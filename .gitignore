@@ -1,4 +1,8 @@
 CVS/
+/bin/
+/etc/
+/www/
+/logs/
 /src/WordNetSQL/download-wn-db.sh
 /src/Data/
 config.log
