@@ -1,0 +1,13 @@
+div.section { margin-left: 1em }
+h1 { font-size: 36pt }
+h2 { font-size: xx-large }
+h3 { font-size: x-large }
+h4 { font-size: large }
+h5 { font-size: medium }
+dt { font-weight: bold }
+table { border-collapse: collapse }
+td, th {
+  border: 1px solid black;
+  padding: 1ex
+}
+samp { white-space: pre }

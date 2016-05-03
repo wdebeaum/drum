@@ -1,0 +1,22 @@
+#
+# Makefile for config
+#
+# George Ferguson, ferguson@cs.rochester.edu,  3 Jun 2002
+# $Id: Makefile.in,v 1.1.1.1 2005/01/14 19:47:58 ferguson Exp $
+#
+# @configure_input@
+#
+
+include auto/rules.mk
+
+SUBDIRS = @subdirs@
+
+all install clean distclean confclean::
+	@for d in $(SUBDIRS); do \
+	  if test -d $$d; then \
+	    (cd $$d; $(MAKE) $@); \
+	  fi; \
+	done
+
+distclean::
+	rm -f defs.mk

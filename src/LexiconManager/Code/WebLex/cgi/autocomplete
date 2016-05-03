@@ -1,0 +1,28 @@
+#!/usr/bin/perl
+
+# autocomplete - CGI script supporting autocompletion for the lexicon and ontology browsers
+
+use CGI qw/:standard/;
+
+use strict vars;
+
+my $package = param('package') or die "missing package param";
+my $q = param('q') or die "missing q param";
+my $limit = param('limit') || undef;
+
+$package =~ /^(?:W|ONT)$/ or die "package must be either W or ONT";
+$q =~ /^[\w-^]+$/ or die "q must contain only letters, digits, hyphens, underscores, and carets";
+
+my @results = ();
+opendir DATADIR, "/u/www/research/trips/lexicon/data/" or die "Can't open lexicon data directory: $!";
+while (my $filename = readdir(DATADIR)) {
+  next unless ($filename =~ /^$package\:\:(.*)\.xml$/);
+  my $name = $1;
+  push @results, $name if ($name =~ /\Q$q\E/i);
+  last if (defined($limit) and @results >= $limit);
+}
+closedir DATADIR;
+
+@results = sort @results;
+
+print header(-type=>'text/plain'), map { "$_\n" } @results;

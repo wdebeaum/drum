@@ -1,0 +1,14 @@
+#
+# Makefile for lisp
+#
+# George Ferguson, ferguson@cs.rochester.edu,  3 Jun 2002
+# $Id: Makefile.in,v 1.2 2010/12/10 15:16:42 ferguson Exp $
+#
+# @configure_input@
+#
+
+include ../auto/rules.mk
+
+distclean::
+	(cd defsystem; $(MAKE) distclean)
+	rm -f defs.mk

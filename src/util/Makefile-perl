@@ -1,0 +1,19 @@
+# -*-mode: Makefile;-*-
+#
+# Makefile for TRIPS Utilities libraries (in Perl)
+#
+# William de Beaumont <wbeaumont@ihmc.us> 2013-04-03
+# $Id: Makefile-perl,v 1.1 2013/04/04 15:28:44 wdebeaum Exp $
+#
+
+MODULE = util
+CONFIGDIR = ../config
+
+SRCS = add_suffix.polyglot
+
+include $(CONFIGDIR)/perl/lib.mk
+
+install::
+	# placate Perl library naming conventions
+	ln -sf add_suffix.polyglot $(etcdir)/$(MODULE)/add_suffix.ph
+

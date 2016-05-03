@@ -1,0 +1,10 @@
+This is where code for styling the XML data lives.
+onttype.xsl
+	XSL stylesheet for ../data/ONT::*.xml; allows ../cgi/browseontology-ajax
+	to load XML files as list items (<li>)
+onttype.js
+	Javascript functions needed by the output of onttype.xsl for
+	dynamically loading new list items
+lookup.xsl
+	XSL stylesheet for ../data/W::*.xml; presents an interface similar to 
+	that of ../cgi/lookup

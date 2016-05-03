@@ -1,0 +1,8 @@
+
+$Id: TODO.txt,v 1.2 2010/01/18 19:50:33 ferguson Exp $
+
+
+- delegating clean target to platform specific probably isn't best
+  idea...
+
+  - means at leats that a .dxl is cleaned even in lib.mk modules

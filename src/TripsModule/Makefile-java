@@ -1,0 +1,19 @@
+#
+# File: src/TripsModule/Makefile-java
+# Creator: George Ferguson
+# Created: Mon Apr  6 15:08:06 2009
+# Time-stamp: <Mon Apr  6 15:09:48 EDT 2009 ferguson>
+#
+
+PACKAGE = TRIPS.TripsModule
+
+SRCS = TripsModule.java \
+	StandardTripsModule.java \
+	GUITripsModule.java \
+	Sendable.java \
+	RunnableWithExceptions.java
+
+CLASSES = $(SRCS:.java=.class)
+
+CONFIGDIR=../config
+include $(CONFIGDIR)/java/lib.mk

@@ -1,0 +1,224 @@
+#||
+=begin
+
+add_suffix.polyglot - function for adding inflectional suffixes to words
+William de Beaumont
+$Date: 2013/03/29 18:57:01 $
+
+This file is simultaneously valid Perl, Ruby, and Lisp. This is made possible
+by abusing the different block comment styles of each language to make blocks
+of code that are commented out in all but one language at a time (this block is
+commented out in all three languages). I'm putting all three implementations in
+one file to encourage them to be kept in sync with each other.
+
+Extending this technique to Java and/or C is left as an exercise ;-)
+
+The Perl and Ruby versions are nearly identical, both taking a word string and
+a suffix string and returning an inflected word string. The Lisp version is
+slightly different; it takes a word symbol or list of symbols, and an all-caps
+suffix string, and returns an inflected word symbol or list of symbols
+(whichever the first argument was). In all languages, only the last word in a
+sequence receives the suffix (which is incorrect in many cases, but can't be
+reliably determined without a lexicon or at least a POS-tagger).
+
+=cut
+
+# Perl code begins
+
+sub add_suffix {
+  my ($word, $suffix) = @_;
+
+  if ($suffix eq '') {
+    return $word;
+  } elsif ($word =~ /[aeiou]y$/i) {
+    return $word . $suffix;
+  } elsif ($word =~ /y$/i) {
+    my $all_but_last = $`;
+    if ($suffix =~ /^s/i) {
+      return $all_but_last . 'ie' . $suffix;
+    } elsif ($suffix =~ /^i/i) {
+      return $word . $suffix;
+    } else {
+      return $all_but_last . 'i' . $suffix;
+    }
+  } elsif ($word =~ /able$/i and $suffix =~ /^ly$/i) {
+    return substr($word, 0, length($word) - 1) . $suffix; # -ably
+  } elsif ($word =~ /ee$/i and $suffix =~ /^i/i) {
+    return $word . $suffix;
+  } elsif ($word =~ /e$/i) {
+    my $all_but_last = $`;
+    if ($suffix =~ /^[ei]/i) {
+      return $all_but_last . $suffix;
+    } else {
+      return $word . $suffix;
+    }
+  } elsif ($word =~ /[gpt]h$/i) {
+    return $word . $suffix;
+  } elsif ($word =~ /[hsx]$/i and $suffix =~ /^s/i) {
+    return $word . 'e' . $suffix;
+  } elsif ($word =~ /c$/i and $suffix =~ /^[ei]/i) {
+    return $word . 'k' . $suffix;
+  } elsif ($word =~ /(^|[^aeiou])([aeiou][bdglmprt]|[aiou]n)$/i and
+           $suffix =~ /^[ei]/i) {
+    $word =~ s/.$/$&$&/; # double final consonant
+    return $word . $suffix;
+  } else {
+    return $word . $suffix;
+  }
+}
+
+1;
+
+# Perl code ends
+
+__END__
+=end
+
+# Ruby code begins
+
+def add_suffix(word, suffix)
+  if (suffix == '')
+    word
+  elsif (word =~ /[aeiou]y$/i)
+    word + suffix
+  elsif (word =~ /y$/i)
+    all_but_last = $`
+    if (suffix =~ /^s/i)
+      all_but_last + 'ie' + suffix
+    elsif (suffix =~ /^i/i)
+      word + suffix
+    else
+      all_but_last + 'i' + suffix
+    end
+  elsif (word =~ /able$/i and suffix =~ /^ly$/i)
+    word.sub(/.$/,'') + suffix # -ably
+  elsif (word =~ /ee$/i and suffix =~ /^i/i)
+    word + suffix
+  elsif (word =~ /e$/i)
+    all_but_last = $`
+    if (suffix =~ /^[ei]/i)
+      all_but_last + suffix
+    else
+      word + suffix
+    end
+  elsif (word =~ /[gpt]h$/i)
+    word + suffix
+  elsif (word =~ /[hsx]$/i and suffix =~ /^s/i)
+    word + 'e' + suffix
+  elsif (word =~ /c$/i and suffix =~ /^[ei]/i)
+    word + 'k' + suffix
+  elsif (word =~ /(^|[^aeiou])([aeiou][bdglmprt]|[aiou]n)$/i and
+           suffix =~ /^[ei]/i)
+    word.sub(/.$/, '\&\&') + # double final consonant
+      suffix
+  else
+    word + suffix
+  end
+end
+
+# Ruby code ends
+
+__END__
+||#
+
+;;; Lisp code begins
+;;; (this is mostly just copied from src/LexiconManager/Code/lexicon-DB.lisp;
+;;; the original is still in place because it's not my code and I didn't want
+;;; to mess with it)
+
+(in-package :util)
+
+(defun vowel (letter)
+  (member letter  (list  #\A #\E #\I #\O #\U)))
+
+(declaim (ftype function add-suffix))
+
+(defun add-suffix-to-last-word (words suffix)
+  "adds the suffix to the last word in the sequence"
+  (if (null (cdr words))
+    (list (add-suffix (car words) suffix))
+    (cons (car words)
+          (add-suffix-to-last-word (cdr words) suffix))))
+
+(defun add-suffix (word suffix)
+  (if (consp word)
+      (add-suffix-to-last-word word suffix)
+    (if (symbolp word)
+	(let* ((wordstring ;;(symbol-name word))
+		(format nil "~S" word)) ;; Myrosia changed to keep package names
+	       (rev-letters (reverse (coerce wordstring 'list)))
+	       (last-letter (car rev-letters))
+	       (second-last-letter (second rev-letters))
+	       (third-last-letter (third rev-letters))
+	       (fourth-last-letter (fourth rev-letters))
+	       (all-but-last (coerce (reverse (cdr rev-letters)) 'string))
+	       (first-suffix-letter (car (coerce suffix 'list)))
+	       (second-suffix-letter (second (coerce suffix 'list))))
+	  ;;        (intern
+	  (read-from-string ;; Myrosia changed to keep package names
+	   (case last-letter
+	     ;;  switch "Y" to "I" when needed
+	     (#\Y
+	      (if (vowel second-last-letter)
+		  (concatenate 'string wordstring suffix)                 ;; e.g., joys
+		;;  word ends consonant "y"
+		(case first-suffix-letter 
+		  (#\S (concatenate 'string all-but-last "IE" suffix))  ;; e.g.,   carries
+		  (#\I (concatenate 'string wordstring suffix))        ;; e.g., carrying
+		  (otherwise (concatenate 'string all-but-last "I" suffix)))))   ;; e.g.,   carried
+           ;;  Drop final "E" when suffix begins with "E" or "I",	     
+	     (#\E
+	      (case first-suffix-letter 
+		((#\I)
+		  ; but not for words ending in "ee", e.g. agreeing
+		 (if (eql second-last-letter #\E)
+		     (concatenate 'string wordstring suffix)
+		   (concatenate 'string all-but-last suffix)));; e.g., caring
+		((#\E)
+		 (concatenate 'string all-but-last suffix));; e.g., cared, agreed
+		((#\L) ;; able + ly -> ly
+		 (if (and (eql second-suffix-letter #\Y) (eql fourth-last-letter #\A)
+			  (eql third-last-letter #\B) (eql second-last-letter #\L))
+		     (concatenate 'string all-but-last "Y")           ;; e.g., reliably
+		   (concatenate 'string wordstring suffix)))
+		(otherwise
+		 (concatenate 'string wordstring suffix))))           ;; e.g., cases
+	     ;;  Change "S" to "ES" after "H", "S" or "X", but not "GH" or "TH" or "PH"
+	     ((#\H #\S #\X)
+	      (if (and (eql first-suffix-letter #\S) (not (or (eql second-last-letter #\T) (eql second-last-letter #\G)  (eql second-last-letter #\P))))
+		  (concatenate 'string wordstring "ES")                 ;; e.g., kisses
+		(concatenate 'string wordstring suffix)))          ;; e.g., kissed
+	     ;;  add "k" to final "c"
+	     ((#\C)
+	      (if (or (eql first-suffix-letter #\E)(eql first-suffix-letter #\I))
+		  (concatenate 'string wordstring "K" suffix)
+		(concatenate 'string wordstring suffix))); e.g. panicked, frolicking		
+	     ;; Double certain final consonants when suffix begins with "E" or "I"
+	     ;; and the word ends in 1 vowel followed by 1 consonant -- doesn't apply to e.g. stream, lean, gleam
+	     ;; verbs ending in double consonants are not affected	  
+	     ((#\B #\D #\G #\L #\M #\P #\R #\T)
+	      (if (and  (member first-suffix-letter '(#\I #\E))
+			(vowel second-last-letter)
+			(not (vowel third-last-letter))
+			)
+		  (concatenate 'string wordstring (coerce (list last-letter) 'string)
+			       suffix)  ;; e.g., bagged
+		(concatenate 'string wordstring suffix))) ;; e.g., bags
+	      ((#\N)
+	       (if (and   (member first-suffix-letter '(#\I #\E))
+			  (vowel second-last-letter)
+			  (not (vowel third-last-letter))
+			  (not (eql second-last-letter #\E)))    ;; verbs ending in en (listening, happening) are not affected
+		   (concatenate 'string wordstring (coerce (list last-letter) 'string)
+				suffix)  ;; e.g., grinned, grinning
+		(concatenate 'string wordstring suffix))) ;; e.g., grins
+	     (otherwise
+	      (concatenate 'string wordstring suffix))
+	     ))
+	  )
+      ;; wasn't a symbol, so return unchanged
+      word)
+    ))
+
+;;; Lisp code ends
+

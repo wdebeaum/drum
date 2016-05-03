@@ -1,0 +1,307 @@
+Here is some basic information on using the parser within a lisp environment for development, as opposed to just running the parser within the overall system.
+
+First, to run the parser from within lisp or emacs, once you have made the system, you can start the facilitator and any non-lisp components simply by running
+
+bin/trips-<systemname> -nolisp
+
+e.g., in drum, thats bin/trips-drum -nolisp.
+
+Then start lisp (or emacs) in the directory
+
+src/Systems/<systemname>    (e.g.,  src/Systems/drum)
+
+and then load the file test.lisp.
+
+This will start all the LISP components, and connect them to the facilitator. 
+
+At this stage, you can run the entire system from lisp using the TEST function,
+
+e.g.,
+
+> (test "Ras activates Raf")
+
+will process that sentence through all the texttagger functions, the parser and any subsequent components that use the parser output, such as the Interpretation Manager and its extraction matching capabilities.
+
+Parser APIs
+
+To just run the parser, or access various data in the ontology and lexicon, change your package to PARSER.
+
+You can then parse sentences directly by the parser (without any preprocessing by TextTagger) using the P command:
+
+> (p "I laughed")
+
+This prints the results out in the lisp window. If you want the results as a list, then you can use the function
+
+> (parse-text "I laughed")
+
+If you've already done a parse, the system maintains the chart and results until a new sentence is parsed. Thus you can access and inspect the parse results. Here are useful functions:
+
+(lf &optional n) - pretty prints the n'th LF hypothesis. (default n=1 need not be specified)
+
+> (lf)
+
+;;;;; (W::I W::LAUGHED)
+(ONT::SPEECHACT ONT::V33061 ONT::SA_TELL :CONTENT ONT::V33044 :START 0 :END 10)
+  (ONT::F ONT::V33044 (:* ONT::NONVERBAL-EXPRESSION W::LAUGH) :AGENT
+   ONT::V33030 :TENSE ONT::PAST :START 0 :END 10 :WNSENSE "laugh%2:29:00::")
+    (ONT::PRO ONT::V33030 (:* ONT::PERSON W::I) :PROFORM ONT::I :START 0 :END 2)
+
+To see the parse tree, there is a function (show-answers <list of feats>), which prints the parse tree showing all the features listed in the argument. If no argument is specified, it shows all features.
+
+e.g.,
+
+PARSER> (SHOW-ANSWERS '(w::lex w::agr))
+
+UTT33149: (% W::UTT
+           (W::LEX
+            W::LAUGHED)) from 0 to 10 using rule W::-UTT-S1> [p=0.951] [score=0.951]
+  S33142: (% W::S
+           (W::LEX
+            W::LAUGHED)) from 0 to 10 using rule W::-S1> [p=0.961] [score=0.961]
+    NP33137: (% W::NP (W::AGR W::|1S|)
+              (W::LEX
+               W::I)) from 0 to 2 using rule W::-NP-PRO> [p=0.980] [score=0.980]
+      PRO33128: (% W::PRO (W::LEX W::I)
+                 (W::AGR
+                  W::|1S|)) from 0 to 2 using rule W::I13633 [p=0.990] [score=0.990]
+    VP33136: (% W::VP (W::AGR W::|1S|)
+              (W::LEX
+               W::LAUGHED)) from 2 to 10 using rule W::-VP-TNS+> [p=0.990] [score=0.990]
+      VP-33134: (% W::VP- (W::AGR W::|1S|)
+                 (W::LEX
+                  W::LAUGHED)) from 2 to 10 using rule W::-VP1-ROLE> [p=0.990] [score=0.990]
+        V33133: (% W::V (W::LEX W::LAUGHED)
+                 (W::AGR
+                  W::|1S|)) from 2 to 10 using rule W::LAUGH15517 [p=0.990] [score=0.990]
+
+
+It you want to return an interpretation in code, there is a general function to return various aspects of the result called GET-PARSER that takes either :lf or :syntax as an argument depending on what you want to obtain.
+
+(get-parse :lf)
+((UTT :TYPE W::UTT :CHANNEL NIL :ROOT ONT::V71954 :TERMS
+  ((TERM :LF (ONT::SPEECHACT ONT::V71954 ONT::SA_TELL :CONTENT ONT::V71937)
+    :VAR ONT::V71954 :SEM NIL :INPUT (W::SHE W::SIGHED) :START 0 :END 11)
+   (TERM :LF
+    (ONT::F ONT::V71937 (:* ONT::NONVERBAL-EXPRESSION W::SIGH) :AGENT
+     ONT::V71932 :TENSE ONT::PAST)
+    :VAR ONT::V71937 :SEM
+    ($ F::SITUATION (F::ASPECT F::DYNAMIC) (F::TIME-SPAN F::EXTENDED)
+     (F::CAUSE F::AGENTIVE) (F::LOCATIVE -) (F::IOBJ -)
+     (F::TYPE ONT::NONVERBAL-EXPRESSION) (F::INTENTIONAL -)
+     (F::INFORMATION F::MENTAL-CONSTRUCT) (F::CONTAINER -)
+     (F::ORIGIN F::ANY-ORIGIN) (F::TRAJECTORY -)
+     (F::KR-TYPE ((WN ("sigh%2:29:00::")))))
+    :INPUT (W::SHE W::SIGHED) :START 0 :END 11)
+   (TERM :LF (ONT::PRO ONT::V71932 (:* ONT::PERSON W::SHE) :PROFORM ONT::SHE)
+    :VAR ONT::V71932 :SEM
+    ($ F::PHYS-OBJ (F::FORM F::SOLID-OBJECT) (F::MOBILITY F::SELF-MOVING)
+     (F::GROUP -) (F::SPATIAL-ABSTRACTION F::SPATIAL-POINT)
+     (F::TYPE ONT::PERSON) (F::OBJECT-FUNCTION F::OCCUPATION)
+     (F::INTENTIONAL +) (F::INFORMATION -) (F::CONTAINER -)
+     (F::ORIGIN F::LIVING) (F::TRAJECTORY -) (F::KR-TYPE -))
+    :INPUT (W::SHE) :START 0 :END 4))
+  :UTTNUM NIL :START 0 :END 11 :WORDS (W::SHE W::SIGHED)))
+
+
+Exploring the Chart
+
+To explore the chart, there is a function Show-Chart which takes a set of optional arguments of form
+
+(show-chart <features> <start> <end>) - shows the chart entries between the start and end position, showing the listed features for each entry.
+
+e.g., 
+PARSER> (show-chart '(w::lex))
+
+N133187: (% W::N1 (W::LEX W::I)) from 0 to 2 using rule W::-N1-FROM-NAME> [P = 0.6573 S = 0.6573]
+CP33186: (% W::CP (W::LEX W::LAUGHED)) from 0 to 10 using rule W::-S-THAT-MISSING> [P = 0.6945 S = 0.6945]
+UTT33185: (% W::UTT (W::LEX W::LAUGHED)) from 0 to 10 using rule W::-UTT-S1> [P = 0.7016 S = 0.7016]
+S33179: (% W::S (W::LEX W::LAUGHED)) from 0 to 10 using rule W::-S1> [P = 0.7087 S = 0.7087]
+CP33174: (% W::CP (W::LEX W::LAUGHED)) from 0 to 10 using rule W::-S-THAT-MISSING> [P = 0.8489 S = 0.8489]
+UTT33173: (% W::UTT (W::LEX W::LAUGHED)) from 2 to 10 using rule W::-VP-UTT-INFORM> [P = 0.8554 S = 0.8554]
+UTT33169: (% W::UTT (W::LEX W::LAUGHED)) from 0 to 10 using rule W::-UTT-S1> [P = 0.8575 S = 0.8575]
+UTT33163: (% W::UTT (W::LEX W::I)) from 0 to 2 using rule W::-NP-UTT-SIMPLE> [P = 0.8660 S = 0.8660]
+S33161: (% W::S (W::LEX W::LAUGHED)) from 0 to 10 using rule W::-S1> [P = 0.8662 S = 0.8662]
+UTT33160: (% W::UTT (W::LEX W::I)) from 0 to 2 using rule W::-NP-UTT-SIMPLE> [P = 0.8747 S = 0.8747]
+NP33156: (% W::NP (W::LEX W::I)) from 0 to 2 using rule W::-NP-SEQUENCE-NUM> [P = 0.8837 S = 0.8837]
+NP33155: (% W::NP (W::LEX W::I)) from 0 to 2 using rule W::-NP-NAME> [P = 0.8926 S = 0.8926]
+RNUMBER33154: (% W::RNUMBER (W::LEX W::I)) from 0 to 2 using rule W::-RN3> [P = 0.8926 S = 0.8926]
+MIXED-SEQUENCE33153: (% W::MIXED-SEQUENCE (W::LEX W::I)) from 0 to 2 using rule W::-MIXED-SEQUENCE-LETTER1> [P = 0.9016 S = 0.9016]
+NAME33151: (% W::NAME (W::LEX W::I)) from 0 to 2 using rule W::-N1_SYM> [P = 0.9016 S = 0.9016]
+VALUE33127: (% W::VALUE (W::LEX W::I)) from 0 to 2 using rule W::I13635 [P = 0.9200 S = 0.9200]
+CP33150: (% W::CP (W::LEX W::LAUGHED)) from 0 to 10 using rule W::-S-THAT-MISSING> [P = 0.9414 S = 0.9414]
+UTT33149: (% W::UTT (W::LEX W::LAUGHED)) from 0 to 10 using rule W::-UTT-S1> [P = 0.9510 S = 0.9510]
+UTT33144: (% W::UTT (W::LEX W::I)) from 0 to 2 using rule W::-NP-UTT-SIMPLE> [P = 0.9605 S = 0.9605]
+S33142: (% W::S (W::LEX W::LAUGHED)) from 0 to 10 using rule W::-S1> [P = 0.9606 S = 0.9606]
+NP33137: (% W::NP (W::LEX W::I)) from 0 to 2 using rule W::-NP-PRO> [P = 0.9801 S = 0.9801]
+PRO33128: (% W::PRO (W::LEX W::I)) from 0 to 2 using rule W::I13633 [P = 0.9900 S = 0.9900]
+WORD33126: (% W::WORD (W::LEX W::I)) from 0 to 2 using rule W::I13659 [P = 0.9900 S = 0.9900]
+VP33136: (% W::VP (W::LEX W::LAUGHED)) from 2 to 10 using rule W::-VP-TNS+> [P = 0.9900 S = 0.9900]
+VP33135: (% W::VP (W::LEX W::LAUGHED)) from 2 to 10 using rule W::-VP-TNS-> [P = 0.9900 S = 0.9900]
+VP-33134: (% W::VP- (W::LEX W::LAUGHED)) from 2 to 10 using rule W::-VP1-ROLE> [P = 0.9900 S = 0.9900]
+V33133: (% W::V (W::LEX W::LAUGHED)) from 2 to 10 using rule W::LAUGH15517 [P = 0.9900 S = 0.9900]
+WORD33132: (% W::WORD (W::LEX W::LAUGHED)) from 2 to 10 using rule W::LAUGH15517 [P = 0.9900 S = 0.9900]
+
+The entry ID gives a handle to exploring the chart in more detail using the following functions. You can inspect the parents of a constituent using the function (show-parents <entry-id>) with two optional arguments, one to determine how far up to go (default is 2) and what features to show (default is '(w::lex)).
+
+For example, with the chart above, we'd get
+PARSER> (show-parents 'V33133)
+
+    V33133: (% W::V (W::LEX W::LAUGHED)) from 2 to 10 using rule W::LAUGH15517 [P = 0.9900 S = 0.9900]
+  VP-33134: (% W::VP- (W::LEX W::LAUGHED)) from 2 to 10 using rule W::-VP1-ROLE> [P = 0.9900 S = 0.9900]
+VP33136: (% W::VP (W::LEX W::LAUGHED)) from 2 to 10 using rule W::-VP-TNS+> [P = 0.9900 S = 0.9900]
+VP33135: (% W::VP (W::LEX W::LAUGHED)) from 2 to 10 using rule W::-VP-TNS-> [P = 0.9900 S = 0.9900]
+
+Here we see that V33133 is a subconstituent of VP-33134, which in turn is a subconstituent of two VP consituents. We can look further up by changing the max-levels parameter.
+
+PARSER> (show-parents 'V33133 :max-levels 3)
+      V33133: (% W::V (W::LEX W::LAUGHED)) from 2 to 10 using rule W::LAUGH15517 [P = 0.9900 S = 0.9900]
+    VP-33134: (% W::VP- (W::LEX W::LAUGHED)) from 2 to 10 using rule W::-VP1-ROLE> [P = 0.9900 S = 0.9900]
+  VP33136: (% W::VP (W::LEX W::LAUGHED)) from 2 to 10 using rule W::-VP-TNS+> [P = 0.9900 S = 0.9900]
+S33179: (% W::S (W::LEX W::LAUGHED)) from 0 to 10 using rule W::-S1> [P = 0.7087 S = 0.7087]
+UTT33173: (% W::UTT (W::LEX W::LAUGHED)) from 2 to 10 using rule W::-VP-UTT-INFORM> [P = 0.8554 S = 0.8554]
+S33161: (% W::S (W::LEX W::LAUGHED)) from 0 to 10 using rule W::-S1> [P = 0.8662 S = 0.8662]
+S33142: (% W::S (W::LEX W::LAUGHED)) from 0 to 10 using rule W::-S1> [P = 0.9606 S = 0.9606]
+  VP33135: (% W::VP (W::LEX W::LAUGHED)) from 2 to 10 using rule W::-VP-TNS-> [P = 0.9900 S = 0.9900]
+
+We can examine a constituent using the function (show-constit <id> <features>), which shows the entire parser tree that produced this constituent:
+
+PARSER> (show-constit 'VP33136  '(w::agr w::lex))
+VP33136: (% W::VP (W::AGR ?#:AGR33130144515:(W::|1S| W::|2S| W::|3S| W::|1P|
+                                             W::|2P| W::|3P|))
+            (W::LEX W::LAUGHED)) from 2 to 10 using rule W::-VP-TNS+> [P = 0.9900 S = 0.9900]
+  VP-33134: (% W::VP- (W::AGR ?#:AGR33130144515:(W::|1S| W::|2S| W::|3S|
+                                                 W::|1P| W::|2P| W::|3P|))
+               (W::LEX W::LAUGHED)) from 2 to 10 using rule W::-VP1-ROLE> [P = 0.9900 S = 0.9900]
+    V33133: (% W::V (W::LEX W::LAUGHED)
+               (W::AGR ?#:AGR33130144515:(W::|1S| W::|2S| W::|3S| W::|1P|
+                                          W::|2P|
+                                          W::|3P|))) from 2 to 10 using rule W::LAUGH15517 [P = 0.9900 S = 0.9900]
+
+
+Examining the Ontology
+
+Here are some functions for accessing the ontology. If you just need to browse through it, its much easier to use the web browser interface at
+http://www.cs.rochester.edu/research/trips/lexicon/browse-ont-lex.html
+
+The types in the ontology are in the ONT package. To check whether one type is a subclass of another, we have the function OM::SUBTYPE, and we can traverse the hierarchy using OM::GET-PARENT and OM::GET-CHILDREN
+
+PARSER> (om::subtype 'ont::person 'ont::animal)
+ONT::PERSON
+PARSER> (om::get-parent 'ont::mammal)
+ONT::VERTEBRATE
+PARSER> (om::get-children 'ont::mammal)
+(ONT::PERSON ONT::NONHUMAN-ANIMAL)
+
+We can get the least common subsumer of two types 
+
+PARSER> (om::common-ancestor 'ont::person 'ont::structure)
+ONT::PHYS-OBJECT
+
+You can get the roles defined for a type:
+
+PARSER> (om::lf-arguments 'ont::event-of-action)
+
+((:ESSENTIAL ONT::AGENT
+  ((ONTOLOGYMANAGER::? ONTOLOGYMANAGER::CAU2 F::SITUATION F::ABSTR-OBJ
+    F::PHYS-OBJ))
+  (:IMPLEMENTS ONT::AGENT))
+ (:OPTIONAL ONT::NOROLE (ONTOLOGYMANAGER::?!TYPE) (:IMPLEMENTS ONT::NOROLE))
+ (:OPTIONAL ONT::AFFECTED
+  ((ONTOLOGYMANAGER::? ONTOLOGYMANAGER::CAU2 F::SITUATION F::ABSTR-OBJ
+    F::PHYS-OBJ))
+  (:IMPLEMENTS ONT::AFFECTED))
+ (:OPTIONAL ONT::RESULT
+  ((ONTOLOGYMANAGER::? ONTOLOGYMANAGER::CAU2 F::SITUATION F::ABSTR-OBJ
+    F::PHYS-OBJ))
+  (:IMPLEMENTS ONT::RESULT))
+ (:OPTIONAL ONT::BENEFICIARY
+  ((ONTOLOGYMANAGER::? ONTOLOGYMANAGER::CAU1 F::PHYS-OBJ))
+  (:IMPLEMENTS ONT::BENEFICIARY)))
+
+and get the semantic features associated with a type using
+
+PARSER> (om::lf-sem 'ont::person)
+(F::PHYS-OBJ
+ (:REQUIRED (F::GROUP -) (F::TYPE ONT::PERSON) (F::INFORMATION -)
+  (F::INTENTIONAL +) (F::CONTAINER -) (F::MOBILITY F::SELF-MOVING)
+  (F::OBJECT-FUNCTION F::OCCUPATION) (F::ORIGIN F::LIVING)
+  (F::SPATIAL-ABSTRACTION F::SPATIAL-POINT) (F::FORM F::SOLID-OBJECT)
+  (F::TRAJECTORY -))
+ (:DEFAULT (F::INTENTIONAL -) (F::OBJECT-FUNCTION -)))
+
+Accessing the Lexicon
+
+To see what the lexicon manager, in its current configuration, returns for a given word (drawing from the core lexicon and possibly wordnet), there is a function WORDDEF, that has an optional second argument indictaing which features to show.
+e.g., 
+PARSER> (worddef 'sigh)
+
+W::SIGH25027:
+    (% W::N (W::GAP ?182932) (W::MASS ?#:MSS47371) (W::CASE ?#:CAS47372)
+       (W::AGR W::|3S|) (W::MORPH (:FORMS (LEXICONMANAGER::|-S-3P|)))
+       (W::VAR V71924) (W::LEX W::SIGH) (W::INPUT W::SIGH)
+       (W::LF (:* ONT::NONVERBAL-EXPRESSION W::SIGH))
+       (W::SEM ?182925:(F::SITUATION (F::TRAJECTORY -)
+                        (F::ORIGIN F::ANY-ORIGIN) (F::CONTAINER -)
+                        (F::INFORMATION F::MENTAL-CONSTRUCT) (F::INTENTIONAL -)
+                        (F::TYPE ONT::NONVERBAL-EXPRESSION) (F::IOBJ -)
+                        (F::LOCATIVE -) (F::CAUSE F::AGENTIVE)
+                        (F::TIME-SPAN F::EXTENDED) (F::ASPECT F::DYNAMIC)))
+       (W::COERCE -) (W::TEMPLATE LEXICONMANAGER::AGENT-TEMPL)
+       (W::NOMSUBJPREPS ?#:SUBJP47373:(W::BY))
+       (W::NOMOBJPREPS ?#:OBJP47374:(W::OF)) (W::SORT W::PRED)
+       (W::ROLES (% W::ROLES (ONT::AGENT ?182926:(F::PHYS-OBJ (F::ORIGIN ?#:ORG47375:(F::HUMAN
+                                                                                      F::NON-HUMAN-ANIMAL))))
+                    (ONT::BENEFICIARY ?182927:(?#:CAU147376:(F::PHYS-OBJ) NIL))
+                    (ONT::RESULT ?182928:(?#:CAU247377:(F::SITUATION
+                                                        F::ABSTR-OBJ
+                                                        F::PHYS-OBJ) NIL))
+                    (ONT::AFFECTED ?182929:(?#:CAU247377:(F::SITUATION
+                                                          F::ABSTR-OBJ
+                                                          F::PHYS-OBJ) NIL))
+                    (ONT::NOROLE ?!#:!SEM47378)))
+       (W::SUBJ-MAP ONT::AGENT)
+       (W::SUBJ ?#:LSUBJ47385:((% W::NP (W::GAP ?182931)
+                                  (W::LF ?#:LSUBJLF47379)
+                                  (W::SORT ?#:LSUBJSORT47380)
+                                  (W::LEX ?#:LSUBJLEX47381)
+                                  (W::VAR ?#:LSUBJVAR47382)
+                                  (W::AGR ?#:LSUBJAGR47383)
+                                  (W::CASE ?#:LSUBJCASE47384)
+                                  (W::SEM ?182930:(F::PHYS-OBJ (F::ORIGIN ?#:ORG47375:(F::HUMAN
+                                                                                       F::NON-HUMAN-ANIMAL)))))))) [p=0.99]
+
+W::SIGH25023:
+    (% W::V (W::GAP ?182940) (W::VC +) (W::PART (% - (W::VAR -)))
+       (W::COMP3 (% - (W::VAR -))) (W::DOBJ (% - (W::VAR -)))
+       (W::IOBJ (% - (W::VAR -))) (W::MORPH (:FORMS (LEXICONMANAGER::-VB)))
+       (W::VAR V71927) (W::LEX W::SIGH) (W::INPUT W::SIGH)
+       (W::LF (:* ONT::NONVERBAL-EXPRESSION W::SIGH))
+       (W::SEM ?182933:(F::SITUATION (F::TRAJECTORY -)
+                        (F::ORIGIN F::ANY-ORIGIN) (F::CONTAINER -)
+                        (F::INFORMATION F::MENTAL-CONSTRUCT) (F::INTENTIONAL -)
+                        (F::TYPE ONT::NONVERBAL-EXPRESSION) (F::IOBJ -)
+                        (F::LOCATIVE -) (F::CAUSE F::AGENTIVE)
+                        (F::TIME-SPAN F::EXTENDED) (F::ASPECT F::DYNAMIC)))
+       (W::COERCE -) (W::TEMPLATE LEXICONMANAGER::AGENT-TEMPL)
+       (W::VFORM ?#:X7192547386:(W::BASE W::PRES))
+       (W::AGR ?#:Y7192647387:(W::|1S| W::|2S| W::|1P| W::|2P| W::|3P|))
+       (W::ROLES (% W::ROLES (ONT::AGENT ?182934:(F::PHYS-OBJ (F::ORIGIN ?#:ORG47388:(F::HUMAN
+                                                                                      F::NON-HUMAN-ANIMAL))))
+                    (ONT::BENEFICIARY ?182935:(?#:CAU147389:(F::PHYS-OBJ) NIL))
+                    (ONT::RESULT ?182936:(?#:CAU247390:(F::SITUATION
+                                                        F::ABSTR-OBJ
+                                                        F::PHYS-OBJ) NIL))
+                    (ONT::AFFECTED ?182937:(?#:CAU247390:(F::SITUATION
+                                                          F::ABSTR-OBJ
+                                                          F::PHYS-OBJ) NIL))
+                    (ONT::NOROLE ?!#:!SEM47391)))
+       (W::SUBJ-MAP ONT::AGENT)
+       (W::SUBJ ?#:LSUBJ47398:((% W::NP (W::GAP ?182939)
+                                  (W::LF ?#:LSUBJLF47392)
+                                  (W::SORT ?#:LSUBJSORT47393)
+                                  (W::LEX ?#:LSUBJLEX47394)
+                                  (W::VAR ?#:LSUBJVAR47395)
+                                  (W::AGR ?#:LSUBJAGR47396)
+                                  (W::CASE ?#:LSUBJCASE47397)
+                                  (W::SEM ?182938:(F::PHYS-OBJ (F::ORIGIN ?#:ORG47388:(F::HUMAN
+                                                                                       F::NON-HUMAN-ANIMAL)))))))) [p=0.99]

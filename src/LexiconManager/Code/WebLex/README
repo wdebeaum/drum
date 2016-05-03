@@ -1,0 +1,25 @@
+This directory contains the files needed to set up the TRIPS web ontology and
+lexicon browsers.
+
+cgi
+	contains the web-runnable CGI scripts
+data
+	contains the XML data files and DTDs for words and LF types
+style
+	contains XSL and JavaScript code for displaying the XML data in an XSLT
+	capable browser
+
+generate-data-files.sh
+	Generates XML data files, using lftypes2xml.lisp and words2xml.lisp.
+	usage:
+	./generate-data-files.sh <trips src directory> <lexicon data directory>
+LispLists.pm
+	Perl functions for converting between strings/files containing Lisp 
+	S-expressions and Perl list references
+lisp2xml.lisp
+	Lisp functions for converting various parser data structures to strings
+	containing XML descriptions of them.
+lftypes2xml.lisp
+	Lisp functions for writing data/LF::*.xml files, uses lisp2xml.lisp.
+words2xml.lisp
+	Lisp functions for writing data/W::*.xml files, uses lisp2xml.lisp.

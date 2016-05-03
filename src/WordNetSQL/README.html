@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head><title>WordNetSQL - WordNet 3.0 as an SQL database</title></head>
+<body>
+<h1>WordNetSQL</h1>
+William de Beaumont<br>
+$Date: 2013/07/22 20:23:31 $
+
+<h2>Introduction</h2>
+<p>This directory contains code to make an SQL database from WordNet 3.0 (plus the tagged gloss corpus), and a Ruby/Perl library of common functions for accessing that database. It also contains code to make a compatible SQL database from the Spanish version of WordNet, esWN, and to make a companion database for the mappings between WordNet 1.6 and 3.0 (esWN refers to 1.6 for interlingual links). The remainder of this document deals with the database only; see also the <a href="rdoc/WordNetSQL.html">Ruby library documentation</a> and the <a href="pod/WordNetSQL.html">Perl library documentation</a> (do <code>make docs</code> if the files aren't there).</p>
+
+<h2>Prerequisites</h2>
+<ul>
+ <li><a href="http://wordnet.princeton.edu/wordnet/">WordNet</a> <a href="http://wordnet.princeton.edu/wordnet/download/current-version/#nix">3.0</a>
+ <li>WordNet 3.0 <a href="http://wordnet.princeton.edu/glosstag.shtml">tagged gloss corpus ("glosstag")</a> installed so that its <code>WordNet-3.0</code> directory is the same as above
+ <li>If you want Spanish: <a href="http://nlp.lsi.upc.edu/web/index.php?option=com_content&task=view&id=31&Itemid=57">esWN-200611</a> installed alongside the <code>WordNet-3.0</code> directory
+ <li>If you want interlingual links: All the WNsnsmap packages:
+  <ul>
+   <li><a href="http://wordnetcode.princeton.edu/1.7.1/WNsnsmap-1.7.1.tar.gz">1.6 &lt;=&gt; 1.7.1</a>
+   <li><a href="http://wordnetcode.princeton.edu/2.0/WNsnsmap-2.0.tar.gz">1.7.1 &lt;=&gt; 2.0</a>
+   <li><a href="http://wordnetcode.princeton.edu/2.1/WNsnsmap-2.1.tar.gz">2.0 &lt;=&gt; 2.1</a>
+   <li><a href="http://wordnetcode.princeton.edu/3.0/WNsnsmap-3.0.tar.gz">2.1 &lt;=&gt; 3.0</a>
+  </ul>
+  These should be installed so their <code>sensemap</code> directories coincide, within the <code>WordNet-3.0</code> directory. The relevant files are then called <code>WordNet-3.0/sensemap/<var>old</var>to<var>new</var>.<var>pos</var>.<var>semy</var></code>, where <code><var>old</var></code> and <code><var>new</var></code> are the old and new version numbers, respectively, <code><var>pos</var></code> is either <code>noun</code> or <code>verb</code>, and <code><var>semy</var></code> is either <code>mono</code> or <code>poly</code>.
+ <li><a href="http://www.sqlite.org/">SQLite</a> 3 (comes with Mac OS X)
+ <li><a href="http://www.perl.org/">Perl</a> (comes with Mac OS X), with the following modules installed:
+  <ul>
+   <li><a href="http://search.cpan.org/~timb/DBI/DBI.pm">DBI</a>
+   <li><a href="http://search.cpan.org/~adamk/DBD-SQLite/lib/DBD/SQLite.pm">DBD::SQLite</a>
+   <li><a href="http://search.cpan.org/~szabgab/Term-ProgressBar-2.10/lib/Term/ProgressBar.pm">Term::ProgressBar</a>
+  </ul>
+  These may be installed using <code>cpan</code>, or using the MacPorts packages <code>p5-dbi</code>, <code>p5-dbd-sqlite</code>, and <code>p5-term-progressbar</code> (but then you'd have to use <a href="http://www.macports.org/">MacPorts</a>' version of Perl in <code>/opt/local/bin/perl</code>).
+ <li>xsltproc (comes with Mac OS X)
+</ul>
+
+<h2>Usage</h2>
+<p>Running <code>make</code> produces an SQLite3 database file called
+<code>wn.db</code> (for esWN run <code>make eswn.db</code> to produce
+<code>eswn.db</code>, for the interlingual links run <code>make
+sense-map.db</code>). Run <code>sqlite3 wn.db</code> to open it, and
+interactively run SQL queries. Enter <code>.schema</code> to see the database
+schema. Type <code>Ctrl-D</code> or enter <code>.exit</code> to exit
+<code>sqlite3</code>. The following table shows which WordNet files each SQL
+table comes from, and summarizes the purpose of the table.</p>
+
+<table border="1">
+<tr><th>WordNet 3.0 file(s)</th>
+    <th>SQL table</th>
+    <th>Notes</th>
+</tr>
+<tr><td><code>index.sense</code></td>
+    <td><code>senses</code></td>
+    <td>This table links synsets with the words (lemmas) they contain, and defines sense keys (indexing all senses), sense numbers (indexing senses given a word), and word numbers (indexing words given a synset). Word numbers actually come from the order the senses appear in <code>data.<var>pos</var></code>.</td>
+</tr>
+<tr><td rowspan="4"><code>data.<var>pos</var></code></td>
+    <td><code>synsets</code></td>
+    <td>Synsets and their glosses. Synsets are identified by the combination of offset (byte offset within the data file) and type (one of the letters <code>nvars</code>).</td>
+</tr>
+<tr>
+    <td><code>pointers</code></td>
+    <td>Links between synsets (labeled by <code>pointer_symbols</code>). Some pointers involve specific words, identified by word number. Some of these word numbers may only exist in the <code>capitalization</code> table, see below.</td>
+</tr>
+<tr>
+    <td><code>frames</code></td>
+    <td>Links from verb synsets to the sentence frames (in <code>frames_text</code>) they support. </td>
+</tr>
+<tr>
+    <td><code>capitalization</code></td>
+    <td>Lemmas that differ only in capitalization and word number. <code>index.sense</code> and sense keys are case-insensitive, but the words in <code>data.<var>pos</var></code> are case-sensitive, so it's possible for one sense key to map to multiple word numbers. In this case, only the first word number and the downcased lemma are represented in <code>senses</code>, while this table has all the word numbers for such words, with capitalization as it appears in <code>data.<var>pos</var></code>.</td>
+</tr>
+<tr><td><code>verb.Framestext</code> (AKA <code>frames.vrb</code>)</td>
+    <td><code>frames_text</code></td>
+    <td>Text of the sentence frames, indexed by frame number. The verb goes where <code>----</code> is.</td>
+</tr>
+<tr><td><code>sentidx.vrb</code></td>
+    <td><code>examples</code></td>
+    <td>Links from verb senses (identified by sense key) to example sentence templates.</td>
+</tr>
+<tr><td><code>sents.vrb</code></td>
+    <td><code>examples_text</code></td>
+    <td>Text of the example sentences, indexed by example number. The verb goes where <code>%s</code> is.</td>
+</tr>
+<tr><td><code><var>pos</var>.exc</code></td>
+    <td><code>exceptions</code></td>
+    <td>Exceptions to inflectional morphology rules. Some heuristics in <code>make-wordnet-sql-db.pl</code> add a Penn POS to most rows, and omit some other rows. This is done so that these exceptions work for both stemming and generation.</td>
+</tr>
+<tr><td><code>glosstag/standoff/*</code> (from the tagged gloss corpus)</td>
+    <td>glosstags</td>
+    <td>Tags annotating the synset glosses: definitions (<code>def</code>), examples (<code>ex</code>), lemmas (<code>lem</code>), parts of speech (<code>pos</code>), and senses (<code>sns</code>). These tags have been corrected in a number of ways in order to make them match up with the glosses as they appear in the <code>synsets</code> table (and in a few cases the glosses have been changed in minor ways).</td>
+</tr>
+<tr><td rowspan="2">(from the documentation)</td>
+    <td><code>pointer_inverses</code></td>
+    <td>Maps each pointer to its inverse if it has one (it might be itself).</td>
+</tr>
+<tr>
+    <td><code>pointer_symbols</code></td>
+    <td>Maps pointer symbols to their names, roughly as described in the
+<a href="http://wordnet.princeton.edu/wordnet/man/wninput.5WN.html"><code>wninput(5WN)</code> manpage</a>
+    (some capitalization was changed for consistency). (For esWN, the <code>pointer_symbol</code> is all-lowercase with underscores, as in the original data, while the <code>pointer_name</code> has a capital first letter, and uses spaces. In addition, <code>madeof</code> is expanded to <code>made of</code> in the name but not the symbol.)</td>
+</tr>
+</table>
+
+<p>Note that there are three sources of example sentences in WordNetSQL:
+<ol>
+<li>Examples contained in glosses (and tagged in <code>glosstags</code>). These are complete examples with no placeholders, and are present for all parts of speech. They are associated with synsets, but since they generally have a sense tag they're also associated with a specific word sense in that synset.
+<li>Verb example sentence templates (in <code>examples</code> and <code>examples_text</code>). These are nearly complete examples associated with specific verb senses, just substitute the base form of the verb in for the <code>%s</code>.
+<li>Verb sentence frames (in <code>frames</code> and <code>frames_text</code>). These are generalized sentences with multiple placeholders. The associated verb goes where the <code>----</code> is, with the indicated suffix applied. Other placeholders are "somebody", "something", and a few kinds of phrases (in all-caps).
+</ol>
+</p>
+
+<h2>How it works</h2>
+<h3>WordNet-3.0 and glosstag</h3>
+<ol>
+ <li><code>make-wordnet-sql-db.pl</code> sets up most of the tables, and
+ inserts data from the files in WordNet proper (i.e. not the gloss corpus).
+
+ <li><code>glosstags.sqlite</code> creates the <code>glosstags</code> table, as
+ well as two somewhat temporary tables, <code>structs</code> and
+ <code>feats</code>. It also fixes the <code>ss_type</code> of satellite
+ adjectives in pointer targets to be <code>s</code> instead of <code>a</code>.
+
+ <li><code>glosstag-standoff-to-sql.pl</code> uses
+ <code>glosstag-standoff-to-sql.xsl</code> to insert the
+ <code>&lt;struct&gt;</code> and <code>&lt;feat&gt;</code> elements from each
+ chunk of the glosstag standoff XML data into the <code>structs</code> and
+ <code>feats</code> tables, respectively. It also reads the text data from the
+ chunk to get what the glosstags corpus thinks the glosses are. For each gloss,
+ it tries to align the glosstags gloss with the WordNet gloss. Sometimes it
+ fails, and leaves the alignment for the next step. Finally, it drops the
+ <code>structs</code> and <code>feats</code> tables, and creates indexes on the
+ <code>glosstags</code> table.
+
+ <li><code>fix-glosstag-offsets-manually.pl</code> reads
+ <code>manual-glosstag-fixes.txt</code> to apply fixes to individual
+ glosses/tags. The format of the text file is as follows:
+  <ul>
+   <li>Comments starting with <code>#</code> and ending at the end of the line
+   are ignored, as are blank lines. All other lines are commands for editing
+   (or checking) the database.
+
+   <li>An 8-digit 0-padded synset offset followed by a synset type
+   (<code>n,v,a,r,s</code>) sets the current synset under consideration.
+ 
+   <li>A line starting with <code>+</code> or <code>-</code> and containing
+   <code>|</code>s represents a row of the <code>glosstags</code> table to be
+   inserted or deleted, respectively. These are easily copied and pasted from
+   the output of an SQL <code>SELECT</code> statement in SQLite3.
+ 
+   <li>Other lines starting with <code>-</code> check that the gloss of the
+   current synset is the same as the rest of that line (don't forget trailing
+   spaces!).
+ 
+   <li>Other lines starting with <code>+</code> replace the gloss of the
+   current synset with the rest of the line.
+
+   <li>Lines of the form <code><var>a</var>+<var>b</var></code> or
+   <code><var>a</var>-<var>b</var></code>, where <code><var>a</var></code> and
+   <code><var>b</var></code> are character offsets, add or subtract
+   (respectively) <code><var>b</code></var> from all start offsets <code>&gt;=
+   <var>a</code></var>, and all end offsets <code>&gt; <var>a</var></code>, in
+   the current synset. This is useful when characters are inserted or deleted
+   in the tagged gloss corpus relative to WordNet proper. The different
+   treatment of start and end offsets enables you to insert characters between
+   directly adjacent tags (i.e. the first tag's end equals the second tag's
+   start). Think of the <code><var>a</var></code> as moving the cursor to the
+   position before the indexed character (starting from 0), <code>+</code> as
+   pressing the space key and <code>-</code> as pressing backspace.
+  </ul>
+  The effect of each line is cumulative, so later lines that reference absolute
+  offsets (<code><var>a</var></code>s, and start/end offsets in
+  <code>glosstags</code> rows) should refer to the offsets as changed by
+  earlier lines.
+</ol>
+
+<h3>esWN (Spanish)</h3>
+<p>esWN is distributed in a completely different format from the original WordNet, and lacks some features (including verb frames and tagged glosses).</p>
+<ol>
+ <li>The three esWN table files are converted from Latin1 to UTF-8 character encoding, and stored in this directory as <code>eswn-{relation,synset,variant}.psv</code> (PSV stands for Pipe-Separated Values).
+ <li><code>eswn.sqlite</code> imports each of the converted esWN files into a temporary table, and uses them to construct the same tables and indices as <code>make-wordnet-sql-db.pl</code> would.
+ <li>Two other psv files are included in WordNetSQL: <code>eswn-pointer-{inverses,symbols}.psv</code>. <code>eswn.sqlite</code> imports these directly into the corresponding tables. It also fills in missing inverse pointers in the <code>pointers</code> table.
+ <li><code>eswn.sqlite</code> also creates an empty <code>glosstags</code> table for completeness.
+</ol>
+
+<h3>WNsnsmap (for interlingual links)</h3>
+<ol>
+ <li><code>sense-map-to-psv.pl</code> converts the multiple data files to the single <code>sense-map.psv</code> file. Rows from the <code>mono</code> files are given a score of 100. Rows from the <code>poly</code> files are split up so there is only one new sense per row.
+ <li><code>sense-map.sqlite</code> creates the <code>sense_map</code> table in <code>sense-map.db</code> and imports <code>sense-map.psv</code> into it.
+</ol>
+</body>
+</html>

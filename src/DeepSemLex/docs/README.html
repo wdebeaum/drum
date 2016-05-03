@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Deep Semantic Lexicon</title>
+</head>
+<body>
+<h1>Deep Semantic Lexicon</h1>
+
+<h2>Introduction</h2>
+<p>Goals:
+<ul>
+ <li>Replace existing TRIPS LexiconManager/OntologyManager.
+ <li>Use data files that are easy for TRIPS-outsiders to access and use.
+ <li>Integrate external resources (WordNet, VerbNet, PropBank...).
+ <li>Support multiple inheritance of concepts.
+ <li>Support inheritance among syntactic frames/templates.
+ <li>Support definition of concepts in terms of their entailments, with a few semantic primitives.
+ <li><em>New goal for 2015:</em> enable modification of the TRIPS lexicon/ontology via JSON modification requests from the wiki.
+</ul>
+</p>
+
+<h2>Directory Structure</h2>
+<ul>
+ <li>code
+  <ul>
+   <li>lib - Lisp library for loading, querying, and printing lexicon data according to the model in dsl.class.violet
+   <li>converters - code for converting lexicon data between different formats, especially for importing data from external resources
+   <li>browser - web-based ontology browser for TRIPS lex/ont data in DSL XML format
+  </ul>
+ <li>docs - documentation
+ <li>data - lexicon data, whether imported from external resources, hand-built, or automatically generated
+  <ul>
+   <li>FrameNet
+   <li>OntoNotes
+    <ul>
+     <li>sense-inventories
+    </ul>
+   <li>PropBank
+    <ul>
+     <li>frames
+    </ul>
+   <li>SemLink
+   <li>WordNet
+   <li>VerbNet
+   <li>browser
+  </ul>
+</ul>
+
+<h2>Model</h2>
+
+<p>See dsl.class.violet (or <a href="dsl-uml-class-diagram.pdf">dsl-uml-class-diagram.pdf</a>, which is exported from it).</p>
+
+<h2>Lisp Data Format</h2>
+
+<p>In general, the operators correspond to the classes they're meant to instantiate, and/or the slots they're meant to fill in the enclosing class instance. Nested instantiations can have one of two meanings. If the inner class is part of the outer one, it is taken to define that part of the outer class (e.g. in <code>(sense (sem-frame <var>...</var>))</code>, the sem-frame is part of the sense). If the outer class is part of or the same as the inner one, the inner instance gets the properties of the outer one (e.g. in <code>(word foo (morph <var>...</var>))</code>, the morph gets "foo" as the base form). This happens via an inheritance relation if they're both concepts. It's also possible to inherit concepts by name rather than nesting, in the same way as other relations are formed.</p>
+
+<p>Certain slots can be set outside of any class instantiation for a class with that slot, and in that case they apply to everything after them in the same lexical scope. Slots with this behavior include <code>provenance</code>, <code>word</code>, <code>pos</code>, and <code>morph</code>. In addition, <code>provenance</code>, <code>word</code>, and <code>pos</code> may contain nested instantiations that use those slot values.</p>
+
+<h3>Special sub-formats</h3>
+
+<p>[examples given here should be taken with a grain of salt; I made them up without looking at the actual data]</p>
+
+<p>A word looks like this: <code>(word <var>word-spec</var> [<var>body...</var>])</code>. The <code><var>word-spec</var></code> can be one of the following: a single word symbol (this includes hyphenated words), a list of word symbols, or a list of word symbols with a final list containing a single particle word. Examples:</p>
+<ul>
+ <li><code>(word cake)</code> ; a single word, "cake"
+ <li><code>(word caked-on)</code> ; a single word with a hyphen
+ <li><code>(word (pound cake))</code> ; multiple contiguous words, "pound cake"
+ <li><code>(word (eat (up)))</code> ; "eat up", with "up" as a separable particle, as in "eat the cake up"
+</ul>
+
+<p>A syn-sem-map (part of a syn-sem) looks like this: <code>(<var>syn-arg</var> <var>syn-cat</var> <var>sem-role</var> [optional])</code>. The <code><var>syn-cat</var></code> can either be a syntactic phrase category (like <code>NP</code>) by itself, or a two-item list of the category and a head word or disjunction of head words. The second option is mostly used for prepositions, e.g. <code>(PP with)</code> to indicate that the argument syntax is a prepositional phrase where the preposition is "with". Examples:</p>
+<ul>
+ <li><code>(lsubj NP ONT::agent)</code> ; a required subject that is a noun phrase and fills the agent role
+ <li><code>(liobj NP ONT::recipient optional)</code> ; an optional indirect object that is a noun phrase and fills the recipient role
+ <li><code>(lcomp (PP (or to into)) ONT::to-loc)</code> ; a required complement that is a prepositional phrase with preposition "to" or "into", that fills the to-loc role
+</ul>
+
+<p>A role-restr-map (part of a sem-frame) looks like this: <code>(<var>sem-role(s)</var> <var>restriction</var> [optional])</code>. Multiple semantic role symbols can be specified as a list. The <code><var>restriction</var></code> should be some kind of (semantic) concept or <code>AND</code>/<code>OR</code> formula of concepts. The symbol <code>t</code> may be used to indicate a lack of restriction (think of it as the "top" concept type). Examples:</p>
+<ul>
+ <li><code>(ONT::agent (sem-feats (intentional +)))</code> ; the agent role is required, and is restricted to be intentional (the semantic feature <code>intentional</code> must have value <code>+</code>)
+ <li><code>(ONT::recipient t optional)</code> ; the recipient role is optional and unrestricted
+ <li><code>(ONT::effect (or ONT::activity ONT::procedure))</code> ; the effect role is required and restricted to be either an activity or a procedure
+</ul>
+
+<h2>Lisp Library</h2>
+
+<h3>Loading Data</h3>
+<h4>For a specific concept</h4>
+<p><code>(require-concept 'VN::mix-22.1-1)</code></p>
+<p>Note that this will only load what VerbNet knows about mix-22.1-1, not what other resources like SemLink know about it.</p>
+<h4>From a specific file</h4>
+<code>(load-dsl-file "../../data/VerbNet/mix-22.1.lisp")</code>
+
+<h3>Querying the loaded data</h3>
+<h4>Look up a single concept</h4>
+<code>(gethash 'VN::mix-22.1-1 (concepts *db*))</code>
+<h4>Look up senses of a word</h4>
+<p><code>(gethash '(W::mix) (senses *db*))</code></p>
+<p>Note that multiword expressions and particle verbs are indexed by their first word/non-particle part as well as by the full expression. So when looking up e.g. "mix", you might also get senses of "mix up", "mix together", "mix tape", etc. Inflected forms are also indexed, so you can look up "mixes", "mixing", or "mixed" and still get senses of "mix".</p>
+<h4>Look up concepts reachable via a path through slots and relations</h4>
+<code>(eval-path-expression '(1 VN::mix-22.1-1 &gt;inherit))</code>
+
+<h2>Ontology Browser</h2>
+
+<p>I [Will] am in the process of writing a new web-based lexicon/ontology browser using DSL XML format and client-side XSLT. The old one is <a href="http://www.cs.rochester.edu/research/trips/lexicon/browse-ont-lex-ajax.html">here</a>, and the new one is <a href="http://www.cs.rochester.edu/research/trips/lexicon/dsl/ONT%3A%3Aroot.xml">here</a>. The code for writing all the XML files for the TRIPS ontology, and transforming that XML into an HTML webpage, is in <code>code/browser/</code>, with support from <code>code/converters/dsl-to-xml.lisp</code>.</p>
+
+<p>A feature of this new browser is that you can make your own version of it based on your modified CVS checkout of TRIPS, and just open any of the XML data files in your browser and get the pretty(er) interface without needing a web server. To do this, run <code>make install</code> in <code>code/browser/</code>, and use your web browser to open an XML file in <code><var>$TRIPS_BASE</var>/etc/ont-browser/</code>. This has been tested in Firefox, Safari, and Chrome, however in order for Chrome to work you need to pass it the <code>-allow-file-access-from-files</code> command line argument to disable an overly-restrictive (IMHO) security check. If you change the original TRIPS lex/ont data files, run <code>make install</code> again to update the XML files. If the only files you changed are the individual word files in <code><var>$TRIPS_BASE</var>/src/LexiconManager/Data/new/</code>, you need to do <code>make clean</code> first (adding all of those files as dependencies slows down <code>make</code>, so I didn't do it).</p>
+
+<h2>TODO</h2>
+
+<ul>
+ <li>Finish lex/ont browser based on DSL XML format.
+  <ul>
+   <li>compute effective <code>sem-feats</code> and <code>sem-frame</code> in <code>ont-type.xsl</code>
+   <li>output <code>W::*.xml</code> files
+   <li>write <code>word.xsl</code>?
+   <li>polish
+  </ul>
+ <li>More and better documentation.
+ <li>More unit tests.
+ <li>Combine information from inherited concepts into one big lex-entry to send to the parser.
+ <li>Export to some of OWL, JSON, YAML...
+ <li>When do DSL files get loaded? Compile-time? Run-time initialization? On demand? Some combination for different resources?
+ <li>When and how do DSL files get unloaded? Need to save memory.
+ <li>Overrides.
+ <li>Irregular morphology specs.
+  <ul>
+   <li>Handle <code>:forms NIL</code> properly (e.g. in <code>w::afford</code>). I think this means add only the base form of the word and not any of the default stuff, though I need to check that against LXM...
+  </ul>
+ <li>Make aliases actually work (right now if you refer to a concept by an alias before you load the definition calling it an alias, a separate concept object will be made with that alias, unconnected to the main one).
+ <li>Complete loading of old TRIPS lexicon/ontology data.
+  <ul>
+   <li>ONT types:
+    <ul>
+     <li><code>:required</code> and <code>:default</code> parts of sem feats as in <code>ONT::MOVE</code> [currently these just get flattened so they're all required]
+    </ul>
+   <li>Templates:
+    <ul>
+     <li>What to do about variables used across different parts of a template? (e.g. in <code>THEME-PRED-EXPERIENCER-OPTIONAL-TEMPL</code>)
+     <li>What to do about syntactic features in template constits (some aren't just head words)?
+     <li>What to do about unspecified syn-cats, e.g. <code>(% ?sc)</code>? Are they even useful anymore?
+    </ul>
+   <li>Words:
+    <ul>
+     <li>Word-level syn-feats
+     <li><code>abbrev</code>
+     <li><code>:nom</code>
+     <li><code>:nomsubjpreps</code> and <code>:nomobjpreps</code>
+    </ul>
+   <li>Senses:
+    <ul>
+     <li>Group senses under distinct <code>(:* <var>ONT</var> <var>W</var>)</code> names (subsenses can have different templates, features, examples...).
+     <li>More meta-data, particularly <code>:wn</code>, which is tricky because it often uses sense keys for the wrong word,
+     <li>Alternatives to <code>lf-parent</code>: <code>lf</code>, <code>lf-form</code>, <code>non-hierarchy-lf</code>.
+     <li>Misc. other stuff: <code>preference</code>, <code>prototypical-word</code>.
+    </ul>
+  </ul>
+ <li>Make input texts with the same string the same object, like concept names.
+ <li>Handle information beyond text in OntoNotes/PropBank frame examples.
+ <li>Make <code>wnsql-to-dsl.rb</code> also output glosstags, like <code>synset-glosses-to-tags.rb</code>.
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+# -*- mode: Makefile;-*-
+#
+# defs.mk for ruby
+#
+# George Ferguson, ferguson@cs.rochester.edu,  3 Jun 2002
+# $Id: defs.mk.in,v 1.2 2013/04/10 20:28:24 wdebeaum Exp $
+#
+# @configure_input@
+#
+
+RUBY  = @RUBY@
+RUBY_LIB  = @RUBY_LIB@
+
+# guess at the other commands' names based on ruby's, e.g. ruby1.9 => gem1.9
+GEM=$(subst ruby,gem,$(RUBY))
+RDOC=$(subst ruby,rdoc,$(RUBY))
+

@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# File: defs.sh.in
+# Creator: George Ferguson
+# Created: Wed Feb 10 15:54:46 2010
+# Time-stamp: <Wed Feb 10 15:55:42 EST 2010 ferguson>
+#
+# @configure_input@
+#
+
+PROTEGE_BASE="@PROTEGE_BASE@"
+

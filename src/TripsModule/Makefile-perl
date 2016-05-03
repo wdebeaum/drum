@@ -1,0 +1,12 @@
+#
+# File: src/TripsModule/Makefile-perl
+# Creator: George Ferguson
+# Created: Mon Apr  6 15:08:23 2009
+# Time-stamp: <Mon Apr  6 15:13:10 EDT 2009 ferguson>
+#
+
+MODULE = TripsModule
+SRCS = TripsModule.pm
+
+CONFIGDIR=../config
+include $(CONFIGDIR)/perl/lib.mk

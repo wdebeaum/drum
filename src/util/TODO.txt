@@ -1,0 +1,4 @@
+.lisp files need (use-package :util) instead oif "UTIL"
+
+also versiuon file cleanup, and C makefile stuff
+

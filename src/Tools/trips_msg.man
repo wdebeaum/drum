@@ -1,0 +1,70 @@
+.\" Time-stamp: <Fri Mar 10 17:39:55 EST 2000 ferguson>
+.TH TRIPS_MSG 1 "10 Oct 1996" "TRIPS"
+.SH NAME
+trips_msg \- Send a KQML message to the TRIPS Facilitator
+.SH SYNOPSIS
+trips_msg [-socket HOST:PORT] verb [parameters]
+.SH DESCRIPTION
+.PP
+.I trips_msg
+is a simple program that allows a single KQML message to be sent to
+the TRIPS Facilitator. It first connects to the Facilitator (see
+the -socket option, below). The arguments are then formatted
+as a KQML performative and sent over the connection.
+Note that the parameters are not checked for KQML syntactic correctness.
+Be sure to escape parentheses, spaces, and the like from the shell.
+.SH OPTIONS
+.PP
+.IP "-socket HOST:PORT"
+Connect to Facilitator at the given
+.I HOST
+and
+.IR PORT .
+The default is to use port 6200 on the local host, or the value of the
+environment variable TRIPS_SOCKET, if set.
+.I trips_msg
+will scan successive port numbers from that given trying to connect
+(see
+.IR tfacilitator (1)
+for details).
+.SH USAGE
+This command tells the Facilitator to terminate, thereby terminating all the
+other modules:
+
+.nf
+.na
+    trips_msg request :receiver facilitator :content '(exit)'
+.ad
+.fi
+
+This simple example simulates a word being recognized by Sphinx:
+
+.nf
+.na
+    trips_msg tell :sender speech-in :content '(word "hello" :index 1)'
+.ad
+.fi
+
+.SH ENVIRONMENT
+.PP
+TRIPS_SOCKET			HOST:PORT at which to contact IM
+.SH FILES
+.PP
+None.
+.SH DIAGNOSTICS
+.PP
+None.
+.SH SEE ALSO
+.PP
+tfacilitator(1),
+trips_cat(1),
+trips_client(1),
+trips_exec(1)
+.SH BUGS
+.PP
+Probably not.
+.SH AUTHOR
+.PP
+George Ferguson (ferguson@cs.rochester.edu).
+
+

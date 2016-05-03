@@ -1,0 +1,11 @@
+#
+# File: src/config/protege/Makefile.in
+# Creator: George Ferguson
+# Created: Wed Feb 10 14:58:26 2010
+# Time-stamp: <Wed Feb 10 14:58:33 EST 2010 ferguson>
+#
+
+include ../auto/rules.mk
+
+distclean::
+	rm -f defs.mk

@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>Running TRIPS</title>
+<link href="style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<h2>TRIPS HowTo for Developers</h2>
+
+<hr>
+<h3>Running TRIPS</h3>
+
+<p>There are two ways of running the full TRIPS system. With lisp from a dumped library, or with lisp from a loaded interpreter. You also have the option of running the speech components or not. The <tt>trips-<i>domain</i></tt> script uses command line arguments to control the execution. This script is located in your <tt>[dir-home]/bin</tt> directory.
+
+<ul>
+ <li><tt>trips-<i>domain</i> -nolisp</tt>
+  <br>Run everything except the lisp
+ <li><tt>trips-<i>domain</i> -nospeech</tt>
+  <br>Run everything except speechin and speechout
+ <li><tt>trips-<i>domain</i> -nolisp -nospeech</tt>
+  <br>Run everything except speech and lisp
+ <!-- LG 20110916 -- this script isn't generated anymore
+ <li><i>trips-domain-gen</i>
+  <br>The same as '<i>trips-domain -nolisp -nospeech</i>'. Usually used for testing.
+  -->
+</ul>
+
+Additional options are typically available, some common to all TRIPS domain,
+and some domain-specific. Run <i>trips-domain -help</i> to see what options
+are available.
+
+The above options startup all or some of TRIPS. If you need to start LISP separately, see the <i>Testing TRIPS</i> section below.
+
+
+<hr>
+<h3>Testing TRIPS</h3>
+
+<p>Most of the reasoning components in TRIPS are written in LISP. In order to test the system, it is often easiest to debug by loading and running the lisp code in an interpreter (as opposed to running from a lisp dump). If lisp dumps are not working, using the lisp interpreter is required. The following steps assume you will run lisp from within the Emacs editor. You can obviously run it external from Emacs if you'd rather.
+
+<ol>
+ <li>Run the Facilitator and all other non-lisp components
+  <br>
+  <tt>[dir-home]/bin/trips-<i>domain</i> -nolisp -nospeech</tt>
+ <li>Open <tt>[dir-home]/src/Systems/<i>domain</i>/test.lisp</tt> in Emacs.
+ <li>Start a lisp interpreter within Emacs. <i>([M-x] lisp)</i>
+ <li>Load the test file in your interpreter:
+  <br>
+  <i>? (open "test.lisp")</i>
+ <li>Once loaded, you should see a message like: "Start the TRIPS facilitator if you haven't done so already."
+  <br>
+  Type <i>(run)</i> in lisp and the modules will connect to the Facilitator
+</ol>
+
+If you do the above 5 steps, you now have TRIPS running (without speechin or speechout). You are able to debug any lisp module by using various <i>trace</i> commands dynamically. You can also stop the lisp by typing <i>(quit)</i>. You can reconnect the lisp as long as you haven't stopped the Facilitator. 
+
+<p><b>A note about <tt>[dir-home]/src/<i>domain</i>/test.lisp</tt></b>:
+<br>
+This file should contain a list of the dialogue utterances for your domain. It is best to keep this file up to date so everyone tests the same sequence.
+
+<p><b>Testing the dialogue</b>:
+<ol>
+<li><i>? (next)</i>
+ <br>
+ Once you have started TRIPS, you can now test the dialogue, step by step. The domain.lisp test file contains a list of the dialogue utterances and external messages that you expect to occur in order. You can send these through the system, one by one in lisp. The (next) function iteratively scales the dialogue list and sends each message to TRIPS. Strings are sent to the Parser as if the user said them. Lists are broadcasted as normal messages.
+<li><i>? (test "blah blah")</i>
+ <br>
+ You can send an utterance to the Parser with the <i>test</i> function.
+</ol>
+
+<hr>
+<h3>Injecting Messages into the System</h3> 
+Sometimes in debugging, it is useful to be able to send arbitrary messages to
+the Facilitator (which will then be forwarded to a given component).
+There are several ways for doing this.
+
+<p><b>Using Lisp</b>
+<br>
+If you are running Lisp components separately (as described above), you can
+use one of them to send a message. Just go to a trips component package
+in Lisp and use the <tt>send-msg</tt> function (I think it's called
+that). Caveat: the message you send will be tagged with a somewhat
+arbitrary <tt>:sender</tt>. 
+
+<p><b>Using KQML Command-line Tools</b> 
+<br>
+(George Ferguson): In <tt>[dir-home]/src/Tools/</tt> you can find
+<tt>trips_msg</tt>, <tt>trips_cat</tt>, <tt>trips_client</tt>,
+and <tt>trips_exec</tt>. These date back to the pre-history of the
+system, but they do have manpages which may or may not be
+accurate. And they are still used today.
+
+<p><b>Using Java GUI</b>
+<br>
+You can run the <tt>MessageInjector</tt> module (<tt>src/MessageInjector</tt>), 
+which will show a simple GUI where you can paste in the message to be send.
+
+<p><em><small>
+(L Galescu, 20011/09/16): This module either doesn't exist any more, or it has
+been renamed. 
+</small></em>
+
+<p><b>On the command line to the Facilitator</b>
+<br>
+Start the Facilitator alone from the command line and type messages on the
+command line. 
+
+<p><b>Piping a message</b>
+<br>(Will de Beaumont): I have a
+little shell script using the <tt>rlwrap</tt> and <tt>netpipes</tt> utilities:
+
+<blockquote><tt>#!/bin/sh
+rlwrap -b '() ' -s 0 hose localhost 6200 --netslave 
+</tt></blockquote>
+
+<p><em><small>
+(L Galescu, 20011/09/16): Your default system configuration may not include
+the <tt>rlwrap</tt> and <tt>netpipes</tt> utilities, in which case you will
+obviously need to install them before using this option to send TRIPS messages.
+</small></em>
+
+
+<hr>
+<a href="index.html">Index</a>
+
+</body>
+</html>

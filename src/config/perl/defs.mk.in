@@ -1,0 +1,12 @@
+# -*- mode: Makefile;-*-
+#
+# defs.mk for perl
+#
+# George Ferguson, ferguson@cs.rochester.edu,  3 Jun 2002
+# $Id: defs.mk.in,v 1.2 2007/10/22 16:55:29 ferguson Exp $
+#
+# @configure_input@
+#
+
+PERL  = @PERL@
+PERL_LIB  = @PERL_LIB@

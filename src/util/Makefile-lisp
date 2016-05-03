@@ -1,0 +1,14 @@
+# -*-mode: Makefile;-*-
+#
+# Makefile for TRIPS Utilities libraries (in Lisp)
+#
+# George Ferguson, ferguson@cs.rochester.edu,  6 Nov 1995
+# $Id: Makefile-lisp,v 1.1.1.1 2005/01/14 19:48:07 ferguson Exp $
+#
+
+NAME = util
+DEFSYS = defsys.lisp
+SYSTEM = :util
+
+CONFIGDIR=../config
+include $(CONFIGDIR)/lisp/lib.mk

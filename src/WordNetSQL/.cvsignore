@@ -1,0 +1,12 @@
+.*.swp
+glosstags.psv
+wn.db
+gsts-warnings.txt
+eswn-relation.psv
+eswn-synset.psv
+eswn-variant.psv
+eswn.db
+sense-map.psv
+sense-map.db
+rdoc
+pod

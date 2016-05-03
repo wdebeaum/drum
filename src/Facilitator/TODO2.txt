@@ -1,0 +1,20 @@
+
+Time-stamp: <Thu Jan 15 12:59:05 EST 2004 ferguson>
+
+- Could support two different views of the connections:
+  - One is by name, which is how we do it now, but wouldn't show if
+    someone was forging messages
+  - The other is by connection, which would show this
+    - and if there's only one name, then could use it also in the
+      display
+
+- to support adjusting the menu in the TrafficViewer, really should
+  implement listeners on the registry...
+
+- this business of temporary items on the display prior to register
+  is insane
+  - why not just create the item with the gensym name when the client
+    connects. Then when they register, that's just another name, only
+    make it the primary name. Ditto for unregister, adjusting the
+    primary if needed.
+    -> DONE!

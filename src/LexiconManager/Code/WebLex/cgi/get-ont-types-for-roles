@@ -1,0 +1,88 @@
+#!/usr/bin/perl
+
+# get-ont-types-for-roles - CGI script which finds all the ONT types browseontology-ajax needs to fetch in order to filter by the given roles
+
+use strict vars;
+
+sub safer_backticks {
+  local %ENV = ();
+  return `$_[0]`;
+}
+
+$ENV{QUERY_STRING} =~ /roles=([,\w\s\-]+)/ or die "Invalid query string";
+
+# we reverse the list of roles because people tend to put the less common roles
+# later in the list
+my @roles = reverse(split(/,/,lc($1)));
+
+# get all types that have all the roles
+my @types_with_roles = ();
+my $typefiles = "../data/ONT\\:\\:*.xml";
+for my $role (@roles) {
+  @types_with_roles =
+      map { (/ONT::(.*?)\.xml/ or die "Bogus result from fgrep") and $1 }
+          safer_backticks(qq(/bin/fgrep -l 'role="$role"' $typefiles));
+  last unless (@types_with_roles);
+  $typefiles = join(' ', map { "../data/ONT\\:\\:$_.xml" } @types_with_roles)
+}
+
+# memoized function mapping types to their parents
+my %type2parent = ();
+sub get_type_parent {
+  my $type = shift;
+  return undef if ($type eq 'root');
+  unless (exists($type2parent{$type})) {
+    my $parent_attr = safer_backticks(qq(/bin/grep -o -e 'parent="[[:alnum:]-]\\+"' ../data/ONT\\:\\:$type.xml));
+    $parent_attr =~ /parent="([\w-]+)"/ or die "Bogus result from grep";
+    $type2parent{$type} = $1;
+  }
+  return $type2parent{$type};
+}
+
+# get the types with all the roles whose parents don't have all the roles
+my @top_types_with_roles = ();
+for my $type (@types_with_roles) {
+  my $parent = get_type_parent($type);
+  unless (grep { $_ eq $parent} @types_with_roles) {
+    push @top_types_with_roles, $type;
+  }
+}
+
+# get the list of ancestors of a given type (including that type itself),
+# sorted root first
+sub get_type_ancestors {
+  my $type = shift;
+  my $parent = get_type_parent($type);
+  if (defined($parent)) {
+    return (get_type_ancestors($parent), $type);
+  } else {
+    return ($type);
+  }
+}
+
+# append ancestors in $new_ancestors that aren't already in $old_ancestors to
+# $old_ancestors (destructively)
+sub append_unique_ancestors {
+  my ($old_ancestors, $new_ancestors) = @_;
+  while (@$new_ancestors and
+         grep { $_ eq $new_ancestors->[0] } @$old_ancestors) {
+    shift @$new_ancestors;
+  }
+  push @$old_ancestors, @$new_ancestors;
+}
+
+# get all the ancestors of the top types, ordered so that parents are before
+# children (so browseontology-ajax loads them in the right order)
+my @ancestors = ();
+for my $type (@top_types_with_roles) {
+  append_unique_ancestors(\@ancestors, [get_type_ancestors($type)]);
+}
+
+my $ancestors = join(',',@ancestors);
+my $ont_types_with_roles = join(',', @top_types_with_roles);
+print "Content-type: text/xml\r\n\r\n";
+print <<EOP;
+<?xml version="1.0"?>
+<ont-types-for-roles ancestors="$ancestors" ont-types-with-roles="$ont_types_with_roles" />
+EOP
+

@@ -1,0 +1,5 @@
+Options ExecCGI
+AddHandler cgi-script pl
+AuthType Basic
+AuthName "WordNetWeb"
+Require user ihmc

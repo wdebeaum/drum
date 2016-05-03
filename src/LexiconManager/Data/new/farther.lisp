@@ -1,0 +1,35 @@
+;;;;
+;;;; W::farther
+;;;;
+
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+   (W::farther
+   (wordfeats (W::COMPARATIVE +) (W::FUNCTN ONT::linear-scale))
+   (SENSES
+    ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("farther%5:00:01:far:00"))
+     (LF-PARENT ONT::MORE-VAL)
+     (lf-form w::far)
+     (TEMPL COMPAR-TEMPL)
+     (SEM (f::orientation ont::more) (f::intensity ont::med))
+     )
+    )
+   )
+))
+
+(define-words :pos W::ADV
+ :words (
+  (W::FARTHER
+   (SENSES
+    ((LF-PARENT ONT::EXTENSION)
+     (TEMPL PRED-S-POST-TEMPL)
+     )
+    ((LF-PARENT ONT::degree-modifier)
+     (TEMPL ADJ-ADV-OPERATOR-TEMPL)
+     (meta-data :origin fruitcarts :entry-date 20060111 :change-date nil :comments nil)
+     (example "move it a little bit farther down")
+     )
+    )
+   )
+))
+

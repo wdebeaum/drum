@@ -1,0 +1,11 @@
+$Id: TODO.txt,v 1.1.1.1 2005/01/14 19:48:14 ferguson Exp $
+
+- The method for using the current process to find a :sender in the
+  internal transport is broken if a client itself uses multiple
+  processes. Need to rethink this. Meanwhile they have to specify
+  :sender or get *unknown* stuck in there.
+
+- The various "transports" really conflate *transport* with
+  *protocol*. That is, stdio is a transport (as is internal and
+  socket), but kqml is a protocol (as would be, eg., fipa-acl). This
+  could be cleaned up.

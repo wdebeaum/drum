@@ -1,0 +1,12 @@
+# -*- mode: Makefile;-*-
+#
+# File: src/config/Graphviz/defs.mk.in
+# Creator: William de Beaumont
+# Created: 2015-12-09
+#
+# @configure_input@
+#
+
+DOT_BIN_DIR = @DOT_BIN_DIR@
+DOT_LIB_DIR = @DOT_LIB_DIR@
+

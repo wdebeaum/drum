@@ -1,0 +1,301 @@
+.\" $Id: facilitator.man,v 1.1.1.1 2005/01/14 19:48:08 ferguson Exp $
+.TH FACILITATOR 1 "26 Apr 2001" "TRIPS"
+.SH NAME
+facilitator \- TRIPS Facilitator
+.SH SYNOPSIS
+facilitator
+[-port PORT]
+[-display DISPLAYTYPE]
+[-log BOOLEAN]
+[-debug BOOLEAN]
+[-help]
+[display args]
+.SH DESCRIPTION
+.PP
+The
+.I Facilitator
+is the hub of the TRIPS inter-module communication architecture. It
+accepts connections on a ``well-known'' socket and routes KQML
+messages between connected clients.
+It supports broadcast and subscription models for
+non-explicitly-addressed messages.
+It provides full KQML syntax checking of all messages.
+.PP
+The Facilitator can optionally display the traffic flowing through it
+in a variety of ways, from text-only printing to graphical displays.
+See the description of the
+.I -display
+option for details.
+.PP
+The Facilitator writes a log of all messages received and sent to
+the file "facilitator.log" in the current directory (see the
+description of the
+.I -log
+option, below).
+Receipt of a
+.I chdir
+message (see below) causes the log to be closed and reopened in a new
+directory.
+.SH OPTIONS
+.PP
+.IP "-port PORT"
+Use PORT as the initial port number on which to listen for
+connections. The default is 6200.
+.IP "-display DISPLAYTYPE"
+If given, DISPLAYTYPE should name the type of display to use. This can
+be either a predefined name or a Java class name. The following
+predefined names are acceptable:
+.RS
+.IP "none|null"
+Message traffic is not displayed.
+.IP "tty"
+Message traffic is printed to stdout.
+.IP "modem"
+Message traffic is displayed using a graphical display that looks
+vaguely like a rack of modems. This is the default display type.
+.RE
+.IP ""
+Otherwise, DISPLAYTYPE should name a Java class, which must be
+loadable by the JVM running the Facilitator and must implement the
+TRIPS.Facilitator.Display interface.
+.IP ""
+For graphical displays, the following command-line arguments may be
+specified:
+.RS
+.IP "-title TITLE"
+Set title in window titlebar. The default is ``TRIPS Facilitator'' or
+something. 
+.IP "-iconic BOOLEAN"
+Whether to start iconified or not (the default is false).
+.IP "-geometry GEOM"
+Set initial window size and position. The default is in the upper
+right-hand corner.
+.IP "-showMenuBar BOOLEAN"
+Whether to display the application's menubar (the default is true).
+.RE
+.IP "-log BOOLEAN"
+If false, no Facilitator log is written. The default is true.
+.IP "-debug BOOLEAN"
+If true, print copious tracing and debugging information to stderr.
+The default is false.
+.IP "-help"
+Print the usage message and exit.
+.SH USAGE
+.PP
+From the shell, usage is trivial: simply start
+.I facilitator
+and arrange for clients to connect to it. Normally this will be done
+by a script that launches the TRIPS system as a whole, and clients
+will be launched by the TRIPS Launcher,
+.IR launcher (1).  
+.PP
+.SH "CLIENT USAGE"
+From a client application's perspective, using the Facilitator can
+be broken down into three steps:
+.IP 1.
+Connect to the Facilitator on the well-known socket.
+.IP ""
+Because of a quirk of the TCP protocol, a
+port may not be immediately reuseable if it has been recently closed
+(the so-called
+.I TIME-WAIT
+state). This could have the effect of making it impossible to restart
+the Facilitator and have it listen on the ``well-known'' socket until
+several minutes had elapsed. The avoid this, if the primary port
+cannot be allocated, the Facilitator will increment the port number
+and try again, up to a maximum of 100 tries. To be robust, clients
+should perform a similar search for the Facilitator's port, starting
+at the ``well-known'' port number (6200 or whatever was specified
+with the
+.I -port
+option).
+.IP ""
+Note that if clients don't want to bother with sockets, the TRIPS
+.I Launcher
+can connect them via their standard input and standard output. See the
+.IR launcher (1)
+manpage for details.
+.IP 2.
+Register the name of the client with the Facilitator. To do this,
+the following KQML message must be sent (to the connected socket):
+
+.nf
+.na
+    (register :name myname)
+.ad
+.fi
+
+An optional :group argument can be given to specify to which client
+group a client belongs.
+Once this is done, messages sent to
+.I myname
+by other clients will appear for reading from the socket.
+.IP ""
+A client would also normally send a MODULE-STATUS message (see below)
+to indicate when it is ``ready,'' although the Facilitator does not
+enforce this.
+.IP 3.
+Use the socket for communication with the Facilitator and other
+clients. A complete spec of the messages understood by the Facilitator
+itself is in the next section.
+.PP
+Messages not addressed to the Facilitator itself are copied to the
+receiver's connection. If the intended receiver is not registered with
+the Facilitator, an ERROR message will be sent back to the sending
+client. Messages without an explicit :receiver are selective
+broadcasts, and are sent to any module that has subscribed to receive
+them (see below). Note that this is different from the effect of the
+BROADCAST performative (also see below).
+.SH "FACILITATOR MESSAGES"
+.PP
+The following KQML messages are understood by the Facilitator. Case is
+insignificant outside of strings. Whitespace between messages is
+ignored (but rigorously enforced within messages according to the KQML
+spec).
+.IP "(request :content (define-group G :parent P))"
+Requests that the Facilitator define a new client group named
+.I G
+whose parent group is
+.I P
+(the default parent is the pre-defined class
+.IR Any ).
+.IP "(register :name M :group G)"
+Sender is asking to be identified as
+.I M
+from now on. This should be the first message sent by any client. The
+client's status is set to CONNECTED after receipt of this message. The
+group
+.I G
+is optional and defaults to
+.IR Any .
+The group
+.I G
+can also be a list of group names, indicating membership in multiple
+groups.
+Multiple REGISTER messages per client are permitted, and will result
+in messages for any of the registered names being sent to that client.
+.IP "(tell :content (module-status ready))"
+Sender is announcing that it is ``ready,'' whatever exactly that is
+taken to mean. The client's status is set to READY after receipt of
+this message.
+.IP "(subscribe :content PATTERN)"
+Sender is subscribing to receive message matching the given PATTERN.
+The pattern-specification language is described in the next section.
+The effect of a subscription is that any message with no :receiver
+parameter (i.e., selectively broadcast) that matches the PATTERN will
+be copied to the subscribing client.
+.IP "(broadcast :content PERFORMATIVE)"
+Causes the given
+.I PERFORMATIVE
+to be sent to all connected modules. Note that this is a true
+broadcast, as opposed to the selective broadcast based on
+subscriptions.
+.IP "(request :content (chdir DIR))"
+Request that the Facilitator close the current "facilitator.log" and open a
+new one in the given
+.IR DIR .
+.IP "(request :content (exit :status N))"
+Request that the Facilitator exit (with optional status
+.IR N ).
+This closes all client connections, and so is an effective, although
+abrupt, way to halt the entire system.
+.IP "(request :content (hide\-window))"
+Causes the Facilitator display to iconify itself.
+.IP "(request :content (show\-window))"
+Causes the Facilitator display to deiconify itself.
+.IP "(request :content (start\-conversation :name N :lang L :sex S))"
+Ignored.
+.IP "(request :content (end\-conversation)"
+Ignored.
+.SH "SUBSCRIPTION PATTERNS"
+Patterns used in SUBSCRIBE messages are specified as follows:
+.IP -
+A literal other than an asterisk (and items processed under &key,
+below) must match exactly. Case is not significant outside of
+strings.
+.IP -
+An asterisk pattern ``*'' matches any single item.
+.IP -
+A list pattern ``(...)'' matches if all its elements match the
+elements in the corresponding positions in the target list.
+.IP -
+In a list pattern, a final dot-asterisk ``. *'', matches all
+remaining elements in the target list, however many there are (this is
+based on Lisp dotted-list notation, if you care).
+.IP -
+Inside a list pattern, the token ``&key'' switches from positional
+matching to keyword-value matching. Items following the &key should be
+pairs consisting of a keyword (token starting with a colon, ``:'') and
+a pattern. The target list is searched for a matching keyword and, if
+found, its value (the next item in the target list) is matched against
+the pattern. The entire pattern matches if all the &key patterns
+match.
+.IP -
+As a special case, a :sender pattern will match a :sender target if
+either they are literally the same, or the pattern names a group and
+the target is a member of that group.
+.PP
+Here are some examples of subscription patterns. The first subscribes
+to any TELL message:
+
+.nf
+.na
+    (subscribe :content (tell . *))
+.ad
+.fi
+
+The next pattern subscribes to tell message from a module named USER-INPUT
+or, if USER-INPUT is a named group, then any member of the USER-INPUT
+group:
+
+.na
+.nf
+    (subscribe :content (tell &key :sender user-input))
+.fi
+.ad
+
+The next pattern subscribes to TELL messages whose content starts with
+WORD (sent by anyone):
+
+.na
+.nf
+    (subscribe :content (tell &key :content (word . *)))
+.fi
+.ad
+
+Note that without &key, this would match only messages that were
+precisely the verb ``tell'', followed by the token ``:content'',
+followed by a list starting with ``word'', and nothing else. This is
+almost certainly not what you want (there will probably be a :sender
+parameter, for example).
+.SH ENVIRONMENT
+.PP
+DISPLAY			HOST:SCREEN for X server
+.br
+TRIPS_SOCKET		HOST:PORT for Facilitator connection
+.SH FILES
+.PP
+facilitator.log		Facilitator log
+.SH DIAGNOSTICS
+.PP
+Copious, especially when
+.I -debug
+is true.
+.PP
+In particular, when non-KQML input is received from a client
+(as can happen when it inadvertently prints an error message to its
+standard output, for example), the Facilitator complains to stderr
+and logs the bad input. This can be somewhat verbose due to the
+incremental parsing of KQML messages. Sorry.
+.SH SEE ALSO
+.PP
+launcher(1),
+trips_client(1)
+.SH BUGS
+.PP
+Undoubtedly.
+.SH AUTHOR
+.PP
+George Ferguson, ferguson@cs.rochester.edu
+
+

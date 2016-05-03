@@ -1,0 +1,13 @@
+# -*- mode: Makefile;-*-
+#
+# defs.mk for festival
+#
+# George Ferguson, ferguson@cs.rochester.edu, 12 Dec 2003
+# Time-stamp: <Fri Dec 12 15:12:38 EST 2003 ferguson>
+#
+# @configure_input@
+#
+
+FESTIVAL_BASE   = @FESTIVAL_BASE@
+FESTIVAL_CXXFLAGS = @FESTIVAL_CXXFLAGS@
+FESTIVAL_LIBS   = @FESTIVAL_LIBS@

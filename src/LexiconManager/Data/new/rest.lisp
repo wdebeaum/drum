@@ -1,0 +1,33 @@
+;;;;
+;;;; W::REST
+;;;;
+
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :tags (:base500)
+ :words (
+  (W::REST
+   (SENSES
+    ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("rest%1:24:00"))
+     (LF-PARENT ONT::PART)
+     (TEMPL GEN-PART-OF-RELN-TEMPL)
+     )
+    ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("rest%1:24:00"))
+     (LF-PARENT ONT::PART)
+     )
+    )
+   )
+))
+
+(define-words :pos W::v :templ agent-affected-xp-templ
+ :tags (:base500)
+ :words (
+  (W::rest
+   (SENSES
+    ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("put_spatial-9.2-1"))
+     (LF-PARENT ONT::be-at-loc)
+     (TEMPL neutral-location-templ) ; like hang,stand,sit
+     )
+    )
+   )
+))
+

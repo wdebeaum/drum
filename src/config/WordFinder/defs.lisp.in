@@ -1,0 +1,23 @@
+;;;; -*- mode: Lisp;-*-
+;;;;
+;;;; config/WordFinder/defs.lisp
+;;;;
+;;;; George Ferguson, ferguson@cs.rochester.edu, 20 Jul 2005
+;;;; Time-stamp: <Wed Jul 20 14:02:52 EDT 2005 ferguson>
+;;;;
+;;;; @configure_input@
+;;;;
+
+(in-package :wordfinder)
+
+(defvar *use-wordfinder* @USE_WORDFINDER@
+  "Enable or disable use of WordFinder to lookup unknown words.")
+
+(defvar *wordnet-basepath* @WORDFINDER_wordnet@
+  "Path to WordNet dict dir for use by WordFinder.")
+
+(defvar *comlex-filename* @WORDFINDER_comlex@
+  "Path to comlex file for use by WordFinder.")
+
+(defvar *cmu-names-filename* @WORDFINDER_cmu_names@
+  "Path to CMU names file for use by WordFinder.")

@@ -1,0 +1,22 @@
+/*
+ * File: style.css
+ * Creator: George Ferguson
+ * Created: Mon May 14 10:45:41 2007
+ * Time-stamp: <Mon May 14 10:47:33 EDT 2007 ferguson>
+ */
+
+body {
+  margin: 0 0.5in;
+  background: white;
+  color: black;
+  font-family: verdana, arial, tahoma, helvetica, sans-serif;
+  font-size: 14px;
+}
+
+h1 {
+  text-align: center;
+}
+  
+li {
+  margin-bottom: 0.5em;
+}

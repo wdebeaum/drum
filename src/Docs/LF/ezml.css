@@ -1,0 +1,89 @@
+/*
+ * ezml.css
+ *
+ * George Ferguson, ferguson@cs.rochester.edu, 2 Oct 2004
+ * Time-stamp: <Mon Feb  7 19:35:52 EST 2005 ferguson>
+ *
+ * This is a CSS2 stylesheet.
+ */
+
+body {
+    background: white;
+    color: black
+    font: "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
+    margin-left: 1in;
+    margin-right: 1in;
+    text-align: justify;
+}
+
+h1 {
+    text-align: center;
+}
+
+tt {
+    font-weight: bold;
+}
+
+pre.code {
+    font-weight: bold;
+    margin-left: 0.25in;
+    margin-right: 0.25in;
+    background: #d0d0d0;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+    caption-side: bottom;
+    border-collapse: collapse;
+    border: 1px solid;
+}
+
+table tr {
+}
+
+table td {
+    border: 1px solid;
+}
+
+table th {
+    border: 1px solid;
+}
+
+table caption {
+    font-weight: bold;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+div.footnote {
+    margin-top: 1em;
+}
+div.footnote:before {
+    content: "NOTE: ";
+}
+
+div.comment {
+    color: red;
+}
+
+li {
+    margin-top: 1ex;
+}
+
+div.toc li {
+    margin-top: 0ex;
+}
+
+div.example {
+    font-style: italic;
+    margin-left: 0.25in;
+    margin-right: 0.25in;
+}
+
+div.aside {
+    margin-left: 0.25in;
+    margin-right: 0.25in;
+    background: #e0e0e0;
+}

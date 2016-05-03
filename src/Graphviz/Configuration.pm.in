@@ -1,0 +1,20 @@
+package Graphviz::Configuration;
+use strict vars;
+
+my $DOT_BIN_DIR = "DOT_BIN_DIR";
+my $DOT_LIB_DIR = "DOT_LIB_DIR";
+
+$ENV{PATH} = "$DOT_BIN_DIR:$ENV{PATH}"
+  unless (grep { $_ eq $DOT_BIN_DIR } split(/:/, $ENV{PATH}));
+
+if ($DOT_LIB_DIR ne '') {
+  if ($ENV{LD_LIBRARY_PATH} ne '') {
+    $ENV{LD_LIBRARY_PATH} = "$DOT_LIB_DIR:$ENV{LD_LIBRARY_PATH}"
+      unless (grep { $_ eq $DOT_BIN_DIR } split(/:/, $ENV{LD_LIBRARY_PATH}));
+  } else {
+    $ENV{LD_LIBRARY_PATH} = $DOT_LIB_DIR;
+  }
+}
+
+1;
+

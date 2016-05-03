@@ -1,0 +1,387 @@
+<html>
+<head>
+<title>Notes on Lisp for TRIPS</title>
+<style type="text/css">
+body {
+  margin: 0 0.5in;
+}
+h1 {
+  text-align: center;
+}
+.center {
+  text-align: center;
+}
+#chart {
+  border-collapse: collapse;
+}
+#chart th,
+#chart td {
+  border: 1px solid black;
+}
+ol li {
+  padding-bottom: 10pt;
+}
+ol ol, ol ul {
+  padding-top: 10pt;
+}
+</style>
+</head>
+<body>
+<h1>Notes on Lisp for TRIPS</h1>
+
+<div class="center">
+<a href="#openmcl">OpenMCL</a> |
+<a href="#cmucl">CMUCL</a> |
+<a href="#allegro">Allegro</a> |
+<a href="#ecl">ecl</a> |
+<a href="#sbcl">sbcl</a> |
+<a href="#mcl">MCL</a> |
+<a href="#abcl">abcl</a> |
+<a href="#clisp">clisp</a> |
+<a href="#gcl">gcl</a>
+<a href="#ccl">Corman</a>
+</div>
+
+<h2>Overview</h2>
+<p>
+I have started recording what is known and what is not about the
+various Lisps that work with TRIPS. The main requirements are CLtL2
+compatibility (anything fairly modern) *and* multiprocessing. Although
+in principle one could run with each Lisp component in a separate unix
+thread and let them communicate over TCP via the TRIPS Facilitator, in
+practice it would probably kill you to run a whole bunch of Lisp
+processes at once.
+</p>
+<p>
+A valuable meta-resource is the following:
+<a href="http://www.cliki.net/Common%20Lisp%20implementation">http://www.cliki.net/Common%20Lisp%20implementation</a>
+<p>
+The following table summarizes some aspects of my
+investigations. Further details are in each of the following sections.
+<p>
+<table id="chart">
+ <tr>
+  <th>Lisp</th>
+  <th>Date</th>
+  <th>Version</th>
+  <th>Linux/x86</th>
+  <th>OSX/PPC</th>
+  <th>OSX/x86</th>
+  <th>Win32</th>
+ </tr>
+ <tr>
+  <!--Lisp--><td><a href="#openmcl">OpenMCL</a></td>
+  <!--Date--><td>30-Jan-2007</td>
+  <!--Version--><td>1.0</td>
+  <!--Linux/x86--><td>n/a</td>
+  <!--OSX/PPC--><td>OK</td>
+  <!--OSX/x86--><td>64-bit version in <q>testing</q></td>
+  <!--Win32--><td>n/a</td>
+ </tr>
+ <tr>
+  <td><a href="#cmucl">CMUCL</a></td>
+  <!--Date--><td>30-Jan-2007</td>
+  <!--Version--><td>19d</td>
+  <!--Linux/x86--><td>OK</td>
+  <!--OSX/PPC--><td>no mp</td>
+  <!--OSX/x86--><td>n/a</td>
+  <!--Win32--><td>n/a</td>
+ </tr>
+ <tr>
+  <td><a href="#allegro">Allegro</a></td>
+  <!--Date--><td>30-Jan-2007</td>
+  <!--Version--><td>8.0</td>
+  <!--Linux/x86--><td>OK</td>
+  <!--OSX/PPC--><td>OK</td>
+  <!--OSX/x86--><td>OK</td>
+  <!--Win32--><td>OK</td>
+ </tr>
+ <tr>
+  <td><a href="#ecl">ecl</a></td>
+  <!--Date--><td>30-Jan-2007</td>
+  <!--Version--><td>0.9i</td>
+  <!--Linux/x86--><td>0.9h ?</td>
+  <!--OSX/PPC--><td>OK</td>
+  <!--OSX/x86--><td>OK</td>
+  <!--Win32--><td>0.9h ?</td>
+ </tr>
+ <tr>
+  <td><a href="#sbcl">sbcl</a></td>
+  <!--Date--><td>10-Dec-2010</td>
+  <!--Version--><td>1.0.45</td>
+  <!--Linux/x86--><td>ok</td>
+  <!--OSX/PPC--><td>?</td>
+  <!--OSX/x86--><td>ok</td>
+  <!--Win32--><td>?</td>
+ </tr>
+ <tr>
+  <td><a href="#mcl">MCL</a></td>
+  <!--Date--><td>30-Jan-2007</td>
+  <!--Version--><td>5.1</td>
+  <!--Linux/x86--><td>n/a</td>
+  <!--OSX/PPC--><td>?</td>
+  <!--OSX/x86--><td>n/a</td>
+  <!--Win32--><td>n/a</td>
+ </tr>
+ <tr>
+  <td><a href="#abcl">abcl</a></td>
+  <!--Date--><td>6-Feb-2007</td>
+  <!--Version--><td>0.0.9</td>
+  <!--Linux/x86--><td>mp crash</td>
+  <!--OSX/PPC--><td>ok</td>
+  <!--OSX/x86--><td>mp crash</td>
+  <!--Win32--><td>?</td>
+ </tr>
+ <tr>
+  <td><a href="#clisp">clisp</a></td>
+  <!--Date--><td>30-Jan-2007</td>
+  <!--Version--><td>2.4.1</td>
+  <!--Linux/x86--><td>no mp</td>
+  <!--OSX/PPC--><td>no mp</td>
+  <!--OSX/x86--><td>no mp</td>
+  <!--Win32--><td>cygwin</td>
+ </tr>
+ <tr>
+  <td><a href="#gcl">gcl</a></td>
+  <!--Date--><td>30-Jan-2007</td>
+  <!--Version--><td>2.6.7</td>
+  <!--Linux/x86--><td>no mp?</td>
+  <!--OSX/PPC--><td>no mp?</td>
+  <!--OSX/x86--><td>no mp?</td>
+  <!--Win32--><td>no mp?</td>
+ </tr>
+ <tr>
+  <td><a href="#ccl">Corman</a></td>
+  <!--Date--><td>13-May-2008</td>
+  <!--Version--><td>3.0</td>
+  <!--Linux/x86--><td>n/a</td>
+  <!--OSX/PPC--><td>n/a</td>
+  <!--OSX/x86--><td>n/a</td>
+  <!--Win32--><td>?</td>
+ </tr>
+</table>
+</p>
+
+<h2><a id="openmcl">OpenMCL</a></h2>
+<p>
+URL: <A href="http://openmcl.clozure.com/">http://openmcl.clozure.com/</a>
+</p>
+<p>
+<ul>
+<li>Free</li>
+<li>Standard for TRIPS on OSX/PPC</li>
+<li>DarwinX86/64 version in "testing" will not run on 32-bit x86
+      machines (e.g., Mac Mini, MacBook, MacBook Pro). As of Jan 2007,
+      only the Mac Pro has 64-bit x86 processors.</li>
+</ul>
+</p>
+
+<h2><a id="cmucl">CMUCL</a></h2>
+
+<p>
+URL: <a href="http://www.cons.org/cmucl">http://www.cons.org/cmucl</a>
+</p>
+<p>
+<ul>
+<li>Free</li>
+<li>Standard for TRIPS on Linux/x86</li>
+<li>Version 19d changed a few things related to pathname parsing that
+      broke some defsystem-related stuff, but I have fixed that (and
+      it still works with 19c).</li>
+<li>Multiprocessing only on x86, apparently.
+ <ul>
+ <li>Carl Shapiro (<a href="mailto:shapiro@AI.SRI.COM">shapiro@AI.SRI.COM<a>)
+     may have a cmucl for Win32 that includes MP.</li>
+ <li>See also <a href="http://www.trakt7.net/cmucl%20and%20multiprocessing">http://www.trakt7.net/cmucl%20and%20multiprocessing</a></li>
+ </ul>
+</li>
+</ul>
+</p>
+
+<h2><a id="allegro">Allegro</a></h2>
+<p>
+URL: <a	href="http://franz.com/products/allegrocl/">http://franz.com/products/allegrocl/</a>
+</p>
+<p>
+<ul>
+<li>Commercial</li>
+<li>ACL 8 works for TRIPS on Linux/x86 and OSX/PPC.</li>
+</ul>
+</p>
+
+<h2><a id="ecl">ecl</a></h2>
+<p>
+URL: <a href="http://ecls.sourceforge.net/">http://ecls.sourceforge.net/</a>
+</p>
+<p>
+<ul>
+<li>Free</li>
+<li>Version 0.9h compiles TRIPS on OSX/PPC, Linux/x86, and Win32</li>
+<li>Version 0.9i changes something in pathname handling that seems to
+    break our bootstrapping code (could presumably be fixed)</li>
+<li>But:
+ <ul>
+ <li>Requires <code>--enable-tcp</code> in configure for sockets</li>
+ <li>Multiprocessing is still <q>experimental</q>:
+  <ul>
+  <li>See <a href="http://ecls.sourceforge.net/cgi-bin/view/Main/MultiProcessing">http://ecls.sourceforge.net/cgi-bin/view/Main/MultiProcessing</a></li>
+  <li>Requires <code>--with-threads</code> in configure</li>
+  <li>Comment in that page lists <q>Test thread-safety of ECL</q> in
+  the TODO section! (23 Jun 2005)</li>
+  <li>I remember reading somewhere that MP and Boehm-Weiser GC
+      don't co-exist nicely, but now I can't find the reference</li>
+  </ul>
+ </li>
+ </ul>
+</li>
+<li>Compiles Lisp to C then compiles the C (not sure how this works
+  on Windows, don't recall if cygwin was needed)</li>
+</ul>
+</p>
+
+<h2><a id="sbcl">SBCL</a></h2>
+<p>
+URL: <a href="http://www.sbcl.org/">http://www.sbcl.org/</a>
+</p>
+<p>
+<ul>
+<li>Free</li>
+<li>Multiprocessing (<q>threading</q>) on Linux/x86; experimental on OSX/x86:
+<a href="http://www.sbcl.org/manual/Threading.html">http://www.sbcl.org/manual/Threading.html</a>
+   Seems to work on darwin/x86, but needs to be configured in a src
+   build (not in distributed binaries).
+</li>
+<li>Strict interpretation of <code>defconstant</code> requires that we
+  use <code>defparameter</code> in some places
+  (e.g, <code>util/util.lisp</code>). See <a href="http://www.sbcl.org/manual/Defining-Constants.html">http://www.sbcl.org/manual/Defining-Constants.html</a>.</li>
+<li>Also duplicate docstrings not allowed (easy to clean up).</li>
+<li>Otherwise is likely to work, but no multiprocessing on OSX/ppc and
+  Win32 uncertain (<q>port in progress</q> as of v 1.0.2);
+  see <a
+  href="http://sbcl.sourceforge.net/platform-table.html">http://sbcl.sourceforge.net/platform-table.html</a>. I
+  wouldn't hold my breath for MP on Win32.
+</li>
+<li>sb-thread:make-thread requires name of thread be a string since 1.0.37.30</li>
+<li>Works fine for TRIPS as of 1.0.45</li>
+</ul>
+</p>
+
+<h2><a id="mcl">MCL</a></h2>
+<p>
+URL: <a href="http://digitool.com/">http://digitool.com/</a>
+</p>
+<p>
+<ul>
+<li>Not tested with TRIPS</li>
+<li>Was the only lisp on macs in the pre-OSX days.</li>
+<li>OSX version 5.1 released May 2005. Nothing further on the
+  website.</li>
+</ul>
+</p>
+
+<h2><a id="abcl">abcl</a></h2>
+<p>
+URL: <a href="http://armedbear.org/abcl.html">http://armedbear.org/abcl.html</a>
+</p>
+<p>
+<i>Latest Release</i>: 0.0.10 (March 6, 2007)
+</p>
+<p>
+<ul>
+<li><q>An implementation of ANSI Common Lisp that runs in a Java
+    virtual machine</q>, <q>compiles Lisp source to JVM bytecode</q>.
+</li>
+<li>Initially looked promising, although sluggish to startup (thanks
+  to Java).</li>
+<li>Has some kind of threading/MP support (based on Java threads).</li>
+<li>If it works, it might work on Windows (within JVM), although I'm
+  guessing it will be way slower than the <q>real</q> lisp
+  compilers.</li>
+<li>Was able to compile defsystem-3.5 with a few tweaks to the
+  (horrible) conditionals therein. Also had to be careful not to
+  redefine <code>require</code> which was causing an infinite
+  loop. That code really is gross.</li>
+<li>Discovered bug in implementation of built-in <code>MEMBER</code>
+  (for <code>:test</code> arg, was requiring <code>T</code> rather
+  than non-<code>NIL</code> for <q>generalized boolean</q>). Easy
+  fix.</li>
+<li>Several cases of using <code>EQ</code> on numbers (particularly
+  the result of <code>LIST-LENGTH</code>) needed to be changed
+  to <code>EQL</code>. Also on characters in several components.</li>
+<li>On Linux/x86 (FC5, jikes 1.22, java 1.6.0-b105), everything compiles
+  and loads, but I get some Java null pointer exceptions and
+  ultimately a SIGSEGV notification.</li>
+<li>I just noticed the same problem on OSX/x86. Seems to be something
+  with the threading (<code>LispThread.java</code> is implicated).<br>
+  <i>Update (lgalescu, 2008/05/19)</i>: I was able to run a full TRIPS/Plot
+  session; there were problems with compiling and loading one module
+  (Task-KB/KM), but otherwise everything worked fine. Startup is extremely
+  slow, and on occasion system becomes sluggish (mostly the generation, it
+  seems) but it otherwise performed adequately. This was run on an Intel
+  dual-core Leopard (10.5.2) MacBook Pro.
+<li>Not tested on Windows.</li>
+</ul>
+</p>
+
+<h2><a id="clisp">clisp</a></h2>
+<p>
+URL: <a href="http://clisp.cons.org/">http://clisp.cons.org/</a>
+</p>
+<p>
+<i>Latest Release</i>: 2.44.1 (2008-02-24)
+</p>
+<p>
+<ul>
+<li>Not tested with TRIPS</li>
+<li>No multiprocessing (on any platform).</li>
+</ul>
+</p>
+
+<h2><a id="gcl">gcl</a></h2>
+<p>
+URL: <a href="http://www.gnu.org/software/gcl/">http://www.gnu.org/software/gcl/</a>
+</p>
+<p>
+<ul>
+<li>Not tested with TRIPS</li>
+<li>No multiprocessing (on any platform, so far as I can tell).</li>
+</ul>
+</p>
+
+<h2><a id="ccl">Corman Lisp</a></h2>
+<p>
+URL: <a href="http://www.cormanlisp.com">http://www.cormanlisp.com</a>
+</p>
+<p>
+<i>Latest Release</i>: 3.0 (Sept. 14, 2006)
+</p>
+<p>
+<ul>
+<li>Not tested with TRIPS</li>
+<li>Developed for Windows only</li>
+<li>Claims to have multiprocessing</li>
+<li>Able to compile into distributable applications</li>
+<li>Not fully standard compliant, according to CLiki</li>
+<li>License cost: $249</li>
+</ul>
+</p>
+
+<h2><a id="notes">Notes</a></h2>
+<p>
+<ul>
+<li>Links to consider when researching this topic:
+ <ul>
+ <li><a href="http://www.cliki.net/Common%20Lisp%20implementation">http://www.cliki.net/Common%20Lisp%20implementation</a></li>
+ <li><a href="http://bc.tech.coop/blog/041203.html">http://bc.tech.coop/blog/041203.html</a></li>
+ </ul>
+</ul>
+</p>
+
+<hr>
+<address>
+George Ferguson
+<br>(some additions by Lucian Galescu)
+</address>
+
+</body>
+</html>

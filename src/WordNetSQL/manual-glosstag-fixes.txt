@@ -1,0 +1,316 @@
+# glosses that glosstag-standoff-to-sql.pl couldn't align
+
+03550420 n
+-3550420|n|19|40|def|||
+19-19
++3550420|n|0|40|def|||
+
+06570963 n
+15-1
+168+1
+
+06807501 n
+22-1
+24-1
+26-1
+28-1
+30-1
+32-1
+34-1
+36-1
+38-1
+
+06807657 n
+63-1
+65-1
+68-1
+71-1
+75-1
+79-1
+
+07163381 n
+-7163381|n|5|151|def|||
+5-5
++7163381|n|0|151|def|||
+
+07688757 n
+-7688757|n|19|63|def|||
+19-19
++7688757|n|0|63|def|||
+
+07689003 n
+-7689003|n|22|73|def|||
+22-22
++7689003|n|0|73|def|||
+
+07689313 n
+-7689313|n|19|104|def|||
+19-19
++7689313|n|0|104|def|||
+
+08180484 n
+-8180484|n|18|83|def|||
+18-18
++8180484|n|0|83|def|||
+
+08589351 n
+-(meteorology)an isogram connecting points having equal barometric pressure at a given time  
++(meteorology) an isogram connecting points having equal barometric pressure at a given time
+#89+1
+
+10833805 n
+-Canadian physiologist who discovered insulin with C. H. Best and who used it to treat diabetes(1891-1941)  
++Canadian physiologist who discovered insulin with C. H. Best and who used it to treat diabetes (1891-1941)
+
+11382688 n
+-United States photographer(1886-1958)  
++United States photographer (1886-1958)
+-11382688|n|0|37|def|||
++11382688|n|0|38|def|||
+
+
+12097013 n
+-12097013|n|14|78|def|||
+14-14
++12097013|n|0|78|def|||
+
+12647231 n
+-12647231|n|13|67|def|||
+13-13
++12647231|n|0|67|def|||
+
+00003316 v
+-3316|v|6|13|def|||
+6-6
++3316|v|0|13|def|||
+
+00427558 v
+-427558|v|8|42|def|||
+8-8
++427558|v|0|42|def|||
+
+02704349 v
+-have certain dimensions; "This table surfaces measures 20inches by 36 inches"  
++have certain dimensions; "This table surfaces measures 20 inches by 36 inches"
+-2704349|v|0|24|def|||
+25+1
++2704349|v|0|23|def|||
+
+00204249 s
+-204249|s|0|25|def|||
+65-38
++204249|s|0|24|def|||
+
+00218305 s
+-(poetic )beautiful, especially to the sight  
++(poetic) beautiful, especially to the sight
+41+1
+
+00326608 s
+-326608|s|0|65|def|||
+88-21
+87+1
+90+1
+141+1
+143+1
+190+1
+193+1
++326608|s|0|64|def|||
+
+00767626 s
+-767626|s|0|35|def|||
+59-22
+127+1
+130+1
+257+1
++767626|s|0|34|def|||
+
+01032029 a
+-having a toe or toes of a specified kind; often used in combination; "long-toed; "five-toed"  
++having a toe or toes of a specified kind; often used in combination; "long-toed"; "five-toed"
+-1032029|a|0|41|def|||
+-1032029|a|69|90|ex|||
+69+1
+79+1
+82+1
++1032029|a|0|40|def|||
++1032029|a|70|79|ex|||
++1032029|a|83|92|ex|||
+
+01085442 s
+-(followed by `with')deeply filled or permeated; "imbued with the spirit of the Reformation"; "words instinct with love"; "it is replete with misery"  
++(followed by `with') deeply filled or permeated; "imbued with the spirit of the Reformation"; "words instinct with love"; "it is replete with misery"
+-1085442|s|19|46|def|||
+13+1
+18+1
+48+1
+90+1
+93+1
+118+1
+121+1
+148-1
++1085442|s|21|47|def|||
+
+00015471 r
+-15471|r|0|37|def|||
+86-47
+64+1
+67+1
++15471|r|0|38|def|||
+
+00022401 r
+68-21
+67+1
+70+1
+111+1
+114+1
+137+1
+140+1
+185+1
+188+1
+-22401|r|0|45|def|||
++22401|r|0|44|def|||
+-22401|r|47|69|ex|||
++22401|r|47|67|ex|||
+-22401|r|71|113|ex|||
++22401|r|71|111|ex|||
+-22401|r|115|139|ex|||
++22401|r|115|137|ex|||
+-22401|r|141|187|ex|||
++22401|r|141|185|ex|||
+
+00025290 r
+-25290|r|0|25|def|||
+69-42
++25290|r|0|24|def|||
+
+00025559 r
+-25559|r|0|26|def|||
+72-44
+-25559|r|0|25|def|||
+
+00025728 r
+75-46
+65+1
+68+1
+120+1
+123+1
+159+1
+162+1
+-25728|r|0|27|def|||
++25728|r|0|26|def|||
+-25728|r|29|67|ex|||
++25728|r|29|65|ex|||
+-25728|r|69|122|ex|||
++25728|r|69|120|ex|||
+-25728|r|124|161|ex|||
++25728|r|124|159|ex|||
+
+00074641 r
+75-44
+47+1
+50+1
+63+1
+66+1
+-74641|r|0|29|def|||
++74641|r|0|28|def|||
+-74641|r|31|49|ex|||
++74641|r|31|47|ex|||
+-74641|r|51|65|ex|||
++74641|r|51|63|ex|||
+
+00121135 r
+56-33
+40+1
+43+1
+-121135|r|0|21|def|||
++121135|r|0|20|def|||
+-121135|r|23|42|ex|||
++121135|r|23|40|ex|||
+
+00145713 r
+-145713|r|0|21|def|||
+45-22
+43-1
+44+29
++145713|r|0|20|def|||
+
+00385946 r
+-385946|r|19|48|def|||
+19-19
++385946|r|0|48|def|||
+
+
+# glosses that did get aligned, but are still wrong somehow
+
+08260220 n
+92+1
+
+01182293 v
+-1182293|v|30|31|lem|||to
+-1182293|v|30|31|pos|TO||
+30+1
++1182293|v|30|32|lem|||to
++1182293|v|30|32|pos|TO||
+
+08845555 n
+184+1
+
+02601680 v
+46+1
+
+00833702 v
+134+2
+
+01874886 s
+272+2
+
+02437853 s
+134+2
+
+03148724 a
+-3148724|a|27|38|sns||slip_by%2:38:00::|
++3148724|a|27|37|sns||slip_by%2:38:00::|
+
+01157517 v
+136+1
+
+00104868 v
+99+1
+
+01679433 v
+56+1
+
+00068858 v
+57+1
+
+02300734 v
+65+1
+
+02249591 v
+46+1
+
+02463990 v
+35+1
+
+07855317 n
+39+1
+
+06570963 n
+15+1
+170-1
+
+01521756 n
+122+1
+
+06015700 n
+95+1
+
+02238887 n
+79+1
+
+14947255 n
+97+1
+
+00482893 v
+119+1

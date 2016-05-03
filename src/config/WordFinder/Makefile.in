@@ -1,0 +1,13 @@
+#
+# config/WordFinder/Makefile
+#
+# George Ferguson, ferguson@cs.rochester.edu, 20 Jul 2005
+# Time-stamp: <Wed Jul 20 09:05:24 EDT 2005 ferguson>
+#
+# @configure_input@
+#
+
+include ../auto/rules.mk
+
+distclean::
+	rm -f defs.mk defs.lisp

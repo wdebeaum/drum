@@ -1,0 +1,30 @@
+.ss_type {
+  color: red;
+}
+
+.example {
+  font-style: italic;
+}
+
+.selected {
+  font-weight: bold;
+}
+
+li.selected {
+  font-weight: normal;
+  background: #FFFF7F;
+}
+
+a.pointer_type {
+  font-style: italic;
+}
+
+a[onclick] {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+ul.pointers, li.pointer_type ul.synsets, ul.frames {
+  display: none;
+}

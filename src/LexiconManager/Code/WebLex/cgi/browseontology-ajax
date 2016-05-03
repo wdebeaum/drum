@@ -1,0 +1,111 @@
+#!/usr/bin/perl
+
+# browseontology-ajax - CGI script for browsing the TRIPS Ontology, with client-side tree navigation (implemented using JavaScript and XSLT)
+
+use strict vars;
+
+# start with only root expanded by default
+my $parent = 'root';
+
+# ...or start with the searched-for ONT type
+$parent = lc($1)
+  if ($ENV{QUERY_STRING} =~ /search=([\w-]+)/);
+
+# build a path from the search ONT type to ONT::root in ancestry
+my @ancestry = ();
+my $done = 0;
+do
+{
+  unshift @ancestry, $parent;
+  my $onttypetag = '';
+  #`grep -e '\\<ONTTYPE' ../data/ONT\\:\\:$parent.xml`;
+  my $f;
+  open $f, "<../data/ONT::$parent.xml" or die "can't open $parent: $!";
+  while (<$f>) {
+    if (/<ONTTYPE/) {
+      $onttypetag = $_;
+      last;
+    }
+  }
+  close $f;
+  if ($onttypetag =~ /parent="([^"]+)"/)
+  {
+    $parent = $1;
+  } else
+  {
+    $done = 1;
+  }
+} while ((!$done) and $parent ne '' and $parent ne 'nil');
+
+my $search = pop @ancestry; # don't show the children of the search ONT type, because we don't know that it has any
+
+# header and search form
+print "Content-type: text/html\r\n\r\n";
+
+print <<EOP;
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>TRIPS Ontology Browser</title>
+<script type="text/javascript" src="../style/onttype.js"></script>
+
+<!-- jQuery autocomplete -->
+  <script src="../jquery/jquery-latest.js"></script>
+  <link rel="stylesheet" href="../jquery/jquery.autocomplete.css" type="text/css" />
+  <script type="text/javascript" src="../jquery/jquery.bgiframe.min.js"></script>
+  <script type="text/javascript" src="../jquery/jquery.dimensions.js"></script>
+  <script type="text/javascript" src="../jquery/jquery.autocomplete.js"></script>
+  <script>
+  \$(document).ready(function(){
+    \$("#search-input").autocomplete("autocomplete?package=ONT");
+  });
+  </script>
+<!-- end jQuery stuff -->
+
+</head>
+<body>
+<h1><img src="/images/monalogo_thin.jpg" alt="URCS (logo)" /> TRIPS Ontology Browser</h1>
+<form action="browseontology-ajax">
+<div>
+<input type="text" size="40" name="search" id="search-input" value="$search" />
+<input type="submit" value="Search for ONT type" />
+</div>
+</form>
+<form onsubmit="return filterByRoles()">
+<div>
+<input type="text" size="40" name="roles" />
+<input type="submit" value="Filter by roles" />
+</div>
+</form>
+<ul style="list-style: none">
+ <li id="root"></li>
+</ul>
+<script type="text/javascript">
+<!--
+loadONTLI('root')
+EOP
+
+# tell the browser to load the path in order from root to search
+for my $onttype (@ancestry)
+{
+  print "toggleChildren('$onttype')\n";
+}
+
+if ($search ne 'root')
+{
+  # scroll to the searched-for ONT type
+  print "window.location.hash = '$search'\n";
+  # and highlight it
+  print "document.getElementById('$search').style.background = '#FFFF7F'\n";
+}
+
+# footer, tell the browser to display the modified date for ONT::root.xml
+print <<EOP;
+document.getElementById('root-modified').style.display = ''
+//-->
+</script>
+</body>
+</html>
+EOP
+

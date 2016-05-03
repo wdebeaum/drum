@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DTD schema for the EKB
+
+Author: Lucian Galescu <lgalescu@ihmc.us> 03/04/2016
+$Id: ekb.dtd,v 1.6 2016/05/03 15:34:20 lgalescu Exp $
+
+When the EKB is used for annotation, textual elements must be present (eg, <input>, <text>, @start, @end, @uttnum, @paragraph). 
+
+-->
+
+<!-- 1. CORE ENTITIES
+
+Core entities function as data types.
+
+-->
+
+<!-- Boolean -->
+<!ENTITY % boolean "(true|false)">
+<!-- Datetime
+ISO 8601, regular or extended.
+
+@fixme Restrict timestamp to only the extended Datetime format, which is
+       preferred in various XML schemas.
+-->
+<!ENTITY % datetime "CDATA">
+
+<!-- File path
+@fixme Probably not a good idea to use these; should use URIs instead.
+-->
+<!ENTITY % filepath "CDATA">
+
+<!-- A type in the TRIPS ontology (uses 'ONT::' prefix) -->
+<!ENTITY % onttype "#PCDATA">
+
+<!-- Lisp form -->
+<!ENTITY % lispform "CDATA">
+
+<!-- Integer (non-negative) -->
+<!ENTITY % integer "CDATA">
+
+<!-- Negation value
+Note: Currently this can only be "+".
+-->
+<!ENTITY % negvalue "#PCDATA">
+
+<!-- Database identifier(s)
+
+An identifier linking the entity to entities in external ontologies or
+databases. Multiple such cross-references may be included, separated by a pipe
+symbol ('|').
+
+@fixme This will very likely be eliminated in the future.
+-->
+<!ENTITY % dbid "CDATA">
+
+<!-- Text -->
+<!ENTITY % text "#PCDATA">
+
+<!-- 2. ELEMENTS AND ATTRIBUTES
+
+Structural definition of the EKB data and metadata.
+
+-->
+
+<!-- 2.1 ROOT ELEMENT
+
+@attr id	An identifier for the input data (may be empty).
+@attr complete	A boolean; false iff input data was not processed completely.
+@attr timestamp A Datetime timestamp.
+-->
+<!ELEMENT ekb (input?,(CC|EPI|EVENT|MODALITY|TERM)*)>
+<!ATTLIST ekb
+  id CDATA #IMPLIED 
+  complete %boolean; #IMPLIED
+  timestamp %datetime; #IMPLIED>
+
+<!-- 2.2 Textual input -->
+<!ELEMENT input (paragraphs,sentences)>
+
+<!-- One or more input documents
+
+@fixme Documents are called 'paragraphs' for historical reasons. In the future
+       I may change this, and call input units 'documents' instead.
+-->
+<!ELEMENT paragraphs (paragraph)+>
+<!-- Input document.
+
+@attr id	A unique document identifier.
+@attr file	Source file path.
+
+@fixme Change filepath to URI.
+-->
+<!ELEMENT paragraph (#PCDATA)>
+<!ATTLIST paragraph
+  id NMTOKEN #REQUIRED
+  file %filepath; #REQUIRED>
+
+<!-- Sentences derived from the input documents -->
+<!ELEMENT sentences (sentence)+>
+<!-- Input sentence
+
+@attr id	A unique sentence identifier (typically a number).
+@attr pid	The id of document/paragraph this sentence belongs to.
+-->
+<!ELEMENT sentence (#PCDATA)>
+<!ATTLIST sentence
+  id NMTOKEN #REQUIRED
+  pid NMTOKEN #REQUIRED>
+
+<!-- 2.3 EKB assertions -->
+
+<!-- Entities
+
+@attr id	A unique identifier.
+@attr dbid	An identifier linking the entity to entities in external
+                ontologies or databases. 
+@attr paragraph	Id of the document this entity was extracted from.
+@attr uttnum	Id of the sentence this entity was extracted from.
+@attr start	Start frame (from the beginning of the document) for the text
+                where this entity was extracted from. 
+@attr end	End frame (from the beginning of the document) for the text
+                where this entity was extracted from. 
+@attr lisp	Lisp form used to compute this entity. For debugging purposes.
+@attr rule	DRUM rule(s) used to extract this entity. For debugging purposes.
+
+@fixme Modifiers ('mods') change the meaning of the 'type'. As such, I
+       probably should move them under 'type'. Applies to all assertions!
+@fixme The dbid attribute is kludgy; I should replace it with an 'xref' element.
+@fixme I'm not sure why a mutation is a different type of TERM; I suppose I
+       could make it into a regular one, with the mutation info under
+       'features'?
+@fixme Replace :utnnum with :sentence.
+-->
+<!ELEMENT TERM (type,((mods?,features?,name?,coref?)|mutation|aggregate|components|members),text?)>
+<!ATTLIST TERM
+  id NMTOKEN #REQUIRED
+  dbid %dbid; #IMPLIED
+  paragraph NMTOKEN #IMPLIED
+  uttnum CDATA #IMPLIED
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED
+  lisp %lispform; #IMPLIED
+  rule CDATA #IMPLIED>
+
+<!-- Events -->
+<!ELEMENT EVENT (type,negation?,polarity?,force?,modality?,epistemic-modality?,mods?,
+                 aggregate?,
+                 predicate?,arg1?,arg2?,arg3?,
+                 site?,location?,from-location?,to-location?,cell-line?,text?)>
+<!ATTLIST EVENT
+  id NMTOKEN #REQUIRED
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED
+  uttnum CDATA #IMPLIED
+  paragraph NMTOKEN #IMPLIED
+  lisp %lispform; #IMPLIED
+  rule CDATA #IMPLIED>
+
+<!-- Causal relations -->
+<!ELEMENT CC (type,negation?,polarity?,force?,modality?,epistemic-modality?,arg*,text?)>
+<!ATTLIST CC
+  id NMTOKEN #REQUIRED
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED
+  uttnum CDATA #IMPLIED
+  paragraph NMTOKEN #IMPLIED
+  lisp %lispform; #IMPLIED
+  rule NMTOKEN #IMPLIED>
+
+<!-- Epistemic knowledge -->
+<!ELEMENT EPI (type,negation?,polarity?,force?,modality?,arg1?,arg2?,text?)>
+<!ATTLIST EPI
+  id NMTOKEN #REQUIRED
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED
+  uttnum CDATA #IMPLIED
+  paragraph NMTOKEN #IMPLIED
+  lisp %lispform; #IMPLIED
+  rule NMTOKEN #IMPLIED>
+
+<!-- Modality assertions -->
+<!ELEMENT MODALITY (type,negation?,polarity?,epistemic-modality?,arg1?,arg2?,text?)>
+<!ATTLIST MODALITY
+  id NMTOKEN #REQUIRED
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED
+  uttnum CDATA #IMPLIED
+  paragraph NMTOKEN #IMPLIED
+  lisp %lispform; #IMPLIED
+  rule NMTOKEN #IMPLIED>
+
+<!-- 2.4 Sub-elements -->
+
+<!-- Aggregate of other terms
+Such a term represent an aggregate, via a logical operator, of other terms.
+
+@attr operator	A logical operator.
+-->
+<!ELEMENT aggregate (member)+>
+<!ATTLIST aggregate
+  operator NMTOKEN #REQUIRED>
+
+<!-- Members of a protein family 
+-->
+<!ELEMENT members (member)+>
+
+<!-- Components of a molecular complex 
+Such a term represents a set of component parts, each being another term.
+-->
+<!ELEMENT components (component)+>
+<!-- A component
+
+@attr id	Id for a term.
+-->
+<!ELEMENT component EMPTY>
+<!ATTLIST component
+  id NMTOKEN #REQUIRED>
+
+<!-- Member of a protein family or molecular complex
+For molecular complexes, members refer to other terms, so they typically have an @id.
+For protein families, members are identified by cross-references to other resources (databases), so they typically require a @dbid.
+-->
+
+<!ELEMENT member EMPTY>
+<!ATTLIST member
+  id NMTOKEN #IMPLIED
+  dbid %dbid; #IMPLIED
+  type NMTOKEN #IMPLIED>
+
+<!-- In-event feature
+
+@fixme The semantics of this is not entirely clear; therefore, it might change
+       in the future.
+-->
+<!ELEMENT inevent (event+)>
+<!-- Event reference
+
+@attr id	Id for an event.
+-->
+<!ELEMENT event EMPTY>
+<!ATTLIST event
+  id NMTOKEN #REQUIRED>
+
+<!-- Coref feature -->
+<!ELEMENT coref EMPTY>
+
+<!-- Coref attributes
+
+@attr id	 for the referenced element.
+@attr type reference type.
+-->
+<!ATTLIST coref
+  type NMTOKEN #REQUIRED
+  id NMTOKEN #IMPLIED>
+
+<!-- Assertion or property type.
+Common to: all entities, predicates, most features, etc.
+Generally, this is an onttype, but in some cases it's a regular string.
+
+@fixme It probably should be always an onttype.
+-->
+<!ELEMENT type (#PCDATA)>
+
+<!-- Modifiers
+Note: At least one modifier must be present!
+Common to: TERM, EVENT.
+-->
+<!ELEMENT mods (degree*,frequency*,mod*)>
+
+<!-- Degree modifier
+Common to: TERM and EVENT.
+
+@fixme: Different representations for TERM and EVENT: why?
+-->
+<!ELEMENT degree (type,(value|text))>
+<!ATTLIST degree
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED>
+
+<!-- Frequency modifier
+
+@fixme Shouldn't allow #PCDATA here!
+-->
+<!ELEMENT frequency (#PCDATA|type|value)*>
+
+<!-- Other modifier
+
+@fixme Should look for a more specific solution.
+-->
+<!ELEMENT mod (type,value)>
+
+<!-- Modifier value -->
+<!ELEMENT value (#PCDATA)>
+
+<!-- Entity features -->
+<!ELEMENT features (active|location|mutation|site|cell-line|inevent)*>
+
+<!-- Activity feature
+Values can be TRUE or FALSE.
+
+@fixme Maybe use attribute instead of text?
+-->
+<!ELEMENT active (#PCDATA)>
+
+<!-- Site on an entity (e.g, an amino-acid or a domain in a protein)
+
+@attr id	Id for a term representing a site.
+
+@fixme In EVENTs, there may be a modifier; it is not produced yet, but will
+       likely be added in the future.
+@fixme There is no need for structural elements when an id is given.
+-->
+<!ELEMENT site ((name,code,pos)|(type,text))?>
+<!ATTLIST site
+  id NMTOKEN #IMPLIED
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED>
+
+<!-- Cellular location source of a translocation event
+
+@attr id	Id for a term representing a location.
+-->
+<!ELEMENT from-location (type,text)?>
+<!ATTLIST from-location
+  id NMTOKEN #REQUIRED
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED>
+
+<!-- Cellular location destination of a translocation event
+
+@attr id	Id for a term representing a location.
+-->
+<!ELEMENT to-location (type,text)?>
+<!ATTLIST to-location
+  id NMTOKEN #REQUIRED
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED>
+
+<!-- Cellular location
+Common to: TERM, EVENT.
+
+@attr id	Id for a term representing a location.
+@attr mod	A modifier representing the relation between the EVENT and the location.
+
+Note: The 'mod' attribute is present only in EVENT locations.
+-->
+<!ELEMENT location (type,text)?>
+<!ATTLIST location
+  id NMTOKEN #REQUIRED
+  mod NMTOKEN #IMPLIED
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED>
+
+<!-- Mutation (feature or definition in a TERM represnting a mutation)
+Unspecified mutant proteins use the feature <mutation>TRUE</mutation>.
+Wild-type proteins use the feature <mutation>FALSE</mutation>.
+Specified mutations are structured objects.
+
+@fixme There is no need for this dual representation. Instead, this
+       information can be conveyed using an appropriate type specifier, or
+       using special attributes. A more consistent representation would make
+       it easier to unify mutation features. Also, currently both types may be
+       present in a TERM's feature list, even though they might be redundant.
+@fixme In some cases we're using ONT types for the boolean values and
+       elsewhere we use naked tokens. Should regularize this.
+@fixme Note that TERMs defining a molecular site include the site definition
+       in the 'features' element, via a 'site' element; whereas TERMs
+       defining mutations embed a 'mutation' element directly under the 'TERM'
+       element. Should regularize this.
+-->
+<!ELEMENT mutation (#PCDATA|type|pos|aa-from|aa-to|pos-from|pos-to|insert)*>
+<!ATTLIST mutation
+  id NMTOKEN #IMPLIED>
+<!-- Position for a mutation -->
+<!ELEMENT pos (#PCDATA)>
+<!-- Start position of a deletion range -->
+<!ELEMENT pos-from (site)>
+<!-- End position of a deletion range -->
+<!ELEMENT pos-to (site)>
+<!-- Amino-acid changed in a substitution -->
+<!ELEMENT aa-from (aa)>
+<!-- Amino-acid result of a substitution -->
+<!ELEMENT aa-to (aa)>
+<!-- Insertion -->
+<!ELEMENT insert (aa)+>
+<!-- Amino-acid -->
+<!ELEMENT aa (name,code)>
+
+<!-- A name (e.g., for an entity, or an amino-acid)
+Used in: TERM, site, aa.
+-->
+<!ELEMENT name (#PCDATA)>
+<!-- Code for an amino-acid
+Note: This is a fixed set.
+-->
+<!ELEMENT code (#PCDATA)>
+
+<!-- A cell line feature
+
+@attr id	Id for a TERM representing a cell line.
+-->
+<!ELEMENT cell-line (type,text)>
+<!ATTLIST cell-line
+  id NMTOKEN #REQUIRED
+  start %integer; #REQUIRED
+  end %integer; #REQUIRED>
+
+<!-- Negation
+Common to: EVENT, CC, EPI, and MODALITY.
+-->
+<!ELEMENT negation (%negvalue;)>
+
+<!-- Polarity
+Common to: EVENT, CC, EPI, and MODALITY.
+-->
+<!ELEMENT polarity (%onttype;)>
+
+<!-- Force
+Common to: EVENT and EPI.
+
+@fixme This is experimental and might be eliminated in the future.
+-->
+<!ELEMENT force (%onttype;)>
+
+<!-- Modality (for events and some relations) -->
+<!ELEMENT modality (%onttype;)>
+
+<!-- Epistemic modality (for events and some relations)
+
+@attr id	Id for an EPI assertion.
+-->
+<!ELEMENT epistemic-modality EMPTY>
+<!ATTLIST epistemic-modality
+  id NMTOKEN #REQUIRED>
+
+<!-- Event predicate -->
+<!ELEMENT predicate (type,text)>
+<!ATTLIST predicate
+  id NMTOKEN #REQUIRED
+  start %integer; #REQUIRED
+  end %integer; #REQUIRED>
+
+<!-- Argument for an event or relation
+Note: Arguments are numbered ('arg1', 'arg2', and, occasionally, 'arg3')
+for historical reasons. CC is only using arg, and eventually that'll be done for
+all events and relations.
+
+@attr id	Id of an assertion (TERM, EVENT, CC, EPI, MODALITY).
+@attr role	Argument role (a fixed set).
+
+@fixme I think it would make sense to remove the numbers.
+@fixme All optional attributes are superfluous and should be removed.
+-->
+<!ELEMENT arg (type?,text?)>
+<!ATTLIST arg
+  id NMTOKEN #REQUIRED
+  role NMTOKEN #REQUIRED
+  seqno %integer; #IMPLIED
+  dbid %dbid; #IMPLIED
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED>
+
+<!ELEMENT arg1 (type?,text?)>
+<!ATTLIST arg1
+  id NMTOKEN #REQUIRED
+  role NMTOKEN #REQUIRED
+  dbid %dbid; #IMPLIED
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED>
+
+<!ELEMENT arg2 (type?,text?)>
+<!ATTLIST arg2
+  id NMTOKEN #REQUIRED
+  role NMTOKEN #REQUIRED
+  dbid %dbid; #IMPLIED
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED>
+
+<!ELEMENT arg3 (type?)>
+<!ATTLIST arg3
+  id NMTOKEN #REQUIRED
+  role NMTOKEN #REQUIRED
+  dbid %dbid; #IMPLIED
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED>
+
+<!-- Textual evidence
+Used in many elements as the evidential source from which the
+element/assertion is derived. 
+
+@attr normalization A regularized form of the main part of the textual evidence 
+-->
+<!ELEMENT text (%text;)>
+<!ATTLIST text
+  normalization CDATA #IMPLIED>
+

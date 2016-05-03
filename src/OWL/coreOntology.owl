@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:swrlxml="http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlxml.owl#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:swrlx="http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#"
+    xmlns:swrlm="http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:temporal="http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#"
+    xmlns:tbox="http://swrl.stanford.edu/ontologies/built-ins/3.3/tbox.owl#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sqwrl="http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:abox="http://swrl.stanford.edu/ontologies/built-ins/3.3/abox.owl#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:rdfb="http://swrl.stanford.edu/ontologies/built-ins/3.4/rdfb.owl#"
+    xmlns="http://trips.ihmc.us/ont#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:swrla="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#"
+  xml:base="http://trips.ihmc.us/ont">
+  <owl:Ontology rdf:about="">
+    <owl:imports rdf:resource="http://swrl.stanford.edu/ontologies/built-ins/3.3/abox.owl"/>
+    <owl:imports rdf:resource="http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl"/>
+    <owl:imports rdf:resource="http://swrl.stanford.edu/ontologies/3.3/swrla.owl"/>
+    <owl:imports rdf:resource="http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl"/>
+    <owl:imports rdf:resource="http://swrl.stanford.edu/ontologies/built-ins/3.3/tbox.owl"/>
+    <owl:imports rdf:resource="http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlxml.owl"/>
+    <owl:imports rdf:resource="http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl"/>
+    <owl:imports rdf:resource="http://swrl.stanford.edu/ontologies/built-ins/3.4/rdfb.owl"/>
+    <owl:imports rdf:resource="http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl"/>
+  </owl:Ontology>
+  <owl:Class rdf:ID="ont-special-class"/>
+  <owl:Class rdf:ID="ont-indicator">
+    <rdfs:subClassOf rdf:resource="#ont-special-class"/>
+  </owl:Class>
+  <ont-indicator rdf:ID="ont-f"/>
+  <ont-indicator rdf:ID="ont-a"/>
+  <ont-indicator rdf:ID="ont-the"/>
+  <ont-indicator rdf:ID="ont-speechact"/>
+  <ont-indicator rdf:ID="ont-bare"/>
+  <ont-indicator rdf:ID="ont-kind"/>
+  <ont-indicator rdf:ID="ont-pro"/>
+  <ont-indicator rdf:ID="ont-impro"/>
+  <ont-indicator rdf:ID="ont-pro-set"/>
+  <ont-indicator rdf:ID="ont-the-set"/>
+  <ont-indicator rdf:ID="ont-wh-term"/>
+  <ont-indicator rdf:ID="ont-indef-set"/>
+  <owl:Class rdf:ID="ont-tense">
+    <rdfs:subClassOf rdf:resource="#ont-special-class"/>
+  </owl:Class>
+  <ont-tense rdf:ID="ont-past"/>
+  <ont-tense rdf:ID="ont-present"/>
+  <ont-tense rdf:ID="ont-future"/>
+  <owl:Class rdf:ID="ont-proform">
+    <rdfs:subClassOf rdf:resource="#ont-special-class"/>
+  </owl:Class>
+  <owl:Class rdf:ID="ont-operator">
+    <rdfs:subClassOf rdf:resource="#ont-special-class"/>
+  </owl:Class>
+  <owl:Class rdf:ID="ont-quan">
+    <rdfs:subClassOf rdf:resource="#ont-special-class"/>
+  </owl:Class>
+  <owl:Class rdf:ID="ont-provenance">
+    <rdfs:subClassOf rdf:resource="#ont-special-class"/>
+  </owl:Class>
+  <owl:Class rdf:ID="ont-mention-info">
+    <rdfs:subClassOf rdf:resource="#ont-special-class"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="_has-indicator">
+    <rdfs:range rdf:resource="#ont-indicator"/>
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:ID="_ont-special-object-property"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#ont-mention-info"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="_has-mention-info">
+    <rdfs:subPropertyOf rdf:resource="#_ont-special-object-property"/>
+    <rdfs:range rdf:resource="#ont-mention-info"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="_has-provenance">
+    <rdfs:domain rdf:resource="#ont-mention-info"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:subPropertyOf rdf:resource="#_ont-special-object-property"/>
+    <rdfs:range rdf:resource="#ont-provenance"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:ID="_ont-special-data-property"/>
+  <owl:DatatypeProperty rdf:ID="_name-of">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="_has-domain-info">
+    <rdfs:domain rdf:resource="#ont-mention-info"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:subPropertyOf rdf:resource="#_ont-special-data-property"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="_from-utterance-id">
+    <rdfs:domain rdf:resource="#ont-mention-info"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:subPropertyOf rdf:resource="#_ont-special-data-property"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="_has-end">
+    <rdfs:subPropertyOf rdf:resource="#_ont-special-data-property"/>
+    <rdfs:domain rdf:resource="#ont-provenance"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="_has-start">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:domain rdf:resource="#ont-provenance"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:subPropertyOf rdf:resource="#_ont-special-data-property"/>
+  </owl:DatatypeProperty>
+  <!-- former :TMA roles -->
+  <owl:ObjectProperty rdf:ID="_has-tense">
+    <rdfs:range rdf:resource="#ont-tense"/>
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:ID="_ont-special-object-property"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#ont-mention-info"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="_has-modality">
+    <!-- rdfs:range rdf:resource="#aux"/ -->
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:ID="_ont-special-object-property"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#ont-mention-info"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:ID="_is-progressive">
+    <rdfs:domain rdf:resource="#ont-mention-info"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:subPropertyOf rdf:resource="#_ont-special-data-property"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="_is-perfective">
+    <rdfs:domain rdf:resource="#ont-mention-info"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:subPropertyOf rdf:resource="#_ont-special-data-property"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="_is-negated">
+    <rdfs:domain rdf:resource="#ont-mention-info"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:subPropertyOf rdf:resource="#_ont-special-data-property"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="_is-passive">
+    <rdfs:domain rdf:resource="#ont-mention-info"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:subPropertyOf rdf:resource="#_ont-special-data-property"/>
+  </owl:DatatypeProperty>
+  <!-- other roles to put in mention-info -->
+  <owl:ObjectProperty rdf:ID="_has-proform">
+    <rdfs:range rdf:resource="#ont-proform"/>
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:ID="_ont-special-object-property"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#ont-mention-info"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="_has-operator">
+    <rdfs:range rdf:resource="#ont-operator"/>
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:ID="_ont-special-object-property"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#ont-mention-info"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="_has-quan">
+    <rdfs:range rdf:resource="#ont-quan"/>
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:ID="_ont-special-object-property"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#ont-mention-info"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:ObjectProperty>
+  <!-- data box class for properties whose values can be objects or data -->
+  <owl:Class rdf:ID="ont-data">
+    <rdfs:subClassOf rdf:resource="#ont-special-class"/>
+  </owl:Class>
+  <owl:DatatypeProperty rdf:ID="_has-value">
+    <rdfs:domain rdf:resource="#ont-data"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anySimpleType"/>
+    <rdfs:subPropertyOf rdf:resource="#_ont-special-data-property">
+  </owl:DatatypeProperty>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.4.4, Build 579)  http://protege.stanford.edu -->

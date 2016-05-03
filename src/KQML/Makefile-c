@@ -1,0 +1,20 @@
+# -*-mode: Makefile;-*-
+#
+# Makefile for TRIPS KQML library (in C)
+#
+# George Ferguson, ferguson@cs.rochester.edu,  6 Nov 1995
+# Time-stamp: <Wed Sep  3 20:30:17 EDT 2003 ferguson>
+#
+
+MODULE = KQML
+
+LIB  = libKQML
+SRCS = KQML.c KQML_parse.c KQML_read.c KQML_error.c KQML_misc.c
+HDRS = KQML.h
+MANS = $(LIB).man
+XTRA = Makefile-c
+
+EXTRA_CFLAGS = -I..
+
+CONFIGDIR=../config
+include $(CONFIGDIR)/c/lib.mk

@@ -1,0 +1,20 @@
+# config file for TextTagger's new XMLInput tagger
+
+# these rules are intended to cause get-entities-from-tt.lisp to reproduce the
+# original XML annotations
+<GENE_PROTEIN>		-> (sense :lftype (ONT::protein))
+<PROTEIN_FAMILY>	-> (sense :lftype (ONT::protein-family))
+<COMPLEX>		-> (sense :lftype (ONT::macromolecular-complex))
+<PATHWAY>		-> (sense :lftype (ONT::signaling-pathway))
+<DRUG>			-> (sense :lftype (ONT::pharmacologic-substance))
+# this one's a little weird since we don't have a separate ONT type for it
+<DRUG_CLASS>		->
+  (sense :lftype (ONT::chemical)
+         :domain-specific-info (drum :mappings (
+	   (map :through (concept CHEBI::50906) :to ONT::chemical)))
+	 )
+<CELL_LINE>		-> (sense :lftype (ONT::cell-line))
+<SUBCELLULAR_LOCATION>	-> (sense :lftype (ONT::cell-part))
+
+# not an entity, but still potentially useful to us
+<xref> -> (sense :penn-pos (NNP) :lftype (ONT::referential-sem))

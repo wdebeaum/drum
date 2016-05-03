@@ -1,0 +1,21 @@
+# -*- mode: Makefile;-*-
+#
+# defs.mk for lisp
+#
+# George Ferguson, ferguson@cs.rochester.edu,  3 Nov 1995
+# $Id: defs.mk.in,v 1.2 2008/09/14 18:25:58 wdebeaum Exp $
+#
+# @configure_input@
+#
+
+# (build time) Lisp
+LISP = @LISP@
+
+# Extension for compiled lisp files (usually "fasl")
+FASL = @FASL@
+
+# Lisp flavor
+LISP_FLAVOR = @LISP_FLAVOR@
+
+# Runtime Lisp
+RUNTIME_LISP = @RUNTIME_LISP@

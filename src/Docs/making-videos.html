@@ -1,0 +1,200 @@
+<html>
+<head>
+<title>Making TRIPS Videos</title>
+</head>
+
+<body>
+<h1>Making TRIPS Videos</h1>
+
+This document describes the process of making
+<a href="http://en.wikipedia.org/wiki/Screencast">screencast videos</a>
+of the TRIPS system.  This is a description of how
+TRIPS videos are made using resources available at IHMC.  If you
+are making a video elsewhere, your mileage may vary.
+<p>
+In a screencast video, we record what is happening on (part of) a
+computer monitor as well as input/output audio.  For TRIPS, this means
+we record speech input (from the user) and speech output (from the
+system) and show what is happening on the screen.  There are some
+examples of videos on
+the <a href="http://www.cs.rochester.edu/research/trips/plow/">PLOW
+public webpage</a>.
+<p>
+These instructions were last updated using Snapz Pro X v. 2.1.1 on a MacBook Pro.
+
+<h2>Planning the Video</h2>
+Schedule <b>lots</b> of time to record a dialogue (even after all the preliminary
+stuff listed above is done).  Remember, to finish you will need to have the dialogue
+go <b>flawlessly</b>, including speech recognition.  William Taysom estimates about
+4 hours per dialogue if you know what you are doing.
+<p>
+The rest of this section has some tips that will hopefully help you get done sooner:
+
+<ul>
+<li>Make a list of all the features of the system you want to show.
+
+<li>Make a script: Include not only the utterances, but also the input data
+  (e.g., the addresses you'll input for teaching and practice).
+
+<li>Verify that the script works for all parts of the system (e.g., speech recognition,
+   speech output, displays, etc.)
+
+<li>Do a run through of the script and make sure that it looks okay as a video.  E.g.,
+   does the processing happen fast enough?
+
+</ul>
+
+<h2>Screencast Capture Software</h2>
+We use <a href="http://www.ambrosiasw.com/utilities/snapzprox/">Snapz Pro X</a> 
+(version 2.1.1 was used for these instructions)
+from <a href="http://www.ambrosiasw.com">Ambrosia Software</a>
+to capture the video (including audio).  IHMC has a license for this.
+<p>
+To get it, download and install the trial version from <a href="http://www.ambrosiasw.com/utilities/snapzprox/">here</a> and then give it the license key.  (You can get the license key from
+Nate Blaylock or from Alan Ordway).
+
+<h3>General Instructions for Using Snapz Pro X</h3>
+(This section just gives general instructions on using the Snapz Pro X software.  See
+below for TRIPS-specific instructions and tips.)
+<p>
+By default, Snapz will install itself to run in the background on system startup.  (You can
+also apparently run it from the Applications folder as well, though I haven't tried.)
+When Snapz Pro is running, it won't show up in your Dock.  Instead, you need to invoke
+it using a hotkey (he default hotkey is Cmd-Shift 3).  This will bring up
+a Snapz window.
+<p>
+Click on 'Movies' and a rectangular area and the "movie settings" window
+ will appear.  The rectangular area is the portion of your screen
+which will be captured.  You can move/resize this area with the mouse, or by changing
+values in the "movie settings" window.
+<p>
+Once you like the size/position of the recording area, double-click anywhere within it to
+start recording (you'll hear "Action!" which signifies that it is recording).  When you
+are done recording, hit the hotkey (same as above --- default is CMD-Shift 3), and you'll
+hear "Cut!").
+<p>
+You'll then see a window with options of saving or deleting what has been recorded.  Hit
+"save" and a file will be saved to a certain default location (the Desktop, I believe).
+
+<h2>Setting up to Record TRIPS</h2>
+
+These are specific instructions for setting up to record a TRIPS video.
+
+<h3>Snapz Settings</h3>
+In the "window settings" window:
+
+<ul>
+<li>Set frame rate to 15
+<li>Make sure the "microphone track", "mac audio track", and "cursor visible" boxes are checked
+<li>Do not check the "auto mic input gain" box.  Instead, set audio input with System Preferences as is normally done with the system.
+<li>"Camera mode" should be "fixed camera"
+<li>Set "selection style" to "fixed size" and set the window size by either resizing the
+rectangular recording area with the mouse, or by changing the width and height parameters.
+The size of the window is typically around 1000x700 pixels.  (You usually don't want something
+the size of your screen, since that won't work well for LCD projectors, etc. -- better to
+stay conservative in the size of the frame.  Note that, this won't give you lots of room
+for most TRIPS components (even the web browser).  See other TRIPS videos for ideas of how
+to arrange and size components.
+</ul>
+
+<h3>Arranging the Screen</h3>
+You will need to arrange all your windows before you run Snapz.  Actually, this is a bit
+of a pain, since you can't rearrange windows when you are setting the size/position of
+the recording area for Snapz.  In reality, you will probably have to do a couple of cycles
+of arranging your windows, running Snapz and seeing how they fit, and then rearranging.
+Remember to try to keep the video window size small (see above).
+<p>
+To avoid having to rearrange the screen by hand each time you run the
+system (you will re-run it more times than you think), you can make a
+copy of the system run script (e.g., trips-plow), and adjust
+the <tt>-geometry</tt> settings of the windows you are concerned
+about.  Not all components accept geometry settings (noteably Firefox
+and Speech Recognition --- although Firefox remembers its position and
+shape from the previous run, so once you position it you should be
+fine.)  The <tt>-geometry</tt> settings are basically of the
+form <tt>-geometry |width|x|height|+|xpos|+|ypos|</tt>
+
+<h2>Recording TRIPS</h2>
+
+<h3>Test the recording</h3>
+Go through and record a few utterances with the system.  Look
+at the resulting video and make sure that the video looks okay, the audio channels sound
+okay, etc.  (I'm told post-processing can sometimes help some audio issues by, e.g.,
+normalizing the input and output audio to the same volume.)  Things to specifically
+look out for:
+<ul>
+<li>Does the speech input audio sound okay?  Note, you can make this louder or softer by adjusting the audio input volume in System Preferences.  Many times, the resulting video will have speech output at a louder level than speech input.  Snapz does not have any functionality to readjust these levels after the recording.  You can use other tools to do this, though.  See the discussion in Post-Production below.
+<li>Does the speech output audio sound okay?
+<li>Does the video of the window arrangements look okay?
+</ul>
+
+<h3>Record sessions until you get a good dialogue</h3>
+
+Some tips for while you're recording:
+
+<ul>
+<li>As you practice, jot down any additional tips to yourself for the script (or if they
+are general, add them to this list!)
+<li>When you start over, you may want to clear windows of text from the previous
+session (e.g., utterances in the Chat and Speech Recognition windows).  
+Clicking the "new task" button should
+clear most windows of previous output.  Firefox
+can be pointed at a blank window by putting <tt>about:blank</tt>
+into the address window.
+<li>After you start recording, wait a few seconds before you do anything (so it doesn't seem
+like an 'abrupt' start to the video).
+<li>Use a professional voice.  (Maybe goes without saying, but I had to readjust how I was speaking
+to sound more "professional video"-like.)
+<li>After you are done with a candidate recording, make sure to let the recording continue for
+about 10 seconds (without doing anything) so that the video doesn't end abruptly.
+(This can, e.g., be turned into a 'fade' in post-production if desired.)
+<li>If you have to scroll through a window, do it slowly and smoothly.
+</ul>
+
+<h3>Saving the Recording</h3>
+
+When you're done, hit the Snapz hotkey (default: Cmd-Shift 3) which will stop the
+recording and bring up a dialogue box to save the movie.  
+
+<ul>
+<li>Make sure that
+the 3 checkboxes are checked (include video track, include audio track, include
+microphone track).  
+
+<li>On the video track, click on "Settings" and select H.264 as the compression type.
+
+<li>I don't know what is best for the audio settings.  The default seems to be
+22.050 kHz, mono, 16 bit.
+</ul>
+
+Then hit "save", which will save the movie to whichever
+default location is specified in the original Snapz window (the one that first comes
+up when you hit Cmd-Shift 3 to launch Snapz).  It will take a while (around
+twice as long as the recording) for Snapz to save the file.
+
+<h2>Post-Production</h2>
+
+These are some of the various things that can be done to the video post-production.
+The IHMC multimedia specialist (Billy Howell) can help with these.  (Actually,
+he can do many of them for you -- especially things that need specialized software to do.)
+
+<h3>Movie Format</h3>
+Snapz saves the movie in QuickTime format.  The movies on the PLOW page are currently encoded
+as .mov (QuickTime) and .mp4 files.
+
+<h3>Readjusting Audio Levels</h3>
+As noted above, Snapz doesn't let you control the levels of the input and output audio.  In
+most cases, the result is that the input (speech-in) audio is quieter than they 
+output audio.  Billy has tools which can be used to readjust these to be at the same level.
+
+<h3>Cutting and Splicing</h3>
+This can also be done.
+
+<p>
+<br>
+<i>last updated 10/22/2007 by blaylock</i>
+</body>
+</html>
+
+<!--  LocalWords:  Snapz
+ -->

@@ -1,0 +1,55 @@
+;;;;
+;;;; w::stand
+;;;;
+
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :tags (:base500)
+ :words (
+   (w::stand
+   (SENSES
+    ((meta-data :origin calo-ontology :entry-date 20051214 :change-date nil :comments nil)
+     (LF-PARENT ont::support-stand)
+     (example "plant stand")
+     )
+    ((meta-data :origin caet :entry-date 20111220)
+     (lf-parent ont::stand)
+     )
+    )
+   )
+))
+
+(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+ :tags (:base500)
+ :words (
+  (W::stand
+   (wordfeats (W::morph (:forms (-vb) :past W::stood :ing W::standing)))
+   (SENSES
+    ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("put_spatial-9.2-1"))
+     (EXAMPLE "The tree was standing on the hill")
+     (LF-PARENT ONT::BE-AT-LOC) 
+     (SEM (F::Aspect F::Stage-level) (F::Time-span F::Extended))
+     (TEMPL neutral-location-templ)
+     )
+    )
+   )
+))
+
+(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+ :words (
+  ((W::stand (W::up))
+   (wordfeats (W::morph (:forms (-vb) :past W::stood :ing W::standing)))
+   (SENSES
+    ((EXAMPLE "You had better stand up")
+     (LF-PARENT ONT::BODY-MOVEMENT-place)
+     (TEMPL AGENT-TEMPL)
+     )
+    ((EXAMPLE "stand the box on the desk" )
+     ;;(LF-PARENT ONT::BODY-MOVEMENT)
+     (lf-parent ont::put ) ;; 20120523 GUM change new parent
+      (TEMPL AGENT-AFFECTED-goal-TEMPL)
+     )
+
+    )
+   )
+))
+

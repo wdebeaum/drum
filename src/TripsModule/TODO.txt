@@ -1,0 +1,8 @@
+$Id: TODO.txt,v 1.1.1.1 2005/01/14 19:48:14 ferguson Exp $
+
+- These classes were developed to avoid having to use an Applet (which
+  extends Panel, and hence needs a window system). But one might want
+  to use an applet and implement TripsModule. I need to see how this
+  works and at least document what one should do if one wants this
+  behavior (I think your applet needs at the very least to take its
+  parameters and hand them into the contstructor for the TripsModule).

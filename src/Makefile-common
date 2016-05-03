@@ -1,0 +1,122 @@
+#
+# Makefile-common for TRIPS toplevel
+#
+# George Ferguson, ferguson@cs.rochester.edu, 30 Dec 2003
+# Time-stamp: <Thu Feb 12 14:42:08 CST 2015 lgalescu>
+#
+
+all: compile-libs \
+	compile-lisp \
+	compile-speech \
+	compile-java \
+	compile-others
+
+install: install-libs \
+	install-lisp \
+	install-speech \
+	install-java \
+	install-others
+
+# Don't even compile speech; don't install lisp image
+# Don't even compile lisp either (gets auto-compiled by defsystem)
+devel non-lisp: \
+	compile-libs \
+	compile-java \
+	compile-others \
+	install-libs \
+	install-java \
+	install-others
+
+speech: compile-speech \
+	install-speech
+
+compile-libs:
+	@for d in $(LIBS); do \
+	  if test -d $$d; then \
+	    (cd $$d; $(MAKE)) || exit 1; \
+	  fi; \
+	done
+
+install-libs:
+	@for d in $(LIBS); do \
+	  if test -d $$d; then \
+	    (cd $$d; $(MAKE) install) || exit 1; \
+	  fi; \
+	done
+
+compile compile-lisp:
+	@for d in $(LISP_MODULES); do \
+	  if test -d $$d; then \
+	    (cd $$d; $(MAKE) compile) || exit 1; \
+	  fi; \
+	done
+
+install-lisp:
+	@for d in $(LISP_PROGRAMS); do \
+	  if test -d $$d; then \
+	    (cd $$d; $(MAKE) dump install) || exit 1; \
+	  fi; \
+	done
+
+compile-speech: compile-libs
+	@for d in $(SPEECH_LIBS) $(SPEECH_PROGRAMS); do \
+	  if test -d $$d; then \
+	    (cd $$d; $(MAKE)) || exit 1; \
+	  fi; \
+	done
+
+install-speech:
+	@for d in $(SPEECH_PROGRAMS); do \
+	  if test -d $$d; then \
+	    (cd $$d; $(MAKE) install) || exit 1; \
+	  fi; \
+	done
+
+java compile-java:
+	@for d in $(JAVA_PROGRAMS); do \
+	  if test -d $$d; then \
+	    (cd $$d; $(MAKE)) || exit 1; \
+	  fi; \
+	done
+
+install-java:
+	@for d in $(JAVA_PROGRAMS); do \
+	  if test -d $$d; then \
+	    (cd $$d; $(MAKE) install) || exit 1; \
+	  fi; \
+	done
+
+compile-others:
+	@for d in $(OTHER_PROGRAMS) $(DATA); do \
+	  if test -d $$d; then \
+	    (cd $$d; $(MAKE)) || exit 1; \
+	  fi; \
+	done
+
+install-others:
+	@for d in $(OTHER_PROGRAMS) $(DATA); do \
+	  if test -d $$d; then \
+	    (cd $$d; $(MAKE) install) || exit 1; \
+	  fi; \
+	done
+
+clean distclean:
+	@for d in $(LIBS) $(LISP_MODULES) $(LISP_PROGRAMS) $(SPEECH_LIBS) $(SPEECH_PROGRAMS) $(JAVA_PROGRAMS) $(OTHER_PROGRAMS) $(DATA); do \
+	  if test -d $$d; then \
+	    (cd $$d; $(MAKE) $@); \
+	  fi; \
+	done
+
+clean-lisp:
+	@for d in $(LISP_MODULES) $(LISP_PROGRAMS); do \
+	  if test -d $$d; then \
+	    (cd $$d; $(MAKE) clean); \
+	  fi; \
+	done
+
+#
+# Local variables:
+# mode: makefile
+# End:
+#
+

@@ -1,0 +1,16 @@
+- separate the :types argument into :taggers and :types, or use (tagger type) pairs (current system is sloppy)
+- allow either absolute specification of :types (and :taggers) or relative to the default, like this: :types (-minipar_pos +spaced_chunks)
+- fix waiting for java parts to load
+# don't make named-entities and terms parts for PLOT
+ > (no longer a major issue)
+# use "use" instead of "require"
+# tag_words: BiCapitalization
+? spelling correction
+- numbers
+ - different formats
+ - obvious kinds
+  - phone
+  - zipcode
+- abbreviations
+- fix NamedEntities.pm's treatment of single-quoted strings
+ > NERFilter converts the open-quote ' to a backtick `, and that causes the whole string to fail because it can't find the backtick in the original string

@@ -1,0 +1,228 @@
+#!/usr/bin/perl
+
+# lookup - CGI script for browsing words in the TRIPS lexicon
+
+use strict vars;
+use XML::DOM;
+use POSIX qw(strftime);
+
+my $datadir = "../data";
+
+# map part-of-speech abbreviations to spelled-out versions
+my %posexpansion =
+qw(^ ^
+   adj Adjective
+   adv Adverb
+   art Article
+   conj Conjunction
+   cv CV
+   fp Filled-Pause
+   infinitival-to Infinitival-To
+   n Noun
+   name Name
+   number-unit Number-Unit
+   ^o ^o
+   ordinal Ordinal
+   prep Preposition
+   pro Pronoun
+   punc Punctuation
+   quan Quantifier
+   ^s ^s
+   uttword Uttword
+   v Verb
+   value Value);
+
+print "Content-type: text/html\r\n\r\n";
+
+if ($ENV{'REQUEST_METHOD'} ne "GET")
+{
+  print "You must use the GET method to access this page\n";
+  exit(0);
+}
+
+# get the query into a hash
+my %query = ();
+for my $assgn (split(/&/, $ENV{'QUERY_STRING'}))
+{
+  my ($name, $val) = split(/=/, $assgn);
+  $name =~ s/\%([\dA-Fa-f]{2})/chr(hex($1))/ge;
+  $name =~ s/\+/ /g;
+  $val =~ s/\%([\dA-Fa-f]{2})/chr(hex($1))/ge;
+  $val =~ s/\+/ /g;
+  $query{lc($name)} = lc($val);
+}
+
+my ($targetAttribute, $framesArgument, $framesInput) = ("","","");
+if (exists($query{'frames'}) and $query{'frames'} =~ /^(t|true|y|yes)$/)
+{
+  $targetAttribute = ' target="ontology"';
+  $framesArgument = 'frames=y&';
+  $framesInput = '<INPUT type="hidden" name="frames" value="y">';
+}
+
+if (exists($query{'word'}))
+{
+  # get the word query in a format we like
+  
+  $query{'word'} =~ s/\s+/_/g;
+
+  $query{'word'} =~ s/^W:://i;
+
+  # untaint the word
+  unless ($query{'word'} =~ /^\w+$/)
+  {
+    print "Invalid word\n";
+    exit(0);
+  }
+  my $word = $&;
+
+  # header and search form
+  print <<EOP;
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD><TITLE>TRIPS Word Lookup: $word</TITLE></HEAD>
+<BODY>
+<H1><IMG SRC="/images/monalogo_thin.jpg" ALT="URCS (logo)"> TRIPS Word Lookup</H1>
+<FORM action="lookup">
+$framesInput
+<INPUT type="text" size=40 name="word" value="$word">
+<INPUT type="submit" value="Look Up">
+</FORM>
+<H2>$word</H2>
+EOP
+
+  # get data for $word from the XML file, and translate to HTML
+  my $filename = "$datadir/W::$word.xml";
+  if (-e $filename)
+  {
+    my $parser = new XML::DOM::Parser;
+    my $doc = $parser->parsefile($filename);
+
+    my $poses = $doc->getElementsByTagName("WORD")->[0]->getElementsByTagName("POS");
+    print "<UL>\n";
+    for my $pos (@$poses)
+    {
+      my $posname = $posexpansion{$pos->getAttributeNode("name")->getValue};
+      print " <LI>$posname Classes:<BR>\n  <DL style=\"padding-left: 2.0em\">\n";
+      my $classes = $pos->getElementsByTagName("CLASS");
+      for my $class (@$classes)
+      {
+	my $onttype = $class->getAttributeNode("onttype")->getValue;
+	print "   <DT>\n    <A HREF=\"browseontology?" . $framesArgument . "search=$onttype\" style=\"color: #7F0000\"$targetAttribute>ONT::$onttype</A>\n";
+        # expandable synset
+	if ($query{'synsets'} =~ /(^|,)$onttype(,|$)/)
+	{
+          # print hide link
+	  print "    (<A HREF=\"lookup?" . $framesArgument;
+	  my %newquery = %query;
+	  $newquery{'synsets'} =~ s/,$onttype(?=,|$)//;
+	  delete $newquery{'ancestors'} if ($newquery{'ancestors'} eq '');
+	  print join("&amp;", map {$_ . '=' . $newquery{$_}} keys %newquery);
+	  print "\">hide synset</A>)\n";
+
+          # print list of words in $onttype
+	  print
+	    join(', ',
+	      map
+	        {
+		  my $queryword = $_;
+		  $queryword =~ s/\s+/+/g;
+		  "<A HREF=\"lookup?" . $framesArgument . "word=$queryword\">$_</A>";
+		}
+		split(/,/, $class->getAttributeNode("words")->getValue)
+	    ) .
+	    "<BR>\n";
+	} else
+	{
+          # print show link
+	  print "    (<A HREF=\"lookup?" . $framesArgument;
+	  my %newquery = %query;
+	  $newquery{'synsets'} .= ",$onttype";
+	  print join("&amp;", map {$_ . '=' . $newquery{$_}} keys %newquery);
+	  print "\">show synset</A>)\n";
+	}
+        # expandable ONT type ancestors
+	if ($query{'ancestors'} =~ /(^|,)$onttype(,|$)/)
+	{
+	  # Print hide link
+	  print "    (<A HREF=\"lookup?" . $framesArgument;
+	  my %newquery = %query; 
+	  $newquery{'ancestors'} =~ s/,$onttype(?=,|$)//;
+	  delete $newquery{'ancestors'} if ($newquery{'ancestors'} eq '');
+	  print join("&amp;", map {$_ . '=' . $newquery{$_}} keys %newquery);
+	  print "\">hide ancestors</A>)<BR>\n";
+
+	  # Print ancestors hierarchically
+	  my @ancestors = split(',', 
+	    $class->getAttributeNode("ancestors")->getValue);
+	  print "   </DT>\n   <DD>\n";
+	  foreach my $a (@ancestors) {
+	    print "<ul><li><a href=\"browseontology?" . $framesArgument . "search=$a\"$targetAttribute>$a</a>";
+	  }
+	  print '</li></ul>' x @ancestors;
+	} else
+	{
+	  # print show link
+	  print "    (<A HREF=\"lookup?" . $framesArgument;
+	  my %newquery = %query;
+	  $newquery{'ancestors'} .= ",$onttype";
+	  print join("&amp;", map {$_ . '=' . $newquery{$_}} keys %newquery);
+	  print "\">show ancestors</A>)\n";
+	  print "   </DT>\n   <DD>\n";
+	}
+	
+	my $frames = $class->getElementsByTagName("FRAME");
+	my $firstframedesc = $frames->[0]->getAttributeNode("desc")->getValue;
+	if (@$frames > 1 or
+	    ($firstframedesc ne 'count-pred-templ' and
+	     $firstframedesc ne 'mass-pred-templ'))
+	{
+	  print "    Frames:\n    <DL style=\"padding-left: 2.0em\">\n";
+	  for my $frame (@$frames)
+	  {
+	    my $desc = $frame->getAttributeNode("desc")->getValue;
+	    my $examplenode = $frame->getAttributeNode("example");
+	    if (defined($examplenode))
+	    {
+	      print "    <DT><FONT color=\"#007F00\">$desc</FONT>\n";
+	      print "     <DD>Example: <I>" . $examplenode->getValue . "</I>\n";
+	    } else #example undefined
+	    {
+	      print "    <DT><FONT color=\"#007F00\">$desc</FONT>\n";
+	    }
+	  }
+	  print "    </DL>\n";
+	} elsif (@$frames == 1)
+	{
+	  my $examplenode = $frames->[0]->getAttributeNode("example");
+	  print "    Example: <I>" . $examplenode->getValue . "</I>\n"
+	    if (defined($examplenode));
+	}
+	print "   </DD>\n";
+      }
+      print "  </DL>\n </LI>\n";
+    }
+    print "</UL>\n";
+
+    $doc->dispose;
+  } else
+  {
+    print "$filename not found\n";
+  }
+} else # no word specified
+{
+  print <<EOP;
+<HTML>
+<HEAD><TITLE>TRIPS Word Lookup</TITLE></HEAD>
+<BODY>
+<H1><IMG SRC="/images/monalogo_thin.jpg" ALT="URCS (logo)"> TRIPS Word Lookup</H1>
+<FORM action="lookup">
+$framesInput
+<INPUT type="text" size=40 name="word">
+<INPUT type="submit" value="Look Up">
+</FORM>
+EOP
+}
+# show modification time based on the filesystem status of the data directory
+print "<P>Data files last modified: " . strftime("%a %b %e %H:%M:%S %Y", localtime(@{[stat($datadir)]}[9])) . "<P>\n";
+print "</BODY>\n</HTML>\n";

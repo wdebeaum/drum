@@ -1,0 +1,50 @@
+
+$Id: test-input.txt,v 1.1.1.1 2005/01/14 19:48:08 ferguson Exp $
+
+(request
+ :sender init
+ :receiver facilitator
+ :content (start-module
+	   :name keyboard
+	   :class TRIPS.KeyboardManager.KeyboardManager
+	   :urlclasspath ("/u/trains/2000/5.5/src/KeyboardManager/TRIPS.KeyboardManager.jar"
+			  "/u/trains/2000/5.5/src/TripsModule/TRIPS.TripsModule.jar"
+			  "/u/trains/2000/5.5/src/KQML/TRIPS.KQML.jar"
+			  "/u/trains/2000/5.5/src/util/TRIPS.util.jar")
+	   :argv ("-geometry"
+		  "+0+0")))
+(request
+ :sender init
+ :receiver facilitator
+ :content (start-module
+	   :name keyboard2
+	   :class TRIPS.KeyboardManager.KeyboardManager
+	   :urlclasspath ("/u/trains/2000/5.5/src/KeyboardManager/TRIPS.KeyboardManager.jar"
+			  "/u/trains/2000/5.5/src/TripsModule/TRIPS.TripsModule.jar"
+			  "/u/trains/2000/5.5/src/KQML/TRIPS.KQML.jar"
+			  "/u/trains/2000/5.5/src/util/TRIPS.util.jar")
+	   :argv ("-geometry"
+		  "+0+0"
+		  "-name"
+		  "key2")))
+(request
+ :sender init
+ :receiver facilitator
+ :content (start-module
+	   :name keyboard3
+	   :class TRIPS.KeyboardManager.KeyboardManager
+	   :urlclasspath ("/u/trains/2000/5.5/src/KeyboardManager/TRIPS.KeyboardManager.jar"
+			  "/u/trains/2000/5.5/src/TripsModule/TRIPS.TripsModule.jar"
+			  "/u/trains/2000/5.5/src/KQML/TRIPS.KQML.jar"
+			  "/u/trains/2000/5.5/src/util/TRIPS.util.jar")
+	   :argv ("-geometry"
+		  "+0+0"
+		  "-name"
+		  "key3")))
+
+(request
+ :sender init
+ :receiver facilitator
+ :content (start-module
+	   :name planviewer
+	   :exec /u/trains/2000/5.5/bin/planviewer))

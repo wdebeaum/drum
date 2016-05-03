@@ -1,0 +1,40 @@
+Nate Chambers
+HowToUse.txt
+---
+
+The TransformEngine applies transform rules to the TRIPS Logical Form (LF).
+Transform rules specify how to convert the TRIPS LF into a desired knowledge
+representation (KR).  The TransformEngine uses the rules to create an 
+intermediate KR in lambda form that can easily be syntactically converted into
+the target KR's needs.  In addition, the rules are designed to facilitate
+a reverse mapping KR->LF algorithm.
+
+
+QuickStart
+---
+:ld om
+:pa om
+(load-rules 'test)   ;; loads the testing rules, specify any KR language
+(transform LF) ;; transforms the list of LF terms using the KR test rules
+
+
+Rules
+---
+This is based on Myrosia Dzikovska's PhD thesis, although it is not the same.
+Please see BNFSyntax.txt for the Backus Naur Form (BNF) and differences from
+Myrosia's work.
+
+
+KR Separation
+---
+The directory rules/XX contains transform definitions for the KR language XX.
+If you wish to create new rules, create a directory with the KR's name and
+a file load-rules.lisp that loads all of your rules files (which should all
+be in the rules/XX directory).
+
+
+Testing/Examples
+---
+There is a "test" KR language in rules/test/ with a few examples of LF inputs,
+transform rules, and the output of the TransformEngine.      
+

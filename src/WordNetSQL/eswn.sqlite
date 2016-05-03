@@ -1,0 +1,171 @@
+.echo ON
+.bail ON
+.timer ON
+.separator "|"
+
+--
+-- variants/senses
+--
+
+CREATE TEMPORARY TABLE pos2num (
+  pos char(1) NOT NULL,
+  numeric_ss_type INT(1) NOT NULL
+);
+INSERT INTO pos2num VALUES ('n', 1);
+INSERT INTO pos2num VALUES ('v', 2);
+INSERT INTO pos2num VALUES ('a', 3);
+INSERT INTO pos2num VALUES ('r', 4);
+
+CREATE TEMPORARY TABLE eswn_variant (
+  pos CHAR(1) NOT NULL, 
+  offset INT(8) NOT NULL,
+  word VARCHAR(100) NOT NULL,
+  sense INT(1) NOT NULL,
+  csco FLOAT NOT NULL,
+  status CHAR(1) NOT NULL
+);
+.import eswn-variant.psv eswn_variant
+
+DROP TABLE IF EXISTS senses;
+CREATE TABLE senses AS
+  SELECT
+    offset AS synset_offset,
+    pos AS ss_type,
+    NULL AS sense_number,
+    NULL AS word_number,
+    NULL AS tag_cnt,
+    (word || '%' || numeric_ss_type || ':00:' || substr('00',1+length(sense)) || sense || '::') AS sense_key,
+    word AS lemma,
+    0 AS lex_filenum,
+    sense AS lex_id
+  FROM eswn_variant NATURAL JOIN pos2num;
+
+DROP TABLE eswn_variant;
+DROP TABLE pos2num;
+
+CREATE INDEX x_senses_synset ON senses(synset_offset, ss_type);
+
+--
+-- synsets
+--
+
+CREATE TEMPORARY TABLE eswn_synset (
+  pos CHAR(1) NOT NULL,
+  offset INT(8) NOT NULL,
+  sons INT(1) default NULL,
+  lexical CHAR(2),
+  gloss VARCHAR(512)
+);
+.import eswn-synset.psv eswn_synset
+
+DROP TABLE IF EXISTS synsets;
+CREATE TABLE synsets AS
+  SELECT
+    offset AS synset_offset,
+    0 AS lex_filenum,
+    pos AS ss_type,
+    gloss
+  FROM eswn_synset;
+
+DROP TABLE eswn_synset;
+
+--
+-- frames (empty, but included for completeness)
+--
+
+CREATE TABLE frames (
+  synset_offset INT(8) NOT NULL,
+  ss_type CHAR(1) NOT NULL,
+  word_number INT(3),
+  frame_number INT(2) NOT NULL
+);
+
+CREATE TABLE frames_text (
+  frame_number INT(2) NOT NULL PRIMARY KEY,
+  frame_text VARCHAR(45) NOT NULL
+);
+
+--
+-- relations/pointers
+--
+
+CREATE TEMPORARY TABLE eswn_relation (
+  relation VARCHAR(30) NOT NULL,
+  sourcePos CHAR(1) NOT NULL,
+  sourceSynset INT(8) NOT NULL,
+  targetPos CHAR(1) NOT NULL,
+  targetSynset INT(8) NOT NULL,
+  csco FLOAT NOT NULL
+);
+.import eswn-relation.psv eswn_relation
+
+DROP TABLE IF EXISTS pointers;
+CREATE TABLE pointers AS
+  SELECT
+    sourceSynset AS source_synset_offset,
+    sourcePos AS source_ss_type,
+    NULL AS source_word_number,
+    relation AS pointer_symbol,
+    targetSynset AS target_synset_offset,
+    targetPos AS target_ss_type,
+    NULL AS target_word_number
+  FROM eswn_relation;
+
+DROP TABLE eswn_relation;
+
+DROP TABLE IF EXISTS pointer_symbols;
+CREATE TABLE pointer_symbols (
+  pointer_symbol VARCHAR(30) NOT NULL PRIMARY KEY,
+  pointer_name VARCHAR(32) NOT NULL
+);
+.import eswn-pointer-symbols.psv pointer_symbols
+
+DROP TABLE IF EXISTS pointer_inverses;
+CREATE TABLE pointer_inverses (
+  pointer_symbol VARCHAR(30) NOT NULL PRIMARY KEY,
+  inverse VARCHAR(30)
+);
+.import eswn-pointer-inverses.psv pointer_inverses
+
+-- insert inverse pointers where they don't exist yet
+INSERT INTO pointers
+  SELECT
+    p1.target_synset_offset AS source_synset_offset,
+    p1.target_ss_type AS source_ss_type,
+    p1.target_word_number AS source_word_number,
+    inverse AS pointer_symbol,
+    p1.source_synset_offset AS target_synset_offset,
+    p1.source_ss_type AS target_ss_type,
+    p1.source_word_number AS target_word_number
+  FROM pointers AS p1 NATURAL JOIN pointer_inverses
+  WHERE NOT EXISTS (
+    SELECT *
+    FROM pointers AS p2
+    WHERE
+      p2.source_synset_offset=p1.target_synset_offset AND
+      p2.source_ss_type=p1.target_ss_type AND
+      p2.source_word_number=p1.target_word_number AND
+      p2.pointer_symbol=inverse AND
+      p2.target_synset_offset=p1.source_synset_offset AND
+      p2.target_ss_type=p1.source_ss_type AND
+      p2.target_word_number=p1.source_word_number
+  )
+;
+
+CREATE INDEX x_pointers_source ON pointers(source_synset_offset,source_ss_type);
+
+--
+-- glosstags (empty, but included for completeness)
+--
+
+DROP TABLE IF EXISTS glosstags;
+CREATE TABLE glosstags (
+    synset_offset       INT(8) NOT NULL,
+    ss_type     CHAR(1) NOT NULL,
+    start       INT UNSIGNED NOT NULL,
+    end INT UNSIGNED NOT NULL,
+    tag_type    VARCHAR(3) NOT NULL,
+    pos VARCHAR(4),
+    sense_key   VARCHAR(82)
+);
+

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<program-api module="UnknownModule">
+  <function name="subtype" visibility="private">
+    <param name="x"> one of: lf-type/lf-feature-val/kr-class/kr-predicate/kr-operator
+   </param>
+    <param name="y"> one of: lf-type/lf-feature-val/kr-class/kr-predicate/kr-operator
+   </param>
+    <param name="ontology" key="true">  lf/kr, whichever sub/super is a member of
+   </param>
+    <return>returns t if sub is a subclass of super</return>
+    <location>general-public.lisp</location>
+  </function>
+  <function name="more-specific" visibility="private">
+    <param name="x"> one of: lf-type/lf-feature-val/kr-class/kr-predicate/kr-operator
+   </param>
+    <param name="y"> one of: lf-type/lf-feature-val/kr-class/kr-predicate/kr-operator
+   </param>
+    <param name="ontology" key="true">lf/kr, whichever sub/super is a member of
+   </param>
+    <return>the more specific of x and y, i.e. the subtype</return>
+    <location>general-public.lisp</location>
+  </function>
+  <function name="get-parent" visibility="private">
+    <param name="x">   one of the following: lf-type/kr-class/kr-predicate/kr-operator
+   </param>
+    <param name="ontology" key="true"> lf/kr, whichever x is a member of
+   </param>
+    <return>the parent of x, nil if it does not exist</return>
+    <location>general-public.lisp</location>
+  </function>
+  <function name="get-parents" visibility="private">
+    <param name="x"> one of the following: lf-type/kr-class/kr-predicate/kr-operator
+   </param>
+    <param name="ontology" key="true"> lf/kr, whichever x is a member of
+   </param>
+    <return> list of the path from x to the top of the ontology, nil if none</return>
+    <location>general-public.lisp</location>
+  </function>
+  <function name="common-ancestor" visibility="private">
+    <param name="x">       one of: lf-type/kr-class
+   </param>
+    <param name="y">       one of: lf-type/kr-class
+   </param>
+    <param name="ontology" key="true">lf/kr, whichever x is a member of
+   </param>
+    <return>        returns the common ancestor of x and y, nil if there is none</return>
+    <location>general-public.lisp</location>
+  </function>
+  <function name="defined-p" visibility="private">
+    <param name="x">        an atom to check for in the ontologies
+   </param>
+    <param name="ontology" key="true"> lf/kr - only search in the specified ontology
+   </param>
+    <param name="cat" key="true">      type/feature/feature-type/class/predicate/operator
+                    - only search in the specific table given</param>
+    <location>general-public.lisp</location>
+  </function>
+</program-api>

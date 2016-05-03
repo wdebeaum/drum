@@ -1,0 +1,167 @@
+Nate Chambers
+---
+A more detailed description of the rule definitions and how the algorithm
+treats them.  The syntax can be found in BNFSyntax.txt
+
+
+REQUIRED:
+  name
+  :typevar
+  :typetransform
+
+OPTIONAL:
+  :abstract
+  :argtransforms
+  :defaults
+  :constraints
+  :functions
+
+
+1. name 
+Every rule must provide a name and they *should* all be unique.  The name is only
+used in debugging and error messages right now, so they do not *have* to be
+unique.
+e.g. (define-transform name 
+     		       :typevar ?v
+		       :typetransform ....)
+
+
+2. :typevar
+Every rule is required to provide a variable that represents the KR object 
+that is created when the rule is matched successfully.  This variable can be
+used in the :argtransforms to specify that arguments should be placed in the 
+rule's object.  Variables must start with a question mark.  e.g. ?vv
+
+
+3. :typetransform
+Every rule is required to provide a type transform.  This is the central 
+type that determines if a rule will be applied to an LF.  The type transform
+has two parts, an LF and a KR.  
+    e.g. :typetransform (LF::MOTION  -> MOVE)
+         :typetransform ((:* LF::MOTION ?v) -> ?v)
+         :typetransform ((:* LF::MOTION TAKE) -> MOVE)
+         :typetransform ((:* LF::MOTION ?v) -> (:map ?v))
+
+There are several options for this transform.  The KR (right hand side) is
+always a single LISP atom unless the :map function is being used.  If it is a
+variable, it must be resolved in the LHS of the type transform.  The KR is the
+*type* of object that is created when the rule is applied.  
+       e.g. (lambda ?v (Instance-of ?v MOVE))
+
+The LHS (left hand side) can be a single LF type or a standard TRIPS triple.
+If it is a triple, the lexical item must match exactly and the LF type must
+be a parent (or an exact match) in the TRIPS LF ontology.  If the LF is a 
+single LF type, it must be a parent (or an exact match) in the TRIPS LF
+ontology of the LF we are trying to transform.
+
+
+4. :argtransforms
+An argtransform has two parts, an LF and a KR.
+ e.g. (define-transform move
+ 	:typevar ?vv
+   	:argtransforms ( (nil -> (SHADE ?vv ?new1)
+			 ((:agent ?a) -> (ACTOR ?vv ?a))
+   			 ((F ?b LF::COLOR :of ?vv :val ?c) -> (COLOR ?new1 ?c))
+			 ((:patient ?p) -> nil)
+			 )
+        :defaults ((?new1 SHADEPRED))
+         )
+
+The RHS is the KR representation.  This *must always* be a triple.  The 
+first atom is the predicate to create, the second atom is the KR object to 
+associate the predicate with, and the third atom is the value of the predicate.  
+All variables must be bound in the LHS or the :typevar or previous :argtransforms
+in this rule.
+
+The LHS is the LF part.  There are four types of LF argtransforms:
+
+Creation:
+The LHS is 'nil' (first example above).  This indicates that a new KR object
+should be created.  The new object is created with the third atom in the
+RHS triple as its id.  The new object's type is defined in the :defaults rule 
+or is found in a query to the KR.  The query must be done in the function 
+query-kr in messaging.lisp.  It *must* be defined in :defaults if query-kr is 
+not being used.  Finally, a predicate is created pointing to the new object.
+
+Roles:
+The LHS matches an LF role (second example above).  This is always a list of
+size 2.  The first atom is the role, the second is the variable to represent
+the role's value.  When matched, the RHS creates a new KR slot as usual.
+
+Terms:
+The LHS can match an entire LF term (third example above).  As many variables
+as desired may be used to help match.  The LF term type (F, THE, A, etc.),
+the term variable, and the LF type must all match exactly (or with variables).
+The LF type can be a parent.  If the LF type is a triple in the argtransform,
+then the entire triple must match.  If the LF type is just a single type, 
+then it matches all single types and triples whose LF type is a subtype of 
+the rule's given type.  Any given thematic roles in the LHS must appear in 
+the given LF to be a match.  If the given LF has more roles than appear in
+the argtransform LHS, it is ok and they are ignored.
+
+* Note that there can be as many lists on the LHS of a single argtransform
+  as you desire.  The three examples only give one list each.  There can be
+  multiple terms, roles, or even terms and roles mixed together.  
+
+* Note that variables must be unique.  Using variable ?a in one argtransform
+  must unify with any other ?a appearances in the other argtransforms.  This 
+  allows one to create a long LHS that links terms together.
+
+Empty:
+These rules have no affect on the KR being created.  Their RHS is nil.
+The purpose of these rules is to be used to bind role values in the LF that
+might be needed in later argtransforms, or to be used with the :allobligatory
+constraint to require that an LF property exists.  The most common use is
+to make sure a modifier exists, even though the KR doesn't explicitly use the
+modifier's value.
+
+
+5. :defaults
+Defaults specify the default KR type for a create object variable in an
+argtransform.  See :argtransforms for an example.
+
+
+6. :constraints
+Constraints are used to restrict when a transform rule can match an LF.  There
+are three types of constraints:
+    (:obligatory :theme)
+    (:allobligatory)  * note, must be in parentheses
+    (:lf-type ?vv LF::MOTION)
+
+:obligatory
+If a role is given as obligatory, the LF must have that role to be used in the
+LF to KR transform.
+
+:allobligatory
+This constraint means that *all* argtransforms must match their LFs with the
+given LF term in order for any of them to apply.
+
+:lf-type
+This constraint requires that a variable in the rule must be a subtype of
+the specified LF type.
+
+
+7. :functions
+The functions allow rules to include external processing to help with the
+transformation process.  There used to be a need for post-processing to handle
+many syntactic needs, but these function options can encode them directly
+into the rules.  Functions can return one value only, and it is bound to the
+listed variable:
+    :functions ((?res (to-military-time ?h ?ap))
+    	        (?res2 (get-lf-atom-map ?atom)))
+
+The above shows two variables being bound.  These functions are only called
+when their variables (?res and ?res2) are come across during processing of the
+rule.  Their arguments must have been bound at this time, or the process is
+aborted.
+
+!!
+The last condition is that any/all functions must allow a :reverse key as a 
+parameter.  In addition, they must return the reverse map of the function 
+when called with this key ... this is needed to assist in KR -> LF mapping.
+     (to-military-time 5 w::pm) -> 17
+     (to-military-time 17 nil :reverse t) -> (5 w::pm)
+
+The first parameter during reversing will always contain the result to reverse.
+The returned value should always be a list, containing all of the parameters
+that would have produced the result.

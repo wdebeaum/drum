@@ -1,0 +1,57 @@
+--------------------------------------------------
+BNF Syntax of the LF Transforms
+--------------------------------------------------
+Nate Chambers
+Based on thesis by Myrosia Dzikovska
+---
+Additions:
+  - type constraints
+  - default types
+  - the KR argument transforms must always be triples
+  - the :type-var must always be defined
+
+
+<Transform> ::= (define-transform <transform-name>
+	          [ :abstract <boolean> ]
+		    :typevar <variable>
+		    :typetransform ( <Type-transform> )
+		  [ :argtransforms ( <Argument-transform>+ ) ]
+		  [ :constraints ( <Constraint>+ ) ]
+		  [ :defaults ( <Default-setting>+ ) ]
+		  [ :functions ( <Function-setting>+ ) ]
+		)
+
+<Type-transform>     ::= <LF-type> -> { <KR-type> | ? }
+
+;; argument transforms
+<Argument-transform> ::= <Create-arg> | <Normal-arg>
+<Create-arg>         ::= NIL -> <KR-triple>
+<Normal-arg>         ::= <LF-arg>+ -> <KR-triple>
+<KR-triple>          ::= ( <kr-predicate> <variable> <KR-type> )
+
+;; LF argument transform heads
+<LF-arg>           ::= (<LF-slot-argument>) | <F-argument>
+<LF-slot-argument> ::= <sem-argument-name> <variable>
+<F-argument>       ::= <Link-F-Argument> {<Link-F-Argument>}
+<Link-F-Argument>  ::= (F <variable> <LF-type> <sem-argument-name> {<lf-slot-argument>})
+
+;; constraint rules
+<Constraint>       ::= <Oblig-Constraint> | <Stop-Constraint> | <Type-Constraint>
+<Oblig-Constraint> ::= ( :obligatory <sem-argument-name> )
+<Stop-Constraint>  ::= ( :prohibit <sem-argument-name> )
+<Type-Constraint>  ::= ( :lf-type <variable> <sem-argument-name> )
+
+;; default rules
+<Default-setting>  ::= <Default-value> | <Default-type>
+<Default-value>    ::= ( <variable> <KR-type> )
+<Default-type>     ::= ( <variable> <KR-type> )
+
+;; function rules
+<Function-setting> ::= ( <variable> <Function> )
+<Function>	   ::= ( <string> <variable>* )
+
+;; basic atoms
+<LF-KR-map>	   ::= ( :map <KR-type> )
+<LF-type>          ::= (:* <lf> <lex>) | (:* <lf> <variable) | <lf>
+<KR-type>          ::= <LF-KR-map> | <kr> | <variable>
+<boolean>          ::= t | nil

@@ -1,0 +1,6 @@
+
+Time-stamp: <Tue Feb 10 14:58:38 EST 2004 ferguson>
+
+- logging2:initialize causes error in cmucl because nil can't be a
+  pathname component
+  -> investigate, and also the :relative thing that NC added

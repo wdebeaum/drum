@@ -1,0 +1,30 @@
+-- make-ing-stoplist.sqlite - make the part of stoplist.lisp dealing with -ing nominalizations of verbs
+-- William de Beaumont
+-- 2016-02-17
+--
+-- USAGE: sqlite3 <make-ing-stoplist.sqlite
+-- writes ing-stoplist.txt, to be inserted in stoplist.lisp
+
+.open ../../WordNetSQL/wn.db
+
+CREATE TEMPORARY TABLE stoplist (lemma);
+
+INSERT INTO stoplist
+SELECT lemma FROM senses
+WHERE ss_type='n' AND lemma LIKE '%ing'
+  AND EXISTS(
+    SELECT * FROM pointers
+    WHERE source_ss_type='n'
+      AND source_synset_offset=synset_offset
+-- this is tempting to do, but too many DRF links are missing, so it gets rid
+-- of too many words that should be stoplisted
+--      AND (source_word_number=NULL OR source_word_number=word_number)
+      AND pointer_symbol='+' -- derivationally related
+      AND target_ss_type='v'
+  )
+;
+
+-- output
+.output ing-stoplist.txt
+SELECT DISTINCT lemma FROM stoplist ORDER BY lemma;
+

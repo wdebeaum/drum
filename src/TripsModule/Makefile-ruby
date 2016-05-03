@@ -1,0 +1,18 @@
+# -*-mode: Makefile;-*-
+#
+# Makefile for TripsModule library (in Ruby)
+#
+# $Id: Makefile-ruby,v 1.1 2013/10/30 20:40:39 wdebeaum Exp $
+#
+
+MODULE = TripsModule
+SRCS = 	trips_module.rb
+
+CONFIGDIR=../config
+include $(CONFIGDIR)/ruby/defs.mk
+include $(CONFIGDIR)/ruby/lib.mk
+
+rdoc: trips_module.rb
+	rm -rf rdoc
+	$(RDOC) -o $@ $<
+

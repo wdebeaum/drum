@@ -1,0 +1,1354 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml-stylesheet type="text/xsl" href="toc.xsl"?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>TextTagger</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head><body>
+
+<div>
+
+<div class="section">
+<h2>Introduction</h2>
+<p>TextTagger is a module in the TRIPS system which finds "tags" in text
+strings and sends them to the parser. Tags associate various information with
+spans of characters in the input string. For example, this information can
+include:
+<ul>
+<li>that the span is punctuation/a word/a comma-separated clause/a sentence</li>
+<li>the part of speech of the word</li>
+<li>that the span names some kind of entity</li>
+</ul>
+</p>
+</div>
+
+<div class="section">
+<h2>Installation</h2>
+<p>TextTagger glues together several different taggers, including several
+written in Perl with TextTagger itself,
+<a href="http://nlp.stanford.edu/">Stanford</a>'s
+<a href="http://nlp.stanford.edu/software/corenlp.shtml">CoreNLP</a>
+(as well as the older separate parts thereof,
+the <a href="http://nlp.stanford.edu/software/CRF-NER.shtml">NER</a>,
+the <a href="http://nlp.stanford.edu/software/tagger.shtml">POS</a> tagger, and
+the <a href="http://nlp.stanford.edu/software/lex-parser.shtml">parser</a>),
+the <a href="http://www.nactem.ac.uk/enju/">Enju parser</a>,
+Charniak and Johnson's 
+<a href="http://bllip.cs.brown.edu/resources.shtml">parser</a>
+(using McClosky's
+<a href="http://www.cs.brown.edu/~dmcc/biomedical.html">self-trained biomedical model</a>) and
+<a href="http://www.nlm.nih.gov/research/umls/">UMLS</a>'
+<a href="http://mmtx.nlm.nih.gov/">MetaMap</a>.
+Some taggers require resources that you must download and install if you want
+to use those taggers (if you don't, TextTagger should still work otherwise). If
+you're on the URCS network, it's taken care of for you (except for MetaMap, 
+CJParser, and Enju, but most TextTagger users don't need those); the resources
+are installed in <code>/p/nl/</code>. If you're not, then you have to install
+them in either <code>/p/nl/</code> or <code>/usr/local/share/</code>, or you
+have to specify where they're installed using the appropriate configure
+options.</p>
+
+<p>How to install the necessary resources in <code>/usr/local/share/</code>:
+<ul>
+<li>Get the Stanford tools. To use the integrated CoreNLP version:
+ <ul><li>Download <a href="http://nlp.stanford.edu/software/stanford-corenlp-full-2014-06-16.zip">this Stanford CoreNLP package</a> and unpack it in <code>/usr/local/share/stanford-corenlp/</code> (create the directory if necessary).</li></ul>
+ To use the old separate tools:
+ <ul>
+  <li>Download <a href="http://nlp.stanford.edu/software/stanford-ner-2007-11-05.tar.gz">this Stanford NER package</a> and unpack it in <code>/usr/local/share/stanford-ner/</code>.</li>
+
+  <li>Do the same for <a href="http://nlp.stanford.edu/software/stanford-postagger-2008-06-06.tar.gz">this Stanford POS Tagger package</a> and <code>/usr/local/share/stanford-postagger/</code>.</li>
+
+  <li>...and <a href="http://nlp.stanford.edu/software/stanford-parser-2007-08-19.tar.gz">this Stanford Parser package</a> and <code>/usr/local/share/stanford-parser/</code>.</li>
+ </ul>
+</li>
+
+<li>To use the Enju parser, <a href="http://www.nactem.ac.uk/enju/#download">download</a> the binary package for your platform (you will have to fill out a form), and unpack it in <code>/usr/local/share/enju/</code>.</li>
+
+<li>To use the Charniak-Johnson parser with McClosky's biomedical model:
+ <ul>
+  <li>Download the parser. Which version of the parser you get depends on your OS:
+   <dl>
+    <dt>older versions of Mac OS X and Linux</dt>
+    <dd>Download <a href="http://bllip.cs.brown.edu/download/reranking-parserAug06.tar.gz">this Charniak-Johnson Parser package</a> and unpack it in <code>/usr/local/share/cj-parser/</code>.</dd>
+
+    <dt>Mac OS X 10.10 Yosemite (possibly also 10.9, see below)</dt>
+    <dd>
+     <ul>
+      <li>Change to the right directory: <code>cd /usr/local/share/cj-parser</code></li>
+      <li>Download the repo: <code>git clone --depth 1 https://github.com/jimwhite/bllip-parser.git</code>
+       <ul>
+	<li>Note that this is a <a href="https://github.com/jimwhite/bllip-parser">fork</a> from <a href="https://github.com/BLLIP/bllip-parser">the official BLLIP parser</a> (which is what they're calling the Charniak-Johnson parser nowadays). It was created in response to the fact that <a href="http://github.com/BLLIP/bllip-parser/issues/19">the official version can't be compiled on Mac OS X 10.9+</a>. It might not work on other platforms.</li>
+	<li>Also note that the <code>--depth 1</code> option causes <code>git</code> to retrieve only the latest revision in the repository, as opposed to its default behavior of retrieving the entire history, which in this case is reported to be a burdensome download.</li>
+       </ul>
+      </li>
+      <li>Make a symlink to make it look like you unpacked the old package: <code>ln -s bllip-parser reranking-parser</code></li>
+      <li>Add <code>#include &lt;unistd.h&gt;</code> after <code>#include &lt;vector&gt;</code> in <code>second-stage/programs/features/best-parses.cc</code> (I guess Jim White missed this bit?)</li>
+      <li>Install gcc 4.9 from MacPorts (XCode's "g++" program actually runs Clang instead, which doesn't work for this parser): <code>sudo port install gcc49</code></li>
+     </ul>
+    </dd>
+    
+    <dt>newer versions of Linux, possibly others</dt>
+    <dd>
+     <ul>
+      <li>Change to the right directory: <code>cd /usr/local/share/cj-parser</code></li>
+      <li>Download the repo: <code>git clone --depth 1 https://github.com/BLLIP/bllip-parser.git</code> (see the note about <code>--depth 1</code> above)</li>
+      <li>Make a symlink to make it look like you unpacked the old package: <code>ln -s bllip-parser reranking-parser</code></li>
+     </ul>
+    </dd>
+   </dl>
+  </li>
+
+  <li>Run <code>make clean</code> in <code>/usr/local/share/cj-parser/reranking-parser/second-stage/programs/</code> (they left some compiled Linux binaries in there that interfere with the next step).</li>
+
+  <li>Run <code>make</code> in <code>/usr/local/share/cj-parser/reranking-parser/</code>. Again this depends on your OS:
+   <dl>
+    <dt>Mac OS X &lt; 10.6, Linux, possibly others</dt>
+    <dd>Just run <code>make</code>.</dd>
+
+    <dt>Mac OS X 10.6-10.8?</dt>
+    <dd>Run <code>make GCCFLAGS="-arch i386" LDFLAGS="-arch i386"</code> instead of just <code>make</code>, in order to compile a 32-bit binary and avoid problems compiling this code in 64-bit mode (which 10.6 does by default).</dd>
+    
+    <dt>Mac OS X 10.9</dt>
+    <dd>I'm not exactly sure where the transition between the 10.6 way and the 10.10 way happened. I have a 10.9 machine that works in the 10.6 way, but the BLLIP bug report says 10.9 doesn't work that way. Try one and then the other, and <a href="mailto:wbeaumont@ihmc.us">let me know what worked</a>.</dd>
+    
+    <dt>Mac OS X 10.10+ (with gcc 4.9 from MacPorts as suggested above)</dt>
+    <dd>Run <code>make CXX=g++-mp-4.9 GCCFLAGS="-ansi" LDFLAGS="-L/opt/local/lib"</code> instead of just <code>make</code>, in order to use gcc 4.9 instead of Clang.</dd>
+   </dl>
+  </li>
+
+  <li>Download <a href="http://bllip.cs.brown.edu/download/bioparsingmodel-rel1.tar.gz">this biomedical model package</a> and unpack it in <code>/usr/local/share/cj-parser/</code>.</li>
+ </ul>
+</li>
+
+<li>Download
+<a href="http://geonames.usgs.gov/docs/stategaz/NationalFile_20160201.zip">this
+GNIS geographic names database package</a> and put it in
+<code>/usr/local/share/geonames/2016-02-01/</code>. The
+name of this file appears to change frequently. If that link doesn't work, go
+to the <a href="http://geonames.usgs.gov/">geonames</a> site and select
+"domestic names" and then "download" from the navigation menu. On that page
+there should be a link to a zip file containing one text file for the whole
+nation (not individual state files). Rename the zip file to
+<code>NationalFile.zip</code> and put it in a directory named for the date on
+the file, with dashes. No need to unpack it.</li>
+
+<li>Running MetaMap locally requires approximately 28GB of disk space (though the 16GB of UMLS data files could be deleted after installation), and some extra installation effort, so by default a remote MetaMap server is used instead. The server already has all of these UMLS resources installed, so you won't have to install them in order to use MetaMap. If you want to use MetaMap locally:
+<ul>
+<li>Install <a href="http://www.mysql.com/">MySQL</a> (the free "Community Edition" is fine), and make sure you have the location of the <code>mysql_config</code> program in your <code>$PATH</code> (e.g. <code>/usr/local/mysql/bin/</code>).</li>
+
+<li>Install the <code>DBD::mysql</code> Perl module. You can do this using CPAN like so: <code>sudo cpan DBD::mysql</code>.</li>
+
+<li>Obtain a license code for UMLS and follow their instructions for installing it. You should install it so that you have the directory <code>/usr/local/share/UMLS/2010AB/</code> in that location. If the <code>2010AB</code> part is different (e.g. <code>2009AA</code>) leave it the way it is and instead give this argument to <code>configure</code>: <code>--with-umls=/usr/local/share/UMLS/2009AA/</code> (using the previous example).</li>
+
+<li>Download the semantic groups file from <a href="http://semanticnetwork.nlm.nih.gov/SemGroups/">here</a> (it should be called SemGroups.txt) and put it in <code>/usr/local/share/UMLS/</code> (this one doesn't require a license code).</li>
+
+<li>Download <a href="http://mmtx.nlm.nih.gov/">MetaMap</a> (not MMTx) and install it in <code>/usr/local/share/UMLS/</code>. You should then have the directory <code>/usr/local/share/UMLS/public_mm/bin/</code> (which contains the programs TextTagger needs to run).
+</li>
+
+<li>After running <code>configure</code> and starting MySQL, install the necessary UMLS tables in the MySQL database by running <code>make install-umls-mysql-db</code> in <code>src/TextTagger/</code> (after this step the UMLS data files in <code>/usr/local/share/UMLS/</code> are no longer needed and may be deleted to save space).</li>
+
+<li>When running TextTagger, pass the <code><a href="#sec-3.1.6.">-remote-meta-map</a> no</code> option (passing <code>-metamap-server no</code> to <code>trips-cernl</code> does this too).</li>
+</ul>
+</li>
+
+<li>To use WordNet, follow the instructions in <code>src/WordFinder/README.txt</code>. TextTagger will use the WordFinder configuration to find the necessary WordNet files.</li>
+
+<li>To use the Drum tagger, you need to get the ASCII MeSH SCR file <code>c2015.bin.gz</code>, either from <a href="http://www.nlm.nih.gov/mesh/filelist.html">the MeSH website</a> (where you will have to register and agree to a "memorandum of understanding"), or from IHMC's <a href="https://sharebox.ihmc.us/public.php?service=files&amp;t=3a8588532fd22e790ecfa37a16849d88">ownCloud</a> (where you need to sign in with your IHMC login/password). As of this writing it looks like MeSH might not be offering SCR by itself, you'd have to get the whole ASCII MeSH and pull out SCR yourself. Either way, put the file in <code>/usr/local/share/mesh/</code> (don't decompress it, the Makefile will do that for you).</li>
+
+<li>Note that the TextTagger Makefile also downloads and processes some files for you, depending on what parts of it are included in your checkout.</li>
+
+</ul>
+</p>
+
+<p>TextTagger also requires the following dependencies (you might already have them, though):</p>
+<ul>
+<li><a href="http://xmlsoft.org/XSLT/xsltproc2.html">xsltproc</a> (used to process the XML output of MetaMap)</li>
+<li><a href="http://www.perl.org/">Perl</a> &gt;= 5.6?</li>
+<li><a href="http://www.java.com/">Java</a> &gt;= 1.5 (used for the Stanford components)</li>
+<li>A C compiler (e.g. <a href="http://gcc.gnu.org">GCC</a>) (used for the Terms tagger)</li>
+<li><a href="http://www.gnu.org/software/make/">GNU Make</a> (other versions of make might work too)</li>
+<li><a href="http://www.gnu.org/software/bash/">Bash</a></li>
+<li>Other common UNIX tools like cut, sort, uniq, iconv, unzip, etc.</li>
+<li>Other parts of TRIPS, including KQML, TripsModule, and the Facilitator. TextTagger also makes symlinks to a couple of Perl libraries that live in TextPP.</li>
+</ul>
+
+</div>
+
+<div class="section">
+<h2>Running</h2>
+
+<div class="section">
+<h3>Command-line arguments</h3>
+<p>In addition to the standard TripsModule command-line arguments, TextTagger accepts the following:</p>
+
+<div class="section">
+<h4>-config-file</h4>
+<p><code>-config-file <var>filename</var></code></p>
+<p>Load a configuration file containing command-line arguments to insert at this point in the list of arguments. The file may contain newlines (treated as spaces) and comments starting with <code>#</code> and continuing to the end of the line. Environment variables may be referenced with a <code>$</code> prefix. Whitespace within arguments and literal <code>$</code>s may be escaped with a preceding backslash, and all backslashes will be removed. Other shell characters (other backslash escapes, quotes, pipes, etc.) are not interpreted.</p>
+</div>
+
+<div class="section">
+<h4>-init-taggers</h4>
+<p><code>-init-taggers <var>"all" | comma-separated list of taggers</var></code></p>
+<p>Select which of the initializable taggers to initialize. The <a
+href="#sec-5.2.">table of taggers</a> has a column indicating which taggers are
+initializable. These taggers use the external resources listed above.
+<code>-init-taggers</code> must be followed by either <code>all</code>
+(indicating that all initializable taggers are to be initialized), or a
+comma-separated list of taggers to initialize (in their <code>:type</code>
+form, see below). By default, no taggers are initialized (but in that case you
+can still use those taggers that don't require initialization). If this
+argument is given more than once, TextTagger takes the union of the sets of
+taggers to initialize.</p>
+</div>
+
+<div class="section">
+<h4>-dont-init-taggers</h4>
+<p><code>-dont-init-taggers <var>"all" | comma-separated list of taggers</var></code></p>
+<p>Undo the effect of a previous <code>-init-taggers</code> argument for the given taggers. That is, select taggers <em>not</em> to be initialized.</p>
+</div>
+
+<div class="section">
+<h4>-default-type</h4>
+<p><code>-default-type <var>tag type expression</var></code></p>
+<p>Specify the tag type to be used when no <code>:type</code> argument is given, or when the special type <code>default</code> is used in another tag type expression. If this argument is given more than once, <code>default</code> in the later arguments will refer to the previous arguments. The default value of <code>default</code> is:
+  <blockquote>
+    <code>(or terms words punctuation named_entities street_addresses capitalized_names alphanumerics quotations alternate_spellings (and stanford_pos pos))</code>
+  </blockquote>
+Note that in order to get around the limitations of some shells, it's OK to use <code>[]</code> instead of <code>()</code> here.
+</p>
+</div>
+
+<div class="section">
+<h4>-process-input-utterances</h4>
+<p><code>-process-input-utterances <var>boolean</var></code> (default false)</p>
+<p>When true, TextTagger will subscribe to messages of the form <code>(tell
+&amp;key :content (utterance . *))</code> and translate them to tag requests
+internally. These will be of the form <code>(request :content (tag :text
+<var>text</var> :tell-each-tag t :extra-tag-args (<var>args</var>)))</code>,
+where <code><var>text</var></code> comes from the <code>:text</code> argument
+of the <code>utterance</code>, and <code><var>args</var></code> come from the
+<code>:channel</code>, <code>:direction</code>, <code>:mode</code>,
+<code>:genre</code>, and <code>:uttnum</code> arguments. The original utterance
+message is also re-sent with the <code>:sender</code> removed, to indicate the
+end of the output. A <code>start-new-sentence</code> message with the same
+<code><var>args</var></code> is sent before the internal tag request is
+processed in order to mark the beginning of the output from TextTagger.  (Note
+that when <code>utterance</code>s are sent in rapid succession, relying on
+<code>started/stopped-speaking</code> messages from the sender of the original
+<code>utterance</code> is error-prone because you might get a
+<code>started-speaking</code> for the next utterance/sentence from the original
+sender before the <code>utterance</code> for the previous utterance from
+TextTagger.)</p>
+</div>
+
+<div class="section">
+<h4>-remote-meta-map</h4>
+<p><code>-remote-meta-map <var>boolean|HOST:PORT</var></code> (default trips.ihmc.us:6300)</p>
+<p>Specify whether to connect to a remote server (yes) or run MetaMap locally (no). You can also specify the host and port of the server to connect to.</p>
+<p>MetaMap (the program used by the MetaMap tagger) and UMLS (the database it refers to) require a lot of disk space and installation effort, so most people using the MetaMap tagger will want to use the server. See also <a href="#sec-3.7.">Running TextTagger remotely</a> (the old way of doing it).</p>
+</div>
+
+<div class="section">
+<h4>-meta-map-sources</h4>
+<p><code>-meta-map-sources <var>"all" | comma-separated list of UMLS source vocabularies</var></code> (default all)</p>
+<p>Specify which source vocabularies we should accept tags from. Any vocabularies not in this list will be stripped from the <code>:sources</code> argument of the <code>:domain-specific-info</code> argument of each tag from MetaMap. Any tags whose sources have all been removed are themselves removed. "all" means we should keep all the sources. There is a list of source vocabularies in <code>Perl/TextTagger.pm</code> called <code>@all_meta_map_sources</code>. See also the per-request version, <a href="#sec-3.5.15.">:meta-map-sources</a>.</p>
+</div>
+
+<div class="section">
+<h4>-drum-species</h4>
+<p><code>-drum-species <var>"all" | comma-separated list of species names</var></code> (default all)</p>
+<p>Specify which species we should accept UniProt IDs from in the Drum tagger (also affects miRNAs). Recognised species are "Homo sapiens"/"Human", "Mus musculus"/"Mouse", "Arabidopsis"/"Cress", "Oryza"/"Rice", and "Hordeum"/"Barley" (the last three are really genuses, oh well). See also the per-request version, <a href="#sec-3.5.16.">:drum-species</a>.</p>
+</div>
+
+<div class="section">
+<h4>-no-sense-words</h4>
+<p><code>-no-sense-words <var>comma-separated list of words</var></code> (default empty list)</p>
+<p>Specify words for which TextTagger should not send sense information. This is used in CERNL to filter out bogus senses of common words that come from MetaMap.</p>
+</div>
+
+<div class="section">
+<h4>-senses-only-for-penn-poss</h4>
+<p><code>-senses-only-for-penn-poss <var>"all" | comma-separated list of Penn parts of speech</var></code> (default all the POSs)</p>
+<p>Specify Penn POSs for which TextTagger should send sense information beyond the POS itself (that is, <code>:ont-types</code>, <code>:wn-sense-keys</code>, and <code>:domain-specific-info</code>). This is useful for focusing on disambiguating senses of specific parts of speech and removing bad results from others. Note that this option only works for <a href="#sec-4.1.">lattice format</a> and not <a href="#sec-4.2.">native format</a>, because the tags need to be combined in order to know the POS for all the sense tags.</p>
+</div>
+
+<div class="section">
+<h4>-names-file</h4>
+<p><code>-names-file <var>filename</var></code></p>
+<p>Specify the file full of names that the NamesFromFile tagger should tag as named entities. Note that setting this does not automatically (re)initialize the NamesFromFile tagger or add it to the default tag type; you do that yourself.</p>
+</div>
+
+<div class="section">
+<h4>-terms-file</h4>
+<p><code>-terms-file <var>filename</var></code></p>
+<p>Specify the TSV file mapping terms to native tags that the TermsFromFile should use to tag them. This file is similar to the <a href="#sec-3.6.">input terms list</a> for the TermsInput tagger, but they are separate. You can use the <code>input-terms-to-terms-file.pl</code> program to convert an input terms list to a TSV file. Note that setting this does not automatically (re)initialize the TermsFromFile tagger or add it to the default tag type; you do that yourself.</p>
+</div>
+
+<div class="section">
+<h4>-xml-tags</h4>
+<p><code>-xml-tags <var>mode</var></code></p>
+<p>Specify how to treat XML tags and entities (things like <code>&amp;...;</code>); <code><var>mode</var></code> should be one of the following:
+<dl>
+<dt><code>keep</code></dt>
+<dd>Keep XML tags and entities in the text, don't do anything to them. This is the default.</dd>
+<dt><code>remove</code></dt>
+<dd>Remove XML tags from the text and replace XML entities with the characters they represent (the few TT recognizes anyway).</dd>
+<dt><code>replace-with-spaces</code></dt>
+<dd>Replace XML tags in the text with a string of spaces of the same length, and replace XML entities with the characters they represent followed by spaces, so that character offsets into the original string are preserved. Note that as a special case, the Sentences tagger will act as if the mode were <code>remove</code>, removing the extra spaces before sending the string to Lingua::EN::Sentence. It puts them back afterwards. This special case was added so that the tagger wouldn't be confused by spaces inserted between the last word in a sentence and its final punctuation.</dd>
+</dl>
+</p>
+</div>
+
+<div class="section">
+<h4>-xml-input-rules-file</h4>
+<p><code>-xml-input-rules-file <var>filename</var></code></p>
+<p>Specify the file full of rules for the XMLInput tagger to use to translate XML tags in the input text to TextTagger tags. The file may also contain comments starting with either <code>#</code> or <code>;</code> and continuing to the end of the line. Rules consist of a left-hand side (LHS) describing XML tags that match, and a right-hand side (RHS) describing the (<a href="#sec-4.2.">native-format</a>) TextTagger tag(s) that the XMLInput tagger should output when there is a match (if more than one tag is on the RHS they must be enclosed in another set of parens). Rules may contain newlines, but the LHS must start at the beginning of a line. The LHS and RHS are separated by <code>-&gt;</code>. For example, this rule says that any XML tags with the tag name <code>N</code> should result in a <code>pos</code> tag whose <code>:penn-pos</code> is <code>(NN NNS)</code>:</p>
+<blockquote><code>
+&lt;N&gt; -&gt; (pos :penn-pos (NN NNS))
+</code></blockquote>
+<p>The LHS may also specify XML attributes, with or without values. If a value is specified (e.g. <code>&lt;N number="plural"&gt;</code>), it must match the value of the same attribute in the input. If no value is specified (e.g. <code>&lt;N number&gt;</code>), any value matches, as long as the attribute is there at all.</p>
+<p>Variables are indicated with a <code>?</code> prefix, and may be used for the XML tag name or attribute values (but not attribute names) on the LHS, and may be used anywhere outside quotes on the RHS, or as the only thing inside quotes (e.g. <code>... :text "?text" ...</code>). Attributes with no values implicitly bind a variable named the same as the attribute, e.g. <code>&lt;N number&gt;</code> becomes <code>&lt;N number="?number"&gt;</code>. There are a number of other implicitly-defined variables for all rules (these may be overridden by using them explicitly in the LHS):</p>
+<dl>
+<dt><code>?lex</code> and <code>?text</code></dt>
+<dd>Both contain the content of the XML element without the tags, and with whitespace trimmed from both ends.</dd>
+<dt><code>?start</code> and <code>?end</code></dt>
+<dd>These are the start and end character offsets of <code>?lex</code>/<code>?text</code> within the input text.</dd>
+<dt><code>?tag-start</code> and <code>?tag-end</code></dt>
+<dd>These are the start and end character offsets of the whole XML element, including the XML tags, within the input text.</dd>
+<dt><code>?content-start</code> and <code>?content-end</code></dt>
+<dd>These are the start and end character offsets of the contents of the XML element, before whitespace is trimmed, within the input text.</dd>
+</dl>
+<p>By default, tags on the RHS implicitly have the arguments <code>:lex "?lex" :text "?text" :start ?start :end ?end</code> appended to them, but they can be overridden by explicitly specifying different values for these arguments. One of <code>:lex</code> or <code>:text</code> is sufficient to override both.</p>
+<p><code>case</code> expressions may appear anywhere on the RHS. They are similar to <code>ecase</code> in Common Lisp, and <code>switch</code> in C-family languages. For example, this rule:</p>
+<blockquote><pre>
+&lt;N number&gt; -&gt; (pos :penn-pos (
+  (case ?number
+    (singular NN)
+    (plural NNS)
+    )))
+</pre></blockquote>
+<p>says that any XML element whose tag name is <code>N</code> and that has a <code>number</code> attribute turns into a <code>pos</code> tag with a <code>:penn-pos</code> argument, which is a list with one item in it. The value of that list item depends on the value of the <code>number</code> attribute. If the attribute value is <code>singular</code>, the list item will be <code>NN</code>. If the attribute is <code>plural</code>, the list item will be <code>NNS</code>. If it's anything else, an error occurs (this is why it's more similar to Lisp's <code>ecase</code> than <code>case</code>).</p>
+</div>
+
+<div class="section">
+<h4>-parsers-must-agree</h4>
+<p><code>-parsers-must-agree <var>boolean</var></code> (default false)</p>
+<p>When true, only the phrase categories (<code>:penn-cats</code>/<code>:trips-cats</code>) that all enabled parsers agree on for a given span will be output. Otherwise, all phrase categories that any parser outputs for that span will be output. Setting this to true is necessary when the TRIPS parser's barrier penalty is used, because conflicting phrase tags confuse it.</p>
+</div>
+</div>
+
+<div class="section">
+<h3>The set- and get-parameters messages</h3>
+<p>Some of TextTagger's command-line arguments can be changed at runtime using the <code>set-parameters</code> request. For example:</p>
+<blockquote><samp>
+(request :receiver TextTagger :content
+  (set-parameters
+    :default-type (or words punctuation meta-map)
+    :process-input-utterances nil
+    :meta-map-sources (SNOMEDCT)
+    :no-sense-words (history procedure)
+    :senses-only-for-penn-poss (NN NNS NNP NNPS)
+    )
+  :sender test
+  :reply-with test123)
+(reply :sender TextTagger :receiver test :in-reply-to test123 :content (ok))
+</samp></blockquote>
+<p>TextTagger does not subscribe for this request, so you must specify <code>:receiver TextTagger</code> explicitly (other modules might have their own parameters to set). <code>:default-type</code>, <code>:process-input-utterances</code>, <code>:meta-map-sources</code>, <code>:drum-species</code>, <code>:no-sense-words</code>, <code>:senses-only-for-penn-poss</code>, <code>:xml-tags</code>, and <code>:parsers-must-agree</code> can be set at runtime. <code>-init-taggers</code> cannot be set using <code>set-parameters</code>; use <code>init</code> and <code>fini</code> messages for that (see <a href="#sec-3.3.">below</a>). <code>:remote-meta-map</code>, <code>:names-file</code>, <code>:terms-file</code>, and <code>:xml-input-rules-file</code> can be set, but don't take effect until the related taggers (meta-map, names-from-file, terms-from-file, and xml-input, respectively) are re-initialized (using <code>re-init</code> or <code>fini</code> and <code>init</code>).</p>
+<p>You can also get the current runtime values of all parameters (including the currently initialized taggers) using the <code>get-parameters</code> request, for example:</p>
+<blockquote><samp>
+(request :receiver TextTagger :content (get-parameters) :sender test :reply-with test456)
+(reply :sender TextTagger :receiver test :in-reply-to test456 :content
+  (parameters
+    :init-taggers (meta-map)
+    :default-type (or words punctuation meta-map)
+    :process-input-utterances nil
+    :remote-meta-map "trips.ihmc.us:6300"
+    :meta-map-sources (SNOMEDCT)
+    :drum-species all
+    :no-sense-words (history procedure)
+    ))
+</samp></blockquote>
+</div>
+
+<div class="section">
+<h3>The init, fini, and re-init messages</h3>
+<p>Individual taggers can be initialized, finalized, and re-initialized using the <code>init</code>, <code>fini</code>, and <code>re-init</code> requests, respectively. For example:</p>
+<blockquote><samp>
+;; initialize the meta-map tagger
+(request
+  :receiver TextTagger
+  :content (init :taggers (meta-map))
+  :sender test
+  :reply-with test123)
+(reply :sender TextTagger :receiver test :in-reply-to test123 :content (ok))
+
+;; finalize the stanford-pos and stanford-parser taggers
+(request
+  :receiver TextTagger
+  :content (fini :taggers (stanford-pos stanford-parser))
+  :sender test
+  :reply-with test456)
+(reply :sender TextTagger :receiver test :in-reply-to test456 :content (ok))
+
+;; re-initialize the meta-map tagger
+(request
+  :receiver TextTagger
+  :content (re-init :taggers (meta-map))
+  :sender test
+  :reply-with test789)
+(reply :sender TextTagger :receiver test :in-reply-to test789 :content (ok))
+</samp></blockquote>
+<p><code>init</code> and <code>fini</code> are useful for changing which taggers are initialized (effectively changing the <code>-init-taggers</code> parameter, see <a href="#sec-3.2.">above</a>), while <code>re-init</code> is useful for restarting taggers that have stopped working, or have had a configuration change. Note that <code>re-init</code> won't work for hung taggers, because TextTagger won't be able to process the message while waiting for the tagger.</p>
+</div>
+
+<div class="section">
+<h3>The utterance message</h3>
+<p>The main way TextTagger operates is by reacting to utterance messages like this one:</p>
+<blockquote><samp>
+(tell :sender keyboardmanager :content
+  (utterance
+    :text "Hello, world!"
+    :channel Desktop
+    :direction input
+    :mode text
+    :genre text
+    :uttnum 1))
+</samp></blockquote>
+<p>It does so by converting them to tag requests internally. See the section on the <a href="#sec-3.1.5.">-process-input-utterances</a> argument for how this conversion works, and the section on <a href="#sec-3.5.">the tag request</a> for explanations of the tag request arguments.</p>
+</div>
+
+<div class="section">
+<h3>The tag request</h3>
+<p>Here is an example of the <code>tag</code> request, along with TextTagger's reply:</p>
+<blockquote><samp>
+(request :content (tag :text "Hello, world!"))
+(reply :content (
+  (word "Hello" :frame (0 4) :sense-info ((
+    :penn-parts-of-speech (NNP NNPS)
+    :trips-parts-of-speech (W::NAME)
+    :ont-types (ONT::REFERENTIAL-SEM)
+    )))
+  (word "," :frame (5 6))
+  (word "world" :frame (7 11))
+  (word "!" :frame (12 12))
+  ))
+</samp></blockquote>
+
+<p>A description of each argument follows.</p>
+
+<div class="section">
+<h4>:text</h4>
+<p><code>:text <var>string</var></code></p>
+<p>The string to tag. This is the only required argument; the rest are optional.</p>
+</div>
+
+<div class="section">
+<h4>:type</h4>
+<p><code>:type <var>tagger/tag type expression</var></code></p>
+<p>Select which taggers to use for this text, and which tag types to return.
+This is structured as a Lisp-like boolean expression, which is applied to
+each tagger to decide whether to run it, and to each tag to decide whether to
+output it.</p>
+
+<dl>  
+<dt><code>(and ...)</code>, <code>(or ...)</code>, <code>(not <var>expression</var>)</code></dt>
+  <dd>These do what you think.</dd>
+<dt><code>(type <var>type-name</var>)</code></dt>
+  <dd>A tagger matches this if it can produce tags of the given type. A tag matches this if it is of the given type.</dd>
+<dt><code>(source <var>tagger-name</var>)</code></dt>
+  <dd>A tagger matches this if it has the given name. A tag matches this if it was produced by the named tagger.</dd>
+<dt><code><var>name</var></code></dt>
+  <dd>Shorthand for <code>(or (type <var>name</var>) (source <var>name</var>))</code>. Note that type names are generally singular and tagger names are generally plural, so you can usually avoid using the explicit <code>(type <var>type-name</var>)</code> and <code>(source <var>tagger-name</var>)</code> forms.</dd>
+<dt><code>all</code></dt>
+  <dd>Matches all tags and taggers. Useful if you only want to specify what you don't want, e.g. <code>(and all (not (or <var>types to exclude...</var>)))</code>. Note that <code>(not all)</code> means no tags or taggers will be selected.</dd>
+<dt><code>default</code></dt>
+  <dd>Shorthand for what you get if you don't specify <code>:type</code> at all (see <a href="#sec-3.1.4.">-default-type</a> above).</dd>
+</dl>
+
+<p>For example, if you wanted to get all part of speech tags except those produced by minipar, you would use <code>:type (and (type pos) (not (source minipar)))</code></p>
+
+<p>In general, you don't need to worry about the order of taggers/tag types in the <code>:type</code> argument. Each tagger has lists of tag types that it requires as input, that it may optionally use as input, and that it may output. TextTagger uses this information to select taggers that output types required by already-selected taggers, and to sort the final list of taggers to be run so that each tagger has all the input tags it needs when it runs. There are no cycles in the dependency graph formed by all the taggers and types in TextTagger, except that some taggers output some of the same tag types that they optionally take as input. These loopy taggers are sorted after other taggers outputting that type and before other taggers inputting that type.</p>
+</div>
+
+<div class="section">
+<h4>:format</h4>
+<p><code>:format <var>native|lattice</var></code> (default lattice)</p>
+<p>Get exactly the information TextTagger uses internally to represent the tags
+(<code>native</code>), or transform that into a format the Parser likes
+(<code>lattice</code>). See the section on <a href="#sec-4.">output formats</a>.</p>
+</div>
+
+<div class="section">
+<h4>:imitate-keyboard-manager</h4>
+<p><code>:imitate-keyboard-manager <var>boolean</var></code> (default nil)</p>
+<p>Send the same kinds of messages that KeyboardManager would send, sending both the whole utterance and each word (tag) individually in its own message. Reply with a message like <code>(tell :content (ok :uttnums <var>list-of-utterance-numbers</var>))</code>, giving all the utterance numbers output for this request.</p>
+<p><code>sentence</code> tags are required in order to make uttnums. If <code>:type</code> doesn't already have a source of <code>sentence</code> tags (Sentences, OneSentencePerLine, or StanfordCoreNLP), the Sentences tagger will be selected by mapping <code>:type <var>type</var></code> to <code>:type (or sentences <var>type</var>)</code>. Note that using both dedicated sentence taggers at the same time will lead to bad results. But if StanfordCoreNLP and another sentence tagger are selected, StanfordCoreNLP will consume rather than produce sentence tags, so there will be no conflict.</p>
+</div>
+
+<div class="section">
+<h4>:split-clauses</h4>
+<p><code>:split-clauses <var>boolean</var></code> (default nil)</p>
+<p>(only valid with <code>:imitate-keyboard-manager t</code>, implies that
+<code>:type</code> includes <code>clauses</code>) Treat each clause from the Clauses tagger as its own utterance. Note that while other taggers may produce clause tags, only those from the Clauses tagger are used, since it in turn uses the clauses from other taggers to filter its clause boundaries.</p>
+</div>
+
+<div class="section">
+<h4>:split-sentences</h4>
+<p><code>:split-sentences <var>boolean</var></code> (default nil)</p>
+<p>(only valid with <code>:imitate-keyboard-manager t</code>) Treat each sentence as its own utterance.</p>
+</div>
+
+<div class="section">
+<h4>:paragraph</h4>
+<p><code>:paragraph <var>boolean</var></code> (default t if :split-* is t, nil otherwise)</p>
+<p>(only valid with <code>:imitate-keyboard-manager t</code>) Treat the text as a paragraph. That is, send <code>start-</code> and <code>end-paragraph</code> messages before and after the rest of the messages, respectively. It's useful to set e.g. <code>:split-clauses t :paragraph nil</code> if you're sending the sentences in a paragraph individually through TextTagger, and you want to send <code>start-</code> and <code>end-paragraph</code> yourself.</p>
+</div>
+
+<div class="section">
+<h4>:next-uttnum</h4>
+<p><code>:next-uttnum <var>integer</var></code> (default 1 + the last uttnum output, or 0 if :paragraph was t last time)</p>
+<p>(only valid with <code>:imitate-keyboard-manager t</code>) Use the given number for the next :uttnum in the output. You can set this to 0 for the first in a sequence of <code>:paragraph nil</code> requests representing a paragraph, and the following requests will use the automatically incremented value.</p>
+</div>
+
+<div class="section">
+<h4>:fill-gaps</h4>
+<p><code>:fill-gaps <var>boolean</var></code> (default t)</p>
+<p>Extend each tag's endpoint to cover all the characters until the next start of a tag.</p>
+</div>
+
+<div class="section">
+<h4>:sense-bracketing</h4>
+<p><code>:sense-bracketing <var>tree</var></code> (default nil)</p>
+<p>This argument is the source of information for the gold tagger. Leaves of
+the tree have the format <code>(<var>POS</var> <var>[LF type]</var>
+<var>word</var>)</code>. Internal nodes have the format
+<code>(<var>category</var> <var>subtree</var> <var>[subtree ...]</var>)</code>.
+For example, you might provide the following tree for the sentence "drive the
+truck":
+<blockquote><samp>
+(S (VP (VP- (V CAUSE-TO-MOVE drive)
+            (NP (SPEC (DET (ART the)))
+                (N1 (N LAND-VEHICLE truck))))))
+</samp></blockquote>
+Then you would get the following tags (shown here in lattice format) from the gold tagger:
+<blockquote><samp>
+(word "drive" :frame (0 5) :sense-info ((:trips-parts-of-speech (W::V) :ont-types (ONT::CAUSE-TO-MOVE))))
+(word "the" :frame (6 9) :sense-info ((:trips-parts-of-speech (W::ART))))
+(prefer "the" :frame (6 9) :trips-cats (W::DET W::SPEC))
+(word "truck" :frame (10 14) :sense-info ((:trips-parts-of-speech (W::N) :ont-types (ONT::LAND-VEHICLE))))
+(prefer "truck" :frame (10 14) :trips-cats (W::|N1|))
+(prefer "the truck" :frame (6 14) :trips-cats (W::NP))
+(prefer "drive the truck" :frame (0 14) :trips-cats (W::VP- W::VP))
+</samp></blockquote>
+</p>
+</div>
+
+<div class="section">
+<h4>:input-tags</h4>
+<p><code>:input-tags <var>tags</var></code> (default nil)</p>
+<p>This argument is the source of tags for the Input tagger. The tags should be in <a href="#sec-4.2.">native format</a>. They will be included as-is in TextTagger's list of tags.</p>
+</div>
+
+<div class="section">
+<h4>:input-terms</h4>
+<p><code>:input-terms <var>tags</var></code> (default nil)</p>
+<p>If this argument is given, it's equivalent to <a href="#sec-3.6.">the load-input-terms request</a>. If it's not given, the input terms list is not affected.</p>
+</div>
+
+<div class="section">
+<h4>:tell-each-tag</h4>
+<p><code>:tell-each-tag <var>boolean</var></code> (default nil)</p>
+<p>Instead of replying, send a <code>tell</code> message for each tag. This is
+kind of like <code>:imitate-keyboard-manager t</code>, except that it doesn't
+send the <code>started-speaking</code>, <code>stopped-speaking</code>, or
+<code>utterance</code> messages, and it doesn't automatically add the
+<code>:channel</code>, <code>:uttnum</code>, etc. arguments. When no tags would be output (e.g. when <code>:type</code> is <code>(not all)</code>), this instead sends a single <code>word</code> message with the whole text in it (the Parser then splits it into words by itself).</p>
+</div>
+
+<div class="section">
+<h4>:extra-tag-args</h4>
+<p><code>:extra-tag-args <var>keyword argument list</var></code> (default nil)</p>
+<p>A list of extra keyword arguments to append to each tag. This was briefly
+used (with <code>:tell-each-tag</code>) by SenseKeyboardManager to provide the
+<code>:channel</code>, <code>:uttnum</code>, etc. arguments. Now it's only used
+internally when <a href="#sec-3.1.5.">-process-input-utterances</a> is
+specified. Note that if you include <code>:uttnum</code> in this list, it will set TextTagger's internal uttnum counter. Doing this is incompatible with the <code>:split-<var>*</var> t</code> options because they increment the uttnum within a single tag request.</p>
+</div>
+
+<div class="section">
+<h4>:meta-map-sources</h4>
+<p><code>:meta-map-sources <var>all | list of UMLS source vocabulary abbreviations</var></code> (default same as -meta-map-sources)</p>
+<p>This argument overrides the command-line argument <a href="#sec-3.1.7.">-meta-map-sources</a> on a per-request basis.</p>
+</div>
+
+<div class="section">
+<h4>:drum-species</h4>
+<p><code>:drum-species <var>all | list of species names</var></code> (default same as -drum-species)</p>
+<p>This argument overrides the command-line argument <a href="#sec-3.1.8.">-drum-species</a> on a per-request basis.</p>
+</div>
+
+<p>Note: <code>:imitate-keyboard-manager</code> and <code>:split-clauses</code>
+have a strange interaction with clauses and sentences. When both are
+<code>t</code>, the <code>utterance</code> messages correspond to clauses. When
+<code>:imitate-keyboard-manager</code> is <code>t</code> but
+<code>:split-clauses</code> is <code>nil</code>, only one
+<code>utterance</code> message is sent. In both cases, <code>:uttnum</code>
+corresponds to sentences (not clauses or the whole input string). Because of
+this, <code>:type <var>foo</var></code> sometimes gets mapped to <code>:type (or
+sentences <var>foo</var>)</code> (see
+<a href="#sec-3.5.4.">:imitate-keyboard-manager</a>). When
+<code>:split-clauses</code> is <code>t</code>, sentence and clause tags are not
+output, but without it, they are. This includes the case
+<code>:imitate-keyboard-manager t :split-clauses nil</code>, where you'll get
+sentence tags even if you didn't explicitly ask for them.</p>
+</div>
+
+<div class="section">
+<h3>The load-, add-, get-, and clear-input-terms requests</h3>
+<p>These requests manage the input terms list, which is the source of tags for the TermsInput tagger (note that these requests do <em>not</em> activate the TermsInput tagger by themselves; you must also add <code>terms-input</code> to <a href="#sec-3.5.2."><code>:type</code></a> or <a href="#sec-3.1.4."><code>-default-type</code></a>). The tags should be in <a href="#sec-4.2.">native format</a>, except they shouldn't include <code>:start</code>/<code>:end</code> offsets. The tagger searches the text for the value of the <code>:lex</code> argument (or failing that, <code>:text</code>), and tags each instance using a copy of the input tag(s) that matched. The requests are of the form <code>(request :receiver TextTagger :content <var>content</var>)</code>, with each kind of <code><var>content</var></code> described below:</p>
+<dl>
+<dt><code>(load-input-terms :input-terms <var>tags</var>)</code></dt>
+<dd>Replace the input terms list with the given list of tags. This is equivalent to using <a href="#sec-3.5.12.">the <code>:input-terms</code> argument</a> to <a href="#sec-3.5.">the tag request</a>. Replies with <code>(reply :content (ok))</code>.</dd>
+<dt><code>(add-input-terms :input-terms <var>tags</var>)</code></dt>
+<dd>Add the given list of tags to those already in the input terms list. Replies with <code>(reply :content (ok))</code></dd>
+<dt><code>(get-input-terms)</code></dt>
+<dd>Retrieve the current contents of the input terms list. The reply will be of the form <code>(reply :content <var>tags</var>)</code>.</dd>
+<dt><code>(clear-input-terms)</code></dt>
+<dd>Remove all tags from the input terms list. <!-- not anymore: This also happens when TextTagger receives <code>(tell :content (start-conversation))</code>. --> TextTagger replies to the request with <code>(reply :content (ok))</code>.</dd>
+</dl>
+</div>
+
+<div class="section">
+<h3>Running TextTagger remotely</h3>
+<p>NOTE: this is no longer the way we solve this problem. See <a href="#sec-3.1.6.">-remote-meta-map</a>.</p>
+
+<p>In the TRIPS CER/NL system, it's sometimes necessary to run TextTagger on a
+different computer from the rest of the system (a server). This was because
+MetaMap (used in CER/NL) used to only run on Linux and Solaris, not Mac or
+Windows. It's possible to start TextTagger on the server and give it a
+<code>-connect</code> command-line argument that causes it to connect back to
+the Facilitator on the local machine (instead of the default localhost, which
+would be the server). This is standard TRIPS module stuff.</p>
+
+<p>However, we also want the connection to be secure, since we might be passing
+patient data through it. Using <code>-connect</code> alone doesn't do that.
+Instead, the CER/NL start script (<code>trips-cernl</code>) is set up to create
+a secure tunnel from the server back to the local Facilitator (when you give it
+the <code>-remote-texttagger</code> option), using the <code>-R</code> option
+to <code>ssh</code>. <code>ssh</code> then allocates a port to listen for
+connections from the server, which TextTagger can connect to in order to get to
+the local Facilitator. It allocates these ports dynamically so that multiple
+clients can run instances of TextTagger and have them connect back to the right
+Facilitators.</p>
+
+<p>Unfortunately, <code>ssh</code> doesn't tell the command it's running on the
+server what port it just allocated. It tells the client, but that doesn't help
+when you're running it non-interactively like we are from the start script.
+Instead, we run the <code>get-ssh-tunnel</code> program (installed with
+TextTagger) on the server to get the right port. It does so by running the
+<code>lsof</code> utility to find an open port owned by the current user whose
+name is the port number prefixed by <code>localhost:</code> (which also happens
+to be the right thing to pass to TextTagger's <code>-connect</code> argument).
+This means that each user can only run one TextTagger instance at a time, but
+that's better than only one user at a time being able to use the server.</p>
+
+<p>Another issue is that MetaMap requires two server processes of its own.
+These can be shared among different users. Normally, TextTagger will start and
+stop these processes each time it is run, but this would be bad when it is run
+remotely, because one user might stop the server processes when another user is
+still using them. To get around this, these two processes should be started
+separately from TextTagger, by a user who won't be using the server otherwise
+(using the <code>wsdserverctl</code> and <code>skrmedpostctl</code> scripts
+included with MetaMap). That way, TextTagger will see that the processes are
+already started and not start them itself, and it won't be able to stop them
+because it doesn't have permission to kill another user's processes.</p>
+</div>
+
+<div class="section">
+<h3>MetaMapServer.pl</h3>
+<p><code>MetaMapServer.pl</code> is the server side of <a href="#sec-3.1.6."><code>-remote-meta-map</code></a>. It accepts connections on port 6300, reads text until a blank line, runs half of the MetaMap tagger on the text, and writes the half-finished tags in native format back through the socket. It is responsible for running the MetaMap program itself, transforming its output using xsltproc, and adding more information to the tags from the UMLS database. The client side is responsible for filtering tags based on which source vocabularies they have, and mapping to ONT types.</p>
+
+<p>Running <code>MetaMapServer.pl</code> requires certain tables from UMLS and the NCI ontology to be set up in a MySQL database. This requires about 4GB of disk space (in addition to the space taken by the MetaMap program). There are some rules in the Makefile that should help with this, but they're currently kind of messy. There is some support for using SQLite instead of MySQL, but you'll need to edit MetaMap.pm to use that.</p>
+</div>
+
+<div class="section">
+<h3>text-to-lattice-test.pl</h3>
+<p>In addition to the TextTagger TRIPS module, there is a more-or-less
+standalone script <code>text-to-lattice-test.pl</code>. It accepts plain text
+on standard input, and prints lattice-test lisp format to standard output. It
+accepts all the same command-line arguments as TextTagger. It is not installed
+anywhere, and it expects to be run from the <code>src/TextTagger/</code>
+directory.</p> 
+
+<p><code>text-to-lattice-test.pl</code> works by making a simple subclass of
+TextTagger that redirects KQML output to <code>/dev/null</code>, and overrides
+<code>imitateKeyboardManagerUtterance</code> to make it write lattice-test
+forms to standard output. Then it instantiates that subclass with the
+<code>-connect no</code> argument, reads each line of the input, and sends a
+fake KQML message using <code>receive_request</code>. The taggers in the <a href="#sec-5.2.">Table of Taggers</a> with an X in the "requires TRIPS" column will not work in this mode, since they make requests of other TRIPS modules and would hang while waiting for a reply.</p>
+</div>
+</div>
+
+<div class="section">
+<h2>Output formats</h2>
+<p>TextTagger supports two different formats for outputting tags: <code>lattice</code>, and <code>native</code>. The default is <code>lattice</code>, and the format can be changed using the <a href="#sec-3.5.3."><code>:format</code></a> argument to <a href="#sec-3.5.">the tag request</a>. The <code>native</code> format is much closer to how TextTagger represents tags internally, while the <code>lattice</code> format is more compact, and easier for the Parser to deal with.</p>
+
+<div class="section">
+<h3>Lattice format</h3>
+<p>TextTagger's <code>lattice</code> output format is defined operationally, in terms of the effects each message has on the Parser's operation. Several tags may contribute to a single <code>lattice</code> format message. There are three major types of message: <code>word</code>, <code>prefix</code> and <code>prefer</code>. All have the form:</p>
+<blockquote><code>(type "text" :frame (start end) args...)</code></blockquote>
+<p>Where:</p>
+<dl>
+<dt><code>type</code></dt><dd>is the message type</dd>
+<dt><code>"text"</code></dt><dd>is the substring of the input string the message talks about</dd>
+<dt><code>start</code> and <code>end</code></dt><dd>are the start and end character offsets of that substring (but see <a href="#sec-3.5.9."><code>:fill-gaps</code></a>)</dd>
+<dt><code>args...</code></dt><dd>is the rest of the list, consisting of alternating :keyword/value arguments</dd>
+</dl>
+
+<p>Each of the message types is described below, along with the arguments it may have. In addition, all types of message may have <code>:channel</code>, <code>:direction</code>, <code>:mode</code>, <code>:genre</code>, and <code>:uttnum</code> arguments, as described in <a href="#sec-3.1.5.">-process-input-utterances</a>. These arguments are single values, not lists.</p>
+
+<div class="section">
+<h4>Lattice format message types</h4>
+
+<div class="section">
+<h5>Word</h5>
+<p>This message causes the Parser to build constituents based on the information in the message and add them directly to the chart. If there isn't enough information in the message itself to build constituents for a particular sense, it causes the Parser to look up the described word(s) in the lexicon (which may include using WordFinder to look it/them up in WordNet).</p>
+
+<p>At most one <code>word</code> message will be output for each <code>:frame</code>. Different senses of the same word are represented in the <code>:sense-info</code> list. Each item of this list is a list of keyword arguments describing a set of senses. Each argument is a list of options, and selecting one option from a POS argument and one from a sense argument gives you a single sense. The following arguments may be specified in a <code>:sense-info</code> item, but are not required:</p>
+
+<dl>
+<dt><code>:penn-parts-of-speech</code></dt>
+<dd><a href="http://www.cis.upenn.edu/~treebank/">Penn Treebank</a> style part of speech tags (I and II, they didn't change), from <a href="http://bulba.sdsu.edu/jeanette/thesis/PennTags.html#Word">this list</a>. Note that these actually contain morphological information as well as the basic part of speech. For example, verbs are split into <code>VB, VBD, VBG, VBN, VBP, VBZ</code>.</dd>
+<dt><code>:trips-parts-of-speech</code> (deprecated)</dt>
+<dd>TRIPS-style parts of speech. These are now just mapped from the <code>:penn-parts-of-speech</code>.</dd>
+<dt><code>:wn-sense-keys</code></dt>
+<dd><a href="http://wordnet.princeton.edu/">WordNet</a> 3.0 <a href="http://wordnet.princeton.edu/wordnet/man/senseidx.5WN.html#sect3">sense keys</a>. Note that most of the time the last two fields, <code>:head_word:head_id</code>, are empty, so TextTagger leaves them out (including the colons).</dd>
+<dt><code>:ont-types</code></dt>
+<dd><a href="http://www.cs.rochester.edu/research/cisd/projects/trips/lexicon/cgi/browseontology-ajax">TRIPS Ontology</a> types. Note that <a href="http://www.cs.rochester.edu/research/cisd/projects/trips/lexicon/cgi/browseontology-ajax?search=referential-sem#referential-sem"><code>ONT::referential-sem</code></a> is removed when there are other (more specific) sense options.</dd>
+<dt><code>:alternate-spellings</code></dt>
+<dd>Alternate spellings of the word (e.g. "color" vs. "colour").</dd>
+<dt><code>:score</code></dt>
+<dd>(only from the Drum tagger) A single number between 0 and 1 indicating how good this sense is compared to the others, 1 being the best score. This is the maximum of the scores of the matches in the <code>:domain-specific-info</code>.</dd>
+<dt><code>:domain-specific-info</code></dt>
+<dd>Structures describing other pieces of information that don't affect parsing but should be carried through to the Parser's output (all of them will be carried through, not just one). Currently this is used for <a href="http://www.nlm.nih.gov/research/umls/">UMLS</a> mappings from <a href="http://mmtx.nlm.nih.gov/">MetaMap</a>, mappings from the Drum tagger, and lexical information from Specialist. In lattice format this is an assoc list mapping domains to lists of <code>:domain-specific-info</code> structures with that domain.</dd>
+</dl>
+
+<p>In order to build constituents directly, without looking up the words, both part of speech (<code>:penn-parts-of-speech</code> or <code>:trips-parts-of-speech</code>) and sense (<code>:wn-sense-keys</code> or <code>:ont-types</code>) information must be present.</p>
+
+<p>The <code>:sense-info</code> argument is a list because we might want to allow only certain combinations of POS, sense, and <code>:domain-specific-info</code>. For example, if we want to express the fact that the word "crashes" can either be a plural noun with the sense key <code>"crash%1:11:03"</code> or a verb in 3<sup>rd</sup> person singular present tense with the sense key <code>"crash%2:30:10"</code>, but we want to exclude the possibility of mismatching the sense and the POS, we could use two different items in the <code>:sense-info</code> list:</p>
+<blockquote><pre>(word "crashes" :frame (0 7)
+  :sense-info (
+    (:penn-parts-of-speech (NNS) :wn-sense-keys ("crash%1:11:03"))
+    (:penn-parts-of-speech (VBZ) :wn-sense-keys ("crash%2:30:10"))
+    )
+  )
+</pre></blockquote>
+
+</div>
+
+<div class="section">
+<h5>Prefix</h5>
+
+<p><code>prefix</code> messages are exactly like <code>word</code> messages except that they indicate the tagged string is only a prefix, connected to the following word. This information is useful when <a href="#sec-3.5.9."><code>:fill-gaps</code></a> is <code>t</code>, since then it's not obvious from the character offsets in <code>:frame</code> whether there is whitespace between two "words". But note that you will only get <code>prefix</code> messages for tags of type <code>prefix</code>, which currently only come from the Affixes tagger. There are other situations where you can get multiple <code>word</code> messages with no whitespace between them, for example CamelCase words (which are split into tags of type <code>subword</code>), and endings like "n't" (which have tag type <code>ending</code>). See the <a href="#sec-5.2.">Table of Taggers</a>.</p>
+
+</div>
+
+<div class="section">
+<h5>Prefer</h5>
+<p>This causes the Parser to prefer certain kinds of consituents, without causing it to actually build any based on the contents of the message. These are used for things we don't have sense information for, but don't want to look up in the lexicon either (i.e. phrases, not words or multiwords). These arguments may be specified, and at least one of <code>:penn-cats</code> or <code>:trips-cats</code> is required:</p>
+
+<dl>
+<dt><code>:penn-cats</code></dt>
+<dd>A list of <a href="http://www.cis.upenn.edu/~treebank/">Penn Treebank</a> II style syntactic category tags, from <a href="http://bulba.sdsu.edu/jeanette/thesis/PennTags.html#Clause">this list</a> or <a href="http://bulba.sdsu.edu/jeanette/thesis/PennTags.html#Phrase">this list</a> (all three Penn lists are on the same page).</dd>
+<dt><code>:enju-cats</code></dt>
+<dd>A list of Enju syntactic category tags. See the <a href="http://www.nactem.ac.ku/enju/enju-manual/enju-output-spec.html">Enju output spec</a>. The <code>xcat</code> is appended to the <code>cat</code> with an underscore, and any spaces inside it are replaced with underscores (the spec says <code>xcat</code> is a space-separated list, but I haven't seen more than one yet). The original Enju cats are included for completeness; they get mapped to Penn cats and then TRIPS cats.</dd>
+<dt><code>:trips-cats</code> (deprecated)</dt>
+<dd>A list of TRIPS-style syntactic categories. These are now just mapped from the <code>:penn-cats</code>.</dd>
+<dt><code>:score</code></dt>
+<dd>Negative log probability score coming directly from the Stanford parser. This is a single value, not a list. Note that this only comes from the separate StanfordParser tagger, not from StanfordCoreNLP.</dd>
+</dl>
+</div>
+
+</div>
+
+<div class="section">
+<h4>Combining tags</h4>
+<p>For lattice format only, TextTagger combines tags that are for the same span of text. These may come from different taggers, or the same tagger may output multiple different tags representing different options for interpreting the text, or representing different kinds of information. For the gory details on how this combination is done, see <a href="../Perl/TextTagger/CombineTags.pm"><code>CombineTags.pm</code></a>. But the general strategy is described here.</p>
+<p>There are a couple things to note before we get to combining tags for the same span, which involve combining tags for different spans. First, if we have a sense tag for a span with no POS information at all, it usually means it's a sense tag for a multi-word expression that was never itself POS-tagged. But the individual words might have been. So we look at POS tags for spans contained within the sense tag's span, and using some simple heuristics, we try to guess the POS for the whole span. Failing that, we guess that it's a noun of some kind and print a warning. (This part is in <a href="../Perl/TextTagger/ExtraArgs.pm"><code>ExtraArgs.pm</code></a>.)</p>
+<p>Second, we remove phrase tags that overlap with other phrase tags without nesting. For example, if the input is "A B C", and we get phrase tags covering "A B", "B C", and "A B C", the first two will be removed. We always do this; it's not affected by the <a href="#sec-3.1.15."><code>-parsers-must-agree</code></a> option.</p>
+<p>Now we come back to combining tags for the same span. We divide the set of tags into POS (with no sense), sense (with optional POS), phrase, and other tags. We discard the other tags (which are things like clause, quotation, and spaced-chunk tags that don't fit in the word/prefix/prefer messages), and if the <a href="#sec-3.1.15."><code>-parsers-must-agree true</code></a> option was given we keep a phrase tag only if all phrase taggers (parsers) that tagged the current text at all agree on it (otherwise we keep all phrase tags). We combine sense tags for the same set of senses (and parts of speech if they have them) and take the union of their <code>:domain-specific-info</code>s. Sense tags without <code>:domain-specific-info</code> are combined even if their sense sets differ, by taking the union of the sets. As a special case, if we have exactly one sense tag from any of the input taggers (Input, TermsFromFile, TermsInput, or XMLInput), we use that and discard the rest. POS tags are more complicated.</p>
+<p>Each POS tag may contain a set of multiple parts of speech. We divide the set of POS tags for a span into "intersected", "unioned", and "fallback" sets, based on which tagger they came from. We take the union of the unioned tags, and try to intersect that union with all of the intersected tags. Then we try to combine those POS tags with the sense tags that already have POS tags, again by taking the intersection with each sense's POS tags (if some senses have an empty intersection but others don't, the empty ones are eliminated). In several stages I won't go into here, we weaken this whole intersection process until we actually get some information out. Any sense tags that didn't start out with POS information get the set of POS tags we had before we intersected it with any of the other sense tags. If at the end we still don't have any POS tags, we just use the union of the fallback tags. The <code>:domain-specific-info</code> from any POS tags that have it is added to each combined POS tag if the combined tag has a (non-strict) subset of the set of parts of speech from the tag with the <code>:domain-specific-info</code>.</p>
+<p>Currently, POS tags from the Specialist tagger are the only fallback tags, and POS tags from the following taggers are unioned tags (the rest are intersected): POS (stanford-pos), StanfordParser, StanfordCoreNLP, CJParser, Enju, and the input taggers listed above. POS tags for multi-word expressions that were added as described above are also unioned.</p>
+</div>
+
+</div>
+
+<div class="section">
+<h3>Native format</h3>
+<p>TextTagger's <code>native</code> output format is defined denotationally, in terms of what each tag and each tag argument says about the input string. Tags are output in the form <code>(type args...)</code>, where <code>type</code> is the tag type (i.e. one of the tag types in the <a href="#sec-5.3.">table of tag types</a>, not the message type from <a href="#sec-4.1"><code>lattice</code> format</a>), and <code>args...</code> is the rest of the list, consisting of alternating :keyword/value arguments. The following arguments are used (many of these are the same as in the previous section):</p>
+
+<dl>
+<dt><code>:lex</code></dt>
+<dd>The lexical item tagged.</dd>
+<dt><code>:text</code></dt>
+<dd>The part of the text tagged. This is basically the same as <code>:lex</code>, except that it's used for tags that are decidedly un-word-like, like sentences and quotations.</dd>
+<dt><code>:start</code> and <code>:end</code></dt>
+<dd>The character indices of the start and end of the substring tagged.</dd>
+<dt><code>:penn-pos</code></dt>
+<dd>Penn-style part-of-speech tags. If you're giving <code>native</code> format tags to one of the input taggers (e.g. via the <a href="#sec-3.6.">load-input-terms request</a>), please note that specifying <code>:penn-pos</code> on a <code>sense</code> tag is not sufficient to make all the parts of speech appear in the combined <code>lattice</code> format output (see <a href="#sec-4.1.2.">Combining tags</a> for details). If you want this you should also include a separate tag of type <code>pos</code>, e.g.
+<blockquote><samp>
+(sense :lex "IL-8" :lftype (ONT::PROTEIN) :penn-pos (NN NNP))
+(pos :lex "IL-8" :penn-pos (NN NNP))
+</samp></blockquote>
+</dd>
+<dt><code>:pos</code></dt>
+<dd>TRIPS-style part-of-speech tags. (deprecated)</dd>
+<dt><code>:penn-cat</code></dt>
+<dd>Penn-style syntactic categories.</dd>
+<dt><code>:enju-cat</code></dt>
+<dd>Enju-style syntactic categories.</dd>
+<dt><code>:cat</code></dt>
+<dd>TRIPS-style syntactic categories. (deprecated)</dd>
+<dt><code>:lftype</code></dt>
+<dd>TRIPS ontology types. This was named before we switched from the LF to the ONT package for these symbols.</dd>
+<dt><code>:wn-sense-keys</code></dt>
+<dd>WordNet 3.0 sense keys.</dd>
+<dt><code>:domain-specific-info</code></dt>
+<dd>UMLS/Drum/Specialist-specific structure. This argument has a slightly different format from the same argument in <a href="#sec-4.1."><code>lattice</code> format</a>: it has only one DSI structure instead of an assoc list of them, and the domain to be used as the key in the assoc list should go in the <code>:domain</code> argument instead. If you're giving <code>native</code> format tags to one of the input taggers (e.g. via the <a href="#sec-3.6.">load-input-terms request</a>), and you want to see <code>:domain-specific-info ((<var>domain</var> (<var>type</var> <var>args...</var>)))</code> in the <code>lattice</code> format output, you should write the <code>native</code> format argument as <code>:domain-specific-info (<var>type</var> :domain <var>domain</var> <var>args...</var>)</code> instead. If you want more than one DSI structure in the <code>lattice</code> format output, you need to put them in whole separate tags that are <a href="#sec-4.1.2.">combinable</a>. For example, <code>native</code> format
+<blockquote><samp>
+(sense :lftype (ont::molecule) :lex "GDP" :penn-pos (NNP)
+  :domain-specific-info (term :domain drum :id PC::8977))
+(sense :lftype (ont::molecule) :lex "GDP" :penn-pos (NNP)
+  :domain-specific-info (term :domain drum :id CHEBI::17552))
+(sense :lftype (ont::molecule) :lex "GDP" :penn-pos (NNP)
+  :domain-specific-info (term :domain something-else :id SE::a-made-up-id-123))
+</samp></blockquote>
+becomes <code>lattice</code> format
+<blockquote><samp>
+(word "GDP" :frame (<var>start</var> <var>end</var>) :sense-info ((
+  :penn-parts-of-speech (NNP) :trips-parts-of-speech (W::NAME)
+  :ont-types (ONT::MOLECULE)
+  :domain-specific-info (
+    (something-else
+      (term :id SE::a-made-up-id-123))
+    (drum
+      (term :id PC::8977)
+      (term :id CHEBI::17552))
+    )
+  )))
+</samp></blockquote>
+</dd>
+<dt><code>:score</code></dt>
+<dd>When used in phrase tags from StanfordParser: the negative log probability of this phrase. When used in sense tags from drum: the maximum match score for any of the matches used to find this sense (not any kind of probability, just a number between 0 and 1, 1 being the best match).</dd>
+<dt><code>:source</code></dt>
+<dd>The name of the tagger this tag came from.</dd>
+</dl>
+
+</div>
+
+</div>
+
+<div class="section">
+<h2>Tagger reference</h2>
+<p>This section describes all the individual taggers that make up TextTagger.</p>
+
+<div class="section">
+<h3>A word on naming</h3>
+<p>The names of the various tags are used in different forms for different
+purposes. Suppose you wanted to add a new type of tag called "mome rath":
+<ul>
+<li>The tagger would go in <code>Perl/TextTagger/MomeRaths.pm</code>.</li>
+<li>The function to call in that file would be called <code>tag_mome_raths</code>.</li>
+<li>The <code>type</code> key in the tags produced by that function would get the value <code>mome-rath</code>.</li>
+<li>The name of the tagger used in the <code>:type</code> argument would be <code>mome-raths</code> or <code>mome_raths</code> (they're equivalent).</li>
+</ul>
+</p>
+
+<p>There are a few exceptions to this:
+<ul>
+<li>Some taggers produce tags with different names (e.g. Terms produces <code>named-entity</code> tags).</li>
+<li>The tagger in POS.pm is named <code>stanford_pos</code>.</li>
+</ul>
+(sorry about this, it's partly a result of naming conventions clashing across
+different languages)</p>
+</div>
+
+<div class="section">
+<h3>Table of taggers</h3>
+<table>
+<tr><th>Tagger</th><th>Tag type(s)</th><th class="rotate"><div><span>initializable</span></div></th><th class="rotate"><div><span>requires TRIPS</span></div></th><th>Description</th></tr>
+<tr>
+<td>Affixes</td>
+<td>prefix, word</td>
+<td></td>
+<td>X</td>
+<td>Splits common affixes (just prefixes for now) from words.</td>
+</tr><tr>
+<td>Alphanumerics</td>
+<td>named-entity</td>
+<td></td>
+<td></td>
+<td>Marks sequences of capital letters, numbers, and hyphens as named
+entities with lftype <code>REFERENTIAL-SEM</code> (e.g. "AK-47").</td>
+</tr><tr>
+<td>AlternateSpellings</td>
+<td>alternate-spelling</td>
+<td>X</td>
+<td></td>
+<td>Looks up alternate spellings for words in a simple tab-separated values (tsv) file (currently fetched and converted from <a href="https://wiki.ubuntu.com/EnglishTranslation/WordSubstitution">this page</a>).</td>
+</tr><tr>
+<td>Asma</td>
+<td>alternate-spelling, sense</td>
+<td>X</td>
+<td></td>
+<td>Expands texting acronyms and tags asthma drug names for the TRIPS Asma system.</td>
+</tr><tr>
+<td>CapitalizedNames</td>
+<td>named-entity</td>
+<td></td>
+<td></td>
+<td>Marks any capitalized word not at the beginning of a sentence as a
+named-entity with LF type <code>REFERENTIAL-SEM</code>.</td>
+</tr><tr>
+<td>ChemicalFormulae</td>
+<td>sense</td>
+<td></td>
+<td></td>
+<td>Marks chemical formulae (with element abbreviations, counts, bonds, groups, etc.) with LF type <code>CHEMICAL</code> and Penn POS <code>NNP</code>.</td>
+</tr><tr>
+<td>CJParser</td>
+<td>clause, phrase, pos</td>
+<td>X</td>
+<td></td>
+<td>Uses the Charniak-Johnson Parser (with McClosky's biomed parsing model) to parse sentences, and converts the resulting parse trees to clause, phrase, and POS tags.</td>
+</tr><tr>
+<td>Clauses</td>
+<td>clause</td>
+<td></td>
+<td></td>
+<td>Splits sentences into clauses at certain punctuation (e.g. commas), as long
+as the clauses end up long enough, and they agree with other sources of clause tags if enabled.</td>
+</tr><tr>
+<td>Disambiguator</td>
+<td>sense</td>
+<td></td>
+<td>X</td>
+<td>Calls the Disambiguator TRIPS module to run a statistical classifier and assign scores to previously found ambiguous sense tags.</td>
+</tr><tr>
+<td>Drum</td>
+<td>sense</td>
+<td>X</td>
+<td>X</td>
+<td>Looks up biological mechanism terms for the Deep Reader for Understanding Mechanisms (DRUM).</td>
+</tr><tr>
+<td>Enju</td>
+<td>clause, phrase, pos</td>
+<td>X</td>
+<td></td>
+<td>Uses the Enju parser (with the GENIA model) to parse sentences, and converts the resulting parses to clause, phrase, and POS tags.</td>
+</tr><tr>
+<td>Gold</td>
+<td>phrase, pos, sense, word</td>
+<td></td>
+<td></td>
+<td>Returns tags according to the given <code>:sense-bracketing</code> argument. This was used in the STEP system to provide the parser with perfect ("gold standard") information in these areas.</td>
+</tr><tr>
+<td>Input</td>
+<td>(anything)</td>
+<td></td>
+<td></td>
+<td>Accepts <a href="#sec-4.2.">native tags</a> in the <a href="#sec-3.5.11."><code>:input-tags</code></a> argument and integrates them into TextTagger's output as if they originated within TextTagger. It's possible some tags won't end up being output due to conflicts with other tags (particularly phrase tags).</td>
+</tr><tr>
+<td>MetaMap</td>
+<td>sense</td>
+<td>X</td>
+<td></td>
+<td>Uses UMLS MetaMap to find senses of words and phrases in the medical domain.</td>
+</tr><tr>
+<td>Minipar</td>
+<td>phrase, pos</td>
+<td></td>
+<td>X</td>
+<td>Uses Minipar (via the Minipar TRIPS module) to parse the string.
+Gets phrase tags for internal nodes of the parse tree, and pos tags for the
+leaves. Note that the Minipar TRIPS module pretty much only works on the URCS
+network, since it references an installation of Minipar in someone's home
+directory there. Also, it doesn't work with CMUCL due to a problem it has
+finding a PTY to run Minipar on. Also note that you can't use this tagger with
+<a href="#sec-3.9."><code>text-to-lattice-test.pl</code></a>, since it requires
+a real KQML connection to talk to the Minipar TRIPS module.</td>
+</tr><tr>
+<td>NamedEntities</td>
+<td>named-entity</td>
+<td>X</td>
+<td></td>
+<td>Uses the Stanford NER to find named entities with lftypes
+<code>ORGANIZATION</code>, <code>PERSON</code>, or
+<code>GEOGRAPHIC-REGION</code>.</td>
+</tr><tr>
+<td>NamesFromFile</td>
+<td>named-entity</td>
+<td>X</td>
+<td></td>
+<td>Tags names listed in the file specified with the <code>-names-file</code> option (one per line)</td>
+</tr><tr>
+<td>OneSentencePerLine</td>
+<td>sentence</td>
+<td></td>
+<td></td>
+<td>Tags nonempty lines as sentences.</td>
+</tr><tr>
+<td>PersonalNames</td>
+<td>named-entity</td>
+<td>X</td>
+<td></td>
+<td>Uses the <a href="https://www.ssa.gov/oact/babynames/limits.html">SSA names list</a> to tag personal names, with their gender if it's not too ambiguous.</td>
+</tr><tr>
+<td>POS (stanford-pos)</td>
+<td>pos</td>
+<td>X</td>
+<td></td>
+<td>Uses the Stanford POS tagger to find (Penn) parts of speech for the words
+in the string.</td>
+</tr><tr>
+<td>Prescriptions</td>
+<td>pos</td>
+<td></td>
+<td></td>
+<td>Tag certain (often abbreviated) phrases occurring in prescriptions as either adjectives or adverbs</td>
+</tr><tr>
+<td>PseudoMetaMap</td>
+<td>sense</td>
+<td>X</td>
+<td></td>
+<td>Tag a few specific word senses that we've found MetaMap fails to tag. This is a complement to, not a replacement for, MetaMap</td>
+</tr><tr>
+<td>Punctuation</td>
+<td>punctuation</td>
+<td></td>
+<td></td>
+<td>Each punctuation character gets its own tag.</td>
+</tr><tr>
+<td>Quotations</td>
+<td>quotation</td>
+<td></td>
+<td></td>
+<td>Tag double-quoted strings.</td>
+</tr><tr>
+<td>Sentences</td>
+<td>sentence</td>
+<td></td>
+<td></td>
+<td>Uses the <a href="http://search.cpan.org/~shlomoy/Lingua-EN-Sentence-0.25/lib/Lingua/EN/Sentence.pm"><code>Lingua::EN::Sentence</code></a>
+Perl module to split the string into sentences.</td>
+</tr><tr>
+<td>SpacedChunks</td>
+<td>spaced-chunk</td>
+<td></td>
+<td></td>
+<td>Splits the string on sequences of whitespace longer than one character.
+Used in the PLOT system to help identify columns of data in a character cell
+grid.</td>
+</tr><tr>
+<td>Specialist</td>
+<td>pos</td>
+<td>X</td>
+<td></td>
+<td>Adds information from the SPECIALIST lexicon, including part of speech, citation form, complement patterns, and derivational links.</td>
+</tr><tr>
+<td>StanfordCoreNLP</td>
+<td>clause, named-entity, phrase, pos, punctuation, sentence, word</td>
+<td>X</td>
+<td></td>
+<td>Uses Stanford CoreNLP to process the string (or each sentence tag if they're available), using the tokenizer to produce <code>word</code> and <code>punctuation</code> tags, the sentence splitter to produce <code>sentence</code> tags (unless they were already in the input), the POS tagger to produce <code>pos</code> tags, the parser to produce <code>clause</code> and <code>phrase</code> tags, and the NER to produce <code>named-entity</code> tags.</td>
+</tr><tr>
+<td>StanfordParser</td>
+<td>clause, phrase, pos</td>
+<td>X</td>
+<td></td>
+<td>Uses the Stanford Parser to parse sentences, and converts the resulting
+parse trees to clause, phrase, and POS tags.</td>
+</tr><tr>
+<td>StreetAddresses</td>
+<td>street-address</td>
+<td></td>
+<td></td>
+<td>Uses the <a href="http://search.cpan.org/~sderle/Geo-StreetAddress-US-0.99/US.pm"><code>Geo::StreetAddress::US</code></a>
+Perl module to tag anything that could be the first line of a US address (e.g. "40 S. Alcaniz St.").</td>
+</tr><tr>
+<td>Terms</td>
+<td>named-entity</td>
+<td>X</td>
+<td></td>
+<td>Tags any substring that matches a name in the GNIS database as a
+named-entity with LF type <code>GEOGRAPHIC-REGION</code>.</td>
+</tr><tr>
+<td>TermsFromFile</td>
+<td>(anything)</td>
+<td>X</td>
+<td></td>
+<td>Tags anything matching the first column of the <a href="#sec-3.1.12."><code>-terms-file</code></a> with all the tags in the rest of the columns on that row. Matching is done case-insensitively, and allows the insertion of various kinds of dash.</td>
+</tr><tr>
+<td>TermsInput</td>
+<td>(anything)</td>
+<td></td>
+<td></td>
+<td>Tags anything matching the <a href="#sec-4.2."><code>:lex</code> (or <code>:text</code>) argument</a> of any of the tags from the input terms list with a copy of the matching tag(s). See <a href="#sec-3.6.">the load-, add-, get-, and clear-input-terms requests</a> and <a href="#sec-3.5.12.">the <code>:input-terms</code> argument</a> to <a href="#sec-3.5.">the tag request</a>. Matching is done case-insensitively, and allows the insertion of various kinds of dash.</td>
+</tr><tr>
+<td>VariantLists</td>
+<td>alternate-spelling</td>
+<td></td>
+<td></td>
+<td>Tags non-first variants in slash-separated lists of variants like "Smad1/5/8" as alternate spellings that include the prefix, like "5" -&gt; "Smad5" and "8" -&gt; "Smad8". The Words tagger should already get the first one, "Smad1".</td>
+</tr><tr>
+<td>WordNet</td>
+<td>sense</td>
+<td>X</td>
+<td></td>
+<td>Tags multiword "words" from WordNet with their sense key, part of speech, and morphology.</td>
+</tr><tr>
+<td>Words</td>
+<td>word, ending, number, subword, subnumber</td>
+<td></td>
+<td></td>
+<td>Tags anything that the Parser might want to consider a separate
+word. Example:
+<blockquote><samp>
+foo BarBaz don't 123,456 12EA56
+( ) (    )(()  )         (    ) word
+             ( )                ending
+                 ( ) ( )        number
+    ( )( )                 ()   subword
+                         ()  () subnumber
+</samp></blockquote>
+</td>
+</tr><tr>
+<td>XMLInput</td>
+<td>(anything)</td>
+<td>X</td>
+<td></td>
+<td>Gets XML tags from the original text (before <a href="#sec-3.1.13."><code>-xml-tags</code></a> removes them) and maps them to TextTagger tags using the rules specified in <a href="#sec-3.1.14."><code>-xml-input-rules-file</code></a>.</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h3>Table of tag types</h3>
+<p>This is simply a reverse-lookup table for the above table, except that the input taggers (Input, TermsFromFile, TermsInput, and XMLInput) are omitted.</p>
+<table>
+<tr><th>Tag type</th><th>Tagger(s)</th></tr>
+<tr><td>alternate-spelling</td><td>AlternateSpellings, Asma, VariantLists</td></tr>
+<tr><td>clause</td><td>CJParser, Clauses, Enju, StanfordCoreNLP, StanfordParser</td></tr>
+<tr><td>ending</td><td>Words</td></tr>
+<tr><td>named-entity</td>
+    <td>Alphanumerics, CapitalizedNames, NamedEntities, NamesFromFile, PersonalNames, StanfordCoreNLP, Terms</td></tr>
+<tr><td>number</td><td>Words</td></tr>
+<tr><td>phrase</td>
+    <td>CJParser, Enju, Minipar, StanfordCoreNLP, StanfordParser, Gold</td></tr>
+<tr><td>pos</td>
+    <td>CJParser, Enju, Gold, Minipar, StanfordCoreNLP, StanfordParser, POS (stanford-pos), Prescriptions, Specialist</td></tr>
+<tr><td>punctuation</td><td>Punctuation, StanfordCoreNLP</td></tr>
+<tr><td>quotation</td><td>Quotations</td></tr>
+<tr><td>sentence</td><td>OneSentencePerLine, Sentences, StanfordCoreNLP</td></tr>
+<tr><td>sense</td><td>ChemicalFormulae, Disambiguator, Drum, Gold, MetaMap, WordNet</td></tr>
+<tr><td>spaced-chunk</td><td>SpacedChunks</td></tr>
+<tr><td>street-address</td><td>StreetAddresses</td></tr>
+<tr><td>subnumber</td><td>Words</td></tr>
+<tr><td>subword</td><td>Affixes, Words</td></tr>
+<tr><td>word</td><td>Gold, StanfordCoreNLP, Words</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h3>Table of LF types</h3>
+<p>Some tags (especially named-entity tags) have an associated LF type, and
+different LF types are emitted by different taggers. Note that sense tags
+emitted by the gold tagger (not listed in this table) may have any LF type,
+since the LF types are provided in the <code>:sense-bracketing</code> argument
+to the tag request. Sense tags emitted by the Disambiguator tagger may also have any LF type, as long as it was emitted by another tagger.</p>
+<table>
+<tr><th>LF type</th><th>Tagger(s)</th></tr>
+<tr><td>ALLERGY-MEDICATION</td><td>Asma</td></tr>
+<tr><td>ANGLE-UNIT</td><td>Drum</td></tr>
+<tr><td>AREA-UNIT</td><td>Drum</td></tr>
+<tr><td>BIOLOGICAL-ROLE</td><td>Drum</td></tr>
+<tr><td>BODY-PART</td><td>Drum</td></tr>
+<tr><td>CELL</td><td>Drum</td></tr>
+<tr><td>CELL-LINE</td><td>Drum</td></tr>
+<tr><td>CELL-PART</td><td>Drum</td></tr>
+<tr><td>CHEMICAL</td><td>ChemicalFormulae, Drum</td></tr>
+<tr><td>EVENT-OF-CHANGE</td><td>Drum</td></tr>
+<tr><td>FEMALE-PERSON</td><td>PersonalNames</td></tr>
+<tr><td>GEOGRAPHIC-REGION</td><td>NamedEntities, StanfordCoreNLP, Terms</td></tr>
+<tr><td>INJURY</td><td>Drum</td></tr>
+<tr><td>INTERNAL-BODY-PART</td><td>Drum</td></tr>
+<tr><td>GENE</td><td>Drum</td></tr>
+<tr><td>LENGTH-UNIT</td><td>Drum</td></tr>
+<tr><td>LOCATION-ID</td><td>StreetAddresses</td></tr>
+<tr><td>LONG-TERM-CONTROL-DRUG</td><td>Asma</td></tr>
+<tr><td>MACROMOLECULAR-COMPLEX</td><td>Drum</td></tr>
+<tr><td>MALE-PERSON</td><td>PersonalNames</td></tr>
+<tr><td>MEASURE-UNIT</td><td>Drum</td></tr>
+<tr><td>MEDICAL-DISORDERS-AND-CONDITIONS</td><td>Drum</td></tr>
+<tr><td>MEDICAL-INSTRUMENT</td><td>Drum</td></tr>
+<tr><td>MOLECULAR-DOMAIN</td><td>Drum</td></tr>
+<tr><td>MOLECULE</td><td>Drum</td></tr>
+<tr><td>ORDERED-DOMAIN</td><td>Drum</td></tr>
+<tr><td>ORGANIZATION</td><td>NamedEntities, StanfordCoreNLP</td></tr>
+<tr><td>PERSON</td><td>NamedEntities, PersonalNames, StanfordCoreNLP</td></tr>
+<tr><td>PHYSICAL-CONDITION</td><td>Drum</td></tr>
+<tr><td>PROCESS</td><td>Drum</td></tr>
+<tr><td>PROTEIN</td><td>Drum</td></tr>
+<tr><td>PROTEIN-FAMILY</td><td>Drum</td></tr>
+<tr><td>QUICK-RELIEF-DRUG</td><td>Asma</td></tr>
+<tr><td>RATE-UNIT</td><td>Drum</td></tr>
+<tr><td>REFERENTIAL-SEM</td><td>Alphanumerics, CapitalizedNames, Drum, NamesFromFile, StanfordCoreNLP</td></tr>
+<tr><td>SIGNALING-PATHWAY</td><td>Drum</td></tr>
+<tr><td>TEMPERATURE-UNIT</td><td>Drum</td></tr>
+<tr><td>TIME-SPAN</td><td>Drum</td></tr>
+<tr><td>TIME-UNIT</td><td>Drum</td></tr>
+<tr><td>VOLUME-UNIT</td><td>Drum</td></tr>
+<tr><td>WEIGHT-UNIT</td><td>Drum</td></tr>
+<tr><td>many different types</td><td>MetaMap</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h3>Table of POS/cats</h3>
+<p>Similarly, some types of tags have fixed default parts of speech or syntactic categories:</p>
+<table>
+<tr><th>POS/cat argument</th><th>types of tags</th></tr>
+<tr><td>:penn-parts-of-speech (NNP NNPS)</td><td>named-entity tags</td></tr>
+<tr><td>:penn-parts-of-speech (NNP)</td><td>street-address tags, sense tags from ChemicalFormulae, and sense tags from MetaMap whose lftype is <a href="http://www.cs.rochester.edu/research/cisd/projects/trips/lexicon/cgi/browseontology-ajax?search=geographic-region#geographic-region"><code>ONT::geographic-region</code></a></td></tr>
+<tr><td>:penn-parts-of-speech (NN NNP)</td><td>sense tags from MetaMap whose lftype is <a href="http://www.cs.rochester.edu/research/cisd/projects/trips/lexicon/cgi/browseontology-ajax?search=substance#substance"><code>ONT::substance</code></a></td></tr>
+<tr><td>:penn-cats (S SBARQ SINV SQ)</td><td>sentence tags</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h3>Table of Drum tagger data sources</h3>
+<table>
+<tr><th>data source name/link</th><th>ID prefix</th><th>file format</th><th>maps to TRIPS types</th><th>description</th></tr>
+<tr>
+ <td><a href="http://www.brenda-enzymes.info/">BRENDA</a> Tissue Ontology</td>
+ <td>BTO</td>
+ <td><a href="http://www.geneontology.org/GO.format.obo-1_2.shtml">OBO</a></td>
+ <td>CELL, CELL-LINE, INTERNAL-BODY-PART</td>
+ <td>"A structured controlled vocabulary for the source of an enzyme. It comprises terms of tissues, cell lines, cell types and cell cultures from uni- and multicellular organisms."</td>
+</tr>
+<tr>
+ <td><a href="https://code.google.com/p/cell-ontology/">Cell Ontology</a> (basic)</td>
+ <td>CL</td>
+ <td>OBO</td>
+ <td>CELL</td>
+ <td>"The Cell Ontology is designed as a structured controlled vocabulary for cell types. This ontology was constructed for use by the model organism and other bioinformatics databases, where there is a need for a controlled vocabulary of cell types. This ontology is not organism specific; indeed it includes cell types from prokaryotes to mammals, including plants and fungi."</td>
+</tr>
+<tr>
+ <td><a href="http://www.ebi.ac.uk/chebi">Chemical Entities of Biological Interest (ChEBI)</a></td>
+ <td>CHEBI</td>
+ <td>OBO</td>
+ <td>CHEMICAL, MOLECULE</td>
+ <td>"A freely available dictionary of molecular entities focused on ‘small’ chemical compounds."</td>
+</tr>
+<tr>
+ <td><a href="http://www.nextprot.org/">neXtProt</a> Cellosaurus</td>
+ <td>CVCL</td>
+ <td>OBO</td>
+ <td>CELL-LINE</td>
+ <td>"a controlled vocabulary of cell lines"</td>
+</tr>
+<tr>
+ <td><a href="http://www.ebi.ac.uk/efo/">Experimental Factor Ontology</a></td>
+ <td>EFO</td>
+ <td>OBO</td>
+ <td>CELL-LINE, MEASURE-UNIT</td>
+ <td>"The Experimental Factor Ontology (EFO) provides a systematic description of many experimental variables available in EBI databases, and for external projects such as the NHGRI GWAS catalogue. It combines parts of several biological ontologies, such as anatomy, disease and chemical compounds. The scope of EFO is to support the annotation, analysis and visualization of data handled by many groups at the EBI and as the core ontology for the Centre for Therapeutic Validation (CTTV). Functional Genomics Team. We also add terms for external users when requested." For now we are using only the cell line and unit pieces of this ontology, which include parts of BTO and UO with some extensions native to EFO.</td>
+</tr>
+<tr>
+ <td><a href="http://www.nextprot.org/">neXtProt</a> controlled vocabulary of families</td>
+ <td>FA</td>
+ <td>EMBL?</td>
+ <td>PROTEIN-FAMILY</td>
+ <td>Protein families from neXtProt's <code>cv_family.txt</code>. "Developed in collaboration between the SIB Swiss Institute of Bioinformatics and Geneva Bioinformatics (GeneBio) SA, neXtProt will be a comprehensive human-centric discovery platform, offering its users a seamless integration of and navigation through protein-related data."</td>
+</tr>
+<tr>
+ <td><a href="http://www.genenames.org/">HUGO Gene Nomenclature Committee</a></td>
+ <td>HGNC</td>
+ <td><a href="http://www.genenames.org/cgi-bin/statistics">TSV</a></td>
+ <td>GENE</td>
+ <td>"HGNC is responsible for approving unique symbols and names for human loci, including protein coding genes, ncRNA genes and pseudogenes, to allow unambiguous scientific communication." We are using just the protein coding genes for now.</td>
+</tr>
+<tr>
+ <td><a href="http://www.geneontology.org/">Gene Ontology</a></td>
+ <td>GO</td>
+ <td>OBO</td>
+ <td>CELL, CELL-PART, EVENT-OF-CHANGE, INTERNAL-BODY-PART, MACROMOLECULAR-COMPLEX, MOLECULE, SIGNALING-PATHWAY, TIME-SPAN</td>
+ <td>"The GO project has developed three structured, controlled vocabularies (ontologies) that describe gene products in terms of their associated biological processes, cellular components and molecular functions in a species-independent manner."</td>
+</tr>
+<tr>
+ <td><a href="http://www.nlm.nih.gov/mesh/">Medical Subject Headings (MeSH)</a> <a href="http://www.nlm.nih.gov/bsd/indexing/training/CATD_040.html">Supplementary Concept Records (SCR)</a></td>
+ <td>MESH</td>
+ <td><a href="http://www.nlm.nih.gov/mesh/ctype.html">ASCII MeSH SCR</a></td>
+ <td>PHARMACOLOGIC-SUBSTANCE</td>
+ <td>Mostly drugs and chemicals. We only get terms in the semantic types "Pharmacologic Substance" (T121), "Antibiotic" (T195), and "Clinical Drug" (T200).</td>
+</tr>
+<tr>
+ <td><a href="http://psidev.info/">Proteomics Standards Initiative</a> for Molecular Interaction (PSI-MI)</td>
+ <td>MI</td>
+ <td>OBO</td>
+ <td>BIOLOGICAL-ROLE, CHEMICAL, EVENT-OF-CHANGE, FORMAL-UNIT, GENE, MACROMOLECULAR-COMPLEX, MOLECULE, ORDERED-DOMAIN, PROTEIN</td>
+ <td>Molecular interactions, and the interacting molecules that interact in them. (this is currently unused)</td>
+</tr>
+<tr>
+ <td><a href="https://code.google.com/p/unit-ontology/">Units of Measurement Ontology</a></td>
+ <td>UO</td>
+ <td>OBO</td>
+ <td>MEASURE-UNIT</td>
+ <td>Ontology of measurement units used in biology.</td>
+</tr>
+<tr>
+ <td><a href="http://www.uniprot.org/">UniProt</a> Swiss-Prot</td>
+ <td>UP</td>
+ <td><a href="http://web.expasy.org/docs/userman.html">EMBL (sorta)</a></td>
+ <td>CELL-PART, PROTEIN</td>
+ <td>"The UniProt Knowledgebase (UniProtKB) is the central hub for the collection of functional information on proteins, with accurate, consistent and rich annotation." Uniprot has two sections, Swiss-Prot and TrEMBL. Swiss-Prot is the hand-curated section, so it's the one we use. We also use their subcellular location vocabulary, <code>subcell.txt</code>.</td>
+</tr>
+<tr>
+ <td><a href="http://xfam.org/">Xfam</a>/<a href="http://pfam.xfam.org/">Pfam</a>-A</td>
+ <td>XFAM</td>
+ <td><a href="http://en.wikipedia.org/wiki/Stockholm_format">Stockholm</a></td>
+ <td>PROTEIN-FAMILY</td>
+ <td>"The Pfam database is a large collection of protein families, each represented by multiple sequence alignments and hidden Markov models (HMMs). ... There are two components to Pfam: Pfam-A and Pfam-B. Pfam-A entries are high quality, manually curated families."</td>
+</tr>
+</table>
+</div>
+
+</div>
+
+<div class="section">
+<h2>Stanford weirdness</h2>
+<p>The old separate tools from Stanford that TextTagger uses (their NER, POS tagger, and parser) do some weird things that make it difficult for TextTagger to deal with them (in particular, matching up their output with the original input string is a problem). Most of these things are done only by the NER and parser, not by the POS tagger (which is weird in itself). The POS tagger does insist that its input is spaced in a particular way, but that's about it. The rest of these apply to the NER and parser:</p>
+<ul>
+<li>They convert most kinds of braces ( ([&lt; and &gt;]) ) to -LRB- and -RRB-, which are the Penn tags for Left Round Brace and Right Round Brace, which is wrong because [&lt;&gt;] are not round.</li>
+<li>They convert curly braces { and } to -LCB- and -RCB-, which are correct according to Penn, but why pick these out from all the other braces they say are "round"?</li>
+<li>Stanford Parser sometimes <em>doesn't</em> convert ( and ) to -LRB- and -RRB-, making the Lispy parse trees it outputs more difficult to interpret.</li>
+<li>They convert ". . ." to "..." (removing spaces).</li>
+<li>They convert " to `` or '', if they think it's the start or end of a quotation, respectively.</li>
+<li>They convert ' to ` in similar situations.</li>
+<li>They convert Unicode en-dashes (–) and em-dashes (—) to double ASCII hyphen-minuses (--).</li>
+<li>They insert an extra "." after an abbreviation if they think it's at the end of a sentence, e.g. "...Hewlett-Packard Co. Recently..." becomes "...Hewlett-Packard Co. . Recently...".</li>
+<li>They convert (some) British spellings like "organisation" and "colour" to their American equivalents like "organization" and "color".</li>
+<li>They capitalize days of the week, and months of the year except "may".</li>
+<li>They convert the cents character "¢" to the word "cents".</li>
+<li>Stanford NER doesn't tag things that look like XML tags; it passes them through unchanged.</li>
+<li>...Except when they occur at the beginning of the string. If there is a sequence of XML tags at the beginning, only the last one is kept (but still not tagged), and any space between it and the following token will be removed, e.g. "&lt;foo&gt; &lt;bar&gt; &lt;baz&gt; test" becomes " &lt;baz&gt;test". This doesn't appear to affect the tagging of the following token, e.g. in "&lt;foo&gt; Mount Rushmore" -&gt; "&lt;foo&gt;Mount Rushmore", "Mount Rushmore" is still tagged as a <code>LOCATION</code>.</li>
+</ul>
+<p>There may be more things like this lurking. In particular, I doubt I covered all their British to American spelling mappings (though I already know they didn't do all of them). If you see the error message "word not found in remaining original text", it's likely something like this is the problem.</p>
+<p>The new integrated Stanford CoreNLP still does a lot of this stuff, but it's not really a problem because it also now gives TextTagger the character offsets for the token boundaries, so it's no longer necessary to match up the output string to the original input. One thing that still happens is that sentence-ending abbreviations get their final periods chopped off to serve as the end of the sentence (so in the above example you'd get "Co" and "." in separate tags, but you wouldn't get "Co."). </p>
+</div>
+
+</div>
+</body></html>
+

@@ -1,0 +1,165 @@
+.\" Time-stamp: <Mon Nov 24 19:12:25 EST 1997 ferguson>
+.TH LIBKQML 3 "10 Oct 1996" "TRIPS"
+.SH NAME
+libKQML \- TRIPS System KQML Library
+.SH SYNOPSIS
+#include <KQML.h>
+.SH DESCRIPTION
+.PP
+KQML is the Knowledge Query and Manipulation language, a communication
+protocol for knowledge-based systems. The TRIPS KQML Library provides
+C data structures and routines for manipulating the KQML performatives
+exchanged between modules of the TRIPS System.
+.PP
+Basically, KQML performatives are parenthesized lists consisting of a
+"verb" (e.g., "tell" or "ask") and a sequence of keyword-value
+"parameters" (e.g., :sender, :content). KQML performatives are
+transmitted as ASCII strings, and the libKQML routines are essentially
+routines for parsing and managing these strings. For more details on
+KQML, see the specification and/or the TRAINS-96 Technical Note.
+.SH "KQML SYNTAX"
+.PP
+The following is a brief BNF grammar for KQML:
+
+.nf
+.na
+  <performative> ::= ( <word> {<white> :<word> <white> <expr>}* )
+  <expr> ::= <word> | <quotation> | <string> |
+             (<word> {<white> <expr>}*)
+  <word> ::= <char><char>*
+  <char> ::= <alphabetic> | <numeric> | <special>
+  <special> ::= < | > | = | + | - | * | / | & | ^ | ~ | _ |
+                @ | $ | % | : | . | ! | ?
+  <quotation> ::= '<expr> | `<comma-expr>
+  <comma-expr> ::= <word> | <quotation> | <string> | ,<comma-expr> |
+                   (<word> {<white> <comma-expr>}*)
+  <string> ::= "<stringchar>" | #<digit><digit>*"<ascii>*
+  <stringchar> ::= \e<ascii> | <ascii-not-\e-or-">
+.ad
+.fi
+
+This grammar assumes definitions for <ascii>, <alphabetic>, <numeric>,
+etc. A "*" means zero or more occurrences, and braces indicate
+optional items. Note that <performative> is a specialization of <expr>
+(requiring strict keyword-value alternation).
+.PP
+This specification is quite restrictive. It prohibits the empty list
+"()", for example, as well as whitespace between the last element of a
+list and any of its closing parentheses. It also prohibits lists of
+strings (requiring a <word> at the start of any list). Some of these
+restrictions have been relaxed in TRIPS.
+.SH "MEMORY FUNCTIONS"
+.PP
+The following functions allocate and manipulate performatives.
+.IP "KQMLPerformative *KQMLNewPerformative(char *verb)"
+Allocates a new performative with the given verb and no parameters.
+.IP "void KQMLFreePerformative(KQMLPerformative *perf)"
+Frees the given performative and all its parameters.
+.IP "char *KQMLGetParameter(KQMLPerformative *perf, char *key)"
+Returns the value of the requested parameter, i.e., the element
+following KEY in the performative. Returns NULL is there is no KEY
+parameter. Note that this function does NOT allocate a copy of the
+string value.
+.IP "KQMLParameter *KQMLSetParameter(KQMLPerformative *perf,"
+.nf
+.na
+                           char *key, char *value)
+.fi
+.ad
+Sets the value of the parameter KEY. This frees any previous value for
+the parameter and allocates a copy of the given VALUE.
+.SH "PARSING FUNCTIONS"
+.PP
+These routines convert between normal C strings (char*), string
+arrays (char **), and performatives.
+.IP "char *KQMLParseString(char *in)"
+Parses the input as a KQML string, either double-quoted or sharped,
+and returns a newly-allocated C string. Returns NULL if the input is
+not a KQML string.
+.IP "char *KQMLParseQuotedString(char *in)"
+Like KQMLParseString but the input must be a quoted KQML string.
+.IP "char *KQMLParseSharpedString(char *in)"
+Like KQMLParseString but the input must be a sharped KQML string.
+.IP "char **KQMLParseList(char *in)"
+Parses the input as KQML list and returns a newly-allocated,
+NULL-terminated array of C strings each of which is a newly-allocated
+copy of an element of the list. These elements are not themselves
+parsed, however. Returns NULL if the input is not a KQML list.
+.IP "char **KQMLParseStringList(char *in)"
+Like KQMLParseList, but further parses each of the elements of the
+list as KQML strings.
+.IP "char *KQMLParseThing(char *in)"
+Parses the input as a string if it is in KQML string syntax, otherwise
+simply returns a newly-allocated copy of the input (assumed to be a
+token). Returns NULL only if
+.IR malloc (3)
+fails.
+.IP "char **KQMLParseThingList(char *in)"
+Like KQMLParseList, but further parses each of the elements of the
+list that are KQML strings.
+.IP "KQMLPerformative *KQMLParsePerformative(char *in)"
+Parses the input as a KQML performative and returns a newly-allocated
+KQMLPerformative structure containing the verb and any parameters.
+Note that a KQML performative is simply a list with an initial token
+followed by keyword-value pairs.
+.IP "int KQMLParseKeywordList(char *in, char **keys, char ***vals)"
+For KEYS a NULL-terminated list of keywords, parses the input and
+places the newly-allocated copies of the corresponding values into
+corresponding elements of VALS. Returns the number of keywords
+matched.
+.SH "INPUT FUNCTIONS"
+.PP
+These functions are used for input of KQML performatives from open
+file descriptors. The enumerated type KQMLError is used to indicate
+errors encountered during processing.
+.IP "KQMLPerformative *KQMLRead(int fd, KQMLError *errorp,"
+.nf
+.na
+                      char **txtp)
+.ad
+.fi
+This routine reads a performative from the given file descriptor. It
+returns a newly-allocated performative and sets *ERRORP to 0 if
+successful. It returns NULL and sets *ERRORP to 0 if end-of-file is
+encountered. Otherwise it returns NULL and *ERRORP will be less than
+0. If TEXTP is non-null, a newly-allocated copy of the text of the
+message (or text leading up to an error) is stored in *TXTP.
+.IP "KQMLPerformative *KQMLReadNoHang(int fd, KQMLError *errorp,"
+.nf
+.na
+                            char **txtp)
+.ad
+.fi
+This routine reads a performative from the given file descriptor
+without blocking in
+.IR read (2).
+It returns a newly-allocated performative and sets *ERRORP to 0 if
+successful. It returns NULL and sets *ERRORP to a value greater than 0
+if the performative is not yet complete. It returns NULL and sets
+*ERRORP to 0 if end-of-file is encountered. Otherwise it returns NULL
+and *ERRORP will be less than 0. If TEXTP is non-null, a
+newly-allocated copy of the text of the message (or text leading up to
+an error) is stored in *TXTP. Note that this is not only the text read
+this call--it is the text read thus far on this message, or up to this
+error.
+.IP "char *KQMLErrorString(KQMLError num)"
+Returns a string corresponding to the given KQML error number. Note
+that this string is not freshly allocated.
+.SH "MISCELLANEOUS FUNCTIONS"
+.IP "char *KQMLPerformativeToString(KQMLPerformative *perf)"
+Returns a newly-allocated string containing the text form of the given
+performative, suitable for printing.
+.IP "KQMLPerformative *KQMLCopyPerformative(KQMLPerformative *perf)"
+Returns a newly-allocated copy of the given performative, with the
+same verb and parameters, all also copied.
+.SH SEE ALSO
+.PP
+trips(1),
+libtrlib(3),
+libutil(3)
+.SH BUGS
+.PP
+Swat. Ow! Swat. Yikes!
+.SH AUTHOR
+.PP
+George Ferguson (ferguson@cs.rochester.edu).

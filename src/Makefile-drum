@@ -1,0 +1,56 @@
+#
+# Makefile for TRIPS (DRUM configuration)
+#
+
+LIBS = \
+	KQML \
+	TripsModule \
+	trlib \
+	util \
+        defcomponent \
+	AKRL \
+	WordNetSQL
+#	OWL
+
+LISP_MODULES = \
+	util \
+	Comm \
+	Logging \
+	SimpleKB \
+	OntologyManager \
+	LexiconManager \
+	WordFinder \
+	Parser \
+	NewIM \
+	ChannelKB \
+	DeepSemLex/code/lib
+#	DiscourseContext
+
+LISP_PROGRAMS = \
+	Systems/drum
+
+SPEECH_LIBS = \
+
+SPEECH_PROGRAMS = \
+
+JAVA_PROGRAMS = \
+	Facilitator \
+	DrumGUI
+
+OTHER_PROGRAMS = \
+	Graphviz \
+	TextPP \
+	TextTagger \
+	Tools
+
+DATA = \
+	Data
+
+include Makefile-common
+
+#
+# Local variables:
+# mode: makefile
+# End:
+#
+

@@ -1,0 +1,2108 @@
+/*
+ * DrumGUI.java
+ *
+ * $Id: DrumGUI.java,v 1.61 2016/04/21 23:24:25 lgalescu Exp $
+ *
+ * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
+ */
+
+/* History
+ * 20141021 lgalescu - Adapted from the CernlGUI module.
+ */
+
+package TRIPS.DrumGUI;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import TRIPS.KQML.KQMLContinuation;
+import TRIPS.KQML.KQMLExpectedListException;
+import TRIPS.KQML.KQMLList;
+import TRIPS.KQML.KQMLObject;
+import TRIPS.KQML.KQMLPerformative;
+import TRIPS.KQML.KQMLReader;
+import TRIPS.KQML.KQMLString;
+import TRIPS.KQML.KQMLToken;
+import TRIPS.TripsModule.StandardTripsModule;
+import TRIPS.util.StringUtils;
+
+/**
+ * GUI module for data manipulation and visualization in the DRUM system.
+ * 
+ * @author lgalescu
+ *
+ */
+// TODO: make this into a DrumManager and split off all the EKB stuff into a separate module
+public class DrumGUI extends StandardTripsModule {
+
+    /** Modes of operation. */
+    public enum Mode {
+        /**
+         * In this mode, the module is connected to the TRIPS system. Its
+         * operation is driven by the user or some other module. This is the
+         * normal mode of operation.
+         */
+        CONNECTED,
+        /**
+         * In this mode, the module is connected to TRIPS system. On startup it
+         * goes automatically into processing a set of files from a batch list;
+         * when the processing is over it exits (shutting down the whole
+         * system).
+         */
+        BATCH,
+        /**
+         * In this mode, the module is not connected to TRIPS. It reads messages
+         * from trace files and simulates execution. Trace files contain KQML
+         * messages that this module should receive during its processing;
+         * typically, these are obtained from logs obtained from runs using any
+         * of the other two modes of operation.
+         * <p>
+         * This mode can be useful for re-running the system on a dataset if the only changes are in this module,
+         * whereas other TRIPS components' behavior as well as the interaction between those components and this module
+         * has not changed.
+         * <p>
+         * This mode can be triggered via the command line in two ways, leading to slightly different modes of
+         * operation:
+         * <li><code>-cache DIR</code>: for each data file being processed the module will look in <code>DIR</code> for
+         * a file with the same name as the data file name holding the KQML messages it needs to process that one data
+         * item. NOTE: This mode of operation has not been tested recently, so it might not work at all! --lg, 20150701
+         * <li><code>-trace FILE</code>: the trace file contains the list of all KQML messages for replaying a session
+         * (or a portion of it).
+         * 
+         * @see #processCache(String)
+         * @see #processTrace()
+         */
+        STANDALONE
+    }
+
+    // TODO: add documentation
+
+    // properties
+    static Properties properties;
+
+    // mode
+    private Mode mode = Mode.CONNECTED;
+
+    // display
+    protected Display display = null; 
+    private boolean showDisplay = true;
+
+    // selected datasets
+    protected DataSet dataset = new DataSet();
+    /** Input file currently being processed. */
+    protected String currentInputFile;
+    /** String form of data currently being processed. */
+    protected String currentInputData;
+
+    // useful stuff for syncing with other TRIPS modules
+    private boolean isSysReady = false;
+    /** When true, we can do whatever to close off the current document, then can move on to a new one */
+    private boolean documentDone = true;
+    /** ID for current document (corresponds to paragraph ID in the rest of the system). */
+    protected String documentID;
+    /** Counter for external {@code run-text} requests. */
+    protected int runTextCounter = 0;
+    /** Utterance number (uttnum) of the last utterance of the current paragraph. */
+    private int pLastUttnum = 0;
+    /** Number of clauses for the last utterance of the current paragraph that remain to be processed. */
+    private int pLastClausesToDo = 0;
+    /** True iff full paragraph sent to TextTagger was OKed for processing */
+    private boolean gotOK = false;
+    /**
+     * Utterances we're waiting on. Each utterance, represented by its {@code uttnum}, maps to a list of clauses. The
+     * clause is represented via the list of words specified in the speech act from the Parser.
+     */
+    private LinkedHashMap<Integer, ArrayList<KQMLList>> waitingList = new LinkedHashMap<Integer, ArrayList<KQMLList>>();
+    /** Call-back map for keeping track of current load requests. It maps document IDs to call-back IDs. */
+    private LinkedHashMap<String, KQMLPerformative> callBacks = new LinkedHashMap<String, KQMLPerformative>();
+    /** Current call-back ID */
+    private KQMLPerformative currentCallBack = null;
+    /** Time of last activity seen on the rest of the system */
+    private long timeOfLastSystemActivity;
+    /** If {@code true}, exit after current dataset is completed */
+    private boolean exitUponCompletion = false;
+
+    /**
+     * List of run requests that haven't been processed yet. If we're working on a dataset and another request comes
+     * in, it is queued up here. When a dataset is finished processing, the first request from this list is taken up.
+     */
+    private List<RunTask> runTaskQueue = Collections.synchronizedList(new ArrayList<RunTask>());
+
+    /**
+     * A timer that checks every now and then whether we're idle and have tasks to do. If so, it will pick the first
+     * task and execute it
+     */
+    private final Timer taskMonitor = new Timer(true);
+    /** How often to check for activity status */
+    private static final int TS_PERIOD = 2000; // two seconds
+
+
+    /**
+     * The KB.
+     */
+    private static DrumKB kb = new DrumKB();
+
+    // logging
+    protected Log log = null;
+    protected boolean logging = false;
+
+    // things relevant for STANDALONE mode
+    protected String cacheDir;  // cached input directory
+    protected String traceFile; // msg input for rerunning a full session
+    // things relevant for BATCH mode
+    protected String batchFile; // lists data files to be processed in batch mode
+
+    // LG 20110710: ideally the processing model should allow for documents to be structured in more complex
+    // hierarchies. For now, we have only two options:
+    // i) process whole document in one step (single-paragraph mode); and
+    // ii) process a document as a sequence of paragraphs, separated by line-breaks.
+    private boolean breakLines; // TODO: change name
+    /** paragraphs, obtained from a document by splitting at line breaks */
+    String[] paragraphs;
+    /** paragraph offsets relative to document */
+    int[] paragraphOffsets;
+    /** maps each uttnum to a paragraph index (starting at 0) */
+    HashMap<Integer, Integer> docMap;
+    /** number of paragraphs processed */
+    int paragraphsDone = 0;
+
+    int currentDatasetIndex = 0;
+
+    // TT options, etc.
+    /** Default tag options, set during initialization. */
+    private KQMLList defaultTagOptions;
+    /** Tag options for processing current data item. May be changed via GUI or message. */
+    private KQMLList tagOptions;
+    /** Input terms */
+    private KQMLList inputTerms = new KQMLList();
+    private String inputTermsFolder = null;
+    private String inputTermsFileExtension = "its";
+
+    /** main()
+     */
+    public static void main(String argv[]) {
+        new DrumGUI(argv, true).run();
+    }
+    /** Constructor
+     */
+    public DrumGUI(String argv[], boolean isApplication) {
+        super(argv, isApplication);
+    }
+    /** Constructor
+     */
+    public DrumGUI(String argv[]) {
+        this(argv, false);
+    }
+
+    /** 
+     * Performs initializations.
+     */
+    public void init() {
+        name = "DRUM";
+        super.init();
+        handleParameters();
+
+        // debugging
+        if (debuggingEnabled) {
+            Debug.setDebugLevel(Debug.Level.DEBUG);
+        }
+
+        // TT options
+        String tagOptProp = getProperty("tag.options.default");
+        if (tagOptProp != null) {
+            try {
+                defaultTagOptions = KQMLList.fromString(tagOptProp);
+            } catch (IOException e) {
+                Debug.fatal("Badly formed default tag options string!");
+            }
+        } else {
+            defaultTagOptions = new KQMLList();
+        }
+        tagOptions = defaultTagOptions;
+
+        // breakLines?
+        breakLines = getBoolean("input.split-on-newlines");
+
+        // ready
+        sendSubscriptions();
+        initLog();
+        setTimeOfSystemActivity();
+        ready();
+
+        // get dataset
+        if (mode == Mode.CONNECTED) {
+            // nop
+        } else if (mode == Mode.BATCH) {
+            if (batchFile == null) {
+                Debug.fatal("No batch file specified!");
+            }
+            dataset.addFromFile(batchFile);
+            dataset.selectAll();
+            if (isSysReady) { // normally we'd have to wait for this...
+                sendGetTTParameters();
+                initiateProcessing();
+            }
+        } else if (mode == Mode.STANDALONE) {
+            if ((cacheDir == null) && (traceFile == null)) {
+                Debug.fatal("A cache directory or a trace file must be specified!");
+            }
+            isSysReady = true; // not sure this is actually useful
+            if (traceFile != null)
+                processTrace();
+        }
+
+        // display
+        Debug.warn("showDisplay = " + showDisplay);
+        if (showDisplay) {
+            display = new Display(this, name);
+            display.setSelectorMode(getInteger("Display.SelectorPanel.mode"));
+            display.setExtractorMode(getProperty("Display.ExtractorPanel.mode"));
+            display.showDataset(false);
+        }
+
+        // should we wait?
+        if (display != null) {
+            display.setState(isSysReady ? Display.State.READY : Display.State.WAITING);
+        }
+
+        // task scheduler
+        taskMonitor.schedule(new TaskScheduler(), 5000, TS_PERIOD);
+
+        // fragmentsMap initialization
+        docMap = new HashMap<Integer, Integer>();
+    }
+
+    /** 
+     * Handles command-line parameters.
+     */
+    protected void handleParameters() {
+        String value;
+        // properties
+        properties = new Properties();
+        setDefaultProperties();
+        if ((value = getParameter("-config")) != null) {
+            loadProperties(value);
+        }
+        dumpProperties();
+
+        if ((value = getParameter("-display")) != null) {
+            showDisplay = StringUtils.stringToBoolean(value);
+        }
+        if ((value = getParameter("-data")) != null) {
+            try {
+                dataset.setFolder(value, true);
+            } catch (IOException e) {
+                Debug.fatal("Cannot set folder to " + value);
+            }
+        }
+        if ((value = getParameter("-cache")) != null) {
+            cacheDir = value;
+            mode = Mode.STANDALONE;
+        }
+        if ((value = getParameter("-trace")) != null) {
+            traceFile = value;
+            mode = Mode.STANDALONE;
+        }
+        if ((value = getParameter("-batch")) != null) {
+            batchFile = value;
+            mode = Mode.BATCH;
+        }
+        if ((value = getParameter("-log")) != null) {
+            logging = StringUtils.stringToBoolean(value);
+        }
+        if ((value = getParameter("-wait")) != null) {
+            isSysReady = ! StringUtils.stringToBoolean(value);
+        }
+    }
+
+    /**
+     * Sets default properties.
+     */
+    private void setDefaultProperties() {
+        properties.put("Display.ExtractorPanel.mode", "TREE");
+        properties.put("Display.SelectorPanel.mode", "2");
+        properties.put("tag.options.default", "(:split-clauses true :split-sentences true)");
+        properties.put("input.split-on-newlines", "false");
+    }
+
+    /**
+     * Loads properties from a configuration file.
+     * 
+     * @param file
+     */
+    private void loadProperties(String file) {
+        Debug.warn("Using configuration file: " + file);
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new FileReader(file));
+        } catch (FileNotFoundException e) {
+            Debug.error("Cannot open file: " + file);
+            e.printStackTrace();
+            return;
+        }
+        try {
+            properties.load(in);
+        } catch (IOException e) {
+            Debug.error("Cannot read file: " + file);
+            e.printStackTrace();
+        }
+        try {
+            if (in != null)
+                in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Dumps properties to STDERR.
+     */
+    private void dumpProperties() {
+        properties.list(System.err);
+    }
+
+    /**
+     * Returns a property value.
+     * 
+     * @param prop
+     * @return
+     */
+    protected String getProperty(String prop) {
+        return properties.getProperty(prop);
+    }
+
+    /**
+     * Returns a property value as {@code int}.
+     * 
+     * @param prop
+     * @return
+     */
+    protected int getInteger(String prop) {
+        return Integer.parseInt(properties.getProperty(prop));
+    }
+
+    /**
+     * Returns a property value as {@code boolean}.
+     * 
+     * @param prop
+     * @return
+     */
+    protected boolean getBoolean(String prop) {
+        return Boolean.parseBoolean(properties.getProperty(prop, "false"));
+    }
+
+    /** 
+     * Sends message subscriptions.
+     */
+    protected void sendSubscriptions() {
+        if (mode == Mode.STANDALONE) {
+            return;
+        }
+        KQMLPerformative perf = null;
+        try {
+            perf = KQMLPerformative.fromString("(subscribe :content (tell &key :content (extraction-result . *)))");
+            send(perf);
+            perf = KQMLPerformative
+                    .fromString("(subscribe :content (tell &key :content (module-status . *) :sender TEXTTAGGER))");
+            send(perf);
+            perf = KQMLPerformative.fromString("(subscribe :content (tell &key :content (start-paragraph . *)))");
+            send(perf);
+            perf = KQMLPerformative
+                    .fromString("(subscribe :content (tell &key :content (utterance . *) :sender TEXTTAGGER))");
+            send(perf);
+            // from Parser: useful only to tell when it rejects the input (therefore no need to expect IM messages)
+            perf = KQMLPerformative.fromString("(subscribe :content (tell &key :content (paragraph-completed . *)))");
+            send(perf);
+            // from parser, to keep track of clauses IM is working on
+            perf = KQMLPerformative.fromString("(subscribe :content (tell &key :content (new-speech-act . *)))");
+            send(perf);
+            // from parser: parse failures (so we know nothing else is coming)
+            perf = KQMLPerformative.fromString("(subscribe :content (tell &key :content (failed-to-parse . *)))");
+            send(perf);
+            // from IM: utterance finished
+            perf = KQMLPerformative.fromString("(subscribe :content (tell &key :content (end-of-turn . *)))");
+            send(perf);
+            // from IM: fragment or full utterance failed interpretation
+            perf = KQMLPerformative.fromString("(subscribe :content (tell &key :content (interpretation-failed . *)))");
+            send(perf);
+            // from IM: paragrapd done
+            perf = KQMLPerformative.fromString("(subscribe :content (tell &key :content (paragraph-done . *)))");
+            send(perf);
+            // tag requests to TextTagger initiated by other modules
+            perf = KQMLPerformative.fromString("(subscribe :content (request &key :content (tag . *)))");
+            send(perf);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /** Requests that the {@code TextTagger} component send back its 
+     * configuration. Currently this ifnormation is not processed in any way, 
+     * but is logged so it can be inspected.
+     */
+    protected void sendGetTTParameters() {
+        if (mode == Mode.STANDALONE) {
+            return;
+        }
+        KQMLPerformative perf = null;
+        try {
+            perf = KQMLPerformative.fromString("(request :receiver TextTagger :content (get-parameters))");
+            send(perf);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /** 
+     * Handles {@code tell} messages.
+     */
+    public void receiveTell(KQMLPerformative msg, Object contentobj) {
+        log("<received>\n" + msg + "\n</received>");
+
+        if (contentobj.toString().equals("NIL")) {
+            errorReply(msg, "NIL content in tell");
+            return;
+        }
+
+        KQMLList content = (KQMLList)contentobj;
+        String verb = content.get(0).toString();
+
+        this.setTimeOfSystemActivity();
+
+        if (verb.equalsIgnoreCase("module-status")) {
+            handleModuleStatus(msg, content);
+        } else if (verb.equalsIgnoreCase("start-paragraph")) {
+            handleStartParagraph(content);
+        } else if (verb.equalsIgnoreCase("utterance")) {
+            handleUtterance(msg, content);
+        } else if (verb.equalsIgnoreCase("extraction-result")) {
+            handleExtraction(content);
+        } else if (verb.equalsIgnoreCase("paragraph-completed")) {
+            handleParagraphCompleted(content);
+        } else if (verb.equalsIgnoreCase("new-speech-act")) {
+            handleNewSpeechAct(content);
+        } else if (verb.equalsIgnoreCase("failed-to-parse")) {
+            handleUtteranceFailed(content);
+        } else if (verb.equalsIgnoreCase("end-of-turn")) {
+            handleUtteranceDone(content);
+        } else if (verb.equalsIgnoreCase("interpretation-failed")) {
+            handleUtteranceDone(content);
+        } else if (verb.equalsIgnoreCase("paragraph-done")) {
+            handleParagraphDone(content);
+        } else {
+            // ignore
+            error("Can't handle tell: " + verb);
+        }
+    }
+
+    /** 
+     * Handles {@code request} messages.
+     */
+    public void receiveRequest(KQMLPerformative msg, Object contentObject) {
+        log("<received>\n" + msg + "\n</received>");
+
+        if (contentObject.toString().equals("NIL")) {
+            errorReply(msg, "NIL content in tell");
+            return;
+        }
+
+        KQMLList content = (KQMLList) contentObject;
+        String verb = content.get(0).toString();
+
+        if (verb.equalsIgnoreCase("tag")) {
+            // we only overhear this!
+            handleTag(msg, content);
+        } else if (verb.equalsIgnoreCase("set-tag-options")) {
+            // set options to send to TextTagger
+            handleSetTagOptions(msg, content);
+        } else if (verb.equalsIgnoreCase("set-terms-folder")) {
+            // set options to send to TextTagger
+            handleSetTermsFolder(msg, content);
+        } else if (verb.equalsIgnoreCase("run-text") || verb.equalsIgnoreCase("load-text")
+                || verb.equalsIgnoreCase("run-file") || verb.equalsIgnoreCase("load-file")
+                || verb.equalsIgnoreCase("run-all-files")
+                || verb.equalsIgnoreCase("run-pmcid"))
+        {
+            if (dataset.getSelectionSize() > 0) { // if we're busy, we queue this up
+                synchronized (runTaskQueue) {
+                    runTaskQueue.add(new RunTask(msg, content));
+                }
+            } else { // otherwise, send it directly for processing
+                handleRunRequest(msg, content);
+            }
+        } else if (verb.equalsIgnoreCase("get-status")) {
+            // initiate processing of files from folder
+            try {
+                handleGetStatus(msg);
+            } catch (Exception e) {
+                errorReply(msg, e.toString());
+            }
+        } else if (verb.equalsIgnoreCase("set-debug")) {
+            // set debugging level
+            try {
+                Debug.setDebugLevel(content);
+            } catch (Exception e) {
+                errorReply(msg, e.toString());
+            }
+        } else {
+            error("Can't handle request: " + verb);
+            errorReply(msg, "Sorry, I don't know how to handle your request.");
+        }
+    }
+
+    /**
+     * Handles run requests.
+     */
+    protected void handleRunRequest(KQMLPerformative msg, KQMLList content) {
+        String verb = content.get(0).toString();
+        try {
+            if (verb.equalsIgnoreCase("load-text") || verb.equalsIgnoreCase("run-text")) {
+                // initiate processing of text
+                handleRunText(msg, content);
+            } else if (verb.equalsIgnoreCase("load-file") || verb.equalsIgnoreCase("run-file")) {
+                // initiate processing of file
+                handleRunFile(msg, content);
+            } else if (verb.equalsIgnoreCase("run-all-files")) {
+                // initiate processing of files from folder
+                handleRunAllFiles(msg, content);
+            } else if (verb.equalsIgnoreCase("run-pmcid")) {
+                // initiate processing of files from folder
+                handleRunPMCID(msg, content);
+            }
+        } catch (Exception e) {
+            errorReply(msg, e.toString());
+        }
+    }
+
+    /** 
+     * Handles {@code reply} messages.
+     */
+    public void receiveReply(KQMLPerformative msg, Object contentObject) {
+        log("<received>\n" + msg + "\n</received>");
+
+        KQMLList content = (KQMLList) contentObject;
+        String verb = content.get(0).toString();
+
+        if (verb.equalsIgnoreCase("ok")) {
+            handleReplyOK(content);
+        } else if (verb.equalsIgnoreCase("parameters")) {
+            // ignore: we only want to log these
+        } else {
+            // ignore but complain softly
+            error("Can't handle reply: " + verb);
+        }
+    }
+
+    /** 
+     * Handler for 'overheard' {@code tag} requests to TextTagger 
+     * (<em>i.e.</em>, messages sent from some other TRIPS component).
+     */
+    private void handleTag(KQMLPerformative msg, KQMLList content) {
+        KQMLToken sender = (KQMLToken) msg.getParameter(":sender");
+        if (sender == null) {
+            errorReply(msg, "No :sender... Who *are* you?");
+            return;
+        }
+        // if we sent this, and we're not in standalone mode, we don't do anything
+        if ((mode != Mode.STANDALONE) && sender.toString().equalsIgnoreCase(name)) {
+            // ignore
+            return;
+        }
+        currentInputData = ((KQMLString) content.getKeywordArg(":text")).stringValue();
+        Debug.warn("current para length: " + currentInputData.length());
+
+        if (display != null) {
+            display.showTextNoSelector(currentInputData);
+        }
+    }
+
+    /**
+     * Handler for setting options to add to the {@code tag} message.
+     * <p>
+     * The {@code set-tag-options} message has two forms:
+     * <dl>
+     * <dt>{@literal (set-tag-options :tt-opt tt-value ...)}
+     * <dd>allows direct specification of {@code tag} options. If no options are
+     * specified options are reset to their default values.
+     * <dt>{@literal (set-tag-options :from-file "file")}
+     * <dd>read {@code tag} options from a file
+     * </dl>
+     * In all cases the options must be a valid sequence of keyword-argument
+     * pairs in valid KQML.
+     *
+     * @see #tagOptions
+     * @see #defaultTagOptions
+     */
+    private void handleSetTagOptions(KQMLPerformative msg, KQMLList content) {
+        KQMLObject fileObj = content.getKeywordArg(":from-file");
+        if (fileObj == null) {
+            content.remove(0); // take verb out of content list
+            setTagOptions(content);
+        } else {
+            KQMLList options = null;
+            try {
+                KQMLReader reader = new KQMLReader(new FileReader(fileObj.stringValue()));
+                try {
+                    options = reader.readList();
+                    Debug.debug("options:" + options);
+                    setTagOptions(options);
+                } catch (IOException e) {
+                    Debug.debug("Ecountered a problem while reading " + fileObj + " (options so far:" + options + ")");
+                    e.printStackTrace();
+                }
+            } catch (FileNotFoundException e) {
+                Debug.error(e);
+                e.printStackTrace();
+                errorReply(msg, "Sorry. Failed to set tag options (file not found).");
+            }
+        }
+    }
+
+    /**
+     * Handler for setting and resetting folder with input term files.
+     * <p>
+     * To set, use: {@literal (set-terms-folder :folder "/tmp/input-terms" :extension "its")} <br>
+     * To reset, use: {@literal (reset-terms-folder)}
+     */
+    private void handleSetTermsFolder(KQMLPerformative msg, KQMLList content) {
+        KQMLObject folder = content.getKeywordArg(":folder");
+        if (folder == null) {
+            resetInputTerms();
+            return;
+        }
+        try {
+            File folderAsFile = new File(folder.stringValue());
+            if (!folderAsFile.isDirectory()) {
+                errorReply(msg, "Directory does not exist: " + folder);
+                resetInputTerms();
+                return;
+            }
+            inputTermsFolder = folderAsFile.getCanonicalPath();
+            KQMLObject extension = content.getKeywordArg(":extension");
+            if (extension != null) {
+                inputTermsFileExtension = extension.stringValue();
+            }
+            Debug.info("Input terms set to: " + inputTermsFolder + File.separator + "*." + inputTermsFileExtension);
+        } catch (Exception e) {
+            Debug.error(e);
+            e.printStackTrace();
+            errorReply(msg, "Directory does not exist or cannot be accessed: " + folder);
+            resetInputTerms();
+        }
+    }
+
+    /**
+     * Reset default values for input terms parameters.
+     * 
+     */
+    private void resetInputTerms() {
+        inputTermsFolder = null;
+        inputTermsFileExtension = "its";
+        Debug.info("Input terms parameters have been reset");
+    }
+
+    /**
+     * Handler for {@code run-text} requests.
+     * <p>
+     * Request format: {@code (run-text :text "text" [:exit-when-done false])}.
+     * <p>
+     * Throws an exception if there is a problem.
+     * 
+     * @param msg
+     *            requester performative
+     * @param content
+     *            performative content
+     */
+    private void handleRunText(KQMLPerformative msg, KQMLList content)
+            throws RuntimeException, IOException
+    {
+        String text = ((KQMLString) content.getKeywordArg(":text")).stringValue();
+        String folder = dataset.getFolder();
+        KQMLObject exitWhenDone = content.getKeywordArg(":exit-when-done");
+        if (exitWhenDone != null) {
+            exitUponCompletion = StringUtils.stringToBoolean(exitWhenDone.toString());
+        }
+        KQMLObject replyWith = msg.getParameter(":reply-with");
+
+        // write text to new file
+        String filename = String.format("TEXT%05d%s", ++runTextCounter,
+                (replyWith != null) ? "_" + replyWith.toString() : "");
+        String pathname = folder + File.separator + filename;
+        File f = new File(pathname);
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+            bw.write(text);
+            bw.close();
+            Debug.debug("Written file to: " + pathname);
+        } catch (Exception e) {
+            Debug.debug("Error writing file to: " + pathname);
+            throw new RuntimeException("Error saving data to file.");
+        }
+
+        // set dataset
+        setDatasetToFile(folder, filename);
+
+        // init the EKB
+        kb.init();
+        kb.setID(filename);
+
+        // add callback
+        if (replyWith != null)
+            currentCallBack = msg;
+
+        // go!
+        initiateProcessing(false);
+    }
+
+    /**
+     * Handler for {@code run-file} requests.
+     * <p>
+     * Request format: {@code (run-file :folder "folder" :file "filename" [:exit-when-done false])}.
+     * <p>
+     * Throws an exception if there is a problem.
+     * 
+     * @param msg
+     *            requester performative
+     * @param content
+     *            performative content
+     */
+    private void handleRunFile(KQMLPerformative msg, KQMLList content)
+            throws RuntimeException
+    {
+        String folder = ((KQMLString) content.getKeywordArg(":folder")).stringValue();
+        String filename = ((KQMLString) content.getKeywordArg(":file")).stringValue();
+        KQMLObject exitWhenDone = content.getKeywordArg(":exit-when-done");
+        if (exitWhenDone != null) {
+            exitUponCompletion = StringUtils.stringToBoolean(exitWhenDone.toString());
+        }
+
+        // set dataset
+        try {
+            setDatasetToFile(folder, filename);
+            Debug.debug("dataset folder: " + dataset.getFolder());
+        } catch (Exception e) {
+            throw new RuntimeException("Dataset not found.");
+        }
+
+        // add callback
+        if (msg.getParameter(":reply-with") != null)
+            currentCallBack = msg;
+
+        // set id for this run to the basename of the file
+        int pos = filename.lastIndexOf(".");
+        String basename = pos > 0 ? filename.substring(0, pos) : filename;
+
+        // init the EKB
+        kb.init();
+        kb.setID(basename);
+
+        // go!
+        initiateProcessing(false);
+    }
+
+    /**
+     * Handler for {@code run-all-files} requests.
+     * <p>
+     * Request format:
+     * {@code (run-all-files :folder "folder" :select "*.xml" [:single-ekb false] [:exit-when-done false])}.
+     * <p>
+     * Extractions will be placed in a single EKB if {@code :single-ekb} resolves to {@code true}; if this parameter is
+     * missing, it defaults to {@code false}.
+     * <p>
+     * Throws an exception if there is a problem.
+     * 
+     * @param msg
+     *            requester performative
+     * @param content
+     *            performative content
+     */
+    private void handleRunAllFiles(KQMLPerformative msg, KQMLList content)
+            throws RuntimeException
+    {
+        String folder = ((KQMLString) content.getKeywordArg(":folder")).stringValue();
+        String fileType = ((KQMLString) content.getKeywordArg(":select")).stringValue();
+        boolean singleEKB = false;
+        KQMLObject singleEKBObject = content.getKeywordArg(":single-ekb");
+        if (singleEKBObject != null) {
+            singleEKB = StringUtils.stringToBoolean(singleEKBObject.toString());
+        }
+        KQMLObject exitWhenDone = content.getKeywordArg(":exit-when-done");
+        if (exitWhenDone != null) {
+            exitUponCompletion = StringUtils.stringToBoolean(exitWhenDone.toString());
+        }
+        
+        // set dataset
+        try {
+            setDatasetWithFilePattern(folder, fileType);
+        } catch (Exception e) {
+            throw new RuntimeException("Dataset not found.");
+        }
+
+        if (singleEKB) {
+            // init the ekb; use folder name as id
+            String ekb_id = (new File(folder)).getName();
+            kb.init();
+            kb.setID(ekb_id);
+
+            // go!
+            initiateProcessing(false);
+        } else {
+            // the way we handle this is as a batch job of single-file run requests: we make fake run-file
+            // requests and place them in the queue. N.B.: i think it's possible that external requests might be
+            // interspersed with these; i'm not sure this is really likely to happen, and even if it does, it may not be
+            // harmful. TODO: perhaps worth keeping an eye on this, just in case!
+            while (!dataset.isSelectionEmpty()) {
+                // N.B.: we use getFirstSelection() rather than popSelection() b/c we want to keep it in
+                // the dataset until the data item is actually processed; only then we do a pop!
+                String filename = dataset.getFirstSelection();
+                KQMLPerformative rfRequest = new KQMLPerformative("request");
+                KQMLList rfContent = new KQMLList();
+                rfContent.add("run-file");
+                rfContent.add(":folder");
+                rfContent.add(new KQMLString(folder));
+                rfContent.add(":file");
+                rfContent.add(new KQMLString(filename));
+                rfRequest.setParameter(":content", rfContent);
+                receiveRequest(rfRequest, rfContent);
+                dataset.popSelection();
+            }
+        }
+    }
+
+    /**
+     * Handler for {@code run-pmcid} requests.
+     * <p>
+     * Request format: {@code (run-pmcid :folder "folder" :pmcid "pmcid" [:save-to "ekb-path"] [:exit-when-done false])}
+     * <p>
+     * The data files are assumed to be in a subfolder (named by the value of the {@code :pmcid} parameter) in a given
+     * folder (value of the {@code :folder} parameter). All XML files (extension {@literal .xml}) are selected for
+     * processing. It is assumed that the contents of these XML files contain text, optionally mixed with
+     * correctly-balanced XLM tags. The {@code :save-to} value is a path to a file or a directory. In the former case,
+     * the EKB will be save to that file; in the latter case, it will be saved in the specified directory, with a name
+     * computed automatically. It is assumed that a file has an extension (typically, {@literal .ekb}); if none is
+     * found, the path is taken to be a directory.
+     * <p>
+     * N.B.: If desired, a file selector might be implemented in the future, similar to the one used by
+     * {@link #handleRunAllFiles()}.
+     */
+    private void handleRunPMCID(KQMLPerformative msg, KQMLList content)
+            throws RuntimeException
+    {
+        String folder = ((KQMLString) content.getKeywordArg(":folder")).stringValue();
+        String pmcid = ((KQMLString) content.getKeywordArg(":pmcid")).stringValue();
+        KQMLObject savetoObj = content.getKeywordArg(":save-to");
+        String saveto = null;
+        File savetoFile = null;
+        File savetoFolder = null;
+        if (savetoObj != null) {
+            saveto = savetoObj.stringValue();
+            savetoFile = new File(saveto);
+            // file or folder?
+            if (savetoFile.getName().lastIndexOf('.') == -1) {
+                savetoFolder = savetoFile;
+                savetoFile = null;
+            }
+        }
+        KQMLObject exitWhenDone = content.getKeywordArg(":exit-when-done");
+        if (exitWhenDone != null) {
+            exitUponCompletion = StringUtils.stringToBoolean(exitWhenDone.toString());
+        }
+
+        // init the EKB
+        kb.init();
+        kb.setID(pmcid);
+        if (saveto != null) {
+            if (savetoFolder != null) {
+                Debug.debug("Setting EKB folder to: " + saveto);
+                kb.setEKBFolder(saveto);
+            } else if (savetoFile != null) {
+                Debug.debug("Setting EKB file to: " + saveto);
+                kb.setEKBFile(savetoFile);
+            } else {
+                Debug.debug("How did we get in this dark corner?!?");
+            }
+        }
+
+        // get EKB filename and return it to sender
+        try {
+            String ekbFilename = kb.saveEKB();
+            KQMLPerformative rmsg = new KQMLPerformative("reply");
+            KQMLList rcontent = new KQMLList();
+            rcontent.add("accepted");
+            if (savetoFile == null) { // tell the caller what the EKB file is
+                rcontent.add(":result");
+                rcontent.add(new KQMLString(ekbFilename));
+            }
+            rmsg.setParameter(":content", rcontent);
+            reply(msg, rmsg);
+        } catch (Exception e) {
+            // e.printStackTrace();
+            errorReply(msg, "Error: EKB cannot be saved" + ((saveto == null) ? "" : " to " + saveto));
+            kb.clear();
+            return;
+        }
+
+        // set dataset
+        String oldDataFolder = dataset.getFolder();
+        try {
+            String pmcidFolder = folder + File.separator + pmcid;
+            String pmcidFileType = ".*\\.xml";
+            setDatasetWithFilePattern(pmcidFolder, pmcidFileType);
+            Debug.debug("Number of paragraphs found: " + dataset.getSelectionSize());
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot find folder for the PMCID given.");
+        }
+
+        // go!
+        initiateProcessing(false);
+    }
+
+    /**
+     * Handler for {@code extraction-result} messages (from Extractor).
+     */
+    private void handleExtraction(KQMLList content) {
+        try {
+            List<Extraction> newExtractions = kb.add(content);
+            if ((display != null) && (newExtractions != null)) {
+                for (Extraction x : newExtractions)
+                    display.addExtraction(x);
+            }
+            Debug.debug("STATE: got extraction-result :uttnum " + newExtractions.get(0).getUttnum());
+        } catch (Exception e1) {
+            log("[ERROR] Extraction interpretation failed: " + e1);
+            Debug.error("STATE: got extraction-result and failed!");
+        }
+    }
+
+    /** 
+     * Handler for {@code utterance} messages (from TextTagger).
+     */
+    private void handleUtterance(KQMLPerformative msg, KQMLList content) {
+        KQMLObject uttnumObj = content.getKeywordArg(":uttnum");
+        if (uttnumObj == null) {
+            errorReply(msg, "Missing :uttnum");
+            return;
+        }
+        // text
+        KQMLObject text = content.getKeywordArg(":text");
+        int uttnum = Integer.parseInt(uttnumObj.toString());
+        if (text != null) {
+            kb.addUtterance(uttnum, text.stringValue());
+        }
+        //
+        if (uttnum > pLastUttnum) {
+            pLastUttnum = uttnum;
+            pLastClausesToDo = 1;
+        } else if (uttnum == pLastUttnum) {
+            pLastClausesToDo++;
+        }
+    }
+
+    /** 
+     * Handler for {@code module-status} (from TextTagger)).
+     *  In "live" mode we wait for this before enabling input processing.
+     */
+    private void handleModuleStatus(KQMLPerformative msg, KQMLList content) {
+        KQMLToken sender = (KQMLToken) msg.getParameter(":sender");
+        if (sender == null) {
+            errorReply(msg, "No :sender... Who *are* you?");
+            return;
+        }
+        if (!sender.toString().equalsIgnoreCase("TextTagger")) {
+            errorReply(msg, "Who are *you*?");
+            return;
+        }
+        KQMLToken status = (KQMLToken) content.get(1);
+        if ((status != null) && (status.equalsIgnoreCase("ready"))) {
+            isSysReady = true;
+            sendGetTTParameters();
+            if (mode == Mode.BATCH) {
+                // wait for a while to make sure TT really is online
+                try {
+                    Thread.sleep(10000);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                initiateProcessing();
+            }
+            if (display != null)
+                display.setState(Display.State.READY);
+        }
+    }
+
+    /**
+     * Handler for {@code start-paragraph}. This signals that the the tag request has now started cascading through the
+     * system.
+     * <p>
+     * Note: Normally this message comes from TextTagger; however, when {@code input.split-on-newlines} is {@code true},
+     * we self-generate it.
+     */
+    private void handleStartParagraph(KQMLList content) {
+        documentID = content.getKeywordArg(":id").toString();
+        if (documentID == null) {
+            Debug.error("No paragraph ID?!?! " + content);
+            return;
+        }
+        kb.setParagraph(documentID, currentInputFile, currentInputData);
+        if (currentCallBack != null) {
+            Debug.debug("STATE: start-paragraph " + documentID + " (callback: "
+                    + currentCallBack.getParameter(":reply-with") + ") ");
+            callBacks.put(documentID, currentCallBack);
+            currentCallBack = null;
+        } else {
+            Debug.debug("STATE: start-paragraph " + documentID + " (callback: none) ");
+        }
+    }
+
+    /** 
+     * Handler for {@code reply} messages signaling the tag request was processed. 
+     */
+    private void handleReplyOK(KQMLList content) {
+        // TODO: i should do a better job managing requests and replies. here i'm simplifying things based on a few
+        // assumptions:
+        // most "ok" replies have no information other than the acknowledgement itself; TT is pretty reliable in
+        // processing requests;
+        // there is one and only one request type that adds information
+        KQMLList uttnums = (KQMLList) content.getKeywordArg(":uttnums");
+        if (uttnums != null) { // this is the one reply we care about
+            if (uttnums.isEmpty()) {
+                Debug.error("STATE: No uttnums");
+            } else {
+                pLastUttnum = Integer.parseInt(uttnums.get(uttnums.size() - 1).toString());
+                Debug.debug("STATE: uttnums: " + uttnums);
+                gotOK = true;
+            }
+        }
+    }
+
+    /**
+     * Handler for {@code paragraph-completed} messages signaling data item was fully processed.
+     * <p>
+     * NB: This only says the PARSER is done; further processing may be happening in other modules! This may be removed
+     * in the future.
+     */
+    private void handleParagraphCompleted(KQMLList content) {
+        String pID = content.getKeywordArg(":id").toString();
+        Debug.debug("STATE: Parsing completed: " + pID);
+        checkIfDoneProcessing();
+    }
+
+    /**
+     * Handler for {@code paragraph-done} messages. This indicates we've reached the end of processing for the
+     * current document.
+     * <p>
+     * We also track the state of the system utterance-by-utterance.
+     * 
+     * @see #handleUtteranceDone(KQMLList)
+     * @see #waitingList
+     */
+    private void handleParagraphDone(KQMLList content) {
+        String pID = content.getKeywordArg(":id").toString();
+        if (!waitingList.isEmpty()) {
+            Debug.error("STATE: Document done: " + pID + ", but waiting on: " + waitingList);
+            documentDone = true;
+            return;
+        }
+        Debug.warn("STATE: Document done [IM is done]: " + pID);
+        documentDone();
+    }
+
+    /**
+     * Handler for messages from Parser about new speech acts.
+     * 
+     * @param content
+     */
+    private void handleNewSpeechAct(KQMLList content) {
+        KQMLList act = (KQMLList) content.get(1);
+        KQMLObject actType = act.get(0);
+        KQMLObject wordsObj = act.getKeywordArg(":words"); // list or NIL
+
+        // case #1: SA failure
+        // eg: (UTT :TYPE W::UTT :ROOT NIL :TERMS NIL :UTTNUM 1 :START 0 :END 85 :WORDS NIL :TREE NIL)
+        // eg: (:TREE NIL)
+        if ((wordsObj == null) || wordsObj.toString().equals("NIL")) {
+            Debug.debug("STATE: Parser failure"); // we won't be getting anything meaningful from the IM
+            if (waitingList.isEmpty()) { 
+                // discard clause
+                KQMLObject unObject = act.getKeywordArg(":uttnum");
+                if (unObject != null) {
+                    int uttnum = Integer.parseInt(unObject.toString());
+                    if (uttnum == pLastUttnum) {
+                        pLastClausesToDo--;
+                        Debug.debug("STATE: Assuming clause failed; " + pLastClausesToDo
+                                + " clauses remaining");
+                    }
+                } else {
+                    // TODO
+                    Debug.warn("No :uttnum in SA!?!");
+                }
+            }
+            // now that failed-to-parse leads to a normal flow, i think this is not necessary anymore! TODO: check
+            // checkIfDoneProcessing();
+            return;
+        }
+        // case #2: SA
+        KQMLList words = (KQMLList) wordsObj;
+        // case #2.1: single SA
+        if (actType.toString().equalsIgnoreCase("UTT")) {
+            int uttnum = Integer.parseInt(act.getKeywordArg(":uttnum").toString());
+            if (waitingList.containsKey(uttnum)) {
+                waitingList.get(uttnum).add(words);
+            } else {
+                ArrayList<KQMLList> clauses = new ArrayList<KQMLList>();
+                clauses.add(words);
+                waitingList.put(uttnum, clauses);
+            }
+        } else
+        // case #2.2: compound SA (CCA)
+        if (actType.toString().equalsIgnoreCase("COMPOUND-COMMUNICATION-ACT")) {
+            KQMLList acts = (KQMLList) act.getKeywordArg(":acts");
+            KQMLList firstAct = (KQMLList) acts.get(0);
+            int uttnum = Integer.parseInt(firstAct.getKeywordArg(":uttnum").toString());
+            if (waitingList.containsKey(uttnum)) {
+                waitingList.get(uttnum).add(words);
+            } else {
+                ArrayList<KQMLList> clauses = new ArrayList<KQMLList>();
+                clauses.add(words);
+                waitingList.put(uttnum, clauses);
+            }
+        }
+        Debug.warn("STATE: Waiting on: " + waitingList);
+    }
+
+    /**
+     * Handler for {@code failed-to-parse} messages.
+     * 
+     * @param content
+     */
+    private void handleUtteranceFailed(KQMLList content) {
+        KQMLObject uttnumObj = content.getKeywordArg(":uttnum");
+        int uttnum = Integer.parseInt(uttnumObj.toString());
+        //
+        if (waitingList.containsKey(uttnum)) {
+            // is this actually happening???
+            Debug.error("STATE: Stray fragment? (ignored) :uttnum " + uttnum);
+            return;
+        } else {
+            Debug.debug("STATE: Utterance failed :uttnum " + uttnum + " (waiting for " + pLastUttnum + ")");
+            if (uttnum == pLastUttnum) {
+                pLastClausesToDo--;
+                Debug.debug("STATE: " + pLastClausesToDo + " clauses remaining");
+            }
+        }
+        //
+        checkIfDoneProcessing();
+    }
+
+    /**
+     * Handler for messages signaling utterance was fully processed.
+     * When last utterance for the current input is done, the data item is considered
+     * done as well, which may trigger special actions.
+     */
+    private void handleUtteranceDone(KQMLList content) {
+        KQMLObject wordsObj = content.getKeywordArg(":words");
+
+        // case #1: IM failure
+        // eg, (INTERPRETATION-FAILED :WORDS NIL ...)
+        if (wordsObj instanceof KQMLToken) { // must be NIL
+            Debug.debug("STATE: Pathologic utterance or fragment: " + wordsObj);
+            checkIfDoneProcessing();
+            return;
+        }
+
+        KQMLList words = (KQMLList) wordsObj;
+        KQMLObject uttnumObj = content.getKeywordArg(":uttnum");
+        int uttnum = Integer.parseInt(uttnumObj.toString());
+
+        if (waitingList.containsKey(uttnum)) {
+            Debug.debug("STATE: Waiting list match for: " + uttnum);
+            // case #2: successful interpretation; we discharge the clause
+            if (waitingList.get(uttnum).remove(words)) {
+                if (waitingList.get(uttnum).isEmpty()) {
+                    waitingList.remove(uttnum);
+                    Debug.debug("STATE: Utterance done :uttnum " + uttnum + " (waiting for " + pLastUttnum + ")");
+                }
+                if (uttnum == pLastUttnum) {
+                    pLastClausesToDo--;
+                    Debug.debug("STATE: " + pLastClausesToDo + " clauses remaining");
+                }
+            } else {
+                // case #3: fragment: keep waiting
+                Debug.error("STATE: Unexpected fragment(?) :uttnum " + uttnum + " :words " + words);
+                return;
+            }
+        } else {
+            // case #4: is this possible? TODO:
+            Debug.error("STATE: Stray fragment? (ignored) :uttnum " + uttnum + " :words " + words);
+            return;
+        }
+        //
+        checkIfDoneProcessing();
+    }
+
+    /**
+     * Checks whether we are at the end of processing for the current document.
+     * 
+     * @see #documentDone()
+     */
+    private void checkIfDoneProcessing() {
+        // have we got the full paragraph through?
+        if (!gotOK) {
+            Debug.debug("STATE: No OK");
+            return;
+        }
+        // are we still waiting for utterances to be processed?
+        if (!waitingList.isEmpty()) {
+            Debug.debug("STATE: Still waiting on: " + waitingList);
+            return;
+        }
+        // we are on the last utterance but waiting for some clauses to make it through?
+        if (pLastClausesToDo > 0) {
+            return;
+        }
+        // done?
+        paragraphsDone++;
+        if (breakLines) {
+            int linesToDo = paragraphs.length - paragraphsDone;
+            Debug.debug("STATE: Paragraphs done: " + paragraphsDone + " (to do: " + linesToDo + ")");
+            if (linesToDo == 0) {
+                Debug.debug("STATE: Document done [nothing left to do]");
+                if (documentDone) {
+                    documentDone();
+                }
+            } else {
+                // send next fragment for tagging
+                Debug.debug("STATE: Moving on to next paragraph");
+                sendTagRequestForParagraph();
+            }
+        } else {
+            Debug.debug("STATE: Document done [nothing left to do]");
+            if (documentDone) {
+                documentDone();
+            }
+        }
+    }
+
+    /**
+     * Marks that we ended processing on the current document.
+     * 
+     * @see #finishCurrentInput()
+     */
+    private void documentDone() {
+        // done
+        documentDone = true;
+        Debug.debug("STATE: Document done; finishing off");
+        finishCurrentInput();
+    }
+
+    /**
+     * Handler for requests asking for the status of this module.
+     * <p>
+     * Example: {@code (request :receiver DRUM :content (get-status) :reply-with TT123)}
+     * 
+     * @param msg
+     * @param content
+     */
+    private void handleGetStatus(KQMLPerformative msg) {
+        KQMLPerformative perf = new KQMLPerformative("reply");
+        KQMLList content = new KQMLList();
+        content.add("status");
+        int toDo = dataset.getSelectionSize();
+        content.add(":idle");
+        content.add(String.valueOf(toDo == 0));
+        content.add(":secs-since-last-activity");
+        content.add(String.valueOf((now() - timeOfLastSystemActivity) / 1000));
+        if (toDo > 0) {
+            content.add(":dataset");
+            String kbId = kb.getID();
+            content.add(new KQMLString(String.valueOf(kbId == null ? "" : kbId)));
+            content.add(":paragraphs-to-do");
+            content.add(String.valueOf(toDo));
+            if (documentID != null) { // we check, in case we get a call before the first dataset gets going
+                content.add(":current-paragraph");
+                content.add(documentID);
+                if (!callBacks.isEmpty()) {
+                    KQMLPerformative callback = callBacks.get(documentID);
+                    if (callback != null) {
+                        content.add(":current-task");
+                        content.add(callback.getParameter(":reply-with"));
+                    }
+                }
+            }
+        }
+        if (breakLines) {
+            content.add(":lines-to-do");
+            content.add(String.valueOf(paragraphs.length - paragraphsDone));
+        }
+        synchronized (runTaskQueue) {
+            if (!runTaskQueue.isEmpty()) {
+                content.add(":scheduled-tasks");
+                KQMLList tasks = new KQMLList();
+                for (RunTask task : runTaskQueue) {
+                    tasks.add(task.toString());
+                }
+                content.add(tasks);
+            }
+        }
+        perf.setParameter(":content", content);
+        reply(msg, perf);
+    }
+
+    // FIXME: paragraph->document, fragment->paragraph
+
+    /**
+     * Finishes processing of the current document. If more documents remain to be
+     * processed, moves on to the next one (by calling {@link processSelectedDatatset}).
+     * 
+     * @see #processSelectedDataset()
+     */
+    private void finishCurrentInput() {
+        if (dataset.getSelectionSize() == 0) {
+            // this shouldn't happen!
+            Debug.debug("no data items to flush!");
+            return;
+        }
+
+        // update dataset; see if there's anything left
+        String done = dataset.popSelection();
+        int remaining = dataset.getSelectionSize();
+        Debug.debug("STATE: Finished data item: " + done + "\n" + remaining + " more to do: "
+                + Arrays.toString(dataset.getSelection()));
+
+        // update and save the EKB
+        kb.setCompletionStatus(remaining == 0);
+        // TODO: do we need to send this file back to anyone?
+        try {
+            String ekbFile = kb.saveEKB();
+            log("<ekb>" + ekbFile + "</ekb>");
+        } catch (Exception e) {
+            // TODO: what do we do here? should we throw the exception up?
+            Debug.error("Couldn't save the EKB: " + e);
+        }
+
+        // check if we have a callback on this para
+        Debug.debug("Callbacks:" + callBacks);
+        KQMLPerformative callback = callBacks.remove(documentID);
+        if (callback != null) {
+            if (mode != Mode.STANDALONE) {
+                reply(callback, makeCallBackMessage(documentID));
+            }
+            Debug.warn("Resolved: " + callback.getParameter(":reply-with"));
+        } else {
+            Debug.warn("No callback; moving on.");
+        }
+
+        // if there are more data items to be processed, keep going
+        if (remaining > 0) {
+            Debug.debug("STATE: Moving on to next document");
+            processSelectedDataset();
+        } else {
+            // ... otherwise, finish round according to mode
+            if (exitUponCompletion && runTaskQueue.isEmpty()) {
+                // sendExitRequest();
+                try {
+                    send(KQMLPerformative.fromString("(request :receiver facilitator :content (exit))"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Debug.fatal("Something's wrong!");
+                }
+            }
+            if (display != null) {
+                display.unsetState(Display.State.RUNNING);
+                display.clearSelections();
+                display.enableSelector();
+                display.activateExtractorPanel();
+            }
+            if (mode == Mode.BATCH) {
+                // sendExitRequest();
+                System.exit(0);
+            }
+        }
+    }
+
+    /**
+     * Sets the current dataset to a given file in a given folder. As a side effect, if a display is available, it will
+     * show the selection in the display.
+     *
+     * @throws IOException
+     *             if the folder doesn't exist
+     */
+    protected void setDatasetToFile(String folder, String file) throws IOException {
+        dataset.setFolder(folder, true);
+        // update display
+        if (display != null) {
+            display.showDataset(false);
+        }
+        dataset.select(file);
+    }
+
+    /**
+     * Sets the current dataset to a set of files in a given folder. The files are indicated by a pattern. As a side
+     * effect, if a display is available, it will show the selection in the display.
+     *
+     * @throws IOException
+     *             if the folder doesn't exist
+     */
+    protected void setDatasetWithFilePattern(String folder, String filePattern) throws IOException {
+        dataset.setFolder(folder, true);
+        // update display
+        if (display != null) {
+            display.showDataset(false);
+        }
+        dataset.selectFiles(filePattern);
+    }
+
+    /**
+     * Sets time of system activity.
+     */
+    private void setTimeOfSystemActivity() {
+        timeOfLastSystemActivity = now();
+    }
+
+    /**
+     * Get current time (as number of milliseconds since January 1, 1970, 00:00:00 GMT).
+     * 
+     * @return the number of milliseconds since January 1, 1970, 00:00:00 GMT until now
+     */
+    private long now() {
+        return (new Date()).getTime();
+    }
+
+    /**
+     * Initiates the processing of a dataset.
+     * 
+     * @param initKB
+     *            if true, the EKB is also initialized
+     */
+    protected void initiateProcessing(boolean initKB) {
+        // set display
+        if (display != null) {
+            display.disableSelector();
+            display.setState(Display.State.RUNNING);
+        }
+
+        // send the input terms
+        sendInputTerms();
+
+        // init the EKB
+        if (initKB) {
+            kb.init();
+        }
+
+        Debug.info("Initialization complete. Ready to go");
+
+        // go!
+        processSelectedDataset();
+    }
+
+    /**
+     * Initiates the processing of a dataset.
+     * 
+     */
+    protected void initiateProcessing() {
+        initiateProcessing(true);
+    }
+
+    /**
+     * Processes selected dataset. Does nothing if no dataset is selected.
+     * <p>
+     * If we have a display, the current data item will be shown in the Text panel.
+     * <p>
+     * In <em>connected</em> mode, processing a document means sending it out to the system for processing. In
+     * <em>standalone</em> mode, the extraction messages are instead read from a file in the <em>cache</em> directory.
+     * 
+     * @see #sendTagRequest()
+     * @see #processCache(String)
+     */
+    protected void processSelectedDataset() {
+        if (dataset.isSelectionEmpty()) {
+            if (display != null)
+                display.unsetState(Display.State.RUNNING);
+            Debug.warn("Nothing to do.");
+            return;
+        }
+        //
+        documentDone = false;
+        paragraphsDone = 0;
+        // get data item
+        String dataFolder = dataset.getFolder();
+        String dataFile = dataset.getFirstSelection();
+        // show in selector what item we're processing
+        if (display != null) {
+            display.showSelected();
+        }
+        Debug.debug("STATE: Working on: " + dataFile);
+        Debug.debug("full list: " + Arrays.toString(dataset.getSelection()));
+        log("<folder>" + dataFolder + "</folder>\n" + "<file>" + dataFile + "</file>");
+        currentInputFile = dataFolder + File.separator + dataFile;
+        currentInputData = dataset.getText(dataFile);
+        // send start-conversation
+        try {
+            send(KQMLPerformative.fromString("(tell :content (start-conversation))"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        // if we have input terms, send them to TextTagger
+        sendInputTermsForDataFile(dataFile);
+        // get on with it
+        if (mode == Mode.STANDALONE) {
+            if (cacheDir != null)
+                processCache(dataFile);
+        } else {
+            sendTagRequest();
+        }
+    }
+
+    /**
+     * Processes cache file for a document.
+     *
+     * The cache file contains messages that would be coming in to this module
+     * if the document was processed by the full system.
+     * <p>
+     * NOTE: It is assumed that each line in the cache file contains a full KQML message.
+     */
+    protected void processCache(String fileName) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(cacheDir + File.separator + fileName));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // skip if line is empty
+                if (line.length() == 0) {
+                    continue;
+                }
+                KQMLPerformative perf = KQMLPerformative.fromString(line);
+                Object content = perf.getParameter(":content");
+                receiveTell(perf, content);
+            }
+        } catch (Exception e) {
+            Debug.fatal("Problem processing cache file. Check that the file exists and each line contains a proper KQML message.");
+        }
+        // just in case we don't have paragraph-done in the cache file
+        if (display != null)
+            display.unsetState(Display.State.RUNNING);
+    }
+
+    /**
+     * Processes trace file for a session.
+     *
+     */
+    protected void processTrace() {
+        try {
+            KQMLReader reader = new KQMLReader(new FileReader(traceFile));
+            while (true) {
+                try {
+                    KQMLPerformative perf = reader.readPerformative();
+                    String verb = perf.getVerb();
+                    Object content = perf.getParameter(":content");
+                    if (verb.equalsIgnoreCase("tell")) {
+                        receiveTell(perf, content);
+                    } else if (verb.equalsIgnoreCase("request")) {
+                        receiveRequest(perf, content);
+                    } else {
+                        // ignore
+                    }
+                } catch (EOFException e) {
+                    break;
+                } catch (KQMLExpectedListException e) {
+                    e.printStackTrace();
+                    Debug.fatal("Improper KQML in the trace file. Exiting.");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Debug.fatal("Can't process the trace file. Exiting.");
+        }
+        // done:
+        if (display == null)
+            System.exit(0);
+    }
+
+    /**
+     * Loads input terms from file.
+     * 
+     * @param filePath
+     * 
+     * @see #readTermsFromFile(String)
+     */
+    protected void loadTermsFromFile(String filePath) {
+        inputTerms = readTermsFromFile(filePath);
+    }
+
+    /**
+     * Add input terms from file.
+     * 
+     * @param filePath
+     * 
+     * @see #readTermsFromFile(String)
+     */
+    protected void addTermsFromFile(String filePath) {
+        // TODO: check for duplicates(?)
+        inputTerms.addAll(readTermsFromFile(filePath));
+    }
+
+    /**
+     * Clears the set of input terms.
+     * 
+     * @see #loadTermsFromFile(String)
+     */
+    protected void clearTerms() {
+        inputTerms = new KQMLList();
+        try {
+            send(KQMLPerformative.fromString("(request :receiver TextTagger :content (clear-input-terms))"));
+        } catch (Exception e) {
+            Debug.error(e);
+        }
+    }
+
+    /**
+     * Reads input terms from file.
+     * <p>
+     * The file must contain each term input definition on a single line. Empty lines are ignored; lines starting with
+     * {@literal #} are considered comments and are skipped.
+     * <p>
+     * The input term definition must conform to the requirements of {@TextTagger} -- see documentation for
+     * details.
+     * 
+     * @param filePath
+     */
+    protected KQMLList readTermsFromFile(String filePath) {
+        Debug.info("Reading input terms from " + filePath);
+        File termsFile = new File(filePath);
+        KQMLList inputTerms = new KQMLList();
+        if (!termsFile.isFile()) {
+            Debug.error("Cannot read input terms file (file not found: " + filePath + ")");
+            return inputTerms;
+        }
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(termsFile));
+            String line;
+            int i = 0;
+            while ((line = reader.readLine()) != null) {
+                i++;
+                if (!line.matches(".*\\S.*")) {
+                    continue; // skip blank lines
+                }
+                if (line.startsWith("#")) {
+                    continue; // skip comments
+                }
+                try {
+                    KQMLList term = KQMLList.fromString(line);
+                    inputTerms.add(term);
+                } catch (IOException e) {
+                    Debug.fatal("Badly formed input term definition: " + line);
+                }
+            }
+            Debug.debug("Read " + i + " lines.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Debug.info("Read " + inputTerms.size() + " input terms.");
+
+        return inputTerms;
+    }
+
+    /**
+     * Reads input terms from {@code inputTermsFolder} and sends them to {@code TextTagger}.
+     * 
+     * @param dataFile
+     * 
+     * @see #inputTermsFolder
+     * @see #sendInputTerms(KQMLList)
+     */
+    private void sendInputTermsForDataFile(String dataFile) {
+        if (inputTermsFolder == null) {
+            return;
+        }
+        // strip extension, if any
+        int extPos = dataFile.lastIndexOf('.');
+        String filename = (extPos > 0) ? dataFile.substring(0, extPos) : dataFile;
+        // read corresponding input terms file
+        String itFile = inputTermsFolder + File.separator + filename + '.' + inputTermsFileExtension;
+        loadTermsFromFile(itFile);
+        // send terms over
+        sendInputTerms();
+    }
+
+    /**
+     * Sends input terms to {@code TextTagger}.
+     * 
+     * @see #inputTerms
+     */
+    private void sendInputTerms() {
+        if (inputTerms.isEmpty()) {
+            return;
+        }
+        KQMLPerformative msg = new KQMLPerformative("request");
+        msg.setParameter(":receiver", "TextTagger");
+        KQMLList content = new KQMLList();
+        content.add("load-input-terms");
+        content.add(":input-terms");
+        content.add(inputTerms);
+        msg.setParameter(":content", content);
+        send(msg);
+    }
+
+    /**
+     * Creates tag message(s) for the current document and sends them off.
+     * If {@code breakLines} is {@code true}, the document is first split into fragments, then
+     * {@link #sendTagRequestForFragment} is called to send a tag request for the first line. This initiates an
+     * iterative process by which all lines from the current document are eventually sent out for tagging.
+     * 
+     * @see #splitDocumentIntoParagraphs()
+     * @see #sendTagRequestForParagraph()
+     */
+    private void sendTagRequest() {
+        currentDatasetIndex++;
+        gotOK = false;
+        if (breakLines) {
+            // first, break item into paragraphs
+            splitDocumentIntoParagraphs();
+            docMap.clear();
+            // and send the first paragraph; the rest will be sent off in turn, after each one is finished
+            sendTagRequestForParagraph();
+        } else {
+            send(makeTagMessage(currentInputData));
+            Debug.debug("STATE: tag");
+        }
+        paragraphsDone = 0;
+    }
+
+    /**
+     * Breaks data into paragraphs. Currently a line break is the only separator considered.
+     * All empty lines and line-initial white space are skipped.
+     */
+    private void splitDocumentIntoParagraphs() {
+        Pattern fPattern = Pattern.compile("^(\\s*)(\\S.*)$", Pattern.MULTILINE);
+        Matcher fMatcher = fPattern.matcher(currentInputData);
+        Vector<String> lines = new Vector<String>();
+        Vector<Integer> offsets = new Vector<Integer>();
+        int n = 0;
+        while (fMatcher.find()) {
+            n++;
+            lines.add(fMatcher.group(2));
+            offsets.add(fMatcher.start() + fMatcher.group(1).length());
+            // Debug.debug("line " + n + ":" + offsets.lastElement() + ":" + lines.lastElement());
+        }
+        paragraphs = lines.toArray(new String[n]);
+        paragraphOffsets = new int[n];
+        for (int i = 0; i < n; i++) {
+            paragraphOffsets[i] = offsets.get(i);
+        }
+    }
+
+    /**
+     * Sends tag request for current paragraph.
+     */
+    private void sendTagRequestForParagraph() {
+        if (paragraphsDone == 0) {
+            // send start-para
+            try {
+                send(KQMLPerformative.fromString("(tell :content (start-paragraph :id paragraph" + currentDatasetIndex
+                        + "))"));
+                Debug.debug("STATE: start-paragraph");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        if (paragraphsDone < paragraphs.length) {
+            try {
+                // Debug.debug("Processing fragment["+fragmentsProcessed+"]: /"+(fragmentOffsets[fragmentsProcessed])+"/");
+                sendWithContinuation(makeTagMessage(paragraphs[paragraphsDone]), new TagReplyHandler(
+                        paragraphsDone));
+                Debug.debug("STATE: tag");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Sends end-paragraph message.
+     * 
+     */
+    private void sendEndParagraph() {
+        try {
+            // send end-para
+            send(KQMLPerformative.fromString("(tell :content (end-paragraph :id paragraph"
+                    + currentDatasetIndex + "))"));
+            Debug.debug("STATE: end-paragraph");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Sets utterance offsets for the current paragraph of the current document.
+     * <p>
+     * Note: This depends on utterances having been added already to the {@code kb}.
+     * 
+     * @see DrumKB#setOffset(int, int)
+     * @see #kb
+     */
+    protected void setUtteranceOffsetsForParagraph(int index, KQMLList uttnums) {
+        if (uttnums == null)
+            return;
+        ListIterator<KQMLObject> iterator = uttnums.listIterator();
+        while (iterator.hasNext()) {
+            int uttnum = Integer.parseInt(iterator.next().toString());
+            kb.setOffset(uttnum, paragraphOffsets[index]);
+            docMap.put(uttnum, index);
+        }
+    }
+
+    /**
+     * Makes tag message.
+     * 
+     * @see #sendTagRequest()
+     */
+    private KQMLPerformative makeTagMessage(String text) {
+        try {
+            String message = "(tag :text "
+                    + (new KQMLString(text)).toString()
+                    + " :imitate-keyboard-manager T"
+                    + " :next-uttnum " + (pLastUttnum + 1)
+                    + ")";
+            KQMLList content = KQMLList.fromString(message);
+            // when we break the input document ourselves, we need to send :paragraph nil
+            if (breakLines) {
+                content.add(":paragraph");
+                content.add("nil");
+            }
+            // append tag options
+            ListIterator<KQMLObject> iterator = tagOptions.listIterator();
+            while (iterator.hasNext()) {
+                content.add(iterator.next());
+            }
+
+            KQMLPerformative perf = new KQMLPerformative("request");
+            perf.setParameter(":receiver", "TextTagger");
+            perf.setParameter(":content", content);
+            return perf;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Gets tag options as string.
+     */
+    protected KQMLList getTagOptions() {
+        return tagOptions;
+    }
+
+    /**
+     * Sets tag options.
+     * 
+     * @see #tagOptions
+     * @see #defaultTagOptions
+     */
+    protected void setTagOptions(KQMLList options) {
+        String oldTagOptions = tagOptions.toString();
+        if (options == null) { // revert to default
+            tagOptions = defaultTagOptions;
+        } else { // switch to new ones, but add default ones unless changed
+            int n = defaultTagOptions.size();
+            for (int i = 0; i < n; i += 2) {
+                String param = defaultTagOptions.get(i).toString();
+                String oldValue = defaultTagOptions.get(i + 1).toString();
+                KQMLObject newValueObj = options.getKeywordArg(param);
+                if (newValueObj == null) {
+                    options.add(param);
+                    options.add(oldValue);
+                }
+            }
+            tagOptions = options;
+        }
+        Debug.info("set-tag-options from: " + oldTagOptions + " to: " + tagOptions);
+    }
+
+    /**
+     * Makes call-back reply to a load request.
+     * @param pid Currently ignored (since we only handle one paragraph at the time).
+     */
+    private KQMLPerformative makeCallBackMessage(String pid) {
+        KQMLPerformative perf = new KQMLPerformative("reply");
+        KQMLList content = new KQMLList();
+        content.add("result");
+        content.add(":uttnums");
+        content.add(kb.getUttnums());
+        content.add(":extractions");
+        content.add(new KQMLString(kb.toXML()));
+        perf.setParameter(":content", content);
+        return perf;
+    }
+
+    /**
+     * Creates log file.
+     */
+    private void initLog() {
+        if (!logging)
+            return;
+        try {
+            log = new Log();
+        } catch (IOException ex) {
+            error("error opening log file: " + ex);
+        }
+    }
+
+    /**
+     * Writes string to log file.
+     *
+     * @param text String to write.
+     * @see #handleParameters
+     */
+    private void log(String text) {
+        if (log != null) {
+            log.log(text);
+        } else {
+            System.out.println(text);
+        }
+    }
+
+    /** Closes log file.
+     */
+    private void closeLog() {
+        if (log != null) {
+            log.close();
+        }
+    }
+
+    /** 
+     * Delete selected dataset.
+     */
+    protected void deleteSelectedDataset() {
+        dataset.removeSelectedFiles();
+        if (display != null) {
+            display.showDataset(true);
+        }
+    }
+
+    /**
+     * Requests that system exit.
+     */
+    private void sendExitRequest() {
+        KQMLPerformative perf = null;
+        try {
+            perf = KQMLPerformative.fromString("(request :content (exit 0))");
+            send(perf);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Sends a message. Wrapper for {@code super.send()} with logging.
+     */
+    protected synchronized void send(KQMLPerformative msg) {
+        log("<sent>\n" + msg + "\n</sent>");
+        super.send(msg);
+    }
+
+
+    /**
+     * Handler for replies to tag messages for paragraphs.
+     */
+    protected class TagReplyHandler implements KQMLContinuation {
+        int paragraphNumber;
+
+        public TagReplyHandler(int index) {
+            paragraphNumber = index;
+        }
+
+        public void receive(KQMLPerformative replyMsg) {
+            KQMLObject content = replyMsg.getParameter(":content");
+            if (!(content instanceof KQMLList)) {
+                error("Bad message format");
+                return;
+            }
+            String reply = ((KQMLList) content).get(0).toString();
+            if (reply.equalsIgnoreCase("ok")) {
+                log("<received>\n" + replyMsg + "\n</received>");
+                KQMLObject uttnums = ((KQMLList) content).getKeywordArg(":uttnums");
+                Debug.debug("STATE: uttnums: " + uttnums);
+                if (uttnums != null) {
+                    setUtteranceOffsetsForParagraph(paragraphNumber, (KQMLList) uttnums);
+                    Debug.debug("paragraph " + paragraphNumber + " => uttnums " + uttnums);
+                    gotOK = true;
+                    // when we're at the last fragment, we send out end-paragraphs
+                    if (paragraphsDone + 1 == paragraphs.length) {
+                        sendEndParagraph();
+                    }
+                } else {
+                    errorReply(replyMsg, "Missing :uttnums values");
+                    // we keep going, but with unpredictable behavior
+                }
+            } else { // TODO: handle reject
+                error("Cannot handle reply");
+                return;
+            }
+        }
+    }
+
+    /**
+     * Class for representing tasks received via one of the {@code run-*} requests.
+     */
+    protected class RunTask {
+        KQMLPerformative msg;
+        KQMLList content;
+
+        public RunTask(KQMLPerformative msg, KQMLList content) {
+            this.msg = msg;
+            this.content = content;
+        }
+        public String toString() {
+            // TODO
+            KQMLObject replyWith = msg.getParameter(":reply-with");
+            if (replyWith == null) {
+                return "ANONYMOUS";
+            }
+            return replyWith.toString();
+        }
+    }
+
+    /**
+     * Scheduler for running tasks off the task queue.
+     * 
+     * @author lgalescu
+     * @see DrumGUI#runTaskQueue
+     * @see DrumGUI#handleRunRequest(KQMLPerformative, Object)
+     */
+    protected class TaskScheduler extends TimerTask {
+        public void run() {
+            synchronized (runTaskQueue) {
+                if (runTaskQueue.isEmpty() || (dataset.getSelectionSize() > 0)
+                        || (now() - timeOfLastSystemActivity < 2500)) // TODO: replace this hack w/ smthg proper
+                /* (we need to wait for the ekb to be written, i think) */
+                {
+                    return;
+                }
+
+                RunTask nextTask = runTaskQueue.remove(0);
+                handleRunRequest(nextTask.msg, nextTask.content);
+            }
+        }
+    }
+
+}

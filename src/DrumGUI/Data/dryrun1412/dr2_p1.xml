@@ -1,0 +1,9 @@
+Ras, like all GTPases, cycles between an inactive GDP-bound state and an active GTP-bound state. 
+The transition from the inactive to active state requires formation of nucleotide-free Ras through the action of exchange factors. 
+This state is considered to be a short-lived transition state intermediate in vivo <xref>[36]</xref> based on the relatively high GTP: GDP ratio in vivo <xref>[37]</xref>, the ability of GTP to dissociate the GEF-Ras complex in vitro <xref>[31]</xref>, and the assumption that there are no proteins in vivo that might stabilize nucleotide-free Ras and prevent GTP loading. 
+However, our results provide the first direct evidence for a protein that may stabilize nucleotide-free Ras in vivo. 
+We demonstrate that the RBD of PI3K-C2-beta binds nucleotide-free Ras in vitro (<xref>Fig. 5</xref>). 
+In contrast to the GEF-Ras complex, which is disrupted by addition of guanine nucleotides, the PI3K-C2-beta RBD-Ras complex is stable even in the presence of high concentrations of GTP or GDP. 
+These data suggest that PI3K-C2-beta binding to nucleotide-free Ras in vivo may prevent loading of nucleotides onto Ras. 
+Although current methods do not allow for detection of nucleotide-free GTPases in vivo, our BiFC results provide additional support for our model. PI3K-C2-beta preferentially interacts with Ras17N, which has a 30-fold lower affinity for nucleotide compared to wild type Ras and therefore should exist for longer periods in the nucleotide-free state. 
+As a result, BiFC traps this form of Ras resulting in greater fluorescence complementation for Ras17N (and Ras17N/69N) compared to wild type or constitutively activated Ras (61L or 12V).

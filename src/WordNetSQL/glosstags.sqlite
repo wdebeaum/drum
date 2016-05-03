@@ -1,0 +1,42 @@
+DROP TABLE IF EXISTS glosstags;
+CREATE TABLE glosstags (
+    synset_offset	INT(8) NOT NULL,
+    ss_type	CHAR(1) NOT NULL,
+    start	INT UNSIGNED NOT NULL,
+    end	INT UNSIGNED NOT NULL,
+    tag_type	VARCHAR(3) NOT NULL,
+    pos	VARCHAR(4),
+    sense_key	VARCHAR(82),
+    lemma	VARCHAR(82)
+);
+
+DROP TABLE IF EXISTS structs;
+CREATE TABLE structs (
+    synset_offset	INT(8) NOT NULL,
+    ss_type	CHAR(1) NOT NULL,
+    id	VARCHAR NOT NULL,
+    type	VARCHAR NOT NULL,
+    start	INT NOT NULL,
+    end		INT NOT NULL
+);
+
+DROP TABLE IF EXISTS feats;
+CREATE TABLE feats (
+    id	VARCHAR NOT NULL,
+    name	VARCHAR NOT NULL,
+    value	VARCHAR NOT NULL
+);
+
+-- this doesn't really belong here, but whatever
+UPDATE pointers
+SET target_ss_type='s'
+WHERE
+    target_ss_type='a' AND    
+    EXISTS(
+	SELECT *
+	FROM synsets
+	WHERE synsets.synset_offset=pointers.target_synset_offset AND
+	      synsets.ss_type='s'
+    )
+;
+

@@ -1,0 +1,57 @@
+<HTML>
+<HEAD>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<TITLE>EPCA Documentation</TITLE>
+</HEAD>
+<BODY><html><body>
+<H1>Lexicon Manager</H1>
+<br><b>[Function]</b><br><tt>get-lf <i>w</i></tt><p>
+<tt><i>w</i></tt> <p>
+<b>Return: </b>returns : LF_parent, agreement 
+                 (in a variable list format, if more than one possibility) and part of speech 
+ 
+<p>(get-lf 'leave) returns 
+  ((LF_LEAVE-TIME (AGR (? Y (1S 2S 1P 2P 3P))) V) 
+  (LF_LEAVE (AGR (? Y (1S 2S 1P 2P 3P))) V)
+  (LF_DEPART (AGR (? Y (1S 2S 1P 2P 3P))) V))
+ Note that agreement features are (NIL) for words that don't have any (adjectives, adverbs...)
+<p>
+<b>Visibility: </b>public<br><b>Location: </b>../Code/lexicon-interface.lisp<p>
+<br><b>[Function]</b><br><tt>get-word-form &amp;key <i>w</i> &amp;key <i>formcat</i> &amp;key <i>agr</i></tt><p>
+<tt><i>w</i></tt> <p>
+<tt><i>formcat</i></tt> <p>
+<tt><i>agr</i></tt> <p>
+<b>Return: </b>returns : word-form (e.g. took)  
+;; 
+;; <p>(get-word-form 'man ':plur) returns (men)
+;; 
+;; (get-word-form 'be ':3S) returns (is)
+;; (get-word-form 'be ':12S123PBASE :agr 2p) returns (are) 
+;; (get-word-form 'be ':past :agr 1s) returns (was)
+;;   if no agr is given for be past or present, return a list of possible values
+;; (get-word-form 'be 'v :past) returns (was were)
+;; 
+;; (get-word-form 'quick ':er) returns (quicker)
+;;
+;; Current limitations (code to be added later):
+;; Does not process multiple word entries, such as by the way or take off
+;;
+;; <p>
+<b>Visibility: </b>public<br><b>Location: </b>../Code/lexicon-interface.lisp<p>
+<br><b>[Function]</b><br><tt>get-word-def <i>w</i></tt><p>
+<tt><i>w</i></tt> <p>
+<b>Return: </b>returns  : the lexicon entry for the word, but converts the structure to list format for message passing
+;;            and for the parser adds the % constituent marker at the beginning of lex-entry-description
+;;            this lexicon entry retrieval makes calls to the ontology manager
+;;
+;; <p>(get-word-def 'and) returns 
+;; ((AND 1.0 (% WORD (LEX AND)))
+;; ((AND) 1.03
+;;  (% CONJ (VAR V217636) (LEX AND) (INPUT AND) (LF AND) (SEM ($ -)) (TRANSFORM NIL) (COERCE -)
+;;   (SUBCAT (? SUB S PP NP VP)) (CONJ +) (SEQ +))))
+;; ... (for brevity just one sense here)
+;;
+;; <p>
+<b>Visibility: </b>public<br><b>Location: </b>../Code/lexicon-interface.lisp<p>
+</body></html></BODY>
+</HTML>

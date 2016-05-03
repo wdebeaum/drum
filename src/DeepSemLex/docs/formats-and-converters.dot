@@ -1,0 +1,65 @@
+digraph FormatsAndConverters {
+  /*
+   * Most edges are labeled with the name of the program(s) that convert data
+   * from their source to their target formats. Some are TBD or To Be
+   * Determined. Unless otherwise specified these programs are in
+   * src/DeepSemLex/code/converters/. Other places are abbreviated, including:
+   * WNSQL/ = src/WordNetSQL/
+   * MD/ = src/MetaphorData/
+   * lib/ = src/DeepSemLex/code/lib/
+   * WebLex/ = src/LexiconManager/Code/WebLex/
+   * OWLAgent/ = src/OWLAgent/
+   */
+
+  TRIPS [label="old TRIPS LXM/OM data"]
+  synset_input [label="lisp input to gloss"]
+  define_concept [label="define-concept msgs\noutput from gloss"]
+  DSL_Lisp [label="Lisp DSL"]
+  DSL_Memory [label="objects in the memory\nof a running lisp process"]
+  DSL_XML [label="XML DSL"]
+  lex_entry [label="lex-entry passed\nto the parser"]
+  VerbNet [label="VerbNet class XML"]
+  WordNet [label="WordNet native files"]
+  glosstag [label="Tagged gloss corpus\nstandoff files"]
+  SemCor [label="SemCor tagfiles"]
+  WordNetSQL [label="WordNet in an\nSQLite3 database"]
+  FrameNet_frame [label="FrameNet frame XML\nfrom their website"]
+  FrameNet_lu [label="FrameNet lexical unit XML\nfrom their website"]
+  OntoNotes_si [label="OntoNotes sense inventory XML"]
+  PropBank_frameset [label="PropBank frameset XML\n(from ON)"]
+  HTML [label="HTML web page"]
+  Lisp_syntax_tree [label="Lisp syntax tree"]
+  XML_syntax_tree [label="XML syntax tree"]
+  LF_terms [label="LF terms"]
+  RDF_XML [label="RDF/XML"]
+  OWL
+
+  WordNet -> WordNetSQL [label="WNSQL/make-wordnet-sql-db.pl"]
+  glosstag -> WordNetSQL [label="WNSQL/glosstag-standoff-to-sql"]
+  WordNetSQL -> synset_input [label="MD/synset-glosses-to-tags.rb"]
+  SemCor -> synset_input [label="MD/semcor-to-tags.xsl"]
+  VerbNet -> synset_input [label="MD/verbnet-to-tags.xsl"]
+  synset_input -> define_concept [label="gloss system"]
+  define_concept -> DSL_Lisp [label="gloss-output-to-dsl"]
+  DSL_Lisp -> DSL_Memory [label="lib/load.lisp"]
+  DSL_Memory -> DSL_Lisp [label="lib/print.lisp"]
+  TRIPS -> DSL_Memory [label="lib/load-old.lisp"]
+  DSL_Memory -> lex_entry [label="TBD"]
+  DSL_Lisp -> DSL_XML [label="dsl-to-xml"]
+  VerbNet -> DSL_Lisp [label="verbnet-to-dsl.xsl"]
+  WordNetSQL -> DSL_Lisp [label="wnsql-to-dsl.rb"]
+  FrameNet_frame -> DSL_Lisp [label="framenet-frame-to-dsl.xsl"]
+  FrameNet_lu -> DSL_Lisp [label="TBD"]
+  OntoNotes_si -> DSL_Lisp [label="ontonotes-inventory-to-dsl.xsl"]
+  OntoNotes_si -> HTML [label="ontonotes-inventory-to-html.xsl"]
+  PropBank_frameset -> DSL_Lisp [label="propbank-frameset-to-dsl.xsl"]
+  DSL_Lisp -> Lisp_syntax_tree [label="[split]"]
+  DSL_Lisp -> LF_terms [label="[split]"]
+  Lisp_syntax_tree -> XML_syntax_tree [label="syntax-tree-to-xml.lisp"]
+  LF_terms -> RDF_XML [label="lf-to-rdf.lisp"]
+  XML_syntax_tree -> DSL_XML [label="[join]"]
+  RDF_XML -> DSL_XML [label="[join]"]
+  TRIPS -> HTML [label="WebLex"]
+  define_concept -> OWL [label="OWLAgent/"]
+  DSL_XML -> OWL [label="TBD?"]
+}

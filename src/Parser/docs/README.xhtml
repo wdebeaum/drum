@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml-stylesheet type="text/xsl" href="toc.xsl"?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Parser</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head><body>
+
+<div>
+
+<div class="section">
+<h2>Introduction</h2>
+<p>Parser is a module in the TRIPS system which parses language input and produces 
+a semantic representation called the Logical Form (LF) representation which is an overall linked structure that includes
+ 
+<ul>
+<li>speech act type</li>
+<li>predicate argument structure derived from the semantic lexicon (lexical definitions in LexiconManager/Data)</li>
+<li>semantic types and roles derived from the semantic ontology (semantic type definitions in OntologyManager/Data)</li>
+</ul>
+More detail on the LF representation can be found in the LF documentation in this directory.
+</p>
+<p> 
+The parser can be accessed online at: http://www.cs.rochester.edu/research/trips/parser/cgi/web-parser-xml.cgi
+</p>
+</div>
+
+<div class="section">
+<h2>Running</h2>
+
+<div class="section">
+<h3>Stand-alone</h3>
+<p>To run the TRIPS parser in stand-alone mode:</p>
+
+<p>Start LISP from your TRIPS directory ...src/Parser</p>
+<p>At the prompt:</p>
+
+<p><code> CL-USER> (load "parser") </code> </p>
+
+<p> To parse individual strings:</p>
+<p><code> PARSER> (p "parse this sentence") </code></p>
+<blockquote><samp>
+(UTT :TYPE W::UTT :CHANNEL NIL :ROOT ONT::V31174 :TERMS
+ ((TERM :LF (ONT::SPEECHACT ONT::V31174 ONT::SA_REQUEST :CONTENT ONT::V30950)
+   :VAR ONT::V31174 :SEM NIL :INPUT (W::PARSE W::THIS W::SENTENCE) :START 0
+   :END 20)
+  (TERM :LF
+   (ONT::F ONT::V30950 (:* ONT::SITUATION-ROOT W::PARSE) :ARG1 ONT::V30959
+    :ARG0 ONT::V31167 :TMA ((W::TENSE W::PRES) (W::VFORM W::BASE)))
+   :VAR ONT::V30950 :SEM
+   ($ F::SITUATION (F::ASPECT F::DYNAMIC) (F::TIME-SPAN F::ANY-TIME-SPAN)
+    (F::CAUSE F::ANY-CAUSE) (F::LOCATIVE -) (F::TYPE F::EVENTUALITY)
+    (F::INTENTIONAL -) (F::INFORMATION F::MENTAL-CONSTRUCT) (F::CONTAINER -)
+    (F::ORIGIN F::ANY-ORIGIN) (F::TRAJECTORY -))
+   :INPUT (W::PARSE W::THIS W::SENTENCE) :START 0 :END 20)
+  (TERM :LF (ONT::IMPRO ONT::V31167 ONT::PERSON :PROFORM ONT::*YOU*) :VAR
+   ONT::V31167 :SEM
+   ($ F::PHYS-OBJ (F::FORM F::SOLID-OBJECT) (F::MOBILITY F::SELF-MOVING)
+    (F::GROUP -) (F::SPATIAL-ABSTRACTION F::SPATIAL-POINT) (F::INTENTIONAL +)
+    (F::INFORMATION -) (F::CONTAINER -) (F::ORIGIN F::HUMAN) (F::TRAJECTORY -))
+   :START 0 :END 20)
+  (TERM :LF
+   (ONT::THE ONT::V30959 (:* ONT::LINGUISTIC-OBJECT W::SENTENCE) :PROFORM
+    ONT::THIS)
+   :VAR ONT::V30959 :SEM
+   ($ F::ABSTR-OBJ (F::MEASURE-FUNCTION -) (F::INTENSITY -) (F::ORIENTATION -)
+    (F::OBJECT-FUNCTION F::ANY-OBJECT-FUNCTION) (F::INTENTIONAL -)
+    (F::INFORMATION F::DATA) (F::CONTAINER -) (F::GRADABILITY -)
+    (F::ORIGIN F::ANY-ORIGIN) (F::SCALE -))
+   :INPUT (W::THIS W::SENTENCE) :START 6 :END 20))
+ :UTTNUM NIL :START 0 :END 20 :WORDS (W::PARSE W::THIS W::SENTENCE))
+
+</samp></blockquote>
+
+<p> To see the abbreviated logical form:</p>
+<p><code> PARSER> (lf) </code> </p>
+<blockquote><samp>
+;;;;; (W::PARSE W::THIS W::SENTENCE)
+(ONT::SPEECHACT ONT::V31174 ONT::SA_REQUEST :CONTENT ONT::V30950 :START 0 :END
+ 20)
+  (ONT::F ONT::V30950 (:* ONT::SITUATION-ROOT W::PARSE) :ARG1 ONT::V30959 :ARG0
+   ONT::V31167 :TMA ((W::TENSE W::PRES) (W::VFORM W::BASE)) :START 0 :END 20)
+    (ONT::THE ONT::V30959 (:* ONT::LINGUISTIC-OBJECT W::SENTENCE) :PROFORM
+     ONT::THIS :START 6 :END 20)
+    (ONT::IMPRO ONT::V31167 ONT::PERSON :PROFORM ONT::*YOU* :START 0 :END 20)
+</samp></blockquote>
+
+
+<p> To see additional abbreviated logical forms if available, e.g. for the second-best interpretation:</p>
+<p><code> PARSER> (lf 2) </code> </p>
+
+<div class="section">
+<h3>Debugging</h3>
+
+<p> 
+Several useful debugging functions can be found in <code>src/Parser/Core-parser/printing.lisp</code> and <code>src/Parser/Core-parser/trace.lisp</code>. Some typical examples are below.
+</p>
+
+<p> To see the rules used in a parse, with probabilities and score:</p>
+<p><code> PARSER> (p show-answers '(lex)) </code></p>
+<blockquote><samp>
+UTT31405: (% W::UTT
+           (W::LEX
+            W::PARSE)) from 0 to 20 using rule W::-COMMAND-IMP1> [p=0.914] [score=0.963]
+  S31398: (% W::S
+           (W::LEX
+            W::PARSE)) from 0 to 20 using rule W::-COMMAND-IMP2> [p=0.923] [score=0.973]
+    VP31389: (% W::VP
+              (W::LEX
+               W::PARSE)) from 0 to 20 using rule W::-VP-TNS-> [p=0.932] [score=0.983]
+      VP-31388: (% W::VP-
+                 (W::LEX
+                  W::PARSE)) from 0 to 20 using rule W::-VP1-ROLE> [p=0.932] [score=0.983]
+        V31183: (% W::V
+                 (W::LEX
+                  W::PARSE)) from 0 to 6 using rule W::PARSE31178 [p=0.990] [score=0.990]
+        NP31387: (% W::NP
+                  (W::LEX
+                   W::SENTENCE)) from 6 to 20 using rule W::-NP-INDV> [p=0.951] [score=0.951]
+          SPEC31280: (% W::SPEC
+                      (W::LEX
+                       W::THIS)) from 6 to 11 using rule W::-SPEC-DET1> [p=0.970] [score=0.970]
+            DET31236: (% W::DET
+                       (W::LEX
+                        W::THIS)) from 6 to 11 using rule W::-DET-DIECTIC> [p=0.980] [score=0.980]
+              ART31187: (% W::ART
+                         (W::LEX
+                          W::THIS)) from 6 to 11 using rule W::THIS27558 [p=0.990] [score=0.990]
+          N131237: (% W::N1
+                    (W::LEX
+                     W::SENTENCE)) from 11 to 20 using rule W::-N1_1> [p=0.980] [score=0.980]
+            N31208: (% W::N
+                     (W::LEX
+                      W::SENTENCE)) from 11 to 20 using rule W::SENTENCE23733 [p=0.990] [score=0.990]
+</samp></blockquote>
+
+
+<p> To see additional parses if available, e.g. for the second-best interpretation:</p>
+<p><code> PARSER> (show-answers '(lex) :nth 2) </code> </p>
+
+<p> To see unification against every rule for a given constituent (in this case, <code>NP31387</code>):</p>
+<p><code> PARSER> (debug-match-grammar 'NP31387)</code> </p>
+
+</div>
+
+
+</div>
+
+<div class="section">
+<h3>Parsing Speech Input</h3>
+
+<p>Output speech hypotheses as messages just like speech-out (which is also more or less like keyboard). The protocol supports incremental output and revision of hypotheses, as well as a final "utterance" message that informs the system of the final SR output. For example:</p>
+
+<p><code>STARTED-SPEAKING :direction INPUT :uttnum N </code> </p>
+<p><code>WORD "TEXT" :index I :frame ((START) (END)) :uttnum N</code> </p>
+<p><code>BACKTO :frame F :uttnum N</code> </p>
+<p><code>STOPPED-SPEAKING :direction INPUT :uttnum N</code> </p>
+<p><code>UTTERANCE :direction INPUT :uttnum N :text "TEXT OF UTTERANCE"</code> </p>
+
+<p>
+<code>STARTED-SPEAKING</code> and <code>STOPPED-SPEAKING</code> are self-explanatory. The uttnum is incremented by  <code>SR</code>, and only counts the utterances output by this component (that is, not a global utterance counter, e.g., if you are typing and talking, so really uttnum is more for debugging than online processing).
+</p>
+<p>
+ <code>WORD</code> extends the hypothesis;  <code>BACKTO</code> revises (actually prunes) the hypothesis. So a  <code>BACKTO</code> is usually followed by some  <code>WORD</code> messages.
+</p>
+<p>
+<code>UTTERANCE</code> is sent to inform the system of the final hypothesis. In some sense, it ought to be the result of the  <code>WORD</code> and  <code>BACKTO</code> messages. It was originally put into the protocol so that simple components who just wanted to know what was said (e.g., for display) wouldn't have to deal with incremental output.
+</p>
+<p>
+Frames refer to acoustic frames within the utterance. Indexes refer to the index of the word in the utterance. I think was originally for the parser, perhaps originally for keyboard input. 
+</p>
+<p>
+It may also be the case that the parser ignores <code>WORD/BACKTO</code> and just uses  <code>UTTERANCE</code>. Certainly the original motivation for incremental processing, namely that it would be too slow to wait until all the words were in to start parsing, is no longer an issue. But since the parser uses a chart, it is still a natural fit.
+</p>
+<p>
+There are also messages sent by other components to the <code>SR</code> to control it. For example, <code>START-CONVERSATION</code> to have it go online.
+</p>
+</div>
+
+</div>
+
+
+<div class="section">
+<h2>WordFinder</h2>
+<p>WordFinder is a module that uses WordNet to create a lexical entries for the parser.
+More detail on WordFinder can be found in <code>src/WordFinder/README.txt</code>.
+</p>
+<p> 
+
+</p>
+
+</div>
+
+</div>
+</body></html>
+

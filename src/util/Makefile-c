@@ -1,0 +1,24 @@
+# -*-mode: Makefile;-*-
+#
+# Makefile for TRIPS Utilities libraries (in C)
+#
+# George Ferguson, ferguson@cs.rochester.edu,  6 Nov 1995
+# $Id: Makefile-c,v 1.1.1.1 2005/01/14 19:48:07 ferguson Exp $
+#
+
+MODULE = util
+
+LIB  = libutil
+SRCS = buffer.c memory.c 
+HDRS = $(SRCS:.c=.h) \
+	bitops.h \
+	debug.h \
+	error.h \
+	error_codes.h \
+	nonblockio.h \
+	streq.h
+MANS = libutil.man
+XTRA = Makefile-c
+
+CONFIGDIR=../config
+include $(CONFIGDIR)/c/lib.mk

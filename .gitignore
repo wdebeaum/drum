@@ -1,0 +1,23 @@
+CVS/
+/src/WordNetSQL/download-wn-db.sh
+/src/Data/
+config.log
+config.status
+TRIPS-stamp
+trips-*.core
+# junk certain editors create
+.*.swp
+*~
+# compiled JVM code
+*.class
+*.jar
+# compiled C code
+*.o
+*.lo
+# compiled Lisp code
+*.fasl
+*.x86f
+*.dfsl
+*.abcl
+*.dx86fsl
+*.lx86fsl

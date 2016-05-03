@@ -1,0 +1,89 @@
+#!/usr/bin/perl
+
+# Config.pm.in - processed by make-config-dot-pm.pl, with the result written to Config.pm
+# References to %ENV herein will be replaced by the Makefile with their
+# make-time values, and "use"s for non-existent files will be commented out.
+
+package TextTagger::Config;
+
+# for MetaMap.pm
+$UMLS_HOME = $ENV{TEXTTAGGER_umls};
+$SEMGROUPS_FILE = $ENV{TEXTTAGGER_semgroups};
+$METAMAP_HOME = $ENV{TEXTTAGGER_metamap};
+$METAMAP_VERSION = undef;
+
+unless ($METAMAP_HOME eq '') {
+  opendir MMB, "$METAMAP_HOME/bin/" or die "Can't open MetaMap bin dir: $!";
+  my @binaries = grep /^metamap(\d\d)$/, sort readdir MMB;
+  closedir MMB;
+  die "Can't find metamap binary!" unless (@binaries);
+  $METAMAP_VERSION = substr($binaries[-1], 7, 2);
+}
+
+# two digit year for the version of UMLS to use, passed to MetaMap with -Z
+$UMLS_YR = $METAMAP_VERSION; # default to the metamap version
+$UMLS_YR = $1 # set to the UMLS version if we can find it and MetaMap has the right files
+  if ($UMLS_HOME =~ qr{\/20(\d\d)[A-Z]{2}/?$} and
+      (-e "$METAMAP_HOME/DB/DB.normal.$1.base" or
+       -e "$METAMAP_HOME/DB/BDB4/DB.normal.$1.base"));
+
+# for CJParser.pm
+$CJ_PARSER_HOME = $ENV{TEXTTAGGER_cj_parser};
+$BIOMODEL_HOME = $ENV{TEXTTAGGER_biomodel};
+
+# for Enju.pm
+$ENJU = $ENV{TEXTTAGGER_enju};
+
+=nontaggers
+these are listed here so that make-config-dot-pm.pl will check them out if
+they're not already present
+use TextTagger::CombineTags;
+use TextTagger::Escape;
+use TextTagger::ExtraArgs;
+use TextTagger::Normalize;
+use TextTagger::Tags2Trips;
+use TextTagger::Util;
+use TextTagger::XML;
+=cut
+
+# all required taggers (part of texttagger-common CVS module)
+use TextTagger::Affixes;
+use TextTagger::Alphanumerics;
+use TextTagger::CapitalizedNames;
+use TextTagger::ChemicalFormulae;
+use TextTagger::Clauses;
+use TextTagger::Disambiguator;
+use TextTagger::Gold;
+use TextTagger::Input;
+use TextTagger::OneSentencePerLine;
+use TextTagger::Prescriptions;
+use TextTagger::Punctuation;
+use TextTagger::Quotations;
+use TextTagger::Sentences;
+use TextTagger::SpacedChunks;
+use TextTagger::StreetAddresses;
+use TextTagger::TermsInput;
+use TextTagger::VariantLists;
+use TextTagger::Words;
+use TextTagger::XMLInput;
+# all optional taggers
+use TextTagger::AlternateSpellings;
+use TextTagger::Asma;
+use TextTagger::CJParser;
+use TextTagger::Drum;
+use TextTagger::Enju;
+use TextTagger::MetaMap;
+use TextTagger::Minipar;
+use TextTagger::NamedEntities;
+use TextTagger::NamesFromFile;
+use TextTagger::PersonalNames;
+use TextTagger::POS;
+use TextTagger::PseudoMetaMap;
+use TextTagger::Specialist;
+use TextTagger::StanfordCoreNLP;
+use TextTagger::StanfordParser;
+use TextTagger::Terms;
+use TextTagger::TermsFromFile;
+use TextTagger::WordNet;
+
+1;

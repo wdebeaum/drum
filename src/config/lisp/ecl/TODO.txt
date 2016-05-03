@@ -1,0 +1,13 @@
+
+Time-stamp: <Wed Nov  1 14:02:09 EST 2006 ferguson>
+
+1 Nov 2006:
+
+- Don't yet know how to dump and image or run one with ecl
+
+  - The function to build the image is c:build-program
+
+    http://ecls.sourceforge.net/ecldev/Building-standalone-executables.html#Building-standalone-executables
+
+  - The resulting executable probably won't need a wrapper, but we'll
+    see (might need the TRIPS_BASE stuff or something)

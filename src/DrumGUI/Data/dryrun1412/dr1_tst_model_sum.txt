@@ -1,0 +1,33 @@
+Activated RAS binds to RAF.
+Activated RAS activates RAF.
+GTP-bound RAS binds to RAF.
+GTP-bound RAS activates RAF.
+Activated RAS is GTP-bound RAS.
+
+RAF phosphorylates MEK. 
+RAF phosphorylates MAPKK. 
+RAF activates MEK.  
+RAF activates MAPKK.  
+MEK is MAPKK.
+
+MEK phosphorylates MAPK.
+MEK phosphorylates ERK.
+MEK activates MAPK. 
+MEK activates ERK. 
+MAPK is ERK.
+
+ASPP2 binds to RAS.
+ASPP2 binds to PAR3.
+ASPP2 binds to ATG5.
+ASPP2 binds to P53.
+
+GEF stimulates the dissociation of GDP from RAS. 
+GEF stimulates the binding of GTP to RAS. 
+GEF stimulates RAS activation.
+
+GAP stimulates the hydrolysis of GTP.
+GAP stimulates Ras deactivation.
+
+K-Ras is monoubiquitinated at position 147.
+K-Ras monoubiquitinated at position 147 promotes tumorigenesis.
+

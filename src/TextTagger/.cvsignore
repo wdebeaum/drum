@@ -1,0 +1,14 @@
+TextTagger
+alternate-spellings.tsv
+terms
+terms.txt
+terms.unsorted.txt
+personal-names.tsv
+get-ssh-tunnel
+wn-multiwords.tsv
+*-terms.tsv
+downloads
+.*.swp
+drum-dsl
+specialist.tsv
+drum-dbxrefs.tsv

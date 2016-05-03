@@ -1,0 +1,9 @@
+This is the directory where the CGI scripts live.
+browseontology
+	server-side ontology tree navigation, does not support semantic roles 
+	or features
+browseontology-ajax
+	mostly client-side version, displays sematic roles and features
+lookup
+	server-side word lookup (for client-side, visit any of the W::*.xml files in ../data/ with an xslt-capable browser)
+

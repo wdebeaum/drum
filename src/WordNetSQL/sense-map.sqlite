@@ -1,0 +1,24 @@
+.echo ON
+.bail ON
+.timer ON
+.separator "|"
+
+CREATE TABLE sense_map (
+  old_version VARCHAR(5) NOT NULL,
+  old_sense_key VARCHAR(82) NOT NULL,
+  old_synset_offset INT(8) NOT NULL,
+  old_sense_number INT(8) NOT NULL,
+  new_version VARCHAR(5) NOT NULL,
+  new_sense_key VARCHAR(82) NOT NULL,
+  new_synset_offset INT(8) NOT NULL,
+  new_sense_number INT(8) NOT NULL,
+  lemma varchar(72) NOT NULL,
+  ss_type CHAR(1) NOT NULL,
+  score INT(3) NOT NULL
+);
+.import sense-map.psv sense_map
+
+CREATE INDEX x_sense_map_old_sso ON sense_map(old_version, old_synset_offset, ss_type);
+CREATE INDEX x_sense_map_new_sso ON sense_map(new_version, new_synset_offset, ss_type);
+CREATE INDEX x_sense_map_old_sn ON sense_map(old_version, lemma, ss_type, old_sense_number);
+CREATE INDEX x_sense_map_new_sn ON sense_map(new_version, lemma, ss_type, new_sense_number);

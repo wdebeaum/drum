@@ -1,0 +1,13 @@
+#
+# File: src/config/TextTagger/Makefile.in
+# Creator: George Ferguson
+# Created: Tue Sep  9 11:18:05 2008
+# Time-stamp: <Tue Sep  9 11:18:17 EDT 2008 ferguson>
+#
+# @configure_input@
+#
+
+include ../auto/rules.mk
+
+distclean::
+	rm -f defs.mk

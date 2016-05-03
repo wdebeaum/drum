@@ -1,0 +1,6 @@
+.git
+*.abcl
+*.fasl
+*.x86f
+*.sse2f
+.*.swp

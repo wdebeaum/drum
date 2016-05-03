@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<TITLE>EPCA Documentation</TITLE>
+</HEAD>
+<BODY>
+<H1>UnknownModule</H1>
+  <br><b>[Function]</b><br><tt>subtype <i>x</i> <i>y</i> &amp;key <i>ontology</i><p></tt><tt><i>x</i></tt>  one of: lf-type/lf-feature-val/kr-class/kr-predicate/kr-operator
+   <p>
+<tt><i>y</i></tt>  one of: lf-type/lf-feature-val/kr-class/kr-predicate/kr-operator
+   <p>
+<tt><i>ontology</i></tt>   lf/kr, whichever sub/super is a member of
+   <p>
+<b>Return: </b>returns t if sub is a subclass of super<p>
+<b>Visibility: </b>private<br><b>Location: </b>general-public.lisp<p>
+  <br><b>[Function]</b><br><tt>more-specific <i>x</i> <i>y</i> &amp;key <i>ontology</i><p></tt><tt><i>x</i></tt>  one of: lf-type/lf-feature-val/kr-class/kr-predicate/kr-operator
+   <p>
+<tt><i>y</i></tt>  one of: lf-type/lf-feature-val/kr-class/kr-predicate/kr-operator
+   <p>
+<tt><i>ontology</i></tt> lf/kr, whichever sub/super is a member of
+   <p>
+<b>Return: </b>the more specific of x and y, i.e. the subtype<p>
+<b>Visibility: </b>private<br><b>Location: </b>general-public.lisp<p>
+  <br><b>[Function]</b><br><tt>get-parent <i>x</i> &amp;key <i>ontology</i><p></tt><tt><i>x</i></tt>    one of the following: lf-type/kr-class/kr-predicate/kr-operator
+   <p>
+<tt><i>ontology</i></tt>  lf/kr, whichever x is a member of
+   <p>
+<b>Return: </b>the parent of x, nil if it does not exist<p>
+<b>Visibility: </b>private<br><b>Location: </b>general-public.lisp<p>
+  <br><b>[Function]</b><br><tt>get-parents <i>x</i> &amp;key <i>ontology</i><p></tt><tt><i>x</i></tt>  one of the following: lf-type/kr-class/kr-predicate/kr-operator
+   <p>
+<tt><i>ontology</i></tt>  lf/kr, whichever x is a member of
+   <p>
+<b>Return: </b> list of the path from x to the top of the ontology, nil if none<p>
+<b>Visibility: </b>private<br><b>Location: </b>general-public.lisp<p>
+  <br><b>[Function]</b><br><tt>common-ancestor <i>x</i> <i>y</i> &amp;key <i>ontology</i><p></tt><tt><i>x</i></tt>        one of: lf-type/kr-class
+   <p>
+<tt><i>y</i></tt>        one of: lf-type/kr-class
+   <p>
+<tt><i>ontology</i></tt> lf/kr, whichever x is a member of
+   <p>
+<b>Return: </b>        returns the common ancestor of x and y, nil if there is none<p>
+<b>Visibility: </b>private<br><b>Location: </b>general-public.lisp<p>
+  <br><b>[Function]</b><br><tt>defined-p <i>x</i> &amp;key <i>ontology</i> <i>cat</i><p></tt><tt><i>x</i></tt>         an atom to check for in the ontologies
+   <p>
+<tt><i>ontology</i></tt>  lf/kr - only search in the specified ontology
+   <p>
+<tt><i>cat</i></tt>       type/feature/feature-type/class/predicate/operator
+                    - only search in the specific table given<p>
+<b>Visibility: </b>private<br><b>Location: </b>general-public.lisp<p>
+</BODY>
+</HTML>

@@ -1,0 +1,50 @@
+<HTML>
+<HEAD>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<TITLE>EPCA Documentation</TITLE>
+</HEAD>
+<BODY>
+<H1>UnknownModule</H1>
+  <br><b>[Function]</b><br><tt>kr-add-to-lf <i>lf-name</i> <i>sem</i> &amp;key <i>present-sem-args</i> &amp;key <i>no-kr-preference</i> &amp;key <i>kr-preference</i> &amp;key <i>allow-coercions</i> &amp;key <i>from-predicate</i> &amp;key <i>to-predicate</i><p></tt><tt><i>lf-name</i></tt> lf-type or star list - e.g. lf_move or (:* lf_move go)
+   <p>
+<tt><i>sem</i></tt>     feature list
+   <p>
+<tt><i>present-sem-args</i></tt> <p>
+<tt><i>no-kr-preference</i></tt> <p>
+<tt><i>kr-preference</i></tt> <p>
+<tt><i>allow-coercions</i></tt> <p>
+<tt><i>from-predicate</i></tt> <p>
+<tt><i>to-predicate</i></tt> <p>
+<b>Return: </b>  list of 4-grams: (transform-name 
+                               preference-weight
+                               sem-with-kr-type
+                               list-of-semantic-arguments)<p>
+<b>Visibility: </b>private<br><b>Location: </b>kr-public.lisp<p>
+  <br><b>[Function]</b><br><tt>kr-slots <i>x</i><p></tt><tt><i>x</i></tt> kr class  (i.e. Cargo)
+   <p>
+<b>Return: </b>the slots of x in list form<p>
+<b>Visibility: </b>private<br><b>Location: </b>kr-public.lisp<p>
+  <br><b>[Function]</b><br><tt>lf-info-for-class <i>class</i><p></tt><tt><i>class</i></tt> kr-class (i.e. kr-type)
+  <p>
+<b>Return: </b>list (transform lf sem)
+  where
+  transform = the 'best' lf-kr-transform for this class
+  lf        = lf specified in the transform
+  sem       = domain specific sem -- i.e. sem feature vector consistent with this lf, plus kr-type for this class<p>Given a class, return a tripple: (transform lf sem) corresponding to the retrieved LF information for that class
+
+  <p>
+<b>Visibility: </b>private<br><b>Location: </b>kr-public.lisp<p>
+  <br><b>[Function]</b><br><tt>kr-coercion-operators <i>class</i><p></tt><tt><i>class</i></tt> kr-type 
+  <p>
+<b>Return: </b>list of applicable coercions (opname, class, newtype, newlf, newsem)
+  where
+  opname  = name of coercion operation (e.g. medication-from-prescription)
+  class   = kr class to which the coercion applies (e.g prescription)
+  newtype = kr class that results from the coercion (e.g. medication)
+  newlf   = lf type associated with newtype (if any)
+  newsem  = semantic features for newlf with kr-type added<p>Given a class, return a list of quintuples that define applicable coercions for this kr class
+ 
+  <p>
+<b>Visibility: </b>private<br><b>Location: </b>kr-public.lisp<p>
+</BODY>
+</HTML>

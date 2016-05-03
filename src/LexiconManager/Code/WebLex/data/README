@@ -1,0 +1,8 @@
+This is where the XML data files live. ../generate-data-files.sh should be run
+with this directory as the second argument. It makes one XML file for each word
+and LF type.
+lftype.dtd
+	document type definition for ONT::*.xml
+word.dtd
+	document type definition for W::*.xml
+	

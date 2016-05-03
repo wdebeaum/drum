@@ -1,0 +1,101 @@
+#!/usr/staff/bin/perl
+#
+# makedepend : Personal version of dependency generator
+#
+# George Ferguson, ferguson@cs.rochester.edu, 18 Apr 1995
+# $Id: makedepend,v 1.1.1.1 2005/01/14 19:47:58 ferguson Exp $
+#
+# This version handles multiple subdirectories for different architectures
+# nicely by letting you pass on the -d flag the subdirectory prefix you
+# want to add to the basic dependency line.
+#
+$usage = "makedepend [-f file] [-d dir] -- [cflags] [cfiles]";
+
+$tmp = "/tmp/makedepend.$$";
+$file = "Makefile";
+$subdir = "";
+$dnd = "# DO NOT DELETE";
+$cccmd = "gcc -MM";
+
+# Parse command line
+while ($ARGV[0] =~ /^-/) {
+    if ($ARGV[0] eq "--") {
+	shift;
+	last;
+    } elsif ($ARGV[0] eq "-f") {
+	$file = $ARGV[1];
+	shift;
+    } elsif ($ARGV[0] = "-d") {
+	$subdir = $ARGV[1];
+	shift;
+    } else {
+	print STDERR "$0: unknown option: $ARGV[0]\n";
+	print STDERR "usage: $usage\n";
+	exit(1);
+    }
+    shift;
+}
+$dndline = $subdir ? "$dnd -- $subdir" : $dnd;
+
+# Backup original file
+if (system("cp $file $file.bak") >> 8 != 0) {
+    die("$0: couldn't backup $file\n");
+}
+
+# Open (temporary) output files
+open(OUT,">$tmp") || die("$0: couldn't open $file: $!\n");
+
+# Copy lines except those dependecies we're replacing (if any)
+open(IN,"<$file") || die("$0: couldn't open $file: $!\n");
+$printit = 1;
+while (<IN>) {
+    if (/$dndline/) {
+	$printit = 0;
+    } elsif (!$printit && /^$dnd/) {
+	$printit = 1;
+    }
+    print OUT if $printit;
+}
+close(IN);
+
+# Add the DO NOT DELETE LINE for these dependencies
+print OUT "$dndline\n";
+
+# And run gcc to add the dependencies
+$cmd = "$cccmd " . join(' ',@ARGV);
+open(PIPE,"$cmd|") || die("$0: couldn't run \"$cccmd\": $!\n");
+select PIPE; $| = 1; select STDOUT;
+while (<PIPE>) {
+    if (/^\s/) {
+	$text .= $_;
+    } else {
+	if ($text) {
+	    if ($subdir) {
+		print OUT "$subdir/$text";
+	    } else {
+		print OUT $text;
+	    }
+	}
+	$text = $_;
+    }
+}
+if ($text) {
+    if ($subdir) {
+	print OUT "$subdir/$text";
+    } else {
+	print OUT $text;
+    }
+}
+close(PIPE);
+
+# All done
+close(OUT);
+if (system("cp $tmp $file") >> 8 != 0) {
+    die("$0: couldn't copy new $file\n");
+}
+unlink($tmp);
+exit(0);
+
+# Local Variables:
+# mode: perl
+# End:

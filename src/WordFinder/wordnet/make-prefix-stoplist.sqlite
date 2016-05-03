@@ -1,0 +1,50 @@
+-- make-prefix-stoplist.sqlite - make the part of stoplist.lisp dealing with prefixed verbs
+-- William de Beaumont
+-- 2016-02-08
+--
+-- USAGE: sqlite3 <make-prefix-stoplist.sqlite
+-- writes prefix-stoplist.txt, to be inserted in stoplist.lisp
+
+.open ../../WordNetSQL/wn.db
+
+CREATE TEMPORARY TABLE stoplist (lemma);
+
+-- re-, over-, and under- verbs in a synset whose direct hypernym has the word
+-- without the prefix
+INSERT INTO stoplist
+SELECT prefixed.lemma
+FROM senses AS prefixed
+JOIN pointers
+  ON (prefixed.synset_offset=pointers.source_synset_offset)
+JOIN senses AS unprefixed
+  ON (unprefixed.synset_offset=pointers.target_synset_offset)
+WHERE prefixed.ss_type='v' AND unprefixed.ss_type='v'
+  AND pointers.source_ss_type='v' AND pointers.target_ss_type='v'
+  AND pointers.pointer_symbol='@'
+  AND ((prefixed.lemma LIKE 're%' AND
+        unprefixed.lemma=substr(prefixed.lemma,3)) OR
+       (prefixed.lemma LIKE 'over%' AND
+        unprefixed.lemma=substr(prefixed.lemma,5)) OR
+       (prefixed.lemma LIKE 'under%' AND
+        unprefixed.lemma=substr(prefixed.lemma,6))
+      )
+;
+
+-- over- and under- verbs in a synset with the word without the prefix
+INSERT INTO stoplist
+SELECT prefixed.lemma
+FROM senses AS prefixed
+JOIN senses AS unprefixed
+  ON ((prefixed.lemma LIKE 'over%' AND
+       unprefixed.lemma=substr(prefixed.lemma,5)) OR
+      (prefixed.lemma LIKE 'under%' AND
+       unprefixed.lemma=substr(prefixed.lemma,6))
+     )
+WHERE prefixed.ss_type='v' AND unprefixed.ss_type='v'
+  AND prefixed.synset_offset=unprefixed.synset_offset
+;
+
+-- output
+.output prefix-stoplist.txt
+SELECT DISTINCT lemma FROM stoplist ORDER BY lemma;
+

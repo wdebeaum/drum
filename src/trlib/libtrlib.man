@@ -1,0 +1,153 @@
+.\" Time-stamp: <Mon Nov 24 19:18:26 EST 1997 ferguson>
+.TH LIBTRLIB 3 "10 Oct 1996" "TRIPS"
+.SH NAME
+libtrlib \- TRIPS System Module Library
+.SH SYNOPSIS
+#include <debugarg.h>
+.br
+#include <error.h>
+.br
+#include <hostname.h>
+.br
+#include <input.h>
+.br
+#include <parse.h>
+.br
+#include <send.h>
+.SH DESCRIPTION
+.PP
+The TRIPS System Module library,
+.IR libtrlib ,
+provides a collection of C language routines used in most, if not all,
+of the TRIPS modules. They generally provide functionality shared by
+all modules, such as waiting for KQML input, parsing it into messages,
+and generating responses.
+.SH "DEBUG PROCESSING"
+.PP
+The following function is used by all modules that understand the
+-debug command-line argument.
+.PP
+#include <debugarg.h>
+.IP "void trlibDebugArg(int argc, char **argv)"
+Given a process' ARGC and ARGV, this function extracts the -debug
+option, if given, and sets up the FILE*
+.I debugfp
+used by the DEBUG* and ERROR* macros from
+.IR libutil (3).
+If the argument is a hyphen ("-"), then debugging output is to stderr.
+If it starts with a pipe symbol ("|"), then the rest of the argument
+is passed to
+.IR popen (3)
+and the resulting FILE* used for debugging output. Otherwise the
+argument is treated as a filename, which is opened for debugging
+output. Making this a library routine allows for uniform treatment of
+the option.
+.SH "KQML ERROR PROCESSING"
+.PP
+The following function is used to generate a KQML error performative
+in reply to a previous message.
+.PP
+#include <error.h>
+.IP "void trlibErrorReply(KQMLPerformative *perf,"
+.nf
+.na
+                TrlibErrorCode code, char *comment)
+.ad
+.fi
+Sends a KQML error performative with the given :code and :comment to
+the :sender of
+.IR PERF .
+Any :reply-with in the original
+.I PERF
+will be used as the :in-reply-to of the reply.
+.SH "HOSTNAME FUNCTIONS"
+.PP
+It can be tricky to get your own hostname, so this function does it
+for you.
+.PP
+#include <hostname.h>
+.IP "char *trlibGetHostname(void)"
+Returns the current hostname as a pointer to static storage.
+.SH "KQML INPUT PROCESSING"
+.PP
+All TRIPS modules need to process KQML messages, whether they block
+waiting for them or not (for example, X apps can't block as that would
+prevent the user from interacting with the display).
+.PP
+#include <input.h>
+.IP "int trlibInput(int fd, int block, TrlibCallbackProc cbp)"
+Reads KQMl input from
+.IR fd .
+The
+.I block
+parameter should be one of TRLIB_BLOCK or TRLIB_DONTBLOCK. Returns
+less than 0 on error, 0 on end-of-file, and greater than 0 otherwise.
+In addition, if a performative is successfully read and parsed, and if
+the callback parameter
+.I cbp
+is non-NULL, it is called with the KQMLPerformative* as argument.
+.SH "KQML PERFORMATIVE PARSING"
+.PP
+All TRIPS modules need to look at the KQML performatives they receive
+and decide what to do, processing the ones they can and generating
+errors for those they can't. This function simplifies the first stages
+of that process.
+.PP
+#include <parse.h>
+.IP "void trlibParsePerformative(KQMLPerformative *perf,"
+.nf
+.na
+                       TrlibParseDef *defs)
+.ad
+.fi
+The parameter
+.I DEFS
+describes the messages that the module expects to receive using a
+array of the following structures:
+
+.nf
+.na
+        typedef void (*TrlibParseCallbackProc)(KQMLPerformative *perf,
+                                               char **contents);
+        typedef struct _TrlibParseDef {
+            char *verb;
+            char *content0;
+            TrlibParseCallbackProc cb;
+        } TrlibParseDef;
+.ad
+.fi
+
+The last element in the array should have a NULL verb. The function
+then scans the array comparing first the verb of the performative then
+the first element of its :content (a NULL
+.I content0
+in an entry means ignore the content). If a matching entry is found,
+its callback is called (a NULL
+.I cb
+in the entry means ignore the message completely). The callback can
+then further parse the
+.I contents
+of the performative. If no entry matches, an error is generated using
+.IR trlibErrorReply (3).
+.SH "KQML OUTPUT FUNCTIONS"
+.PP
+All TRIPS modules need to send KQML performatives. The following
+function simplies this.
+.PP
+#include <send.h>
+.IP "void trlibSendPerformative(FILE *fp, KQMLPerformative *perf)"
+Formats
+.I PERF
+to the given standard i/o file pointer. Note that this may block,
+although it's pretty unlikely.
+.SH SEE ALSO
+.PP
+trips(1),
+libutil(3),
+libKQML(3)
+.SH BUGS
+.PP
+Could well be...
+.SH AUTHOR
+.PP
+George Ferguson (ferguson@cs.rochester.edu).

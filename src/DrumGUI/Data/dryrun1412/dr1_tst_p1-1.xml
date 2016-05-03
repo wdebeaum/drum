@@ -1,0 +1,15 @@
+<sec>
+We next considered the effect of Ras monoubiquitination on GAP-mediated hydrolysis. 
+To this end we compared the rate of GTP hydrolysis for Ras and mUbRas in the presence of the catalytic domains of two GAPs, NF1 (NF1<sup>333</sup>) and p120GAP(GAP-334)<xref>4,36</xref>.
+At a GAP-to-Ras ratio of 1:500, we observed an order of magnitude increase in the rate of GTP hydrolysis for unmodified Ras relative to the intrinsic rate of GTP hydrolysis.
+No increase in the rate of GTP hydrolysis was observed for mUbRas in the presence of the same GAP-to Ras ratio (<xref>Fig. 5b</xref>).
+Therefore, mUbRas is insensitive to GAP-mediated regulation, similar to an oncogenic Ras<sup>G12V</sup> mutation<xref>9</xref>.
+We obtained similar results using K-Ras (<xref>Supplementary Figure 6</xref>), indicating that the effects of monoubiquitination on Ras are not isoform-specific.
+To verify that the differences between the enzymatic and chemical ubiquitination linkers (seven bonds and five bonds, respectively) do not alter GAP-responsiveness, we placed an additional cysteine at the c-terminus of Ubiquitin (Ubiquitin<sup>C77</sup>), thereby creating a linker one bond longer than the native linker.
+We measured the rate of GAP-mediated GTP hydrolysis and observed that the response of Ras ligated to Ubiquitin<sup>C77</sup> was identical to Ras ligated to Ubiquitin<sup>G76C</sup> (<xref>Fig. 5b</xref>).
+These results indicate that variations in the linker length on this scale (1-2 bonds) do not influence the sensitivity of mUbRas to GAP downregulation.
+To validate the use of an in vitro system to dissect the mechanism of Ras regulation, we measured the sensitivity of mUbRas to GAP-mediated hydrolysis in a cellular reconstitution system.
+We immunoprecipitated Ras from HEK293T cells and compared the sensitivity of the monoubiquitinated and unmodified fractions of Ras to regulation by GAP.
+As seen in <xref>Figure 5c</xref>, monoubiquitinated K-Ras is less sensitive than the unmodified protein to GAP-mediated GTP hydrolysis.
+These data support our in vitro findings that monoubiquitination increases the population of active, GTP-bound Ras through a defect in sensitivity to GAP-mediated regulation.
+</sec>

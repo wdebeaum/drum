@@ -1,0 +1,17 @@
+;;;;
+;;;; W::EVERYTHING
+;;;;
+
+(define-words :pos W::pro :boost-word t :templ PRONOUN-TEMPL
+ :tags (:base500)
+ :words (
+  (W::EVERYTHING
+   (wordfeats (W::ELSE-WORD +))
+   (SENSES
+    ((LF-PARENT ONT::REFERENTIAL-SEM)
+     (TEMPL PRONOUN-QUAN-TEMPL)
+     )
+    )
+   )
+))
+

@@ -1,0 +1,8 @@
+MODULE=''
+PROG=run-pmcid
+MAIN=$(PROG).pl
+SRCS=$(MAIN)
+
+CONFIGDIR=../../config
+include $(CONFIGDIR)/perl/cgi-prog.mk
+

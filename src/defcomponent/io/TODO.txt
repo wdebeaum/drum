@@ -1,0 +1,22 @@
+Time-stamp: <Tue Jul 18 18:56:50 EDT 2000 ferguson>
+
+
+
+- The method for using the current process to find a :sender in the
+
+  internal transport is broken if a client itself uses multiple
+
+  processes. Need to rethink this. Meanwhile they have to specify
+
+  :sender or get *unknown* stuck in there.
+
+
+
+- The various "transports" really conflate *transport* with
+
+  *protocol*. That is, stdio is a transport (as is internal and
+
+  socket), but kqml is a protocol (as would be, eg., fipa-acl). This
+
+  could be cleaned up.
+

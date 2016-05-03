@@ -1,0 +1,19 @@
+# -*-mode: Makefile;-*-
+#
+# Makefile for TRIPS Utilities libraries (in Ruby)
+#
+# William de Beaumont <wbeaumont@ihmc.us> 2013-04-03
+# $Id: Makefile-ruby,v 1.2 2013/05/08 17:11:17 wdebeaum Exp $
+#
+
+MODULE = util
+CONFIGDIR = ../config
+
+SRCS = add_suffix.polyglot java_sqlite3.rb
+
+include $(CONFIGDIR)/ruby/lib.mk
+
+install::
+	# placate Ruby library naming requirements
+	ln -sf add_suffix.polyglot $(etcdir)/$(MODULE)/add_suffix.rb
+

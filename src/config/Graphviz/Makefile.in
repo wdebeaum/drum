@@ -1,0 +1,12 @@
+#
+# File: src/config/Graphviz/Makefile.in
+# Creator: William de Beaumont
+# Created: 2015-12-09
+#
+# @configure_input@
+#
+
+include ../auto/rules.mk
+
+distclean::
+	rm -f defs.mk

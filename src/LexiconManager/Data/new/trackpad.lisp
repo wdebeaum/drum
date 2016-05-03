@@ -1,0 +1,22 @@
+;;;;
+;;;; W::TRACKPAD
+;;;;
+
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :words (
+  (W::TRACKPAD
+   (SENSES
+    ((LF-PARENT ONT::computer-input-device) (TEMPL COUNT-PRED-TEMPL)
+     (META-DATA :ORIGIN CALO :ENTRY-DATE 20040204 :CHANGE-DATE  20051214
+      :COMMENTS HTML-PURCHASING-CORPUS))))
+))
+
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :words (
+  (W::TRACKPAD
+   (SENSES
+    ((LF-PARENT ONT::computer-input-device) (TEMPL COUNT-PRED-TEMPL)
+     (META-DATA :ORIGIN CALO :ENTRY-DATE 20040204 :CHANGE-DATE NIL
+      :COMMENTS HTML-PURCHASING-CORPUS))))
+))
+

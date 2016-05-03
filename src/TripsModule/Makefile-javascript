@@ -1,0 +1,14 @@
+# -*-mode: Makefile;-*-
+#
+# Makefile for TripsModule library (in Javascript)
+#
+# $Id: Makefile-javascript,v 1.1 2015/04/03 15:47:34 wdebeaum Exp $
+#
+
+MODULE = TripsModule
+SRCS = 	trips-module.js \
+	stream-pair.js
+
+CONFIGDIR=../config
+include $(CONFIGDIR)/javascript/lib.mk
+

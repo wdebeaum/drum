@@ -1,0 +1,31 @@
+src/Graphviz
+
+Programs for dealing with viewing LF graphs and converting them among three formats: Graphviz .dot, OmniGraffle .graffle, and the original lisp LFs. Most of them are written as UNIX filters; they read from stdin and write to stdout.
+
+In order to run the programs written in Ruby (*.rb), you need to have a Ruby interpeter with RubyGems installed (MacOS comes with one), and you need to install the gems "plist" and "session". To install Ruby gems, run "gem install names-of-gems" as an administrator, e.g.:
+
+sudo gem install plist session
+(enter your user password at the prompt)
+
+Files:
+dot-to-terms.lisp
+	Contains convert-dot-to-terms, a lisp function for converting Graphviz .dot to lisp LFs. Also contains code for parsing Graphviz .dot into a lispy AST.
+
+get-quick-look-preview.rb
+	Gets the QuickLookPreview attribute from a (possibly gzipped) plist. In an OmniGraffle Pro 5 file, this is a PDF version of the graph. (OmniGraffle 4 files don't have this attribute)
+
+graffle-to-dot.rb
+	Converts a .graffle file to a .dot file, and fixes up the labels. Assumes that the graph is an LF graph, and that you don't care about formatting.
+
+graffle-to-terms.sh
+	Converts a .graffle file to lisp LF terms directly, using graffle-to-dot.rb and dot-to-terms.lisp. Uses ccl by default, but there are commented out lines for SBCL and CMUCL too.
+
+Graphviz.pl
+	A TRIPS module which will display a .dot file (string) upon request. On Mac, it will use the Graphviz Mac GUI. On Linux, it will use the "dot" program (part of Graphviz) to convert the file to PNG, and then display the PNG using ImageMagick's "display" program.
+
+Makefile
+	For installing the TRIPS module.
+
+preview-graffle.sh
+	A program for viewing OmniGraffle Pro 5 files on non-Macs. It gets the QuickLookPreview and runs xpdf to view it.
+

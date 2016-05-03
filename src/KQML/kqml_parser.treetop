@@ -1,0 +1,92 @@
+grammar KQMLSyntax
+  rule sexp
+    sp
+    (list /
+     atom)
+    sp {
+      def to_ruby
+        elements[1].to_ruby
+      end
+    }
+  end
+
+  rule list
+    '(' (sexp)* ')' {
+      def to_ruby
+        re = elements[1].elements.collect { |e| e.to_ruby }
+	i = re.length - 2
+	i -= 2 while (i >= 0 and Symbol === re[i] and re[i].to_s =~ /^:/)
+	i += 2
+	return KQML[*re[0, i], Hash[*re[i, re.length - i]]]
+      end
+    }
+  end
+
+  rule atom
+    string /
+    number /
+    symbol
+  end
+
+  rule string
+    '"' ('\\' . / [^\\\"])* '"' {
+      def to_ruby
+        elements[1].text_value.gsub(/\\(.)/) { |m|
+	  if (%w{n r t}.include?($1))
+	    eval("\"\\#{$1}\"")
+	  else
+	    $1
+	  end
+	}
+      end
+    }
+  end
+
+  rule number
+    ([\d]* '.' [\d]+ /
+    [\d]+ '.'?) {
+      def to_ruby
+        eval(text_value)
+      end
+    }
+  end
+
+  rule symbol
+    (symbol_component '::' / ':')? symbol_component {
+      def to_ruby
+        if (text_value =~ /^nil$/i)
+	  nil
+	elsif (elements[0].text_value == ':')
+	  (':' + symbol_component.to_ruby).intern
+	elsif (elements[0].elements.nil?)
+	  symbol_component.to_ruby.intern
+	else
+	  (
+	    elements[0].elements[0].to_ruby + '::' +
+	    symbol_component.to_ruby
+	  ).intern
+	end
+      end
+    }
+  end
+
+  rule symbol_component
+    [^\s\(\)\|\:]+ {
+      def to_ruby
+        text_value.downcase
+      end
+    } /
+    '|' ('\\' . / [^\\\|])* '|' {
+      def to_ruby
+        elements[1].text_value.gsub(/\\(.)/) { |m| $1 }
+      end
+    }
+  end
+
+  rule sp
+    ([\s] /
+     ';' [^\r\n]+ [\r\n]
+    )*
+  end
+end
+

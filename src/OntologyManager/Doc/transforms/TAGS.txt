@@ -1,0 +1,9 @@
+Nate Chambers
+---
+cvs tags
+
+
+---
+before-usedterms: 
+
+I tagged the LFMapper directory with this before committing changes that return a list of unused LF terms with each transformation.  The code change wasn't huge, but the transforms were working perfectly up till this point.

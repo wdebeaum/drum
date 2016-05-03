@@ -1,0 +1,12 @@
+# -*- mode: Makefile;-*-
+#
+# File: src/config/DeepSemLex/defs.mk.in
+# Creator: William de Beaumont
+# Created: 2013-07-16
+#
+# @configure_input@
+#
+
+ONTONOTES = @ONTONOTES@
+VERBNET = @VERBNET@
+

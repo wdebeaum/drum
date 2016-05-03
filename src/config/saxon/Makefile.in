@@ -1,0 +1,12 @@
+#
+# File: src/config/saxon/Makefile.in
+# Creator: William de Beaumont
+# Created: 2009-01-09
+#
+# @configure_input@
+#
+
+include ../auto/rules.mk
+
+distclean::
+	rm -f defs.mk

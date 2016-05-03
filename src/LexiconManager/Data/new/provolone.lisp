@@ -1,0 +1,16 @@
+;;;;
+;;;; W::PROVOLONE
+;;;;
+
+(define-words :pos W::n
+ :words (
+  (W::PROVOLONE
+  (senses
+	   ((LF-PARENT ONT::CHEESE)
+	    (TEMPL MASS-PRED-TEMPL)
+	    (syntax (W::morph (:forms (-none))))
+	    )
+	   )
+)
+))
+

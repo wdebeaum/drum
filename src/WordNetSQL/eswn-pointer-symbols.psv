@@ -1,0 +1,36 @@
+be_in_state|Be in state
+causes|Causes
+derived_from|Derived from
+has_derived|Has derived
+has_holo_madeof|Has holo made of
+has_holo_member|Has holo member
+has_holo_part|Has holo part
+has_hyponym|Has hyponym
+has_hyperonym|Has hyperonym
+has_mero_madeof|Has mero made of
+has_mero_member|Has mero member
+has_mero_part|Has mero part
+has_subevent|Has subevent
+has_xpos_hyponym|Has xpos hyponym
+has_xpos_hyperonym|Has xpos hyperonym
+involved|Involved
+involved_agent|Involved agent
+involved_instrument|Involved instrument
+involved_location|Involved location
+involved_patient|Involved patient
+is_caused_by|Is caused by
+is_pertained_to|Is pertained to
+is_subevent_of|Is subevent of
+near_antonym|Near antonym
+near_synonym|Near synonym
+pertains_to|Pertains to
+role|Role
+role_agent|Role agent
+role_instrument|Role instrument
+role_location|Role location
+role_patient|Role patient
+see_also_wn15|See also wn15
+state_of|State of
+verb_group|Verb group
+xpos_fuzzynym|Xpos fuzzynym
+xpos_near_synonym|Xpos near synonym

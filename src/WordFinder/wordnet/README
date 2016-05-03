@@ -1,0 +1,22 @@
+README
+	short descriptions of files in this directory
+update-hierarchy-mapping-offsets.pl
+	uses the WNsnsmap package to update file offsets in the 
+	hierarchy-mapping hash in wordnet-to-trips.lisp
+get-sense-key-map.pl
+	simplifies the data in WNsnsmap to facilitate updating of sense key
+	references (e.g. in the lexicon's meta-data)
+upgrading-wordnet.txt
+	instructions for how to update TRIPS for a new version of WordNet
+wordnet.lisp
+	code for handling WordNet data
+wordnet-to-trips.lisp
+	code for translating between WordNet and TRIPS Lexicon/Ontology
+stoplist.lisp
+	stoplist of words not to look up in WordNet, with supporting code
+make-ing-stoplist.sqlite
+	code that was used to generate the part of the stoplist involving
+	-ing nominalizations
+make-prefix-stoplist.sqlite
+	code that was used to generate the part of the stoplist involving
+	prefixed verbs

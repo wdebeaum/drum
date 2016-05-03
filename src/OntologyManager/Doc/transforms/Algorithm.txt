@@ -1,0 +1,98 @@
+Nate Chambers
+---
+Algorithm based on Myrosia Dzikovska's PhD thesis.
+
+
+Information on how the rules match LF representations can be found in
+RuleDescription.txt.  This short file just describes a few features of the 
+algorithm in LF -> KR mapping.
+
+---
+KR Creation
+
+The KR form that is created is not a syntactically correct KR language.  The
+rule transforms create an intermediate lambda notation that uses the same
+types and roles as the KR, but not the same syntax.  By using the lambda
+notation, later reference and interpretation can easily be performed on the
+lists.  The lambda form always has an instance-of triple that is the type
+of the object for each unique variable id in the list of triples.  An example
+of a computer in lambda form:
+
+((lambda v1 (instance-of v1 Computer) 
+	    (hasProcessor v1 v2)
+	    (hasDisk v1 v3))
+ (lambda v2 (instance-of v2 Processor))
+ (lambda v3 (instance-of v3 Disk-Drive)
+	    (value v3 60)))
+	   
+This can easily be converted in a later syntactic conversion if the transform
+rules creates triples that use the correct classes, slots, and hierarchy.
+It was decided to do syntactic creation later because it is easier to create
+different code for different KRs after the algorithm finishes, rather than 
+requiring code changes within the algorithm itself.  Also, things like 
+reference can potentially bind to the lambda values themselves, for instance:
+
+((lambda v1 (instance-of v1 Find)
+	    (agent v1 v9)
+	    (theme v1 *computer*))
+ (lambda v9 (instance-of v9 Person)))
+
+The v9 identifier refers to the speaker in the LF, but is unknown at the time
+of transformation.  Reference can resolve the v9 later.  Granted, we don't 
+need lambda forms to do this, but it is simpler to have a list of triples in
+a flat form than a potentially complex frame representation.
+
+
+---
+Rule Ordering
+
+One major issue is the issue of rule ordering.  One can create rules with LF
+typetransforms that all match the same LF TERM.  One option is to create several
+different KRs and let other reasoners choose the best.  However, this puts a
+burden on later processing and isn't necessarily the best option.  Dzikovska's
+thesis suggests an ordering of specificity on the typetransforms.  She describes
+an algorithm that applying the most specific LF types first, followed by the
+least specific in order.  If there is more than one rule with the same LF type,
+the rule with the type *and* a lexical choice is applied before the rule with
+just an LF type.
+
+I adopted this approach, but I found that it was still lacking.  Many times there
+are rules that have the same LF type, but differ in argtransforms.  It happens
+that we desire one to apply first, and the other to apply only if the first one
+fails.  Here is an example:
+
+(define-transform laptop-computer
+  :typevar ?vv
+  :typetransform ((:* LF::COMPUTER W::COMPUTER) -> LAPTOP-COMPUTER)
+  :argtransforms (
+		  ((:assoc-with ?a)
+		   (LF::KIND ?a (:* LF::COMPUTER W::LAPTOP))
+		   -> nil)
+		  )
+  :constraints ((:allobligatory))
+  )
+
+(define-transform computer
+  :typevar ?vv
+  :typetransform ((:* LF::COMPUTER W::COMPUTER) -> COMPUTER)
+  )
+
+We want the first rule to apply if it can (note the allobligatory constraint
+on the argtransforms).  The second rule should *not* apply if the first does.
+
+Therefore, I added a rule ordering to the rule specificity condition.  Namely,
+if two rules are of the same specificity, then the rule that is listed first
+in the rules file (read first by the algorithm) is applied before the other.
+I have found that this adds a very nice flexibility and hierarchy to the rules
+that I write without concern that the rules will create a million different KRs.
+
+As for abstract rules, there is no specificity condition.  All abstract rules
+apply if they match.
+
+
+---
+Final Note
+
+I think the only unflexible part of this implementation is the instance-of 
+name being used to define types in the lambda triples.  This would have to be
+defined for each KR being used...

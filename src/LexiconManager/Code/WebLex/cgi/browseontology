@@ -1,0 +1,299 @@
+#!/usr/bin/perl
+
+# browseontology - CGI script for browsing the TRIPS Ontology, with server-side tree navigation
+
+use strict vars;
+use XML::DOM;
+use POSIX qw(strftime);
+
+# parameters for finding the appropriate data files
+my $datadir = "../data";
+my $rootont = "root";
+
+# header
+print "Content-type: text/html\r\n\r\n";
+print <<EOP;
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD><TITLE>TRIPS Ontology Browser</TITLE></HEAD>
+<BODY>
+<H1><IMG SRC="/images/monalogo_thin.jpg" ALT="URCS (logo)"> TRIPS Ontology Browser</H1>
+EOP
+
+if ($ENV{REQUEST_METHOD} ne "GET")
+{
+  print "You must use the GET method to access this page\n</BODY></HTML>\n";
+  exit(0);
+}
+
+# get query string into a hash
+my %query = ();
+for my $assgn (split(/&/, $ENV{'QUERY_STRING'}))
+{
+  my ($name, $val) = split(/=/, $assgn);
+  $name =~ s/\%([\dA-Fa-f]{2})/chr(hex($1))/ge;
+  $name =~ s/\+/ /g;
+  $val =~ s/\%([\dA-Fa-f]{2})/chr(hex($1))/ge;
+  $val =~ s/\+/ /g;
+  $query{lc($name)} = lc($val);
+}
+
+my ($targetAttribute, $framesArgument, $framesInput) = ("","","");
+if (exists($query{'frames'}) and $query{'frames'} =~ /^(t|true|y|yes)$/)
+{
+  $targetAttribute = ' target="lexicon"';
+  $framesArgument = 'frames=y&';
+  $framesInput = '<INPUT type="hidden" name="frames" value="y">';
+}
+
+# search form
+print <<EOP;
+<FORM action="browseontology#highlight">
+$framesInput
+<INPUT type="text" size=40 name="search">
+<INPUT type="submit" value="Search for ONT type">
+</FORM>
+EOP
+
+# get which ONTs want their words shown
+my %showwords = map {$_ => 1} split(/,/, $query{showwords});
+
+# get data from ONT::*.xml
+
+my %onttypes = ();
+
+my $parser = new XML::DOM::Parser;
+
+sub getDataForONTType
+{
+  my $onttype = shift;
+  my $doc = $parser->parsefile("$datadir/ONT::$onttype.xml");
+  $onttypes{$onttype}->{parent} =
+    $doc->getElementsByTagName("ONTTYPE")->[0]->getAttributeNode("parent")->getValue;
+  $onttypes{$onttype}->{arguments} =
+    [
+      map
+        {
+	  {
+	    role => $_->getAttributeNode("role")->getValue,
+	    fltype => $_->getAttributeNode("fltype")->getValue,
+	    features => 
+	      do
+	      {
+		my %features = ();
+		my $featurestag = $_->getElementsByTagName("FEATURES")->[0];
+		if (defined($featurestag))
+		{
+		  my $attributes = $featurestag->getAttributes;
+		  for (my $i = 0; $i < $attributes->getLength; $i++)
+		  {
+		    $features{$attributes->item($i)->getName} = $attributes->item($i);
+		  }
+		  \%features;
+		} else
+		{
+		  undef;
+		}
+	      }
+	  }
+	}
+	$doc->getElementsByTagName("ARGUMENT")
+    ];
+  $onttypes{$onttype}->{children} =
+    [
+      map
+        { $_->getAttributeNode("name")->getValue; }
+	$doc->getElementsByTagName("CHILD")
+    ];
+  $onttypes{$onttype}->{words} =
+    [
+      map
+        { $_->getAttributeNode("name")->getValue; }
+	$doc->getElementsByTagName("WORD")
+    ];
+  $onttypes{$onttype}->{mappings} =
+    [
+      map
+        { { to => $_->getAttributeNode("to")->getValue,
+	    name => $_->getAttributeNode("name")->getValue,
+	    url => $_->getAttributeNode("url")->getValue
+	  } }
+	$doc->getElementsByTagName("MAPPING")
+    ];
+  $doc->dispose;
+}
+
+# make sure all the ancestors of an expanded node are also expanded, so we can see it
+sub expandAncestors
+{
+  my $onttype = shift;
+  getDataForONTType($onttype);
+  $onttypes{$onttype}->{expanded} = 1;
+  while ($onttypes{$onttype}->{parent} ne '' and
+         $onttypes{$onttype}->{parent} ne 'nil')
+  {
+    getDataForONTType($onttypes{$onttype}->{parent});
+    $onttype = $onttypes{$onttype}->{parent};
+    $onttypes{$onttype}->{expanded} = 1;
+  }
+}
+
+# get data for nodes on the fringe of tree expansion
+sub getLeafData
+{
+  my $onttype = shift;
+  $onttype = $rootont unless (defined($onttype));
+  if (exists($onttypes{$onttype}))
+  { # this is not a leaf, so recurse on children
+    for my $child (@{$onttypes{$onttype}->{children}})
+    {
+      getLeafData($child);
+    }
+  } else
+  { # this is a leaf, so get the data, but keep it unexpanded
+    getDataForONTType($onttype);
+    $onttypes{$onttype}->{expanded} = 0;
+  }
+}
+
+# if we searched for something, we should expand it and highlight it
+if (exists($query{search}))
+{
+  $query{search} =~ s/^ONT:://i;
+  $query{expand} = $query{search};
+  $query{highlight} = $query{search};
+}
+
+# get data for expanded ONT types
+if (exists($query{expand}))
+{
+  for (split(/,/, $query{expand}))
+  {
+    unless (/^[a-z0-9_-]+$/)
+    {
+      print "Invalid ONT type name: $_<BR>\n";
+      next;
+    }
+    unless (-e "$datadir/ONT::$_.xml")
+    {
+      print "ONT type '$_' not found.<BR>\n";
+      next;
+    }
+    expandAncestors($_);
+  }
+}
+
+getLeafData();
+
+# display expanded tree
+
+sub getCollapsed
+{
+  my $onttype = shift;
+  my @expanded = grep {$onttypes{$_}->{expanded}} sort keys %onttypes;
+  
+  # get all descendants of onttype
+  my %descendants = ();
+  my @queue = ($onttype);
+  my $d;
+  while (defined($d = shift @queue))
+  {
+    $descendants{$d} = 1;
+    if ($onttypes{$d}->{expanded})
+    {
+      push @queue, @{$onttypes{$d}->{children}};
+    }
+  }
+ 
+  # return a comma-separated string without the descendants 
+  return join(',', grep {not exists($descendants{$_})} @expanded);
+}
+
+# output HTML for the subtree rooted at $onttype
+sub display
+{
+  my $onttype = shift;
+
+  # show highlighting
+  if ($onttype eq $query{highlight})
+  {
+    print '<LI style="background: #FFFF7F"><A NAME="highlight"></A>';
+  } else
+  {
+    print '<LI>';
+  }
+
+  # show disclosure triangle
+  if (@{$onttypes{$onttype}->{children}} > 0)
+  {
+    if ($onttypes{$onttype}->{expanded})
+    {
+      my $collapsed = getCollapsed($onttype);
+      print "<A HREF=\"browseontology?" . $framesArgument . "expand=$collapsed&amp;highlight=$onttype&amp;showwords=$query{showwords}#highlight\" style=\"text-decoration: none\">V</A>";
+    } else
+    {
+      my $expanded = join(',', (grep {$onttypes{$_}->{expanded}} sort(keys(%onttypes))), $onttype);
+      print "<A HREF=\"browseontology?" . $framesArgument . "expand=$expanded&amp;highlight=$onttype&amp;showwords=$query{showwords}#highlight\" style=\"text-decoration: none\">&gt;</A>";
+    }
+  } else
+  {
+    print '-';
+  }
+
+  # show name
+  print " $onttype ";
+
+  # show mappings
+  if (@{$onttypes{$onttype}->{mappings}} > 0)
+  {
+    print '(' . join(', ', map { "<A HREF=\"$_->{url}\">$_->{name}</A>" } @{$onttypes{$onttype}->{mappings}}) . ")\n";
+  }
+  
+  # show/hide words
+  if (@{$onttypes{$onttype}->{words}} > 0)
+  {
+    if ($showwords{$onttype})
+    {
+      my $shown = join(',', grep {$_ ne $onttype} sort(keys(%showwords)));
+      print "(<A HREF=\"browseontology?" . $framesArgument . "expand=$query{expand}&amp;highlight=$onttype&amp;showwords=$shown#highlight\">hide words</A>)\n";
+      print join
+        (
+	  ', ',
+          map
+	    {
+	      "<A HREF=\"lookup?" . $framesArgument . "word=$_\"$targetAttribute>$_</A>";
+	    }
+	    @{$onttypes{$onttype}->{words}}
+	) .
+	"\n";
+    } else
+    {
+      my $shown = join(',', sort(keys(%showwords), $onttype));
+      print "(<A HREF=\"browseontology?" . $framesArgument . "expand=$query{expand}&amp;highlight=$onttype&amp;showwords=$shown#highlight\">show words</A>)\n";
+    }
+  }
+  
+  # show children
+  if ($onttypes{$onttype}->{expanded} and 
+      @{$onttypes{$onttype}->{children}} > 0)
+  {
+    print "<UL style=\"list-style: none\">\n";
+    for my $child (@{$onttypes{$onttype}->{children}})
+    {
+      display($child);
+    }
+    print "</UL>\n";
+  }
+  print "</LI>\n";
+}
+
+# show the entire tree
+print "<UL style=\"list-style: none\">\n";
+display($rootont);
+print "</UL>\n";
+
+# show modification time based on the filesystem status of the data directory
+print "<P>Data files last modified: " . strftime("%a %b %e %H:%M:%S %Y", localtime(@{[stat($datadir)]}[9])) . "<P>\n";
+print "</BODY>\n</HTML>\n";
+
+

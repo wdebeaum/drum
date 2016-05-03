@@ -1,0 +1,13 @@
+#
+# File: config/mozilla/Makefile.in
+# Creator: George Ferguson
+# Created: Mon Feb 19 13:57:51 2007
+# Time-stamp: <Mon Feb 19 13:58:08 EST 2007 ferguson>
+#
+# @configure_input@
+#
+
+include ../auto/rules.mk
+
+distclean::
+	rm -f defs.mk

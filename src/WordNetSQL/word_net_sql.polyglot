@@ -1,0 +1,857 @@
+# This file is both Ruby and Perl code (see ../util/add_suffix.polyglot)
+
+# Ruby code to make Perl's "my" parse
+eval('def my(a);end') if (RUBY_VERSION);
+
+# Common data begins
+
+# This list is from Wikipedia, with some bogus ones thrown out
+my $preposition_string = "
+  aboard about above across after against along alongside amid amidst among amongst around as aside astride at athwart atop
+  before behind below beneath beside besides between beyond but by
+  circa
+  despite down during
+  except
+  for from
+  given
+  in inside into
+  like
+  minus
+  near next
+  of off on onto opposite out outside over
+  pace past per plus
+  qua
+  round
+  save since
+  than through throughout till times to toward towards
+  under underneath unlike until up upon
+  versus via
+  with within without worth
+";
+
+my $penn_pos_to_suffix_string = "
+  NNS s
+  VBZ s
+  VBD ed
+  VBN ed
+  VBG ing
+  JJR er
+  JJS est
+  RBR er
+  RBS est
+";
+
+my $penn_pos_to_be_form_string = "
+  VB be
+  VBP am/are
+  VBZ is
+  VBD was/were
+  VBN been
+  VBG being
+";
+
+my $ss_type_to_penn_poses_string = "
+  n NN NNS NNP NNPS
+  v VB VBZ VBP VBG VBD VBN
+  a JJ JJR JJS
+  r RB RBR RBS
+";
+
+# select a preferred word to use to fill in a frame for a given synset
+# (optionally excluding a particular word)
+my $select_word_query = <<EOSQL;
+  SELECT lemma FROM senses
+  WHERE ss_type=? AND synset_offset=? AND lemma <> ?
+  ORDER BY ( -- score
+    -- prefer words earlier in the list
+    word_number +
+    -- prefer words tagged in examples
+    100 * (NOT EXISTS(
+      SELECT * FROM glosstags AS g1
+      WHERE g1.synset_offset=senses.synset_offset AND g1.ss_type=senses.ss_type
+        AND tag_type='sns'
+        AND g1.sense_key=senses.sense_key
+        AND EXISTS(
+          SELECT * FROM glosstags AS g2
+          WHERE g2.synset_offset=g1.synset_offset AND g2.ss_type=g1.ss_type
+            AND g2.tag_type='ex'
+            AND g2.start <= g1.start AND g2.end >= g1.end
+        )
+    )) +
+    -- prefer single words (no spaces/underscores)
+    200 * (lemma LIKE '%\\_%' ESCAPE '\\')
+  ) ASC
+  LIMIT 1;
+EOSQL
+
+my $select_sense_key_query = <<EOSQL;
+  SELECT sense_key FROM senses
+  WHERE ss_type=? AND synset_offset=? AND lemma=?
+EOSQL
+
+my $select_examples_from_gloss_query = <<EOSQL;
+  SELECT
+    substr(
+      gloss,
+      ( SELECT min(start)+1
+        FROM glosstags
+	WHERE glosstags.ss_type=synsets.ss_type
+	  AND glosstags.synset_offset=synsets.synset_offset
+	  AND tag_type='ex'
+      ),
+      ( SELECT max(end) - min(start)
+        FROM glosstags
+	WHERE glosstags.ss_type=synsets.ss_type
+	  AND glosstags.synset_offset=synsets.synset_offset
+	  AND tag_type='ex'
+      )
+    )
+  FROM synsets
+  WHERE ss_type=? AND synset_offset=?;
+EOSQL
+
+my $select_frame_query = <<EOSQL;
+  SELECT frame_text
+  FROM frames NATURAL JOIN frames_text
+  WHERE ss_type=? AND synset_offset=?
+    AND ifnull(frames.word_number,0)=0
+  ORDER BY ( -- score
+    frame_number +
+    -- kinds of replacements I have to do in order of how confident I am in them
+    100 * (frame_number IN (4,20,21,22)) + -- PP
+    200 * (frame_number IN (30,33)) + -- VERB-ing/V-ing
+    400 * (frame_number IN (24,25,26,28,29,32,34,35)) + -- INFINITIVE/CLAUSE
+    800 * (frame_number IN (5,6,7)) -- Adj/N
+  ) ASC
+  LIMIT 1;
+EOSQL
+
+my $select_frames_query = <<EOSQL;
+  SELECT frame_text, frame_number
+  FROM frames NATURAL JOIN frames_text
+  WHERE ss_type=? AND synset_offset=?
+    AND ifnull(word_number,0)=0
+    AND frame_number NOT IN (5,6,7); -- don't know how to substitute these
+EOSQL
+
+my $select_exceptions_query = <<EOSQL;
+  SELECT inflected FROM exceptions
+  WHERE lemma=? AND pos=?
+  ORDER BY length(inflected) ASC
+  LIMIT 1;
+EOSQL
+
+my $select_verb_examples_query = <<EOSQL;
+  SELECT replace(example_text, '%s', lemma),
+         example_number, example_text, lemma, sense_key
+  FROM senses NATURAL JOIN examples NATURAL JOIN examples_text
+  WHERE ss_type='v' AND synset_offset=?;
+EOSQL
+
+my $is_verb_query = <<EOSQL;
+  SELECT * FROM senses WHERE lemma=? AND ss_type='v' LIMIT 1;
+EOSQL
+
+my $ss2sk_query = <<EOSQL;
+  SELECT sense_key FROM senses WHERE ss_type=? AND synset_offset=? LIMIT 1;
+EOSQL
+
+my $sk2ss_query = <<EOSQL;
+  SELECT ss_type, synset_offset FROM senses WHERE sense_key=?;
+EOSQL
+
+# Common data ends
+
+=begin REMOVE_THIS_LINE_FOR_POD
+
+=head1 SYNOPSIS
+
+  use lib "$ENV{TRIPS_BASE}/etc/WordNetSQL";
+  use WordNetSQL;
+
+=head1 DESCRIPTION
+
+See F<README.html>.
+
+=for html <a href="../README.html">here</a>
+
+=head1 FUNCTIONS
+
+=over 4
+
+=cut
+
+# Perl code begins
+
+use strict vars;
+package WordNetSQL;
+require Exporter;
+our @ISA = qw(Exporter);
+our @EXPORT_OK = qw(add_suffix set_lang set_db_file db query_first_row query_first_value query query_first_column is_preposition apply_morph apply_frame apply_a_frame ss2sk sk2ss);
+
+use lib "$ENV{TRIPS_BASE}/etc/util";
+require 'add_suffix.ph';
+use DBI;
+
+my (undef, @prepositions) = split(/\s+/, $preposition_string);
+my $prepositions = join('|', @prepositions);
+my $preposition_re = qr/\b($prepositions)\b/i;
+
+my (undef, %penn_pos_to_suffix) = split(/\s+/, $penn_pos_to_suffix_string);
+my (undef, %penn_pos_to_be_form) = split(/\s+/, $penn_pos_to_be_form_string);
+my %penn_pos_to_ss_type = ();
+for (split(/\n/, $ss_type_to_penn_poses_string)) {
+  my ($ss_type, @penn_poses) = split;
+  for (@penn_poses) { $penn_pos_to_ss_type{$_} = $ss_type; }
+}
+
+my $lang = undef;
+my $db_file = undef;
+my %ss2sk = ();
+my %sk2ss = ();
+my $db = undef;
+
+sub reset_wnsql {
+  %ss2sk = ();
+  %sk2ss = ();
+  $db->disconnect if (defined($db));
+  $db = undef;
+}
+
+=item C<set_lang($l)>
+
+Set the language of WordNet to use, 'en' or 'es' (default 'en').
+
+=cut
+sub set_lang {
+  my $l = shift;
+  if ($l ne $lang) {
+    reset_wnsql();
+    $lang = $l;
+    $db_file = $ENV{TRIPS_BASE}. '/etc/WordNetSQL/' . ($lang eq 'es' ? 'es' : '') . 'wn.db';
+  }
+}
+
+=item C<set_db_file($f)>
+
+Set the filename of the SQLite3 database to use (default
+F<$TRIPS_BASE/etc/WordNetSQL/wn.db>, affected by set_lang).
+
+=cut
+sub set_db_file {
+  my $f = shift;
+  if ($f ne $db_file) {
+    reset_wnsql();
+    $db_file = $f;
+  }
+}
+
+set_lang('en');
+
+=item C<db()>
+
+Get the DBI database connection, creating it if necessary.
+
+=for html See <a href="http://search.cpan.org/~timb/DBI/DBI.pm">DBI</a>.
+
+=cut
+sub db {
+  unless (defined($db)) {
+    $db = DBI->connect("DBI:SQLite(RaiseError=>1):dbname=$db_file", '', '');
+  }
+  return $db;
+}
+
+=item C<query_first_row($q, @args)>
+
+Return the first row in the results of query $q executed with arguments @args.
+
+=cut
+sub query_first_row {
+  my $q = shift;
+  $q = db()->prepare_cached($q) unless (ref($q));
+  $q->execute(@_);
+  my @row = $q->fetchrow_array();
+  $q->finish();
+  return @row;
+}
+
+=item C<query_first_value($q, @args)>
+
+Return the value in the first row and column of the results of query $q
+executed with arguments @args.
+
+=cut
+sub query_first_value {
+  my @row = query_first_row(@_);
+  die "expected >=1 column, but got " . scalar(@row) unless (@row >= 1);
+  return $row[0];
+}
+
+=item C<query($q, @args)>
+
+Return the list of rows of results of query $q executed with arguments @args.
+
+=cut
+sub query {
+  my $q = shift;
+  $q = db()->prepare_cached($q) unless (ref($q));
+  $q->execute(@_);
+  my $results = $q->fetchall_arrayref();
+  $q->finish();
+  return @$results;
+}
+
+=item C<query_first_column($q, @args)>
+
+Return the list of values in the first column of the results of query $q
+executed with arguments @args.
+
+=cut
+sub query_first_column {
+  return map { $_[0] } query(@_);
+}
+
+=item C<is_preposition($word)>
+
+Is this word (string) a preposition?
+
+=cut
+sub is_preposition {
+  my $word = lc(shift);
+  return grep { $_ eq $word } @prepositions;
+}
+
+=item C<apply_morph($lemma, $penn_pos)>
+
+Apply inflectional morphology to $lemma in order to make its POS $penn_pos,
+taking into account exceptions to the general rules.
+
+=cut
+sub apply_morph {
+  my ($lemma, $penn_pos) = @_;
+  return $penn_pos_to_be_form{$penn_pos} || 'be' if ($lemma eq 'be');
+  my $suffix = $penn_pos_to_suffix{$penn_pos};
+  return $lemma unless (defined($suffix));
+  # check for exceptions, and use the shortest applicable inflected form
+  my $lemma_ = $lemma;
+  $lemma_ =~ s/\s+/_/g;
+  eval {
+    return query_first_value($select_exceptions_query, $lemma_, $penn_pos);
+  };
+  # no exceptions apply, continue using the standard rules
+  return apply_morph_to_multiword($lemma, $penn_pos) if ($lemma_ =~ /_/);
+  # single word
+  return add_suffix($lemma, $suffix);
+}
+
+# Does this lemma (string) have a verb sense?
+sub is_verb {
+  my $lemma = shift;
+  eval {
+    query_first_value($is_verb_query, $lemma);
+    return 1;
+  };
+  return 0;
+}
+
+sub apply_morph_to_multiword {
+  my ($lemma, $penn_pos) = @_;
+  my $suffix = $penn_pos_to_suffix{$penn_pos};
+  my $ss_type = $penn_pos_to_ss_type{$penn_pos};
+  if ($ss_type eq 'v') {
+    # morph the first word that could be a verb
+    my $morphed = 0;
+    $lemma =~ s/[^\s_]+/
+      if ($morphed or not is_verb($&)) {
+	$&;
+      } else {
+	$morphed = 1;
+	apply_morph($&, $penn_pos);
+      }
+    /eg;
+    # default to morphing the first word
+    $lemma =~ s/^[^\s_]+/ apply_morph($&, $penn_pos) /e unless ($morphed);
+    return $lemma;
+  } else { # n a r s, just morph the last word
+    $lemma =~ /[^\s_]+$/ or die "WTF";
+    my ($prefix, $last_word) = ($`, $&);
+    return $prefix . apply_morph($last_word, $penn_pos);
+  }
+}
+
+# Fill in everything except the ----.
+sub fill_placeholders_in_frame {
+#  no warnings 'experimental::lexical_topic'; # squelch warning for next line
+  my ($_, $prep) = @_;
+  s/\bPP\b/$prep . ' something'/e;
+  s/\bVERB-ing\b/acting/;
+  s/\bV-ing\b/doing/;
+  s/\bINFINITIVE\b/(to) act/;
+  s/\bCLAUSE\b/something is/;
+  return $_;
+}
+
+=item C<apply_frame($frame, $word, $examples)>
+
+Apply a given frame to a given word (fill in everything including the ----).
+Fall back to just using add_suffix instead of apply_morph if the database isn't
+connected.
+
+=cut
+sub apply_frame {
+  my ($frame, $word, $examples) = @_;
+  my $prep = ($examples =~ /$preposition_re/ ? $& : 'of');
+  $frame = fill_placeholders_in_frame($frame, $prep);
+  $word =~ s/_/ /g;
+  $frame =~ s/----(s|ing)/
+    if (defined($db)) {
+      apply_morph($word, $1 eq 's' ? 'VBZ' : 'VBG');
+    } else {
+      add_suffix($word, $1);
+    }
+  /eg;
+  return $frame;
+}
+
+=item C<apply_a_frame($ss_type, $synset_offset)>
+
+Pick a frame and a word to apply it to a given synset.
+
+=cut
+sub apply_a_frame {
+  # pick a word to use
+  my $word = query_first_value($select_word_query, @_, '');
+  # get examples for the synset
+  my $examples = query_first_value($select_examples_from_gloss_query, @_);
+  # pick a frame to use
+  my $frame = query_first_value($select_frame_query, @_);
+  # apply it
+  return apply_frame($frame, $word, $examples);
+}
+
+# TODO apply_all_frames? get_tagged_frames get_verb_examples get_tagged_verb_examples
+
+=item C<ss2sk($ss_type, $synset_offset)>
+
+Get the canonical sense key for the given synset.
+
+=cut
+sub ss2sk {
+  my ($ss_type, $synset_offset) = @_;
+  my $ss = sprintf("$ss_type%08d", $synset_offset);
+  unless (exists($ss2sk{$ss})) {
+    unless (eval { $ss2sk{$ss} = query_first_value($ss2sk_query, @_); 1 }) {
+      if ($lang eq 'es') {
+	# Some synsets in esWN have no senses (there is no Spanish word for
+	# the concept). In that case, just use the ID.
+	$ss2sk{$ss} = $ss;
+      } else {
+	die "failed to get sense key for synset $ss";
+      }
+    }
+  }
+  return $ss2sk{$ss};
+}
+
+=item C<sk2ss($sk)>
+
+Get the synset (ss_type, synset_offset) for a sense key.
+
+=cut
+sub sk2ss {
+  my $sk = shift;
+  return ($1, 0+$2) if ($sk =~ /^([nvars])(\d{8})$/);
+  return @{$sk2ss{$sk} ||= [query_first_row($sk2ss_query, $sk)]};
+}
+
+1;
+
+# Perl code ends
+
+__END__
+
+=begin ruby
+=end
+
+# Ruby code begins
+
+# NOTE:
+# db.execute {} and stmt.execute! {} yield each row,
+# db.query {} and stmt.execute {} yield the whole result set
+
+require 'set'
+$: << (ENV.key?('TRIPS_BASE') ? ENV['TRIPS_BASE'] + '/etc/' : '../') + 'util'
+require 'add_suffix'
+
+# USAGE
+#
+#     $: << ENV['TRIPS_BASE'] + '/etc/WordNetSQL'
+#     require 'word_net_sql'
+#
+# See link:../README.html
+module WordNetSQL
+  Prepositions = $preposition_string.split
+  PrepositionRE = /\b(#{Prepositions.join('|')})\b/i
+  PennPosToSuffix = Hash[*$penn_pos_to_suffix_string.split]
+  PennPosToBeForm = Hash[*$penn_pos_to_be_form_string.split]
+  PennPosToSsType = {}
+  $ss_type_to_penn_poses_string.split(/\n/).each { |l|
+    ss_type, *penn_poses = *l.split
+    penn_poses.each { |p| PennPosToSsType[p] = ss_type }
+  }
+end
+
+class <<WordNetSQL
+  attr_reader :lang, :db_file
+
+  def reset
+    @statement_cache = {}
+    @ss2sk = {}
+    @sk2ss = {}
+    @db = nil
+  end
+  private :reset
+
+  # Set the language of WordNet to use, 'en' or 'es' (default 'en').
+  def lang=(l)
+    if (l != @lang)
+      reset()
+      @lang = l
+      @db_file = "#{ENV['TRIPS_BASE']}/etc/WordNetSQL/#{@lang == 'es' ? 'es' : ''}wn.db"
+    end
+  end
+
+  # Set the filename of the SQLite3 database to use (default
+  # $TRIPS_BASE/etc/WordNetSQL/wn.db, affected by #lang).
+  def db_file=(f)
+    if (f != @db_file)
+      reset()
+      @db_file = f
+    end
+  end
+
+  WordNetSQL.lang = 'en'
+
+  # Get the 
+  # SQLite3::Database[http://rubydoc.info/gems/sqlite3/1.3.5/SQLite3/Database]
+  # connection, creating it if necessary.
+  def db
+    if (@db.nil?)
+      if (JRUBY_VERSION.nil? rescue true)
+        require 'sqlite3'
+      else
+	require 'java_sqlite3'
+      end
+      @db = SQLite3::Database.new(@db_file)
+    end
+    return @db
+  end
+
+  # See Perl's
+  # DBI::prepare_cached[http://search.cpan.org/~timb/DBI/DBI.pm#prepare_cached].
+  def prepare_cached(query_string)
+    unless (@statement_cache.key?(query_string))
+      @statement_cache[query_string] = db.prepare(query_string)
+    end
+    return @statement_cache[query_string]
+  end
+
+  # Return the first row in the results of query q executed with arguments args.
+  #
+  # See also
+  # SQLite3::Database#get_first_row[http://rubydoc.info/gems/sqlite3/1.3.5/SQLite3/Database#get_first_row-instance_method],
+  # which returns nil instead of raising when there's no result.
+  def query_first_row(q, *args)
+    q = prepare_cached(q) if (String === q)
+    result_set = q.execute(args)
+    first_row = result_set.next
+    raise "expected >=1 row, but got 0" if (first_row.nil?)
+    return first_row
+  end
+
+  # Return the value in the first row and column of the results of query q
+  # executed with arguments args.
+  #
+  # See also
+  # SQLite3::Database#get_first_value[http://rubydoc.info/gems/sqlite3/1.3.5/SQLite3/Database#get_first_value-instance_method],
+  # which returns nil instead of
+  # raising when there's no result.
+  def query_first_value(q, *args)
+    first_row = query_first_row(q, *args)
+    raise "expected >=1 column, but got 0" if (first_row.empty?)
+    return first_row[0]
+  end
+
+  # Return an array of, or yield each of, the rows of results of query q
+  # executed with arguments args. When a block is given, the return value is
+  # the collected results of yielding to that block.
+  #
+  # See also
+  # SQLite3::Database#execute[http://rubydoc.info/gems/sqlite3/1.3.5/SQLite3/Database#execute-instance_method],
+  # which does not collect the results of the block.
+  def query_collect(q, *args, &block)
+    q = prepare_cached(q) if (String === q)
+    result_set = q.execute(args)
+    if (block_given?)
+      result_set.collect(&block)
+    else
+      result_set.to_a
+    end
+  end
+
+  # Return an array of, or yield each of, the values in the first column of the
+  # results of query q executed with arguments args. When a block is given, the
+  # return value is the collected results of yielding to that block.
+  def query_first_column(q, *args)
+    query_collect(q, *args) { |row|
+      raise "expected >=1 column, but got 0" if (row.empty?)
+      if (block_given?)
+	yield row[0]
+      else
+	row[0]
+      end
+    }
+  end
+
+  # Is this word (string) a preposition?
+  def preposition?(word)
+    WordNetSQL::Prepositions.include?(word.downcase)
+  end
+
+  # Apply inflectional morphology to lemma in order to make its POS penn_pos,
+  # taking into account exceptions to the general rules.
+  def apply_morph(lemma, penn_pos)
+    return WordNetSQL::PennPosToBeForm[penn_pos] || 'be' if (lemma == 'be')
+    suffix = WordNetSQL::PennPosToSuffix[penn_pos]
+    return lemma if (suffix.nil?)
+    # check for exceptions, and use the shortest applicable inflected form
+    begin
+      return query_first_value($select_exceptions_query, lemma.gsub(/\s+/,'_'), penn_pos)
+    rescue
+      # no exceptions apply, continue using the standard rules
+    end
+    return apply_morph_to_multiword(lemma, penn_pos) if (lemma =~ /[\s_]/)
+    # single word
+    return add_suffix(lemma, suffix)
+  end
+
+  # Does this lemma (string) have a verb sense?
+  def verb?(lemma)
+    begin
+      query_first_value($is_verb_query, lemma)
+      return true
+    rescue
+      return false
+    end
+  end
+  private :verb?
+
+  def apply_morph_to_multiword(lemma, penn_pos)
+    suffix = WordNetSQL::PennPosToSuffix[penn_pos]
+    ss_type = WordNetSQL::PennPosToSsType[penn_pos]
+    if (ss_type == 'v')
+      lemma = lemma.dup # don't clobber argument
+      # morph the first word that could be a verb
+      morphed = false
+      lemma.gsub!(/[^\s_]+/) { |match|
+        next match if (morphed)
+	if (verb?(match))
+	  morphed = true
+          apply_morph(match, penn_pos)
+	else
+	  match
+	end
+      }
+      unless (morphed)
+        # default to morphing the first word
+        lemma.sub!(/^[^\s_]+/) { |match| apply_morph(match, penn_pos) }
+      end
+      return lemma
+    else # n a r s, just morph the last word
+      lemma =~ /[^\s_]+$/ or raise "WTF"
+      prefix, last_word = $`, $&
+      return prefix + apply_morph(last_word, penn_pos)
+    end
+  end
+  private :apply_morph_to_multiword
+
+  # Fill in everything except the ----.
+  def fill_placeholders_in_frame(frame, prep)
+    frame.
+    sub(/\bPP\b/, prep + ' something').
+    sub(/\bVERB-ing\b/, 'acting').
+    sub(/\bV-ing\b/, 'doing').
+    sub(/\bINFINITIVE\b/, '(to) act').
+    sub(/\bCLAUSE\b/, 'something is')
+  end
+  private :fill_placeholders_in_frame
+
+  # Apply a given frame to a given word (fill in everything including the
+  # \-\-\-\-). Fall back to just using add_suffix instead of apply_morph if the
+  # database isn't connected.
+  def apply_frame(frame, word, examples='')
+    prep = (examples =~ WordNetSQL::PrepositionRE ? $& : 'of')
+    frame = fill_placeholders_in_frame(frame, prep)
+    word = word.gsub(/_/,' ')
+    frame.sub!(/----(s|ing)/) { |m|
+      if (@db.nil?)
+        add_suffix(word, $1)
+      else
+	apply_morph(word, $1 == 's' ? 'VBZ' : 'VBG')
+      end
+    }
+    return frame
+  end
+
+  # Pick a frame and a word to apply it to, given a synset, and apply it.
+  def apply_a_frame(ss_type, synset_offset)
+    # pick a word to use
+    word = query_first_value($select_word_query, ss_type, synset_offset, '')
+    # get examples for the synset
+    examples = query_first_value($select_examples_from_gloss_query, ss_type, synset_offset)
+    # pick a frame to use
+    frame = query_first_value($select_frame_query, ss_type, synset_offset)
+    # apply it
+    return apply_frame(frame, word, examples)
+  end
+
+  Tag = Struct.new(:word, :start, :end, :pos, :sense_key)
+
+  def tags_to_example!(tags, source=nil)
+    # fill gaps between tokens, pointing end at the last character before
+    # the start of the next token
+    following_start = tags[-1].end
+    tags.reverse.each { |t|
+      t.end = following_start - 1
+      following_start = t.start
+    }
+    # convert tags to lispy format
+    tags.collect! { |t|
+      %Q{      (word "#{t.word}" :frame (#{t.start} #{t.end})} +
+      (if (t.sense_key.nil?)
+	''
+      else
+	%Q{ :sense-info ((:penn-parts-of-speech (#{t.pos}) :wn-sense-keys ("#{t.sense_key}")))}
+      end) + %Q{)\n}
+    }
+    "    (example#{source.nil? ? '' : " :source #{source}"} :lattice (\n#{tags.join}      ))\n"
+  end
+  private :tags_to_example!
+
+  # Get a list of Lisp-formatted tagged applied sentence frames for the given
+  # verb synset, without repeating frames, to be used as examples.
+  def get_tagged_frames(synset_offset)
+    ss_type = 'v'
+    # pick a word to use
+    word = query_first_value($select_word_query, ss_type, synset_offset, '')
+    sense_key = query_first_value($select_sense_key_query, ss_type, synset_offset, word)
+    word.gsub!(/_/, ' ')
+    # get examples for the synset
+    examples = query_first_value($select_examples_from_gloss_query, ss_type, synset_offset)
+    # get a preposition to use in case we have a PP
+    prep = (examples =~ WordNetSQL::PrepositionRE ? $& : 'of') 
+    used_frame_numbers = Set[]
+    query_collect($select_frames_query, [ss_type, synset_offset]) { |row|
+      frame_text, frame_number = *row
+      next if (used_frame_numbers.include?(frame_number))
+      used_frame_numbers << frame_number
+      tags = []
+      offset = 0
+      fill_placeholders_in_frame(frame_text, prep).
+      gsub(/[()]/, '').
+      scan(/\S+/) { |match|
+	tag = Tag.new(match, $~.begin(0) + offset, $~.end(0), nil, nil)
+	if (tag.word =~ /^----(s|ing)$/)
+	  tag.pos = ($1 == 's' ? 'VBZ' : 'VBG')
+	  tag.sense_key = sense_key
+	  morphed_word = apply_morph(word, tag.pos)
+	  offset += morphed_word.length - tag.word.length
+	  tag.word = morphed_word
+	end
+	tag.end += offset
+	tags << tag
+      }
+      tags_to_example!(tags, 'wn-sentence-frame')
+    }.reject { |e| e.nil? }
+  end
+
+  # Get a list of (untagged) example strings for the given verb synset,
+  # without repeating example templates.
+  def get_verb_examples(synset_offset)
+    used_example_numbers = Set[]
+    query_collect($select_verb_examples_query, [synset_offset]) { |row|
+      filled_example, example_number = *row
+      if (used_example_numbers.include?(example_number))
+	nil
+      else
+	used_example_numbers << example_number
+	filled_example
+      end
+    }.reject { |e| e.nil? }
+  end
+
+  # Get a list of Lisp-formatted tagged verb examples for the given verb
+  # synset, without repeating example templates.
+  def get_tagged_verb_examples(synset_offset)
+    used_example_numbers = Set[]
+    query_collect($select_verb_examples_query, [synset_offset]) { |row|
+      filled_example, example_number, example_text, lemma, sense_key = *row
+      next if (used_example_numbers.include?(example_number))
+      used_example_numbers << example_number
+      lemma.gsub!(/_/, ' ')
+      # tokenize example_text and insert lemma/sense_key
+      tags = []
+      offset = 0
+      example_text.scan(/"|%s|[a-z']+/i) { |match|
+	tags <<
+	  if (match == '%s')
+	    Tag.new(
+	      lemma,
+	      $~.begin(0) + offset,
+	      $~.end(0) + (offset += lemma.length - 2),
+	      sense_key
+	    )
+	  else
+	    Tag.new(
+	      match,
+	      $~.begin(0) + offset,
+	      $~.end(0) + offset,
+	      nil
+	    )
+	  end
+      }
+      tags_to_example!(tags, 'wn-example-template')
+    }.reject { |e| e.nil? }
+  end
+
+  # Get the canonical sense key for the given synset ([ss_type, synset_offset]).
+  def ss2sk(ss)
+    unless (@ss2sk.key?(ss))
+      @ss2sk[ss] =
+	begin
+	  query_first_value($ss2sk_query, *ss)
+	rescue
+	  if (@lang == 'es')
+	    # Some synsets in esWN have no senses (there is no Spanish word for
+	    # the concept). In that case, just use the ID.
+	    $ss2sk[ss] = ss[0] + ('%08d' % ss[1])
+	  else
+	    raise "failed to get sense key for synset #{ss.inspect}"
+	  end
+	end
+    end
+    @ss2sk[ss]
+  end
+
+  # Get the synset ([ss_type, synset_offset]) for a sense key.
+  def sk2ss(sk)
+    return [$1, $2.to_i] if (sk =~ /^([nvars])(\d{8})$/)
+    @sk2ss[sk] ||= query_first_row($sk2ss_query, sk)
+  end
+end
+
+# Ruby code ends
+
+__END__
+=end ruby

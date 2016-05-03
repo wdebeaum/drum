@@ -1,0 +1,22 @@
+# -*-mode: Makefile;-*-
+#
+# Makefile for TRIPS KQML library (in Ruby)
+#
+# $Id: Makefile-ruby,v 1.1 2013/05/03 15:51:58 wdebeaum Exp $
+#
+
+MODULE = KQML
+SRCS = 	kqml.rb \
+	kqml_parser.treetop
+
+CONFIGDIR=../config
+include $(CONFIGDIR)/ruby/defs.mk
+include $(CONFIGDIR)/ruby/lib.mk
+
+test:
+	$(RUBY) test_kqml.rb
+
+rdoc: kqml.rb
+	rm -rf rdoc
+	$(RDOC) -o $@ $<
+

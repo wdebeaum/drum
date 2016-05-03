@@ -1,0 +1,207 @@
+.\" Time-stamp: <Mon Nov 24 19:18:41 EST 1997 ferguson>
+.TH LIBUTIL 3 "10 Oct 1996" "TRIPS"
+.SH NAME
+libutil \- TRIPS System Utility Library
+.SH SYNOPSIS
+#include <bitops.h>
+.br
+#include <buffer.h>
+.br
+#include <debug.h>
+.br
+#include <error.h>
+.br
+#include <memory.h>
+.br
+#include <nonblockio.h>
+.br
+#include <streq.h>
+.SH DESCRIPTION
+.PP
+The TRIPS utility library,
+.IR libutil ,
+provides a collection of C language routines I have found useful
+during development of many of the modules.
+.SH "BIT OPERATIONS"
+.PP
+The following macors are useful for manipulating bitsets.
+.PP
+#include <bitops.h>
+.IP "BITSET(B, N)"
+This macros sets the
+.IR N th
+bit in
+.IR B .
+.IP "BITCLR(B, N)"
+This macros clears the
+.IR N th
+bit in
+.IR B .
+.IP "BITSET(B, N)"
+This macros tests the
+.IR N th
+bit in
+.I B
+(that is, is non-zero if the bit is non-zero).
+.SH "BUFFER OPERATIONS"
+.PP
+The following functions operate on a opaque datatype Buffer that
+implements a dynamically-extensible circular character buffer.
+.PP
+#include <buffer.h>
+.IP "Buffer *bufferCreate(void)"
+Allocates and returns a new empty Buffer.
+.IP "void bufferDestroy(Buffer *this)"
+Frees up a previously allocated Buffer.
+.IP "char *bufferData(Buffer *this)"
+Returns a pointer to the data stored in the Buffer. Note that
+the data is NOT copied.
+.IP "int bufferDatalen(Buffer *this)"
+Returns the number of bytes stored in the Buffer.
+.IP "int bufferAvail(Buffer *this)"
+Returns the available space in the Buffer.
+.IP "int bufferEmpty(Buffer *this)"
+Returns non-zero if the Buffer is empty.
+.IP "int bufferAdd(Buffer *this, char *s, int len)"
+Adds
+.I LEN
+bytes from
+.I S
+to the Buffer.
+.IP "int bufferAddString(Buffer *this, char *s)"
+Adds the contents of the NUL-terminated string
+.I S
+to the Buffer.
+.IP "int bufferAddChar(Buffer *this, char c)"
+Adds a single character
+.I C
+to the Buffer.
+.IP "int bufferDiscard(Buffer *this, int len)"
+Discards the first
+.I len
+characters from the Buffer.
+.IP "int bufferGet(Buffer *this, char *s, int len)"
+Retrieves
+.I LEN
+characters from the buffer, stores them in
+.IR S ,
+and discard them from the Buffer.
+.IP "void bufferErase(Buffer *this)"
+Makes the Buffer empty.
+.IP "int bufferIncRefCount(Buffer *this)"
+Increments the Buffer's reference count.
+.IP "int bufferDecRefCount(Buffer *this)"
+Decrements the Buffer's reference count.
+.IP "int bufferRefCount(Buffer *this)"
+Returns the Buffer's reference count.
+.SH "DEBUGGING MACROS"
+.PP
+The following macros are useful for debugging. They must be compiled
+with the symbol DEBUG defined. Then, during execution, if the stream
+.I debugfp
+is non-NULL, they print debugging messages to it using
+.IR fprintf (3).
+Use of these macros requires the definition of the FILE*
+.I debugfp
+(which can be stderr), and of the char*
+.IR program ,
+which should be the argv[0] of the process.
+.PP
+#include <debug.h>
+.IP "DEBUG0(S)"
+Debugging message with no arguments.
+.IP "DEBUG1(S, A1)"
+Debugging message with one argument.
+.IP "DEBUG2(S, A1, A2)"
+Debugging message with two arguments.
+.IP "DEBUG3(S, A1, A2, A3)"
+Debugging message with three arguments.
+.IP "DEBUG4(S, A1, A2, A3, A4)"
+Debugging message with four arguments.
+.SH "ERROR MACROS"
+.PP
+The following macros are useful for printing error messages. They must
+be compiled with the symbol DEBUG defined. They print error messages
+to stderr using fprintf and, if DEBUG was define at compile-time, they
+use the corresponding DEBUG macro to log the error as well.
+Use of these macros requires the definition of the char*
+.IR program ,
+which should be the argv[0] of the process.
+.PP
+#include <error.h>
+.IP "ERROR0(S)"
+Error message with no arguments.
+.IP "ERROR1(S, A1)"
+Error message with one argument.
+.IP "ERROR2(S, A1, A2)"
+Error message with two arguments.
+.IP "ERROR3(S, A1, A2, A3)"
+Error message with three arguments.
+.IP "SYSERR0(S)"
+System error message with no arguments. Includes output of
+.IR strerror (3).
+.IP "SYSERR1(S, A1)"
+System error message with one argument.
+.IP "SYSERR2(S, A1, A2)"
+System error message with two arguments.
+.SH "MEMORY OPERATIONS"
+.PP
+These functions and macros are usful wrappers for the C library memory
+allocation routines.
+.PP
+#include <memory.h>
+.IP "gfree(P)"
+Free
+.I P
+if it is non-NULL by calling
+.IR free (3).
+.IP "char *gnewstr(char *s)"
+Allocates and returns a new copy of NUL-terminated string
+.IR S .
+.IP "void gfreeall(char **strs)"
+Frees all non-NULL elements of the NULL-terminated array
+.IR strs ,
+then frees
+.I strs
+itself.
+.IP "char **gcopyall(char **strs)"
+Allocates and returns a copy of the NULL-terminated array of strings.
+.SH "NONBLOCKING I/O MACROS"
+.PP
+These macros provide a portable way to use non-blocking i/o.
+.PP
+#include <nonblockio.h>
+.IP "MAKE_NONBLOCKING(FD)"
+Marks
+.I FD
+for POSIX-style nonblocking i/o. Under SunOS and Solaris, this means
+setting the O_NONBLOCK flag using
+.IR fcntl (2).
+.IP "ISWOULDBLOCK(E)"
+Tests if the given value (typically
+.IR errno )
+is the "would block" error code.  Under SunOS and Solaris, this means
+tesing for EAGAIN.
+.IP "MAKE_BLOCKING(FD)"
+Very untested attempt at restoring blocking i/o status.
+.SH "STRING COMPARISON MACRO"
+.PP
+This macro is used by all components of the TRIPS system when doing
+string comparisons.
+.PP
+#include <streq.h>
+.IP "STREQ(S1, S2)"
+When this is defined to be
+.IR strcasecmp (3),
+string comparisons are case-insensitive.
+.SH SEE ALSO
+.PP
+trips(1),
+libtrlib(3),
+libKQML(3)
+.SH BUGS
+.PP
+Probably not.
+.SH AUTHOR
+.PP
+George Ferguson (ferguson@cs.rochester.edu).

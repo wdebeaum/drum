@@ -1,0 +1,24 @@
+# -*- mode: Makefile;-*-
+#
+# File: src/config/TextTagger/defs.mk.in
+# Creator: George Ferguson
+# Created: Tue Sep  9 10:58:39 2008
+# Time-stamp: <Tue Sep  9 11:06:17 EDT 2008 ferguson>
+#
+# @configure_input@
+#
+
+TEXTTAGGER_geonames = @TEXTTAGGER_geonames@
+TEXTTAGGER_ner = @TEXTTAGGER_ner@
+TEXTTAGGER_postagger = @TEXTTAGGER_postagger@
+TEXTTAGGER_parser = @TEXTTAGGER_parser@
+TEXTTAGGER_cj_parser = @TEXTTAGGER_cj_parser@
+TEXTTAGGER_biomodel = @TEXTTAGGER_biomodel@
+TEXTTAGGER_umls = @TEXTTAGGER_umls@
+TEXTTAGGER_semgroups = @TEXTTAGGER_semgroups@
+TEXTTAGGER_metamap = @TEXTTAGGER_metamap@
+TEXTTAGGER_corenlp = @TEXTTAGGER_corenlp@
+TEXTTAGGER_mesh_scr = @TEXTTAGGER_mesh_scr@
+TEXTTAGGER_enju = @TEXTTAGGER_enju@
+TEXTTAGGER_CXXFLAGS = @TEXTTAGGER_CXXFLAGS@
+TEXTTAGGER_LDFLAGS = @TEXTTAGGER_LDFLAGS@

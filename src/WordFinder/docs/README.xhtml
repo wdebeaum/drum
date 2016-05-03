@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml-stylesheet type="text/xsl" href="toc.xsl"?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>WordFinder</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head><body>
+
+<div>
+
+<div class="section">
+<h2>Introduction</h2>
+<p>WordFinder (WF) is a module in the TRIPS system which supplements the LexiconManager (LXM) with lexical entries for unknown words, senses, or phrases. WF searches external lexical resources such as WordNet for the unknown words, builds lexical entries for them based on the information available from Wordnet-TRIPS mappings and/or TextTagger (TT), and returns them to the LXM. 
+</p>
+</div>
+
+<div class="section">
+<h2>Installation</h2>
+<p>
+To use WordFinder, you must have the external lexical resources installed on your machine.
+WF will look for WordNet (and optionally Comlex) in some "standard" places.  
+If you are at URCS, the resources are available on the fileserver at
+ <ul><code>/p/nl/wordnet/WordNet-3.0/dict </code></ul>
+ <ul><code>/p/nl/wordnet/WordNet-3.0/dict/standoff-files/core-wordnet.txt </code></ul>
+ <ul><code>/p/nl/comlex/comlex_synt_1.1.1 </code></ul>
+<p>
+If you are not at URCS, WordNet 3.0 (and the standoff files) can be downloaded <a href="http://wordnet.princeton.edu/">here</a>.
+</p>
+<p>
+Comlex is not freely available (distributed through LDC, but costs more than $1200).
+It is being phased out of WF and the system runs without it.  
+</p>
+If you're running on Linux at URCS, you don't need to do anything: the
+resources will be found in their locations listed above.
+
+If you have access to the URCS fileserver, just copy the directories shown above.
+If you put them in the following locations, configure will find them
+automagically:
+<p>
+  <ul>WordNet: <code>/usr/local/share/wordnet/WordNet-3.0/dict</code></ul>
+  <ul>WordNet: <code>/usr/local/share/wordnet/WordNet-3.0/dict/standoff-files/core-wordnet.txt</code></ul>
+  <ul>Comlex: <code>/usr/local/share/comlex/comlex_synt_1.1.1</code></ul>
+</p>
+Otherwise, you can put these wherever you want, but you'll have to run
+configure with the options described in <code>src/config/WordFinder/README.txt</code>.
+</p>
+</div>
+
+<div class="section">
+<h2>Running</h2>
+
+<div class="section">
+<h3>Lexical lookup strategy</h3>
+<p> The LXM receives requests for word entries from the parser via a direct function call to lxm::get-word-def. </p>
+
+<div class="section">
+<h4>Without TextTagger</h4>
+<p> This section describes the basic algorithm for LXM word retrieval with WF when no information from TextTagger is present (as in the web Parser):</p>
+<li><var>w</var> in TRIPS</li>
+  <ul>if <var>*use-wordfinder*</var> 
+     <ul>if <var>w</var> is not a number or a function word
+     <ul>if <var>*use-trips-and-wf-senses*</var>
+     <ul>retrieve <var>*wf-sense-limit*</var> senses of <var>w</var> for each part of speech in <var>*default-wf-poslist*</var> (senses subsumed by existing TRIPS senses are discarded)</ul>
+     otherwise, retrieve <var>*wf-sense-limit*</var> senses of <var>w</var> only for parts of speech not already defined in TRIPS</ul>
+     <ul>append the WF senses, with lower preference, to the TRIPS senses and return senses to the parser</ul>
+     </ul>
+If no WF senses are found or if <var>*use-wordfinder*</var> is NIL, return just the TRIPS senses to the parser
+</ul>
+
+<li><var>w</var> not in TRIPS</li>
+ <ul>if <var>*use-wordfinder*</var>
+     <ul>if <var>w</var> is not a number or function word
+   <ul>retrieve <var>*wf-sense-limit*</var> senses of <var>w</var> for each part of speech in <var>*default-wf-poslist*</var></ul>
+     <ul>build lexical entries for each sense, based on <code>WN-to-TRIPS mappings</code>, and return them to the parser
+     </ul></ul>
+If no senses are found or if <var>*use-wordfinder*</var> is NIL, return a default <code>ont::referential-sem</code> entry for <var>w</var> to the parser
+</ul>
+
+</div>
+
+<div class="section">
+<h4>With TextTagger</h4>
+<p> This section describes the algorithm for LXM word retrieval with WF when information from TextTagger is present. If TextTagger provides specific information about preferred sense or part of speech, this takes precedence over the basic strategy outlined above.</p>
+<li><var>w</var> in TRIPS</li>
+  <ul>if <var>*use-wordfinder*</var> 
+     <ul>if <var>w</var> is not a number or a function word
+     <ul>if <var>*use-trips-and-wf-senses*</var>
+     <ul>retrieve the specified sense of <var>w</var> for the part of speech specified (exhaustive sense search)</ul>
+     otherwise, retrieve the specified sense of <var>w</var> only for specified parts of speech not already defined in TRIPS</ul>
+      <ul>filter the results for the specified sense and part of speech and return it to the parser.</ul>
+     </ul>
+If no compatible senses are found or if <var>*use-wordfinder*</var> is NIL, return a new sense based on the specified sense and part of speech and return it to the parser.
+</ul>
+
+<li><var>w</var> not in TRIPS</li>
+<ul>if <var>*use-wordfinder*</var>
+     <ul>if <var>w</var> is not a number or function word
+   <ul>retrieve the specified sense of <var>w</var> for the part of speech specified (exhaustive sense search)</ul>
+   <ul>build the lexical entry based on <code>WN-to-TRIPS mappings</code>, and return it to the parser
+     </ul></ul>
+If no compatible senses are found or if <var>*use-wordfinder*</var> is NIL, return a new sense based on the specified sense and part of speech, or default values if specific information is missing. </ul>
+<p>Note that if both part of speech and word sense are provided, WF will return the same thing whether the requested word is found in WordNet or the lookup fails.
+</p>
+
+<div class="section">
+<h4>Names</h4>
+<p> Currently most names are tagged as such by a named entity recognizer and passed to the LXM via the parser. The LXM does not lookup names in WF, to avoid competition and give preference to NER. The LXM will check the TRIPS lexicon, since it has a few names, such as names of days and months. If there are no matches for <var>w</var> in TRIPS, the LXM constructs an entry for <var>w</var> based on the sense information provided and returns it. If there are matching entries in TRIPS, those are returned to the parser.</p>
+</div>
+</div>
+<div class="section">
+<h4>Stemming</h4>
+<p> The initial WF lookup is performed with the word "as is", that is, no morphological processing is performed. However WordNet stores only the base forms of words. So if the initial lookup fails, WF performs some basic morphological processing to find an underlying base form, and tries the lookup again with the output of the stemming process.</p>
+</div>
+</div>
+
+</div>
+
+<div class="section">
+<h3>Settings</h3>
+<p> This section describes variables that control aspects of WF function:</p>
+
+<ul><li><var>wf::*use-wordfinder*</var> : controls whether WF will be called or not. The TRIPS text-based systems (CERNL, GLOSS, STEP) are configured by default to set this variable to T. This can be set to NIL at runtime to disable WF search.</li></ul>
+
+<ul><li><var>lxm::*use-wordfinder*</var> : set to value of wf::*use-wordfinder* when system is loaded. </li></ul>
+
+<ul><li><var>lxm::*use-trips-and-wf-senses*</var> : If T, retrieve WF senses of <var>w</var> even for competing parts of speech in TRIPS. If NIL, retrieve senses only for parts of speech not already defined for <var>w</var> in TRIPS. Set this to NIL to reduce competing senses, at the expense of coverage. However if a system uses sense tagging, such as GLOSS, setting this to T will improve coverage while the ambiguity is kept in check by the sense tagging.</li></ul>
+
+<ul><li><var>lxm::*default-wf-poslist*</var> : the parts of speech to be looked up by default in WF are noun, verb, adjective and adverb. Note that the parts of speech WF retrieves is also affected by the setting of <var>lxm::*use-trips-and-wf-senses*</var>, and by part of speech tags supplied by TextTagger.</li></ul>
+
+<ul><li><var>lxm::*wf-sense-limit* </var>: the number of senses to be returned for each part of speech for a word. By default this is 2, relatively low to control for ambiguity. Note that if TT supplies a specific sense, WF will search exhaustively for that sense, regardless of the value of this variable.</li></ul>
+
+<ul><li><var>lxm::*use-tagged-senses-only*</var> : If tagged senses are present in the call to LXM, then if matching senses are found, only those are returned, regardless of this variable setting. If no matching senses are found, then if this variable is T, a new sense based on the tagged input is created on-the-fly and returned. If *use-tagged-senses-only* is NIL (the default), all senses found are returned.</li></ul>
+
+<ul><li><var>wf::*prefer-core-wordnet-senses* </var>: Prefer core wordnet senses, i.e., senses in the core-wordnet.txt file. If there are no core senses for the given word, the existing senses are returned. </li></ul>
+
+
+<div class="section">
+<h4>Default Settings</h4>
+<p> This section summarizes the default WF settings for TRIPS text-based systems such as CERNL, GLOSS and STEP.</p>
+<ul><li><var>wf::*use-wordfinder*</var> : T</li></ul>
+
+<ul><li><var>lxm::*use-wordfinder*</var> : set to value of wf::*use-wordfinder* when system is loaded.</li></ul>
+
+<ul><li><var>lxm::*use-trips-and-wf-senses*</var> : NIL </li></ul>
+
+<ul><li><var>lxm::*default-wf-poslist*</var> : (W::N W::V W::ADJ W::ADV)</li></ul>
+
+<ul><li><var>lxm::*wf-sense-limit* </var>: 2 </li></ul>
+
+<ul><li><var>lxm::*use-tagged-senses-only* </var>: NIL </li></ul>
+
+<ul><li><var>wf::*prefer-core-wordnet-senses* </var>: NIL </li></ul>
+
+</div>
+<div class="section">
+<h4>Default Word Entries</h4>
+<p> If a word lookup fails in both TRIPS and WordNet, a lexical entry for the word is constructed using whatever parameters were provided with the lookup request (typically part of speech and word sense). If either or both of those parameters are missing, default values are used. The default word sense for nouns, adjectives and adverbs is <code>ont::referential-sem</code>; for verbs, it is <code>ont::situation-root</code>. If no part of speech is provided, the default is w::noun.</p>
+</div>
+
+<div class="section">
+<h4>Core Senses</h4>
+<p> 
+WordFinder's use of core WordNet senses is controlled by wf::*prefer-core-wordnet-senses*. You must also have the core-wordnet.txt available (see section 2 on Installation).
+</p>
+</div>
+</div>
+
+<div class="section">
+<h3>Troubleshooting</h3>
+<p> </p>
+<ul><li>Check that WF was configured propertly, in particular the setting of <var>wf::*use-wordfinder*</var> and the basepaths to the lexical resources in <code>src/config/Wordfinder/defs.lisp</code></li></ul>
+<ul><li>For resource basepath information, refer to section 2 on Installation</li></ul>
+<ul><li>For additional information on WF configuration, see <code>src/config/Wordfinder/README.txt</code></li></ul>
+<ul><li>To check if WF is running on your system, try parsing a sentence with an unknown word, such as "aardvark". If it receives an <code>ont::organism</code> sense, WF is running. If it receives ont::referential-sem, then the WF lookup failed inappropriately.</li></ul>
+</div>
+
+</div>
+</body></html>
+

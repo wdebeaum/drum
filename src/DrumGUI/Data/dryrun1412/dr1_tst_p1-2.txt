@@ -1,0 +1,11 @@
+It was established recently that monoubiquitination increases the proportion of Ras that is in the activated (GTP-bound) state, that monoubiquitination enhances association with the downstream effectors Raf and PI3-Kinase, and that mutation of the primary site of monoubiquitination impairs oncogenic Ras-mediated tumorigenesis.
+Here we show that monoubiquitination decreases the sensitivity of Ras to GAP-mediated hydrolysis.
+A major advance was our ability to easily generate mUbRas, modified at a single site, in a form suitable for detailed biophysical studies.
+This chemical ligation strategy will likely be useful for the study of other monoubiquitinated proteins.
+Surprisingly, monoubiquitination did not alter the intrinsic activity of Ras, despite the size of the modification.
+Our modeling and NMR analyses indicated that Ubiquitin dynamically samples a broad surface area of Ras that alters switch region dynamics.
+These results led us to examine the effect of monoubiquitination on the interaction of Ras with its cognate GEF and GAPs, which also target the switch domains.
+The analysis revealed that monoubiquitination abrogates GAP-mediated GTP hydrolysis.
+All other activities, including the ability to bind regulators, were largely preserved and our kinetic modeling suggests that the GAP defect will dominate.
+Furthermore, this outcome was specific to monoubiquitination at position 147.
+Thus our work establishes an entirely new mode of Ras activation in which signaling is sustained even in the absence of hormone stimulus or oncogene mutation.

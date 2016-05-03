@@ -1,0 +1,27 @@
+# -*-mode: Makefile;-*-
+#
+# File: Makefile-objc
+# Creator: George Ferguson
+# Created: Fri Jan  8 10:23:52 2010
+# Time-stamp: <Tue Jan 12 15:25:00 EST 2010 ferguson>
+#
+# Makefile for the Objective-C wrapper for the TRIPS KQML library
+#
+# This could be bundled into a library or framework if desired. But
+# for now just leave the OBJS sitting here to get used in other apps.
+#
+
+SRCS = KQMLStream.m
+OBJS = $(SRCS:.m=.o)
+
+KQMLStream.o: KQMLStream.m KQMLStream.h
+
+EXTRA_CFLAGS = -I..
+
+CONFIGDIR=../config
+include $(CONFIGDIR)/c/defs.mk
+
+all default: $(OBJS)
+
+clean:
+	rm -f $(OBJS)

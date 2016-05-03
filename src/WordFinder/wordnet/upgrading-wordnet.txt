@@ -1,0 +1,22 @@
+Things to change when upgrading WordNet:
+
+config/WordFinder/configure.ac: ac_wordnet_search_list
+config/WordFinder/defs.lisp: *wordnet-basepath*
+  Change these paths to the new path to the wordnet dict. Delete the configure
+  script in this directory so that it will be rebuilt.
+
+WordFinder/wordnet/wordnet-to-trips.lisp: hierarchy-mapping
+  These 8-digit numbers are synset offsets, and change with Wordnet version.
+  This hash needs to be recalculated, or the offsets need to be adjusted using
+  the WNsensemap package. Offset adjustment for this structure can be
+  accomplished with the script
+  update-hierarchy-mapping-offsets.pl
+
+ParserTools/LexiconTool/GUI/WordnetAnalyzer.java: DictPath
+  Again, change the path to the new path to the wordnet dict.
+  
+make clean
+./configure-trips --enable-wordfinder ...
+make
+make install
+

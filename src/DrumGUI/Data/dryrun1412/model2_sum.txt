@@ -1,0 +1,7 @@
+inhibiting MEK increases AKT phosphorylation (in EFGR and HER2 driven cancer cells)
+phosphorylated ERBB3 activates PI3K
+ERK decreases ERBB tyrosine phosphorylation
+PI3K increases AKT activity  
+MEK phosphorylates ERK
+ERK phosphorylates EGFR
+ERK phosphorylates HER2

@@ -1,0 +1,383 @@
+.rn '' }`
+''' $RCSfile: KQML.pm.man,v $$Revision: 1.1.1.1 $$Date: 2005/01/14 19:48:08 $
+'''
+''' $Log: KQML.pm.man,v $
+''' Revision 1.1.1.1  2005/01/14 19:48:08  ferguson
+''' Imported to new repository
+'''
+''' Revision 1.1.1.1  2000/09/18 19:57:10  ferguson
+''' Imported sources
+'''
+''' Revision 54.1  2000/03/30 23:40:43  ferguson
+''' Added 5.4 sources to repository.
+'''
+''' Revision 1.1.1.1  2000/03/15 22:05:09  ferguson
+''' Imported sources.
+'''
+'''
+.de Sh
+.br
+.if t .Sp
+.ne 5
+.PP
+\fB\\$1\fR
+.PP
+..
+.de Sp
+.if t .sp .5v
+.if n .sp
+..
+.de Ip
+.br
+.ie \\n(.$>=3 .ne \\$3
+.el .ne 3
+.IP "\\$1" \\$2
+..
+.de Vb
+.ft CW
+.nf
+.ne \\$1
+..
+.de Ve
+.ft R
+
+.fi
+..
+'''
+'''
+'''     Set up \*(-- to give an unbreakable dash;
+'''     string Tr holds user defined translation string.
+'''     Bell System Logo is used as a dummy character.
+'''
+.tr \(*W-|\(bv\*(Tr
+.ie n \{\
+.ds -- \(*W-
+.ds PI pi
+.if (\n(.H=4u)&(1m=24u) .ds -- \(*W\h'-12u'\(*W\h'-12u'-\" diablo 10 pitch
+.if (\n(.H=4u)&(1m=20u) .ds -- \(*W\h'-12u'\(*W\h'-8u'-\" diablo 12 pitch
+.ds L" ""
+.ds R" ""
+'''   \*(M", \*(S", \*(N" and \*(T" are the equivalent of
+'''   \*(L" and \*(R", except that they are used on ".xx" lines,
+'''   such as .IP and .SH, which do another additional levels of
+'''   double-quote interpretation
+.ds M" """
+.ds S" """
+.ds N" """""
+.ds T" """""
+.ds L' '
+.ds R' '
+.ds M' '
+.ds S' '
+.ds N' '
+.ds T' '
+'br\}
+.el\{\
+.ds -- \(em\|
+.tr \*(Tr
+.ds L" ``
+.ds R" ''
+.ds M" ``
+.ds S" ''
+.ds N" ``
+.ds T" ''
+.ds L' `
+.ds R' '
+.ds M' `
+.ds S' '
+.ds N' `
+.ds T' '
+.ds PI \(*p
+'br\}
+.\"	If the F register is turned on, we'll generate
+.\"	index entries out stderr for the following things:
+.\"		TH	Title 
+.\"		SH	Header
+.\"		Sh	Subsection 
+.\"		Ip	Item
+.\"		X<>	Xref  (embedded
+.\"	Of course, you have to process the output yourself
+.\"	in some meaninful fashion.
+.if \nF \{
+.de IX
+.tm Index:\\$1\t\\n%\t"\\$2"
+..
+.nr % 0
+.rr F
+.\}
+.TH KQML 3 "perl 5.004, patch 04" "24/Nov/97" "User Contributed Perl Documentation"
+.UC
+.if n .hy 0
+.if n .na
+.ds C+ C\v'-.1v'\h'-1p'\s-2+\h'-1p'+\s0\v'.1v'\h'-1p'
+.de CQ          \" put $1 in typewriter font
+.ft CW
+'if n "\c
+'if t \\&\\$1\c
+'if n \\&\\$1\c
+'if n \&"
+\\&\\$2 \\$3 \\$4 \\$5 \\$6 \\$7
+'.ft R
+..
+.\" @(#)ms.acc 1.5 88/02/08 SMI; from UCB 4.2
+.	\" AM - accent mark definitions
+.bd B 3
+.	\" fudge factors for nroff and troff
+.if n \{\
+.	ds #H 0
+.	ds #V .8m
+.	ds #F .3m
+.	ds #[ \f1
+.	ds #] \fP
+.\}
+.if t \{\
+.	ds #H ((1u-(\\\\n(.fu%2u))*.13m)
+.	ds #V .6m
+.	ds #F 0
+.	ds #[ \&
+.	ds #] \&
+.\}
+.	\" simple accents for nroff and troff
+.if n \{\
+.	ds ' \&
+.	ds ` \&
+.	ds ^ \&
+.	ds , \&
+.	ds ~ ~
+.	ds ? ?
+.	ds ! !
+.	ds /
+.	ds q
+.\}
+.if t \{\
+.	ds ' \\k:\h'-(\\n(.wu*8/10-\*(#H)'\'\h"|\\n:u"
+.	ds ` \\k:\h'-(\\n(.wu*8/10-\*(#H)'\`\h'|\\n:u'
+.	ds ^ \\k:\h'-(\\n(.wu*10/11-\*(#H)'^\h'|\\n:u'
+.	ds , \\k:\h'-(\\n(.wu*8/10)',\h'|\\n:u'
+.	ds ~ \\k:\h'-(\\n(.wu-\*(#H-.1m)'~\h'|\\n:u'
+.	ds ? \s-2c\h'-\w'c'u*7/10'\u\h'\*(#H'\zi\d\s+2\h'\w'c'u*8/10'
+.	ds ! \s-2\(or\s+2\h'-\w'\(or'u'\v'-.8m'.\v'.8m'
+.	ds / \\k:\h'-(\\n(.wu*8/10-\*(#H)'\z\(sl\h'|\\n:u'
+.	ds q o\h'-\w'o'u*8/10'\s-4\v'.4m'\z\(*i\v'-.4m'\s+4\h'\w'o'u*8/10'
+.\}
+.	\" troff and (daisy-wheel) nroff accents
+.ds : \\k:\h'-(\\n(.wu*8/10-\*(#H+.1m+\*(#F)'\v'-\*(#V'\z.\h'.2m+\*(#F'.\h'|\\n:u'\v'\*(#V'
+.ds 8 \h'\*(#H'\(*b\h'-\*(#H'
+.ds v \\k:\h'-(\\n(.wu*9/10-\*(#H)'\v'-\*(#V'\*(#[\s-4v\s0\v'\*(#V'\h'|\\n:u'\*(#]
+.ds _ \\k:\h'-(\\n(.wu*9/10-\*(#H+(\*(#F*2/3))'\v'-.4m'\z\(hy\v'.4m'\h'|\\n:u'
+.ds . \\k:\h'-(\\n(.wu*8/10)'\v'\*(#V*4/10'\z.\v'-\*(#V*4/10'\h'|\\n:u'
+.ds 3 \*(#[\v'.2m'\s-2\&3\s0\v'-.2m'\*(#]
+.ds o \\k:\h'-(\\n(.wu+\w'\(de'u-\*(#H)/2u'\v'-.3n'\*(#[\z\(de\v'.3n'\h'|\\n:u'\*(#]
+.ds d- \h'\*(#H'\(pd\h'-\w'~'u'\v'-.25m'\f2\(hy\fP\v'.25m'\h'-\*(#H'
+.ds D- D\\k:\h'-\w'D'u'\v'-.11m'\z\(hy\v'.11m'\h'|\\n:u'
+.ds th \*(#[\v'.3m'\s+1I\s-1\v'-.3m'\h'-(\w'I'u*2/3)'\s-1o\s+1\*(#]
+.ds Th \*(#[\s+2I\s-2\h'-\w'I'u*3/5'\v'-.3m'o\v'.3m'\*(#]
+.ds ae a\h'-(\w'a'u*4/10)'e
+.ds Ae A\h'-(\w'A'u*4/10)'E
+.ds oe o\h'-(\w'o'u*4/10)'e
+.ds Oe O\h'-(\w'O'u*4/10)'E
+.	\" corrections for vroff
+.if v .ds ~ \\k:\h'-(\\n(.wu*9/10-\*(#H)'\s-2\u~\d\s+2\h'|\\n:u'
+.if v .ds ^ \\k:\h'-(\\n(.wu*10/11-\*(#H)'\v'-.4m'^\v'.4m'\h'|\\n:u'
+.	\" for low resolution devices (crt and lpr)
+.if \n(.H>23 .if \n(.V>19 \
+\{\
+.	ds : e
+.	ds 8 ss
+.	ds v \h'-1'\o'\(aa\(ga'
+.	ds _ \h'-1'^
+.	ds . \h'-1'.
+.	ds 3 3
+.	ds o a
+.	ds d- d\h'-1'\(ga
+.	ds D- D\h'-1'\(hy
+.	ds th \o'bp'
+.	ds Th \o'LP'
+.	ds ae ae
+.	ds Ae AE
+.	ds oe oe
+.	ds Oe OE
+.\}
+.rm #[ #] #H #V #F C
+.SH "NAME"
+KQML \- Read and parse KQML messages
+.SH "SYNOPSIS"
+.PP
+.Vb 1
+\& use KQML;
+.Ve
+.Vb 1
+\& $lolref = KQMLRead(\e*FILEHANDLE, \e$text);
+.Ve
+.Vb 1
+\& $lolref = KQMLRead1(\e*FILEHANDLE, \e$text);
+.Ve
+.Vb 1
+\& $lolref = KQMLReadFromString($input);
+.Ve
+.Vb 6
+\& $MW->fileevent(STDIN,
+\&                'readable' => [\e&KQMLInputCB, \e*STDIN, \e&receiveFunc]);
+\& sub receiveFunc {
+\&     my($lolref, $text) = @_;
+\&     ...
+\& }
+.Ve
+.Vb 5
+\& $hashref = KQMLKeywordify($lolref);
+\& $hashref->{'list'} == $lolref
+\& $hashref->{'verb'} == first token
+\& $hashref->{':KEY'} == VALUE for each keyword/value argument
+\& $hashref->{'rest'} == rest of arguments
+.Ve
+.SH "DESCRIPTION"
+\fBKQMLRead\fR tries to read a KQML performative from the given filehandle
+(passed as a typeglob). It returns:
+.Ip "a)" 5
+A reference to a list of lists if successful (this is described in more
+detail below);
+.Ip "b)" 5
+0 if \s-1EOF\s0 is reached on the filehandle;
+.Ip "c)" 5
+A scalar less than 0 if a read or parse error occurs (values less than 100
+signify system call errors; other values are parse errors).
+.PP
+\fBKQMLRead1\fR reads a single character from the given filehandle and uses it
+in an ongoing parse of a \s-1KQML\s0 performative. That is, successive calls will
+read successive characters and try to parse them together. It returns as
+for \fBKQMLRead\fR, or \fBundef\fR if the parse is not yet complete. Multiple
+parses can be ongoing on different filehandles simultaneously.
+.PP
+\fBKQMLReadFromString\fR tries to parse a performative out of the given
+string. It returns as for \fBKQMLRead\fR, and returns \fBundef\fR if the
+parse was incomplete at the end of the string. There is no way to know
+whether there were unparsed characters left in the string.
+.PP
+\fBKQMLInputCB\fR is intended for use with Perl/Tk, as the \s-1SYNPOSIS\s0 example
+shows. It should be called with two parameters:
+.Ip "a)" 5
+The filehandle typeglob; and
+.Ip "b)" 5
+A reference to a function to call when the read is complete.
+.PP
+The callback function (\fBreceiveFunc\fR in the example) will be called with
+two parameters:
+.Ip "a)" 5
+The return value of the parse as for \fBKQMLRead\fR; and
+.Ip "b)" 5
+A string containing the raw text of the parsed message.
+.PP
+The function \fBKQMLKeywordify\fR is a convenience function that takes a
+reference to a list of lists as returned by the parsing functions, and
+returns a reference to a hash with the following elements:
+.Ip "a)" 5
+The element \fBlist\fR contains the original list reference.
+.Ip "b)" 5
+The element \fBverb\fR contains the first word from the toplevel list;
+.Ip "c)" 5
+For each keyword/value pair in the top level of the list, there is an
+element indexed by the \fBkeyword\fR (downcased) whose value is the value.
+Keywords are tokens starting with a colon and the index includes the colon.
+Keyword arguments must precede any other arguments.
+.Ip "d)" 5
+The element \fBrest\fR contains any arguments not consumed by the previous
+two catgeories (ie., non-keyword arguments). The value of the element is
+a reference to the list of remaining arguments.
+.PP
+This interface is provisional and subject to change.
+.PP
+The function \fBKQMLAsString\fR is a convenience function that takes a
+reference to a list of lists as returned by the parsing functions, and
+returns a string. The list is printed in standard Lisp-like parenthesized
+notation. You could make this acceptable to Perl by changing the
+parentheses to square brackets if you wanted to \fBeval\fR it back.
+.SH "DATATYPES"
+If you don't know how to handle a list of lists, the following description
+may help and you should probably look at the the \fIperllol\fR manpage documentation.
+First you will want to test the return value from the KQML functions to
+see if it is indeed a reference to a list of lists (indicating success).
+Use the \fBref\fR function for this. If it returns true, dereferencing
+the value will give you the toplevel list. Each element of the list will
+be either a scalar or a reference to a sublist, and again \fBref\fR
+will tell you which it is.
+.PP
+Here is an example of a subroutine that formats the list of lists into a
+string and returns it (this is effectively \fBKQMLAsString\fR):
+.PP
+.Vb 17
+\&    sub list_as_string {
+\&        my($listref) = @_;
+\&        my $str = '(';
+\&        my $item;
+\&        foreach $item (@$listref) {
+\&            if (ref($item)) {
+\&                $str .= list_as_string($item);
+\&            } else {
+\&                $str .= $item;
+\&            }
+\&            $str .= ' ';
+\&        }
+\&        if ($str ne '(') {
+\&            chop($str);
+\&        }
+\&        $str .= ')';
+\&    }
+.Ve
+And here's how you might use it:
+.PP
+.Vb 7
+\&    $perf = KQMLRead(\e*STDIN, \e$text);
+\&    print "text=$text\en";
+\&    if (ref($perf)) {
+\&        print "perf=" . list_as_string($perf) . "\en";
+\&    } else {
+\&        print "error=$perf\en";
+\&    }
+.Ve
+.SH "SEE ALSO"
+the \fIperlmod\fR manpage
+.SH "BUGS"
+Probably.
+.SH "AUTHOR"
+George Ferguson, ferguson@cs.rochester.edu.
+
+.rn }` ''
+.IX Title "KQML 3"
+.IX Name "KQML - Read and parse KQML messages"
+
+.IX Header "NAME"
+
+.IX Header "SYNOPSIS"
+
+.IX Header "DESCRIPTION"
+
+.IX Item "a)"
+
+.IX Item "b)"
+
+.IX Item "c)"
+
+.IX Item "a)"
+
+.IX Item "b)"
+
+.IX Item "a)"
+
+.IX Item "b)"
+
+.IX Item "a)"
+
+.IX Item "b)"
+
+.IX Item "c)"
+
+.IX Item "d)"
+
+.IX Header "DATATYPES"
+
+.IX Header "SEE ALSO"
+
+.IX Header "BUGS"
+
+.IX Header "AUTHOR"
+

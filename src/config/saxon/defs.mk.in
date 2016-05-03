@@ -1,0 +1,10 @@
+# -*- mode: Makefile;-*-
+#
+# File: src/config/saxon/defs.mk.in
+# Creator: William de Beaumont
+# Created: 2009-01-09
+#
+# @configure_input@
+#
+
+SAXON_JAR = @SAXON_JAR@

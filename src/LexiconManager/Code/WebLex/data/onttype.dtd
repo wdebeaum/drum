@@ -1,0 +1,37 @@
+<!ELEMENT ONTTYPE (SEM?, ARGUMENT*, WORD*, MAPPING*, (CHILD|ONTTYPE)*)>
+<!ATTLIST ONTTYPE name CDATA #REQUIRED
+		  parent CDATA #REQUIRED
+		  modified CDATA #IMPLIED
+		  version CDATA #IMPLIED
+		  comment CDATA #IMPLIED>
+<!ELEMENT SEM (FEATURES?)>
+<!ATTLIST SEM fltype CDATA #REQUIRED>
+<!ELEMENT ARGUMENT (FEATURES?)>
+<!ATTLIST ARGUMENT role CDATA #REQUIRED
+                   optionality CDATA #REQUIRED
+		   fltype CDATA #REQUIRED>
+<!ELEMENT FEATURES EMPTY>
+<!ATTLIST FEATURES abstraction CDATA #IMPLIED
+                   aspect CDATA #IMPLIED
+                   cause CDATA #IMPLIED
+                   container CDATA #IMPLIED
+                   form CDATA #IMPLIED
+                   function CDATA #IMPLIED
+                   gradability CDATA #IMPLIED
+                   group CDATA #IMPLIED
+                   information CDATA #IMPLIED
+                   intentional CDATA #IMPLIED
+                   locative CDATA #IMPLIED
+                   mobility CDATA #IMPLIED
+                   origin CDATA #IMPLIED
+                   scale CDATA #IMPLIED
+                   span CDATA #IMPLIED
+                   trajectory CDATA #IMPLIED>
+<!ELEMENT CHILD EMPTY>
+<!ATTLIST CHILD name CDATA #REQUIRED>
+<!ELEMENT WORD EMPTY>
+<!ATTLIST WORD name CDATA #REQUIRED>
+<!ELEMENT MAPPING EMPTY>
+<!ATTLIST MAPPING to CDATA #REQUIRED
+                  name CDATA #IMPLIED
+		  url CDATA #IMPLIED>

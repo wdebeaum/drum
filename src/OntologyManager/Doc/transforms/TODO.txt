@@ -1,0 +1,21 @@
+Nate Chambers
+---
+
+
+1. Do we need a third type of transform?  A semi-abstract transform?
+   - This would be created *after* all normal transforms, and is applied as
+     abstract if it's :typetransform has already been created.  But it is
+     applied like a normal transform if it has not been created.
+   - Might be needed for rules that apply in gaps.
+     1. "I need a CPU with clock speed of 1.5 ghz"
+     2. "I need a clock speed of 1.5 ghz"
+   - Number (1) puts clock speed into an argument of CPU
+   - Number (2) creates a CPU and puts it into the argument?
+   - or maybe (2) should just be an argument to 'need'
+
+
+
+- Implement the :lf-type constraint option
+
+- Allow multiple KR rules to be loaded (i.e. KM and OWL at the same time).
+  Right now only one can be loaded into the global *lftransforms*

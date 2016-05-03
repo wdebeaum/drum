@@ -1,0 +1,15 @@
+# -*- mode: Makefile;-*-
+#
+# defs.mk: Settings for c++
+#
+# George Ferguson, ferguson@cs.rochester.edu, 17 Sep 2002
+# $Id: defs.mk.in,v 1.1.1.1 2005/01/14 19:47:58 ferguson Exp $
+#
+# @configure_input@
+#
+
+CXX      = @CXX@
+CXXFLAGS  = $(EXTRA_CXXFLAGS) @CXXFLAGS@
+LDFLAGS = @LDFLAGS@
+LIBS    = $(EXTRA_LIBS) @LIBS@
+

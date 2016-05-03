@@ -1,0 +1,12 @@
+
+Time-stamp: <Wed Feb 25 16:25:49 EST 2004 ferguson>
+
+- have to fire listeners whenever anything changes, like
+  channel-status, not just when location-of changes
+
+- have to decide whether to register listeners to this module, or
+  just use the existing selective broadcast method
+
+- currently system utts produce channel events with :channel NIL
+  this is because the test code and the speechin/speechout stuff
+  isn't really up to speed on channels...

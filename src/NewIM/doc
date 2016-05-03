@@ -1,0 +1,20 @@
+IM Tracing
+
+The IM supports multiple levels of tracing and stepping. The trace level is
+set with the function
+(im-trace-on n), where n is a number with the following effect
+      1 - traces input calls to matching and the output produced
+      2 - also provides all the rules that matched before the best cover is selected
+      3 - traces each LF term individually as it matches the "active frontier"
+      4 - traces each match within each rule in the active frontier
+
+(im-trace-off) turns off tracing.
+
+Stepping
+
+(im-step-on n) invokes tracing but allows you to redefine the trace level at each trace message.
+You may enter a number, which becomes the new trace level, or just hit return.
+Entering a 0 for the level simply turns off the tracing and stepping.
+
+(im-step-off) - turns stepping off but leaves tracing on. (im-trace-off) turns off stepping as well as tracing.
+

@@ -1,0 +1,49 @@
+.\" Time-stamp: <Fri Mar 10 17:38:36 EST 2000 ferguson>
+.TH TRIPS_CLIENT 1 "10 Oct 1996" "TRIPS"
+.SH NAME
+trips_client \- Send and receive KQML messages to/from TRIPS Facilitator
+.SH SYNOPSIS
+trips_client [-socket HOST:PORT]
+.SH DESCRIPTION
+.PP
+.I trips_client
+is a fairly simple program that reads KQML messages from its standard input
+and sends them to the TRIPS Facilitator, and reads messages from
+the Facilitator and prints them to its standard output.
+.SH OPTIONS
+.PP
+.IP "-socket HOST:PORT"
+Connect to Facilitator at the given
+.I HOST
+and
+.IR PORT .
+The default is to use port 6200 on the local host, or the value of the
+environment variable TRIPS_SOCKET, if set.
+.I trips_client
+will scan successive port numbers from that given trying to connect
+(see
+.IR tfacilitator (1)
+for details).
+.SH ENVIRONMENT
+.PP
+TRIPS_SOCKET			HOST:PORT at which to contact Facilitator
+.SH FILES
+.PP
+None.
+.SH DIAGNOSTICS
+.PP
+None.
+.SH SEE ALSO
+.PP
+tfacilitator(1),
+trips_cat(1),
+trips_exec(1),
+trips_msg(1)
+.SH BUGS
+.PP
+Probably not.
+.SH AUTHOR
+.PP
+George Ferguson (ferguson@cs.rochester.edu).
+
+

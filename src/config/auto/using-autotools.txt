@@ -1,0 +1,51 @@
+
+$Id: using-autotools.txt,v 1.1.1.1 2005/01/14 19:47:58 ferguson Exp $
+
+Notes on using the GNU configuration/build tools (autoconf et al.):
+
+- Run `autoscan', then rename configure.scan to configure.ac.
+
+- We want to pull the various helpful scripts from one central place,
+  so we need to add:
+
+    AC_CONFIG_AUX_DIR([../config/autotools])
+
+- Then we need to adjust the file for use with automake:
+
+    AM_INIT_AUTOMAKE(TRIPS-Tools, 2002-02-20)
+    AM_CONFIG_HEADER([config.h])
+
+- Next create Makefile.am based on old Makefile.
+
+- Then run `aclocal' to create aclocal.m4.
+
+- Then run `autoconf' to create configure from configure.ac.
+
+- Then run `automake --foreign' to create Makefile.in from Makefile.am.
+
+- Then run `autoheader' to create `config.h.in' from configure.ac.
+
+- To build:
+
+	./configure
+	make
+	make install
+
+30 May 2002:
+
+  - Decide automake was overkill, and too specific to C stuff. We have
+    a nice system of make templates, so I'm going to stick with that.
+    Perhaps add some targets like "distclean" for compatibility.
+
+  - So now we don't add the AM_* macros, we don't run automake, and we
+    use a Makefile.in rather than a (much sparser) Makefile.am.
+
+  - TODO: Setup to use config.h if needed in the .c files.
+
+#include <stdlib.h>     ???
+#include <string.h>	strrchr()
+#include <netdb.h>	gethostbyname()
+#include <sys/types.h>  ???
+#include <sys/socket.h>	socket(), connect(), and constants
+#include <netinet/in.h> struct sockaddr_in and constants
+#include <signal.h>     ???

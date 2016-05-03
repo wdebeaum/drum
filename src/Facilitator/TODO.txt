@@ -1,0 +1,110 @@
+
+$Id: TODO.txt,v 1.1.1.1 2005/01/14 19:48:08 ferguson Exp $
+
+- In START-MODULE, should accept list of urls (:jar -> :urls?) that
+  can be built into classloader
+  - But then, have to know in trips.sh what classes might be needed by
+    submodules
+  - Instead, going to try specifying all jars in TRIPS_BASE/etc/java
+    when we start the facilitator
+
+
+- manpage patterhn examples
+
+- MONITOR status, EVALUATE status (ASK?), broadcast status updates?
+
+
+- Scan for dangling TODOs
+  - groups is one
+  
+- Have to synchronize some methods also, perhaps
+
+- Clean up subscriptions when client exits
+
+- Queries:
+
+    //
+    // Queries of the facilitator
+    //
+    public void receiveAsk(KQMLPerformative msg, Sendable fromWhom) {
+	Debug.debug("Facilitator.receiveAsk: fromWhom=" + fromWhom);
+	Object contentobj = msg.getParameter(":content");
+	if (contentobj == null) {
+	    errorReply(msg, fromWhom, "missing content for ASK-*");
+	    return;
+	} else if (!(contentobj instanceof KQMLList)) {
+	    errorReply(msg, fromWhom, "content of ASK-* is not a list");
+	    return;
+	}
+	KQMLList content = (KQMLList)contentobj;
+	Debug.debug("Facilitator.receiveAsk: content=" + content);
+	if (content.length() == 0) {
+	    errorReply(msg, fromWhom, "content of ASK-* is empty list");
+	    return;
+	} else if (!content.nth(0).toString().equalsIgnoreCase("query")) {
+	    errorReply(msg, fromWhom, "content of ASK-* is not QUERY");
+	    return;
+	}
+	KQMLObject qcontentobj = content.getKeywordParameter(":content");
+	if (qcontentobj == null) {
+	    errorReply(msg, fromWhom, "missing content in ASK-* query");
+	    return;
+	} else if (!(qcontentobj instanceof KQMLList)) {
+	    errorReply(msg, fromWhom, "content of ASK-* query is not a list");
+	    return;
+	}
+	KQMLList qcontent = (KQMLList)qcontentobj;
+	Debug.debug("Facilitator.receiveAsk: qcontent=" + qcontent);
+	if (qcontent.length() == 0) {
+	    errorReply(msg, fromWhom, "content of ASK-* query is empty list");
+	    return;
+	}
+	String qpred = qcontent.nth(0).toString();
+	if (qpred.equalsIgnoreCase("module-status")) {
+	    answerModuleStatusQuery(qcontent, msg, fromWhom);
+	} else {
+	    errorReply(msg, fromWhom, "unknown predicate in ASK-* query: " + qpred);
+	    return;
+	}
+    }
+    void answerModuleStatusQuery(KQMLList qcontent, KQMLPerformative msg,
+				 			Sendable fromWhom) {
+	if (qcontent.length() != 3) {
+	    errorReply(msg, fromWhom, "ASK-* module-status query not length 3");
+	    return;
+	}
+	String modname = qcontent.nth(1).toString();
+	String status = qcontent.nth(2).toString();
+	if (modname.startsWith("?")) {
+	    if (status.startsWith("?")) {
+		// All module/status pairs
+	Enumeration names = registry.enumerateNames();
+	try {
+	    while (names.hasMoreElements()) {
+		String name = (String)names.nextElement();
+		Sendable client = registry.lookupClientByName(name);
+		Debug.debug("Facilitator.receiveBroadcast: sending to client " + client);
+		client.sendTo(contentmsg, fromWhom);
+	    }
+	} catch (NoSuchElementException ex) {
+	}
+
+	    } else {
+		// All modules with given status
+	    }
+	} else {
+	    Sendable client = registry.lookupClientByName(name);
+	    if (client == nil) {
+		// Specific client not found
+		KQMLList content = new KQMLList();
+		content.add("reply");
+		content.add(":content");
+		content.add("NIL");
+		reply("tell", content, msg, fromWhom);
+	    } else if (status.startsWith("?")) {
+		// Status of given module
+	    } else {
+		// Check specific module/status pair
+	    }
+	}
+    }

@@ -1,0 +1,89 @@
+#
+# Makefile for TRIPS Parser
+#
+# George Ferguson, ferguson@cs.rochester.edu, 13 Dec 1995
+# Time-stamp: <Tue Apr 29 16:27:23 EDT 2003 myros>
+#
+
+MODULE  = Parser
+PACKAGE = PARSER
+NAME    = parser
+
+PROG = parsermed
+ANNPROG = parserserver
+DEFSYS = defsysWithLauncher.lisp
+LOADER = parser-medadvisor-kr.lisp
+SRCS = 	Core-parser/structures.lisp \
+	Core-parser/trace.lisp \
+	Core-parser/warning.lisp \
+	Core-parser/Chart.lisp \
+	Core-parser/GrammarandLexicon.lisp \
+	Core-parser/FeatureHandling.lisp \
+	Core-parser/onlineParser.lisp \
+	Core-parser/hierarchFeatures.lisp \
+	Core-parser/attachment.lisp \
+	Core-parser/hierarchy-functions.lisp \
+	Core-parser/lex-functions.lisp \
+	Core-parser/sem-features.lisp \
+	Core-parser/char.lisp \
+	Core-parser/printing.lisp \
+	Trips-parser/streaminterface.lisp \
+	Trips-parser/tripsParser.lisp \
+	Trips-parser/attachments.lisp \
+	Trips-parser/messages.lisp \
+	Trips-parser/speeling.lisp \
+	Trips-parser/support_funs.lisp \
+	Trips-parser/unify.lisp \
+	Trips-parser/scenario.lisp \
+	Lexicon/Code/structures.lisp \
+	Lexicon/Code/make-new-lex.lisp \
+	Lexicon/Code/lexicon-DB.lisp \
+	Lexicon/Code/make-templates.lisp \
+	Lexicon/Code/make-vocab.lisp \
+	load-ontology.lisp
+
+XTRA = Makefile \
+	Grammar/adjective-lex.lisp \
+	Grammar/adverb-lex.lisp \
+	Grammar/adverbial-grammar.lisp \
+	Grammar/auxiliary-lex.lisp \
+	Grammar/clause-grammar.lisp \
+	Grammar/domain-camps-lex.lisp \
+	Grammar/domain-monroe-rules.lisp \
+	Grammar/domain-specific-rules.lisp \
+	Grammar/fnword-lex.lisp \
+	Grammar/lexical-rules.lisp \
+	Grammar/make-new-lex.lisp \
+	Grammar/noun-lex.lisp \
+	Grammar/phrase-grammar.lisp \
+	Grammar/procedures.lisp \
+	Grammar/robust.lisp \
+	Grammar/runtest.lisp \
+	Lexicon/Lex/templates.lisp \
+	Grammar/time-grammar.lisp \
+	Lexicon/Lex/vocab.lisp \
+	Lexicon/Lex/vocab-nouns.lisp
+
+MANS = $(PROG).man
+
+CONFIGDIR=../config
+include $(CONFIGDIR)/lisp/prog.mk
+
+clean::
+	$(RM) parser.log
+
+annTool: compile dump script
+
+#
+# Script to launch lisp with image file
+#
+
+script: $(MAKEFILE) annToolImage.sh
+	sed -e 's@${prefix}/src=.*$$@${prefix}/src=$(${prefix}/src)@' \
+	    -e 's@LISP=.*@LISP=$(LISP)@' \
+	    -e 's@IMAGE=.*@IMAGE=${prefix}/src/Parser/$(IMAGE)@' \
+	    -e 's@<FILENAME>@$(PROG)@' \
+	    -e 's@<MODULE>@$(MODULE)@' \
+	    annToolImage.sh > $(ANNPROG)
+	chmod a+x $(ANNPROG)
+

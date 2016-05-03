@@ -1,0 +1,15 @@
+# -*-mode: Makefile;-*-
+#
+# Makefile for TRIPS KQML library (in JavaScript)
+#
+# $Id: Makefile-javascript,v 1.1 2015/04/03 15:46:52 wdebeaum Exp $
+#
+
+MODULE = KQML
+SRCS = 	kqml.js \
+	kqml_parser.pegjs
+REQUIRES = pegjs
+
+CONFIGDIR=../config
+include $(CONFIGDIR)/javascript/lib.mk
+

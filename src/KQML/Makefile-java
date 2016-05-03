@@ -1,0 +1,34 @@
+# -*-mode: Makefile;-*-
+#
+# Makefile for TRIPS KQML library (in Java)
+#
+# George Ferguson, ferguson@cs.rochester.edu,  6 Nov 1995
+# Time-stamp: <Wed Sep  3 20:26:09 EDT 2003 ferguson>
+#
+
+MODULE = KQML
+PACKAGE = TRIPS.KQML
+
+SRCS = KQMLBadCharacterException.java \
+	KQMLBadCloseException.java \
+	KQMLBadCommaException.java \
+	KQMLBadHashException.java \
+	KQMLBadOpenException.java \
+	KQMLBadPerformativeException.java \
+	KQMLDispatcher.java \
+	KQMLException.java \
+	KQMLExpectedListException.java \
+	KQMLExpectedWhitespaceException.java \
+	KQMLList.java \
+	KQMLObject.java \
+	KQMLPerformative.java \
+	KQMLQuotation.java \
+	KQMLReader.java \
+	KQMLReceiver.java \
+	KQMLString.java \
+	KQMLToken.java \
+	KQMLContinuation.java
+CLASSES = $(SRCS:.java=.class)
+
+CONFIGDIR = ../config
+include $(CONFIGDIR)/java/lib.mk

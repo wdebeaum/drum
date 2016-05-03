@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<program-api module="UnknownModule">
+  <function name="lf-sem" visibility="private">
+    <param name="x">lf type  (i.e. lf_move)
+  </param>
+    <param name="no-defaults" key="true">set to true if you don't want the default features also
+  </param>
+    <return>list form of the feature-list structure, with all defaults
+            filled in from the feature-type declarations</return>
+    <location>lf-public.lisp</location>
+  </function>
+  <function name="lf-arguments" visibility="private">
+    <param name="x">lf type  (i.e. lf_move)
+   </param>
+    <return> list of x's arguments in their original Data list format</return>
+    <location>lf-public.lisp</location>
+  </function>
+  <function name="lf-GCB" visibility="private">
+    <param name="fs1">list form of a feature set
+           ( i.e. (ft_Situation (intentional -))
+   </param>
+    <param name="fs2">list form of a feature set
+   </param>
+    <return>greatest (most-specific) common bound of the two feature sets
+           nil, if the lists contain different or default features
+           if there is no bound for two feature values, nil is inserted
+           as the value.  ((origin nil) (object f_word))</return>
+    <location>lf-public.lisp</location>
+  </function>
+  <function name="lf-feature-pattern-match" visibility="private">
+    <param name="fs1">feature set list...the pattern  (ft_situation (ft val) (ft val))
+   </param>
+    <param name="fs2">feature set list...set to match to the pattern
+   </param>
+    <return>t if every feature value in fs1 is a supertype of the
+           corresponding feature value in fs2
+           fs2 can contain more feature/value pairs than fs1</return>
+    <location>lf-public.lisp</location>
+  </function>
+  <function name="lf-feature-set-merge" visibility="private">
+    <param name="fs1">feature set list  (ft_situation (ft val) (ft val) ...)
+   </param>
+    <param name="fs2">feature set list  (ft_situation (ft val) (ft val) ...)
+   </param>
+    <return>feature set list of merge, inherited and any feature inference</return>
+    <location>lf-public.lisp</location>
+  </function>
+  <function name="lf-coercion-operators" visibility="private">
+    <param name="lfname"> lf type 
+  </param>
+    <desc>Given a class, return a list of quintuples that define applicable coercions for this kr class
+ 
+  </desc>
+    <return>list of applicable coercions (opdef, lfname, newlf, newsem)
+  where
+  opdef   = lf-coercion-operator structure (these are stored directly with the lf)
+  lfname  = lf type to which the coercion applies
+  newlf   = lf type that results from the coercion
+  newsem  = semantic features for newlf</return>
+    <location>lf-public.lisp</location>
+  </function>
+</program-api>

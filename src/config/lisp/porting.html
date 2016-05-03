@@ -1,0 +1,92 @@
+<html>
+<head>
+<title>Porting TRIPS to a New Lisp</title>
+<style type="text/css">
+body {
+  margin: 0 0.5in;
+}
+h1 {
+  text-align: center;
+}
+ol li {
+  padding-bottom: 10pt;
+}
+ol ol, ol ul {
+  padding-top: 10pt;
+}
+</style>
+</head>
+<body>
+<h1>Porting TRIPS to a new Lisp</h1>
+
+Very brief description of what to do in order to port the TRIPS Lisp
+configuration to a new platform and/or Lisp implementation.
+
+<ol>
+<li>Create new sub-directory for your configuration. For example, if
+  you're porting to <q><code>foocl</code></q>, you might make the
+  sub-directory <code>foocl</code>. Brilliant!
+</li>
+<li>Create <code>extensions.lisp</code> in your platform's
+  sub-directory.  The code loaded here implements the standard set of
+  non-CL functions exported from the TRIPS package. It is my intention
+  to (eventually) be able to check that the extensions have all been
+  implemented. The best approach here is to copy an existing version
+  of <code>extensions.lisp</code> and adjust the magic for your new
+  platform.
+</li>
+<li>Create <code>defs.mk</code> in your platform's
+  sub-directory. These GNU <code>make</code> definitions are used in
+  compiling and dumping lisp components. Here be dragons, but only
+  baby ones. Copy an existing one and adjust as needed.
+</li>
+<li>Edit <code>trips.lisp</code>:
+ <ol>
+ <li>Filesystem-specific pathname code (i.e., slashes, backslashes, or
+ something else). The code loaded here controls how pathnames
+ expressed using the pseudo-logical-filename syntax get converted into
+ real pathnames. This will be either:
+  <ol>
+  <li><code>unix</code> (all modern unix-based platforms, including
+      OSX);</li>
+  <li><code>macos</code> (old Mac OS; no longer used); or</li>
+  <li><code>windows</code> (once I put back the support).
+  </ol>
+ You need to make sure that the conditional works properly for your
+ new platform. This should be straightforward.
+ </li>
+ <li>Platform-specific code (i.e., extensions to Common Lisp): Add a
+ case to pickup your platform-specific code.
+ </li>
+ </ol>
+</li>
+<li>Adjust <code>configure.ac</code>: You will at least need to add
+  the new platform to the for loop that check
+  for <code>LISP_FLAVOR</code>, and you may have to do further munging
+  depending on what value is returned (like
+  for <code>cmucl</code>).
+</li>
+<li>You then need to run <code>autoconf</code> to build the
+  new <code>configure</code> from <code>configure.ac</code>. Note that
+  we check in both <code>configure.ac</code>
+  and <code>configure</code> itself so that mere mortals don't
+  need <code>autoconf</code>.
+</li>
+<li>You should now be able to test the result by
+  running <code>configure</code>. If the new Lisp platform is not run
+  by invoking simply <code>lisp</code>, you should pass in the right
+  executable as in:
+  <pre>
+  ./configure --with-lisp=foocl
+  </pre>
+</li>
+<li>You may need to adjust defsystem settings. In
+  particular, <code>defsystem/defsystem.lisp</code> loads the
+  distributed defsystem and then performs various customizations (such
+  as tweaking filename suffixes and adjusting output). You may need a
+  case there, although hopefully not in
+  the <code>defsystem-<i>version</i>/defsystem.lisp</code> itself.
+</li>
+</ol>
+</body>
+</html>

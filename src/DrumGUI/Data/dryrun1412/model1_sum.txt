@@ -1,0 +1,17 @@
+PIKC3A binds to the RAS-GTP complex
+BRAF binds to the RAS-GTP complex
+KRAS binds AF6
+KRAS binds RASSF1
+KRAS binds RASSF2
+KRAS binds RASSF3
+KRAS binds RASSF4
+KRAS binds RASSF5
+KRAS binds RASSF6
+KRAS binds RASSF7
+KRAS binds RASSF8
+KRAS binds RASSF9
+KRAS binds RASSF10
+Rabex5 ubiquinates KRAS
+KRAS<sub>GLY12</sub> increases GTP bound state of KRAS
+KRAS<sub>GLY13</sub> increases GTP bound state of KRAS
+KRAS<sub>GLN61</sub> increases GTP bound state of KRAS

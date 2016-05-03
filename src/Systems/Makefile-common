@@ -1,0 +1,59 @@
+#
+# File: src/Systems/Makefile-common
+# Creator: George Ferguson
+# Created: Mon Jul 16 13:09:10 2007
+# Time-stamp: <Thu Feb 14 13:21:08 EST 2013 ferguson>
+#
+# Common code for dumping an image of a TRIPS system configuration.
+#
+# Need to override normal config/lisp/common.mk that (currently) dumps
+# based on defsystems. Also specify PROG explicitly so as not to clobber
+# pre-existing "trips-plow" (or whatever) scripts in TRIPS_BASE/bin.
+#
+
+DEFAULT = dump
+
+COMPILE_STYLE = compile-nothing
+
+DUMP_STYLE = dump-image
+LOADFILE   = system.lisp
+TOPLEVEL   = trips:restart-trips-system
+PROG       = $(NAME)-lisp
+
+CONFIGDIR=../../config
+include $(CONFIGDIR)/defs.mk
+-include $(CONFIGDIR)/lisp/prog.mk
+
+# Shell script system starters
+
+PROGS = $(basename $(wildcard trips-*.sh))
+
+.SUFFIXES: .sh
+
+# Default startup script substitutions
+SEDOPTS =  -e 's/Run version [^ ]*/Run version $(TRIPS_VERSION)/' \
+	   -e "s/This is \([^ ]*\) version [0-9\.]*/This is \1 version $(TRIPS_VERSION)/" \
+	   -e 's@TRIPS_BASE_DEFAULT=.*$$@TRIPS_BASE_DEFAULT=$(prefix)@'
+
+.sh:
+	sed $(SEDOPTS) $< >$@
+	chmod a+x $@
+
+default all:: $(PROGS)
+
+.PHONY: install install.sh
+
+install.sh:: $(PROGS)
+	$(MKINSTALLDIRS) $(bindir)
+	$(INSTALL_PROGRAM) $(PROGS) $(bindir)
+
+install:: $(PROGS)
+	$(MKINSTALLDIRS) $(bindir)
+	$(INSTALL_PROGRAM) $(PROGS) $(bindir)
+
+clean::
+	rm -f $(PROGS)
+
+# Local variables:
+# mode: makefile
+# End:

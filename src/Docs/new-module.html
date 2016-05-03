@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<!--
+Author: William de Beaumont, 12/02/2015
+$Id: new-module.html,v 1.3 2015/12/08 15:09:24 wdebeaum Exp $
+
+Credits:
+* Based on Scott C. Stoness' old src/Docs/newLispModule.txt
+* Minor contributions from: Lucian Galescu
+-->
+<head>
+<meta charset="UTF-8">
+<title>New TRIPS module HOWTO</title>
+<style type="text/css">
+code, code pre {
+  background-color: LightGray;
+}
+var {
+  background-color: SkyBlue;
+}
+</style>
+</head>
+<body>
+<h1>New TRIPS module HOWTO</h1>
+
+<p>This file will outline how to create a new Lisp module in the TRIPS system from scratch; that is, from conception to a Lisp module that works in the same manner as other Lisp modules in the system. In the future this file might be generalized to cover other programming languages, but for now it focuses on just Lisp.</p>
+
+<p>As a convention, code looks like <code>this</code>, and variables look like <code><var>this</var></code>.</p>
+
+
+<h2>Step 0: check out Hello</h2>
+
+The Hello folder contains examples of TRIPS modules in a number of different
+programming languages. It is not part of any TRIPS system, so you'll have to
+check it out individually. Assumming you've checked out a TRIPS system in a
+folder we'll call <code><var>$TRIPS_BASE</var></code>:
+
+<code><pre>
+cd <var>$TRIPS_BASE</var>/src/
+cvs update -d Hello
+</pre></code>
+
+In the following the Hello module will be used as a prototype for your
+new Lisp module.
+
+
+<h2>Step 1: make a directory for the new module</h2>
+
+<code><pre>
+cd <var>$TRIPS_BASE</var>/src/
+mkdir <var>ModuleName</var>
+</pre></code>
+
+
+<h2>Step 2: create a <code>Makefile</code></h2>
+
+<p>Copy and modify <code>Makefile-lisp</code> from the Hello module:</p>
+<code><pre>
+cp Hello/Makefile-lisp <var>ModuleName</var>/Makefile
+<var>$EDITOR</var> <var>ModuleName</var>/Makefile
+</pre></code>
+
+
+<h2>Step 3: create a <code>messages.lisp</code> file</h2>
+
+<p>Copy and modify <code>messages.lisp</code> from the Hello module:</p>
+<code><pre>
+cp Hello/messages.lisp <var>ModuleName</var>/
+<var>$EDITOR</var> <var>ModuleName</var>/messages.lisp
+</pre></code>
+
+<p>This sets up the message handling (and the registration) for the types of messages that your module will be listening to. The Hello module's <code>messages.lisp</code> file also contains its message handling function itself. Note that this is a spectacularly simple and fairly useless message handler; yours will probably be more impressive, and you will probably have more than one. You may wish to put these functions in a separate file from the <code>defcomponent-handler</code> calls, which should remain in <code>messages.lisp</code>. Feel free to create more <code>.lisp</code> files at this time.</p>
+
+<!--
+NB: old docs had an additional step in here; now folded into #3.
+-->
+
+
+<h2>Step 4: create a <code>defsys.lisp</code> file</h2>
+
+<p>Copy and modify <code>defsys.lisp</code> from the Hello module:</p>
+<code><pre>
+cp Hello/defsys.lisp <var>ModuleName</var>/
+<var>$EDITOR</var> <var>ModuleName</var>/messages.lisp
+</pre></code>
+
+<p>Make sure you change <code>:hello</code> to your module name. Also, all the <code>.lisp</code> files you've created in step 3 need to be listed in the <code>:components</code> of the <code>dfc:defcomponent</code> call. If you create another file later, make sure to add it here.</p>
+
+
+<h2>Step 5: create a <code><var>modulename</var>.lisp</code> file</h2>
+
+<p>Copy and modify <code>hello.lisp</code> from the Hello module:</p>
+<code><pre>
+cp Hello/hello.lisp <var>ModuleName</var>/<var>modulename</var>.lisp
+<var>$EDITOR</var> <var>ModuleName</var>/<var>modulename</var>.lisp
+</pre></code>
+
+<p>This file is useful for testing your module alone, without running it as part of a larger system. Make sure you change <code>Hello</code> to your <code><var>ModuleName</var></code> in the <code>load</code> command, and <code>:hello</code> in the <code>dfc:load-component</code> and <code>dfc:run-component</code> calls.</p>
+
+
+<h2>Step 6: add your module to a system</h2>
+
+<p>Find the <code>system.lisp</code> file for the system you want to add your module to. For example, for the DRUM system, it's <code>src/Systems/<var>drum</var>/system.lisp</code>. In that file there should be a call to <code>trips:def-trips-system</code> with a list of Lisp modules in the system. Add your module like this:</p>
+<code><pre>
+(:dfc-component    <var>:modulename</var>    #!TRIPS"src;<var>ModuleName</var>;")
+</pre></code>
+
+<!--
+NB: old docs had two additional steps in here about make/install/test; now folded in step #8.
+-->
+
+
+<h2>Step 7: add your module to the <code>Makefile-<var>system</var></code> file</h2>
+
+<p>Edit the <code>Makefile-<var>system</var></code> file at the top level of <code>src</code> (e.g. <code><var>$TRIPS_BASE</var>/src/Makefile-<var>drum</var></code>). Add your <code><var>ModuleName</var></code> to the list of <code>LISP_MODULES</code>. Technically this list is all on one line; the backslashes escape the newline characters, so every line except the last should end with a backslash.</p>
+
+<!--
+NB: old docs had one additional step in here; no longer relevant
+-->
+
+
+<h2>Step 8: install and run; further development</h2>
+
+<p>See the separate documentation on <a href="building-trips.html">Building TRIPS</a> and <a href="running-trips.html">Running TRIPS</a> (which <!-- also --> need updating).</p>
+
+<h2>Checking in your module</h2>
+
+<p>If your module is finished, and you need to commit it, remember that you need to follow several steps:</p>
+<ul>
+<li>add the module directory from <code>src</code>
+<li>add all the module files
+<li>commit the module
+<li>commit <code>Makefile-<var>system</var></code> and <code>Systems/<var>system</var>/system.lisp</code>
+</ul>
+
+<p>i.e.  Make sure you check in everything you had to change so that someone else can run everything smoothly.</p>
+
+</body>
+</html>

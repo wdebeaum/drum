@@ -1,0 +1,55 @@
+.\" Time-stamp: <Wed Nov 14 13:28:38 EST 2001 ferguson>
+.TH TRIPS_EXEC 1 "24 Oct 2001" "TRIPS"
+.SH NAME
+trips_exec \- Exec a program with stdin/stdout connected to TRIPS Facilitator
+.SH SYNOPSIS
+trips_exec [-socket HOST:PORT] [-register BOOL] [-name NAME] cmd [args]
+.SH DESCRIPTION
+.PP
+.I trips_exec
+is a simple program that connects to the TRIPS Facilitator, then
+uses the rest of its command-line arguments as a command to launch
+with stdin and stdout connected to the IM.
+.SH OPTIONS
+.PP
+.IP "-socket HOST:PORT"
+Connect to Facilitator at the given
+.I HOST
+and
+.IR PORT .
+The default is to use port 6200 on the local host, or the value of the
+environment variable TRIPS_SOCKET, if set.
+.I trips_exec
+will scan successive port numbers from that given trying to connect
+(see
+.IR facilitator (1)
+for details).
+.IP "-register BOOL"
+If true (argument ``t'', ``true'', or ``yes'', then will send the
+REGISTER message to the Facilitator on the process' behalf. Requires
+-name.
+.IP "-name NAME"
+Sets name used in REGISTER message, if -register is true.
+.SH ENVIRONMENT
+.PP
+TRIPS_SOCKET			HOST:PORT at which to contact Facilitator
+.SH FILES
+.PP
+None.
+.SH DIAGNOSTICS
+.PP
+None.
+.SH SEE ALSO
+.PP
+tfacilitator(1),
+trips_msg(1),
+trips_cat(1),
+trips_client(1)
+.SH BUGS
+.PP
+Probably not.
+.SH AUTHOR
+.PP
+George Ferguson (ferguson@cs.rochester.edu).
+
+

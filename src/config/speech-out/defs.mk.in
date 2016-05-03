@@ -1,0 +1,11 @@
+# -*- mode: Makefile;-*-
+#
+# File: config/speech-out/defs.mk
+# Creator: George Ferguson
+# Created: Mon Feb 19 13:57:00 2007
+# Time-stamp: <Mon Feb 19 13:57:47 EST 2007 ferguson>
+#
+# @configure_input@
+#
+
+SPEECH_OUT_COMPONENT = @SPEECH_OUT_COMPONENT@

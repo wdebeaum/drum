@@ -1,0 +1,20 @@
+;;;;
+;;;; W::tack
+;;;;
+
+(define-words :pos W::V :templ agent-affected-xp-templ
+ :words (
+    (W::tack
+   (SENSES
+    ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("nonvehicle-51.4.2") :wn ("tack%2:38:00"))
+     (LF-PARENT ONT::ride) ;; theme should be restricted to boats
+ ; like ride
+     )
+    ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("run-51.3.2") :wn ("tack%2:38:00"))
+     (LF-PARENT ONT::self-locomote)
+     (TEMPL agent-templ) ; like stroll,walk
+     )
+    )
+   )
+))
+

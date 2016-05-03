@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<program-api module="UnknownModule">
+  <function name="kr-add-to-lf" visibility="private">
+    <param name="lf-name">lf-type or star list - e.g. lf_move or (:* lf_move go)
+   </param>
+    <param name="sem">    feature list
+   </param>
+    <param name="present-sem-args" key="true"/>
+    <param name="no-kr-preference" key="true"/>
+    <param name="kr-preference" key="true"/>
+    <param name="allow-coercions" key="true"/>
+    <param name="from-predicate" key="true"/>
+    <param name="to-predicate" key="true"/>
+    <return>  list of 4-grams: (transform-name 
+                               preference-weight
+                               sem-with-kr-type
+                               list-of-semantic-arguments)</return>
+    <location>kr-public.lisp</location>
+  </function>
+  <function name="kr-slots" visibility="private">
+    <param name="x">kr class  (i.e. Cargo)
+   </param>
+    <return>the slots of x in list form</return>
+    <location>kr-public.lisp</location>
+  </function>
+  <function name="lf-info-for-class" visibility="private">
+    <param name="class">kr-class (i.e. kr-type)
+  </param>
+    <desc>Given a class, return a tripple: (transform lf sem) corresponding to the retrieved LF information for that class
+
+  </desc>
+    <return>list (transform lf sem)
+  where
+  transform = the 'best' lf-kr-transform for this class
+  lf        = lf specified in the transform
+  sem       = domain specific sem -- i.e. sem feature vector consistent with this lf, plus kr-type for this class</return>
+    <location>kr-public.lisp</location>
+  </function>
+  <function name="kr-coercion-operators" visibility="private">
+    <param name="class">kr-type 
+  </param>
+    <desc>Given a class, return a list of quintuples that define applicable coercions for this kr class
+ 
+  </desc>
+    <return>list of applicable coercions (opname, class, newtype, newlf, newsem)
+  where
+  opname  = name of coercion operation (e.g. medication-from-prescription)
+  class   = kr class to which the coercion applies (e.g prescription)
+  newtype = kr class that results from the coercion (e.g. medication)
+  newlf   = lf type associated with newtype (if any)
+  newsem  = semantic features for newlf with kr-type added</return>
+    <location>kr-public.lisp</location>
+  </function>
+</program-api>
