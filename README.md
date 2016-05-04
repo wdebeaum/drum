@@ -10,7 +10,7 @@ Note that the `src/config/lisp/defsystem/defsystem-3.6i/` directory contains a m
 
 The rest of the repository is licensed using the [GPL 2+](http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) (see `gpl-2.0.txt`):
 
-TRIPS DRUM system
+TRIPS DRUM system  
 Copyright (C) 2016  Institute for Human & Machine Cognition
 
 This program is free software; you can redistribute it and/or
