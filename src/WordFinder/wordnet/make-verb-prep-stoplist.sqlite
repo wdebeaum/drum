@@ -1,0 +1,64 @@
+-- make-verb-prep-stoplist.sqlite - make the part of stoplist.lisp dealing with verbs with prepositions after them
+-- William de Beaumont
+-- 2016-05-04
+--
+-- USAGE: sqlite3 <make-verb-prep-stoplist.sqlite
+-- writes verb-prep-stoplist.txt, to be inserted in stoplist.lisp
+
+.open ../../WordNetSQL/wn.db
+
+CREATE TEMPORARY TABLE stoplist (sense_key);
+
+--
+-- verb senses ending with " up" that have the prefix alone...
+--
+
+-- ... in the same synset
+INSERT INTO stoplist
+SELECT mw.sense_key
+FROM senses AS mw
+JOIN senses AS sw
+  ON (mw.synset_offset = sw.synset_offset)
+WHERE mw.ss_type='v' AND sw.ss_type='v'
+  AND mw.lemma LIKE '%\_up' ESCAPE '\'
+  AND sw.lemma = substr(mw.lemma,1,length(mw.lemma)-3)
+;
+
+-- ... in a direct hypernym synset
+INSERT INTO stoplist
+SELECT mw.sense_key
+FROM senses AS mw
+JOIN pointers ON (mw.synset_offset = source_synset_offset)
+JOIN senses AS sw ON (target_synset_offset = sw.synset_offset)
+WHERE mw.ss_type='v' AND pointer_symbol='@' AND sw.ss_type='v'
+  AND mw.lemma LIKE '%\_up' ESCAPE '\'
+  AND sw.lemma=substr(mw.lemma,1,length(mw.lemma)-3)
+;
+
+-- ... as the first verb in the definition
+INSERT INTO stoplist
+SELECT mw.sense_key
+FROM senses AS mw
+JOIN glosstags AS sw USING (synset_offset, ss_type)
+WHERE mw.ss_type='v' AND sw.tag_type='lem'
+  AND mw.lemma LIKE '%\_up' ESCAPE '\'
+  AND sw.lemma=substr(mw.lemma,1,length(mw.lemma)-3) || '%2'
+  AND EXISTS(
+    SELECT * FROM glosstags AS def
+    WHERE def.tag_type='def'
+      AND def.ss_type='v' AND def.synset_offset=sw.synset_offset
+      AND def.start <= sw.start AND def.end >= sw.end
+      AND NOT EXISTS(
+        SELECT * FROM glosstags AS pv
+        WHERE pv.tag_type='lem'
+          AND pv.ss_type='v' AND pv.synset_offset=sw.synset_offset
+          AND pv.lemma LIKE '%\%2' ESCAPE '\'
+          AND pv.start >= def.start AND pv.end <= sw.start
+      )
+  )
+;
+
+-- output
+.output verb-prep-stoplist.txt
+SELECT DISTINCT sense_key FROM stoplist ORDER BY sense_key;
+

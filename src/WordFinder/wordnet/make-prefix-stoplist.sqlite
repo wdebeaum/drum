@@ -1,18 +1,18 @@
 -- make-prefix-stoplist.sqlite - make the part of stoplist.lisp dealing with prefixed verbs
 -- William de Beaumont
--- 2016-02-08
+-- 2016-05-04
 --
 -- USAGE: sqlite3 <make-prefix-stoplist.sqlite
 -- writes prefix-stoplist.txt, to be inserted in stoplist.lisp
 
 .open ../../WordNetSQL/wn.db
 
-CREATE TEMPORARY TABLE stoplist (lemma);
+CREATE TEMPORARY TABLE stoplist (sense_key);
 
 -- re-, over-, and under- verbs in a synset whose direct hypernym has the word
 -- without the prefix
 INSERT INTO stoplist
-SELECT prefixed.lemma
+SELECT prefixed.sense_key
 FROM senses AS prefixed
 JOIN pointers
   ON (prefixed.synset_offset=pointers.source_synset_offset)
@@ -32,7 +32,7 @@ WHERE prefixed.ss_type='v' AND unprefixed.ss_type='v'
 
 -- over- and under- verbs in a synset with the word without the prefix
 INSERT INTO stoplist
-SELECT prefixed.lemma
+SELECT prefixed.sense_key
 FROM senses AS prefixed
 JOIN senses AS unprefixed
   ON ((prefixed.lemma LIKE 'over%' AND
@@ -46,5 +46,5 @@ WHERE prefixed.ss_type='v' AND unprefixed.ss_type='v'
 
 -- output
 .output prefix-stoplist.txt
-SELECT DISTINCT lemma FROM stoplist ORDER BY lemma;
+SELECT DISTINCT sense_key FROM stoplist ORDER BY sense_key;
 

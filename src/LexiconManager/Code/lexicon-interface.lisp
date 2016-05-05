@@ -1065,7 +1065,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
  @visibility public
  "
  (let* ((trips-pos-list (find-arg keylist :trips-parts-of-speech))
-	(wn-sense-keys (remove-if #'wf::sense-key-stoplist-p
+	(wn-sense-keys (remove-if #'wf::stoplist-p
 				  (find-arg keylist :wn-sense-keys)))
 	(rawscore (find-arg keylist :score))
 	(score (if (numberp rawscore) (max rawscore .95) .98))

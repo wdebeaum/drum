@@ -192,7 +192,7 @@ resulting WORDNET-INDEX-ENTRY."
     (with-slots (entries) index
 		(dolist (entry  (read-index-entry s))
 		  (push entry entries))
-		(nreverse entries))
+		(setf entries (nreverse entries)))
     index))
 
 (defvar token-buffer nil
@@ -344,8 +344,7 @@ returns NIL)."
 (defmethod sense-key-for-word-and-synset (word (this wordnet-synset))
   "Returns the sense-key for the specific word in the synset."
   (remove-if #'null (mapcar #'(lambda (w)
-				(when (or (equalp (slot-value w 'word)  word)
-					  (equalp (slot-value w 'word)  (concatenate 'string word "(p)")))
+				(when (lemmas-equal-p (slot-value w 'word) word)
 				  (get-sense-key this (slot-value w 'word))))
 			    (slot-value this 'words)))
   )
@@ -645,16 +644,25 @@ Signals a condition if EOF is encountered."
   "Get the wordnet-index-entry for a word (symbol) given a part of speech"
   (get-index-entry this (string word) pos))
 
+(defun remove-stoplisted-synsets (word synsets)
+  "Given a word and a list of synsets containing senses of that word, remove
+   the synsets for which the sense is on the stoplist."
+  (remove-if (lambda (ss)
+               (let ((sks (sense-key-for-word-and-synset word ss)))
+                 (when sks
+		   (stoplist-p (car sks)))))
+	     synsets))
 
 (defmethod get-all-synsets ((this wordnet-manager) word
 			    &key (use-morphy nil) (use-stoplist nil))
-  "This method returns synsets that match a word for all parts of speech.  It can optionally use morphy to try to find a base form if the lookup fails. It can also optionally check words against the stoplist."
+  "This method returns synsets that match a word for all parts of speech.  It can optionally use morphy to try to find a base form if the lookup fails. It can also optionally check senses against the stoplist."
   (let ((synsets
-          (unless (and use-stoplist (stoplist-p word))
-	    (apply #'append
-	           (mapcar (lambda (pos)
-		             (get-synsets this word pos))
-                           (get-parts-of-speech this))))))
+	  (apply #'append
+		 (mapcar (lambda (pos)
+			   (get-synsets this word pos))
+			 (get-parts-of-speech this)))))
+    (when use-stoplist
+      (setf synsets (remove-stoplisted-synsets word synsets)))
        ; if they want to use morphy and we didn't get any synsets, we run
        ; morphy and feed the results to get-synsets-morpho, a function
        ; intended to be used in exactly this way
@@ -663,12 +671,8 @@ Signals a condition if EOF is encountered."
       (loop with new-forms = (run-morphy this word)
 	    initially
 	      (print-debug "morphy returns these forms ~S~%" new-forms)
-	    for (pos words) in new-forms
-	    for unstopped-words =
-	      (if use-stoplist
-		(remove-if #'stoplist-p words)
-		words)
-	    append (get-synsets-morpho this (list pos unstopped-words))
+	    for form in new-forms
+	    append (get-synsets-morpho this form :use-stoplist use-stoplist)
 	      into new-synsets
 	    finally (setf synsets (append synsets new-synsets))
 	    ))
@@ -686,13 +690,18 @@ Signals a condition if EOF is encountered."
            (get-synsets this index-entry pos))))
 
 (defmethod get-synsets-morpho ((this wordnet-manager) 
-                               (exception-list-form list))
-  "This gets all synsets for words mentioned in an exception list form, which has the form (part-of-speech list-of-inflected-forms).  For example: ((\"bus\") \"noun\").  This is used by get-all-synsets when :use-morphy is activated."
+                               (exception-list-form list)
+			       &key (use-stoplist nil))
+  "This gets all synsets for words mentioned in an exception list form, which has the form (part-of-speech list-of-inflected-forms).  For example: (\"noun\" (\"bus\")).  This is used by get-all-synsets when :use-morphy is activated."
   (let ((pos (first exception-list-form))
         (words (second exception-list-form)))
        (apply #'append 
               (mapcar (lambda (word)
-                      (get-synsets this word pos))
+	                (let ((synsets (get-synsets this word pos)))
+			  (when use-stoplist
+			    (setf synsets
+				  (remove-stoplisted-synsets word synsets)))
+			  synsets))
                       words))))
 
 (defun lemmas-equal-p (l1 l2)

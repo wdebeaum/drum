@@ -314,6 +314,7 @@
 (defun startNewUtterance ()
   ;;(clear-context-after 0)
   (Reset-max-position 0)
+  (reset-min-position 1000)
   (setf (skeleton *chart*) nil)
   (setq *semantic-skeleton-map* *debug-skeleton-info*)
   (setq *var-type-map* nil)

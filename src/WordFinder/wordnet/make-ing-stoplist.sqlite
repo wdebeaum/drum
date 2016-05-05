@@ -1,16 +1,16 @@
 -- make-ing-stoplist.sqlite - make the part of stoplist.lisp dealing with -ing nominalizations of verbs
 -- William de Beaumont
--- 2016-02-17
+-- 2016-05-04
 --
 -- USAGE: sqlite3 <make-ing-stoplist.sqlite
 -- writes ing-stoplist.txt, to be inserted in stoplist.lisp
 
 .open ../../WordNetSQL/wn.db
 
-CREATE TEMPORARY TABLE stoplist (lemma);
+CREATE TEMPORARY TABLE stoplist (sense_key);
 
 INSERT INTO stoplist
-SELECT lemma FROM senses
+SELECT sense_key FROM senses
 WHERE ss_type='n' AND lemma LIKE '%ing'
   AND EXISTS(
     SELECT * FROM pointers
@@ -26,5 +26,5 @@ WHERE ss_type='n' AND lemma LIKE '%ing'
 
 -- output
 .output ing-stoplist.txt
-SELECT DISTINCT lemma FROM stoplist ORDER BY lemma;
+SELECT DISTINCT sense_key FROM stoplist ORDER BY sense_key;
 

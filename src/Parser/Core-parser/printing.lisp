@@ -3,7 +3,7 @@
 ;;;
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
-;;; Time-stamp: <Sun Feb  7 20:34:48 EST 2016 jallen>
+;;; Time-stamp: <Tue Apr 26 17:01:37 EDT 2016 jallen>
 
 (in-package "PARSER")
 
@@ -1839,7 +1839,9 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 						
 (setq *role-mapping-table*
       '(
-	(ont::send
+	(ont::situation-root
+	 ((ont::at-loc) :location))  ;; at-loc is always location
+	 (ont::send
 	 ((ont::to-loc ont::goal-reln  ont::direction-reln) :RESULT)
 	 ((ont::position-reln) :loc))
 	(ont::motion

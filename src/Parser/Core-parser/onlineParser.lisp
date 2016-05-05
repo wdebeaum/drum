@@ -102,6 +102,9 @@
   
   (defun reset-max-position (n)
     (setf (max-position-found *chart*) n))
+
+  (defun reset-min-position (n)
+  (setf (min-position-found *chart*) n))
   
   ;;  word count is only decreased if the parser has to back up because of
   ;;   backspacing in the input

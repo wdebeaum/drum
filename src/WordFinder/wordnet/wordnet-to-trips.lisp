@@ -136,11 +136,6 @@
 	senselist)
 	)
 
-(defun sense-key-stoplist-p (sk-str)
-  "Is the lemma of the given sense key string stoplisted?"
-  (stoplist-p (string-downcase (remove-parens-from-lemma
-				   (subseq sk-str 0 (position #\% sk-str))))))
-
 (defun core-wordnet-senses (synsets)
   "Given a list of synsets, return only those that are core"
   (let ((core-senses))
@@ -171,18 +166,10 @@
     (initialize-word-inflections)
     (cond (;; if we have wordnet sense keys, use those to get the word senses
 	   (not (null wn-sense-keys))
-	   (loop for sense-key in wn-sense-keys
-	         ;; get the lemma part of the sense-key to call stoplist-p on it
-	         for pct = (position #\% sense-key)
-		 for lemma =
-		   (string-downcase
-		     (remove-parens-from-lemma (subseq sense-key 0 pct)))
-		 for new-synset =
-		   (unless (stoplist-p lemma)
-		     (get-synset-from-sense-key wm sense-key))
-		 when new-synset
-		   do (pushnew new-synset synsets :test #'equalp)
-		 )
+	   (dolist (sense-key wn-sense-keys)
+	     (unless (stoplist-p sense-key)
+	       (let ((new-synset (get-synset-from-sense-key wm sense-key)))
+	         (if new-synset (pushnew new-synset synsets :test #'equalp)))))
 	   (setq synsets (reverse synsets))) ;; preserve wn sense ordering
 	  (t  ;; otherwise look up the word in WordNet
 	   (if (or (is-base-form penntags) (null penntags))
