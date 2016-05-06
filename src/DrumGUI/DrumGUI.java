@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.61 2016/04/21 23:24:25 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.62 2016/05/05 21:42:44 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -59,24 +59,19 @@ public class DrumGUI extends StandardTripsModule {
     /** Modes of operation. */
     public enum Mode {
         /**
-         * In this mode, the module is connected to the TRIPS system. Its
-         * operation is driven by the user or some other module. This is the
-         * normal mode of operation.
+         * In this mode, the module is connected to the TRIPS system. Its operation is driven by the user or some other
+         * module. This is the normal mode of operation.
          */
         CONNECTED,
         /**
-         * In this mode, the module is connected to TRIPS system. On startup it
-         * goes automatically into processing a set of files from a batch list;
-         * when the processing is over it exits (shutting down the whole
-         * system).
+         * In this mode, the module is connected to the TRIPS system. On startup it goes automatically into processing a
+         * set of files from a batch list; when the processing is over it exits (shutting down the whole system).
          */
         BATCH,
         /**
-         * In this mode, the module is not connected to TRIPS. It reads messages
-         * from trace files and simulates execution. Trace files contain KQML
-         * messages that this module should receive during its processing;
-         * typically, these are obtained from logs obtained from runs using any
-         * of the other two modes of operation.
+         * In this mode, the module is not connected to TRIPS. It reads messages from trace files and simulates
+         * execution. Trace files contain KQML messages that this module should receive during its processing;
+         * typically, these are obtained from logs obtained from runs using any of the other two modes of operation.
          * <p>
          * This mode can be useful for re-running the system on a dataset if the only changes are in this module,
          * whereas other TRIPS components' behavior as well as the interaction between those components and this module
@@ -1580,7 +1575,9 @@ public class DrumGUI extends StandardTripsModule {
      * The cache file contains messages that would be coming in to this module
      * if the document was processed by the full system.
      * <p>
-     * NOTE: It is assumed that each line in the cache file contains a full KQML message.
+     * NOTE: It is assumed that each line in the cache file contains a full KQML message! This will fail if KQML
+     * messages span multiple lines!!
+     * 
      */
     protected void processCache(String fileName) {
         try {
@@ -1592,8 +1589,17 @@ public class DrumGUI extends StandardTripsModule {
                     continue;
                 }
                 KQMLPerformative perf = KQMLPerformative.fromString(line);
+                String verb = perf.getVerb();
                 Object content = perf.getParameter(":content");
-                receiveTell(perf, content);
+                if (verb.equalsIgnoreCase("TELL")) {
+                    receiveTell(perf, content);
+                } else if (verb.equalsIgnoreCase("REQUEST")) {
+                    receiveRequest(perf, content);
+                } else if (verb.equalsIgnoreCase("REPLY")) {
+                    receiveReply(perf, content);
+                } else {
+                    // ignore
+                }
             }
         } catch (Exception e) {
             Debug.fatal("Problem processing cache file. Check that the file exists and each line contains a proper KQML message.");
@@ -1606,6 +1612,9 @@ public class DrumGUI extends StandardTripsModule {
     /**
      * Processes trace file for a session.
      *
+     * The trace file should contain all messages coming in to this module during the session being replayed.
+     * <p>
+     * Note: This is not guaranteed to work for all sessions!
      */
     protected void processTrace() {
         try {
@@ -1615,10 +1624,12 @@ public class DrumGUI extends StandardTripsModule {
                     KQMLPerformative perf = reader.readPerformative();
                     String verb = perf.getVerb();
                     Object content = perf.getParameter(":content");
-                    if (verb.equalsIgnoreCase("tell")) {
+                    if (verb.equalsIgnoreCase("TELL")) {
                         receiveTell(perf, content);
-                    } else if (verb.equalsIgnoreCase("request")) {
+                    } else if (verb.equalsIgnoreCase("REQUEST")) {
                         receiveRequest(perf, content);
+                    } else if (verb.equalsIgnoreCase("REPLY")) {
+                        receiveReply(perf, content);
                     } else {
                         // ignore
                     }

@@ -155,8 +155,12 @@
 ;;; BRENDA Tissue Ontology
 (concept BTO::0000000 ; tissues, cell types and enzyme sources
   (inherit ONT::internal-body-part))
-(concept BTO::0000214 ; cell culture
-  (inherit ONT::referential-sem)) ; block this subtree
+(concept BTO::0001490 ; other source
+  (inherit ONT::referential-sem)) ; block this subtree, except those below
+;(concept BTO::0000214 ; cell culture
+;  (inherit ONT:: )) ; TODO
+(concept BTO::0003809 ; soil
+  (inherit ONT::substance))
 ;; everything ending in " cell line" with no is_a
 (concept BTO::0000003 (inherit ONT::cell-line))
 (concept BTO::0000067 (inherit ONT::cell-line))

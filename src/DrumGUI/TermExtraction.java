@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.34 2016/04/03 16:33:50 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.35 2016/05/05 21:42:44 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -182,7 +182,7 @@ public class TermExtraction extends Extraction {
                     paVals1.add(aVal2);
                     shortValue.add(attr.toString());
                     shortValue.add(aVal2);
-                    Debug.debug("Updated: " + attr + " to: " + polyAttributes.get(attr));
+                    Debug.debug("Updated poly: " + attr + " of " + id + " to: " + polyAttributes.get(attr));
                 }
             }
         }
@@ -375,8 +375,11 @@ public class TermExtraction extends Extraction {
         if (attributes.get(Attribute.MSEQ) != null) { // complex sequence
             return createComplexTermXML();
         }
-        if (ontType.equalsIgnoreCase("ONT::MUTATION")) { // all info in :DRUM
+        if (ontType.equalsIgnoreCase("ONT::MUTATION")) { // info from :DRUM
             return createMutationTermXML();
+        }
+        if (ontType.equalsIgnoreCase("ONT::PROTEIN-FAMILY")) { // info from :DRUM
+            return createProtfamTermXML();
         }
         return createTermXML();
     }
@@ -452,6 +455,10 @@ public class TermExtraction extends Extraction {
                 "rule=\"" + ruleID + "\">"
                 + "<type>" + ontType + "</type>"
                 + aggregate
+                + createModsXML()
+                + createFeaturesXML()
+                + createNameXML()
+                + createCorefXML()
                 + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
                 "</" + exType + ">";
     }
@@ -497,6 +504,10 @@ public class TermExtraction extends Extraction {
                 "rule=\"" + ruleID + "\">"
                 + "<type>" + ontType + "</type>"
                 + subterms
+                + createModsXML()
+                + createFeaturesXML()
+                + createNameXML()
+                + createCorefXML()
                 + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
                 "</" + exType + ">";
     }
@@ -562,6 +573,73 @@ public class TermExtraction extends Extraction {
                 "rule=\"" + ruleID + "\">"
                 + "<type>" + ontType + "</type>"
                 + mutation
+                + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
+                "</" + exType + ">";
+    }
+
+    /**
+     * Returns a {@code <term>} XML element representing a protein family term.
+     */
+    private String createProtfamTermXML() {
+        Debug.debug("pfTERM(" + value + ")");
+        String var = pullTermVar(value);
+        String id = removePackage(var, false);
+        String ontText = normalize(pullTermOntWord(value));
+        String parID = getParagraphID();
+
+        String text = removeTags(getTextSpan(start, end));
+
+        String ruleID = value.getKeywordArg(":RULE").toString();
+
+        // get members from :DRUM
+        KQMLObject dsiInfo = attributes.get(Attribute.DRUM);
+        if ((dsiInfo != null) && !(dsiInfo instanceof KQMLList)) {
+            dsiInfo = null;
+        }
+        String members = "";
+        if (dsiInfo != null) {
+            KQMLList drumInfo = findTermByHead(":DRUM", (KQMLList) dsiInfo);
+            if (drumInfo == null) {
+            } else {
+                Debug.debug("drumInfo:" + drumInfo);
+                KQMLList pfTerms = findAllTermsByHead("TERM", drumInfo);
+                // FIXME: for now, there should be only one TERM, but in the future this may need to be revised
+                if (pfTerms == null) {
+                } else {
+                    Debug.debug("pfTerms:" + pfTerms);
+                    KQMLList pfTerm = (KQMLList) pfTerms.get(0);
+                    
+                    // ok, we know memberType can only be ONT::PROTEIN...
+                    String memberType = getKeywordArgString(":MEMBER-TYPE", pfTerm);
+                    
+                    // member DBIDs
+                    KQMLObject memberIDs = pfTerm.getKeywordArg(":MEMBERS");
+                    if (memberIDs != null) {
+                        members += "<members>";
+                        for (KQMLObject memberID : (KQMLList) memberIDs) {
+                            members += "<member type=\"" + memberType + "\" "
+                                    + "dbid=\"" + normalizeDBID(memberID.stringValue()) + "\" "
+                                    + "/>";
+                        }
+                        members += "</members>";
+                    }
+                }
+            }
+        }
+
+        return "<" + exType + " " +
+                "id=\"" + id + "\" " +
+                "start=\"" + getOffset(start) + "\" " +
+                "end=\"" + getOffset(end) + "\" " +
+                "paragraph=\"" + parID + "\" " +
+                "uttnum=\"" + uttnum + "\" " +
+                "rule=\"" + ruleID + "\">"
+                + "<type>" + ontType + "</type>"
+                + members
+                + createModsXML()
+                + createFeaturesXML()
+                + createNameXML()
+                + createCorefXML()
                 + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
                 "</" + exType + ">";
     }
@@ -1044,6 +1122,7 @@ public class TermExtraction extends Extraction {
 
     private String createIneventFeaturesXML() {
         ArrayList<KQMLObject> inEvents = polyAttributes.get(PolyAttribute.INEVENT);
+        Debug.warn("poly :INEVENT of " + id + " =  " + inEvents);
         if ((inEvents == null) || inEvents.isEmpty()) {
             return "";
         }
