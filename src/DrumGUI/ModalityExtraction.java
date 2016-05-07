@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: ModalityExtraction.java,v 1.20 2016/04/05 21:02:03 lgalescu Exp $
+ * $Id: ModalityExtraction.java,v 1.22 2016/05/06 22:24:43 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -60,9 +60,7 @@ public class ModalityExtraction extends Extraction {
         // :NEGATION true|false --> negation
         NEGATION(":NEGATION"),
         // :POLARITY negative|positive --> polarity
-        POLARITY(":POLARITY"),
-        // :EPI VAR
-        EPI(":EPI");
+        POLARITY(":POLARITY");
         private String modName;
 
         private Modifier(String name) {
@@ -87,8 +85,7 @@ public class ModalityExtraction extends Extraction {
         }
 
         public boolean hasReferent() {
-            boolean result = (this == EPI);
-            return result;
+            return false;
         }
     };
 
@@ -176,13 +173,6 @@ public class ModalityExtraction extends Extraction {
      */
     public KQMLObject getPolarity() {
         return mods.get(Modifier.POLARITY);
-    }
-
-    /**
-     * @return the epistemic modality
-     */
-    public KQMLObject getEpiModality() {
-        return mods.get(Modifier.EPI);
     }
 
     //// PULLERS
@@ -292,7 +282,6 @@ public class ModalityExtraction extends Extraction {
                 + "<type>" + ontType + "</type>"
                 + createNegationXML()
                 + createPolarityXML()
-                + createEpiModalityXML()
                 + createArgsXML()
                 + "<text>" + escapeXML(text) + "</text>" +
                 "</" + exType + ">";
@@ -385,20 +374,6 @@ public class ModalityExtraction extends Extraction {
         return "";
     }
     
-    /**
-     * Returns a {@code <epistemic-modality>} XML element representing the epistemic modality associated with the
-     * event. If that value is {@code null}, returns the empty string.
-     * 
-     * @see Modifier#EPI
-     */
-    private String createEpiModalityXML() {
-        KQMLObject value = getEpiModality();
-        if (value != null) { // must be a variable
-            return "<epistemic-modality id=\"" + removePackage(value.toString()) + "\" />";
-        }
-        return "";
-    }
-
     /**
      * Returns a {@code <mods>} XML element representing the term modifiers, or
      * the empty string if no such information exists.

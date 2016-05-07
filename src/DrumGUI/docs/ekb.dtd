@@ -3,7 +3,7 @@
 <!-- DTD schema for the EKB
 
 Author: Lucian Galescu <lgalescu@ihmc.us> 03/04/2016
-$Id: ekb.dtd,v 1.6 2016/05/03 15:34:20 lgalescu Exp $
+$Id: ekb.dtd,v 1.7 2016/05/06 22:18:18 lgalescu Exp $
 
 When the EKB is used for annotation, textual elements must be present (eg, <input>, <text>, @start, @end, @uttnum, @paragraph). 
 
@@ -132,7 +132,7 @@ Structural definition of the EKB data and metadata.
        'features'?
 @fixme Replace :utnnum with :sentence.
 -->
-<!ELEMENT TERM (type,((mods?,features?,name?,coref?)|mutation|aggregate|components|members),text?)>
+<!ELEMENT TERM (type,(mutation|aggregate|components|members)?,(mods?,features?,name?,coref?)?,text?)>
 <!ATTLIST TERM
   id NMTOKEN #REQUIRED
   dbid %dbid; #IMPLIED

@@ -539,12 +539,14 @@ separate instances of the chart/parser.")
 (defvar *min-semantic-skeleton-factor* .95)
 
 (defun convert-to-adjustment-factor (log)
-  "This takes a log linear prob and converts to a range of adjustment scores"
+  (if (numberp log) (max (min log *max-semantic-skeleton-factor*) *min-semantic-skeleton-factor*)
+      1))
+#||  "This takes a log linear prob and converts to a range of adjustment scores"
   (if (numberp log)
       (let ((factor (-  *max-semantic-skeleton-factor* (* log log) )))
 	(max factor *min-semantic-skeleton-factor*)
 	   )
-      1))
+      1))||#
 
 
 (defun unpack-roles (roles)

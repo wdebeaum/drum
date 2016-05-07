@@ -7,7 +7,7 @@
 # Process this file with autoconf to produce a configure script.
 #
 
-AC_INIT(TRIPS-config-TextTagger, 2008-09-09, ferguson@cs.rochester.edu)
+AC_INIT(TRIPS-config-TextTagger, 2008-09-09, wdebeaum@cs.rochester.edu)
 AC_CONFIG_SRCDIR([defs.mk.in])
 AC_CONFIG_AUX_DIR([../auto])
 
