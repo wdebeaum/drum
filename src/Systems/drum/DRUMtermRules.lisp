@@ -60,6 +60,23 @@
 	    :rule -simple-ref
 	    ))
 
+	  ; the first protein
+	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+;	    (:* (? t1 ONT::EVENT-OF-CHANGE ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT) ?w) :SEQUENCE - :DRUM ?code)
+
+; took out EVENT-OF-CHANGE: it doesn't work well with term substitution (e.g., phosphorylation would lose all the AGENT/AFFECTED/etc roles when not returned with the TERM)
+; but put back ONT::MUTATION and ONT::BIOLOGICAL-PROCESS (e.g., tumorigenesis) which were in EVENT-OF-CHANGE
+	    (:* (? t1 
+;ONT::EVENT-OF-CHANGE 
+		   ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT ONT::MENTAL-CONSTRUCTION ONT::AWARENESS ONT::INFORMATION-FUNCTION-OBJECT) ?!w) :SEQUENCE (ONT::NTH ?x) :DRUM ?code)
+	   -simple-ref-2>
+	   90
+	   (ONT::TERM ?!obj ?t1
+	    :name ?!w
+	    :drum ?code
+	    :rule -simple-ref-2
+	    ))
+	  
 
 #|
 ; matches the speech act: hack to return mutation/cell location/cell line that got covered by another term (e.g., G12V Ras; Ras in the nucleus)
@@ -192,7 +209,6 @@
 	    :operator ONT::BUT-NOT
 	    :rule -logicalOp-refA
 	    ))
-|#
 
 ; for paper1
 	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
@@ -210,6 +226,7 @@
 	    :operator ONT::BUT-NOT
 	    :rule -logicalOp-refA
 	    ))
+|#
 
 
 ;	  ;; logical operations for chemicals (e.g. conjunctions)
@@ -507,12 +524,12 @@
 	   (ONT::TERM ?!name1 ?type1    ; this is otherwise not extracted because it is subsumed
 	    :name ?!w
 	    :drum ?code
-	    :rule -explicit-ref-seq0-term
+	    :rule -explicit-ref-seq0-x2-term
 	    )
 	   (ONT::TERM ?!name2 ?type2    ; this is otherwise not extracted because it is subsumed
 	    :name ?!w2
 	    :drum ?code2
-	    :rule -explicit-ref-seq0-term
+	    :rule -explicit-ref-seq0-x2-term2
 	    )
 	   )
 
@@ -523,7 +540,13 @@
 	    :ASSOC-WITHS (?!name))
 	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name 
 ;	    (? type1 ONT::SEQUENCE) :SEQUENCE ?!sequence)
-	    (? type1 ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART) :SEQUENCE ?!sequence :operator -)  ; ":operator -" is here to exclude logical sequences (e.g., Ras and Raf)
+	    (? type1 ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART)
+	    :SEQUENCE ?!sequence
+ 	    :SEQUENCE (?!s1 ?s2 ?s3)  ; this is so to match a superset of -explicit-ref-seq0b
+	    :operator -)  ; ":operator -" is here to exclude logical sequences (e.g., Ras and Raf)
+	   ((? reln1s ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!s1
+	    (:* (? type1s ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART) ?!w1s)
+	    :SEQUENCE - :drum ?code1s)
 	   -explicit-ref-seq0a>
 	   100
 	   (ONT::TERM ?!obj ?type
@@ -532,6 +555,11 @@
 ;	    :drum ?code  ; there is no :drum information for :SEQUENCE (so this will be empty)
 	    :rule -explicit-ref-seq0a
 	    )
+	   (ONT::TERM ?!s1 ?type1s  ; emit !?s1 also which otherwise would not be extracted by -simple-ref
+	    :name ?!w1s
+	    :drum ?code1s
+	    :rule -explicit-ref-seq0a-term
+	    )	   	   
 	   )
 
 	  ;; robust rule for explicit constructions for pathways/complexes, e.g., "a complex of Ras/Raf"
@@ -541,7 +569,13 @@
 	   (ONT::F ?!name ONT::ASSOC-WITH :VAL ?!nVal)
 	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!nVal
 ;	    (? type1 ONT::SEQUENCE) :SEQUENCE ?!sequence)
-	    (? type1 ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART) :SEQUENCE ?!sequence :operator -)
+	    (? type1 ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART)
+	    :SEQUENCE ?!sequence
+ 	    :SEQUENCE (?!s1 ?s2 ?s3)  ; this is so to match a superset of -explicit-ref-seq0b
+	    :operator -)
+	   ((? reln1s ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!s1
+	    (:* (? type1s ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART) ?!w1s)
+	    :SEQUENCE - :drum ?code1s)
 	   -explicit-ref-seq0a2>
 	   100
 	   (ONT::TERM ?!obj ?type
@@ -550,13 +584,25 @@
 ;	    :drum ?code  ; there is no :drum information for :SEQUENCE (so this will be empty)
 	    :rule -explicit-ref-seq0a2
 	    )
+	   (ONT::TERM ?!s1 ?type1s  ; emit !?s1 also which otherwise would not be extracted by -simple-ref
+	    :name ?!w1s
+	    :drum ?code1s
+	    :rule -explicit-ref-seq0a2-term
+	    )	   	   
 	   )
-	  
+
 	  ;; robust rule for explicit constructions for pathways/complexes (without the word "pathway" or "complex"), e.g., "Ras/Raf/Mek"
 	  ;; We do not make the combined type PATHWAY or MACROMOLECULAR-COMPLEX because it could be either
+	  ; works only up to three elements because of :SEQUENCE (?!s1 ?s2 ?s3)
 	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
 ;	    ONT::SEQUENCE :ELEMENT-TYPE ?!type :SEQUENCE ?!sequence)
-	    (? type ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART) :SEQUENCE ?!sequence :operator -)
+	    (? type ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART)
+	    :SEQUENCE ?!sequence
+	    :SEQUENCE (?!s1 ?s2 ?s3)  ; this is to stop "the first protein" from matching ("first" is :sequence (nth 1))
+	    :operator -)
+	   ((? reln1s ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!s1
+	    (:* (? type1s ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART) ?!w1s)
+	    :SEQUENCE - :drum ?code1s)
 	   -explicit-ref-seq0b>
 	   100
 	   (ONT::TERM ?!obj ?type
@@ -565,7 +611,13 @@
 ;	    :drum ?code  ; there is no :drum information for :SEQUENCE (so this will be empty)
 	    :rule -explicit-ref-seq0b
 	    )
+	   (ONT::TERM ?!s1 ?type1s  ; emit !?s1 also which otherwise would not be extracted by -simple-ref
+	    :name ?!w1s
+	    :drum ?code1s
+	    :rule -explicit-ref-seq0b-term
+	    )	   
 	   )
+	  
 
 	  ;; robust rule for explicit constructions for molecules with mutations that look like pathways/complexes, e.g., BRAF-V600E 
 	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 

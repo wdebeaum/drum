@@ -32,8 +32,8 @@
    (SENSES
     (
      (LF-PARENT ONT::NEG)
-     (example "nonpayment; nonanswer")
-     (TEMPL central-adj-templ)
+     (example "non-payment; non-answer")
+     (TEMPL prefix-adj-templ)
      )
     )
    )
@@ -44,8 +44,8 @@
   (w::non-
   (senses
    ((lf-parent ont::NEG)
-    (example "nonspecific; nonalcoholic; noncompetitive inhibitor")
-    (templ ADJ-OPERATOR-TEMPL)
+    (example "non-specific; non-alcoholic; non-competitive inhibitor")
+    (templ adj-operator-prefix-TEMPL)
     )
    )
   )

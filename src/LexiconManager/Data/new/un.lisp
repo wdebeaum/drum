@@ -20,7 +20,7 @@
   (senses
    ((lf-parent ont::MANNER-UNDO)
     (example "unbundle; unload; unbind; unclutter; unwrap")
-    (templ PRED-VP-PRE-templ)
+    (templ V-PREFIX-templ)
     )
    )
   )
@@ -33,7 +33,7 @@
     (
      (LF-PARENT ONT::NEG)
      (example "unemployment")
-     (TEMPL central-adj-templ)
+     (TEMPL prefix-adj-templ)
      )
     )
    )
@@ -45,7 +45,7 @@
   (senses
    ((lf-parent ont::NEG)
     (example "unfair")
-    (templ ADJ-OPERATOR-TEMPL)
+    (templ ADJ-OPERATOR-PREFIX-TEMPL)
     )
    )
   )

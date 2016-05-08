@@ -20,7 +20,7 @@
   (senses
    ((lf-parent ont::CARDINALITY-VAL)
     (example "polyubiquitination; polypeptide")
-    (templ central-adj-templ)
+    (templ adj-operator-prefix-templ)
     )
    )
   )
