@@ -10,6 +10,9 @@
   (load (make-pathname :directory '(:relative :up "config" "lisp")
 		       :name "trips")))
 
+(unless (find-package :util)
+  (load #!TRIPS"src;util;defsys"))
+
 (unless (find-package :comm)
   (load #!TRIPS"src;Comm;defsys"))
 
@@ -23,7 +26,7 @@
   (load #!TRIPS"src;LexiconManager;defsys"))
 
 (defpackage :wordfinder
-  (:use :common-lisp)
+  (:use :common-lisp :util)
   (:nicknames :wf))
 
 (in-package :wordfinder)
@@ -40,6 +43,7 @@
 		 "wordnet/wordnet"
 		 "wordnet/wordnet-to-trips"
 		 )
+    :depends-on (:util)
     :finally-do (init-wordfinder)
     )
 
