@@ -11,6 +11,11 @@
      (LF-PARENT ONT::body-part)
      (templ body-part-reln-templ)
      )
+    (
+     (LF-PARENT ONT::group-object)
+     (example "a body of knowledge")
+     (templ other-reln-templ)
+     )
     ((LF-PARENT ONT::info-medium)
      (EXAMPLE "put the body of the message here")
      (meta-data :origin plot :entry-date 20080225 :change-date nil :comments nil)

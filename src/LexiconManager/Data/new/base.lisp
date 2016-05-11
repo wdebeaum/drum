@@ -20,6 +20,10 @@
  :words (
   (W::BASE
    (SENSES
+    (
+     (LF-PARENT ONT::commercial-activity)
+     (example "industrial base")
+     )
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("base%1:06:04"))
      (LF-PARENT ONT::transportation-facility)
      )
@@ -34,6 +38,7 @@
 ;     (TEMPL GEN-PART-OF-RELN-TEMPL)
 ;     (example "base of the power")
 ;     )
+
     ))   
 ))
 

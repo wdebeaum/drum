@@ -110,7 +110,7 @@
 
 ;; tree, plant
 (define-type ONT::plant
-    :wordnet-sense-keys ("tracheophyte%1:20:00" "vascular_plant%1:20:00" "plant%1:03:00" "flora%1:03:00" "plant_life%1:03:00")
+    :wordnet-sense-keys ("tracheophyte%1:20:00" "vascular_plant%1:20:00" "plant%1:03:00" "flora%1:03:00" "plant_life%1:03:00" "cultivar%1:20:00")
     :parent ONT::organism
     :sem (F::Phys-obj (F::origin F::plant))
     )
@@ -245,6 +245,14 @@
     :parent ont::natural-phenomenon
     :sem (F::Phys-obj (F::origin F::non-living) (f::object-function f::weather))
     )
+
+#|
+(define-type ont::climate
+    :wordnet-sense-keys ("climate%1:26:00")
+    :parent ont::atmospheric-phenomenon
+    :sem (F::Phys-obj (F::origin F::non-living))
+    )
+|#
 
 (define-type ont::weather
     :wordnet-sense-keys ("weather%1:19:00" "weather_condition%1:19:00" "conditions%1:19:00" "atmospheric_condition%1:19:00")

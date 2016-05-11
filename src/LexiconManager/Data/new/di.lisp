@@ -20,7 +20,7 @@
   (senses
    ((lf-parent ont::CARDINALITY-VAL)
     (example "diubiquitinate")
-    (templ PRED-VP-PRE-templ)
+    (templ V-PREFIX-templ)
     )
    )
   )
@@ -32,7 +32,7 @@
   (senses
    ((lf-parent ont::CARDINALITY-VAL)
     (example "diubiquitination; dipeptide")
-    (templ central-adj-templ)
+    (templ prefix-adj-templ)
     )
    )
   )
@@ -44,7 +44,7 @@
   (senses
    ((lf-parent ont::CARDINALITY-VAL)
     (example "dichromatic")
-    (templ ADJ-OPERATOR-TEMPL)
+    (templ adj-operator-prefix-TEMPL)
     )
    )
   )

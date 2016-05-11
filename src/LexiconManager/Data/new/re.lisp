@@ -8,7 +8,7 @@
    (SENSES
     ((LF-PARENT ONT::REPETITION)
     (example "reactivate")
-    (templ PRED-VP-PRE-templ)
+    (templ V-PREFIX-templ)
      )
     )
    )
@@ -20,7 +20,7 @@
    (SENSES
     ((LF-PARENT ONT::REPETITION)
     (example "reactivation")
-    (templ CENTRAL-ADJ-TEMPL)
+    (templ prefix-adj-templ)
      )
     )
    )

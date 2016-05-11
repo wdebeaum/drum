@@ -8,7 +8,7 @@
   (senses
    ((lf-parent ont::ACROSS)
     (example "transphosphrylate")
-    (templ PRED-VP-PRE-templ)
+    (templ V-PREFIX-templ)
     )
    )
   )
@@ -21,7 +21,7 @@
     (
      (LF-PARENT ONT::ACROSS)
      (example "transatlantic")
-     (TEMPL central-adj-templ)
+     (TEMPL prefix-adj-templ)
      )
     )
    )
@@ -33,7 +33,7 @@
   (senses
    ((lf-parent ont::ACROSS)
     (example "transcontinental")
-    (templ ADJ-OPERATOR-TEMPL)
+    (templ adj-operator-prefix-TEMPL)
     )
    )
   )

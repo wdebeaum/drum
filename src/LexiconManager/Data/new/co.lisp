@@ -7,11 +7,11 @@
   (w::co-
    (SENSES
     ((LF-PARENT ONT::INCLUSIVE)
-     (TEMPL PRED-VP-PRE-templ)
+     (TEMPL V-PREFIX-templ)
      (example "coexist")
      )
     ((LF-PARENT ONT::INCLUSIVE)
-     (TEMPL ADJ-OPERATOR-TEMPL)
+     (TEMPL adj-operator-prefix-TEMPL)
      (example "coexistent")
      )
     )
@@ -23,7 +23,7 @@
   (w::co-
    (SENSES
     ((LF-PARENT ONT::INCLUSIVE)
-     (TEMPL central-adj-templ)
+     (TEMPL prefix-adj-templ)
      (example "They are cochairs of the meeting.")
      )    
     )

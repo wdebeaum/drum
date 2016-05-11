@@ -101,7 +101,7 @@
 ;; give the man a book / give a book to the man
 ;; the windmill supplies areas with electricity
 (define-type ONT::GIVING
- :wordnet-sense-keys ("give%2:40:00" "offer%1:10:01" "offering%1:10:01" "gift%2:40:00" "give%2:40:03" "allow%2:41:01" "fall%2:40:12" "send_in%2:41:00" "giving%1:04:00" "gift%1:21:00")
+ :wordnet-sense-keys ("give%2:40:00" "offer%1:10:01" "offering%1:10:01" "give%2:40:03" "allow%2:41:01" "fall%2:40:12" "send_in%2:41:00" "giving%1:04:00" )
  :parent ONT::RELINQUISH
  :sem (F::SITUATION (f::cause f::agentive) (F::iobj F::recipient))
  :arguments ((:REQUIRED ONT::affected ((? tc1  F::Phys-obj f::abstr-obj) ))
@@ -111,7 +111,7 @@
  )
 
 (define-type ONT::donate
- :wordnet-sense-keys ("donate%2:40:00")
+ :wordnet-sense-keys ("donate%2:40:00" "gift%2:40:00" "gift%1:21:00" )
  :parent ONT::giving
  )
 
@@ -3000,7 +3000,7 @@
  )
 
 (define-type ONT::decrease
- :wordnet-sense-keys ("decrease%2:30:00" "diminish%2:30:00" "lessen%2:30:00" "fall%2:30:06" "weaken%2:30:01")
+ :wordnet-sense-keys ("decrease%2:30:00" "decrease%2:30:01" "diminish%2:30:00" "lessen%2:30:00" "fall%2:30:06" "weaken%2:30:01")
  :parent ONT::change-magnitude
  )
 

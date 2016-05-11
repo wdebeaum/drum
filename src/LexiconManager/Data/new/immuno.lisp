@@ -8,7 +8,7 @@
   (senses
    ((lf-parent ont::BODY-SYSTEM-VAL)
     (example "This molecule immunoprecipitated with that protein.")
-    (templ PRED-VP-PRE-templ)
+    (templ V-PREFIX-templ)
     )
    )
   )
@@ -21,7 +21,7 @@
     (
      (LF-PARENT ONT::BODY-SYSTEM-VAL)
      (example "The immunoprecipitate of this protein")
-     (TEMPL central-adj-templ)
+     (TEMPL prefix-adj-templ)
      )
     )
    )

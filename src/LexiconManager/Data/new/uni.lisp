@@ -8,7 +8,7 @@
   (senses
    ((lf-parent ont::CARDINALITY-VAL)
     (example "uniprocessing")
-    (templ PRED-VP-PRE-templ)
+    (templ V-PREFIX-templ)
     )
    )
   )
@@ -20,7 +20,7 @@
   (senses
    ((lf-parent ont::CARDINALITY-VAL)
     (example "uniprocessor; unicolor")
-    (templ central-adj-templ)
+    (templ prefix-adj-templ)
     )
    )
   )
@@ -32,7 +32,7 @@
   (senses
    ((lf-parent ont::CARDINALITY-VAL)
     (example "unilingual")
-    (templ ADJ-OPERATOR-TEMPL)
+    (templ adj-operator-prefix-TEMPL)
     )
    )
   )

@@ -44,7 +44,7 @@
   (senses
    ((lf-parent ont::OUTSIDE)
     (example "extracellular")
-    (templ ADJ-OPERATOR-TEMPL)
+    (templ adj-operator-prefix-TEMPL)
     )
    )
   )

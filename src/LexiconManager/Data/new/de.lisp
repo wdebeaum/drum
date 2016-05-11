@@ -21,7 +21,7 @@
   (senses
    ((lf-parent ont::MANNER-UNDO)
     (example "deactivate; dephosphorylate")
-    (templ PRED-VP-PRE-templ)
+    (templ V-PREFIX-templ)
     )
    )
   )
@@ -34,7 +34,7 @@
     (
      (LF-PARENT ONT::MANNER-UNDO)
      (example "deactivation")
-     (TEMPL central-adj-templ)
+     (TEMPL prefix-adj-templ)
      )
     )
    )

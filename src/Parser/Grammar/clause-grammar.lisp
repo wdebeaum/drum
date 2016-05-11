@@ -16,7 +16,7 @@
     (vp- vform var agr neg sem iobj dobj comp3 part cont   tense-pro aux modal auxname lex headcat transform subj-map advbl-needed
 	 passive passive-map template) 
     (s vform var neg sem subjvar dobjvar cont  lex headcat transform)
-    (cp vform var neg sem subjvar dobjvar cont  transform subj-map subj)
+    (cp vform var neg sem subjvar dobjvar cont  transform subj-map subj lex)
     (v lex sem lf neg var agr cont aux modal auxname ellipsis tma transform headcat)
     (aux vform var agr neg sem subj iobj dobj comp3 part cont  tense-pro lex headcat transform subj-map advbl-needed
 	 passive passive-map ellipsis contraction auxname) 
@@ -578,6 +578,26 @@
 	   (advbl-needed -)
 	   (headcat ?hcat) ;; aug-trips
 	   )))
+
+#|   
+   ; This should replace the above but it doesn't quite work yet.
+   ;; TEST: The man whose dog barked
+   ((CP (ctype rel-whose) ;(arg ?arg) (argsem ?argsem)
+	(gap -) (lf ?lf) (wh R) (wh-var ?whv)
+     ;; (lex ?l) (headcat ?vcomp) ;; non-aug-trips settings
+     (lex ?hlex) (headcat ?hcat) ;; aug-trips
+     )
+    -rel-whose>
+    (NP (sem ?argsem) (agr ?agr) (CASE SUB) (wh R) (wh-var ?whv) (var ?arg)
+     )
+    (head (vp (subj (% np (var ?arg) (sem ?argsem) (sem ($ ?!type)) (lf ?nplf) )) (agr ?agr) (gap -) ;;(WH -)
+	   (class ?c) (constraint ?con) (vform fin) (tma ?tma)
+	   (sem ?sem) (lf ?lf) 
+	   (transform ?transform) (lex ?vlex)
+	   (advbl-needed -)
+	   (headcat ?hcat) ;; aug-trips
+	   )))
+|#
    
    ;; e.g., (the train) that I moved
    ;; TEST: The cat that the dog chased.
@@ -1055,7 +1075,7 @@
 		       (LIOBJ ?iobjvar) (LCOMP ?compvar)
 		       (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 		       (?iobj-map ?iobjvar) (?comp3-map ?compvar)
-                       ;;?prefix
+                       (mod ?prefix)
 		       ))
       (tma ?tma)
       (postadvbl -) (vform ?vf)
@@ -1657,6 +1677,7 @@
      (dobj (% -)) (agent-map ?subj-map)
      (iobj ?iobj) (iobj-map ?iobj-map)
      (comp3 ?comp3) (part ?part) (comp3-map ?comp-map)
+     (prefix ?prefix)
      )
     -v-passive> 1.0 
     (head (v (vform pastpart) (lex (? !lx been)) ;; exclude be
@@ -1664,7 +1685,9 @@
 	   (dobj ?!dobj) (dobj-map ?dobj-map) (exclude-passive -)
 	   (iobj ?iobj) (iobj-map ?iobj-map)
 	   (comp3 ?comp3) (comp3-map ?comp-map)
-	   (part ?part))))
+	   (part ?part)
+	   (prefix ?prefix)
+	   )))
    
    ;; TEST:  The dog is taken care of
    ((v (vform passive)  (passive +)
@@ -1764,15 +1787,17 @@
      (dobj ?!dobj) (dobj-map ?dobj-map)
      (iobj ?iobj) (iobj-map ?iobj-map)
      (comp3 ?comp3) (part ?part) (comp3-map ?comp-map)
-     (prefix (:MOD (% *PRO* (status F) (class ?qual)
-				   (var ?adv-v) (constraint (& (of ?v))))))
+;     (prefix (:MOD (% *PRO* (status F) (class ?qual)
+     (prefix (% *PRO* (status F) (class ?qual)
+				   (var ?adv-v) (constraint (& (of ?v)))))
      )
-    -v-prefix> 1.0 
+    -v-prefix> 1.01
     (ADV (prefix +)
-     (LF ?qual) (ARG ?v) (VAR ?adv-v) (WH -)
+;     (LF ?qual) (ARG ?v) (VAR ?adv-v) (WH -)
+     (LF ?qual) (VAR ?adv-v) (WH -)
      (argument (% S (sem ?argsem))) 
      )
-    (head (v (vform ?vf) (lex (? !lx been)) ;; exclude be
+    (head (v (var ?v) (vform ?vf) (lex (? !lx been)) ;; exclude be
 	     (subj ?subj) (subj-map ?subj-map) ;; Please don't remove - this is needed for trips-tflex conversion
 	     (dobj ?!dobj) (dobj-map ?dobj-map) (exclude-passive -)
 	     (iobj ?iobj) (iobj-map ?iobj-map)
@@ -1781,6 +1806,30 @@
 	     (passive -)))  ;; we do the prefix first, then the passive
     )
    
+   ((v (vform ?vf) 
+     (subj ?subj) (subj-map ?subj-map) 
+     (dobj ?!dobj) (dobj-map ?dobj-map)
+     (iobj ?iobj) (iobj-map ?iobj-map)
+     (comp3 ?comp3) (part ?part) (comp3-map ?comp-map)
+;     (prefix (:MOD (% *PRO* (status F) (class ?qual)
+     (prefix (% *PRO* (status F) (class ?qual)
+				   (var ?adv-v) (constraint (& (of ?v)))))
+     )
+    -v-prefix-hyphen> 1.01 
+    (ADV (prefix +)
+;     (LF ?qual) (ARG ?v) (VAR ?adv-v) (WH -)
+     (LF ?qual) (VAR ?adv-v) (WH -)
+     (argument (% S (sem ?argsem))) 
+     )
+    (word (lex w::punc-minus))
+    (head (v (var ?v) (vform ?vf) (lex (? !lx been)) ;; exclude be
+	     (subj ?subj) (subj-map ?subj-map) ;; Please don't remove - this is needed for trips-tflex conversion
+	     (dobj ?!dobj) (dobj-map ?dobj-map) (exclude-passive -)
+	     (iobj ?iobj) (iobj-map ?iobj-map)
+	     (comp3 ?comp3) (comp3-map ?comp-map)
+	     (part ?part)
+	     (passive -)))  ;; we do the prefix first, then the passive
+    )
    
    
    ;; DITRANSITIVE TRANSFORMATION 

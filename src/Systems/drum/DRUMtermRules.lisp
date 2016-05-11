@@ -18,6 +18,8 @@
 (mapcar #'(lambda (x) (add-im-rule x 'drumterms))  ;; sets of rules are tagged so they can be managed independently 
 	'(
 
+;; ** temporarily comment out this rule so it doesn't get used for extracting the :ASSOC in explicit-ref1 **
+#|	  
 	  ;; robust rule for explicit constructions, e.g., "RasGEF domain", when we want to return the variable (?!name) pointing to RasGEF but modify its type
 	  ;; lower priority than -explicit-ref1, which returns a TERM pointing to ?!obj instead of ?!name
 	  ;; used for dangling variables, e.g., in "SOS1's RasGEF domain"
@@ -36,7 +38,8 @@
 	    :rule -explicit-ref1x
 	    )
 	   )
-
+|#
+	  
 	  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	  ; basic terms (not conjunctions)
 	  ; phys-object: fragment, we, mutant
@@ -261,8 +264,17 @@
 	    :name ?!w
 	    :drum ?code    
 	    :rule -explicit-ref1
+	    :BASE ?!name  
 	    )
+	   #|
+	   (ONT::TERM ?!name ?type1   ; this rule has to go first because otherwise for some reason -EXPLICIT-REF1X is fired (to extract the :BASE ?!name  ??)
+	    :name ?!w
+	    :drum ?code    
+	    :rule -explicit-ref1-base
+	    )
+	   |#
 	   )
+
 
 	  ;; robust rule for explicit constructions, e.g., "the protein Erk"  Erk :ASSOC-WITH protein
 	  ;; "the pathway Ras/Raf parses the same as the Ras/Raf pathway", so no need for another rule?
@@ -281,6 +293,12 @@
 	    :name ?!w
 	    :drum ?code    
 	    :rule -explicit-ref1-rev
+	    :BASE *1
+	    )
+	   (ONT::TERM *1 ?type   ; this rule has to go first because otherwise for some reason -EXPLICIT-REF1X is fired (to extract the :ASSOC ?!name  ??)
+	    :name ?!w
+	    :drum ?code    
+	    :rule -explicit-ref1-rev-base
 	    )
 	   )
 

@@ -407,7 +407,7 @@
    ((N1 (RESTR  ?con) (CLASS ?lf) (SORT ?sort) (QUAL +) (relc ?relc) (sem ?nsem) (subcat ?subcat) (SET-RESTR ?sr)
      (comparative ?com) (complex ?cmpl) (post-subcat -) (gap ?gap)
      )
-    -N1-prefix>
+    -N1-prefix> 1
     (ADJ (prefix +)
      (LF ?qual) (ARG ?v) (VAR ?adjv) (WH -)
      (argument (% NP (sem ?argsem))) 
@@ -424,6 +424,30 @@
     (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
     (add-to-conjunct (val (:MOD (% *PRO* (status F) (class ?qual)
 				   (var *) (constraint (& (of ?v)))))) (old ?r) (new ?con)))
+
+   ;; special rule for NOUN prefixes that act as adjectives
+   ((N1 (RESTR  ?con) (CLASS ?lf) (SORT ?sort) (QUAL +) (relc ?relc) (sem ?nsem) (subcat ?subcat) (SET-RESTR ?sr)
+     (comparative ?com) (complex ?cmpl) (post-subcat -) (gap ?gap)
+     )
+    -N1-prefix-hyphen> 1
+    (ADJ (prefix +)
+     (LF ?qual) (ARG ?v) (VAR ?adjv) (WH -)
+     (argument (% NP (sem ?argsem))) 
+     (COMPLEX -) (comparative ?com) (Set-modifier -)
+     (post-subcat -)
+     )
+    (word (lex w::punc-minus))
+    (head (N (RESTR ?r) (VAR ?v) (SEM ?nsem) (CLASS ?c) (SET-RESTR ?sr) (gap ?gap)
+	      (SORT ?sort) (relc -) ;;(relc ?relc) "-" to avoid the ambiguity "the [[red book] which I saw]" "the [red [book which I saw]]"  
+	      (subcat ?subcat) (complex -) (lf ?lf)
+	      (post-subcat -)
+	      (PRO -) (postadvbl -) ;; to avoid the ambiguity "the [[red truck] at Avon]" "the [red [truck at Avon]]"
+	      )
+     )
+    (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
+    (add-to-conjunct (val (:MOD (% *PRO* (status F) (class ?qual)
+				   (var *) (constraint (& (of ?v)))))) (old ?r) (new ?con)))
+
    
    ;; special construction, a noun with a name
    ((N1 (CLASS ?lf) (sort PRED)
@@ -776,11 +800,12 @@
    ((ADJ (LF ?lf) (SUBCAT ?subcat) (VAR ?v) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap)
      (transform ?transform) (constraint ?newc) (functn ?fn) (comp-op ?dir)  (argument ?argument)
      (atype ?atype) (comparative ?cmp) (lex ?lx) ; (lf (:* ?lftype ?lx))
-     (sem ($ F::SITUATION)) (arg ?arg)
+     ;(sem ($ F::SITUATION))
+     (arg ?arg)
      (prefix -)
      )
    
-   -adj-prefix-with-hyphen> 1
+   -adj-prefix-hyphen> 1
     (adv (PREFIX +) (VAR ?advbv) 
      (argument (% ADJP (sem ?sem))) (LF ?qual)
      )
@@ -795,6 +820,27 @@
      (new ?newc))
     )
      
+   ((ADJ (LF ?lf) (SUBCAT ?subcat) (VAR ?v) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap)
+     (transform ?transform) (constraint ?newc) (functn ?fn) (comp-op ?dir)  (argument ?argument)
+     (atype ?atype) (comparative ?cmp) (lex ?lx) ; (lf (:* ?lftype ?lx))
+     ;(sem ($ F::SITUATION))
+     (arg ?arg)
+     (prefix -)
+     )
+   
+   -adj-prefix> 1
+    (adv (PREFIX +) (VAR ?advbv) 
+     (argument (% ADJP (sem ?sem))) (LF ?qual)
+     )
+    (head (ADJ (LF ?lf) (SUBCAT ?subcat) (VAR ?v) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap)
+	       (transform ?transform) (constraint ?con) (functn ?fn) (comp-op ?dir) (arg ?arg)
+	       (atype ?atype) (comparative ?cmp) (lex ?lx) (argument ?argument)
+	       ))
+    (add-to-conjunct  (val (:MOD (% *PRO* (status F) (class ?qual)
+				    (var ?advbv) (constraint (& (of ?v))))))
+     (old ?con) 
+     (new ?newc))
+    )
    
    ;; non-scalar adjectives (e.g., sleeping)
    ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem) (atype ?atype) (comparative ?cmp)
@@ -1319,8 +1365,25 @@
 	 (dobj ?!dobj) (dobj (% np (sem ?sem)))
 	  (LF ?lf)) 
      (add-to-conjunct (val (MODS ?tov)) (old ?r) (new ?con)))
-  
-    ;; e.g., anything else, what else
+
+  #|
+  ; the policy to close the park
+  ((N1 (RESTR ?con) (gap -)
+      (CLASS ?c) (SORT ?sort) (QUAL ?qual) (COMPLEX +)
+      (subcat -) (post-subcat -)
+      )
+     -n1-inf2> .92
+     (head (N1 (VAR ?v) (RESTR ?r) (SEM ?sem) (CLASS ?c) (SORT ?sort) (QUAL ?qual)
+	    (subcat -) (post-subcat -)
+	    (no-postmodifiers -) ;; exclude "the same path as the battery I saw" and cp attaching to "path"
+	    ))
+     (cp (ctype s-to) (VAR ?tov) (gap -) ;(subj ?subj)   (gap (% np (sem ?sem) (var ?v)))
+;	 (dobj ?!dobj) (dobj (% np (sem ?sem)))
+	  (LF ?lf)) 
+     (add-to-conjunct (val (MODS ?tov)) (old ?r) (new ?con)))
+  |#
+
+  ;; e.g., anything else, what else
     ((NP (SORT PRED)
          (VAR ?v) (SEM ?sem) (lex ?hl) (headcat ?hc) (Class ?c) (AGR ?agr) (WH ?wh) (PRO INDEF)(case ?case)
          (LF (% Description (status ?status) (var ?v) (Class ?c) (SORT individual)
@@ -1897,7 +1960,8 @@
 	            (CLASS ?c) (CONSTRAINT ?r) (sem ?sem) (transform ?transform)))
              (SORT PRED) (VAR ?v)
              (BARE-NP +) (name-or-bare ?nob)
-	     (simple +))
+	     (simple +)
+	     )
          -bare-singular> .98
          (head (N1 (SORT PRED) (MASS  count) (gerund -) (complex -) (name-or-bare ?nob)
 		(AGR 3s) (VAR ?v) (CLASS ?c) (RESTR ?r) 
@@ -2515,20 +2579,37 @@
     ((ADJP (ARG ?arg) (VAR ?v)  (SUBCATMAP ?!reln) (atype attributive-only)
            (ARGUMENT ?subj)
            (LF (% PROP (class ?lf) (VAR ?v) 
-                  (CONSTRAINT (& (?!reln ?arg)))
+                  (CONSTRAINT (& (?!reln ?arg) (mod ?prefix)))
                   (transform ?transform)
-                  ))
+		  ))
            )
      -adj-ing> 0.97
      (head (V (VFORM (? vf ING)) (COMP3 (% - )) ;;(DOBJ (% -)) 
 	      (GAP -) (LF ?lf) 
               (SUBJ-MAP ?!reln) (SUBJ ?subj)
               (VAR ?v) (transform ?transform)
+	      (prefix ?prefix)
               )
            ))
-    ))
+   
   
 
+ ((ADJP (ARG ?arg) (VAR ?v)  (SUBCATMAP ?!reln) (atype attributive-only)
+           (ARGUMENT ?subj)
+           (LF (% PROP (class ?lf) (VAR ?v) 
+                  (CONSTRAINT (& (?!reln ?arg) (mod ?prefix)))
+                  (transform ?transform)
+		  ))
+           )
+     -adj-ing-opt-comp3> 0.97
+     (head (V (VFORM (? vf ING)) (COMP3 (% ?xx (w::optional +)))
+	      (GAP -) (LF ?lf) 
+              (SUBJ-MAP ?!reln) (SUBJ ?subj)
+              (VAR ?v) (transform ?transform)
+	      (prefix ?prefix)
+              )
+           ))
+  ))
 
 ;; PP-WORDS
 
@@ -2635,7 +2716,7 @@
       )
      -n1-nom-with-obj> 1
       (head (n  (var ?v) (gap -) (aux -) (agr ?agr) (sort pred)
-		(sem ?sem)  (sem ($ F::SITUATION (f::type ont::event-of-change)))
+		(sem ?sem)  (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(LF ?class) (transform ?transform)
             ;; these are dummy vars for trips-lcflex conversion, please don't delete
             ;;(subj ?subj) (dobj ?dobj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
@@ -2668,7 +2749,7 @@
       )
      -n1-nom-without-obj> 1
       (head (n  (var ?v) (gap -) (aux -) (agr ?agr) (sort pred)
-		(sem ?sem)  (sem ($ F::SITUATION (f::type ont::event-of-change)))
+		(sem ?sem)  (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(LF ?class) (transform ?transform)
             ;; these are dummy vars for trips-lcflex conversion, please don't delete
             ;;(subj ?subj) (dobj ?dobj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
@@ -2706,7 +2787,7 @@
 ;		(dobj (% ?s3 (case (? dcase obj -)) (agr ?agr) (var ?dv) (sem ?dobjsem) (gap -)))
 		(dobj (% ?s3 (case (? dcase obj -)) (var ?dv) (sem ?dobjsem) (gap -)))
 		(dobj-map ?!dmap)
-		(sem ?sem) (sem ($ F::SITUATION (f::type ont::event-of-change)))
+		(sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(class ?class) (transform ?transform)
 		;; these are dummy vars for trips-lcflex conversion, please don't delete
 		;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
@@ -2739,7 +2820,7 @@
      (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger) (agr ?agr)
 		(pre-arg-already ?npay) 
 		(dobj-map -)
-		(sem ?sem) (sem ($ F::SITUATION (f::type ont::event-of-change)))
+		(sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(class ?class) (transform ?transform)
 	    ;; these are dummy vars for trips-lcflex conversion, please don't delete
 	    ;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
@@ -2776,7 +2857,7 @@
 	      (dobj ?dobj) (pre-arg-already ?npay)(agr ?agr)
 	      (subj (% ?s3 (case (? dcase obj -)) (var ?dv) (sem ?subjsem) (gap -)))
 	      (dobj-map ?dmap)
-	      (sem ?sem) (sem ($ F::SITUATION (f::type ont::event-of-change)))
+	      (sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 	      (class ?class) (transform ?transform)
 	    ;; these are dummy vars for trips-lcflex conversion, please don't delete
 	    ;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
@@ -2817,7 +2898,7 @@
 		(dobj (% ?s3 (case (? dcase obj -)) (var ?dv) (sem ?dobjsem) (gap -)))
 		(dobj-map ?!dmap) (pre-arg-already -)
 		(nomobjpreps w::of)
-		(sem ?sem) (sem ($ F::SITUATION (f::type ont::event-of-change)))
+		(sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(class ?class) (transform ?transform)
 		;; these are dummy vars for trips-lcflex conversion, please don't delete
 		;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
@@ -2855,7 +2936,7 @@
 		(dobj (% ?s3 (case (? dcase obj -)) (var ?dv) (sem ?dobjsem) (gap -)))
 		(dobj-map ?!dmap) (pre-arg-already -)
 		(nomobjpreps w::of)
-		(sem ?sem) (sem ($ F::SITUATION (f::type ont::event-of-change)))
+		(sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(class ?class) (transform ?transform)
 		;; these are dummy vars for trips-lcflex conversion, please don't delete
 		;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
@@ -2894,7 +2975,7 @@
 		(dobj-map -) 
 ;		(nomobjpreps w::of)
 		(pre-arg-already -)
-		(sem ?sem) (sem ($ F::SITUATION (f::type ont::event-of-change)))
+		(sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(class ?class) (transform ?transform)
 		;; these are dummy vars for trips-lcflex conversion, please don't delete
 		;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
@@ -2933,7 +3014,7 @@
 		;;(dobj-map -) can't do this!  cf "ras attack"
 		(pre-arg-already -)
 		(nomsubjpreps w::of)
-		(sem ?sem) (sem ($ F::SITUATION (f::type ont::event-of-change)))
+		(sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(class ?class) (transform ?transform)
 		;; these are dummy vars for trips-lcflex conversion, please don't delete
 		;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
@@ -2972,7 +3053,7 @@
 		(subj-map -) 
 ;		(nomsubjpreps w::of)
 		(pre-arg-already -)
-		(sem ?sem) (sem ($ F::SITUATION (f::type ont::event-of-change)))
+		(sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(class ?class) (transform ?transform)
 		;; these are dummy vars for trips-lcflex conversion, please don't delete
 		;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
@@ -3007,7 +3088,7 @@
      (Possessor (restr (& (assoc-poss ?v1))))
      (head (n1  (var ?v) (gap -) (aux -)(case ?case)  (gerund ?ger)(agr ?agr)
 		(complex ?complex)
-		(sem ?sem) (sem ($ F::SITUATION (f::type ont::event-of-change)))
+		(sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(class ?class) (transform ?transform)
 		;; these are dummy vars for trips-lcflex conversion, please don't delete
 		;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
@@ -3036,7 +3117,7 @@
      (head (n1  (var ?v) (gap -) (aux -)(case ?case)  (gerund ?ger) (complex ?complex) (agr ?agr)
 		(dobj-map (? dobjmap ONT::AFFECTED ONT::NEUTRAL ONT::AFFECTED1 ONT::NEUTRAL1 ONT::AGENT1))
 		(dobj ?!dobj) 
-		(sem ?sem) (sem ($ F::SITUATION (f::type ont::event-of-change)))
+		(sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(class ?class) (transform ?transform)
 		;; these are dummy vars for trips-lcflex conversion, please don't delete
 		;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
@@ -3070,7 +3151,7 @@
 		(pre-arg-already ?npay)  (gerund ?ger)
 		;;(dobj-map ?dobjmap)
 		(dobj-map -)
-		(sem ?sem) (sem ($ F::SITUATION (f::type ont::event-of-change)))
+		(sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(class ?class) (transform ?transform)
 		;; these are dummy vars for trips-lcflex conversion, please don't delete
 		;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)

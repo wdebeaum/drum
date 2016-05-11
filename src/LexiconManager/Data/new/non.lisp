@@ -19,8 +19,8 @@
   (w::non-
   (senses
    ((lf-parent ont::NEG)
-    (example "nonword")
-    (templ PRED-VP-PRE-templ)
+    (example "nonmoving")
+    (templ V-PREFIX-templ)
     )
    )
   )

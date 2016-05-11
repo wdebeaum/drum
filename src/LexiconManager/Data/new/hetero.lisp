@@ -8,7 +8,7 @@
   (senses
    ((lf-parent ont::DIFFERENT)
     (example "heterodimerize")
-    (templ PRED-VP-PRE-templ)
+    (templ V-PREFIX-templ)
     )
    )
   )
@@ -21,7 +21,7 @@
     (
      (LF-PARENT ONT::DIFFERENT)
      (example "heterodimer")
-     (TEMPL central-adj-templ)
+     (TEMPL prefix-adj-templ)
      )
     )
    )

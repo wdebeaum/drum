@@ -8,7 +8,7 @@
   (senses
    ((lf-parent ont::CARDINALITY-VAL)
     (example "polyubiquitinate")
-    (templ PRED-VP-PRE-templ)
+    (templ V-PREFIX-templ)
     )
    )
   )
@@ -20,7 +20,7 @@
   (senses
    ((lf-parent ont::CARDINALITY-VAL)
     (example "polyubiquitination; polypeptide")
-    (templ adj-operator-prefix-templ)
+    (templ prefix-adj-templ)
     )
    )
   )
@@ -32,7 +32,7 @@
   (senses
    ((lf-parent ont::CARDINALITY-VAL)
     (example "polychromatic")
-    (templ ADJ-OPERATOR-TEMPL)
+    (templ adj-operator-prefix-TEMPL)
     )
    )
   )

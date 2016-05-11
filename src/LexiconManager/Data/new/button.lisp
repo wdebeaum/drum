@@ -25,8 +25,8 @@
     (wordfeats (W::morph (:forms (-vb) :past W::buttoned :ing W::buttoning)))
    (SENSES
     ((meta-data :origin trips :entry-date 20090401 :change-date nil :comments nil)
-     (LF-PARENT ONT::unattach)
-     (TEMPL agent-theme-xp-templ)
+     (LF-PARENT ONT::attach)
+     (TEMPL agent-affected-xp-templ)
      )
     )
    )

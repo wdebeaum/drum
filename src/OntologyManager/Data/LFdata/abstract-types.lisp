@@ -1697,6 +1697,7 @@
  )
 
 (define-type ONT::LEVEL
+ :wordnet-sense-keys ("level%1:26:00")
  :parent ONT::ordered-DOMAIN
  :arguments ((:ESSENTIAL ONT::of ((? of f::phys-obj F::Abstr-obj))) ;; noise, water
 	     (:essential ont::val (f::abstr-obj   (F::INFORMATION F::INFORMATION-CONTENT)))
@@ -1866,6 +1867,7 @@
  ;; making it f::size, to match w/ small & large
  :sem (F::abstr-obj (F::scale F::size-scale)) ; what scale should this be? weight? length? does it need a scale?
  :arguments ((:REQUIRED ONT::of (F::Phys-obj))
+	     (:OPTIONAL ONT::EXTENT)
              )
  )
 
@@ -2050,7 +2052,7 @@
  )
 
 (define-type ONT::commercial-activity
- :wordnet-sense-keys ("finance%1:04:00")
+ :wordnet-sense-keys ("finance%1:04:00" "commerce%1:04:00" "base%1:06:06")
  :parent ONT::activity
  :sem (F::situation (F::cause (? cause F::agentive F::force)))
  )
@@ -3371,7 +3373,7 @@
 (define-type ONT::UNSTEADY
  :parent ONT::STEADINESS-VAL
  ; Words: (W::UNSTEADY W::SHAKY)
-:wordnet-sense-keys ("unsteady%3:00:00" "shaky%5:00:00" "unsteady%3:00:00")
+:wordnet-sense-keys ("unsteady%3:00:00" "shaky%5:00:00" "unsteady%3:00:00" "unstable%3:00:00" "volatile%3:00:00")
  ; Antonym: NIL (W::STEADY)
  )
 

@@ -305,6 +305,104 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    :rule -simple-ref-modCL
 	    ))
 
+	  
+	  ; Ras localizes to/in the nucleus
+          (((? reln0  ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?ev
+            (:* (? type ONT::BE-AT-LOC) ?!w) :NEUTRAL ?!obj :DRUM ?code :LOCATION ?!modL)
+;           ((? reln1 ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!ag  (? t1 ONT::EVENT-OF-CHANGE ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ ONT::SEQUENCE))
+           (ONT::TERM ?!obj ?t1)
+           (ONT::TERM ?!modL (? tmp ONT::BODY-PART))
+           -location1>
+	   100
+	   (ONT::TERM ?!obj ?t1
+	    :LOC ?!modL
+	    :rule -location1
+	    ))
+
+	  ; Ras is localized to/in the nucleus  (Can you say this?)
+	  ; Ras and Raf are colocalized in the nucleus
+          (((? reln0  ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?ev
+            (:* (? type ONT::BE-AT-LOC) ?!w) :NEUTRAL1 ?!obj :DRUM ?code :LOCATION ?!modL)
+;           ((? reln1 ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!ag  (? t1 ONT::EVENT-OF-CHANGE ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ ONT::SEQUENCE))
+           (ONT::TERM ?!obj ?t1)
+           (ONT::TERM ?!modL (? tmp ONT::BODY-PART))
+           -location1b>
+	   100
+	   (ONT::TERM ?!obj ?t1
+	    :LOC ?!modL
+	    :rule -location1b
+	    ))
+	  
+	  ; Ras is located in the nucleus
+          (((? reln0  ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?ev
+            (:* (? type ONT::EXISTS) ?!w) :NEUTRAL ?!obj :DRUM ?code :LOCATION ?!modL)
+;           ((? reln1 ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!ag  (? t1 ONT::EVENT-OF-CHANGE ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ ONT::SEQUENCE))
+           (ONT::TERM ?!obj ?t1)
+	   (ONT::F ?!modL (? tmp ONT::IN-LOC ONT::AT-LOC ONT::ON) :VAL ?!modBP)	   
+           (ONT::TERM ?!modBP (? tmp2 ONT::BODY-PART))
+           -location2>
+	   100
+	   (ONT::TERM ?!obj ?t1
+	    :LOC ?!modBP
+	    :rule -location2
+	    ))
+
+	  ; Ras is in the nucleus
+          (((? reln0  ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?ev
+            (:* (? type ONT::HAVE-PROPERTY) ?!w) :NEUTRAL ?!obj :DRUM ?code :FORMAL ?!modL)
+;           ((? reln1 ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!ag  (? t1 ONT::EVENT-OF-CHANGE ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ ONT::SEQUENCE))
+           (ONT::TERM ?!obj ?t1)
+	   (ONT::F ?!modL (? tmp ONT::IN-LOC ONT::AT-LOC ONT::ON) :VAL ?!modBP)	   
+           (ONT::TERM ?!modBP (? tmp2 ONT::BODY-PART))
+           -location3>
+	   100
+	   (ONT::TERM ?!obj ?t1
+	    :LOC ?!modBP
+	    :rule -location3
+	    ))
+
+	  ; Ras resides/hangs out in the nucleus
+	  ; Ras residency in the nucleus
+          (((? reln0  ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?ev
+            (:* (? type ONT::APPEAR ONT::STAY ONT::STOP-MOVE ONT::WAIT) ?!w) :AGENT ?!obj :DRUM ?code :LOCATION ?!modL)
+;           ((? reln1 ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!ag  (? t1 ONT::EVENT-OF-CHANGE ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ ONT::SEQUENCE))
+           (ONT::TERM ?!obj ?t1)
+	   (ONT::F ?!modL (? tmp ONT::IN-LOC ONT::AT-LOC ONT::ON) :VAL ?!modBP)	   
+           (ONT::TERM ?!modBP (? tmp2 ONT::BODY-PART))
+           -location4>
+	   100
+	   (ONT::TERM ?!obj ?t1
+	    :LOC ?!modBP
+	    :rule -location4
+	    ))
+	  
+	  ; Ras lives in the nucleus
+          (((? reln0  ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?ev
+            (:* (? type ONT::LIVE) ?!w) :AFFECTED ?!obj :DRUM ?code :LOCATION ?!modL)
+;           ((? reln1 ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!ag  (? t1 ONT::EVENT-OF-CHANGE ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ ONT::SEQUENCE))
+           (ONT::TERM ?!obj ?t1)
+	   (ONT::F ?!modL (? tmp ONT::IN-LOC ONT::AT-LOC ONT::ON) :VAL ?!modBP)	   
+           (ONT::TERM ?!modBP (? tmp2 ONT::BODY-PART))
+           -location5>
+	   100
+	   (ONT::TERM ?!obj ?t1
+	    :LOC ?!modBP
+	    :rule -location5
+	    ))
+
+	  ; Ras lives in the nucleus
+          ((ONT::TERM ?ev
+            (? type ONT::LOCATION) :OF ?!obj :DRUM ?code :LOC ?!modL)
+;           ((? reln1 ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!ag  (? t1 ONT::EVENT-OF-CHANGE ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ ONT::SEQUENCE))
+           (ONT::TERM ?!obj ?t1)
+	   (ONT::F ?!modL (? tmp ONT::IN-LOC ONT::AT-LOC ONT::ON) :VAL ?!modBP)	   
+           (ONT::TERM ?!modBP (? tmp2 ONT::BODY-PART))
+           -location6>
+	   100
+	   (ONT::TERM ?!obj ?t1
+	    :LOC ?!modBP
+	    :rule -location6
+	    ))
 
 	  )
 	)

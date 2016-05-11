@@ -20,7 +20,7 @@
   (senses
    ((lf-parent ont::MANNER-UNDO)
     (example "disconnect; disintegrate")
-    (templ PRED-VP-PRE-templ)
+    (templ V-PREFIX-templ)
     )
    )
   )
@@ -33,7 +33,7 @@
     (
      (LF-PARENT ONT::NEG)
      (example "disbelief; discomfort")
-     (TEMPL central-adj-templ)
+     (TEMPL prefix-adj-templ)
      )
     )
    )

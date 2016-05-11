@@ -8,7 +8,7 @@
   (senses
    ((lf-parent ont::SAME)
     (example "homodimerize")
-    (templ PRED-VP-PRE-templ)
+    (templ V-PREFIX-templ)
     )
    )
   )
@@ -21,7 +21,7 @@
     (
      (LF-PARENT ONT::SAME)
      (example "homodimer")
-     (TEMPL central-adj-templ)
+     (TEMPL prefix-adj-templ)
      )
     )
    )

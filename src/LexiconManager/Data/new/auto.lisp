@@ -30,7 +30,7 @@
    (SENSES
     ((LF-PARENT ONT::MANNER-REFL)
     (example "autophosphorylate")
-    (templ PRED-VP-PRE-templ)
+    (templ V-PREFIX-templ)
      )
     )
    )
@@ -42,7 +42,7 @@
    (SENSES
     ((LF-PARENT ONT::MANNER-REFL)
     (example "autophosphorylation; autobiography")
-    (templ CENTRAL-ADJ-TEMPL)
+    (templ prefix-adj-templ)
      )
     )
    )
@@ -54,7 +54,7 @@
   (senses
    ((lf-parent ont::MANNER-REFL)
     (example "autohypnotic")
-    (templ ADJ-OPERATOR-TEMPL)
+    (templ adj-operator-prefix-TEMPL)
     )
    )
   )

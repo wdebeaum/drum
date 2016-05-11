@@ -6,7 +6,7 @@
  :words (
   (w::extent
    (senses
-    ((lf-parent ont::mental-object)
+    ((lf-parent ont::level)
      (example "the extent of his understanding")
      (templ other-reln-templ)
      (meta-data :origin task-learning :entry-date 20050824 :change-date nil :wn ("extent%1:26:00") :comments nil)

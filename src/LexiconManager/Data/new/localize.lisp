@@ -2,6 +2,8 @@
 ;;;; w::localize
 ;;;;
 
+; note: similar file for "localise"
+
 (define-words :pos W::v 
  :words (
   (w::localize

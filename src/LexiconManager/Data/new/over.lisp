@@ -75,7 +75,7 @@
   (senses
    ((lf-parent ont::DEGREE-MODIFIER-HIGH)
     (example "overexpress; overdo")
-    (templ PRED-VP-PRE-templ)
+    (templ V-PREFIX-templ)
     )
    )
   )
@@ -88,7 +88,7 @@
     (
      (LF-PARENT ONT::DEGREE-MODIFIER-HIGH)
      (example "overthin")
-     (TEMPL central-adj-templ)
+     (TEMPL prefix-adj-templ)
      )
     )
    )
@@ -100,7 +100,7 @@
   (senses
    ((lf-parent ont::DEGREE-MODIFIER-HIGH)
     (example "oversensitive; overconfident")
-    (templ ADJ-OPERATOR-TEMPL)
+    (templ adj-operator-prefix-TEMPL)
     )
    )
   )

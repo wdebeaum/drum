@@ -8,7 +8,7 @@
   (senses
    ((lf-parent ont::DEGREE-MODIFIER-HIGH)
     (example "hyperactivate")
-    (templ PRED-VP-PRE-templ)
+    (templ V-PREFIX-templ)
     )
    )
   )
@@ -21,7 +21,7 @@
     (
      (LF-PARENT ONT::DEGREE-MODIFIER-HIGH)
      (example "hyperactivation; hypermarket")
-     (TEMPL central-adj-templ)
+     (TEMPL prefix-adj-templ)
      )
     )
    )
@@ -33,7 +33,7 @@
   (senses
    ((lf-parent ont::DEGREE-MODIFIER-HIGH)
     (example "hyperclever; hypersensitive")
-    (templ ADJ-OPERATOR-TEMPL)
+    (templ adj-operator-prefix-TEMPL)
     )
    )
   )

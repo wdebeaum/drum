@@ -47,7 +47,7 @@
   (senses
    ((lf-parent ont::DEGREE-MODIFIER-LOW)
     (example "underproduce; underperform; undersample")
-    (templ PRED-VP-PRE-templ)
+    (templ V-PREFIX-templ)
     )
    )
   )
@@ -60,7 +60,7 @@
     (
      (LF-PARENT ONT::DEGREE-MODIFIER-LOW)
      (example "underexposure")
-     (TEMPL central-adj-templ)
+     (TEMPL prefix-adj-templ)
      )
     )
    )
@@ -72,7 +72,7 @@
   (senses
    ((lf-parent ont::DEGREE-MODIFIER-LOW)
     (example "underexposed")
-    (templ ADJ-OPERATOR-TEMPL)
+    (templ adj-operator-prefix-TEMPL)
     )
    )
   )
