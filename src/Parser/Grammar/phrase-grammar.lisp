@@ -92,9 +92,10 @@
 	
 	;; e.g., which, what    -- just like spec-det1> except for adding the wh-var feature
 	((SPEC (SEM ?def) (AGR ?agr) (MASS ?m) (ARG ?arg) (NObareSpec +)  (lex ?lex) (LF ?l)
-	       (RESTR (& (PROFORM ?lex))) (WH ?!wh) (wh-var ?arg))
+	       (RESTR ?newr) (WH ?!wh) (wh-var ?arg))
 	 -spec-whdet1>
-	 (head (DET (sem ?def) (AGR ?agr) (WH ?!wh) (MASS ?m) (lex ?lex) (RESTR ?R) (LF ?l))))
+	 (head (DET (sem ?def) (AGR ?agr) (WH ?!wh) (MASS ?m) (lex ?lex) (poss -) (RESTR ?R) (LF ?l)))
+	 (add-to-conjunct (old ?r) (val (PROFORM ?lex)) (new ?newr)))
       
 	;; e.g., the first
 	((SPEC (SEM ?def) (AGR ?agr) (MASS ?m) (ARG ?arg) (LF ?l) (RESTR ?newr)
@@ -198,6 +199,8 @@
 	 -possessive1> 
 	 (head (NP (PRO (? xx - INDEF)) (gerund -) (generated -) (time-converted -) (SEM ?sem) (VAR ?v) (sort pred))) (^S))
 
+
+	
 ;;    DELETING THE RELN POSS rules - we will do this as an infrerence process in the IM
 #||	;; possessor of a relational noun e.g. the man's hand
 	;; Myrosia added a restriction (sort pred) to prevent wh-desc prhases appearing in this rule
@@ -386,6 +389,7 @@
  '((headfeatures
     ;; (N1 VAR arg AGR MASS CASE SEM Changeagr lex quantity subcat transform)
     (N1 var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)
+    (N var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)  ; this is a copy of N1 so -N1-prefix> would pass on the features
     (UNITMOD var arg lex headcat transform agr mass case sem quantity subcat argument indef-only)
     (QUAL var arg lex headcat transform ARGUMENT COMPLEX)
     ;; MD 18/04/2008 added SEM as a headfeature to handle "in full" where in subcategorizes for adjp
@@ -403,33 +407,18 @@
 	   )
      ))
 
-   ;; special rule for NOUN prefixes that act as adjectives
-   ((N1 (RESTR  ?con) (CLASS ?lf) (SORT ?sort) (QUAL +) (relc ?relc) (sem ?nsem) (subcat ?subcat) (SET-RESTR ?sr)
-     (comparative ?com) (complex ?cmpl) (post-subcat -) (gap ?gap)
-     )
-    -N1-prefix> 1
-    (ADJ (prefix +)
-     (LF ?qual) (ARG ?v) (VAR ?adjv) (WH -)
-     (argument (% NP (sem ?argsem))) 
-     (COMPLEX -) (comparative ?com) (Set-modifier -)
-     (post-subcat -)
-     )
-    (head (N (RESTR ?r) (VAR ?v) (SEM ?nsem) (CLASS ?c) (SET-RESTR ?sr) (gap ?gap)
-	      (SORT ?sort) (relc -) ;;(relc ?relc) "-" to avoid the ambiguity "the [[red book] which I saw]" "the [red [book which I saw]]"  
-	      (subcat ?subcat) (complex -) (lf ?lf)
-	      (post-subcat -)
-	      (PRO -) (postadvbl -) ;; to avoid the ambiguity "the [[red truck] at Avon]" "the [red [truck at Avon]]"
-	      )
-     )
-    (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
-    (add-to-conjunct (val (:MOD (% *PRO* (status F) (class ?qual)
-				   (var *) (constraint (& (of ?v)))))) (old ?r) (new ?con)))
 
    ;; special rule for NOUN prefixes that act as adjectives
-   ((N1 (RESTR  ?con) (CLASS ?lf) (SORT ?sort) (QUAL +) (relc ?relc) (sem ?nsem) (subcat ?subcat) (SET-RESTR ?sr)
-     (comparative ?com) (complex ?cmpl) (post-subcat -) (gap ?gap)
+   ((N (RESTR  ?con)
+       (LF ?lf) ;(CLASS ?lf)
+       (SORT ?sort) (QUAL +)
+	(relc -) ;(relc ?relc)
+	(sem ?nsem) (subcat ?subcat) (SET-RESTR ?sr)
+	(comparative ?com)
+	(complex -) ;(complex ?cmpl)
+	(post-subcat -) (gap ?gap)
      )
-    -N1-prefix-hyphen> 1
+    -N-prefix-hyphen> 1
     (ADJ (prefix +)
      (LF ?qual) (ARG ?v) (VAR ?adjv) (WH -)
      (argument (% NP (sem ?argsem))) 
@@ -448,6 +437,34 @@
     (add-to-conjunct (val (:MOD (% *PRO* (status F) (class ?qual)
 				   (var *) (constraint (& (of ?v)))))) (old ?r) (new ?con)))
 
+   ;; special rule for NOUN prefixes that act as adjectives
+   ((N (RESTR  ?con)
+       (LF ?lf) ;(CLASS ?lf)
+       (SORT ?sort) (QUAL +)
+	(relc -) ;(relc ?relc)
+	(sem ?nsem) (subcat ?subcat) (SET-RESTR ?sr)
+	(comparative ?com)
+	(complex -) ;(complex ?cmpl)
+	(post-subcat -) (gap ?gap)
+     )
+    -N-prefix> 1
+    (ADJ (prefix +)
+     (LF ?qual) (ARG ?v) (VAR ?adjv) (WH -)
+     (argument (% NP (sem ?argsem))) 
+     (COMPLEX -) (comparative ?com) (Set-modifier -)
+     (post-subcat -)
+     )
+    (head (N (RESTR ?r) (VAR ?v) (SEM ?nsem) (CLASS ?c) (SET-RESTR ?sr) (gap ?gap)
+	      (SORT ?sort) (relc -) ;;(relc ?relc) "-" to avoid the ambiguity "the [[red book] which I saw]" "the [red [book which I saw]]"  
+	      (subcat ?subcat) (complex -) (lf ?lf)
+	      (post-subcat -)
+	      (PRO -) (postadvbl -) ;; to avoid the ambiguity "the [[red truck] at Avon]" "the [red [truck at Avon]]"
+	      )
+     )
+    (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
+    (add-to-conjunct (val (:MOD (% *PRO* (status F) (class ?qual)
+				   (var *) (constraint (& (of ?v)))))) (old ?r) (new ?con)))
+   
    
    ;; special construction, a noun with a name
    ((N1 (CLASS ?lf) (sort PRED)
@@ -804,7 +821,6 @@
      (arg ?arg)
      (prefix -)
      )
-   
    -adj-prefix-hyphen> 1
     (adv (PREFIX +) (VAR ?advbv) 
      (argument (% ADJP (sem ?sem))) (LF ?qual)
@@ -820,14 +836,13 @@
      (new ?newc))
     )
      
-   ((ADJ (LF ?lf) (SUBCAT ?subcat) (VAR ?v) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap)
+    ((ADJ (LF ?lf) (SUBCAT ?subcat) (VAR ?v) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap)
      (transform ?transform) (constraint ?newc) (functn ?fn) (comp-op ?dir)  (argument ?argument)
      (atype ?atype) (comparative ?cmp) (lex ?lx) ; (lf (:* ?lftype ?lx))
      ;(sem ($ F::SITUATION))
      (arg ?arg)
      (prefix -)
      )
-   
    -adj-prefix> 1
     (adv (PREFIX +) (VAR ?advbv) 
      (argument (% ADJP (sem ?sem))) (LF ?qual)
@@ -841,7 +856,7 @@
      (old ?con) 
      (new ?newc))
     )
-   
+  
    ;; non-scalar adjectives (e.g., sleeping)
    ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem) (atype ?atype) (comparative ?cmp)
       (LF (% PROP (CLASS ?lf)
@@ -861,26 +876,26 @@
 
     ;;  a (ten foot) high fence, a three mile wide path, .. 
     ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem) (atype ?atype) (comparative ?cmp)
-      (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT ?newc)
+      (LF (% PROP (CLASS ont::at-scale-val) (VAR ?v) (CONSTRAINT ?newc)
 	     (transform ?transform) (sem ?sem)))
       )
      -adj-unit-modifier> 1.0
      (ADJP (sort unit-measure) (var ?adjv) 
       (LF (% PROP (constraint (& (val ?adjval)))))
       (sem ($ F::ABSTR-OBJ (F::scale F::linear-scale))))
-     (head (ADJ (LF ?lf)  (VAR ?v) (SUBCAT -)(sem ($ F::ABSTR-OBJ (F::scale F::linear-scale)))
-		(SORT PRED) (ARGUMENT-MAP ?argmap)
+     (head (ADJ (LF ?lf)  (VAR ?v) (SUBCAT -) (sem ($ F::ABSTR-OBJ (F::scale (? scale F::linear-scale))))
+		(SORT PRED) ;;(ARGUMENT-MAP ?argmap)
 		(transform ?transform) (constraint ?con)
 	    (atype ?atype) (comparative ?cmp)
 	    (post-subcat -)
 	    ))
      (append-conjuncts (conj1 ?restr) (conj2 ?r) (new ?tempcon))
-     (append-conjuncts (conj1 (& (?argmap ?arg) (IS ?adjval)))
+     (append-conjuncts (conj1 (& (OF ?arg) (VAL ?adjval) (scale (? scale F::linear-scale))))
 		       (conj2 ?tempcon) (new ?newc)))
 
 ;;  a (ten foot)-high fence, a three mile wide path, .. 
     ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem) (atype ?atype) (comparative ?cmp)
-      (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT ?newc)
+      (LF (% PROP (CLASS ont::at-scale-val) (VAR ?v) (CONSTRAINT ?newc)
 	     (transform ?transform) (sem ?sem)))
       )
      -adj-unit-modifier-HYPHEN> 1.1
@@ -888,14 +903,14 @@
       (LF (% PROP (constraint (& (val ?adjval)))))
       (sem ($ F::ABSTR-OBJ (F::scale F::linear-scale))))
      (word (lex w::punc-minus))
-     (head (ADJ (LF ?lf)  (VAR ?v) (SUBCAT -)(sem ($ F::ABSTR-OBJ (F::scale F::linear-scale)))
-		(SORT PRED) (ARGUMENT-MAP ?argmap)
+     (head (ADJ (LF ?lf)  (VAR ?v) (SUBCAT -) (sem ($ F::ABSTR-OBJ (F::scale (? scale F::linear-scale))))
+		(SORT PRED) ;;(ARGUMENT-MAP ?argmap)
 		(transform ?transform) (constraint ?con)
 	    (atype ?atype) (comparative ?cmp)
 	    (post-subcat -)
 	    ))
      (append-conjuncts (conj1 ?restr) (conj2 ?r) (new ?tempcon))
-     (append-conjuncts (conj1 (& (?argmap ?arg) (IS ?adjval)))
+     (append-conjuncts (conj1 (& (OF ?arg) (VAL ?adjval) (scale (? scale F::linear-scale))))
 		       (conj2 ?tempcon) (new ?newc)))
 
    ;; adjectives with deleted complements  JFA 8/02
@@ -1334,6 +1349,7 @@
      (LF ?lf))
     (add-to-conjunct (val (MODS (?relv ?advv))) (old ?r) (new ?con)))
 
+   #|
     ;; the man whose dog barked
     ((N1 (RESTR ?con)
       (CLASS ?c) (SORT ?sort)
@@ -1349,7 +1365,24 @@
      (cp (ctype rel-whose) (VAR ?relv) ;(arg ?v) (argsem ?sem)
       (LF ?lf))
     (add-to-conjunct (val (MODS ?relv)) (old ?r) (new ?con)))
-    
+   |#
+
+    ;; the man whose dog barked
+    ((N1 (RESTR ?con)
+      (CLASS ?c) (SORT ?sort)
+      (QUAL ?qual) (COMPLEX +) (wh -) (wh-var ?whv)
+      (relc +)  (subcat -) (post-subcat -)
+      )
+     -n1-rel-whose>
+     (head (N1 (VAR ?v) (RESTR ?r) (SEM ?sem) (CLASS ?c) (SORT ?sort) (QUAL ?qual)
+	    (sem ?argsem)
+	    (post-subcat -)
+	    (no-postmodifiers -) ;; exclude "the same path as the battery I saw" and cp attaching to "path"
+	    ))
+     (cp (ctype rel-whose) (VAR ?relv) (wh R) (wh-var ?whv) ;(arg ?v) (argsem ?sem)
+      (LF ?lf))
+    (add-to-conjunct (val (MODS ?relv)) (old ?r) (new ?con)))
+
     ;; attach an s-to to a noun:
     ;; I have a job to do, an option to suggest
   ((N1 (RESTR ?con) (gap -)
@@ -1366,7 +1399,6 @@
 	  (LF ?lf)) 
      (add-to-conjunct (val (MODS ?tov)) (old ?r) (new ?con)))
 
-  #|
   ; the policy to close the park
   ((N1 (RESTR ?con) (gap -)
       (CLASS ?c) (SORT ?sort) (QUAL ?qual) (COMPLEX +)
@@ -1381,7 +1413,6 @@
 ;	 (dobj ?!dobj) (dobj (% np (sem ?sem)))
 	  (LF ?lf)) 
      (add-to-conjunct (val (MODS ?tov)) (old ?r) (new ?con)))
-  |#
 
   ;; e.g., anything else, what else
     ((NP (SORT PRED)
@@ -1953,7 +1984,8 @@
 		(sem ?sem) (transform ?transform)
 		(post-subcat -)
 		)))
-        
+
+        #|
         ;;  Bare singular - rare forms/telegraphic speech e.g., status report.
 	;;  Also used for N1 conjunction "the truck and train"
         ((NP (LF (% Description (STATUS BARE) (VAR ?v) (SORT INDIVIDUAL)
@@ -1967,6 +1999,22 @@
 		(AGR 3s) (VAR ?v) (CLASS ?c) (RESTR ?r) 
 		(sem ?sem) (transform ?transform)
 		)))
+	|#
+
+        ;;  Bare singular - rare forms/telegraphic speech e.g., status report.
+	;;  Also used for N1 conjunction "the truck and train"
+        ((NP (LF (% Description (STATUS BARE) (VAR ?v) (SORT INDIVIDUAL)
+	            (CLASS ?c) (CONSTRAINT ?r) (sem ?sem) (transform ?transform)))
+             (SORT PRED) (VAR ?v)
+             (BARE-NP +) (name-or-bare ?nob)
+	     ;(simple +)
+	     )
+         -bare-singular> .98
+         (head (N1 (SORT PRED) (MASS  count) (gerund -) ;(complex -)   ; to allow "competition for water" which has complex +
+		   (name-or-bare ?nob)
+		(AGR 3s) (VAR ?v) (CLASS ?c) (RESTR ?r) 
+		(sem ?sem) (transform ?transform)
+		)))	
 
         ;;  COMMAS
         ;;  e.g., the train ,
@@ -2579,37 +2627,50 @@
     ((ADJP (ARG ?arg) (VAR ?v)  (SUBCATMAP ?!reln) (atype attributive-only)
            (ARGUMENT ?subj)
            (LF (% PROP (class ?lf) (VAR ?v) 
-                  (CONSTRAINT (& (?!reln ?arg) (mod ?prefix)))
+;                  (CONSTRAINT (& (?!reln ?arg) (mod ?prefix)))
+                  (CONSTRAINT ?newc)
                   (transform ?transform)
 		  ))
            )
-     -adj-ing> 0.97
+     -adj-ing> ;;0.98
      (head (V (VFORM (? vf ING)) (COMP3 (% - )) ;;(DOBJ (% -)) 
 	      (GAP -) (LF ?lf) 
               (SUBJ-MAP ?!reln) (SUBJ ?subj)
               (VAR ?v) (transform ?transform)
-	      (prefix ?prefix)
+;	      (prefix ?prefix)
+	      (restr ?prefix)
               )
-           ))
-   
-  
+           )
+     (append-conjuncts (conj1 ?prefix) (conj2 (& (?!reln ?arg)))
+		       (new ?newc))
 
+     )
+
+
+  ;; the phosphorylating Ras (phosphorylating has an optional LOC role)
  ((ADJP (ARG ?arg) (VAR ?v)  (SUBCATMAP ?!reln) (atype attributive-only)
            (ARGUMENT ?subj)
            (LF (% PROP (class ?lf) (VAR ?v) 
-                  (CONSTRAINT (& (?!reln ?arg) (mod ?prefix)))
+;                  (CONSTRAINT (& (?!reln ?arg) (mod ?prefix)))
+                  (CONSTRAINT ?newc)
                   (transform ?transform)
 		  ))
            )
-     -adj-ing-opt-comp3> 0.97
-     (head (V (VFORM (? vf ING)) (COMP3 (% ?xx (w::optional +)))
+     -adj-ing-opt-comp3> 0.98
+     (head (V (VFORM (? vf ING)) (COMP3 (% ?!xx (w::optional +)))
 	      (GAP -) (LF ?lf) 
               (SUBJ-MAP ?!reln) (SUBJ ?subj)
               (VAR ?v) (transform ?transform)
-	      (prefix ?prefix)
+;	      (prefix ?prefix)
+	      (restr ?prefix)
               )
-           ))
-  ))
+           )
+     (append-conjuncts (conj1 ?prefix) (conj2 (& (?!reln ?arg)))
+		       (new ?newc))
+
+     )
+ 
+ ))
 
 ;; PP-WORDS
 
@@ -3801,9 +3862,15 @@
 
    ;; possessive pronouns: it is yours, mine, his, hers
     ((NP (SORT PRED) (case ?case)
-         (VAR ?v) (SEM ?sem) (lex ?lex) (Class ?c) (AGR ?agr)
-         (LF (% Description (status PRO) (var ?v) (Class ?c) (SORT (?agr -))
-                (Lex ?lex) (constraint (& (proform ?lex)))
+         (VAR ?v) (SEM ?sem) (lex ?lex) (Class ont::REFERENTIAL-SEM) (AGR ?agr)
+         (LF (% Description (status w::pro) 
+		(var ?v) (Class ont::REFERENTIAL-SEM) 
+		(SORT (?agr -))
+                (Lex ?lex) 
+		(constraint (& (assoc-poss (% *PRO* (status w::PRO) (var *)
+					      (class ?c) 
+					      (constraint (& (proform ?lex)
+					  ))))))
                 (sem ?sem)))
 	 (mass ?m)
          )
@@ -4003,7 +4070,7 @@
      )
 
      ((NPSEQ  (SEM ?sem) (LF (?v1 ?v2)) (AGR ?agr) (mass ?m) (class ?class) (case ?c)
-      (generated ?gen)  (time-converted ?tc1) (separator (? p w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash))
+      (generated ?gen)  (time-converted ?tc1) (separator (? p w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash  w::punc-minus))
       )
      -npseq-initial-sequence> 1.01
      (head (NP (SEM ?s1) (VAR ?v1) ;;(agr ?agr)   ;; AGR is not reliably determined for proper names
@@ -4014,7 +4081,7 @@
 	    (LF (% ?sort (class ?c1))) (CASE ?c) (constraint ?con) (mass ?m)
 	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram] 	    
 	    ))
-     (punc (lex (? p w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash)))
+     (punc (lex (? p w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash w::punc-minus)))
      (NP (SEM ?s2) (VAR ?v2) ;;(agr ?agr)  
       (complex -) (expletive -) (simple +) 
       (headless -)
@@ -4069,7 +4136,7 @@
       )
      np-sequence> 
       (head (NPSEQ (var ?v) (SEM ?s1) (lf ?lf1) (class ?c1) (CASE ?case) (mass ?m1)
-		   (generated ?generated1) (separator (? p w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash))
+		   (generated ?generated1) (separator (? p w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash w::punc-minus))
 		   (time-converted ?rule))))
 
     #|| ;;  tc1 without any separator -- needed for speech, should add there
@@ -4089,11 +4156,11 @@
      )||#
 
     ((NPSEQ  (SEM  ?sem) (LF ?newlf) (AGR 3s) (CASE ?case) (mass ?m) (class ?class)
-      (generated ?gen) (time-conevn1-from-rted ?tc1) (separator (? p w::punc-comma w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash))
+      (generated ?gen) (time-conevn1-from-rted ?tc1) (separator (? p w::punc-comma w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash w::punc-minus))
       )
      npseq-add-next-comma> 1.02 
      (head (NPSEQ  (SEM ?s1) (LF ?lf) (MASS ?m) (class ?c1) (CASE ?case)
-	    (generated ?gen1) (time-converted ?tc1) (separator (? p w::punc-comma w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash))
+	    (generated ?gen1) (time-converted ?tc1) (separator (? p w::punc-comma w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash w::punc-minus))
 	    )) 
      (punc  (lex w::punc-comma))
      (NP (SEM ?s2) (VAR ?v2) (MASS ?m) (COMPLEX -) (name-mod -) (bare-sequence -) (class ?c2) (CASE ?case) (expletive -)
@@ -4106,13 +4173,13 @@
 
 
     ((NPSEQ  (SEM  ?sem) (LF ?newlf) (AGR 3s) (CASE ?case) (mass ?m) (class ?class)
-      (generated ?gen) (time-conevn1-from-rted ?tc1) (separator (? p w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash))
+      (generated ?gen) (time-conevn1-from-rted ?tc1) (separator (? p w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash  w::punc-minus))
       )
      npseq-add-next> 1.02 
      (head (NPSEQ  (SEM ?s1) (LF ?lf) (MASS ?m) (class ?c1) (CASE ?case)
-	    (generated ?gen1) (time-converted ?tc1) (separator (? p w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash))
+	    (generated ?gen1) (time-converted ?tc1) (separator (? p w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash  w::punc-minus))
 	    )) 
-     (punc  (lex (? p w::punc-slash w::punc-colon  w::punc-minus w::punc-en-dash)))
+     (punc  (lex (? p w::punc-slash w::punc-colon  w::punc-minus w::punc-en-dash  w::punc-minus)))
      (NP (SEM ?s2) (VAR ?v2) (MASS ?m) (COMPLEX -) (simple +)   ;; simple is a bare-NP or name
       (name-mod -) (bare-sequence -) (class ?c2) (CASE ?case) (expletive -)
       (generated ?gen2)  (time-converted ?tc1)) ;; MD 2008/03/06 Introduced restriction that only items with the same time-converted status can combine - i.e. don't mix number notation for times or non-times. 

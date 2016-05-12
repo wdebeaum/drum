@@ -30,10 +30,11 @@
  :words (
   (W::WHERE
    (SENSES
-    ((LF-PARENT ONT::WH-LOCATION)
+    ((LF-PARENT ONT::AT-LOC)  ;; WH-LOCATION)
      (SYNTAX (W::IMPRO-CLASS ONT::LOCATION))
      (TEMPL ppword-question-adv-pred-templ)
      (SEM (F::information F::information-content))
+     (preference .98)  ;; prefer TO-LOC all other things being equal, as it is more restrictive
      )
     ((LF-PARENT ONT::TO-LOC)
      (SYNTAX (W::IMPRO-CLASS ONT::LOCATION))

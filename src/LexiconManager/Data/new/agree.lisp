@@ -30,14 +30,12 @@
 	    (;(LF-parent ont::accept)
 	     (lf-parent ont::accept-agree) ;; 20120523 GUM change new parent
 	     (Example "He agreed with the findings")
-	     (TEMPL AGENT-theme-XP-TEMPL)
-	     (meta-data :origin bee :entry-date 20040607 :change-date 20090508 :comments portability-expt) 
+	     (TEMPL AGENT-neutral-XP-TEMPL (xp (% W::PP (W::ptype (? xx W::to W::on w::with)))))
 	     )
-	    ((LF-parent ont::promise)
+	    #||((LF-parent ont::promise)
 	     (Example "He agreed to the arrangements")
-	     (TEMPL AGENT-THEME-XP-TEMPL(xp (% W::PP (W::ptype W::to))))
-	     (meta-data :origin calo-ontology :entry-date 20060125 :change-date nil :comments meeting-understanding) 
-	     )
-	    ))
-))
+	     (TEMPL AGENT-THEME-XP-TEMPL (xp (% W::PP (W::ptype (? xx W::to W::on )))))
+	     )||#
 
+	    )))
+ )

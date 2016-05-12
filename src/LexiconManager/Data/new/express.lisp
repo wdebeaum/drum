@@ -41,3 +41,27 @@
    )
 )
 
+(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+ :words (
+   (W::express
+    (wordfeats (W::morph (:forms (-vb) :nom (w::gene w::expression))))
+    (SENSES
+     
+     ((meta-data :origin BOB :entry-date 20141212 :change-date nil :comments nil)
+      (LF-PARENT ONT::GENE-EXPRESSION) 
+      (example "the gene expresses the protein")
+      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
+      (TEMPL agent-affected-create-templ)
+      )
+
+     ((meta-data :origin BOB :entry-date 20141212 :change-date nil :comments nil)
+      (LF-PARENT ONT::GENE-EXPRESSION)
+      (example "the gene expresses")
+      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded))
+      (templ affected-templ)
+      )
+     
+     ))   
+   )
+)
+

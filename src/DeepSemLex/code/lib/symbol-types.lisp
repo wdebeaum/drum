@@ -59,9 +59,11 @@
     number
     numerical-form	; numercal-both numerical-comp
     operator	; one-of
+    particle
     pointer
     pos		; (see deftype pos)
     poss
+    prefix
     pro		; + indef recip
     ptype	; (prepositions)
 ;    qcomp	; (constits (blech))

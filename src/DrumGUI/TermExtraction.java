@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.35 2016/05/05 21:42:44 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.36 2016/05/12 04:02:38 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -36,6 +36,8 @@ public class TermExtraction extends Extraction {
         SPEC(":SPEC"),
         // :PRO context-term-id --> ID for event describing modifier
         PRO(":PRO"),
+        // :BASE id --> an assoc-with for compositional terms, eg, "the Erk gene"
+        BASE(":BASE"),
         // :M-SEQUENCE context-term-id --> sequence of term IDs
         MSEQ(":M-SEQUENCE"),
         // :LOGICALOP-SEQUENCE context-term-id --> sequence of term IDs
@@ -420,6 +422,7 @@ public class TermExtraction extends Extraction {
                 + createFeaturesXML()
                 + createNameXML()
                 + createCorefXML()
+                + createBaseXML()
                 + "<text>" + escapeXML(text) + "</text>" +
                 "</" + exType + ">";
     }
@@ -686,6 +689,18 @@ public class TermExtraction extends Extraction {
                     + "/>";
         }
         return result;
+    }
+
+    /**
+     * Returns a {@code <base>} XML element representing the term referred to by this term, or
+     * the empty string if no such information exists.
+     */
+    private String createBaseXML() {
+        KQMLObject baseObj = attributes.get(Attribute.BASE);
+        if (baseObj == null) {
+            return "";
+        }
+        return "<assoc-with id=\"" + removePackage(baseObj.stringValue(), false) + "\" " + "/>";
     }
 
     /**

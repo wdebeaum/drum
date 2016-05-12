@@ -53,7 +53,7 @@
 	;; penalty multiplier for lex entries that do not match POS tags
 	(parser::*bad-tag-multiplier* .9)
 	;; penalty for referential-sem lex items
-	(parser::*referential-sem-penalty* .98)
+	(parser::*referential-sem-penalty* .96)
 	;; constituents that we expect in the skeleton
 	(parser::*skeleton-constit-cats* '(W::NP W::CP W::VP W::ADVBL W::PP W::S))
 	;; boost constituents that match the skeleton (from stat. parser)

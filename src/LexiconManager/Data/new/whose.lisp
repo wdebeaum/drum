@@ -18,6 +18,7 @@
    )
 ))
 
+#|
 (define-words :pos W::pro :boost-word t :templ poss-pro-det-templ
  :tags (:base500)
  :words (
@@ -30,18 +31,20 @@
 	     )
 	    )
 ))
+|#
 
-(define-words :pos W::art :boost-word t
+(define-words :pos W::pro :boost-word t
  :tags (:base500)
  :words (
   (W::WHOSE
-   (wordfeats (W::agr (? agr w::3s W::3p)) (W::mass (? mass W::COUNT W::MASS)))
+   (wordfeats (W::agr (? agr w::3s W::3p)) (W::mass (? mass W::COUNT W::MASS)) (W::WH (? wh W::Q W::R 
+     )))
    (SENSES
     ((LF W::whose)
-     (example "whose dog did you see?" "whose water did you drink?")
-     (non-hierarchy-lf t)(TEMPL wh-qtype-TEMPL)
+     (example "The man whose dog barked; Whose dog is this?")
+     (non-hierarchy-lf t)
+     (templ poss-pro-det-indef-templ) ;(TEMPL wh-qtype-TEMPL)
      )
     )
    )
 ))
-

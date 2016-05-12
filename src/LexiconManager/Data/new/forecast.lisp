@@ -2,7 +2,7 @@
 ;;;; W::forecast
 ;;;;
 
-(define-words :pos W::n :templ COUNT-PRED-TEMPL
+#||(define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
   (W::forecast
    (SENSES
@@ -13,17 +13,17 @@
      )
     )
    )
-))
+))||#
 
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
  (W::forecast
-  (wordfeats (W::morph (:forms (-vb) :past W::forecast)))
+  (wordfeats (W::morph (:forms (-vb) :past W::forecast :nom w::forecast)))
    (SENSES
     ((LF-PARENT ONT::predict)
      (preference .97) ;; prefer noun sense
-     (SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
-   (TEMPL agent-THEME-affected-OPTIONAL-TEMPL (xp2 (% w::pp (w::ptype w::for))))
+     (SEM (F::Time-span F::extended))
+     (TEMPL agent-THEME-affected-OPTIONAL-TEMPL (xp2 (% w::pp (w::ptype w::for))))
      (example "the weatherman forecasts rain [for this zipcode]")
      )
     )

@@ -5,7 +5,7 @@ output_dir=$1
 . ../lisp-env.sh
 
 # run genericized lisp command
-$LISP --dynamic-space-size 4096 \
+$LISP \
   $BATCH \
   $LOAD write-trips-ont-xmls.lisp \
   $EVAL "(run \"$output_dir\")" \

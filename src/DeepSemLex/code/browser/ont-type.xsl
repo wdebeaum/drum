@@ -88,30 +88,21 @@
   <xsl:when test="starts-with(@name,'wn::')">
    <xsl:variable name="sk" select="substring(@name,6,string-length(@name) - 6)" />
    <xsl:variable name="sk2">
-    <xsl:value-of select="$sk" />
     <xsl:variable name="tokens">
      <xsl:call-template name="str:tokenize">
       <xsl:with-param name="string" select="$sk" />
       <xsl:with-param name="delimiters" select="':'" />
      </xsl:call-template>
     </xsl:variable>
-    <xsl:if test="count(exsl:node-set($tokens)/token)=3">
-     <xsl:text>%3A%3A</xsl:text>
-    </xsl:if>
-   </xsl:variable>
-   <xsl:variable name="sk3">
-    <xsl:variable name="tokens">
-     <xsl:call-template name="str:tokenize">
-      <xsl:with-param name="string" select="$sk2" />
-      <xsl:with-param name="delimiters" select="':'" />
-     </xsl:call-template>
-    </xsl:variable>
+    <xsl:variable name="token-count" select="count(exsl:node-set($tokens)/token)" />
     <xsl:for-each select="exsl:node-set($tokens)/token">
      <xsl:if test="position() != 1">%3A</xsl:if>
      <xsl:value-of select="." />
     </xsl:for-each>
+    <xsl:if test="4 > $token-count"><xsl:text>%3A</xsl:text></xsl:if>
+    <xsl:if test="5 > $token-count"><xsl:text>%3A</xsl:text></xsl:if>
    </xsl:variable>
-   <a href="http://trips.ihmc.us/WordNetWeb/get-word-xml.pl?lang=en&amp;search={$sk3}">
+   <a href="http://trips.ihmc.us/WordNetWeb/get-word-xml.pl?lang=en&amp;search={$sk2}">
     <xsl:value-of select="@name" />
    </a>
   </xsl:when>

@@ -248,13 +248,13 @@
 	(LOBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::Affected)
 	(LCOMP (:parameter xp (:default (% w::pp (w::ptype w::from)))) ONT::formal)
 	))
-
+#||
       (agent-RESULT-AFFECTED-XP-TEMPL  ;; we switch these to AGENT as a general role in reduced role set
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
 	(LOBJ (% W::NP) ONT::Result)
 	(LCOMP (:parameter xp (:default (% w::pp (w::ptype w::to)))) ONT::Affected)
-	))
+	))||#
 
       (agent-RESULT-TEMPL
        (ARGUMENTS
@@ -3538,7 +3538,7 @@
   
   (pronoun-wh-templ
    (SYNTAX(W::MASS W::count) (W::status W::WH) (W::case (? case W::sub W::obj -)) (W::PRO W::INDEF) 
-     (W::agr W::3s))
+     (W::agr (? a W::3s W::3p)))
    (ARGUMENTS
     ))
   

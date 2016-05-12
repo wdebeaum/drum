@@ -20,6 +20,7 @@ QUIT="--eval (quit)"
 
 case "$LISP_FLAVOR" in
   sbcl)
+    LISP="$LISP --dynamic-space-size 4096"
     BATCH="--noinform --noprint --disable-debugger"
     QUIT="--eval (sb-ext:quit)"
     ;;

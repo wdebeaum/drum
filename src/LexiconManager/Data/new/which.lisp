@@ -6,7 +6,8 @@
  :tags (:base500)
  :words (
   (W::WHICH
-   (wordfeats (W::sing-lf-only +)  (W::case (? cas W::sub W::obj -)))
+   (wordfeats ;(W::sing-lf-only +) 
+    (W::case (? cas W::sub W::obj -)))
    (SENSES
     ((LF-PARENT ONT::REFERENTIAL-SEM)
      (SYNTAX (W::wh W::R))
