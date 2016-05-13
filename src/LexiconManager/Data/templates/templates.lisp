@@ -3229,7 +3229,7 @@
   (central-adj-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::central) (W::SUBCAT -) (W::ARG ?arg) (W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
     ))
 
    (prefix-adj-templ

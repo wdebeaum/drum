@@ -1850,7 +1850,8 @@
       
    ((v (vform ?vf) 
      (subj ?subj) (subj-map ?subj-map) 
-     (dobj ?!dobj) (dobj-map ?dobj-map)
+;     (dobj ?!dobj) (dobj-map ?dobj-map)
+     (dobj ?dobj) (dobj-map ?dobj-map)
      (iobj ?iobj) (iobj-map ?iobj-map)
      (comp3 ?comp3) (part ?part) (comp3-map ?comp-map)
 ;     (prefix (:MOD (% *PRO* (status F) (class ?qual)
@@ -1865,7 +1866,8 @@
     (word (lex w::punc-minus))
     (head (v (var ?v) (vform ?vf) (lex (? !lx been)) ;; exclude be
 	     (subj ?subj) (subj-map ?subj-map) ;; Please don't remove - this is needed for trips-tflex conversion
-	     (dobj ?!dobj) (dobj-map ?dobj-map) (exclude-passive -)
+;	     (dobj ?!dobj) (dobj-map ?dobj-map) (exclude-passive -)
+	     (dobj ?dobj) (dobj-map ?dobj-map) (exclude-passive -)
 	     (iobj ?iobj) (iobj-map ?iobj-map)
 	     (comp3 ?comp3) (comp3-map ?comp-map)
 	     (part ?part) (restr ?prefix)
@@ -1877,7 +1879,7 @@
 
    ((v (vform ?vf) 
      (subj ?subj) (subj-map ?subj-map) 
-     (dobj ?!dobj) (dobj-map ?dobj-map)
+     (dobj ?dobj) (dobj-map ?dobj-map)
      (iobj ?iobj) (iobj-map ?iobj-map)
      (comp3 ?comp3) (part ?part) (comp3-map ?comp-map)
 ;     (prefix (:MOD (% *PRO* (status F) (class ?qual)
@@ -1891,7 +1893,7 @@
      )
     (head (v (var ?v) (vform ?vf) (lex (? !lx been)) ;; exclude be
 	     (subj ?subj) (subj-map ?subj-map) ;; Please don't remove - this is needed for trips-tflex conversion
-	     (dobj ?!dobj) (dobj-map ?dobj-map) (exclude-passive -)
+	     (dobj ?dobj) (dobj-map ?dobj-map) (exclude-passive -)
 	     (iobj ?iobj) (iobj-map ?iobj-map)
 	     (comp3 ?comp3) (comp3-map ?comp-map)
 	     (part ?part) (restr ?prefix)

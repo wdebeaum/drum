@@ -389,7 +389,7 @@
  '((headfeatures
     ;; (N1 VAR arg AGR MASS CASE SEM Changeagr lex quantity subcat transform)
     (N1 var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)
-    (N var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)  ; this is a copy of N1 so -N1-prefix> would pass on the features
+    (N var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)  ; this is a copy of N1 so -N-prefix> would pass on the features
     (UNITMOD var arg lex headcat transform agr mass case sem quantity subcat argument indef-only)
     (QUAL var arg lex headcat transform ARGUMENT COMPLEX)
     ;; MD 18/04/2008 added SEM as a headfeature to handle "in full" where in subcategorizes for adjp
@@ -417,8 +417,14 @@
 	(comparative ?com)
 	(complex -) ;(complex ?cmpl)
 	(post-subcat -) (gap ?gap)
+	    (dobj ?dobj)
+	    (subj ?subj)
+      	    (comp3 ?comp3)
+	    (subj-map ?subjmap)
+	    (dobj-map ?dobjmap)  
+	    (comp3-map ?comp-map)
      )
-    -N-prefix-hyphen> 1
+    -N-prefix-hyphen> 1.01
     (ADJ (prefix +)
      (LF ?qual) (ARG ?v) (VAR ?adjv) (WH -)
      (argument (% NP (sem ?argsem))) 
@@ -431,13 +437,19 @@
 	      (subcat ?subcat) (complex -) (lf ?lf)
 	      (post-subcat -)
 	      (PRO -) (postadvbl -) ;; to avoid the ambiguity "the [[red truck] at Avon]" "the [red [truck at Avon]]"
+	    (dobj ?dobj)   ; for nominalizations
+	    (subj ?subj)
+      	    (comp3 ?comp3)
+	    (subj-map ?subjmap)
+	    (dobj-map ?dobjmap)  
+	    (comp3-map ?comp-map)
+	      
 	      )
      )
     (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
     (add-to-conjunct (val (:MOD (% *PRO* (status F) (class ?qual)
 				   (var *) (constraint (& (of ?v)))))) (old ?r) (new ?con)))
 
-   ;; special rule for NOUN prefixes that act as adjectives
    ((N (RESTR  ?con)
        (LF ?lf) ;(CLASS ?lf)
        (SORT ?sort) (QUAL +)
@@ -446,8 +458,14 @@
 	(comparative ?com)
 	(complex -) ;(complex ?cmpl)
 	(post-subcat -) (gap ?gap)
+	    (dobj ?dobj)
+	    (subj ?subj)
+      	    (comp3 ?comp3)
+	    (subj-map ?subjmap)
+	    (dobj-map ?dobjmap)  
+	    (comp3-map ?comp-map)
      )
-    -N-prefix> 1
+    -N-prefix> 1.01
     (ADJ (prefix +)
      (LF ?qual) (ARG ?v) (VAR ?adjv) (WH -)
      (argument (% NP (sem ?argsem))) 
@@ -459,6 +477,13 @@
 	      (subcat ?subcat) (complex -) (lf ?lf)
 	      (post-subcat -)
 	      (PRO -) (postadvbl -) ;; to avoid the ambiguity "the [[red truck] at Avon]" "the [red [truck at Avon]]"
+	    (dobj ?dobj)   ; for nominalizations
+	    (subj ?subj)
+      	    (comp3 ?comp3)
+	    (subj-map ?subjmap)
+	    (dobj-map ?dobjmap)  
+	    (comp3-map ?comp-map)
+	      
 	      )
      )
     (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
@@ -2772,7 +2797,7 @@
       (subj-map ?subjmap)
       (dobj-map (? !dmap ONT::NOROLE))
       (comp3-map ?comp-map)
-      (restr (& (?subjmap ?subjvar) ((? !dmap ONT::NOROLE) ?dobjvar)))
+      (restr ?newr)
       
       )
      -n1-nom-with-obj> 1
@@ -2790,7 +2815,10 @@
 	    (dobj-map (? !dmap ONT::NOROLE))  ; this is so "Ras causes the inhibition of MMP-9 activation." won't be able to use this template to assign NOROLE to MMP-9
 	    (comp3-map ?comp-map)
 	    (generated -)
-	    )))
+	    (restr ?r)
+	    ))
+      (add-to-conjunct (val (& (?subjmap ?subjvar) ((? !dmap ONT::NOROLE) ?dobjvar))) (old ?r) (new ?newr))
+      )
     
  ;; and we have explicit nominalizations (current any N of type EVENT-OF-CHANGE)
     ((N1 (SORT PRED)
@@ -2805,7 +2833,7 @@
       (dobj-map ?dmap)
 ;      (dobj-map -)
       (comp3-map ?comp-map)
-      (restr (& (?subjmap ?subjvar)))
+      (restr ?newr)
       
       )
      -n1-nom-without-obj> 1
@@ -2823,7 +2851,10 @@
 ;	    (dobj-map -)
 	    (comp3-map ?comp-map)
 	    (generated -)
-	    )))
+	    (restr ?r)
+	    ))
+      (add-to-conjunct (val (& (?subjmap ?subjvar))) (old ?r) (new ?newr))
+      )
      
 
     ;;  of-PP is typically the DOBJ role   

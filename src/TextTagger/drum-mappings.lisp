@@ -34,6 +34,12 @@
   (inherit ONT::cell))
 
 ;;; Gene Ontology
+(concept GO::0097659 ; nucleic acid-templated transcription
+  (inherit ONT::gene-transcription))
+(concept GO::0006412 ; translation
+  (inherit ONT::gene-translation))
+(concept GO::0010467 ; gene expression
+  (inherit ONT::gene-translation))
 (concept GO::0008150 ; biological process
   (inherit ONT::biological-process))
 (concept GO::0044848 ; biological phase

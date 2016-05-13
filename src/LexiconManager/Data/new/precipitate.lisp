@@ -32,7 +32,7 @@
 (define-words :pos W::v 
  :words (
   (W::precipitate
-   (wordfeats (W::morph (:forms (-vb) :nom w::precipitation)))
+   (wordfeats (W::morph (:forms (-vb) :nom w::precipitation :nomsubjpreps (w::of) :nomobjpreps (w::with))))
    (SENSES
     (
      (LF-PARENT ONT::parts-removed)
