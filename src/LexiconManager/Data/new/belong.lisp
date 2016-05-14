@@ -14,7 +14,7 @@
 
     (
      (EXAMPLE "this belongs to me")
-     (LF-PARENT ONT::possession)
+     (LF-PARENT ONT::possess)
      (TEMPL neutral1-neutral-TEMPL (xp (% W::PP (W::ptype W::to))))  ;; note neutral roles in opposite order to match "I own this"
      )
 

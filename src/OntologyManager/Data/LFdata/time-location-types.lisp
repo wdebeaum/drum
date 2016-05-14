@@ -17,14 +17,14 @@
  ;; so can abstr-obj: the idea in the document; the name on the envelope; the man at the party
  :arguments ((:ESSENTIAL ONT::OF ((? of F::Phys-obj F::Situation f::abstr-obj)))
 	     (:ESSENTIAL ONT::val ((? val F::Phys-obj F::Situation f::abstr-obj)))
-	     (:ESSENTIAL ONT::FIGURE ((? of F::Phys-obj F::Situation f::abstr-obj)))
-	     (:ESSENTIAL ONT::GROUND ((? val F::Phys-obj F::Situation f::abstr-obj)))
+	     (:ESSENTIAL ONT::FIGURE ((? fig F::Phys-obj F::Situation f::abstr-obj)))
+	     (:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj F::Situation f::abstr-obj)))
              )
  )
 
 (define-type ont::at-scale-value
     :comment "The main predicate for mapping an object to a value on a scale"
-    :parent ont::positional-reln)
+    :parent ont::position-reln)
 
 ; *********************************************
 ;

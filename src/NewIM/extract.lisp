@@ -9,6 +9,7 @@
 (defvar *substitute-types-in-pros* nil)
 
 (defun do-extractions (rec rule-groups)
+  (trace-msg 1 "~%Performing Extractions with ~S" rule-groups)
   (let* ((lfs (if (utt-record-speechactID rec)
 		  (remove-unused-context-with-root (utt-record-speechactID rec) (make-lf-list rec))
 		  (make-lf-list rec)))
@@ -39,9 +40,10 @@
       lf))
 
 (defun continue-extractions (prior-extractions lfs rec rule-groups)
+  (trace-msg 1 "~%Performing Extractions with ~S" rule-groups)
   (let* ((new-lfs (if *substitute-terms-in-extraction* 
 		      (let ((newlfs (replace-lfs-with-terms prior-extractions lfs nil)))
-			(trace-msg 1 "~%Replacing LFS with extracted terms: ~S resulting is ~S" prior-extractions newlfs)
+			(trace-msg 2 "~%Replacing LFS with extracted terms: ~S resulting is ~S" prior-extractions newlfs)
 			newlfs)
 		      lfs))
 	 (extractions (extract-events-from-lfs new-lfs (utt-record-uttnum rec) rule-groups)))

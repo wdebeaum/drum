@@ -92,9 +92,10 @@
 	
 	;; e.g., which, what    -- just like spec-det1> except for adding the wh-var feature
 	((SPEC (SEM ?def) (AGR ?agr) (MASS ?m) (ARG ?arg) (NObareSpec +)  (lex ?lex) (LF ?l)
-	       (RESTR ?newr) (WH ?!wh) (wh-var ?arg))
+	       (RESTR ?newr) (WH ?!wh) (wh-var ?wh-var))
 	 -spec-whdet1>
-	 (head (DET (sem ?def) (AGR ?agr) (WH ?!wh) (MASS ?m) (lex ?lex) (poss -) (RESTR ?R) (LF ?l)))
+	 (head (DET (sem ?def) (AGR ?agr) (WH ?!wh) (wh-var ?wh-var)
+		    (MASS ?m) (lex ?lex) (poss -) (RESTR ?R) (LF ?l)))
 	 (add-to-conjunct (old ?r) (val (PROFORM ?lex)) (new ?newr)))
       
 	;; e.g., the first
@@ -176,10 +177,10 @@
 	 (head (NP (SEM ?sem) (VAR ?v) (sort pp-word))) (^S))
 
 	;; possessives become determiners - we use an intermediate constit POSSESSOR to allow the modifier "own", as in "his own truck"
-	((DET (LF DEFINITE) (AGR ?agr) (ARG ?arg) (mass ?m) (poss ?v) (restr ?r)
+	((DET (LF DEFINITE) (AGR ?agr) (wh-var ?wh-var) (ARG ?arg) (mass ?m) (poss ?v) (restr ?r)
                (NObareSpec +))
 	 -possessor1>
-	 (head (Possessor  (AGR ?agr) (ARG ?arg) (mass ?m) (poss ?v) (restr ?r))))
+	 (head (Possessor  (AGR ?agr)  (wh-var ?wh-var) (ARG ?arg) (mass ?m) (poss ?v) (restr ?r))))
 
 	;;  possessive OWN construction. e.g., his own truck, john's very own house
 	((Possessor  (AGR ?agr) (ARG ?arg) (mass ?m) 
@@ -226,12 +227,23 @@
 	;;   e.g., his book
 	;; Myrosia 2003/11/04 changed NP to PRO. Genitives are covered by possessive1 and possessive2 rules
 	;; so this should only be pronouns
-	((possessor (LF DEFINITE) (AGR ?agr) (ARG ?arg) (MASS ?m)
-	      (RESTR (& (assoc-poss (% *PRO* (VAR ?v) (SEM ?sem)
-				       (STATUS PRO) (class ?lf) (constraint (& (proform ?lex)))))))
+	((possessor (LF DEFINITE) (AGR ?agr) (WH-VAR ?arg) (MASS ?m) (ARG ?arg1)
+	      (RESTR (& (assoc-poss ?arg)))(WH R)
+			 ;;(% *PRO* (VAR ?v) (SEM ?sem)
+			 ;;(STATUS PRO) (class ?lf) (constraint (& (proform ?lex)))))))
 	      (NObareSpec +))	 
+	 -possessive3-whose-rel-clause>
+	 (head (PRO (CASE POSS) (WH R) 
+		    (STATUS PRO-DET) (SEM ?sem) (VAR ?v) (LF ?lf) (lex ?lex) (input ?i))))
+
+	((possessor (LF DEFINITE) (AGR ?agr) (ARG ?arg) (MASS ?m)
+	  (RESTR (& (assoc-poss
+		     (% *PRO* (VAR ?v) (SEM ?sem)
+			(STATUS PRO) (class ?lf) (constraint (& (proform ?lex)))))))
+	  (NObareSpec +) (WH (? wh Q -)) (wh-var ?v))	 
 	 -possessive3>
-	 (head (PRO (CASE POSS) (STATUS PRO-DET) (SEM ?sem) (VAR ?v) (LF ?lf) (lex ?lex) (input ?i))))
+	 (head (PRO (CASE POSS) (WH (? wh Q -))
+		    (STATUS PRO-DET) (SEM ?sem) (VAR ?v) (LF ?lf) (lex ?lex) (input ?i))))
 #||
 	((possessor (LF DEFINITE) (AGR ?agr) (ARG ?arg) (mass ?m)
 	      (POSS (% *PRO* (VAR ?v) (SEM ?sem)(STATUS PRO) (class ?lf) (constraint (& (proform ?lex)))))
@@ -1395,7 +1407,7 @@
     ;; the man whose dog barked
     ((N1 (RESTR ?con)
       (CLASS ?c) (SORT ?sort)
-      (QUAL ?qual) (COMPLEX +) (wh -) (wh-var ?whv)
+      (QUAL ?qual) (COMPLEX +) (wh -) ;;(wh-var ?whv)
       (relc +)  (subcat -) (post-subcat -)
       )
      -n1-rel-whose>
@@ -1404,7 +1416,7 @@
 	    (post-subcat -)
 	    (no-postmodifiers -) ;; exclude "the same path as the battery I saw" and cp attaching to "path"
 	    ))
-     (cp (ctype rel-whose) (VAR ?relv) (wh R) (wh-var ?whv) ;(arg ?v) (argsem ?sem)
+     (cp (ctype rel-whose) (VAR ?relv) (wh R) (wh-var ?v) ;(arg ?v) (argsem ?sem)
       (LF ?lf))
     (add-to-conjunct (val (MODS ?relv)) (old ?r) (new ?con)))
 

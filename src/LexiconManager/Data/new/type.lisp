@@ -16,7 +16,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
  :words (
  (W::type
     (SENSES

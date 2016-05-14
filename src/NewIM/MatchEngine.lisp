@@ -545,7 +545,7 @@
 
 (defun match-lfs-to-rules (lfs lf-index rules)
   (when lfs
-    (trace-msg 1 "Matching LF ~S ... " (car lfs))
+    (trace-msg 2 "Matching LF ~S ... " (car lfs))
     (mapcar #'(lambda (mnode)
 		(mapcar #'(lambda (info)
 			    (let ((bndgs (LF-match (pattern-info-pattern info) (car lfs))))

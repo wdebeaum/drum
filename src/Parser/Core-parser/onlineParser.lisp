@@ -1090,7 +1090,7 @@
 
 (defun replace-term-with-sequence-and-continue (target act preparses root newterms rest)
   (let* ((target-root (find-arg-in-act target :var)))
-    (trace-preparse "~%~%Replacing term ~S with preparsed fragment: ~%~S~%" target newterms)
+    (trace-preparse "~%~%Replacing target ~S with root ~S for preparsed fragment: ~%~S~%" target target-root newterms)
     (insert-preparse1 (replace-arg-in-act act :terms (append rest 
 							     (subst target-root root newterms)))
 		      

@@ -308,6 +308,7 @@
 		  (Do-discourse-reference arg)
 		  ;;(DO-KB-reference arg)
 		  (setf (utt-record-status rec) 'success)
+		  (trace-msg 1 "~%==========================~%STARTING ITERATIVE EXTRACTIONS with sequence ~S" *extraction-sequence*)
 		  (multiple-value-bind
 			(extractions newLFS)
 		      (iterate-extractions rec *extraction-sequence*)
@@ -339,6 +340,7 @@
 
 (defun iterate-extractions (rec seq)
   (when seq
+    (trace-msg 1 "~%Performing Extractions with ~S" (car seq))
     (multiple-value-bind
 	  (extractions lfs)
 	(do-extractions rec (car seq))

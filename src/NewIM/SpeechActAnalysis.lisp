@@ -19,7 +19,7 @@
     (let ((interps (identify-dialog-act (utt-record-speaker rec) (make-lf-list rec) conditionals))
 	   )
     ;; if we succeed we have at least produced some sort of mapping
-      (trace-msg 1 "Mapped to CPSact: ~S" interps)
+      (trace-msg 2 "Mapped to CPSact: ~S" interps)
       (if (null interps)
 	  ;;(setf (utt-record-discourse-acts rec) interps)
 	  (handle-failure index 'mapping-failure channel)

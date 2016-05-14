@@ -28,6 +28,8 @@
      and tries to interpret the input. This also includes processing of conditionals"
   ;; currently we also allow matching down the stack without really accounting for
   ;;   the consequences of this
+  (trace-msg 1 "~%==============================~%  IDENTIFYING INTENDED SPEECH ACT FROM ~% ~S ~%=================================="
+	     lfs)
   (let* ((rules (get-active-interpretation-rules))
 	 (interpretation nil)
 	 (reduced-lfs (cons (car lfs) (remove-unused-context (car lfs) (cdr lfs))))
@@ -38,16 +40,19 @@
 	  (setq rules (cdr rules)))
     ;; add the conditional if its present
     ;;   as per the CPS modificaiton spec, conditional go to either :condition or :relation depending on whether its an action or relation
-    (let ((result
+    (let* ((result
 	   (convert-vars-to-kr-package
 	    (subst (list *me* speaker) '*US*
 		   (subst *me* '*ME*
-			  (subst speaker '*USER* interpretation))))))
-      (if conditional
-	  (mapcar #'(lambda (r)
-		      (insert-conditional r conditional))
-		  result)
-	result)
+			  (subst speaker '*USER* interpretation)))))
+	  (final (if conditional
+		     (mapcar #'(lambda (r)
+				 (insert-conditional r conditional))
+			     result)
+		     result)))
+      (trace-msg 1 "~%==============================~%  INTENDED SPEECH ACT IS~% ~S ~%=================================="
+	     final)
+      final
       )))
 
 (defun insert-conditional (cps-act conditional)
@@ -529,7 +534,7 @@
 
 (defun remove-mod-arg (args modvar)
   (when args
-    (format t "~%args is ~S ~S~%" (car args) (if (consp (cadr args)) (eq (caadr args) modvar)))
+    ;;(format t "~%args is ~S ~S~%" (car args) (if (consp (cadr args)) (eq (caadr args) modvar)))
     (if (and (eq (car args) :mods) (eq (caadr args) modvar))
 	(cddr args)
 	(list* (car args) (cadr args) (remove-mod-arg (cddr args) modvar)))))

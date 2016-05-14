@@ -9,7 +9,7 @@
    (SENSES
     ((LF-PARENT ONT::METHOD)
      (example "how did he do it")
-     (SYNTAX (W::IMPRO-CLASS ONT::method))
+     (SYNTAX (W::IMPRO-CLASS ONT::by-means-of))
      )
     )
    )

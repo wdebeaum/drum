@@ -628,6 +628,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	      ((symbolp compat)
 	       (pushnew def adjusted-def))
 	      ((consp compat)
+	       (print-debug "~%Point 1")
 	       ;; if a list, we have a set of subtypes of the entry in the tagged list, use them instead
 	       (pushnew (car (make-unknown-word-entry w this-pos this-pref nil (gen-id w) (list (car compat)) nil penn-tags (list (car compat)) domain-info)) adjusted-def)))
 	    ;;  not in tagged list, penalize
@@ -738,6 +739,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	(dolist (pos pos-list)
 	  (cond ((and pos (compatible-pos-and-ont-type pos ont-type))
 		 ;; create a new entry with the given pos and sense as long as they are compatible
+		 (print-debug "~%point 2")
 		 (let ((new-entry (car (make-unknown-word-entry w pos .99 nil (gen-id w) (list ont-type) nil penn-tags (list ont-type) domain-info))))
 		   (when new-entry (push new-entry compatible-defs)))
 		 (print-debug "making new sense for ~S as ~S ~S~%" w pos ont-type)
@@ -961,13 +963,17 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	     (print-debug "warning:: creating underspecified entry for domain-tagged multiword ~S~%" w)
 	     (dolist (this-sense-keylist tagged-senses)
 	       (let* ((domain-info (find-arg this-sense-keylist :domain-specific-info))
-		      (score (find-arg this-sense-keylist :score))
+		      (rawscore (find-arg this-sense-keylist :score))
+		      (score (if (and (numberp rawscore) (< rawscore 1)) 
+				 (+ rawscore (/ (- 1 rawscore) 2))
+				 rawscore))  ;; reduce the impact of the Texttagger scores
 		      (penn-tags (util::convert-to-package (find-arg this-sense-keylist :penn-parts-of-speech) :w))
 		      (these-word-categories (merge-pos-info nil penn-tags))
 		      (these-ont-types (find-arg this-sense-keylist :ont-types)))
 		 (dolist (ont-type these-ont-types)
 		   (dolist (cat these-word-categories)
 		     (when (compatible-pos-and-ont-type cat ont-type)
+		       (print-debug "~%point 3")
 		       (setq res (append res (make-unknown-word-entry w cat score NIL (gen-id w) (list ont-type) nil penn-tags these-ont-types domain-info))))
 		     ))
 		 (if (null res) (setq res (append res (make-default-unknown-word-entry w nil penn-tags nil))))
@@ -1108,6 +1114,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
    ;; now get TRIPS senses from the calling function only
    (setq res (or combined-wdef adjusted-wdef final-wf-wdef))
   
+   (print-debug "~%PROCESS-WORD-REQUEST:  RES is ~S" res)
    ;; filter the results according to tagging information: senses or pos
    (cond (;(and (not (find 'w::name (merge-pos-info trips-pos-list penn-tags))) ; no sense filtering on names
 	  (or (not (null ont-sense-tags)) (not (null wn-sense-keys)));)

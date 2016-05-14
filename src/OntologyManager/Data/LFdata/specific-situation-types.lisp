@@ -2417,30 +2417,6 @@
 	      )
   )
 
-; emit
-; 20121022 GUM change : merging with ont::emit-givoff-discharge.
-;(define-type ont::emit
-; :wordnet-sense-keys ("emit%2:32:00" "let_out%2:32:02" "let_loose%2:32:00" "emission%1:04:00" "emanation%1:04:00")
-;  :parent ont::cause-effect
-;  )
-
-;; 20120524 GUM change new type
-;; 20121022 GUM change : merging with ont::emit; moving WN mappings here.
-(define-type ont::emit-giveoff-discharge
-    :wordnet-sense-keys ("emit%2:32:00" "let_out%2:32:02" "let_loose%2:32:00" "emission%1:04:00" "emanation%1:04:00" "emit%2:43:00" "discharge%2:29:00")
-    :parent ont::releasing
-    )
-
-;; sound
-;; 20121022 GUM change parent; this change requires adding an ont::effect role
-(define-type ont::make-sound
-   :wordnet-sense-keys ("utter%2:32:02")
-  ;; :parent ont::emit
-   :parent ont::emit-giveoff-discharge ;; 20121022 GUM change parent; this change requires adding an ont::effect role
-   :arguments ((:OPTIONAL ONT::effect (F::situation))
-	       )
-  )
-
 (define-type ONT::USE
  :wordnet-sense-keys ("use%1:04:01" "habit%1:04:02" "use_of_goods_and_services%1:22:00" "use%1:22:00" "usance%1:22:00" "economic_consumption%1:22:00" "consumption%1:22:00" "use%1:07:02" "use%1:07:00" "role%1:07:00" "purpose%1:07:00" "function%1:07:00" "exercise%1:04:03" "employment%1:04:01" "utilisation%1:04:00" "utilization%1:04:00" "usage%1:04:00" "use%1:04:00" "practical_application%1:04:00" "application%1:04:02" "use%2:41:03" "use%2:41:04" "apply%2:41:01" "practice%2:41:01" "use%2:41:14" "expend%2:34:00" "use%2:34:00" "habituate%2:34:00" "use%2:34:02" "use%2:34:01" "utilize%2:34:00" "utilise%2:34:00" "apply%2:34:00" "employ%2:34:00")
  :parent ONT::CAUSE-effect
@@ -2820,6 +2796,32 @@
 	     (:optional ont::affected (F::PHYS-OBJ (F::type ont::molecular-part)))
 	     )
  )
+
+; emit
+; 20121022 GUM change : merging with ont::emit-givoff-discharge.
+;(define-type ont::emit
+; :wordnet-sense-keys ("emit%2:32:00" "let_out%2:32:02" "let_loose%2:32:00" "emission%1:04:00" "emanation%1:04:00")
+;  :parent ont::cause-effect
+;  )
+
+;; 20120524 GUM change new type
+;; 20121022 GUM change : merging with ont::emit; moving WN mappings here.
+(define-type ont::emit-giveoff-discharge
+    :wordnet-sense-keys ("emit%2:32:00" "let_out%2:32:02" "let_loose%2:32:00" "emission%1:04:00" "emanation%1:04:00" "emit%2:43:00" "discharge%2:29:00")
+;    :parent ont::releasing
+    :parent ONT::CAUSE-MAKE-THINGS
+    )
+
+;; sound
+;; 20121022 GUM change parent; this change requires adding an ont::effect role
+(define-type ont::make-sound
+   :wordnet-sense-keys ("utter%2:32:02")
+  ;; :parent ont::emit
+   :parent ont::emit-giveoff-discharge ;; 20121022 GUM change parent; this change requires adding an ont::effect role
+   :arguments ((:OPTIONAL ONT::effect (F::situation))
+	       )
+  )
+
 
 ;; write a book (about trucks), write your name
 (define-type ONT::write
