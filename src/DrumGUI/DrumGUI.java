@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.62 2016/05/05 21:42:44 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.63 2016/05/14 23:44:01 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -1308,6 +1308,10 @@ public class DrumGUI extends StandardTripsModule {
         // done
         documentDone = true;
         Debug.debug("STATE: Document done; finishing off");
+        // if we used input terms specific to this doc, clear them up
+        if (inputTermsFolder != null) {
+            this.clearTerms();
+        }
         finishCurrentInput();
     }
 
