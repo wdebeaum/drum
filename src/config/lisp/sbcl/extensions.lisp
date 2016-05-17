@@ -79,7 +79,11 @@ the new process."
 It does whatever is appropriate to keep Lisp running (some Lisps
 loop or exit when their restart function completes).
 For CMUCL, this means suspending the current (initial) process."
-  (sleep 999999)
+  (format *trace-output* "~&;; Initial thread sleeping practically forever~%")
+  (finish-output *trace-output*)
+  (sleep 31536000) ; 1 year
+  (format *trace-output* "~&;; Initial thread finished sleeping forever!~%")
+  (finish-output *trace-output*)
 ;  (error "~S not implemented in src/config/lisp/sbcl" :avoid-exiting)
   )
 

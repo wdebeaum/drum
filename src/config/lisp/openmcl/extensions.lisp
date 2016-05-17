@@ -2,7 +2,7 @@
 ;;;; extensions.lisp for config/lisp/openmcl
 ;;;;
 ;;;; George Ferguson, ferguson@cs.rochester.edu, 29 Jul 2002
-;;;; $Id: extensions.lisp,v 1.6 2009/01/21 20:23:57 wdebeaum Exp $
+;;;; $Id: extensions.lisp,v 1.7 2016/05/16 19:26:31 wdebeaum Exp $
 ;;;;
 ;;;; Native threads in OpenMCL 0.14 and later are indicated by the
 ;;;; presence of :OPENMCL-NATIVE-THREADS on *FEATURES*.
@@ -83,6 +83,9 @@ For OpenMCL, this means sleeping for a very, very, very long time."
   ;; OpenMCL loops its restart function
   (format *trace-output* "~&;; Initial thread sleeping practically forever~%")
   (finish-output *trace-output*)
-  (sleep 999999))
+  (sleep 31536000) ; 1 year
+  (format *trace-output* "~&;; Initial thread finished sleeping forever!~%")
+  (finish-output *trace-output*)
+  )
 
 ) ;; End warn-if-redfine block

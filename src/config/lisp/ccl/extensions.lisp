@@ -76,6 +76,9 @@ For ccl, this means sleeping for a very, very, very long time."
   ;; CCL loops its restart function (is that still true? -gf)
   (format *trace-output* "~&;; Initial thread sleeping practically forever~%")
   (finish-output *trace-output*)
-  (sleep 999999))
+  (sleep 31536000) ; 1 year
+  (format *trace-output* "~&;; Initial thread finished sleeping forever!~%")
+  (finish-output *trace-output*)
+  )
 
 ) ;; End warn-if-redfine block
