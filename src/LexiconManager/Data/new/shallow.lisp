@@ -13,7 +13,7 @@
      (example "a shallow ditch")
      )
     ((meta-data :origin cardiac :entry-date 20090130 :change-date 20090731 :comments nil)
-     (LF-PARENT ONT::intense)
+     (LF-PARENT ONT::weak)
      (TEMPL LESS-ADJ-TEMPL)
      (example "shallow breathing")
      )

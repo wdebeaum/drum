@@ -894,8 +894,9 @@
 								 (not (find-arg (message-content x) :sense-info)))) ;; only removing numbers not tagged with senses
 					    *message-cache* non-subsumed-noms-with-senses)))
     (trace-preparse "~% Revised message cache after sense filtering: ~S" non-subsumed)
-    (mapcar #'refine-type-of-multi-words 
-	    (filter-sequences non-subsumed))))   ;; i removed non-subsumed here as we have problems with prefixed verb that occur in specialist! (e.h., hyperstimulateps has a tagged sense but stimulates does not, so it is removed
+    ;;(mapcar #'refine-type-of-multi-words      ;; disabled this as it lessens the chance of getting a compositional meaning, e.g., "other sources" comes in as a multiword
+	    (filter-sequences non-subsumed)))
+;;)   ;; i removed non-subsumed here as we have problems with prefixed verb that occur in specialist! (e.h., hyperstimulateps has a tagged sense but stimulates does not, so it is removed
 ;;    and my second attempt fails on terms such as "threonine residue 185"
 
 (defun all-numbers (str)
@@ -938,7 +939,7 @@
 					(mapcar #'extract-type-from-lex-entry defs))))
 	      (if (and ont-types 
 		       (om::subtype (car ont-types) (car (message-ont-types msg))))
-		  (replace-pos-and-ont-type msg nil (car ont-types))
+		  (replace-pos-and-ont-type msg nil  (remove-duplicates ont-types))
 		  msg))
 	    msg))))
 
@@ -959,7 +960,7 @@
     msg))
 
 (defun replace-ont-in-sense (sense-info pos-list ont-type)
-  (let ((c (replace-arg sense-info :ont-types (list ont-type))))
+  (let ((c (replace-arg sense-info :ont-types (if (consp ont-type) ont-type (list ont-type)))))
     (if pos-list
 	(replace-arg
 	 (replace-arg c :penn-parts-of-speech '(NNP NNPS))

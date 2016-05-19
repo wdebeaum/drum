@@ -3,19 +3,6 @@
 ;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
- :words (
-;   )
-  ((w::out w::of w::whack)
-   (SENSES
-    ((LF-PARENT ONT::IN-WORKING-ORDER-val)
-     (example "the system is out of whack")
-     (meta-data :origin cardiac :entry-date 20080327 :change-date nil :comments nil)
-     )
-    )
-   )
-))
-
-(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :tags (:base500)
  :words (
   (W::OUT
@@ -34,65 +21,6 @@
      )
     )
    )
-))
-
-(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
- :words (
-   ((w::out w::of w::breath)
-   (senses
-   ((meta-data :origin chf :entry-date 20071227 :change-date nil :comments nil)
-   (lf-parent ont::physical-symptom-val)
-   (templ less-adj-templ)
-   (example "he is out of breath")
-   )))
-))
-
-(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
- :words (
-   ((W::out w::of w::whack)
-   (SENSES
-    ((LF-PARENT ONT::in-working-order-val)
-     (meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
-     )
-    )
-   )
-))
-
-(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
- :words (
-   ((W::out w::of w::kilter)
-   (SENSES
-    ((LF-PARENT ONT::in-working-order-val)
-     (meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
-     )
-    )
-   )
-))
-
-(define-words :pos W::adj
- :words (
-  ((w::out w::of w::kilter)
-  (senses
-   ((LF-PARENT ONT::strange)
-    (TEMPL central-adj-templ)
-    (sem (f::gradability +) (f::intensity ont::med) (f::orientation ont::less))
-    (meta-data :origin cardiac :entry-date 20090129 :change-date 20090804 :wn ("strange%3:00:00") :comments nil)
-    )
-   )
-)
-))
-
-(define-words :pos W::adj
- :words (
-  ((w::out w::of w::whack)
-  (senses
-   ((LF-PARENT ONT::strange)
-    (TEMPL central-adj-templ)
-    (sem (f::gradability +) (f::intensity ont::med) (f::orientation ont::less))
-    (meta-data :origin cardiac :entry-date 20090129 :change-date 20090804 :wn ("strange%3:00:00") :comments nil)
-    )
-   )
-)
 ))
 
 (define-words :pos W::ADV
@@ -146,3 +74,61 @@
    )
 ))
 
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+   ((w::out w::of w::breath)
+   (senses
+   ((meta-data :origin chf :entry-date 20071227 :change-date nil :comments nil)
+   (lf-parent ont::physical-symptom-val)
+   (templ less-adj-templ)
+   (example "he is out of breath")
+   )))
+))
+
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+   ((W::out w::of w::whack)
+   (SENSES
+    ((LF-PARENT ONT::not-in-working-order-val)
+     (meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
+     )
+    )
+   )
+))
+
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+   ((W::out w::of w::kilter)
+   (SENSES
+    ((LF-PARENT ONT::not-in-working-order-val)
+     (meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
+     )
+    )
+   )
+))
+
+(define-words :pos W::adj
+ :words (
+  ((w::out w::of w::kilter)
+  (senses
+   ((LF-PARENT ONT::strange)
+    (TEMPL central-adj-templ)
+    (sem (f::gradability +) (f::intensity ont::med) (f::orientation ont::less))
+    (meta-data :origin cardiac :entry-date 20090129 :change-date 20090804 :wn ("strange%3:00:00") :comments nil)
+    )
+   )
+)
+))
+
+(define-words :pos W::adj
+ :words (
+  ((w::out w::of w::whack)
+  (senses
+   ((LF-PARENT ONT::strange)
+    (TEMPL central-adj-templ)
+    (sem (f::gradability +) (f::intensity ont::med) (f::orientation ont::less))
+    (meta-data :origin cardiac :entry-date 20090129 :change-date 20090804 :wn ("strange%3:00:00") :comments nil)
+    )
+   )
+)
+))

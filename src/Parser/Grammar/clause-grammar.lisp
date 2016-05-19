@@ -558,30 +558,8 @@
 	      (advbl-needed -)
 	      (headcat ?hcat) ;; aug-trips
 	   )))
-
-   #|
-   ;; TEST: The man whose dog barked
-   ((CP (ctype rel-whose) (arg ?arg) (argsem ?argsem)
-	(gap -) (lf ?lf) (wh -)
-     ;; (lex ?l) (headcat ?vcomp) ;; non-aug-trips settings
-     (lex ?hlex) (headcat ?hcat) ;; aug-trips
-     )
-    -rel-whose>
-    (NP (sem ?argsem) (agr ?agr) (CASE SUB) (wh -) (var ?arg)
-	(lf (% description (constraint (& (assoc-poss (% *pro* (w::status w::Pro)
-							 (constraint (& (proform w::whose)))		 
-							 )))))) 
-     )
-    (head (vp (subj (% np (var ?arg) (sem ?argsem) (sem ($ ?!type)) (lf ?nplf) )) (agr ?agr) (gap -) ;;(WH -)
-	   (class ?c) (constraint ?con) (vform fin) (tma ?tma)
-	   (sem ?sem) (lf ?lf)
-	   (transform ?transform) (lex ?vlex)
-	   (advbl-needed -)
-	   (headcat ?hcat) ;; aug-trips
-	   )))
-   |#
    
-   ;; TEST: The man whose dog barked
+   ;; TEST: (The man) whose dog barked
    ((CP (ctype rel-whose) ;(arg ?arg) (argsem ?argsem)
 	(gap -) (lf ?lf) (wh R) (wh-var ?whv)
      ;; (lex ?l) (headcat ?vcomp) ;; non-aug-trips settings
@@ -1068,42 +1046,6 @@
     
      ;; VP RULES 
      ;; TEST: He said the dog barked.
-    #|
-    ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar)
-      (var ?v) (class ?c) (gap ?gap) 
-      (constraint (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-		       (LIOBJ ?iobjvar) (LCOMP ?compvar)
-		       (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
-		       (?iobj-map ?iobjvar) (?comp3-map ?compvar)
-                       (mod ?prefix)
-		       ))
-      (tma ?tma)
-      (postadvbl -) (vform ?vf)
-      )
-     -vp1-role> 1  ;;  rule with no indirect object
-     (head (v (aux -) ;; main verbs only
-	    (lf ?c)
-	    (sem ($ f::situation (f::type ont::situation-root)))
-	    (vform ?vf)
-	    (tma ?tma)
-	    ;; (subj (? subj (% ?s1 (var ?subjvar))))
-	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (agr ?subjagr) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
-	    (iobj ?iobj) (iobj (% ?s2  (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))
-	   ;; (iobj (% -))
-	    (part ?part) 
-	    (dobj ?dobj) (dobj (% ?s3 (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap)))	    
-	    ;; we allow a possible gap in the DOBJ NP e.g., "what did he thwart the passage of"
-	    (Comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -)))
-	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
-	    (prefix ?prefix)
-	   ))
-     ?iobj     
-     ?dobj
-     ?part
-     ?comp
-     )
-   |#
-
     ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar)
       (var ?v) (class ?c) (gap ?gap) 
       (constraint ?newc)
@@ -1820,33 +1762,6 @@
     )
 
    ;;  PREFIXES on verbs
-
-   #|
-   ((v (vform ?vf) 
-     (subj ?subj) (subj-map ?subj-map) 
-     (dobj ?!dobj) (dobj-map ?dobj-map)
-     (iobj ?iobj) (iobj-map ?iobj-map)
-     (comp3 ?comp3) (part ?part) (comp3-map ?comp-map)
-;     (prefix (:MOD (% *PRO* (status F) (class ?qual)
-     (prefix (% *PRO* (status F) (class ?qual)
-				   (var ?adv-v) (constraint (& (of ?v)))))
-     )
-    -v-prefix-hyphen> 1.01 
-    (ADV (prefix +)
-;     (LF ?qual) (ARG ?v) (VAR ?adv-v) (WH -)
-     (LF ?qual) (VAR ?adv-v) (WH -)
-     (argument (% S (sem ?argsem))) 
-     )
-    (word (lex w::punc-minus))
-    (head (v (var ?v) (vform ?vf) (lex (? !lx been)) ;; exclude be
-	     (subj ?subj) (subj-map ?subj-map) ;; Please don't remove - this is needed for trips-tflex conversion
-	     (dobj ?!dobj) (dobj-map ?dobj-map) (exclude-passive -)
-	     (iobj ?iobj) (iobj-map ?iobj-map)
-	     (comp3 ?comp3) (comp3-map ?comp-map)
-	     (part ?part)
-	     (passive -)))  ;; we do the prefix first, then the passive
-    )
-   |#
       
    ((v (vform ?vf) 
      (subj ?subj) (subj-map ?subj-map) 

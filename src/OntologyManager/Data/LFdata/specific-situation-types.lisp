@@ -298,7 +298,7 @@
 
 ;; back
 (define-type ONT::move-back
- :wordnet-sense-keys ("back%2:38:01" "back_away%2:32:00" "back_up%2:41:00")
+ :wordnet-sense-keys ("back%2:38:01" "move_back%2:38:00")
  :parent ONT::MOVE
  )
 
@@ -619,7 +619,7 @@
 
 
 (define-type ONT::FOLLOW-PATH
- :wordnet-sense-keys ("follow%2:38:00" "follow%2:38:13" "come_after%2:41:00" "follow%2:42:03")
+ :wordnet-sense-keys ("follow%2:38:00" "come_after%2:41:00" "follow%2:42:03")
  :parent ONT::CO-MOTION
  :sem (F::SITUATION (F::Aspect F::Unbounded) (F::Cause F::Agentive) (F::Trajectory +))
  )
@@ -4343,7 +4343,7 @@
  )
 
 (define-type ONT::ARRIVE
- :wordnet-sense-keys ("come%2:38:04" "get%2:38:00" "arrive%2:38:00" "happen%2:30:01" "materialize%2:30:00" "materialise%2:30:00" "appear%2:41:03" "arrive_at%2:38:00" "come_across%2:31:00")
+ :wordnet-sense-keys ("come%2:38:04" "get%2:38:00" "arrive%2:38:00" "arrive_at%2:38:00")
  :parent ont::event-of-action ;; 20120529 GUM change new parent
  :sem (F::SITUATION (:required (F::Aspect F::Bounded)))
  :arguments ((:ESSENTIAL ONT::location (F::Phys-obj (F::Object-Function (? obf2 F::Place f::representation))))

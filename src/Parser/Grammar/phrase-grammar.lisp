@@ -1386,23 +1386,6 @@
      (LF ?lf))
     (add-to-conjunct (val (MODS (?relv ?advv))) (old ?r) (new ?con)))
 
-   #|
-    ;; the man whose dog barked
-    ((N1 (RESTR ?con)
-      (CLASS ?c) (SORT ?sort)
-      (QUAL ?qual) (COMPLEX +) (wh -) (wh-var -)
-      (relc +)  (subcat -) (post-subcat -)
-      )
-     -n1-rel-whose>
-     (head (N1 (VAR ?v) (RESTR ?r) (SEM ?sem) (CLASS ?c) (SORT ?sort) (QUAL ?qual)
-	    (sem ?argsem)
-	    (post-subcat -)
-	    (no-postmodifiers -) ;; exclude "the same path as the battery I saw" and cp attaching to "path"
-	    ))
-     (cp (ctype rel-whose) (VAR ?relv) ;(arg ?v) (argsem ?sem)
-      (LF ?lf))
-    (add-to-conjunct (val (MODS ?relv)) (old ?r) (new ?con)))
-   |#
 
     ;; the man whose dog barked
     ((N1 (RESTR ?con)
@@ -1435,22 +1418,7 @@
 	 (dobj ?!dobj) (dobj (% np (sem ?sem)))
 	  (LF ?lf)) 
      (add-to-conjunct (val (MODS ?tov)) (old ?r) (new ?con)))
-
-  ; the policy to close the park
-  ((N1 (RESTR ?con) (gap -)
-      (CLASS ?c) (SORT ?sort) (QUAL ?qual) (COMPLEX +)
-      (subcat -) (post-subcat -)
-      )
-     -n1-inf2> .92
-     (head (N1 (VAR ?v) (RESTR ?r) (SEM ?sem) (CLASS ?c) (SORT ?sort) (QUAL ?qual)
-	    (subcat -) (post-subcat -)
-	    (no-postmodifiers -) ;; exclude "the same path as the battery I saw" and cp attaching to "path"
-	    ))
-     (cp (ctype s-to) (VAR ?tov) (gap -) ;(subj ?subj)   (gap (% np (sem ?sem) (var ?v)))
-;	 (dobj ?!dobj) (dobj (% np (sem ?sem)))
-	  (LF ?lf)) 
-     (add-to-conjunct (val (MODS ?tov)) (old ?r) (new ?con)))
-
+  
   ;; e.g., anything else, what else
     ((NP (SORT PRED)
          (VAR ?v) (SEM ?sem) (lex ?hl) (headcat ?hc) (Class ?c) (AGR ?agr) (WH ?wh) (PRO INDEF)(case ?case)
@@ -2022,7 +1990,6 @@
 		(post-subcat -)
 		)))
 
-        #|
         ;;  Bare singular - rare forms/telegraphic speech e.g., status report.
 	;;  Also used for N1 conjunction "the truck and train"
         ((NP (LF (% Description (STATUS BARE) (VAR ?v) (SORT INDIVIDUAL)
@@ -2036,22 +2003,6 @@
 		(AGR 3s) (VAR ?v) (CLASS ?c) (RESTR ?r) 
 		(sem ?sem) (transform ?transform)
 		)))
-	|#
-
-        ;;  Bare singular - rare forms/telegraphic speech e.g., status report.
-	;;  Also used for N1 conjunction "the truck and train"
-        ((NP (LF (% Description (STATUS BARE) (VAR ?v) (SORT INDIVIDUAL)
-	            (CLASS ?c) (CONSTRAINT ?r) (sem ?sem) (transform ?transform)))
-             (SORT PRED) (VAR ?v)
-             (BARE-NP +) (name-or-bare ?nob)
-	     ;(simple +)
-	     )
-         -bare-singular> .98
-         (head (N1 (SORT PRED) (MASS  count) (gerund -) ;(complex -)   ; to allow "competition for water" which has complex +
-		   (name-or-bare ?nob)
-		(AGR 3s) (VAR ?v) (CLASS ?c) (RESTR ?r) 
-		(sem ?sem) (transform ?transform)
-		)))	
 
         ;;  COMMAS
         ;;  e.g., the train ,

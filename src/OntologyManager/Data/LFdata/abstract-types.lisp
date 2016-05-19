@@ -934,11 +934,6 @@
              )
  )
 
-(define-type ONT::IN-WORKING-ORDER-VAL
- :parent ONT::configuration-PROPERTY-VAL
- :sem (F::Abstr-obj (F::gradability -))
- )
-
 (define-type ONT::FALLEN-VAL
  :parent ONT::configuration-PROPERTY-VAL
  :sem (F::Abstr-obj (F::gradability -))
@@ -2690,11 +2685,13 @@
  :wordnet-sense-keys ("voltage%1:19:02" "electromotive_force%1:19:00" "emf%1:19:00")
     :parent ont::phys-measure-domain)
 
+#|
 ;; We have a lot of things pertaining to artifacts only: lamps being lit, switches on and off etc.
 (define-type ont::artifact-property-val
     :parent ont::configuration-property-val
     :arguments ((:required ont::of (f::phys-obj (f::origin f::artifact))))
     )
+|#
 
 (define-type ont::definition
     :parent ont::information-function-object
@@ -3415,14 +3412,14 @@
 (define-type ONT::intense
  :parent ONT::INTENSITY-VAL
  ; Words: (W::HIGH W::LOW W::STRONG W::DEEP W::POWERFUL W::SHARP W::INTENSE W::DULL W::SHALLOW W::POTENT)
-:wordnet-sense-keys ("high%3:00:03" "intense%3:00:00" "shrill%5:00:00" "acute%5:00:00" "powerful%3:00:00" "strong%3:00:00" "low%3:00:02" "low%3:00:01" "deep%3:00:01" "shallow%3:00:01" "high%3:00:02" "intense%3:00:00" "sharp%3:00:04" "potent%5:00:00" "deep%5:00:00" "dull%3:00:04" "strong%5:00:00" "deep%5:00:00")
+:wordnet-sense-keys ("high%3:00:03" "intense%3:00:00" "shrill%5:00:00" "acute%5:00:00" "powerful%3:00:00" "strong%3:00:00" "deep%3:00:01" "high%3:00:02" "intense%3:00:00" "sharp%3:00:04" "potent%5:00:00" "deep%5:00:00" "strong%5:00:00" "deep%5:00:00" "intensive%5:00:00:intense:00")
  ; Antonym: ONT::weak (W::WEAK W::FAINT)
  )
 
 (define-type ONT::weak
  :parent ONT::INTENSITY-VAL
  ; Words: (W::WEAK W::FAINT)
-:wordnet-sense-keys ("weak%3:00:00" "faint%5:00:00" "weak%3:00:00")
+:wordnet-sense-keys ("weak%3:00:00" "faint%5:00:00" "weak%3:00:00" "low%3:00:02" "low%3:00:01" "shallow%3:00:01" "dull%3:00:04")
  ; Antonym: ONT::intense (W::HIGH W::LOW W::STRONG W::DEEP W::POWERFUL W::SHARP W::INTENSE W::DULL W::SHALLOW W::POTENT)
  )
 
@@ -3474,7 +3471,7 @@
 
 (define-type ONT::activity-val
     :comment "predicates relating to whether something is acting as intended for some process"
-  :parent ONT::process-val
+  :parent ONT::property-val
  )
 
 (define-type ONT::active
@@ -3490,6 +3487,12 @@
  :comment "not operating as intended wrt some process"
 :wordnet-sense-keys ("passive%3:00:01" "idle%3:00:00")
  ; Antonym: ONT::active (W::ACTIVE W::BUSY)
+ )
+
+(define-type ONT::NOT-IN-WORKING-ORDER-VAL
+ :parent ONT::inactive
+ :comment "broken/not-operational"
+ :sem (F::Abstr-obj (F::gradability -))
  )
 
 (define-type ONT::dependence-val

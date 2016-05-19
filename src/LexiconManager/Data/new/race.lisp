@@ -2,6 +2,7 @@
 ;;;; W::RACE
 ;;;;
 
+#|
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
    (W::RACE
@@ -12,6 +13,7 @@
     )
    )
 ))
+|#
 
 (define-words :pos W::V :templ agent-affected-xp-templ
  :words (

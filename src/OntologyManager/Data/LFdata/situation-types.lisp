@@ -846,7 +846,7 @@
  )
 
 (define-type ONT::APPEARS-TO-HAVE-PROPERTY
- :wordnet-sense-keys ("sound%2:39:06")
+ :wordnet-sense-keys ("sound%2:39:06" "come_across%2:31:00")
  :parent ONT::HAVE-PROPERTY
  :sem (F::situation (F::Aspect F::stage-level) (F::Time-span F::extended))
  :arguments ((:OPTIONAL ONT::neutral (F::phys-obj (F::origin F::living)))

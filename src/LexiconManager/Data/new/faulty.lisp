@@ -7,7 +7,7 @@
  :words (
 	  (w::faulty
 	   (senses
-	    ((lf-parent ont::in-working-order-val)
+	    ((lf-parent ont::not-in-working-order-val)
 	     (meta-data :origin bee :entry-date 20040608 :change-date nil :wn ("faulty%5:00:00:imperfect:00") :comments portability-experiment)
 	     )
 	    ))

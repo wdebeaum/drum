@@ -52,6 +52,7 @@
 
 
 (define-type ont::occurring
+  :wordnet-sense-keys ("happen%2:30:00")
      :parent ONT::SITUATION-ROOT
      :comment "event occurrence - e.g., an explosion happened"
      :arguments ((:essential ONT::neutral (f::situation (F::aspect F::dynamic))))
