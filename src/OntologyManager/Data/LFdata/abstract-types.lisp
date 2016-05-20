@@ -3480,6 +3480,7 @@
  ; Words: (W::ACTIVE W::BUSY)
  :wordnet-sense-keys ("busy%3:00:00" "active%3:00:03" "active%3:00:06" "busy%5:00:01")
  ; Antonym: ONT::INACTIVE (W::PASSIVE W::IDLE)
+  :arguments ((:required ONT::FIGURE ((? lof f::phys-obj))))
  )
 
 (define-type ONT::INACTIVE

@@ -36,15 +36,15 @@
    )
 ))
 
-(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+(define-words :pos W::adv 
  :words (
   ((W::IN W::A W::HURRY)
    (SENSES
-    ((LF-PARENT ONT::manner)
+    ((LF-PARENT ONT::speedy)
+     (templ pred-s-vp-templ)
      )
     )
-   )
-))
+   )))
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (

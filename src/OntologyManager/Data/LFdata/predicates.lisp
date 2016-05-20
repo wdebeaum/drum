@@ -479,6 +479,6 @@
  
 (define-type ONT::COMPLETELY
   :parent ONT::PREDICATE
-  :arguments ((:ESSENTIAL ONT::OF (F::SITUATION))
+  :arguments ((:ESSENTIAL ONT::OF (F::SITUATION (f::type ont::event-of-change))
 	      )
-  )
+  ))

@@ -16,7 +16,11 @@
      (example "the army attacked the city" "the virus attacked his immune system")
      (TEMPL agent-affected-xp-templ) 
      )
+    ((meta-data :origin cardiac :entry-date 20090121 :change-date 20090506 :comments nil :vn ("judgement-33"))
+     (LF-PARENT ONT::ATTACK)
+     (example "the army attacked" )
+     (TEMPL agent-templ) 
+     )
     )
-   )
-))
+   )))
 

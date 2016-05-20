@@ -964,8 +964,8 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	     (dolist (this-sense-keylist tagged-senses)
 	       (let* ((domain-info (find-arg this-sense-keylist :domain-specific-info))
 		      (rawscore (find-arg this-sense-keylist :score))
-		      (score (if (and (numberp rawscore) (< rawscore 1)) 
-				 (+ rawscore (/ (- 1 rawscore) 2))
+		      (score (if (and (numberp rawscore) (< rawscore .95))
+				 (max (+ rawscore (/ (- 1 rawscore) 1.5)) .95)
 				 rawscore))  ;; reduce the impact of the Texttagger scores
 		      (penn-tags (util::convert-to-package (find-arg this-sense-keylist :penn-parts-of-speech) :w))
 		      (these-word-categories (merge-pos-info nil penn-tags))
