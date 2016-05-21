@@ -878,6 +878,10 @@
              )
  )
 
+;;  this type is constructed by the grammar for dates, times of day, etc.
+(define-type ONT::TIME-LOC
+ :parent ONT::TIME-interval)
+
 (define-type ONT::season
  :parent ONT::time-interval
  )

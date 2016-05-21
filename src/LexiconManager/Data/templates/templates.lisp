@@ -408,7 +408,7 @@
       
       (neutral-DURATION-TEMPL
        (ARGUMENTS
-	(LSUBJ (% W::NP) ont::formal)
+	(LSUBJ (% W::NP) ont::neutral)
 ;	(LOBJ (% W::NP) ONT::DURATION)
 	(LOBJ (% W::NP) ONT::EXTENT)
 	))
