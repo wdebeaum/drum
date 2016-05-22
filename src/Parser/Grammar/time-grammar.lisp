@@ -528,7 +528,7 @@
 		  (sem ?sem)))
      )
 
-     ;; this morning, this year, that week
+     ;; this morning, this year, that week, next week, ...
       ((advbl (sort constraint)
 	    (argument (% S (var ?argvar) (sem ($ f::situation)) ))
 	    (subcatsem ?valsem)  (bare-advbl +)
