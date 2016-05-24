@@ -5,7 +5,7 @@
 
 (define-words :pos W::V :templ agent-affected-xp-templ
  :words (
-   (W::race
+   (W::compete
      (wordfeats (W::morph (:forms (-vb) :nom W::competition)))
    (SENSES
     (

@@ -2797,6 +2797,10 @@ hot_air%1:27:00::
 hot_air%1:10:00:: ; non-compositional sense we're ignoring
 phone_number%1:10:00::
 gene_expression%1:19:00::
+young_woman%1:18:00::
+young_girl%1:18:00::
+young_person%1:18:00::
+old_person%1:18:00::
 ")
 "List of WordNet sense keys for senses we should avoid using."
 )

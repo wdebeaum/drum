@@ -43,7 +43,7 @@
   (trace-msg 1 "~%Performing Extractions with ~S" rule-groups)
   (let* ((new-lfs (if *substitute-terms-in-extraction* 
 		      (let ((newlfs (replace-lfs-with-terms prior-extractions lfs nil)))
-			(trace-msg 2 "~%Replacing LFS with extracted terms: ~S resulting is ~S" prior-extractions newlfs)
+			(trace-msg 1 "~%Replacing LFS with extracted terms: ~S resulting is ~S" prior-extractions newlfs)
 			newlfs)
 		      lfs))
 	 (extractions (extract-events-from-lfs new-lfs (utt-record-uttnum rec) rule-groups)))
