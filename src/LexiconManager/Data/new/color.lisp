@@ -15,7 +15,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
  :tags (:base500)
  :words (
  (W::color
@@ -25,12 +25,13 @@
      (SEM (F::aspect F::bounded) (F::time-span F::atomic))
      (example "color the triangle")
      )
-    ((meta-data :origin fruit-carts :entry-date 20050331 :change-date nil :comments nil)
+    ;; not done with a general result rule
+   #|| ((meta-data :origin fruit-carts :entry-date 20050331 :change-date nil :comments nil)
      (lf-parent ont::coloring)
      (SEM (F::aspect F::bounded) (F::time-span F::atomic))
      (example "color the triangle red")
-     (TEMPL agent-theme-result-optional-templ (xp (% w::ADJP  (w::set-modifier -))))
-     )    
+     (TEMPL agent-affected-result-optional-templ (xp (% w::ADJP  (w::set-modifier -))))
+     )   ||# 
     )
    )
 ))

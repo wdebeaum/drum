@@ -1241,7 +1241,8 @@
              )
  )
 
-;; adjacent, contiguous
+#||
+;; adjacent, contiguous  -- moved to ADJACENT
 (define-type ont::connected-val
  :parent ont::spatial
  :sem (F::abstr-obj (:required)(:default (F::gradability +)))
@@ -1249,7 +1250,7 @@
              (:ESSENTIAL ONT::neutral1)
 ;	     (:OPTIONAL ONT::PROPERTY)
              )
- )
+ )||#
 
 ;; sure, certain, confident
 (define-type ONT::confidence-VAL

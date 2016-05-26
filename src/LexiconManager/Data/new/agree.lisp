@@ -20,7 +20,11 @@
 	     (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
 	     (Example "The results agree that the theory is true.")
 	     (TEMPL neutral-formal-as-comp-templ (xp (% W::cp (W::ctype W::s-finite))))
-	     )	    
+	     )	
+	    ((LF-parent ont::accept-agree)
+	     (Example "They agreed that the theory is true.")
+	     (TEMPL neutral-formal-as-comp-templ (xp (% W::cp (W::ctype W::s-finite))))
+	     )
 	    (;(LF-parent ont::accept)
 	     (lf-parent ont::accept-agree) ;; 20120523 GUM change new parent
 	     (Example "He agreed [with John]")

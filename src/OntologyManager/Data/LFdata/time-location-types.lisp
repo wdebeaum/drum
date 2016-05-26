@@ -13,6 +13,7 @@
 ; a relation between an object (figure) to another object (ground) by a spatial relation, possible abstract
 (define-type ont::position-reln
  :parent ont::abstract-object
+ :comment "Spatial relations that locate one object (the figure) in terms of another object (the ground)"
  ;; situations can be spatially located, e.g. meetings, riots, parties
  ;; so can abstr-obj: the idea in the document; the name on the envelope; the man at the party
  :arguments ((:ESSENTIAL ONT::OF ((? of F::Phys-obj F::Situation f::abstr-obj)))
@@ -170,28 +171,29 @@
   )
 
 ; figure is related by a navigational reln to ground
-(define-type ont::navigational
-  :parent ont::pos-directional-reln
-  )
+(define-type ont::navigational-reln
+    :comment "Figure is related by a cardinal directional reln to ground"
+    :parent ont::pos-directional-reln
+    )
 
 ; north (of), northward
 (define-type ont::north-reln
-  :parent ont::navigational
+  :parent ont::navigational-reln
   )
 
 ; east (of/from), eastward
 (define-type ont::east-reln
-  :parent ont::navigational
+  :parent ont::navigational-reln
   )
 
 ; south (of/from), southward
 (define-type ont::south-reln
-  :parent ont::navigational
+  :parent ont::navigational-reln
   )
 
 ; west (of/from), westward
 (define-type ont::west-reln
-  :parent ont::navigational
+  :parent ont::navigational-reln
   )
 
 ; figure is related by inherent orientation of ground
@@ -383,10 +385,10 @@
  :parent ont::city-rel
  )
 
-; home
+#||
 (define-type ont::dwelling
  :parent ont::conventional-position-reln
- )
+ )||#
 
 ; <
 
@@ -614,10 +616,8 @@
 
 (define-type ONT::direction
  :parent ONT::PREDICATE
- :arguments (;(:ESSENTIAL ONT::OF ((? t F::Phys-obj F::Situation) (F::trajectory +)))
-	     ;(:ESSENTIAL ONT::VAL (F::Phys-obj))
-	     (:ESSENTIAL ONT::OF (F::SITUATION (f::type ONT::MOTION) (F::trajectory +)))
-	     (:OPTIONAL ONT::VAL (F::Phys-obj))
+ :arguments ((:ESSENTIAL ONT::OF ((? t F::Phys-obj F::Situation) (F::trajectory +) (f::type (? tt ONT::MOTION ONt::APPLY-FORCE))))
+	     (:ESSENTIAL ONT::VAL (F::Phys-obj))
             )
  )
 

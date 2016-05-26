@@ -514,10 +514,14 @@
              )
  )
 
+(define-type ONT::touch
+    :wordnet-sense-keys ("touch%2:35:00")
+    :parent ONT::event-of-causation
+    )
 
 (define-type ONT::apply-force
  :wordnet-sense-keys ("reflect%2:39:00" "drive%2:35:01")
- :parent ont::event-of-causation
+ :parent ont::touch
  :sem (F::Situation (F::Cause F::Force) )
  :arguments ((:ESSENTIAL ONT::agent)
              )
@@ -596,7 +600,7 @@
 
 ;; poke, prod, ...
 (define-type ONT::Penetrate
- :wordnet-sense-keys ("poke%2:35:01" "stab%2:35:02" "penetrate%2:35:00")
+ :wordnet-sense-keys ( "stab%2:35:02" "penetrate%2:35:00")
  :parent ont::entering
  :arguments ((:REQUIRED ONT::agent ((? ttype f::phys-obj)))
 	     (:ESSENTIAL ONT::affected (F::phys-obj (F::spatial-abstraction (? sa F::spatial-region))

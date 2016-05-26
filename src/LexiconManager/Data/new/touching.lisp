@@ -6,7 +6,7 @@
  :words (
   (W::touching
    (SENSES
-    ((LF-PARENT ont::near-reln)
+    ((LF-PARENT ont::touching)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
       (SYNTAX (W::ALLOW-DELETED-COMP +))
      )

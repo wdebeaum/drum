@@ -26,7 +26,7 @@
  :words (
   (W::flush
    (SENSES
-    ((LF-PARENT ONT::CONNECTED-VAL)
+    ((LF-PARENT ONT::adjacent)
      (meta-data :origin fruitcarts :entry-date 20060215 :change-date nil :wn ("flush%5:00:00:even:01") :comments nil)
      (EXAMPLE "move it so it's flush with the side of the square")
      (TEMPL adj-theme-templ)

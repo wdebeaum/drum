@@ -32,7 +32,7 @@
   (W::NORTH
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("north%3:00:00"))
-     (LF-PARENT ONT::NORTH)
+     (LF-PARENT ONT::NORTH-RELN)
      )
     )
    )

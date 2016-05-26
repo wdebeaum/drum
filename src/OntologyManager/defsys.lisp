@@ -35,7 +35,7 @@
 
 (in-package :ontologymanager)
 
-(defvar *ont-package* (find-package :om))
+(defvar *ont-package* (find-package :ont))
 (defvar *lf-ontology* nil)
 (defvar *kr-ontology* nil)
 

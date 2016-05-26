@@ -437,13 +437,13 @@
     ;;  resultative construction using adjectives: e.g., wipe the table clean
     ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
-      (advbl-needed -) (complex +) (subjvar ?subjvar)(GAP ?gap)
+      (advbl-needed -) (complex +) (result-present +) (subjvar ?subjvar)(GAP ?gap)
       )
      -vp-result> .98   ;;  want to prefer explicitly subcategorized attachments
      (head (vp- (VAR ?v) 
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		(DOBJ (% NP (Var ?npvar) (sem ?sem)))
-		(constraint ?con) (tma ?tma)
+		(constraint ?con) (tma ?tma) (result-present -)
 		;;(subjvar ?subjvar)
 		(aux -) (gap ?gap)
 		(ellipsis -)
@@ -461,13 +461,13 @@
       ;;  resultative construction using adverbs: e.g., sweep the dust into the corner
     ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
-      (advbl-needed -) (complex +) (subjvar ?subjvar)(GAP ?gap)
+      (advbl-needed -) (complex +) (result-present +) (subjvar ?subjvar)(GAP ?gap)
       )
      -vp-result-advbl>  
      (head (vp- (VAR ?v) 
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		(DOBJ (% NP (Var ?npvar) (sem ?sem)))
-		(constraint ?con) (tma ?tma)
+		(constraint ?con) (tma ?tma) (result-present -)
 		;;(subjvar ?subjvar)
 		(aux -) (gap ?gap)
 		(ellipsis -)

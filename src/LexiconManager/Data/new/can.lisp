@@ -16,7 +16,7 @@
    )
 ))
 
-(define-words :pos W::v :boost-word t :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :boost-word t 
  :tags (:base500)
  :words (
   (W::can
@@ -34,7 +34,13 @@
      (TEMPL MODAL-AUX-NOCOMP-TEMPL)
      (SYNTAX (W::VFORM W::PRES) (W::changesem +))
      )
-    )
+    ((LF-PARENT ONT::FIRE-DISMISS)
+     (TEMPL agent-affected-xp-templ)
+     )
+    ((LF-PARENT ONT::TRANSFORM-TO-PRESERVE)
+     (TEMPL agent-affected-xp-templ)
+     )
+    
    )
-))
+   )))
 

@@ -103,6 +103,7 @@
 (define-type ONT::GIVING
  :wordnet-sense-keys ("give%2:40:00" "offer%1:10:01" "offering%1:10:01" "give%2:40:03" "allow%2:41:01" "fall%2:40:12" "send_in%2:41:00" "giving%1:04:00" )
  :parent ONT::RELINQUISH
+ :comment "To relinquish control of AFFECTED AFFECTED-RESULT, typically voluntarily and possibly in exchange for something"
  :sem (F::SITUATION (f::cause f::agentive) (F::iobj F::recipient))
  :arguments ((:REQUIRED ONT::affected ((? tc1  F::Phys-obj f::abstr-obj) ))
 	     (:REQUIRED ONT::affected-result ((? tc2  F::Phys-obj f::abstr-obj)))
@@ -110,15 +111,16 @@
              )
  )
 
-(define-type ONT::donate
+(define-type ONT::donate-give
  :wordnet-sense-keys ("donate%2:40:00" "gift%2:40:00" "gift%1:21:00" )
+ :comment "to give without expectation of any payback or return"
  :parent ONT::giving
  )
 
 ;; owe
 (define-type ONT::FUTURE-GIVING
  :wordnet-sense-keys ("bequeath%2:40:00" "will%2:40:00" "leave%2:40:01")
- :parent ONT::donate
+ :parent ONT::donate-give
  )
 
 ;; charge or bill an account, pay for something, spend money for something
@@ -773,7 +775,7 @@
  )
 
 (define-type ONT::PUSH
- :wordnet-sense-keys ("push%2:38:00" "force%2:38:00" "thrust%2:38:00" "thrust%2:42:01")
+ :wordnet-sense-keys ("poke%2:35:01" "push%2:38:00" "force%2:38:00" "thrust%2:38:00" "thrust%2:42:01")
   :parent ONT::apply-force
  )
 
@@ -1517,8 +1519,10 @@
  )
 
 (define-type ONT::evoke-relation
- :parent ONT::affect-experiencer
- )
+    :arguments (
+		(:REQUIRED ONT::affected (F::phys-obj (F::origin f::living) (f::intentional +))))
+    :parent ONT::affect-experiencer
+    )
 
 (define-type ONT::evoke-attention
  :wordnet-sense-keys ("interest%2:37:00")
@@ -2934,9 +2938,9 @@
  :wordnet-sense-keys ("colour_in%2:30:00" "color_in%2:30:00" "colour%2:30:09" "colourize%2:30:03" "colourise%2:30:03" "colorise%2:30:03" "colorize%2:30:03" "color%2:30:00" "seal%2:35:04" "varnish%2:35:00" "discolor%2:30:00" "discolour%2:30:00" "colour%2:30:00" "color%2:30:01")
  :parent ONT::transformation
  :sem (F::SITUATION (F::Aspect F::Dynamic))
- :arguments ((:REQUIRED ONT::Formal)
+ :arguments (
              (:OPTIONAL ONT::Agent)
-             (:OPTIONAL ONT::RESULT (f::abstr-obj (f::scale f::scale)))
+             (:OPTIONAL ONT::RESULT (f::abstr-obj (f::scale f::color-scale)))
              )
  )
 
@@ -3017,7 +3021,7 @@
 
 (define-type ONT::change-format
  :parent ONT::adjust
- :arguments ((:optional ont::affected ((? ff F::PHYS-OBJ F::Abstr-obj F::Situation)  (F::type F::INFORMATION-CONTENT) ))
+ :arguments ((:optional ont::affected ((? ff F::PHYS-OBJ F::Abstr-obj F::Situation)  (F::INFORMATION F::INFORMATION-CONTENT) ))
 	     )
  )
 
@@ -3152,8 +3156,12 @@
 
 (define-type ont::steep
     :parent ont::cooking
+    )
 
-)
+(define-type ont::transform-to-preserve
+    :parent ont::cooking
+    )
+
 ;; grow, thrive, flourish
 (define-type ONT::grow
  :wordnet-sense-keys ("grow%2:30:02" "bring_up%2:41:00" "cultivate%2:36:00")
@@ -3385,6 +3393,7 @@
 (define-type ONT::INTERSECT
  :wordnet-sense-keys ("cross%2:38:03" "intersect%2:38:00" "meet%2:41:01" "get_together%2:41:01" "hold%2:35:01" "coexist%2:42:00")
  :parent ONT::position
+ :comment "two objects share a common subpart"
  :sem (F::Situation (F::Aspect F::Indiv-level) (F::Cause -))
  :arguments ((:REQUIRED ONT::neutral (F::Phys-obj (F::Spatial-abstraction (? sa1 F::Line F::Strip F::Spatial-region))))
              (:REQUIRED ONT::neutral1 (F::Phys-obj (F::Spatial-abstraction (? sa1 F::Line F::Strip F::Spatial-region))
@@ -3420,22 +3429,15 @@
 (define-type ONT::CONNECTED
  :wordnet-sense-keys ("connect%2:42:02" "link%2:42:01" "link_up%2:42:00" "join%2:42:01" "unite%2:42:02" "admit%2:42:00" "afford%2:40:01" "converge%2:42:00" "open%2:42:00")
  :parent ONT::POSITION
+ :comment "two objects are touching in some way"
  :sem (F::Situation (F::Aspect F::Indiv-level) (F::Cause -))
  :arguments ((:optional  ONT::neutral2))
  )
-
-(define-type ONT::touch
-    :wordnet-sense-keys ("touch%2:35:00")
-    :parent ONT::intersect
-    :sem (F::Situation (F::Aspect F::Indiv-level) (F::Cause -))
-    )
 
 (define-type ONT::support
     :parent ONT::POSITION
     :sem (F::Situation (F::Aspect F::Indiv-level) (F::Cause -))
     )
-
-
 
 ;; aim, face, orient, point
 ;; the statue is facing me/east/towards the street
@@ -4090,6 +4092,11 @@
 ;; employ, hire
 (define-type ONT::employ
  :wordnet-sense-keys ("hire%2:41:00" "engage%2:41:01" "employ%2:41:00")
+ :parent ONT::employment
+ )
+
+(define-type ONT::fire-dismiss
+;; :wordnet-sense-keys (" ")
  :parent ONT::employment
  )
 

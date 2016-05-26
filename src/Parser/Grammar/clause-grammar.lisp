@@ -1610,7 +1610,7 @@
     ?comp
     )
 
-
+   
  ;;  TEST: load up the oranges  ;; note: example isobsolete as UP will be compositional!!!
    ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar) (main +)
       (class ?c) (var ?v) 
@@ -1623,8 +1623,8 @@
      (postadvbl -)
      )
     -vp-compositional-particle-role> 1
-    (head (v (aux -)
-	   (lf ?c) (sem ($ f::situation (f::type ont::situation-root)))  (VFORM ?tense-pro)
+    (head (v (aux -) (var ?v)
+	   (lf ?c) (sem ?sem) (sem ($ f::situation (f::type ont::situation-root)))  (VFORM ?tense-pro)
 	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -) )) ;; note double matching required
 	   (iobj (% -))
 	   (part (% -)) ;;(part (% part))
@@ -1633,11 +1633,11 @@
 	   (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	   
 	   ))
-    (advbl (particle +) (var ?adv-v)  (arg ?dobjvar) (ARGUMENT (% S (sem ?sem))) (GAP -))
+    (advbl (particle +) (var ?adv-v)  (arg ?v) (ARGUMENT (% S (sem ?sem))) (GAP -))
     ?dobj
     ?comp
     )
-  
+   
   
    
    ;; PASSIVE TRANSFORMATIONS

@@ -269,7 +269,9 @@
 (defun checksemfeatures (semlist lfontology)
   (dolist (element semlist)
     (when (and (null (get-featval-descr element lfontology)) ;; couldn't find feature
-	       (eq (symbol-package (second element)) *ont-package*))
+	       (if (symbolp (second element))
+		   (not (eq (symbol-package (second element)) *ont-package*))
+		   (not (eq (car (second element)) '?))))
       (Error 
        (make-system-condition 'invalid-sem-spec
 	 :format-control "Invalid Feature value in ~S" 

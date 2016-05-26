@@ -43,7 +43,7 @@
   (trace-msg 1 "~%Performing Extractions with ~S" rule-groups)
   (let* ((new-lfs (if *substitute-terms-in-extraction* 
 		      (let ((newlfs (replace-lfs-with-terms prior-extractions lfs nil)))
-			(trace-msg 1 "~%Replacing LFS with extracted terms: ~S resulting is ~S" prior-extractions newlfs)
+			(trace-msg 1 "~%Replacing LFS with extracted terms: ~S resulting in ~S" prior-extractions newlfs)
 			newlfs)
 		      lfs))
 	 (extractions (extract-events-from-lfs new-lfs (utt-record-uttnum rec) rule-groups)))
@@ -56,7 +56,7 @@
 	 (term-vars (mapcar #'(lambda (x) (second x)) term-list))
 	 (lf-vars (mapcar #'(lambda (x) (second x)) lfs))
 	 (newterm-vars (set-difference term-vars lf-vars))
-	 (newterms (if newterm-vars (remove-if-not #'(lambda (x) (member (car x) newterm-vars)) term-list))))
+	 (newterms (if newterm-vars (remove-if-not #'(lambda (x) (member (second x) newterm-vars)) term-list))))
     (append (replace-lfs-with-terms+ terms lfs output) newterms)))
 
 (defun append-lists (list)

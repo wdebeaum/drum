@@ -32,12 +32,12 @@
   (W::SOUTH
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("south%3:00:00"))
-     (LF-PARENT ONT::SOUTH)
+     (LF-PARENT ONT::SOUTH-RELN)
      )
     )
    )
 ))
-
+ 
 (define-words :pos W::ADV
  :words (
   ((W::SOUTH W::OF)

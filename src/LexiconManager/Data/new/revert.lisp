@@ -10,7 +10,7 @@
      (LF-PARENT ONT::adjust)
      (example "revert the document to the saved version")
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-THEME-RESULT-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? pt W::to)))))
+     (TEMPL AGENT-affected-RESULT-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? pt W::to)))))
      )
     )
    )

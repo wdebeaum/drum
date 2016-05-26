@@ -23,7 +23,7 @@
    (wordfeats (W::MORPH (:FORMS (-ER))))
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("east%3:00:00"))
-     (LF-PARENT ONT::EAST)
+     (LF-PARENT ONT::EAST-reln)
      )
     )
    )
