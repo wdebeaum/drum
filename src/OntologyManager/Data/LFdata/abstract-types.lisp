@@ -111,13 +111,13 @@
 (define-type ONT::More-val
     :parent ONT::domain-property
     :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (F::INTENTIONAL -))
-		       (:default (F::GRADABILITY +) (F::scale F::other-scale)))
+		       (:default (F::GRADABILITY +) (F::scale ?!sc)))
     )
 ;; less, worse
 (define-type ONT::less-val
     :parent ONT::domain-property
     :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (F::INTENTIONAL -))
-		       (:default (F::GRADABILITY +) (F::scale F::other-scale)))
+		       (:default (F::GRADABILITY +) (F::scale ?!sc)))
     )
 
 ;; and for superlatives
@@ -125,7 +125,7 @@
 (define-type ONT::MAX-val
   :parent ONT::domain-property
   :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (F::INTENTIONAL -))
-		      (:default (F::GRADABILITY +) (F::scale F::other-scale)))
+		      (:default (F::GRADABILITY +) (F::scale ?!sc)))
   :arguments ((:REQUIRED ONT::FIGURE)
 	      (:REQUIRED ONT::GROUND)))
 
@@ -133,7 +133,7 @@
 (define-type ONT::MIN-val
   :parent ONT::domain-property
   :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (F::INTENTIONAL -))
-		      (:default (F::GRADABILITY +) (F::scale F::other-scale)))
+		      (:default (F::GRADABILITY +) (F::scale ?!sc)))
   )
 
 ;; for adjective scale values to be translated properly to the akrl, the intensity values (hi, med, lo) need to be defined in the ontology
@@ -1882,7 +1882,7 @@
 (define-type ONT::Color
  :wordnet-sense-keys ("colouring%1:07:00" "coloring%1:07:00" "colour%1:07:00" "color%1:07:00" "color%1:09:01" "colour%1:09:01")
  :parent ONT::physical-discrete-domain
- :arguments ((:REQUIRED ONT::val (F::abstr-obj (F::scale F::other-scale))) ;?? what's this? the car's color of red?
+ :arguments ((:REQUIRED ONT::val (F::abstr-obj (F::scale F::color-scale))) ;?? what's this? the car's color of red?
              )
  )
 

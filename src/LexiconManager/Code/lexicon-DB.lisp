@@ -154,7 +154,7 @@
 		 :lf 'ont::number
 		 :sem `,(make-typed-sem '(F::ABSTR-OBJ (F::INTENTIONAL -)
                           (F::INFORMATION F::DATA) (F::CONTAINER -)
-                          (F::GRADABILITY -) (F::SCALE f::any-scale)
+                          (F::GRADABILITY -) (F::SCALE ?!sc)
                           (F::MEASURE-FUNCTION f::value)))		 
 ;;		 :sem (make-untyped-sem nil)
 		 :boost-word t

@@ -27,7 +27,7 @@
 (define-type ONT::grade-modifier
  :parent ONT::MODIFIER
  :arguments ((:REQUIRED ONT::OF (F::abstr-obj (F::gradability +)))
-	     (:ESSENTIAL ONT::VAL (F::abstr-obj (f::scale f::scale)))
+	     (:ESSENTIAL ONT::VAL (F::abstr-obj (f::scale ?!sc)))
              )
  )
 
@@ -249,7 +249,7 @@
 (define-type ONT::SCALE-RELATION
  :parent ONT::PREDICATE
  :arguments ((:ESSENTIAL ONT::OF ((? s F::Phys-obj F::abstr-obj F::situation)))
-             (:REQUIRED ONT::VAL (F::abstr-obj (f::scale f::scale)))
+             (:REQUIRED ONT::VAL (F::abstr-obj (f::scale ?!sc)))
              )
  )
 
@@ -271,8 +271,8 @@
 (define-type ONT::dimension
  :parent ONT::PREDICATE
  :arguments ((:ESSENTIAL ONT::OF ((? s F::Phys-obj F::situation)))
-             (:REQUIRED ONT::VAL (F::abstr-obj (f::scale f::scale)))
-	     (:OPTIONAL ONT::VAL2 (F::abstr-obj (f::scale f::scale)))
+             (:REQUIRED ONT::VAL (F::abstr-obj (f::scale ?!sc)))
+	     (:OPTIONAL ONT::VAL2 (F::abstr-obj (f::scale ?!sc2)))
              )
  )
 

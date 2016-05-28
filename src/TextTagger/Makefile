@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.80 2016/05/03 15:28:38 wdebeaum Exp $
+# $Id: Makefile,v 1.81 2016/05/27 18:16:07 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -301,9 +301,10 @@ drum-dsl/UO/COMPLETE: downloads/unit.obo obo-to-dsl.pl
 	./obo-to-dsl.pl <$<
 	touch $@
 
-drum-dsl: drum-dsl/BTO/COMPLETE drum-dsl/CHEBI/COMPLETE drum-dsl/CO/COMPLETE drum-dsl/EFO/COMPLETE drum-dsl/GO/COMPLETE drum-dsl/SO/COMPLETE drum-dsl/UO/COMPLETE
+drum-dsl: drum-dsl/BTO/COMPLETE drum-dsl/CHEBI/COMPLETE drum-dsl/CO/COMPLETE drum-dsl/EFO/COMPLETE drum-dsl/GO/COMPLETE drum-dsl/UO/COMPLETE
 
 # drum-dsl/MI/COMPLETE
+# drum-dsl/SO/COMPLETE 
 
 clean::
 	rm -rf specialist.tsv drum-terms.tsv obo-terms.tsv hgnc-terms.tsv uniprot-terms.tsv drum-dsl

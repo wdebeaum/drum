@@ -3,18 +3,21 @@
 (define-type ONT::ROOT
  )
 
+#|
 (define-type -
  :parent ONT::ROOT
  )
+|#
 
 (define-type ONT::ANY-SEM
  :parent ONT::ROOT
  )
 
+#|
 (define-type +
  :parent ONT::ANY-SEM
  )
-
+|#
 
 (define-type ONT::referential-sem
  :wordnet-sense-keys ("entity%1:03:00")

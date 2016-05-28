@@ -436,6 +436,7 @@ sub tag_drum_terms {
   # remove extra tags for amino acids
   @terms = grep {
     my $lex = lc($_->{lex});
+    $lex =~ s/s$// if (length($lex) > 6); # depluralize full names
     my $dsi_type = $_->{'domain-specific-info'}{type};
     $dsi_type eq 'amino-acid' or not grep { lc($_) eq $lex } @amino_acids
   } @terms;
@@ -668,13 +669,20 @@ sub tag_protein_sites_and_mutations {
              exists($three_letters_to_aa{$1})) {
       $lftype = 'MOLECULAR-SITE';
       $dsi = aa_site_dsi($1, $2);
+    # 3-letter amino acid abbreviation
     } elsif ($tag->{lex} =~ /^[A-Z][a-z][a-z]$/ and
              exists($three_letters_to_aa{$tag->{lex}})) {
       $lftype = 'AMINO-ACID';
       $dsi = amino_acid_dsi($tag->{lex});
+    # singular amino acid full name
     } elsif (exists($aa_to_aa{lc($tag->{lex})})) {
       $lftype = 'AMINO-ACID';
       $dsi = amino_acid_dsi($tag->{lex});
+    # plural amino acid full name
+    } elsif ($tag->{lex} =~ /s$/i and $` ne '' and
+             exists($aa_to_aa{lc($`)})) {
+      $lftype = 'AMINO-ACID';
+      $dsi = amino_acid_dsi($`);
     # ideally this part would be handled compositionally by the Parser, but
     # that doesn't look like it's happening soon...
     } elsif ($tag->{type} eq 'number' and # this is a number

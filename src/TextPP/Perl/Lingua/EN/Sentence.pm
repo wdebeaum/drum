@@ -64,7 +64,7 @@ This function returns the value of the string used to mark the end of sentence. 
 This function alters the end-of-sentence string used to mark the end of sentences. 
 
 =item set_locale( $new_locale )
-Revceives language locale in the form language.country.character-set
+Receives language locale in the form language.country.character-set
 for example:
 	"fr_CA.ISO8859-1"
 for Canadian French using character set ISO8859-1.
@@ -145,7 +145,9 @@ use Carp qw/cluck/;
 $VERSION = '0.25';
 
 # LC_CTYPE now in locale "French, Canada, codeset ISO 8859-1"
-$LOC=setlocale(LC_CTYPE, "fr_CA.ISO8859-1"); 
+# $LOC=setlocale(LC_CTYPE, "fr_CA.ISO8859-1");
+# <lgalescu> use default for the current environment
+$LOC=setlocale(LC_CTYPE, ""); 
 use locale;
 
 @ISA = qw( Exporter );
