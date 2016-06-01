@@ -39,7 +39,7 @@ for my $obo_file_name (@ARGV) {
     };
     $info->{id} =~ s/^CVCL_/CVCL:/; # Cellosaurus
     if ($obo_file_name =~ /efo.obo$/) { # EFO has lots of extra stuff in other namespaces, so be selective about which ones we take
-      next unless ($info->{id} =~ /^(EFO|UO):/);
+      next unless ($info->{id} =~ /^(EFO|UO|Orphanet):/);
     }
     $id_to_obo_info{$info->{id}} = $info;
     if (exists($stanza{is_a})) {

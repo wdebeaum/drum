@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.81 2016/05/27 18:16:07 wdebeaum Exp $
+# $Id: Makefile,v 1.83 2016/05/31 20:28:45 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -215,7 +215,7 @@ downloads/chebi.obo:
 	$(call download,"ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo")
 
 downloads/cl-basic.obo:
-	$(call download,"https://cell-ontology.googlecode.com/svn/trunk/src/ontology/cl-basic.obo")
+	$(call download-compressed,"https://raw.githubusercontent.com/obophenotype/cell-ontology/master/cl-basic.obo")
 
 downloads/go.obo:
 	$(call download_compressed,"http://purl.obolibrary.org/obo/go.obo")
@@ -230,7 +230,7 @@ downloads/efo.obo:
 	$(call download_sourceforge,"http://sourceforge.net/p/efo/code/HEAD/tree/trunk/src/efoinobo/efo.obo")
 
 downloads/unit.obo:
-	$(call download_compressed,"http://unit-ontology.googlecode.com/svn/trunk/unit.obo")
+	$(call download_compressed,"https://raw.githubusercontent.com/bio-ontology-research-group/unit-ontology/master/unit.obo")
 
 downloads/so-xp.obo:
 	$(call download_sourceforge,"https://sourceforge.net/p/song/svn/HEAD/tree/trunk/so-xp.obo")
@@ -282,7 +282,7 @@ drum-dsl/CO/COMPLETE: downloads/cl-basic.obo obo-to-dsl.pl
 	touch $@
 
 drum-dsl/EFO/COMPLETE: downloads/efo.obo obo-to-dsl.pl
-	./obo-to-dsl.pl EFO <$<
+	./obo-to-dsl.pl EFO Orphanet <$<
 	touch $@
 
 drum-dsl/GO/COMPLETE: downloads/go.obo obo-to-dsl.pl

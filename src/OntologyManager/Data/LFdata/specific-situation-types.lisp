@@ -86,6 +86,7 @@
 
 (define-type ONT::RELINQUISH
  :parent ONT::event-of-causation
+ :comment "An AGENT does something that results in loss of possession or control of the AFFECTED"
  :sem (F::SITUATION)
  :arguments ((:REQUIRED ONT::Agent ((? ag F::Phys-obj f::abstr-obj) (F::intentional +)) (:implements donor))
 	     ;; can relinquish phys-obj as well as power, authority
@@ -158,6 +159,7 @@
 (define-type ONT::surrender
  :wordnet-sense-keys ("concede%2:40:00" "yield%2:40:01" "cede%2:40:01" "grant%2:40:04" "chuck_up_the_sponge%2:33:00" "despair%2:37:00" "relent%2:42:00" "submit%2:33:00" "yield%2:33:00")
   :parent ONT::relinquish
+  :comment " an AGENT relinquishes AFFECTED unwillingly"
   )
 
 (define-type ONT::lose

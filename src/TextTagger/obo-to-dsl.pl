@@ -8,7 +8,7 @@ use FileCache; # so we can open more files than the OS technically lets us
 
 use strict vars;
 
-# a list of symbol pacakges to limit processing to may be specified on the
+# a list of symbol packages to limit processing to may be specified on the
 # command line (this is used for EFO since it has a lot of extra ones)
 my @packages = @ARGV;
 @ARGV = ();
@@ -20,6 +20,7 @@ my %ont_to_prefix_to_file = ();
 sub file_for_id {
   my $id = shift;
   my ($ont, $id_num) = split(/::/, $id);
+  $ont = uc($ont);
   my $prefix = sprintf("%06d", ($id_num / 10));
   unless (exists($ont_to_prefix_to_file{$ont})) {
     system("mkdir -p drum-dsl/$ont");

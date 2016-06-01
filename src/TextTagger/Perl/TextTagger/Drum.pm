@@ -265,7 +265,8 @@ sub tag_drum_terms {
 	$id =~ s/^CL:/CO:/; # can't use CL because that's Common Lisp
 	# turn ID into a real Lisp symbol
 	$id =~ /:/ or die "unpackaged id: $id";
-	$id = lisp_intern($', $`);
+	$id = lisp_intern($', uc($`));
+	print STDERR "interned id=$id\n" if ($debug);
 	if ($id =~ /^GO:/ and
 	    $name =~ / activity$/ and $matched_variant !~ / activity$/i) {
 	  # special case for GO molecular_function terms with "activity" removed
@@ -274,7 +275,7 @@ sub tag_drum_terms {
 		 $match->{'surely-depluralized'}
 		) {
 	  # skip morphed CHEBI and CVCL terms
-	} elsif ($id =~ /^(BTO|CHEBI|CO|EFO|GO|MI|UO|SO):/) { # ontologies with hierarchies
+	} elsif ($id =~ /^(BTO|CHEBI|CO|EFO|GO|MI|UO|SO|ORPHANET):/) { # ontologies with hierarchies
 	  push @{$mapped_id_to_matches_with_status{$id}}, $match_with_status
 	    unless (grep { structurally_equal($_, $match_with_status) }
 			 @{$mapped_id_to_matches_with_status{$id}});

@@ -51,13 +51,28 @@
   (values extractions new-lfs)))
 
 (defun replace-lfs-with-terms (terms lfs output)
-  "Replace LFs with extractions of the same name, and also passes along new extractions that don't correspond to any LF"
-  (let* ((term-list (append-lists terms))
-	 (term-vars (mapcar #'(lambda (x) (second x)) term-list))
-	 (lf-vars (mapcar #'(lambda (x) (second x)) lfs))
-	 (newterm-vars (set-difference term-vars lf-vars))
-	 (newterms (if newterm-vars (remove-if-not #'(lambda (x) (member (second x) newterm-vars)) term-list))))
-    (append (replace-lfs-with-terms+ terms lfs output) newterms)))
+  "Replace LFs with extractions of the same name, and also passes along new extractions that don't correspond to any LF.
+   now also looks for term extensions where the info is added to the existing term"
+  (let ((allterms (append-lists terms)))
+	  (multiple-value-bind (extensionterms term-list)
+	      (split-list #'(lambda (x) (eq (car x) 'ont::term-extend)) allterms)
+	    (let* ((term-vars (mapcar #'(lambda (x) (second x)) term-list))
+		   (lf-vars (mapcar #'(lambda (x) (second x)) lfs))
+		   (unchanged-lf-vars (set-difference lf-vars term-vars))
+		   (unchanged-lfs 
+		    (if unchanged-lf-vars (remove-if-not #'(lambda (x) (member (second x) unchanged-lf-vars))
+							 lfs)))
+		   (extended-lfs (extend-lf-terms unchanged-lfs extensionterms)))
+      (append term-list extended-lfs)))))
+
+(defun extend-lf-terms (lfs extensions)
+  (when lfs
+    (let* ((lf (car lfs))
+	   (var (second lf))
+	   (extension (find-if #'(lambda (x) (eq (second x) var)) extensions)))
+      (cons (append lf (cdddr extension))
+	    (extend-lf-terms (cdr lfs) extensions)))))
+		       
 
 (defun append-lists (list)
   "reduces a list of lists to a list"

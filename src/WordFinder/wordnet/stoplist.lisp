@@ -2801,6 +2801,9 @@ young_woman%1:18:00::
 young_girl%1:18:00::
 young_person%1:18:00::
 old_person%1:18:00::
+for_the_first_time%4:02:00::
+to_it%4:02:00::
+to_that%4:02:00::
 ")
 "List of WordNet sense keys for senses we should avoid using."
 )
