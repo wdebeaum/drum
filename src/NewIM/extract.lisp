@@ -58,12 +58,15 @@
 	      (split-list #'(lambda (x) (eq (car x) 'ont::term-extend)) allterms)
 	    (let* ((term-vars (mapcar #'(lambda (x) (second x)) term-list))
 		   (lf-vars (mapcar #'(lambda (x) (second x)) lfs))
-		   (unchanged-lf-vars (set-difference lf-vars term-vars))
+		   (extend-vars (mapcar #'(lambda (x) (second x)) extensionterms))
+		   (unchanged-lf-vars (set-difference lf-vars term-vars))  ;; the LFS that are not modified
+		   (orphan-extend-vars (set-difference extend-vars lf-vars))
+		   (orphan-extensions (remove-if-not #'(lambda (x) (member (second x) orphan-extend-vars))  extensionterms))
 		   (unchanged-lfs 
 		    (if unchanged-lf-vars (remove-if-not #'(lambda (x) (member (second x) unchanged-lf-vars))
 							 lfs)))
 		   (extended-lfs (extend-lf-terms unchanged-lfs extensionterms)))
-      (append term-list extended-lfs)))))
+      (append term-list extended-lfs (mapcar #'(lambda (x) (cons 'TERM (cdr x))) orphan-extensions))))))
 
 (defun extend-lf-terms (lfs extensions)
   (when lfs
@@ -84,12 +87,12 @@
   "Replaces the LFs with the terms that have the same variable name. Note each term result is a list of new
      extracted formulas, but the variable we are looking for should be the one in the first extract term"
   (if lfs
-    (let* ((first-lf-var (cadr (car lfs)))
+      (let* ((first-lf-var (cadr (car lfs)))
 	  (term-with-same-var (find-if #'(lambda (x) (eq (second (car x)) first-lf-var)) terms)))
       (replace-lfs-with-terms+ terms (cdr lfs) (if term-with-same-var 
 						  (append (expand-with-unused-features term-with-same-var (car lfs)) output)
 						  (cons (car lfs) output))))
-    (reverse output)))
+      (reverse output)))
 
 (defun expand-with-unused-features (term lf)
   "this add any additional features in the LF that were not used in the matching! - how do we do this?"  ;;  FIX ME

@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.83 2016/05/31 20:28:45 wdebeaum Exp $
+# $Id: Makefile,v 1.84 2016/06/01 14:17:20 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -215,7 +215,7 @@ downloads/chebi.obo:
 	$(call download,"ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo")
 
 downloads/cl-basic.obo:
-	$(call download-compressed,"https://raw.githubusercontent.com/obophenotype/cell-ontology/master/cl-basic.obo")
+	$(call download_compressed,"https://raw.githubusercontent.com/obophenotype/cell-ontology/master/cl-basic.obo")
 
 downloads/go.obo:
 	$(call download_compressed,"http://purl.obolibrary.org/obo/go.obo")

@@ -281,13 +281,15 @@
        (Do-discourse-reference arg)
        ;;(DO-KB-reference arg)
        ;; Now we do the series of extractions based on the defined extraction sequence 
-       (iterate-extractions rec *extraction-sequence*)
-       (setf (utt-record-status rec) 'success)
-       (build-and-send-extractions rec) ;; all the extractions are in the utt record 
-       (when *show-lf-graphs*  ;; we are showing the graph for demonstration/debugging
-	 (send-lf-graph (make-lf-list rec)  (utt-record-uttnum rec) (utt-record-input rec))))
-     (if *inputQ* 
-	 (run-IM-manager))) ;; simple DM loops until no more input
+       (multiple-value-bind
+	     (extractions newlfs)
+	   (iterate-extractions rec *extraction-sequence*)
+	 (setf (utt-record-status rec) 'success)
+	 (build-and-send-extractions-from-lfs newlfs rec)
+	 (when *show-lf-graphs*  ;; we are showing the graph for demonstration/debugging
+	   (send-lf-graph (make-lf-list rec)  (utt-record-uttnum rec) (utt-record-input rec))))
+       (if *inputQ* 
+	   (run-IM-manager)))) ;; simple DM loops until no more input
     (utt-end   ;; end of utterance
      (send-msg `(tell :content ,(cons 'end-of-turn (cdr arg)))))
     ))
@@ -390,7 +392,7 @@
 		 (continue-extractions event-extractions newlfs rec *post-extraction-rules*)
 		 )))
        (setf (utt-record-status rec) 'success)
-       (build-and-send-extractions rec) ;; all the extractions are in the utt record 
+       (build-and-send-extractions-from-rec rec) ;; all the extractions are in the utt record 
        (when *show-lf-graphs*  ;; we are showing the graph for demonstration/debugging
 	    (send-lf-graph (make-lf-list rec)  (utt-record-uttnum rec) (utt-record-input rec))))
      (if *inputQ* (run-IM-manager))) ;; simple DM loops until no more input
@@ -398,7 +400,7 @@
       (send-msg `(tell :content ,(cons 'end-of-turn (cdr arg)))))
      ))
 
-(defun build-and-send-extractions (rec)
+(defun build-and-send-extractions-from-rec (rec)
   (if (consp  (utt-record-extractions rec))
       (let* ((context (make-lf-list rec))
 	     (extractions (build-extractions (utt-record-extractions rec)  context))
@@ -413,6 +415,32 @@
 			     :context ,(remove-unused-context e context)
 			     :channel ,(utt-record-channel rec)))))
 		    reduced-exs))
+		     
+      (send-msg
+       `(tell :content (Interpretation-failed :words ,(utt-record-input rec) 
+					      :uttnum ,(utt-record-uttnum rec)
+					      :channel ,(utt-record-channel rec)))
+       )))
+
+(defun build-and-send-extractions-from-lfs (lfs rec)
+  (if (consp lfs)
+      (let* ((context lfs)
+	     (extraction-ids (remove-duplicates (mapcar #'second (append-lists (utt-record-extractions rec)))))
+	     
+	     (extractions (build-extractions (mapcar #'list ;; I add an extra set of parens to be backwards compatible with old format!
+						     (remove-if-not #'(lambda (x) (member (second x) extraction-ids)) lfs))
+					     context)))
+	     ;;(reduced-exs (mapcar #'elim-dups extractions)))
+	(mapcar #'(lambda (e)
+		    (send-msg 
+		     `(tell :content 
+			    (extraction-result 
+			     :value ,e
+			     :words ,(utt-record-input rec)
+			     :uttnum ,(utt-record-uttnum rec)
+			     :context ,(remove-unused-context e context)
+			     :channel ,(utt-record-channel rec)))))
+		    extractions))
 		     
       (send-msg
        `(tell :content (Interpretation-failed :words ,(utt-record-input rec) 

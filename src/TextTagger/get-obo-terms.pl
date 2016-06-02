@@ -38,8 +38,17 @@ for my $obo_file_name (@ARGV) {
       ( exists($stanza{subset}) ? (subsets => $stanza{subset}) : () )
     };
     $info->{id} =~ s/^CVCL_/CVCL:/; # Cellosaurus
-    if ($obo_file_name =~ /efo.obo$/) { # EFO has lots of extra stuff in other namespaces, so be selective about which ones we take
-      next unless ($info->{id} =~ /^(EFO|UO|Orphanet):/);
+    if ($obo_file_name =~ /efo.obo$/) {
+      # EFO has lots of extra stuff in other namespaces, so be selective about
+      # which ones we take
+      next unless ($info->{id} =~ /^(EFO|UO|Orphanet|HP):/);
+      # only take terms from the Human Phenotype Ontology when they're linked
+      # to MeSH and/or DOID; they tend to be diseases (as opposed to normal
+      # conditions)
+      next if ($info->{id} =~ /^HP:/ and not (
+               (grep /^(Me?SH|DOID):/, @{$stanza{xref}}) or
+	       (grep m!^http://www\.ebi\.ac\.uk/efo/(DOID|Me?SH)_definition_citation (DOID|Me?SH):!, @{$stanza{property_value}})
+	      ));
     }
     $id_to_obo_info{$info->{id}} = $info;
     if (exists($stanza{is_a})) {

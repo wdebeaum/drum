@@ -325,6 +325,12 @@ sub tag_drum_terms {
 	  $lftypes = ['CELL-LINE'];
 	} elsif ($id =~ /^FA:/) { # everything's a protein family
 	  $lftypes = ['PROTEIN-FAMILY'];
+	} elsif ($id =~ /^HP:/) { # everything (that we get) is a disease
+	  # NOTE: technically we could use EFO's hierarchy for this, but that
+	  # would put these under "phenotype" which maps to
+	  # ONT::physical-condition, which we think is too general.
+	  # (see bob:#5, #12)
+	  $lftypes = ['MEDICAL-DISORDERS-AND-CONDITIONS'];
 	}
 	if (defined($lftypes)) {
 	  my @old_terms = grep {

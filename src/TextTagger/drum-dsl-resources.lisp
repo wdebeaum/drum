@@ -29,6 +29,7 @@
 (def-obo-resource (EFO experimental-factor-ontology))
 (def-obo-resource (UO units-of-measurement-ontology))
 (def-obo-resource (Orphanet))
+(def-obo-resource (HP human-phenotype))
 ;; these don't have DSL files associated with them because the original
 ;; resources don't define type hierarchies, but we define them anyway in order
 ;; to get the symbol packages defined
