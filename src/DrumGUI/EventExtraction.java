@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.43 2016/04/06 05:13:49 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.44 2016/06/02 16:10:40 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -842,9 +842,15 @@ public class EventExtraction extends Extraction {
         String predType;
         if (contextTerm != null) {
             KQMLList ontInfo = pullCompleteOntInfo(contextTerm);
-            String ontText = removePackage(ontInfo.get(1).toString());
-            predType = ontInfo.get(0).toString();
-            textNorm = " normalization=\"" + escapeXML(ontText) + "\"";
+            if (ontInfo.size() > 1) {
+                // complete context term
+                String ontText = removePackage(ontInfo.get(1).toString());
+                predType = ontInfo.get(0).toString();
+                textNorm = " normalization=\"" + escapeXML(ontText) + "\"";
+            } else {
+                // incomplete context term
+                predType = ontType;
+            }
         } else {
             // when events are inferred rather than read off the LF, we have no context term
             predType = ontType;
