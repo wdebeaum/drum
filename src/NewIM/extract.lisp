@@ -72,7 +72,7 @@
   (when lfs
     (let* ((lf (car lfs))
 	   (var (second lf))
-	   (extension (find-if #'(lambda (x) (eq (second x) var)) extensions)))
+	   (extension (remove-arg-in-act (remove-arg-in-act (find-if #'(lambda (x) (eq (second x) var)) extensions) :start) :end)))
       (cons (append lf (cdddr extension))
 	    (extend-lf-terms (cdr lfs) extensions)))))
 		       
