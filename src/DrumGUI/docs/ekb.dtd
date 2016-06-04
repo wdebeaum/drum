@@ -3,7 +3,7 @@
 <!-- DTD schema for the EKB
 
 Author: Lucian Galescu <lgalescu@ihmc.us> 03/04/2016
-$Id: ekb.dtd,v 1.7 2016/05/06 22:18:18 lgalescu Exp $
+$Id: ekb.dtd,v 1.8 2016/06/04 04:51:19 lgalescu Exp $
 
 When the EKB is used for annotation, textual elements must be present (eg, <input>, <text>, @start, @end, @uttnum, @paragraph). 
 
@@ -132,7 +132,7 @@ Structural definition of the EKB data and metadata.
        'features'?
 @fixme Replace :utnnum with :sentence.
 -->
-<!ELEMENT TERM (type,(mutation|aggregate|components|members)?,(mods?,features?,name?,coref?)?,text?)>
+<!ELEMENT TERM (type,(mutation|aggregate|components|members)?,(mods?,features?,name?,coref?,assoc-with?)?,text?)>
 <!ATTLIST TERM
   id NMTOKEN #REQUIRED
   dbid %dbid; #IMPLIED
@@ -166,7 +166,7 @@ Structural definition of the EKB data and metadata.
   uttnum CDATA #IMPLIED
   paragraph NMTOKEN #IMPLIED
   lisp %lispform; #IMPLIED
-  rule NMTOKEN #IMPLIED>
+  rule CDATA #IMPLIED>
 
 <!-- Epistemic knowledge -->
 <!ELEMENT EPI (type,negation?,polarity?,force?,modality?,arg1?,arg2?,text?)>
@@ -177,7 +177,7 @@ Structural definition of the EKB data and metadata.
   uttnum CDATA #IMPLIED
   paragraph NMTOKEN #IMPLIED
   lisp %lispform; #IMPLIED
-  rule NMTOKEN #IMPLIED>
+  rule CDATA #IMPLIED>
 
 <!-- Modality assertions -->
 <!ELEMENT MODALITY (type,negation?,polarity?,epistemic-modality?,arg1?,arg2?,text?)>
@@ -188,7 +188,7 @@ Structural definition of the EKB data and metadata.
   uttnum CDATA #IMPLIED
   paragraph NMTOKEN #IMPLIED
   lisp %lispform; #IMPLIED
-  rule NMTOKEN #IMPLIED>
+  rule CDATA #IMPLIED>
 
 <!-- 2.4 Sub-elements -->
 
@@ -252,6 +252,17 @@ For protein families, members are identified by cross-references to other resour
 -->
 <!ATTLIST coref
   type NMTOKEN #REQUIRED
+  id NMTOKEN #IMPLIED>
+
+<!-- Assoc-with feature -->
+<!ELEMENT assoc-with EMPTY>
+
+<!-- Assoc-with attributes
+
+@attr id	 for the referenced element.
+@attr type reference type.
+-->
+<!ATTLIST assoc-with
   id NMTOKEN #IMPLIED>
 
 <!-- Assertion or property type.
