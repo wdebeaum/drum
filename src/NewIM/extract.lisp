@@ -52,30 +52,33 @@
 
 (defun replace-lfs-with-terms (terms lfs output)
   "Replace LFs with extractions of the same name, and also passes along new extractions that don't correspond to any LF.
-   now also looks for term extensions where the info is added to the existing term"
-  (let ((allterms (append-lists terms)))
-	  (multiple-value-bind (extensionterms term-list)
-	      (split-list #'(lambda (x) (eq (car x) 'ont::term-extend)) allterms)
-	    (let* ((term-vars (mapcar #'(lambda (x) (second x)) term-list))
-		   (lf-vars (mapcar #'(lambda (x) (second x)) lfs))
-		   (extend-vars (mapcar #'(lambda (x) (second x)) extensionterms))
-		   (unchanged-lf-vars (set-difference lf-vars term-vars))  ;; the LFS that are not modified
-		   (orphan-extend-vars (set-difference extend-vars lf-vars))
-		   (orphan-extensions (remove-if-not #'(lambda (x) (member (second x) orphan-extend-vars))  extensionterms))
-		   (unchanged-lfs 
-		    (if unchanged-lf-vars (remove-if-not #'(lambda (x) (member (second x) unchanged-lf-vars))
-							 lfs)))
-		   (extended-lfs (extend-lf-terms unchanged-lfs extensionterms)))
-      (append term-list extended-lfs (mapcar #'(lambda (x) (cons 'TERM (cdr x))) orphan-extensions))))))
+   When replacing an LF with a term, all roles not specified in the new term are copied from the original LF"
+  (let* ((allterms (append-lists terms))
+	(term-vars (mapcar #'(lambda (x) (second x)) allterms))
+	(lf-vars (mapcar #'(lambda (x) (second x)) lfs))
+	(orphan-term-vars (set-difference term-vars lf-vars))
+	(orphan-terms (remove-if-not #'(lambda (x) (member (second x) orphan-term-vars)) allterms))
+	(extended-lfs (extend-lf-terms lfs allterms)))
+      (append extended-lfs orphan-terms)))
 
 (defun extend-lf-terms (lfs extensions)
   (when lfs
     (let* ((lf (car lfs))
 	   (var (second lf))
-	   (extension (remove-arg-in-act (remove-arg-in-act (find-if #'(lambda (x) (eq (second x) var)) extensions) :start) :end)))
-      (cons (append lf (cdddr extension))
-	    (extend-lf-terms (cdr lfs) extensions)))))
-		       
+	   (extension (find-if #'(lambda (x) (eq (second x) var)) extensions)))
+      (if extension
+	   (let* ((specified-roles (every-other (cdddr extension)))
+		  (carryover-rolevalues (remove-args (cdddr lf) specified-roles)))
+	     (format t "~% combining new ~S with old ~S to get ~S" lf extension carryover-rolevalues)
+	     (cons (append extension carryover-rolevalues)
+		   (extend-lf-terms (cdr lfs) extensions)))
+	   (cons lf
+		 (extend-lf-terms (cdr lfs) extensions))))))
+	
+(defun every-other (ll)
+  "returns every other value in a list"
+  (when ll
+    (cons (car ll) (every-other (cddr ll)))))
 
 (defun append-lists (list)
   "reduces a list of lists to a list"
