@@ -7,7 +7,7 @@
   (W::hotel
    (SENSES
     ((meta-data :origin calo-ontology :entry-date 20060117 :change-date nil :wn ("hotel%1:06:00") :comment caloy3)
-     (LF-PARENT ont::accomodation)
+     (LF-PARENT ont::accommodation)
      )
     )
    )

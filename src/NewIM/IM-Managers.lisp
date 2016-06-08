@@ -220,12 +220,16 @@
        ))
   )
 
+(defvar *roles-to-emit* nil)
+(defvar *roles-to-suppress* nil)
+
 (defun build-and-send-cps-hyps-with-new-lfs (acts lfs rec)
   (if (not (eq acts 'failed))
       (let ((extended-context 
-	     (add-reference-info-in-lfs
-	      (remove-unused-context (car acts) lfs)
-	      )))
+	     (Mapcar #'remove-unwanted-roles
+		     (add-reference-info-in-lfs
+		      (remove-unused-context (car acts) lfs)
+	      ))))
 	(send-msg 
 	 `(tell :content (CPS-act-hyps 
 			  :hyps ,(if (member *output-format* '(LF LF-TERM))
@@ -242,6 +246,22 @@
 					      :channel ,(utt-record-channel rec)))
        ))
   )
+
+(defun remove-unwanted-roles (lf)
+  (list* (car lf) (cadr lf) (caddr lf) (remove-unwanted-role (cdddr lf))))
+
+(defun remove-unwanted-role (role-values)
+  "Removes the roles not desired, either using a explicit list if desired roles (*roles-to-emit*) or
+     suppresses roles (*roles-to-suppress*) if *roles-to-emit* is not specified. Also
+     roles with empty values are removed"
+  (when role-values
+    (if (or (eq (second role-values) '-)
+	    (if *roles-to-emit* 
+		(not (member (car role-values) *roles-to-emit*))
+		(member (car role-values) *roles-to-suppress*)))
+	(remove-unwanted-role (cddr role-values))
+	
+	(list* (car role-values) (cadr role-values) (remove-unwanted-role  (cddr role-values))))))
 
 (defun replace-lfs-if-specified-in-SAprocessing (newlfs rec)
   (when newlfs
@@ -314,7 +334,7 @@
 		  (multiple-value-bind
 			(extractions newLFS)
 		      (iterate-extractions rec *extraction-sequence*)
-		    (if newLFs 
+		    (if newLFS
 			(build-and-send-cps-hyps-with-new-lfs results newLFS rec)
 			(build-and-send-cps-hyps results rec))))
 		(progn
@@ -354,7 +374,7 @@
 	  (new-extractions newlfs)
 	(continue-extractions extractions lfs rec (car seq))
       (continue-extraction-sequence new-extractions newlfs rec (cdr seq)))
-    (values extractions lfs)))
+    (values extractions (replace-lfs-with-terms extractions lfs nil))))
 
 ;;   ExtractIM
 

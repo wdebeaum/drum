@@ -69,7 +69,7 @@
       (if extension
 	   (let* ((specified-roles (every-other (cdddr extension)))
 		  (carryover-rolevalues (remove-args (cdddr lf) specified-roles)))
-	     (format t "~% combining new ~S with old ~S to get ~S" lf extension carryover-rolevalues)
+	     (format t "~% combining old ~S ~%     with new ~S ~%    to get ~S" lf extension  (append extension carryover-rolevalues))
 	     (cons (append extension carryover-rolevalues)
 		   (extend-lf-terms (cdr lfs) extensions)))
 	   (cons lf

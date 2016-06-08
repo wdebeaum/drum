@@ -18,7 +18,7 @@
 (mapcar #'(lambda (x) (add-im-rule x 'drumterms))  ;; sets of rules are tagged so they can be managed independently 
 	'(
 
-;; ** temporarily comment out this rule so it doesn't get used for extracting the :ASSOC in explicit-ref1 **
+;; ** temporarily comment out this rule so it doesn't get used for extracting the :BASE in explicit-ref1 **
 #|	  
 	  ;; robust rule for explicit constructions, e.g., "RasGEF domain", when we want to return the variable (?!name) pointing to RasGEF but modify its type
 	  ;; lower priority than -explicit-ref1, which returns a TERM pointing to ?!obj instead of ?!name
@@ -262,12 +262,16 @@
 	   100
 	   (ONT::TERM ?!obj ?!type
 	    :name ?!w
+	    :BASE ?!name  
 	    :drum ?code    
 	    :rule -explicit-ref1
-	    :BASE ?!name  
 	    )
 	   #|
-	   (ONT::TERM ?!name ?type1   ; this rule has to go first because otherwise for some reason -EXPLICIT-REF1X is fired (to extract the :BASE ?!name  ??)
+	   ; this extraction has to go first because otherwise for some reason -EXPLICIT-REF1X is fired (to extract the :BASE ?!name)
+	   ; but if this extraction goes first, ?!obj is not substituted at the next level.  The second extraction here is just appended and it results in two ?!obj TERMs and duplicate event extractions
+	   ; if we leave out this extraction, the system correctly tries to extract ?!name, but the rule with the largest cover is -EXPLICIT-REF1X
+	   ; so we commented out -EXPLICIT-REF1X temporarily
+	   (ONT::TERM ?!name ?type1   
 	    :name ?!w
 	    :drum ?code    
 	    :rule -explicit-ref1-base
@@ -291,9 +295,9 @@
 	   100
 	   (ONT::TERM ?!obj ?!type1
 	    :name ?!w
+	    :BASE *1
 	    :drum ?code    
 	    :rule -explicit-ref1-rev
-	    :BASE *1
 	    )
 	   (ONT::TERM *1 ?type   ; this rule has to go first because otherwise for some reason -EXPLICIT-REF1X is fired (to extract the :ASSOC ?!name  ??)
 	    :name ?!w

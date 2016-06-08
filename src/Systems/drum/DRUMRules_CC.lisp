@@ -400,8 +400,8 @@
 
 	  ; (DUE-TO is subtype of REASON; both -reason and -reason2 will fire in some cases)
 	  ; The activation of Raf is due to the stimulation of Ras.  
-          ((ONT::EVENT ?ev ?type)
-	   (ONT::F ?!r ONT::DUE-TO :OF ?!ev :VAL ?!rVal)
+          ((ONT::EVENT ?ev ?type)  ; note: all free variables
+	   (ONT::F ?!r ONT::DUE-TO :OF ?ev :VAL ?!rVal)
 	   (ONT::EVENT ?!rVal ?!rValType)
            -reason2>
            100

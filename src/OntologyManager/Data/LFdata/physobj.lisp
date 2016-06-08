@@ -1037,14 +1037,14 @@
     )
 
 ;; hotel, inn, guesthouse
-(define-type ONT::accomodation
+(define-type ONT::accommodation
     :parent ONT::lodging
     :wordnet-sense-keys ("hotel%1:06:00")
     :sem (F::Phys-obj (F::object-function F::Building))
     )
 
 (define-type ONT::bedandbreakfast
-    :parent ONT::accomodation
+    :parent ONT::accommodation
     :wordnet-sense-keys ("boarding_house%1:06:00" "boarding_house%1:06:00")
     )
 

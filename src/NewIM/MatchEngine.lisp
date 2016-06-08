@@ -467,6 +467,7 @@
   rule-id
   bndgs
   cover
+  patterns
   )
  
 (defun construct-rule-match (mnode lfs)
@@ -478,14 +479,20 @@
 		(trace-msg 4 " with bindings ~S" (car res))
 		(let ((reduced-res (remove-if #'null (cadr res))))
 		  (if reduced-res
-;		      (push (make-match-result :output (subst-in (mnode-output mnode) (car res)) :rule-id (mnode-rule-id mnode)
 		      (push (make-match-result :output (substitute-stars (subst-in (mnode-output mnode) (car res))) :rule-id (mnode-rule-id mnode)
-							      :bndgs (car res) :cover reduced-res)
+							      :bndgs (car res) :cover reduced-res :patterns (construct-patterns mnode (car res)))
 			    *rule-matches*)
 		      (trace-msg 1 "~% Rule ~S eliminated as it matched no input" (mnode-rule-id mnode)))))
 	    *complete-bndgs*)
     (values)))
   
+(defun construct-patterns (mnode bndgs)
+  "instantiates the patterns with the successful bindings for use later"
+  (remove-if #'(lambda (y)
+		 (or (null (second y)) (eq (second y) '-)))
+	     (mapcar #'(lambda (x)
+			 (subst-in (pattern-info-pattern x) bndgs))
+		     (mnode-pattern mnode))))
 
 (defun find-bndg-set (patterns test oldbndgs cover lfs)
   "This searches the set of individual binding results for an overall consistent set across all patterns"
