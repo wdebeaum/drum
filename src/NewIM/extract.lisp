@@ -65,15 +65,21 @@
   (when lfs
     (let* ((lf (car lfs))
 	   (var (second lf))
-	   (extension (find-if #'(lambda (x) (eq (second x) var)) extensions)))
-      (if extension
-	   (let* ((specified-roles (every-other (cdddr extension)))
-		  (carryover-rolevalues (remove-args (cdddr lf) specified-roles)))
-	     (format t "~% combining old ~S ~%     with new ~S ~%    to get ~S" lf extension  (append extension carryover-rolevalues))
-	     (cons (append extension carryover-rolevalues)
-		   (extend-lf-terms (cdr lfs) extensions)))
-	   (cons lf
-		 (extend-lf-terms (cdr lfs) extensions))))))
+	   (this-lf-extensions (remove-if-not #'(lambda (x) (eq (second x) var)) extensions)))
+      (cons (install-extensions this-lf-extensions lf lfs)
+	    (extend-lf-terms (cdr lfs) extensions)))))
+
+(defun install-extensions (extensions lf lfs)
+  (if extensions
+      (install-extensions (cdr extensions) (install-extension (car extensions) lf lfs) lfs)
+      lf))
+
+(defun install-extension (extension lf lfs)
+  (let* ((specified-roles (every-other (cdddr extension)))
+	 (carryover-rolevalues (remove-args (cdddr lf) specified-roles)))
+    ;;(format t "~% combining old ~S ~%     with new ~S ~%    to get ~S" lf extension  (append extension carryover-rolevalues))
+    (append extension carryover-rolevalues)))
+    
 	
 (defun every-other (ll)
   "returns every other value in a list"

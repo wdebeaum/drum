@@ -141,11 +141,13 @@
             :rule -via-A
 	    :AGENT ?!ag
             :AFFECTED ?!mVal
+	    :TYPE ONT::CONTROL-MANAGE ; this is invented---there is nothing corresponding to this event in the LF
             )
 	   (ONT::EVENT *2 ONT::MODULATE
 	    :rule -via-B
-	    :AGENT ?!mVAL
+	    :AGENT ?!mVal
 	    :AFFECTED ?!obj
+	    :TYPE ONT::CONTROL-MANAGE ; this is invented---there is nothing corresponding to this event in the LF
 	    )
            (ONT::CC *3 ONT::BY-MEANS-OF
             :rule -via-C
@@ -188,6 +190,7 @@
             :rule -bmo1
 	    :FACTOR ?!bmoVal
             :OUTCOME ?ev
+	    :TYPE ONT::BY-MEANS-OF
             )
 	   (ONT::EVENT ?!bmoVal ?!bmoValType
 	    :rule -bmo1-event
@@ -249,6 +252,7 @@
             :rule -bmo1-cc
 	    :FACTOR ?!bmoVal
             :OUTCOME ?ev
+	    :TYPE ONT::BY-MEANS-OF
             )
 	   (ONT::CC ?!bmoVal ?!bmoValType
 	    :rule -bmo1-cc-event
@@ -295,6 +299,7 @@
             :rule -bmo1b
 	    :FACTOR ?!bmoVal
             :OUTCOME ?ev
+	    :TYPE ONT::BY-MEANS-OF
             )
 	   (ONT::EVENT ?!bmoVal ?!bmoValType
 	    :rule -bmo1b-event
@@ -314,6 +319,7 @@
             :rule -bmo1a
 	    :FACTOR ?!bmoVal
             :OUTCOME ?ev
+	    :TYPE ONT::BY-MEANS-OF
             )
 	   (ONT::EVENT ?!bmoVal ?!bmoValType
 	    :rule -bmo1a-event
@@ -331,6 +337,7 @@
             :rule -bmo2
 	    :FACTOR ?!bmoVal
             :OUTCOME ?ev
+	    :TYPE ONT::BY-MEANS-OF
             )
 	   (ONT::EVENT ?!bmoVal ?!bmoValType
 	    :rule -bmo2-event
@@ -350,6 +357,7 @@
             :rule -bmo3
 	    :FACTOR ?!bmoVal
             :OUTCOME ?ev
+	    :TYPE ONT::BY-MEANS-OF
             )
 	   (ONT::EVENT ?!bmoVal ?!bmoValType
 	    :rule -bmo3-event
@@ -395,6 +403,7 @@
             :rule -reason
 	    :FACTOR ?!rVal
             :OUTCOME ?ev
+	    :TYPE ONT::REASON
             )
           )
 
@@ -409,6 +418,7 @@
             :rule -reason2
 	    :FACTOR ?!rVal
             :OUTCOME ?ev
+	    :TYPE ONT::DUE-TO
             )
           )
 
@@ -426,6 +436,7 @@
             :rule -purpose
 	    :FACTOR ?ev
             :OUTCOME ?!rVal
+	    :TYPE ONT::PURPOSE
             )
 	   )
 	  
@@ -461,6 +472,7 @@
             :rule -therefore
 	    :FACTOR ?ev
             :OUTCOME ?!rVal
+	    :TYPE ONT::THEREFORE
             )
 	   )
 
@@ -477,6 +489,7 @@
             :rule -result
 	    :FACTOR ?!r3
             :OUTCOME ?ev
+	    :TYPE ONT::OUTCOME
             )
 	   )
 
@@ -526,6 +539,7 @@
             :rule -necessary1
 	    :FACTOR ?!ag
             :OUTCOME ?!obj
+	    :TYPE ?type
             )
 	   )
 
@@ -543,6 +557,7 @@
             :rule -necessary2
 	    :FACTOR ?!obj
             :OUTCOME ?!ag
+	    :TYPE ONT::NECESSITY
             )
 	   )
 
@@ -574,6 +589,7 @@
             :rule -necessary3
 	    :FACTOR ?!obj
             :OUTCOME ?!rVal
+	    :TYPE ONT::NECESSITY
             )
 	   )
 	  
@@ -593,6 +609,7 @@
             :rule -sufficent
 	    :FACTOR ?!obj
             :OUTCOME ?!rVal
+	    :TYPE ONT::SUFFICIENCY
             )
 	   )
 	  

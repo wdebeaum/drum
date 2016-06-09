@@ -3,7 +3,7 @@
 <!-- DTD schema for the EKB
 
 Author: Lucian Galescu <lgalescu@ihmc.us> 03/04/2016
-$Id: ekb.dtd,v 1.8 2016/06/04 04:51:19 lgalescu Exp $
+$Id: ekb.dtd,v 1.10 2016/06/09 01:39:54 lgalescu Exp $
 
 When the EKB is used for annotation, textual elements must be present (eg, <input>, <text>, @start, @end, @uttnum, @paragraph). 
 
@@ -29,6 +29,9 @@ ISO 8601, regular or extended.
 @fixme Probably not a good idea to use these; should use URIs instead.
 -->
 <!ENTITY % filepath "CDATA">
+
+<!-- Section types (fixed vocab) -->
+<!ENTITY % sectype "(title|abstract|introduction|background|methods|results|discussion|conclusion)">
 
 <!-- A type in the TRIPS ontology (uses 'ONT::' prefix) -->
 <!ENTITY % onttype "#PCDATA">
@@ -94,7 +97,8 @@ Structural definition of the EKB data and metadata.
 <!ELEMENT paragraph (#PCDATA)>
 <!ATTLIST paragraph
   id NMTOKEN #REQUIRED
-  file %filepath; #REQUIRED>
+  file %filepath; #REQUIRED
+  sec-type %sectype; #IMPLIED>
 
 <!-- Sentences derived from the input documents -->
 <!ELEMENT sentences (sentence)+>
@@ -113,6 +117,7 @@ Structural definition of the EKB data and metadata.
 <!-- Entities
 
 @attr id	A unique identifier.
+@attr refid An identifier (or a list of them, separated by commas) from which this term has been derived.
 @attr dbid	An identifier linking the entity to entities in external
                 ontologies or databases. 
 @attr paragraph	Id of the document this entity was extracted from.
@@ -132,9 +137,10 @@ Structural definition of the EKB data and metadata.
        'features'?
 @fixme Replace :utnnum with :sentence.
 -->
-<!ELEMENT TERM (type,(mutation|aggregate|components|members)?,(mods?,features?,name?,coref?,assoc-with?)?,text?)>
+<!ELEMENT TERM (type|mutation|aggregate|components|members|mods|features|name|coref|assoc-with|text)*>
 <!ATTLIST TERM
   id NMTOKEN #REQUIRED
+  refid %dbid; #IMPLIED
   dbid %dbid; #IMPLIED
   paragraph NMTOKEN #IMPLIED
   uttnum CDATA #IMPLIED
@@ -144,12 +150,13 @@ Structural definition of the EKB data and metadata.
   rule CDATA #IMPLIED>
 
 <!-- Events -->
-<!ELEMENT EVENT (type,negation?,polarity?,force?,modality?,epistemic-modality?,mods?,
-                 aggregate?,
-                 predicate?,arg1?,arg2?,arg3?,
-                 site?,location?,from-location?,to-location?,cell-line?,text?)>
+<!ELEMENT EVENT (type|negation|polarity|force|modality|epistemic-modality|mods|
+                 aggregate|
+                 predicate|arg1|arg2|arg3|arg|
+                 site|location|from-location|to-location|cell-line|text)*>
 <!ATTLIST EVENT
   id NMTOKEN #REQUIRED
+  refid %dbid; #IMPLIED
   start %integer; #IMPLIED
   end %integer; #IMPLIED
   uttnum CDATA #IMPLIED
@@ -158,9 +165,10 @@ Structural definition of the EKB data and metadata.
   rule CDATA #IMPLIED>
 
 <!-- Causal relations -->
-<!ELEMENT CC (type,negation?,polarity?,force?,modality?,epistemic-modality?,arg*,text?)>
+<!ELEMENT CC (type|negation|polarity|force|modality|epistemic-modality|arg|text)*>
 <!ATTLIST CC
   id NMTOKEN #REQUIRED
+  refid %dbid; #IMPLIED
   start %integer; #IMPLIED
   end %integer; #IMPLIED
   uttnum CDATA #IMPLIED
@@ -169,9 +177,10 @@ Structural definition of the EKB data and metadata.
   rule CDATA #IMPLIED>
 
 <!-- Epistemic knowledge -->
-<!ELEMENT EPI (type,negation?,polarity?,force?,modality?,arg1?,arg2?,text?)>
+<!ELEMENT EPI (type|negation|polarity|force|modality|arg1|arg2|ar|text)*>
 <!ATTLIST EPI
   id NMTOKEN #REQUIRED
+  refid %dbid; #IMPLIED
   start %integer; #IMPLIED
   end %integer; #IMPLIED
   uttnum CDATA #IMPLIED
@@ -180,9 +189,10 @@ Structural definition of the EKB data and metadata.
   rule CDATA #IMPLIED>
 
 <!-- Modality assertions -->
-<!ELEMENT MODALITY (type,negation?,polarity?,epistemic-modality?,arg1?,arg2?,text?)>
+<!ELEMENT MODALITY (type|negation|polarity|epistemic-modality|arg1|arg2|arg|text)*>
 <!ATTLIST MODALITY
   id NMTOKEN #REQUIRED
+  refid %dbid; #IMPLIED
   start %integer; #IMPLIED
   end %integer; #IMPLIED
   uttnum CDATA #IMPLIED
@@ -228,43 +238,6 @@ For protein families, members are identified by cross-references to other resour
   dbid %dbid; #IMPLIED
   type NMTOKEN #IMPLIED>
 
-<!-- In-event feature
-
-@fixme The semantics of this is not entirely clear; therefore, it might change
-       in the future.
--->
-<!ELEMENT inevent (event+)>
-<!-- Event reference
-
-@attr id	Id for an event.
--->
-<!ELEMENT event EMPTY>
-<!ATTLIST event
-  id NMTOKEN #REQUIRED>
-
-<!-- Coref feature -->
-<!ELEMENT coref EMPTY>
-
-<!-- Coref attributes
-
-@attr id	 for the referenced element.
-@attr type reference type.
--->
-<!ATTLIST coref
-  type NMTOKEN #REQUIRED
-  id NMTOKEN #IMPLIED>
-
-<!-- Assoc-with feature -->
-<!ELEMENT assoc-with EMPTY>
-
-<!-- Assoc-with attributes
-
-@attr id	 for the referenced element.
-@attr type reference type.
--->
-<!ATTLIST assoc-with
-  id NMTOKEN #IMPLIED>
-
 <!-- Assertion or property type.
 Common to: all entities, predicates, most features, etc.
 Generally, this is an onttype, but in some cases it's a regular string.
@@ -305,7 +278,7 @@ Common to: TERM and EVENT.
 <!ELEMENT value (#PCDATA)>
 
 <!-- Entity features -->
-<!ELEMENT features (active|location|mutation|site|cell-line|inevent)*>
+<!ELEMENT features (active|location|mutation|site|cell-line|inevent|bound-to|not-bound-to|ptm|not-ptm)*>
 
 <!-- Activity feature
 Values can be TRUE or FALSE.
@@ -417,6 +390,46 @@ Note: This is a fixed set.
   start %integer; #REQUIRED
   end %integer; #REQUIRED>
 
+<!-- In-event feature
+
+@fixme The semantics of this is not entirely clear; therefore, it might change
+       in the future.
+-->
+<!ELEMENT inevent (event+)>
+<!-- Event reference
+
+@attr id	 Id for an event.
+-->
+<!ELEMENT event EMPTY>
+<!ATTLIST event
+  id NMTOKEN #REQUIRED>
+
+<!-- Bound-to feature
+-->
+<!ELEMENT bound-to EMPTY>
+<!ATTLIST bound-to
+  id NMTOKEN #REQUIRED>
+
+<!-- Not-bound-to feature
+-->
+<!ELEMENT not-bound-to EMPTY>
+<!ATTLIST not-bound-to
+  id NMTOKEN #REQUIRED>
+
+<!-- Ptm feature
+-->
+<!ELEMENT ptm EMPTY>
+<!ATTLIST ptm
+  type NMTOKEN #REQUIRED
+  id NMTOKEN #REQUIRED>
+
+<!-- Not-ptm feature
+-->
+<!ELEMENT not-ptm EMPTY>
+<!ATTLIST not-ptm
+  type NMTOKEN #REQUIRED
+  id NMTOKEN #REQUIRED>
+
 <!-- Negation
 Common to: EVENT, CC, EPI, and MODALITY.
 -->
@@ -434,6 +447,29 @@ Common to: EVENT and EPI.
 -->
 <!ELEMENT force (%onttype;)>
 
+<!-- Coref feature -->
+<!ELEMENT coref EMPTY>
+
+<!-- Coref attributes
+
+@attr id	 for the referenced element.
+@attr type reference type.
+-->
+<!ATTLIST coref
+  type NMTOKEN #REQUIRED
+  id NMTOKEN #IMPLIED>
+
+<!-- Assoc-with feature -->
+<!ELEMENT assoc-with EMPTY>
+
+<!-- Assoc-with attributes
+
+@attr id	 for the referenced element.
+@attr type reference type.
+-->
+<!ATTLIST assoc-with
+  id NMTOKEN #IMPLIED>
+
 <!-- Modality (for events and some relations) -->
 <!ELEMENT modality (%onttype;)>
 
@@ -446,11 +482,11 @@ Common to: EVENT and EPI.
   id NMTOKEN #REQUIRED>
 
 <!-- Event predicate -->
-<!ELEMENT predicate (type,text)>
+<!ELEMENT predicate (type,text?)>
 <!ATTLIST predicate
-  id NMTOKEN #REQUIRED
-  start %integer; #REQUIRED
-  end %integer; #REQUIRED>
+  id NMTOKEN #IMPLIED
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED>
 
 <!-- Argument for an event or relation
 Note: Arguments are numbered ('arg1', 'arg2', and, occasionally, 'arg3')

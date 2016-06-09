@@ -447,8 +447,11 @@
       (let* ((context lfs)
 	     (extraction-ids (remove-duplicates (mapcar #'second (append-lists (utt-record-extractions rec)))))
 	     
+;	     (extractions (build-extractions (mapcar #'list ;; I add an extra set of parens to be backwards compatible with old format!
+;						     (remove-if-not #'(lambda (x) (member (second x) extraction-ids)) lfs))
+;					     context)))
 	     (extractions (build-extractions (mapcar #'list ;; I add an extra set of parens to be backwards compatible with old format!
-						     (remove-if-not #'(lambda (x) (member (second x) extraction-ids)) lfs))
+						     (mapcar #'remove-unwanted-roles (remove-if-not #'(lambda (x) (member (second x) extraction-ids)) lfs)))
 					     context)))
 	     ;;(reduced-exs (mapcar #'elim-dups extractions)))
 	(mapcar #'(lambda (e)
