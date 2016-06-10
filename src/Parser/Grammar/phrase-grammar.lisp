@@ -92,10 +92,18 @@
 	
 	;; e.g., which, what    -- just like spec-det1> except for adding the wh-var feature
 	((SPEC (SEM ?def) (AGR ?agr) (MASS ?m) (ARG ?arg) (NObareSpec +)  (lex ?lex) (LF ?l)
-	       (RESTR ?newr) (WH ?!wh) (wh-var ?wh-var))
+	       (RESTR ?newr) (WH ?!wh) (wh-var ?arg))
 	 -spec-whdet1>
-	 (head (DET (sem ?def) (AGR ?agr) (WH ?!wh) (wh-var ?wh-var)
+	 (head (DET (sem ?def) (AGR ?agr) (WH ?!wh) 
 		    (MASS ?m) (lex ?lex) (poss -) (RESTR ?R) (LF ?l)))
+	 (add-to-conjunct (old ?r) (val (PROFORM ?lex)) (new ?newr)))
+
+	;; e.g., which, what    -- just like spec-det1> except for adding the wh-var feature
+	((SPEC (SEM ?def) (AGR ?agr) (MASS ?m) (ARG ?arg) (NObareSpec +)  (lex ?lex) (LF ?l)
+	       (RESTR ?newr) (WH ?!wh) (wh-var ?wh-var))
+	 -spec-whdet1-poss>
+	 (head (DET (sem ?def) (AGR ?agr) (WH ?!wh) (wh-var ?wh-var)
+		    (MASS ?m) (lex ?lex) (poss +) (RESTR ?R) (LF ?l)))
 	 (add-to-conjunct (old ?r) (val (PROFORM ?lex)) (new ?newr)))
       
 	;; e.g., the first
@@ -177,7 +185,7 @@
 	 (head (NP (SEM ?sem) (VAR ?v) (sort pp-word))) (^S))
 
 	;; possessives become determiners - we use an intermediate constit POSSESSOR to allow the modifier "own", as in "his own truck"
-	((DET (LF DEFINITE) (AGR ?agr) (wh-var ?wh-var) (ARG ?arg) (mass ?m) (poss ?v) (restr ?r)
+	((DET (LF DEFINITE) (AGR ?agr) (wh-var ?wh-var) (ARG ?arg) (mass ?m) (poss ?v) (restr ?r) (poss +)
                (NObareSpec +))
 	 -possessor1>
 	 (head (Possessor  (AGR ?agr)  (wh-var ?wh-var) (ARG ?arg) (mass ?m) (poss ?v) (restr ?r))))
@@ -1699,10 +1707,10 @@
 		    (sem ?sem)  (transform ?transform)
 		    ))
              (SORT PRED) (VAR ?v) (CASE (? case SUB OBJ))
-	    (wh ?w) (wh-var ?whv);; must move WH feature up by hand here as it is explicitly specified in a daughter
-	     )
+	    (wh ?w) (wh-var ?whv)
+	  )
          -np-indv> 1.0    ;; because determiners are such a closed class, they provide strong evidence for an NP - hence the 1.0 to help with large search spaces
-         (SPEC (LF ?spec) (ARG ?v) (mass ?m) (POSS -)
+         (SPEC (LF ?spec) (ARG ?v) (mass ?m) ;;(POSS -)
 	       (wh ?w) (WH-VAR ?whv)
 	       (agr ?agr) (RESTR ?spec-restr) (NOSIMPLE -))   ;; NOSIMPLE prevents this rule for a few cases
          (head (N1 (VAR ?v) (SORT PRED) (CLASS ?c) (MASS ?m)
