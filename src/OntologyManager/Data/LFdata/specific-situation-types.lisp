@@ -9,17 +9,19 @@
 ;;     plus the causal form "cause to position" - so we overload the roles!
 ;;   E.G., THE CHAIR LEANS AGAINST THE WALL, He leaned the chair against the wall.
 (define-type ONT::position
- :parent ONT::event-of-state
- :sem (F::Situation (F::Trajectory -))
- :arguments ((:optional ONT::NEUTRAL1  ((? pvt1 F::Phys-obj f::abstr-obj)))
-             (:optional ONT::NEUTRAL ((? pvt F::Phys-obj f::abstr-obj)))
-	     (:optional ont::agent ((? agt F::Phys-obj) (F::intentional +)))
-	     (:optional ont::affected ((? aff F::Phys-obj f::abstr-obj)))
-             (:optional ont::affected1 ((? aff1 F::Phys-obj f::abstr-obj)))
-	     )
+    :comment "These are stative predicates indicating the position of an object with respect to another. They also typically allow a causal variant where an agent causes this position (see ONT::CAUSE-POSITION)"
+  :parent ONT::event-of-state
+  :sem (F::Situation (F::Trajectory -))
+  :arguments ((:optional ONT::NEUTRAL1  ((? pvt1 F::Phys-obj f::abstr-obj)))
+	      (:optional ONT::NEUTRAL ((? pvt F::Phys-obj f::abstr-obj)))
+	      (:optional ont::agent ((? agt F::Phys-obj) (F::intentional +)))
+	      (:optional ont::affected ((? aff F::Phys-obj f::abstr-obj)))
+	      (:optional ont::affected1 ((? aff1 F::Phys-obj f::abstr-obj)))
+	      )
  )
 
 (define-type ont::cause-position
+    :comment "events involving causing a state of type ONT::POSITION"
     :parent ont::event-of-causation
     :arguments ((:optional ont::agent ((? agt F::Phys-obj) (F::intentional +)))
 	     (:optional ont::affected ((? aff F::Phys-obj f::abstr-obj)))
@@ -1007,6 +1009,14 @@
     :wordnet-sense-keys ("lay_off%2:42:00" "quit%2:42:04" "give_up%2:42:00" "cease%2:42:00" "stop%2:42:00" "discontinue%2:42:00" "cease%2:42:13" "terminate%2:42:00"  "terminate%2:30:01" "finish%2:42:00" "stop%2:42:13" "end%2:42:00" "run_out%2:42:00" "expire%2:42:00" "blow_out%2:43:00" "bog_down%2:38:01" "break%2:42:04" "get_off%2:41:00" "halt%2:38:01" "stop%2:38:01" "abort%2:29:00" "terminate%2:30:01")
     :parent ONT::inhibit-effect
  )
+
+;; added because of importance in bio domain
+(define-type ONT::deactivate
+    :comment "Stoping the running of some ongoing process or object that causes a process"
+    :parent ONT::stop
+ )
+
+
 
 (define-type ONT::START
  :wordnet-sense-keys ("take%2:41:13" "start%2:36:00" "initiate%2:36:01" "originate%2:36:00" "commence%2:30:01" "start%2:30:01" "lead_off%2:30:00" "begin%2:30:01" "get_down%2:30:00" "begin%2:30:00" "get%2:30:12" "start_out%2:30:00" "start%2:30:00" "set_about%2:30:00" "set_out%2:30:00" "commence%2:30:00" "begin%2:32:04" "lie_in%2:29:00" "originate_in%2:42:00" "activate%2:36:00" "activate%2:30:00")

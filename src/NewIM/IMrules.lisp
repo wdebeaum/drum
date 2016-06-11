@@ -1,4 +1,4 @@
-;; These are the rules for all the conventional speech act forms
+;; These are The Rules for all the conventional speech act forms
 
 (in-package "IM")
 
@@ -105,7 +105,7 @@
 
      ;;  Enumerations
    ;; let's work on this first
-     ;; Note: "first" is attached to "let"
+     ;; Note: "first" attached is to "let"
 
      ((ONT::SPEECHACT ?!V1 ONT::SA_REQUEST :content ?!act  )
       (ONT::F ?!seq (:* ONT::SEQUENCE-POSITION ?!indicator))
@@ -203,10 +203,19 @@
        (ONT::THE ?!ff ?!type :suchthat ?!rr)
 	)
      
+   ;; conditional questions: is ERK activated if we add Serafinabib?
 
+     ((ONT::SPEECHACT ?!a ONT::SA_YN-QUESTION :CONTENT ?!rr)
+      (ONT::F ?!rr ONT::SITUATION-ROOT :condition ?!cond-op)
+      (ONT::F ?!cond-op ONT::POS-CONDITION :VAL ?!test)
+      (ONT::F ?!test ONT::EVENT-OF-CAUSATION)
+      -ynq-condition>
+      (ONT::ASK-CONDITIONAL-IF :who *USER* :to *ME* :what ?!rr :condition ?!test)
+      )
+   
    ;; is the box on the table?, Is the box this?
      ((ONT::SPEECHACT ?!a ONT::SA_YN-QUESTION :CONTENT ?!rr)
-      -ynq>
+      -ynq> 1
       (ONT::ASK-IF :who *USER* :to *ME* :what ?!rr)
       )
 
@@ -268,7 +277,7 @@
    ;; e.g., action fragment, used if nothing better is found!
 
    ((ONT::F ?!v ?type)
-    -event-frag>
+    -event-frag> .95
     (ONT::FRAGMENT :who *USER* :to *ME* :what ?!v))
    
     
