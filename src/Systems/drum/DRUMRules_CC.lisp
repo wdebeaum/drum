@@ -23,16 +23,20 @@
 |#
 	  
 	  ; NRAS, expressed by GTP, binds BRAF.
-          (((? reln ONT::EVENT ONT::TERM) ?ev ?type :MODS (?!ev2))
-	   ((? reln2 ONT::EVENT ONT::CC) ?!ev2 ?!type2)
+	  ; RAF-bound BRAF that is not bound to Vemurafenib phosphorylates MAP2K1.
+          (((? reln ONT::EVENT ONT::TERM) ?ev ?type :MODS (?!ev2 ?ev2b))  ; note optional ?ev2b
+	   ((? reln2 ONT::EVENT ONT::CC) ?!ev2 ?type2)
+	   ((? reln2b ONT::EVENT ONT::CC) ?ev2b ?type2b)
            -inevent2>
            100
 	   (?reln ?ev ?type
 	    :rule -inevent2
 	    :INEVENT ?!ev2
+	    :INEVENT ?ev2b
 	    )
           )
-	  
+
+	  ; This doesn't fire anymore?  But if it does, we need to consider two INEVENTs here (e.g., Raf-bound NRAS, bound to GTP, binds BRAF, but this is now parsed as two :MODs)
 	  ; NRAS, bound to GTP, binds BRAF.
           (((? reln ONT::EVENT ONT::TERM) ?ev ?type :PARENTHETICAL ?!ev2)
 	   (ONT::EVENT ?!ev2 ?!type2 :AFFECTED ?ev)
@@ -515,12 +519,18 @@
           ((ONT::EVENT ?ev ?type :MANNER ?!r1)
 	   (ONT::F ?!r1 ONT::MANNER :VAL ?!r2)
 	   (ONT::TERM ?!r2 ?t2 :MODS (?!r3))            ; need to fix ?t2 for "way", "fashion"
-	   (ONT::CC ?!r3 (? t3 ONT::DEPENDENT ONT::INDEPENDENT))     ; lost the NEUTRAL due to event substitution
+;	   (ONT::CC ?!r3 (? t3 ONT::DEPENDENT ONT::INDEPENDENT))     ; lost the NEUTRAL due to event substitution
+	   (ONT::F ?!r3 (:* (? t3 ONT::DEPENDENT ONT::INDEPENDENT) ?!w3) :NEUTRAL1 ?!r4 :NEUTRAL ?!r2)
+	   (ONT::TERM ?!r4 ?t4)
+           (ONT::EVAL (symbolmap ?t3 ?!eventName -rule5b_NEUTRAL1_NEUTRAL))	  ; Note: there is a rule in drumrules_ev that generates this CC too.  Need to make sure the name of the CC stays the same. 
            -depend>
            100
-           (ONT::CC ?!r3 ?t3
+           (ONT::CC ?!r3 ?!eventName
             :rule -depend
+	    :FACTOR ?!r4
 	    :OUTCOME ?ev
+	    :NEUTRAL -
+	    :NEUTRAL1 -
             )
 	   )
 
@@ -529,16 +539,19 @@
 	  
 	  ; Ras activation is necessary for Raf stimulation.
 	  ; Ras is necessary for Raf stimulation.
-          ((ONT::F ?ev (? type ONT::NECESSARY ONT::ADEQUATE) :NEUTRAL ?!ag :FORMAL ?!obj)
+          ((ONT::F ?ev (:* (? type ONT::NECESSARY ONT::ADEQUATE) ?!w) :NEUTRAL ?!ag :FORMAL ?!obj)  ; need the "(:* ...)" here because otherwise ?type gets maps to (:* ONT::NECESSARY W::NECESSARY)
 	   ((? reln ONT::TERM ONT::EVENT) ?!ag ?!type1)
 	   (ONT::EVENT ?!obj ?!type2)
 	   (ONT::EVAL (symbolmap ?type ?!newtype))
            -necessary1>
            100
-           (ONT::CC *1 ?!newtype    
+           (;ONT::CC *1 ?!newtype
+	    ONT::CC ?ev ?!newtype    
             :rule -necessary1
 	    :FACTOR ?!ag
             :OUTCOME ?!obj
+	    :NEUTRAL -    ; zero out NEUTRAL/FORMAL so they wouldn't be emitted 
+	    :FORMAL -
 	    :TYPE ?type
             )
 	   )
@@ -553,10 +566,13 @@
 	   ((? reln ONT::TERM ONT::EVENT) ?!obj ?!type2)
            -necessary2>
            100
-           (ONT::CC *1 ONT::DEPENDENT    
+           (;ONT::CC *1 ONT::DEPENDENT    
+	    ONT::CC ?ev ONT::DEPENDENT    
             :rule -necessary2
 	    :FACTOR ?!obj
             :OUTCOME ?!ag
+	    :NEUTRAL -    ; zero out NEUTRAL/FORMAL so they wouldn't be emitted 
+	    :FORMAL -
 	    :TYPE ONT::NECESSITY
             )
 	   )
@@ -585,10 +601,13 @@
 	   (ONT::EVENT ?!rVal ?!rValType)
            -necessary3>
            100
-           (ONT::CC *1 ONT::DEPENDENT    
+           (;ONT::CC *1 ONT::DEPENDENT
+	    ONT::CC ?ev ONT::DEPENDENT    
             :rule -necessary3
 	    :FACTOR ?!obj
             :OUTCOME ?!rVal
+	    :FORMAL -
+	    :REASON -
 	    :TYPE ONT::NECESSITY
             )
 	   )
@@ -605,10 +624,13 @@
 	   (ONT::EVENT ?!rVal ?!rValType)
            -sufficient>
            100
-           (ONT::CC *1 ONT::ENSURE    
+           (;ONT::CC *1 ONT::ENSURE
+	    ONT::CC ?ev ONT::ENSURE    
             :rule -sufficent
 	    :FACTOR ?!obj
             :OUTCOME ?!rVal
+	    :NEUTRAL -
+	    :REASON -
 	    :TYPE ONT::SUFFICIENCY
             )
 	   )

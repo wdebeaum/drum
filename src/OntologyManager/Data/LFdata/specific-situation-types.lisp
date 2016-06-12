@@ -3838,8 +3838,8 @@
  :wordnet-sense-keys ("submit%2:32:01" "subject%2:32:04")
  :parent ONT::giving
  :sem (F::situation)
- :arguments ((:REQUIRED ONT::Formal ((? oc F::Phys-obj F::Abstr-obj f::situation)))
-             (:REQUIRED ONT::Agent)
+ :arguments ((:REQUIRED ONT::affected ((? oc F::Phys-obj F::Abstr-obj f::situation)))
+	     (:REQUIRED ONT::Agent)
              )
  )
 

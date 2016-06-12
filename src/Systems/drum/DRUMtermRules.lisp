@@ -265,6 +265,7 @@
 	    :BASE ?!name  
 	    :drum ?code    
 	    :rule -explicit-ref1
+	    ; we don't zero out :ASSOC-WITH here because there might be other :ASSOC-WITH in there
 	    )
 	   #|
 	   ; this extraction has to go first because otherwise for some reason -EXPLICIT-REF1X is fired (to extract the :BASE ?!name)
@@ -469,7 +470,7 @@
 	   90 ; lower priority than -explicit-ref-pathway2
 	   (ONT::TERM ?!obj ?!type
 	    :name ?!w
-;	    :drum ?code
+;	    :drum ?code    ; note: with new scheme the :drum slot for ?!obj will be retained if there is one
 	    :rule -explicit-ref-robust
 	    )
 	   )
@@ -512,6 +513,7 @@
 ;	    :name ?w
 	    :m-sequence (?!name1)
 ;	    :drum ?code
+	    :drum -   ; zero out :drum explicitly
 	    :rule -explicit-ref-seq0
 	    )
 	   (ONT::TERM ?!name1 ?type1    ; this is otherwise not extracted because it is subsumed
@@ -541,6 +543,7 @@
 ;	    :name ?w
 	    :m-sequence (?!name1 ?!name2)
 ;	    :drum ?code
+	    :drum -   ; zero out :drum explicitly
 	    :rule -explicit-ref-seq0-x2
 	    )
 	   (ONT::TERM ?!name1 ?type1    ; this is otherwise not extracted because it is subsumed
@@ -575,6 +578,7 @@
 	    :m-sequence ?!sequence
 ;	    :operator ONT::AND
 ;	    :drum ?code  ; there is no :drum information for :SEQUENCE (so this will be empty)
+	    :drum -   ; zero out :drum explicitly
 	    :rule -explicit-ref-seq0a
 	    )
 	   (ONT::TERM ?!s1 ?type1s  ; emit !?s1 also which otherwise would not be extracted by -simple-ref
@@ -604,6 +608,7 @@
 	    :m-sequence ?!sequence
 ;	    :operator ONT::AND
 ;	    :drum ?code  ; there is no :drum information for :SEQUENCE (so this will be empty)
+	    :drum -   ; zero out :drum explicitly
 	    :rule -explicit-ref-seq0a2
 	    )
 	   (ONT::TERM ?!s1 ?type1s  ; emit !?s1 also which otherwise would not be extracted by -simple-ref
@@ -631,6 +636,7 @@
 	    :m-sequence ?!sequence
 ;	    :operator ONT::AND
 ;	    :drum ?code  ; there is no :drum information for :SEQUENCE (so this will be empty)
+	    :drum -   ; zero out :drum explicitly
 	    :rule -explicit-ref-seq0b
 	    )
 	   (ONT::TERM ?!s1 ?type1s  ; emit !?s1 also which otherwise would not be extracted by -simple-ref

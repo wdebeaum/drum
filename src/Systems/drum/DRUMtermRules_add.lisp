@@ -302,6 +302,7 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	   100
 	   (ONT::TERM ?!obj ?t1
 	    :CELL-LINE ?!modBP
+	    :LOC -   ; zero out :LOC so it wouldn't be emitted
 	    :rule -simple-ref-modCL
 	    ))
 
@@ -404,6 +405,34 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    :rule -location6
 	    ))
 
+	  ; Ras is active
+          (((? reln0  ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?ev
+            (:* (? type ONT::HAVE-PROPERTY) ?!w) :NEUTRAL ?!obj :DRUM ?code :FORMAL ?!modActive)
+;           ((? reln1 ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!ag  (? t1 ONT::EVENT-OF-CHANGE ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ ONT::SEQUENCE))
+           (ONT::TERM ?!obj ?t1)
+           (ONT::F ?!modActive (? tmp2 ONT::ACTIVE))
+           -active3>
+	   100
+	   (ONT::TERM ?!obj ?t1
+	    :active ONT::TRUE
+	    :rule -active3
+	    ))
+
+	  ; Ras is inactive
+          (((? reln0  ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?ev
+            (:* (? type ONT::HAVE-PROPERTY) ?!w) :NEUTRAL ?!obj :DRUM ?code :FORMAL ?!modActive)
+;           ((? reln1 ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!ag  (? t1 ONT::EVENT-OF-CHANGE ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ ONT::SEQUENCE))
+           (ONT::TERM ?!obj ?t1)
+           (ONT::F ?!modActive (? tmp2 ONT::INACTIVE))
+           -active4>
+	   100
+	   (ONT::TERM ?!obj ?t1
+	    :active ONT::FALSE
+	    :rule -active4
+	    ))
+
+	  
 	  )
 	)
-	  
+
+

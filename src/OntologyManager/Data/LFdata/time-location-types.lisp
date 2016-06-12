@@ -615,7 +615,7 @@
 
 
 (define-type ONT::direction
- :parent ONT::PREDICATE
+ :parent ONT::position-reln
  :arguments ((:ESSENTIAL ONT::OF ((? t F::Phys-obj F::Situation) (F::trajectory +) (f::type (? tt ONT::MOTION ONt::APPLY-FORCE))))
 	     (:ESSENTIAL ONT::VAL (F::Phys-obj))
             )
