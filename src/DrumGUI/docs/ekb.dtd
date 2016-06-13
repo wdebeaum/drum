@@ -3,7 +3,7 @@
 <!-- DTD schema for the EKB
 
 Author: Lucian Galescu <lgalescu@ihmc.us> 03/04/2016
-$Id: ekb.dtd,v 1.11 2016/06/10 19:39:12 lgalescu Exp $
+$Id: ekb.dtd,v 1.12 2016/06/12 16:26:41 lgalescu Exp $
 
 When the EKB is used for annotation, textual elements must be present (eg, <input>, <text>, @start, @end, @uttnum, @paragraph). 
 
@@ -408,17 +408,22 @@ Note: This is a fixed set.
   id NMTOKEN #REQUIRED>
 
 <!-- Bound-to feature
+@id ID of term this term is bound to. May be empty, if not known.
+@event ID of the binding event.
 -->
 <!ELEMENT bound-to EMPTY>
 <!ATTLIST bound-to
-  id NMTOKEN #REQUIRED>
+  id NMTOKEN #REQUIRED
+  event NMTOKEN #REQUIRED>
 
 <!-- Ptm feature
+@type Ont-type of the modification.
+@event ID of the modification event.
 -->
 <!ELEMENT ptm EMPTY>
 <!ATTLIST ptm
   type NMTOKEN #IMPLIED
-  id NMTOKEN #REQUIRED>
+  event NMTOKEN #REQUIRED>
 
 <!-- Negation
 Common to: EVENT, CC, EPI, and MODALITY.

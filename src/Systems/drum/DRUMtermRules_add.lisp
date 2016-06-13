@@ -6,7 +6,8 @@
 (mapcar #'(lambda (x) (add-im-rule x 'drumtermsAdd))  ;; sets of rules are tagged so they can be managed independently 
 	'(
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	  
 #|
 	  ;; basic terms (not conjunctions) with selected mod (e.g., prefixes auto-, mono-, trans-)
 	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
@@ -431,6 +432,23 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    :rule -active4
 	    ))
 
+	  #|
+	  ; conserved domain
+	  ;; basic terms (not conjunctions) with selected mod (only ONT::ACTIVE)
+	  ((ONT::TERM ?!obj 
+	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT ONT::MENTAL-CONSTRUCTION ONT::AWARENESS ONT::INFORMATION-FUNCTION-OBJECT) :SEQUENCE - :MODS (?!modC) )
+            (ONT::F ?!modC (:* ONT::RETAIN W::CONSERVE) :AFFECTED ?!obj)
+	   -simple-ref-modConserved>
+	   100
+	   (ONT::TERM ?!obj ?t1
+	    :conserved ONT::TRUE
+	    :rule -simple-ref-modConserved
+	    ))
+	  |#
+
+
+	  
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	  
 	  )
 	)

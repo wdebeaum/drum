@@ -22,10 +22,9 @@
    (wordfeats (W::morph (:forms (-vb) :past W::left)))
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090501 :comments nil :vn ("future_having-13.3") :wn ("leave%2:31:05" "leave%2:40:01" "leave%2:40:02"))
-     (LF-PARENT ONT::donate)
+     (LF-PARENT ONT::future-giving)
      (example "leave him the truck")
-     (TEMPL agent-affected-recipient-alternation-templ) ; like grant,offer
-     (PREFERENCE 0.96)
+      (TEMPL AGENT-RECIPIENT-affected-TEMPL )
      )
     ;;;; swier -- the truck will leave from Boston for Rochester
     ((LF-PARENT ONT::DEPART)

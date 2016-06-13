@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.36 2016/05/12 04:02:38 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.37 2016/06/12 16:25:34 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -594,6 +594,9 @@ public class TermExtraction extends Extraction {
 
         String ruleID = value.getKeywordArg(":RULE").toString();
 
+        // dbids
+        String dbID = getDBTermIds(attributes.get(Attribute.DRUM));
+
         // get members from :DRUM
         KQMLObject dsiInfo = attributes.get(Attribute.DRUM);
         if ((dsiInfo != null) && !(dsiInfo instanceof KQMLList)) {
@@ -632,6 +635,7 @@ public class TermExtraction extends Extraction {
 
         return "<" + exType + " " +
                 "id=\"" + id + "\" " +
+                (dbID == null ? "" : ("dbid=\"" + dbID + "\" ")) +
                 "start=\"" + getOffset(start) + "\" " +
                 "end=\"" + getOffset(end) + "\" " +
                 "paragraph=\"" + parID + "\" " +

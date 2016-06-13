@@ -746,14 +746,14 @@
 	(LOBJ (% W::NP) ONT::affected)
 	(LCOMP (:parameter xp (:default (% W::PP (W::ptype W::to)))) ONT::RESULT)
 	))
-
+#||
       (AGENT-AFFECTED-optional-GOAL-TO-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
 	(LOBJ (% W::NP) ONT::affected optional)
 	(LCOMP (:parameter xp (:default (% W::PP (W::ptype W::to)))) ONT::RESULT)
 	))
-
+||#
       (AGENT-AFFECTED-AR-TO-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
@@ -764,9 +764,9 @@
       (AGENT-AFFECTED-GOAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
-	(LOBJ (% W::NP) ONT::affected)
-	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln ont::position-reln ont::source-reln))))
-					   )))
+	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::affected)
+	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln ont::position-reln ont::source-reln)))) (w::arg ?dobjvar))))
+					   
 			  
 	       ONT::RESULT)
 	))
@@ -2514,8 +2514,8 @@
   (binary-constraint-S-OR-NP-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% (? W::x W::S W::NP)) ONT::OF)
-    (SUBCAT (:parameter xp (:default (% W::NP (W::case (? cas W::obj -))))) ONT::VAL)
+    (ARGUMENT (% (? W::x W::S W::NP)) ONT::figure)
+    (SUBCAT (:parameter xp (:default (% W::NP (W::case (? cas W::obj -))))) ONT::ground)
     )) 
   
   (binary-constraint-S-OR-NP-pred-templ
@@ -2668,12 +2668,12 @@
     (SUBCAT (% W::S (W::stype (? st W::decl w::ing))) ONT::VAL)  
     ))
 
-  (binary-constraint-S-or-NP-general-templ
+ #|| (binary-constraint-S-or-NP-general-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
     (ARGUMENT (% (? ag W::S w::NP)) ONT::OF)
     (subcat (% (? sc W::S W::NP w::adjp)  (w::set-modifier -)) ONT::VAL)
-    ))
+    ))||#
  
   (binary-constraint-S-ing-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
@@ -2692,8 +2692,8 @@
   (binary-constraint-NP-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? atype W::POST w::pre)))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
-    (SUBCAT (:parameter xp (:default (% W::NP (W::case (? cas W::obj -))))) ONT::VAL)
+    (ARGUMENT (% W::NP) ONT::figure)
+    (SUBCAT (:parameter xp (:default (% W::NP (W::case (? cas W::obj -))))) ONT::ground)
     ))
   
   ;;;;; modifiers for measure phrases, e.g. 'or so'
@@ -2702,7 +2702,7 @@
    (ARGUMENTS
     (ARGUMENT (% W::NP (W::sort W::unit-measure)) ONT::OF)
     ))
-  
+  #||
   (binary-constraint-NP-THEME-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE W::POST))
    (ARGUMENTS
@@ -2710,19 +2710,18 @@
     (SUBCAT (:parameter xp (:default (% W::NP (W::case (? cas W::obj -))))) ONT::FORMAL1)
     ))
   
-   
+   ||#
   (binary-constraint-NP-implicit-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE W::POST) (W::allow-deleted-comp +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
-    (SUBCAT (% W::NP (W::case (? cas W::obj -))) ONT::VAL)
-    ))
-  
+    (ARGUMENT (% W::NP) ONT::FIGURE)
+    (SUBCAT (% W::NP (W::case (? cas W::obj -))) ONT::GROUND)
+    ))  
   (binary-constraint-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
-    (SUBCAT (% W::NP (W::case (? cas W::obj -))) ONT::VAL)
+    (ARGUMENT (% W::S) ONT::FIGURE)
+    (SUBCAT (% W::NP (W::case (? cas W::obj -))) ONT::GROUND)
     ))
   
   (PRED-S-VP-templ
@@ -3252,7 +3251,7 @@
   (central-adj-experiencer-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::central) (W::SUBCAT -) (W::ARG ?arg) (W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ont::of)
+    (ARGUMENT (% W::NP) ont::figure)
     ))
 
    ;; a sad movie/ the movie is sad
@@ -3260,7 +3259,7 @@
    (central-adj-content-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::central) (W::SUBCAT -) (W::ARG ?arg) (W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::of)
+    (ARGUMENT (% W::NP) ONT::figure)
     ))
   
   (central-adj-plur-templ
@@ -3273,24 +3272,24 @@
    (central-adj-xp-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::central) (W::ALLOW-DELETED-COMP +) (W::ARG ?arg))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
-    (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to)))) ONT::VAL optional)
+    (ARGUMENT (% W::NP) ONT::figure)
+    (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to)))) ONT::ground optional)
     ))
 
     ;; optional subcat that can also be a pre modifier
     (central-adj-xp-possible-pre-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::central) (W::ALLOW-DELETED-COMP +) (W::ALLOW-PRE-MOD +) (W::ARG ?arg))
       (ARGUMENTS
-        (ARGUMENT (% W::NP) ONT::OF)
-        (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to)))) ONT::VAL)
+        (ARGUMENT (% W::NP) ONT::figure)
+        (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to)))) ONT::ground)
     ))
 
     ;; requires the subcat  
    (central-adj-xp-required-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
-    (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to)))) ONT::VAL)
+    (ARGUMENT (% W::NP) ONT::figure)
+    (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to)))) ONT::ground)
     ))
   
   ;;;;; Both predicative and atributive, and can take
@@ -3298,8 +3297,8 @@
   (central-adj-optional-xp-templ
    (SYNTAX (W::SORT W::PRED) (W::atype w::central) (W::ARG ?arg) (W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ONT::VAL) ;; MD: you should not define "optional" and "allow-deleted-comp" in the same template, or -adj-subcat> and -adj-pred-object-deleted> create an ambiguity
+    (ARGUMENT (% W::NP) ONT::figure)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ONT::ground) ;; MD: you should not define "optional" and "allow-deleted-comp" in the same template, or -adj-subcat> and -adj-pred-object-deleted> create an ambiguity
     ))
  
   ;;;;; attributive only adjectives, like "mere" or "former" which

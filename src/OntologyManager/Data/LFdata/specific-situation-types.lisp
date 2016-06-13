@@ -1407,7 +1407,7 @@
  :parent ONT::experiencer-emotion
  )
 
-(define-type ONT::worrying
+(define-type ONT::state-of-worrying
  :wordnet-sense-keys ("worry%2:37:00" "concern%2:42:01")
  :parent ONT::care
  )
@@ -1483,6 +1483,11 @@
 (define-type ONT::evoke-distress
  :wordnet-sense-keys ("disturb%2:37:00" "upset%2:37:00" "trouble%2:37:01")
  :parent ONT::evoke-emotion
+ )
+
+(define-type ONT::evoke-worry
+ :wordnet-sense-keys ("worry%2:37:01")
+ :parent ONT::evoke-distress
  )
 
 (define-type ONT::evoke-offense

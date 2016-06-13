@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.46 2016/05/03 15:34:48 lgalescu Exp $
+ * $Id: Extraction.java,v 1.47 2016/06/12 16:24:59 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -103,10 +103,35 @@ public class Extraction {
         start = getKeywordArgInt(":START", value);
         end = getKeywordArgInt(":END", value);
 
+        packRules();
+
         pullCorefInfo();
 
         shortValue = makeShortValue(value);
         expandedValue = shortValue;
+    }
+
+    //
+
+    /**
+     * Pack rules.
+     */
+    protected void packRules() {
+        String rules = null;
+        String delimiter = ",";
+        while (true) {
+            KQMLObject rule = value.removeKeywordArg(":RULE");
+            if (rule == null) {
+                break;
+            }
+            if (rules == null) {
+                rules = rule.stringValue();
+            } else {
+                rules = rules + delimiter + rule.stringValue();
+            }
+        }
+        value.add(":RULE");
+        value.add(rules);
     }
 
     // // LF TERMS

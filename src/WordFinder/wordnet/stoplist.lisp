@@ -2804,6 +2804,7 @@ old_person%1:18:00::
 for_the_first_time%4:02:00::
 to_it%4:02:00::
 to_that%4:02:00::
+walk_in%2:38:00::
 ")
 "List of WordNet sense keys for senses we should avoid using."
 )

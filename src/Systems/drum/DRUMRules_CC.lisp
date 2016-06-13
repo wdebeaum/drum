@@ -21,9 +21,9 @@
 	    )
           )
 |#
-	  
-	  ; NRAS, expressed by GTP, binds BRAF.
-	  ; RAF-bound BRAF that is not bound to Vemurafenib phosphorylates MAP2K1.
+
+	  ; NRAS, expressed by GTP, binds BRAF.	  	  
+	  ; RAF-bound BRAF that is not bound to Vemurafenib phosphorylates MAP2K1. (need to return *two* INEVENT slots)
           (((? reln ONT::EVENT ONT::TERM) ?ev ?type :MODS (?!ev2 ?ev2b))  ; note optional ?ev2b
 	   ((? reln2 ONT::EVENT ONT::CC) ?!ev2 ?type2)
 	   ((? reln2b ONT::EVENT ONT::CC) ?ev2b ?type2b)
@@ -36,6 +36,21 @@
 	    )
           )
 
+	  ; Need this rule in addition to -inevent2 because some MODs (e.g., "active") are not EVENT/CC
+	  ; Active MAP2K1 that is not bound to PP2A-alpha phosphorylates MAPK1. 
+          (((? reln ONT::EVENT ONT::TERM) ?ev ?type :MODS (?!ev2))  
+	   ((? reln2 ONT::EVENT ONT::CC) ?!ev2 ?type2)
+;	   ((? reln2b ONT::EVENT ONT::CC) ?ev2b ?type2b)
+           -inevent2b>
+           100
+	   (?reln ?ev ?type
+	    :rule -inevent2b
+	    :INEVENT ?!ev2
+;	    :INEVENT ?ev2b
+	    )
+	   )
+
+	  
 	  ; This doesn't fire anymore?  But if it does, we need to consider two INEVENTs here (e.g., Raf-bound NRAS, bound to GTP, binds BRAF, but this is now parsed as two :MODs)
 	  ; NRAS, bound to GTP, binds BRAF.
           (((? reln ONT::EVENT ONT::TERM) ?ev ?type :PARENTHETICAL ?!ev2)

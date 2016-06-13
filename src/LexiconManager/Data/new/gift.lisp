@@ -6,7 +6,7 @@
  :words (
   (W::gift
    (SENSES
-    ((LF-PARENT ONT::donate)
+    ((LF-PARENT ONT::donate-give)
      (meta-data :origin plow :entry-date 20050928 :change-date nil :wn ("gift%1:21:00") :comments naive-subjects)
      (example "I am looking for a gift for my mother")
      )
