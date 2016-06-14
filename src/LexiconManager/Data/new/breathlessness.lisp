@@ -6,19 +6,8 @@
  :words (
   (w::breathlessness
   (senses
-   ((LF-PARENT ONT::physical-symptom)
-    (TEMPL mass-pred-TEMPL)
-    (syntax (W::morph (:forms (-none))))
-    )
-   )
-)
-))
-
-(define-words :pos W::n
- :words (
-  (w::breathlessness
-  (senses
-   ((LF-PARENT ONT::dyspnea)
+   ((meta-data :wn ("asthma%1:26:00"))
+    (LF-PARENT ONT::dyspnea)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

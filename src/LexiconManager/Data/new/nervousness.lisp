@@ -6,7 +6,8 @@
  :words (
   (W::NERVOUSNESS
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("nervousness%1:26:00"))
+    (LF-PARENT ONT::medical-condition)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

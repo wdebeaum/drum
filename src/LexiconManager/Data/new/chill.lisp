@@ -6,7 +6,8 @@
  :words (
   (W::CHILL
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("chill%1:26:01"))
+    (LF-PARENT ONT::medical-symptom)
     (TEMPL count-pred-TEMPL)
     )
    )

@@ -15,3 +15,16 @@
    )
 ))
 
+(define-words :pos W::n
+ :words (
+  (w::injury
+  (senses
+	   ((meta-data :wn ("injury%1:26:00"))
+            (LF-PARENT ONT:: injury)
+	    (TEMPL count-pred-TEMPL)
+	    )
+	   )
+)
+))
+
+

@@ -6,7 +6,8 @@
  :words (
   (w::tightness
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("tightness%1:09:00"))
+    (LF-PARENT ONT::medical-symptom)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

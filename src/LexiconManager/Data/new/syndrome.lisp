@@ -6,7 +6,8 @@
  :words (
   (w::syndrome
   (senses;;;;; names of diseases/conditions that are count nouns and cannot appear without an article
-	   ((LF-PARENT ONT::medical-disorders-and-conditions)
+	   ((meta-data :wn ("syndrome%1:26:00"))
+            (LF-PARENT ONT::medical-symptom)
 	    (TEMPL count-pred-TEMPL)
 	    )
 	   )

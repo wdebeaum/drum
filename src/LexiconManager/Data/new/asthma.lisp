@@ -7,7 +7,8 @@
   (w::asthma
   (senses;;;;; names of medical conditions/symptoms that are mass nouns
    ;;;;; i.e., they can't take an indefinite article (*an arthritis) and they have no plural form
-   ((LF-PARENT ONT::medical-disorders-and-conditions)
+   ((meta-data :wn ("asthma%1:26:00"))
+    (LF-PARENT ONT::breathing-disorder)
     (TEMPL MASS-PRED-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

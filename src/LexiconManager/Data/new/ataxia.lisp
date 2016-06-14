@@ -6,7 +6,8 @@
  :words (
   (w::ataxia
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("nervous_disorder%1:26:00" "ataxia%1:26:00"))
+    (LF-PARENT ONT::medical-condition)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

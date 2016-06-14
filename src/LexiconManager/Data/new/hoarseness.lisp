@@ -6,7 +6,8 @@
  :words (
   (w::hoarseness
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("hoarseness%1:07:00"))
+    (LF-PARENT ONT::medical-symptom)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

@@ -16,18 +16,6 @@
    )
 ))
 
-(define-words :pos W::n
- :words (
-  ((w::light w::headedness)
-  (senses
-   ((LF-PARENT ONT::physical-symptom)
-    (TEMPL mass-pred-TEMPL)
-    (syntax (W::morph (:forms (-none))))
-    )
-   )
-)
-))
-
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
 	 ((w::light w::bulb)
@@ -86,6 +74,32 @@
 	    ))
 ))
 
+(define-words :pos W::adj :templ ADJ-EXPERIENCER-TEMPL
+ :words (
+   ((w::light (w::headed))
+   (SENSES
+    ((meta-data :origin chf :entry-date 20070904 :change-date 20090731 :comments nil :wn nil)
+     (LF-PARENT ONT::AILING)
+     (example "do you feel lightheaded")
+     (templ central-adj-templ)
+     )
+    )
+   )
+))
+
+(define-words :pos W::n
+ :words (
+  ((w::light (w::headedness))
+  (senses
+   ((meta-data :wn ("lightheadedness%1:26:00"))
+    (LF-PARENT ONT::medical-symptom)
+    (TEMPL mass-pred-TEMPL)
+    (syntax (W::morph (:forms (-none))))
+    )
+   )
+)
+))
+
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :tags (:base500)
  :words (
@@ -104,4 +118,3 @@
     )
    )
 ))
-

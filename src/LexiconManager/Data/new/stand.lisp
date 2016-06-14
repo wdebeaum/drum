@@ -43,11 +43,11 @@
      (LF-PARENT ONT::BODY-MOVEMENT-place)
      (TEMPL AGENT-TEMPL)
      )
-    ((EXAMPLE "stand the box on the desk" )
-     ;;(LF-PARENT ONT::BODY-MOVEMENT)
-     (lf-parent ont::put ) ;; 20120523 GUM change new parent
-      (TEMPL AGENT-AFFECTED-goal-TEMPL)
+    ((LF-PARENT ONT::contest-deny-oppose-protest)
+     (example “he stood up to cancer“)
+     (TEMPL AGENT-neutral-xp-TEMPL  (xp (% W::pp (W::ptype W::to))))
      )
+
 
     )
    )

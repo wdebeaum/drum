@@ -6,7 +6,8 @@
  :words (
   (w::constriction
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("constriction%1:09:00"))
+    (LF-PARENT ONT::medical-symptom)
     (TEMPL bare-pred-TEMPL)
     )
    )

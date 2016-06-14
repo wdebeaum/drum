@@ -6,7 +6,8 @@
  :words (
   (w::nosebleed
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("nosebleed%1:26:00"))
+    (LF-PARENT ONT::medical-symptom)
     (TEMPL count-pred-TEMPL)
     )
    )

@@ -6,7 +6,8 @@
  :words (
   (w::sniffle
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("sniffle%1:04:00"))
+    (LF-PARENT ONT::medical-symptom)
     (TEMPL count-pred-TEMPL)
     )
    )

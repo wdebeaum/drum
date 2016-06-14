@@ -5,7 +5,8 @@
 (define-words :pos W::n
  :words (
   (w::sore
-  (senses((LF-PARENT ONT::wound)
+  (senses((meta-data :wn ("sore%1:26:00"))
+          (LF-PARENT ONT::wound)
 	    (TEMPL count-pred-TEMPL)
 	    )
 	   )

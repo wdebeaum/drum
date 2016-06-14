@@ -28,7 +28,7 @@ ideo idio immuno Indo infra inter intra iso
 macro macr mal maxi megalo mega meta meso micro midi mid mini mis mono mon multi mult
 neo non
 octo omni ortho out over
-paleo pan para ped penta peri per photo pod poly post preter pre pros proto pro pseudo pyro
+paleo pan para ped penta peri per phospho photo pod poly post preter pre pros proto pro pseudo pyro
 quadri quasi
 retro
 self semi socio step sub super supra sup sur syl sym syn

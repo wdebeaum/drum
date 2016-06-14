@@ -5,6 +5,7 @@
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
   (W::confuse
+   (wordfeats (W::morph (:forms (-vb) :nom w::confusion)))
    (SENSES
     ((meta-data :origin "verbnet-2.0-corrected" :entry-date 20060315 :change-date 20090512 :comments nil :vn ("amuse-31.1") :wn ("confuse%2:31:03" "confuse%2:37:00"))
      (LF-PARENT ONT::evoke-confusion)

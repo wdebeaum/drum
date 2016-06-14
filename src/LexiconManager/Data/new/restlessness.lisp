@@ -6,7 +6,8 @@
  :words (
   (W::RESTLESSNESS
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("restlessness%1:07:00"))
+    (LF-PARENT ONT::medical-condition)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

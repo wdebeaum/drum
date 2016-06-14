@@ -2,18 +2,6 @@
 ;;;; w::irregular
 ;;;;
 
-(define-words :pos W::n
- :words (
-  ((w::irregular w::heartbeat)
-  (senses
-   ((LF-PARENT ONT::physical-symptom)
-    (TEMPL mass-pred-TEMPL)
-    (syntax (W::morph (:forms (-none))))
-    )
-   )
-)
-))
-
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
    (W::IRREGULAR
@@ -27,3 +15,17 @@
    )
 ))
 
+#|
+(define-words :pos W::n
+ :words (
+  ((w::irregular w::heartbeat)
+  (senses
+   ((meta-data :wn ("arrhythmia%1:26:00"))
+    (LF-PARENT ONT::medical-symptom)
+    (TEMPL mass-pred-TEMPL)
+    (syntax (W::morph (:forms (-none))))
+    )
+   )
+)
+))
+|#

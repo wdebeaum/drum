@@ -6,7 +6,8 @@
  :words (
   (w::weakness
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("weakness%1:07:00"))
+    (LF-PARENT ONT::medical-condition)
     (TEMPL bare-pred-TEMPL)
     )
    )

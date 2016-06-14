@@ -6,7 +6,8 @@
  :words (
   (W::COUGH
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("cough%1:26:00"))
+    (LF-PARENT ONT::medical-symptom)
     (TEMPL count-pred-TEMPL)
     )
    )

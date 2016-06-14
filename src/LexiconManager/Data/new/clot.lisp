@@ -2,12 +2,13 @@
 ;;;; w::clot
 ;;;;
 
-(define-words :pos W::n
+(define-words :pos W::v :templ affected-TEMPL
  :words (
   (w::clot
-  (senses;;;;; names of diseases/conditions that are count nouns and cannot appear without an article
-	   ((LF-PARENT ONT::medical-disorders-and-conditions)
-	    (TEMPL count-pred-TEMPL)
+  (wordfeats (W::morph (:forms (-vb) :nom w::clot)))
+  (senses;;;;; change from a liquid to a thickened or solid state
+	   ((meta-data :wn ("clot%2:30:01"))
+           (LF-PARENT ONT:: change-integrity)
 	    )
 	   )
 )

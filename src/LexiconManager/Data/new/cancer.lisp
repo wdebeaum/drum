@@ -6,7 +6,8 @@
  :words (
   (w::cancer
   (senses;;;;; names of diseases/conditions that can appear without an article
-   ((LF-PARENT ONT::medical-disorders-and-conditions)
+   ((meta-data :wn ("cancer%1:26:00"))
+    (LF-PARENT ONT:: cancer)
     (TEMPL bare-pred-TEMPL)
     )
    )

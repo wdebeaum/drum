@@ -6,7 +6,8 @@
  :words (
   (w::backache
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("backache%1:26:00"))
+    (LF-PARENT ONT::medical-symptom)
     (TEMPL count-pred-TEMPL)
     )
    )

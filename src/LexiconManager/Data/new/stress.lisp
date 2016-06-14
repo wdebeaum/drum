@@ -6,7 +6,8 @@
  :words (
   (w::stress
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("stress%1:26:01"))
+    (LF-PARENT ONT::medical-condition)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

@@ -6,7 +6,8 @@
  :words (
   (w::headache
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("headache%1:26:00"))
+    (LF-PARENT ONT::medical-condition)
     (TEMPL count-pred-TEMPL)
     )
    )

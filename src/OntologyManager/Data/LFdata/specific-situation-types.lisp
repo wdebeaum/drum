@@ -934,7 +934,7 @@
   )
 
 (define-type ONT::change-integrity
-    :wordnet-sense-keys ("change_integrity%2:30:00")
+    :wordnet-sense-keys ("change_integrity%2:30:00" "clot%2:30:01")
     :parent ONT::change-state
     :comment "an AFFECTED undergoes a change of physical state, e.g., thaw. Allows but does not require an AGENT"
     :sem (F::Situation (F::Trajectory -))
@@ -4210,7 +4210,7 @@
              )
  )
 
-(define-type ONT::physical-CONDITION
+(define-type ONT::physical-condition
  :parent ONT::situation-root
  :wordnet-sense-keys ("condition%1:26:02")
  :sem (f::situation (f::aspect f::indiv-level)) ;; prevent attachment of temporal adv
@@ -4225,64 +4225,97 @@
              )
  )
 
-;; cancer, diabetes, flu
-(define-type ONT::medical-disorders-and-conditions
- :parent ONT::physical-condition
- :arguments ((:OPTIONAL ONT::of (F::phys-obj (F::origin F::human)))
-             )
- )
-
-(define-type ONT::breathing-disorder
- :parent ONT::medical-disorders-and-conditions
- :wordnet-sense-keys ("asthma%1:26:00")
- :arguments ((:OPTIONAL ONT::of (F::phys-obj (F::origin F::human)))
-             )
- )
-
-
 ;; health, wellness
 (define-type ONT::health
- :wordnet-sense-keys ("wellness%1:26:00" "wellbeing%1:26:00")
+ :wordnet-sense-keys ("wellness%1:26:00" "wellbeing%1:26:00" "health%1:26:00" "fitness%1:26:00")
  :parent ont::physical-condition
  )
 
-;; chills, fever, pain
-(define-type ONT::physical-symptom
- :wordnet-sense-keys ("symptom%1:26:00" "sign%1:26:00")
- :parent ONT::medical-disorders-and-conditions
- :arguments ((:OPTIONAL ONT::of (F::phys-obj (F::origin F::human)))
+(define-type ONT::medical-disorders-and-conditions
+ :wordnet-sense-keys ("disorder%1:26:03")
+ :parent ONT::physical-condition
+ :arguments ((:OPTIONAL ONT::of (F::phys-obj (F::origin (? og2 f::human f::non-human-animal))))
              )
+ )
+
+;; fever, pain
+(define-type ONT::medical-symptom
+ :wordnet-sense-keys ("symptom%1:26:00" "sign%1:26:00" "fever%1:26:00" "febrility%1:26:00" "febricity%1:26:00" "pyrexia%1:26:00" "feverishness%1:26:00" "pain%1:26:00" "hurting%1:26:00" "pain_sensation%1:09:00" "painful_sensation%1:09:00" "syndrome%1:26:00" "amnesia%1:09:00" "backache%1:26:00" "stomachache%1:26:00" "chest_pain%1:26:00" "chill%1:26:01" "constipation%1:26:00" "constriction%1:09:00" "contraction%1:04:01" "cough%1:26:00" "cramp%1:26:00" "diarrhea%1:26:00" "dyspepsia%1:26:00" "edema%1:26:00" "heartburn%1:26:00" "hives%1:26:00" "hoarseness%1:07:00" "hyperventilation%1:04:00" "arrhythmia%1:26:00" "tachycardia%1:26:00" "lightheadedness%1:26:00" "nausea%1:26:00" "nosebleed%1:26:00" "numbness%1:26:00" "palpitation%1:26:00" "edema%1:26:00" "redness%1:26:00" "sneeze%1:26:00" "sniffle%1:04:00" "soreness%1:26:00" "spasm%1:26:00" "tightness%1:09:00")
+ :parent ONT::medical-disorders-and-conditions
+ )
+
+;; condition, fever
+(define-type ONT::medical-condition
+ :wordnet-sense-keys ("condition%1:26:05" "sign%1:26:00" "arteriosclerosis%1:26:00" "eating_disorder%1:26:00"  "anorexia%1:26:00" "clot%1:08:00" "insanity%1:26:00" "disorder%1:26:03" "cholelithiasis%1:26:00" "lithiasis%1:26:00" "hyperkalemia%1:26:00" "hypoglycemia%1:26:00" "kidney_stone%1:17:00" "malformation%1:26:00" "mania%1:26:00" "pathology%1:26:00" "phlebitis%1:26:00" "phobia%1:26:00" "seizure%1:26:00" "stroke%1:26:00" "thrombosis%1:26:00" "psychological_condition%1:26:00" "anesthesia%1:26:00" "angina%1:26:01" "anxiety%1:26:00" "nervous_disorder%1:26:00" "ataxia%1:26:00" "confusion%1:09:00" "depression%1:26:03" "distress%1:12:02" "dizziness%1:26:00" "drowsiness%1:26:00" "exhaustion%1:26:00" "fatigue%1:26:00" "headache%1:26:00" "irritation%1:26:00" "anorexia%1:26:00" "restlessness%1:07:00" "stress%1:26:01" "tiredness%1:26:00" "weakness%1:07:00" "addiction%1:26:00") 
+ :parent ONT::medical-disorders-and-conditions
+ )
+
+(define-type ont::pregnancy
+ :wordnet-sense-keys ("pregnancy%1:26:00")
+ :parent ont::medical-condition
+ )
+
+(define-type ont:: dyspnea
+ :wordnet-sense-keys ("dyspnea%1:26:00" "dyspnea%1:26:00" "dyspnoea%1:26:00" "asthma%1:26:00") 
+ :parent ont::medical-symptom
  )
 
 (define-type ont::injury
  :wordnet-sense-keys ("injury%1:26:00" "hurt%1:26:00" "harm%1:26:00" "trauma%1:26:02")
   :parent ont::medical-disorders-and-conditions
-  :arguments ((:OPTIONAL ONT::of (F::phys-obj (F::origin F::human)))
-	       )
-  )
+ )
 
 ;; wound, lesion, bruise
+; bruise can come under physical-symptom too but WN defines it as an injury.
 (define-type ONT::wound
+  :wordnet-sense-keys ("wound%1:26:00" "lesion%1:26:02" "bruise%1:26:00" "contusion%1:26:00" "injury%1:26:00" "sore%1:26:00")  
   :parent ONT::injury
  )
 
-(define-type ONT::illness
- :wordnet-sense-keys ("health_problem%1:26:00" "unhealthiness%1:26:00" "ill_health%1:26:00" "illness%1:26:00" "unwellness%1:26:00" "malady%1:26:00" "sickness%1:26:00" "condition%1:26:05")
+;; sickness
+(define-type ONT::disease
+ :wordnet-sense-keys ("health_problem%1:26:00" "unhealthiness%1:26:00" "ill_health%1:26:00" "illness%1:26:00" "unwellness%1:26:00" "malady%1:26:00" "sickness%1:26:00" "ailment%1:26:00" "complaint%1:26:00" "ill%1:26:00" "abnormality%1:26:00" "abnormalcy%1:26:00" "aids%1:26:00" "acquired_immune_deficiency_syndrome%1:26:00" "anemia%1:26:00" "aneurysm%1:26:00" "gout%1:26:00" "arthritis%1:26:00" "osteoarthritis%1:26:00" "osteoporosis%1:26:00" "pancreatitis%1:26:00" "pneumonia%1:26:00" "angina%1:26:00" "cardiovascular_disease%1:26:00" "allergy%1:26:00" "hypertension%1:26:00" ) 
  :parent ONT::medical-disorders-and-conditions
- :arguments ((:OPTIONAL ONT::of (F::phys-obj (F::origin F::human)))
-	     )
+ )
+
+(define-type ONT::cancer
+ :parent ONT::disease
+ :wordnet-sense-keys ("cancer%1:26:00" "malignancy%1:26:00" "malignance%1:26:00" "carcinoma%1:26:00" "melanoma%1:26:00" "malignant_melanoma%1:26:00" "lymphoma%1:26:00" "leukemia%1:26:00" "leukaemia%1:26:00" "leucaemia%1:26:00" "cancer_of_the_blood%1:26:00" "sarcoma%1:26:00" "angiosarcoma%1:26:00" "myeloma%1:26:00")
+ )
+
+(define-type ONT::diabetes
+ :parent ONT:: disease
+ :wordnet-sense-keys ("diabetes%1:26:00")
+ )
+
+(define-type ONT::indigestion
+ :parent ONT:: disease
+ :wordnet-sense-keys ("stomach_upset%1:26:00" "indigestion%1:26:00" "dyspepsia%1:26:00" "upset_stomach%1:26:00")
  )
 
 ; for asthma
-(define-type ont::dyspnea
-    :wordnet-sense-keys ("shortness_of_breath%1:26:00" "breathlessness%1:26:00" "dyspnea%1:26:00")
-    :parent ont::physical-symptom
+(define-type ONT::breathing-disorder
+ :parent ONT:: disease
+ :wordnet-sense-keys ("asthma%1:26:00" "respiratory_disorder%1:26:00" "shortness_of_breath%1:26:00" "breathlessness%1:26:00" "sob%1:26:00")
+ )
 
-    )
+;; flu
+(define-type ONT::flu
+ :parent ONT:: disease
+ :wordnet-sense-keys ("flu%1:26:00" "influenza%1:26:00" "grippe%1:26:00")
+ )
 
-;;; nauseous/sick/sore
+;; infection
+(define-type ONT::infection
+ :parent ONT:: disease
+ :wordnet-sense-keys ("infection%1:26:00")
+ )
+
+;;; nauseous/sick/sore, chills, nausea, sickness
 ;;; e.g. He feels sick, Her feet are sore
+;;;   other types have nouns, this type has adjectives. For now, keep them separate. —Actually added chills, nausea & sickness too even though they are nouns but because one can feel them, WN has different sense keys for such uses and the illness type noun type use which still is under medical-disorders-and-conditions!
 (define-type ONT::PHYSICAL-SENSATION
+ :wordnet-sense-keys ("nauseous%3:00:00:ill:01" "nauseated%3:00:00:ill:01" "queasy%3:00:00:ill:01" "sickish%3:00:00:ill:01" "chill%1:26:01" "shivering%1:26:00" "nausea%1:26:00" )
  :parent ONT::PERCEPTION
  )
 

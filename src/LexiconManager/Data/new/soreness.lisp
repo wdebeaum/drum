@@ -6,7 +6,8 @@
  :words (
   (w::soreness
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("soreness%1:26:00"))
+    (LF-PARENT ONT::medical-symptom)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

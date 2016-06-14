@@ -6,7 +6,8 @@
  :words (
   (w::depression
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("depression%1:26:03"))
+    (LF-PARENT ONT::medical-condition)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

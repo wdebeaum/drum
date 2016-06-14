@@ -6,7 +6,8 @@
  :words (
   (w::angina
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("angina%1:26:00"))
+    (LF-PARENT ONT::disease)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )
@@ -18,7 +19,8 @@
  :words (
   ((w::angina w::pectoris)
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("angina%1:26:01"))
+    (LF-PARENT ONT::medical-condition)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

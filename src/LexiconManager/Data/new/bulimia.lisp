@@ -1,13 +1,14 @@
 ;;;;
-;;;; w::bulemia
+;;;; w::bulimia
 ;;;;
 
 (define-words :pos W::n
  :words (
-  (w::bulemia
+  (w::bulimia
   (senses;;;;; names of medical conditions/symptoms that are mass nouns
    ;;;;; i.e., they can't take an indefinite article (*an arthritis) and they have no plural form
-   ((LF-PARENT ONT::medical-disorders-and-conditions)
+   ((meta-data :wn ("eating_disorder%1:26:00"))
+    (LF-PARENT ONT::medical-condition)
     (TEMPL MASS-PRED-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

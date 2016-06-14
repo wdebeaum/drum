@@ -6,7 +6,8 @@
  :words (
   (w::defect
   (senses;;;;; names of diseases/conditions that are count nouns and cannot appear without an article
-	   ((LF-PARENT ONT::medical-disorders-and-conditions)
+	   ((meta-data :wn ("defect%1:26:01"))
+           (LF-PARENT ONT::medical-disorders-and-conditions)
 	    (TEMPL count-pred-TEMPL)
 	    )
 	   )
@@ -21,7 +22,5 @@
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
      (LF-PARENT ONT::problem)
      )
-    )
-   )
-))
+))))
 

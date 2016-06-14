@@ -6,7 +6,8 @@
  :words (
   ((w::pulmonary w::edema)
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("edema%1:26:00"))
+    (LF-PARENT ONT::medical-symptom)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

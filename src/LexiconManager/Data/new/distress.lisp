@@ -18,7 +18,8 @@
  :words (
   (w::distress
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("distress%1:12:02"))
+    (LF-PARENT ONT::medical-condition)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

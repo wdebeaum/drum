@@ -6,7 +6,8 @@
  :words (
   (w::hyperventilation
   (senses
-   ((LF-PARENT ONT::physical-symptom)
+   ((meta-data :wn ("hyperventilation%1:04:00"))
+    (LF-PARENT ONT::medical-symptom)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )
