@@ -182,6 +182,38 @@
 	   |#
           )
 
+          ((ONT::EVENT ?ev ?type :AGENT ?!ag :AFFECTED ?!obj :MODS (?!m))
+	   (ONT::F ?!m ONT::OBJ-IN-PATH :GROUND ?!mVal)
+	   (ONT::TERM ?!mVal ?!type)   
+           -via-gb>
+           100
+           (ONT::EVENT *1 ONT::MODULATE
+            :rule -via-A-gb
+	    :AGENT ?!ag
+            :AFFECTED ?!mVal
+	    :TYPE ONT::CONTROL-MANAGE ; this is invented---there is nothing corresponding to this event in the LF
+            )
+	   (ONT::EVENT *2 ONT::MODULATE
+	    :rule -via-B-gb
+	    :AGENT ?!mVal
+	    :AFFECTED ?!obj
+	    :TYPE ONT::CONTROL-MANAGE ; this is invented---there is nothing corresponding to this event in the LF
+	    )
+           (ONT::CC *3 ONT::BY-MEANS-OF
+            :rule -via-C-gb
+	    :factor-sequence (*1 *2)
+            :OUTCOME ?ev
+            )
+	   #|
+           (CC *3 ONT::VIA
+            :rule -via
+	    :cause ?!mVal
+            :effect ?ev
+            )
+	   |#
+          )
+
+	  
 	  ; Ras binds to Raf via S338.  
           ((ONT::EVENT ?ev ONT::BIND :AGENT ?!ag :AFFECTED ?!obj :MODS (?!m))
 	   (ONT::F ?!m (:* ONT::OBJ-IN-PATH ?!w) :VAL ?!locVal)
@@ -195,6 +227,18 @@
             )
 	   )
 
+          ((ONT::EVENT ?ev ONT::BIND :AGENT ?!ag :AFFECTED ?!obj :MODS (?!m))
+	   (ONT::F ?!m (:* ONT::OBJ-IN-PATH ?!w) :GROUND ?!locVal)
+           (ONT::TERM ?!locVal (? locType ONT::MOLECULAR-SITE ONT::MOLECULAR-DOMAIN ONT::AMINO-ACID ONT::RESIDUE ONT::TERMINUS))
+           -via2-gd>
+           100
+           (ONT::EVENT ?ev ONT::BIND
+            :rule -via2-gd
+	    :sitemod (:* ONT::OBJ-IN-PATH ?!w)
+	    :site ?!locVal
+            )
+	   )
+	  
 
 
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; bmo ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -426,6 +470,19 @@
             )
           )
 
+          ((ONT::EVENT ?ev ?type :REASON ?!r)   ; "because" is not FIGURE/GROUND yet, but it would be if it is to match "due to" etc below
+	   (ONT::F ?!r ONT::REASON :GROUND ?!rVal)
+	   (ONT::EVENT ?!rVal ?!rValType)
+           -reason-gd>
+           100
+           (ONT::CC *1 ONT::CAUSE
+            :rule -reason-gd
+	    :FACTOR ?!rVal
+            :OUTCOME ?ev
+	    :TYPE ONT::REASON
+            )
+          )
+	  
 	  ; (DUE-TO is subtype of REASON; both -reason and -reason2 will fire in some cases)
 	  ; The activation of Raf is due to the stimulation of Ras.  
           ((ONT::EVENT ?ev ?type)  ; note: all free variables
@@ -441,6 +498,19 @@
             )
           )
 
+          ((ONT::EVENT ?ev ?type)  ; note: all free variables
+	   (ONT::F ?!r ONT::DUE-TO :FIGURE ?ev :GROUND ?!rVal)
+	   (ONT::EVENT ?!rVal ?!rValType)
+           -reason2-gd>
+           100
+           (ONT::CC *1 ONT::CAUSE
+            :rule -reason2-gd
+	    :FACTOR ?!rVal
+            :OUTCOME ?ev
+	    :TYPE ONT::DUE-TO
+            )
+          )
+	  
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; purpose ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 	  
@@ -512,6 +582,20 @@
             )
 	   )
 
+          ((ONT::EVENT ?ev ?type :MANNER ?!r1)
+	   (ONT::F ?!r1 ONT::MANNER :GROUND ?!r2)
+	   (ONT::TERM ?!r2 ONT::OUTCOME :OF ?!r3)   ; term substitution  ; :OF not :FIGURE
+	   (ONT::EVENT ?!r3 ?!r3Type)
+           -result-gd>
+           100
+           (ONT::CC *1 ONT::CAUSE    ; used to be ONT::RESULT
+            :rule -result-gd
+	    :FACTOR ?!r3
+            :OUTCOME ?ev
+	    :TYPE ONT::OUTCOME
+            )
+	   )
+
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; cause ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 	  ; Ras causes Raf to activate.
@@ -531,6 +615,7 @@
 
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; in a Ras-(in)dependent manner ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+	  ; Raf activates Erk in a Ras-dependent manner
           ((ONT::EVENT ?ev ?type :MANNER ?!r1)
 	   (ONT::F ?!r1 ONT::MANNER :VAL ?!r2)
 	   (ONT::TERM ?!r2 ?t2 :MODS (?!r3))            ; need to fix ?t2 for "way", "fashion"
@@ -626,6 +711,23 @@
 	    :TYPE ONT::NECESSITY
             )
 	   )
+
+          ((ONT::F ?ev ONT::NECESSITY :FORMAL ?!obj :REASON ?!r)  ; This doesn't parse but let's assume it would be GROUND
+	   (ONT::EVENT ?!obj ?!type2)
+	   (ONT::F ?!r ONT::PURPOSE :GROUND ?!rVal)
+	   (ONT::EVENT ?!rVal ?!rValType)
+           -necessary3-gd>
+           100
+           (;ONT::CC *1 ONT::DEPENDENT
+	    ONT::CC ?ev ONT::DEPENDENT    
+            :rule -necessary3-gd
+	    :FACTOR ?!obj
+            :OUTCOME ?!rVal
+	    :FORMAL -
+	    :REASON -
+	    :TYPE ONT::NECESSITY
+            )
+	   )
 	  
 	  ;;;;;
 	  ; "Ras activation is required by Raf for Erk stimulation." doesn't parse very well---which is good!  We don't know what we want to extract
@@ -650,6 +752,22 @@
             )
 	   )
 	  
+          ((ONT::F ?ev ONT::SUFFICIENCY :NEUTRAL ?!obj :REASON ?!r)
+	   ((? reln ONT::TERM ONT::EVENT) ?!obj ?!type2)
+	   (ONT::F ?!r ONT::PURPOSE :GROUND ?!rVal)
+	   (ONT::EVENT ?!rVal ?!rValType)
+           -sufficient-gd>
+           100
+           (;ONT::CC *1 ONT::ENSURE
+	    ONT::CC ?ev ONT::ENSURE    
+            :rule -sufficent-gd
+	    :FACTOR ?!obj
+            :OUTCOME ?!rVal
+	    :NEUTRAL -
+	    :REASON -
+	    :TYPE ONT::SUFFICIENCY
+            )
+	   )
 	  
 	  )
 	)

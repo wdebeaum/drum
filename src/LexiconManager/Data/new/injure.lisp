@@ -20,7 +20,7 @@
   (w::injury
   (senses
 	   ((meta-data :wn ("injury%1:26:00"))
-            (LF-PARENT ONT:: injury)
+            (LF-PARENT ONT::injury)
 	    (TEMPL count-pred-TEMPL)
 	    )
 	   )

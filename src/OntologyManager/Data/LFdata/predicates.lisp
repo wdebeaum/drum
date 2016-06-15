@@ -348,6 +348,8 @@
  :parent ONT::SITUATION-MODIFIER
  :arguments ((:ESSENTIAL ONT::OF (F::Situation))
              (:REQUIRED ONT::val (F::situation))
+	     (:ESSENTIAL ONT::FIGURE (F::Situation))
+             (:REQUIRED ONT::GROUND (F::situation))
              )
  )
 

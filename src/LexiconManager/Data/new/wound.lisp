@@ -20,7 +20,7 @@
   (w::wound
   (senses
 	   ((meta-data :wn ("wound%1:26:00"))
-            (LF-PARENT ONT:: wound)
+            (LF-PARENT ONT::wound)
 	    (TEMPL count-pred-TEMPL)
 	    )
 	   )

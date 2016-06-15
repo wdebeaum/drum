@@ -44,7 +44,7 @@
      (TEMPL AGENT-TEMPL)
      )
     ((LF-PARENT ONT::contest-deny-oppose-protest)
-     (example “he stood up to cancer“)
+     (example "he stood up to cancer")
      (TEMPL AGENT-neutral-xp-TEMPL  (xp (% W::pp (W::ptype W::to))))
      )
 

@@ -4255,7 +4255,7 @@
  :parent ont::medical-condition
  )
 
-(define-type ont:: dyspnea
+(define-type ont::dyspnea
  :wordnet-sense-keys ("dyspnea%1:26:00" "dyspnea%1:26:00" "dyspnoea%1:26:00" "asthma%1:26:00") 
  :parent ont::medical-symptom
  )
@@ -4284,30 +4284,30 @@
  )
 
 (define-type ONT::diabetes
- :parent ONT:: disease
+ :parent ONT::disease
  :wordnet-sense-keys ("diabetes%1:26:00")
  )
 
 (define-type ONT::indigestion
- :parent ONT:: disease
+ :parent ONT::disease
  :wordnet-sense-keys ("stomach_upset%1:26:00" "indigestion%1:26:00" "dyspepsia%1:26:00" "upset_stomach%1:26:00")
  )
 
 ; for asthma
 (define-type ONT::breathing-disorder
- :parent ONT:: disease
+ :parent ONT::disease
  :wordnet-sense-keys ("asthma%1:26:00" "respiratory_disorder%1:26:00" "shortness_of_breath%1:26:00" "breathlessness%1:26:00" "sob%1:26:00")
  )
 
 ;; flu
 (define-type ONT::flu
- :parent ONT:: disease
+ :parent ONT::disease
  :wordnet-sense-keys ("flu%1:26:00" "influenza%1:26:00" "grippe%1:26:00")
  )
 
 ;; infection
 (define-type ONT::infection
- :parent ONT:: disease
+ :parent ONT::disease
  :wordnet-sense-keys ("infection%1:26:00")
  )
 

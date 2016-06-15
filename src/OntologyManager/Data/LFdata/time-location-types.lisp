@@ -481,7 +481,9 @@
 ; constrains direction of motion
 (define-type ont::direction-reln
  :parent ont::path
- :arguments ((:ESSENTIAL ONT::val ((? val F::Phys-obj))))
+ :arguments ((:ESSENTIAL ONT::val ((? val F::Phys-obj)))
+	     (:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj)))
+	     )
  )
 
 ; constrains direction of rotation
@@ -501,7 +503,9 @@
 
 (define-type ont::dir-in-terms-of-obj
  :parent ont::direction-reln
-  :arguments ((:ESSENTIAL ONT::OF (F::situation (F::type ont::motion))))
+ :arguments ((:ESSENTIAL ONT::OF (F::situation (F::type ont::motion)))
+	     (:ESSENTIAL ONT::FIGURE (F::situation (F::type ont::motion)))
+	     )
  )
 
 ; towards
@@ -574,6 +578,8 @@
  :parent ONT::goal-reln
  :arguments ((:ESSENTIAL ONT::OF (F::situation (f::type ont::event-of-change)))
 	     (:ESSENTIAL ONT::VAL ((? t F::Phys-obj F::abstr-obj)))
+	     (:ESSENTIAL ONT::FIGURE (F::situation (f::type ont::event-of-change)))
+	     (:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj)))
 	     )
  )
 
@@ -784,7 +790,9 @@
 (define-type ONT::event-time
  :parent ONT::event-time-rel
  :arguments ((:ESSENTIAL ONT::VAL ((? vl F::time)))
-	     ))
+	     (:ESSENTIAL ONT::GROUND ((? grd F::time)))
+	     )
+ )
 
 ;; event temporal not including times (e.g., when, upon)
 (define-type ONT::event-event-time
@@ -961,5 +969,7 @@
   :parent ont::predicate
   :arguments ((:optional ont::of ((? t f::phys-obj f::situation)))
 	      (:essential ont::val (f::abstr-obj (f::measure-function f::value) (f::scale (? sc f::rate-scale f::money-scale))))
+	      (:optional ont::figure ((? t2 f::phys-obj f::situation)))
+	      (:essential ont::ground (f::abstr-obj (f::measure-function f::value) (f::scale (? sc2 f::rate-scale f::money-scale))))
 	      )
   )
