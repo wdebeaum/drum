@@ -8,7 +8,7 @@
    (SENSES
     ((meta-data :origin calo-ontology :entry-date 20051209 :change-date 20090508 :wn ("contact%1:10:01") :comments Break-Contact)
      (example "he cut off contact with the other team")
-     (LF-PARENT ONT::establish-communication)
+     (LF-PARENT ONT::communication)
      )
     )
    )

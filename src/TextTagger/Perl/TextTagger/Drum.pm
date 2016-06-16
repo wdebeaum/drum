@@ -627,6 +627,8 @@ sub tag_protein_sites_and_mutations {
     $prev_tag = $tag;
     my $lftype = undef;
     my $dsi = undef;
+    my $start = $tag->{start};
+    my $end = $tag->{end};
     if ($tag->{lex} =~ /^([A-Z]?)([1-9]\d*)([A-Z])$/) {
       # single amino-acid substitution
       $lftype = 'MUTATION';
@@ -669,18 +671,28 @@ sub tag_protein_sites_and_mutations {
 	       upper => aa_site_dsi($3, $upper_index),
 	       'new' => [map { amino_acid_dsi($_) } split(//, $5)]
       };
+    # site with single-letter amino acid abbreviation
     } elsif ($tag->{lex} =~ /^([A-Z])([1-9]\d*)$/) {
       $lftype = 'MOLECULAR-SITE';
       $dsi = aa_site_dsi($1, $2);
-    } elsif ($tag->{lex} =~ /^([A-Z][a-z][a-z])([1-9]\d*)$/ and
+    # site with 3-letter amino acid abbreviation
+    } elsif ($tag->{lex} =~ /^p?([A-Z][a-z][a-z])([1-9]\d*)$/ and
              exists($three_letters_to_aa{$1})) {
       $lftype = 'MOLECULAR-SITE';
       $dsi = aa_site_dsi($1, $2);
+      $start++ if ($tag->{lex} =~ /^p/);
+    # site with amino acid full name (and optional p prefix)
+    } elsif ($tag->{lex} =~ /^p?([A-Za-z][a-z]*)([1-9]\d*)$/ and
+             exists($aa_to_aa{lc($1)})) {
+      $lftype = 'MOLECULAR-SITE';
+      $dsi = aa_site_dsi($1, $2);
+      $start++ if ($tag->{lex} =~ /^p[A-Z]/);
     # 3-letter amino acid abbreviation
-    } elsif ($tag->{lex} =~ /^[A-Z][a-z][a-z]$/ and
-             exists($three_letters_to_aa{$tag->{lex}})) {
+    } elsif ($tag->{lex} =~ /^p?[A-Z][a-z][a-z]$/ and
+             exists($three_letters_to_aa{substr($tag->{lex},-3)})) {
       $lftype = 'AMINO-ACID';
-      $dsi = amino_acid_dsi($tag->{lex});
+      $dsi = amino_acid_dsi(substr($tag->{lex},-3));
+      $start++ if ($tag->{lex} =~ /^p/);
     # singular amino acid full name
     } elsif (exists($aa_to_aa{lc($tag->{lex})})) {
       $lftype = 'AMINO-ACID';
@@ -690,6 +702,12 @@ sub tag_protein_sites_and_mutations {
              exists($aa_to_aa{lc($`)})) {
       $lftype = 'AMINO-ACID';
       $dsi = amino_acid_dsi($`);
+    # singular amino acid full name with p prefix
+    } elsif ($tag->{lex} =~ /^p[A-Z]/ and
+             exists($aa_to_aa{lc(substr($tag->{lex},1))})) {
+      $lftype = 'AMINO-ACID';
+      $dsi = amino_acid_dsi($tag->{lex});
+      $start++;
     # ideally this part would be handled compositionally by the Parser, but
     # that doesn't look like it's happening soon...
     } elsif ($tag->{type} eq 'number' and # this is a number
@@ -726,9 +744,9 @@ sub tag_protein_sites_and_mutations {
     next unless (defined($lftype));
     push @output_tags, +{
       type => 'sense',
-      lex => $tag->{lex},
-      start => $tag->{start},
-      end => $tag->{end},
+      lex => substr($tag->{lex}, $start - $tag->{start}), # for p prefix
+      start => $start,
+      end => $end,
       lftype => [$lftype],
       'domain-specific-info' => $dsi
     };

@@ -8,6 +8,7 @@ require Exporter;
 use TextTagger::Escape qw(escape_for_quotes);
 use TextTagger::Util qw(intersection union remove_duplicates);
 use TextTagger::Tags2Trips qw(sortTags);
+use TextTagger::Normalize qw($dash_re);
 
 use strict vars;
 
@@ -42,6 +43,7 @@ sub add_extra_args {
     $self->{next_uttnum}++ if ($inc_uttnum);
   }
  
+  # FIXME? move this after any new tags are added (e.g. pos, p-)
   for my $tag (@tags) {
     # assign uttnum based on which sentence $tag is in
     for my $s (@sentences) {
@@ -175,7 +177,63 @@ sub add_extra_args {
     $new_pos_tag->{'penn-pos'} = [qw(NN NNS NNP NNPS)];
   }
 
+  # FIXME this really belongs in Drum.pm, being domain-specific, but if I put
+  # it there it means Drum.pm outputs prefix tags, which messes up tagger
+  # sorting (I think) because it forms a cycle between Drum and Specialist:
+  # Drum->prefix->Specialist->pos->Drum
+  push @tags, tag_p_prefixes(@tags);
+
   return @tags;
+}
+
+# tag "p" as a prefix if it's its own (sub)word immediately before (or
+# separated by a dash) a word tagged with one of a few phosphorylatable senses
+my @phosphorylatable_lftypes = qw(
+  GENE
+  PROTEIN
+  GENE-PROTEIN
+  MOLECULE
+  AMINO-ACID
+  MOLECULAR-SITE
+  MUTATION
+);
+sub tag_p_prefixes {
+  my @input_tags = @_;
+  my @output_tags = ();
+  my @phosphorylatable_tags =
+    grep {
+      my $t = $_;
+      $t->{type} eq 'sense' and
+      exists($t->{lftype}) and
+      (@{intersection($t->{lftype}, \@phosphorylatable_lftypes)} > 0)
+    } @input_tags;
+  my @dash_tags =
+    grep {
+      $_->{type} eq 'punctuation' and
+      $_->{lex} =~ /^$dash_re$/
+    } @input_tags;
+  # TODO make this more efficient than this basic n^2 search?
+  # for each "p"
+  for my $prefix_tag (@input_tags) {
+    next unless ($prefix_tag->{type} =~ /^(sub)?word$/ and
+		 $prefix_tag->{lex} eq 'p');
+    # for each thing we'd accept coming after a "p"
+    for my $suffix_tag (@phosphorylatable_tags) {
+          # if it does in fact come after
+      if ($prefix_tag->{end} == $suffix_tag->{start} or
+	  # ... or after a dash
+	  ($prefix_tag->{end} + 1 == $suffix_tag->{start} and
+	   grep {
+	     $_->{start} == $prefix_tag->{end} and
+	     $_->{end} == $suffix_tag->{start} 
+	   } @dash_tags)
+	 ) {
+	# then turn the "p" into a prefix tag
+        push @output_tags, +{ %$prefix_tag, type => 'prefix' };
+      }
+    }
+  }
+  return @output_tags;
 }
 
 1;
