@@ -430,7 +430,7 @@ sub tag_drum_terms {
     } @terms;
   }
   # remove tags on all-lowercase single words that are already in the TRIPS
-  # lexicon or WordNet
+  # lexicon
   @terms = grep {
     (not ($_->{lex} =~ /^\p{Ll}+$/ and
           (word_is_in_trips_lexicon($self, $_->{lex}) or

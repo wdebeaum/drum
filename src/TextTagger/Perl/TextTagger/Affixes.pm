@@ -3,7 +3,6 @@ require Exporter;
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(tag_affixes);
 
-use TextTagger::Util qw(lisp_intern word_is_in_trips_lexicon);
 use TextTagger::Normalize qw($dash_re);
 
 use strict vars;
@@ -85,20 +84,20 @@ sub tag_affixes {
 	  $last_chunk =~ $prefixed_word_re) {
 	my ($prefix, $root_and_suffixes) = ($1, $2);
 	my $middle = $chunk_start + $+[1];
-	if ((not word_is_in_trips_lexicon($self, $last_chunk, 1)) and
-	    word_is_in_trips_lexicon($self, $root_and_suffixes, 1)) {
-	  push @tags, +{
-	    type => 'prefix',
-	    lex => $prefix,
-	    start => $chunk_start,
-	    end => $middle
-	  }, +{
+	my $tag = +{
+	  type => 'prefix',
+	  lex => $prefix,
+	  start => $chunk_start,
+	  end => $middle,
+	  # save the root tag here so we can remove it in CombineTags if needed
+	  root => +{
 	    type => 'word',
 	    lex => $root_and_suffixes,
 	    start => $middle,
 	    end => $end
-	  };
-	}
+	  }
+	};
+	push @tags, $tag, $tag->{root};
       }
     }
   }
