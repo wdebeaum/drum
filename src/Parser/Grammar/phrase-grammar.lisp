@@ -410,6 +410,7 @@
     ;; (N1 VAR arg AGR MASS CASE SEM Changeagr lex quantity subcat transform)
     (N1 var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)
     (N var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)  ; this is a copy of N1 so -N-prefix> would pass on the features
+    (NAME var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)  ; this is a copy of N1 so -NAME-prefix> would pass on the features
     (UNITMOD var arg lex headcat transform agr mass case sem quantity subcat argument indef-only)
     (QUAL var arg lex headcat transform ARGUMENT COMPLEX)
     ;; MD 18/04/2008 added SEM as a headfeature to handle "in full" where in subcategorizes for adjp
@@ -510,6 +511,86 @@
     (add-to-conjunct (val (:MOD (% *PRO* (status F) (class ?qual)
 				   (var *) (constraint (& (of ?v)))))) (old ?r) (new ?con)))
    
+   ((NAME (RESTR  ?con)
+       (LF ?lf) ;(CLASS ?lf)
+       (SORT ?sort) (QUAL +)
+	(relc -) ;(relc ?relc)
+	(sem ?nsem) (subcat ?subcat) (SET-RESTR ?sr)
+	(comparative ?com)
+	(complex -) ;(complex ?cmpl)
+	(post-subcat -) (gap ?gap)
+	    (dobj ?dobj)
+	    (subj ?subj)
+      	    (comp3 ?comp3)
+	    (subj-map ?subjmap)
+	    (dobj-map ?dobjmap)  
+	    (comp3-map ?comp-map)
+     )
+    -Name-prefix-hyphen> 1.01
+    (ADJ (prefix +)
+     (LF ?qual) (ARG ?v) (VAR ?adjv) (WH -)
+     (argument (% NP (sem ?argsem))) 
+     (COMPLEX -) (comparative ?com) (Set-modifier -)
+     (post-subcat -)
+     )
+    (word (lex w::punc-minus))
+    (head (NAME (RESTR ?r) (VAR ?v) (SEM ?nsem) (CLASS ?c) (SET-RESTR ?sr) (gap ?gap)
+	      (SORT ?sort) (relc -) ;;(relc ?relc) "-" to avoid the ambiguity "the [[red book] which I saw]" "the [red [book which I saw]]"  
+	      (subcat ?subcat) (complex -) (lf ?lf)
+	      (post-subcat -)
+	      (PRO -) (postadvbl -) ;; to avoid the ambiguity "the [[red truck] at Avon]" "the [red [truck at Avon]]"
+	    (dobj ?dobj)   ; for nominalizations
+	    (subj ?subj)
+      	    (comp3 ?comp3)
+	    (subj-map ?subjmap)
+	    (dobj-map ?dobjmap)  
+	    (comp3-map ?comp-map)
+	      
+	      )
+     )
+    (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
+    (add-to-conjunct (val (:MOD (% *PRO* (status F) (class ?qual)
+				   (var *) (constraint (& (of ?v)))))) (old ?r) (new ?con)))
+
+   ((NAME (RESTR  ?con)
+       (LF ?lf) ;(CLASS ?lf)
+       (SORT ?sort) (QUAL +)
+	(relc -) ;(relc ?relc)
+	(sem ?nsem) (subcat ?subcat) (SET-RESTR ?sr)
+	(comparative ?com)
+	(complex -) ;(complex ?cmpl)
+	(post-subcat -) (gap ?gap)
+	    (dobj ?dobj)
+	    (subj ?subj)
+      	    (comp3 ?comp3)
+	    (subj-map ?subjmap)
+	    (dobj-map ?dobjmap)  
+	    (comp3-map ?comp-map)
+     )
+    -Name-prefix> 1.01
+    (ADJ (prefix +)
+     (LF ?qual) (ARG ?v) (VAR ?adjv) (WH -)
+     (argument (% NP (sem ?argsem))) 
+     (COMPLEX -) (comparative ?com) (Set-modifier -)
+     (post-subcat -)
+     )
+    (head (NAME (RESTR ?r) (VAR ?v) (SEM ?nsem) (CLASS ?c) (SET-RESTR ?sr) (gap ?gap)
+	      (SORT ?sort) (relc -) ;;(relc ?relc) "-" to avoid the ambiguity "the [[red book] which I saw]" "the [red [book which I saw]]"  
+	      (subcat ?subcat) (complex -) (lf ?lf)
+	      (post-subcat -)
+	      (PRO -) (postadvbl -) ;; to avoid the ambiguity "the [[red truck] at Avon]" "the [red [truck at Avon]]"
+	    (dobj ?dobj)   ; for nominalizations
+	    (subj ?subj)
+      	    (comp3 ?comp3)
+	    (subj-map ?subjmap)
+	    (dobj-map ?dobjmap)  
+	    (comp3-map ?comp-map)
+	      
+	      )
+     )
+    (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
+    (add-to-conjunct (val (:MOD (% *PRO* (status F) (class ?qual)
+				   (var *) (constraint (& (of ?v)))))) (old ?r) (new ?con)))
    
    ;; special construction, a noun with a name
    ((N1 (CLASS ?lf) (sort PRED)
@@ -4471,7 +4552,7 @@
 	;;   we need this for constructions wwith modifiers, like "phosphorylated HER3"
     ((n1 (SORT PRED)
       (var ?v) (Class ?lf) (sem ?sem) (agr ?agr) (case (? cas sub obj -)) (derived-from-name -)
-      (status name) (lex ?l) (restr (& (w::name-of ?l)))
+      (status name) (lex ?l) (restr ?con) ;(restr (& (w::name-of ?l)))
       (mass mass)
       )
      -n1-from-name> 1
@@ -4482,7 +4563,9 @@
 	    ;; swift 11/28/2007 removing gname rule & passing up generated feature (instead of restriction (generated -))
 	    (generated -)  (transform ?transform) (title -)
 	    (restr ?restr)
-	    )))
+	    ))
+     (add-to-conjunct (val (w::name-of ?l)) (old ?restr) (new ?con))
+     )
 
 	;;  HEADLESS CONSTRUCTIONS
 

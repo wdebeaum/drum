@@ -35,6 +35,18 @@
     ))
   ))
 
+(define-words :pos W::ADJ 
+ :words (
+	 (W::p-
+	  (SENSES
+	   (
+	    (LF-PARENT ONT::phosphorilated)
+	    (templ prefix-adj-templ)
+	    )
+	   ))
+
+	 ))
+
 (define-words :pos W::value :boost-word t
  :words (
   (W::P

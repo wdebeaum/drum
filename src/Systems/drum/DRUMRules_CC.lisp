@@ -22,6 +22,20 @@
           )
 |#
 
+	  ; the preexisting INEVENT could be from, e.g., pTyr176-AKT (-phospho2b>)
+          (((? reln ONT::EVENT ONT::TERM) ?ev ?type :MODS (?!ev2) :INEVENT ?!ev3)  
+	   ((? reln2 ONT::EVENT ONT::CC) ?!ev2 ?type2)
+	   ((? reln2b ONT::EVENT ONT::CC) ?ev2b ?type2b)
+           -inevent4>
+           100
+	   (?reln ?ev ?type
+	    :rule -inevent4
+	    :INEVENT ?!ev2
+	    :INEVENT ?!ev3
+	    )
+          )
+
+	  
 	  ; NRAS, expressed by GTP, binds BRAF.	  	  
 	  ; RAF-bound BRAF that is not bound to Vemurafenib phosphorylates MAP2K1. (need to return *two* INEVENT slots)
           (((? reln ONT::EVENT ONT::TERM) ?ev ?type :MODS (?!ev2 ?ev2b))  ; note optional ?ev2b

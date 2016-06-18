@@ -544,7 +544,112 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    ))
 	  |#
 
+	  ;;;;;;;;;;;;;; phosphorylation ;;;;;;;;;;;;;;
 
+	  ; phosphoRaf; pAck1
+	  ((ONT::TERM ?!name (? t ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ) :MODS (?!m)) 
+	   (ONT::F ?!m ONT::PHOSPHORILATED)
+	   -phospho1>
+	   100
+	   (ONT::event ?!m ONT::PHOSPHORYLATION
+	    :rule -phospho1
+	    :AFFECTED ?!name
+	    :type ONT::PHOSPHORILATED
+;	    :drum ?code    
+	    )
+	   )
+
+	  ; pAck1-Tyr176; pAck1-Tyr
+	  ((ONT::TERM ?!name (? t ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ) :MODS (?!m)) 
+	   (ONT::F ?!m ONT::PHOSPHORILATED)
+	   (ONT::TERM ?!loc (? locType ONT::MOLECULAR-SITE ONT::MOLECULAR-DOMAIN ONT::AMINO-ACID ONT::RESIDUE ONT::TERMINUS ONT::MUTATION) :ASSOC-WITHS (?!name)) ; note: it doesn't work to make ?name and ?loc optional, probably because ?name gets instantiated
+	   -phospho1b>
+	   100
+	   (ONT::event ?!m ONT::PHOSPHORYLATION
+	    :rule -phospho1b
+	    :AFFECTED ?!name
+	    :SITE ?!loc
+	    :type ONT::PHOSPHORILATED
+;	    :drum ?code    
+	    )
+	   )
+
+	  ; pTyr; pTyr176
+	  ((ONT::TERM ?!name (? locType ONT::MOLECULAR-SITE ONT::MOLECULAR-DOMAIN ONT::AMINO-ACID ONT::RESIDUE ONT::TERMINUS ONT::MUTATION) :MODS (?!m)) 
+	   (ONT::F ?!m ONT::PHOSPHORILATED)
+	   -phospho2>
+	   101  ; higher priority than -phospho1> because MOLECULAR-SITE would also match MOLECULAR-PART
+	   (ONT::event ?!m ONT::PHOSPHORYLATION
+	    :rule -phospho2
+	    :SITE ?!name
+	    :type ONT::PHOSPHORILATED
+;	    :drum ?code    
+	    )
+	   )
+
+	  ; pTyr176-AKT
+	  ((ONT::TERM ?!loc (? locType ONT::MOLECULAR-SITE ONT::MOLECULAR-DOMAIN ONT::AMINO-ACID ONT::RESIDUE ONT::TERMINUS ONT::MUTATION) :MODS (?!m)) 
+	   (ONT::F ?!m ONT::PHOSPHORILATED)
+	   (ONT::TERM ?!name (? t ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ) :ASSOC-WITHS (?!loc))
+	   -phospho2b>
+	   100
+	   (ONT::event ?!m ONT::PHOSPHORYLATION
+	    :rule -phospho2b
+	    :AFFECTED ?!name
+	    :SITE ?!loc
+	    :type ONT::PHOSPHORILATED
+;	    :drum ?code    
+	    )
+	   (ONT::TERM ?!name ?t
+	    :rule -phospho2b-term
+	    :INEVENT ?!m
+	    )
+	   )
+
+	  ; pAck1(Tyr); pAck1(Tyr176)
+	  ((ONT::TERM ?!name (? t ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ) :MODS (?!m) :PARENTHETICAL ?!loc) 
+	   (ONT::F ?!m ONT::PHOSPHORILATED)
+	   (ONT::TERM ?!loc (? locType ONT::MOLECULAR-SITE ONT::MOLECULAR-DOMAIN ONT::AMINO-ACID ONT::RESIDUE ONT::TERMINUS ONT::MUTATION)) 
+	   -phospho3>
+	   100
+	   (ONT::event ?!m ONT::PHOSPHORYLATION
+	    :rule -phospho3
+	    :AFFECTED ?!name
+	    :SITE ?!loc
+	    :type ONT::PHOSPHORILATED
+;	    :drum ?code    
+	    )
+	   )
+
+	  ; pTyr(Ack1)   ; this notation might not happen but is here just in case
+	  ((ONT::TERM ?!name (? t ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ)) 
+	   (ONT::F ?!m ONT::PHOSPHORILATED)
+	   (ONT::TERM ?!loc (? locType ONT::MOLECULAR-SITE ONT::MOLECULAR-DOMAIN ONT::AMINO-ACID ONT::RESIDUE ONT::TERMINUS ONT::MUTATION) :MODS (?!m) :PARENTHETICAL ?!name) 
+	   -phospho3b>
+	   100
+	   (ONT::event ?!m ONT::PHOSPHORYLATION
+	    :rule -phospho3b
+	    :AFFECTED ?!name
+	    :SITE ?!loc
+	    :type ONT::PHOSPHORILATED
+;	    :drum ?code    
+	    )
+	   )
+
+	  ; pRasV12
+	  ((ONT::TERM ?!name (? t ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ) :MODS (?!m) :ASSOC-WITHS (?!loc)) 
+	   (ONT::F ?!m ONT::PHOSPHORILATED)
+	   (ONT::TERM ?!loc (? locType ONT::MOLECULAR-SITE ONT::MOLECULAR-DOMAIN ONT::AMINO-ACID ONT::RESIDUE ONT::TERMINUS ONT::MUTATION)) 
+	   -phospho4>
+	   100
+	   (ONT::event ?!m ONT::PHOSPHORYLATION
+	    :rule -phospho4
+	    :AFFECTED ?!name
+	    :SITE ?!loc
+	    :type ONT::PHOSPHORILATED
+;	    :drum ?code    
+	    )
+	   )
 	  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	  
