@@ -1348,6 +1348,7 @@
  )
 
 (define-type ONT::ORDERED-DOMAIN
+; :sem (F::Abstr-obj (F::Scale ?!sc))
  :parent ONT::DOMAIN
  )
 
@@ -1429,7 +1430,10 @@
 ;; a number/amount/quantity of X
 (define-type ONT::QUANTITY
  :wordnet-sense-keys ("measure%1:03:00" "quantity%1:03:00" "amount%1:03:00")
- :parent ONT::measure-UNIT
+; :parent ONT::DOMAIN-PROPERTY
+ :parent ONT::abstract-object ; would like to move it into DOMAIN-PROPERTY
+ :arguments ((:ESSENTIAL ONT::OF)
+             )
  )
 
 ;; ratio, proportion, percent(age)
@@ -1694,6 +1698,7 @@
 
 (define-type ONT::LEVEL
  :wordnet-sense-keys ("level%1:26:00")
+ :sem (F::Abstr-obj (F::Scale F::LINEAR-SCALE))
  :parent ONT::ordered-DOMAIN
  :arguments ((:ESSENTIAL ONT::of ((? of f::phys-obj F::Abstr-obj))) ;; noise, water
 	     (:essential ont::val (f::abstr-obj   (F::INFORMATION F::INFORMATION-CONTENT)))
@@ -1814,6 +1819,13 @@
              )
  )
 
+(define-type ONT::DENSITY
+ :wordnet-sense-keys ("density%1:07:00" "concentration%1:07:02")
+ :parent ONT::RATE
+ :arguments ((:REQUIRED ONT::OF (F::Phys-obj))
+             )
+ )
+
 (define-type ONT::ASSETS
  :wordnet-sense-keys ("assets%1:21:00")
  :parent ONT::MEASURE-DOMAIN
@@ -1823,8 +1835,14 @@
              )
  )
 
-(define-type ONT::CLOCK-SPEED
+(define-type ONT::TIME-RATE
  :parent ONT::RATE
+ :arguments ((:REQUIRED ONT::OF (F::Phys-obj))
+             )
+ )
+
+(define-type ONT::CLOCK-SPEED
+ :parent ONT::TIME-RATE
  :arguments ((:REQUIRED ONT::OF (F::Phys-obj (F::origin F::artifact)))
              )
  )
@@ -3841,4 +3859,6 @@
 
 (define-type ont::phosphorilated
     :parent ont::physical-property-val
-    :arguments ((:ESSENTIAL ONT::of (F::phys-obj (f::type ont::molecular-part)))))
+    :arguments ((:ESSENTIAL ONT::of (F::phys-obj (f::type (? t ont::molecular-part ont::chemical))))
+		(:ESSENTIAL ONT::figure (F::phys-obj (f::type (? t2 ont::molecular-part ont::chemical))))
+		))

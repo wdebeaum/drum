@@ -7,11 +7,11 @@
   (W::SPEED
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("speed%1:28:00"))
-     (LF-PARENT ONT::RATE)
+     (LF-PARENT ONT::TIME-RATE)
      (TEMPL other-reln-TEMPL)
      )
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("speed%1:28:00"))
-     (LF-PARENT ONT::RATE)
+     (LF-PARENT ONT::TIME-RATE)
      (TEMPL reln-subcat-of-units-TEMPL)
      )
     )
@@ -40,7 +40,7 @@
 (define-words :pos W::V :templ agent-affected-xp-templ
  :words (
   (W::speed
-   (wordfeats (W::morph (:forms (-vb) :past W::sped :nom w::speed)))
+   (wordfeats (W::morph (:forms (-vb) :past W::sped)))
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("run-51.3.2") :wn ("speed%2:30:00" "speed%2:30:02" "speed%2:38:00" "speed%2:38:03"))
      (LF-PARENT ONT::move-rapidly)
