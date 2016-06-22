@@ -99,7 +99,7 @@
      :comment "Events that involve creating some new object (typically the AFFECTED-RESULT)"
      :sem (F::Situation)
      :arguments ((:optional ONT::result ((? neu F::situation F::Abstr-obj f::phys-obj)))
-		 (:optional ONT::affected-result ((? neu F::situation F::Abstr-obj f::phys-obj))))
+		 (:optional ONT::affected-result ((? neu2 F::situation F::Abstr-obj f::phys-obj))))
      )
 
 (define-type ont::event-of-state 

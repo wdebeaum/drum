@@ -3,7 +3,7 @@
 # File: src/config/TextTagger/defs.mk.in
 # Creator: George Ferguson
 # Created: Tue Sep  9 10:58:39 2008
-# Time-stamp: <Tue Sep  9 11:06:17 EDT 2008 ferguson>
+# Time-stamp: <Tue Jun 21 15:31:31 CDT 2016 lgalescu>
 #
 # @configure_input@
 #
@@ -30,7 +30,7 @@ CORENLP_JAR = $(shell ls $(TEXTTAGGER_corenlp)stanford-corenlp-?.?.?.jar 2>/dev/
 
 CORENLP_MODELS_JAR = $(shell ls $(TEXTTAGGER_corenlp)stanford-corenlp-?.?.?-models.jar 2>/dev/null || ls $(TEXTTAGGER_corenlp)stanford-corenlp-?.?-models.jar 2>/dev/null || ls $(TEXTTAGGER_corenlp)stanford-corenlp-models-????-??-??.jar 2>/dev/null)
 
-CORENLP_CLASSPATH = $(CORENLP_JAR)$(CP_SEP)$(CORENLP_MODELS_JAR)$(CP_SEP)$(TEXTTAGGER_corenlp)xom.jar$(CP_SEP)$(TEXTTAGGER_corenlp)jgrapht.jar
+CORENLP_CLASSPATH = $(CORENLP_JAR)$(CP_SEP)$(CORENLP_MODELS_JAR)$(CP_SEP)$(TEXTTAGGER_corenlp)xom.jar$(CP_SEP)$(TEXTTAGGER_corenlp)jgrapht.jar$(CP_SEP)$(TEXTTAGGER_corenlp)slf4j-api.jar
 CORENLP_JAVA_FLAGS	= -Xmx3g
 
 endif

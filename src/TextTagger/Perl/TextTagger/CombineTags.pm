@@ -36,28 +36,43 @@ use strict vars;
 my $debug = 0;
 
 # remove prefix tags and their corresponding root words when the whole word has
-# a sense in TRIPS/WN or the root word *doesn't* have a sense anywhere
+# a sense in TRIPS/WN or the root word *doesn't* have a sense anywhere. Also
+# remove any other tags for the prefix/root if there isn't a subword version of
+# the prefix (the only other way we'd get the split).
 # note: assumes tag list is sorted
 sub remove_unusable_prefix_splits {
   my ($self, @tags) = @_;
   my @senses = grep { $_->{type} eq 'sense' } @tags;
+  my @subwords = grep { $_->{type} eq 'subword' } @tags;
   my @prefixes = grep { $_->{type} eq 'prefix' } @tags;
   for my $prefix (@prefixes) {
-    # make the grep below faster by discarding sense tags we've passed already
+    # make the greps below faster by discarding tags we've passed already
     pop @senses while (@senses and $senses[0]{end} < $prefix->{start});
+    pop @subwords while (@subwords and $subwords[0]{end} < $prefix->{start});
     next unless (exists($prefix->{root})); # saved root word tag
     my $root = $prefix->{root};
     my $whole = $prefix->{lex} . $root->{lex};
-    # remove $prefix and $root from @tags...
-    @tags = (grep { (not ($_ == $prefix or $_ == $root)) } @tags)
-          # ... if the whole is in TRIPS/WN
-      if (word_is_in_trips_lexicon($self, $whole, 1) or
-          # ... or we have no sense (in TRIPS/WN or here) for the root
-	  not (word_is_in_trips_lexicon($self, $root->{lex}, 1) or
-	       grep {
-		 $_->{start} == $root->{start} and
-		 $_->{end} == $root->{end}
-	       } @senses));
+          # if the whole word is in TRIPS/WN...
+    if (word_is_in_trips_lexicon($self, $whole, 1) or
+        # ... or we have no sense (in TRIPS/WN or here) for the root
+	not (word_is_in_trips_lexicon($self, $root->{lex}, 1) or
+	     grep {
+	       $_->{start} == $root->{start} and
+	       $_->{end} == $root->{end}
+	     } @senses)) {
+      # remove $prefix and $root from @tags
+      @tags = grep { (not ($_ == $prefix or $_ == $root)) } @tags;
+      # if there's no subword tag for the same span as $prefix
+      if (not grep {
+	    $_->{start} == $prefix->{start} and $_->{end} == $prefix->{end}
+	  } @subwords) {
+	# remove all other tags for the same spans as the prefix and root
+	@tags = grep { (not (
+	  ($_->{start} == $prefix->{start} and $_->{end} == $prefix->{end}) or
+	  ($_->{start} == $root->{start} and $_->{end} == $root->{end})
+	)) } @tags;
+      }
+    }
   }
   return @tags;
 }
