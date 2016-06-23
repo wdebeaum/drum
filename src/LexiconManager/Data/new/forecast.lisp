@@ -23,7 +23,7 @@
     ((LF-PARENT ONT::predict)
      (preference .97) ;; prefer noun sense
      (SEM (F::Time-span F::extended))
-     (TEMPL agent-THEME-affected-OPTIONAL-TEMPL (xp2 (% w::pp (w::ptype w::for))))
+     (TEMPL agent-neutral-xp-templ)
      (example "the weatherman forecasts rain [for this zipcode]")
      )
     )

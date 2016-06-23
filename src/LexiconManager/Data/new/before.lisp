@@ -27,12 +27,13 @@
      (example "show me departures before 5 pm")
      (TEMPL binary-constraint-np-TEMPL)
      )
-    ((LF-PARENT ONT::event-time-rel)
+    ;; This one should now be handled by the adj-verb rules
+   #|| ((LF-PARENT ONT::event-time-rel)
      (TEMPL BINARY-CONSTRAINT-adj-postpos-TEMPL)
      (meta-data :origin cernl :entry-date 20110114 :change-date nil :comments hpi-acn-3)
      (example "the device placed before that day")
      (preference .98)
-     )
+     )||#   
     ((LF-PARENT ONT::pos-before-in-trajectory)
      (meta-data :origin beetle :entry-date 20090406 :change-date nil :comments nil)
      (example "just before the bridge, turn left" "the bulbs that come before the switch affect it")

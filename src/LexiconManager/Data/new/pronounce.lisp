@@ -14,7 +14,7 @@
      )
     ((lf-parent ont::locution)
      (example "pronounce the word for me")
-     (templ agent-theme-affected-optional-templ (xp1 (% w::NP)) (xp2 (% w::pp (w::ptype w::for))))	     
+     (templ agent-neutral-xp-templ)
      (meta-data :origin task-learning :entry-date 20050815 :change-date nil :comments nil)
     )
    ))

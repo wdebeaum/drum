@@ -21,7 +21,7 @@
     
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("contiguous_location-47.8-1"))
      (LF-PARENT ONT::touch)
-     (TEMPL neutral-plural-templ)
+     (TEMPL agent-plural-templ)
      )
     )
    )

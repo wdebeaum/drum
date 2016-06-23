@@ -83,6 +83,17 @@
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
+   ((W::IN W::touch)
+   (SENSES
+    ((LF-PARENT ONT::social-interaction-val)
+     (TEMPL central-adj-templ)
+     )
+    )
+   )
+))
+
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
   ((W::in W::place)
    (SENSES
     ((EXAMPLE "that's in place [for him]")

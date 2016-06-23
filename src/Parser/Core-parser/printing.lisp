@@ -3,7 +3,7 @@
 ;;;
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
-;;; Time-stamp: <Tue May 24 23:43:47 EDT 2016 jallen>
+;;; Time-stamp: <Fri Jun 17 16:07:18 EDT 2016 jallen>
 
 (in-package "PARSER")
 
@@ -1845,6 +1845,12 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	 ((ont::to-loc ont::goal-reln  ont::direction-reln) :RESULT)
 	 ((ont::position-reln) :location))
 	(ont::motion
+	 ((ont::pos-as-containment-reln) :location)
+	 ((ont::to-loc ont::position-rel ont::goal-reln ont::direction-reln) :result)
+	 ((ont::from-loc ont::from) :source)
+	 
+	 )
+	(ont::put
 	 ((ont::to-loc ont::position-reln ont::goal-reln  ont::direction-reln) :result)
 	 ((ont::from-loc ont::from) :source)
 	 )

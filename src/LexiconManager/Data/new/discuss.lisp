@@ -9,7 +9,7 @@
    (SENSES
     ((lf-parent ont::discuss)
      (example "he discussed it [with her]")
-     (TEMPL agent-theme-affected-optional-templ)
+     (TEMPL agent-neutral-xp-templ)
      )
     ))
   ))
