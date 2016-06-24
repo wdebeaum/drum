@@ -207,9 +207,19 @@
 
      ((ONT::SPEECHACT ?!a ONT::SA_YN-QUESTION :CONTENT ?!rr)
       (ONT::F ?!rr ONT::SITUATION-ROOT :condition ?!cond-op)
-      (ONT::F ?!cond-op ONT::POS-CONDITION :VAL ?!test)
+      (ONT::F ?!cond-op ONT::POS-CONDITION :GROUND ?!test)
       (ONT::F ?!test ONT::EVENT-OF-CAUSATION)
       -ynq-condition>
+      (ONT::ASK-CONDITIONAL-IF :who *USER* :to *ME* :what ?!rr :condition ?!test)
+      )
+
+   ;; conditional questions: is ERK activated if we add Serafinabib?
+
+     ((ONT::SPEECHACT ?!a ONT::SA_YN-QUESTION :CONTENT ?!rr)
+      (ONT::F ?!rr ONT::SITUATION-ROOT :condition ?!cond-op)
+      (ONT::F ?!cond-op ONT::POS-CONDITION :VAL ?!test)
+      (ONT::F ?!test ONT::EVENT-OF-CAUSATION)
+      -ynq-condition-old-with-val>
       (ONT::ASK-CONDITIONAL-IF :who *USER* :to *ME* :what ?!rr :condition ?!test)
       )
    
@@ -321,7 +331,7 @@
 
    ;; e.g., when I climb the stairs
     (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :content ?!cc)
-     (ONT::F ?!cc (:* ONT::EVENT-TIME-REL W::WHEN) :OF ?!x)
+     (ONT::F ?!cc (:* ONT::EVENT-TIME-REL W::WHEN) :FIGURE ?!x)
      ;(ONT::IMPRO ?!x ?y)
      -explicit-condition->
      (ONT::ANSWER :who *USER* :to *ME* :condition (when ?!x))
@@ -329,7 +339,7 @@
 
    ;; e.g., If I am running, 
    (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :content ?!vv)
-    (ONT::F ?!vv (:* ONT::POS-CONDITION W::IF) :OF ?!x :VAL ?!val)
+    (ONT::F ?!vv (:* ONT::POS-CONDITION W::IF) :FIGURE ?!x :GROUND ?!val)
     (ONT::IMPRO ?!x ?y)
     -explicit-condition1->
     (ONT::ANSWER :who *USER* :to *ME* :condition (if ?!val))
@@ -554,7 +564,7 @@
 	  ((ONT::SPEECHACT ?!x ONT::SA_TELL :CONTENT ?!c)
 	   (ONT::F ?!c (:* ONT::HAVE-PROPERTY W::BE) :PROPERTY ?!p  :force ONT::FALSE)
 	   (ONT::PRO ?!i (:* ONT::PERSON W::I) :PROFORM ont::I)
-	   (ONT::F ?!p (:* ONT::CONFIDENCE-VAL W::SURE) :OF ?!i)
+	   (ONT::F ?!p (:* ONT::CONFIDENCE-VAL W::SURE) :FIGURE ?!i)
 	   -unsure->
 	    (ONT::ANSWER :who *USER* :to *ME* :what ONT::UNSURE-NEG))
 
