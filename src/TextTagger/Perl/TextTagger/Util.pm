@@ -237,7 +237,7 @@ my %wiitl_wf = ();
 sub word_is_in_trips_lexicon {
   my ($self, $word, $use_wordfinder) = @_;
   $word = uc($word);
-  if ($use_wordfinder) {
+  if ($use_wordfinder and $self->{use_wordfinder}) {
     # TRIPS + WordNet (from WordFinder)
     unless (exists($wiitl_wf{$word})) {
       my $reply_content = $self->send_and_wait(

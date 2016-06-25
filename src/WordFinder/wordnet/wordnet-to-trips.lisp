@@ -301,7 +301,10 @@
 		     (util::convert-to-package
 		       `(request
 			  :receiver TextTagger
-			  :content (tag :text ,pertainym-string))))))
+			  :content (tag :text ,pertainym-string
+					;; don't reenter WF
+					:use-wordfinder nil
+					))))))
 	       (pertainym-infos
 		 (loop for msg in tt-reply
 		       for msg-type = (intern (symbol-name (first msg)) :wf)

@@ -138,6 +138,7 @@ sub handle_parameters {
   $self->{senses_only_for_penn_poss} = 'all';
   $self->{xml_tags_mode} = 'keep';
   $self->{parsers_must_agree} = 0;
+  $self->{use_wordfinder} = 1;
   # process options
   eval {
   while (@argv) {
@@ -286,6 +287,8 @@ sub handle_parameters {
       $self->{xml_input_rules_file} = $rules_file;
     } elsif ($opt eq '-parsers-must-agree') {
       $self->{parsers_must_agree} = TripsModule::boolean_opt($opt, shift @argv);
+    } elsif ($opt eq '-use-wordfinder') {
+      $self->{use_wordfinder} = TripsModule::boolean_opt($opt, shift @argv);
     } elsif ($opt eq '') {
       # ignore (we get this from a bug in bash 3.2)
     } else {
@@ -883,6 +886,15 @@ sub receive_request
       } else {
 	die "Invalid value for :drum-species argument: " . KQML::KQMLAsString($content->{':drum-species'});
       }
+      # FIXME? ditto for CombineTags (this is becoming a pattern...)
+      my $old_use_wordfinder = $self->{use_wordfinder};
+      if (not defined($content->{':use-wordfinder'})) {
+	# do nothing
+      } elsif ($content->{':use-wordfinder'} =~ /t/i) {
+	$self->{use_wordfinder} = 1;
+      } else {
+	$self->{use_wordfinder} = 0;
+      }
 
       my $paragraph = 0;
       $paragraph = 1
@@ -983,10 +995,20 @@ sub receive_request
 
 	$self->send_msg("(tell :content (start-paragraph :id $paragraph_ID))")
 	  if (defined($paragraph_ID));
+	# Get all the trips-format tags for the whole paragraph first, since
+	# getTripsTags can send is-defined-word requests to LXM, and those must
+	# not happen at the same time as the Parser is calling functions in LXM
+	# to process messages from the previous chunk. See drum:#183.
+	my @trips_tagses = ();
 	for my $chunk (@chunks)
 	{
 	  my ($chunkTag, $tagsInChunk) = @$chunk;
-	  my $tripsTags = $self->getTripsTags($tagsInChunk, $content);
+	  push @trips_tagses, $self->getTripsTags($tagsInChunk, $content);
+	}
+	for my $chunk (@chunks)
+	{
+	  my ($chunkTag, $tagsInChunk) = @$chunk;
+	  my $tripsTags = shift @trips_tagses;
 	  $self->imitateKeyboardManagerUtterance($chunkTag, $tripsTags, $content->{':extra-tag-args'});
 	}
 	$self->send_msg("(tell :content (end-paragraph :id $paragraph_ID))")
@@ -1008,6 +1030,7 @@ sub receive_request
       # FIXME hack (see above)
       $self->{meta_map_sources} = $old_meta_map_sources;
       $self->{drum_species} = $old_drum_species;
+      $self->{use_wordfinder} = $old_use_wordfinder;
     } elsif ($content->{verb} eq 'set-parameters') {
       for my $keyword (grep /^:/, keys %$content) {
 	my $value = $content->{$keyword};
@@ -1057,6 +1080,8 @@ sub receive_request
 	  $self->{xml_input_rules_file} = $value;
 	} elsif ($keyword eq ':parsers-must-agree') {
 	  $self->{parsers_must_agree} = TripsModule::boolean_opt($keyword, $value);
+	} elsif ($keyword eq ':use-wordfinder') {
+	  $self->{use_wordfinder} = TripsModule::boolean_opt($keyword, $value);
 	} else {
 	  die "Unknown parameter: $keyword";
 	}
@@ -1098,7 +1123,9 @@ sub receive_request
 	    '"' . escape_for_quotes($self->{xml_input_rules_file}) . '"'
 	    : 'nil'),
 	':parsers-must-agree',
-	  ($self->{parsers_must_agree} ? 't' : 'nil')
+	  ($self->{parsers_must_agree} ? 't' : 'nil'),
+	':use-wordfinder',
+	  ($self->{use_wordfinder} ? 't' : 'nil')
       ]]);
     } elsif ($content->{verb} eq 'init') {
       die "'init' request is missing a :taggers list"
