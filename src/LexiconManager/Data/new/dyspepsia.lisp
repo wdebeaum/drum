@@ -7,7 +7,7 @@
   (w::dyspepsia
   (senses
    ((meta-data :wn ("dyspepsia%1:26:00"))
-    (LF-PARENT ONT::medical-symptom)
+    (LF-PARENT ONT::dyspepsia)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

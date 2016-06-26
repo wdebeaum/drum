@@ -7,7 +7,7 @@
   (w::cramp
   (senses
    ((meta-data :wn ("cramp%1:26:00"))
-    (LF-PARENT ONT::medical-symptom)
+    (LF-PARENT ONT::cramp)
     (TEMPL count-pred-TEMPL)
     )
    )

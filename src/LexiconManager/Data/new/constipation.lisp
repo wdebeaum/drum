@@ -7,7 +7,7 @@
   (w::constipation
   (senses
    ((meta-data :wn ("constipation%1:26:00"))
-    (LF-PARENT ONT::medical-symptom)
+    (LF-PARENT ONT::constipation)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

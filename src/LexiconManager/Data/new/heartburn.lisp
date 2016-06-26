@@ -7,9 +7,8 @@
   (w::heartburn
   (senses
    ((meta-data :wn ("heartburn%1:26:00"))
-    (LF-PARENT ONT::medical-symptom)
-    (TEMPL mass-pred-TEMPL)
-    (syntax (W::morph (:forms (-none))))
+    (LF-PARENT ONT::heartburn)
+    (TEMPL bare-pred-TEMPL)
     )
    )
 )

@@ -6,7 +6,7 @@
  :words (
   (w::fever
   (senses
-   ((LF-PARENT ONT::medical-symptom)
+   ((LF-PARENT ONT::fever)
     (example "the child has (a) fever.")
     (TEMPL bare-pred-TEMPL)
     )

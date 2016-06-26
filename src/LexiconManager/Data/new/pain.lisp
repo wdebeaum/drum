@@ -50,26 +50,28 @@
   (W::pain
   (senses
    ((meta-data :wn ("pain%1:26:00" "pain%1:09:00"))
-    (LF-PARENT ONT::medical-symptom)
+    (LF-PARENT ONT::pain)
     (TEMPL bare-pred-TEMPL)
     )
    )
 )
 ))
 
+#|
 (define-words :pos W::n
  :words (
   (w::pain
   (senses;;;;; names of medical conditions/symptoms that are mass nouns
    ;;;;; i.e., they can't take an indefinite article (*an arthritis) and they have no plural form
    ((meta-data :wn ("pain%1:26:00" "pain%1:09:00"))
-    (LF-PARENT ONT::medical-symptom)
+    (LF-PARENT ONT::pain)
     (TEMPL MASS-PRED-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )
    )
 )
 ))
+|#
 
 (define-words :pos W::V :templ agent-theme-xp-templ
  :words (

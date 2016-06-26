@@ -4240,8 +4240,86 @@
 
 ;; fever, pain
 (define-type ONT::medical-symptom
- :wordnet-sense-keys ("symptom%1:26:00" "sign%1:26:00" "fever%1:26:00" "febrility%1:26:00" "febricity%1:26:00" "pyrexia%1:26:00" "feverishness%1:26:00" "pain%1:26:00" "hurting%1:26:00" "pain_sensation%1:09:00" "painful_sensation%1:09:00" "syndrome%1:26:00" "amnesia%1:09:00" "backache%1:26:00" "stomachache%1:26:00" "chest_pain%1:26:00" "chill%1:26:01" "constipation%1:26:00" "constriction%1:09:00" "contraction%1:04:01" "cough%1:26:00" "cramp%1:26:00" "diarrhea%1:26:00" "dyspepsia%1:26:00" "edema%1:26:00" "heartburn%1:26:00" "hives%1:26:00" "hoarseness%1:07:00" "hyperventilation%1:04:00" "arrhythmia%1:26:00" "tachycardia%1:26:00" "lightheadedness%1:26:00" "nausea%1:26:00" "nosebleed%1:26:00" "numbness%1:26:00" "palpitation%1:26:00" "redness%1:26:00" "sneeze%1:26:00" "sniffle%1:04:00" "soreness%1:26:00" "spasm%1:26:00" "tightness%1:09:00" "jaundice%1:26:00")
+ :wordnet-sense-keys ("symptom%1:26:00" "sign%1:26:00" "syndrome%1:26:00" "constriction%1:09:00" "contraction%1:04:01" "hives%1:26:00" "hoarseness%1:07:00" "hyperventilation%1:04:00" "arrhythmia%1:26:00" "tachycardia%1:26:00" "lightheadedness%1:26:00" "nausea%1:26:00" "nosebleed%1:26:00" "numbness%1:26:00" "palpitation%1:26:00" "redness%1:26:00" "sneeze%1:26:00" "sniffle%1:04:00" "soreness%1:26:00" "spasm%1:26:00" "tightness%1:09:00" "jaundice%1:26:00")
  :parent ONT::medical-disorders-and-conditions
+ )
+
+; for amnesia
+(define-type ONT::amnesia
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("amnesia%1:09:00")
+ )
+
+; for chill
+(define-type ONT::chill
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("chill%1:26:01")
+ )
+
+; for constipation
+(define-type ONT::constipation
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("constipation%1:26:00")
+ )
+
+; for cough
+(define-type ONT::cough
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("cough%1:26:00")
+ )
+
+; for cramp
+(define-type ONT::cramp
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("cramp%1:26:00")
+ )
+
+; for diarrhea
+(define-type ONT::diarrhea
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("diarrhea%1:26:00")
+ )
+
+; for dyspepsia
+(define-type ONT::dyspepsia
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("dyspepsia%1:26:00")
+ )
+
+; for edema
+(define-type ONT::edema
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("edema%1:26:00")
+ )
+
+; for fever
+(define-type ONT::fever
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("fever%1:26:00" "febrility%1:26:00" "febricity%1:26:00" "pyrexia%1:26:00" "feverishness%1:26:00")
+ )
+
+; for heartburn
+(define-type ONT::heartburn
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("heartburn%1:26:00")
+ )
+
+; for pain
+(define-type ONT::pain
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("pain%1:26:00" "hurting%1:26:00" "pain_sensation%1:09:00" "painful_sensation%1:09:00" "chest_pain%1:26:00")
+ )
+
+; for backache
+(define-type ONT::backache
+ :parent ONT::pain
+ :wordnet-sense-keys ("backache%1:26:00")
+ )
+
+; for stomachache
+(define-type ONT::stomachache
+ :parent ONT::pain
+ :wordnet-sense-keys ("stomachache%1:26:00")
  )
 
 ;; condition, fever
@@ -4256,19 +4334,19 @@
  )
 
 (define-type ont::dyspnea
- :wordnet-sense-keys ("dyspnea%1:26:00" "dyspnea%1:26:00" "dyspnoea%1:26:00" "shortness_of_breath%1:26:00" "sob%1:26:00") 
+ :wordnet-sense-keys ("dyspnea%1:26:00" "dyspnea%1:26:00" "dyspnoea%1:26:00" "shortness_of_breath%1:26:00" "sob%1:26:00" "breathlessness%1:26:00") 
  :parent ont::medical-symptom
  )
 
 (define-type ont::injury
- :wordnet-sense-keys ("concussion%1:11:00" "injury%1:26:00" "hurt%1:26:00" "harm%1:26:00" "trauma%1:26:02")
+ :wordnet-sense-keys ("concussion%1:11:00" "injury%1:26:00" "hurt%1:26:00" "harm%1:26:00" "trauma%1:26:02" "bruise%1:26:00" "contusion%1:26:00")
   :parent ont::medical-disorders-and-conditions
  )
 
 ;; wound, lesion, bruise
 ; bruise can come under physical-symptom too but WN defines it as an injury.
 (define-type ONT::wound
-  :wordnet-sense-keys ("wound%1:26:00" "lesion%1:26:02" "bruise%1:26:00" "contusion%1:26:00" "sore%1:26:00")  
+  :wordnet-sense-keys ("wound%1:26:00" "lesion%1:26:02" "sore%1:26:00")  
   :parent ONT::injury
  )
 
@@ -4299,13 +4377,25 @@
 ; for arthritis
 (define-type ONT::arthritis
  :parent ONT::disease
- :wordnet-sense-keys ("arthritis%1:26:00" "gout%1:26:00" "osteoarthritis%1:26:00")
+ :wordnet-sense-keys ("arthritis%1:26:00")
+ )
+
+; for gout
+(define-type ONT::gout
+ :parent ONT::arthritis
+ :wordnet-sense-keys ("gout%1:26:00")
+ )
+
+; for osteoarthritis
+(define-type ONT::osteoarthritis
+ :parent ONT::arthritis
+ :wordnet-sense-keys ("osteoarthritis%1:26:00")
  )
 
 ; for asthma
 (define-type ONT::breathing-disorder
  :parent ONT::disease
- :wordnet-sense-keys ("asthma%1:26:00" "respiratory_disorder%1:26:00" "breathlessness%1:26:00")
+ :wordnet-sense-keys ("asthma%1:26:00" "respiratory_disorder%1:26:00")
  )
 
 ; for brain-disease

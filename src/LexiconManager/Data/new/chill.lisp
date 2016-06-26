@@ -7,7 +7,7 @@
   (W::CHILL
   (senses
    ((meta-data :wn ("chill%1:26:01"))
-    (LF-PARENT ONT::medical-symptom)
+    (LF-PARENT ONT::chill)
     (TEMPL count-pred-TEMPL)
     )
    )
