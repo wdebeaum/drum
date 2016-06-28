@@ -3,7 +3,7 @@
 ;;;
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
-;;; Time-stamp: <Fri Jun 17 16:07:18 EDT 2016 jallen>
+;;; Time-stamp: <Mon Jun 27 16:27:24 EDT 2016 jallen>
 
 (in-package "PARSER")
 
@@ -1188,7 +1188,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
       ;; add a proform feature for the pro unless it is already there
       (setq constraint-list (if (not (get-fvalue (third constraint-list) 'proform))
 				(insert-into-& (list :proform (or input (list lex))) constraint-list)
-			      constraint-list))))
+				constraint-list))))
     (let* ((newlf (list* (build-spec status)
 			 var
 			 (build-type-for-lf (or class sem))
@@ -1425,7 +1425,10 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	      ;; convert the semantic scale feature to the ontology package for AKRL
 	      ;;(if (eq (car c) 'w::scale)
 	      ;;(list (keywordify (car c)) (build-value (util::convert-to-package (second c) :ont)))
-		(list (keywordify (car c)) (build-value (util::convert-to-package (second c) *ont-package*))))))
+	      (let ((val (second c)))
+		(list (keywordify (car c)) (if (and (symbolp val) (eq (symbol-package val) *parser-package*))
+					       (build-value (util::convert-to-package (second c) *ont-package*))
+					       val))))))
        (t (consp (car c))  
           (list :MODS (build-modifier var c))
        ))))
