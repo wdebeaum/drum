@@ -7,7 +7,7 @@
  (W::maintain
    (SENSES
     ((meta-data :origin calo :entry-date 20060117 :change-date nil :comments calo-ontology)
-     (LF-PARENT ONT::repair)
+     (LF-PARENT ONT::activity-ongoing)
      (example "maintain the equipment")
      
      )

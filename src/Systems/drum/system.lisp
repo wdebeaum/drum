@@ -116,7 +116,7 @@
 ;; dialogue manager, eg: textIM, simpleIM, extractIM...
 (setq im::*current-dialog-manager* #'im::extractsequenceIM)
 ;;(setq im::*current-dialog-manager* #'im::extractIM)
-(setq im::*output-format* 'im::lf-term)
+
 (setq im::*substitute-types-in-pros* t)
 (setq im::*compute-force-from-tmas* t)
 ;; allow highly fragmented parses
@@ -139,7 +139,8 @@
 (setq im::*eliminate-subevents* nil)
 
 (setq im::*allow-optional-lfs* t) ;; set to t for optional term matching
-(setq im::*substitute-terms-in-extraction* t)
+(setq im::*output-format* 'im::lf-term)
+
 (setq im::*symbol-map* nil)
 
 

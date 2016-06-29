@@ -8,7 +8,7 @@
   (W::MINUTE
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("minute%1:28:00"))
-     (LF-PARENT ONT::time-unit)
+     (LF-PARENT ONT::minute-duration)
      (example "five minutes of silence")
      (templ unit-templ)
      )

@@ -25,13 +25,13 @@
   (COUNT-PRED-SUBCAT-TEMPL
    (SYNTAX(W::SORT W::PRED) (W::AGR W::3s) (W::CASE (? cas W::sub W::obj)) (W::MASS W::COUNT))
    (ARGUMENTS
-    (SUBCAT (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::OF)
+    (SUBCAT (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::FIGURE)
     ))
 
    (COUNT-PRED-SUBCAT-required-TEMPL
    (SYNTAX(W::SORT W::PRED) (W::AGR W::3s) (W::CASE (? cas W::sub W::obj)) (W::MASS W::COUNT))
    (ARGUMENTS
-    (SUBCAT (% W::pp (W::ptype W::of)) ONT::OF)
+    (SUBCAT (% W::pp (W::ptype W::of)) ONT::FIGURE)
     ))
   (COUNT-PRED-SUBCAT-THEME-TEMPL
    (SYNTAX(W::SORT W::PRED) (W::AGR W::3s) (W::CASE (? cas W::sub W::obj)) (W::MASS W::COUNT))
@@ -48,8 +48,8 @@
   (COUNT-PRED-JUNCTION-TEMPL
    (SYNTAX(W::SORT W::PRED) (W::AGR W::3s) (W::CASE (? cas W::sub W::obj)) (W::MASS W::COUNT))
    (ARGUMENTS
-    (SUBCAT (:parameter xp1 (:default (% W::pp (W::ptype W::of)))) ONT::OF OPTIONAL)
-    (SUBCAT2 (:parameter xp2 (:default (% W::pp (W::ptype W::with)))) ONT::OF2 OPTIONAL)
+    (SUBCAT (:parameter xp1 (:default (% W::pp (W::ptype W::of)))) ONT::FIGURE OPTIONAL)
+    (SUBCAT2 (:parameter xp2 (:default (% W::pp (W::ptype W::with)))) ONT::FIGURE1 OPTIONAL)
     ))
 
   ;; subcats are restricted to numbers. At the moment we can't make this restriction via the
@@ -57,8 +57,8 @@
   (coordinate-TEMPL
    (SYNTAX(W::SORT W::PRED) (W::AGR W::3s) (W::CASE (? cas W::sub W::obj)) (W::MASS W::BARE))
    (ARGUMENTS
-    (SUBCAT (:parameter xp1 (:default (% W::number))) ONT::OF)
-    (SUBCAT2 (:parameter xp2 (:default (% W::number ))) ONT::OF2)
+    (SUBCAT (:parameter xp1 (:default (% W::number))) ONT::FIGURE)
+    (SUBCAT2 (:parameter xp2 (:default (% W::number ))) ONT::FIGURE1)
     ))
 
   ;;;;; Mass nouns - e.g. water
@@ -114,7 +114,7 @@
    (ARGUMENTS
     ;; the argument can be either mass (gallons of water) or count (pounds of oranges). Both possibilities
     ;; must be included in the default specification or the one not included breaks
-    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::mass (? mas w::count W::MASS))))) ONT::OF)
+    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::mass (? mas w::count W::MASS))))) ONT::FIGURE)
     ))
 
   (substance-unit-abbrev-templ
@@ -124,7 +124,7 @@
    (ARGUMENTS
     ;; the argument can be either mass (gallons of water) or count (pounds of oranges). Both possibilities
     ;; must be included in the default specification or the one not included breaks
-    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::mass (? mas w::count W::MASS))))) ONT::OF)
+    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::mass (? mas w::count W::MASS))))) ONT::FIGURE)
     ))
 
   (substance-unit-plural-templ
@@ -133,7 +133,7 @@
    (ARGUMENTS
     ;; the argument can be either mass (gallons of water) or count (pounds of oranges). Both possibilities
     ;; must be included in the default specification or the one not included breaks
-    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::mass (? mas w::count W::MASS))))) ONT::OF)
+    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::mass (? mas w::count W::MASS))))) ONT::FIGURE)
     ))
 
   ;;;;; certain measures only apply to singular lf-ofs (which are count nouns), e.g.
@@ -142,7 +142,7 @@
    (SYNTAX(W::AGR (? a W::3s W::3p)) (W::MORPH (:FORMS (-S-3P))) (W::SORT W::SUBSTANCE-UNIT) (W::CASE (? cas 
      W::sub W::obj)) (w::allow-deleted-comp +) (W::MASS W::COUNT))
    (ARGUMENTS
-    (ARGUMENT (% W::PP (W::ptype W::of) (W::agr W::3s)) ONT::OF)
+    (ARGUMENT (% W::PP (W::ptype W::of) (W::agr W::3s)) ONT::FIGURE)
     ))
 
   ;; for plural variants of measure term abbreviations, e.g. 5 mb
@@ -150,7 +150,7 @@
    (SYNTAX (W::AGR W::3p) (W::morph (:forms (-none))) (W::SORT W::SUBSTANCE-UNIT) (W::CASE (? cas 
      W::sub W::obj)) (w::allow-deleted-comp +) (W::MASS W::COUNT))
    (ARGUMENTS
-    (ARGUMENT (% W::PP (W::ptype W::of) (W::agr W::3s)) ONT::OF)
+    (ARGUMENT (% W::PP (W::ptype W::of) (W::agr W::3s)) ONT::FIGURE)
     ))
   
   ;;;;; Attribute units, e.g. degree (temperature), length units: mile, foot, ...
@@ -161,7 +161,7 @@
    (SYNTAX(W::AGR (? a W::3s W::3p)) (W::MORPH (:FORMS (-S-3P))) (W::SORT W::ATTRIBUTE-UNIT) (W::CASE (? cas 
      W::sub W::obj)) (w::allow-deleted-comp +) (W::MASS W::COUNT))
    (ARGUMENTS
-    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::of)
+    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::FIGURE)
     ))
 
    ;;;;; a few constructions have the units first, mostly currency  e.g., $100
@@ -169,7 +169,7 @@
    (SYNTAX(W::AGR (? a W::3s W::3p)) (W::MORPH (:FORMS (-S-3P))) (W::SORT W::ATTRIBUTE-UNIT) (W::CASE (? cas 
      W::sub W::obj)) (w::Allow-before +) (w::allow-deleted-comp +) (W::MASS W::COUNT))
    (ARGUMENTS
-    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::of)
+    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::FIGURE)
     ))
 
   ;; for plural variants of measure term abbreviations, e.g. 5 km
@@ -177,7 +177,7 @@
    (SYNTAX (W::AGR W::3p) (W::MORPH (:FORMS (-none))) (W::SORT W::ATTRIBUTE-UNIT) (W::CASE (? cas 
      W::sub W::obj)) (w::allow-deleted-comp +) (W::MASS W::COUNT))
    (ARGUMENTS
-    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::of)
+    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::FIGURE)
     ))
 
   ;; a week of work, a day of meetings, a moment of silence 
@@ -187,7 +187,7 @@
    (ARGUMENTS
     ;; the argument can be either mass (gallons of water) or count (pounds of oranges). Both possibilities
     ;; must be included in the default specification or the one not included breaks
-    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::mass (? mas w::count W::MASS))))) ONT::OF)
+    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::mass (? mas w::count W::MASS))))) ONT::FIGURE)
     ))
 
   (unit-plural-templ
@@ -196,7 +196,7 @@
    (ARGUMENTS
     ;; the argument can be either mass (gallons of water) or count (pounds of oranges). Both possibilities
     ;; must be included in the default specification or the one not included breaks
-    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::mass (? mas w::count W::MASS))))) ONT::OF)
+    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::mass (? mas w::count W::MASS))))) ONT::FIGURE)
     ))
 
    
@@ -216,7 +216,7 @@
    (SYNTAX(W::sort W::pred) (W::AGR (? a W::3s W::3p)) (W::CASE (? cas W::sub W::obj)) (W::MASS W::COUNT 
     ))
    (ARGUMENTS
-    (SUBCAT (% W::PP (W::ptype W::of)) ONT::OF)
+    (SUBCAT (% W::PP (W::ptype W::of)) ONT::FIGURE)
     ))
   
   ;;;;; e.g., pair of trucks, set of dogs, ....
@@ -225,7 +225,7 @@
 	  (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +) (W::MASS W::COUNT))
    (ARGUMENTS
     (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of)
-				       (W::AGR W::3p) (W::MASS W::COUNT)))) ONT::OF)
+				       (W::AGR W::3p) (W::MASS W::COUNT)))) ONT::FIGURE)
     ))
 
   ;; a serving of food, shipment of water, ...
@@ -234,7 +234,7 @@
 	  (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +) (W::MASS W::COUNT))
    (ARGUMENTS
     (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of)
-				       (W::MASS W::MASS)))) ONT::OF)
+				       (W::MASS W::MASS)))) ONT::FIGURE)
     ))
 
   ;; those that take just about anything, e.g., a shipment of food, a shipment of trucks, ...
@@ -242,21 +242,21 @@
    (SYNTAX (W::sort W::classifier) 
 	  (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +) (W::MASS W::COUNT))
    (ARGUMENTS
-    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of) (w::mass (? ms w::mass w::count))))) ONT::OF)
+    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of) (w::mass (? ms w::mass w::count))))) ONT::FIGURE)
     ))
   
   (indef-classifier-templ
    (SYNTAX (W::sort W::classifier) (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +)
 	  (W::INDEF-ONLY  +) (W::MASS W::COUNT))
    (ARGUMENTS
-    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of)(w::mass (? ms w::mass w::count))))) ONT::OF)
+    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of)(w::mass (? ms w::mass w::count))))) ONT::FIGURE)
     ))
 
   (indef-classifier-count-pl-templ
    (SYNTAX (W::sort W::classifier) (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +)
 	  (W::INDEF-ONLY  +) (W::MASS W::COUNT))
    (ARGUMENTS
-    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::AGR W::3p) (w::mass w::count)))) ONT::OF)
+    (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::AGR W::3p) (w::mass w::count)))) ONT::FIGURE)
     ))
   ;;;;; Relational nouns tagged with other-reln
   ;;;;; distance, weight, speed
@@ -267,7 +267,7 @@
     (SUBCAT (:parameter xp 
 			(:default (% W::PP (W::ptype W::of))) 
 			(:required (W::sort (? !sort W::unit-measure))))
-	    ONT::OF)
+	    ONT::FIGURE)
       ))
 
   ;; an impro that is a TIME-LOC
@@ -278,7 +278,7 @@
     (SUBCAT (:parameter xp 
 			(:default (% W::PP (W::ptype W::of))) 
 			(:required (W::sort (? !sort W::unit-measure))))
-	    ONT::OF)
+	    ONT::FIGURE)
       ))
    
   ;; mass relational nouns
@@ -289,7 +289,7 @@
     (SUBCAT (:parameter xp 
 			(:default (% W::PP (W::ptype W::of))) 
 			(:required (W::sort (? !sort W::unit-measure))))
-	    ONT::OF)
+	    ONT::FIGURE)
       ))
   
   (OTHER-RELN-subcat-required-TEMPL
@@ -299,7 +299,7 @@
     (SUBCAT (:parameter xp 
 			(:default (% W::PP (W::ptype W::of))) 
 			(:required (W::sort (? !sort W::unit-measure))))
-	    ONT::OF)
+	    ONT::FIGURE)
       ))
   ;; relational nouns that use both of and for for the ont::of, e.g. route and path
   (OTHER-RELN-of-for-TEMPL
@@ -309,7 +309,7 @@
     (SUBCAT (:parameter xp 
 			(:default (% W::PP (W::ptype (? p W::of w::for)))) 
 			(:required (W::sort (? !sort W::unit-measure))))
-	    ONT::OF)
+	    ONT::FIGURE)
       ))
 
   ;; for nominalizations where the ont::of role is the ont::formal of the verb
@@ -327,7 +327,7 @@
       W::OTHER-RELN) (w::allow-deleted-comp +) (W::MASS W::COUNT))
    (ARGUMENTS
     (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of))) (:required (W::sort (? !sort W::unit-measure)))) 
-     ont::of)
+     ont::FIGURE)
     ))
 
   (OTHER-RELN-result-TEMPL
@@ -488,7 +488,7 @@
     (SYNTAX (W::SORT  W::PRED) 
 	    (w::allow-deleted-comp +) (W::MASS W::COUNT))
     (ARGUMENTS
-     (SUBCAT (:parameter xp (:default (% W::cp (W::ctype W::s-to) (W::subj ?lsubj)))) ONT::OF)
+     (SUBCAT (:parameter xp (:default (% W::cp (W::ctype W::s-to) (W::subj ?lsubj)))) ONT::FIGURE)
      ))
 
   ;;; nouns that subcategorize for a "that" clause
@@ -532,7 +532,7 @@
   (reln-subcat-of-units-templ
    (SYNTAX(W::sort W::other-reln) (W::AGR (? a W::3s W::3p)) (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp -) (W::MASS W::COUNT))
    (ARGUMENTS
-    (ARGUMENT (% W::NP (W::sort (? !sort W::unit-measure))) ONT::OF)
+    (ARGUMENT (% W::NP (W::sort (? !sort W::unit-measure))) ONT::FIGURE)
     (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::sort (? s w::unit-measure))))) ONT::EXTENT)
     ))
 
@@ -541,8 +541,8 @@
    (SYNTAX(W::sort W::other-reln) (W::AGR (? a W::3s W::3p)) (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +) (W::MASS 
       W::COUNT))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
-     (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::VAL optional)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
+     (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::GROUND optional)
      ))
 
   ;; these are for words like similarity, which have theme (difference between 2 points) and property (difference in charge)
@@ -578,8 +578,8 @@
   (reln-of-ground-templ
    (SYNTAX (W::sort W::other-reln)  (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +) (W::MASS W::COUNT))
    (ARGUMENTS
-    (SUBCAT (:parameter xp1 (:default (% W::PP (W::ptype w::of)))) ONT::of)
-    (SUBCAT2 (:parameter xp2 (:default (% W::PP (W::ptype w::to)))) ONT::of1)
+    (SUBCAT (:parameter xp1 (:default (% W::PP (W::ptype w::of)))) ONT::FIGURE)
+    (SUBCAT2 (:parameter xp2 (:default (% W::PP (W::ptype w::to)))) ONT::FIGURE1)
     ))
   
   ;; effect of A on B
@@ -602,7 +602,7 @@
    (SYNTAX(W::AGR W::3S) (W::MORPH (:FORMS (-S-3P))) (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +) (W::SORT 
       W::KINSHIP-RELN) (W::MASS W::COUNT))
    (ARGUMENTS
-    (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::of)
+    (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::FIGURE)
     ))
   
   ;;;;; Relational nouns tagged with body-part-reln, e.g. hand
@@ -610,7 +610,7 @@
    (SYNTAX(W::AGR W::3S) (W::MORPH (:FORMS (-S-3P))) (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +) (W::SORT 
       W::BODY-PART-RELN) (W::MASS W::COUNT))
    (ARGUMENTS
-    (subcat (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::of)
+    (subcat (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::FIGURE)
     ))
   
   ;;;;; Relational nouns tagged with part-of-reln, e.g. wheel
@@ -618,7 +618,7 @@
    (SYNTAX(W::AGR W::3S) (W::MORPH (:FORMS (-S-3P))) (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +) (W::SORT 
       W::PART-OF-RELN) (W::MASS W::COUNT))
    (ARGUMENTS
-    (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::of)
+    (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::FIGURE)
     ))
   
   ;;;;; Relational nouns tagged with generalized-part-of-reln, e.g. top
@@ -626,7 +626,7 @@
    (SYNTAX(W::AGR W::3S) (W::MORPH (:FORMS (-S-3P))) (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +) (W::SORT 
       W::GEN-PART-OF-RELN) (W::MASS W::COUNT))
    (ARGUMENTS
-    (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::of)
+    (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::FIGURE)
     ))
 
 ; nobody uses this
@@ -675,7 +675,7 @@
      W::sub W::obj)) (W::MASS W::COUNT)
      (W::QOF (% W::PP (W::PTYPE W::OF) (w::agr ?nagr) (w::mass w::count))) )
    (ARGUMENTS
-    (SUBCAT (% W::PP (W::ptype W::of) (w::agr ?nagr) (w::mass w::count)) ont::of)
+    (SUBCAT (% W::PP (W::ptype W::of) (w::agr ?nagr) (w::mass w::count)) ont::FIGURE)
     )
    )
  ))

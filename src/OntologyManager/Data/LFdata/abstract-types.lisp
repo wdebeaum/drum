@@ -15,7 +15,7 @@
 (define-type ONT::KIND
  :parent ONT::ABSTRACT-OBJECT-nontemporal
  :sem (F::abstr-obj (F::SCALE -))
- :arguments ((:REQUIRED ONT::OF)
+ :arguments ((:REQUIRED ONT::FIGURE)
              )
  )
 
@@ -43,7 +43,7 @@
 ;; purpose, function
 (define-type ont::utility
  :parent ont::function-object
-  :arguments ((:REQUIRED ONT::OF)
+  :arguments ((:REQUIRED ONT::FIGURE)
              )
  )
 
@@ -58,7 +58,7 @@
  ;; For example, "this is good for him"
  ;; purpose-implicit is something related to the action that would be a purpose, but which requires coercion
  ;; for example, this drug is good for leukemia = this drug is useful for treating leukemia, the treatment as purpose is implicit
- :arguments ((:REQUIRED ONT::OF)
+ :arguments ((:REQUIRED ONT::FIGURE)
 	     (:optional ONT::FORMAL  (f::situation))
 	     (:optional ONT::NEUTRAL1)
              (:optional ONT::NEUTRAL ((? pvt F::Phys-obj f::abstr-obj f::situation)))
@@ -66,7 +66,7 @@
 	     (:optional ONT::Affected ((? aff f::phys-obj f::abstr-obj f::situation)))
 ;	     (:optional ONT::Purpose-implicit ((? pi f::phys-obj f::abstr-obj f::situation)))
 	     (:optional ONT::REASON ((? pi f::phys-obj f::abstr-obj f::situation)))
-	     (:OPTIONAL ONT::VAL)
+	     (:OPTIONAL ONT::GROUND)
 	     (:optional ont::norole)
              )
  )
@@ -74,13 +74,13 @@
 (define-type ONT::living-val
  :parent ONT::property-val
  :wordnet-sense-keys  ("live%3:00:00" "dead%3:00:01"  "dead%3:00:02")
- :arguments ((:ESSENTIAL ONT::of (F::phys-obj (f::intentional +) (f::type ont::organism))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj (f::intentional +) (f::type ont::organism))
 	     ))
  )
 
 (define-type ONT::behavioral-property
  :parent ONT::property-val
- :arguments ((:ESSENTIAL ONT::of (F::phys-obj (f::intentional +) (f::type ont::organism))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj (f::intentional +) (f::type ont::organism))
 	     ))
  )
 
@@ -162,7 +162,7 @@
  :wordnet-sense-keys ("mathematical_group%1:09:00" "group%1:09:00" "chemical_group%1:27:00" "radical%1:27:00" "group%1:27:00" "group%1:03:00" "grouping%1:03:00")
   :parent ont::abstract-object-nontemporal
 ;  :sem (F::Abstr-obj (f::group +)) ; group feature not defined for abstract objects
-  :arguments ((:OPTIONAL ONT::of)
+  :arguments ((:OPTIONAL ONT::FIGURE)
               )
   )
 
@@ -171,7 +171,7 @@
  :wordnet-sense-keys ("social_group%1:14:00")
   :parent ont::group-object
   :sem (F::Abstr-obj (F::information F::information-content) (f::intentional +) (F::Object-Function F::Occupation) (F::Container -))
-  :arguments ((:OPTIONAL ONT::OF ((? lof f::phys-obj f::abstr-obj))))
+  :arguments ((:OPTIONAL ONT::FIGURE ((? lof f::phys-obj f::abstr-obj))))
   )
 
 ;; swift 20110928 crew defined for obtw demo
@@ -371,13 +371,13 @@
 ;; not under physical-property-val b.c. e.g. fast/slow service fast/slow talking
 (define-type ONT::Speed-val
  :parent ONT::process-val
- :arguments ((:REQUIRED ONT::OF ((? type F::phys-obj F::situation F::abstr-obj)))   ;; e.g., "rate" is an abstract object
+ :arguments ((:REQUIRED ONT::FIGURE ((? type F::phys-obj F::situation F::abstr-obj)))   ;; e.g., "rate" is an abstract object
              )
  )
 
 (define-type ONT::quantity-related-property-val
  :parent ONT::property-val
- :arguments ((:optional ONT::val)
+ :arguments ((:optional ONT::GROUND)
              )
  )
 
@@ -410,21 +410,21 @@
 ;; no experiencer role; currently no distinction between human and non-human ont::of
 (define-type ONT::social-interaction-val
  :parent ONT::property-val
- :arguments ((:required ont::of ((? lof f::abstr-obj f::phys-obj f::situation))
+ :arguments ((:required ont::FIGURE ((? lof f::abstr-obj f::phys-obj f::situation))
 	     ))
  )
 
 (define-type ONT::automatic
  :parent ONT::property-val
- :arguments ((:required ont::of ((? lof f::abstr-obj f::phys-obj f::situation))
+ :arguments ((:required ont::FIGURE ((? lof f::abstr-obj f::phys-obj f::situation))
 	     ))
  )
 
 ;; responsible, irresponsible
 (define-type ONT::responsibility-val
  :parent ONT::social-interaction-val
- :arguments ((:required ont::of ((? lof f::abstr-obj f::phys-obj f::situation)))
-	     (:optional ont::val))
+ :arguments ((:required ont::FIGURE ((? lof f::abstr-obj f::phys-obj f::situation)))
+	     (:optional ont::GROUND))
  )
 
 ;; interesting, boring
@@ -501,10 +501,10 @@
 
 (define-type ont::spatial
  :parent ont::abstract-object
- :arguments ((:OPTIONAL ONT::OF ((? of F::Phys-obj F::Situation f::abstr-obj)))
-	     (:OPTIONAL ONT::val ((? val F::Phys-obj F::Situation f::abstr-obj)))
-	     (:OPTIONAL ONT::FIGURE)
-	     (:OPTIONAL ONT::GROUND)	     
+ :arguments ((:OPTIONAL ONT::FIGURE ((? of F::Phys-obj F::Situation f::abstr-obj)))
+	     (:OPTIONAL ONT::GROUND ((? val F::Phys-obj F::Situation f::abstr-obj)))
+	     ;(:OPTIONAL ONT::FIGURE)
+	     ;(:OPTIONAL ONT::GROUND)	     
              )
  )
 
@@ -512,7 +512,7 @@
 (define-type ONT::ROUTE-TOPOLOGY-VAL
  :parent ONT::spatial
  :sem (F::abstr-obj (:required)(:default (F::gradability -)))
- :arguments ((:REQUIRED ONT::OF (F::phys-obj (F::spatial-abstraction (? sab F::line F::strip))))
+ :arguments ((:REQUIRED ONT::FIGURE (F::phys-obj (F::spatial-abstraction (? sab F::line F::strip))))
              )
  )
 
@@ -520,7 +520,7 @@
 (define-type ONT::FLOW-VAL
  :parent ONT::configuration-PROPERTY-VAL
  :sem (F::abstr-obj (:required)(:default (F::gradability -)))
- :arguments ((:REQUIRED ONT::OF (F::phys-obj (F::spatial-abstraction (? sab F::line F::strip))))
+ :arguments ((:REQUIRED ONT::FIGURE (F::phys-obj (F::spatial-abstraction (? sab F::line F::strip))))
              )
  )
 
@@ -622,7 +622,7 @@
 
 (define-type ONT::orientation-val
  :parent ONT::spatial
-  :arguments ((:OPTIONAL ONT::VAL (F::phys-obj))
+  :arguments ((:OPTIONAL ONT::GROUND (F::phys-obj))
              )
  )
 
@@ -711,7 +711,7 @@
 (define-type ONT::loudness-VAL
  :parent ONT::audible-PROPERTY-VAL
  :sem (F::Abstr-obj (F::MEasure-function F::VALUE))
- :arguments ((:required ont::of ((? lof f::phys-obj f::situation)))) ;; an event can be loud, e.g. barking
+ :arguments ((:required ont::FIGURE ((? lof f::phys-obj f::situation)))) ;; an event can be loud, e.g. barking
  )
 
 ;; imported, domestic
@@ -728,7 +728,7 @@
 ;; wet, dry
 (define-type ONT::dampness-VAL
  :parent ONT::substantial-property-val
- :arguments ((:REQUIRED ONT::OF ((? lof f::phys-obj f::situation)))) ;; dry towel, a dry cough
+ :arguments ((:REQUIRED ONT::FIGURE ((? lof f::phys-obj f::situation)))) ;; dry towel, a dry cough
  )
 
 ;; consecutive, sequential, groups of ordered items
@@ -747,15 +747,15 @@
 ;; consistent, inconsistent
 (define-type ont::consistent-val
  :parent ont::property-val
- :arguments ((:REQUIRED ONT::OF ((? lof f::abstr-obj f::situation)))
-	     (:REQUIRED ONT::val ((? vl f::abstr-obj f::situation)))
+ :arguments ((:REQUIRED ONT::FIGURE ((? lof f::abstr-obj f::situation)))
+	     (:REQUIRED ONT::GROUND ((? vl f::abstr-obj f::situation)))
 	     )
  )
 
 ;; still, motionless, static, dynamic
 (define-type ont::motion-val
  :parent ont::process-val
- :arguments ((:REQUIRED ONT::OF (F::phys-obj))
+ :arguments ((:REQUIRED ONT::FIGURE (F::phys-obj))
              )
  )
 
@@ -767,7 +767,7 @@
 ;; internal, external, inner, outer, onsite facilities
 (define-type ONT::LOCATION-VAL
  :parent ONT::spatial
- :arguments ((:REQUIRED ONT::OF ((? lof f::phys-obj f::situation f::abstr-obj))))
+ :arguments ((:REQUIRED ONT::FIGURE ((? lof f::phys-obj f::situation f::abstr-obj))))
  )
 
 ;; these are cardinal directions: northern, northeastern
@@ -789,7 +789,7 @@
 (define-type ONT::Sequence-val
  :parent ONT::process-val
  :sem (F::Abstr-obj (F::gradability -))
- :arguments ((:optional ONT::val)
+ :arguments ((:optional ONT::GROUND)
             )
  )
 
@@ -797,7 +797,7 @@
 (define-type ONT::PART-WHOLE-VAL
  :parent ONT::physical-PROPERTY-VAL
  :sem (F::Abstr-obj)
- :arguments ((:optional ONT::val)
+ :arguments ((:optional ONT::GROUND)
              )
  )
 
@@ -831,7 +831,7 @@
 
 (define-type ONT::actuality-VAL
  :parent ONT::physical-property-val
- :arguments ((:REQUIRED ONT::of (F::proposition (F::information F::mental-construct)))
+ :arguments ((:REQUIRED ONT::FIGURE (F::proposition (F::information F::mental-construct)))
              )
  )
 
@@ -851,7 +851,7 @@
  :parent ONT::PROCESS-VAL
  :sem (F::abstr-obj)
  ;; f::situation restriction is too strong
- :arguments ((:REQUIRED ONT::OF) ;;(F::situation)) ;; weekly meeting; daily vitamin; daily routine/practice
+ :arguments ((:REQUIRED ONT::FIGURE) ;;(F::situation)) ;; weekly meeting; daily vitamin; daily routine/practice
              )
  )
 
@@ -930,7 +930,7 @@
 (define-type ONT::COMPLETION-VAL
  :parent ONT::PROCESS-VAL
  :sem (F::Abstr-obj (F::gradability -))
- :arguments ((:optional ONT::val)
+ :arguments ((:optional ONT::GROUND)
              )
  )
 
@@ -1077,19 +1077,19 @@
 ;; severe, mild
 (define-type ONT::SEVERITY-VAL
  :parent  ONT::evaluation-attribute-val
- :arguments ((:required ont::of ((? of f::situation f::abstr-obj)))) ;; adding restriction to prevent "acute stomach"
+ :arguments ((:required ont::FIGURE ((? of f::situation f::abstr-obj)))) ;; adding restriction to prevent "acute stomach"
  )
 
 
 ;; physical, bodily
 (define-type ONT::physical-VAL
  :parent ONT::property-val
- :arguments ((:optional ONT::val))
+ :arguments ((:optional ONT::GROUND))
  )
 
 (define-type ont::has-medical-condition
   :parent ont::physical-val
-  :arguments ((:essential ONT::of (F::phys-obj (F::origin F::human) (F::intentional +))))
+  :arguments ((:essential ONT::FIGURE (F::phys-obj (F::origin F::human) (F::intentional +))))
   )
 
 ;; lightheaded, tired
@@ -1100,12 +1100,12 @@
 ;; mental, cerebral
 (define-type ONT::mental-VAL
  :parent ONT::property-val
- :arguments ((:optional ONT::val))
+ :arguments ((:optional ONT::GROUND))
  )
 
 (define-type ONT::STATUS-VAL
  :parent ONT::PROPERTY-VAL
- :arguments ((:optional ONT::val))
+ :arguments ((:optional ONT::GROUND))
  )
 
 ;; american, european, asian...
@@ -1116,7 +1116,7 @@
 ;; adjectives meaning "can [not] be verb'd" for some verb
 (define-type ONT::can-be-done-val
  :parent ONT::process-val
- :arguments ((:optional ONT::val))
+ :arguments ((:optional ONT::GROUND))
  )
 
 ;; adjectives meaning "has [not] been verb'd" for some verb
@@ -1179,9 +1179,9 @@
  :parent ONT::RELATION
  :arguments ((:ESSENTIAL ONT::neutral)
 	     (:ESSENTIAL ONT::neutral1)
-	     (:ESSENTIAL ONT::of)
+	     (:ESSENTIAL ONT::FIGURE)
 	     (:optional ont::formal)
-	     (:optional ont::val) ;; for backwards compat
+	     (:optional ont::GROUND) ;; for backwards compat
 	                  )
  )
 
@@ -1255,7 +1255,7 @@
 ;; sure, certain, confident
 (define-type ONT::confidence-VAL
  :parent  ONT::psychological-property-val
- :arguments ((:optional ONT::val)
+ :arguments ((:optional ONT::GROUND)
              )
  )
 
@@ -1263,14 +1263,14 @@
 ;; visibility, audibility
 (define-type ONT::perceptibility
  :parent ONT::physical-property-val
- :arguments ((:optional ONT::val)
+ :arguments ((:optional ONT::GROUND)
              )
  )
 
 ;; (un)available
 (define-type ONT::AVAILABILITY-VAL
  :parent  ONT::can-be-done-val
- :arguments ((:optional ONT::val ((? tp F::phys-obj F::situation)))
+ :arguments ((:optional ONT::GROUND ((? tp F::phys-obj F::situation)))
 	     ;; available in 4 MW capacity
 ;	     (:optional ont::property (f::abstr-obj))
              )
@@ -1289,28 +1289,28 @@
 ;; (un)reasonable, (ir)rational, (in)sane
 (define-type ONT::reasonable-VAL
  :parent  ONT::psychological-property-val
- :arguments ((:optional ONT::val ((? tp F::phys-obj F::situation)))
+ :arguments ((:optional ONT::GROUND ((? tp F::phys-obj F::situation)))
              )
  )
 
 ;(un)likely, unexpected
 (define-type ONT::EXPECTATION-VAL
  :parent  ONT::property-val
- :arguments ((:optional ONT::val ((? tp F::phys-obj F::situation)))
+ :arguments ((:optional ONT::GROUND ((? tp F::phys-obj F::situation)))
              )
  )
 
 ;; (in)accessible
 (define-type ONT::ACCESSIBILITY-VAL
  :parent  ONT::can-be-done-val
- :arguments ((:REQUIRED ONT::OF (F::phys-obj))
-             (:ESSENTIAL ONT::VAL (F::phys-obj))
+ :arguments ((:REQUIRED ONT::FIGURE (F::phys-obj))
+             (:ESSENTIAL ONT::GROUND (F::phys-obj))
              )
  )
 
 (define-type ONT::ENOUGH-VAL
  :parent  ONT::quantity-related-property-val
- :arguments ((:ESSENTIAL ONT::val)
+ :arguments ((:ESSENTIAL ONT::GROUND)
              )
  )
 
@@ -1318,7 +1318,7 @@
 (define-type ONT::Numerical-property-val
     :parent ONT::discrete-property-val
     :sem (f::abstr-obj (f::gradability -))
-    :arguments ((:REQUIRED ONT::Of (f::abstr-obj (F::measure-function f::term)))))
+    :arguments ((:REQUIRED ONT::FIGURE (f::abstr-obj (F::measure-function f::term)))))
 
 #|
 ;;; Function terms have one or more arguments and have a value
@@ -1334,16 +1334,17 @@
 (define-type ONT::Mathematical-term
     :parent ONT::abstract-object-nontemporal
     :sem (f::abstr-obj (:required (f::gradability -)) (:default (f::information f::data)) )
-    :arguments ((:ESSENTIAL ONT::Of (f::abstr-obj (F::measure-function f::term)))
-		(:ESSENTIAL ONT::val (F::abstr-obj (:default (F::measure-function F::value))))))
+    :arguments ((:ESSENTIAL ONT::FIGURE (f::abstr-obj (F::measure-function f::term)))
+		(:ESSENTIAL ONT::GROUND (F::abstr-obj (:default (F::measure-function F::value))))))
 
 
 ;;; A domain is a single-valued function
 (define-type ONT::DOMAIN
  :parent ONT::ABSTRACT-object
  :comment "Nouns that name domain/scales, and can serve as relational nouns (e.g., the COLOR of the box)"
- :arguments ((:REQUIRED ONT::OF)
-	     (:optional ont::val)
+ :arguments ((:REQUIRED ONT::FIGURE)
+	     (:optional ont::GROUND)
+	     (:optional ont::EXTENT)
              )
  )
 
@@ -1419,7 +1420,7 @@
  :sem (F::abstr-obj (F::measure-function F::value) (F::CONTAINER -) (F::INFORMATION -)
        (F::INTENTIONAL -))
  ;;; We define an argument here because we want to express selectional restrictions on what this unit can measure
- :arguments ((:ESSENTIAL ONT::OF)
+ :arguments ((:ESSENTIAL ONT::FIGURE)
              )
  )
 
@@ -1430,9 +1431,8 @@
 ;; a number/amount/quantity of X
 (define-type ONT::QUANTITY
  :wordnet-sense-keys ("measure%1:03:00" "quantity%1:03:00" "amount%1:03:00")
-; :parent ONT::DOMAIN-PROPERTY
- :parent ONT::abstract-object ; would like to move it into DOMAIN-PROPERTY
- :arguments ((:ESSENTIAL ONT::OF)
+ :parent ONT::DOMAIN-PROPERTY
+ :arguments ((:ESSENTIAL ONT::FIGURE)
              )
  )
 
@@ -1440,7 +1440,7 @@
 (define-type ont::quantitative-relation
  :wordnet-sense-keys ("magnitude_relation%1:24:00" "quantitative_relation%1:24:00")
  :parent ONT::QUANTITY
- :arguments ((:REQUIRED ONT::OF)
+ :arguments ((:REQUIRED ONT::FIGURE)
 	     (:optional ont::formal)
 	     ))
 
@@ -1455,7 +1455,7 @@
 (define-type ONT::ratio
  :wordnet-sense-keys ("percentage%1:24:00" "percent%1:24:00" "per_centum%1:24:00" "pct%1:24:00")
  :parent ONT::quantitative-relation
- :arguments ((:REQUIRED ONT::OF1))
+ :arguments ((:REQUIRED ONT::FIGURE1))
  :sem (F::Abstr-obj (F::Scale F::ratio-scale))
  )
 
@@ -1468,7 +1468,7 @@
 
 (define-type ONT::tangible-unit
  :parent ONT::MEASURE-UNIT
- :arguments ((:ESSENTIAL ONT::OF (F::phys-obj))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj))
              )
  )
 
@@ -1477,22 +1477,40 @@
  :wordnet-sense-keys ("time_unit%1:28:00" "unit_of_time%1:28:00")
   :parent ont::measure-unit
   :sem (F::abstr-obj (F::Scale F::duration-scale))
-  :arguments ((:ESSENTIAL ONT::OF ((? t f::situation F::abstr-obj)))
+  :arguments ((:ESSENTIAL ONT::FIGURE ((? t f::situation F::abstr-obj)))
              )
   )
+
+(define-type ont::Hour-duration
+    :parent ont::time-unit)
+
+(define-type ont::minute-duration
+    :parent ont::time-unit)
+
+(define-type ont::day-duration
+    :parent ont::time-unit)
+
+(define-type ont::year-duration
+    :parent ont::time-unit)
+
+(define-type ont::week-duration
+    :parent ont::time-unit)
+
+(define-type ont::second-duration
+    :parent ont::time-unit)
 
 (define-type ont::power-unit
  :wordnet-sense-keys ("power_unit%1:23:00" "electromagnetic_unit%1:23:00" "emu%1:23:00")
     :parent ont::formal-unit
     ;; Right now items like electricity are tagged as substance, so for now we assume that power units measure them
-    :arguments ((:essential ont::of (f::phys-obj (f::form f::substance))))
+    :arguments ((:essential ont::FIGURE (f::phys-obj (f::form f::substance))))
     )
 
 (define-type ont::energy-unit
  :wordnet-sense-keys ("energy_unit%1:23:00")
     :parent ont::formal-unit
     ;; Right now items like electricity are tagged as substance, so for now we assume that power units measure them
-    :arguments ((:essential ont::of (f::phys-obj (f::form f::substance))))
+    :arguments ((:essential ont::FIGURE (f::phys-obj (f::form f::substance))))
     )
 
 ;; lumen
@@ -1500,7 +1518,7 @@
  :wordnet-sense-keys ("light_unit%1:23:00" "luminous_flux_unit%1:23:00")
     :parent ont::formal-unit
     :sem (F::abstr-obj (F::SCALE F::luminosity-scale))
-    :arguments ((:essential ont::of (f::phys-obj)))
+    :arguments ((:essential ont::FIGURE (f::phys-obj)))
     )
 
 ;(define-type ONT::group-unit
@@ -1524,7 +1542,7 @@
 (define-type ONT::MEDIUM
  :parent ONT::substantial-property-val
  :sem (F::Abstr-obj (F::gradability -))
- :arguments ((:OPTIONAL ONT::OF)
+ :arguments ((:OPTIONAL ONT::FIGURE)
              )
  )
 
@@ -1532,7 +1550,7 @@
 (define-type ONT::MODE
  :parent ONT::substantial-property-val
  :sem (F::Abstr-obj (F::gradability -))
- :arguments ((:OPTIONAL ONT::OF)
+ :arguments ((:OPTIONAL ONT::FIGURE)
              )
  )
 
@@ -1550,7 +1568,7 @@
  :parent ONT::unit
  :comment "words that name measurement units in scales: foot, mile, ..."
  :sem (F::Abstr-obj (F::information F::data))
- :arguments ((:ESSENTIAL ONT::OF))
+ :arguments ((:ESSENTIAL ONT::FIGURE))
  )
 
 (define-type ONT::WEIGHT-UNIT
@@ -1558,7 +1576,7 @@
  :parent ONT::tangible-unit
  :sem (F::abstr-obj (F::Scale F::WEIGHT-scale))
  ;; 5 ounces of water
- :arguments ((:ESSENTIAL ONT::OF (F::phys-obj))) ;;(F::FORM F::solid))))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj))) ;;(F::FORM F::solid))))
  )
 
 (define-type ONT::acoustic-UNIT
@@ -1584,7 +1602,7 @@
  :wordnet-sense-keys ("volume_unit%1:23:00" "capacity_unit%1:23:00" "capacity_measure%1:23:00" "cubage_unit%1:23:00" "cubic_measure%1:23:00" "cubic_content_unit%1:23:00" "displacement_unit%1:23:00" "cubature_unit%1:23:00")
  :parent ONT::tangible-unit
  :sem (F::Abstr-obj (F::Scale F::Volume-scale))
- :arguments ((:ESSENTIAL ONT::OF (F::phys-obj (F::FORM F::substance))))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj (F::FORM F::substance))))
  )
 
 (define-type ONT::CONTAINER-LOAD
@@ -1595,13 +1613,13 @@
 (define-type ont::volume-measure-unit
  :wordnet-sense-keys ("liquid_unit%1:23:00" "liquid_measure%1:23:00")
  :parent ont::volume-unit
- :arguments ((:essential ont::of (f::phys-obj (f::form f::substance))))
+ :arguments ((:essential ont::FIGURE (f::phys-obj (f::form f::substance))))
  )
 
 ;; portion, serving
 (define-type ont::food-measure-unit
  :parent ont::measure-unit
- :arguments ((:essential ont::of (f::phys-obj (f::form f::substance))))
+ :arguments ((:essential ont::FIGURE (f::phys-obj (f::form f::substance))))
  )
 
 (define-type ONT::dose
@@ -1613,14 +1631,14 @@
 (define-type ont::substance-delivery-unit
  :wordnet-sense-keys ("pill%1:06:00")
     :parent ont::dose
-    :arguments ((:essential ont::of (f::phys-obj (f::form f::substance))))
+    :arguments ((:essential ont::FIGURE (f::phys-obj (f::form f::substance))))
     )
 
 (define-type ONT::rate-unit
  :wordnet-sense-keys ("rate%1:28:00")
  :parent ONT::formal-unit
  :sem (F::Abstr-obj (F::Scale F::Rate-scale))
- :arguments ((:ESSENTIAL ONT::OF ((? type F::phys-obj F::situation)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? type F::phys-obj F::situation)))
              )
  )
 
@@ -1634,7 +1652,7 @@
  :wordnet-sense-keys ("computer_memory_unit%1:23:00")
  :parent ONT::formal-UNIT
  :sem (F::Abstr-obj (F::Scale F::Other-scale))
- :arguments ((:ESSENTIAL ONT::OF (F::phys-obj (f::origin f::artifact)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj (f::origin f::artifact)))
              )
  )
 
@@ -1642,7 +1660,7 @@
  :wordnet-sense-keys ("temperature_unit%1:23:00")
  :parent ONT::formal-UNIT
  :sem (F::Abstr-obj (F::Scale F::Temperature-scale))
- :arguments ((:ESSENTIAL ONT::OF ((? type F::phys-obj F::situation)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? type F::phys-obj F::situation)))
              )
  )
 
@@ -1650,15 +1668,15 @@
  :wordnet-sense-keys ("angular_unit%1:23:00")
  :parent ONT::formal-UNIT
  :sem (F::Abstr-obj (F::Scale F::Linear-scale))
- :arguments ((:ESSENTIAL ONT::OF (F::situation (f::trajectory +)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::situation (f::trajectory +)))
              )
  )
 
 (define-type ONT::measure-domain
  :parent ONT::ORDERED-DOMAIN
  :sem (F::Abstr-obj (F::Measure-function F::term))
- :arguments ((:REQUIRED ONT::OF)
-             (:ESSENTIAL ONT::VAL (F::Abstr-obj (F::Measure-function F::Value)))
+ :arguments ((:REQUIRED ONT::FIGURE)
+             (:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Measure-function F::Value)))
              )
  )
 
@@ -1670,14 +1688,14 @@
 
 (define-type ONT::phys-measure-domain
  :parent ONT::MEASURE-DOMAIN
- :arguments ((:REQUIRED ONT::of (F::phys-obj (:default (f::form f::object) (f::container +))))
+ :arguments ((:REQUIRED ONT::FIGURE (F::phys-obj (:default (f::form f::object) (f::container +))))
 	     (:optional ont::extent))
  )
 
 
 (define-type ONT::number-measure-domain
  :parent ONT::MEASURE-DOMAIN
- :arguments ((:REQUIRED ONT::of (F::Abstr-obj (F::Measure-function F::Term)))
+ :arguments ((:REQUIRED ONT::FIGURE (F::Abstr-obj (F::Measure-function F::Term)))
              )
  )
 
@@ -1685,14 +1703,14 @@
  :wordnet-sense-keys ("weight%1:07:00" "heaviness%1:07:00" "weightiness%1:07:00")
  :parent ONT::PHYS-MEASURE-DOMAIN
  :sem (F::Abstr-obj (F::Scale F::Weight-scale))
- :arguments ((:ESSENTIAL ONT::val (F::Abstr-obj (F::Scale F::Weight-scale)))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Scale F::Weight-scale)))
              )
  )
 
 (define-type ONT::area
  :parent ONT::PHYS-MEASURE-DOMAIN
  :sem (F::Abstr-obj (F::Scale F::area-scale))
- :arguments ((:ESSENTIAL ONT::val (F::Abstr-obj (F::Scale F::area-scale)))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Scale F::area-scale)))
              )
  )
 
@@ -1700,8 +1718,8 @@
  :wordnet-sense-keys ("level%1:26:00")
  :sem (F::Abstr-obj (F::Scale F::LINEAR-SCALE))
  :parent ONT::ordered-DOMAIN
- :arguments ((:ESSENTIAL ONT::of ((? of f::phys-obj F::Abstr-obj))) ;; noise, water
-	     (:essential ont::val (f::abstr-obj   (F::INFORMATION F::INFORMATION-CONTENT)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::phys-obj F::Abstr-obj))) ;; noise, water
+	     (:essential ont::GROUND (f::abstr-obj   (F::INFORMATION F::INFORMATION-CONTENT)))
              )
  )
 
@@ -1748,7 +1766,7 @@
  :sem (f::abstr-obj (F::Scale F::Linear-scale))
  :arguments ((:REQUIRED ONT::neutral (F::phys-obj))
              (:OPTIONAL ONT::neutral1 (F::phys-obj))
-	     (:OPTIONAL ONT::OF (F::phys-obj))
+	     (:OPTIONAL ONT::FIGURE (F::phys-obj))
 
              )
  )
@@ -1757,7 +1775,7 @@
 (define-type ONT::luminosity-val
  :wordnet-sense-keys ("brightness%1:07:00")
  :parent ONT::PHYS-MEASURE-DOMAIN
- :arguments ((:ESSENTIAL ONT::val (F::Abstr-obj (F::Scale F::luminosity-scale)))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Scale F::luminosity-scale)))
              )
  )
 
@@ -1765,21 +1783,21 @@
  :wordnet-sense-keys ("temperature%1:07:00" "temperature%1:09:00")
  :parent ONT::PHYS-MEASURE-DOMAIN
  :sem (F::Abstr-obj (F::Scale F::Temperature-scale))
- :arguments ((:ESSENTIAL ONT::val (F::Abstr-obj (F::Scale F::Temperature-scale)))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Scale F::Temperature-scale)))
              )
  )
 
 (define-type ONT::VOLUME
  :parent ONT::PHYS-MEASURE-DOMAIN
  :sem (F::Abstr-obj (F::Scale F::Volume-scale))
- :arguments ((:ESSENTIAL ONT::val (F::Abstr-obj (F::Scale F::Volume-scale)))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Scale F::Volume-scale)))
              )
  )
 
 (define-type ONT::humidity
  :parent ONT::PHYS-MEASURE-DOMAIN
  :sem (F::Abstr-obj (F::Scale F::humidity-scale))
- :arguments ((:ESSENTIAL ONT::val (F::Abstr-obj (F::Scale F::humidity-scale)))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Scale F::humidity-scale)))
              )
  )
 
@@ -1787,8 +1805,8 @@
 (define-type ONT::BOUND
      :wordnet-sense-keys ("extremity%1:15:00" "extreme%1:07:00" "extreme%1:15:00")
      :parent ONT::ORDERED-DOMAIN
-     :arguments ((:REQUIRED ONT::OF ((? fot F::phys-obj F::abstr-obj f::situation)))
-		 (:ESSENTIAL ONT::VAL)
+     :arguments ((:REQUIRED ONT::FIGURE ((? fot F::phys-obj F::abstr-obj f::situation)))
+		 (:ESSENTIAL ONT::GROUND)
 		 )
      )
 
@@ -1805,7 +1823,7 @@
 ;; the resolution of an image
 (define-type ONT::RESOLUTION
  :parent ONT::phys-measure-domain
- :arguments ((:ESSENTIAL ONT::VAL (f::abstr-obj (f::scale f::other-scale)))
+ :arguments ((:ESSENTIAL ONT::GROUND (f::abstr-obj (f::scale f::other-scale)))
              )
  )
 
@@ -1813,7 +1831,7 @@
 (define-type ONT::RATE
  :parent ONT::MEASURE-DOMAIN
  :sem (F::Abstr-obj (F::Scale F::Rate-scale))
- :arguments ((:REQUIRED ONT::OF ((? fot F::phys-obj F::situation)))
+ :arguments ((:REQUIRED ONT::FIGURE ((? fot F::phys-obj F::situation)))
              (:ESSENTIAL ONT::EXTENT (F::abstr-obj (F::measure-function F::value) (F::scale F::rate-scale)))
 	     (:essential ont::FORMAL (F::SITUATION (f::type ont::event-of-change)))
              )
@@ -1822,7 +1840,7 @@
 (define-type ONT::DENSITY
  :wordnet-sense-keys ("density%1:07:00" "concentration%1:07:02")
  :parent ONT::RATE
- :arguments ((:REQUIRED ONT::OF (F::Phys-obj))
+ :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
              )
  )
 
@@ -1830,20 +1848,20 @@
  :wordnet-sense-keys ("assets%1:21:00")
  :parent ONT::MEASURE-DOMAIN
  :sem (F::Abstr-obj (F::Scale F::money-scale))
- :arguments ((:REQUIRED ONT::OF ((? fot F::phys-obj F::situation)))
-             (:ESSENTIAL ONT::VAL (F::abstr-obj (F::measure-function F::value) (F::scale F::money-scale)))
+ :arguments ((:REQUIRED ONT::FIGURE ((? fot F::phys-obj F::situation)))
+             (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::measure-function F::value) (F::scale F::money-scale)))
              )
  )
 
 (define-type ONT::TIME-RATE
  :parent ONT::RATE
- :arguments ((:REQUIRED ONT::OF (F::Phys-obj))
+ :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
              )
  )
 
 (define-type ONT::CLOCK-SPEED
  :parent ONT::TIME-RATE
- :arguments ((:REQUIRED ONT::OF (F::Phys-obj (F::origin F::artifact)))
+ :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj (F::origin F::artifact)))
              )
  )
 
@@ -1864,7 +1882,7 @@
 (define-type ONT::Physical-discrete-domain
  :wordnet-sense-keys ("conformation%1:07:00" "contour%1:07:00" "configuration%1:07:00" "form%1:07:01" "shape%1:07:00" "shape%1:03:00" "form%1:03:00")
  :parent ONT::DISCRETE-DOMAIN
- :arguments ((:REQUIRED ONT::of (F::Phys-obj))
+ :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
              )
  )
 
@@ -1872,7 +1890,7 @@
 (define-type ONT::sensory-property
  :parent ONT::PHYSICAL-DISCRETE-DOMAIN
  :sem (F::abstr-obj (F::scale F::other-scale)) ;; why scale?
- :arguments ((:REQUIRED ONT::of (F::Phys-obj))
+ :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
              )
  )
 
@@ -1880,41 +1898,41 @@
  :parent ONT::PHYSICAL-DISCRETE-DOMAIN
  ;; making it f::size, to match w/ small & large
  :sem (F::abstr-obj (F::scale F::size-scale)) ; what scale should this be? weight? length? does it need a scale?
- :arguments ((:REQUIRED ONT::of (F::Phys-obj))
+ :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
 	     (:OPTIONAL ONT::EXTENT)
              )
  )
 
 (define-type ONT::texture
  :parent ONT::PHYSICAL-DISCRETE-DOMAIN
- :arguments ((:REQUIRED ONT::of (F::Phys-obj))
+ :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
              )
  )
 
 (define-type ONT::gender
  :parent ONT::PHYSICAL-DISCRETE-DOMAIN
- :arguments ((:REQUIRED ONT::of (F::Phys-obj))
+ :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
              )
  )
 
 (define-type ONT::Color
  :wordnet-sense-keys ("colouring%1:07:00" "coloring%1:07:00" "colour%1:07:00" "color%1:07:00" "color%1:09:01" "colour%1:09:01")
  :parent ONT::physical-discrete-domain
- :arguments ((:REQUIRED ONT::val (F::abstr-obj (F::scale F::color-scale))) ;?? what's this? the car's color of red?
+ :arguments ((:REQUIRED ONT::GROUND (F::abstr-obj (F::scale F::color-scale))) ;?? what's this? the car's color of red?
              )
  )
 
 (define-type ONT::source
  :parent ONT::function-OBJECT
  :sem (F::Abstr-obj)
- :arguments ((:essential ONT::OF)
+ :arguments ((:essential ONT::FIGURE)
 	     )
  )
 
 (define-type ONT::prize
  :parent ONT::function-OBJECT
  :sem (F::Abstr-obj)
- :arguments ((:essential ONT::OF)
+ :arguments ((:essential ONT::FIGURE)
 	     )
  )
 
@@ -1922,7 +1940,7 @@
   :wordnet-sense-keys ("subject%1:09:00::" "subject_area%1:09:00::" "subject_field%1:09:00::" "field%1:09:00::" "field_of_study%1:09:00::" "study%1:09:02::")
   :parent ONT::function-OBJECT
   :sem (F::Abstr-obj)
-  :arguments ((:essential ONT::OF)
+  :arguments ((:essential ONT::FIGURE)
 	      )
  )
 
@@ -1930,7 +1948,7 @@
 (define-type ONT::technology
  :parent ONT::discipline
  :sem (F::Abstr-obj)
- :arguments ((:essential ONT::OF)
+ :arguments ((:essential ONT::FIGURE)
 	     )
  )
 
@@ -1966,26 +1984,26 @@
 ;; success, failure
 (define-type ONT::outcome
  :parent ONT::information-function-object
- :arguments ((:essential ONT::of)
+ :arguments ((:essential ONT::FIGURE)
 	     )
  )
 
 (define-type ONT::result
  :parent ONT::outcome
- :arguments ((:essential ONT::of)
+ :arguments ((:essential ONT::FIGURE)
 	     )
  )
 
 (define-type ONT::clinical-finding
  :parent ONT::result
- :arguments ((:essential ONT::of)
+ :arguments ((:essential ONT::FIGURE)
 	     )
  )
 
 ;; identification
 (define-type ONT::identification
  :parent ONT::information-FUNCTION-OBJECT
-  :arguments ((:essential ONT::of ((? lof F::Phys-obj f::abstr-obj)))
+  :arguments ((:essential ONT::FIGURE ((? lof F::Phys-obj f::abstr-obj)))
 	     )
  )
 
@@ -1996,13 +2014,13 @@
 ;; ssn
 (define-type ONT::ssn
  :parent ONT::id-number
-  :arguments ((:essential ONT::of (F::Phys-obj)))
+  :arguments ((:essential ONT::FIGURE (F::Phys-obj)))
  )
 
 ;; username, login
 (define-type ONT::username
  :parent ONT::identification
-  :arguments ((:essential ONT::of ((? lof F::Phys-obj f::abstr-obj)))
+  :arguments ((:essential ONT::FIGURE ((? lof F::Phys-obj f::abstr-obj)))
 	     )
  )
 
@@ -2017,7 +2035,7 @@
  :wordnet-sense-keys ("address%1:15:00")
  :parent ONT::identification
  :sem (F::Abstr-obj (F::object-function f::spatial-object))
- :arguments ((:essential ONT::of (F::Phys-obj)))
+ :arguments ((:essential ONT::FIGURE (F::Phys-obj)))
  )
 
 (define-type ont::zipcode
@@ -2045,7 +2063,7 @@
  :wordnet-sense-keys ("event%1:03:00" "time_period%1:28:00" "period_of_time%1:28:00" "period%1:28:00")
  :parent ONT::EVENT-TYPE
  :sem (F::Situation (F::aspect F::dynamic))
- :arguments ((:OPTIONAL ONT::OF)
+ :arguments ((:OPTIONAL ONT::FIGURE)
 ;	     (:optional ont::content)
              )
  )
@@ -2061,7 +2079,7 @@
 (define-type ONT::Action
  :parent ONT::EVENT-TYPE
  :sem (F::Situation (F::cause F::Agentive) (F::aspect F::dynamic))
- :arguments ((:OPTIONAL ONT::OF)
+ :arguments ((:OPTIONAL ONT::FIGURE)
              )
  )
 
@@ -2080,13 +2098,13 @@
 (define-type ONT::attribute
  :wordnet-sense-keys ("dimension%1:09:00" "attribute%1:09:00" "property%1:09:00" "property%1:07:00" "holding%1:21:00" "belongings%1:21:00" "property%1:21:00" "attribute%1:03:00")
  :parent ont::abstract-object-nontemporal
- :arguments ((:OPTIONAL ONT::of ((? lo f::phys-obj f::abstr-obj)))
+ :arguments ((:OPTIONAL ONT::FIGURE ((? lo f::phys-obj f::abstr-obj)))
              )
  )
 
 (define-type ONT::body-property
  :parent ont::attribute
- :arguments ((:OPTIONAL ONT::of (f::phys-obj (f::origin f::living)))
+ :arguments ((:OPTIONAL ONT::FIGURE (f::phys-obj (f::origin f::living)))
              )
  )
 
@@ -2208,8 +2226,8 @@
  :wordnet-sense-keys ("cognition%1:03:00" "knowledge%1:03:00" "noesis%1:03:00" "grounds%1:10:00" "reason%1:10:00")
  :parent ONT::mental-construction
 ;; :sem (F::Abstr-obj (F::container +))
- :arguments ((:OPTIONAL ONT::OF) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
-	     (:optional ont::VAL)
+ :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
+	     (:optional ont::GROUND)
 	     (:optional ont::FORMAL (f::situation))
              )
  )
@@ -2217,7 +2235,7 @@
 (define-type ONT::FEELING
     :wordnet-sense-keys ("feeling%1:03:00" "bother%1:09:00" "worry%1:09:00" "sorrow%1:09:00")
     :parent ONT::mental-construction
-    :arguments ((:OPTIONAL ONT::OF) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
+    :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
 		))
 
 ;; reason, motivation
@@ -2235,9 +2253,9 @@
 (define-type ONT::ps-object
  :parent ONT::mental-construction
  ;;:sem (F::Abstr-obj (F::information F::information-content))
- :arguments ((:optional ont::of)
+ :arguments ((:optional ont::FIGURE)
 	     (:optional ont::formal)
-	     (:optional ont::val)
+	     (:optional ont::GROUND)
 	     )
 )
 
@@ -2294,7 +2312,7 @@
 ;; proposal, advice, assignment, recommendation
 (define-type ONT::proposal
  :parent ONT::ps-object
- :arguments ((:essential ONT::OF))
+ :arguments ((:essential ONT::FIGURE))
  )
 
 ;; task-related things that one commits to
@@ -2428,7 +2446,7 @@
 ;; prefix, suffix
 (define-type ont::linguistic-component
  :parent ont::linguistic-object
- :arguments ((:REQUIRED ONT::OF (F::abstr-obj (f::information f::information-content))))
+ :arguments ((:REQUIRED ONT::FIGURE (F::abstr-obj (f::information f::information-content))))
  )
 
 ;; html, java, etc.
@@ -2464,15 +2482,15 @@
 (define-type ONT::POPULATION
  :parent ONT::ORDERED-DOMAIN
  :sem (F::Abstr-obj (F::Measure-function F::term))
- :arguments ((:REQUIRED ONT::OF (F::Phys-obj (F::form F::geographical-object)))
+ :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj (F::form F::geographical-object)))
              )
  )
 
 (define-type ONT::COST-RELATION
  :parent ONT::predicate
  :sem (F::Abstr-obj (f::scale f::money-scale) (f::information f::information-content))
- :arguments ((:REQUIRED ont::of)
-	     (:REQUIRED ONT::val (F::Abstr-obj (F::Scale F::money-scale) (f::object-function f::currency)))
+ :arguments ((:REQUIRED ont::FIGURE)
+	     (:REQUIRED ONT::GROUND (F::Abstr-obj (F::Scale F::money-scale) (f::object-function f::currency)))
              )
  )
 
@@ -2480,8 +2498,8 @@
 ;; we want vp attachment here, but not to static verbs
 (define-type ONT::PURCHASE-COST
   :parent ONT::COST-RELATION
-  :arguments ((:REQUIRED ont::of (f::situation (f::aspect f::dynamic)))
-	      (:REQUIRED ONT::val (F::Abstr-obj (F::Scale F::money-scale) (f::object-function f::currency)))
+  :arguments ((:REQUIRED ont::FIGURE (f::situation (f::aspect f::dynamic)))
+	      (:REQUIRED ONT::GROUND (F::Abstr-obj (F::Scale F::money-scale) (f::object-function f::currency)))
              )
  )
 
@@ -2491,16 +2509,16 @@
  :wordnet-sense-keys ("change%1:21:02" "return%1:21:00" "issue%1:21:00" "take%1:21:00" "takings%1:21:00" "proceeds%1:21:00" "yield%1:21:00" "payoff%1:21:02")
  :wordnet-sense-keys ("change%1:21:02" "return%1:21:00" "issue%1:21:00" "take%1:21:00" "takings%1:21:00" "proceeds%1:21:00" "yield%1:21:00" "payoff%1:21:02")
  :parent ONT::COST-RELATION
-  :arguments ((:REQUIRED ont::of ((? lo f::phys-obj f::abstr-obj)))
-	      (:REQUIRED ONT::val (F::Abstr-obj (F::Scale F::money-scale) (f::object-function f::currency)))
+  :arguments ((:REQUIRED ont::FIGURE ((? lo f::phys-obj f::abstr-obj)))
+	      (:REQUIRED ONT::GROUND (F::Abstr-obj (F::Scale F::money-scale) (f::object-function f::currency)))
              )
  )
 
 ;; unique lf for price
 (define-type ONT::PRICE
  :parent ONT::VALUE-COST
-  :arguments ((:REQUIRED ont::of ((? lo f::phys-obj f::abstr-obj)))
-	      (:REQUIRED ONT::val (F::Abstr-obj (F::Scale F::money-scale) (f::object-function f::currency)))
+  :arguments ((:REQUIRED ont::FIGURE ((? lo f::phys-obj f::abstr-obj)))
+	      (:REQUIRED ONT::GROUND (F::Abstr-obj (F::Scale F::money-scale) (f::object-function f::currency)))
              )
  )
 
@@ -2513,9 +2531,9 @@
  :parent ONT::MEASURE-DOMAIN
  :sem (F::Abstr-obj (f::scale f::money-scale))
  :arguments (;; only projects have budgets -- the budgets for people and objects are more general relations (JFA 9/1)
-	     (:essential ONT::of (f::abstr-obj (f::information f::information-content)))
+	     (:essential ONT::FIGURE (f::abstr-obj (f::information f::information-content)))
              ;;; a project's budget of 5 dollars
-             (:ESSENTIAL ONT::val (F::Abstr-obj (F::Scale F::money-scale)))
+             (:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Scale F::money-scale)))
              )
  )
 
@@ -2526,7 +2544,7 @@
  :sem (F::Abstr-obj (F::Measure-function F::term)  (f::object-function f::currency) (f::scale f::money-scale))
   :arguments (
  ;; accounts can belong to individuals, organizations or projects
- (:essential ont::of ((? lof f::phys-obj f::abstr-obj))))
+ (:essential ont::FIGURE ((? lof f::phys-obj f::abstr-obj))))
  )
 
 ;; bill, tab
@@ -2540,21 +2558,21 @@
 ;; lack, shortage
 (define-type ONT::LACK
   :parent ont::situation
- :arguments ((:REQUIRED ONT::OF)
+ :arguments ((:REQUIRED ONT::FIGURE)
              )
  )
 
 ;; surplus, excess
 (define-type ONT::surplus
  :parent ONT::ORDERED-DOMAIN
- :arguments ((:REQUIRED ONT::OF)
+ :arguments ((:REQUIRED ONT::FIGURE)
              )
  )
 
 ;; spec, requirement
 (define-type ONT::REQUIREMENTS
  :parent ONT::ORDERED-DOMAIN
- :arguments ((:REQUIRED ONT::OF)
+ :arguments ((:REQUIRED ONT::FIGURE)
              )
  )
 
@@ -2601,7 +2619,7 @@
  :wordnet-sense-keys ("control%1:04:00" "restriction%1:09:00" "limitation%1:09:00")
  :wordnet-sense-keys ("control%1:04:00" "restriction%1:09:00" "limitation%1:09:00")
  :parent ONT::SITUATION
- :arguments ((:OPTIONAL ONT::OF)
+ :arguments ((:OPTIONAL ONT::FIGURE)
 ;	     (:optional ont::associated-information)
              )
  )
@@ -2609,28 +2627,28 @@
 (define-type ONT::NAME
  :parent ONT::IDENTIFICATION
  :sem (F::Abstr-obj (F::information F::information-content))
- :arguments ((:ESSENTIAL ONT::of )
+ :arguments ((:ESSENTIAL ONT::FIGURE )
              )
  )
 
 (define-type ONT::FIRSTNAME
  :parent ONT::NAME
  :sem (F::Abstr-obj (F::information F::information-content))
- :arguments ((:ESSENTIAL ONT::of )
+ :arguments ((:ESSENTIAL ONT::FIGURE )
              )
  )
 
 (define-type ONT::LASTNAME
  :parent ONT::NAME
  :sem (F::Abstr-obj (F::information F::information-content))
- :arguments ((:ESSENTIAL ONT::of )
+ :arguments ((:ESSENTIAL ONT::FIGURE )
              )
  )
 
 (define-type ONT::FULLNAME
  :parent ONT::NAME
  :sem (F::Abstr-obj (F::information F::information-content))
- :arguments ((:ESSENTIAL ONT::of )
+ :arguments ((:ESSENTIAL ONT::FIGURE )
              )
  )
 
@@ -2638,7 +2656,7 @@
 (define-type ONT::TITLE
  :parent ONT::NAME
  :sem (F::Abstr-obj (F::information F::information-content))
- :arguments ((:ESSENTIAL ONT::of  (F::phys-obj (F::origin F::artifact) (F::information f::information-content)))
+ :arguments ((:ESSENTIAL ONT::FIGURE  (F::phys-obj (F::origin F::artifact) (F::information f::information-content)))
              )
  )
 
@@ -2681,7 +2699,7 @@
 
 (define-type ONT::RESPONSIBILITY
  :parent ONT::ORDERED-DOMAIN
- :arguments ((:OPTIONAL ONT::OF)
+ :arguments ((:OPTIONAL ONT::FIGURE)
              )
  )
 
@@ -2714,7 +2732,7 @@
 
 (define-type ont::definition
     :parent ont::information-function-object
-    :arguments ((:essential ont::of))
+    :arguments ((:essential ont::FIGURE))
     )
 
 ;; To put in adjectives which are difficult to find a spot somewhere
@@ -2724,7 +2742,7 @@
 (define-type ont::abstract-information-property-val
     :parent ont::property-val
     :sem (f::abstr-obj (:default (f::gradability -)))
-    :arguments ((:required ont::of (?ft (f::information f::information-content))))
+    :arguments ((:required ont::FIGURE (?ft (f::information f::information-content))))
     )
 
 
@@ -2785,7 +2803,7 @@
 (define-type ONT::likelihood
  :parent ONT::ORDERED-DOMAIN
  :sem (F::Abstr-obj (F::measure-function F::term))
- :arguments ((:REQUIRED ONT::OF (f::situation))
+ :arguments ((:REQUIRED ONT::FIGURE (f::situation))
              )
  )
 
@@ -2821,14 +2839,14 @@
 ;; hearing, sight, vision
 (define-type ONT::physical-sense
  :parent ONT::non-measure-ordered-domain
- :arguments ((:REQUIRED ONT::OF (F::Phys-obj (F::container -) (F::form F::solid-object) (F::origin F::human)))
+ :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj (F::container -) (F::form F::solid-object) (F::origin F::human)))
              )
  )
 
 ;; natural, unnatural
 (define-type ONT::natural-val
  :parent ONT::physical-property-val
- :arguments ((:REQUIRED ONT::OF ((? lof f::phys-obj f::abstr-obj f::situation)))
+ :arguments ((:REQUIRED ONT::FIGURE ((? lof f::phys-obj f::abstr-obj f::situation)))
              )
  )
 
@@ -2837,7 +2855,7 @@
  :wordnet-sense-keys ("abnormality%1:04:00" "irregularity%1:04:00")
  :parent ONT::event-type
  :sem (F::Situation (F::aspect F::dynamic))
- :arguments ((:OPTIONAL ONT::OF)
+ :arguments ((:OPTIONAL ONT::FIGURE)
              )
  )
 
@@ -2846,7 +2864,7 @@
 (define-type ONT::medical-action
  :parent ONT::action
  :sem (F::Situation (F::aspect F::dynamic))
- :arguments ((:OPTIONAL ONT::OF)
+ :arguments ((:OPTIONAL ONT::FIGURE)
              )
  )
 
@@ -3517,7 +3535,7 @@
 
 (define-type ONT::dependence-val
  :parent ONT::property-val
- :arguments ((:optional ONT::VAL ((? lof f::phys-obj f::abstr-obj))))  ;;  independent/dependent of X
+ :arguments ((:optional ONT::GROUND ((? lof f::phys-obj f::abstr-obj))))  ;;  independent/dependent of X
  )
 
 (define-type ONT::DEPENDENT
@@ -3663,7 +3681,7 @@
  ; Words: (W::willing w::inclined w::voluntary)
 :wordnet-sense-keys ("willing%3:00:00" "incapable%3:00:00")
  ; Antonym: ONT::disinclined (W::unwilling w::disinclined w::involuntary)
-  :arguments ((:required ONT::OF ((? lof f::phys-obj f::abstr-obj) (f::intentional +)))
+  :arguments ((:required ONT::FIGURE ((? lof f::phys-obj f::abstr-obj) (f::intentional +)))
 ;	      (:optional ont::action (f::situation))
              )
  )
@@ -3674,7 +3692,7 @@
  ; Words: (W::unwilling w::disinclined w::involuntary)
 :wordnet-sense-keys ("unwilling%3:00:00" "unwilling%3:00:00:involuntary:01")
  ; Antonym: ONT::inclined (W::willing w::inclined w::voluntary)
-  :arguments ((:required ONT::OF ((? lof f::phys-obj f::abstr-obj) (f::intentional +)))
+  :arguments ((:required ONT::FIGURE ((? lof f::phys-obj f::abstr-obj) (f::intentional +)))
 ;	      (:optional ont::action (f::situation))
              )
  )
@@ -3859,6 +3877,6 @@
 
 (define-type ont::phosphorilated
     :parent ont::physical-property-val
-    :arguments ((:ESSENTIAL ONT::of (F::phys-obj (f::type (? t ont::molecular-part ont::chemical))))
+    :arguments (;(:ESSENTIAL ONT::of (F::phys-obj (f::type (? t ont::molecular-part ont::chemical))))
 		(:ESSENTIAL ONT::figure (F::phys-obj (f::type (? t2 ont::molecular-part ont::chemical))))
 		))

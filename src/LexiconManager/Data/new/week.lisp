@@ -8,7 +8,7 @@
   (W::WEEK
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
-     (LF-PARENT ONT::time-unit)
+     (LF-PARENT ONT::week-duration)
      (templ substance-unit-templ)
      (example "two weeks of work")
      )

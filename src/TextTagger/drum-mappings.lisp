@@ -115,6 +115,8 @@
   (inherit ONT::cell-line))
 (concept EFO::0000408 ; disease
   (inherit ONT::medical-disorders-and-conditions))
+(concept EFO::0000311 ; cancer
+  (inherit ONT::cancer))
 (concept EFO::0000546 ; injury
   (inherit ONT::injury))
 (concept EFO::0000651 ; phenotype

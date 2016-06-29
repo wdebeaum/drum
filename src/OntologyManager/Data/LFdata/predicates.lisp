@@ -5,8 +5,8 @@
   :parent ONT::abstract-object
   :comment "predications that require a subcat to form a modifier, typically adverbials (e.g., on, as well as"
   :sem (F::ABSTR-OBJ (:default (F::GRADABILITY +) (F::scale -) (f::intensity -) (f::orientation -)  (F::CONTAINER -) (f::intentional -)))
-  :arguments ((:ESSENTIAL ONT::OF)
-	      (:ESSENTIAL ONT::VAL)
+  :arguments (;(:ESSENTIAL ONT::OF)
+	      ;(:ESSENTIAL ONT::VAL)
 	      (:ESSENTIAL ONT::FIGURE)
 	      (:ESSENTIAL ONT::GROUND)
 	      
@@ -17,7 +17,7 @@
  :parent ONT::PREDICATE
  :sem (F::ABSTR-OBJ  (:required (F::CONTAINER -) (f::intentional -))
 		     (:default (F::GRADABILITY +) (F::scale -) (f::intensity -) (f::orientation -)))
- :arguments ((:OPTIONAL ONT::VAL)
+ :arguments ((:OPTIONAL ONT::GROUND)
              )
  )
 
@@ -29,21 +29,21 @@
 ;;; for more, less, most, least
 (define-type ONT::grade-modifier
  :parent ONT::MODIFIER
- :arguments ((:REQUIRED ONT::OF (F::abstr-obj (F::gradability +)))
-	     (:ESSENTIAL ONT::VAL (F::abstr-obj (f::scale ?!sc)))
+ :arguments ((:REQUIRED ONT::FIGURE (F::abstr-obj (F::gradability +)))
+	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (f::scale ?!sc)))
              )
  )
 
 (define-type ONT::situation-object-modifier
  :parent ONT::PREDICATE
  :sem (F::ABSTR-OBJ (:default (F::GRADABILITY +) (F::scale F::other-scale) (f::intensity ont::hi)))
- :arguments ((:ESSENTIAL ONT::OF ((? tt F::PHYS-OBJ F::situation)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? tt F::PHYS-OBJ F::situation)))
              )
  )
 
 (define-type ONT::phys-modifier
  :parent ONT::SITUATION-OBJECT-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF (F::PHYS-OBJ))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::PHYS-OBJ))
              )
  )
 
@@ -53,14 +53,22 @@
 ;;; medical emergency / medical instrument
 (define-type ONT::situation-modifier
  :parent ONT::SITUATION-OBJECT-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF (F::situation))
-             (:OPTIONAL ONT::VAL)
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::situation))
+             (:OPTIONAL ONT::GROUND)
 	     (:optional ont::norole)	     
              )
  )
 
 (define-type ONT::CONJUNCT
  :parent ONT::PREDICATE
+ )
+
+(define-type ONT::CLAUSE-CONDITION
+ :parent ONT::CONJUNCT
+ )
+
+(define-type ONT::BUT-EXCEPTION
+ :parent ONT::CONJUNCT
  )
 
 ;;; swift 04/14/02 added to support sentence-initial uses of yes & no
@@ -72,7 +80,7 @@
 ;; split into five sublevels
 (define-type ONT::degree-modifier
  :parent ONT::modifier
-  :arguments ((:REQUIRED ONT::OF ((? ss F::situation F::abstr-obj))
+  :arguments ((:REQUIRED ONT::FIGURE ((? ss F::situation F::abstr-obj))
  )))
 
 (define-type ONT::DEGREE-MODIFIER-VERYHIGH
@@ -128,26 +136,26 @@
 
 (define-type ONT::TOPIC
  :parent ONT::PREDICATE
- :arguments ((:OPTIONAL ONT::VAL)
+ :arguments ((:OPTIONAL ONT::GROUND)
              )
  )
 
 (define-type ONT::DEGREE
  :parent ONT::PREDICATE
- :arguments ((:OPTIONAL ONT::VAL)
+ :arguments ((:OPTIONAL ONT::GROUND)
              )
  )
 
 (define-type ONT::DEGREE-OF-BELIEF
  :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF (F::situation))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::situation))
              )
  )
 
 ;;; for you know, you see, etc.
 (define-type ONT::INTERJECTION
  :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF (F::situation))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::situation))
              )
  )
 
@@ -175,10 +183,10 @@
 
 (define-type ONT::PURPOSE
  :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF (F::Situation (F::type ont::event-of-action)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation)) ;(F::type ont::event-of-action))) ; takes statives: This suffices for...
 ;;             (:REQUIRED ONT::VAL (F::Situation (F::aspect F::dynamic)))
 	     ;; purposes don't have to be dynamic -- e.g. to store something, to remember, etc.
-	     (:REQUIRED ONT::VAL ((? xx F::Situation f::abstr-obj f::phys-obj)))
+	     (:REQUIRED ONT::GROUND ((? xx F::Situation f::abstr-obj f::phys-obj) (F::scale (? !sc f::duration-scale))))
 	     ;; a separate role because it will be lower priority
 ;	     (:required ont::obj-val (f::abstr-obj)) ;; needed for non-situation ont::vals -- e.g., hit return for more results
 	    ;; (:required ont::REASON (f::abstr-obj)) ;; needed for non-situation ont::vals -- e.g., hit return for more results
@@ -188,10 +196,10 @@
 ; against
 (define-type ONT::CONTRA
  :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF (F::Situation))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
 ;;             (:REQUIRED ONT::VAL (F::Situation (F::aspect F::dynamic)))
 	     ;; purposes don't have to be dynamic -- e.g. to store something, to remember, etc.
-	     (:REQUIRED ONT::VAL (F::Situation))
+	     (:REQUIRED ONT::GROUND (F::Situation))
              )
  )
 
@@ -199,16 +207,16 @@
 ;;; being parsed as beneficiaries
 (define-type ONT::BENEFICIARY
  :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF (F::Situation (F::aspect F::dynamic) (F::Cause F::agentive)))
-             (:REQUIRED ONT::VAL (F::Phys-obj (F::origin F::human) (F::intentional +)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (F::aspect F::dynamic) (F::Cause F::agentive)))
+             (:REQUIRED ONT::GROUND (F::Phys-obj (F::origin F::human) (F::intentional +)))
              )
  )
 
 ;;; swift 11/27/01 -- 'why is he on synthroid'
 (define-type ONT::on-medication
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF (F::Phys-obj (F::origin F::living) (F::intentional +)))
-             (:REQUIRED ONT::VAL (F::Phys-obj (F::form F::substance)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Phys-obj (F::origin F::living) (F::intentional +)))
+             (:REQUIRED ONT::GROUND (F::Phys-obj (F::form F::substance)))
              )
  )
 
@@ -216,43 +224,43 @@
 ;; get the weather report [for tomorrow]; the day for the meeting
 (define-type ONT::ASSOC-WITH
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF ((? s F::Phys-obj F::Situation f::abstr-obj f::time)))
-             (:REQUIRED ONT::VAL ((? vl F::Phys-obj f::situation f::abstr-obj f::time)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? s F::Phys-obj F::Situation f::abstr-obj f::time)))
+             (:REQUIRED ONT::GROUND ((? vl F::Phys-obj f::situation f::abstr-obj f::time)))
              )
  )
 
 ;; book by an author
 (define-type ONT::ORIGINATOR
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF ((? s F::Phys-obj f::abstr-obj)
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? s F::Phys-obj f::abstr-obj)
 				  (f::intentional -)
 				  (f::information (? inf f::information-content))
 				 ))
-             (:REQUIRED ONT::VAL (F::Phys-obj (f::intentional +)))
+             (:REQUIRED ONT::GROUND (F::Phys-obj (f::intentional +)))
              )
  )
 
 ;; I cleared the roads with Charlie
 (define-type ONT::ACCOMPANIMENT
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF (F::Situation (f::aspect f::dynamic)))
-             (:REQUIRED ONT::VAL (F::Phys-obj (F::origin F::living) (F::intentional +)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (f::aspect f::dynamic)))
+             (:REQUIRED ONT::GROUND (F::Phys-obj (F::origin F::living) (F::intentional +)))
              )
  )
 
 ;; for 'without' adverbials
 (define-type ONT::without
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF ((? o F::Phys-obj F::Situation)))
-             (:REQUIRED ONT::VAL ((? v F::Phys-obj f::situation f::abstr-obj)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? o F::Phys-obj F::Situation)))
+             (:REQUIRED ONT::GROUND ((? v F::Phys-obj f::situation f::abstr-obj)))
              )
  )
 
 ;; under/over/above/below 5 pounds/dollars/feet etc.
 (define-type ONT::SCALE-RELATION
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF ((? s F::Phys-obj F::abstr-obj F::situation)))
-             (:REQUIRED ONT::VAL (F::abstr-obj (f::scale ?!sc)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? s F::Phys-obj F::abstr-obj F::situation)))
+             (:REQUIRED ONT::GROUND (F::abstr-obj (f::scale ?!sc)))
              )
  )
 
@@ -273,45 +281,45 @@
 ;; 5 (feet) by 10 (feet)
 (define-type ONT::dimension
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF ((? s F::Phys-obj F::situation)))
-             (:REQUIRED ONT::VAL (F::abstr-obj (f::scale ?!sc)))
-	     (:OPTIONAL ONT::VAL2 (F::abstr-obj (f::scale ?!sc2)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? s F::Phys-obj F::situation)))
+             (:REQUIRED ONT::GROUND (F::abstr-obj (f::scale ?!sc)))
+	     (:OPTIONAL ONT::GROUND1 (F::abstr-obj (f::scale ?!sc2)))
              )
  )
 
 (define-type ONT::instrument
  :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF (F::Situation (F::Aspect F::dynamic)))
-             (:REQUIRED ONT::val (F::Phys-obj (F::intentional -) (F::origin (? x F::non-living F::Artifact))))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (F::Aspect F::dynamic)))
+             (:REQUIRED ONT::GROUND (F::Phys-obj (F::intentional -) (F::origin (? x F::non-living F::Artifact))))
              )
  )
 
 (define-type ONT::choice-option
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF (F::Situation))
-             (:REQUIRED ONT::val)
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
+             (:REQUIRED ONT::GROUND)
              )
  )
 
 (define-type ONT::attributed-information
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF (F::situation))
-             (:REQUIRED ONT::val ((? s F::Phys-obj F::abstr-obj)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::situation))
+             (:REQUIRED ONT::GROUND ((? s F::Phys-obj F::abstr-obj)))
              )
  )
 
 ;; (f::intentional -) allows "travel by car" but not "travel by hemingway"
 (define-type ONT::manner
  :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF (F::situation))
-             (:REQUIRED ONT::val ((? at F::abstr-obj F::situation f::phys-obj) (f::intentional -))) ;; don't want times to work here
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::situation))
+             (:REQUIRED ONT::GROUND ((? at F::abstr-obj F::situation f::phys-obj) (f::intentional -))) ;; don't want times to work here
              )
  )
 
 (define-type ONT::by-means-of
  :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF (F::situation (F::type ont::event-of-change))) ;(f::aspect (? asp f::dynamic f::stage-level))))
-             (:REQUIRED ONT::val (F::situation))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::situation (F::type ont::event-of-change))) ;(f::aspect (? asp f::dynamic f::stage-level))))
+             (:REQUIRED ONT::GROUND (F::situation))
              )
  )
 
@@ -323,15 +331,15 @@
 ;; 2015/12: This is not "by itself" anymore.  "by itself" has moved to EXCLUSIVE
 (define-type ONT::manner-refl
  :parent ONT::MANNER
- :arguments ((:ESSENTIAL ONT::OF (F::situation))
-             (:REQUIRED ONT::val (f::phys-obj))				 
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::situation))
+             (:REQUIRED ONT::GROUND (f::phys-obj))				 
              )
  )
 
 (define-type ONT::manner-undo
  :parent ONT::MANNER
- :arguments ((:ESSENTIAL ONT::OF (F::situation))
-             (:REQUIRED ONT::val (f::phys-obj))				 
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::situation))
+             (:REQUIRED ONT::GROUND (f::phys-obj))				 
              )
  )
 
@@ -346,8 +354,8 @@
 ;; in that event
 (define-type ONT::situated-in
  :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF (F::Situation))
-             (:REQUIRED ONT::val (F::situation))
+ :arguments (;(:ESSENTIAL ONT::OF (F::Situation))
+             ;(:REQUIRED ONT::val (F::situation))
 	     (:ESSENTIAL ONT::FIGURE (F::Situation))
              (:REQUIRED ONT::GROUND (F::situation))
              )
@@ -356,8 +364,8 @@
 ;; out of the meeting
 (define-type ONT::situated-out
  :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF (F::Situation))
-             (:REQUIRED ONT::val (F::situation))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
+             (:REQUIRED ONT::GROUND (F::situation))
              )
  )
 
@@ -384,15 +392,15 @@
 ;; for like, in the sense of similar to
 (define-type ONT::similarity
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF ((? at F::Phys-obj F::Situation)))
-             (:REQUIRED ONT::val)
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? at F::Phys-obj F::Situation)))
+             (:REQUIRED ONT::GROUND)
              )
  )
 
 (define-type ONT::such
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF)
-             (:optional ONT::val)
+ :arguments ((:ESSENTIAL ONT::FIGURE)
+             (:optional ONT::GROUND)
              )
  )
 
@@ -400,23 +408,23 @@
 
 (define-type ONT::reason-for
  :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF (F::Situation))
-             (:REQUIRED ONT::val)
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
+             (:REQUIRED ONT::GROUND)
              )
  )
 
 (define-type ONT::sequence-position
  :parent ONT::PREDICATE
- :arguments ((:REQUIRED ONT::OF)
-	     (:optional ont::val) ;; list members before/after the specified item
+ :arguments ((:REQUIRED ONT::FIGURE)
+	     (:optional ont::GROUND) ;; list members before/after the specified item
              )
  )
 
 ;;; Added by myrosia to handle about
 (define-type ONT::association-predicate
  :parent ONT::PREDICATE
- :arguments ((:REQUIRED ONT::OF)
-             (:REQUIRED ONT::VAL)
+ :arguments ((:REQUIRED ONT::FIGURE)
+             (:REQUIRED ONT::GROUND)
              )
  )
 
@@ -424,22 +432,22 @@
 ;; e.g. the incident regarding the man; the meeting regarding the party
 (define-type ONT::associated-information
  :parent ONT::ASSOCIATION-PREDICATE
- :arguments ((:REQUIRED ONT::OF) ;(?argtype (F::information F::information-content))
-	     (:required ont::val) ;(?argtyp2 (f::information f::information-content)))
+ :arguments ((:REQUIRED ONT::FIGURE) ;(?argtype (F::information F::information-content))
+	     (:required ont::GROUND) ;(?argtyp2 (f::information f::information-content)))
              )
  )
 
 ;;; swift 04/14/02 added for too, also
 (define-type ONT::additive
  :parent ONT::PREDICATE
- :arguments ((:OPTIONAL ONT::VAL)
+ :arguments ((:OPTIONAL ONT::GROUND)
              )
  )
 
 (define-type ont::parenthetical
     :parent ONT::PREDICATE
-    :arguments ((:REQUIRED ONT::OF )
-		(:REQUIRED ONT::VAL )			   
+    :arguments ((:REQUIRED ONT::FIGURE )
+		(:REQUIRED ONT::GROUND )			   
 		)
     )
 
@@ -451,26 +459,26 @@
 ;;; swift 03/20/02 defined to handle 'vertical' and 'horizontal'
 (define-type ONT::orientation
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF (F::PHYS-OBJ))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::PHYS-OBJ))
              )
  )
 
 (define-type ONT::SpeakerStatus
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF (F::SITUATION))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::SITUATION))
              )
  )
 
 (define-type ONT::Politeness
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF (F::SITUATION))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::SITUATION))
              )
  )
 
 ;; breathlessly, sickly, tiredly
 (define-type ONT::physical-symptom-manner
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF (F::SITUATION))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::SITUATION))
              )
  )
 
@@ -478,12 +486,12 @@
 ;; e.g., use it as a lever
 (define-type ONT::as-role
  :parent ONT::PREDICATE
- :arguments ((:essential  ONT::VAL ((? roleval F::PHYS-OBJ F::ABSTR-OBJ)
+ :arguments ((:essential  ONT::GROUND ((? roleval F::PHYS-OBJ F::ABSTR-OBJ)
 			  ))
 	     ))
  
 (define-type ONT::COMPLETELY
   :parent ONT::PREDICATE
   :arguments (;(:ESSENTIAL ONT::OF (F::SITUATION (f::type ont::event-of-change)))
-	      (:ESSENTIAL ONT::OF (F::SITUATION (f::type ont::event-of-change) (F::trajectory -)))
+	      (:ESSENTIAL ONT::FIGURE (F::SITUATION (f::type ont::event-of-change) (F::trajectory -)))
   ))

@@ -493,15 +493,19 @@
      (preadvbl +) (subj ?subj) 
      (advbl-needed -)
        )
-    -wh-setting2> .96 ;; don't want this to apply before gaps
+    -wh-setting2> .98 ;; don't want this to apply before gaps
     (np (wh q) (var ?tv) (sem ($ f::time (f::time-scale f::point))))  ;; should only be time points, not intervals
     (head (s (stype ynq) (var ?v) (gap -) (subj ?subj) (tag -)
 	   (lf (% Prop (sem ?sem) (class ?c) (constraint ?con) (tma ?tma) (transform ?transform)))
 	   (advbl-needed -)
 	   )
      )
-    (add-to-conjunct (val (MODS ?tv)) (old ?con) (new ?constraint))
-    )
+    (add-to-conjunct (val (MODS 
+			   (% *PRO* (status F) (var *)
+			      (CLASS ONT::event-time-rel)
+			      (constraint (& (figure ?v) (ground ?tv))))))
+			  (old ?con) (new ?constraint))
+     )
 
    ;; to feed into s-that-subjunctive: he recommends that the dog bark
    ;; TEST: The dog bark
@@ -982,7 +986,7 @@
      
      ((pred (arg ?arg) (var ?v)  (sem ?sem)
             (lf (% prop (status F) (arg ?arg) (VAR ?v) 
-		   (CLASS ?c) (CONSTRAINT (& (of ?arg)))))
+		   (CLASS ?c) (CONSTRAINT (& (FIGURE ?arg)))))
             (argument ?argument)
             (filled -)
             )
@@ -1124,7 +1128,7 @@
 		       (LIOBJ ?iobjvar) (LCOMP ?compvar)
 		       (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 		       (affected-result (% *PRO* (status F)
-				(CLASS (:* ONT::recipient iobj)) (VAR *) (SEM ?subjsem) (constraint (& (val ?iobjvar) (of ?v)))))
+				(CLASS (:* ONT::recipient iobj)) (VAR *) (SEM ?subjsem) (constraint (& (GROUND ?iobjvar) (FIGURE ?v)))))
 		       (?comp3-map ?compvar)
 		       
                        ))
@@ -1158,7 +1162,7 @@
 		       (LIOBJ ?iobjvar) ;;(beneficiary ?iobjvar)
 		       (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 		       (beneficiary (% *PRO* (status F)
-				(CLASS (:* ONT::beneficiary iobj)) (VAR *) (SEM ?subjsem) (constraint (& (val ?iobjvar) (of ?v)))))
+				(CLASS (:* ONT::beneficiary iobj)) (VAR *) (SEM ?subjsem) (constraint (& (GROUND ?iobjvar) (FIGURE ?v)))))
 		       (?comp3-map ?compvar)
 		       
                        ))
@@ -1788,7 +1792,7 @@
 	     (part ?part) (restr ?prefix)
 	     (passive -)))  ;; we do the prefix first, then the passive
      (append-conjuncts (conj1 ?prefix) (conj2 (& (MOD (% *PRO* (status F) (class ?qual)
-				   (var ?adv-v) (constraint (& (of ?v)))))))
+				   (var ?adv-v) (constraint (& (FIGURE ?v)))))))
 		       (new ?newc))
     )
 
@@ -1814,7 +1818,7 @@
 	     (part ?part) (restr ?prefix)
 	     (passive -)))  ;; we do the prefix first, then the passive
      (append-conjuncts (conj1 ?prefix) (conj2 (& (MOD (% *PRO* (status F) (class ?qual)
-				   (var ?adv-v) (constraint (& (of ?v)))))))
+				   (var ?adv-v) (constraint (& (FIGURE ?v)))))))
 		       (new ?newc))
     )
 
@@ -2592,6 +2596,20 @@
          (punctype (? x decl imp)))
     -utt4a>
     (head (uttword (lf (?lf)) (lex ?lex) (var ?v) (sa ?sa))))
+
+    ((Utt (var *) (sem ($ f::proposition)) (uttword +)
+      (lf (% SPEECHACT (VAR *) (CLASS  ONT::SA_APOLOGIZE) (constraint (& (content ?reason)))))
+      (punctype (? x decl imp)))
+     -utt-sa-cp>
+     (head (uttword (lf (?lf)) (lex ?lex) (var ?v) (sa ONT::SA_APOLOGIZE)))
+     (cp (var ?reason)))
+
+    ((Utt (var *) (sem ($ f::proposition)) (uttword +)
+      (lf (% SPEECHACT (VAR *) (CLASS (? sa ONT::SA_APOLOGIZE ONT::SA_THANK)) (constraint (& (content ?reason)))))
+      (punctype (? x decl imp)))
+     -utt-sa-for>
+     (head (uttword (lf (?lf)) (lex ?lex) (var ?v) (sa (? sa ONT::SA_APOLOGIZE ONT::SA_THANK))))
+     (pp (ptype w::for) (var ?reason)))
 
     )
   )

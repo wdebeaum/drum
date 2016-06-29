@@ -13,7 +13,7 @@
 ;;; interactions between individuals and society
 
 (define-type ont::social-contract
-    :arguments ((:OPTIONAL ONT::OF (f::situation)))
+    :arguments ((:OPTIONAL ONT::FIGURE (f::situation)))
     :parent ont::mental-construction
 )
 

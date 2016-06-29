@@ -47,8 +47,8 @@
 (define-type ont::event-of-change 
      :parent ONT::SITUATION-ROOT
      :comment "Events that involve change or force: should ahve an AGENT or AFFECTED role"
-     :arguments ((:optional  ONT::agent ((? cau2 F::situation F::Abstr-obj f::phys-obj)))
-		 (:optional  ONT::affected ((? cau2 F::situation F::Abstr-obj f::phys-obj)))
+     :arguments ((:optional  ONT::agent ((? cau4 F::situation F::Abstr-obj f::phys-obj)))
+		 (:optional  ONT::affected ((? cau3 F::situation F::Abstr-obj f::phys-obj)))
 		 (:optional  ONT::result ((? cau2 F::situation F::Abstr-obj f::phys-obj)))
 		 (:optional ONT::beneficiary ((? cau1 f::phys-obj))))
      :sem (F::Situation (F::aspect F::dynamic)))
@@ -99,7 +99,7 @@
      :comment "Events that involve creating some new object (typically the AFFECTED-RESULT)"
      :sem (F::Situation)
      :arguments ((:optional ONT::result ((? neu F::situation F::Abstr-obj f::phys-obj)))
-		 (:optional ONT::affected-result ((? neu2 F::situation F::Abstr-obj f::phys-obj))))
+		 (:optional ONT::affected-result ((? neu F::situation F::Abstr-obj f::phys-obj))))
      )
 
 (define-type ont::event-of-state 
@@ -161,6 +161,6 @@
     :wordnet-sense-keys ("part%1:24:00" "portion%1:24:00" "component_part%1:24:00" "component%1:24:00" "constituent%1:24:00" "part%1:17:00" "piece%1:17:00")
     :comment "Part is actually a conceptualization of things that fill the part-of role"
     :parent ont::referential-sem
-    :arguments ((:OPTIONAL ONT::OF )
+    :arguments ((:OPTIONAL ONT::FIGURE )
 		)
  )

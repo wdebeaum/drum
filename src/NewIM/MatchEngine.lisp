@@ -72,7 +72,7 @@
   "If the pattern only contains free variables, we generate a binding list where all bind to -
     which is the result used if the LF term doesn't exist in the LF being matched"
   (let ((res (every #'free-if-var pat)))
-    (if res (trace-msg 1 "~% WARNING: ~S: ALL VARS are FREE ~S:" pat res))
+    (if res (trace-msg 2 "~% WARNING: ~S: ALL VARS are FREE ~S:" pat res))
     (if res
 	(gen-bind-to-none-list pat)
     )))

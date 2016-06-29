@@ -469,7 +469,7 @@
      )
     (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
     (add-to-conjunct (val (:MOD (% *PRO* (status F) (class ?qual)
-				   (var *) (constraint (& (of ?v)))))) (old ?r) (new ?con)))
+				   (var *) (constraint (& (FIGURE ?v)))))) (old ?r) (new ?con)))
 
    ((N (RESTR  ?con)
        (LF ?lf) ;(CLASS ?lf)
@@ -509,7 +509,7 @@
      )
     (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
     (add-to-conjunct (val (:MOD (% *PRO* (status F) (class ?qual)
-				   (var *) (constraint (& (of ?v)))))) (old ?r) (new ?con)))
+				   (var *) (constraint (& (FIGURE ?v)))))) (old ?r) (new ?con)))
    
    ((NAME (RESTR  ?con)
        (LF ?lf) ;(CLASS ?lf)
@@ -550,7 +550,7 @@
      )
     (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
     (add-to-conjunct (val (:MOD (% *PRO* (status F) (class ?qual)
-				   (var *) (constraint (& (of ?v)))))) (old ?r) (new ?con)))
+				   (var *) (constraint (& (FIGURE ?v)))))) (old ?r) (new ?con)))
 
    ((NAME (RESTR  ?con)
        (LF ?lf) ;(CLASS ?lf)
@@ -590,8 +590,8 @@
      )
     (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
     (add-to-conjunct (val (:MOD (% *PRO* (status F) (class ?qual)
-				   (var *) (constraint (& (of ?v)))))) (old ?r) (new ?con)))
-   
+				   (var *) (constraint (& (FIGURE ?v)))))) (old ?r) (new ?con)))
+
    ;; special construction, a noun with a name
    ((N1 (CLASS ?lf) (sort PRED)
      (POSTADVBL -) (QUAL -) (RESTR ?newr) (subcat ?subcat)) 
@@ -620,7 +620,7 @@
 	   (sem ?ssem)  (SEM ($ ?type (f::scale ?sc)))
 	   (subcat (% ?argcat (sem ?argsem)))
 	   (subcat-map ?smap)
-	   (subcat-map (? !smap ont::val)) ;; disallow ont::val here
+	   (subcat-map (? !smap ont::GROUND)) ;; disallow ont::val here
 	   ))
     )
 
@@ -695,7 +695,7 @@
 	     (subcat2 (% ?scat2 (var ?v2) (sem ?ssem2) (lf ?lf3) (sort (? srt2 pred individual set comparative reln))))
 	     (subcat-map ?smap)
 	     (subcat2-map ?smap2)))
- )
+   )
     ;; simple qualifier modifiers
     ;; TEST: orange dog, the orange dogs
     ((N1 (RESTR  ?con) (CLASS ?c) (SORT ?sort) (QUAL +) (relc ?relc) (sem ?nsem) (subcat ?subcat) (SET-RESTR ?sr)
@@ -914,7 +914,7 @@
      ?subcat
      ?!subcat2)
     
-    ;;===========================================================================
+   ;;===========================================================================
     ;; ADJECTIVE PHRASES
 
     ;; adjectives that map to predicates, e.g., little
@@ -927,7 +927,7 @@
 	     (transform ?transform) (sem ?sem) (premod -)
 	     )))
      -adj-scalar-pred> 1
-     (head (ADJ (LF ?lf) (SUBCAT -) (VAR ?v) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap)
+     (head (ADJ (LF ?lf) (SUBCAT -) (VAR ?v) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap) (pertainym -)
 	    (transform ?transform) (constraint ?con) (functn ?fn) (comp-op ?dir)
 	    (Atype ?atype) (comparative ?cmp) (lex ?lx) ;(lf (:* ?lftype ?lex))
 	    (sem ($ F::ABSTR-OBJ (f::scale ?!scale) (F::intensity ?ints) (F::orientation ?orient)))
@@ -957,7 +957,7 @@
 	       (atype ?atype) (comparative ?cmp) (lex ?lx) (argument ?argument)
 	       ))
     (add-to-conjunct  (val (:MOD (% *PRO* (status F) (class ?qual)
-				    (var ?advbv) (constraint (& (of ?v))))))
+				    (var ?advbv) (constraint (& (FIGURE ?v))))))
      (old ?con) 
      (new ?newc))
     )
@@ -978,11 +978,30 @@
 	       (atype ?atype) (comparative ?cmp) (lex ?lx) (argument ?argument)
 	       ))
     (add-to-conjunct  (val (:MOD (% *PRO* (status F) (class ?qual)
-				    (var ?advbv) (constraint (& (of ?v))))))
+				    (var ?advbv) (constraint (& (FIGURE ?v))))))
      (old ?con) 
      (new ?newc))
     )
   
+;;  Pertainyms
+   ((ADJ (LF ONT::ASSOC-WITH) (SUBCAT ?subcat) (VAR ?v) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap)
+     (transform ?transform) (constraint ?newc) (functn ?fn) (comp-op ?dir)  (argument ?argument)
+     (atype ?atype) (comparative ?cmp) (lex ?lx) ; (lf (:* ?lftype ?lx))
+     ;(sem ($ F::SITUATION))
+     (arg ?arg)
+     (prefix -)
+     )
+   -adj-pertainym-construction> 1
+    (head (ADJ (LF ?lf) (SUBCAT ?subcat) (VAR ?v) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap) (pertainym (?!pert-type ?pert-sem))
+	       (transform ?transform) (constraint ?con) (functn ?fn) (comp-op ?dir) (arg ?arg)
+	       (atype ?atype) (comparative ?cmp) (lex ?lx) (argument ?argument)
+	       ))
+    (add-to-conjunct  (val (:GROUND (% *PRO* (status KIND) (class ?!pert-type)
+				    (var *) (sem ?pert-sem) )))
+     (old ?con) 
+     (new ?newc))
+    )
+
    ;; non-scalar adjectives (e.g., sleeping)
    ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem) (atype ?atype) (comparative ?cmp)
       (LF (% PROP (CLASS ?lf)
@@ -990,7 +1009,7 @@
 	     (transform ?transform) (sem ?sem) (premod -)
 	     )))
      -adj-nonscalar-pred> 1
-     (head (ADJ (LF ?lf) (SUBCAT -) (VAR ?v) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap)
+     (head (ADJ (LF ?lf) (SUBCAT -) (VAR ?v) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap) (pertainym -)
 	    (transform ?transform) (constraint ?con) (functn ?fn) (comp-op ?dir)
 	    (atype ?atype) (comparative ?cmp) (lex ?lx) ; (lf (:* ?lftype ?lx))
 	    (sem ($ F::ABSTR-OBJ
@@ -1009,7 +1028,7 @@
       )
      -adj-unit-modifier> 1.0
      (ADJP (sort unit-measure) (var ?adjv) 
-      (LF (% PROP (constraint (& (val ?adjval)))))
+      (LF (% PROP (constraint (& (GROUND ?adjval)))))
       (sem ($ F::ABSTR-OBJ (F::scale F::linear-scale))))
      (head (ADJ (LF ?lf)  (VAR ?v) (SUBCAT -) (sem ($ F::ABSTR-OBJ (F::scale (? scale F::linear-scale))))
 		(SORT PRED) ;;(ARGUMENT-MAP ?argmap)
@@ -1018,7 +1037,7 @@
 	    (post-subcat -)
 	    ))
      (append-conjuncts (conj1 ?restr) (conj2 ?r) (new ?tempcon))
-     (append-conjuncts (conj1 (& (OF ?arg) (VAL ?adjval) (scale (? scale F::linear-scale))))
+     (append-conjuncts (conj1 (& (FIGURE ?arg) (GROUND ?adjval) (scale (? scale F::linear-scale))))
 		       (conj2 ?tempcon) (new ?newc)))
 
 ;;  a (ten foot)-high fence, a three mile wide path, .. 
@@ -1028,7 +1047,7 @@
       )
      -adj-unit-modifier-HYPHEN> 1.1
      (ADJP (sort unit-measure) (var ?adjv) 
-      (LF (% PROP (constraint (& (val ?adjval)))))
+      (LF (% PROP (constraint (& (GROUND ?adjval)))))
       (sem ($ F::ABSTR-OBJ (F::scale F::linear-scale))))
      (word (lex w::punc-minus))
      (head (ADJ (LF ?lf)  (VAR ?v) (SUBCAT -) (sem ($ F::ABSTR-OBJ (F::scale (? scale F::linear-scale))))
@@ -1038,7 +1057,7 @@
 	    (post-subcat -)
 	    ))
      (append-conjuncts (conj1 ?restr) (conj2 ?r) (new ?tempcon))
-     (append-conjuncts (conj1 (& (OF ?arg) (VAL ?adjval) (scale (? scale F::linear-scale))))
+     (append-conjuncts (conj1 (& (FIGURE ?arg) (GROUND ?adjval) (scale (? scale F::linear-scale))))
 		       (conj2 ?tempcon) (new ?newc)))
 
    ;; adjectives with deleted complements  JFA 8/02
@@ -1051,7 +1070,7 @@
 	     )))
      -adj-pred-object-deleted>
      (head (ADJ (LF ?lf) (VAR ?v) (sem ?sem) (atype ?atype)
-		(CONSTRAINT ?con) (comparative -) (prefix -)
+		(CONSTRAINT ?con) (comparative -) (prefix -) (pertainym -)
 		(SUBCAT (% ?!subc (SEM ?subsem) ))
 		(sem ($ F::ABSTR-OBJ (f::scale ?scale) (F::intensity ?ints) (F::orientation ?orient)))
 		(SORT PRED) (SUBCAT-MAP ?submap)
@@ -1694,7 +1713,7 @@
 	(RESTR (& (MODS (% *PRO* (Var **) (status F)
 			   (class ?op)
 			   (constraint (& (is ?v)
-					  (of (% *PRO* (var *) (class ?lf-old) (SEM ?oldsem) (constraint (& (related-to **)))))))))))
+					  (FIGURE (% *PRO* (var *) (class ?lf-old) (SEM ?oldsem) (constraint (& (related-to **)))))))))))
 	(lex ?l) (sem ?newsem) (AGR ?agr)
       (COERCE -) (TRANSFORM ?t) (MASS ?mass) (CASE ?case) 
       (argument ?argument) (subcat ?subcat) 
@@ -1733,7 +1752,7 @@
   ;;  COERCION RULE FOR Names
     ((Name (name +) (VAR ?v) (CLASS ?kr) (LF ?lf-new)
 	   (RESTR (& (MODS (% *PRO* (var **) (status F) (class ?op)
-				  (constraint (& (is ?v) (of (% *PRO* (var *) (STATUS DEFINITE)
+				  (constraint (& (is ?v) (FIGURE (% *PRO* (var *) (STATUS DEFINITE)
 								(constraint (& (name-of ?l)))  ;; NAME-OF used to be ?fname JFA 5/04
 								(class ?lf-old)))))))))
 	   (lex ?l) (sem ?newsem) (AGR ?agr) (full-name ?fname)
@@ -2117,16 +2136,22 @@
 		   (SORT PRED) (VAR ?v)
 		   (wh ?w) (wh-var ?whv);; must move WH feature up by hand here as it is explicitly specified in a dauhter
 		   ))
-	 (parenthetical (var ?pv) (arg ?v))
+	 (parenthetical (var ?pv) (arg ?v) (role ?role))
 	 (add-to-conjunct (val (parenthetical ?pv)) (old ?constr) (new ?newc)))
 
-	((parenthetical (var ?cc) (arg ?arg))
+  ((parenthetical (var ?cc) (arg ?arg) (role :identified-as))
+	 -paren-np> 1
+	 (punc (lex (? x W::START-SQUARE-PAREN W::START-PAREN w::punc-comma)))
+	 (head (np (var ?cc)))
+	 (punc (lex  (? y W::END-SQUARE-PAREN W::END-PAREN w::punc-comma))))
+
+	((parenthetical (var ?cc) (arg ?arg) (role :parenthetical))
 	 -paren1> 1
 	 (punc (lex (? x W::START-SQUARE-PAREN W::START-PAREN w::punc-comma)))
 	 (head (Utt (LF (% W::SPEECHACT (constraint (& (content ?cc)))))))
 	 (punc (lex  (? y W::END-SQUARE-PAREN W::END-PAREN w::punc-comma))))
 
-	((parenthetical (var ?cc) (arg ?arg))
+	((parenthetical (var ?cc) (arg ?arg) (role :parenthetical))
 	 -paren2> 1
 	 (punc (lex (? x W::START-SQUARE-PAREN W::START-PAREN W::punc-COMMA)))
 	 (head (pred (var ?cc) (arg ?arg)))
@@ -2190,7 +2215,8 @@
 		))
          (add-to-conjunct (val (& (value ?num))) (old ?r) (new ?newr))
 	 (add-to-conjunct (val (& (amount (% *PRO* (status indefinite) (class ont::NUMBER) (VAR ?nv) (constraint ?newr)))
-				  (unit ?c))) (old ?restr) (new ?constr))
+				  (unit ?c)
+				  (scale ?sc))) (old ?restr) (new ?constr))
 	 )
 
    ;;  NP with SPECS that subcategorize for "of" PP's that are count and definite
@@ -2331,8 +2357,8 @@
     ;;  a four cycle engine, a two-trick pony, a one horse town, ...
     ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype central) (comparative -) (argument ?aa)
       (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
-	     (CONSTRAINT (& (of ?arg) 
-			    (val (% *PRO* (status KIND) (var ?nv) 
+	     (CONSTRAINT (& (FIGURE ?arg) 
+			    (GROUND (% *PRO* (status KIND) (var ?nv) 
 				    (CLASS ?c) (CONSTRAINT ?con)))))
 				    
 	     (Sem ?sem)))
@@ -2353,8 +2379,8 @@
     ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype ?atype) (comparative -) (argument ?aa)
       (SORT unit-measure)
       (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
-	     (CONSTRAINT (& (of ?arg) 
-			    (val (% *PRO* (status INDEFINITE) (var ?nv) 
+	     (CONSTRAINT (& (FIGURE ?arg) 
+			    (GROUND (% *PRO* (status INDEFINITE) (var ?nv) 
 				    (CLASS (:* ont::quantity ?sc))
 				    (CONSTRAINT ?constr)))))
 	     (Sem ?sem)))					
@@ -2373,8 +2399,8 @@
     ;; and often has a hyphen
     ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype ?atype) (comparative -) (argument ?aa)
       (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
-	     (CONSTRAINT (& (of ?arg) 
-			    (val (% *PRO* (status INDEFINITE) (var ?nv) 
+	     (CONSTRAINT (& (FIGURE ?arg) 
+			    (GROUND (% *PRO* (status INDEFINITE) (var ?nv) 
 				    (CLASS (:* ont::quantity ?sc))
 				    (CONSTRAINT ?constr)))))
 	     (Sem ?sem)))
@@ -2395,8 +2421,8 @@
     ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype ?atype) (comparative -) (argument ?aa)
       (SORT unit-measure)
       (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
-	     (CONSTRAINT (& (of ?arg) 
-			    (val (% *PRO* (status INDEFINITE) (var ?nv) 
+	     (CONSTRAINT (& (FIGURE ?arg) 
+			    (GROUND (% *PRO* (status INDEFINITE) (var ?nv) 
 				    (CLASS (:* ont::quantity ?unit))
 				    (CONSTRAINT ?constr)))))
 	     (Sem ?sem)))					
@@ -4329,7 +4355,7 @@
             (mass ?m2) (constraint ?con2)
             (sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
             )
-    (add-to-conjunct (val (MODS (% *PRO* (status F) (var *) (class (:* ont::exemplifies w::such-as)) (constraint (& (of ?v1) (val ?v2)))))) (old ?con1) (new ?new))
+    (add-to-conjunct (val (MODS (% *PRO* (status F) (var *) (class (:* ont::exemplifies w::such-as)) (constraint (& (FIGURE ?v1) (GROUND ?v2)))))) (old ?con1) (new ?new))
      )
 
     ;; Myrosia added atype central restriction. This may be a little bit too harsh, but it is farily reasonable
@@ -4339,7 +4365,7 @@
     ((ADJP (ARG ?arg) (argument ?a) (sem ?sem) (atype central)
 	   (VAR *) ;(COMPLEX +) -- removed to allow complex adj prenominal modification, e.g. "a natural and periodic state of rest"
 	   (SORT PRED)
-      (LF (% PROP (CLASS ?conj) (VAR *) (sem ?sem) (CONSTRAINT (& (sequence (?v1 ?v2)))) ;;?members)))
+      (LF (% PROP (CLASS ?conj) (VAR *) (sem ?sem) (CONSTRAINT (& (:sequence (?v1 ?v2)))) ;;?members)))
 	     (transform ?transform) (sem ?sem)
 	     )))
           
@@ -4741,3 +4767,121 @@
 	 (head (W::punc (skip -) (lex (? lex w::punc-comma w::punc-colon W::semi-colon W::punc-hashmark w::punc-quotemark)))))
 
 	))
+
+(parser::augment-grammar
+ '((headfeatures
+    (N1 var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund generated))
+
+   ;; special construction for rate , e.g., the binding rate, allows a gerund 
+   ;;  this rule doesn't build the LF we'd really like, any arguments end up attached to RATE rather than the event.
+   ;;   but at least it great something close
+    ((N1 (RESTR ?new) (SORT ?sort) (sem ?sem) (class ONT::RATE)
+      (N-N-MOD +) (QUAL -) (relc -) (subcat ?subcat) (gap ?gap)
+     )
+      
+     -gerund-rate> 1
+     (n1 (AGR 3s) (abbrev -) (generated -)
+        (var ?v1) (restr ?modr)  (gerund +)  
+	;;  removed this to handle things like "computing services"
+	;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
+      (sem ?n-sem)
+      (CLASS ?modc) (PRO -) (N-N-MOD -) ;;(COMPLEX -)   can't require COMPLEX - any more -- e.g., "p53 expression levels"
+      (SUBCAT ?ignore) (GAP -) (kr-type ?kr-type)
+      (postadvbl -) (post-subcat -) 
+      (subj ?subj)
+	    (subj-map ?subjmap)
+	    ;;(dobj-map ?dobjmap) 
+	    (dobj-map ?dobjmap)
+	    (dobj ?dobj)
+	     (comp3 ?comp)
+	     (comp3-map ?compmap)
+      (nomobjpreps ?numobjpreps)
+      (nomsubjpreps ?numsubjpreps)
+      )
+     (head (N1 (VAR ?v2) (QUAL -) (subcat ?subcat) (sort ?sort)
+	       (sem ?sem)  (class ONT::RATE)
+	       (generated -)
+	       (RESTR ?r) 
+	       (SORT PRED) (gap ?gap) 
+	    (relc -)  (postadvbl -) (post-subcat -) 
+	    (abbrev -)
+	       ))
+     (add-to-conjunct 
+      (val (ont::figure (% *PRO* (status kind) (var ?v1) (class ?modc) (constraint ?modr) (sem ?n-sem) (kr-type ?kr-type)))) 
+      (old ?r) (new ?new))
+     )
+
+   ;;   the binding rate by X
+   ((N1 (RESTR ?new) (SORT ?sort) (sem ?sem) (class ONT::RATE)
+     (N-N-MOD +) (QUAL -) (relc -) (subcat ?subcat) (gap ?gap)
+     )
+    
+    -gerund-rate+subj-arg> 1
+    (n1 (AGR 3s) (abbrev -) (generated -)
+     (var ?v1) (restr ?modr)  (gerund +)  
+     ;;  removed this to handle things like "computing services"
+     ;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
+     (sem ?n-sem)
+     (CLASS ?modc) (PRO -) (N-N-MOD -) ;;(COMPLEX -)   can't require COMPLEX - any more -- e.g., "p53 expression levels"
+     (SUBCAT ?ignore) (GAP -) (kr-type ?kr-type)
+     (postadvbl -) (post-subcat -) 
+     (subj (% np (sem ?subjsem)))
+     (subj-map ?subjmap)
+     (nomsubjpreps ?nomsubjpreps)
+     )
+    (head (N1 (VAR ?v2) (QUAL -) (subcat ?subcat) (sort ?sort)
+	      (sem ?sem)  (class ONT::RATE)
+	      (generated -)
+	      (restr ?r)
+	      (SORT PRED) (gap ?gap) 
+	      (relc -)  (postadvbl -) (post-subcat -) 
+	      (abbrev -)
+	      ))
+     (pp (ptype ?nomsubjpreps) (sem ?subjsem) (var ?vpp) (gap -))
+     (add-to-conjunct 
+      (val (?subjmap ?vpp))
+      (old ?modr) (new ?new-ev-constraint))
+     (add-to-conjunct 
+      (val (ont::figure (% *PRO* (status kind) (var ?v1) (class ?modc) (constraint ?new-ev-constraint)
+			   (sem ?n-sem) (kr-type ?kr-type))))
+      (old ?r) (new ?new))
+     )
+
+   ;;   the binding rate of X
+   ((N1 (RESTR ?new) (SORT ?sort) (sem ?sem) (class ONT::RATE)
+     (N-N-MOD +) (QUAL -) (relc -) (subcat ?subcat) (gap ?gap)
+     )
+    
+    -gerund-rate+arg-obj> 1
+    (n1 (AGR 3s) (abbrev -) (generated -)
+     (var ?v1) (restr ?modr)  (gerund +)  
+     ;;  removed this to handle things like "computing services"
+     ;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
+     (sem ?n-sem)
+     (CLASS ?modc) (PRO -) (N-N-MOD -) ;;(COMPLEX -)   can't require COMPLEX - any more -- e.g., "p53 expression levels"
+     (SUBCAT ?ignore) (GAP -) (kr-type ?kr-type)
+     (postadvbl -) (post-subcat -) 
+     (dobj (% np (sem ?subjsem)))
+     (dobj-map ?subjmap)
+     (nomobjpreps ?nomobjpreps)
+     )
+    (head (N1 (VAR ?v2) (QUAL -) (subcat ?subcat) (sort ?sort)
+	      (sem ?sem)  (class ONT::RATE)
+	      (generated -)
+	      (restr ?r)
+	      (SORT PRED) (gap ?gap) 
+	      (relc -)  (postadvbl -) (post-subcat -) 
+	      (abbrev -)
+	      ))
+     (pp (ptype ?nomobjpreps) (sem ?subjsem) (var ?vpp) (gap -))
+     (add-to-conjunct 
+      (val (?subjmap ?vpp))
+      (old ?modr) (new ?new-ev-constraint))
+     (add-to-conjunct 
+      (val (ont::figure (% *PRO* (status kind) (var ?v1) (class ?modc) (constraint ?new-ev-constraint)
+			   (sem ?n-sem) (kr-type ?kr-type))))
+      (old ?r) (new ?new))
+     )
+
+))
+

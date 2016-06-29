@@ -275,6 +275,23 @@
 	    )
 	   )
 
+          ((ONT::EVENT ?ev ?type :AGENT ?!ag :METHOD ?!bmo :PASSIVE -)
+	   (ONT::F ?!bmo ONT::BY-MEANS-OF :GROUND ?!bmoVal)
+	   (ONT::EVENT ?!bmoVal ?!bmoValType :AGENT -)
+           -bmo1-gd>
+           100
+           (ONT::CC *1 ONT::BY-MEANS-OF
+            :rule -bmo1-gd
+	    :FACTOR ?!bmoVal
+            :OUTCOME ?ev
+	    :TYPE ONT::BY-MEANS-OF
+            )
+	   (ONT::EVENT ?!bmoVal ?!bmoValType
+	    :rule -bmo1-event-gd
+	    :AGENT ?!ag
+	    )
+	   )
+	  
 	  ; Our results show that Ras activates Erk by binding to Raf.
 #|
           ((CC ?ev ONT::BY-MEANS-OF :OUTCOME ?!outcomeV)
@@ -336,6 +353,25 @@
 	    :FACTOR ?!ag
 	    )
 	   )
+
+          ((ONT::EVENT ?ev ?type :AGENT ?!ag :METHOD ?!bmo :PASSIVE -)
+	   (ONT::F ?!bmo ONT::BY-MEANS-OF :GROUND ?!bmoVal)
+	   (ONT::CC ?!bmoVal ?!bmoValType :FACTOR -)
+           -bmo1-cc-gd>
+           100
+           (ONT::CC *1 ONT::BY-MEANS-OF
+            :rule -bmo1-cc-gd
+	    :FACTOR ?!bmoVal
+            :OUTCOME ?ev
+	    :TYPE ONT::BY-MEANS-OF
+            )
+	   (ONT::CC ?!bmoVal ?!bmoValType
+	    :rule -bmo1-cc-event-gd
+	    :FACTOR ?!ag
+	    )
+	   )
+
+
 	  
 	  #|   ********  commenting this out for now  ***********
           ((EVENT ?ev ?type :AGENT ?!ag :METHOD ?!bmo :PASSIVE - :epi ?!epiV)
@@ -384,6 +420,25 @@
 	    :AFFECTED ?!obj
 	    )
 	   )
+
+          ((ONT::EVENT ?ev ?type :AGENT ?!ag :AFFECTED ?!obj :METHOD ?!bmo :PASSIVE -)
+	   (ONT::F ?!bmo ONT::BY-MEANS-OF :GROUND ?!bmoVal)
+	   (ONT::EVENT ?!bmoVal ?!bmoValType :AGENT - :AFFECTED -)
+           -bmo1b-gd>
+           120  ; takes precedence to -bmo1
+           (ONT::CC *1 ONT::BY-MEANS-OF
+            :rule -bmo1b-gd
+	    :FACTOR ?!bmoVal
+            :OUTCOME ?ev
+	    :TYPE ONT::BY-MEANS-OF
+            )
+	   (ONT::EVENT ?!bmoVal ?!bmoValType
+	    :rule -bmo1b-event-gd
+	    :AGENT ?!ag
+	    :AFFECTED ?!obj
+	    )
+	   )
+
 	  
 					; should have a rule that generates AFFECTED-RESULT too
 	  ; Raf activates Erk by being stimulated by Ras.
@@ -403,6 +458,24 @@
 	    :AFFECTED ?!ag
 	    )
           )
+
+          ((ONT::EVENT ?ev ?type :AGENT ?!ag :METHOD ?!bmo :PASSIVE -)
+	   (ONT::F ?!bmo ONT::BY-MEANS-OF :GROUND ?!bmoVal)
+	   (ONT::EVENT ?!bmoVal ?!bmoValType :PASSIVE +)
+           -bmo1a-gd>
+           100
+           (ONT::CC *1 ONT::BY-MEANS-OF
+            :rule -bmo1a-gd
+	    :FACTOR ?!bmoVal
+            :OUTCOME ?ev
+	    :TYPE ONT::BY-MEANS-OF
+            )
+	   (ONT::EVENT ?!bmoVal ?!bmoValType
+	    :rule -bmo1a-event-gd
+	    :AFFECTED ?!ag
+	    )
+          )
+
 	  
 	  ; By binding to Ras, Raf is activated.
 	  ((ONT::EVENT ?ev ?type :AFFECTED ?!obj :METHOD ?!bmo :PASSIVE +)
@@ -422,6 +495,24 @@
 	    )
           )
 
+	  ((ONT::EVENT ?ev ?type :AFFECTED ?!obj :METHOD ?!bmo :PASSIVE +)
+	   (ONT::F ?!bmo ONT::BY-MEANS-OF :GROUND ?!bmoVal)
+	   (ONT::EVENT ?!bmoVal ?!bmoValType :AGENT - :AFFECTED ?!bmoAff)
+           -bmo2-gd>
+           100
+           (ONT::CC *1 ONT::BY-MEANS-OF
+            :rule -bmo2-gd
+	    :FACTOR ?!bmoVal
+            :OUTCOME ?ev
+	    :TYPE ONT::BY-MEANS-OF
+            )
+	   (ONT::EVENT ?!bmoVal ?!bmoValType
+	    :rule -bmo2-event-gd
+	    :AGENT ?!obj
+	    )
+          )
+
+	  
 					; should have a rule that generates AFFECTED-RESULT too
 	  ; By phosphorylation, Raf is activated.
 	  ; By phosphorylation by Ras, Raf is activated.
@@ -442,6 +533,24 @@
 	    )
           )
 
+	  ((ONT::EVENT ?ev ?type :AFFECTED ?!obj :METHOD ?!bmo :PASSIVE +)
+	   (ONT::F ?!bmo ONT::BY-MEANS-OF :GROUND ?!bmoVal)
+	   (ONT::EVENT ?!bmoVal ?!bmoValType :AFFECTED - :AFFECTED-RESULT -)
+           -bmo3-gd>
+           100
+           (ONT::CC *1 ONT::BY-MEANS-OF
+            :rule -bmo3-gd
+	    :FACTOR ?!bmoVal
+            :OUTCOME ?ev
+	    :TYPE ONT::BY-MEANS-OF
+            )
+	   (ONT::EVENT ?!bmoVal ?!bmoValType
+	    :rule -bmo3-event-gd
+	    :AFFECTED ?!obj
+	    )
+          )
+
+	  
 					; should have a rule that generates AFFECTED-RESULT too
 	  ; Raf is activated by phosphorylation.
 	  ; Raf is activated by phosphorylation by Ras.
@@ -542,6 +651,20 @@
 	    :TYPE ONT::PURPOSE
             )
 	   )
+
+          ((ONT::EVENT ?ev ?type :REASON ?!r)
+	   (ONT::F ?!r ONT::PURPOSE :GROUND ?!rVal)
+	   (ONT::EVENT ?!rVal ?!rValType)
+           -purpose-gd>
+           100
+           (ONT::CC *1 ONT::BY-MEANS-OF
+            :rule -purpose-gd
+	    :FACTOR ?ev
+            :OUTCOME ?!rVal
+	    :TYPE ONT::PURPOSE
+            )
+	   )
+
 	  
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; therefore ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -579,6 +702,19 @@
             )
 	   )
 
+          ((ONT::EVENT ?ev ?type :REASON ?!r)
+	   (ONT::F ?!r ONT::THEREFORE :GROUND ?!rVal)
+	   (ONT::EVENT ?!rVal ?!rValType)
+           -therefore-gd>
+           100
+           (ONT::CC *1 ONT::CAUSE
+            :rule -therefore-gd
+	    :FACTOR ?ev
+            :OUTCOME ?!rVal
+	    :TYPE ONT::THEREFORE
+            )
+	   )
+	  
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; result ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	  
 	  ; Raf is activated as a result of Ras stimulation.
@@ -598,7 +734,7 @@
 
           ((ONT::EVENT ?ev ?type :MANNER ?!r1)
 	   (ONT::F ?!r1 ONT::MANNER :GROUND ?!r2)
-	   (ONT::TERM ?!r2 ONT::OUTCOME :OF ?!r3)   ; term substitution  ; :OF not :FIGURE
+	   (ONT::TERM ?!r2 ONT::OUTCOME :FIGURE ?!r3)   ; term substitution  ; (2016/06/13 :OF not :FIGURE) (2016/06/22: changed :OF to :FIGURE too)
 	   (ONT::EVENT ?!r3 ?!r3Type)
            -result-gd>
            100
@@ -648,6 +784,25 @@
             )
 	   )
 
+          ((ONT::EVENT ?ev ?type :MANNER ?!r1)
+	   (ONT::F ?!r1 ONT::MANNER :GROUND ?!r2)
+	   (ONT::TERM ?!r2 ?t2 :MODS (?!r3))            ; need to fix ?t2 for "way", "fashion"
+;	   (ONT::CC ?!r3 (? t3 ONT::DEPENDENT ONT::INDEPENDENT))     ; lost the NEUTRAL due to event substitution
+	   (ONT::F ?!r3 (:* (? t3 ONT::DEPENDENT ONT::INDEPENDENT) ?!w3) :NEUTRAL1 ?!r4 :NEUTRAL ?!r2)
+	   (ONT::TERM ?!r4 ?t4)
+           (ONT::EVAL (symbolmap ?t3 ?!eventName -rule5b_NEUTRAL1_NEUTRAL))	  ; Note: there is a rule in drumrules_ev that generates this CC too.  Need to make sure the name of the CC stays the same. 
+           -depend-gd>
+           100
+           (ONT::CC ?!r3 ?!eventName
+            :rule -depend-gd
+	    :FACTOR ?!r4
+	    :OUTCOME ?ev
+	    :NEUTRAL -
+	    :NEUTRAL1 -
+            )
+	   )
+
+	  
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; dependent (was: necessary) and ensure (sufficient) ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	  ; "Ras-dependent activation" is in DRUMRules_mod.lisp
 	  

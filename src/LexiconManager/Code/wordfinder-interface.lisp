@@ -10,86 +10,6 @@
 
 ;; a sample list of entries returned by WordFinder
 
-;;;(SUCCESS :ENTRIES
-;;;	 ((ENTRY :WORD "frogs" 
-;;;		 :score 1 
-;;;		 :LFS (LF::PHYS-OBJECT) 
-;;;		 :LIKE ("frog") 
-;;;		 :FEATURES NIL 
-;;;		 :COMLEX-SUBCATS NIL 
-;;;		 :WORDNET-VERB-FRAME NIL
-;;;		 :SOURCE :WORDNET 
-;;;		 :CONSTIT (% N))))
-
-;(defun get-unknown-word-def-MP (w)
-;    "get-unknown-word-def-MP (w)
-; @param w : word
-; @return  : if word is undefined, send a message with continuation to wordfinder; if the word is found in the
-;          : lexicon, return the lexical definition
-; @desc 
-; @visibility private
-;if the word is undefined in the lexicon, call WordFinder (via message interface) to get word information"
-;    (let ((res (retrieve-from-lex w))) ;; is the word already defined?
-;      (if (null res)
-;          ;; send the request via message to wordfinder
-;          (send-with-continuation `(request :receiver wordfinder
-;                                            :sender lexiconmanager 
-;                                            :content (unknown-word :word ,w))
-;                                  #'(lambda (msg)
-;                                      ;; when wordfinder responds, continue with this function
-;                                      (setq res (process-unknown-word msg w))
-;                                      )
-;                                  )
-;          ;; another way to send the request
-;          (send-with-continuation (list
-;                                  'request
-;                                  :receiver 'wordfinder
-;                                  :sender 'lexiconmanager 
-;                                  :content (list 'unknown-word ':word w)
-;                                  )
-;                                  #'(lambda (msg)
-;                                      ;; when wordfinder responds, continue with this function
-;                                      (setq res (process-unknown-word msg w))
-;                                      )
-;                                  )   
-;          (let ((unknown-word (read-from-string (wf::lookup-unknown-word-string w))))
-;            (setq res (process-unknown-word unknown-word w))            
-;                )
-;          )
-;     res) ;; return the lexicon definition if already defined
-;   )
-
-; (defun process-unknown-word (msg w)
-;  " process-unknown-word (w)
-; @param w : word
-; @param msg : the message returned from wordfinder
-; @return  : an underspecified word sense for w in parser-suitable format
-; @desc 
-; @visibility private
-;TODO: 
-;add verbnet
-;check for other senses/part of speech for already defined words
-;what about lemmatization?"
-;  (let ((res nil)
-;        ;; (wf-entry (second (member ':content msg)))
-;         (wf-entry msg)
-;        ;; (first-wf-entry (get-first-wf-entry wf-entry))
-;         )
-;    
-;    ;; make an underspecified lex entry for this word
-;    (if (not (null wf-entry))
-;        (let* ((first-wf-entry (get-first-wf-entry wf-entry))
-;              (pos (get-wf-constit first-wf-entry))
-;              (score (get-wf-score first-wf-entry))
-;              (wid (gen-id (get-wf-word first-wf-entry)))
-;              (lflist (get-wf-lfs first-wf-entry))
-;              )
-;          (setq res (list (make-unknown-word-entry w pos score nil wid lflist)))
-;          )
-;      (setq res nil)) ;;unknown word not found by wordfinder
-;   res)
-;  )
-
 (defun found-wordp (wf-info)
   (equal (car wf-info) 'SUCCESS)
 )
@@ -487,6 +407,15 @@
 	    (car values)
 	    ))))
 
+(defun lookup-type-in-lexicon (w)
+  "this looks up a word in the lexicon and retruns the ONT type of the first entry"
+  (let* ((entries (remove-if #'(lambda (x)
+				(eq (second (fourth x)) 'w::word))
+			     (get-word-def w nil)))
+	 (c (cddr (fourth (first entries))))
+	 (lf (parser::get-fvalue c 'w::lf)))
+    (second lf)))
+    
 (defun make-unknown-word-entry (word pos score feats wid lflist trips-sense-list penn-tag tagged-ont-types domain-info)
   "make an underspecified lexical entry for the unknown word"
   (print-debug  "~%MAKE-UNKNOWN-WORD-EMTRY: generating word entry for ~S with ~S and ~S ~%" word pos lflist)
@@ -529,12 +458,26 @@
        ;; make untyped sem so it will match any features on the role restrictions
 ;       (setq sem `,(make-untyped-sem nil) )
        (setq res (create-entry-based-on-entries-of-the-same-type word wid lf lfform sem syntax pos trips-sense-list domain-info score))
-       )
+        )
       (w::name
        (setq res (make-unknown-name-entry word score penn-tag tagged-ont-types domain-info))
        )
       (w::adj
-       (setq sem (get-lf-sem lf :no-defaults nil))
+       (let ((pertainyms (find-arg-in-act (car domain-info) :pertainyms)))
+	 ;;(format t "~%Pertainymm is ~S from domain info ~S" pertainyms domain-info)
+	 (if pertainyms
+	     (let* ((pert (car pertainyms))
+		    (sense-info (find-arg pert :sense-info))
+		    (pert-lf-form (parser::tokenize (second pert)))
+		    (pert-lf (or (car (find-arg (cadr sense-info) :ont-types))
+				 (lookup-type-in-lexicon pert-lf-form)
+				 'ont::referential-sem))
+		    (pert-sem (make-type-spec (get-lf-sem pert-lf :no-defaults nil) :semvar '?xx :feature-list-sign '$)))
+	       ;;(format t "pertainym sense info is: SENSE-INFO ~S LF: ~S LF-FORM: ~S SEM: ~S" sense-info pert-lf pert-lf-form pert-sem)
+	     (setq feats (append feats (list (list 'w::pertainym (list (list :* pert-lf pert-lf-form) pert-sem)))))
+	     (setq sem (get-lf-sem 'ont::ASSOC-WITH :no-defaults nil)))
+	     ;;  no pertainym, so do normal computation off the LF
+	 (setq sem (get-lf-sem lf :no-defaults nil)))
        ;;(setq lf (list :* lf lfform))
        (setq syntax (append feats `((w::gap ?gap)
 				    (w::roles ?roles)
@@ -551,7 +494,7 @@
 						    (W::CASE ?argcase)
 						    (W::SEM ?argsem)))
 					;(w::argument ?argument)
-				    (w::argument-map ont::of)
+				    (w::argument-map ont::figure)
 				    (w::subcat-map ?sm)
 				    (w::atype (? atype w::central w::postpositive))
 				    (w::sort w::pred)
@@ -562,7 +505,7 @@
 				    )))
        (when syntax-from-penn-tag (setq syntax (append syntax syntax-from-penn-tag)))
        (setq score (adjust-score-if-participle-adj lfform score trips-sense-list))
-       )
+       ))
       (w::adv
        (setq replica-entry (make-replica-entry word lf pos '(ont::modifier)))
 ;       (setq sem (get-lf-sem lf :no-defaults nil ))
@@ -591,32 +534,6 @@
        ;; now we look at existing lexicon entries to generate entries for the new word
        (setq res (create-entry-based-on-entries-of-the-same-type word wid lf lfform sem syntax pos trips-sense-list domain-info score))
        )
-       #||(let ((this-entry (make-replica-entry word lf 'w::v trips-sense-list))
-	     sense-defs)
-	 (when this-entry
-	   (print-debug "generating senses for entry ~S~%" this-entry)
-	   (setq sense-defs (make-word-sense-definitions this-entry (lexicon-db-synt-table *lexicon-data*)))
-	   (when sense-defs
-	     (dolist (this-sense sense-defs)
-	       (setq maps (word-sense-definition-mappings this-sense))
-	       (setq roles (word-sense-definition-roles this-sense))
-	       (let* ((new-entry (make-word-sense-definition
-                   :name wid
-                   :pos pos
-                   :lf fulllf
-                   :sem sem
-                   :boost-word nil
-                   :pref (or score .99)
-                   :syntax syntax
-                   :kr-type domain-info
-		   :specialized (if domain-info t nil)
-		   :mappings maps
-		   :roles roles
-                   )))
-		 (push (make-lexicon-entry word new-entry) res)
-	       ))
-	     ))
-	   ))||#
       (otherwise nil))
   ;; if we failed to make an entry above, we do a generic one here
     (when (not res) ;; (find pos '(w::v w::adv w::name w::n))) 

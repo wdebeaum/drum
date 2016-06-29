@@ -41,7 +41,7 @@
      )
    
      ;;  simple adverbials- used is the lexical entry does not specify an argument-map
-    ((ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT (& (ONT::OF ?arg)))
+    ((ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT (& (ONT::FIGURE ?arg)))
                               (sem ?sem) (transform ?transform)))
             ;;(SORT CONSTRAINT)
       (role ?lf)
@@ -473,7 +473,8 @@
 		(ellipsis -)
 		))
 
-     (advbl (ARGUMENT (% (? xxx NP S) (sem ?sem))) (GAP -)
+     (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
+			 (sem ?sem))) (GAP -)
       ;; (subjvar ?subjvar)
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
       (ARG ?npvar) (VAR ?mod)
@@ -587,7 +588,7 @@
 	      )
            )
      (add-to-conjunct (val (TIME (% *pro* (var *) (status F) (class ont::EVENT-TIME-REL) 
-				    (constraint (& (of ?v) (val ?mod))))))
+				    (constraint (& (FIGURE ?v) (GROUND ?mod))))))
       (old ?con) (new ?newcon))
      (change-feature-values (OLD ?lf) (NEW ?newlf) (newvalues ((CONSTRAINT ?newcon)))))
 
@@ -608,7 +609,7 @@
 	 (ARG ?subjvar) (VAR ?mod)
 	 )
      (add-to-conjunct (val (TIME (% *pro* (var *) (status F) (class ont::EVENT-TIME-REL) 
-				    (constraint (& (of ?v) (val ?mod))))))
+				    (constraint (& (FIGURE ?v) (GROUND ?mod))))))
       (old ?con) (new ?newcon))
      (change-feature-values (OLD ?lf) (NEW ?newlf) (newvalues ((CONSTRAINT ?newcon)))))
 
@@ -1005,8 +1006,8 @@
     ((number (agr ?agr) (VAR ?v) (MASS ?mn) (lf ?lf) (sem ?sem) (premod +) ;;(val ?val)
 	     (nobarespec +) ; this can't be a specifier -- that goes through the cardinality rules
 	     (restr (& (mods (% *PRO* (status F) (class ?lfa) (var ?v1) 
-				(constraint (& (of ?v) 
-					       (val (% *PRO* (status indefinite) (var *) (class ont::number) (constraint (& (value ?val)))))))))))
+				(constraint (& (FIGURE ?v) 
+					       (GROUND (% *PRO* (status indefinite) (var *) (class ont::number) (constraint (& (value ?val)))))))))))
 	     )
      -advbl-bare-number-pre>
      (adv (ATYPE PRE) (VAR ?v1) (argument (% number)) (Mass ?m) (lf ?lfa))
@@ -1018,8 +1019,8 @@
     ((number (agr ?agr) (VAR ?v) (MASS ?mn) (lf ?lf) (sem ?sem) (premod +) ;;(val ?val)
 	     (nobarespec +) ; this can't be a specifier -- that goes through the cardinality rules
 	     (restr (& (mods (% *PRO* (status F) (class (:* ont::precision-val w::approximate)) (var *) 
-				(constraint (& (of ?v) 
-					       (val (% *PRO* (status indefinite) (var **) (class ont::number) (constraint (& (value ?val)))))))))))
+				(constraint (& (FIGURE ?v) 
+					       (GROUND (% *PRO* (status indefinite) (var **) (class ont::number) (constraint (& (value ?val)))))))))))
 	     )
      -number-or-so>
      (head (number (VAR ?v) (lf ?lf) (lex ?l) (agr ?agr) (MASS ?mn) (sem ?sem) (val ?val) (premod -)
@@ -1042,7 +1043,7 @@
 	       )
       )
      (add-to-conjunct (val (MODS (% *PRO* (status F) (class ?lfa) (var ?v) 
-				    (constraint (& (of ?v1))))))
+				    (constraint (& (FIGURE ?v1))))))
       (old ?restr) (new ?new))
      )
     
@@ -1177,7 +1178,7 @@
    ((advbl (arg ?arg) (role (:* ONT::distance W::quantity)) (var *)
 	   (sort binary-constraint)
 	   (LF (% PROP (VAR *) (CLASS (:* ONT::extent-predicate ?scale)) (sem ?sem)
-		  (CONSTRAINT (& (OF ?arg) (VAL ?v)))))
+		  (CONSTRAINT (& (FIGURE ?arg) (GROUND ?v)))))
 	   (atype (? x W::PRE W::POST))
 	   (argument (% (? ARGCAT8043 W::S
                            W::NP
@@ -1205,7 +1206,7 @@
      (sort pred) (gap -) (atype (? atp pre post))
      (role ONT::MANNER) (var **)
      (LF (% PROP (CLASS ONT::Manner) (VAR **) 
-	    (CONSTRAINT (& (ONT::OF ?arg) (ont::val ?v)))
+	    (CONSTRAINT (& (ONT::FIGURE ?arg) (ont::GROUND ?v)))
 	    (sem ($ f::abstr-obj (f::information -) (f::intentional -)))))
      )
     -vp-ing-advbl> 0.93
@@ -1221,7 +1222,7 @@
      (sort pred) (gap -) (atype (? atp pre post))
      (role ONT::MANNER) (var **)
      (LF (% PROP (CLASS ONT::result) (VAR **) 
-	    (CONSTRAINT (& (ONT::OF ?arg) (ont::val ?v)))
+	    (CONSTRAINT (& (ONT::FIGURE ?arg) (ont::GROUND ?v)))
 	    (sem ($ f::abstr-obj (f::information -) (f::intentional -)))))
      )
     -vp-ing-as-result-advbl> 0.93
@@ -1241,7 +1242,7 @@
      (sort pred) (gap -) (atype (? atp pre post))
      (var *)
      (LF (% PROP (CLASS ONT::Manner) (VAR *) 
-	    (CONSTRAINT (& (ONT::OF ?arg) (ont::val ?v)))
+	    (CONSTRAINT (& (ONT::FIGURE ?arg) (ont::GROUND ?v)))
 	    (sem ($ f::abstr-obj (f::information -) (f::intentional -)))))
      )
     -manner-advbl> 
@@ -1253,7 +1254,7 @@
     ((ADVBL (ARG ?arg) 
       (SORT BINARY-CONSTRAINT) (var *)
        (LF (% PROP (var *) (CLASS ONT::EXCLUSIVE) 
-	        (Constraint (& (of ?arg) (val ?v)))))
+	        (Constraint (& (FIGURE ?arg) (GROUND ?v)))))
       (ATYPE w::post) (focus ?v)
       (ARGUMENT (% (? x W::VP W::S)))
       (SEM ?sem))
@@ -1266,7 +1267,7 @@
     ((ADVBL (ARG ?arg) 
       (SORT BINARY-CONSTRAINT) (var *)
        (LF (% PROP (var *) (CLASS ONT::EXCLUSIVE) 
-	        (Constraint (& (of ?arg) (val ?v)))))
+	        (Constraint (& (FIGURE ?arg) (GROUND ?v)))))
       (ATYPE (? xx w::post w::pre w::pre-vp)) (focus ?v)
       (lex ?hlex) (headcat ?hcat)
       (ARGUMENT (% (? x W::VP W::S)))
@@ -1280,7 +1281,7 @@
     ((ADVBL (ARG ?arg) 
       (SORT BINARY-CONSTRAINT) (var *)
        (LF (% PROP (var *) (CLASS ONT::EXCLUSIVE) 
-	        (Constraint (& (of ?arg) (val ?v)))))
+	        (Constraint (& (FIGURE ?arg) (GROUND ?v)))))
       (ATYPE (? xx w::post w::pre w::pre-vp)) (focus ?v)
       (lex ?hlex) (headcat ?hcat)
       (ARGUMENT (% (? x W::VP W::S)))

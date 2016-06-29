@@ -227,8 +227,8 @@
   (if (not (eq acts 'failed))
       (let ((extended-context 
 	     (Mapcar #'remove-unwanted-roles
-		     (add-reference-info-in-lfs
-		      (remove-unused-context (car acts) lfs)
+		     (add-reference-info-in-lfs lfs
+		     ;(remove-unused-context (car acts) lfs)  ; this removes extractions with new ids not in the original LF
 	      ))))
 	(send-msg 
 	 `(tell :content (CPS-act-hyps 
@@ -491,8 +491,8 @@
     (LOGIC (convert-to-package (convert-lfs-to-logic lfs) :im))
     (LF (mapcar #'extend-lf lfs))
     (LF-TERM
-     (mapcar #'convert-to-term-format
-	     (mapcar #'extend-lf lfs)))
+     ;(mapcar #'convert-to-term-format    ; this doesn't work for SequentialLFTransformIM because the unextracted LF clauses would all get converted 
+	     (mapcar #'extend-lf lfs));)
     (t lfs)))
 
 (defun convert-to-term-format (lf)

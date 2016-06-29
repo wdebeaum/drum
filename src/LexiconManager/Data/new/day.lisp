@@ -8,7 +8,7 @@
   (W::DAY
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("day%1:28:00" "day%1:28:06"))
-     (LF-PARENT ONT::time-unit)
+     (LF-PARENT ONT::day-duration)
      (example "day of 24 hours" "for some days" "a 5-day week")
      (templ unit-templ)
      )

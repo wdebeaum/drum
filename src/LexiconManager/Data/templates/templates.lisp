@@ -2340,58 +2340,58 @@
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE))
    (ARGUMENTS
     (ARGUMENT (% (? W::argcat ;;W::ADVBL   ;; what's an example of NO ADV?
-		    W::ADJP)  (w::set-modifier -) (W::sort ?sort)) ONT::OF)
+		    W::ADJP)  (w::set-modifier -) (W::sort ?sort)) ONT::FIGURE)
     ))
 
   ;; Not -- don't modify discourse adverbials
    (NEG-ADJ-ADV-OPERATOR-TEMPL
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE))
    (ARGUMENTS 
-    (ARGUMENT (% (? W::argcat W::ADVBL W::ADJP)  (w::set-modifier -) (W::sort (? !sort w::disc))) ONT::OF)
+    (ARGUMENT (% (? W::argcat W::ADVBL W::ADJP)  (w::set-modifier -) (W::sort (? !sort w::disc))) ONT::FIGURE)
     ))
 
 (NEG-ADJ-OPERATOR-TEMPL
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE))
    (ARGUMENTS 
-    (ARGUMENT (% (? W::argcat W::ADJP)  (w::set-modifier -) (W::sort (? !sort w::disc))) ONT::OF)
+    (ARGUMENT (% (? W::argcat W::ADJP)  (w::set-modifier -) (W::sort (? !sort w::disc))) ONT::FIGURE)
     ))
   
   (ADJ-ADV-GRADABLE-OPERATOR-TEMPL
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE))
    (ARGUMENTS
-    (ARGUMENT (% (? W::argcat W::ADVBL W::ADJP)  (w::set-modifier -) (W::sort ?sort) (W::gradability +)) ONT::OF)
+    (ARGUMENT (% (? W::argcat W::ADVBL W::ADJP)  (w::set-modifier -) (W::sort ?sort) (W::gradability +)) ONT::FIGURE)
     ))
   
   (ADV-OPERATOR-TEMPL
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE))
    (ARGUMENTS
-    (ARGUMENT (% W::ADVBL (W::sort ?sort)) ONT::OF)
+    (ARGUMENT (% W::ADVBL (W::sort ?sort)) ONT::FIGURE)
     ))
 
    ;; so, too, really as intensifiers
    (NON-DISC-ADV-OPERATOR-TEMPL
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE))
    (ARGUMENTS 
-    (ARGUMENT (% (? W::argcat W::ADVBL)  (w::set-modifier -) (W::sort (? !sort w::disc))) ONT::OF)
+    (ARGUMENT (% (? W::argcat W::ADVBL)  (w::set-modifier -) (W::sort (? !sort w::disc))) ONT::FIGURE)
     ))
   
   (BINARY-CONSTRAINT-ADV-OPERATOR-TEMPL
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE))
    (ARGUMENTS
-    (ARGUMENT (% W::ADVBL (W::sort W::BINARY-CONSTRAINT)) ONT::OF)
+    (ARGUMENT (% W::ADVBL (W::sort W::BINARY-CONSTRAINT)) ONT::FIGURE)
     ))
   
   ;;;;;swier -- words that grade/modify adjectives get this templ
   (ADJ-OPERATOR-TEMPL
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE))
    (ARGUMENTS
-    (ARGUMENT (% W::ADJP) ONT::OF)
+    (ARGUMENT (% W::ADJP) ONT::FIGURE)
     ))
 
    (ADJ-OPERATOR-PREFIX-TEMPL
     (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE) (W::PREFIX +))
     (ARGUMENTS
-     (ARGUMENT (% W::ADJP) ONT::OF)
+     (ARGUMENT (% W::ADJP) ONT::FIGURE)
      ))
 
   ;; e.g. much can only modify comparative adjectives
@@ -2399,7 +2399,7 @@
   (COMPARATIVE-ADJ-adv-OPERATOR-TEMPL
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE))
    (ARGUMENTS
-    (ARGUMENT (% (? W::argcat w::advbl W::ADJP) (w::comparative +)) ONT::OF)
+    (ARGUMENT (% (? W::argcat w::advbl W::ADJP) (w::comparative +)) ONT::FIGURE)
     ))
   
   ;; e.g. much can only modify comparative adverbs
@@ -2407,7 +2407,7 @@
   (COMPARATIVE-ADV-OPERATOR-TEMPL
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE))
    (ARGUMENTS
-    (ARGUMENT (% W::ADVBL (w::comparative +)) ONT::OF)
+    (ARGUMENT (% W::ADVBL (w::comparative +)) ONT::FIGURE)
     ))
   
   ;;;;; for words like "more" and "less"...they take a noncomparative adj
@@ -2416,7 +2416,7 @@
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE) (W::comparative +))
    (ARGUMENTS
     ;;;;; this restriction does not seem to get picked up...
-    (ARGUMENT (% W::ADJ) ONT::OF)
+    (ARGUMENT (% W::ADJ) ONT::FIGURE)
     ))
 
 
@@ -2424,13 +2424,13 @@
   (ADJ-ADV-COMP-OPERATOR-TEMPL
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE) (w::comparative +))
    (ARGUMENTS
-    (ARGUMENT (% (? W::argcat W::ADVBL W::ADJP)  (w::set-modifier -) (W::sort ?sort)) ONT::OF)
+    (ARGUMENT (% (? W::argcat W::ADVBL W::ADJP)  (w::set-modifier -) (W::sort ?sort)) ONT::FIGURE)
     ))
   
   (OPERATOR-TEMPL
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE))
    (ARGUMENTS
-    (ARGUMENT (% ?argcat) ONT::OF)
+    (ARGUMENT (% ?argcat) ONT::FIGURE)
     ))
 
   ;; exactly five
@@ -2438,51 +2438,51 @@
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE) (W::MASS W::COUNT))
    (ARGUMENTS
  ;   (ARGUMENT (% W::CARDINALITY) ONT::OF)
-    (ARGUMENT (% W::NUMBER) ONT::OF)
+    (ARGUMENT (% W::NUMBER) ONT::FIGURE)
     ))
 
    ;; exactly five
      (NUMBER-OPERATOR-POST-TEMPL
         (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::POST) (W::MASS W::COUNT))
           (ARGUMENTS
-	   (ARGUMENT (% W::NUMBER) ONT::OF)
+	   (ARGUMENT (% W::NUMBER) ONT::FIGURE)
 	   ))
   
   ;;;;; operators that can modifier both quanitifers (e.g., almost all) and numbers
   (QUAN-OPERATOR-TEMPL
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE) (W::MASS W::COUNT))
    (ARGUMENTS
-    (ARGUMENT (% W::QUAN) ONT::OF)
+    (ARGUMENT (% W::QUAN) ONT::FIGURE)
     ))
   
   (Binary-constraint-S-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
+    (ARGUMENT (% W::S) ONT::FIGURE)
     (SUBCAT (:parameter xp (:default (% W::NP (W::case (? cas W::obj -))
-					(w::gerund -)))) ONT::VAL)
+					(w::gerund -)))) ONT::GROUND)
     ))
 
    ;; e.g., I opened the door by hitting it.
    (Binary-constraint-S-subjcontrol-templ
     (SYNTAX (W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
     (ARGUMENTS
-     (ARGUMENT (% W::S (w::subjvar ?subjvar)) ONT::OF)
-     (SUBCAT (:parameter xp (:default (% W::VP  (W::vform W::ing) (gap ?gap) (w::subjvar ?subjvar)))) ont::val
+     (ARGUMENT (% W::S (w::subjvar ?subjvar)) ONT::FIGURE)
+     (SUBCAT (:parameter xp (:default (% W::VP  (W::vform W::ing) (gap ?gap) (w::subjvar ?subjvar)))) ont::GROUND
 	     )))
 
    (Binary-constraint-S-pp-of-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
-    (SUBCAT (:parameter xp (:default (% W::PP (W::ptype w::of)))) ONT::VAL)
+    (ARGUMENT (% W::S) ONT::FIGURE)
+    (SUBCAT (:parameter xp (:default (% W::PP (W::ptype w::of)))) ONT::GROUND)
     ))
 
    (Binary-constraint-S-or-NP-value-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% (? W::x W::S W::NP)) ONT::OF)
-    (SUBCAT (% W::value (W::case (? cas W::obj -))) ONT::VAL)
+    (ARGUMENT (% (? W::x W::S W::NP)) ONT::FIGURE)
+    (SUBCAT (% W::value (W::case (? cas W::obj -))) ONT::GROUND)
     ))
 
 ; nobody uses this
@@ -2499,16 +2499,16 @@
    (Binary-constraint-S-trajectory-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% W::S (f::sem ($ f::situation (f::trajectory +)))) ONT::OF)
-    (SUBCAT (% W::NP (W::case (? cas W::obj -))) ONT::VAL)
+    (ARGUMENT (% W::S (f::sem ($ f::situation (f::trajectory +)))) ONT::FIGURE)
+    (SUBCAT (% W::NP (W::case (? cas W::obj -))) ONT::GROUND)
     ))
 
   (binary-constraint-PRED-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
 ;    (ARGUMENT (% W::PRED (W::arg ?subjvar)) ONT::OF)
-    (ARGUMENT (% W::PRED) ONT::OF)
-    (SUBCAT (:parameter xp (:default (% W::NP (W::case (? cas W::obj -)) (w::gerund -)))) ONT::VAL)
+    (ARGUMENT (% W::PRED) ONT::FIGURE)
+    (SUBCAT (:parameter xp (:default (% W::NP (W::case (? cas W::obj -)) (w::gerund -)))) ONT::GROUND)
     ))
   
   (binary-constraint-S-OR-NP-templ
@@ -2521,16 +2521,16 @@
   (binary-constraint-S-OR-NP-pred-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% (? W::x W::S W::NP) (w::var ?v)) ONT::OF)
+    (ARGUMENT (% (? W::x W::S W::NP) (w::var ?v)) ONT::FIGURE)
     (SUBCAT (:parameter xp (:default (% W::ADJP))
-			(:required (W::arg ?v))) ONT::VAL)
+			(:required (W::arg ?v))) ONT::GROUND)
     ))
 
   (binary-constraint-S-implicit-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)) (W::allow-deleted-comp +))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
-    (SUBCAT (% W::NP (W::case (? cas W::obj -))) ONT::VAL)
+    (ARGUMENT (% W::S) ONT::FIGURE)
+    (SUBCAT (% W::NP (W::case (? cas W::obj -))) ONT::GROUND)
     ))
   
 ; nobody uses this 
@@ -2589,8 +2589,8 @@
 	   (W::ALLOW-DELETED-COMP -)
 	   )
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
-    (SUBCAT (% W::S (W::stype W::decl)) ONT::VAL)
+    (ARGUMENT (% W::S) ONT::FIGURE)
+    (SUBCAT (% W::S (W::stype W::decl)) ONT::GROUND)
     ))
 
     (binary-constraint-S-while-loc-templ
@@ -2598,8 +2598,8 @@
 	 (W::ALLOW-DELETED-COMP -)
 	 )
      (ARGUMENTS
-      (ARGUMENT (% W::S) ONT::OF)
-      (SUBCAT  (% W::ADVBL (W::lf (% ?p (w::class (? x ont::position-reln))))) ONT::VAL)
+      (ARGUMENT (% W::S) ONT::FIGURE)
+      (SUBCAT  (% W::ADVBL (W::lf (% ?p (w::class (? x ont::position-reln))))) ONT::GROUND)
       ))
 
 (binary-constraint-S-decl-gap-templ
@@ -2607,8 +2607,8 @@
 	   (W::ALLOW-DELETED-COMP -)
 	   )
    (ARGUMENTS
-    (ARGUMENT (% (? W::x W::S W::NP)) ONT::OF)
-    (SUBCAT (% W::S (W::stype W::decl) (GAP ?GAP)) ONT::VAL)
+    (ARGUMENT (% (? W::x W::S W::NP)) ONT::FIGURE)
+    (SUBCAT (% W::S (W::stype W::decl) (GAP ?GAP)) ONT::GROUND)
     ))
 
 (binary-constraint-S-decl-templ-post-only
@@ -2616,8 +2616,8 @@
 	   (W::ALLOW-DELETED-COMP -)
 	   )
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
-    (SUBCAT (% W::S (W::stype W::decl)) ONT::VAL)
+    (ARGUMENT (% W::S) ONT::FIGURE)
+    (SUBCAT (% W::S (W::stype W::decl)) ONT::GROUND)
     ))
 
  (binary-constraint-NP-decl-templ
@@ -2625,8 +2625,8 @@
 	   (W::ALLOW-DELETED-COMP -)
 	   )
    (ARGUMENTS
-    (ARGUMENT (% W::NP)  ONT::OF)
-    (SUBCAT (% W::S (W::stype W::decl)) ONT::VAL)
+    (ARGUMENT (% W::NP)  ONT::FIGURE)
+    (SUBCAT (% W::S (W::stype W::decl)) ONT::GROUND)
     ))
 
   (binary-constraint-S-decl-it-that-templ
@@ -2634,8 +2634,8 @@
 	   (W::ALLOW-DELETED-COMP -)
 	   )
    (ARGUMENTS
-    (ARGUMENT (% W::NP (W::lex (? lx w::that w::this W::it))) ONT::OF)
-    (SUBCAT (% W::S (W::stype W::decl)) ONT::VAL)
+    (ARGUMENT (% W::NP (W::lex (? lx w::that w::this W::it))) ONT::FIGURE)
+    (SUBCAT (% W::S (W::stype W::decl)) ONT::GROUND)
     ))
 
   (binary-constraint-gerund-templ
@@ -2644,8 +2644,8 @@
 	   (W::ALLOW-DELETED-COMP -)
 	  )
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
-    (SUBCAT (% W::NP (w::sort w::pred) (w::lf (% w::description (w::status w::kind)))) ONT::VAL)
+    (ARGUMENT (% W::S) ONT::FIGURE)
+    (SUBCAT (% W::NP (w::sort w::pred) (w::lf (% w::description (w::status w::kind)))) ONT::GROUND)
     ))
 
   
@@ -2654,8 +2654,8 @@
   (binary-constraint-S-decl-middle-word-subcat-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE W::PRE))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
-    (SUBCAT (:parameter xp1 (:default (% W::S (W::stype W::decl)))) ONT::VAL)    
+    (ARGUMENT (% W::S) ONT::FIGURE)
+    (SUBCAT (:parameter xp1 (:default (% W::S (W::stype W::decl)))) ONT::GROUND)    
     (SUBCAT2 (:parameter xp2 (:default (% w::word (w::lex w::then)))) NOROLE)
     ))
 
@@ -2664,8 +2664,8 @@
  (binary-constraint-S-or-NP-decl-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% (? ag W::S w::NP)) ONT::OF)
-    (SUBCAT (% W::S (W::stype (? st W::decl w::ing))) ONT::VAL)  
+    (ARGUMENT (% (? ag W::S w::NP)) ONT::FIGURE)
+    (SUBCAT (% W::S (W::stype (? st W::decl w::ing))) ONT::GROUND)  
     ))
 
  #|| (binary-constraint-S-or-NP-general-templ
@@ -2678,15 +2678,15 @@
   (binary-constraint-S-ing-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
-    (SUBCAT (% W::VP (W::vform W::ing)) ONT::VAL)
+    (ARGUMENT (% W::S) ONT::FIGURE)
+    (SUBCAT (% W::VP (W::vform W::ing)) ONT::GROUND)
     ))
   
   (binary-constraint-S-VPbase-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
-    (SUBCAT (% W::VP (W::vform W::base)) ONT::VAL)
+    (ARGUMENT (% W::S) ONT::FIGURE)
+    (SUBCAT (% W::VP (W::vform W::base)) ONT::GROUND)
     ))
   
   (binary-constraint-NP-templ
@@ -2700,7 +2700,7 @@
   (binary-constraint-measure-NP-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE W::POST))
    (ARGUMENTS
-    (ARGUMENT (% W::NP (W::sort W::unit-measure)) ONT::OF)
+    (ARGUMENT (% W::NP (W::sort W::unit-measure)) ONT::FIGURE)
     ))
   #||
   (binary-constraint-NP-THEME-templ
@@ -2727,65 +2727,65 @@
   (PRED-S-VP-templ
    (SYNTAX (W::SORT W::PRED) (W::ATYPE (? ATYPE W::PRE W::POST W::PRE-VP)))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
+    (ARGUMENT (% W::S) ONT::FIGURE)
     ))
 
 (PRED-S-or-NP-templ
    (SYNTAX (W::SORT W::PRED) (W::ATYPE (? ATYPE W::PRE W::POST W::PRE-VP)))
    (ARGUMENTS
-    (ARGUMENT (% (? cat W::S w::NP)) ONT::OF)
+    (ARGUMENT (% (? cat W::S w::NP)) ONT::FIGURE)
     ))
   
   (PRED-S-VP-implicit-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE (? ATYPE W::PRE W::POST W::PRE-VP)) (W::implicit-arg +))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
+    (ARGUMENT (% W::S) ONT::FIGURE)
     ;; !!!FIXME
     ;; removing the maponly since it throws this warning: parser: warning: Bad feature-value specification NIL in rule NIL
-    (SUBCAT (% W::NP) ONT::VAL) ;MAPONLY)
+    (SUBCAT (% W::NP) ONT::GROUND) ;MAPONLY)
     ))
   
   (PRED-S-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
+    (ARGUMENT (% W::S) ONT::FIGURE)
     ))
   
   (PRED-S-implicit-templ
    (SYNTAX(W::implicit-arg +) (W::SORT W::PRED) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
-    (SUBCAT (% W::S) ONT::VAL)
+    (ARGUMENT (% W::S) ONT::FIGURE)
+    (SUBCAT (% W::S) ONT::GROUND)
     ))
   
   (PRED-NP-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::POST))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
     ))
   
   (PRED-NP-subj-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::POST))
    (ARGUMENTS
-    (ARGUMENT (% W::NP (W::case W::sub)) ONT::OF)
+    (ARGUMENT (% W::NP (W::case W::sub)) ONT::FIGURE)
     ))
   
   (PRED-S-PRE-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::PRE))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
+    (ARGUMENT (% W::S) ONT::FIGURE)
     ))
   
   (PRED-VP-PRE-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::PRE-VP))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
+    (ARGUMENT (% W::S) ONT::FIGURE)
     ))
 
    (V-PREFIX-templ
       (SYNTAX (W::SORT W::PRED) (W::ATYPE W::PRE-VP) (W::prefix +))
       (ARGUMENTS
-         (ARGUMENT (% W::S) ONT::OF)
+         (ARGUMENT (% W::S) ONT::FIGURE)
     ))
   
   (ELSE-templ
@@ -2798,21 +2798,21 @@
   (PRED-VP-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE (? ATYPE W::PRE-VP W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
+    (ARGUMENT (% W::S) ONT::FIGURE)
     ))
 
   ;;;;; post-vp advs only
   (PRED-S-POST-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::POST))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
+    (ARGUMENT (% W::S) ONT::FIGURE)
     ))
 
 ;;;;;  PARTICLES
   (PARTICLE-templ
    (SYNTAX (W::SORT W::PRED) (W::ATYPE W::POST) (W::PARTICLE +))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
+    (ARGUMENT (% W::S) ONT::FIGURE)
     )
    )
 
@@ -2821,40 +2821,40 @@
  (PRED-S-OR-NP-POST-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::POST))
    (ARGUMENTS
-    (ARGUMENT (% (? cat W::S w::np)) ONT::OF)
+    (ARGUMENT (% (? cat W::S w::np)) ONT::FIGURE)
     ))
 
    ;;;;; post-vp advs only
   (PRED-S-POST-subcat-optional-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::POST) (w::allow-deleted-comp +))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ONT::val)
+    (ARGUMENT (% W::S) ONT::FIGURE)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ONT::GROUND)
     ))
 
   (topic-templ
    (SYNTAX(W::SORT W::DISC) (W::SA-ID ?SA-ID) (W::ATYPE (? ATYPE W::PRE)))
    (ARGUMENTS
-    (ARGUMENT (% W::UTT (W::subjvar (? !sv -)) (w::uttword -)) ONT::OF) ;; utt must have a filled subject
-    (SUBCAT (:parameter xp (:default (% W::NP (W::case (? cas W::obj -))))) ONT::VAL)
+    (ARGUMENT (% W::UTT (W::subjvar (? !sv -)) (w::uttword -)) ONT::FIGURE) ;; utt must have a filled subject
+    (SUBCAT (:parameter xp (:default (% W::NP (W::case (? cas W::obj -))))) ONT::GROUND)
     ))
   
   (disc-templ
    (SYNTAX(W::SORT W::DISC) (W::SA-ID ?SA-ID) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% W::UTT (w::subjvar ?sv)) ONT::OF)
+    (ARGUMENT (% W::UTT (w::subjvar ?sv)) ONT::FIGURE)
     ))
   
   (disc-pre-templ
    (SYNTAX(W::SORT W::DISC) (W::SA-ID ?SA-ID) (W::ATYPE W::PRE))
    (ARGUMENTS
-    (ARGUMENT (% W::UTT (w::subjvar ?sv)) ONT::OF)
+    (ARGUMENT (% W::UTT (w::subjvar ?sv)) ONT::FIGURE)
     ))
   
   (disc-post-templ
    (SYNTAX(W::SORT W::DISC) (W::SA-ID ?SA-ID) (W::ATYPE W::POST))
    (ARGUMENTS
-    (ARGUMENT (% W::S) ONT::OF)
+    (ARGUMENT (% W::S) ONT::FIGURE)
     ))
   
   ;; beetle fix
@@ -2863,7 +2863,7 @@
   (disc-post-UTT-templ
    (SYNTAX(W::SORT W::DISC) (W::SA-ID ?SA-ID) (W::ATYPE W::POST))
    (ARGUMENTS
-    (ARGUMENT (% W::UTT) ONT::OF)
+    (ARGUMENT (% W::UTT) ONT::FIGURE)
     ))
   
   ;; This template is for "for him to come", as in "she is happy for him to come"
@@ -2871,14 +2871,14 @@
   (adv-double-subcat-control-templ
    (SYNTAX (W::SORT W::DOUBLE-SUBCAT) (W::ATYPE (? ATYPE W::PRE W::POST)) (W::ARG ?arg) (W::ALLOW-DELETED-COMP -))
    (ARGUMENTS    
-    (ARGUMENT (% W::S ) ONT::OF)
+    (ARGUMENT (% W::S ) ONT::FIGURE)
     (subcat (:parameter xp1 
 			(:default (% W::NP) ) 
 			(:required (w::var ?subcatvar) (w::sem ?subcatsem) (w::lex ?subcatlex))) NOROLE)
     (subcat2 (:parameter xp2 
 			 (:default (% W::CP (W::ctype W::s-to)))  
 			 (:required (W::subj (% W::np (W::sem ?subcatsem) (W::lex ?subcatlex) (W::var ?subcatvar)))))
-	     ONT::Val)
+	     ONT::GROUND)
     ))
 
 
@@ -2909,17 +2909,20 @@
     ; 04/13/06 ont::entity role changed to ont::formal
   ;;;;; this is currently used only for 'located'
 
+#|
+; nobody uses this
   (simple-adj-entity-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::central) (W::SUBCAT -) (W::ARG ?arg))
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::ENTITY)
     ))
+|#
 
   (less-adj-templ
    (SYNTAX (W::COMP-OP W::LESS) (W::SORT W::PRED) (W::ATYPE W::CENTRAL) (W::SUBCAT -) (W::ARG ?arg)
 	   )
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
     ))
   
    (own-templ
@@ -2993,7 +2996,7 @@
    (adj-subcat-property-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::IN)))) ONT::FORMAL)
     ))
   
@@ -3003,7 +3006,7 @@
   (adj-Purpose-optional-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) (W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
 ;    (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::Purpose)
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::REASON)
     ))
@@ -3012,7 +3015,7 @@
    (adj-action-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
     (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to)))) ONT::formal)
     ))
 
@@ -3020,24 +3023,24 @@
    (BINARY-CONSTRAINT-ADJ-TEMPL
     (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg))
     (ARGUMENTS
-     (ARGUMENT (% W::NP) ONT::OF)
-     (subcat (:parameter xp (:default (% W::pp (W::ptype W::as)))) ONT::val)
+     (ARGUMENT (% W::NP) ONT::FIGURE)
+     (subcat (:parameter xp (:default (% W::pp (W::ptype W::as)))) ONT::GROUND)
      ))
  
    (BINARY-CONSTRAINT-time-ADV-result-VAL-TEMPL
    (SYNTAX (w::sort w::binary-constraint)  (W::ATYPE (? ATYPE w::pre W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% (? ag W::S)) ONT::OF)
+    (ARGUMENT (% (? ag W::S)) ONT::FIGURE)
 ;    (subcat (% W::ADVBL) ONT::time-VAL)
-    (subcat (% W::ADVBL) ONT::VAL)
+    (subcat (% W::ADVBL) ONT::GROUND)
     ))
    
    (BINARY-CONSTRAINT-ADJ-result-VAL-TEMPL
    (SYNTAX (w::sort w::binary-constraint)  (W::ATYPE (? ATYPE w::pre W::POST)))
    (ARGUMENTS
-    (ARGUMENT (% (? ag W::S)) ONT::OF)
+    (ARGUMENT (% (? ag W::S)) ONT::FIGURE)
 ;    (subcat (% w::adjp (w::set-modifier -)) ONT::result-VAL)
-    (subcat (% w::adjp (w::set-modifier -)) ONT::VAL)
+    (subcat (% w::adjp (w::set-modifier -)) ONT::GROUND)
     ))
    
   ;; This is: this place is good for fishing 
@@ -3046,7 +3049,7 @@
   (adj-Purpose-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) (W::ALLOW-DELETED-COMP -))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
 ;    (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::Purpose)
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::REASON)
     ))
@@ -3057,7 +3060,7 @@
   (adj-affected-xp-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) (W::ALLOW-DELETED-COMP -))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::Affected)
     ))
 
@@ -3067,8 +3070,8 @@
    (ARGUMENTS
 ;    (ARGUMENT (% W::NP) ONT::Affected)
 ;    (subcat (:parameter xp (:default (% W::pp (W::ptype W::with)))) ONT::stimulus)
-    (ARGUMENT (% W::NP) ONT::OF)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::with)))) ONT::VAL)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::with)))) ONT::GROUND)
     ))
 
   ;; This template is for "I am afraid fo dogs"
@@ -3077,9 +3080,9 @@
   (adj-stimulus-xp-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) (W::ALLOW-DELETED-COMP -))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::of)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
 ;    (subcat (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::Stimulus)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::VAL)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::GROUND)
     ))
 
 ;; This is: this drug is good for cancer
@@ -3088,7 +3091,7 @@
   (adj-Purpose-implicit-xp-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) (W::ALLOW-DELETED-COMP -))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
 ;    (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::Purpose-implicit)
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::REASON)
     ))
@@ -3113,7 +3116,7 @@
   (adj-of-content-xp-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) (W::ALLOW-DELETED-COMP -))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::of)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
 ;    (subcat (:parameter xp (:default (% W::CP (W::ctype W::s-that)))) ONT::Content)
     (subcat (:parameter xp (:default (% W::CP (W::ctype W::s-that)))) ONT::FORMAL)
     ))
@@ -3140,7 +3143,7 @@
    (ARGUMENTS    
     (ARGUMENT (% W::NP (W::lex W::it)) NOROLE)
 ;    (subcat (:parameter xp (:default (% W::CP (W::ctype W::s-that)))) ONT::Content)
-    (subcat (:parameter xp (:default (% W::CP (W::ctype W::s-that)))) ONT::OF)
+    (subcat (:parameter xp (:default (% W::CP (W::ctype W::s-that)))) ONT::FIGURE)
     ))
 
    ;; e.g., Frogs are difficult to cook
@@ -3151,7 +3154,7 @@
 ;    (subcat (:parameter xp (:default (% W::CP (W::ctype W::s-that)))) ONT::Content)
     (subcat (:parameter xp (:default (% W::CP (W::ctype W::s-to)))
 			(:required (W::dobj (% W::np (W::sem ?dobjsem) (W::lex ?dobjlex) (W::var ?dobjvar)))))
-	    ONT::OF))
+	    ONT::FIGURE))
     )
 
   
@@ -3209,8 +3212,8 @@
   (adj-premod-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::PRE) (W::ARG ?arg) (w::atype w::central))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
-    (PREMOD (% W::NP) ONT::VAL)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
+    (PREMOD (% W::NP) ONT::GROUND)
     ))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -3229,13 +3232,13 @@
     (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::central) (W::SUBCAT -) 
 	   (w::PREFIX +) (W::ARG ?arg) (W::ALLOW-DELETED-COMP +))
     (ARGUMENTS
-     (ARGUMENT (% W::NP) ONT::OF)
+     (ARGUMENT (% W::NP) ONT::FIGURE)
      ))
 
    (pre-adj-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::pre) (W::SUBCAT -) (W::ARG ?arg) (W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
     ))
 
 
@@ -3243,7 +3246,7 @@
   (central-adj-sing-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::central) (W::SUBCAT -) (W::ARG ?arg) (W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP (w::agr w::3s)) ONT::OF)
+    (ARGUMENT (% W::NP (w::agr w::3s)) ONT::FIGURE)
     ))
 
 
@@ -3265,7 +3268,7 @@
   (central-adj-plur-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::central) (W::SUBCAT -) (W::ARG ?arg) (W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP (w::agr w::3p)) ONT::OF)
+    (ARGUMENT (% W::NP (w::agr w::3p)) ONT::FIGURE)
     ))
 
    ;; allows an optional subcat  
@@ -3309,7 +3312,7 @@
 	  (W::SUBCAT -) (W::ARG ?arg)
 	  (W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
     ))
   
   ;;;;; attributive only adjectives, like "mere" or "former" which
@@ -3327,7 +3330,7 @@
   (adj-theme-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::SUBCAT -) (W::ARG ?arg) (W::ATYPE W::central))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
     ))
   
   (adj-experiencer-templ
@@ -3358,23 +3361,23 @@
   (predicative-adj-optional-xp-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::PREDICATIVE-only) (W::ALLOW-DELETED-COMP +) (W::ARG ?arg))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ONT::val optional)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ONT::GROUND optional)
     ))
   
   ;;;;; predicative only. Requires a complement, like "subject to" "tantamount to"
   (predicative-adj-req-xp-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::PREDICATIVE-only) (W::ALLOW-DELETED-COMP -) (W::ARG ?arg))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ONT::val)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ONT::GROUND)
     ))
   
   ;;;;; predicative only. No complement allowed. Ex: "ablaze"
   (predicative-only-adj-templ
    (SYNTAX(W::SUBCAT -) (W::SORT W::PRED) (W::ATYPE W::PREDICATIVE-only) (W::ARG ?arg))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
     ))
 
   (predicative-only-experiencer-adj-templ
@@ -3389,7 +3392,7 @@
   (postpositive-adj-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::postpositive) (W::SUBCAT -) (W::ARG ?arg))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
     ))
   
   ;;;;; These are adjectives that can be used post-positively
@@ -3407,16 +3410,16 @@
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ALLOW-DELETED-COMP +) 
 	  (W::ATYPE W::postpositive) (W::ARG ?arg))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::OF)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ONT::val optional)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ONT::GROUND optional)
     ))
 
   ;; quiet enough for all
   (postpositive-adv-optional-xp-templ
    (SYNTAX (W::SORT W::PRED) (W::ALLOW-DELETED-COMP +) (W::ATYPE W::postpositive) (W::ARG ?arg))
    (ARGUMENTS
-    (ARGUMENT (% (? W::argcat W::ADVBL W::ADJP)  (w::set-modifier -) (W::sort ?sort)) ONT::OF)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::val optional)
+    (ARGUMENT (% (? W::argcat W::ADVBL W::ADJP)  (w::set-modifier -) (W::sort ?sort)) ONT::FIGURE)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::GROUND optional)
     ))
   
 ;   (binary-constraint-S-or-NP-decl-templ
@@ -3430,8 +3433,8 @@
   (binary-constraint-adj-postpos-templ
    (SYNTAX (W::SORT W::binary-constraint) (W::ATYPE W::postpositive) (W::ARG ?arg))
    (ARGUMENTS
-    (ARGUMENT (% (? W::argcat W::ADJP)  (w::set-modifier -) (W::sort ?sort)) ONT::OF)
-    (subcat (% (? ag w::NP)) ONT::val)
+    (ARGUMENT (% (? W::argcat W::ADJP)  (w::set-modifier -) (W::sort ?sort)) ONT::FIGURE)
+    (subcat (% (? ag w::NP)) ONT::GROUND)
     ))
   
   ;;;;; if word is postpositive and takes optional subcats
@@ -3542,20 +3545,20 @@
   (ppword-adv-templ
    (SYNTAX  (W::wh -) (W::sort W::pp-word) (W::atype (? atype W::pre W::post)))
    (ARGUMENTS
-    (argument (:parameter xp (:default (% (? W::argcat W::S W::NP W::VP) (w::lex ?arglex)))) ONT::OF)
+    (argument (:parameter xp (:default (% (? W::argcat W::S W::NP W::VP) (w::lex ?arglex)))) ONT::FIGURE)
     ;;;;; Myrosia uncommented. Because the subcat is implicit, and we only need it to provide a selectional restriction
     ;;;;; Why do we have such a general subcat for these PP Adverbs? JFA 12/02
-    (subcat (% ?sc) ONT::VAL)
+    (subcat (% ?sc) ONT::GROUND)
     ))
 
   
   (ppword-question-adv-templ
    (SYNTAX (W::sing-lf-only +) (w::else-word +) (W::wh W::q) (W::sort W::pp-word) (W::atype (? atype W::pre W::post)))
    (ARGUMENTS
-    (argument (% W::S) ONT::OF)
+    (argument (% W::S) ONT::FIGURE)
         ;;; Subcat of PP words is implicit, and we need it to provide a selectional restriction, but it won't be matched with anything syntactically,
     ;;; hence is a very general category
-    (subcat (% ?sc) ONT::VAL)
+    (subcat (% ?sc) ONT::GROUND)
     ))
 
   (ppword-question-adv-pred-templ
@@ -3563,17 +3566,17 @@
    (ARGUMENTS
     ;; For "where" and "when" we need argument to be either "S" for "where did this happen" or "NP" for "Where is he", because "where" in the latter
     ;; case is a predicate applying to a NP
-    (argument (% (? argcat W::S W::NP) (w::lex ?arglex)) ONT::OF)
+    (argument (% (? argcat W::S W::NP) (w::lex ?arglex)) ONT::FIGURE)
            ;;; Subcat of PP words is implicit, and we need it to provide a selectional restriction, but it won't be matched with anything syntactically,
     ;;; hence is a very general category
-    (subcat (% ?sc) ONT::VAL)
+    (subcat (% ?sc) ONT::GROUND)
     ))
 
   (ppword-question-adv-how-templ
    (SYNTAX (W::sing-lf-only +) (W::wh W::q) (W::sort W::pp-word) (W::atype (? atype W::pre)))
    (ARGUMENTS
-    (argument (% (? argcat W::ADJP W::ADVBL)  (w::set-modifier -) (w::lex ?arglex)) ONT::OF)
-    (subcat (% ?sc) ONT::VAL)
+    (argument (% (? argcat W::ADJP W::ADVBL)  (w::set-modifier -) (w::lex ?arglex)) ONT::FIGURE)
+    (subcat (% ?sc) ONT::GROUND)
     ))
   
   (ppword-n-templ

@@ -8,7 +8,7 @@
   (W::YEAR
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
-     (LF-PARENT ONT::time-unit)
+     (LF-PARENT ONT::year-duration)
      (example "a 3 year warranty")
      (templ substance-unit-templ)
      )

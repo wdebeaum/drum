@@ -16,8 +16,8 @@
  :comment "Spatial relations that locate one object (the figure) in terms of another object (the ground)"
  ;; situations can be spatially located, e.g. meetings, riots, parties
  ;; so can abstr-obj: the idea in the document; the name on the envelope; the man at the party
- :arguments ((:ESSENTIAL ONT::OF ((? of F::Phys-obj F::Situation f::abstr-obj)))
-	     (:ESSENTIAL ONT::val ((? val F::Phys-obj F::Situation f::abstr-obj)))
+ :arguments (;(:ESSENTIAL ONT::OF ((? of F::Phys-obj F::Situation f::abstr-obj)))
+	     ;(:ESSENTIAL ONT::val ((? val F::Phys-obj F::Situation f::abstr-obj)))
 	     (:ESSENTIAL ONT::FIGURE ((? fig F::Phys-obj F::Situation f::abstr-obj)))
 	     (:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj F::Situation f::abstr-obj)))
              )
@@ -51,7 +51,7 @@
 ; in, within, inside (of)
 (define-type ont::in-loc
   :parent ont::pos-as-containment-reln
-  :arguments ((:ESSENTIAL ONT::VAL ((? val f::phys-obj)
+  :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj)
 				   )))
   )
 
@@ -71,8 +71,8 @@
 ; ?? the house is within five miles of the starbucks
 (define-type ont::delimit-reln
   :parent ont::pos-as-containment-reln
-  :arguments ((:ESSENTIAL ONT::OF ((? of f::abstr-obj)))
-	      (:ESSENTIAL ONT::val ((? val f::abstr-obj)))
+  :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::abstr-obj)))
+	      (:ESSENTIAL ONT::GROUND ((? val f::abstr-obj)))
 	      )
   )
 
@@ -96,7 +96,7 @@
 (define-type ont::adjacent
   :wordnet-sense-keys ("adjacent%5:00:00:close:01")
   :parent ont::near-reln
-  :arguments ((:essential ONT::of ((? of1  f::phys-obj f::abstr-obj))))
+  :arguments ((:essential ONT::FIGURE ((? of1  f::phys-obj f::abstr-obj))))
   )
 
 ; figure is large distance on the scale
@@ -403,28 +403,28 @@
  :sem (F::abstr-obj)
  ;; situations can be spatially located, e.g. meetings, riots, parties
  ;; so can abstr-obj: the idea in the document; the name on the envelope; the man at the party
- :arguments ((:ESSENTIAL ONT::OF ((? of F::Phys-obj F::Situation f::abstr-obj)))
-	     (:ESSENTIAL ONT::val ((? val F::Phys-obj F::Situation f::abstr-obj)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? of F::Phys-obj F::Situation f::abstr-obj)))
+	     (:ESSENTIAL ONT::GROUND ((? val F::Phys-obj F::Situation f::abstr-obj)))
              )
  )
 
 ; relates a trajectory/event to its end/goal
 (define-type ont::goal-reln
  :parent ont::path
- :arguments ((:ESSENTIAL ONT::OF ((? of F::Situation) (F::trajectory +))))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? of F::Situation) (F::trajectory +))))
  )
 
 (define-type ONT::resulting-object
  :parent ONT::goal-reln
- :arguments ((:ESSENTIAL ONT::OF (F::Situation (f::aspect f::dynamic) (f::type ont::change)))
-             (:REQUIRED ONT::VAL (F::Phys-obj ))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (f::aspect f::dynamic) (f::type ont::change)))
+             (:REQUIRED ONT::GROUND (F::Phys-obj ))
              )
  )
 
 (define-type ONT::resulting-state
  :parent ONT::goal-reln
- :arguments ((:ESSENTIAL ONT::OF (F::Situation (f::aspect f::dynamic) (f::type ont::change)))
-             (:REQUIRED ONT::VAL ((? t F::Abstr-obj F::situation)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (f::aspect f::dynamic) (f::type ont::change)))
+             (:REQUIRED ONT::GROUND ((? t F::Abstr-obj F::situation)))
              )
  )
 
@@ -445,8 +445,8 @@
 ; into
 (define-type ont::goal-as-containment
     :parent ONT::goal-reln
-    :arguments ((:ESSENTIAL ONT::OF (F::Situation (f::aspect f::dynamic) (f::type ont::motion)))
-		(:REQUIRED ONT::VAL (F::Phys-obj  (F::container +)
+    :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (f::aspect f::dynamic) (f::type ont::motion)))
+		(:REQUIRED ONT::GROUND (F::Phys-obj  (F::container +)
 			   )))
     )
 
@@ -481,7 +481,7 @@
 ; constrains direction of motion
 (define-type ont::direction-reln
  :parent ont::path
- :arguments ((:ESSENTIAL ONT::val ((? val F::Phys-obj)))
+ :arguments (;(:ESSENTIAL ONT::val ((? val F::Phys-obj)))
 	     (:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj)))
 	     )
  )
@@ -503,7 +503,7 @@
 
 (define-type ont::dir-in-terms-of-obj
  :parent ont::direction-reln
- :arguments ((:ESSENTIAL ONT::OF (F::situation (F::type ont::motion)))
+ :arguments (;(:ESSENTIAL ONT::OF (F::situation (F::type ont::motion)))
 	     (:ESSENTIAL ONT::FIGURE (F::situation (F::type ont::motion)))
 	     )
  )
@@ -531,9 +531,9 @@
 (define-type ONT::spatial-loc
  :parent ONT::PREDICATE
  ;; situations can be spatially located, e.g. meetings, riots, parties
- :arguments ((:ESSENTIAL ONT::OF ((? t F::Phys-obj F::Situation)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj F::Situation)))
 	     ;; should really allow a f::situation as ont::val but limited by system here since we specify features
-             (:ESSENTIAL ONT::VAL (F::Phys-obj (F::form (? ff F::object f::solid f::liquid f::gas))))
+             (:ESSENTIAL ONT::GROUND (F::Phys-obj (F::form (? ff F::object f::solid f::liquid f::gas))))
 	     ;; this is for "the voltage at terminals"
 	     ;; BEETLE
 ;	     (:ESSENTIAL ONT::OF-STATE (F::Abstr-obj))
@@ -542,7 +542,7 @@
 
 (define-type ONT::spatial-line-loc
  :parent ONT::SPATIAL-LOC
- :arguments ((:ESSENTIAL ONT::VAL (F::Phys-obj (F::form F::object) (F::spatial-abstraction (? spa F::line F::strip)))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::Phys-obj (F::form F::object) (F::spatial-abstraction (? spa F::line F::strip)))
              )
              )
  )
@@ -552,8 +552,8 @@
 ;; perhaps the situation cases should be handled with coercion, but for now...
 (define-type ONT::approximate-at-loc
  :parent ONT::predicate ;; can't make this child of ont::spatial-loc since ont::val can be f::situation
- :arguments ((:ESSENTIAL ONT::OF ((? lof F::Phys-obj F::Situation)))
-             (:ESSENTIAL ONT::VAL ((? lv f::phys-obj f::situation)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? lof F::Phys-obj F::Situation)))
+             (:ESSENTIAL ONT::GROUND ((? lv f::phys-obj f::situation)))
              )
  )
 
@@ -561,23 +561,23 @@
 
 (define-type ONT::trajectory
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF ((? t F::Phys-obj F::Situation) (F::trajectory +)))
-             (:ESSENTIAL ONT::VAL (F::Phys-obj))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj F::Situation) (F::trajectory +)))
+             (:ESSENTIAL ONT::GROUND (F::Phys-obj))
              )
  )
 
 (define-type ONT::from-loc
  :parent ONT::source-reln
- :arguments ((:ESSENTIAL ONT::OF ( F::situation (F::type ont::event-of-change)))
-	     (:ESSENTIAL ONT::VAL (F::Phys-obj (f::spatial-abstraction (? sa f::spatial-point))))
+ :arguments ((:ESSENTIAL ONT::FIGURE ( F::situation (F::type ont::event-of-change)))
+	     (:ESSENTIAL ONT::GROUND (F::Phys-obj (f::spatial-abstraction (? sa f::spatial-point))))
 	     )
  )
 
 (define-type ONT::to-loc
     :comment "the generic goal role: might be a physical object (as possessor) or a resulting state"
  :parent ONT::goal-reln
- :arguments ((:ESSENTIAL ONT::OF (F::situation (f::type ont::event-of-change)))
-	     (:ESSENTIAL ONT::VAL ((? t F::Phys-obj F::abstr-obj)))
+ :arguments (;(:ESSENTIAL ONT::OF (F::situation (f::type ont::event-of-change)))
+	     ;(:ESSENTIAL ONT::VAL ((? t F::Phys-obj F::abstr-obj)))
 	     (:ESSENTIAL ONT::FIGURE (F::situation (f::type ont::event-of-change)))
 	     (:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj)))
 	     )
@@ -595,22 +595,22 @@
 ;; for to-phrases that modify vehicles, e.g. the plane to rochester
 (define-type ONT::destination-loc
  :parent ONT::predicate
- :arguments ((:ESSENTIAL ONT::VAL (F::Phys-obj (f::spatial-abstraction (? sa f::spatial-point))))
-	     (:ESSENTIAL ont::of  (f::phys-obj (F::Object-Function F::vehicle) (F::MOBILITY F::Self-moving) (F::container +)))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::Phys-obj (f::spatial-abstraction (? sa f::spatial-point))))
+	     (:ESSENTIAL ont::FIGURE  (f::phys-obj (F::Object-Function F::vehicle) (F::MOBILITY F::Self-moving) (F::container +)))
 	     )
  )
 
 ;; for from phrases that modify nouns, like "the girl from california" "the plane from rochester"
 (define-type ONT::source-loc
  :parent ONT::predicate
- :arguments ((:ESSENTIAL ONT::VAL (F::Phys-obj (f::spatial-abstraction (? sa f::spatial-point))))
-	     (:ESSENTIAL ont::of  (f::phys-obj ))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::Phys-obj (f::spatial-abstraction (? sa f::spatial-point))))
+	     (:ESSENTIAL ont::FIGURE  (f::phys-obj ))
 	     )
  )
 
 (define-type ONT::via
  :parent ONT::TRAJECTORY
- :arguments ((:ESSENTIAL ONT::VAL (F::Phys-obj (F::spatial-abstraction (? sa F::spatial-point F::spatial-region))))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::Phys-obj (F::spatial-abstraction (? sa F::spatial-point F::spatial-region))))
              )
  )
 
@@ -622,8 +622,8 @@
 
 (define-type ONT::direction
  :parent ONT::position-reln
- :arguments ((:ESSENTIAL ONT::OF ((? t F::Phys-obj F::Situation) (F::trajectory +) (f::type (? tt ONT::MOTION ONt::APPLY-FORCE))))
-	     (:ESSENTIAL ONT::VAL (F::Phys-obj))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj F::Situation) (F::trajectory +) (f::type (? tt ONT::MOTION ONt::APPLY-FORCE))))
+	     (:ESSENTIAL ONT::GROUND (F::Phys-obj))
             )
  )
 
@@ -635,30 +635,30 @@
 ;;; swift 04/14/02 added to handle adverbs further/father
 (define-type ONT::extension
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::OF ((? t F::Phys-obj F::Situation)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj F::Situation)))
              )
  )
 
 ;; along/up/down the street
 (define-type ONT::ALONG
  :parent ONT::TRAJECTORY
- :arguments ((:ESSENTIAL ONT::VAL (F::Phys-obj (F::spatial-abstraction (? sa F::line F::strip))))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::Phys-obj (F::spatial-abstraction (? sa F::line F::strip))))
              )
  )
 
 (define-type ONT::extent-predicate
  :parent ONT::PREDICATE
  :sem  (F::abstr-obj)
- :arguments ((:ESSENTIAL ONT::OF (F::Situation))
-	     (:ESSENTIAL ONT::VAL (F::abstr-obj (F::scale f::length-scale)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
+	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale f::length-scale)))
              )
  )
 
 ;;; he ran for five miles
 (define-type ONT::spatial-distance-rel
  :parent ONT::extent-predicate
- :arguments ((:ESSENTIAL ONT::OF (F::Situation (f::trajectory +) (F::aspect (? asp F::unbounded F::stage-level)) (F::time-span F::extended)))
-	      (:ESSENTIAL ONT::VAL (F::abstr-obj (F::scale f::length-scale)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (f::trajectory +) (F::aspect (? asp F::unbounded F::stage-level)) (F::time-span F::extended)))
+	      (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale f::length-scale)))
              )
  )
 
@@ -676,69 +676,69 @@
 ;;; A class for core temporal properties of events - aspect, tense, ...
 (define-type ONT::time-rel
  :parent ONT::TEMPORAL-PREDICATE
- :arguments ((:REQUIRED ONT::of (F::situation))
+ :arguments ((:REQUIRED ONT::FIGURE (F::situation))
              )
  )
 
 ;;; phase (of the moon, of the project)
 (define-type ONT::time-span
  :parent ONT::TEMPORAL-PREDICATE
- :arguments ((:REQUIRED ONT::of)
+ :arguments ((:REQUIRED ONT::FIGURE)
 	     )
  )
 
 ;;; A class for temporal modifiers introduced by adjectives or adverbials
 (define-type ONT::temporal-modifier
  :parent ONT::TEMPORAL-PREDICATE
- :arguments ((:ESSENTIAL ONT::OF ((? of F::Phys-obj f::situation f::abstr-obj f::time)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? of F::Phys-obj f::situation f::abstr-obj f::time)))
              )
  )
 
 ;; the delayed cargo, a scheduled meeting
 (define-type ONT::scheduled-time-modifier
  :parent ONT::TEMPORAL-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF ((? of f::phys-obj f::situation)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::phys-obj f::situation)))
              )
  )
 
 ;; temporal locations of events, things
 (define-type ONT::temporal-location
  :parent ONT::TEMPORAL-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF ((? of F::abstr-obj f::situation f::time)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? of F::abstr-obj f::situation f::time)))
              )
  )
 
 ;; durations
 (define-type ONT::event-duration-modifier
  :parent ONT::TEMPORAL-MODIFIER
- :arguments ((:ESSENTIAL ONT::OF ((? of f::situation f::time)))
-             (:essential ont::val (f::abstr-obj (F::Scale F::duration-scale)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::situation f::time)))
+             (:essential ont::GROUND (f::abstr-obj (F::Scale F::duration-scale)))
  ))
 
 (define-type ONT::LONG
  :parent ONT::event-duration-modifier
- :arguments ((:ESSENTIAL ONT::OF ((? of f::situation f::time)))
-             (:essential ont::val (f::abstr-obj (F::Scale F::duration-scale)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::situation f::time)))
+             (:essential ont::GROUND (f::abstr-obj (F::Scale F::duration-scale)))
  ))
 
 (define-type ONT::SHORT
  :parent ONT::event-duration-modifier
- :arguments ((:ESSENTIAL ONT::OF ((? of f::situation f::time)))
-             (:essential ont::val (f::abstr-obj (F::Scale F::duration-scale)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::situation f::time)))
+             (:essential ont::GROUND (f::abstr-obj (F::Scale F::duration-scale)))
  ))
 
 ;; how long did it take / did he run
 (define-type ont::duration
   :parent ont::temporal-predicate
   :sem (F::abstr-obj (F::Scale F::duration-scale))
-  :arguments ((:ESSENTIAL ONT::OF ((? t f::situation F::abstr-obj)))
+  :arguments ((:ESSENTIAL ONT::FIGURE ((? t f::situation F::abstr-obj)))
              )
   )
 
 ;; frequencies
 (define-type ONT::frequency
  :parent ONT::temporal-modifier
- :arguments ((:ESSENTIAL ONT::VAL (F::abstr-obj (F::scale f::duration-scale)))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale f::duration-scale)))
              )
  )
 
@@ -750,7 +750,7 @@
 ;;; for things like per day, a day - must apply to bounded events (no quite stong enough, but as close as we can get with the features we have)
 (define-type ONT::iteration-period
  :parent ONT::temporal-location
- :arguments ((:ESSENTIAL ONT::OF (F::situation (F::aspect F::bounded))))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::situation (F::aspect F::bounded))))
  )
 
 ;; the population in the 1920s; the shortage in the 1920s
@@ -759,7 +759,7 @@
 ;; so I uncommented the first defn of ONT::VAL
 (define-type ONT::time-span-rel
  :parent ONT::temporal-location
- :arguments ((:ESSENTIAL ONT::VAL (F::time (F::time-scale F::interval)
+ :arguments ((:ESSENTIAL ONT::GROUND (F::time (F::time-scale F::interval)
 			 (F::time-function (? funcn F::month-name F::year-name F::day-period))))
 
 ;	     (:ESSENTIAL ONT::SIT-VAL (F::situation))
@@ -772,8 +772,8 @@
 ;; the meeting next week; he arrives next week
 (define-type ONT::event-time-rel
  :parent ONT::temporal-location
- :arguments ((:ESSENTIAL ONT::OF (F::Situation (F::aspect (? asp F::dynamic F::stage-level))))
-             (:ESSENTIAL ONT::VAL ((? vl F::time f::situation)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (F::aspect (? asp F::dynamic F::stage-level))))
+             (:ESSENTIAL ONT::GROUND ((? vl F::time f::situation)))
 	     ; 3/2011 conflating time and situation in the val role to reduce search space
 ;             (:ESSENTIAL ONT::SIT-VAL (F::situation)) ;; swift 04/14/02 added this to handle when/before/as soon as/etc. + S, e.g. when I go
              )
@@ -782,14 +782,14 @@
 ;; still, yet, so far, ....
 (define-type ONT::time-rel-so-far
  :parent ONT::event-time-rel
- :arguments ((:ESSENTIAL ONT::OF (F::Situation))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
              )
  )
 
 ;; event times not including situations
 (define-type ONT::event-time
  :parent ONT::event-time-rel
- :arguments ((:ESSENTIAL ONT::VAL ((? vl F::time)))
+ :arguments (;(:ESSENTIAL ONT::VAL ((? vl F::time)))
 	     (:ESSENTIAL ONT::GROUND ((? grd F::time)))
 	     )
  )
@@ -797,7 +797,7 @@
 ;; event temporal not including times (e.g., when, upon)
 (define-type ONT::event-event-time
  :parent ONT::event-time-rel
- :arguments ((:ESSENTIAL ONT::VAL ((? vl F::situation)))
+ :arguments ((:ESSENTIAL ONT::GROUND ((? vl F::situation)))
 	     ))
 
 ; unused 3/2011
@@ -812,14 +812,14 @@
 ;; on Monday, on the next day
 (define-type ONT::time-weekday-rel
  :parent ONT::temporal-location
- :arguments ((:ESSENTIAL ONT::VAL (F::time (F::time-function F::day-of-week)))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::time (F::time-function F::day-of-week)))
              )
  )
 
 ;;; some things apply only to time specifications like 5am/noon
 (define-type ONT::time-clock-rel
  :parent ONT::temporal-location
- :arguments ((:ESSENTIAL ONT::VAL (F::time (F::time-function (? fn F::clock-time F::day-point))))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::time (F::time-function (? fn F::clock-time F::day-point))))
 ;	     (:ESSENTIAL ONT::SIT-VAL (F::situation))
              )
  )
@@ -828,24 +828,24 @@
 ;; short term parking; a long day
 (define-type ONT::interval-duration-modifier
  :parent ONT::event-duration-modifier
- :arguments ((:essential ONT::OF (F::time (f::time-function f::time-frame) (f::time-scale f::interval)))
+ :arguments ((:essential ONT::FIGURE (F::time (f::time-function f::time-frame) (f::time-scale f::interval)))
              )
  )
 
 ;;; for five minutes
 (define-type ONT::time-duration-rel
  :parent ONT::event-duration-modifier
- :arguments ((:ESSENTIAL ONT::OF (F::Situation (F::aspect (? asp F::unbounded F::stage-level)) (F::time-span F::extended)))
-	      (:ESSENTIAL ONT::VAL (F::abstr-obj (F::scale f::duration-scale)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (F::aspect (? asp F::unbounded F::stage-level)) (F::time-span F::extended)))
+	      (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale f::duration-scale)))
              )
  )
 
 ;;; in five minutes -- a measure of how long it takes to complete s.t.: 'he runs 5 miles in 5 minutes'
 (define-type ONT::time-culmination-rel
  :parent ONT::event-duration-modifier
- :arguments ((:ESSENTIAL ONT::OF (F::Situation (F::Aspect F::bounded) (F::Time-span F::extended)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (F::Aspect F::bounded) (F::Time-span F::extended)))
 ;             (:ESSENTIAL ONT::VAL (F::time (F::time-function f::time-unit)))
-	     (:ESSENTIAL ONT::VAL (F::abstr-obj (F::scale f::duration-scale)))
+	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale f::duration-scale)))
 ;	     (:optional ont::result-val (f::abstr-obj)) ; until recently / ready
 ;	     (:optional ont::time-val  (f::abstr-obj (f::scale f::time-measure-scale)))
              )
@@ -855,8 +855,8 @@
 ;;; so, 'he will run in 2 hours'; he will arrive in 2 hours
 (define-type ONT::time-deadline-rel
  :parent ONT::event-duration-modifier
- :arguments ((:ESSENTIAL ONT::OF (F::Situation))
-	     (:ESSENTIAL ONT::VAL (F::abstr-obj (F::scale f::duration-scale)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
+	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale f::duration-scale)))
              )
  )
 
@@ -881,9 +881,9 @@
 (define-type ONT::TIme-interval
  :wordnet-sense-keys ("interval%1:28:00" "time_interval%1:28:00" "time%1:28:03" "clock_time%1:28:00" "time%1:28:00" "time%1:28:05" )
  :parent ONT::TIME-OBJECT
- :arguments ((:OPTIONAL ONT::OF (F::time (f::time-function f::time-frame) (f::time-scale f::interval) (f::scale f::duration-scale)))
+ :arguments ((:OPTIONAL ONT::FIGURE (F::time (f::time-function f::time-frame) (f::time-scale f::interval) (f::scale f::duration-scale)))
              ;;; a time of two hours
-             (:OPTIONAL ONT::VAL (F::Abstr-obj))
+             (:OPTIONAL ONT::GROUND (F::Abstr-obj))
 	     (:OPTIONAL ONT::EXTENT (F::Abstr-obj (f::time-scale f::interval) (f::scale f::duration-scale)))
              )
  )
@@ -929,7 +929,7 @@
  :wordnet-sense-keys ("time%1:28:06" "clip%1:11:00" "time%1:11:00" "point%1:28:00" "point_in_time%1:28:00")
  :parent ONT::TIME-OBJECT
  :sem (F::time (f::time-scale f::point))
- :arguments ((:OPTIONAL ONT::OF ((? lof f::situation F::time)))
+ :arguments ((:OPTIONAL ONT::FIGURE ((? lof f::situation F::time)))
 	     ;; this is because we may have things "the end of an event". In reality, there should be a coercion rule, but we are not doing it yet
 	     ;; middle of the meeting
 ;	     (:OPTIONAL ONT::ACTION (F::situation (f::aspect f::unbounded)))
@@ -948,8 +948,8 @@
  :wordnet-sense-keys ("day_of_the_week%1:28:00")
  :parent ONT::DATE-OBJECT
  :sem (F::time (F::time-function F::day-of-week))
-   :arguments ((:OPTIONAL ONT::OF ((? t f::situation f::abstr-obj)))
-	       (:optional ont::val)
+   :arguments ((:OPTIONAL ONT::FIGURE ((? t f::situation f::abstr-obj)))
+	       (:optional ont::GROUND)
              )
  )
 
@@ -967,8 +967,8 @@
 ;; move forward at seven meters per second; find a hotel at gsa rates
 (define-type ont::rate-rel
   :parent ont::predicate
-  :arguments ((:optional ont::of ((? t f::phys-obj f::situation)))
-	      (:essential ont::val (f::abstr-obj (f::measure-function f::value) (f::scale (? sc f::rate-scale f::money-scale))))
+  :arguments (;(:optional ont::of ((? t f::phys-obj f::situation)))
+	      ;(:essential ont::val (f::abstr-obj (f::measure-function f::value) (f::scale (? sc f::rate-scale f::money-scale))))
 	      (:optional ont::figure ((? t2 f::phys-obj f::situation)))
 	      (:essential ont::ground (f::abstr-obj (f::measure-function f::value) (f::scale (? sc2 f::rate-scale f::money-scale))))
 	      )

@@ -2660,6 +2660,7 @@
  )
 
 (define-type ONT::socially-remove
+    :wordnet-sense-keys ("banishment%1:04:00" "expel%2:41:01" "expel%2:41:00" "ouster%1:04:00")
  :parent ONT::cause-come-from
  :arguments ((:REQUIRED ONT::Formal ((? thm F::phys-obj F::abstr-obj) (F::intentional +)))
              )
@@ -4197,8 +4198,8 @@
 ;; 20120502 :origin jr :comment gloss-variant
 (define-type ONT::whereby
  :parent ONT::predicate
- :arguments ((:OPTIONAL ONT::OF)
-	     (:OPTIONAL ONT::VAL)
+ :arguments ((:OPTIONAL ONT::FIGURE)
+	     (:OPTIONAL ONT::GROUND)
              )
  )
 
@@ -4214,14 +4215,14 @@
  :parent ONT::situation-root
  :wordnet-sense-keys ("condition%1:26:02")
  :sem (f::situation (f::aspect f::indiv-level)) ;; prevent attachment of temporal adv
- :arguments ((:OPTIONAL ONT::of (F::phys-obj (F::origin F::natural)))
+ :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj (F::origin F::natural)))
              )
  )
 
 ;; infancy, childhood, adulthood
 (define-type ONT::lifecycle-stage
  :parent ONT::domain-property
- :arguments ((:OPTIONAL ONT::of (F::phys-obj (F::origin F::living)))
+ :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj (F::origin F::living)))
              )
  )
 
@@ -4234,12 +4235,13 @@
 (define-type ONT::medical-disorders-and-conditions
  :wordnet-sense-keys ("disorder%1:26:03")
  :parent ONT::physical-condition
- :arguments ((:OPTIONAL ONT::of (F::phys-obj (F::origin (? og2 f::human f::non-human-animal))))
+ :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj (F::origin (? og2 f::human f::non-human-animal))))
              )
  )
 
 ;; fever, pain
 (define-type ONT::medical-symptom
+ 
  :wordnet-sense-keys ("symptom%1:26:00" "sign%1:26:00" "syndrome%1:26:00" "constriction%1:09:00" "contraction%1:04:01" "hives%1:26:00" "hoarseness%1:07:00" "hyperventilation%1:04:00" "arrhythmia%1:26:00" "tachycardia%1:26:00" "lightheadedness%1:26:00" "nausea%1:26:00" "nosebleed%1:26:00" "numbness%1:26:00" "palpitation%1:26:00" "redness%1:26:00" "sneeze%1:26:00" "sniffle%1:04:00" "soreness%1:26:00" "spasm%1:26:00" "tightness%1:09:00" "jaundice%1:26:00")
  :parent ONT::medical-disorders-and-conditions
  )
@@ -4334,19 +4336,19 @@
  )
 
 (define-type ont::dyspnea
- :wordnet-sense-keys ("dyspnea%1:26:00" "dyspnea%1:26:00" "dyspnoea%1:26:00" "shortness_of_breath%1:26:00" "sob%1:26:00" "breathlessness%1:26:00") 
+ :wordnet-sense-keys ("dyspnea%1:26:00" "dyspnea%1:26:00" "dyspnoea%1:26:00" "shortness_of_breath%1:26:00" "sob%1:26:00") 
  :parent ont::medical-symptom
  )
 
 (define-type ont::injury
- :wordnet-sense-keys ("concussion%1:11:00" "injury%1:26:00" "hurt%1:26:00" "harm%1:26:00" "trauma%1:26:02" "bruise%1:26:00" "contusion%1:26:00")
+ :wordnet-sense-keys ("concussion%1:11:00" "injury%1:26:00" "hurt%1:26:00" "harm%1:26:00" "trauma%1:26:02")
   :parent ont::medical-disorders-and-conditions
  )
 
 ;; wound, lesion, bruise
 ; bruise can come under physical-symptom too but WN defines it as an injury.
 (define-type ONT::wound
-  :wordnet-sense-keys ("wound%1:26:00" "lesion%1:26:02" "sore%1:26:00")  
+  :wordnet-sense-keys ("wound%1:26:00" "lesion%1:26:02" "bruise%1:26:00" "contusion%1:26:00" "sore%1:26:00")  
   :parent ONT::injury
  )
 
@@ -4374,7 +4376,13 @@
  :wordnet-sense-keys ("anemia%1:26:00")
  )
 
-; for arthritis
+; for AIDS
+(define-type ONT::acquired-immune-deficiency-syndrome
+ :parent ONT::disease
+ :wordnet-sense-keys ("aids%1:26:00" "acquired_immune_deficiency_syndrome%1:26:00")
+ )
+
+
 (define-type ONT::arthritis
  :parent ONT::disease
  :wordnet-sense-keys ("arthritis%1:26:00")
@@ -4468,7 +4476,7 @@
  :wordnet-sense-keys ("pancreatitis%1:26:00")
  )
 
-; for pneumonia
+; for pneuomnia
 (define-type ONT::pneumonia
  :parent ONT::disease
  :wordnet-sense-keys ("pneumonia%1:26:00")

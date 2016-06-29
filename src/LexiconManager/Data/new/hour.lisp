@@ -8,7 +8,7 @@
   (W::HOUR
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("hour%1:28:00"))
-     (LF-PARENT ONT::time-unit)
+     (LF-PARENT ONT::hour-duration)
      (example "5 hours") ;; quantity terms
      (templ unit-templ)
      )
