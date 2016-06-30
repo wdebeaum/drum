@@ -7,7 +7,7 @@
  :words (
   (W::TH^
    (SENSES
-    ((LF W::DEFINITE)
+    ((LF ONT::DEFINITE)
      (non-hierarchy-lf t)(TEMPL mass-agr-TEMPL)
      )
     )

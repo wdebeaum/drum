@@ -136,7 +136,7 @@
   (W::ALL
    (wordfeats (W::status W::quantifier) (W::npmod +) (W::negatable +))
    (SENSES
-    ((LF W::UNIVERSAL)
+    ((LF ONT::UNIVERSAL)
      (non-hierarchy-lf t)(TEMPL quan-count-mass-TEMPL)
      (SYNTAX (W::agr (? agr W::3s W::3p)))
      )

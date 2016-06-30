@@ -7,7 +7,7 @@
  :words (
   (W::AN
    (SENSES
-    ((LF W::INDEFINITE)
+    ((LF ONT::INDEFINITE)
      (non-hierarchy-lf t)(TEMPL INDEFINITE-COUNTABLE-TEMPL)
      )
     )

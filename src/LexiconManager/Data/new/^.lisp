@@ -7,7 +7,7 @@
  :words (
   (W::^
    (SENSES
-    ((LF W::^)
+    ((LF ONT::^)
      (non-hierarchy-lf t))
     )
    )

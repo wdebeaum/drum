@@ -26,7 +26,7 @@
  :words (
   (W::WHAT
    (SENSES
-    ((LF W::WHAT)
+    ((LF ONT::WHAT)
      (non-hierarchy-lf t)(TEMPL wh-qtype-TEMPL)
      (SYNTAX (W::agr (? agr W::3s W::3p)))
      )

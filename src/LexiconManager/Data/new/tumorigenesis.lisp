@@ -8,8 +8,9 @@
 	  (SENSES
 	   ((LF-PARENT ONT::BIOLOGICAL-PROCESS)
 	    (meta-data :origin BOB :entry-date 20150107 :change-date nil :comments nil :wn nil)
-	    (TEMPL reln-cause-affected-templ (XP1 (% W::PP (W::PTYPE (? ptp w::by))))
-		   (XP2 (% W::PP (W::PTYPE (? ptp2 w::of)))))
+; this template works well but sometimes BIOLOGICAL-PROCESS becomes preferred over, e.g., PHOSPHORYLATION, in "phosphorylation of x"	    
+;	    (TEMPL reln-cause-affected-templ (XP1 (% W::PP (W::PTYPE (? ptp w::by))))
+;		   (XP2 (% W::PP (W::PTYPE (? ptp2 w::of)))))
 	    )
 	   #|
 	   ((LF-PARENT ONT::BIOLOGICAL-PROCESS)

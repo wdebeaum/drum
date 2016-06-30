@@ -8,10 +8,12 @@
   (W::EXCEPT
    (wordfeats (W::conj +))
    (SENSES
-    ((LF W::BUT)
+    ((LF ONT::BUT-EXCEPTION)
      (non-hierarchy-lf t)(TEMPL SUBCAT-ANY-TEMPL)
      )
     )
    )
 ))
 
+
+    

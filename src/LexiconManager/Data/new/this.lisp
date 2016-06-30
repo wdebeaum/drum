@@ -21,7 +21,7 @@
   (W::THIS
    (wordfeats (W::agr W::3s) (W::diectic +))
    (SENSES
-    ((LF W::DEFINITE)
+    ((LF ONT::DEFINITE)
      (non-hierarchy-lf t)(TEMPL mass-agr-TEMPL)
      )
     )

@@ -8,10 +8,10 @@
   (W::either
    (wordfeats (W::disj +) (W::seq +))
    (SENSES
-    ((LF W::EITHER)
+    ((LF ONT::EITHER)
      (meta-data :origin csli-ts :entry-date 20070320 :change-date nil :comments nil)
      (non-hierarchy-lf t) (TEMPL SUBCAT-DOUBLE-CONJ-TEMPL)
-     (SYNTAX (w::subcat2 w::or) (w::operator w::one-of) 
+     (SYNTAX (w::subcat2 w::or) (w::operator ONT::one-of) 
 	     (w::status w::indefinite) (w::agr ?agr)
 	     (W::disj +) (w::conj -) (W::seq +)      
 	     )
@@ -25,7 +25,7 @@
   (W::EITHER
    (wordfeats (W::status W::quantifier) (W::MASS ?m) (W::AGR W::3s))
    (SENSES
-    ((LF W::EITHER)
+    ((LF ONT::EITHER)
      (non-hierarchy-lf t)
      (TEMPL quan-sing-count-TEMPL)))
    )

@@ -40,7 +40,7 @@
    (wordfeats (W::agr (? agr w::3s W::3p)) (W::mass (? mass W::COUNT W::MASS)) (W::WH (? wh W::Q W::R 
      )))
    (SENSES
-    ((LF W::whose)
+    ((LF ONT::whose)
      (example "The man whose dog barked; Whose dog is this?")
      (non-hierarchy-lf t)
      (templ poss-pro-det-indef-templ) ;(TEMPL wh-qtype-TEMPL)

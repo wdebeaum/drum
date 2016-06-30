@@ -3,7 +3,7 @@
 ;;;
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
-;;; Time-stamp: <Mon Jun 27 16:27:24 EDT 2016 jallen>
+;;; Time-stamp: <Wed Jun 29 15:54:02 EDT 2016 jallen>
 
 (in-package "PARSER")
 
@@ -1227,13 +1227,13 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 		    (if (null (car val))
 			nil
 			(if negated
-			    (list 'F::NOT (car reduced-val))
+			    (list 'ONT::NOT (car reduced-val))
 			    (car val)))
 		    (if (eq (car val) '$)
 			(mapcar #'clean-out-vars reduced-val)
 			(if negated
-			    (list 'f::NOT (cons 'f::or reduced-val))
-			    (cons 'f::or reduced-val))))))
+			    (list 'ONT::NOT (cons 'ont::or reduced-val))
+			    (cons 'ONT::or reduced-val))))))
 	  val)))
    ((consp expr)
     (mapcar #'clean-out-vars expr))
@@ -1263,6 +1263,29 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
     ((w::F w::prop) 'ONT::F)
     (w::speechact 'ONT::Speechact)
     (w::sa-seq 'ONT::sa-seq)
+    ;;; repeat the above but replace W:: by ONT::
+    ((ONT::definite ONT::name ONT::gname) 'ont::the) 
+    (ONT::indefinite 'ont::A)
+    ((ONT::indefinite-plural ONT::number) 'ont::indef-set)
+    (ONT::SM 'ont::SM)
+    (ONT::definite-plural 'ont::the-set)
+    ((ONT::wh ONT::what ONT::which ONT::whose ONT::*wh-term*) 'ont::wh-term) 
+    (ONT::wh-quantity 'ont::wh-quantity)
+    (ONT::universal 'ont::all-the)
+    (ONT::value 'ont::value)
+    (ONT::pro 'ont::pro)
+    (ONT::pro-set 'ont::pro-set)
+    (ONT::*pro* 'ont::impro)
+    (ONT::direct 'ont::the)
+    (ONT::kind 'ont::kind)
+    (ONT::some-amount-of 'ont::some-amount-of)
+    (ONT::bare 'ont::bare)
+    (ONT::quantity-term 'ont::quantity-term)
+    (ONT::quantifier 'ont::quantifier)
+    ((ONT::F ONT::prop) 'ONT::F)
+    (ONT::speechact 'ONT::Speechact)
+    (ONT::sa-seq 'ONT::sa-seq)
+    ;;;
     (otherwise (parser-warn "~%building LF term: unknown status type ~S" status) 'unknown)
     ))
 
@@ -1426,12 +1449,21 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	      ;;(if (eq (car c) 'w::scale)
 	      ;;(list (keywordify (car c)) (build-value (util::convert-to-package (second c) :ont)))
 	      (let ((val (second c)))
-		(list (keywordify (car c)) (if (and (symbolp val) (eq (symbol-package val) *parser-package*))
-					       (build-value (util::convert-to-package (second c) *ont-package*))
-					       val))))))
+		(list (keywordify (car c))
+		      (convert-to-ont-if-in-parser-package val))))))
        (t (consp (car c))  
           (list :MODS (build-modifier var c))
        ))))
+
+(defun convert-to-ont-if-in-parser-package (val)
+  (cond ((symbolp val)
+	 (if (eq (symbol-package val) *parser-package*)
+	     (build-value (util::convert-to-package val *ont-package*))
+	   val))
+	((numberp val)
+	   val)
+	((consp val) (mapcar #'convert-to-ont-if-in-parser-package 
+			     val))))
        
 
 (defun build-modifier (lf-var mod)

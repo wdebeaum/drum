@@ -7,7 +7,7 @@
   (W::SEVERAL
    (wordfeats (W::status W::indefinite-plural))
    (SENSES
-    ((LF W::SEVERAL)
+    ((LF ONT::SEVERAL)
      (non-hierarchy-lf t) (TEMPL quan-cardinality-pl-templ)
      )
     )

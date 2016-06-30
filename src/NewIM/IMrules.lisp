@@ -9,9 +9,9 @@
    ;;  Proposing actions
    ;; e.g., I want to buy a computer / i'd like to buy a computer (note: maybe overgenerates on "I'd want to buy a computer")
      ((ONT::SPEECHACT ?x ONT::SA_TELL :CONTENT ?!c)  
-      (ONT::F ?!c (:* ONT::WANT ?www) :formal ?!theme :neutral ?v1 
+      (ONT::F ?!c (:* ONT::WANT ?www) :formal ?!theme :EXPERIENCER ?!v1 
 	:force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE))
-      ((? p ONT::PRO ONT::PRO-SET) ?!v1 ?type :PROFORM (? xx ONT::I ONT::WE))
+      ((? p ONT::PRO ONT::PRO-SET) ?!v1 ?type :PROFORM (? xx W::I W::WE))
       -want-to-proposal>
        (ONT::PROPOSE :who *USER* :to *ME*
 		    :what ?!theme
@@ -21,7 +21,7 @@
    ;; e.g., I need to buy a computer
      ((Ont::speechact ?x ONT::SA_TELL :CONTENT ?!c)  
        (ONT::F ?!c (:* ONT::NECESSITY ?w) :formal ?!theme :neutral ?!v1 :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE))
-       ((? a ONT::PRO ONT::PRO-SET) ?!v1 ?type :PROFORM (? xx ont::i ont::we ont::you))
+       ((? a ONT::PRO ONT::PRO-SET) ?!v1 ?type :PROFORM (? xx w::i w::we w::you))
        -necessity-to-proposal>
        (ONT::PROPOSE :who *USER* :to *ME*
 		    :what ?!theme
@@ -64,6 +64,17 @@
     -yes-no-question>
     (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n :as ONT::GOAL)
     )
+
+   ;; are there any trucks carrying pineapples?
+   ;; are there any green trucks?
+   ((ONT::SPEECHACT ?v ONT::SA_YN-QUESTION :CONTENT ?!v1)
+    (ONT::F ?!v1 ONT::EXISTS :neutral ?!n) 
+    (?!spec ?!n ?!t :MODS (?!m))
+    
+    -yes-no-question-suchthat>
+    (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n :as ONT::GOAL)
+    (?!spec ?!n ?!t :suchthat ?!m)
+    )
    
    ;; 
    
@@ -84,7 +95,7 @@
    ;; I'd like to work on X
      ((ONT::SPEECHACT ?x ONT::SA_TELL :CONTENT ?!c)
       (ONT::F ?!c  (:* (? t ONT::WANT) ?w) :ACTION ?!theme :neutral ?!v1 :force (? f ONT::TRUE ONT::REQUIRED ONT::ALLOWED ONT::FUTURE))
-      ((? p ONT::PRO-SET ONT::PRO) ?!v1 ?type :PROFORM (? xx ont::I ont::WE))
+      ((? p ONT::PRO-SET ONT::PRO) ?!v1 ?type :PROFORM (? xx w::I w::WE))
       (ONT::F ?!theme (:* ONT::WORK W::WORK) :formal ?!action)
       -assert-want-to-work-to-propose>
       (ONT::PROPOSE :who *USER* :to *ME*
@@ -98,7 +109,7 @@
      ((ONT::SPEECHACT ?!V9120 ONT::SA_TELL :CONTENT ?!V8097)
       (ONT::F ?!V8097 ONT::TRANSFER-INFORMATION :formal ?!action :AGENT ?!me
 	     :force ?force)
-      ((? p ONT::PRO-SET ONT::PRO) ?!me ?type :PROFORM (? xx ONT::I ONT::WE))
+      ((? p ONT::PRO-SET ONT::PRO) ?!me ?type :PROFORM (? xx w::I w::WE))
       -prop-learn-activity1>
       (ONT::PROPOSE :who *USER* :to *ME* :what ?!V8097 :as ONT::GOAL)
       )
@@ -232,7 +243,7 @@
    ;; can you/I indirect requests
    ((ONT::SPEECHACT ?V7187 ONT::SA_YN-QUESTION :CONTENT ?!c)
     (ONT::F ?!c ONT::EVENT-OF-ACTION :AGENT ?!V6 :force (? f ONT::ALLOWED ONT::PROHIBITED ONT::FUTURE ONT::FUTURENOT ONT::POSSIBLE))
-    ((? z ONT::PRO ONT::PRO-SET) ?!V6 ONT::PERSON :proform (? xx ont::ME ont::I ont::you ont::we ont::us))
+    ((? z ONT::PRO ONT::PRO-SET) ?!V6 ONT::PERSON :proform (? xx w::ME w::I w::you w::we w::us))
     
       -can-indirect-proposal>
       (ONT::PROPOSE :who *USER* :to *ME*
@@ -550,7 +561,7 @@
 	  ;; i do
 	  ((ONT::SPEECHACT ?!vv ONT::SA_TELL :content ?!x)
 	   (ONT::F ?!x ONT::ELLIPSIS :formal ?!i :force ONT::TRUE)
-	   (ONT::PRO ?!i ONT::PERSON :proform ont::I)
+	   (ONT::PRO ?!i ONT::PERSON :proform w::I)
 	   -I-do-response-rule>
 	   (ONT::ANSWER :who *USER* :to *ME* :what ont::POS))
 
@@ -563,7 +574,7 @@
 	  ;; I'm not sure
 	  ((ONT::SPEECHACT ?!x ONT::SA_TELL :CONTENT ?!c)
 	   (ONT::F ?!c (:* ONT::HAVE-PROPERTY W::BE) :PROPERTY ?!p  :force ONT::FALSE)
-	   (ONT::PRO ?!i (:* ONT::PERSON W::I) :PROFORM ont::I)
+	   (ONT::PRO ?!i (:* ONT::PERSON W::I) :PROFORM w::I)
 	   (ONT::F ?!p (:* ONT::CONFIDENCE-VAL W::SURE) :FIGURE ?!i)
 	   -unsure->
 	    (ONT::ANSWER :who *USER* :to *ME* :what ONT::UNSURE-NEG))
@@ -571,7 +582,7 @@
 	  ;; I'm trying to
 	  ((ONT::SPEECHACT ?!vv ONT::SA_TELL :content ?!x)
 	   (ONT::F ?!x ONT::TRY :agent ?!i :force ONT::TRUE)
-	   (ONT::PRO ?!i ONT::PERSON :proform ont::I)
+	   (ONT::PRO ?!i ONT::PERSON :proform w::I)
 	   -am-trying>
 	   (ONT::ANSWER :who *USER* :to *ME* :frequency ONT::SOMETIMES))
 

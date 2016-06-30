@@ -73,7 +73,7 @@
   (W::AND
    (wordfeats (W::conj +) (W::seq +))
    (SENSES
-    ((LF W::AND)
+    ((LF ONT::AND)
      (non-hierarchy-lf t) (TEMPL SUBCAT-ANY-TEMPL)
      (syntax (w::status w::definite-plural))
      )
@@ -88,7 +88,7 @@
    (wordfeats (W::conj +))
    (SENSES
     ;;;I think we don't have SEQ +, since this can't conjoin NPs - need to check JFA 4/02
-    ((LF W::AND)
+    ((LF ONT::AND)
      (non-hierarchy-lf t)(TEMPL SUBCAT-ANY-TEMPL)
      (preference .98)
      )

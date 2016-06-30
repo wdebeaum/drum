@@ -100,7 +100,7 @@
  :words (
   (W::^S
    (SENSES
-    ((LF W::^S)
+    ((LF ONT::^S)
      (non-hierarchy-lf t))
     )
    )

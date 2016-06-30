@@ -23,13 +23,13 @@
   (W::LITTLE
    (wordfeats (W::status W::indefinite)(W::AGR W::3s))
    (SENSES
-    ((LF W::LITTLE)
+    ((LF ONT::LITTLE)
      (non-hierarchy-lf t)(TEMPL quan-mass-TEMPL)
      )
-    ((LF W::LITTLE)
+    ((LF ONT::LITTLE)
      (non-hierarchy-lf t)(TEMPL quan-bare-TEMPL)
      )  
-   ((LF W::LITTLE)
+   ((LF ONT::LITTLE)
      (non-hierarchy-lf t)
      (example "there is little of the truck left")
      (TEMPL quan-sing-sing-TEMPL)

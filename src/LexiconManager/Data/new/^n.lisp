@@ -7,7 +7,7 @@
   (W::^N
    (wordfeats (W::conj +))
    (SENSES
-    ((LF W::AND)
+    ((LF ont::AND)
      (non-hierarchy-lf t)(TEMPL SUBCAT-ANY-TEMPL)
      )
     )

@@ -38,8 +38,9 @@
   (W::BUT
    (wordfeats (W::conj +))
    (SENSES
-    ((LF W::BUT)
-     (non-hierarchy-lf t)(TEMPL SUBCAT-ANY-TEMPL)
+    ((LF ONT::BUT-EXCEPTION)
+     (non-hierarchy-lf t)
+     (TEMPL SUBCAT-ANY-TEMPL)
      )
     )
    )
@@ -52,7 +53,7 @@
   ((W::BUT w::not)
    (wordfeats (W::conj +))
    (SENSES
-    ((LF W::BUT-NOT)
+    ((LF ONT::BUT-NOT)
      (non-hierarchy-lf t)
      (TEMPL SUBCAT-ANY-TEMPL)
      )

@@ -7,7 +7,7 @@
  :words (
 ;; VP negation e.g. he isn't going to the party
   (W::N^T
-  (senses((LF W::NEG)
+  (senses((LF ONT::NEG)
     (non-hierarchy-lf t)(TEMPL no-features-templ)
     )
    )

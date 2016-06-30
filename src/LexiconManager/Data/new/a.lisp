@@ -261,7 +261,7 @@
  :words (
   (W::A
    (SENSES
-    ((LF W::INDEFINITE)
+    ((LF ONT::INDEFINITE)
      (non-hierarchy-lf t)(TEMPL INDEFINITE-COUNTABLE-TEMPL)
      )
     )
@@ -273,7 +273,7 @@
   ((W::A W::FEW)
    (wordfeats (W::status W::indefinite-plural))
    (SENSES
-    ((LF W::A-FEW)
+    ((LF ONT::A-FEW)
      (non-hierarchy-lf t)(TEMPL quan-3p-templ)
      )
     )
@@ -285,7 +285,7 @@
   ((W::A W::couple)
    (wordfeats (W::status W::indefinite-plural))
    (SENSES
-    ((LF W::A-FEW)
+    ((LF ONT::A-FEW)
      (non-hierarchy-lf t)(TEMPL quan-3p-templ)
      )
     )
@@ -297,7 +297,7 @@
   ((W::A W::HANDFUL)
    (wordfeats (W::status W::indefinite-plural)(W::NOsimple +) )
    (SENSES
-    ((LF W::A-FEW)
+    ((LF ONT::A-FEW)
      (non-hierarchy-lf t)(TEMPL quan-3p-templ)
      )
     )
@@ -309,14 +309,14 @@
   ((W::A W::LITTLE)
    (wordfeats (W::status W::indefinite)(W::AGR W::3s))
    (SENSES
-    ((LF W::A-LITTLE)
+    ((LF ONT::A-LITTLE)
      (non-hierarchy-lf t)(TEMPL quan-mass-TEMPL)
      (example "a little water")
       )
-     ((LF W::A-LITTLE)
+     ((LF ONT::A-LITTLE)
      (non-hierarchy-lf t)(TEMPL quan-bare-TEMPL)     
      )
-   ((LF W::A-LITTLE)
+   ((LF ONT::A-LITTLE)
      (non-hierarchy-lf t)
      (example "there is a little of the truck left")
      (TEMPL quan-sing-sing-TEMPL)
@@ -330,12 +330,12 @@
   ((W::A W::good w::deal)
     (wordfeats (W::negatable +) (W::NOsimple +))
     (SENSES
-     ((LF W::PLENTY)
+     ((LF ONT::PLENTY)
       (example "a good deal of people")
       (non-hierarchy-lf t)(TEMPL quan-cardinality-pl-TEMPL)
       (SYNTAX (W::agr W::3p) (w::status w::indefinite-plural))
       )
-     ((LF W::PLENTY)
+     ((LF ONT::PLENTY)
       (example "a good deal of water")
       (non-hierarchy-lf t)(TEMPL quan-mass-TEMPL)
       (SYNTAX (W::agr (? agr W::3s)) (w::status w::indefinite))
@@ -349,13 +349,13 @@
    ((W::A W::great w::deal)
     (wordfeats (W::negatable +) (W::NOsimple +))
     (SENSES
-     ((LF W::PLENTY)
+     ((LF ONT::PLENTY)
       (example "a great deal of people")
       (non-hierarchy-lf t)(TEMPL quan-cardinality-pl-TEMPL)
       (SYNTAX (W::agr W::3p) (w::status w::indefinite-plural))
       (W::status W::indefinite-plural)
       )
-     ((LF W::PLENTY)
+     ((LF ONT::PLENTY)
       (example "a great deal of water")
       (non-hierarchy-lf t)(TEMPL quan-mass-TEMPL)
       (SYNTAX (W::agr (? agr W::3s)) (w::status w::indefinite))
@@ -369,7 +369,7 @@
   ((W::A W::bit)
     (wordfeats (W::status W::indefinite) (W::negatable +) (W::NOsimple +))
     (SENSES
-     ((LF W::a-bit)
+     ((LF ONT::a-bit)
       (example "a bit of sand")
       (non-hierarchy-lf t)(TEMPL quan-mass-TEMPL)
       (SYNTAX (W::agr W::3p))
@@ -383,12 +383,12 @@
    ((W::A W::LOT)
     (wordfeats (W::negatable +) (W::NOsimple +))
     (SENSES
-     ((LF W::PLENTY)
+     ((LF ONT::PLENTY)
       (example "alot of water")
       (non-hierarchy-lf t)(TEMPL quan-mass-TEMPL)
       (SYNTAX (W::agr (? agr W::3s)) (w::status w::indefinite))
        )
-     ((LF W::PLENTY)
+     ((LF ONT::PLENTY)
       (example "a lot of people")
       (non-hierarchy-lf t)(TEMPL quan-cardinality-pl-TEMPL)
       (SYNTAX (W::agr W::3p) (w::status w::indefinite-plural))
@@ -402,7 +402,7 @@
   ((W::A W::CERTAIN)
    (wordfeats (W::status W::indefinite) (W::negatable +))
    (SENSES
-    ((LF W::INDEFINITE)  ;; a certain man == some man
+    ((LF ONT::INDEFINITE)  ;; a certain man == some man
      (non-hierarchy-lf t)
      (TEMPL INDEFINITE-COUNTABLE-TEMPL)
     ))

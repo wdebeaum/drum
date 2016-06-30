@@ -11,7 +11,7 @@
      (LF-PARENT ONT::REFERENTIAL-SEM)
      )
     ;;;;; expletive it
-    ((LF W::EXPLETIVE)
+    ((LF ONT::EXPLETIVE)
      (non-hierarchy-lf t)(SYNTAX (W::CASE W::SUB) (W::expletive +))
      )
     )

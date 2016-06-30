@@ -24,12 +24,12 @@
   (W::most
    (wordfeats (W::negatable +))
    (SENSES
-    ((LF W::most)   ;; the quantity interp of most, e.g., most trucks
+    ((LF ONT::most)   ;; the quantity interp of most, e.g., most trucks
      (non-hierarchy-lf t)
      (TEMPL quan-cardinality-pl-templ)
      (syntax (w::status w::indefinite-plural))
      )
-    ((LF W::MOST) ;; mass sense of most, e.g., most WATER
+    ((LF ONT::MOST) ;; mass sense of most, e.g., most WATER
      (non-hierarchy-lf t)(TEMPL quan-mass-TEMPL)
      (SYNTAX (W::agr (? agr W::3s)) (w::status w::indefinite))
      )

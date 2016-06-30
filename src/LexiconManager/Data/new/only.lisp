@@ -60,7 +60,7 @@
   (W::ONLY
    (wordfeats (W::status W::quantifier) (W::npmod +) (W::negatable +) (w::mass ?mass) (W::AGR (? agr W::3S W::3P)))
    (SENSES
-    ((LF W::ONLY) 
+    ((LF ONT::ONLY) 
      (non-hierarchy-lf t)(TEMPL quan-no-bare-templ)
      )
     )

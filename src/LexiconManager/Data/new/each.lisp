@@ -22,7 +22,7 @@
   (W::EACH
    (wordfeats (W::status W::quantifier) (W::mass W::count) (W::agr W::3s))
    (SENSES
-    ((LF W::EACH)
+    ((LF ONT::EACH)
      (non-hierarchy-lf t)(TEMPL quan-sing-count-TEMPL)
      )
     )

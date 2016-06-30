@@ -3359,6 +3359,7 @@
 
 (define-type ONT::ATTACH
  :wordnet-sense-keys ("attach%2:35:01" "attach%2:35:02" "catch%2:35:08" "connect%2:35:00")
+ :arguments ((:required ont::agent (F::phys-obj (F::origin F::natural))))
  :parent ONT::JOINING
  :sem (F::Situation (F::Aspect F::Dynamic) (F::Cause F::Agentive))
  )

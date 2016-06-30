@@ -8,7 +8,7 @@
   (W::THERE
    (wordfeats (W::CASE W::SUB) (W::agr (? ag W::3s W::3p)) (W::sing-lf-only +))
    (SENSES
-    ((LF W::EXPLETIVE)
+    ((LF ONT::EXPLETIVE)
      (non-hierarchy-lf t))
     )
    )

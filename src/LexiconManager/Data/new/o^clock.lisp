@@ -6,7 +6,7 @@
  :words (
   (W::o^clock
    (SENSES
-    ((LF W::OCLOCK)
+    ((LF ONT::OCLOCK)
      (non-hierarchy-lf t))
     )
    )

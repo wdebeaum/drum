@@ -23,10 +23,10 @@
   (W::BOTH
    (wordfeats (W::conj +) (W::seq +))
    (SENSES
-    ((LF W::BOTH)
+    ((LF ONT::BOTH)
      (meta-data :origin csli-ts :entry-date 20070320 :change-date nil :comments nil)
      (non-hierarchy-lf t) (TEMPL SUBCAT-DOUBLE-CONJ-TEMPL)
-     (SYNTAX (w::subcat2 w::and) (w::operator w::both) 
+     (SYNTAX (w::subcat2 w::and) (w::operator ONT::both) 
 	     (w::status w::definite-plural) (w::agr w::3p)
 	     (W::disj -) (w::conj +) (W::seq +)      
 	     )
@@ -40,7 +40,7 @@
   (W::BOTH
    (wordfeats (W::QUANT 2) (W::status W::definite-plural) (W::NPmod +))
    (SENSES
-    ((LF W::BOTH)
+    ((LF ONT::BOTH)
      (non-hierarchy-lf t)
      (example "both us and european voltage")
      (TEMPL quan-3p-templ)

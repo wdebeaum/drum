@@ -8,7 +8,7 @@
   (W::FEW
    (wordfeats (W::status W::indefinite-plural))
    (SENSES
-    ((LF W::FEW)
+    ((LF ONT::FEW)
      (non-hierarchy-lf t)(TEMPL quan-3p-templ)
      )
     )

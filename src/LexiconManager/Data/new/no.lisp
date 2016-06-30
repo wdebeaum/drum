@@ -67,7 +67,7 @@
   (W::NO
    (wordfeats (W::NEG +) (W::AGR ?agr) (W::MASS ?m) (W::status W::quantifier))
    (SENSES
-    ((LF W::NONE)
+    ((LF ONT::NONE)
      (non-hierarchy-lf t)(TEMPL quan-no-bare-TEMPL)
      )
     )

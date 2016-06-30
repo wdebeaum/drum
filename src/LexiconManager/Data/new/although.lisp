@@ -2,7 +2,7 @@
 ;;;; W::ALTHOUGH
 ;;;;
 
-(define-words 
+#||(define-words 
     :pos W::adv :templ DISC-PRE-TEMPL
  :words (
   (W::ALTHOUGH
@@ -14,5 +14,17 @@
      )
     )
    )  
-))
+))||#
 
+(define-words :pos W::conj :boost-word t
+ :tags (:base500)
+ :words (
+  (W::although
+   (wordfeats (W::conj +))
+   (SENSES
+    ((LF ONT::BUT-EXCEPTION)
+     (non-hierarchy-lf t)
+     (TEMPL SUBCAT-ANY-TEMPL)
+     )
+    )
+   )))

@@ -22,7 +22,7 @@
   (W::THESE
    (wordfeats (W::agr W::3p) (W::diectic +) (W::mass (? mass W::COUNT W::BARE)))
    (SENSES
-    ((LF W::DEFINITE-plural)
+    ((LF ONT::DEFINITE-plural)
      (non-hierarchy-lf t)(TEMPL mass-agr-TEMPL)
      )
     )

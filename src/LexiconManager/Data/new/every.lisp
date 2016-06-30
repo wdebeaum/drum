@@ -8,7 +8,7 @@
   (W::EVERY
    (wordfeats (W::agr W::3s) (W::mass W::count) (W::status W::quantifier) (W::negatable +))
    (SENSES
-    ((LF W::EVERY)
+    ((LF ONT::EVERY)
      (non-hierarchy-lf t)(TEMPL quan-no-bare-TEMPL)
      )
     )
@@ -20,7 +20,7 @@
   ((W::EVERY W::OTHER)
    (wordfeats (W::agr W::3s) (W::mass W::count) (W::status W::quantifier) (W::negatable +))
    (SENSES
-    ((LF W::EVERY-OTHER)
+    ((LF ONT::EVERY-OTHER)
      (non-hierarchy-lf t)(TEMPL quan-no-bare-TEMPL)
      )
     )

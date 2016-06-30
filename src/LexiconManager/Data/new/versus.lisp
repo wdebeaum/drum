@@ -7,7 +7,7 @@
   (W::VERSUS
    (wordfeats (W::conj +))
    (SENSES
-    ((LF W::VERSUS)
+    ((LF ONT::VERSUS)
      (non-hierarchy-lf t)(TEMPL SUBCAT-ANY-TEMPL)
      )
     )

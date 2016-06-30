@@ -29,7 +29,7 @@
 ;;;   )
   (W::THE
    (SENSES
-    ((LF W::DEFINITE)
+    ((LF ONT::DEFINITE)
      (non-hierarchy-lf t)(TEMPL mass-agr-3s-TEMPL)
      )
     )
@@ -41,7 +41,7 @@
  :words (
   (W::THE
    (SENSES
-    ((LF W::DEFINITE-PLURAL)
+    ((LF ONT::DEFINITE-PLURAL)
      (non-hierarchy-lf t)(TEMPL mass-agr-3p-TEMPL)
      )
     )

@@ -27,7 +27,7 @@
   (W::ANY
    (wordfeats (W::status W::indefinite) (w::npmod +) (w::negatable +) (W::mass ?m) (W::agr (? agr W::3s W::3p)))
    (SENSES
-    ((LF W::ANY)
+    ((LF ONT::ANY)
      (non-hierarchy-lf t)(TEMPL quan-count-mass-TEMPL)
      )
     )

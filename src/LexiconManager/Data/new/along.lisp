@@ -25,7 +25,7 @@
   ((W::ALONG W::WITH)
    (wordfeats (W::conj +) (W::seq +))
    (SENSES
-    ((LF W::AND)
+    ((LF ONT::AND)
      (non-hierarchy-lf t) (TEMPL SUBCAT-ANY-TEMPL)
 ;     (syntax (w::status w::definite-plural))
      )

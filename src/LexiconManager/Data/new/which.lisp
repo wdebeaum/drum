@@ -28,7 +28,7 @@
  :words (
   (W::WHICH
    (SENSES
-    ((LF W::WHICH)
+    ((LF ONT::WHICH)
      (non-hierarchy-lf t)(TEMPL wh-qtype-TEMPL)
      )
     )

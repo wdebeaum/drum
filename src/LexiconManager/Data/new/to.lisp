@@ -113,7 +113,7 @@
  :words (
   (W::TO
    (SENSES
-    ((LF W::INF-TO)
+    ((LF ONT::INF-TO)
      (non-hierarchy-lf t))
     )
    )

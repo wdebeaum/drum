@@ -24,7 +24,7 @@
 ; :words (W::IF)
 ; )
   (W::ELSE
-  (senses((LF W::IDENTITY)
+  (senses((LF ONT::IDENTITY)
     (non-hierarchy-lf t)(TEMPL no-features-templ)
     )
    )

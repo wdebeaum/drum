@@ -7,7 +7,7 @@
   (W::MANY
    (wordfeats (W::status W::indefinite-plural) (W::negatable +))
    (SENSES
-    ((LF W::MANY)
+    ((LF ONT::MANY)
      (non-hierarchy-lf t)(TEMPL quan-cardinality-pl-templ)
      )
     )
