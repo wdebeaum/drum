@@ -7,7 +7,7 @@
   (w::spasm
   (senses
    ((meta-data :wn ("spasm%1:26:00"))
-    (LF-PARENT ONT::medical-symptom)
+    (LF-PARENT ONT::spasm)
     (TEMPL count-pred-TEMPL)
     )
    )

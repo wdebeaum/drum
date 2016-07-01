@@ -92,7 +92,7 @@
   ((w::light (w::headedness))
   (senses
    ((meta-data :wn ("lightheadedness%1:26:00"))
-    (LF-PARENT ONT::medical-symptom)
+    (LF-PARENT ONT::lightheadedness)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

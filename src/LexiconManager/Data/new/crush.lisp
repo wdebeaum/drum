@@ -13,10 +13,10 @@
      (PREFERENCE 0.96)
      )
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("break-45.1") :wn ("crush%2:30:00" "crush%2:30:08" "crush%2:35:00" "crush%2:35:01"))
-     (LF-PARENT ont::crush
+     (LF-PARENT ont::crush)
      (TEMPL agent-affected-xp-templ) ; like break
      (PREFERENCE 0.96)
      )
      
-     )))))
+     ))))
 

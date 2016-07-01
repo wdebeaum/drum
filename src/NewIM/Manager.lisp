@@ -366,10 +366,10 @@
 	   'ONT::A
 	 'ONT::THE)))
     ((LAMBDA ONT::A) 'ONT::a)
-    ((EVENT ONT::EVENT  ONT::F)
+    ((EVENT ONT::EVENT ONT::EPI ONT::CC ONT::MODALITY ONT::F)
      'ONT::RELN)
     (ONT::KIND 'ONT::KIND)
-    (otherwise 'ONT::a)))
+    (otherwise 'ONT::a)))  ; this includes ONT::TERM
 
 (defun map-referent-to-KR (ref)
   "Selects the best referent from the REF-HYPs and sets the values

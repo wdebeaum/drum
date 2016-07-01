@@ -2783,6 +2783,32 @@ wrap_up%2:35:00::
 write_up%2:32:02::
 write_up%2:36:00::
 zip_up%2:35:00::
+;; verbs and adverbs ending with 'time'
+against_time%4:02:00::
+ahead_of_time%4:02:00::
+all_the_time%4:02:01::
+at_a_time%4:02:00::
+at_one_time%4:02:00::
+at_one_time%4:02:01::
+at_the_same_time%4:02:03::
+at_the_same_time%4:02:05::
+buy_time%2:30:00::
+double_time%4:02:00::
+for_the_first_time%4:02:00::
+from_time_to_time%4:02:00::
+have_a_good_time%2:34:00::
+in_due_time%4:02:00::
+in_good_time%4:02:00::
+in_no_time%4:02:00::
+in_the_nick_of_time%4:02:00::
+in_time%4:02:00::
+in_time%4:02:01::
+just_in_time%4:02:00::
+of_all_time%4:02:00::
+on_time%4:02:00::
+one_at_a_time%4:02:00::
+one_time%4:02:00::
+waste_one's_time%2:42:00::
 ; end automatically generated lists
 
 ; These were found in a similar way to the re-/over-/under- words, but there
@@ -2790,6 +2816,16 @@ zip_up%2:35:00::
 coordinate%2:30:01::
 hyperextend%2:29:00::
 transmigrate%2:38:00::
+
+;; N times
+a_hundred_times%4:02:00::
+a_million_times%4:02:00::
+four_times%4:02:00::
+nine_times%4:02:00::
+six_times%4:02:00::
+thousand_times%4:02:00::
+three_times%4:02:01::
+two_times%4:02:01::
 
 ;; multiwords that ought to be composed (manually added)
 arrive_at%2:38:00::
@@ -2813,6 +2849,7 @@ walk_in%2:38:00::
 ;; manual golist
 reassure%2:37:00::
 reassure%2:32:00::
+in_the_nick_of_time%4:02:00::
 ")))
 
 (defvar *stophash*

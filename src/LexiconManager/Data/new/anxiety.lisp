@@ -7,7 +7,7 @@
   (w::anxiety
   (senses
    ((meta-data :wn ("anxiety%1:26:00"))
-    (LF-PARENT ONT::medical-condition)
+    (LF-PARENT ONT::anxiety)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

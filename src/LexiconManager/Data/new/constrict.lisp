@@ -5,6 +5,7 @@
 (define-words :pos W::v :templ agent-affected-xp-templ
  :words (
    (w::constrict
+   (wordfeats (W::morph (:forms (-vb) :nom w::constriction)))
    (senses
     ((meta-data :origin "verbnet2.0" :entry-date 20060606 :change-date 20090504 :comments nil :vn ("other_cos-45.4") :wn ("tighten%2:30:01" "tighten%2:30:00"))
      (LF-PARENT ONT::decrease)

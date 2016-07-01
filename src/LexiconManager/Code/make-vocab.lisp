@@ -150,19 +150,19 @@
 ;;;	)
 
 (defun parse-word-sense (word sense &key (pos nil) (default-template nil) (boost-word nil) (remaining-words nil))
-  "The main parsing function. Take a sense and convert it into internal represenation for easier processing later on. Doesn't do any error checking"
+  "The main parsing function. Take a sense and convert it into internal represenation for easier processing later on. Does some error checking"
   (declare (ignore remaining-words)) ;; not used here
   (if (every #'consp sense)
-    (let* ((lf (get-arg-value 'LF sense))
-	   (lf-parent (get-arg-value 'LF-PARENT sense))
-	   (lf-form (get-arg-value 'LF-FORM sense))
+    (let* ((lf (get-arg-value-checked 'LF sense))
+	   (lf-parent (get-arg-value-checked 'LF-PARENT sense))
+	   (lf-form (get-arg-value-checked 'LF-FORM sense))
 	   (templ (or (get-arg-value-list 'TEMPL sense) (and default-template (list default-template))))
 	   (synt (get-arg-value-list 'syntax sense)) 
 	   (sem (get-arg-value-list 'SEM sense))
-	   (pref (or (get-arg-value 'preference sense) *no-kr-probability*))
-	   (nonhier-lf (get-arg-value 'non-hierarchy-lf sense))
+	   (pref (or (get-arg-value-checked 'preference sense) *no-kr-probability*))
+	   (nonhier-lf (get-arg-value-checked 'non-hierarchy-lf sense))
 	   (meta-data (get-arg-value-list 'meta-data sense))
-	   (prototypical-word (get-arg-value 'prototypical-word sense))
+	   (prototypical-word (get-arg-value-checked 'prototypical-word sense))
 	   )
       (when (and templ (null (retrieve-template (car templ))))
 	(format t "~%DEFINE-WORDS: Warning, unknown template: ~S:" templ))

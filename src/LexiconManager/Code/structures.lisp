@@ -169,6 +169,18 @@
   (second (assoc arg list))
   )
 
+(defun get-arg-value-checked (arg list)
+  "Like get-arg-value, but check that the assoc list item is actually a pair."
+  (let ((pair (assoc arg list)))
+    (cond
+      ((null pair) nil) ; arg is allowed to be absent
+      ((null (cdr pair))
+        (error "arg ~s has no values (expected exactly 1) in assoc list:~%  ~s~%Did you misplace a parenthesis in a lexicon data file?" arg list))
+      ((null (cddr pair)) ; the main correct case
+        (second pair))
+      (t (error "arg ~s has more than 1 value (expected exactly 1) in assoc list:~%  ~s~%Did you misplace a parenthesis in a lexicon data file?" arg list))
+      )))
+
 (defun get-arg-value-list (arg list)
   (cdr (assoc arg list))
   )

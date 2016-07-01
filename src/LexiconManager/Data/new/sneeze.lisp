@@ -7,7 +7,7 @@
   (w::sneeze
   (senses
    ((meta-data :wn ("sneeze%1:26:00"))
-    (LF-PARENT ONT::medical-symptom)
+    (LF-PARENT ONT::sneeze)
     (TEMPL count-pred-TEMPL)
     )
    )

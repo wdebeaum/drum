@@ -7,7 +7,7 @@
   (w::palpitation
   (senses
    ((meta-data :wn ("palpitation%1:26:00"))
-    (LF-PARENT ONT::medical-symptom)
+    (LF-PARENT ONT::palpitation)
     (TEMPL count-pred-TEMPL)
     )
    )

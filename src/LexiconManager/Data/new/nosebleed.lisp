@@ -7,7 +7,7 @@
   (w::nosebleed
   (senses
    ((meta-data :wn ("nosebleed%1:26:00"))
-    (LF-PARENT ONT::medical-symptom)
+    (LF-PARENT ONT::nosebleed)
     (TEMPL count-pred-TEMPL)
     )
    )

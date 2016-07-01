@@ -7,7 +7,7 @@
   (W::HIVES
   (senses
    ((meta-data :wn ("hives%1:26:00"))
-    (LF-PARENT ONT::medical-symptom)
+    (LF-PARENT ONT::hives)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

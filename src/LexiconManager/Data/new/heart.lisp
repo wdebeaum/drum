@@ -37,7 +37,7 @@
    (SENSES
     ((meta-data :wn ("heart_attack%1:26:00"))
      (example "He had a heart attack.")
-     (LF-PARENT ONT::cardiovascular-disease)
+     (LF-PARENT ONT::heart-attack)
      )
     )
    )

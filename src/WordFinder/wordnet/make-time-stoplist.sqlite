@@ -1,0 +1,15 @@
+-- make-time-stoplist.sqlite - make the part of stoplist.lisp dealing with verbs/adverbs ending in "time"
+-- William de Beaumont
+-- 2016-06-30
+--
+-- USAGE: sqlite3 <make-time-stoplist.sqlite
+-- writes time-stoplist.txt, to be inserted in stoplist.lisp
+
+.open ../../WordNetSQL/wn.db
+
+.output time-stoplist.txt
+
+SELECT sense_key FROM senses
+WHERE ss_type IN ('v','r')
+  AND lemma LIKE '%\_time' ESCAPE '\'
+ORDER BY sense_key;

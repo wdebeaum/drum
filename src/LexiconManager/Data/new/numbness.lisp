@@ -7,7 +7,7 @@
   (w::numbness
   (senses
    ((meta-data :wn ("numbness%1:26:00"))
-    (LF-PARENT ONT::medical-symptom)
+    (LF-PARENT ONT::numbness)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )
