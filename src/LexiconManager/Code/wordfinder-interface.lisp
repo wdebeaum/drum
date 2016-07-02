@@ -42,7 +42,7 @@
   (if senses
     (concatenate 'string "(success :entries
 	      ((ENTRY :word \"" (make-into-string w) "\" :score " (format nil "~S" score) " :LFS " (format nil "~S" senses) " :constit (% " (format nil "~S" (car pos-list)) "))))")
-    (concatenate 'sting "(failure :word \"" (make-into-string w) "\"")))
+    (concatenate 'string "(failure :word \"" (make-into-string w) "\"")))
 
 (defun make-into-string (obj)
   (when obj

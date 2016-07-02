@@ -5,7 +5,7 @@
 (define-words :pos W::v 
  :words (
   (W::infect
-   (wordfeats (W::morph (:forms (-vb) :nom W::infection)))
+   (wordfeats (W::morph (:forms (-vb))))
    (SENSES
     ( ;;(LF-PARENT ONT::affect)
      (meta-data :origin beetle :entry-date 20081107 :change-date nil :comments nil)
@@ -16,17 +16,3 @@
     )
    )
 ))
-
-(define-words :pos W::n
- :words (
-  (w::infection
-  (senses;;;;; names of diseases/conditions that can appear without an article
-   ((meta-data :wn ("infection%1:26:00"))
-    (LF-PARENT ONT::infection)
-    (TEMPL bare-pred-TEMPL)
-    )
-   )
-)
-))
-
-

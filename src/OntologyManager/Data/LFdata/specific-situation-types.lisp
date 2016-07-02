@@ -4377,6 +4377,12 @@
  :wordnet-sense-keys ("backache%1:26:00")
  )
 
+; for distress
+(define-type ONT::distress
+ :parent ONT::pain
+ :wordnet-sense-keys ("distress%1:26:00")
+ )
+
 ; for headache
 (define-type ONT::headache
  :parent ONT::pain
@@ -4407,9 +4413,9 @@
  :wordnet-sense-keys ("cramp%1:26:00" "spasm%1:26:00")
  )
 
-;; condition, fever
+;; condition
 (define-type ONT::medical-condition
- :wordnet-sense-keys ("condition%1:26:05" "sign%1:26:00" "drowsiness%1:26:00" "malformation%1:26:00" "pathology%1:26:00" "thrombosis%1:26:00" "psychological_condition%1:26:00" "anesthesia%1:26:00" "ataxia%1:26:00" "confusion%1:09:00" "depression%1:26:03" "distress%1:12:02" "exhaustion%1:26:00" "fatigue%1:26:00" "irritation%1:26:00" "restlessness%1:07:00" "stress%1:26:01" "tiredness%1:26:00" "weakness%1:07:00") 
+ :wordnet-sense-keys ("condition%1:26:05" "sign%1:26:00" "drowsiness%1:26:00" "malformation%1:26:00" "pathology%1:26:00" "anesthesia%1:26:00" "confusion%1:09:00" "exhaustion%1:26:00" "fatigue%1:26:00" "irritation%1:26:00" "restlessness%1:07:00" "stress%1:26:01" "tiredness%1:26:00" "weakness%1:07:00") 
  :parent ONT::medical-disorders-and-conditions
  )
 
@@ -4443,9 +4449,21 @@
  :parent ont::medical-condition
  )
 
+;; ataxia
+(define-type ont::nervous-disorder
+ :wordnet-sense-keys ("ataxia%1:26:00" "nervous_disorder%1:26:00")
+ :parent ont::medical-condition
+ )
+
 ;; cholelithiasis (gall stones)
 (define-type ont::cholelithiasis
  :wordnet-sense-keys ("cholelithiasis%1:26:00")
+ :parent ont::medical-condition
+ )
+
+;; depression
+(define-type ont::depression
+ :wordnet-sense-keys ("depression%1:26:03")
  :parent ont::medical-condition
  )
 
@@ -4487,6 +4505,12 @@
 ;; stroke
 (define-type ont::stroke
  :wordnet-sense-keys ("stroke%1:26:00")
+ :parent ont::medical-condition
+ )
+
+;; thrombosis
+(define-type ont::thrombosis
+ :wordnet-sense-keys ("thrombosis%1:26:00")
  :parent ont::medical-condition
  )
 

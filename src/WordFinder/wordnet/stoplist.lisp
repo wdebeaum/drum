@@ -2826,6 +2826,14 @@ six_times%4:02:00::
 thousand_times%4:02:00::
 three_times%4:02:01::
 two_times%4:02:01::
+;; other multiwords ending with 'times'
+at_times%4:02:00::
+hard_times%1:28:00::
+modern_times%1:28:00::
+old_times%1:28:00::
+past_times%1:28:00::
+present_times%1:28:00::
+roman_times%1:28:00::
 
 ;; multiwords that ought to be composed (manually added)
 arrive_at%2:38:00::

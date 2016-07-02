@@ -19,7 +19,20 @@
   (w::distress
   (senses
    ((meta-data :wn ("distress%1:12:02"))
-    (LF-PARENT ONT::medical-condition)
+    (LF-PARENT ONT::feeling)
+    (TEMPL mass-pred-TEMPL)
+    (syntax (W::morph (:forms (-none))))
+    )
+   )
+)
+))
+
+(define-words :pos W::n
+ :words (
+  (w::distress
+  (senses
+   ((meta-data :wn ("distress%1:26:00"))
+    (LF-PARENT ONT::distress)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

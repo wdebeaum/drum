@@ -7,7 +7,7 @@
   (w::depression
   (senses
    ((meta-data :wn ("depression%1:26:03"))
-    (LF-PARENT ONT::medical-condition)
+    (LF-PARENT ONT::depression)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )
