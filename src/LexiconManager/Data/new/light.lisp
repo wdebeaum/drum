@@ -76,6 +76,32 @@
 
 (define-words :pos W::adj :templ ADJ-EXPERIENCER-TEMPL
  :words (
+   ((w::light-headed)
+   (SENSES
+    (
+     (LF-PARENT ONT::AILING)
+     (example "do you feel light-headed")
+     (templ central-adj-templ)
+     )
+    )
+   )
+))
+
+(define-words :pos W::adj :templ ADJ-EXPERIENCER-TEMPL
+ :words (
+   ((w::light w::headed)
+   (SENSES
+    (
+     (LF-PARENT ONT::AILING)
+     (example "do you feel light headed")
+     (templ central-adj-templ)
+     )
+    )
+   )
+))
+
+(define-words :pos W::adj :templ ADJ-EXPERIENCER-TEMPL
+ :words (
    ((w::light (w::headed))
    (SENSES
     ((meta-data :origin chf :entry-date 20070904 :change-date 20090731 :comments nil :wn nil)

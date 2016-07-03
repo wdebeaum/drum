@@ -2944,9 +2944,8 @@
 
 (define-type ONT::AILING
  :parent ONT::PHYSICAL-SYMPTOM-VAL
- :wordnet-sense-keys ("clammy%3:00:00" "ailing%5:00:00" "nauseated%5:00:00" "dizzy%5:00:00" "ill%3:00:01" "faint%5:00:00" "feverish%5:00:00" "upset%5:00:00")
+ :wordnet-sense-keys ("clammy%3:00:00" "ailing%5:00:00" "nauseated%5:00:00" "dizzy%5:00:00" "ill%3:00:01" "faint%5:00:00" "feverish%5:00:00" "upset%5:00:00" "lightheaded%3:00:00:ill:01")
  ; Words: (W::SICK W::ILL W::UPSET W::GIDDY W::WOOZY W::LIGHTHEADED W::DIZZY W::UNWELL W::FEVERISH W::NAUSEOUS)
-:wordnet-sense-keys  ("ailing%5:00:00" "nauseated%5:00:00" "dizzy%5:00:00" "ill%3:00:01" "faint%5:00:00" "feverish%5:00:00" "upset%5:00:00")
  ; Antonym: NIL (W::WELL)
  )
 

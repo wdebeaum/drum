@@ -4246,12 +4246,6 @@
  :parent ONT::medical-disorders-and-conditions
  )
 
-; for amnesia
-(define-type ONT::amnesia
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("amnesia%1:09:00")
- )
-
 ; for chill
 (define-type ONT::chill
  :parent ONT::medical-symptom
@@ -4279,7 +4273,7 @@
 ; for dyspepsia
 (define-type ONT::dyspepsia
  :parent ONT::medical-symptom
- :wordnet-sense-keys ("dyspepsia%1:26:00")
+ :wordnet-sense-keys ("dyspepsia%1:26:00" "indigestion%1:26:00")
  )
 
 (define-type ont::dyspnea
@@ -4401,6 +4395,12 @@
  :wordnet-sense-keys ("palpitation%1:26:00")
  )
 
+;; seizure
+(define-type ont::seizure
+ :wordnet-sense-keys ("seizure%1:26:00")
+ :parent ont::medical-symptom
+ )
+
 ; for sneeze
 (define-type ONT::sneeze
  :parent ONT::medical-symptom
@@ -4419,27 +4419,9 @@
  :parent ONT::medical-disorders-and-conditions
  )
 
-;; addiction
-(define-type ont::addiction
- :wordnet-sense-keys ("addiction%1:26:00")
- :parent ont::medical-condition
- )
-
 ;; angina
 (define-type ont::angina
  :wordnet-sense-keys ("angina%1:26:01")
- :parent ont::medical-condition
- )
-
-;; anorexia
-(define-type ont::eating-disorder
- :wordnet-sense-keys ("anorexia%1:26:00" "eating_disorder%1:26:00")
- :parent ont::medical-condition
- )
-
-;; anxiety
-(define-type ont::anxiety
- :wordnet-sense-keys ("anxiety%1:26:00")
  :parent ont::medical-condition
  )
 
@@ -4449,27 +4431,9 @@
  :parent ont::medical-condition
  )
 
-;; ataxia
-(define-type ont::nervous-disorder
- :wordnet-sense-keys ("ataxia%1:26:00" "nervous_disorder%1:26:00")
- :parent ont::medical-condition
- )
-
 ;; cholelithiasis (gall stones)
 (define-type ont::cholelithiasis
  :wordnet-sense-keys ("cholelithiasis%1:26:00")
- :parent ont::medical-condition
- )
-
-;; depression
-(define-type ont::depression
- :wordnet-sense-keys ("depression%1:26:03")
- :parent ont::medical-condition
- )
-
-;; insanity
-(define-type ont::insanity
- :wordnet-sense-keys ("insanity%1:26:00")
  :parent ont::medical-condition
  )
 
@@ -4479,26 +4443,8 @@
  :parent ont::medical-condition
  )
 
-;; mania
-(define-type ont::mania
- :wordnet-sense-keys ("mania%1:26:00")
- :parent ont::medical-condition
- )
-
-;; phobia
-(define-type ont::phobia
- :wordnet-sense-keys ("phobia%1:26:00")
- :parent ont::medical-condition
- )
-
 (define-type ont::pregnancy
  :wordnet-sense-keys ("pregnancy%1:26:00")
- :parent ont::medical-condition
- )
-
-;; seizure
-(define-type ont::seizure
- :wordnet-sense-keys ("seizure%1:26:00")
  :parent ont::medical-condition
  )
 
@@ -4512,6 +4458,66 @@
 (define-type ont::thrombosis
  :wordnet-sense-keys ("thrombosis%1:26:00")
  :parent ont::medical-condition
+ )
+
+;; mental illness, mental disorder, psychological disorder
+(define-type ONT::mental-psychological-illness-or-disorder
+ :wordnet-sense-keys ("mental_illness%1:26:00" "mental_disorder%1:26:00") 
+ :parent ONT::medical-disorders-and-conditions
+ )
+
+;; addiction
+(define-type ont::addiction
+ :wordnet-sense-keys ("addiction%1:26:00")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+; for amnesia
+(define-type ONT::amnesia
+ :parent ONT::mental-psychological-illness-or-disorder
+ :wordnet-sense-keys ("amnesia%1:09:00")
+ )
+
+;; anorexia
+(define-type ont::eating-disorder
+ :wordnet-sense-keys ("anorexia%1:26:00" "eating_disorder%1:26:00")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+;; anxiety
+(define-type ont::anxiety
+ :wordnet-sense-keys ("anxiety%1:26:00")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+;; ataxia
+(define-type ont::nervous-disorder
+ :wordnet-sense-keys ("ataxia%1:26:00" "nervous_disorder%1:26:00")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+;; depression
+(define-type ont::depression
+ :wordnet-sense-keys ("depression%1:26:03")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+;; insanity
+(define-type ont::insanity
+ :wordnet-sense-keys ("insanity%1:26:00")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+;; mania
+(define-type ont::mania
+ :wordnet-sense-keys ("mania%1:26:00")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+;; phobia
+(define-type ont::phobia
+ :wordnet-sense-keys ("phobia%1:26:00")
+ :parent ont::mental-psychological-illness-or-disorder
  )
 
 ;; bruise, contusion, bump
@@ -4642,11 +4648,6 @@
 (define-type ONT::flu
  :parent ONT::disease
  :wordnet-sense-keys ("flu%1:26:00" "influenza%1:26:00" "grippe%1:26:00")
- )
-
-(define-type ONT::indigestion
- :parent ONT::disease
- :wordnet-sense-keys ("stomach_upset%1:26:00" "indigestion%1:26:00" "dyspepsia%1:26:00" "upset_stomach%1:26:00")
  )
 
 ;; infection
