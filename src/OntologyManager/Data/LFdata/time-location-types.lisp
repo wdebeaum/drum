@@ -715,17 +715,21 @@
              (:essential ont::GROUND (f::abstr-obj (F::Scale F::duration-scale)))
  ))
 
+#|
 (define-type ONT::LONG
  :parent ONT::event-duration-modifier
+ :wordnet-sense-keys ("permanent%3:00:00" "lasting%5:00:00:long:02")
  :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::situation f::time)))
              (:essential ont::GROUND (f::abstr-obj (F::Scale F::duration-scale)))
  ))
 
 (define-type ONT::SHORT
  :parent ONT::event-duration-modifier
+ :wordnet-sense-keys ("transient%5:00:00:impermanent:00" "impermanent%3:00:00" "impermanent%5:00:00:finite:00")
  :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::situation f::time)))
              (:essential ont::GROUND (f::abstr-obj (F::Scale F::duration-scale)))
  ))
+|#
 
 ;; how long did it take / did he run
 (define-type ont::duration

@@ -720,9 +720,33 @@
  :sem (F::Abstr-obj (F::MEasure-function F::VALUE))
  )
 
+(define-type ont::persistence-val
+ :parent ont::process-val
+ )
+
+(define-type ont::persistent
+ :wordnet-sense-keys ("persistent%5:00:00:continual:00" "permanent%3:00:00" "lasting%5:00:00:long:02" "lasting%5:00:00:stable:00")
+ :parent ont::persistence-val
+ )
+
+(define-type ont::temporary
+ :wordnet-sense-keys ("temporary%3:00:00" "transient%5:00:00:impermanent:00" "impermanent%5:00:00:finite:00")
+ :parent ont::persistence-val
+ )
+
 ;; continuous, uninterrupted, can be either time or space dimensionality
 (define-type ont::continuous-val
  :parent ont::process-val
+ )
+
+(define-type ont::continuous
+ :wordnet-sense-keys ("continuous%3:00:01")
+ :parent ont::continuous-val
+ )
+
+(define-type ont::discontinuous
+ :wordnet-sense-keys ("discontinuous%3:00:01")
+ :parent ont::continuous-val
  )
 
 ;; wet, dry
@@ -750,6 +774,16 @@
  :arguments ((:REQUIRED ONT::FIGURE ((? lof f::abstr-obj f::situation)))
 	     (:REQUIRED ONT::GROUND ((? vl f::abstr-obj f::situation)))
 	     )
+ )
+
+(define-type ont::consistent
+ :wordnet-sense-keys ("consistent%3:00:00" "consistent%3:00:01")
+ :parent ont::consistent-val
+ )
+
+(define-type ont::inconsistent
+ :wordnet-sense-keys ("inconsistent%3:00:00" "inconsistent%5:00:00:irreconcilable:00" )
+ :parent ont::consistent-val
  )
 
 ;; still, motionless, static, dynamic
@@ -1782,7 +1816,7 @@
 (define-type ONT::TEMPERATURE
  :wordnet-sense-keys ("temperature%1:07:00" "temperature%1:09:00")
  :parent ONT::PHYS-MEASURE-DOMAIN
- :sem (F::Abstr-obj (F::Scale F::Temperature-scale))
+ :sem (F::Abstr-obj (F::Scale ONT::Temperature-scale))
  :arguments ((:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Scale F::Temperature-scale)))
              )
  )
@@ -1833,7 +1867,7 @@
  :sem (F::Abstr-obj (F::Scale F::Rate-scale))
  :arguments ((:REQUIRED ONT::FIGURE ((? fot F::phys-obj F::situation)))
              (:ESSENTIAL ONT::EXTENT (F::abstr-obj (F::measure-function F::value) (F::scale F::rate-scale)))
-	     (:essential ont::FORMAL (F::SITUATION (f::type ont::event-of-change)))
+;	     (:essential ont::FORMAL (F::SITUATION (f::type ont::event-of-change)))
              )
  )
 
@@ -2870,12 +2904,14 @@
 
 ;;; > Adjective subtypes automatically added using WordNet clustering information
 
+#|
 (define-type ONT::QUICK
  :parent ONT::EVENT-DURATION-MODIFIER
  ; Words: (W::QUICK W::FAST W::INSTANT W::INSTANTANEOUS)
   :wordnet-sense-keys ("quick%5:00:00" "fast%3:00:01" "instantaneous%5:00:00")
  ; Antonym: NIL (W::SLOW)
  )
+|#
 
 (define-type ONT::large
  :parent ONT::SIZE-VAL
@@ -3113,8 +3149,22 @@
 
 (define-type ONT::linear-dimension
  :parent ONT::LINEAR-VAL
- :wordnet-sense-keys ("low%3:00:02" "low%3:00:01" "deep%5:00:00" "deep%5:00:00" "shallow%3:00:01" "high%3:00:02" "long%5:00:00" "long%3:00:02" "tall%3:00:00"  "short%3:00:03"  "deep%3:00:01" "short%3:00:02" "low%3:00:02" "low%3:00:01")
+ :wordnet-sense-keys ("deep%5:00:00" "shallow%3:00:01" "long%5:00:00" "long%3:00:02" "tall%3:00:00"  "short%3:00:03"  "deep%3:00:01" "short%3:00:02")
  )
+
+(define-type ONT::HEIGHT-VAL
+ :parent ONT::linear-dimension
+)
+
+(define-type ONT::HIGH
+ :parent ONT::HEIGHT-VAL
+ :wordnet-sense-keys ("high%3:00:02" "high%3:00:01")
+)
+
+(define-type ONT::LOW
+ :parent ONT::HEIGHT-VAL
+ :wordnet-sense-keys ("low%3:00:02" "low%3:00:01")
+)
 
 (define-type ONT::BROAD
  :parent ONT::LINEAR-VAL
@@ -3282,16 +3332,26 @@
 
 (define-type ONT::OCCASIONAL
  :parent ONT::FREQUENCY-VAL
- ; Words: (W::RARE W::OCCASIONAL W::INFREQUENT W::IRREGULAR)
-:wordnet-sense-keys ("casual%5:00:00" "infrequent%3:00:00" "infrequent%3:00:00" "irregular%3:00:00" "rare%5:00:00")
- ; Antonym: ONT::REGULAR (W::REGULAR W::FREQUENT)
+ ; Words: (W::RARE W::OCCASIONAL W::INFREQUENT)
+:wordnet-sense-keys ("infrequent%3:00:00" "rare%5:00:00:infrequent:00" "occasional%5:00:00:infrequent:00")
+ )
+
+(define-type ONT::FREQUENT
+ :parent ONT::FREQUENCY-VAL
+ ; Words: (W::FREQUENT)
+:wordnet-sense-keys ("frequent%3:00:00")
  )
 
 (define-type ONT::REGULAR
  :parent ONT::FREQUENCY-VAL
- ; Words: (W::REGULAR W::FREQUENT)
-:wordnet-sense-keys ("regular%5:00:00" "frequent%3:00:00" "regular%3:00:00" "frequent%3:00:00")
- ; Antonym: ONT::OCCASIONAL (W::RARE W::OCCASIONAL W::INFREQUENT W::IRREGULAR)
+ ; Words: (W::REGULAR)
+:wordnet-sense-keys ("regular%5:00:00:steady:00" )
+ )
+
+(define-type ONT::IRREGULAR
+ :parent ONT::FREQUENCY-VAL
+ ; Words: (W::IRREGULAR)
+:wordnet-sense-keys ("irregular%5:00:00:sporadic:00" "casual%5:00:00:irregular:00" "sporadic%3:00:00")
  )
 
 (define-type ONT::correct
@@ -3400,13 +3460,14 @@
  )
 
 (define-type ONT::steady
+  :wordnet-sense-keys ("steady%3:00:00" "steady%5:00:00:stable:00" "stable%3:00:00" "unchanged%3:00:00" "unchanged%3:00:04")
  :parent ONT::steadiness-val
  )
 
 (define-type ONT::UNSTEADY
  :parent ONT::STEADINESS-VAL
  ; Words: (W::UNSTEADY W::SHAKY)
-:wordnet-sense-keys ("unsteady%3:00:00" "shaky%5:00:00" "unsteady%3:00:00" "unstable%3:00:00" "volatile%3:00:00")
+:wordnet-sense-keys ("unsteady%3:00:00" "shaky%5:00:00" "unstable%3:00:00" "volatile%3:00:00")
  ; Antonym: NIL (W::STEADY)
  )
 

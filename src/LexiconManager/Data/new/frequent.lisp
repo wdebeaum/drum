@@ -9,7 +9,7 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin calo :entry-date 20040504 :change-date 20090731 :wn ("frequent%3:00:00") :comments calo-y1variants)
-     (LF-PARENT ONT::REGULAR)
+     (LF-PARENT ONT::FREQUENT)
      (example "you can pay in frequent installments")
      )
     )

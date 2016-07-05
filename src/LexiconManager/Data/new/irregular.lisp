@@ -8,7 +8,7 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin chf :entry-date 20070809 :change-date 20090731 :comments nil)
-     (LF-PARENT ONT::OCCASIONAL)
+     (LF-PARENT ONT::IRREGULAR)
      (example "he exercises at irregular intervals")
      )
     )

@@ -7,7 +7,7 @@
    (W::shakey
      (wordfeats (W::MORPH (:FORMS (-er -LY))))
    (SENSES
-    ((LF-PARENT ONT::steadiness-val)
+    ((LF-PARENT ONT::unsteady)
      (meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
      )
     )

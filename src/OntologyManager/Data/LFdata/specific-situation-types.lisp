@@ -1601,8 +1601,7 @@
 
 (define-type ONT::proposition-equal
 ; :wordnet-sense-keys ("be%2:42:06" "be%2:42:07" "be%2:41:00" "be%2:42:02" "be_full%2:34:00" "be_quiet%2:32:00" "mean%2:42:03" "rest%2:41:00")
- :arguments ((:REQUIRED ONT::neutral ((? th19 F::abstr-obj f::situation)  (f::type ont::mental-construction))))
- 
+ :arguments ((:REQUIRED ONT::neutral ((? th19 F::abstr-obj f::situation)  (f::type (? t ont::mental-construction ont::fact)))))
                                      ;;  (?th (f::type ont::mental-construction))))
  :parent ONT::be
  )

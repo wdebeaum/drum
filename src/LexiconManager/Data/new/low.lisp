@@ -24,14 +24,17 @@
     ;;;; need to differentiate between the two senses
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("low%3:00:01"))
      (EXAMPLE "a low ceiling")
-     (LF-PARENT ONT::linear-dimension)
+;     (LF-PARENT ONT::linear-dimension)
+     (LF-PARENT ONT::LOW)
      )
+    #|
     ((EXAMPLE "Give me lower resolution" "a low salt diet")
      (LF-PARENT ONT::weak)
      (sem (f::gradability +) (f::intensity ont::lo) (f::orientation ont::less))
      (TEMPL LESS-ADJ-TEMPL)
      (meta-data :origin boudreaux :entry-date 20031024 :change-date 20090731 :wn ("low%3:00:02") :comments nil)
      )
+    |#
     )
    )
 ))

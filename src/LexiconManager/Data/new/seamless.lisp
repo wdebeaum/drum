@@ -20,7 +20,8 @@
  :words (
   (W::seamless
    (SENSES
-    ((LF-PARENT ONT::CONTINUOUS-VAL)
+    (;(LF-PARENT ONT::CONTINUOUS-VAL)
+     (LF-PARENT ONT::consistent)
      (meta-data :origin task-learning :entry-date 20051028 :change-date nil :wn ("seamless%5:00:00:coherent:00") :comments nil)
      (EXAMPLE "the novel's seamless plot")
      )

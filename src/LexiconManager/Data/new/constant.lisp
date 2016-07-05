@@ -20,7 +20,8 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin chf :entry-date 20070809 :change-date nil :wn ("recurring%5:00:00:continual:00") :comments nil)
-     (LF-PARENT ONT::continuous-VAL)
+;     (LF-PARENT ONT::continuous-VAL)
+     (LF-PARENT ONT::steady)
      )
     )
    )
