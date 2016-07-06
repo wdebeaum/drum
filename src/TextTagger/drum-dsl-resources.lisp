@@ -1,5 +1,18 @@
 (in-package :dsl)
 
+(defun get-ncit-files-for-symbol (rv sym)
+  (with-slots (base-dir) rv
+    (let* ((symname (symbol-name sym))
+	   (int (parse-integer (subseq symname 1)))
+	   (filename (format nil "~5,'0d" (floor int 10))))
+      (list (make-pathname :defaults base-dir :name filename :type "lisp")))))
+
+(defresource (NCIT NCI-Thesaurus) (
+  :version "16.05e"
+  :base-dir (pathname-directory #!TRIPS"src;TextTagger;drum-dsl;NCIT;")
+  :get-files-for-symbol #'get-ncit-files-for-symbol
+  ))
+
 (defun get-obo-files-for-symbol (rv sym)
   (with-slots (base-dir) rv
     (let* ((symname (symbol-name sym))

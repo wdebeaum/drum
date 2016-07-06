@@ -275,7 +275,7 @@ sub tag_drum_terms {
 		 $match->{'surely-depluralized'}
 		) {
 	  # skip morphed CHEBI and CVCL terms
-	} elsif ($id =~ /^(BTO|CHEBI|CO|EFO|GO|MI|UO|SO|ORPHANET):/) { # ontologies with hierarchies
+	} elsif ($id =~ /^(BTO|CHEBI|CO|EFO|GO|MI|NCIT|UO|SO|ORPHANET):/) { # ontologies with hierarchies
 	  push @{$mapped_id_to_matches_with_status{$id}}, $match_with_status
 	    unless (grep { structurally_equal($_, $match_with_status) }
 			 @{$mapped_id_to_matches_with_status{$id}});
@@ -924,7 +924,7 @@ sub score_match {
     } else {
       $status_score = 5;
     }
-  } elsif ($m->{status} eq 'EXACT synonym') {
+  } elsif ($m->{status} =~ /^(?:EXACT )?synonym$/) {
     $status_score = 4;
   } elsif ($m->{status} eq 'RELATED synonym') {
     if ($pkg =~ /^(?:BTO|CVCL)$/) {

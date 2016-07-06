@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.84 2016/06/01 14:17:20 wdebeaum Exp $
+# $Id: Makefile,v 1.86 2016/07/05 23:29:40 lgalescu Exp $
 #
 
 MODULE = TextTagger
@@ -151,7 +151,7 @@ install:: mirna-species.tsv drum-terms.tsv drum-dsl specialist.tsv drum-dbxrefs.
 	$(INSTALL_DATA) drum-terms.tsv $(etcdir)/$(MODULE)
 	$(INSTALL_DATA) specialist.tsv $(etcdir)/$(MODULE)
 	$(INSTALL_DATA) drum-dbxrefs.tsv $(etcdir)/$(MODULE)
-	
+
 # This file is in CVS, so we don't really need this rule, but it's here to
 # document how the file was made in the first place. The database is a lot
 # larger than the part we use, and it's public domain, so it makes sense for
@@ -163,7 +163,7 @@ install:: mirna-species.tsv drum-terms.tsv drum-dsl specialist.tsv drum-dbxrefs.
 #	'$$a = $$1 if (/^ID   (\w+)-/i);  push @{$$h{$$a}}, $$1 if (/^DE   ([A-Z]\w* \w*) mir/i and  not grep { $$_ eq $$1 } @{$$h{$$a}});  END {  print map { $$_ . join("", map { "\t$$_" } @{$$h{$$_}}) . "\n" }  sort keys %h;  }' \
 #	>$@
 
-drum-terms.tsv: merge-terms-files.pl obo-terms.tsv hgnc-terms.tsv uniprot-terms.tsv uniprot-subcell-terms.tsv nextprot-family-terms.tsv pfam-terms.tsv mesh-scr-terms.tsv
+drum-terms.tsv: merge-terms-files.pl obo-terms.tsv hgnc-terms.tsv uniprot-terms.tsv uniprot-subcell-terms.tsv nextprot-family-terms.tsv pfam-terms.tsv mesh-scr-terms.tsv ncit-terms.tsv
 	./$^ >$@
 
 drum-dbxrefs.tsv: get-uniprot-dbxrefs.pl downloads/uniprot_sprot.dat.gz
@@ -202,6 +202,11 @@ mesh-scr-terms.tsv: get-mesh-scr-terms.pl $(TEXTTAGGER_mesh_scr)
 	gunzip -c <$(TEXTTAGGER_mesh_scr) \
 	| ./get-mesh-scr-terms.pl \
 	>$@
+
+# also writes drum-dsl/NCIT/*
+NCIT_VERSION := 16.06d
+ncit-terms.tsv: get-ncit-terms.pl downloads/Thesaurus_${NCIT_VERSION}.FLAT.zip
+	./$+ >$@
 
 specialist.tsv: get-specialist-tsv.pl downloads/LEXICON downloads/inflection.table $(prefix)/src/LexiconManager/Data/new
 	TRIPS_BASE=$(prefix) ./get-specialist-tsv.pl downloads/LEXICON downloads/inflection.table >$@
@@ -261,6 +266,11 @@ downloads/cv_family.txt:
 downloads/Pfam-A.seed.gz:
 	$(call download,"ftp://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.seed.gz")
 
+# NCI Thesaurus
+# see http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/ReadMe.txt
+downloads/Thesaurus_${NCIT_VERSION}.FLAT.zip:
+	$(call download,"http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Thesaurus_${NCIT_VERSION}.FLAT.zip")
+
 # see http://lexsrv3.nlm.nih.gov/Specialist/Home/index.html
 
 downloads/LEXICON:
@@ -276,7 +286,7 @@ drum-dsl/BTO/COMPLETE: downloads/BrendaTissueOBO obo-to-dsl.pl
 drum-dsl/CHEBI/COMPLETE: downloads/chebi.obo obo-to-dsl.pl
 	./obo-to-dsl.pl <$<
 	touch $@
-	
+
 drum-dsl/CO/COMPLETE: downloads/cl-basic.obo obo-to-dsl.pl
 	./obo-to-dsl.pl <$<
 	touch $@
@@ -307,7 +317,7 @@ drum-dsl: drum-dsl/BTO/COMPLETE drum-dsl/CHEBI/COMPLETE drum-dsl/CO/COMPLETE dru
 # drum-dsl/SO/COMPLETE 
 
 clean::
-	rm -rf specialist.tsv drum-terms.tsv obo-terms.tsv hgnc-terms.tsv uniprot-terms.tsv drum-dsl
+	rm -rf specialist.tsv drum-terms.tsv obo-terms.tsv hgnc-terms.tsv uniprot-terms.tsv ncit-terms.tsv drum-dsl
 endif
 
 distclean:: clean

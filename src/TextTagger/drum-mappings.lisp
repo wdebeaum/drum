@@ -160,6 +160,84 @@
 (concept UO::0000095 ; volume unit
   (inherit ONT::volume-unit))
 
+;;; NCI Thesaurus
+(concept NCIT::C16612 ; Gene
+  (inherit ONT::gene))
+(concept NCIT::C17021 ; Protein
+  (inherit ONT::protein))
+(concept NCIT::C20130 ; Protein Family
+  (inherit ONT::protein-family))
+(concept NCIT::C21176 ; Protein or Riboprotein Complex
+  (inherit ONT::macromolecular-complex))
+(concept NCIT::C812 ; RNA
+  (inherit ONT::rna))
+(concept NCIT::C813 ; Messenger RNA
+  (inherit ONT::mrna))
+(concept NCIT::C16403 ; Cell Line
+  (inherit ONT::cell-line))
+(concept NCIT::C14250 ; Organism
+  (inherit ONT::organism))
+ ;; finer mappings under organism
+ (concept NCIT::C14182 ; Animal
+   (inherit ONT::animal))
+  (concept NCIT::C77917 ; Arthropoda
+    (inherit ONT::invertebrate))
+   (concept NCIT::C14227 ; Insect
+     (inherit ONT::insect))
+  (concept NCIT::C14248 ; Nematoda
+    (inherit ONT::invertebrate))
+  (concept NCIT::C122024 ; Platyhelminthes
+    (inherit ONT::invertebrate))
+  (concept NCIT::C14282 ; Vertebrata
+    (inherit ONT::vertebrate))
+   (concept NCIT::C14180 ; Amphibia
+     (inherit ONT::amphibian))
+   (concept NCIT::C14189 ; Aves
+     (inherit ONT::bird))
+   (concept NCIT::C14207 ; Fish
+     (inherit ONT::fish))
+   (concept NCIT::C14234 ; Mammalia
+     (inherit ONT::nonhuman-animal)) ; by default
+    (concept NCIT::C14225 ; Human
+      (inherit ONT::person))
+   ; no reptiles in NCIt?
+ (concept NCIT::C14209 ; Fungus
+   (inherit ONT::fungus))
+ (concept NCIT::C14187 ; Bacteria
+   (inherit ONT::bacterium))
+ (concept NCIT::C14283 ; Virus
+   (inherit ONT::virus))
+ (concept NCIT::C14258 ; Plant
+   (inherit ONT::plant))
+  (concept NCIT::C86587 ; Algae
+    (inherit ONT::alga))
+ (concept NCIT::C14329 ; Microorganism
+   (inherit ONT::microorganism))
+(concept NCIT::C45306 ; Substance
+  (inherit ONT::substance))
+(concept NCIT::C1909 ; Pharmacologic Substance
+  (inherit ONT::pharmacologic-substance))
+(concept NCIT::1949 ; Food or Food Product
+  ; FIXME? "Food Product" may be slightly too broad... if so, use NCIT::62695 Food instead
+  (inherit ONT::food))
+(concept NCIT::C48807 ; Chemical
+  (inherit ONT::chemical))
+(concept NCIT::C1932 ; Chemical Modifier
+  ; inexplicably unrelated to "Chemical" above
+  (inherit ONT::chemical))
+(concept NCIT::C17828 ; Biological Process
+  (inherit ONT::biological-process))
+(concept NCIT::C16847 ; Technique
+  (inherit ONT::procedure))
+(concept NCIT::C2991 ; Disease or Disorder
+  (inherit ONT::medical-disorders-and-conditions))
+(concept NCIT::C3262 ; Neoplasm
+  (inherit ONT::cancer))
+(concept NCIT::C97325 ; Manufactured Object
+  (inherit ONT::manufactured-object))
+(concept NCIT::C17132 ; Signaling Pathway
+  (inherit ONT::signaling-pathway))
+
 ;;; BRENDA Tissue Ontology
 (concept BTO::0000000 ; tissues, cell types and enzyme sources
   (inherit ONT::internal-body-part))

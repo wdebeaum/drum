@@ -645,7 +645,7 @@
 (define-type ONT::CATCH
  :wordnet-sense-keys ("catch%2:33:10")
  :parent ONT::CO-MOTION
- :sem (F::SITUATION (F::Aspect F::Unbounded) (F::Cause F::Agentive) (F::Trajectory +))
+ :sem (F::SITUATION (F::Aspect F::Bounded) (F::Cause F::Agentive) (F::Trajectory +))
  :arguments ((:OPTIONAL ONT::affected (F::Phys-obj (f::intentional +)))
              (:OPTIONAL ONT::agent (F::Phys-obj (f::intentional +)))
              )

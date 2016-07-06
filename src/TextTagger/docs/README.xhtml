@@ -1184,47 +1184,17 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 <table>
 <tr><th>LF type</th><th>Tagger(s)</th></tr>
 <tr><td>ALLERGY-MEDICATION</td><td>Asma</td></tr>
-<tr><td>ANGLE-UNIT</td><td>Drum</td></tr>
-<tr><td>AREA-UNIT</td><td>Drum</td></tr>
-<tr><td>BIOLOGICAL-ROLE</td><td>Drum</td></tr>
-<tr><td>BODY-PART</td><td>Drum</td></tr>
-<tr><td>CELL</td><td>Drum</td></tr>
-<tr><td>CELL-LINE</td><td>Drum</td></tr>
-<tr><td>CELL-PART</td><td>Drum</td></tr>
-<tr><td>CHEMICAL</td><td>ChemicalFormulae, Drum</td></tr>
-<tr><td>EVENT-OF-CHANGE</td><td>Drum</td></tr>
+<tr><td>CHEMICAL</td><td>ChemicalFormulae</td></tr>
 <tr><td>FEMALE-PERSON</td><td>PersonalNames</td></tr>
 <tr><td>GEOGRAPHIC-REGION</td><td>NamedEntities, StanfordCoreNLP, Terms</td></tr>
-<tr><td>INJURY</td><td>Drum</td></tr>
-<tr><td>INTERNAL-BODY-PART</td><td>Drum</td></tr>
-<tr><td>GENE</td><td>Drum</td></tr>
-<tr><td>LENGTH-UNIT</td><td>Drum</td></tr>
 <tr><td>LOCATION-ID</td><td>StreetAddresses</td></tr>
 <tr><td>LONG-TERM-CONTROL-DRUG</td><td>Asma</td></tr>
-<tr><td>MACROMOLECULAR-COMPLEX</td><td>Drum</td></tr>
 <tr><td>MALE-PERSON</td><td>PersonalNames</td></tr>
-<tr><td>MEASURE-UNIT</td><td>Drum</td></tr>
-<tr><td>MEDICAL-DISORDERS-AND-CONDITIONS</td><td>Drum</td></tr>
-<tr><td>MEDICAL-INSTRUMENT</td><td>Drum</td></tr>
-<tr><td>MOLECULAR-DOMAIN</td><td>Drum</td></tr>
-<tr><td>MOLECULE</td><td>Drum</td></tr>
-<tr><td>ORDERED-DOMAIN</td><td>Drum</td></tr>
 <tr><td>ORGANIZATION</td><td>NamedEntities, StanfordCoreNLP</td></tr>
 <tr><td>PERSON</td><td>NamedEntities, PersonalNames, StanfordCoreNLP</td></tr>
-<tr><td>PHYSICAL-CONDITION</td><td>Drum</td></tr>
-<tr><td>PROCESS</td><td>Drum</td></tr>
-<tr><td>PROTEIN</td><td>Drum</td></tr>
-<tr><td>PROTEIN-FAMILY</td><td>Drum</td></tr>
 <tr><td>QUICK-RELIEF-DRUG</td><td>Asma</td></tr>
-<tr><td>RATE-UNIT</td><td>Drum</td></tr>
-<tr><td>REFERENTIAL-SEM</td><td>Alphanumerics, CapitalizedNames, Drum, NamesFromFile, StanfordCoreNLP</td></tr>
-<tr><td>SIGNALING-PATHWAY</td><td>Drum</td></tr>
-<tr><td>TEMPERATURE-UNIT</td><td>Drum</td></tr>
-<tr><td>TIME-SPAN</td><td>Drum</td></tr>
-<tr><td>TIME-UNIT</td><td>Drum</td></tr>
-<tr><td>VOLUME-UNIT</td><td>Drum</td></tr>
-<tr><td>WEIGHT-UNIT</td><td>Drum</td></tr>
-<tr><td>many different types</td><td>MetaMap</td></tr>
+<tr><td>REFERENTIAL-SEM</td><td>Alphanumerics, CapitalizedNames, NamesFromFile, StanfordCoreNLP</td></tr>
+<tr><td>many different types</td><td>Drum, MetaMap</td></tr>
 </table>
 </div>
 
@@ -1276,7 +1246,7 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
  <td><a href="http://www.ebi.ac.uk/efo/">Experimental Factor Ontology</a></td>
  <td>EFO</td>
  <td>OBO</td>
- <td>CELL-LINE, MEASURE-UNIT</td>
+ <td>CANCER, CELL-LINE, MEASURE-UNIT</td>
  <td>"The Experimental Factor Ontology (EFO) provides a systematic description of many experimental variables available in EBI databases, and for external projects such as the NHGRI GWAS catalogue. It combines parts of several biological ontologies, such as anatomy, disease and chemical compounds. The scope of EFO is to support the annotation, analysis and visualization of data handled by many groups at the EBI and as the core ontology for the Centre for Therapeutic Validation (CTTV). Functional Genomics Team. We also add terms for external users when requested." For now we are using only the cell line and unit pieces of this ontology, which include parts of BTO and UO with some extensions native to EFO.</td>
 </tr>
 <tr>
@@ -1313,6 +1283,13 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
  <td>OBO</td>
  <td>BIOLOGICAL-ROLE, CHEMICAL, EVENT-OF-CHANGE, FORMAL-UNIT, GENE, MACROMOLECULAR-COMPLEX, MOLECULE, ORDERED-DOMAIN, PROTEIN</td>
  <td>Molecular interactions, and the interacting molecules that interact in them. (this is currently unused)</td>
+</tr>
+<tr>
+ <td><a href="https://ncit.nci.nih.gov/ncitbrowser/">National Cancer Institute thesaurus (NCIt)</a></td>
+ <td>NCIT</td>
+ <td><a href="http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/ReadMe.txt">FLAT (TSV)</a></td>
+ <td>BIOLOGICAL-PROCESS, CANCER, CELL-LINE, CHEMICAL, FOOD, GENE, MACROMOLECULAR-COMPLEX, MANUFACTURED-OBJECT, MEDICAL-DISORDERS-AND-CONDITIONS, MRNA, ORGANISM (and many descendants), PHARMACOLOGIC-SUBSTANCE, PROCEDURE, PROTEIN, PROTEIN-FAMILY, RNA, SIGNALING-PATHWAY, SUBSTANCE</td>
+ <td>"A controlled vocabulary in support of NCI administrative and scientific activities."</td>
 </tr>
 <tr>
  <td><a href="https://code.google.com/p/unit-ontology/">Units of Measurement Ontology</a></td>
