@@ -19,7 +19,7 @@
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("put_spatial-9.2-1"))
      (LF-PARENT ONT::be-at-loc)
-     (TEMPL neutral-location-templ) ; like hang,stand,sit
+     (TEMPL neutral-templ) ; like hang,stand,sit
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("assuming_position-50") :wn ("perch%2:35:00"))
      (LF-PARENT ONT::body-movement-place)

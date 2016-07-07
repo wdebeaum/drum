@@ -4414,8 +4414,14 @@
 
 ;; condition
 (define-type ONT::medical-condition
- :wordnet-sense-keys ("condition%1:26:05" "sign%1:26:00" "drowsiness%1:26:00" "malformation%1:26:00" "pathology%1:26:00" "anesthesia%1:26:00" "confusion%1:09:00" "exhaustion%1:26:00" "fatigue%1:26:00" "irritation%1:26:00" "restlessness%1:07:00" "stress%1:26:01" "tiredness%1:26:00" "weakness%1:07:00") 
+ :wordnet-sense-keys ("condition%1:26:05" "sign%1:26:00" "malformation%1:26:00" "pathology%1:26:00" "exhaustion%1:26:00" "fatigue%1:26:00" "irritation%1:26:00" "restlessness%1:07:00" "stress%1:26:01" "tiredness%1:26:00" "weakness%1:07:00") 
  :parent ONT::medical-disorders-and-conditions
+ )
+
+;; anesthesia
+(define-type ont::anesthesia
+ :wordnet-sense-keys ("anesthesia%1:26:00")
+ :parent ont::medical-condition
  )
 
 ;; angina
@@ -4492,6 +4498,12 @@
 ;; ataxia
 (define-type ont::nervous-disorder
  :wordnet-sense-keys ("ataxia%1:26:00" "nervous_disorder%1:26:00")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+;; confusion
+(define-type ont::confusion
+ :wordnet-sense-keys ("confusion%1:09:00")
  :parent ont::mental-psychological-illness-or-disorder
  )
 

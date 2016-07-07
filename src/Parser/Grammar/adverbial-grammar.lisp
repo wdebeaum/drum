@@ -8,7 +8,7 @@
 (parser::augment-grammar
   '((headfeatures
 	 ;;lex headcat removed --me
-     (PP VAR KIND MASS NAME agr SEM SORT PRO SPEC CLASS transform)
+     (PP KIND MASS NAME agr SEM SORT PRO SPEC CLASS transform)
      ;;(ADVBLS FOCUS VAR SEM SORT ATYPE ARG SEM ARGUMENT NEG TO QTYPE lex transform)
      (ADVBL VAR SORT ARGSORT ATYPE SEM ARGUMENT lex headcat transform neg)
      (ADV SORT ATYPE CONSTRAINT SA-ID PRED NEG TO LEX HEADCAT SEM ARGUMENT SUBCAT IGNORE transform)
@@ -265,59 +265,76 @@
     ;;   by the verb as a SEM restriction on the PP, and SEM is a head feature.
     ;;  e.g., on the top
     
-    ((PP (PTYPE ?pt) (lf ?lf) (case ?c) (sem ?sem)
+    ((PP (PTYPE ?pt) (var ?v) (lf ?lf) (case ?c) (sem ?sem) 
 		 (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
 		 )   ; I set the case here to a var, in order to allow -np-spec-of-pp> to work. Otherwise, CASE is not used in PPs
      -pp1> 1  ;; since PPs are only used if subcategorized, we set this to 1
      (prep (LEX ?pt) (headcat ?hc))
-     (head (np (lf ?lf) (sem ?sem)
+     (head (np (lf ?lf) (sem ?sem)  (var ?v)
 	       ;; 02/07/08 allow bare numbers here! 
 	      ;; (LF (% ?cat (STATUS (? !st number)))) ; disallowing bare numbers here to prevent 'more than 5' w/ bare (referential-sem) interp
 	       (lf (% ?cat (status (? !st PRO)))) ;; disallowing proforms here -- use pp1-pro>
 	       (sort (? sort pred descr wh-desc unit-measure)) (case (? case obj -)))
       ))
 
-    ;; for subcat pp'w with proforms -- but not w::one
-       ((PP (PTYPE ?pt) (lf ?lf) (case ?c) (sem ?sem)
+    ;; PP conjunction rules: e.g., it associates with X and with Y -- both X and Y fill the role signalled by with
+    ;; this rule requires the prep to the identicial, and merges the NP's into a conjunction
+     ((PP (PTYPE ?pt) (var ?vc) (lf (% PROP (class ?class) (var ?vc) (sem ?sem) (constraint (& (operator ont::and) (sequence (?v1 ?v2))))))
+       (case ?c) (sem ?sem)
 		 (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
-		 )   ; I set the case here to a var, in order to allow -np-spec-of-pp> to work. Otherwise, CASE is not used in PPs
+       )
+      -pp-conj1>
+      (head (PP (PTYPE ?pt) (var ?v1) (case ?c) (sem ?s1)
+       (LF (% ?sort1 (class ?c1) (status ?status)))
+       ))
+      (CONJ (LF ?conj) (var ?vc) (but-not -) (but -))
+      (PP (PTYPE ?pt) (var ?v2) (case ?c) (sem ?s2)
+       (LF (% ?sort2 (class ?c2)))
+       )
+      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class)))
+
+    ;; for subcat pp'w with proforms -- but not w::one
+    ((PP (PTYPE ?pt) (lf ?lf) (case ?c) (sem ?sem)  (var ?v)
+      (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
+      )   ; I set the case here to a var, in order to allow -np-spec-of-pp> to work. Otherwise, CASE is not used in PPs
      -pp1-pro>
      (prep (LEX ?pt) (headcat ?hc))
-     (head (np (lex (? !nlx w::one)) (lf ?lf) (sem ?sem)
+     (head (np (lex (? !nlx w::one)) (lf ?lf) (sem ?sem) (var ?v)
 	       (lf (% ?cat (status PRO)))
 	       (sort (? sort pred descr wh-desc unit-measure)) (case (? case obj -)))
       ))
 
-       ;; subcat pp with proform one has lower preference to prefer number subcats
-       ((PP (PTYPE ?pt) (lf ?lf) (case ?c) (sem ?sem)
-		 (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
-		 )   ; I set the case here to a var, in order to allow -np-spec-of-pp> to work. Otherwise, CASE is not used in PPs
+    ;; subcat pp with proform one has lower preference to prefer number subcats
+    ((PP (PTYPE ?pt) (lf ?lf) (case ?c) (sem ?sem)  (var ?v)
+      (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
+      )   ; I set the case here to a var, in order to allow -np-spec-of-pp> to work. Otherwise, CASE is not used in PPs
      -pp1-pro-one> .9
      (prep (LEX ?pt) (headcat ?hc))
-     (head (np (lex w::one) (lf ?lf) (sem ?sem)
+     (head (np (lex w::one) (lf ?lf) (sem ?sem)  (var ?v)
 	       (lf (% ?cat (status PRO)))
 	       (sort (? sort pred descr wh-desc unit-measure)) (case (? case obj -)))
       ))
 
        
      ;; more than five (trucks) 
-    ((PP (PTYPE ?pt) (lf ?lf) (case ?c) (mass count)
+    ((PP (PTYPE ?pt) (lf ?lf) (case ?c) (mass count)  (var ?v)
 		 (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
 		 ) 
      -pp1-number> .9
      (prep (LEX ?pt) (headcat ?hc))
-     (head (cardinality (lf ?lf))
-      ))
+     (head (cardinality (lf ?lf)  (var ?v)))
+      )
     
     ;; rule for prepositional subcats with adjectives, such as
     ;; TEST: classify this as benign
     ;; I'd like one in red
-    ((PP (PTYPE ?pt) (lf ?lf) (case ?c) (adjpp +) (arg ?arg)
+    ((PP (PTYPE ?pt) (lf ?lf) (case ?c) (adjpp +) (arg ?arg)  (var ?v)
 		 (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
 		 )
      -pp1-adj> .97
      (prep (LEX ?pt) (headcat ?hc))
-     (head (adjp (lf ?lf) (case (? case obj -)) (arg ?arg) (set-modifier -)))  ;; set-modifier - excludes numbers
+     (head (adjp (lf ?lf) (case (? case obj -))  (var ?v) (arg ?arg) (set-modifier -)))  ;; set-modifier - excludes numbers
       )
 
     ))  ;; end ADVERBIALS
@@ -511,10 +528,24 @@
 		  )))
      -advbl-conj1>
      (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf1) (VAR ?v1)(sem ?sem1))) (gap ?g) (argument ?argmt))
-     (CONJ (LF ?conj))
+     (CONJ (LF ?conj) (but-not -) (but -))
      (head (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf2) (VAR ?v2) (sem ?sem2))) (gap ?g) (argument ?argmt)))
      (sem-least-upper-bound (in1 ?sem1) (in2 ?sem2) (out ?sem))
     )
+
+    ;; down the hill but to the right
+     ((ADVBL (ARG ?arg) (sem ?sem) (VAR ?v1) (gap ?g)
+	   (LF (% PROP (CLASS ?lf1) (VAR ?v1) (sem ?sem) (CONSTRAINT ?newcon)))
+		  )
+     -advbl-but-conj1>
+      (head (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf1) (VAR ?v1)(sem ?sem) (constraint ?con) ))
+		   (gap ?g) (argument ?argmt)))
+      (CONJ (LF ?conj) (but-not -) (but +) (var ?vc))
+      (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf2) (VAR ?v2) (sem ?sem2))) (gap ?g) (argument ?argmt))
+      (add-to-conjunct (val (:qualification (% *PRO* (status PROP) (var ?vc) (class ?conj) (constraint (& (Figure ?v1) (ground ?v2)))
+					       )))
+       (old ?con) (new ?newcon))
+      )
 
     ((ADVBL (ARG ?arg) (sem ?sem) (VAR *)
       (LF (% PROP (CLASS ?clf) (VAR *) (sem ?sem) 

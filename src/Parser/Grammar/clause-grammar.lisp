@@ -5,8 +5,8 @@
 (in-package w)
 
 (parser::addlexicalcat 'aaux)
-(parser::addlexicalcat 'part)
-(parser::addLexicalCat 'uttword)
+(parser::addlexicalCAT 'PART)
+(PARSER::ADDLEXICALCAT 'UTTWORD)
 
 ;;(define-foot-feature 'gap)
 
@@ -26,23 +26,23 @@
     (pred qtype focus gap filled transform headcat lex)
     )
    
-   ;;  HANDLING START AND END OF UTTERANCE
+   ;;  handling start and end of utterance
    
 
-   ;; If utterance begins with a filled pause  (retrict to having no punc on end yet to reduce spurious ambiguity)
-   ;; TEST: Um the dog barked
-   ((Utt (var ?v) (lf ?lf) (focus ?foc)
+   ;; if utterance begins with a filled pause  (retrict to having no punc on end yet to reduce spurious ambiguity)
+   ;; test: um the dog barked
+   ((utt (var ?v) (lf ?lf) (focus ?foc)
       (punc ?punc) (punctype ?p)
      (started  +)
      )
-   -utt-fp-start> 1 ;; utterances frequently start with silence. But only start the utterances that go through the end of the input
+   -utt-fp-start> 1 ;; utterances frequently start with silence. but only start the utterances that go through the end of the input
     (fp)
     (head (utt (focus ?foc) (started -) (var ?v)
                (lf ?lf) (punctype ?p)))
    )
    
    ;;  here's  the end of utterance marker
-   ((Utt (var ?v1) (lf ?lf) (focus ?foc)
+   ((utt (var ?v1) (lf ?lf) (focus ?foc)
       (punc +) (punctype ?p)
      (ended +)
      )
@@ -52,8 +52,8 @@
     (punc (lex end-of-utterance)))
 
    ;; utts ending with a silence
-   ;; TEST: The dog barked um.
-   ((Utt (var ?v1) (lf ?lf) (focus ?foc)
+   ;; test: the dog barked um.
+   ((utt (var ?v1) (lf ?lf) (focus ?foc)
       (punc +) (punctype ?p)
      (ended +)
      )
@@ -63,16 +63,16 @@
     (fp))
 
    
-   ;; TOP-LEVEL UTTERANCE RULES
+   ;; top-level utterance rules
 
-   ;; hello calo; We did it, calo
+   ;; hello calo; we did it, calo
    ;; any utterance can be addressed to someone
-   ;; The vocative feature prevents multiple vocative constructs, esp one at beginning and one at end
-   ((Utt (var ?v) (vocative +) (lf (% SPEECHACT (var ?sv) (class ?cl) (constraint ?constraint))))
-    -vocative-utt> .95    ;; nb: lowered below NP-CONJ rule to eliminate bad interps of utterances like 'John and Mary"
-    (head (utt (focus ?foc) (var ?v) (vocative -) (lf (% SPEECHACT (var ?sv) (class (? cl ont::sa_TELL ont::sa_YN-QUESTION ont::SA-REQUEST)) (constraint ?con)))
+   ;; the vocative feature prevents multiple vocative constructs, esp one at beginning and one at end
+   ((utt (var ?v) (vocative +) (lf (% speechact (var ?sv) (class ?cl) (constraint ?constraint))))
+    -vocative-utt> .95    ;; nb: lowered below np-conj rule to eliminate bad interps of utterances like 'john and mary"
+    (head (utt (focus ?foc) (var ?v) (vocative -) (lf (% speechact (var ?sv) (class (? cl ont::sa_tell ont::sa_yn-question ont::sa-request)) (constraint ?con)))
 	  (punctype -)))
-    (np (var ?nv) (lf (% Description (Status (? nm gname Name))))
+    (np (var ?nv) (lf (% description (status (? nm ont::gname ont::name))))
 	(sem ($ f::phys-obj (f::intentional +) (f::object-function f::occupation)))
 	)
     (add-to-conjunct (val (vocative ?nv)) (old ?con) (new ?constraint))
@@ -80,53 +80,53 @@
 
   ;; calo find me a computer
    ;; any utterance can be addressed to someone
-   ((Utt (var ?v) (lf (% SPEECHACT (var ?sv) (class ?cl) (constraint ?constraint)))
+   ((utt (var ?v) (lf (% speechact (var ?sv) (class ?cl) (constraint ?constraint)))
 	 (vocative +))
     ;; lowering this rule allows many bad interpretations in coordops
     -vocative-utt2>  .95
-    (np (var ?nv) (lf (% Description (Status (? nm gname Name))))
+    (np (var ?nv) (lf (% description (status (? nm ont::gname ont::name))))
 	(sem ($ f::phys-obj (f::intentional +) (f::object-function f::occupation)))
 	)
     (head (utt (punctype -) (focus ?foc) (var ?v) (vocative -) 
-	       (lf (% SPEECHACT (var ?sv) 
-		      (class (? cl ont::sa_TELL ont::sa_YN-QUESTION ont::SA-REQUEST)) (constraint ?con))))
+	       (lf (% speechact (var ?sv) 
+		      (class (? cl ont::sa_tell ont::sa_yn-question ont::sa-request)) (constraint ?con))))
      )
     (add-to-conjunct (val (vocative ?nv)) (old ?con) (new ?constraint))
     )
 
-   ;;There are oranges at Corning   
-   ((Utt (var *) (punctype decl) (lf (% SPEECHACT (var *) (class ont::sa_TELL) (constraint (& (content ?v)))))) 
+   ;;there are oranges at corning   
+   ((utt (var *) (punctype decl) (lf (% speechact (var *) (class ont::sa_tell) (constraint (& (content ?v)))))) 
     -utt-s1>
     (head (s (stype decl) (gap -) (var ?v) (wh -) (lf ?lf) (advbl-needed -))))
    
-   ;;  Punctuation: for typed input. PUNCTYPE must agree 
-   ;; Myrosia 19/10/06 -- punctype need not always agree in typed dialogue
+   ;;  punctuation: for typed input. punctype must agree 
+   ;; myrosia 19/10/06 -- punctype need not always agree in typed dialogue
    ;; rather than trying to track the speechact via punctype, we are storing it
    ;; for further analysis in the future
    
-   ((Utt  (var ?v) (focus ?foc)  ;; I changed the VAR from the punc to the UTT so that the LF is printed properly (why was it the other way?
+   ((utt  (var ?v) (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
      (punc +) (punctype ?p)
-     (lf (% SPEECHACT (var ?sv) (class ?cl) (constraint ?constraint)))
+     (lf (% speechact (var ?sv) (class ?cl) (constraint ?constraint)))
      )
    -utt-punctuation>
    (head (utt (focus ?foc) (ended -) (var ?v) (punc -)
-	  (lf (% SPEECHACT (var ?sv) (class ?cl) (constraint ?con)))
+	  (lf (% speechact (var ?sv) (class ?cl) (constraint ?con)))
 	  ))
-    (punc (punctype ?p) (lex (? lex W::PUNC-EXCLAMATION-MARK W::punc-period W::PUNC-QUESTION-MARK W::PUNC-COLON W::ELLIPSES W::PUNC-COMMA)))
+    (punc (punctype ?p) (lex (? lex w::punc-exclamation-mark w::punc-period w::punc-question-mark w::punc-colon w::ellipses w::punc-comma)))
     (add-to-conjunct (val (punctype ?p)) (old ?con) (new ?constraint))
    )
 
-    #||((Utt (var *) (punctype ?stype) (lf (% SPEECHACT (var *) (class ont::sa_TELL) (constraint (& (content ?v)))))) 
+    #||((utt (var *) (punctype ?stype) (lf (% speechact (var *) (class ont::sa_tell) (constraint (& (content ?v)))))) 
     -utt-seq1>
     (head (sseq (stype ?stype) (gap -) (var ?v) (wh -) 
 		(lf ?lf) (advbl-needed -))))||#
    
-   ;; QUESTIONS
+   ;; questions
    
-   ;; e.g., Is the engine coming from Corning?
-   ;; TEST: Is the dog barking?
-   ;; TEST: Is the dog chasing the cat?
-   ((Utt (LF (% SPEECHACT (class ont::sa_YN-QUESTION) 
+   ;; e.g., is the engine coming from corning?
+   ;; test: is the dog barking?
+   ;; test: is the dog chasing the cat?
+   ((utt (lf (% speechact (class ont::sa_yn-question) 
 		(constraint (& (content ?s-v))) (var *)))
      (var *) (punctype ?p)
      ) 
@@ -134,13 +134,13 @@
     (head (s (stype ynq) (var ?s-v)  (gap -) (wh -) (advbl-needed -))))
    
    
-   ;; TAG QUESTIONS
-   ;; Note that the rules need to match tense in the TMA, not just the vform
+   ;; tag questions
+   ;; note that the rules need to match tense in the tma, not just the vform
    ;; because vform is hierarchical and so "past" and "pres" match in the vform,
-   ;; but not in the TMA tense
-   ;; TEST: The dog doesn't bark, does it?
-   ;; TEST: The dog doesn't chase the cat, does it?
-   ((Utt (LF (% SPEECHACT (class ont::sa_TAG-QUESTION) 
+   ;; but not in the tma tense
+   ;; test: the dog doesn't bark, does it?
+   ;; test: the dog doesn't chase the cat, does it?
+   ((utt (lf (% speechact (class ont::sa_tag-question) 
 		(constraint (& (content ?s-v))) (var *)))
      (var *) (punctype ?p)
      ) 
@@ -156,9 +156,9 @@
 	    ))
      ))
 
-   ;; TEST: The dog barks, doesn't it?
-   ;; TEST: The dog chases the cat, doesn't it?
-   ((Utt (LF (% SPEECHACT (class ont::sa_TAG-QUESTION) 
+   ;; test: the dog barks, doesn't it?
+   ;; test: the dog chases the cat, doesn't it?
+   ((utt (lf (% speechact (class ont::sa_tag-question) 
 		(constraint (& (content ?s-v))) (var *)))
      (var *) (punctype ?p)
      ) 
@@ -176,112 +176,112 @@
    
    
    ;;  "or what" tag on questions
-   ;; TEST: Did the dog bark or what?
-   ;; TEST: Did the dog chase the cat or what?
-   ((Utt (LF ?lf)
+   ;; test: did the dog bark or what?
+   ;; test: did the dog chase the cat or what?
+   ((utt (lf ?lf)
          (var ?v) (punctype ?p))
-    -utt-ynq-OR-WHAT>
-    (head (utt (LF (% SPEECHACT (class ont::sa_YN-QUESTION))) (LF ?lf) (var ?v)
+    -utt-ynq-or-what>
+    (head (utt (lf (% speechact (class ont::sa_yn-question))) (lf ?lf) (var ?v)
 	       (punctype ?p)))
     (word (lex or))
     (word (lex what)))
 
    ;;  "or not" tag on questions
-   ;; TEST: Did the dog bark or not?
-   ;; TEST: Did the dog chase the cat or not?
-   ((Utt (LF ?lf)
+   ;; test: did the dog bark or not?
+   ;; test: did the dog chase the cat or not?
+   ((utt (lf ?lf)
          (var ?v) (punctype ?p))
-    -utt-ynq-OR-NOT>
-    (head (utt (LF (% SPEECHACT (class ont::sa_YN-QUESTION))) (LF ?lf) (var ?v)
+    -utt-ynq-or-not>
+    (head (utt (lf (% speechact (class ont::sa_yn-question))) (lf ?lf) (var ?v)
 	       (punctype ?p)))
     (word (lex or))
     (word (lex not)))
    
      ;;  e.g., hello with punctuation
-   ((Utt (lf (% SPEECHACT (VAR *) (CLASS ?sa) (constraint (& (content (?lf :content ?lex))))))
+   ((utt (lf (% speechact (var *) (class ?sa) (constraint (& (content (?lf :content ?lex))))))
          (var *) (uttword +))
     -utt4b>
     (head (uttword (lf (?lf)) (lex ?lex) (sa ?sa)))
     (punc (lex punc-comma) (var ?v1)))
 
      
-   ;;  the one compound UTT rule - allows UTTWORD+ utterance to preceed other UTTS
-   ;; TEST: hello hello
-   ((Utt (sa-seq +) (lf (% SA-SEQ (VAR *) (CLASS ONT::SA-SEQ) (constraint (& (acts (?v1 ?v2))))))
+   ;;  the one compound utt rule - allows uttword+ utterance to preceed other utts
+   ;; test: hello hello
+   ((utt (sa-seq +) (lf (% sa-seq (var *) (class ont::sa-seq) (constraint (& (acts (?v1 ?v2))))))
          (var *))
     -uttword-utt> .96
     (utt (lf ?lf1) (var ?v1) (uttword +) (sa-seq -))
-    (head (utt (LF ?lf2) (var ?v2) (sa-seq -))))
+    (head (utt (lf ?lf2) (var ?v2) (sa-seq -))))
 
 
-   ;;  Tag sentences, allowing uttword
-   ;; TEST: the dog barks doesn't it hello
-   ((Utt (sa-seq +) (lf (% SA-SEQ (VAR *) (CLASS ONT::SA-SEQ) (constraint (& (acts (?v1 ?v2))))))
+   ;;  tag sentences, allowing uttword
+   ;; test: the dog barks doesn't it hello
+   ((utt (sa-seq +) (lf (% sa-seq (var *) (class ont::sa-seq) (constraint (& (acts (?v1 ?v2))))))
          (var *))
     -utt-tag> .90 ;; lowering this from .97 because it was preferred over predicate adjectives, e.g that looks good 
     (utt (lf ?lf1) (var ?v1) (sa-seq -))
-    (head (utt (LF ?lf2) (var ?v2) (uttword +) (sa-seq -))))
+    (head (utt (lf ?lf2) (var ?v2) (uttword +) (sa-seq -))))
    
 
  
-   ;; What do you think the red X means? That the battery is damaged
+   ;; what do you think the red x means? that the battery is damaged
    ;;
-   ((Utt (var *) (punctype decl) (no-post-adv +) (lf (% SPEECHACT (var *) (class ont::sa_PRED-FRAGMENT) (constraint (& (content ?v)))))) 
+   ((utt (var *) (punctype decl) (no-post-adv +) (lf (% speechact (var *) (class ont::sa_pred-fragment) (constraint (& (content ?v)))))) 
     -utt-s-that> 0.9
     (head (cp (ctype s-that-overt) (gap -) (var ?v) (wh -) (lf ?lf) (advbl-needed -))))
 
-   ;;  REQUEST and SUGGESTIONS
+   ;;  request and suggestions
    
-    ;; e.g., How about from Avon to Corning? How about going through Corning?
-   ;; TEST: How about chasing the cat?
-   ((Utt (lf (% SPEECHACT (VAR *) (CLASS ONT::SA_REQUEST-COMMENT) (constraint ?c))) (var *)
-     ;; Myrosia commented out (lex how-about) 2006/21/02
-     ;; lex is a head feature and if we specify it here, it clashes with the lex coming up from the S, where it is determined
-     ;; either by an adverbial or an NP head.
-     ;;(LEX HOW-ABOUT) ;; aug-trips -- we need a lex feature here -- can we get it from the s
+    ;; e.g., how about from avon to corning? how about going through corning?
+   ;; test: how about chasing the cat?
+   ((utt (lf (% speechact (var *) (class ont::sa_request-comment) (constraint ?c))) (var *)
+     ;; myrosia commented out (lex how-about) 2006/21/02
+     ;; lex is a head feature and if we specify it here, it clashes with the lex coming up from the s, where it is determined
+     ;; either by an adverbial or an np head.
+     ;;(lex how-about) ;; aug-trips -- we need a lex feature here -- can we get it from the s
      (punctype ?p))
     -how-about-utt>
     (head (s (stype how-about) (var ?v) (lf (constraint ?c)) (advbl-needed -))
           ))
 
-   ;; TEST: How about chasing the cat?
+   ;; test: how about chasing the cat?
    ((s (stype how-about) (lf (constraint (& (content ?v)))))
     -how-about-s>
-    (word (LEX (? x how what)) (var ?v1))
-    (word (LEX about)) 
+    (word (lex (? x how what)) (var ?v1))
+    (word (lex about)) 
     (head ((? cat np vp) (gap -) (var ?v) (lf ?lf) (case (? case obj -)))))
 
-    ;; TEST: How about horizontally?
-    ;; TEST: What about from the cat?
+    ;; test: how about horizontally?
+    ;; test: what about from the cat?
     ((s (stype how-about) (lf (constraint (& (content ?v)))))
     -how-about-advbl>
-    (word (LEX (? x how what)) (var ?v1))
-    (word (LEX about)) 
-    (head (advbl (arg (% *PRO* (var *) (CLASS ONT::REFERENTIAL-SEM)))
+    (word (lex (? x how what)) (var ?v1))
+    (word (lex about)) 
+    (head (advbl (arg (% *pro* (var *) (class ont::referential-sem)))
 		 (gap -) (var ?v) (lf ?lf) (case (? case obj -)))))
    
    
    
-   ;; e.g., What if we use the helicopter instead
-   ;; TEST: What if the dog barks?
-   ;; TEST: What if the dog chases the cat?
-   ;; TEST: What if the dog chases the cat instead?
-   ((Utt (lf (% SPEECHACT (VAR *) (CLASS ONT::SA_REQUEST-COMMENT) (constraint (& (content ?v))))) 
+   ;; e.g., what if we use the helicopter instead
+   ;; test: what if the dog barks?
+   ;; test: what if the dog chases the cat?
+   ;; test: what if the dog chases the cat instead?
+   ((utt (lf (% speechact (var *) (class ont::sa_request-comment) (constraint (& (content ?v))))) 
          (var *)(punctype ?p))
     -what-if1> 
-    (word (LEX what))
-    (word (LEX if))
+    (word (lex what))
+    (word (lex if))
     (head (s (gap -) (stype decl) (var ?v) (lf ?lf) (advbl-needed -))))
       
-    ;; Typical Assertions
+    ;; typical assertions
    
-   ;; main s rule. We exclude the pp-word subjects because they have special rule
+   ;; main s rule. we exclude the pp-word subjects because they have special rule
     
-   ;; e.g., The boxcar is at Bath.
-   ;; TEST: The dog barked.
-   ;; TEST: The dog chased the cat.
+   ;; e.g., the boxcar is at bath.
+   ;; test: the dog barked.
+   ;; test: the dog chased the cat.
    ((s (stype decl) (var ?v) (subjvar ?npvar) (gap ?g) (focus ?npvar)
-     (LF ?lf) (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) 
+     (lf ?lf) (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) 
 		       (pp-word -) (changeagr -))
 	       )
 
@@ -290,7 +290,7 @@
     -s1>
     (np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex) ;; lex needed for expletives?
       (pp-word -) (changeagr -))
-    (head (vp (LF ?lf) (gap ?g)
+    (head (vp (lf ?lf) (gap ?g)
               (template (? !x  lxm::propositional-equal-templ))
 	      (subjvar ?npvar)
 	      (subj (% np (sem ?npsem) (var ?npvar) (lex ?lex)))
@@ -301,12 +301,12 @@
 	  )
     )
 
-   ;;  special case S1 rule for abstract objects that can be equivalent to propositions (e.g., fact, belief, etc)
-   ;;    these all take a SUBCAT-MAP to ONT::FORMAL - only verb that can do this so far is ONT::BE.
+   ;;  special case s1 rule for abstract objects that can be equivalent to propositions (e.g., fact, belief, etc)
+   ;;    these all take a subcat-map to ont::formal - only verb that can do this so far is ont::be.
    ;;    e.g., the fact is he left angry
 
    ((s (stype decl) (var ?v) (subjvar ?npvar) (gap ?g) (focus ?npvar)
-     (LF ?lf) (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) 
+     (lf ?lf) (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) 
 		       (pp-word -) (changeagr -))
 		    )
 
@@ -314,8 +314,8 @@
      )
     -s1-be-prop1>
     (np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex) ;; lex needed for expletives?
-     (pp-word -) (changeagr -) (subcat-map ONT::FORMAL))
-    (head (vp (LF ?lf) (gap ?g) (template lxm::propositional-equal-templ)
+     (pp-word -) (changeagr -) (subcat-map ont::formal))
+    (head (vp (lf ?lf) (gap ?g) (template lxm::propositional-equal-templ)
 	      (subjvar ?npvar)
 	      (subj (% np (sem ?npsem) (var ?npvar) (lex ?lex)))
 	      (var ?v) (vform fin) (agr ?a)
@@ -325,11 +325,11 @@
      )
     )
 
-   ;;  special case S1 rule for nominalizations that have a comp-map of ONT::FORMAL 
+   ;;  special case s1 rule for nominalizations that have a comp-map of ont::formal 
    ;;    e.g., the belief is he left angry
 
    ((s (stype decl) (var ?v) (subjvar ?npvar) (gap ?g) (focus ?npvar)
-     (LF ?lf) (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) 
+     (lf ?lf) (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) 
 		       (pp-word -) (changeagr -))
 		    )
 
@@ -337,8 +337,8 @@
      )
     -s1-be-prop2>
     (np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex) ;; lex needed for expletives?
-     (pp-word -) (changeagr -) (comp3-map ONT::FORMAL))
-    (head (vp (LF ?lf) (gap ?g) (template lxm::propositional-equal-templ)
+     (pp-word -) (changeagr -) (comp3-map ont::formal))
+    (head (vp (lf ?lf) (gap ?g) (template lxm::propositional-equal-templ)
 	      (subjvar ?npvar)
 	      (subj (% np (sem ?npsem) (var ?npvar) (lex ?lex)))
 	      (var ?v) (vform fin) (agr ?a)
@@ -349,10 +349,10 @@
     )
 
     ;; commands with subjects: you/someone take a picture of me
-   ;; TEST: Someone bark.
-   ;; TEST: You chase the cat.
+   ;; test: someone bark.
+   ;; test: you chase the cat.
    ((s (stype imp) (var ?v) (subjvar ?npvar) (gap ?g) 
-     (LF ?lf) (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) 
+     (lf ?lf) (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) 
 		       (pp-word -) (changeagr -))
 	       )
      (advbl-needed ?avn)
@@ -362,7 +362,7 @@
      (lex (? l someone somebody)) ;; only someone, you allowed as subjects of imperatives
      (pp-word -) (changeagr -)
      )
-    (head (vp (LF ?lf) (gap ?g)
+    (head (vp (lf ?lf) (gap ?g)
 	   
 	   (subj (% np (sem ?subjsem) (var ?npvar) (lex ?lex))) 
 	   (var ?v) (vform base)
@@ -372,38 +372,38 @@
     (unify (pattern ?subjsem) (value ?npsem))
     )
    
-   ;; WH Question Utterances
+   ;; wh question utterances
    ;;
 
-   ;; e.g., When will the engine arrive at Dansville? and "Where will the engine arrive",  but not "Where will the engine arrive at"
-   ;; TEST: When will the dog bark?
-   ;; TEST: When will the dog chase the cat?
-   ;; TEST: Where will the dog chase the cat?
-   ;; TEST: What will the dog chase?
-   ((utt (lf (% SPEECHACT (VAR *) (CLASS ONT::SA_WH-QUESTION) (constraint (& (content ?v) (focus ?foc)))))
+   ;; e.g., when will the engine arrive at dansville? and "where will the engine arrive",  but not "where will the engine arrive at"
+   ;; test: when will the dog bark?
+   ;; test: when will the dog chase the cat?
+   ;; test: where will the dog chase the cat?
+   ;; test: what will the dog chase?
+   ((utt (lf (% speechact (var *) (class ont::sa_wh-question) (constraint (& (content ?v) (focus ?foc)))))
          (var *) (qtype ?type) (punctype ?p))
     -wh-question1>
-    (head (s (stype whq) (wh-var ?foc) (var ?v) (qtype (? type WHEN WHERE Q HOW-X -))(advbl-needed -))))
+    (head (s (stype whq) (wh-var ?foc) (var ?v) (qtype (? type when where q how-x -))(advbl-needed -))))
 
    
-   ;; e.g., The engine will arive where?     Put it where?
-   ;; TEST: The dog will chase what?
-   ;; TEST: What will chase the cat?
-   ((utt (lf (% SPEECHACT (VAR *) (CLASS ONT::SA_WH-QUESTION) (constraint (& (content ?v) (focus ?foc)))))
+   ;; e.g., the engine will arive where?     put it where?
+   ;; test: the dog will chase what?
+   ;; test: what will chase the cat?
+   ((utt (lf (% speechact (var *) (class ont::sa_wh-question) (constraint (& (content ?v) (focus ?foc)))))
          (var *) (qtype ?type) (punctype ?p))
     -decl-wh-question1> .96
-    (head (s (stype (? st decl imp)) (WH Q) (GAP -) (wh-var ?foc) (var ?v) (advbl-needed -))))
+    (head (s (stype (? st decl imp)) (wh q) (gap -) (wh-var ?foc) (var ?v) (advbl-needed -))))
    
    
-   ;; e.g., When?
-   ((utt (lf (% SPEECHACT (VAR *) (CLASS ONT::SA_WH-QUESTION) (constraint (& (content ?v) (focus ?foc)))))
-          (VAR *) (qtype ?type) (punctype ?p))
+   ;; e.g., when?
+   ((utt (lf (% speechact (var *) (class ont::sa_wh-question) (constraint (& (content ?v) (focus ?foc)))))
+          (var *) (qtype ?type) (punctype ?p))
     -wh-question2> .95 ;; stop using in cca's
-    (head (advbl (WH Q) (wh-var ?foc) 
-                 (gap -) (var ?v) (qtype (? type WHEN WHERE Q HOW-X)))))
+    (head (advbl (wh q) (wh-var ?foc) 
+                 (gap -) (var ?v) (qtype (? type when where q how-x)))))
    
     ;; "presentational" here: here are the pictures
-   ;; TEST: Here is the dog.
+   ;; test: here is the dog.
    ((s (stype decl) (var ?v) (gap -)
        (subj ?subj) 
      (lf (% prop (var ?v) (class ?c) (constraint ?constraint)
@@ -414,28 +414,28 @@
      )
      -s1-here> .9
     (advbl (lex here) 
-     (argument (% S (sem ($ f::situation ))))
+     (argument (% s (sem ($ f::situation ))))
      (argument ?a)
      (role ?advrole) 
      (var ?advv)
      (arg ?v) (lf ?lf1)
-     ;;(LF (% PROP (CLASS (:* ONT::SPATIAL-LOC HERE)))) ;; this is here to exclude the ont::to-loc, which otherwise comes up 1st
-     (LF (% PROP (CLASS (:* ONT::HERE HERE)))) ;; this is here to exclude the ont::to-loc, which otherwise comes up 1st
+     ;;(lf (% prop (class (:* ont::spatial-loc here)))) ;; this is here to exclude the ont::to-loc, which otherwise comes up 1st
+     (lf (% prop (class (:* ont::here here)))) ;; this is here to exclude the ont::to-loc, which otherwise comes up 1st
      )
-    ;; use a VP which expects "there" in the sense ont::exists
-    (head (vp (LF ?lf) (gap -)
+    ;; use a vp which expects "there" in the sense ont::exists
+    (head (vp (lf ?lf) (gap -)
               
 	   (subj (% np (sem ?subjsem) (var ?npvar) (lex there))) 
 	   (var ?v) (vform fin) (agr ?vpagr)
 	   (advbl-needed -)
-	   (lf (% Prop (transform ?transform) (sem ?ssem) (class ?c) (class ont::exists) (constraint ?con) (tma ?tma)))
+	   (lf (% prop (transform ?transform) (sem ?ssem) (class ?c) (class ont::exists) (constraint ?con) (tma ?tma)))
 	   )
      )
-    (add-to-conjunct (val (MODS ?advv)) (old ?con) (new ?constraint))
+    (add-to-conjunct (val (mods ?advv)) (old ?con) (new ?constraint))
     )
 
    ;; to the left are the pictures
-   ;; TEST: To the left is the dog.
+   ;; test: to the left is the dog.
    ((s (stype decl) (var ?v) (gap -)
        (subj ?subj) 
      (lf (% prop (var ?v) (class ?c) (constraint ?constraint)
@@ -446,27 +446,27 @@
      )
      -s1-spatial-loc> .93
     (advbl 
-     (argument (% S (sem ($ f::situation ))))
+     (argument (% s (sem ($ f::situation ))))
      (argument ?a)
      (role ?advrole) 
      (var ?advv)
      (arg ?subjvar) (lf ?lf1)
-     (LF (% PROP (CLASS ONT::SPATIAL-LOC)))
+     (lf (% prop (class ont::spatial-loc)))
      )
     (head (s (stype ynq) (lf ?lf) (var ?v)	     
 	     (advbl-needed -)
 	     (subjvar ?subjvar) (dobjvar ?dobjvar)
 	     (subj ?subj)
 	     (gap (% pred (sem ?predsem) (var ?advv)))
-	     (lf (% Prop (class ?c) (class ont::have-property) (sem ?ssem) (constraint ?con) (transform ?transform) (tma ?tma)))
+	     (lf (% prop (class ?c) (class ont::have-property) (sem ?ssem) (constraint ?con) (transform ?transform) (tma ?tma)))
 	     )
        )
-    (add-to-conjunct (val (MODS ?advv)) (old ?con) (new ?constraint))
+    (add-to-conjunct (val (mods ?advv)) (old ?con) (new ?constraint))
     )
    
-   ;; TEST: Why did the dog bark?
-   ;; TEST: Why did the dog chase the cat?
-   ((s (stype whq) (wh Q) (qtype ?qtype) (var ?v) (gap -) (wh-var ?wvar)
+   ;; test: why did the dog bark?
+   ;; test: why did the dog chase the cat?
+   ((s (stype whq) (wh q) (qtype ?qtype) (var ?v) (gap -) (wh-var ?wvar)
      (lf (% prop (var ?v) (class ?c) (constraint ?constraint)
 	    (sem ?sem) (tma ?tma) (transform ?transform)
 	    ))
@@ -475,18 +475,18 @@
      )
      -wh-setting1> .98 ;; really don't want this to apply before gaps
     (advbl
-     ;;(argument (% S (sem ?sem) (sem ($ f::situation (f::type f::EVENTUALITY)))))
-     (Var ?advv)
-     (arg ?v) (wh Q) (wh-var ?wvar) (qtype ?qtype) (lf ?lf1)
+     ;;(argument (% s (sem ?sem) (sem ($ f::situation (f::type f::eventuality)))))
+     (var ?advv)
+     (arg ?v) (wh q) (wh-var ?wvar) (qtype ?qtype) (lf ?lf1)
      )
     (head (s (stype ynq) (var ?v) (gap -) (subj ?subj) (tag -)
-	   (lf (% Prop (sem ?sem) (class ?c) (constraint ?con) (tma ?tma) (transform ?transform)))))
-    (add-to-conjunct (val (MODS ?advv)) (old ?con) (new ?constraint)))
+	   (lf (% prop (sem ?sem) (class ?c) (constraint ?con) (tma ?tma) (transform ?transform)))))
+    (add-to-conjunct (val (mods ?advv)) (old ?con) (new ?constraint)))
 
    ;; what time did it arrive?
-   ;; TEST: What time did the dog bark?
-   ;; TEST: What time did the dog chase the cat?
-   ((s (stype whq) (wh Q) (qtype ?qtype) (wh-var ?tv) (var ?v) (gap -)
+   ;; test: what time did the dog bark?
+   ;; test: what time did the dog chase the cat?
+   ((s (stype whq) (wh q) (qtype ?qtype) (wh-var ?tv) (var ?v) (gap -)
        (lf (% prop (var ?v) (class ?c) (constraint ?constraint)
 	      (sem ?sem) (tma ?tma) (transform ?transform)
 	      ))
@@ -496,22 +496,22 @@
     -wh-setting2> .98 ;; don't want this to apply before gaps
     (np (wh q) (var ?tv) (sem ($ f::time (f::time-scale f::point))))  ;; should only be time points, not intervals
     (head (s (stype ynq) (var ?v) (gap -) (subj ?subj) (tag -)
-	   (lf (% Prop (sem ?sem) (class ?c) (constraint ?con) (tma ?tma) (transform ?transform)))
+	   (lf (% prop (sem ?sem) (class ?c) (constraint ?con) (tma ?tma) (transform ?transform)))
 	   (advbl-needed -)
 	   )
      )
-    (add-to-conjunct (val (MODS 
-			   (% *PRO* (status F) (var *)
-			      (CLASS ONT::event-time-rel)
+    (add-to-conjunct (val (mods 
+			   (% *pro* (status ont::f) (var *)
+			      (class ont::event-time-rel)
 			      (constraint (& (figure ?v) (ground ?tv))))))
 			  (old ?con) (new ?constraint))
      )
 
    ;; to feed into s-that-subjunctive: he recommends that the dog bark
-   ;; TEST: The dog bark
-   ;; TEST: The dog chase the cat.
+   ;; test: the dog bark
+   ;; test: the dog chase the cat.
    ((s (stype subjunctive) (var ?v) (subjvar ?npvar) (gap ?g) (focus ?npvar)
-     (LF ?lf) (subj (% np (sem ?npsem) (var ?npvar) ;(agr ?a)
+     (lf ?lf) (subj (% np (sem ?npsem) (var ?npvar) ;(agr ?a)
 		       (case (? case sub -)) 
 		       (pp-word -) (changeagr -))
 		    )
@@ -521,7 +521,7 @@
     (np (sem ?npsem) (var ?npvar) ;(agr ?a)
 	(case (? case sub -)) (lex ?lex) ;; lex needed for expletives?
       (pp-word -) (changeagr -))
-    (head (vp (LF ?lf) (gap ?g)
+    (head (vp (lf ?lf) (gap ?g)
               
 	      (subjvar ?npvar)
 	      (subj (% np (sem ?subjsem) (var ?npvar) (lex ?lex))) 
@@ -534,12 +534,12 @@
     )
 
       ;;============================================================================
-   ;;   RELATIVE CLAUSES
+   ;;   relative clauses
 
-   ;; e.g., (the route) which went from Corning to Avon
-   ;; TEST: The dog that barked.
-   ;; TEST: The dog that chased the cat.
-   ((CP (ctype relc) (arg ?arg) (argsem ?argsem) (var ?v) (gap -) ;; (gap ?g)
+   ;; e.g., (the route) which went from corning to avon
+   ;; test: the dog that barked.
+   ;; test: the dog that chased the cat.
+   ((cp (ctype relc) (arg ?arg) (argsem ?argsem) (var ?v) (gap -) ;; (gap ?g)
 ;;;     (lf (% prop (var ?v) (arg ?arg) (class ?c) 
 ;;;	    (constraint ?con) (sem ?sem) (transform ?transform)
 ;;;	    (tma ?tma)
@@ -551,11 +551,11 @@
      (agr ?agr)
      )
     -rel1> 
-    (pro (wh (? wh R)) (sem ?argsem) (lex ?plex)
-     (agr ?agr) (CASE SUB) (headcat ?vcomp))
+    (pro (wh (? wh r)) (sem ?argsem) (lex ?plex)
+     (agr ?agr) (case sub) (headcat ?vcomp))
     (head (vp (subj (% np (var ?arg) (sem ?argsem) (sem ($ ?!type)) )) (agr ?agr) 
-	      (gap -)  ;; my guess is there are some eliiptical glosses that motivated allowing a gap here, but I'm deleting it for now(gap ?g) 
-	      (WH -)
+	      (gap -)  ;; my guess is there are some eliiptical glosses that motivated allowing a gap here, but i'm deleting it for now(gap ?g) 
+	      (wh -)
 	      (class ?c) (constraint ?con) (vform fin) (tma ?tma)
 	      (sem ?sem) (lf ?lf)
 	      (transform ?transform) (lex ?vlex)
@@ -563,16 +563,16 @@
 	      (headcat ?hcat) ;; aug-trips
 	   )))
    
-   ;; TEST: (The man) whose dog barked
-   ((CP (ctype rel-whose) ;(arg ?arg) (argsem ?argsem)
-	(gap -) (lf ?lf) (wh R) (wh-var ?whv)
+   ;; test: (the man) whose dog barked
+   ((cp (ctype rel-whose) ;(arg ?arg) (argsem ?argsem)
+	(gap -) (lf ?lf) (wh r) (wh-var ?whv)
      ;; (lex ?l) (headcat ?vcomp) ;; non-aug-trips settings
      (lex ?hlex) (headcat ?hcat) ;; aug-trips
      )
     -rel-whose>
-    (NP (sem ?argsem) (agr ?agr) (CASE SUB) (wh R) (wh-var ?whv) (var ?arg)
+    (np (sem ?argsem) (agr ?agr) (case sub) (wh r) (wh-var ?whv) (var ?arg)
      )
-    (head (vp (subj (% np (var ?arg) (sem ?argsem) (sem ($ ?!type)) (lf ?nplf) )) (agr ?agr) (gap -) ;;(WH -)
+    (head (vp (subj (% np (var ?arg) (sem ?argsem) (sem ($ ?!type)) (lf ?nplf) )) (agr ?agr) (gap -) ;;(wh -)
 	   (class ?c) (constraint ?con) (vform fin) (tma ?tma)
 	   (sem ?sem) (lf ?lf) 
 	   (transform ?transform) (lex ?vlex)
@@ -580,78 +580,78 @@
 	   (headcat ?hcat) ;; aug-trips
 	   )))
    
-   ;; e.g., (the train) that I moved
-   ;; TEST: The cat that the dog chased.
-   ((CP (ctype relc) (arg ?arg) (argsem ?argsem) (gap -)
+   ;; e.g., (the train) that i moved
+   ;; test: the cat that the dog chased.
+   ((cp (ctype relc) (arg ?arg) (argsem ?argsem) (gap -)
      (lf ?lf)
      ;; (lex ?l) (headcat ?vcomp) ;; non-aug-trips settings
      (lex ?hlex) (headcat ?hcat) ;; aug-trips
      (agr ?agr)
      )
     -rel2> ;; .95
-    (pro (wh R) (case ?case) (sem ?argsem) (agr ?agr) 
+    (pro (wh r) (case ?case) (sem ?argsem) (agr ?agr) 
      (lex ?l) ;;(lex (? l that which who whom)) 
      (headcat ?vcomp))
     (head (s (gap (% np (var ?arg) (sem ?argsem) (case ?case) (agr ?agr))) 
 	      (adj-s-prepost -)
-	   (WH -) (stype decl)
+	   (wh -) (stype decl)
 	   (vform fin) (lf ?lf)
 	   (preadvbl -)
 	   (advbl-needed -)
 	   (lex ?hlex) (headcat ?hcat) ;; aug-trips
 	   )))
 
-   ;; TEST: The person on whom he relies
-   ((CP (ctype relc) (arg ?arg) (argsem ?argsem) (gap -)
+   ;; test: the person on whom he relies
+   ((cp (ctype relc) (arg ?arg) (argsem ?argsem) (gap -)
      (lf ?lf)
      ;; (lex ?l) (headcat ?vcomp) ;; non-aug-trips settings
      (lex ?hlex) (headcat ?hcat) ;; aug-trips
      )
     -rel3> ;;.95
     (prep (lex ?pt))
-    (pro (wh R) (sem ?argsem) (agr ?agr) (lex ?l) (headcat ?vcomp))
-    ;; Myrosia: note that a better representation would be a PP
-    ;; (PP (wh R) (ptype ?pt) (sem ?argsem) (agr ?agr) (lex ?l) (headcat ?vcomp))
+    (pro (wh r) (sem ?argsem) (agr ?agr) (lex ?l) (headcat ?vcomp))
+    ;; myrosia: note that a better representation would be a pp
+    ;; (pp (wh r) (ptype ?pt) (sem ?argsem) (agr ?agr) (lex ?l) (headcat ?vcomp))
     ;; but wh-pro1 rule only allows (wh q) for pronouns, throwing the relative pronouns away
     ;; we may want to reconsider this in the future
     (head (s (gap (% pp (ptype ?pt) (var ?arg) (sem ?argsem) (agr ?agr))) 
 	      (adj-s-prepost -)
-	   (WH -) (stype decl)
+	   (wh -) (stype decl)
 	   (vform fin) (lf ?lf)
 	   (preadvbl -)
 	   (advbl-needed -)
 	   (lex ?hlex) (headcat ?hcat) ;; aug-trips
 	   )))
    
-   ;; TEST: The city in which I live
-   ;; FIXME:: the argsem isn't being propagated for (WH R) adverbials. So 
-   ((CP (ctype relc) (arg ?srole) (argsem ?srolesem) (gap -)
+   ;; test: the city in which i live
+   ;; fixme:: the argsem isn't being propagated for (wh r) adverbials. so 
+   ((cp (ctype relc) (arg ?srole) (argsem ?srolesem) (gap -)
      (lf ?newlf) (agr ?newagr)
      ;; (lex ?l) (headcat ?vcomp) ;; non-aug-trips settings
      (lex ?hlex) (headcat ?hcat) ;; aug-trips
      )
     -rel4> .92
-    ;; FIXME -- this is really hacked to transfer the role from the wh pronoun to the NP it will eventually modify
-    ;; WH R should only come out of advbl-binary-relative
-    (advbl-r (ATYPE PRE) (ARGUMENT (% S (sem ?argsem))) 
-     (GAP -) (WH R)   
-     (ARG ?v) (VAR ?mod)
+    ;; fixme -- this is really hacked to transfer the role from the wh pronoun to the np it will eventually modify
+    ;; wh r should only come out of advbl-binary-relative
+    (advbl-r (atype pre) (argument (% s (sem ?argsem))) 
+     (gap -) (wh r)   
+     (arg ?v) (var ?mod)
      (subcatsem ?srolesem)
-     (ARG2 ?srole)
+     (arg2 ?srole)
      )
-    (head (S (VAR ?v) (LF ?lf) (LF (% prop (constraint ?con))) (SEM ?argsem) (aux -)
+    (head (s (var ?v) (lf ?lf) (lf (% prop (constraint ?con))) (sem ?argsem) (aux -)
 	      (adj-s-prepost -)
 	    (tma ?tma) (stype (? stp decl imp how-about))
 	   (wh -) (stype decl) (vform fin) (preadvbl -) (lex ?hlex) (headcat ?hcat)
 	   )
      )
-    (add-to-conjunct (val (MODS ?mod)) (old ?con) (new ?newcon))
-    (change-feature-values (OLD ?lf) (NEW ?newlf) (newvalues ((CONSTRAINT ?newcon))))
+    (add-to-conjunct (val (mods ?mod)) (old ?con) (new ?newcon))
+    (change-feature-values (old ?lf) (new ?newlf) (newvalues ((constraint ?newcon))))
     )
   
-   ;;  WH-term as setting in an S structure
+   ;;  wh-term as setting in an s structure
   
-   ((CP (ctype relc) (arg ?arg) (argsem ?advsem) (gap -) (WH -) (agr ?newagr)
+   ((cp (ctype relc) (arg ?arg) (argsem ?advsem) (gap -) (wh -) (agr ?newagr)
      (lf (% prop (var ?v) (class ?c) 
 	    (constraint ?constraint) (tma ?tma)
 	    (sem ?sem) (transform ?transform)
@@ -661,7 +661,7 @@
    -relc-setting-norole> ;;0.95
    (advbl-r
 	  (var ?npvar) (arg2 ?arg) (arg ?v)
-	  (argument (% S (sem ?argsem))) (WH Q)
+	  (argument (% s (sem ?argsem))) (wh q)
 	  ;;(sem ?npsem)
 	  (role ?advrole) (subcatsem ?advsem)
 	  (wh-var ?foc) (qtype ?qtype) (lf ?lf1)
@@ -678,38 +678,38 @@
 	  (lex ?hlex) (headcat ?hcat) ;; aug-trips
 	  )
 	 )     
-   ;;(role-UNIFY (arg0 ?advrole) (arg1 ?advsem) (arg2 ?roles) (arg3 ?con))
-   (add-to-conjunct (val (MODS ?npvar)) (old ?cons) (new ?constraint)))
+   ;;(role-unify (arg0 ?advrole) (arg1 ?advsem) (arg2 ?roles) (arg3 ?con))
+   (add-to-conjunct (val (mods ?npvar)) (old ?cons) (new ?constraint)))
 
    
    
-   ;; e.g., (the train) I moved
-   ;; TEST: The cat the dog chased.
-   ((CP (ctype relc) (arg ?arg) (argsem ?argsem) (gap -) (reduced +)
+   ;; e.g., (the train) i moved
+   ;; test: the cat the dog chased.
+   ((cp (ctype relc) (arg ?arg) (argsem ?argsem) (gap -) (reduced +)
      (lf ?lf) (agr ?newagr)
      (lex ?hlex) (headcat ?hcat)) ;; aug-trips
     -rel-reduced1-that> .92
     (head (s (gap (% np (var ?arg) (sem ?argsem) (case ?case) (agr ?agr))) 
 	     (adj-s-prepost -)
-           (WH -) (stype decl)
+           (wh -) (stype decl)
            (vform fin) (lf ?lf)
            (preadvbl -)
            (advbl-needed -)
            (lex ?hlex) (headcat ?hcat) ;; aug-trips
            )))
    
-   ;;  e.g., (the train) going to Avon, (the train) loaded with oranges 
-   ;; TEST: The dog barking.
-   ;; TEST: The dog chasing the cat.
-   ((CP (ctype relc) (arg ?arg) (argsem ?argsem) (gap -) (reduced +)
-	(LF ?LF) (agr ?agr)
+   ;;  e.g., (the train) going to avon, (the train) loaded with oranges 
+   ;; test: the dog barking.
+   ;; test: the dog chasing the cat.
+   ((cp (ctype relc) (arg ?arg) (argsem ?argsem) (gap -) (reduced +)
+	(lf ?lf) (agr ?agr)
 	(lex ?hlex) (headcat ?hcat)) ;; aug-trips
     -rel-reduced2> .97
     (head (vp (var ?v)
 	   (subj (% np (lex ?lex) (var ?arg) (sem ?argsem) (sem ($ ?!type)))) 	   
 	   (agr ?agr) 
            (gap -)
-	   (WH -)
+	   (wh -)
 	   (class ?c) 
 	   (constraint ?con) (vform (? vform ing passive))
 	   (sem ?sem) (tma ?tma)
@@ -718,11 +718,11 @@
 	   (lex ?hlex) (headcat ?hcat) ;; aug-trips
 	   )))
 
-;;  e.g., (the train) not going to Avon, (the train) not loaded with oranges 
-   ;; TEST: The dog not barking.
-   ;; TEST: The dog not chasing the cat.
-   ((CP (ctype relc) (arg ?arg) (argsem ?argsem) (gap -) (reduced +)
-; this I think also works, part 1
+;;  e.g., (the train) not going to avon, (the train) not loaded with oranges 
+   ;; test: the dog not barking.
+   ;; test: the dog not chasing the cat.
+   ((cp (ctype relc) (arg ?arg) (argsem ?argsem) (gap -) (reduced +)
+; this i think also works, part 1
 ;	(lf (% prop (var ?v) (constraint ?con) (class ?c) (tma ?newtma)))
 	(lf ?newlf) (agr ?agr)
 	(lex ?hlex) (headcat ?hcat)) ;; aug-trips
@@ -732,7 +732,7 @@
 	   (subj (% np (lex ?lex) (var ?arg) (sem ?argsem) (sem ($ ?!type)))) 	   
 	   (agr ?agr) 
            (gap -)
-	   (WH -)
+	   (wh -)
 	   (class ?c) 
 	   (constraint ?con) (vform (? vform ing passive))
 	   (sem ?sem) (tma ?tma)
@@ -740,22 +740,22 @@
 	   (lf ?lf)
 	   (lex ?hlex) (headcat ?hcat) ;; aug-trips
 	   ))
-; this I think also works, part 2
-;    (append-conjuncts (conj1 (& (NEGATION +))) (conj2 ?tma) (new ?newtma))
-     (add-to-conjunct (val (NEGATION +)) (old ?tma) (new ?newtma))
-     (change-feature-values (OLD ?lf) (NEW ?newlf) (newvalues ((tma ?newtma))))
+; this i think also works, part 2
+;    (append-conjuncts (conj1 (& (negation +))) (conj2 ?tma) (new ?newtma))
+     (add-to-conjunct (val (negation +)) (old ?tma) (new ?newtma))
+     (change-feature-values (old ?lf) (new ?newlf) (newvalues ((tma ?newtma))))
     )
    
    ;; "that" and "if" sentences, used embedded, as complements.
 
-   ;; e.g., That the train arrives.
-   ;; TEST: I know that the dog barks.
-   ;; TEST: I know that the dog chased the cat.
-   ((CP (ctype s-that-overt) (gap -) 
+   ;; e.g., that the train arrives.
+   ;; test: i know that the dog barks.
+   ;; test: i know that the dog chased the cat.
+   ((cp (ctype s-that-overt) (gap -) 
      (lf (% prop (var ?v) (constraint ?con) (class ?lf) (tma ?newtma)))  ;; (lf ?lf) ;; (lex ?lex) (headcat ?vcomp)) ;; non-aug-trips settings
 	(lex ?hlex) (headcat ?hcat)) ;; aug-trips
     -s-that-overt>
-    (word (lex (? lx that)) ;; if whether))   these are handled by CTYPE S-IF rule   JFA 3/07
+    (word (lex (? lx that)) ;; if whether))   these are handled by ctype s-if rule   jfa 3/07
 	  (headcat ?vcomp))
     (head (s (stype decl) (main -) (gap -) 
 	     (lf (% prop (var ?v) (constraint ?con) (class ?lf) (tma ?tma))) ;;(lf ?lf) 
@@ -768,8 +768,8 @@
      (append-conjuncts (conj1 (& (prop +))) (conj2 ?tma) (new ?newtma))
      )   
 
-   ;; TEST: I prefer that the dog bark.
-   ((CP (ctype s-that-subjunctive) (gap -)
+   ;; test: i prefer that the dog bark.
+   ((cp (ctype s-that-subjunctive) (gap -)
      (lf (% prop (var ?v) (constraint ?con) (class ?lf) (tma ?newtma))) ;;(lf ?lf) 
      (lex ?hlex) (headcat ?hcat)) ;; aug-trips
     -s-that-subjunctive>
@@ -787,8 +787,8 @@
     )
    
    
-   ;; I guess that if the train arrives, we go
-    ((CP (ctype s-that-overt) (gap -) 
+   ;; i guess that if the train arrives, we go
+    ((cp (ctype s-that-overt) (gap -) 
       (lf (% prop (var ?v) (constraint ?con) (class ?lf) (tma ?newtma))) ;;(lf ?lf)
 ;;	 (lex that) (headcat ?vcomp) ;; non-aug-trips settings
 	 (lex ?hlex) (headcat ?hcat) ;; aug-trips
@@ -806,9 +806,9 @@
       (append-conjuncts (conj1 (& (prop +))) (conj2 ?tma) (new ?newtma)))
    
    ;; e.g., (i know) the train arrived.
-   ;; TEST: I know the dog barked.
-   ;; TEST: I know the dog chased the cat.
-   ((CP (ctype s-that-missing) (gap -) 
+   ;; test: i know the dog barked.
+   ;; test: i know the dog chased the cat.
+   ((cp (ctype s-that-missing) (gap -) 
       (lf (% prop (var ?v) (constraint ?con) (class ?lf) (tma ?newtma))) ;;(lf ?lf)
 	(lex ?hlex) (headcat ?hcat)) ;; aug-trips
     -s-that-missing> .98
@@ -826,18 +826,18 @@
    ;; 'go-and' constructions
    ((cp (ctype s-and) (var ?v)
 	(lex ?lex) (headcat ?hcat) ;; aug-trips
-     (subj (% (? cat NP PP) (ptype (? ptype for -)) (case (? case sub obj -)) 
+     (subj (% (? cat np pp) (ptype (? ptype for -)) (case (? case sub obj -)) 
 	      (agr ?subjagr) (sem ?subjsem) (var ?subjvar) (transform ?subjtransform)
 	;;      (lex ?lex) ;; non-aug-trips settings
 	      ))
      (gap ?g)
-     (LF ?lf))
+     (lf ?lf))
      -sand>
      (word (lex and))
      (head (vp (lf ?lf) 
 	    (aux -)
 	    (gap ?g)
-	    (subj (% NP (sem ?subjsem) ;; (lex ?lex) ;; non-aug-trips setting
+	    (subj (% np (sem ?subjsem) ;; (lex ?lex) ;; non-aug-trips setting
 		     (sem ($ ?!type)) (var ?subjvar) (agr ?subjagr) (transform ?subjtransform)))
 	    (vform base)
 	    (advbl-needed -)
@@ -845,20 +845,20 @@
 	    )))
 
    ;;aug-trips: non-aug-trips settings have lex and hcat in subj-np
-   ;;   INFINITIVE SENTENCES
+   ;;   infinitive sentences
 
-   ;; e.g., To know the train arrived.
+   ;; e.g., to know the train arrived.
    ;; aux - to exclude cases like "to can ..."
-   ;; TEST: The dog wants to bark
+   ;; test: the dog wants to bark
    ((cp (ctype s-to) (var ?v) ;;(subj ?subj) 
-     #||(subj (% (? cat NP PP) (ptype (? ptype for -)) (case (? case sub obj -)) (lex ?lex)
+     #||(subj (% (? cat np pp) (ptype (? ptype for -)) (case (? case sub obj -)) (lex ?lex)
 	      (agr ?subjagr) 
 	      (sem ?subjsem) (var ?subjvar) (transform ?subjtransform)
 	      ))||#
      (subj ?subj)
      (dobj ?dobj)
      (gap ?g)
-     (LF ?lf) ;; (lex to) (headcat ?vinf)) ;; non-aug-trips settings
+     (lf ?lf) ;; (lex to) (headcat ?vinf)) ;; non-aug-trips settings
      (lex ?hlex) (headcat ?hcat)) ;; aug-trips     
      -to1>
      (infinitival-to (lex to) (headcat ?vinf))
@@ -872,10 +872,10 @@
 	   (be-there -)
 	   )))
    
-   ;; We need a special rule for cases like "to be taken", because it is aux be, but for passives it's fine
-   ;; TEST: They appear to be broken
+   ;; we need a special rule for cases like "to be taken", because it is aux be, but for passives it's fine
+   ;; test: they appear to be broken
     ((cp (ctype s-to) (var ?v) (subj ?subj) (gap ?g)
-     (LF ?lf)
+     (lf ?lf)
 ;;     (lex to) (headcat ?vinf) ;; non-aug-trips settings
      (lex ?hlex) (headcat ?hcat) ;; aug-trips
      )
@@ -890,9 +890,9 @@
 	    ))
      )
    
-   ;; e.g., For the train to arrive
+   ;; e.g., for the train to arrive
    ((cp (ctype s-to) (var ?v) (subj ?subj) (gap ?g)
-     (LF ?lf)
+     (lf ?lf)
  ;;    (lex to) (headcat ?vinf) ;; non-aug-trips settings
      (lex ?hlex) (headcat ?hcat) ;; aug-trips
      )
@@ -900,7 +900,7 @@
     (word (lex for))
     (np (sem ?subjsem) (var ?npvar) (case (? case obj -)))
     (infinitival-to (lex to) (headcat ?vinf) )
-    (head (vp (LF ?lf) (gap ?g)
+    (head (vp (lf ?lf) (gap ?g)
 	      (sem ?sem)
 	      (subj ?subj) (subj (% np (lex ?lex) (sem ?subjsem) (sem ($ ?!type)) (var ?npvar)))
 	      (vform base)
@@ -908,7 +908,7 @@
 	      (be-there -)
 	      )))
 
-      ; TEST: Tell him to not bark
+      ; test: tell him to not bark
      ((cp (ctype s-to) (var ?v) (gap ?g)
      (lex ?hlex) (headcat ?hcat)
      (subj ?subj) (dobj ?dobj)
@@ -926,16 +926,16 @@
 	      (dobj ?dobj) (dobj (% ?s3  (case (? dcase obj -)) (gap -)))
 	      (lex ?hlex) (headcat ?hcat) ;; aug-trips
 	    ))
-    (append-conjuncts (conj1 (& (vform base) (NEGATION +))) (conj2 ?tma) (new ?newtma))
+    (append-conjuncts (conj1 (& (vform base) (negation +))) (conj2 ?tma) (new ?newtma))
     )
 
-   ;; V from Xing, e.g. prevent, prohibit, forbid where we want the objcontrol role on the ing form
-   ;; TEST: He prevented the dog from barking.
+   ;; v from xing, e.g. prevent, prohibit, forbid where we want the objcontrol role on the ing form
+   ;; test: he prevented the dog from barking.
    ((cp (ctype s-from-ing) (var ?v) (ptype ?ptype)
      (subj ?subj)
      (dobj ?dobj)
      (gap ?g)
-     (LF ?lf) ;; (lex to) (headcat ?vinf)) ;; non-aug-trips settings
+     (lf ?lf) ;; (lex to) (headcat ?vinf)) ;; non-aug-trips settings
      (lex ?hlex) (headcat ?hcat)) ;; aug-trips     
      -prep-ing>
      (prep (lex ?ptype) (headcat ?ving))
@@ -943,113 +943,113 @@
 	       (advbl-needed -)
 	       (gap ?g)
 	       (subj ?subj)
-	       (vform ING)
+	       (vform ing)
 	       (dobj ?dobj) 
 	       (lex ?hlex) (headcat ?hcat) ;; aug-trips
 	       )))
    
-     ;;  PRED rules: 
-     ;;  PREDs are used for BE verbs, and create a constituent that it similar
+     ;;  pred rules: 
+     ;;  preds are used for be verbs, and create a constituent that it similar
      ;;    to a lambda experssion in the logical form.
-     ;;   adjectives, adverbials, indefinite descriptions or vps can form PREDs
-     ;;  NB: we must put a VAR feature in the LF of pred's if it it to be picked up in the OBJECTS
-     ;;     slot of the logical form  - and it can't be the same as the VAR of an NP or 
+     ;;   adjectives, adverbials, indefinite descriptions or vps can form preds
+     ;;  nb: we must put a var feature in the lf of pred's if it it to be picked up in the objects
+     ;;     slot of the logical form  - and it can't be the same as the var of an np or 
      ;;      any other major constituent
-     ;; e.g., (the train) is ORANGE
-     ;; TEST: The dog is short.
-     ((pred (lf ?lf) (arg ?arg) (ARGUMENT ?argument) (VAR ?v) (agr ?agr) (sem ?sem)    
+     ;; e.g., (the train) is orange
+     ;; test: the dog is short.
+     ((pred (lf ?lf) (arg ?arg) (argument ?argument) (var ?v) (agr ?agr) (sem ?sem)    
             (filled -) (adjectival +)
             )
       -pred-adj> 1
-      (head (adjp (lf ?lf) (VAR ?v) (arg ?arg) (ARGUMENT ?argument) (argument (% ?argcat (var ?arg))) ;;(wh -) eliminated to allow "how red"
+      (head (adjp (lf ?lf) (var ?v) (arg ?arg) (argument ?argument) (argument (% ?argcat (var ?arg))) ;;(wh -) eliminated to allow "how red"
 	     (set-modifier -) ;; numbers are set-modifier +, and they don't behave as normal adjps in predicates
 	     (atype (? atp central predicative-only))
-	     ;; MD 2008/17/07 Eliminated cases with positive post-subcat, they should only happen when an adjective is looking for an argument after an NP, not possible in the PRED situation
+	     ;; md 2008/17/07 eliminated cases with positive post-subcat, they should only happen when an adjective is looking for an argument after an np, not possible in the pred situation
 	     (post-subcat -) 
 	     ))
       )
 
-   ;; TEST: The dog is from the store.
-     ((pred (lf ?lf) (arg ?arg) (ARGUMENT ?argument) (VAR ?v) (agr ?agr) (sem ?sem)    
+   ;; test: the dog is from the store.
+     ((pred (lf ?lf) (arg ?arg) (argument ?argument) (var ?v) (agr ?agr) (sem ?sem)    
        (filled -) (adjectival -) (gap ?gap)
        (wh ?wh)
        )
       -pred-advbl> 0.98 ;; don't use it if a regular advbl interpretation is possible
-      ;; MD: argument should be % NP, if an adverbial does not apply to NPs, don't use it
-      (head (advbl (lf ?lf) (VAR ?v) (arg ?arg) (argument ?argument) (argument (% NP (var ?arg)))
+      ;; md: argument should be % np, if an adverbial does not apply to nps, don't use it
+      (head (advbl (lf ?lf) (var ?v) (arg ?arg) (argument ?argument) (argument (% np (var ?arg)))
 	     (wh (? wh - q)) (sort (? srt binary-constraint pp-word pred))
 	     (gap ?gap)
 	     ))
       )
 
-     ;; e.g., role NPs can be predicates "We remained friends"
+     ;; e.g., role nps can be predicates "we remained friends"
      
      ((pred (arg ?arg) (var ?v)  (sem ?sem)
-            (lf (% prop (status F) (arg ?arg) (VAR ?v) 
-		   (CLASS ?c) (CONSTRAINT (& (FIGURE ?arg)))))
+            (lf (% prop (status ont::f) (arg ?arg) (var ?v) 
+		   (class ?c) (constraint (& (figure ?arg)))))
             (argument ?argument)
             (filled -)
             )
       -pred4>
       (head (np (sem ?sem) (var ?v) (case (? case obj -))
-          (lf (% DESCRIPTION (STATUS (? x INDEFINITE BARE indefinite-plural)) (sem ($ F::PHYS-OBJ (F::TYPE ont::role-reln)))
-	         (CLASS ?c) (CONSTRAINT ?constr))))
+          (lf (% description (status (? x ont::indefinite ont::bare ont::indefinite-plural)) (sem ($ f::phys-obj (f::type ont::role-reln)))
+	         (class ?c) (constraint ?constr))))
       ))
 
    ;; a construction that is limited to pred of emotional state 
    ;;  e.g., he is happy/sad/amused that the dog barked
    
    ((pred (arg ?arg) (var ?v)  (sem ?sem)
-            (lf (% prop  (VAR ?v) 
-		   (CLASS (? c ont::emotional-val ont::evoke-emotion))
-		   (CONSTRAINT ?constraint)))
+            (lf (% prop  (var ?v) 
+		   (class (? c ont::emotional-val ont::evoke-emotion))
+		   (constraint ?constraint)))
             (argument ?argument)
             (filled -)
             )
      -emotional-state-reason>
      (head (pred (var ?v) (arg ?arg) (sem ?sem)
-            (lf (% prop (VAR ?v) 
-		   (CLASS (? c ont::emotional-val ont::evoke-emotion))
-		   (CONSTRAINT ?con)))
+            (lf (% prop (var ?v) 
+		   (class (? c ont::emotional-val ont::evoke-emotion))
+		   (constraint ?con)))
             (argument ?argument)
             (filled -)
             ))
     (cp (ctype s-that) (var ?reason))
-    (add-to-conjunct (val (REASON ?reason)) (old ?con) (new ?constraint)))
+    (add-to-conjunct (val (reason ?reason)) (old ?con) (new ?constraint)))
         
-     ;; Add tense information (past, present, or future)
-     ;; TEST: The dog barked.
-     ;; TEST: The dog barks.
-     ;; TEST: The dog will bark.
-     ((vp (LF (% prop (class ?c) (var ?v) (constraint ?constraint) (tma ?newtma) 
+     ;; add tense information (past, present, or future)
+     ;; test: the dog barked.
+     ;; test: the dog barks.
+     ;; test: the dog will bark.
+     ((vp (lf (% prop (class ?c) (var ?v) (constraint ?constraint) (tma ?newtma) 
 	         (transform ?transf) (sem ?sem)))
           (class ?c) (var ?v) (constraint ?constraint) (tma ?newtma)  (sem ?sem) (transform ?transf)
-           (vform (? vf PAST PRES FUT))
+           (vform (? vf past pres fut))
           )
       -vp-tns+> 1.0 ;; 1 because we are simply adding tense info, not really using more rules
      (head
       (vp- (class ?c)  (constraint ?constraint) (tma ?tma1) 
-        (vform (? vf PAST PRES FUT)) (subjvar ?sv)
+        (vform (? vf past pres fut)) (subjvar ?sv)
        (advbl-needed -)
        )) 
-     (add-to-conjunct (val (TENSE ?vf)) (old ?tma1) (new ?newtma))
+     (add-to-conjunct (val (tense ?vf)) (old ?tma1) (new ?newtma))
      ) 
    
    ;; untensed vp
-   ;; TEST: The dog chased the cat to scare it.
-   ((vp (LF (% prop (class ?c) (var ?v) (constraint ?constraint) (transform ?transf) (tma ?newtma) (sem ?sem)))
+   ;; test: the dog chased the cat to scare it.
+   ((vp (lf (% prop (class ?c) (var ?v) (constraint ?constraint) (transform ?transf) (tma ?newtma) (sem ?sem)))
        (class ?c) (var ?v) (constraint ?constraint) (tma ?newtma) (sem ?sem) (transform ?transf) )
      -vp-tns-> 1.0
      (head
       (vp- (class ?c) (constraint ?constraint) (tma ?tma) (subj ?subj) 
-       (vform (? vf BASE PASSIVE ING PASTPART))
+       (vform (? vf base passive ing pastpart))
        (advbl-needed -)
        ))
     (add-to-conjunct (val (vform ?vf)) (old ?tma) (new ?newtma))
     )
     
-     ;; VP RULES 
-     ;; TEST: He said the dog barked.
+     ;; vp rules 
+     ;; test: he said the dog barked.
     ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar)
       (var ?v) (class ?c) (gap ?gap) 
       (constraint ?newc)
@@ -1068,8 +1068,8 @@
 	   ;; (iobj (% -))
 	    (part ?part) 
 	    (dobj ?dobj) (dobj (% ?s3 (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap)))	    
-	    ;; we allow a possible gap in the DOBJ NP e.g., "what did he thwart the passage of"
-	    (Comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -)))
+	    ;; we allow a possible gap in the dobj np e.g., "what did he thwart the passage of"
+	    (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -)))
 	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	    (restr ?prefix)
 	   ))
@@ -1077,8 +1077,8 @@
      ?dobj
      ?part
      ?comp
-     (append-conjuncts (conj1 ?prefix) (conj2 (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-		       (LIOBJ ?iobjvar) (LCOMP ?compvar)
+     (append-conjuncts (conj1 ?prefix) (conj2 (& (lsubj ?subjvar) (lobj ?dobjvar)
+		       (liobj ?iobjvar) (lcomp ?compvar)
 		       (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 		       (?iobj-map ?iobjvar) (?comp3-map ?compvar)
 		       ))
@@ -1086,12 +1086,12 @@
      
      )
     
-   ;; CASE with a gap in the COMP3
+   ;; case with a gap in the comp3
    ;;  e.g., what did he start to cook
     ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar)
       (var ?v) (class ?c) (gap ?!gap) 
-      (constraint (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-		       (LIOBJ ?iobjvar) (LCOMP ?compvar)
+      (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+		       (liobj ?iobjvar) (lcomp ?compvar)
 		       (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 		       (?iobj-map ?iobjvar) (?comp3-map ?compvar)
                        ))
@@ -1110,7 +1110,7 @@
 	   ;; (iobj (% -))
 	    (part ?part) 
 	    (dobj ?dobj) (dobj (% ?s3 (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap -)))	    
-	    (Comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap ?!gap)))
+	    (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap ?!gap)))
 	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	    
 	   ))
@@ -1120,15 +1120,15 @@
      ?comp
      )
 
-   ;; The indirect object as RECIPIENT construction
+   ;; the indirect object as recipient construction
   
     ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar)
       (var ?v) (class ?c) (gap ?gap) 
-      (constraint (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-		       (LIOBJ ?iobjvar) (LCOMP ?compvar)
+      (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+		       (liobj ?iobjvar) (lcomp ?compvar)
 		       (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
-		       (affected-result (% *PRO* (status F)
-				(CLASS (:* ONT::recipient iobj)) (VAR *) (SEM ?subjsem) (constraint (& (GROUND ?iobjvar) (FIGURE ?v)))))
+		       (affected-result (% *pro* (status ont::f)
+				(class (:* ont::recipient iobj)) (var *) (sem ?subjsem) (constraint (& (ground ?iobjvar) (figure ?v)))))
 		       (?comp3-map ?compvar)
 		       
                        ))
@@ -1138,31 +1138,31 @@
      -vp1-role-recipient-iobj> .97   ;; prefer subcategorized readings if possible
      (head (v (aux -) ;; main verbs only
 	    (lf ?c)
-	    (sem ($ f::situation (f::type ONT::GIVING) (F::iobj F::recipient)))
+	    (sem ($ f::situation (f::type ont::giving) (f::iobj f::recipient)))
 	    (vform ?vf)
 	    (tma ?tma)
 	    ;; (subj (? subj (% ?s1 (var ?subjvar))))
 	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (agr ?subjagr) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	    ;;(iobj ?iobj) (iobj (% ?s2  (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))
 	    (part (% -)) 
-	    (dobj ?dobj) (dobj (% NP (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap)))	    
-	            ;; we allow a possible gap in the DOBJ NP e.g., "what did he thwart the passage of"
-	    (Comp3 (% -))
+	    (dobj ?dobj) (dobj (% np (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap)))	    
+	            ;; we allow a possible gap in the dobj np e.g., "what did he thwart the passage of"
+	    (comp3 (% -))
 	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	    
 	   ))
-     (np (case (? icase obj -)) (var ?iobjvar) (gerund -) (sem ($ (? rcp F::Phys-obj f::abstr-obj) (F::intentional +))) (gap -))
+     (np (case (? icase obj -)) (var ?iobjvar) (gerund -) (sem ($ (? rcp f::phys-obj f::abstr-obj) (f::intentional +))) (gap -))
      ?dobj
      )
 
-   ;; The indirect object beneficiary construction
+   ;; the indirect object beneficiary construction
     ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar)
       (var ?v) (class ?c) (gap ?gap) 
-      (constraint (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-		       (LIOBJ ?iobjvar) ;;(beneficiary ?iobjvar)
+      (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+		       (liobj ?iobjvar) ;;(beneficiary ?iobjvar)
 		       (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
-		       (beneficiary (% *PRO* (status F)
-				(CLASS (:* ONT::beneficiary iobj)) (VAR *) (SEM ?subjsem) (constraint (& (GROUND ?iobjvar) (FIGURE ?v)))))
+		       (beneficiary (% *pro* (status ont::f)
+				(class (:* ont::beneficiary iobj)) (var *) (sem ?subjsem) (constraint (& (ground ?iobjvar) (figure ?v)))))
 		       (?comp3-map ?compvar)
 		       
                        ))
@@ -1172,30 +1172,30 @@
      -vp1-role-beneficiary-iobj> .98
      (head (v (aux -) ;; main verbs only
 	    (lf ?c)
-	    (sem ($ f::situation (f::type ONT::event-of-causation)))
+	    (sem ($ f::situation (f::type ont::event-of-causation)))
 	    (vform ?vf)
 	    (tma ?tma)
 	    ;; (subj (? subj (% ?s1 (var ?subjvar))))
 	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (agr ?subjagr) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	    ;;(iobj ?iobj) (iobj (% ?s2  (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))
 	    (part (% -)) 
-	    (dobj ?dobj) (dobj (% NP (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (gerund -)))	    
-	            ;; we allow a possible gap in the DOBJ NP e.g., "what did he thwart the passage of"
-	    (Comp3 (% -))
+	    (dobj ?dobj) (dobj (% np (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (gerund -)))	    
+	            ;; we allow a possible gap in the dobj np e.g., "what did he thwart the passage of"
+	    (comp3 (% -))
 	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	    
 	   ))
-     (np (case (? icase obj -)) (var ?iobjvar) (sem ($ F::Phys-obj (F::origin F::Living) (F::intentional +) (F::type ont::person))) (gap -))
+     (np (case (? icase obj -)) (var ?iobjvar) (sem ($ f::phys-obj (f::origin f::living) (f::intentional +) (f::type ont::person))) (gap -))
      ?dobj
      )
 
       
-   ;; rule for modal aux's with no VP complements
-   ;; TEST: The dog should.
+   ;; rule for modal aux's with no vp complements
+   ;; test: the dog should.
     ((vp- (subj ?subj)  (subjvar ?subjvar) (lex ?l)
       (var ?v) (class (:* ont::ellipsis ))
       (gap -) 
-      (constraint (& (LSUBJ ?subjvar) (?lsubj-map ?subjvar)))
+      (constraint (& (lsubj ?subjvar) (?lsubj-map ?subjvar)))
       (tma ?newtma) (ellipsis +)
       (postadvbl -) (vform ?vf)
       )
@@ -1215,12 +1215,12 @@
      (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?newtma))
      )
    
-    ;; rule for negated modal aux's with no VP complements
-    ;; TEST: The dog shouldn't.
+    ;; rule for negated modal aux's with no vp complements
+    ;; test: the dog shouldn't.
     ((vp- (subj ?subj)  (subjvar ?subjvar) (lex ?l)
       (var ?v) (class (:* ont::ellipsis ))
       (gap -) 
-      (constraint (& (LSUBJ ?subjvar) (?lsubj-map ?subjvar)))
+      (constraint (& (lsubj ?subjvar) (?lsubj-map ?subjvar)))
       (tma ?newtma)
       (postadvbl -) (vform ?vf)
       )
@@ -1228,7 +1228,7 @@
      (head (aux 
 	    (tma-contrib ?tma-contrib)
 	    (sem-contrib ?sem-contrib)
-	    (ellipsis +) ;; SHOULD THERE BE (contraction -) there???	    
+	    (ellipsis +) ;; should there be (contraction -) there???	    
 	    (lex ?l)
 	    (sem ?sem)
 	    (vform ?vf)
@@ -1238,18 +1238,18 @@
 	    ))
      (neg)
      
-     ;; We need to have a sequence of additions to conjunct, to avoid parser warnings
+     ;; we need to have a sequence of additions to conjunct, to avoid parser warnings
      (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?ntma))
-     (change-feature-values (old ?ntma) (new ?newtma) (newvalues ((NEGATION +)))) 
+     (change-feature-values (old ?ntma) (new ?newtma) (newvalues ((negation +)))) 
      )
    
    
     ;; for negation after contracted forms of main verb be --disallow n't
-    ;; TEST: I'm not short.
+    ;; test: i'm not short.
     ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar)
       (var ?v) (class ?c) (gap -) 
-      (constraint (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-		       (LIOBJ ?iobjvar) (LCOMP ?compvar)
+      (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+		       (liobj ?iobjvar) (lcomp ?compvar)
 		       (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 		       (?iobj-map ?iobjvar) (?comp3-map ?compvar)
                        ))
@@ -1280,21 +1280,21 @@
      )
 
     ;; for pre-adverbials between verb and argument
-    ;; TEST: He said yesterday that the dog barked.
-    ;; TEST: He saw on his left a dog barking.
+    ;; test: he said yesterday that the dog barked.
+    ;; test: he saw on his left a dog barking.
     ((vp- (subj ?subj) (subjvar ?subjvar) (dobjvar ?dobjvar)
       (var ?v) (class ?c) (gap -)  (complex +)
-      (constraint (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-		       (LIOBJ ?iobjvar) (LCOMP ?compvar)
+      (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+		       (liobj ?iobjvar) (lcomp ?compvar)
 		       (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 		       (?iobj-map ?iobjvar) (?comp3-map ?compvar)
-		       (MODS ?mod)
+		       (mods ?mod)
                        ))
       (tma -)
       (postadvbl -) (vform ?vf)
       )
      -vp1-pre-arg-adv> .96 ;; only use if needed; prefer predicate adverbial modification 
-     ;; require non-null DOBJ to avoid using with intransitive verbs (maybe also need a non-null COMP rule??)
+     ;; require non-null dobj to avoid using with intransitive verbs (maybe also need a non-null comp rule??)
      (head (v (aux -)
 	    (lf ?c)
 	    (lex ?lx)
@@ -1308,23 +1308,23 @@
 	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	     
 	    ))
-     (advbl (ATYPE PRE-VP) (GAP -)
-      (ARGUMENT (% S (sem ?argsem)))
-      (ARG ?v) (VAR ?mod) (role ?advrole) (subcat -))      
+     (advbl (atype pre-vp) (gap -)
+      (argument (% s (sem ?argsem)))
+      (arg ?v) (var ?mod) (role ?advrole) (subcat -))      
      ?!dobj  
      ?part
      ?comp
      )
    
      ;; for pre-adverbials after main verb be
-     ;; TEST: Dogs are always short.
+     ;; test: dogs are always short.
     ((vp- (subj ?subj) (subjvar ?subjvar) (dobjvar ?dobjvar)
       (var ?v) (class ?c) (gap -) 
-      (constraint (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-		       (LIOBJ ?iobjvar) (LCOMP ?compvar)
+      (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+		       (liobj ?iobjvar) (lcomp ?compvar)
 		       (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 		       (?iobj-map ?iobjvar) (?comp3-map ?compvar)
-		       (MODS ?mod)
+		       (mods ?mod)
                        ))
       (tma -)
       ;;      (tma ?tma)
@@ -1346,9 +1346,9 @@
 	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	     
 	    ))
-     (advbl (ATYPE PRE-VP) (GAP -) (LF (% PROP (class ont::frequency))) (np-advbl -)  ;; don't allow time NPs here, e.g., "three years"
-      (ARGUMENT (% S (sem ?argsem)))
-      (ARG ?v) (VAR ?mod) (role ?advrole) (subcat -))      
+     (advbl (atype pre-vp) (gap -) (lf (% prop (class ont::frequency))) (np-advbl -)  ;; don't allow time nps here, e.g., "three years"
+      (argument (% s (sem ?argsem)))
+      (arg ?v) (var ?mod) (role ?advrole) (subcat -))      
      ?dobj
      ?part
      ?comp
@@ -1356,14 +1356,14 @@
 
    
    ;; for pre-adverbials after main verb be
-   ;; TEST: 5 is also not a short circuit
+   ;; test: 5 is also not a short circuit
     ((vp- (subj ?subj) (subjvar ?subjvar) (dobjvar ?dobjvar)
       (var ?v) (class ?c) (gap -) 
-      (constraint (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-		       (LIOBJ ?iobjvar) (LCOMP ?compvar)
+      (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+		       (liobj ?iobjvar) (lcomp ?compvar)
 		       (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 		       (?iobj-map ?iobjvar) (?comp3-map ?compvar)
-		       (MODS ?mod)
+		       (mods ?mod)
                        ))
       (tma (& (negation +)))
       (postadvbl -) (vform ?vf)
@@ -1384,9 +1384,9 @@
 	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	     
 	    ))
-     (advbl (ATYPE PRE-VP) (GAP -)
-      (ARGUMENT (% S (sem ?argsem)))
-      (ARG ?v) (VAR ?mod) (role ?advrole) (subcat -))      
+     (advbl (atype pre-vp) (gap -)
+      (argument (% s (sem ?argsem)))
+      (arg ?v) (var ?mod) (role ?advrole) (subcat -))      
      (neg (lex not))
      ?dobj
      ?part
@@ -1395,15 +1395,15 @@
 
    
      
-   ;; VP RULE WITH DOBJ GAP
-   ;; TEST: who did he see
+   ;; vp rule with dobj gap
+   ;; test: who did he see
    ((vp- (subj ?subj) (subjvar ?subjvar) (dobjvar ?dobjvar)
-     (main +) (gap (% ?s3 (Var ?gapvar) (Sem ?gapsem) (AGR ?gapagr) 
+     (main +) (gap (% ?s3 (var ?gapvar) (sem ?gapsem) (agr ?gapagr) 
 		      (case ?dcase) (ptype ?ptype)
 		      ))
      (var ?v) 
-     (class ?c) (constraint (& (LSUBJ ?subjvar) (LOBJ ?gapvar)
-			       (LIOBJ ?iobjvar) (LCOMP ?compvar)
+     (class ?c) (constraint (& (lsubj ?subjvar) (lobj ?gapvar)
+			       (liobj ?iobjvar) (lcomp ?compvar)
 			       (?lsubj-map ?subjvar) (?!dobj-map ?gapvar)
 			       (?iobj-map ?iobjvar) (?comp3-map ?compvar)
 			       ))
@@ -1411,11 +1411,11 @@
      )
     -vp-dobj-gap-role> ;;.97
     (head (v (aux -)  (be-there -)
-	   (lf ?c) (sem ($ f::situation (f::type ont::situation-root))) (VFORM ?tense-pro)
+	   (lf ?c) (sem ($ f::situation (f::type ont::situation-root))) (vform ?tense-pro)
              (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	     (iobj ?iobj) (iobj (% ?s2 (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))
 	     (part ?part) 
-	     (dobj ?!dobj) (dobj (% NP (case (? dcase obj -)) (var ?gapvar) (sem ?gapsem) (agr ?gapagr) (ptype ?ptype))) ;; must have a possibility of NP dobj
+	     (dobj ?!dobj) (dobj (% np (case (? dcase obj -)) (var ?gapvar) (sem ?gapsem) (agr ?gapagr) (ptype ?ptype))) ;; must have a possibility of np dobj
 	     (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -))) 
 	     (subj-map ?lsubj-map) (dobj-map ?!dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	      
@@ -1425,12 +1425,12 @@
     ?comp
     )
    
-   ;; VP RULES where the object pp or pred has a gap
-   ;; TEST: who did he talk to?
+   ;; vp rules where the object pp or pred has a gap
+   ;; test: who did he talk to?
    ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar)
      (var ?v) (class ?c) (gap ?!gap) (be-there -)
-     (constraint (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-		    (LIOBJ ?iobjvar) (LCOMP ?compvar)
+     (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+		    (liobj ?iobjvar) (lcomp ?compvar)
 		    (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 		    (?iobj-map ?iobjvar) (?comp3-map ?compvar)
 		    ))
@@ -1447,8 +1447,8 @@
 	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (agr ?subjagr) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	   (iobj ?iobj) (iobj (% ?s2  (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))
 	   (part ?part) 
-	   (dobj ?dobj) (dobj (% (? s3 PP PRED) (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?!gap)))
-	   (Comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -)))
+	   (dobj ?dobj) (dobj (% (? s3 pp pred) (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?!gap)))
+	   (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -)))
 	   (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	    (be-there -)
 	   ))
@@ -1459,11 +1459,11 @@
     ?comp
     )
    
-   ;; VP RULES where the object pp or pred has a gap
+   ;; vp rules where the object pp or pred has a gap
    ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar)
      (var ?v) (class ?c) (gap ?!gap) 
-     (constraint (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-		    (LIOBJ ?iobjvar) (LCOMP ?!compvar)
+     (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+		    (liobj ?iobjvar) (lcomp ?!compvar)
 		    (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 		    (?iobj-map ?iobjvar) (?comp3-map ?!compvar)
 		    ))
@@ -1481,7 +1481,7 @@
 	   (iobj ?iobj) (iobj (% ?s2  (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))
 	   (part ?part) 
 	   (dobj ?dobj) (dobj (% ?s3 (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap -)))
-	   (Comp3 ?!comp) (comp3 (% (? s4 PP PRED) (case (? ccase obj -)) (var ?!compvar) (sem ?compsem) (gap ?!gap)))
+	   (comp3 ?!comp) (comp3 (% (? s4 pp pred) (case (? ccase obj -)) (var ?!compvar) (sem ?compsem) (gap ?!gap)))
 	   (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	    
 	   (be-there -)
@@ -1493,14 +1493,14 @@
     ?!comp
     )
    
-   ;; VP RULE WITH COMP3 GAP  (typically a PATH from a "where" question or a prepositional phrase)
+   ;; vp rule with comp3 gap  (typically a path from a "where" question or a prepositional phrase)
    ;; where did he come from
    ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar)
-     (main +) (gap (% ?s4 (Var ?!gapvar) (case ?ccase) (agr ?gapagr) (sem ?compsem) (ptype ?ptype)
+     (main +) (gap (% ?s4 (var ?!gapvar) (case ?ccase) (agr ?gapagr) (sem ?compsem) (ptype ?ptype)
 		      ))
      (var ?v) 
-     (class ?c) (constraint (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-				 (LIOBJ ?iobjvar) (LCOMP ?!gapvar)
+     (class ?c) (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+				 (liobj ?iobjvar) (lcomp ?!gapvar)
 				 (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 				 (?iobj-map ?iobjvar) (?comp3-map ?!gapvar)
 				 ))
@@ -1508,7 +1508,7 @@
      )
     -vp-comp-gap1-role> .97
     (head (v (aux -)
-	   (lf ?c) (sem ($ f::situation (f::type ont::situation-root))) (VFORM ?tense-pro)
+	   (lf ?c) (sem ($ f::situation (f::type ont::situation-root))) (vform ?tense-pro)
 	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	   ;;(subjvar ?subjvar)
 	   (iobj ?iobj)  (iobj (% ?s2 (var ?iobjvar) (sem ?iobjsem) (gap -) (case (? icase obj -))))
@@ -1524,16 +1524,16 @@
      ?part
     )
 
-   ;; VP RULE WITH COMP3 GAP when a verb has a particle
+   ;; vp rule with comp3 gap when a verb has a particle
    ;; the difference from comp-gap1-role is that part is bound to be non-empty by double-matching on (part (% word))
    ;; and then the direct object can come after the particle
    ;; the double matching is necessary to differentiate from the cases where there is a non-empty particle
    ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar)
-     (main +) (gap (% ?s4 (Var ?!gapvar) (case ?ccase) (agr ?gapagr) (sem ?compsem) (ptype ?ptype)
+     (main +) (gap (% ?s4 (var ?!gapvar) (case ?ccase) (agr ?gapagr) (sem ?compsem) (ptype ?ptype)
 		      ))
      (var ?v) 
-     (class ?c) (constraint (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-				 (LIOBJ ?iobjvar) (LCOMP ?!gapvar)
+     (class ?c) (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+				 (liobj ?iobjvar) (lcomp ?!gapvar)
 				 (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 				 (?iobj-map ?iobjvar) (?comp3-map ?!gapvar)
 				 ))
@@ -1541,7 +1541,7 @@
      )
     -vp-comp-gap1-part-role> .97
     (head (v (aux -)
-	   (lf ?c) (sem ($ f::situation (f::type ont::situation-root))) (VFORM ?tense-pro)
+	   (lf ?c) (sem ($ f::situation (f::type ont::situation-root))) (vform ?tense-pro)
 	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	   (iobj ?iobj)  (iobj (% ?s2 (var ?iobjvar) (sem ?iobjsem) (gap -) (case (? icase obj -))))
 	   (part ?!part) ;;(part (% part))
@@ -1557,12 +1557,12 @@
     )
 
     
-   ;; VP RULE WITH A VP COMP3 with a GAP inside it
+   ;; vp rule with a vp comp3 with a gap inside it
    ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar)
     (main +) (gap ?!gap)
     (var ?v) 
-     (class ?c) (constraint (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-				 (LIOBJ ?iobjvar) (LCOMP ?!compvar)
+     (class ?c) (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+				 (liobj ?iobjvar) (lcomp ?!compvar)
 				 (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 				 (?iobj-map ?iobjvar) (?comp3-map ?!compvar)
 				 ))
@@ -1570,7 +1570,7 @@
      )
     -vp-comp-gap2-role> 0.97
     (head (v (aux -)
-	   (lf ?c) (sem ($ f::situation (f::type ont::situation-root))) (VFORM ?tense-pro)
+	   (lf ?c) (sem ($ f::situation (f::type ont::situation-root))) (vform ?tense-pro)
 	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	   (iobj ?iobj)  (iobj (% ?s2 (var ?iobjvar) (sem ?iobjsem) (gap -) (case (? icase obj -))))
 	   (part ?!part) 
@@ -1584,15 +1584,15 @@
      ?dobj
      ?!part
      ?comp
-    (BOUND (arg ?!gap))  ;; remember, we are parsing bottom up, so this must be bound from below
+    (bound (arg ?!gap))  ;; remember, we are parsing bottom up, so this must be bound from below
     )
       
-   ;; PARTICLES with no independent semantics
-   ;;  TEST: load up the oranges  ;; note: example isobsolete as UP will be compositional!!!
+   ;; particles with no independent semantics
+   ;;  test: load up the oranges  ;; note: example isobsolete as up will be compositional!!!
    ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar) (main +)
       (class ?c) (var ?v) 
-     (constraint (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-		      (LCOMP ?compvar)
+     (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+		      (lcomp ?compvar)
 		      (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 		      (?iobj-map ?iobjvar) (?comp3-map ?compvar)
 		      ))
@@ -1600,7 +1600,7 @@
      )
     -vp-particle-role>
     (head (v (aux -)
-	   (lf ?c) (sem ($ f::situation (f::type ont::situation-root)))  (VFORM ?tense-pro)
+	   (lf ?c) (sem ($ f::situation (f::type ont::situation-root)))  (vform ?tense-pro)
 	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -) )) ;; note double matching required
 	   (iobj (% -))
 	   (part ?!part) ;;(part (% part))
@@ -1615,11 +1615,11 @@
     )
 
    
- ;;  TEST: load up the oranges  ;; note: example isobsolete as UP will be compositional!!!
+ ;;  test: load up the oranges  ;; note: example isobsolete as up will be compositional!!!
    ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar) (main +)
       (class ?c) (var ?v) 
-     (constraint (& (LSUBJ ?subjvar) (LOBJ ?dobjvar)
-		      (LCOMP ?compvar)
+     (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+		      (lcomp ?compvar)
 		      (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
 		      (?iobj-map ?iobjvar) (?comp3-map ?compvar)
 		      (result ?adv-v)
@@ -1628,7 +1628,7 @@
      )
     -vp-compositional-particle-role> 1
     (head (v (aux -) (var ?v)
-	   (lf ?c) (sem ?sem) (sem ($ f::situation (f::type ont::situation-root)))  (VFORM ?tense-pro)
+	   (lf ?c) (sem ?sem) (sem ($ f::situation (f::type ont::situation-root)))  (vform ?tense-pro)
 	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -) )) ;; note double matching required
 	   (iobj (% -))
 	   (part (% -)) ;;(part (% part))
@@ -1637,24 +1637,24 @@
 	   (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	   
 	   ))
-    (advbl (particle +) (var ?adv-v)  (arg ?v) (ARGUMENT (% S (sem ?sem))) (GAP -))
+    (advbl (particle +) (var ?adv-v)  (arg ?v) (argument (% s (sem ?sem))) (gap -))
     ?dobj
     ?comp
     )
    
   
    
-   ;; PASSIVE TRANSFORMATIONS
+   ;; passive transformations
 
-   ;; Lexical transformation rules for passives.  
-   ;; There are rules for moving the direct object and the indirect object,
-   ;; each case consists of one rule with and one without the "by" PP.
+   ;; lexical transformation rules for passives.  
+   ;; there are rules for moving the direct object and the indirect object,
+   ;; each case consists of one rule with and one without the "by" pp.
 
-   ;;  These rules aren't ideal.  They don't allow the "by" PP
-   ;; (logical subject) in VPs that also have other PPs.  They also
-   ;; don't allow the object of one PP from a PPS to move.
+   ;;  these rules aren't ideal.  they don't allow the "by" pp
+   ;; (logical subject) in vps that also have other pps.  they also
+   ;; don't allow the object of one pp from a pps to move.
 
-   ;; TEST: The dog was given (me)
+   ;; test: the dog was given (me)
    ((v (vform passive) (passive +)
      (subj ?!dobj) (subj-map ?dobj-map) 
      (dobj (% -)) (agent-map ?subj-map)
@@ -1665,7 +1665,7 @@
      )
     -v-passive> 1.0 
     (head (v (vform pastpart) (lex (? !lx been)) ;; exclude be
-	   (subj ?subj) (subj-map ?subj-map) ;; Please don't remove - this is needed for trips-tflex conversion
+	   (subj ?subj) (subj-map ?subj-map) ;; please don't remove - this is needed for trips-tflex conversion
 	   (dobj ?!dobj) (dobj-map ?dobj-map) (exclude-passive -)
 	   (iobj ?iobj) (iobj-map ?iobj-map)
 	   (comp3 ?comp3) (comp3-map ?comp-map)
@@ -1674,7 +1674,7 @@
 	   (restr ?prefix)
 	   )))
    
-   ;; TEST:  The dog is taken care of
+   ;; test:  the dog is taken care of
    ((v (vform passive)  (passive +)
      (subj (% np (lex ?subjlex) (sem ?dobjsem) (var ?dobjvar) (agr ?dobjagr)))
      (subj-map ?dobj-map) 
@@ -1692,9 +1692,9 @@
 	   (part ?part)))
     )
 
-   ;; TEST: The dog was given me by him
+   ;; test: the dog was given me by him
    ;; e.g. these are separated from the battery by a gap
-   ;; Note that comp3 is promoted to dobj
+   ;; note that comp3 is promoted to dobj
    ((v (vform passive)  (passive +)
        (subj ?!dobj) (subj-map ?dobj-map) 
      ;;       (dobj (% -)) 
@@ -1711,8 +1711,8 @@
 	     (comp3 ?comp3) (comp3-map ?comp3-map)
 	     (part ?part)))
 )
-   ;; TEST: I was given the dog
-   ;;  Passive form with indirect object
+   ;; test: i was given the dog
+   ;;  passive form with indirect object
    ((v (vform passive)  (passive +)
        (subj ?!iobj) (subj-map ?iobj-map) 
        (iobj-passive +)
@@ -1722,13 +1722,13 @@
        (part ?part)) 
     -v-passive-iobj> 1.0
     (head (v (vform pastpart) (lex (? !lx been)) ;; exclude be
-	   (subj ?subj) ;; Please don't remove - this is a dummy unrestricted var needed for trips-tflex conversion
+	   (subj ?subj) ;; please don't remove - this is a dummy unrestricted var needed for trips-tflex conversion
 	   (dobj ?!dobj) (dobj-map ?dobj-map)
 	   (iobj ?!iobj) (iobj-map ?iobj-map) 
 	   (comp3 ?comp3) (comp3-map ?comp3-map)
 	   (part ?part))))
    
-   ;; TEST: I was given the dog by him
+   ;; test: i was given the dog by him
 
    ((v (vform passive)  (passive +) (lex (? !lx been)) ;; exclude be
        (subj ?!iobj) (subj-map ?iobj-map) 
@@ -1739,13 +1739,13 @@
        (part ?part)) 
     -v-passive-iobj-by>
     (head (v (vform pastpart)
-	   (subj ?subj) ;; Please don't remove - this is a dummy unrestricted var needed for trips-tflex conversion
+	   (subj ?subj) ;; please don't remove - this is a dummy unrestricted var needed for trips-tflex conversion
 	   (dobj ?!dobj) (dobj-map ?dobj-map)
 	   (iobj ?!iobj) 
 	   (comp3 ?comp3) (comp3-map (% -))
 	   (part ?part))))
    
-   ;;;   ;;  e.g., Terminal 1 is separated by a gap from a positive terminal
+   ;;;   ;;  e.g., terminal 1 is separated by a gap from a positive terminal
    ;;; "by" comes before a subcategorized pp argument
    ((v (vform passive)  (passive +)
        (subj ?!dobj) (subj-map ?dobj-map) 
@@ -1765,7 +1765,7 @@
      )
     )
 
-   ;;  PREFIXES on verbs
+   ;;  prefixes on verbs
       
    ((v (vform ?vf) 
      (subj ?subj) (subj-map ?subj-map) 
@@ -1773,26 +1773,26 @@
      (dobj ?dobj) (dobj-map ?dobj-map)
      (iobj ?iobj) (iobj-map ?iobj-map)
      (comp3 ?comp3) (part ?part) (comp3-map ?comp-map)
-;     (prefix (:MOD (% *PRO* (status F) (class ?qual)
+;     (prefix (:mod (% *pro* (status ont::f) (class ?qual)
      (restr ?newc)
      )
     -v-prefix-hyphen> 1.01 
-    (ADV (prefix +)
-;     (LF ?qual) (ARG ?v) (VAR ?adv-v) (WH -)
-     (LF ?qual) (VAR ?adv-v) (WH -)
-     (argument (% S (sem ?argsem))) 
+    (adv (prefix +)
+;     (lf ?qual) (arg ?v) (var ?adv-v) (wh -)
+     (lf ?qual) (var ?adv-v) (wh -)
+     (argument (% s (sem ?argsem))) 
      )
     (word (lex w::punc-minus))
     (head (v (var ?v) (vform ?vf) (lex (? !lx been)) ;; exclude be
-	     (subj ?subj) (subj-map ?subj-map) ;; Please don't remove - this is needed for trips-tflex conversion
+	     (subj ?subj) (subj-map ?subj-map) ;; please don't remove - this is needed for trips-tflex conversion
 ;	     (dobj ?!dobj) (dobj-map ?dobj-map) (exclude-passive -)
 	     (dobj ?dobj) (dobj-map ?dobj-map) (exclude-passive -)
 	     (iobj ?iobj) (iobj-map ?iobj-map)
 	     (comp3 ?comp3) (comp3-map ?comp-map)
 	     (part ?part) (restr ?prefix)
 	     (passive -)))  ;; we do the prefix first, then the passive
-     (append-conjuncts (conj1 ?prefix) (conj2 (& (MOD (% *PRO* (status F) (class ?qual)
-				   (var ?adv-v) (constraint (& (FIGURE ?v)))))))
+     (append-conjuncts (conj1 ?prefix) (conj2 (& (mod (% *pro* (status ont::f) (class ?qual)
+				   (var ?adv-v) (constraint (& (figure ?v)))))))
 		       (new ?newc))
     )
 
@@ -1801,32 +1801,32 @@
      (dobj ?dobj) (dobj-map ?dobj-map)
      (iobj ?iobj) (iobj-map ?iobj-map)
      (comp3 ?comp3) (part ?part) (comp3-map ?comp-map)
-;     (prefix (:MOD (% *PRO* (status F) (class ?qual)
+;     (prefix (:mod (% *pro* (status ont::f) (class ?qual)
      (restr ?newc)
      )
     -v-prefix> 1.01 
-    (ADV (prefix +)
-;     (LF ?qual) (ARG ?v) (VAR ?adv-v) (WH -)
-     (LF ?qual) (VAR ?adv-v) (WH -)
-     (argument (% S (sem ?argsem))) 
+    (adv (prefix +)
+;     (lf ?qual) (arg ?v) (var ?adv-v) (wh -)
+     (lf ?qual) (var ?adv-v) (wh -)
+     (argument (% s (sem ?argsem))) 
      )
     (head (v (var ?v) (vform ?vf) (lex (? !lx been)) ;; exclude be
-	     (subj ?subj) (subj-map ?subj-map) ;; Please don't remove - this is needed for trips-tflex conversion
+	     (subj ?subj) (subj-map ?subj-map) ;; please don't remove - this is needed for trips-tflex conversion
 	     (dobj ?dobj) (dobj-map ?dobj-map) (exclude-passive -)
 	     (iobj ?iobj) (iobj-map ?iobj-map)
 	     (comp3 ?comp3) (comp3-map ?comp-map)
 	     (part ?part) (restr ?prefix)
 	     (passive -)))  ;; we do the prefix first, then the passive
-     (append-conjuncts (conj1 ?prefix) (conj2 (& (MOD (% *PRO* (status F) (class ?qual)
-				   (var ?adv-v) (constraint (& (FIGURE ?v)))))))
+     (append-conjuncts (conj1 ?prefix) (conj2 (& (mod (% *pro* (status ont::f) (class ?qual)
+				   (var ?adv-v) (constraint (& (figure ?v)))))))
 		       (new ?newc))
     )
 
    
-   ;; DITRANSITIVE TRANSFORMATION 
+   ;; ditransitive transformation 
    
-      ;;  This rule makes the iobj optional
-      ;; TEST: Give the dog
+      ;;  this rule makes the iobj optional
+      ;; test: give the dog
    ((v (iobj (% -)) (subj ?subj) (dobj ?dobj) (comp3 ?comp3) (part ?part) (vform ?vform)
        (subj-map ?subjvar) (dobj-map ?dobjvar)
        (comp3-map ?compvar))
@@ -1836,11 +1836,11 @@
 	    (comp3-map ?compvar))))
 
    
-   ;; THERE transformation - BE and exist forms can take there as a subject
+   ;; there transformation - be and exist forms can take there as a subject
    ;; for objects
-   ;; TEST: there exists a dog
+   ;; test: there exists a dog
     ((v (vform ?vform) (be-there +)
-      (subj (% NP (lex there) (agr ?agr) (SEM ($ -)))) (subj-map -)
+      (subj (% np (lex there) (agr ?agr) (sem ($ -)))) (subj-map -)
       (subjvar -)
       (dobj ?!subj) (dobj-map ?subj-map)
       (iobj (% -)) (iobj-map -)
@@ -1850,7 +1850,7 @@
      -be-there-sense> .97
      (head (v (vform ?vform) (be-there -)
 	    (agr ?agr)
-	    (LF ONT::Exists) (transform ?transform)
+	    (lf ont::exists) (transform ?transform)
 	    (lex (? lex exist exists existed))
 	    (sem ?sem)
 	    (subj ?!subj) (subj-map ?subj-map)
@@ -1864,7 +1864,7 @@
 
     ;; for properties  e.g., there is a man in the corner
    ((v (vform ?vform) (be-there +)
-      (subj (% NP (lex there) (agr ?agr) (SEM ($ -)))) (subj-map -)
+      (subj (% np (lex there) (agr ?agr) (sem ($ -)))) (subj-map -)
      (subjvar -)
       (dobj ?!subj) (dobj-map ?subj-map)
       (iobj (% -)) (iobj-map -)
@@ -1874,7 +1874,7 @@
      -be-there-sense1> .97
      (head (v (vform ?vform) (be-there -)
 	    (agr ?agr)
-	    (LF ONT::Have-property) (transform ?transform)
+	    (lf ont::have-property) (transform ?transform)
 	    (lex (? lex be was were been is ^s are))
 	    (sem ?sem)
 	    (subj ?!subj) (subj-map ?subj-map)
@@ -1886,9 +1886,9 @@
 	    )))   
 
    
-   ;; A transformation on BE to take expletive + filled predicate    
+   ;; a transformation on be to take expletive + filled predicate    
     ((v (vform ?vform) (be-there +)
-      (subj (% NP (lex it) (agr 3s) (expletive +) (SEM ($ -)))) (subj-map -)
+      (subj (% np (lex it) (agr 3s) (expletive +) (sem ($ -)))) (subj-map -)
       (dobj ?dobjnew) (dobj-map ?dobj-map)
       (iobj (% -)) (iobj-map -)
       (comp3 (% -)) (comp3-map -)
@@ -1897,7 +1897,7 @@
      -be-expletive-sense> .97 
      (head (v (vform ?vform) (be-there -)
 	    (agr 3s)
-	    (LF ONT::Have-property) (transform ?transform)
+	    (lf ont::have-property) (transform ?transform)
 	    (lex (? lex be was were been is ^s are))
 	    (sem ?sem)
 	    (subj ?!subj) (subj-map ?subj-map)
@@ -1911,10 +1911,10 @@
      (change-feature-values (old ?!dobj) (new ?dobjnew) (newvalues ((filled +) (argument -))))
      )
    
-   ;; TEST: The dog does bark.
+   ;; test: the dog does bark.
    ((aux
-     (tma-contrib (& (MODALITY ?auxlf) (negation ?neg)))
-     (sem-contrib *NOCHANGE*)
+     (tma-contrib (& (modality ?auxlf) (negation ?neg)))
+     (sem-contrib *nochange*)
      )
     -aux-from-modal-v-nochangesem> 1.0
     (head (v (aux +) (modal +) (lex ?l)
@@ -1925,9 +1925,9 @@
 	   ))
     )
 
-   ;; TEST: The dog can bark.
+   ;; test: the dog can bark.
    ((aux
-     (tma-contrib (& (MODALITY ?auxlf) (negation ?neg)))
+     (tma-contrib (& (modality ?auxlf) (negation ?neg)))
      (sem-contrib ((f::aspect ?aspect) (f::time-span ?time)))
      )
     -aux-from-modal-v-changesem> 1.0
@@ -1940,10 +1940,10 @@
 	   ))
     )
 
-   ;; TEST: The cat was chased.
+   ;; test: the cat was chased.
    ((aux
      (tma-contrib (& (?auxname +) (negation ?neg)))
-     (sem-contrib *NOCHANGE*)
+     (sem-contrib *nochange*)
      )
     -aux-from-asp-v-nochangesem> 1.0
     (head (v (aux +) (modal -) (lex ?l)
@@ -1955,7 +1955,7 @@
 	   ))
     )
 
-   ;; TEST: The dog is barking.
+   ;; test: the dog is barking.
    ((aux
      (tma-contrib (& (?auxname +) (negation ?neg)))
      (sem-contrib ((f::aspect ?aspect) (f::time-span ?time)))
@@ -1976,7 +1976,7 @@
    ))
 
 
- ;;== NEW PASSIVE TREATMENT ====
+ ;;== new passive treatment ====
 (parser::augment-grammar
  '((headfeatures
     (vp- vform var agr neg sem iobj dobj comp3 part cont   tense-pro aux modal auxname lex headcat transform subj-map advbl-needed passive subjvar template)
@@ -1985,11 +1985,11 @@
     )
 
 
-   ;; I know if/whether it's real
+   ;; i know if/whether it's real
    ((cp (ctype s-if) (var *) (gap ?g) (condition ?lf)
      ;; (lex ?l) (headcat ?vcomp) ;; non-aug-trips settings
      (lex ?hlex) (headcat ?hcat) ;; aug-trips
-     (lf (% prop (var *) (class (:* ONT::CLAUSE-CONDITION ?lex))
+     (lf (% prop (var *) (class (:* ont::clause-condition ?lex))
 	    (constraint (& (content ?v)))
 	    ))
      (clex ?lex)
@@ -2004,13 +2004,13 @@
     )
 
    
-   ;; e.g., Tell him whether to leave
-   ;; TEST: If the dog barks.
-   ;; TEST: Unless the dog chases the cat.
+   ;; e.g., tell him whether to leave
+   ;; test: if the dog barks.
+   ;; test: unless the dog chases the cat.
    ((cp (ctype s-if) (var *) (gap ?g) (condition ?lf)
 	;; (lex ?l) (headcat ?vcomp) ;; non-aug-trips settings
      (lex ?hlex) (headcat ?hcat) ;; aug-trips
-     (lf (% prop (var *) (class (:* ONT::CLAUSE-CONDITION ?lex)) 
+     (lf (% prop (var *) (class (:* ont::clause-condition ?lex)) 
 	    (constraint (& (content ?s-v)))
 	    ))
      (clex ?lex)
@@ -2019,11 +2019,11 @@
     (word (lex (? lex if whether)))
     (head (cp (ctype s-to) (sem ?argsem) (var ?s-v) (lf ?lf-s) (gap -)
 	   (lex ?hlex) (headcat ?hcat) ;; aug-trips
-	   (lf (% Prop (transform ?transform) (sem ?argsem) (class ?c) (constraint ?con))))
+	   (lf (% prop (transform ?transform) (sem ?argsem) (class ?c) (constraint ?con))))
      )
     )
 
-    ; TEST: Tell him not to bark
+    ; test: tell him not to bark
      ((cp (ctype s-to) (var ?s-v) (gap ?g)
      (lex ?hlex) (headcat ?hcat)
      (subj ?subj) (dobj ?dobj)
@@ -2036,31 +2036,31 @@
     (head (cp (ctype s-to) (sem ?argsem) (var ?s-v) (lf ?lf-s) (gap ?g)
 	   (lex ?hlex) (headcat ?hcat) ; aug-trips
 	   (subj ?subj) (dobj ?dobj)
-	   (lf (% Prop (transform ?transform) (sem ?argsem) (class ?c) (constraint ?con) (tma ?tma))))
+	   (lf (% prop (transform ?transform) (sem ?argsem) (class ?c) (constraint ?con) (tma ?tma))))
      )
-    (append-conjuncts (conj1 (& (NEGATION +))) (conj2 ?tma) (new ?newtma))
+    (append-conjuncts (conj1 (& (negation +))) (conj2 ?tma) (new ?newtma))
     )
   
    ))
 
-;;  A few rules with exceptional head features
+;;  a few rules with exceptional head features
 (parser::augment-grammar
   '((headfeatures
      (vp vform agr neg sem var subjvar dobjvar cont  lex headcat tma transform subj-map advbl-needed template)
     (s vform neg cont  lex headcat transform advbl-needed)
     (v lex sem lf neg var agr cont lex transform aux modal tma advbl-needed headcat)
-    (Utt sem subjvar dobjvar cont lex headcat transform))
+    (utt sem subjvar dobjvar cont lex headcat transform))
 
-    ;; YNQ QUESTIONS with BE because subjvar must be set properly
+    ;; ynq questions with be because subjvar must be set properly
     
     
-   ;;  These YNQ forms occus only with the verb to be.
-   ;; they are hard to capture using the general mechanisms for the BE serves as the aux and the main verb
-   ;; TEST: ; is the train late?
-   ;;       Is there a train?
+   ;;  these ynq forms occus only with the verb to be.
+   ;; they are hard to capture using the general mechanisms for the be serves as the aux and the main verb
+   ;; test: ; is the train late?
+   ;;       is there a train?
    ((s (stype ynq) (main +) (aux -) (gap ?gap)
      (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar)))
-     (sort PRED) 
+     (sort pred) 
      
      (var ?v) ;; propagate up explicitly because not a head feature	   
      (agr ?subjagr) ;; propagate up explicitly because not a head feature
@@ -2084,7 +2084,7 @@
 	    (transform ?transform)
 	    )))
     -s-ynq-be>
-    (Head (v (aux -)
+    (head (v (aux -)
 
 	   (var ?v) ;; propagate up explicitly because not a head feature	   
 	   (agr ?subjagr) ;; propagate up explicitly because not a head feature
@@ -2110,18 +2110,18 @@
      
      )
     ;;?subj
-    (np (var ?subjvar) (agr ?subjagr) (case (? npcase sub -)) (sem ?subjsem) (wh -) (sort (? !sort wh-desc)) (gap -) (lex ?subjlex) )  ;; lots of restrictions on this NP to eliminate sentences like "is where the people"
+    (np (var ?subjvar) (agr ?subjagr) (case (? npcase sub -)) (sem ?subjsem) (wh -) (sort (? !sort wh-desc)) (gap -) (lex ?subjlex) )  ;; lots of restrictions on this np to eliminate sentences like "is where the people"
     ?dobj
     ?comp
-    (add-to-conjunct (val (TENSE (? vf PAST PRES))) (old ?tma) (new ?newtma))
+    (add-to-conjunct (val (tense (? vf past pres))) (old ?tma) (new ?newtma))
     )
    
    
-   ;; TEST: ; isn't the train late?
-   ;;       Isn't there a train?
+   ;; test: ; isn't the train late?
+   ;;       isn't there a train?
      ((s (stype ynq) (main +) (aux -) (gap ?gap)
        (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar)))
-       (sort PRED) 
+       (sort pred) 
        (advbl-needed ?avn)
        
        (var ?v) ;; propagate up explicitly because not a head feature	   
@@ -2145,7 +2145,7 @@
 	    (transform ?transform)
 	    )))
     -s-ynq-be-neg>
-      (Head (v (sem ?sem) (aux -)
+      (head (v (sem ?sem) (aux -)
 	   (advbl-needed ?avn)
 	   (lf ?belf)
 	   (subj-map ?subj-map) (dobj-map ?dobj-map) (comp3-map ?comp3-map)
@@ -2165,11 +2165,11 @@
        )
       (neg (lex n^t))
     ;;?subj
-    (np (var ?subjvar) (case (? npcase sub -)) (sem ?subjsem) (wh -) (sort (? !sort wh-desc)) (gap -) (lex ?subjlex) )  ;; lots of restrictions on this NP to eliminate sentences like "is where the people"
+    (np (var ?subjvar) (case (? npcase sub -)) (sem ?subjsem) (wh -) (sort (? !sort wh-desc)) (gap -) (lex ?subjlex) )  ;; lots of restrictions on this np to eliminate sentences like "is where the people"
     ?dobj
       ?comp
-      (append-conjuncts (conj1 (& (TENSE (? vf PAST PRES)) (NEGATION +))) (conj2 ?tma) (new ?newtma))
-      ;;    (add-to-conjunct (val (TENSE (? vf PAST PRES FUT))) (old ?tma) (new ?newtma))
+      (append-conjuncts (conj1 (& (tense (? vf past pres)) (negation +))) (conj2 ?tma) (new ?newtma))
+      ;;    (add-to-conjunct (val (tense (? vf past pres fut))) (old ?tma) (new ?newtma))
     )
       
    ((s 
@@ -2185,7 +2185,7 @@
      (dobjvar ?dobjvar)
      
      (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar)))
-     (sort PRED) 
+     (sort pred) 
      (lf (% prop (var ?v) (class ?belf)
 	    (constraint (& (lsubj ?subjvar)
 			   (dobj ?dobjvar) 
@@ -2198,7 +2198,7 @@
      (advbl-needed ?avn)
      )
     -s-ynq-be-gap> 0.97
-    (Head (v (aux -)
+    (head (v (aux -)
 	   
 	   (var ?v) ;; propagate up explicitly because not a head feature	   
 	   (agr ?subjagr) ;; propagate up explicitly because not a head feature
@@ -2222,19 +2222,19 @@
 	    
      ))
     ;;?subj
-    (np (var ?subjvar) (case sub) (sem ?subjsem) (wh -) (sort (? !sort wh-desc)) (gap -) (lex ?subjlex) )  ;; lots of restrictions on this NP to eliminate sentences like "is where the people"
+    (np (var ?subjvar) (case sub) (sem ?subjsem) (wh -) (sort (? !sort wh-desc)) (gap -) (lex ?subjlex) )  ;; lots of restrictions on this np to eliminate sentences like "is where the people"
     ;;?!dobj
-    (add-to-conjunct (val (TENSE (? vf PAST PRES FUT))) (old ?tma) (new ?newtma))
+    (add-to-conjunct (val (tense (? vf past pres fut))) (old ?tma) (new ?newtma))
     )
 
    
    
-   ;;  These YNQ forms occus only with the verb to be.
-   ;; they are hard to capture using the general mechanisms for the BE serves as the aux and the main verb
+   ;;  these ynq forms occus only with the verb to be.
+   ;; they are hard to capture using the general mechanisms for the be serves as the aux and the main verb
    ;; e.g., is the train late?
    ((s (stype ynq) (main +) (aux -) (gap -)
      (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar)))
-     (sort PRED) 
+     (sort pred) 
      
      (var ?v) ;; propagate up explicitly because not a head feature	   
      (agr ?subjagr) ;; propagate up explicitly because not a head feature
@@ -2249,7 +2249,7 @@
 			   (comp3 ?compvar)
 			   (?subj-map ?subjvar) (?dobj-map ?dobjvar)
 			   (?comp3-map ?compvar) 
-			   (MODS ?mod)
+			   (mods ?mod)
 			   ))
 	    (sem ?sem) (tma ?tma)
 	    (transform ?transform)
@@ -2281,18 +2281,18 @@
 	   )
      
      )
-    (add-to-conjunct (val (TENSE (? vf PAST PRES FUT))) (old ?tma) (new ?newtma))
+    (add-to-conjunct (val (tense (? vf past pres fut))) (old ?tma) (new ?newtma))
     ?subj
-    (advbl (ATYPE PRE-VP) (GAP -)
-     (ARGUMENT (% S (sem ?argsem)))
-     (ARG ?v) (VAR ?mod) (role ?advrole) (subcat -))           
+    (advbl (atype pre-vp) (gap -)
+     (argument (% s (sem ?argsem)))
+     (arg ?v) (var ?mod) (role ?advrole) (subcat -))           
     ?dobj
     ?comp) 
     
-    ;; CONDITIONALS
-    ;;; MD Commented out 2008/16/06 because conditionals are now handled as regular adverbials.
-;;;    ;; TEST: If the train arrives, then we can load oranges.
-;;;   ((s (stype ?st) (gap -) (LF (% PROP (class ?op) (var *) (constraint (&  (condition ?v1) (content ?v2)))))
+    ;; conditionals
+    ;;; md commented out 2008/16/06 because conditionals are now handled as regular adverbials.
+;;;    ;; test: if the train arrives, then we can load oranges.
+;;;   ((s (stype ?st) (gap -) (lf (% prop (class ?op) (var *) (constraint (&  (condition ?v1) (content ?v2)))))
 ;;;       (var *))
 ;;;    -s-if-then>
 ;;;    (cp (ctype s-if) (gap -) (var ?v1) (condition ?op))
@@ -2301,16 +2301,16 @@
 ;;;	   (advbl-needed -) 	   
 ;;;	   )))
 ;;;   
-;;;   ;; TEST: If the train arrives, we can load oranges.
-;;;   ((s (stype ?st) (LF (% PROP (Class ?op) (var *) (constraint (& (condition ?v1) (content ?v2))))) (gap -) (var *))
+;;;   ;; test: if the train arrives, we can load oranges.
+;;;   ((s (stype ?st) (lf (% prop (class ?op) (var *) (constraint (& (condition ?v1) (content ?v2))))) (gap -) (var *))
 ;;;    -s-ifb>
 ;;;    (cp (ctype s-if) (var ?v1) (gap -) (condition ?op))
 ;;;    (head (s (gap ?gap) (stype ?st) (var ?v2) (vform (? x fin base))
 ;;;	   (advbl-needed -)
 ;;;	   )))
 ;;;
-;;;    ;; TEST: We can load oranges if the train arrives
-;;;   ((s (stype ?st) (gap -) (LF (% PROP (class ?op) (var *) (constraint (& (condition ?v1) (content ?v2)))))
+;;;    ;; test: we can load oranges if the train arrives
+;;;   ((s (stype ?st) (gap -) (lf (% prop (class ?op) (var *) (constraint (& (condition ?v1) (content ?v2)))))
 ;;;       (var *))
 ;;;    -s-ifc>
 ;;;    (head (s (gap ?gap) (stype ?st) (vform (? x fin base))  (var ?v2)
@@ -2319,18 +2319,18 @@
 ;;;    (cp (ctype s-if) (gap -) (var ?v1) (condition ?op))
 ;;;    )
    
-   #||  ;; DITRANSITIVE TRANSFORMATION 
+   #||  ;; ditransitive transformation 
 
-    ;;  This would be better in code above, but we have to disable 
-    ;;  COMP3-MAP and IOBJ-MAP as head features 
-   ;; As for the passive transformations, this rule is not ideal,
+    ;;  this would be better in code above, but we have to disable 
+    ;;  comp3-map and iobj-map as head features 
+   ;; as for the passive transformations, this rule is not ideal,
    ;; because if there's already a comp3 then you can't put the iobj
    ;; there.
 
-   ;; This rule also overgenerates: e.g.
+   ;; this rule also overgenerates: e.g.
    ;; tell him to go -> *tell to go to him
    ;; that leaves us enough time -> *?that leaves enough time to us
-   ;; TEST: give that to me
+   ;; test: give that to me
    ((v (vform ?vform) (subj ?subj) (dobj ?dobj) (iobj (% -)) (subj-map ?subj-map) (dobj-map ?dobj-map)
      (comp3 (% pp (ptype to) (var ?compvar) (sem ?iosem))) (comp3-map ?map) (part ?part)) 
     -ditransitive-to>
@@ -2340,107 +2340,107 @@
 	   )))||#
  
 
-    ;;  REJECTIONS
+    ;;  rejections
     
-    ;;  Note, utterances like "not avon, bath" are now treated as two speech acts
+    ;;  note, utterances like "not avon, bath" are now treated as two speech acts
      
 
 ;;;    ;;  e.g., not avon
-;;;    ((Utt (var *) (lf (% SPEECHACT (VAR *) (CLASS ONT::SA_REJECT) (constraint (& (content ?v1))))))
+;;;    ((utt (var *) (lf (% speechact (var *) (class ont::sa_reject) (constraint (& (content ?v1))))))
 ;;;     -reject-np>
-;;;     (word (LEX not))
+;;;     (word (lex not))
 ;;;     (head ((? cat np) (var ?v1))))
 ;;;
 ;;;    ;;  not via bath
-;;;    ((Utt (VAR **) (lf (% SPEECHACT (VAR ?nv) (CLASS ONT::SA_REJECT) (constraint (& (content ?v))))))   
+;;;    ((utt (var **) (lf (% speechact (var ?nv) (class ont::sa_reject) (constraint (& (content ?v))))))   
 ;;;      -reject-advbl>
-;;;     (ADV (LEX not) (VAR ?nv))
-;;;     (head (advbl (WH -) (VAR ?v) (ARGUMENT (% ?x (SEM ?sem))) (ARG (% *PRO* (VAR *) (gap -) (sem ?sem))))))
+;;;     (adv (lex not) (var ?nv))
+;;;     (head (advbl (wh -) (var ?v) (argument (% ?x (sem ?sem))) (arg (% *pro* (var *) (gap -) (sem ?sem))))))
 
 ;;;    ;;  e.g., not a closed path
-;;;    ((Utt (var *) (lf (% SPEECHACT (VAR **) (CLASS ONT::SA_IDENTIFY) (constraint (& (content ?v1))))))
+;;;    ((utt (var *) (lf (% speechact (var **) (class ont::sa_identify) (constraint (& (content ?v1))))))
 ;;;     -not-np-utt>
-;;;     (word (LEX not))
+;;;     (word (lex not))
 ;;;     (head ((? cat np) (var ?v1))))
     
     
     
-       ;;  NP UTTERANCES
-   ;;   e.g.,  The train
-   ;; Myrosia 2005/01/25 Added a sem restriction to prevent expletives from coming up here
-   ;; TEST: The dog.
-   ((UTT (lf (% SPEECHACT (VAR *) (CLASS ONT::SA_IDENTIFY) (constraint (& (content ?v))))) (var *))
+       ;;  np utterances
+   ;;   e.g.,  the train
+   ;; myrosia 2005/01/25 added a sem restriction to prevent expletives from coming up here
+   ;; test: the dog.
+   ((utt (lf (% speechact (var *) (class ont::sa_identify) (constraint (& (content ?v))))) (var *))
     -np-utt-simple> .98
-    (head (NP (WH -) (SORT (? x PRED unit-measure)) (COMPLEX -) (VAR ?v) (sem ($ ?!type)))))
+    (head (np (wh -) (sort (? x pred unit-measure)) (complex -) (var ?v) (sem ($ ?!type)))))
 
-    ;; complex NPs (e.g., disjunctions, conjunctions) are dispreferred over parses with disjunction more deeply attached
-    ((UTT (lf (% SPEECHACT (VAR *) (CLASS ONT::SA_IDENTIFY) (constraint (& (content ?v))))) (var *))
+    ;; complex nps (e.g., disjunctions, conjunctions) are dispreferred over parses with disjunction more deeply attached
+    ((utt (lf (% speechact (var *) (class ont::sa_identify) (constraint (& (content ?v))))) (var *))
      -np-utt> .97
-     (head (NP (WH -) (SORT (? x PRED unit-measure)) (COMPLEX +) (VAR ?v) (sem ($ ?!type)))))
+     (head (np (wh -) (sort (? x pred unit-measure)) (complex +) (var ?v) (sem ($ ?!type)))))
 
-    ;; TEST: Not the dog.
-    ((S (STYPE elided-verb) (VAR *) (LF (% PROP (CLASS (:* ONT::ELLIPSIS))
+    ;; test: not the dog.
+    ((s (stype elided-verb) (var *) (lf (% prop (class (:* ont::ellipsis))
 					   (var *)
 					   (constraint (& (:theme ?v)))
-					   (TMA (& (NEGATION +)))
+					   (tma (& (negation +)))
 					   ))
      )
      -not-np-s> .98
      (neg)
-     (head (NP (WH -) (SORT (? x PRED unit-measure)) (gerund -) (VAR ?v) (sem ?sem) (sem ($ ?!type))))
+     (head (np (wh -) (sort (? x pred unit-measure)) (gerund -) (var ?v) (sem ?sem) (sem ($ ?!type))))
      )
 
-    ;; TEST: not red
-    ((S (STYPE elided-verb) (VAR *) (LF (% PROP (CLASS (:* ONT::ELLIPSIS))
+    ;; test: not red
+    ((s (stype elided-verb) (var *) (lf (% prop (class (:* ont::ellipsis))
 					   (var *)
 					   (constraint (& (:property ?v)))
-					   (TMA (& (NEGATION +)))
+					   (tma (& (negation +)))
 					   ))
       )
      -not-adjp-s> .94
      (neg)
-     (head (adjp  (VAR ?v) (ARGUMENT (% ?x (SEM ?sem))) ;; (WH -)  I eliminated this to allow the question  "how red?"
-	    (set-modifier -)  ;; disallows numbers as ADJP fragments - they already have a number interpretation 
-	    (ARG (% *PRO* (VAR *) (gap -) (sem ?sem) (constraint (& (CONTEXT-REL UTT-FRAG)))))))
+     (head (adjp  (var ?v) (argument (% ?x (sem ?sem))) ;; (wh -)  i eliminated this to allow the question  "how red?"
+	    (set-modifier -)  ;; disallows numbers as adjp fragments - they already have a number interpretation 
+	    (arg (% *pro* (var *) (gap -) (sem ?sem) (constraint (& (context-rel utt-frag)))))))
      )
      
 
     
     
      ;;  here a question mark forces a y/n question interp 
-    ;; TEST: OK?
-    ((Utt (VAR *) (lf (% SPEECHACT (VAR *) (CLASS ONT::SA_PROMPT-FOR) (constraint (& (content ?sa))))))
+    ;; test: ok?
+    ((utt (var *) (lf (% speechact (var *) (class ont::sa_prompt-for) (constraint (& (content ?sa))))))
      -utt5>
      (head (uttword (sa ?sa) (lf ?lf)))
      (punc (punctype ynq)))
     
-    ;; TEST: from which city?
-    ((Utt (VAR *) (lf (% SPEECHACT (VAR *) (CLASS ONT::SA_WH-QUESTION) (constraint (& (content ?v) (focus ?foc)))))) 
+    ;; test: from which city?
+    ((utt (var *) (lf (% speechact (var *) (class ont::sa_wh-question) (constraint (& (content ?v) (focus ?foc)))))) 
      -utt4>
-     (head (advbl (WH Q) (VAR ?v) (wh-var ?foc) (GAP -)
-                  (ARGUMENT (% ?x (SEM ?sem)))
-                  (ARG (% *PRO* (VAR *) (gap -) (sem ?sem)))))
+     (head (advbl (wh q) (var ?v) (wh-var ?foc) (gap -)
+                  (argument (% ?x (sem ?sem)))
+                  (arg (% *pro* (var *) (gap -) (sem ?sem)))))
      (punc))
 
-;;;      Still can't figure out a good way to do this
-;;;    ;; E.g., reduced ynq, e.g., can we? don't they?
+;;;      still can't figure out a good way to do this
+;;;    ;; e.g., reduced ynq, e.g., can we? don't they?
 ;;;
-;;;    ((Utt (VAR *) (lf (% SPEECHACT (VAR *) (CLASS ONT::SA_YNQ-QUESTION)
+;;;    ((utt (var *) (lf (% speechact (var *) (class ont::sa_ynq-question)
 ;;;			 (constraint (& (content ?v) (focus ?foc))))))
 ;;;     -utt-ynq-reduced>
 ;;;     (s (type ynq) (reduced +) (var ?v))
 ;;;     (punc))
     
        
-    ;;   GAP questions
+    ;;   gap questions
     ;; who/what-dog/whose-dog did you see at the store?
-    ;; TEST: who did you see?
-    ;; TEST: who did you see at the store?
-    ;; TEST: whose dog did you see at the store?
+    ;; test: who did you see?
+    ;; test: who did you see at the store?
+    ;; test: whose dog did you see at the store?
     ((s (stype whq) (subjvar ?subjvar) (dobjvar ?dobjvar) (subj ?subj)
-      (qtype Q) (lf ?lf) (var ?v))
+      (qtype q) (lf ?lf) (var ?v))
      -wh-q2>
-     (np (var ?npvar) (sem ?npsem) (wh Q) (agr ?a) (case ?case))
+     (np (var ?npvar) (sem ?npsem) (wh q) (agr ?a) (case ?case))
      (head (s (stype ynq) (lf ?lf) (var ?v) 
 	    (advbl-needed -)
 	    (subj ?subj)
@@ -2449,9 +2449,9 @@
       )
      )
 
-    ;; TEST: the dog, he said.
-    ;; TEST: the dog, he told me.
-    ;; TEST: the dog? he asked.
+    ;; test: the dog, he said.
+    ;; test: the dog, he told me.
+    ;; test: the dog? he asked.
     ((s (stype decl) (subjvar ?subjvar) (dobjvar ?dobjvar) (subj ?subj)
 	(lf ?lf) (var ?v))
      -np-role-fronting> .97
@@ -2466,9 +2466,9 @@
 	      ))
      )
 
-    ;; TEST: he barked, he said.
-    ;; TEST: he barked, he told me.
-    ;; TEST: did he bark? he asked.
+    ;; test: he barked, he said.
+    ;; test: he barked, he told me.
+    ;; test: did he bark? he asked.
     ((s (stype decl) (subjvar ?subjvar) (dobjvar ?dobjvar) (subj ?subj)
 	(lf ?lf) (var ?v))
      -utt-role-fronting> .97
@@ -2478,11 +2478,11 @@
 	      ))
      )
   
-    ;; GAP questions with gapped PPs
+    ;; gap questions with gapped pps
      ((s (stype whq) (subjvar ?subjvar) (dobjvar ?dobjvar)
-      (qtype Q) (lf ?lf) (var ?v))
+      (qtype q) (lf ?lf) (var ?v))
      -wh-q-ppgap>
-     (pp (var ?npvar) (sem ?npsem) (wh Q) (agr ?a) (case ?case) (ptype ?ptp))
+     (pp (var ?npvar) (sem ?npsem) (wh q) (agr ?a) (case ?case) (ptype ?ptp))
       (head (s (stype ynq) (lf ?lf) (var ?v) 
 	     (advbl-needed -)
 	     (subjvar ?subjvar) (dobjvar ?dobjvar)
@@ -2490,13 +2490,13 @@
        )
       )
 
-    ;; MOD GAP questions with a gapped pred -- e.g. "where is it", "how far is it"
-    ;; Presumably "how large should I make it" should also parse, but this is untested
-    ;; TEST: where is it?
+    ;; mod gap questions with a gapped pred -- e.g. "where is it", "how far is it"
+    ;; presumably "how large should i make it" should also parse, but this is untested
+    ;; test: where is it?
     ((s (stype whq) (subjvar ?subjvar) (dobjvar ?dobjvar) (subj ?subj)
-      (qtype Q) (lf ?lf) (var ?v))
+      (qtype q) (lf ?lf) (var ?v))
      -wh-q-predgap>
-     (pred (var ?predvar) (sem ?predsem) (wh Q) (arg ?subjvar))
+     (pred (var ?predvar) (sem ?predsem) (wh q) (arg ?subjvar))
      (head (s (stype ynq) (lf ?lf) (var ?v) 
 	    (advbl-needed -)
 	    (subjvar ?subjvar) (dobjvar ?dobjvar)
@@ -2516,14 +2516,14 @@
      )
     
 
-    ;; Myrosia 01/24/02 To get the dummy sentences with predicates to
-    ;; walk, I introduced a new structure: a predicate with filled
-    ;; argument we usually only want unfilled arguments. Note that we
-    ;; assume that adjective The reason to do it this way rather than
+    ;; myrosia 01/24/02 to get the dummy sentences with predicates to
+    ;; walk, i introduced a new structure: a predicate with filled
+    ;; argument we usually only want unfilled arguments. note that we
+    ;; assume that adjective the reason to do it this way rather than
     ;; the previous rules (commented out at the end) is that we want
     ;; to take advantage of selectional restrictions on arguments, and
     ;; it does not seem possible in the other setup
-    ;; TEST: Is it good to bark?
+    ;; test: is it good to bark?
     ((pred (filled +) (argument -) (gap -) (adjectival +)
       )
      -fill-argument-pred>
@@ -2531,13 +2531,13 @@
 	    (arg ?v) (wh -) (adjectival +)
 	    ))
      (cp (ctype (? ctp s-to s-that-overt s-if))
-      (var ?v) (gap -))  ;; note: is it good to eat is NOT expletive - the it refers and fills a gap in the pred.
+      (var ?v) (gap -))  ;; note: is it good to eat is not expletive - the it refers and fills a gap in the pred.
      )
 
-    ;; A special rule for expletive questions - what is possible to do --
-    ;; TEST: What is good to chase?
+    ;; a special rule for expletive questions - what is possible to do --
+    ;; test: what is good to chase?
     ((s (stype whq) (main +) (aux -) (gap -) (subjvar -)
-      (qtype Q)
+      (qtype q)
       (subj -)
       (var ?v)
       (advbl-needed ?avn)
@@ -2552,8 +2552,8 @@
 	     (transform ?transform)
 	     )))
      -s-whq-expletive>
-     (np (var ?npvar) (sem ?npsem) (wh Q) (agr ?gagr) (case ?gcase))
-     (Head (v (sem ?sem) (aux -)
+     (np (var ?npvar) (sem ?npsem) (wh q) (agr ?gagr) (case ?gcase))
+     (head (v (sem ?sem) (aux -)
 	    (advbl-needed ?avn)
 	    (lf ?belf)
 	    (subj-map ?subj-map) (dobj-map ?dobj-map) (comp3-map ?comp3-map)
@@ -2575,40 +2575,40 @@
      ;; no subject because no expletive
      ?dobj
      ?comp3
-     (add-to-conjunct (val (TENSE (? vf PAST PRES FUT))) (old ?tma) (new ?newtma))
+     (add-to-conjunct (val (tense (? vf past pres fut))) (old ?tma) (new ?newtma))
      )
 
    ))
 
-;; putting the sem in this rule violates sem feature inheritance, so I had to move this rule here 
+;; putting the sem in this rule violates sem feature inheritance, so i had to move this rule here 
 ;; ideally, we should put the sem in the lexicon, but it's not currently possible for non-hierarchy lfs
 ;; which is what uttwords have
 (parser::augment-grammar
   '((headfeatures
     (utt cont lex headcat transform))
 
- ;; TEST: hello
- ;; TEST: yes
- ;; TEST: maybe
- ;; TEST: no
-   ((Utt (var *) (sem ($ f::proposition)) (uttword +)
-         (lf (% SPEECHACT (VAR *) (CLASS ?sa) (constraint (& (content (?lf :content ?lex))))))
+ ;; test: hello
+ ;; test: yes
+ ;; test: maybe
+ ;; test: no
+   ((utt (var *) (sem ($ f::proposition)) (uttword +)
+         (lf (% speechact (var *) (class ?sa) (constraint (& (content (?lf :content ?lex))))))
          (punctype (? x decl imp)))
     -utt4a>
     (head (uttword (lf (?lf)) (lex ?lex) (var ?v) (sa ?sa))))
 
-    ((Utt (var *) (sem ($ f::proposition)) (uttword +)
-      (lf (% SPEECHACT (VAR *) (CLASS  ONT::SA_APOLOGIZE) (constraint (& (content ?reason)))))
+    ((utt (var *) (sem ($ f::proposition)) (uttword +)
+      (lf (% speechact (var *) (class  ont::sa_apologize) (constraint (& (content ?reason)))))
       (punctype (? x decl imp)))
      -utt-sa-cp>
-     (head (uttword (lf (?lf)) (lex ?lex) (var ?v) (sa ONT::SA_APOLOGIZE)))
+     (head (uttword (lf (?lf)) (lex ?lex) (var ?v) (sa ont::sa_apologize)))
      (cp (var ?reason)))
 
-    ((Utt (var *) (sem ($ f::proposition)) (uttword +)
-      (lf (% SPEECHACT (VAR *) (CLASS (? sa ONT::SA_APOLOGIZE ONT::SA_THANK)) (constraint (& (content ?reason)))))
+    ((utt (var *) (sem ($ f::proposition)) (uttword +)
+      (lf (% speechact (var *) (class (? sa ont::sa_apologize ont::sa_thank)) (constraint (& (content ?reason)))))
       (punctype (? x decl imp)))
      -utt-sa-for>
-     (head (uttword (lf (?lf)) (lex ?lex) (var ?v) (sa (? sa ONT::SA_APOLOGIZE ONT::SA_THANK))))
+     (head (uttword (lf (?lf)) (lex ?lex) (var ?v) (sa (? sa ont::sa_apologize ont::sa_thank))))
      (pp (ptype w::for) (var ?reason)))
 
     )
@@ -2620,18 +2620,18 @@
     (s vform var neg sem subjvar dobjvar comp3 cont  lex headcat transform subj advbl-needed)
     (utt sem subjvar dobjvar cont lex headcat transform))
    
-     ;;   Basic commands
+     ;;   basic commands
     
     ;; e.g., tell me the plan
-    ;; TEST: Bark.
-    ;; TEST: Chase the cat.
-    ((utt (lf (% SPEECHACT (VAR *) (CLASS ONT::SA_REQUEST) (constraint (& (content ?v))))) (var *)
+    ;; test: bark.
+    ;; test: chase the cat.
+    ((utt (lf (% speechact (var *) (class ont::sa_request) (constraint (& (content ?v))))) (var *)
           )
      -command-imp1>
-     (head (s (stype imp) (WH -) (var ?v) (lf ?lf) (gap -) (advbl-needed -))))
+     (head (s (stype imp) (wh -) (var ?v) (lf ?lf) (gap -) (advbl-needed -))))
       
-    ;; TEST: Bark.
-    ;; TEST: Chase the cat.
+    ;; test: bark.
+    ;; test: chase the cat.
     ((s (stype imp)
 	(lf (% prop (var ?v) (class ?c) (constraint ?con)
 	       (sem ?sem) (tma ?newtma)
@@ -2644,17 +2644,17 @@
 	    (sem ($ f::situation (f::aspect (? aspc f::dynamic f::stage-level))))
 	    (var ?v) (aux -) (tma ?tma)
 	    (constraint ?con)
-	    (subj (% np (var (% *PRO* (CLASS ONT::PERSON) (VAR *) (SEM ?subjsem) (constraint (& (proform *YOU*)))))
-		     (sem ($ f::phys-obj (f::form f::solid-object) (F::spatial-abstraction F::spatial-point)
-			     (F::information -) (F::trajectory -) (F::container -) (F::Group -)
-			     (F::mobility F::self-moving) (F::origin F::human) (f::intentional +)))
+	    (subj (% np (var (% *pro* (class ont::person) (var *) (sem ?subjsem) (constraint (& (proform *you*)))))
+		     (sem ($ f::phys-obj (f::form f::solid-object) (f::spatial-abstraction f::spatial-point)
+			     (f::information -) (f::trajectory -) (f::container -) (f::group -)
+			     (f::mobility f::self-moving) (f::origin f::human) (f::intentional +)))
 		     (sem ?subjsem)))
-	    (subjvar (% *PRO* (CLASS ONT::PERSON) (VAR *) (constraint (& (proform *YOU*)))
+	    (subjvar (% *pro* (class ont::person) (var *) (constraint (& (proform *you*)))
 			(sem ?subjsem)))
-	    (subj-map (? xxx ont::AGENT ont::arg0 ont::neutral))
-	    ;;($ f::phys-obj (f::form f::solid-object) (F::spatial-abstraction F::spatial-point)
-	    ;;			(F::information -) (F::trajectory -) (F::container -) (F::Group -)
-	    ;;			(F::mobility F::self-moving) (F::origin F::human) (f::intentional +)))))
+	    (subj-map (? xxx ont::agent ont::arg0 ont::neutral))
+	    ;;($ f::phys-obj (f::form f::solid-object) (f::spatial-abstraction f::spatial-point)
+	    ;;			(f::information -) (f::trajectory -) (f::container -) (f::group -)
+	    ;;			(f::mobility f::self-moving) (f::origin f::human) (f::intentional +)))))
 		
 	    (class ?c) (lf ?lf)
 	    (vform base) (postadvbl ?pa) (main ?ma)
@@ -2662,13 +2662,13 @@
 	    (advbl-needed -)
 	    )
       )
-     (append-conjuncts (conj1 (& (TENSE PRES))) (conj2 ?tma) (new ?newtma))
+     (append-conjuncts (conj1 (& (tense pres))) (conj2 ?tma) (new ?newtma))
      )
 
-    ;; e.g., Let's go  NB: NOT the same as "let us go" - which is a REQUEST for permission
+    ;; e.g., let's go  nb: not the same as "let us go" - which is a request for permission
 
-    ;; TEST: Let's bark.
-    ;; TEST: Let's chase the cat.
+    ;; test: let's bark.
+    ;; test: let's chase the cat.
     ((s (stype imp) 
 	(lf (% prop (var ?v) (class ?c) (constraint ?con)
 	    (sem ?sem) (tma ?newtma)
@@ -2677,28 +2677,28 @@
 	)
      -lets-imp> 1.0 ;; get let's to go through this rule instead of command-imp2
      (word (lex let))
-     (NP (lex us))
+     (np (lex us))
      (head (vp (gap  -) (sem ?sem)
 	       (sem ($ f::situation (f::aspect (? aspc f::dynamic f::stage-level))))
 	       (var ?v) (aux -) (tma ?tma)
 	       (constraint ?con)
-	       (subj (% np (var (% *PRO* (STATUS PRO) (CLASS (SET-OF ONT::PERSON)) (VAR *) (SEM ?subjsem) (constraint (& (proform US)))))
+	       (subj (% np (var (% *pro* (status ont::pro) (class (set-of ont::person)) (var *) (sem ?subjsem) (constraint (& (proform us)))))
 			(sem ($ f::phys-obj (f::form f::object) (f::intentional +)))
 			(sem ?subjsem)))
-	       (subjvar (% *PRO* (VAR *) (status pro)
-			   (CLASS (SET-OF ONT::PERSON)) (SEM ?subjsem) (constraint (& (proform US)))))
+	       (subjvar (% *pro* (var *) (status ont::pro)
+			   (class (set-of ont::person)) (sem ?subjsem) (constraint (& (proform us)))))
 	       (class ?c)
 	       (vform base) (postadvbl ?pa) (main ?ma)
 	    (transform ?transform)
 	    (advbl-needed -)
 	    )
       )
-     (append-conjuncts (conj1 (& (TENSE PRES))) (conj2 ?tma) (new ?newtma))
+     (append-conjuncts (conj1 (& (tense pres))) (conj2 ?tma) (new ?newtma))
      )
      
     ;; negative commands, e.g., don't tell me the plan
-    ;; TEST: Don't bark.
-    ;; TEST: Don't chase the cat.
+    ;; test: don't bark.
+    ;; test: don't chase the cat.
     ((s (stype imp)
 	 (lf (% prop (var ?v) (class ?c) (constraint ?con)
 	    (sem ?sem) (tma ?newtma)
@@ -2711,88 +2711,88 @@
      (neg)
      (head (vp ;;(gap  -) 
 	       (sem ?sem)
-	       (subj-map (? xx ont::AGENT ont::arg0))
+	       (subj-map (? xx ont::agent ont::arg0))
 	       (sem ($ f::situation (f::aspect (? aspc f::dynamic f::stage-level))))
 	       (var ?v) (aux -) (tma ?tma)
 	       (constraint ?con)
-	       (subj (% np (var (% *PRO* (CLASS ONT::PERSON) (VAR *) (SEM ?subjsem) (constraint (& (proform *YOU*)))))
+	       (subj (% np (var (% *pro* (class ont::person) (var *) (sem ?subjsem) (constraint (& (proform *you*)))))
 			(sem ($ f::phys-obj (f::form f::object) (f::intentional +)))
 			(sem ?subjsem)))
-	       (subjvar (% *PRO* (VAR *) (CLASS ONT::PERSON) (SEM ?subjsem) (constraint (& (proform *YOU*)))))
+	       (subjvar (% *pro* (var *) (class ont::person) (sem ?subjsem) (constraint (& (proform *you*)))))
 	       (class ?c)
 	       (vform base) (postadvbl ?pa) (main ?ma)
 	       (transform ?transform)
 	       (advbl-needed -)
 	       ))
-     (change-feature-values (old ?tma) (new ?newtma) (newvalues ((TENSE PRES) (MODALITY ont::do) (NEGATION +)))) 
+     (change-feature-values (old ?tma) (new ?newtma) (newvalues ((tense pres) (modality ont::do) (negation +)))) 
      )
 	
-  ;;  default rule for non-action VPs (useful when subject is deleted)
+  ;;  default rule for non-action vps (useful when subject is deleted)
     ;;   e.g., have to go to elmira
-    ;; TEST: Have to bark.
-    ;; TEST: Have to chase the cat.
-     ((Utt (lf (% SPEECHACT (VAR **) (CLASS ONT::SA_TELL) (constraint (& (content ?v))))) (var **)
+    ;; test: have to bark.
+    ;; test: have to chase the cat.
+     ((utt (lf (% speechact (var **) (class ont::sa_tell) (constraint (& (content ?v))))) (var **)
            (punctype (? x imp decl)))
       
       -vp-utt-inform> .96
-      (head (vp (gap -) (sem ?sem) (sem ($ f::situation (f::cause (? cs F::Stimulating F::Phenomenal F::Mental -))))
+      (head (vp (gap -) (sem ?sem) (sem ($ f::situation (f::cause (? cs f::stimulating f::phenomenal f::mental -))))
 	     (var ?v)
 	     (constraint ?constraint) (class ?class)
 	     (vform (? vform pres past fut)) (agr (? agr 1s 1p))
 	     (transform ?transform)
 	     (advbl-needed -)
-	     (subj (% np (var (% *PRO* (CLASS ONT::REFERENTIAL-SEM) (VAR *) (constraint (& (proform SUBJ)))))
+	     (subj (% np (var (% *pro* (class ont::referential-sem) (var *) (constraint (& (proform subj)))))
 			(sem ($ f::phys-obj))
 			))
-	     (subjvar (% *PRO* (CLASS ONT::REFERENTIAL-SEM) (VAR *) (constraint (& (proform SUBJ)))
+	     (subjvar (% *pro* (class ont::referential-sem) (var *) (constraint (& (proform subj)))
 			 ))
 	     )))
 
-    ;; TEST: good
-    ;; TEST: bad
+    ;; test: good
+    ;; test: bad
      ;;   again, need to generate two variables to do this right
-    ((utt (lf (% SPEECHACT (VAR **) (CLASS ONT::SA_EVALUATE) (constraint (& (content ?v))))) (var **)
-      (uttword +) ;; we set the UTTWORD feature here to allow an evaluate to prefix another utterance
+    ((utt (lf (% speechact (var **) (class ont::sa_evaluate) (constraint (& (content ?v))))) (var **)
+      (uttword +) ;; we set the uttword feature here to allow an evaluate to prefix another utterance
       (punctype (? x imp decl)))
      -evaluate1>
-     (head (ADJP (WH -) (var ?v) (arg (% *PRO* (VAR *) (CLASS ONT::ANY-SEM))) ;; changing this from ont::situation, which is too restrictive for cardiac domain
-      (lf (% PROP (CLASS ONT::ACCEPTABILITY-VAL))) (gap -))))
+     (head (adjp (wh -) (var ?v) (arg (% *pro* (var *) (class ont::any-sem))) ;; changing this from ont::situation, which is too restrictive for cardiac domain
+      (lf (% prop (class ont::acceptability-val))) (gap -))))
 
-   ;; TEST: good,
-   ;; TEST: ok,
+   ;; test: good,
+   ;; test: ok,
    ;;   again, need to generate two variables to do this right
-   ((utt (lf (% SPEECHACT (VAR **) (CLASS ONT::SA_EVALUATE) (constraint (& (content ?v))))) (var **)
+   ((utt (lf (% speechact (var **) (class ont::sa_evaluate) (constraint (& (content ?v))))) (var **)
      (punctype (? x imp decl)))
     -evaluate1b>
-    (head (ADJP (WH -) (var ?v) (arg (% *PRO* (VAR *) (CLASS ONT::ANY-SEM))) ;; changing this from ont::situation, which is too restrictive for cardiac domain
-	   (lf (% PROP (CLASS ONT::ACCEPTABILITY-VAL))) (gap -)))
+    (head (adjp (wh -) (var ?v) (arg (% *pro* (var *) (class ont::any-sem))) ;; changing this from ont::situation, which is too restrictive for cardiac domain
+	   (lf (% prop (class ont::acceptability-val))) (gap -)))
     (punc (lex punc-comma) (var ?v1)))
    
    
-    ;;; Special rules for VPs that require post-modifying adverbials
-   ;;; (e.g. be). If the adverbial was not specified, we will create a
-   ;;; gap Which will prevent this VP from participating in any
+    ;;; special rules for vps that require post-modifying adverbials
+   ;;; (e.g. be). if the adverbial was not specified, we will create a
+   ;;; gap which will prevent this vp from participating in any
    ;;; constructions except for those that know how to fill that gap
    
-   ;; Add tense information (past, present, or future) for VP that requires and adverbial
-     ((vp (LF (% prop (class ?c) (var ?var) (constraint ?constraint) (tma ?newtma) 
+   ;; add tense information (past, present, or future) for vp that requires and adverbial
+     ((vp (lf (% prop (class ?c) (var ?var) (constraint ?constraint) (tma ?newtma) 
 	         (transform ?transf) (sem ?sem)))
           (class ?c) (constraint ?constraint) (tma ?newtma)  (sem ?sem) (transform ?transf)
-        (vform (? vf PAST PRES FUT))
+        (vform (? vf past pres fut))
        (gap (% advbl))
        (subj ?subj) (subjvar ?subjvar) (var ?var)
        )
       -vp-tns+-gap> ;; 1 because we are simply adding tense info, not really using more rules
       (head
-       (vp- (class ?c)  (constraint ?constraint) (tma ?tma1) (sem ?sem) ;; I added the SEM feature to get right restrictions in "i know where the loop is", but maybe it wasn't there for some other reason JFA 6/04
-	 (vform (? vf PAST PRES FUT)) (var ?var)
+       (vp- (class ?c)  (constraint ?constraint) (tma ?tma1) (sem ?sem) ;; i added the sem feature to get right restrictions in "i know where the loop is", but maybe it wasn't there for some other reason jfa 6/04
+	 (vform (? vf past pres fut)) (var ?var)
 	(advbl-needed +) (gap -) (subj ?subj) (subj (% np (var ?subjvar)))
 	)) 
-      (add-to-conjunct (val (TENSE ?vf)) (old ?tma1) (new ?newtma))
+      (add-to-conjunct (val (tense ?vf)) (old ?tma1) (new ?newtma))
       )
    
    ;; untensed vp that requires a post-modifying adverbial
-   ((vp (LF (% prop (class ?c) (var ?var) (constraint ?constraint) (transform ?transf) (tma ?tma) (sem ?sem)))
+   ((vp (lf (% prop (class ?c) (var ?var) (constraint ?constraint) (transform ?transf) (tma ?tma) (sem ?sem)))
      (class ?c) (var ?var) (constraint ?constraint) (tma ?tma) (sem ?sem) (transform ?transf) 
      (gap (% advbl)) (subj ?subj) (subjvar ?subjvar)
      )
@@ -2801,27 +2801,27 @@
      (vp- (class ?c) (constraint ?constraint) (tma ?tma) 
       (subj ?subj) (subj (% np (var ?subjvar))) (sem ?sem)   ;; see vp-tns+-gap> comment
       
-      (vform (? vf BASE PASSIVE ING PASTPART))
+      (vform (? vf base passive ing pastpart))
       (advbl-needed +) 
       (var ?var)
       )))   
    
     ))
 
-;; aux rules which violate VP sem inheritance constraint
+;; aux rules which violate vp sem inheritance constraint
 (parser::augment-grammar
   '((headfeatures
      (vp vform agr cont comp3 postadvbl aux modal auxname lex headcat transform subj-map template)     
      (s vform neg comp3 cont  lex headcat transform )
      )
     
-     ;; rules for auxiliaries with elided VP complement: will I?, can I?, do I? 
-     ;; TEST: Does he?
+     ;; rules for auxiliaries with elided vp complement: will i?, can i?, do i? 
+     ;; test: does he?
     ((s (stype ynq) (gap -) (wh -) (tag +)
       (subj ?subj) (subjvar ?subjvar) (subj-map ?lsubj-map)
       (var ?v) (lex ?lx)
-       (LF (% prop  (var ?v) (class (:* ont::ellipsis ))  (sem ?sem)
-	     (constraint (& (LSUBJ ?subjvar) (?lsubj-map ?subjvar)))(tma ?newtma)
+       (lf (% prop  (var ?v) (class (:* ont::ellipsis ))  (sem ?sem)
+	     (constraint (& (lsubj ?subjvar) (?lsubj-map ?subjvar)))(tma ?newtma)
 	     ))
        (sem ?sem) (transform ?transform) 
       )
@@ -2831,35 +2831,35 @@
 	    (sem-contrib ?sem-contrib)
 	    (ellipsis +) 
 	    (contraction -)
-	    (sem ?sem) (vform ?vf) (vform (? vf PRES PAST FUT))
+	    (sem ?sem) (vform ?vf) (vform (? vf pres past fut))
 	    (var ?v) (tma ?tma1) (agr ?a)
-	     ;; Myrosia 2007/02/23 added agr ?a restriction to subjects to prevent cases such as "does you" from parsing this way
+	     ;; myrosia 2007/02/23 added agr ?a restriction to subjects to prevent cases such as "does you" from parsing this way
 	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (agr ?a) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	    (subj-map ?lsubj-map)
 	     (transform ?transform)
 	    (advbl-needed -)
 	    ))
      ?subj
-     ;; We need to have a sequence of additions to conjunct, to avoid parser warnings
+     ;; we need to have a sequence of additions to conjunct, to avoid parser warnings
      (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?ntma))
-     (append-conjuncts (conj1 (& (TENSE ?vf))) (conj2 ?ntma) (new ?newtma))
+     (append-conjuncts (conj1 (& (tense ?vf))) (conj2 ?ntma) (new ?newtma))
      ) 
         
-    ;;  rule for modal auxiliaries can, might, may, should, could, would: CAN the train arrive at 5:30?
-    ;; this is the same as ynq-fut-aux except the Aspect and Time-span features change to those of the modal
-    ;; 8/02/2004 build an explicit NP for the subject instead of trying to match it with ?subj to get around a problem with
+    ;;  rule for modal auxiliaries can, might, may, should, could, would: can the train arrive at 5:30?
+    ;; this is the same as ynq-fut-aux except the aspect and time-span features change to those of the modal
+    ;; 8/02/2004 build an explicit np for the subject instead of trying to match it with ?subj to get around a problem with
     ;; the unifier not passing up the subject specifications from the verb
-    ;; TEST: Does the dog bark?
-    ;; TEST: Does the dog chase the cat?
+    ;; test: does the dog bark?
+    ;; test: does the dog chase the cat?
     ((s (stype ynq) (gap ?gap) (lex ?lx)
        (subjvar ?subjvar) (dobjvar ?dobjvar) (var ?v)
-      (LF (% prop  (var ?v) (class ?class) (sem ?newsem)
+      (lf (% prop  (var ?v) (class ?class) (sem ?newsem)
 	     (constraint ?con) (tma ?newtma)
 	     ))
       
       (sem ?newsem)
   ;;    (subj ?subj)
-      (subj (% NP (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
+      (subj (% np (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
       )
      -ynq-modal-aux>
      (head (aux 
@@ -2868,7 +2868,7 @@
 	    (ellipsis -)
 	    (contraction -)
 	    ;;(lex (? lx w::can w::might w::may w::should w::could w::would)) ;; only full forms here
-	    (vform (? vform PRES PAST FUT)) (agr ?a)
+	    (vform (? vform pres past fut)) (agr ?a)
 	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
             (comp3 ?comp)
 	    (comp3 (% ?s4 (class ?class)
@@ -2884,24 +2884,24 @@
             (subj-map ?lsubj-map)
             ))
 ;;     ?subj
-     (NP (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)) ;; build an NP to get around unifier bug
+     (np (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)) ;; build an np to get around unifier bug
      ?comp
-     ;; We need to have a sequence of additions to conjunct, to avoid parser warnings
+     ;; we need to have a sequence of additions to conjunct, to avoid parser warnings
      (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?ntma))
-     (append-conjuncts (conj1 (& (TENSE ?vform))) (conj2 ?ntma) (new ?newtma))
-     ;; change the temporal values in SEM to be consistent with the aux
+     (append-conjuncts (conj1 (& (tense ?vform))) (conj2 ?ntma) (new ?newtma))
+     ;; change the temporal values in sem to be consistent with the aux
      (change-feature-values (old ?compsem) (new ?newsem) (newvalues ?sem-contrib))
      )
 
     ((s (stype ynq) (gap ?gap) (lex ?lx)
       (subjvar ?subjvar) (dobjvar ?dobjvar) (var ?v)
-      (LF (% prop  (var ?v) (class ?class) (sem ?newsem)
+      (lf (% prop  (var ?v) (class ?class) (sem ?newsem)
 	     (constraint ?con) (tma ?newtma)
 	     ))
       
       (sem ?newsem)
       ;;    (subj ?subj)
-      (subj (% NP (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
+      (subj (% np (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
       )
      -ynq-modal-neg-aux>
      (head (aux 
@@ -2910,7 +2910,7 @@
 	    (ellipsis -)
 	    
 	    ;;(lex (? lx w::can w::might w::may w::should w::could w::would)) ;; only full forms here
-	    (vform (? vform PRES PAST FUT)) (agr ?a)
+	    (vform (? vform pres past fut)) (agr ?a)
 	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
             (comp3 ?comp)
 	    (comp3 (% ?s4 (class ?class)
@@ -2926,24 +2926,24 @@
             (subj-map ?lsubj-map)
             ))
      (neg)
-     (NP (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)) ;; build an NP to get around unifier bug
+     (np (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)) ;; build an np to get around unifier bug
      ?comp
-     ;; We need to have a sequence of additions to conjunct, to avoid parser warnings
+     ;; we need to have a sequence of additions to conjunct, to avoid parser warnings
      (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?ntma))
-     (append-conjuncts (conj1 (& (TENSE ?vform) (NEGATION +))) (conj2 ?ntma) (new ?newtma))
-     ;; change the temporal values in SEM to be consistent with the aux
+     (append-conjuncts (conj1 (& (tense ?vform) (negation +))) (conj2 ?ntma) (new ?newtma))
+     ;; change the temporal values in sem to be consistent with the aux
      (change-feature-values (old ?compsem) (new ?newsem) (newvalues ?sem-contrib))
      )
 
    #|| 
     ;; negated yes/no questions with modals (not be)
-    ;;  TEST: Will not he arrive? Won't he arrive
+    ;;  test: will not he arrive? won't he arrive
     ((s (stype ynq) (gap ?gap) 
-      (subjvar ?subjvar) (dobjvar ?dobjvar) (var ?v) ;; NB: values taken from VP
-      (LF (% prop (sem ?sem) (var ?v) (class ?class)
-             (constraint (& (LSUBJ ?subjvar) (DOBJ ?dobj) (dobj-map ?dobjvar)
+      (subjvar ?subjvar) (dobjvar ?dobjvar) (var ?v) ;; nb: values taken from vp
+      (lf (% prop (sem ?sem) (var ?v) (class ?class)
+             (constraint (& (lsubj ?subjvar) (dobj ?dobj) (dobj-map ?dobjvar)
 			    (?comp-map ?compvar)
-                            ;;(LCOMP ?compvar)
+                            ;;(lcomp ?compvar)
                             (?rsubjmap ?subjvar)))
                             ;;(?comp3-map ?compvar)))
              (tma ?newtma)
@@ -2951,7 +2951,7 @@
 	     ))
       (sem ?argsem) ;; 
       (lex ?l)
-      (subj ?subj) ;;(% NP (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
+      (subj ?subj) ;;(% np (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
       )
   
      -ynq-negated-modal-aux>
@@ -2961,7 +2961,7 @@
 	    (ellipsis -);; (contraction -)  
 	    (var ?v) (sem ?sem)
 	    ;; (argsem ?argsem) 
-	    (vform (? vform PRES PAST FUT))
+	    (vform (? vform pres past fut))
 	    (agr ?a) (lex ?l)
             (subj ?subj)
             (subj (% ?s1 (lex ?subjlex) (case sub) (sem ?subjsem) (var ?subjvar) (gap -)))
@@ -2975,22 +2975,22 @@
 	    (transform ?transform)
 	    ))
      (neg)
-     (NP (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)) ;; build an NP to get around unifier bug
+     (np (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)) ;; build an np to get around unifier bug
      (vp- (class ?class) (var ?compvar)  (subj-map ?rsubjmap) (dobjvar ?dobjvar) (dobj-map ?dobj-map) (comp3-map ?comp-map)
 		      (gap -) (subj ?subj) (tma ?tma1) (advbl-needed -) (sem ?compsem))
-     ;; We need to have a sequence of additions to conjunct, to avoid parser warnings
+     ;; we need to have a sequence of additions to conjunct, to avoid parser warnings
      (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?ntma))
-     (change-feature-values (old ?ntma) (new ?newtma) (newvalues ((TENSE (? vform PRES PAST FUT)) (NEGATION +))))
+     (change-feature-values (old ?ntma) (new ?newtma) (newvalues ((tense (? vform pres past fut)) (negation +))))
      (change-feature-values (old ?compsem) (new ?newsem) (newvalues ?sem-contrib))
      )
     ||#
-    ;; rules for auxiliaries with elided VP complement and negation: won't I?, can't I?, do I? 
-    ;; TEST: Doesn't he?
+    ;; rules for auxiliaries with elided vp complement and negation: won't i?, can't i?, do i? 
+    ;; test: doesn't he?
     ((s (stype ynq) (gap -) (wh -) (tag +)
       (subj ?subj) (subjvar ?subjvar) (subj-map ?lsubj-map)
       (var ?v) (lex ?lx)
-       (LF (% prop  (var ?v) (class (:* ont::ellipsis ))  (sem ?sem)
-	      (constraint (& (LSUBJ ?subjvar) (?lsubj-map ?subjvar)))
+       (lf (% prop  (var ?v) (class (:* ont::ellipsis ))  (sem ?sem)
+	      (constraint (& (lsubj ?subjvar) (?lsubj-map ?subjvar)))
 	      (tma ?newtma)
 	     ))
        (sem ?sem) (transform ?transform) 
@@ -3000,7 +3000,7 @@
 	    (tma-contrib ?tma-contrib)
 	    (sem-contrib ?sem-contrib)
 	    (ellipsis +) (contraction -)
-	    (sem ?sem) (vform ?vf) (vform (? vf PRES PAST FUT))
+	    (sem ?sem) (vform ?vf) (vform (? vf pres past fut))
 	    (var ?v) (tma ?tma1) (agr ?a)
 	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	    (subj-map ?lsubj-map)
@@ -3008,10 +3008,10 @@
 	    (advbl-needed -)
 	    ))
      (neg)
-     (NP (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)) ;; build an NP to get around unifier bug
-     ;; We need to have a sequence of additions to conjunct, to avoid parser warnings
+     (np (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)) ;; build an np to get around unifier bug
+     ;; we need to have a sequence of additions to conjunct, to avoid parser warnings
      (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?ntma))
-     (change-feature-values (old ?ntma) (new ?newtma) (newvalues ((TENSE ?vf) (NEGATION +))))
+     (change-feature-values (old ?ntma) (new ?newtma) (newvalues ((tense ?vf) (negation +))))
      (change-feature-values (old ?compsem) (new ?newsem) (newvalues ?sem-contrib))     
      )
     ))
@@ -3023,10 +3023,10 @@
     (vp- lex headcat)
     )
    
-   ;; AUX rule for auxilliaries that change the sem features of the phrase
+   ;; aux rule for auxilliaries that change the sem features of the phrase
    ;; e.g. he has left; she is leaving; she can work
-   ;; TEST: The dog can bark.
-   ;; TEST: The dog has chased the cat.
+   ;; test: the dog can bark.
+   ;; test: the dog has chased the cat.
    ((vp- (subj ?subj) (main -) (subjvar ?subjvar) (dobjvar ?dobjvar) (lex ?l)
      (var ?var) (class ?class) (gap ?gap) 
      (constraint ?con1)
@@ -3040,7 +3040,7 @@
     -vp-changesem-aux> 1.0
     ;; propagate class, semantics, constraint up from main verb
     (head (aux 
-	   (auxname ?auxname) ;; MD 2009/02/11 it's important to propagate up AUXNAME, because templates for "must" and "could" depend on it
+	   (auxname ?auxname) ;; md 2009/02/11 it's important to propagate up auxname, because templates for "must" and "could" depend on it
 	   (tma-contrib ?tma-contrib)
 	   (sem-contrib ?sem-contrib)
 	   (ellipsis -) ;; (contraction -)
@@ -3055,7 +3055,7 @@
 	   (comp3 (% vp- (class ?class)  (constraint ?con1) (tma ?tma1) (var ?var)
 		     (case (? ccase obj -)) (var ?compvar)  
 		     (gap ?gap)		     
-		     (sem ?compsem) ;; (sem ($ f::situation (aspect (? !asp f::indiv-level))))  ;; constraints are in LF
+		     (sem ?compsem) ;; (sem ($ f::situation (aspect (? !asp f::indiv-level))))  ;; constraints are in lf
 		     (subjvar ?subjvar) (dobjvar ?dobjvar) (transform ?transform)
 		     (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -)))
 		     (advbl-needed -) (subj-map ?lsubj-map)
@@ -3064,20 +3064,20 @@
 	    (comp3-map ?comp3-map)
 	   ))
     ?comp
-    (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?newtma)) ;; add aux feature to TMA
-    ;; change the temporal values in SEM to be consistent with the aux
+    (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?newtma)) ;; add aux feature to tma
+    ;; change the temporal values in sem to be consistent with the aux
     (change-feature-values (old ?compsem) (new ?newsem) (newvalues ?sem-contrib))
     )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; Negation rules (for non-elided Vs):   AUX -> AUX not
+;;; negation rules (for non-elided vs):   aux -> aux not
 ;;; 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
    
-   ;; Rule for negated modals that don't change sem features (will and do)
-   ;; Add (MODALITY ONT::XX) & (NEGATION +) to TMA
-   ;; TEST: The dog won't bark.
-   ;; TEST: The dog won't chase the cat.
+   ;; rule for negated modals that don't change sem features (will and do)
+   ;; add (modality ont::xx) & (negation +) to tma
+   ;; test: the dog won't bark.
+   ;; test: the dog won't chase the cat.
     ((vp- (subj ?subj) (subjvar ?subjvar) (dobjvar ?dobjvar) (lex ?l)
       (var ?v) (class ?cl) (gap -) 
       (constraint ?con1)
@@ -3089,12 +3089,12 @@
      )
     -vp-modal-neg> 1.0
      (head (aux 
-	    (auxname ?auxname) ;; MD 2009/02/11 it's important to propagate up AUXNAME, because templates for "must" and "could" depend on it
+	    (auxname ?auxname) ;; md 2009/02/11 it's important to propagate up auxname, because templates for "must" and "could" depend on it
 	    (tma-contrib ?tma-contrib)
 	    (sem-contrib ?sem-contrib)
 	    (ellipsis -) (neg -)
 	    (lex ?l)
-	    (vform ?vform) (vform (? vf PAST PRES FUT)) ;; double matching for 'do', since tense not marked in lexicon
+	    (vform ?vform) (vform (? vf past pres fut)) ;; double matching for 'do', since tense not marked in lexicon
 	    (agr ?a) 
 	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -)))
 	    (dobj (% -)) (part (% -)) (iobj (% -))
@@ -3110,17 +3110,17 @@
      (neg)
      ?comp
      (unify (pattern (% vp- (sem ?compsem))) (value ?comp))    ;; need this to get around a bug in unifier 
-     ;; We need to have a sequence of additions to conjunct, to avoid parser warnings
+     ;; we need to have a sequence of additions to conjunct, to avoid parser warnings
      (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?ntma))
-     (change-feature-values (old ?ntma) (new ?newtma) (newvalues ((NEGATION +)))) 
-     (change-feature-values (old ?compsem) (new ?newsem) (newvalues ?sem-contrib))
-     ;;     (append-conjuncts (conj1 (& (MODALITY ?auxlf) (NEGATION +))) (conj2 ?tma1) (new ?newtma))
+     (change-feature-values (old ?ntma) (new ?newtma) (newvalues ((negation +)))) 
+     (change-feature-values (old ?COMPSEM) (NEW ?NEWSEM) (NEWVALUES ?SEM-CONTRIB))
+     ;;     (APPEND-CONJUNCTS (CONJ1 (& (MODALITY ?AUXLF) (NEGATION +))) (CONJ2 ?TMA1) (NEW ?NEWTMA))
      )
 
    ))
 
 
-;; CONJUNCTIONS
+;; conjunctions
 
 
 (parser::augment-grammar 
@@ -3132,59 +3132,62 @@
     ;;(vp- sem)
     )
    
-   ;; conjoined VPs w/ same subject
-   ;; TEST: The dog barked and chased the cat.
-   ((s (stype ?st) (var ?v3) (LF (% prop (var ?v3) 
-				    (class ONT::S-CONJOINED)
-				    (constraint (& (OPERATOR ?lex) (SEQUENCE (?v1 ?v2)))) (tma ?tma)))
+   ;; conjoined vps w/ same subject
+   ;; test: the dog barked and chased the cat.
+   ((s (stype ?st) (var ?v3) (lf (% prop (var ?v3) 
+				    (class ont::s-conjoined)
+				    (constraint (& (operator ?lex) (sequence (?v1 ?v2)))) (tma ?tma)))
      )
     -s-conj1>
     (head (s (stype (? st decl)) (subj ?subj) (var ?v1) 
 	   (lf (% prop (tma ?tma)))
 	   (advbl-needed -)
 	   ))
-    (CONJ (lex (? lex and or but)) (var ?v3))
-    (vp (subj ?subj) (var ?v2) (tma ?tma) (advbl-needed -)
+    (conj (lf (? lex ont::and ont::or ont::but)) (var ?v3))
+    (vp (subj ?subj) (gap -) (var ?v2) (tma ?tma) (advbl-needed -)
      ))    
    
-   ;; Sentential conjunction
-   ;; both Ss must be of the same type, decl or imperative
+   ;; sentential conjunction
+   ;; both ss must be of the same type, decl or imperative
    ;; he did this and/or/but he did that; do this and/or/but do that
-   ;; TEST: Bark and chase the cat.
-   ((s (sseq +) (stype ?st) (var *) (LF (% prop (var *) (class ont::s-conjoined) 
-				  (constraint (&  (OPERATOR ?lx) (SEQUENCE (?v1 ?v2))))))
+   ;; test: bark and chase the cat.
+   ((s (sseq +) (stype ?st) (var *) 
+     (lf (% prop (var *) (class ont::s-conjoined) 
+	    (constraint 
+	     (&  (operator (? lx ont::or ont::and ont::but ont::however ont::plus ont::otherwise ont::so))
+		 (sequence (?v1 ?v2))))))
      )
     -s-conj2>
     (head (s (stype (? st decl imp)) (subj ?subj1) (var ?v1) 
 	   (lf (% prop (tma ?tma1)))
 	   (advbl-needed -)
 	   ))
-    (CONJ (lex (? lx or but however plus otherwise so and)))
+    (conj (lf (? lx ont::or ont::and ont::but ont::however ont::plus ont::otherwise ont::so)))
     (s (stype (? st decl imp)) (subj ?subj2) (var ?v2) 
      (advbl-needed -)
      (lf (% prop (tma ?tma2))))
     )
 
-   ;; S1, S2 and S3
-   ;;  starting the SSEQ (need two as -s-conj2> above handles the binary conjunctive case)
-   ((SSEQ (stype ?st) (var *);; (LF (% prop (var *) (class ont::s-conjoined) (constraint (& 
-     (SEQUENCE (?v1 ?v2))
+   ;; s1, s2 and s3
+   ;;  starting the sseq (need two as -s-conj2> above handles the binary conjunctive case)
+   ((sseq (stype ?st) (var *);; (lf (% prop (var *) (class ont::s-conjoined) (constraint (& 
+     (sequence (?v1 ?v2))
      )
     -s-conj-seq1>
     (head (s (stype (? st decl imp)) (subj ?subj1) (var ?v1)  (sseq -)
 	   (lf (% prop (tma ?tma1)))
 	   (advbl-needed -)
 	   ))
-    (punc (lex (? x W::punc-comma W::Punc-semicolon)))
+    (punc (lex (? x w::punc-comma w::punc-semicolon)))
     (s (stype (? st decl imp)) (subj ?subj2) (var ?v2) (sseq -)
 	   (lf (% prop (tma ?tma2)))
 	   (advbl-needed -)
 	   )
     )
-   ;; extending the SSEQ
-   ((SSEQ (stype ?st) (var *) ;;(LF (% prop (var *) (class ont::s-conjoined) 
+   ;; extending the sseq
+   ((sseq (stype ?st) (var *) ;;(lf (% prop (var *) (class ont::s-conjoined) 
      ;; (constraint (& (operator ?conjlf) 
-     (SEQUENCE ?newlf))
+     (sequence ?newlf))
     -s-conj-seq2>
     (head (sseq (var ?v1) 
 	   (sequence ?lf)
@@ -3258,19 +3261,19 @@
 
 ;; VP conjunction
    ;; both VP must be of the same vform
-   ;; he had eaten and slept, to puncture or penetrate or pierce
+   ;; he had eaten and slept, to puncture or penetrate or pierce, to fight but accept, 
    ((vp- (seq +) (vform ?vf) (var *)  (subjvar ?subj)  (subj ?subject) (agr ?agr) (gap ?gap)(subj-map ?subjmap)
      (class ont::vp-conjoined) (sem ?sem)
      (constraint (&  (OPERATOR ?lx) 
 		     (SEQUENCE 
-		      ((% *PRO* (var ?v1) (status F) (class ?c1) (tma ?tma1) (sem ?sem1) (constraint ?con1))
-		       (% *PRO* (var ?v2) (status F) (class ?c2) (tma ?tma2) (sem ?sem2) (constraint ?con2)))))))
+		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (sem ?sem1) (constraint ?con1))
+		       (% *PRO* (var ?v2) (status ont::f) (class ?c2) (tma ?tma2) (sem ?sem2) (constraint ?con2)))))))
      
     -vbar-conj>
     (head (vp- (vform ?vf) (subjvar ?subj)  (subj ?subject) (var ?v1) (seq -)  (agr ?agr) (gap ?gap)
 	       (advbl-needed -) (class ?c1) (constraint ?con1) (tma ?tma1) (sem ?sem1) (subj-map ?subjmap)
 	   ))
-    (CONJ (lex ?lx)) ;;(? lx or but however plus otherwise so and)))
+    (CONJ (lf ?lx) (but-not -)) ;;(? lx or but however plus otherwise so and)))
     (vp- (vform ?vf) (var ?v2) (subjvar ?subj) (subj ?subject) (agr ?agr) (gap ?gap)
      (Advbl-needed -) (class ?c2) (constraint ?con2)  (tma ?tma2) (sem ?sem2))
     (sem-least-upper-bound (in1 ?sem1) (in2 ?sem2) (out ?sem))
@@ -3283,8 +3286,8 @@
      (class ont::vp-conjoined)
      (constraint (& 
 		     (SEQUENCE 
-		      ((% *PRO* (var ?v1) (status F) (class ?c1) (tma ?tma1) (constraint ?con1))
-		       (% *PRO* (var ?v2) (status F) (class ?c2) (tma ?tma2) (constraint ?con2)))))))
+		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (constraint ?con1))
+		       (% *PRO* (var ?v2) (status ont::f) (class ?c2) (tma ?tma2) (constraint ?con2)))))))
     -vbar-conj-seq1>
     (head (vp- (vform ?vf) (subjvar ?subj) (subj ?subject) (var ?v1) (seq -) (gap ?gap) (agr ?agr)
 	       (advbl-needed -) (class ?c1) (constraint ?con1) (tma ?tma1)
@@ -3320,7 +3323,7 @@
 		   (constraint (& (sequence ?lf))) (agr ?agr)
 		   (vform ?vf)
 		   ))
-    (CONJ (lex (? lx w::and w::or)))
+    (CONJ (lf (? lx ont::and ont::or)))
     (vp- (vform ?vf) (subjvar ?subj) (subj ?subject)(var ?v2) (seq -)  (gap ?gap)
      (advbl-needed -)  (agr ?agr) (class ?c2) (constraint ?con2) (tma ?tma2))
     (add-to-end-of-list (list ?lf) (val (% *PRO* (var ?v2) (class ?c2) (constraint ?con2) (tma ?tma2))) (newlist ?newlf))

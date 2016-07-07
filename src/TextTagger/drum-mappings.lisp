@@ -168,7 +168,8 @@
 (concept NCIT::C20130 ; Protein Family
   (inherit ONT::protein-family))
 (concept NCIT::C21176 ; Protein or Riboprotein Complex
-  (inherit ONT::macromolecular-complex))
+  ;; Note: not ONT::macromolecular-complex (see discussion on ticket #185)
+  (inherit ONT::protein))
 (concept NCIT::C812 ; RNA
   (inherit ONT::rna))
 (concept NCIT::C813 ; Messenger RNA
@@ -233,8 +234,9 @@
   (inherit ONT::medical-disorders-and-conditions))
 (concept NCIT::C3262 ; Neoplasm
   (inherit ONT::cancer))
-(concept NCIT::C97325 ; Manufactured Object
-  (inherit ONT::manufactured-object))
+;; this mapping is more trouble than it's worth
+;(concept NCIT::C97325 ; Manufactured Object
+;  (inherit ONT::manufactured-object))
 (concept NCIT::C17132 ; Signaling Pathway
   (inherit ONT::signaling-pathway))
 

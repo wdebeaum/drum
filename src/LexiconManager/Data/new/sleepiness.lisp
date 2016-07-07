@@ -1,13 +1,13 @@
 ;;;;
-;;;; w::anesthesia
+;;;; W::SLEEPINESS
 ;;;;
 
 (define-words :pos W::n
  :words (
-  (w::anesthesia
+  (W::SLEEPINESS
   (senses
-   ((meta-data :wn ("anesthesia%1:26:00"))
-    (LF-PARENT ONT::anesthesia)
+   ((meta-data :wn ("sleepiness%1:26:00"))
+    (LF-PARENT ONT::sleepiness)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

@@ -806,8 +806,9 @@ intersection of an entry's tags and these tags is non-empty."
 			     ;;(this-sem (sense-definition-sem x))			    
 			     ;;(orientation (cadr (assoc 'f::orientation this-sem)))
 			     (templ (retrieve-template (sense-definition-templ x)))
-			     (templ-feats (if (syntax-template-p templ)
-					      (syntax-template-syntax templ)))
+			     (templ-feats (remove-if #'(lambda (x) (eq (car x) 'w::SUBCAT))
+						     (if (syntax-template-p templ)
+							 (syntax-template-syntax templ))))
 			     (comp-op (cadr (assoc 'w::comp-op templ-feats)))
 			     )
 			(case comp-op 

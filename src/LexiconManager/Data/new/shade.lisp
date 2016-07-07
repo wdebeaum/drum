@@ -11,7 +11,7 @@
      (example "close the window shades")
      )
     ((meta-data :origin calo :entry-date 20031229 :change-date nil :wn ("shade%1:07:00") :comments html-purchasing-corpus)
-     (LF-PARENT ONT::color)
+     (LF-PARENT ONT::color-scale)
      (example "available in 40 vibrant shades")
      (TEMPL OTHER-RELN-TEMPL)
      )

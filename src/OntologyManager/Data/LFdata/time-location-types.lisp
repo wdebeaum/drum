@@ -650,7 +650,7 @@
  :parent ONT::PREDICATE
  :sem  (F::abstr-obj)
  :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
-	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale f::length-scale)))
+	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::length-scale)))
              )
  )
 
@@ -658,7 +658,7 @@
 (define-type ONT::spatial-distance-rel
  :parent ONT::extent-predicate
  :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (f::trajectory +) (F::aspect (? asp F::unbounded F::stage-level)) (F::time-span F::extended)))
-	      (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale f::length-scale)))
+	      (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::length-scale)))
              )
  )
 
@@ -670,7 +670,7 @@
 
 (define-type ONT::temporal-predicate
  :parent ONT::PREDICATE   ;; if we change this to extent-predicate, we need to generalize the restrition
- :sem  (F::abstr-obj (F::Scale F::time-measure-scale))
+ :sem  (F::abstr-obj (F::Scale Ont::time-measure-scale))
  )
 
 ;;; A class for core temporal properties of events - aspect, tense, ...
@@ -712,7 +712,7 @@
 (define-type ONT::event-duration-modifier
  :parent ONT::TEMPORAL-MODIFIER
  :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::situation f::time)))
-             (:essential ont::GROUND (f::abstr-obj (F::Scale F::duration-scale)))
+             (:essential ont::GROUND (f::abstr-obj (F::Scale Ont::duration-scale) (F::type ont::time-unit)))
  ))
 
 #|
@@ -734,7 +734,7 @@
 ;; how long did it take / did he run
 (define-type ont::duration
   :parent ont::temporal-predicate
-  :sem (F::abstr-obj (F::Scale F::duration-scale))
+  :sem (F::abstr-obj (F::Scale Ont::duration-scale))
   :arguments ((:ESSENTIAL ONT::FIGURE ((? t f::situation F::abstr-obj)))
              )
   )
@@ -742,7 +742,7 @@
 ;; frequencies
 (define-type ONT::frequency
  :parent ONT::temporal-modifier
- :arguments ((:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale f::duration-scale)))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::duration-scale)))
              )
  )
 
@@ -763,12 +763,12 @@
 ;; so I uncommented the first defn of ONT::VAL
 (define-type ONT::time-span-rel
  :parent ONT::temporal-location
- :arguments ((:ESSENTIAL ONT::GROUND (F::time (F::time-scale F::interval)
+ :arguments ((:ESSENTIAL ONT::GROUND (F::time (F::time-scale f::interval)
 			 (F::time-function (? funcn F::month-name F::year-name F::day-period))))
 
 ;	     (:ESSENTIAL ONT::SIT-VAL (F::situation))
-	     ;;(:ESSENTIAL ONT::VAL (F::time ((? vl F::abstr-obj f::time) (F::scale f::duration-scale))) ;; five minutes/days/hours
-	     ;; now used shared (f::scale f::duration feature on the ont::val instead of ont::time-val
+	     ;;(:ESSENTIAL ONT::VAL (F::time ((? vl F::abstr-obj f::time) (F::scale ont::duration-scale))) ;; five minutes/days/hours
+	     ;; now used shared (f::scale ont::duration feature on the ont::val instead of ont::time-val
 ;	     (:optional ont::time-val (f::time)) ;; in June, in 1990
              )
  )
@@ -840,7 +840,7 @@
 (define-type ONT::time-duration-rel
  :parent ONT::event-duration-modifier
  :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (F::aspect (? asp F::unbounded F::stage-level)) (F::time-span F::extended)))
-	      (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale f::duration-scale)))
+	      (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::duration-scale)))
              )
  )
 
@@ -849,9 +849,9 @@
  :parent ONT::event-duration-modifier
  :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (F::Aspect F::bounded) (F::Time-span F::extended)))
 ;             (:ESSENTIAL ONT::VAL (F::time (F::time-function f::time-unit)))
-	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale f::duration-scale)))
+	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::duration-scale)))
 ;	     (:optional ont::result-val (f::abstr-obj)) ; until recently / ready
-;	     (:optional ont::time-val  (f::abstr-obj (f::scale f::time-measure-scale)))
+;	     (:optional ont::time-val  (f::abstr-obj (f::scale ont::time-measure-scale)))
              )
  )
 
@@ -860,7 +860,7 @@
 (define-type ONT::time-deadline-rel
  :parent ONT::event-duration-modifier
  :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
-	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale f::duration-scale)))
+	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::duration-scale)))
              )
  )
 
@@ -885,10 +885,10 @@
 (define-type ONT::TIme-interval
  :wordnet-sense-keys ("interval%1:28:00" "time_interval%1:28:00" "time%1:28:03" "clock_time%1:28:00" "time%1:28:00" "time%1:28:05" )
  :parent ONT::TIME-OBJECT
- :arguments ((:OPTIONAL ONT::FIGURE (F::time (f::time-function f::time-frame) (f::time-scale f::interval) (f::scale f::duration-scale)))
+ :arguments ((:OPTIONAL ONT::FIGURE (F::time (f::time-function f::time-frame) (f::time-scale f::interval) (f::scale ont::duration-scale)))
              ;;; a time of two hours
              (:OPTIONAL ONT::GROUND (F::Abstr-obj))
-	     (:OPTIONAL ONT::EXTENT (F::Abstr-obj (f::time-scale f::interval) (f::scale f::duration-scale)))
+	     (:OPTIONAL ONT::EXTENT (F::Abstr-obj (f::time-scale f::interval) (f::scale ont::duration-scale)))
              )
  )
 
@@ -972,8 +972,8 @@
 (define-type ont::rate-rel
   :parent ont::predicate
   :arguments (;(:optional ont::of ((? t f::phys-obj f::situation)))
-	      ;(:essential ont::val (f::abstr-obj (f::measure-function f::value) (f::scale (? sc f::rate-scale f::money-scale))))
+	      ;(:essential ont::val (f::abstr-obj (f::measure-function f::value) (f::scale (? sc f::rate-scale ont::money-scale))))
 	      (:optional ont::figure ((? t2 f::phys-obj f::situation)))
-	      (:essential ont::ground (f::abstr-obj (f::measure-function f::value) (f::scale (? sc2 f::rate-scale f::money-scale))))
+	      (:essential ont::ground (f::abstr-obj (f::measure-function f::value) (f::scale (? sc2 f::rate-scale ont::money-scale))))
 	      )
   )

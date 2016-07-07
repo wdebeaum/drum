@@ -12,7 +12,7 @@
 
     ( 
      (LF-PARENT ONT::be-at-loc)
-     (TEMPL neutral-LOCATION-TEMPL (xp (% W::pp (W::ptype (? xxx W::to w::on w::in w::into w::at)))))
+     (TEMPL neutral-TEMPL (xp (% W::pp (W::ptype (? xxx W::to w::on w::in w::into w::at)))))
      (example "the protein localizes in/to the nucleus")
      )
 

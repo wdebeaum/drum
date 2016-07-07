@@ -12,7 +12,7 @@
 	  (syntax (W::one +))  ;; such a strange word, we give it its own feature
 	  (LF-PARENT ont::referential-sem)
 	  (example "the other one")
-	  (preference .96) ;; prefer number sense
+	  (preference .98) ;; prefer number sense
 	 )
       )
     )

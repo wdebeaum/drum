@@ -462,9 +462,9 @@
          ((isconjunction val)
           (read-embedded-constit (cons '% val) rule))
 	 
-	 ((and (consp val) (eq (car val) 'ONT::OR))
+	 ;;((and (consp val) (eq (car val) 'ONT::OR))
 	  ;;	  (build-var (gentemp "X") (cdr val) nil))
-	  	  (build-var (gensym "X") (cdr val) nil))
+	  ;;	  (build-var (gensym "X") (cdr val) nil))
 	 
 	 ;;((and (consp val) (eq (car val) 'ONT::NOT))
 	 ;;	 (build-var (gentemp "X") (cdr val) t))

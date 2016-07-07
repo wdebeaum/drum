@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.86 2016/07/05 23:29:40 lgalescu Exp $
+# $Id: Makefile,v 1.88 2016/07/06 20:22:26 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -34,6 +34,14 @@ all default install clean::
 	    (cd $$d && $(MAKE) $@ MODULE=$(MODULE)) || exit 1; \
 	  fi; \
 	done
+
+# if this is a CVS checkout, we can get new .pl files from CVS
+# (saves me telling everyone to do this manually each time I add one)
+# if it's a git checkout, it should already be handled by git
+ifneq (,$(wildcard CVS))
+%.pl:
+	cvs update $@
+endif
 
 #
 # Rules for those using terms.c (see also several sections using this below)
@@ -203,9 +211,15 @@ mesh-scr-terms.tsv: get-mesh-scr-terms.pl $(TEXTTAGGER_mesh_scr)
 	| ./get-mesh-scr-terms.pl \
 	>$@
 
+# get the current version of NCIt, since it changes so often and they don't
+# keep the old ones available (or just use the one we have if we have it
+# already)
+NCIT_WEBSITE=http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/
+NCIT_ZIPFILE=$(shell cd downloads ; ls Thesaurus_??.???.FLAT.zip 2>/dev/null || (curl -s -L $(NCIT_WEBSITE) |grep -o -e 'Thesaurus_..\....\.FLAT.zip' |head -1))
+$(info NCIT_ZIPFILE=$(NCIT_ZIPFILE))
+
 # also writes drum-dsl/NCIT/*
-NCIT_VERSION := 16.06d
-ncit-terms.tsv: get-ncit-terms.pl downloads/Thesaurus_${NCIT_VERSION}.FLAT.zip
+ncit-terms.tsv: get-ncit-terms.pl downloads/$(NCIT_ZIPFILE)
 	./$+ >$@
 
 specialist.tsv: get-specialist-tsv.pl downloads/LEXICON downloads/inflection.table $(prefix)/src/LexiconManager/Data/new
@@ -268,8 +282,8 @@ downloads/Pfam-A.seed.gz:
 
 # NCI Thesaurus
 # see http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/ReadMe.txt
-downloads/Thesaurus_${NCIT_VERSION}.FLAT.zip:
-	$(call download,"http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Thesaurus_${NCIT_VERSION}.FLAT.zip")
+downloads/$(NCIT_ZIPFILE):
+	$(call download,$(NCIT_WEBSITE)$(NCIT_ZIPFILE))
 
 # see http://lexsrv3.nlm.nih.gov/Specialist/Home/index.html
 

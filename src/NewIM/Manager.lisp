@@ -15,7 +15,10 @@
     (when act
       (trace-msg 4  "~%Processing ~S " act)
       (if (eq (car act) 'utterance-end)
-	  (apply *current-dialog-manager* (list 'utt-end act))
+	  ;; new utterance may have come in while we were processing the last one -- so we recheck
+	  (if (empty-inputQ) 
+	      (apply *current-dialog-manager* (list 'utt-end act))
+	      (run-IM-manager))
 	  (let ((index (add-to-im-record act)))
 	    (apply *current-dialog-manager* (list 'process index)))))))
 

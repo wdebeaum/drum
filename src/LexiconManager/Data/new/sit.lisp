@@ -36,7 +36,7 @@
      (EXAMPLE "the cup is sitting on the table")
      (LF-PARENT ONT::BE-AT-LOC)
      (SEM (F::Aspect F::Stage-level) (F::Time-span F::Extended))
-     (TEMPL neutral-location-templ)
+     (TEMPL neutral-templ)
      )
     ((EXAMPLE "he sat at the desk" )
      (LF-PARENT ONT::BODY-MOVEMENT-place)

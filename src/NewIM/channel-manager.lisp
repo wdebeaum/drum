@@ -11,7 +11,7 @@
 (defvar *inputQ* nil)
 
 (defun empty-inputQ nil
-  *inputQ*)
+  (null *inputQ*))
 
 (defun clearQ nil
   (trace-msg 3 "~%Clearing remaining speech acts ...")
