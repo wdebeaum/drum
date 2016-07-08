@@ -2213,9 +2213,9 @@
   (SUBCAT-DISJ-Templ
    (SYNTAX
     (W::SUBCAT (? W::SUB W::S W::PP W::NP W::VP W::ADJP))
-    (W::status w::indefinite)
+    (W::status ont::indefinite)
     (w::agr ?agr)
-    (w::operator w::one-of)
+    (w::operator ont::one-of)
     (W::conj -) (W::disj +) 
     )
    (ARGUMENTS
@@ -2645,7 +2645,7 @@
 	  )
    (ARGUMENTS
     (ARGUMENT (% W::S) ONT::FIGURE)
-    (SUBCAT (% W::NP (w::sort w::pred) (w::lf (% w::description (w::status w::kind)))) ONT::GROUND)
+    (SUBCAT (% W::NP (w::sort w::pred) (w::lf (% w::description (w::status ont::kind)))) ONT::GROUND)
     ))
 
   
@@ -3484,50 +3484,50 @@
   ;;;;; Pronoun templates
   ;;;;;
   (pronoun-templ
-   (SYNTAX(W::pro +) (W::MASS W::count) (W::status W::PRO) (W::case (? case W::sub W::obj -)) (W::agr 
+   (SYNTAX(W::pro +) (W::MASS W::count) (W::status ONT::PRO) (W::case (? case W::sub W::obj -)) (W::agr 
       W::3s))
    (ARGUMENTS
     ))
 
   ;; mine, yours, his, hers, ours, theirs -- stand alone, don't modify a noun
   (poss-pronoun-templ
-   (SYNTAX(W::pro +) (W::case W::poss) (W::status W::PRO) (W::poss +) (W::agr (? a w::3p W::3s)))
+   (SYNTAX(W::pro +) (W::case W::poss) (W::status ONT::PRO) (W::poss +) (W::agr (? a w::3p W::3s)))
    (ARGUMENTS
     ))
 
   ;; my, your, his, her, its, our, their -- must modify a noun
   (poss-pro-det-templ
-   (SYNTAX (W::pro +) (W::case W::poss) (W::status W::PRO-DET) (W::poss +) (W::agr (? a w::3p W::3s)))
+   (SYNTAX (W::pro +) (W::case W::poss) (W::status ONT::PRO-DET) (W::poss +) (W::agr (? a w::3p W::3s)))
    (ARGUMENTS
     ))
 
   ;; whose
   (poss-pro-det-indef-templ
-   (SYNTAX (W::pro w::indef) (W::case W::poss) (W::status W::PRO-DET) (W::poss +) (W::agr (? a w::3p W::3s)))
+   (SYNTAX (W::pro w::indef) (W::case W::poss) (W::status ONT::PRO-DET) (W::poss +) (W::agr (? a w::3p W::3s)))
    (ARGUMENTS
     ))
   
 (pronoun-indef-templ
-   (SYNTAX (W::MASS W::count) (W::status W::PRO) (W::case (? case W::sub W::obj -)) (W::PRO W::INDEF)
+   (SYNTAX (W::MASS W::count) (W::status ONT::PRO) (W::case (? case W::sub W::obj -)) (W::PRO W::INDEF)
 	   (W::agr W::3s))
    (ARGUMENTS
     ))
 
   (pronoun-plural-templ
-   (SYNTAX (W::MASS W::count) (W::status W::PRO-SET) (W::case (? case W::sub W::obj -))
+   (SYNTAX (W::MASS W::count) (W::status ONT::PRO-SET) (W::case (? case W::sub W::obj -))
       (W::agr W::3P))
    (ARGUMENTS
     ))
 
   ;; each other, one another
   (pronoun-reciprocal-templ
-   (SYNTAX(W::MASS W::count) (W::status W::PRO)  (W::case (? case W::obj -)) (W::PRO W::RECIP)
+   (SYNTAX(W::MASS W::count) (W::status ONT::PRO)  (W::case (? case W::obj -)) (W::PRO W::RECIP)
       (W::agr  (? a W::3s w::3p)))
    (ARGUMENTS
     ))
 
   (pronoun-quan-templ
-   (SYNTAX(W::MASS W::count) (W::status W::QUANTIFIER) (W::case (? case W::sub W::obj -)) (W::PRO W::INDEF
+   (SYNTAX(W::MASS W::count) (W::status ONT::QUANTIFIER) (W::case (? case W::sub W::obj -)) (W::PRO W::INDEF
      ) (W::agr W::3s))
    (ARGUMENTS
     ))

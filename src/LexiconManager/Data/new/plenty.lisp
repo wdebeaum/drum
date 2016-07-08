@@ -9,7 +9,7 @@
    (SENSES
     ((LF ONT::PLENTY)
      (non-hierarchy-lf t)(TEMPL quan-cardinality-pl-TEMPL)
-     (SYNTAX (W::agr W::3p) (w::status w::indefinite-plural))
+     (SYNTAX (W::agr W::3p) (w::status ont::indefinite-plural))
      )
     )
    )

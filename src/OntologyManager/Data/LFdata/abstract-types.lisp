@@ -30,10 +30,10 @@
  :parent ONT::kind
  )
 
-;; class (as in class a, class b), classification, category, variety, assortment
 (define-type ONT::grouping
- :parent ONT::version
-  )
+    :comment "a  classification, category, variety of things. Not a set of objects!"
+    :parent ONT::version
+    )
 
 (define-type ONT::FUNCTION-OBJECT
  :parent ONT::domain-property
@@ -51,20 +51,13 @@
  :parent ONT::domain-property
  :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (f::intentional -))
 		    (:default (f::scale -) (f::intensity -) (f::orientation -)))
- ;; The 3 optional roles correspond to different "for" and "to" arguments
- ;; purpose is an explicit purpose, which has to be an action supported or affected by the property
- ;; For example, this drug is useful in treating leukemia
- ;; affected is a person who is either a beneficiary or is somehow else affected by the property
- ;; For example, "this is good for him"
- ;; purpose-implicit is something related to the action that would be a purpose, but which requires coercion
- ;; for example, this drug is good for leukemia = this drug is useful for treating leukemia, the treatment as purpose is implicit
  :arguments ((:REQUIRED ONT::FIGURE)
 	     (:optional ONT::FORMAL  (f::situation))
 	     (:optional ONT::NEUTRAL1)
              (:optional ONT::NEUTRAL ((? pvt F::Phys-obj f::abstr-obj f::situation)))
-;	     (:optional ont::Purpose (f::situation (f::aspect f::dynamic)))
+					;	     (:optional ont::Purpose (f::situation (f::aspect f::dynamic)))
 	     (:optional ONT::Affected ((? aff f::phys-obj f::abstr-obj f::situation)))
-;	     (:optional ONT::Purpose-implicit ((? pi f::phys-obj f::abstr-obj f::situation)))
+					;	     (:optional ONT::Purpose-implicit ((? pi f::phys-obj f::abstr-obj f::situation)))
 	     (:optional ONT::REASON ((? pi f::phys-obj f::abstr-obj f::situation)))
 	     (:OPTIONAL ONT::GROUND)
 	     (:optional ont::norole)
@@ -336,10 +329,10 @@
  :parent ONT::process-val
  )
 
-;; properties having to do with physical substance
 (define-type ONT::substantial-property-val
- :parent ONT::physical-property-val
- )
+    :comment "properties having to do with physical substance"
+    :parent ONT::physical-property-val
+    )
 
 ;;; noisy (data, signal)
 (define-type ONT::interference-val
@@ -1773,31 +1766,31 @@
 
 ;; length
 (define-type ONT::length
- :sem (F::Abstr-obj (F::Scale Ont::length))
+;; :sem (F::Abstr-obj (F::Scale Ont::length))
  :parent ONT::linear-d
  )
 
 ;; width
 (define-type ONT::width
- :sem (F::Abstr-obj (F::Scale Ont::width))
+;; :sem (F::Abstr-obj (F::Scale Ont::width))
  :parent ONT::linear-d
  )
 
 ;; height
-(define-type ONT::height
- :sem (F::Abstr-obj (F::Scale Ont::height))
+(define-type ONT::height-scale
+;; :sem (F::Abstr-obj (F::Scale Ont::height-scale))
  :parent ONT::linear-d
  )
 
 ;; depth
 (define-type ONT::depth
- :sem (F::Abstr-obj (F::Scale Ont::depth))
+;; :sem (F::Abstr-obj (F::Scale Ont::depth))
  :parent ONT::linear-d
  )
 
 ;; thickness
 (define-type ONT::thickness
- :sem (F::Abstr-obj (F::Scale Ont::thickness))
+;; :sem (F::Abstr-obj (F::Scale Ont::thickness))
  :parent ONT::linear-d
  )
 
@@ -1807,7 +1800,7 @@
 (define-type ONT::DISTANCE
  :parent ONT::linear-d
  ;; need this sem specification to get "a short/long distance"
- :sem (f::abstr-obj (F::Scale Ont::distance))
+;; :sem (f::abstr-obj (F::Scale Ont::distance))
  :arguments ((:REQUIRED ONT::neutral (F::phys-obj))
              (:OPTIONAL ONT::neutral1 (F::phys-obj))
 	     (:OPTIONAL ONT::FIGURE (F::phys-obj))
@@ -2970,7 +2963,7 @@
 (define-type ONT::SPEEDY
  :parent ONT::SPEED-VAL
  ; Words: (W::QUICK W::FAST W::RAPID W::SWIFT W::SPEEDY)
-  :wordnet-sense-keys  ("quick%5:00:00" "fast%3:00:01" "fleet%5:00:00" "rapid%5:00:02" "rapid%5:00:00")
+  :wordnet-sense-keys  ("quick%5:00:00:fast:01" "quick%5:00:02:fast:01" "fast%3:00:01" "fleet%5:00:00:fast:01" "rapid%5:00:00:fast:01" "rapid%5:00:02:fast:01" "instantaneous%5:00:00:fast:01")
  ; Antonym: NIL (W::SLOW)
  )
 
@@ -3160,21 +3153,36 @@
 
 (define-type ONT::linear-dimension
  :parent ONT::LINEAR-VAL
- :wordnet-sense-keys ("deep%5:00:00" "shallow%3:00:01" "long%5:00:00" "long%3:00:02" "tall%3:00:00"  "short%3:00:03"  "deep%3:00:01" "short%3:00:02")
+ :wordnet-sense-keys ("deep%5:00:00" "shallow%3:00:01"   "deep%3:00:01" )
  )
 
 (define-type ONT::HEIGHT-VAL
+    :sem (F::Abstr-obj (F::Scale Ont::height-scale))
+    :parent ONT::linear-dimension
+    )
+
+(define-type ONT::HIGH-VAL
+ :parent ONT::linear-dimension
+ :wordnet-sense-keys ("high%3:00:02" "high%3:00:01" "tall%3:00:00")
+)
+
+(define-type ONT::LOW-VAL
+ :parent ONT::linear-dimension
+ :wordnet-sense-keys ("low%3:00:02" "low%3:00:01")
+)
+
+(define-type ONT::LENGTH-VAL
  :parent ONT::linear-dimension
 )
 
-(define-type ONT::HIGH
- :parent ONT::HEIGHT-VAL
- :wordnet-sense-keys ("high%3:00:02" "high%3:00:01")
+(define-type ONT::LONG
+ :parent ONT::LENGTH-VAL
+ :wordnet-sense-keys ("long%3:00:02" "long%3:00:01")
 )
 
-(define-type ONT::LOW
- :parent ONT::HEIGHT-VAL
- :wordnet-sense-keys ("low%3:00:02" "low%3:00:01")
+(define-type ONT::SHORT
+ :parent ONT::LENGTH-VAL
+ :wordnet-sense-keys ("short%3:00:02" "short%3:00:01")
 )
 
 (define-type ONT::BROAD

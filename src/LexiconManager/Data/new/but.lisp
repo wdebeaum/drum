@@ -2,23 +2,36 @@
 ;;;; w::but
 ;;;;
 
-(define-words :pos w::adv
+#||(define-words :pos w::adv
   :words (
-	  ;; Parentheticals
 	  ((w::but w::not)
 	   (senses
 	    ((TEMPL BINARY-CONSTRAINT-NP-TEMPL)
-	     (LF-PARENT ONT::PARENTHETICAL)
-	     (meta-data :origin beetle :entry-date 20090116 :change-date nil :comments nil)
+	     (LF-PARENT ONT::BUT-EXCEPTION)
 	     (preference .98) ;; prefer the ADV operator when possible
 	     )
 	    ((TEMPL  NEG-ADJ-ADV-OPERATOR-TEMPL)
-	     (LF-PARENT ONT::PARENTHETICAL)
+	     (LF-PARENT ONT::BUT-EXCEPTION)
 	     (LF-FORM W::BUT-NOT)
 	     )
 	    )
 	   )
-	  ))
+	  ))||#
+
+(define-words :pos W::conj :boost-word t
+ :tags (:base500)
+ :words (
+  ((W::BUT w::not)
+   (wordfeats (w::but-not +))
+   (SENSES
+    ((LF ONT::BUT-EXCEPTION)
+     (non-hierarchy-lf t)
+     (TEMPL SUBCAT-ANY-TEMPL)
+     )
+    )
+   )
+  
+  ))
 
 (define-words 
     :pos W::adv :templ DISC-PRE-TEMPL
@@ -36,9 +49,9 @@
  :tags (:base500)
  :words (
   (W::BUT
-   (wordfeats (W::conj +))
+   (wordfeats (W::conj +) (w::but +))
    (SENSES
-    ((LF ONT::BUT-EXCEPTION)
+    ((LF ONT::BUT)
      (non-hierarchy-lf t)
      (TEMPL SUBCAT-ANY-TEMPL)
      )
@@ -47,18 +60,5 @@
   
   ))
 
-(define-words :pos W::conj :boost-word t
- :tags (:base500)
- :words (
-  ((W::BUT w::not)
-   (wordfeats (W::conj +))
-   (SENSES
-    ((LF ONT::BUT-NOT)
-     (non-hierarchy-lf t)
-     (TEMPL SUBCAT-ANY-TEMPL)
-     )
-    )
-   )
-  
-  ))
+
 

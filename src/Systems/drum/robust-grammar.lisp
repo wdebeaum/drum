@@ -45,7 +45,7 @@
 	      (advbl-needed -)
 	      (headcat ?hcat) ;; aug-trips
 	      ))
-    (add-to-conjunct (val (focus (% *PRO* (status pro) (var ?prov) (class ?class) (sem ?argsem) (constraint (& (proform ?plex) (relative-pro +))))))
+    (add-to-conjunct (val (focus (% *PRO* (status ont::pro) (var ?prov) (class ?class) (sem ?argsem) (constraint (& (proform ?plex) (relative-pro +))))))
      (old ?con) (new ?newcon))
     (change-feature-values (old ?lf) (new ?newlf) (newvalues ((constraint ?newcon)))))
 

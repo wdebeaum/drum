@@ -34,7 +34,7 @@
    (wordfeats (W::MORPH (:FORMS (-ER -LY))))
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("short%3:00:01"))
-     (LF-PARENT ONT::height)
+     (LF-PARENT ONT::height-val)
      (TEMPL LESS-ADJ-TEMPL)
      )
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("short%3:00:02"))

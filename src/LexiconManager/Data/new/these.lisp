@@ -9,7 +9,7 @@
    (wordfeats (W::WH (? WH W::R -)) (W::agr W::3p))
    (SENSES
     ((LF-PARENT ONT::REFERENTIAL-SEM)
-     (SYNTAX (w::status w::pro-set))
+     (SYNTAX (w::status ont::pro-set))
      (SEM (F::origin (? !n F::human)))
      )
     )

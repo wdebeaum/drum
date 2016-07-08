@@ -23,7 +23,7 @@
      (LF-PARENT ONT::SPEEDY)
      )
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("fast%5:00:00:hurried:00"))
-     (LF-PARENT ONT::QUICK)
+     (LF-PARENT ONT::SPEEDY)
      (example "a fast meeting")
      (TEMPL LESS-ADJ-TEMPL)
      )

@@ -12,6 +12,7 @@
 
     (
      (LF-PARENT ONT::BODY-PART-VAL)
+     (SYNTAX (w::pertainym (:* ONT::NUCLEUS W::NUCLEUS)))
      (TEMPL CENTRAL-ADJ-TEMPL)
      )
     )

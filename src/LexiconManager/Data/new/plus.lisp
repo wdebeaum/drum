@@ -13,7 +13,7 @@
      )
     ((LF ONT::AND)
      (non-hierarchy-lf t)(TEMPL SUBCAT-ANY-TEMPL)
-     (SYNTAX (W::seq +) (W::status W::definite-plural))
+     (SYNTAX (W::seq +) (W::status (? s ont::definite-plural ont::indefinite-plural)))
      )
     )
    )

@@ -25,7 +25,7 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("low%3:00:01"))
      (EXAMPLE "a low ceiling")
 ;     (LF-PARENT ONT::linear-dimension)
-     (LF-PARENT ONT::LOW)
+     (LF-PARENT ONT::LOW-VAL)
      )
     #|
     ((EXAMPLE "Give me lower resolution" "a low salt diet")

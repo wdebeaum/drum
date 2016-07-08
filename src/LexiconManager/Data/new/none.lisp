@@ -11,12 +11,12 @@
     ((LF ONT::NONE)
      (example "none of the trucks")
      (non-hierarchy-lf t)(TEMPL quan-cardinality-pl-templ)
-     (SYNTAX (W::agr (? agr W::3p)) (w::status w::indefinite-plural))
+     (SYNTAX (W::agr (? agr W::3p)) (w::status ont::indefinite-plural))
      )
     ((LF ONT::NONE)
      (example "none of the water")
      (non-hierarchy-lf t)(TEMPL quan-mass-TEMPL)
-     (SYNTAX (W::agr (? agr W::3s)) (w::status w::indefinite)) ; -- never plural if mass
+     (SYNTAX (W::agr (? agr W::3s)) (w::status ont::indefinite)) ; -- never plural if mass
      )
     )
    )

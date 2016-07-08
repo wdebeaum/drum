@@ -41,7 +41,7 @@
      )
    
      ;;  simple adverbials- used is the lexical entry does not specify an argument-map
-    ((ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT (& (ONT::FIGURE ?arg)))
+    ((ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT (& (FIGURE ?arg)))
                               (sem ?sem) (transform ?transform)))
             ;;(SORT CONSTRAINT)
       (role ?lf)
@@ -273,7 +273,7 @@
      (head (np (lf ?lf) (sem ?sem)  (var ?v)
 	       ;; 02/07/08 allow bare numbers here! 
 	      ;; (LF (% ?cat (STATUS (? !st number)))) ; disallowing bare numbers here to prevent 'more than 5' w/ bare (referential-sem) interp
-	       (lf (% ?cat (status (? !st PRO)))) ;; disallowing proforms here -- use pp1-pro>
+	       (lf (% ?cat (status (? !st ONT::PRO)))) ;; disallowing proforms here -- use pp1-pro>
 	       (sort (? sort pred descr wh-desc unit-measure)) (case (? case obj -)))
       ))
 
@@ -301,7 +301,7 @@
      -pp1-pro>
      (prep (LEX ?pt) (headcat ?hc))
      (head (np (lex (? !nlx w::one)) (lf ?lf) (sem ?sem) (var ?v)
-	       (lf (% ?cat (status PRO)))
+	       (lf (% ?cat (status ONT::PRO)))
 	       (sort (? sort pred descr wh-desc unit-measure)) (case (? case obj -)))
       ))
 
@@ -312,7 +312,7 @@
      -pp1-pro-one> .9
      (prep (LEX ?pt) (headcat ?hc))
      (head (np (lex w::one) (lf ?lf) (sem ?sem)  (var ?v)
-	       (lf (% ?cat (status PRO)))
+	       (lf (% ?cat (status ont::PRO)))
 	       (sort (? sort pred descr wh-desc unit-measure)) (case (? case obj -)))
       ))
 
@@ -542,7 +542,7 @@
 		   (gap ?g) (argument ?argmt)))
       (CONJ (LF ?conj) (but-not -) (but +) (var ?vc))
       (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf2) (VAR ?v2) (sem ?sem2))) (gap ?g) (argument ?argmt))
-      (add-to-conjunct (val (:qualification (% *PRO* (status PROP) (var ?vc) (class ?conj) (constraint (& (Figure ?v1) (ground ?v2)))
+      (add-to-conjunct (val (:qualification (% *PRO* (status ont::F) (var ?vc) (class ?conj) (constraint (& (Figure ?v1) (ground ?v2)))
 					       )))
        (old ?con) (new ?newcon))
       )
@@ -618,7 +618,7 @@
 	      (subjvar ?subjvar) 
 	      )
            )
-     (add-to-conjunct (val (TIME (% *pro* (var *) (status F) (class ont::EVENT-TIME-REL) 
+     (add-to-conjunct (val (TIME (% *pro* (var *) (status ont::F) (class ont::EVENT-TIME-REL) 
 				    (constraint (& (FIGURE ?v) (GROUND ?mod))))))
       (old ?con) (new ?newcon))
      (change-feature-values (OLD ?lf) (NEW ?newlf) (newvalues ((CONSTRAINT ?newcon)))))
@@ -639,7 +639,7 @@
 	 (gap -) 
 	 (ARG ?subjvar) (VAR ?mod)
 	 )
-     (add-to-conjunct (val (TIME (% *pro* (var *) (status F) (class ont::EVENT-TIME-REL) 
+     (add-to-conjunct (val (TIME (% *pro* (var *) (status ont::F) (class ont::EVENT-TIME-REL) 
 				    (constraint (& (FIGURE ?v) (GROUND ?mod))))))
       (old ?con) (new ?newcon))
      (change-feature-values (OLD ?lf) (NEW ?newlf) (newvalues ((CONSTRAINT ?newcon)))))
@@ -710,7 +710,7 @@
      (add-to-conjunct (val (& (MODS ?av))) (old ?restr) (new ?new))
      )
     
-    ((NP (name +) (LF (% description (status definite)
+    ((NP (name +) (LF (% description (status ont::definite)
 			 (var ?v1) (class ?class) (sem ?lfsem)
 			 (constraint  ?new)))
          (sort ?sort)  (case ?case))
@@ -1036,9 +1036,9 @@
     ;; TEST: exactly five
     ((number (agr ?agr) (VAR ?v) (MASS ?mn) (lf ?lf) (sem ?sem) (premod +) ;;(val ?val)
 	     (nobarespec +) ; this can't be a specifier -- that goes through the cardinality rules
-	     (restr (& (mods (% *PRO* (status F) (class ?lfa) (var ?v1) 
+	     (restr (& (mods (% *PRO* (status ont::F) (class ?lfa) (var ?v1) 
 				(constraint (& (FIGURE ?v) 
-					       (GROUND (% *PRO* (status indefinite) (var *) (class ont::number) (constraint (& (value ?val)))))))))))
+					       (GROUND (% *PRO* (status ont::indefinite) (var *) (class ont::number) (constraint (& (value ?val)))))))))))
 	     )
      -advbl-bare-number-pre>
      (adv (ATYPE PRE) (VAR ?v1) (argument (% number)) (Mass ?m) (lf ?lfa))
@@ -1049,9 +1049,9 @@
     ;; TEST: eight or so
     ((number (agr ?agr) (VAR ?v) (MASS ?mn) (lf ?lf) (sem ?sem) (premod +) ;;(val ?val)
 	     (nobarespec +) ; this can't be a specifier -- that goes through the cardinality rules
-	     (restr (& (mods (% *PRO* (status F) (class (:* ont::precision-val w::approximate)) (var *) 
+	     (restr (& (mods (% *PRO* (status ont::F) (class (:* ont::precision-val w::approximate)) (var *) 
 				(constraint (& (FIGURE ?v) 
-					       (GROUND (% *PRO* (status indefinite) (var **) (class ont::number) (constraint (& (value ?val)))))))))))
+					       (GROUND (% *PRO* (status ont::indefinite) (var **) (class ont::number) (constraint (& (value ?val)))))))))))
 	     )
      -number-or-so>
      (head (number (VAR ?v) (lf ?lf) (lex ?l) (agr ?agr) (MASS ?mn) (sem ?sem) (val ?val) (premod -)
@@ -1062,7 +1062,7 @@
     
     ;; and the special case for "a" -- e.g., only a week, just a candy, ..
    
-    ((NP (LF (% description (status indefinite)
+    ((NP (LF (% description (status ont::indefinite)
 			 (var ?v1) (class ?class) (sem ?lfsem)
 			 (constraint ?new)))
       (sort ?sort) (case ?case))
@@ -1070,10 +1070,10 @@
      (adv (ATYPE PRE) (VAR ?v) (argument (% number)) (Mass ?m) (lf ?lfa))
      (head (NP (VAR ?v1) (lex ?nlex) (agr 3s)
                (sort ?sort) (case ?case)
-	       (LF (% description (status indefinite) (sem ?lfsem) (class ?class) (constraint  ?restr)))
+	       (LF (% description (status ont::indefinite) (sem ?lfsem) (class ?class) (constraint  ?restr)))
 	       )
       )
-     (add-to-conjunct (val (MODS (% *PRO* (status F) (class ?lfa) (var ?v) 
+     (add-to-conjunct (val (MODS (% *PRO* (status ont::F) (class ?lfa) (var ?v) 
 				    (constraint (& (FIGURE ?v1))))))
       (old ?restr) (new ?new))
      )
@@ -1237,7 +1237,7 @@
      (sort pred) (gap -) (atype (? atp pre post))
      (role ONT::MANNER) (var **)
      (LF (% PROP (CLASS ONT::Manner) (VAR **) 
-	    (CONSTRAINT (& (ONT::FIGURE ?arg) (ont::GROUND ?v)))
+	    (CONSTRAINT (& (FIGURE ?arg) (GROUND ?v)))
 	    (sem ($ f::abstr-obj (f::information -) (f::intentional -)))))
      )
     -vp-ing-advbl> 0.93
@@ -1253,7 +1253,7 @@
      (sort pred) (gap -) (atype (? atp pre post))
      (role ONT::MANNER) (var **)
      (LF (% PROP (CLASS ONT::result) (VAR **) 
-	    (CONSTRAINT (& (ONT::FIGURE ?arg) (ont::GROUND ?v)))
+	    (CONSTRAINT (& (FIGURE ?arg) (GROUND ?v)))
 	    (sem ($ f::abstr-obj (f::information -) (f::intentional -)))))
      )
     -vp-ing-as-result-advbl> 0.93
@@ -1273,7 +1273,7 @@
      (sort pred) (gap -) (atype (? atp pre post))
      (var *)
      (LF (% PROP (CLASS ONT::Manner) (VAR *) 
-	    (CONSTRAINT (& (ONT::FIGURE ?arg) (ont::GROUND ?v)))
+	    (CONSTRAINT (& (FIGURE ?arg) (GROUND ?v)))
 	    (sem ($ f::abstr-obj (f::information -) (f::intentional -)))))
      )
     -manner-advbl> 

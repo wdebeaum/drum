@@ -39,7 +39,7 @@
     ((LF ONT::OR)
      (non-hierarchy-lf t)
      (TEMPL SUBCAT-DISJ-TEMPL)
-     (SYNTAX (w::seq +) (status w::indefinite))
+     (SYNTAX (w::seq +) (status ont::indefinite))
      )
     )
    )

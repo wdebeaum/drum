@@ -170,6 +170,14 @@
 (concept NCIT::C21176 ; Protein or Riboprotein Complex
   ;; Note: not ONT::macromolecular-complex (see discussion on ticket #185)
   (inherit ONT::protein))
+ ;; ...except for a couple we do want to parse compositionally as complexes:
+ (concept NCIT::C116967 ; EGFR-GRB2 Complex
+   (inherit ONT::referential-sem))
+ (concept NCIT::C122771 ; VEGF:VEGFR Complex
+   (inherit ONT::referential-sem))
+ ;; ...and one we want as a whole complex (for synonym "pMHC"):
+ (concept NCIT::C18930 ; Peptide/MHC Complex
+   (inherit ONT::macromolecular-complex))
 (concept NCIT::C812 ; RNA
   (inherit ONT::rna))
 (concept NCIT::C813 ; Messenger RNA

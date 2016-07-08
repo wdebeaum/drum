@@ -169,6 +169,20 @@
       (parser-warn "Attempt to add an illegal constraint ~S. ~%   Constraints must be lists or & constituents" newval))))
   )
 
+(define-predicate 'w::compute-sem-features
+  #'(lambda (args)
+      (compute-sem args)))
+
+(defun compute-sem (args)
+  (let ((lf (second (assoc 'w::lf args)))
+	(semresult (second (assoc 'w::sem args)))
+	)
+    (match-vals nil semresult (lxm::get-lf-sem (get-core-type lf) :no-defaults nil))))
+
+(defun get-core-type (x)
+  (if (consp x)
+      (second x) 
+      x))
 
 (defun add-features-to-constraint (feats oldconstraint newconstraintvar)
   "A helper to add-new-constraint. Given a list of features and an old constraint, creates a new constraint with features added to the old constraint. "

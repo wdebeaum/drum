@@ -671,6 +671,7 @@
 ;; engineer, artist, scientist
 (define-type ONT::professional
     :wordnet-sense-keys ("professional%1:18:00" "professional_person%1:18:00")
+    :comment "a person defined by a role that they play. e.g., doctor, leader, ..."
     :parent ONT::PERSON
     :sem (F::Phys-obj (F::form F::solid-object)
 		      (F::spatial-abstraction F::spatial-point)

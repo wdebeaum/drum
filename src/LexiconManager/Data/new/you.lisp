@@ -24,7 +24,7 @@
   (W::YOU
    (SENSES
     ((LF-PARENT ONT::PERSON)
-     (SYNTAX (W::agr W::2s) (w::status w::pro))
+     (SYNTAX (W::agr W::2s) (w::status ont::pro))
      )
     ;; 2010 -- prefer 1 complex sense to two entries
 ;    ((LF-PARENT ONT::PERSON)
@@ -33,7 +33,7 @@
 ;     )
     ;; 3/3/2011 -- reinstating two entries now that we distinguish between w::pro and w::pro-set
     ((LF-PARENT ONT::PERSON)
-     (SYNTAX (W::agr W::2p) (w::status w::pro-set))
+     (SYNTAX (W::agr W::2p) (w::status ont::pro-set))
      (PREFERENCE 0.98) ;; prefer singular
      )
     )

@@ -13,7 +13,7 @@
     ;;;;;;	 ((LF-PARENT LF_ANY-ABSTRACT-OBJECT))
     ;;;;;;	 ((LF-PARENT LF_SITUATION-ROOT))
     ((LF-PARENT ONT::REFERENTIAL-SEM)
-     (SYNTAX (w::status w::pro-set))
+     (SYNTAX (w::status ont::pro-set))
      (SEM (F::origin (? !n F::human)))
      )
     )

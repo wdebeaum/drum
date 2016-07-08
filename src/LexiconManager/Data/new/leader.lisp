@@ -2,7 +2,7 @@
 ;;;; W::leader
 ;;;;
 
-(define-words :pos W::n :templ COUNT-PRED-TEMPL
+(define-words :pos W::n :templ other-reln-templ
  :words (
   (W::leader
    (SENSES
