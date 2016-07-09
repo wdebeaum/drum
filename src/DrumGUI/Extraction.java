@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.47 2016/06/12 16:24:59 lgalescu Exp $
+ * $Id: Extraction.java,v 1.48 2016/07/08 21:00:42 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -67,6 +67,7 @@ public class Extraction {
     /** The ontology type for the extraction */
     protected String ontType;
     /** Coreference type for referential expressions */
+    @Deprecated
     protected String refType;
     /** Coreference var for referential expressions */
     protected String refVar;
@@ -359,10 +360,7 @@ public class Extraction {
         if (lfTerm == null) {
             return;
         }
-        if (isRefExpr(lfTerm)) { // TODO: do i need to check for :PROFORM? i think not!
-            refType = pullTermHead(lfTerm);
-            refVar = getKeywordArgString(":COREF", lfTerm);
-        }
+        refVar = getKeywordArgString(":COREF", lfTerm);
     }
 
     /**
@@ -371,6 +369,7 @@ public class Extraction {
      * @param term
      * @return
      */
+    @Deprecated
     private boolean isRefExpr(KQMLList term) {
         String lfHead = pullTermHead(term);
         return (lfHead.equals("ONT::PRO") || lfHead.equals("ONT::PRO-SET"));

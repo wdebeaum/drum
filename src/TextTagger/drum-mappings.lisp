@@ -165,6 +165,9 @@
   (inherit ONT::gene))
 (concept NCIT::C17021 ; Protein
   (inherit ONT::protein))
+  ;; ... except these we want to parse compositionally 
+  (concept NCIT::C20030 ; Protein, Organized by Location
+    (inherit ONT::referential-sem))
 (concept NCIT::C20130 ; Protein Family
   (inherit ONT::protein-family))
 (concept NCIT::C21176 ; Protein or Riboprotein Complex
@@ -236,6 +239,9 @@
   (inherit ONT::chemical))
 (concept NCIT::C17828 ; Biological Process
   (inherit ONT::biological-process))
+  ;; ... except PTMs, most of which we handle by other means
+  (concept NCIT::C17019 ; Post-Translational Modification
+    (inherit ONT::referential-sem))
 (concept NCIT::C16847 ; Technique
   (inherit ONT::procedure))
 (concept NCIT::C2991 ; Disease or Disorder

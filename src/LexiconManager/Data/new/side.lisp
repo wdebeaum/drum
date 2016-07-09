@@ -8,7 +8,7 @@
   (W::SIDE
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
-     (LF-PARENT ONT::object-dependent-location)
+     (LF-PARENT ONT::side-location)
      (TEMPL GEN-PART-OF-RELN-TEMPL)
      )
     )

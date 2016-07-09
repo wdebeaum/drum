@@ -579,7 +579,8 @@
    (SYNTAX (W::sort W::other-reln)  (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +) (W::MASS W::COUNT))
    (ARGUMENTS
     (SUBCAT (:parameter xp1 (:default (% W::PP (W::ptype w::of)))) ONT::FIGURE)
-    (SUBCAT2 (:parameter xp2 (:default (% W::PP (W::ptype w::to)))) ONT::FIGURE1)
+;    (SUBCAT2 (:parameter xp2 (:default (% W::PP (W::ptype w::to)))) ONT::FIGURE1)
+    (SUBCAT2 (:parameter xp2 (:default (% W::PP (W::ptype w::to)))) ONT::GROUND)
     ))
   
   ;; effect of A on B

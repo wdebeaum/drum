@@ -7,7 +7,7 @@
   (W::BOTTOM
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
-     (LF-PARENT ONT::object-dependent-location)
+     (LF-PARENT ONT::BOTTOM-location)
      (TEMPL GEN-PART-OF-RELN-TEMPL)
      )
     )
@@ -56,7 +56,7 @@
   (W::BOTTOM
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("bottom%3:00:00"))
-     (LF-PARENT ONT::LOCATION-VAL)
+     (LF-PARENT ONT::BOTTOM-LOCATION-VAL)
      )
     )
    )

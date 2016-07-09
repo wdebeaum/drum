@@ -8,7 +8,8 @@
   (W::COLOR
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
-     (LF-PARENT ONT::color-scale)
+;     (LF-PARENT ONT::color-scale)
+     (LF-PARENT ONT::color-level)
      (TEMPL OTHER-RELN-TEMPL)
      )
     )

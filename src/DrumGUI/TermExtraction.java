@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.37 2016/06/12 16:25:34 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.38 2016/07/08 21:00:42 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -687,10 +687,8 @@ public class TermExtraction extends Extraction {
      */
     private String createCorefXML() {
         String result = "";
-        if (refType != null) {
-            result = "<coref type=\"" + refType + "\" " +
-                    ((refVar != null) ? ("id=\"" + removePackage(refVar, false) + "\" ") : "")
-                    + "/>";
+        if (refVar != null) {
+            result = "<coref id=\"" + removePackage(refVar, false) + "\" />";
         }
         return result;
     }

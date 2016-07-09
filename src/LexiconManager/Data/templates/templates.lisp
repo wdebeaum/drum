@@ -3533,7 +3533,7 @@
     ))
   
   (pronoun-wh-templ
-   (SYNTAX(W::MASS W::count) (W::status W::WH) (W::case (? case W::sub W::obj -)) (W::PRO W::INDEF) 
+   (SYNTAX(W::MASS W::count) (W::status ONT::WH) (W::case (? case W::sub W::obj -)) (W::PRO W::INDEF) 
      (W::agr (? a W::3s W::3p)))
    (ARGUMENTS
     ))

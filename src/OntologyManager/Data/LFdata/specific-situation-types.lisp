@@ -4569,9 +4569,9 @@
  )
 
 ;; angina
-(define-type ont::angina
+(define-type ont::angina-symp
  :wordnet-sense-keys ("angina%1:26:00")
- :parent ont::disease
+ :parent ont::medical-symptom
  )
 
 (define-type ONT::arthritis

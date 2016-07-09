@@ -177,7 +177,7 @@
   (let ((lf (second (assoc 'w::lf args)))
 	(semresult (second (assoc 'w::sem args)))
 	)
-    (match-vals nil semresult (lxm::get-lf-sem (get-core-type lf) :no-defaults nil))))
+    (match-vals nil semresult (lxm::get-sem-for-lf (get-core-type lf)))))
 
 (defun get-core-type (x)
   (if (consp x)

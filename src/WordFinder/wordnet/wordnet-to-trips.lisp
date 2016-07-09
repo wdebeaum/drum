@@ -263,11 +263,12 @@
 			(second (assoc "adj" (run-morphy wm word)
 				       :test #'string=))))
 	   ;; ... and use them to find the number of the word in the synset
+	   (synonyms (get-adj-synonyms synset))
 	   (word-number (1+ (or
 			      (position-if
 				  (lambda (x)
 				    (member x words :test #'string-equal))
-				  (get-adj-synonyms synset)
+				  synonyms
 				  )
 			      ;; if we still failed to find the word number,
 			      ;; pick one that won't match any pointers, and
@@ -275,6 +276,9 @@
 			      (progn
 				(warn "can't find word ~s in synset ~s" word synset)
 				-2))))
+	   (unmorphed-word
+	     (when (> word-number 0)
+	       (nth (- word-number 1) synonyms)))
            (pertainym-pairs (get-pointers-by-relationship wm synset "\\"))
 	   (pertainym-strings
              (loop for (ptr target-ss) in pertainym-pairs
@@ -287,12 +291,19 @@
 		            ;; no word number, get all the synonyms
 		            (get-adj-synonyms target-ss)
 			    ;; get just the one pointed to by the word number
-			    (list (slot-value (nth (- target-word-number 1)
-			    			  (slot-value target-ss 'words))
-					      'word))
+			    (let* ((words (slot-value target-ss 'words))
+			           (target-word
+				       (nth (- target-word-number 1) words))
+				   (target-word-str
+				     (slot-value target-word 'word)))
+			      (list (substitute #\Space #\_ target-word-str)))
 			    )
 		   ))
 	   )
+      ;; don't use pertainyms that are the same word, to avoid infinite
+      ;; recursion
+      (setf pertainym-strings
+	    (remove unmorphed-word pertainym-strings :test #'string-equal))
       (when pertainym-strings
         (let* ((pertainym-string (format nil "~{~a~^ ~}" pertainym-strings))
 	       (tt-reply
@@ -306,23 +317,32 @@
 					:use-wordfinder nil
 					))))))
 	       (pertainym-infos
+		 ;; extract just the tags that are for pertainyms, and add
+		 ;; :wn-sense-keys if necessary
 		 (loop for msg in tt-reply
 		       for msg-type = (intern (symbol-name (first msg)) :wf)
 		       for lex = (second msg)
+		       for lex_ = (substitute #\_ #\Space lex)
 		       for sense-info = (util::find-arg (cddr msg) :sense-info)
-		       when (and (eq 'word msg-type)
-				 (member lex pertainym-strings :test #'string=))
+		       for tag-is-for-pertainym =
+			   (and (eq 'word msg-type)
+				(member lex pertainym-strings :test #'string=))
+		       when (and tag-is-for-pertainym
+		       		 ;; don't add :wn-sense-keys if already there
+		       		 (notany (lambda (si)
+				 	   (member :wn-sense-keys si))
+					 sense-info))
 		       do (loop for (ptr target-ss) in pertainym-pairs
 				when (member lex (get-adj-synonyms target-ss)
 					     :test #'string=)
 				do (pushnew
 				     `(:wn-sense-keys
-				         (,(get-sense-key target-ss lex)))
+				         (,(get-sense-key target-ss lex_)))
 				     sense-info
 				     :test #'equalp)
 				)
-		       when sense-info
-		       collect `(,(intern "WORD" :parser) ,(second msg)
+		       when (and tag-is-for-pertainym sense-info)
+		       collect `(,(intern "WORD" :parser) ,lex
 				   :sense-info ,sense-info)
 		       ))
 	       )

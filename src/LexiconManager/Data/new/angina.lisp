@@ -7,7 +7,7 @@
   (w::angina
   (senses
    ((meta-data :wn ("angina%1:26:00"))
-    (LF-PARENT ONT::angina)
+    (LF-PARENT ONT::angina-symp)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

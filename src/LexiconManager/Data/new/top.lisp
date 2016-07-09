@@ -8,7 +8,7 @@
   (W::TOP
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("top%1:15:00" "top%1:15:01" "top%1:15:02"))
-     (LF-PARENT ONT::object-dependent-location)
+     (LF-PARENT ONT::TOP-location)
      (TEMPL GEN-PART-OF-RELN-TEMPL)
      )
     )
@@ -57,7 +57,7 @@
   (W::TOP
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("top%3:00:00") :comlex (ADJECTIVE))
-     (LF-PARENT ONT::LOCATION-VAL)
+     (LF-PARENT ONT::TOP-LOCATION-VAL)
      )
 ;;;    ((example "I can pay top dollar for a computer")
 ;;;     (meta-data :origin calo :entry-date 20040505 :change-date nil :comments calo-y1variants)

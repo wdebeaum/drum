@@ -36,7 +36,8 @@
     )
 
 (define-type ONT::FUNCTION-OBJECT
- :parent ONT::domain-property
+; :parent ONT::domain-property
+ :parent ONT::abstract-object-nontemporal
  :sem (F::Abstr-obj)
  )
 
@@ -50,7 +51,8 @@
 (define-type ONT::property-val
  :parent ONT::domain-property
  :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (f::intentional -))
-		    (:default (f::scale -) (f::intensity -) (f::orientation -)))
+		    (:default (f::scale -)
+		     (f::intensity -) (f::orientation -)))
  :arguments ((:REQUIRED ONT::FIGURE)
 	     (:optional ONT::FORMAL  (f::situation))
 	     (:optional ONT::NEUTRAL1)
@@ -493,7 +495,8 @@
  )
 
 (define-type ont::spatial
- :parent ont::abstract-object
+; :parent ont::abstract-object
+ :parent ont::property-val
  :arguments ((:OPTIONAL ONT::FIGURE ((? of F::Phys-obj F::Situation f::abstr-obj)))
 	     (:OPTIONAL ONT::GROUND ((? val F::Phys-obj F::Situation f::abstr-obj)))
 	     ;(:OPTIONAL ONT::FIGURE)
@@ -538,8 +541,12 @@
 ;; for adjectives concerning a linear dimension: tall, fat, short, thick
 ;; compare also linear-d: length, width, height
 (define-type ONT::linear-val
- :parent ONT::spatial
+; :parent ONT::spatial
+ :parent ONT::property-val
  :sem (F::abstr-obj (F::scale ont::linear-scale))
+ :arguments ((:OPTIONAL ONT::FIGURE ((? of F::Phys-obj F::Situation f::abstr-obj)))
+	     (:OPTIONAL ONT::GROUND ((? val F::Phys-obj F::Situation f::abstr-obj)))
+             )
  )
 
 ;; physical properties which humans (or animals?) have sensory receptors for
@@ -795,6 +802,21 @@
 (define-type ONT::LOCATION-VAL
  :parent ONT::spatial
  :arguments ((:REQUIRED ONT::FIGURE ((? lof f::phys-obj f::situation f::abstr-obj))))
+ )
+
+(define-type ONT::TOP-LOCATION-VAL
+  :wordnet-sense-keys ("top%3:00:00")
+ :parent ONT::LOCATION-VAL
+ )
+
+(define-type ONT::BOTTOM-LOCATION-VAL
+  :wordnet-sense-keys ("bottom%3:00:00")
+ :parent ONT::LOCATION-VAL
+ )
+
+(define-type ONT::SIDE-LOCATION-VAL
+  :wordnet-sense-keys ("side%3:00:00")
+ :parent ONT::LOCATION-VAL
  )
 
 ;; these are cardinal directions: northern, northeastern
@@ -1463,32 +1485,10 @@
 ;; a number/amount/quantity of X
 (define-type ONT::QUANTITY
  :wordnet-sense-keys ("measure%1:03:00" "quantity%1:03:00" "amount%1:03:00")
- :parent ONT::DOMAIN-PROPERTY
+; :parent ONT::DOMAIN-PROPERTY
+ :parent ONT::GROUP-OBJECT
  :arguments ((:ESSENTIAL ONT::FIGURE)
              )
- )
-
-;; ratio, proportion, percent(age)
-(define-type ont::quantitative-relation
- :wordnet-sense-keys ("magnitude_relation%1:24:00" "quantitative_relation%1:24:00")
- :parent ONT::QUANTITY
- :arguments ((:REQUIRED ONT::FIGURE)
-	     (:optional ont::formal)
-	     ))
-
-;; percent
-(define-type ONT::percent
- :wordnet-sense-keys ("percentage%1:24:00" "percent%1:24:00" "per_centum%1:24:00" "pct%1:24:00")
- :parent ONT::quantitative-relation
- :sem (F::Abstr-obj (F::Scale Ont::percent-scale))
- )
-
-
-(define-type ONT::ratio
- :wordnet-sense-keys ("percentage%1:24:00" "percent%1:24:00" "per_centum%1:24:00" "pct%1:24:00")
- :parent ONT::quantitative-relation
- :arguments ((:REQUIRED ONT::FIGURE1))
- :sem (F::Abstr-obj (F::Scale Ont::ratio-scale))
  )
 
 ;;  be enumerated: 5 sets of people
@@ -1748,12 +1748,47 @@
 
 (define-type ONT::LEVEL
  :wordnet-sense-keys ("level%1:26:00")
- :sem (F::Abstr-obj (F::Scale Ont::LINEAR-SCALE))
- :parent ONT::ordered-DOMAIN
+; :sem (F::Abstr-obj (F::Scale Ont::LINEAR-SCALE))
+ :sem (F::Abstr-obj)
+; :parent ONT::ordered-DOMAIN
+ :parent ONT::ABSTRACT-OBJECT
  :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::phys-obj F::Abstr-obj))) ;; noise, water
 	     (:essential ont::GROUND (f::abstr-obj   (F::INFORMATION F::INFORMATION-CONTENT)))
              )
  )
+
+(define-type ONT::HEIGHT-LEVEL
+ :parent ONT::LEVEL
+ )
+
+(define-type ONT::COLOR-LEVEL
+ :parent ONT::LEVEL
+ )
+
+;; ratio, proportion, percent(age)
+(define-type ont::quantitative-relation
+ :wordnet-sense-keys ("magnitude_relation%1:24:00" "quantitative_relation%1:24:00")
+; :parent ONT::QUANTITY
+ :parent ONT::LEVEL
+ :arguments ((:REQUIRED ONT::FIGURE)
+	     (:optional ont::formal)
+	     ))
+
+;; percent
+(define-type ONT::percent
+ :wordnet-sense-keys ("percentage%1:24:00" "percent%1:24:00" "per_centum%1:24:00" "pct%1:24:00")
+ :parent ONT::quantitative-relation
+ :sem (F::Abstr-obj (F::Scale Ont::percent-scale))
+ )
+
+
+(define-type ONT::ratio
+ :wordnet-sense-keys ("percentage%1:24:00" "percent%1:24:00" "per_centum%1:24:00" "pct%1:24:00")
+ :parent ONT::quantitative-relation
+ :arguments ((:REQUIRED ONT::FIGURE1))
+ :sem (F::Abstr-obj (F::Scale Ont::ratio-scale))
+ )
+
 
 ;; what is linear-s and linear-d?
 (define-type ONT::LINEAR-D
@@ -1866,8 +1901,9 @@
 
 
 (define-type ONT::RATE
- :parent ONT::MEASURE-DOMAIN
- :sem (F::Abstr-obj (F::Scale Ont::Rate-scale))
+; :parent ONT::MEASURE-DOMAIN
+ :parent ONT::LEVEL
+  :sem (F::Abstr-obj (F::Scale Ont::Rate-scale))
  :arguments ((:REQUIRED ONT::FIGURE ((? fot F::phys-obj F::situation)))
              (:ESSENTIAL ONT::EXTENT (F::abstr-obj (F::measure-function F::value) (F::scale ont::rate-scale)))
 ;	     (:essential ont::FORMAL (F::SITUATION (f::type ont::event-of-change)))
