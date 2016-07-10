@@ -2512,7 +2512,7 @@
   '((headfeatures
      (s vform var neg sem dobjvar cont  lex headcat transform advbl-needed)
      (pred qtype focus arg var sem wh lf lex headcat transform)
-     (vp- vform var agr neg sem iobj dobj comp3 part cont  tense-pro aux modal lex headcat transform tma subj-map advbl-needed)
+     (vp- vform var agr neg sem iobj dobj comp3 part cont  tense-pro aux modal lex headcat transform tma subj-map advbl-needed template)
      )
     
 
@@ -3020,7 +3020,7 @@
 (parser::augment-grammar
  '((headfeatures
     (vp agr neg iobj dobj comp3 part cont  tense-pro gap subj subjvar aux modal auxname headcat advbl-needed template)
-    (vp- lex headcat)
+    (vp- lex headcat template)
     )
    
    ;; aux rule for auxilliaries that change the sem features of the phrase

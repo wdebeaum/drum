@@ -712,8 +712,9 @@
 (define-type ONT::event-duration-modifier
  :parent ONT::TEMPORAL-MODIFIER
  :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::situation f::time)))
-             (:essential ont::GROUND (f::abstr-obj (F::Scale Ont::duration-scale) (F::type ont::time-unit)))
- ))
+;             (:essential ont::GROUND (f::abstr-obj (F::Scale Ont::duration-scale) (F::type ont::time-unit)))
+             (:essential ont::GROUND ((? gd F::abstr-obj F::time) (F::time-scale f::interval)))
+  ))
 
 #|
 (define-type ONT::LONG
@@ -883,8 +884,9 @@
 ;; these are intervals such as "duration", which cannot generally be counted
 ;; or serve as time units
 (define-type ONT::TIme-interval
- :wordnet-sense-keys ("interval%1:28:00" "time_interval%1:28:00" "time%1:28:03" "clock_time%1:28:00" "time%1:28:00" "time%1:28:05" )
+ :wordnet-sense-keys ("interval%1:28:00" "time_interval%1:28:00" "time%1:28:03" "clock_time%1:28:00" "time%1:28:00" "time%1:28:05" "time_period%1:28:00")
  :parent ONT::TIME-OBJECT
+ :sem (F::time (F::time-scale (? sc F::interval)))
  :arguments ((:OPTIONAL ONT::FIGURE (F::time (f::time-function f::time-frame) (f::time-scale f::interval) (f::scale ont::duration-scale)))
              ;;; a time of two hours
              (:OPTIONAL ONT::GROUND (F::Abstr-obj))

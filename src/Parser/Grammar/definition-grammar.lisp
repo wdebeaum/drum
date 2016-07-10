@@ -10,7 +10,7 @@
 (parser::augment-grammar
   '((headfeatures
      (NP CASE MASS NAME agr SEM PRO headcat)
-    (vp vform agr sem lex headcat)
+    (vp vform agr sem lex headcat template)
     (cp vform var neg sem subjvar dobjvar lex headcat)
      (definition  vform neg sem subjvar dobjvar lex headcat)
     (utt sem setting subjvar dobjvar lex headcat))

@@ -563,6 +563,7 @@
              )
  )
 
+#|
 ;;; These are all cases where there is an (implicit) agent directing the motion
 (define-type ONT::directed-motion
  :parent ont::motion
@@ -570,15 +571,19 @@
 ;             (:ESSENTIAL ONT::Addressee ((? adr F::Phys-obj f::abstr-obj) (F::intentional +)))
              )
  )
+|#
 
-
+#|
+; merged with ARRIVE
 (define-type ONT::Arriving
  :parent ont::motion
  :arguments (
 ;	     (:ESSENTIAL ONT::To-loc)
              )
  )
+|#
 
+#|
 (define-type ONT::Departing
  :parent ont::motion
  :arguments (
@@ -586,6 +591,7 @@
 	     (:optional ont::neutral)
              )
  )
+|#
 
 ;; enter,  ingress
 (define-type ONT::ENTERING
@@ -617,13 +623,14 @@
              )
  )
 
-
+#|
 (define-type ONT::storing
   :parent ONT::directed-motion
   :arguments ((:REQUIRED ONT::affected ((? ttype F::Abstr-obj f::phys-obj))) ;; storee
 	      (:OPTIONAL ONT::agent (F::phys-obj (F::intentional +))) ;; storer
 	      )
  )
+|#
 
 (define-type ONT::Active-Perception
  :wordnet-sense-keys ("look%2:39:00" "feel%2:39:00" "sense%2:39:00" "note%2:39:02" "look_on%2:39:00" "look_out%2:39:00" "watch%2:39:00" "watch%2:39:03")

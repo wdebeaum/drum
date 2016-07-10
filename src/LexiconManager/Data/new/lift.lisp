@@ -20,7 +20,8 @@
    (wordfeats (W::morph (:forms (-vb) :nom w::lift)))
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("put_direction-9.4") :wn ("lift%2:35:00" "lift%2:35:01" "lift%2:38:00"))
-     (LF-PARENT ONT::lift)
+;     (LF-PARENT ONT::lift)
+     (LF-PARENT ONT::move-upward)
  ; like raise,lower
      )
     ((example "wait until the fog lifts")

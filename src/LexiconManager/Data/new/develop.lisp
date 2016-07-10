@@ -13,17 +13,28 @@
      (TEMPL affected-templ) ; like grow
      (PREFERENCE 0.96)
      )
+    #|
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("occurrence-48.3"))
      (LF-PARENT ONT::occurring)
      (example "a situation developed")
      (TEMPL neutral-templ) ; like occur,happen
      (PREFERENCE 0.98)
      )
+    |#
+
     ((meta-data :origin cernl :entry-date 20110210 :change-date nil :comments ticket-244)
      (LF-PARENT ONT::develop)
      (example "the patient developed a cough")
-     (TEMPL affected-result-xp-templ)
+;     (TEMPL affected-result-xp-templ)
+     (templ AFFECTED-AFFECTED-TEMPL)
      )
+    
+    (
+     (LF-PARENT ONT::CREATE)
+     (example "We developed a theory")
+     (TEMPL agent-affected-create-templ)
+     )
+
     )
    )
 ))

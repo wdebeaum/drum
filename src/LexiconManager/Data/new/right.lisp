@@ -43,7 +43,7 @@
    )
 ))
 
-#||(define-words :pos W::adj 
+(define-words :pos W::adj 
   :templ CENTRAL-ADJ-TEMPL
  :tags (:base500)
  :words (
@@ -54,7 +54,7 @@
 	     (meta-data :origin bee :entry-date 20040408 :change-date 20090731 :wn ("right%3:00:00") :comments test-s)
 	     )
 	    ))	  
-))||#
+))
 
 (define-words :pos W::ADV
  :tags (:base500)

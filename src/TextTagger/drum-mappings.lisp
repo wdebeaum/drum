@@ -239,6 +239,10 @@
   (inherit ONT::chemical))
 (concept NCIT::C17828 ; Biological Process
   (inherit ONT::biological-process))
+  ;; ... except these, which we want to trea compositionally 
+  ;; unfortunately, this also excludes "Exocytosis"; oh, well...
+  (concept NCIT::C21079 ; Transport Process
+    (inherit ONT::referential-sem))
   ;; ... except PTMs, most of which we handle by other means
   (concept NCIT::C17019 ; Post-Translational Modification
     (inherit ONT::referential-sem))

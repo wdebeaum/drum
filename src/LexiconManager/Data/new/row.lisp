@@ -6,10 +6,19 @@
  :words (
   (W::row
    (SENSES
-    ((LF-PARENT ONT::shape-object)
+    (
+     (LF-PARENT ONT::row-formation)
+;     (TEMPL classifier-count-pl-templ)
+     (TEMPL other-reln-templ)
+     (EXAMPLE "A row of ducks")
+     )
+    #|
+    (;(LF-PARENT ONT::shape-object)
+     (LF-PARENT ONT::row-formation)
      (EXAMPLE "Move to the beginning of the row")
      (meta-data :origin task-learning :entry-date 20050812 :change-date nil :wn ("row%1:17:00") :comments nil)
      )
+    |#
     )
    )
 ))

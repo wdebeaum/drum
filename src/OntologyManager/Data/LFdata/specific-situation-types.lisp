@@ -256,11 +256,14 @@
   :parent ont::move
   )
 
+#|
+; merged with FLUIDIC-MOTION
 ;; CAET
 (define-type ont::pour
   :wordnet-sense-keys ("pour%2:38:03")
   :parent ont::move
   )
+|#
 
 ;; CAET
 (define-type ont::stir
@@ -275,14 +278,15 @@
 
 (define-type ONT::move-by-means
  :wordnet-sense-keys ("take%2:38:02" "drive%2:38:11" "take%2:38:11")
- :parent ONT::MOVE
+; :parent ONT::MOVE
+ :parent ONT::TRANSPORTATION
  :arguments ((:ESSENTIAL ONT::formal  (F::phys-obj (F::spatial-abstraction (? sab F::line F::strip))))
              )
  )
 
 ;; ascend, rise, elevate
 (define-type ONT::move-upward
- :wordnet-sense-keys ("rise%2:37:00")
+ :wordnet-sense-keys ("raise%2:38:00")
  :parent ONT::MOVE
  )
 
@@ -384,11 +388,13 @@
   :parent ONT::MOVE
  )
 
-
+#|
+; merged with MOVE-UPWARD
 ;; heft, lift
 (define-type ONT::lift
  :parent ONT::MOVE
  )
+|#
 
 ;; head, approach, near
 (define-type ONT::move-toward
@@ -595,6 +601,8 @@
  :sem (F::SITUATION (F::Aspect F::Unbounded) (F::Time-span F::Extended))
  )
 
+#|
+; merge with RETURN
 (define-type ONT::GO-BACK
  :parent ONT::MOVE
  :sem (F::SITUATION (:required (F::Cause F::Agentive))(:default (F::Aspect F::bounded) (F::Time-span F::atomic)))
@@ -602,6 +610,7 @@
 	     (:OPTIONAL ONT::Source (F::Phys-obj))
              )
  )
+|#
 
 
 (define-type ONT::RETURN
@@ -653,7 +662,8 @@
 
 (define-type ONT::DEPART
  :wordnet-sense-keys ("depart%2:38:01" "part%2:38:00" "start%2:38:02" "start_out%2:38:00" "set_forth%2:38:00" "set_off%2:38:00" "set_out%2:38:00" "take_off%2:38:00")
- :parent ONT::DEPARTING
+; :parent ONT::DEPARTING
+ :parent ONT::EVENT-OF-ACTION
  :sem (F::SITUATION (F::Aspect F::Bounded) (F::Cause F::Force) (F::Time-span F::Atomic))
  )
 
@@ -675,7 +685,8 @@
 
 (define-type ONT::DELIVER
   :wordnet-sense-keys ("deliver%2:35:00" "get%2:30:02" "let%2:30:01" "have%2:30:00")
- :parent ONT::TRANSPORTATION
+; :parent ONT::TRANSPORTATION
+ :parent ONT::TRANSFER
  :sem (F::Situation (F::Cause F::Agentive))
  :arguments ((:OPTIONAL ONT::RESULT ((? rcp F::Phys-obj f::abstr-obj) (F::intentional +)))
              (:OPTIONAL ONT::SOURCE ((? src F::Phys-obj f::abstr-obj) (F::intentional +)))
@@ -2264,13 +2275,6 @@
 	      )
  )
 
-(define-type ont::archive
-  :parent ont::retain
-  :arguments ((:essential ont::affected (?ttype (f::information f::information-content)))
-	     (:essential ont::source (?ttype (f::object-function f::instrument)))
-             )
-  )
-
 (define-type ont::protecting
  :wordnet-sense-keys ("preserve%2:42:01" "keep%2:42:02" "defend%2:33:00")
   :parent ont::event-of-causation
@@ -2279,6 +2283,8 @@
 	      )
  )
 
+#|
+; merged with ARCHIVE
 ;; store my files on the computer; archive the data
 (define-type ONT::store-info
   :parent ONT::storing
@@ -2286,6 +2292,7 @@
 	      (:OPTIONAL ONT::agent (F::phys-obj (F::intentional +)))
 	      )
  )
+|#
 
 (define-type ONT::dig
  :wordnet-sense-keys ("dig%2:35:01" "dig_out%2:35:00")
@@ -2636,24 +2643,34 @@
              )
  )
 
+(define-type ONT::rise
+ :wordnet-sense-keys ("rise%2:38:00")
+ :parent ONT::event-of-undergoing-action
+ :arguments ((:OPTIONAL ONT::Agent)
+             )
+ )
+
 (define-type ONT::come-out-of
- :wordnet-sense-keys ("egress%1:04:01" "egression%1:04:00::" "emergence%1:04:00::")
+ :wordnet-sense-keys ("egress%1:04:01" "egression%1:04:00::" "emergence%1:04:00")
  :parent ONT::come-from
  :arguments ((:OPTIONAL ONT::Agent)
              )
  )
 
 (define-type ONT::push-out-of
- :parent ONT::come-out-of
+; :parent ONT::come-out-of
+ :parent ONT::cause-out-of
  )
 
 (define-type ONT::pull-out-of
- :parent ONT::come-out-of
+; :parent ONT::come-out-of
+ :parent ONT::cause-out-of
  )
 
 (define-type ONT::pull-off
  :wordnet-sense-keys ("draw_off%2:35:00" "draw_away%2:35:01" "pull_off%2:35:01")
- :parent ONT::come-from
+; :parent ONT::come-from
+ :parent ONT::cause-out-of
  :arguments ((:OPTIONAL ONT::Agent)
              )
  )
@@ -2695,7 +2712,8 @@
 
 (define-type ONT::parts-removed
   :wordnet-sense-keys ("precipitate%2:30:00")
-  :parent ONT::come-from
+; :parent ONT::come-from
+ :parent ONT::cause-out-of
   :comment "the part removed is the good part"
   :arguments ((:OPTIONAL ONT::Agent)
 	      (:OPTIONAL ONT::AFFECTED1)
@@ -3705,6 +3723,14 @@
              )
  )
 
+(define-type ont::archive
+;  :parent ont::retain
+  :parent ont::record
+  :arguments ((:essential ont::affected (?ttype (f::information f::information-content)))
+	     (:essential ont::source (?ttype (f::object-function f::instrument)))
+             )
+  )
+
 ;; register for a conference, check in/out at a hotel, enroll in a program
 (define-type ONT::enroll
  :wordnet-sense-keys ("enroll%2:41:00" "inscribe%2:41:00" "enter%2:41:06" "enrol%2:41:00" "recruit%2:41:01" "enter%2:33:00")
@@ -4013,7 +4039,7 @@
 
 ;; FN
 (define-type ont::fluidic-motion
- :wordnet-sense-keys ("course%2:38:00" "feed%2:38:04" "flow%2:38:00" "run%2:38:01" "flow%2:38:01" "flux%2:38:00" "flow%2:38:02")
+ :wordnet-sense-keys ("course%2:38:00" "feed%2:38:04" "flow%2:38:00" "run%2:38:01" "flow%2:38:01" "flux%2:38:00" "flow%2:38:02" "pour%2:38:03")
     :parent ont::motion
     :sem (f::situation (f::trajectory +))
     :arguments ((:required ont::formal (f::phys-obj (f::form (? ff f::liquid f::gas f::wave))))

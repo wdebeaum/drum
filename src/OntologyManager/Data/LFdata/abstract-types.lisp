@@ -1403,7 +1403,8 @@
  )
 
 (define-type ont::number
-  :parent ont::ordered-domain
+;  :parent ont::ordered-domain
+  :parent ONT::MATHEMATICAL-TERM
   :sem (F::abstr-obj ;;(F::measure-function F::value)
        (F::CONTAINER -) (F::INFORMATION f::information-content) (F::INTENTIONAL -)
        )
@@ -1726,7 +1727,8 @@
 
 
 (define-type ONT::number-measure-domain
- :parent ONT::MEASURE-DOMAIN
+; :parent ONT::MEASURE-DOMAIN
+ :parent ONT::MATHEMATICAL-TERM
  :arguments ((:REQUIRED ONT::FIGURE (F::Abstr-obj (F::Measure-function F::Term)))
              )
  )
@@ -1747,9 +1749,9 @@
  )
 
 (define-type ONT::LEVEL
+  :comment "words that act as predicates that return the value on a scale/domain: What is the X on this scale?  Note: We exclude words that are identical to the names of the scales they pertain to (e.g., What is the height on the height scale?)"
  :wordnet-sense-keys ("level%1:26:00")
-; :sem (F::Abstr-obj (F::Scale Ont::LINEAR-SCALE))
- :sem (F::Abstr-obj)
+ :sem (F::Abstr-obj (F::Scale Ont::LINEAR-SCALE))
 ; :parent ONT::ordered-DOMAIN
  :parent ONT::ABSTRACT-OBJECT
  :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::phys-obj F::Abstr-obj))) ;; noise, water
@@ -1757,19 +1759,11 @@
              )
  )
 
-(define-type ONT::HEIGHT-LEVEL
- :parent ONT::LEVEL
- )
-
-(define-type ONT::COLOR-LEVEL
- :parent ONT::LEVEL
- )
-
 ;; ratio, proportion, percent(age)
 (define-type ont::quantitative-relation
  :wordnet-sense-keys ("magnitude_relation%1:24:00" "quantitative_relation%1:24:00")
 ; :parent ONT::QUANTITY
- :parent ONT::LEVEL
+ :parent ONT::MATHEMATICAL-TERM
  :arguments ((:REQUIRED ONT::FIGURE)
 	     (:optional ont::formal)
 	     ))
@@ -1777,13 +1771,14 @@
 ;; percent
 (define-type ONT::percent
  :wordnet-sense-keys ("percentage%1:24:00" "percent%1:24:00" "per_centum%1:24:00" "pct%1:24:00")
- :parent ONT::quantitative-relation
+; :parent ONT::quantitative-relation
+ :parent ONT::MATHEMATICAL-TERM
  :sem (F::Abstr-obj (F::Scale Ont::percent-scale))
  )
 
 
 (define-type ONT::ratio
- :wordnet-sense-keys ("percentage%1:24:00" "percent%1:24:00" "per_centum%1:24:00" "pct%1:24:00")
+ :wordnet-sense-keys ("ratio%1:24:01" "proportion%1:24:00" "ratio%1:24:00")
  :parent ONT::quantitative-relation
  :arguments ((:REQUIRED ONT::FIGURE1))
  :sem (F::Abstr-obj (F::Scale Ont::ratio-scale))
@@ -1899,10 +1894,10 @@
              )
  )
 
-
+; complex scales
 (define-type ONT::RATE
 ; :parent ONT::MEASURE-DOMAIN
- :parent ONT::LEVEL
+ :parent ONT::ORDERED-DOMAIN
   :sem (F::Abstr-obj (F::Scale Ont::Rate-scale))
  :arguments ((:REQUIRED ONT::FIGURE ((? fot F::phys-obj F::situation)))
              (:ESSENTIAL ONT::EXTENT (F::abstr-obj (F::measure-function F::value) (F::scale ont::rate-scale)))

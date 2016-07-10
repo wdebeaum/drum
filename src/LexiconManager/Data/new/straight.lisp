@@ -7,7 +7,8 @@
   (W::STRAIGHT
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("straight%5:00:00:continuous:00"))
-     (LF-PARENT ONT::VERTICAL)
+;     (LF-PARENT ONT::VERTICAL)
+     (LF-PARENT ONT::ROUTE-TOPOLOGY-VAL)
      (SEM (F::GRADABILITY F::+))
      )
     )

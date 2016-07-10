@@ -494,4 +494,5 @@
   :parent ONT::PREDICATE
   :arguments (;(:ESSENTIAL ONT::OF (F::SITUATION (f::type ont::event-of-change)))
 	      (:ESSENTIAL ONT::FIGURE (F::SITUATION (f::type ont::event-of-change) (F::trajectory -)))
+	      (:ESSENTIAL ONT::GROUND ((? gd F::SITUATION F::abstr-obj F::phys-obj)))
   ))
