@@ -14,7 +14,7 @@
     ;;;; auxiliary have in perfect construction
     ((LF-PARENT ONT::PERFECTIVE)
      (meta-data :origin trips :entry-date nil :change-date 20073003 :comments csli-revision)
-     (LF-FORM W::have)
+     (LF-FORM ONT::have)
      (TEMPL PERFECTIVE-TEMPL)
      (example "they've gone")
      (SYNTAX (W::auxname W::perf) (w::changesem +))

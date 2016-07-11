@@ -161,6 +161,15 @@
               )
   )
 
+(define-type ONT::formation
+ :parent ONT::group-object
+ )
+
+(define-type ONT::row-formation
+ :wordnet-sense-keys ("row%1:14:00" "row%1:17:00")
+ :parent ONT::formation
+ )
+
 ;; crowd, audience
 (define-type ont::social-group
  :wordnet-sense-keys ("social_group%1:14:00")
@@ -506,6 +515,7 @@
 
 ;; circular, direct
 (define-type ONT::ROUTE-TOPOLOGY-VAL
+  :wordnet-sense-keys ("straight%3:00:01")
  :parent ONT::spatial
  :sem (F::abstr-obj (:required)(:default (F::gradability -)))
  :arguments ((:REQUIRED ONT::FIGURE (F::phys-obj (F::spatial-abstraction (? sab F::line F::strip))))
@@ -696,7 +706,7 @@
  )
 
 (define-type ONT::SHAPE-VAL
- :parent ONT::spatial
+  :parent ONT::spatial
  :sem (F::Abstr-obj (F::MEasure-function F::VALUE))
  )
 
@@ -1275,7 +1285,7 @@
 (define-type ONT::EVALUATION-VAL
  :parent ONT::RELATION
  :arguments ((:ESSENTIAL ONT::neutral ((? tp f::time f::abstr-obj F::phys-obj F::situation)))
-	     (:OPTIONAL  ONT::neutral1 ((? tp f::time f::abstr-obj F::phys-obj F::situation)))
+	     (:OPTIONAL  ONT::neutral1 ((? tp1 f::time f::abstr-obj F::phys-obj F::situation)))
              )
  )
 
@@ -3271,7 +3281,7 @@
 (define-type ONT::VERTICAL
  :parent ONT::ORIENTATION-VAL
  ; Words: (W::STRAIGHT W::VERTICAL W::PERPENDICULAR)
-:wordnet-sense-keys ("erect%3:00:00" "vertical%3:00:00" "vertical%3:00:00" "perpendicular%3:00:00" "straight%5:00:00")
+:wordnet-sense-keys ("erect%3:00:00" "vertical%3:00:00" "vertical%3:00:00" "perpendicular%3:00:00")
  ; Antonym: ONT::HORIZONTAL (W::PARALLEL W::HORIZONTAL)
  )
 

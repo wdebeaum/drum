@@ -665,6 +665,7 @@
 ; :parent ONT::DEPARTING
  :parent ONT::EVENT-OF-ACTION
  :sem (F::SITUATION (F::Aspect F::Bounded) (F::Cause F::Force) (F::Time-span F::Atomic))
+ :arguments ((:OPTIONAL ONT::Source))
  )
 
 ;;; A more abstract motion. Involves object changing places, but
@@ -1091,7 +1092,7 @@
  :wordnet-sense-keys ("attract%2:35:00" "attract%2:35:01" "affinity%1:19:01" "affinity%1:19:02")
  :parent ONT::cause-effect
   :arguments ((:ESSENTIAL ONT::agent ((? oc F::Phys-obj F::Abstr-obj)))
-	      (:ESSENTIAL ONT::affected ((? oc F::Phys-obj F::Abstr-obj)))
+	      (:ESSENTIAL ONT::affected ((? oc2 F::Phys-obj F::Abstr-obj)))
 	      ))
 
 ;; manage
@@ -1304,7 +1305,7 @@
  :comment "extended interaction using communication acts, symmetric  AGENT1"
  :sem (F::Situation (F::Cause F::Agentive))
  :arguments ((:ESSENTIAL ONT::agent ((? atp F::phys-obj F::abstr-obj) (F::intentional +)))
-	     (:ESSENTIAL ONT::agent1 ((? atp F::phys-obj F::abstr-obj) (F::intentional +)))
+	     (:ESSENTIAL ONT::agent1 ((? atp1 F::phys-obj F::abstr-obj) (F::intentional +)))
              )
  )
 
@@ -2229,7 +2230,8 @@
 
 (define-type ONT::calc-add
  :parent ONT::calculation
- :arguments ((:OPTIONAL ONT::formal1)
+ :arguments ((:REQUIRED ONT::Formal (F::ABSTR-OBJ) (F::TYPE ONT::MATHEMATICAL-TERM))
+	     (:OPTIONAL ONT::formal1)
              )
  )
 
@@ -2451,7 +2453,7 @@
  ;;; an object used in action
  :arguments ((:REQUIRED ONT::formal ((? oc F::Phys-obj F::Abstr-obj F::Situation)))
              ;;; use a book as a hammer; use force as a catalyst
-             (:OPTIONAL ONT::Formal1 ((? oc F::Phys-obj F::Abstr-obj F::Situation)))
+             (:OPTIONAL ONT::Formal1 ((? oc1 F::Phys-obj F::Abstr-obj F::Situation)))
              ;;; use a book to do something
 ;             (:OPTIONAL ONT::Purpose (F::Situation))
              (:OPTIONAL ONT::REASON (F::Situation))
@@ -3431,7 +3433,7 @@
  :parent ONT::position
  :comment "two objects share a common subpart"
  :sem (F::Situation (F::Aspect F::Indiv-level) (F::Cause -))
- :arguments ((:REQUIRED ONT::neutral (F::Phys-obj (F::Spatial-abstraction (? sa1 F::Line F::Strip F::Spatial-region))))
+ :arguments ((:REQUIRED ONT::neutral (F::Phys-obj (F::Spatial-abstraction (? sa F::Line F::Strip F::Spatial-region))))
              (:REQUIRED ONT::neutral1 (F::Phys-obj (F::Spatial-abstraction (? sa1 F::Line F::Strip F::Spatial-region))
               ))
              (:ESSENTIAL ONT::location (F::phys-obj))
@@ -3727,7 +3729,7 @@
 ;  :parent ont::retain
   :parent ont::record
   :arguments ((:essential ont::affected (?ttype (f::information f::information-content)))
-	     (:essential ont::source (?ttype (f::object-function f::instrument)))
+	     (:essential ont::source (?ttype1 (f::object-function f::instrument)))
              )
   )
 
@@ -3754,7 +3756,7 @@
  :parent ONT::record
  :sem (F::situation)
  :arguments ((:essential ont::neutral (?ttype (f::information f::information-content)))
-	     (:essential ont::source (?ttype (f::object-function f::instrument)))
+	     (:essential ont::source (?ttype1 (f::object-function f::instrument)))
              )
  )
 
@@ -3803,7 +3805,7 @@
  :parent ONT::giving
  :sem (F::Situation (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
  :arguments ((:ESSENTIAL ONT::Agent  ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
-             (:ESSENTIAL ONT::affected1 ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
+             (:ESSENTIAL ONT::affected1 ((? agt1 F::Phys-obj f::abstr-obj) (F::intentional +)))
              (:ESSENTIAL ONT::affected ((? th26 F::Abstr-obj F::Situation F::phys-obj)))
              )
  )

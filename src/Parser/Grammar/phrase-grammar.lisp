@@ -997,7 +997,7 @@
 	       (transform ?transform) (constraint ?con) (functn ?fn) (comp-op ?dir) (arg ?arg)
 	       (atype ?atype) (comparative ?cmp) (lex ?lx) (argument ?argument)
 	       ))
-    (compute-sem-features (lf ??!pert-type) (sem ?pert-sem))
+    (compute-sem-features (lf ?!pert-type) (sem ?pert-sem))
     (add-to-conjunct  (val (:GROUND (% *PRO* (status ont::kind) (class ?!pert-type)
 				    (var *) (sem ?pert-sem) (constraint (& (domain-info ?pert-domain-info))))))
      (old ?con) 

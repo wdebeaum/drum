@@ -176,7 +176,7 @@
  :sem (F::Situation (F::Cause F::Mental) (F::Trajectory -))
  :comment "a state in which an EXPERIENCER holds some attitude towards a proposition"
  :arguments ((:ESSENTIAL ONT::Formal)
-	     (:OPTIONAL ont::neutral  ((? cg1 f::abstr-obj F::Phys-obj)))
+	     (:OPTIONAL ont::neutral  ((? cg f::abstr-obj F::Phys-obj)))
 	     (:OPTIONAL ont::neutral1  ((? cg1 f::abstr-obj F::Phys-obj)))  ;; backwards compatability
              )
  )
@@ -792,7 +792,7 @@
  :sem (F::Situation (F::Aspect F::static) (F::Time-span F::extended) (F::Trajectory -))
  :arguments ((:REQUIRED ONT::neutral ((? oc1 F::Phys-obj F::Abstr-obj F::Situation)))
 	     ;; this is still here until we decide what to do with the formal-pred mappings for be
-	     (:optional ONT::formal ((? oc1 F::Phys-obj F::Abstr-obj F::Situation)))
+	     (:optional ONT::formal ((? oc2 F::Phys-obj F::Abstr-obj F::Situation)))
 ;             (:ESSENTIAL ONT::PROPERTY ((? oc2 F::abstr-obj))) ;; only properties (preds) -- for event nouns use ont::have-experience or ont::participating
              )
  )

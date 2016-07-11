@@ -48,7 +48,7 @@
      :parent ONT::SITUATION-ROOT
      :comment "Events that involve change or force: should ahve an AGENT or AFFECTED role"
      :arguments ((:optional  ONT::agent ((? cau4 F::situation F::Abstr-obj f::phys-obj)))
-		 (:optional  ONT::affected ((? cau3 F::situation F::Abstr-obj f::phys-obj)))
+		 (:optional  ONT::affected ((? cau3a F::situation F::Abstr-obj f::phys-obj)))
 		 (:optional  ONT::result ((? cau2 F::situation F::Abstr-obj f::phys-obj)))
 		 (:optional ONT::beneficiary ((? cau1 f::phys-obj))))
      :sem (F::Situation (F::aspect F::dynamic)))
@@ -99,7 +99,7 @@
      :comment "Events that involve creating some new object (typically the AFFECTED-RESULT)"
      :sem (F::Situation)
      :arguments ((:optional ONT::result ((? neu F::situation F::Abstr-obj f::phys-obj)))
-		 (:optional ONT::affected-result ((? neu F::situation F::Abstr-obj f::phys-obj))))
+		 (:optional ONT::affected-result ((? neu2 F::situation F::Abstr-obj f::phys-obj))))
      )
 
 (define-type ont::event-of-state 
