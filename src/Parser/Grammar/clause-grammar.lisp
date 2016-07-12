@@ -1598,7 +1598,7 @@
 		      ))
      (postadvbl -)
      )
-    -vp-particle-role>
+    -vp-particle-role> 1  ;; boost this as finding the particle is good evidence for the interpretation
     (head (v (aux -)
 	   (lf ?c) (sem ($ f::situation (f::type ont::situation-root)))  (vform ?tense-pro)
 	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -) )) ;; note double matching required

@@ -247,6 +247,7 @@ sub tag_drum_terms {
       }
       print STDERR Data::Dumper->Dump([$match],['*match']) if ($debug);
       my %mapped_id_to_matches_with_status = ();
+      my @mapped_ids = (); # equivalent to "keys %mitmws" but stable across runs
       my %id2name = ();
       while (@rest) {
 	my $id = shift(@rest);
@@ -276,6 +277,8 @@ sub tag_drum_terms {
 		) {
 	  # skip morphed CHEBI and CVCL terms
 	} elsif ($id =~ /^(BTO|CHEBI|CO|EFO|GO|MI|NCIT|UO|SO|ORPHANET):/) { # ontologies with hierarchies
+	  push @mapped_ids, $id
+	    unless (exists($mapped_id_to_matches_with_status{$id}));
 	  push @{$mapped_id_to_matches_with_status{$id}}, $match_with_status
 	    unless (grep { structurally_equal($_, $match_with_status) }
 			 @{$mapped_id_to_matches_with_status{$id}});
@@ -364,7 +367,6 @@ sub tag_drum_terms {
 	}
       }
       if (%mapped_id_to_matches_with_status) {
-	my @mapped_ids = keys %mapped_id_to_matches_with_status;
 	# FIXME push this to the end so we only do this message once per text
 	# rather than once per term
 	my $reply_content = KQML::KQMLKeywordify($self->send_and_wait("(request :content (get-trips-ont-mappings :concept-ids (" . join(' ', @mapped_ids) . ")))"));

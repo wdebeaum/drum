@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.44 2016/06/02 16:10:40 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.47 2016/07/12 04:50:40 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -45,6 +45,8 @@ public class EventExtraction extends Extraction {
         NEUTRAL(":NEUTRAL"),
         /** */
         NEUTRAL1(":NEUTRAL1"),
+        /** */
+        NEUTRAL2(":NEUTRAL2"),
         /** */
         FORMAL(":FORMAL");
         private String roleName;
@@ -135,7 +137,9 @@ public class EventExtraction extends Extraction {
         // MODA: auto-/trans-/homo-/hetero-/uni-/mono-/di-/tri-/poly-/multi-
         MODA(":MODA"),
         // MODN: de-/un-/non-/dis-
-        MODN(":MODN");
+        MODN(":MODN"),
+        // :INEVENT id: ID for event in which this event participates in some role
+        INEVENT(":INEVENT");
         private String modName;
 
         private PolyModifier(String name) {
@@ -771,6 +775,7 @@ public class EventExtraction extends Extraction {
                 + createEpiModalityXML()
                 // + createMethodXML()
                 + createModsXML()
+                + createFeaturesXML()
                 + createPredicateXML()
                 + createArgsXML()
                 + createSiteXML()
@@ -1237,6 +1242,45 @@ public class EventExtraction extends Extraction {
         }
 
         return result;
+    }
+
+    /**
+     * Returns a {@code <features>} XML element representing the term features,
+     * or the empty string if no such information exists.
+     * TODO: remove once inevent is moved under mods
+     */
+    private String createFeaturesXML() {
+        String features = "";
+        features += createIneventModsXML();
+
+        return features.equals("")
+                ? ""
+                : "<features>" + features + "</features>";
+    }
+
+    /**
+     * TODO: this probably ought to go under <mods>
+     * 
+     * @return
+     */
+    private String createIneventModsXML() {
+        ArrayList<KQMLObject> inEvents = polyMods.get(PolyModifier.INEVENT);
+        Debug.warn("poly :INEVENT of " + id + " =  " + inEvents);
+        if ((inEvents == null) || inEvents.isEmpty()) {
+            return "";
+        }
+        String result = "";
+        for (KQMLObject inEvVar : inEvents) {
+            if (!isOntVar(inEvVar.toString())) {
+                Debug.warn(":INEVENT value: expected var, got " + inEvVar);
+            } else {
+                KQMLList inEvTerm = findTermByVar(inEvVar.toString(), context);
+                // TODO: get more info?
+                result += "<event id=\"" + removePackage(inEvVar.toString(), false) + "\" />";
+            }
+        }
+
+        return "<inevent>" + result + "</inevent>";
     }
 
     //// LISP FORMATTING

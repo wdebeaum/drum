@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EpistemicModalityExtraction.java,v 1.7 2016/04/05 21:02:03 lgalescu Exp $
+ * $Id: EpistemicModalityExtraction.java,v 1.8 2016/07/11 22:31:44 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -38,6 +38,8 @@ public class EpistemicModalityExtraction extends Extraction {
         NEUTRAL(":NEUTRAL"),
         // NEUTRAL1
         NEUTRAL1(":NEUTRAL1"),
+        // NEUTRAL2
+        NEUTRAL2(":NEUTRAL2"),
         // FORMAL
         FORMAL(":FORMAL"),
         // PURPOSE

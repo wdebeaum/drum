@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.38 2016/07/08 21:00:42 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.39 2016/07/12 04:27:23 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -77,19 +77,19 @@ public class TermExtraction extends Extraction {
      * @author lgalescu
      */
     protected enum PolyAttribute {
-        // :DEGREE context-term-id: hyper-/hypo-/under-/over-
+        // :DEGREE hyper-/hypo-/under-/over-
         DEGREE(":DEGREE"),
-        // :FREQUENCY context-term-id: re-
+        // :FREQUENCY re-
         FREQUENCY(":FREQUENCY"),
         // :MODA auto-/trans-/homo-/hetero-/uni-/mono-/di-/tri-/poly-/multi-
         MODA(":MODA"),
         // :MODN de-/un-/non-/dis-
         MODN(":MODN"),
-        // :INEVENT context-term-id: ID for event modifying this term
+        // :INEVENT id: ID for event in which this term participates in some role
         INEVENT(":INEVENT"),
-        // :LOC context-term-id: ID for cellular location term
+        // :LOC id: ID for cellular location term
         CELL_LOC(":LOC"),
-        // :MUTATION context-term-id: ID for mutation term
+        // :MUTATION id: ID for mutation term
         MUTATION(":MUTATION");
         private String attrName;
 
