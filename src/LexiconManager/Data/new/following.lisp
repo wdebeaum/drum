@@ -14,3 +14,15 @@
    )
 ))
 
+(define-words :pos W::ADV
+ :words (
+  ((W::following)
+   (SENSES
+    ((LF-PARENT ONT::event-time-rel)
+;     (TEMPL binary-constraint-S-TEMPL)  ; copied from "prior to"
+     (TEMPL binary-constraint-S-OR-NP-templ)  
+     (example "following the meeting she checked her watch")
+     )
+    )
+   )
+))

@@ -3028,7 +3028,7 @@
  )
 
 (define-type ONT::increase
- :wordnet-sense-keys ("increase%2:30:00" "protuberate%2:42:01")
+ :wordnet-sense-keys ("increase%2:30:00" "protuberate%2:42:01" "lengthen%2:30:01")
  :parent ONT::change-magnitude
  )
 
@@ -3039,6 +3039,11 @@
 ;; rush, hasten, speed up
 (define-type ONT::increase-speed
  :wordnet-sense-keys ("hasten%2:36:00" "rush%2:36:00" "stimulate%2:36:00" "induce%2:36:01" "hasten%2:41:00" "expedite%2:41:00" "step_on_it%2:38:00" "belt_along%2:38:00" "bucket_along%2:38:00" "cannonball_along%2:38:00" "rush_along%2:38:00" "pelt_along%2:38:00" "race%2:38:00" "speed%2:38:03" "hie%2:38:00" "hasten%2:38:00" "hotfoot%2:38:00" "rush%2:38:00" "rush%2:30:00" "hasten%2:30:00" "hurry%2:30:00" "look_sharp%2:30:00" "festinate%2:30:00")
+ :parent ONT::increase
+ )
+
+(define-type ONT::increase-time
+ :wordnet-sense-keys ("prolong%2:30:00")
  :parent ONT::increase
  )
 
