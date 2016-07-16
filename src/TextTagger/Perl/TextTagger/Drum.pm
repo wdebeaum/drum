@@ -347,17 +347,19 @@ sub tag_drum_terms {
 	      unless (grep { structurally_equal($_, $match_with_status) }
 			   @{$old_terms[0]{'domain-specific-info'}{matches}}); 
 	  } else { # make a new term
+	    $lftypes = remove_duplicates($lftypes);
 	    push @terms, +{
 	      type => 'sense',
 	      lex => $lex,
 	      start => $start,
 	      end => $end,
-	      lftype => remove_duplicates($lftypes),
+	      lftype => $lftypes,
 	      'domain-specific-info' => +{
 		domain => 'drum',
 		type => 'term',
 		id => $id,
 		( $name ne '' ? (name => $name) : () ),
+		'ont-types' => [@$lftypes], # in case the main lftype is changed
 		matches => [$match_with_status],
 		( defined($species) ? (species => $species) : () ),
 		( @dbxrefs ? (dbxrefs => [@dbxrefs]) : () )
@@ -411,6 +413,7 @@ sub tag_drum_terms {
 		type => 'term',
 		id => $id,
 		( $name ne '' ? (name => $name) : () ),
+		'ont-types' => [@$lftypes],
 		matches => [@matches_with_status],
 		mappings => [@mappings]
 	      }

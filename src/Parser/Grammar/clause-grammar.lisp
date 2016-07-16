@@ -986,15 +986,16 @@
      
      ((pred (arg ?arg) (var ?v)  (sem ?sem)
             (lf (% prop (status ont::f) (arg ?arg) (var ?v) 
-		   (class ?c) (constraint (& (figure ?arg)))))
+		   (class ?c) (constraint ?newcon)))
             (argument ?argument)
             (filled -)
             )
       -pred4>
       (head (np (sem ?sem) (var ?v) (case (? case obj -))
           (lf (% description (status (? x ont::indefinite ont::bare ont::indefinite-plural)) (sem ($ f::phys-obj (f::type ont::role-reln)))
-	         (class ?c) (constraint ?constr))))
-      ))
+	         (class ?c) (constraint ?constr)))))
+      (add-to-conjunct (val (Figure ?arg)) (old ?constr) (new ?newcon))
+      )
 
    ;; a construction that is limited to pred of emotional state 
    ;;  e.g., he is happy/sad/amused that the dog barked
@@ -1997,7 +1998,7 @@
     -s-ifa> 
     (word (lex (? lex if whether)))
     (head (s (stype decl) (var ?v) (main -) (gap ?g) (vform fin)
-	   (advbl-needed -)
+	   (advbl-needed -) (adj-s-prepost -)
 	   (lf (% prop (var ?v) (class ?c) (constraint ?con)))
 	   (lex ?hlex) (headcat ?hcat) ;; aug-trips
 	   ))
@@ -3283,50 +3284,78 @@
    ;; they had come, seen and conquered
   ;;  starting the VBARSEQ 
    ((VBARSEQ (vform ?vf) (var *) (subjvar ?subj)  (subj ?subject) (gap ?gap)  (agr ?agr)
-     (class ont::vp-conjoined)
+     (class ?class) (sem ?sem)
      (constraint (& 
 		     (SEQUENCE 
 		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (constraint ?con1))
 		       (% *PRO* (var ?v2) (status ont::f) (class ?c2) (tma ?tma2) (constraint ?con2)))))))
     -vbar-conj-seq1>
     (head (vp- (vform ?vf) (subjvar ?subj) (subj ?subject) (var ?v1) (seq -) (gap ?gap) (agr ?agr)
-	       (advbl-needed -) (class ?c1) (constraint ?con1) (tma ?tma1)
+	       (advbl-needed -) (class ?c1) (constraint ?con1) (tma ?tma1) (sem ?s1)
 	   ))
     (punc (lex (? x W::punc-comma)))
     (vp- (vform ?vf) (var ?v2) (seq -) (subjvar ?subj)  (subj ?subject)  (gap ?gap) (agr ?agr)
-     (advbl-needed -) (class ?c2) (constraint ?con2)  (tma ?tma2))
+     (advbl-needed -) (class ?c2) (constraint ?con2)  (tma ?tma2) (sem ?s2))
+    (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+    (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
     )
     
     ;; extending the VBARSEQ
    ((VBARSEQ (vform ?vf) (var *) (subjvar ?subj)  (subj ?subject) (gap ?gap)  (agr ?agr)
-     (class ont::vp-conjoined)
+     (class ?class) (sem ?sem)
      (constraint (& (SEQUENCE ?newlf))))
     -vbar-conj-seq2>
     (head (vbarseq (var ?v1) (subjvar ?subj)  (subj ?subject) (gap ?gap)  (agr ?agr)
-		   (constraint (& (sequence ?lf)))
+		   (constraint (& (sequence ?lf))) (class ?c1) (sem ?sem1)
 		   (vform ?vf) (punc ?punc)
 		   ))
     (punc (lex ?punc))
-    (vp- (vform ?vf) (var ?v2) (seq -)  (gap ?gap)  (agr ?agr)
+    (vp- (vform ?vf) (var ?v2) (seq -)  (gap ?gap)  (agr ?agr) (sem ?s2)
      (advbl-needed -) (subjvar ?subj) (subj ?subject) (class ?c2) (constraint ?con2) (tma ?tma2))
-    (add-to-end-of-list (list ?lf) (val (% *PRO* (var ?v2) (class ?c2) (constraint ?con2) (tma ?tma2))) (newlist ?newlf))
+    (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+    (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+    (add-to-end-of-list (list ?lf) 
+     (val (% *PRO* (var ?v2) (class ?c2) (constraint ?con2) (tma ?tma2))) (newlist ?newlf))
    )
 
    ;; ending the VBARSEQ 
    ((VP- (vform ?vf) (var *) (seq +) (subjvar ?subj) (subj ?subject)  (gap ?gap)  (agr ?agr) (sem ?sem)
-     (class ont::vp-conjoined)
+     (class ?class) 
      (constraint (&  (OPERATOR ?lx) 
 		     (SEQUENCE ?newlf)))
      )
     -vbar-conj-seq> 1.0
-    (head (vbarseq (var ?v1) (subjvar ?subj) (subj ?subject) (gap ?gap) (sem ?sem)
+    (head (vbarseq (var ?v1) (subjvar ?subj) (subj ?subject) (gap ?gap) (sem ?s1) (class ?c1)
 		   (constraint (& (sequence ?lf))) (agr ?agr)
 		   (vform ?vf)
 		   ))
     (CONJ (lf (? lx ont::and ont::or)))
-    (vp- (vform ?vf) (subjvar ?subj) (subj ?subject)(var ?v2) (seq -)  (gap ?gap)
+    (vp- (vform ?vf) (subjvar ?subj) (subj ?subject)(var ?v2) (seq -)  (gap ?gap) (sem ?s2)
      (advbl-needed -)  (agr ?agr) (class ?c2) (constraint ?con2) (tma ?tma2))
-    (add-to-end-of-list (list ?lf) (val (% *PRO* (var ?v2) (class ?c2) (constraint ?con2) (tma ?tma2))) (newlist ?newlf))
+    (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+    (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+    (add-to-end-of-list (list ?lf) 
+     (val (% *PRO* (var ?v2) (class ?c2) (constraint ?con2) (tma ?tma2))) (newlist ?newlf))
+    )
+
+   ;; ending the VBARSEQ - WITH BUT-NOT - ONLY WORKS FOR only workd of -ing and BARE forms
+   ((VP- (vform (? vf w::ing w::base)) (var *) (seq +) (subjvar ?subj) 
+     (subj ?subject)  (gap ?gap)  (agr ?agr) (sem ?sem)
+     (class ?class)
+     (constraint (&  (OPERATOR ?conj) 
+		     (SEQUENCE ?seq)
+		     (except  (% *PRO* (var ?v2) (class ?c2) (constraint ?con2) (tma ?tma2)))))
+     )
+    -vbar-conj-seq-but-not> 1.0
+    (head (vbarseq (var ?v1) (subjvar ?subj) (subj ?subject) (gap ?gap) (sem ?s1) (class ?c1)
+		   (constraint (& (sequence ?seq))) (agr ?agr)
+		   (vform (? vf w::ing w::base))
+		   ))
+    (CONJ (lf ?conj) (but-not +))
+    (vp- (vform (? vf w::ing w::base)) (subjvar ?subj) (subj ?subject)(var ?v2) (seq -)  (gap ?gap)
+     (advbl-needed -) (sem ?s2) (agr ?agr) (class ?c2) (constraint ?con2) (tma ?tma2))
+    (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+    (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
     )
 
      ;; ending the VBARSEQ, with comma 

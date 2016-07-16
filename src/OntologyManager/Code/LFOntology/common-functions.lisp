@@ -253,10 +253,10 @@
 							      (t (eql x y)))
 						       )))
 	      )
-	    (when (and (null nval) (not (eq name 'F::TYPE)))  ;; f-type does not need checking as its automatically generated while the ontology is being built
+	    (when (and (null nval) (not (member name '(F::TYPE F::SCALE))))  ;; f-type does not need checking as its automatically generated while the ontology is being built
 	      (lfontology-warn " Incompatible feature values ~S and ~S in for child ~S of parent ~S~%" fval olddef childlist parentlist) ;;(break)
 	      )
-	    (if (eq name 'F::TYPE) (setq nval value))
+	    (if (member name '(F::TYPE F::SCALE)) (setq nval value))
 	    (cons (list name nval)
 		  (remove name list :key #'first))
 	  )

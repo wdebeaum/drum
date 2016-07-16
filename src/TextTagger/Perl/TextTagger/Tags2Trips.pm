@@ -450,6 +450,9 @@ sub domainSpecificInfo2trips {
       	   [map { ['map', ':through', $_->{':through'}, ':to', $_->{':to'}] }
 	        @{$info->{mappings}}]
         if (exists($info->{mappings}));
+      push @$trips, ":ont-types",
+	   [map { lisp_intern(uc($_), "ONT") } @{$info->{'ont-types'}}]
+	if (exists($info->{'ont-types'}));
       push @$trips, ':member-type', $info->{'member-type'}
         if (exists($info->{'member-type'}));
       push @$trips, ':members', $info->{members} if (exists($info->{members}));
@@ -545,7 +548,7 @@ sub trips2tagNative
     if ($arg eq 'sources' and ref($val) eq 'ARRAY') {
       # special case to handle pipequotes in flat :sources lists from MetaMap
       $val = [map { un_pipe_quote($_) } @$val];
-    } elsif ($arg eq 'lftype' and ref($val) eq 'ARRAY') {
+    } elsif ($arg =~ /^(?:lftype|ont-types)$/ and ref($val) eq 'ARRAY') {
       # special case to handle flat :lftype lists
       $val = [map {
 	# undo pipe quotes

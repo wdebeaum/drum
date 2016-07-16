@@ -24,5 +24,10 @@
      )    
     )
    )
-))
+  ((w::if w::so)
+   (SENSES 
+    ((TEMPL DISC-PRE-TEMPL)
+     (LF-PARENT ONT::POS-CONDITION))
+    )))
+ )
 

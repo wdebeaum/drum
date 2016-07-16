@@ -934,7 +934,7 @@
 	    (post-subcat -) (prefix -)
 	    ))
      (append-conjuncts (conj1 ?con) (conj2 (& (orientation ?orient) (intensity ?ints)
-					    (?argmap ?arg) (scale ?scale) 
+					    (?argmap ?arg) (scale ?!scale) 
 					     ))
 		       (new ?newc))
      )
@@ -2118,7 +2118,7 @@
 
         ;;  COMMAS
         ;;  e.g., the train ,
-        ((NP (LF ?r) (SORT ?sort) (VAR ?v))
+        ((NP (LF ?r) (SORT ?sort) (VAR ?v) (comma +))
          -np-comma>
          (head (NP (LF ?r) (SORT ?sort) (VAR ?v) (COMPLEX -))) (punc (Lex w::punc-comma)))
 	;; reference/citations
@@ -4184,6 +4184,39 @@
       (simple-cons (in1 ?v2) (in2 ?lf1) (out ?members))
       (logical-and (in1 ?generated1) (in2 ?generated2) (out ?generated))
       )
+
+    ;; same rule with exceptions + comma
+
+     ((NP (ATTACH ?a) (var ?v) (agr 3p) (SEM ?sem)  
+      (LF (% Description (Status ?status) (var ?v) 
+	     (class ?class)
+	     (constraint (& (:operator ?op) (:sequence ?members) (:except ?exception)))
+	     (sem ?sem) (CASE ?case1)
+	     (mass ?m1) 
+	     ))
+      (COMPLEX +) (SORT PRED)
+      (generated ?generated)
+      )
+     np-conj1-with-exception-with-comma> 
+      (NPSEQ (var ?v1) (SEM ?s1) (lf ?lf1) (class ?c1) (CASE ?case) (mass ?m1)
+       (generated ?generated) (separator W::punc-comma)
+       (time-converted ?tc1) ;; MD 2008/03/06 Introduced restriction that only items with the same time-converted status can combine - i.e. don't mix number notation for times or non-times. 
+       )
+      (punc (lex punc-comma))
+      (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v)) ;; (status ?status))
+      (head (NP (VAR ?v2) (SEM ?s2) (ATTACH ?a) (lf ?lf2) (LF (% ?d (class ?c2) (status ?status))) (CASE ?case2) (mass ?m2) (constraint ?con)
+		(generated ?generated2)
+		(sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
+		(time-converted ?tc1) 
+		))
+      (punc (lex punc-comma))      
+      (conj (but-not +))
+      (np (var ?exception))
+      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+      (simple-cons (in1 ?v2) (in2 ?lf1) (out ?members))
+      (logical-and (in1 ?generated1) (in2 ?generated2) (out ?generated))
+      )
     
     ;; sugar, salt, and dill.
 
@@ -4297,7 +4330,7 @@
      ((NP (ATTACH ?a) (var ?v) (agr ?agr) (SEM ?sem) (gerund ?ger) 
       (LF (% Description (Status ?status) (var ?v) 
 	     (class ?class)
-	     (constraint (& (operator ont::and) (sequence (?v1)) (except ?exception)))
+	     (constraint (& (operator but-not) (sequence (?v1)) (except ?exception)))
 	     (sem ?sem) (CASE ?c)
 	     (mass ?m1) 
 	     ))
@@ -4314,9 +4347,30 @@
       (conj (but-not +) (var ?v))
       (np (var ?exception))
       )
+;;  But not construction, e,g,. apples but not pears, apples not pears, 
+     ((NP (ATTACH ?a) (var ?v) (agr ?agr) (SEM ?s1) (gerund ?ger) 
+      (LF (% Description (Status ?status) (var ?v) 
+	     (class ?cl)
+	     (constraint (& (operator ont::and) (sequence (?v1)) (except ?exception)))
+	     (sem ?s1) (CASE ?c)
+	     (mass ?m1) 
+	     ))
+      (COMPLEX +) (SORT PRED)
+      (generated ?generated)  (time-converted ?tc1) 
+       )
+     -np-but-not-conjunct-with-comma> 
+     (head (NP (SEM ?s1) (VAR ?v1) (agr ?agr)  (complex -) (expletive -) ;;(bare-np ?bnp)
+	    (generated ?generated)  (time-converted ?tc1) (gerund ?ger)
+	    ;; (bare-sequence -)
+	    (LF (% ?sort (class ?c1) (status ?status))) (CASE ?c) (constraint ?con) (mass ?m2) ;; allowing mismatch on mass
+	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram] 	    
+	    ))
+      (punc  (lex w::punc-comma))
+      (conj (but-not +) (var ?v))
+      (np (var ?exception))
+      )
 
-    
-    ;;  simple conjuncts/disjunct of NPS with exceptiosn, e.g., the dog and the cat, but not the horse
+        ;;  simple conjuncts/disjunct of NPS with exception + comma, e.g., the dog, but not the horse
      ((NP (ATTACH ?a) (var ?v) (agr 3p) (SEM ?sem) (gerund ?ger) 
       (LF (% Description (Status ?status) (var ?v) 
 	     (class ?class)
@@ -4334,6 +4388,7 @@
 	    (LF (% ?sort (class ?c1) (status ?status))) (CASE ?c) (constraint ?con) (mass ?m2) ;; allowing mismatch on mass
 	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram] 	    
 	    ))
+      
       (conj (SEQ +) (LF ?op) (var ?v) ) ;;(status ?status))
       (NP (SEM ?s2) (VAR ?v2) (agr ?agr1)  (complex -) (expletive -) ;;(bare-np ?bnp)
 	    (generated ?gen2)  (time-converted ?tc1)  (gerund ?ger)

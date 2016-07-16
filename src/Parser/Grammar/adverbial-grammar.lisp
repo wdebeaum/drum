@@ -294,6 +294,44 @@
       (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
       (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class)))
 
+    ;; I ate a dollop of the ice cream but not the ice
+    ((PP (PTYPE ?pt) (var ?vc) 
+      (lf (% PROP (class ?class) (var ?vc) (sem ?sem) 
+	     (constraint (& (operator ont::and) (sequence ?v1) (except ?v2)))))
+      (case ?c) (sem ?sem)
+      (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
+      )
+     -pp-conj-but-not1>
+     (head (PP (PTYPE ?pt) (var ?v1) (case ?c) (sem ?s1)
+	       (LF (% ?sort1 (class ?c1) (status ?status)))
+	       ))
+     (CONJ (LF ?conj) (var ?vc) (but-not +))
+     (PP (PTYPE ?pt) (var ?v2) (case ?c) (sem ?s2)
+      (LF (% ?sort2 (class ?c2)))
+      )
+     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class)))
+
+    ;;PP but-not with comma
+    ((PP (PTYPE ?pt) (var ?vc) 
+      (lf (% PROP (class ?class) (var ?vc) (sem ?sem) 
+	     (constraint (& (operator ont::and) (sequence ?v1) (except ?v2)))))
+      (case ?c) (sem ?sem)
+      (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
+      )
+     -pp-conj-but-not-comma>
+     (head (PP (PTYPE ?pt) (var ?v1) (case ?c) (sem ?s1)
+	       (LF (% ?sort1 (class ?c1) (status ?status)))
+	       ))
+     (punc (lex w::punc-comma))
+     (CONJ (LF ?conj) (var ?vc) (but-not +))
+     (PP (PTYPE ?pt) (var ?v2) (case ?c) (sem ?s2)
+      (LF (% ?sort2 (class ?c2)))
+      )
+     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class)))
+
+
     ;; for subcat pp'w with proforms -- but not w::one
     ((PP (PTYPE ?pt) (lf ?lf) (case ?c) (sem ?sem)  (var ?v)
       (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
@@ -1117,7 +1155,7 @@
      (head (Utt (ended -) (LF (% SPEECHACT (class ?sa) (constraint ?adv1))) (var ?v) (punc -) (subjvar ?sv)))
      (add-to-conjunct (val (MODS ?advv)) (old ?adv1) (new ?adv)))
 
-    ((Utt (LF (% SPEECHACT (class ?sa) (constraint ?adv))) (var ?v) (punctype ?pn))
+    ((Utt (LF (% SPEECHACT (class ?sa) (var ?v) (constraint ?adv))) (var ?v) (punctype ?pn))
      -disc-comma> 
      (advbl (sort DISC) (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -) (argument (% UTT)))
      (punc (lex w::punc-comma))
