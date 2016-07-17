@@ -1137,7 +1137,7 @@
       (Agent-theme-complex-subjcontrol-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP  (w::var ?subjvar)(w::lex ?subjlex) (w::sem ?subjsem))  ONT::agent)
-	(LCOMP (% W::PRED (W::filled -) (W::gap ?gap) (W::argument (% W::np (W::sem ?subjsem) (W::lex ?subjlex) 
+	(LCOMP (% W::PRED (W::filled -) (W::gap ?gap) (W::arg ?subjvar) (W::argument (% W::np (W::sem ?subjsem) (W::lex ?subjlex) 
 								      (W::var ?subjvar)))) ont::formal)
 	))
 
@@ -2586,7 +2586,7 @@
 
   (binary-constraint-S-decl-templ
    (SYNTAX (W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST))
-	   (W::ALLOW-DELETED-COMP -)
+	   (W::ALLOW-DELETED-COMP -) (adj-s-prepost -)
 	   )
    (ARGUMENTS
     (ARGUMENT (% W::S) ONT::FIGURE)
@@ -2850,8 +2850,8 @@
    (ARGUMENTS
     (ARGUMENT (% W::UTT (w::subjvar ?sv)) ONT::FIGURE)
     ))
-  
-  (disc-post-templ
+
+(disc-post-templ
    (SYNTAX(W::SORT W::DISC) (W::SA-ID ?SA-ID) (W::ATYPE W::POST))
    (ARGUMENTS
     (ARGUMENT (% W::S) ONT::FIGURE)
