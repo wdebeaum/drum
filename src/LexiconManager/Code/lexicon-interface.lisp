@@ -1074,7 +1074,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	(wn-sense-keys (remove-if #'wf::stoplist-p
 				  (find-arg keylist :wn-sense-keys)))
 	(rawscore (find-arg keylist :score))
-	(score (if (numberp rawscore) (max rawscore .95) .98))
+	(score (if (numberp rawscore) (convert-raw-score rawscore) .98))
 	(wn-pos-list (when wn-sense-keys (trips-pos-for-wn-sense-keys wn-sense-keys)))
 	(domain-info (find-arg keylist :domain-specific-info))
 	(merged-trips-wn-pos-list (union trips-pos-list wn-pos-list))
@@ -1143,6 +1143,9 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
    (print-debug "process-word-request returns ~S~%" res)
    res)
  )
+
+(defun convert-raw-score (score)
+  (+ .9 (* score .1)))
 
 (defun add-word-def-if-necessary (w pos)
   "The parser calls this when it sees an entry for a composite word -- if one of the subsequent 

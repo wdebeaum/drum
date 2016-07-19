@@ -1090,10 +1090,29 @@
     act))
 
 (defun replace-term-with-sequence-and-continue (target act preparses root newterms rest)
-  (let* ((target-root (find-arg-in-act target :var)))
+  (let* ((target-root (find-arg-in-act target :var))
+	 (newtermswithargs (find-root-term-and-insert-args newterms root target)))
     (trace-preparse "~%~%Replacing target ~S with root ~S for preparsed fragment: ~%~S~%" target target-root newterms)
     (insert-preparse1 (replace-arg-in-act act :terms (append rest 
-							     (subst target-root root newterms)))
+							     (subst target-root root newtermswithargs)))
 		      
 		      (cdr preparses))))
   
+(defun find-root-term-and-insert-args (newterms root target)
+  (multiple-value-bind
+	(rootterm rest)
+      (split-list #'(lambda (x)
+		      (eq (find-arg-in-act x :var)
+			  root))
+		  newterms)
+    (let ((rootlf (find-arg (cdar rootterm) :lf)))
+      (if rootlf
+	  (cons (replace-arg-in-act (car rootterm) :lf (append (remove-args-in-act rootlf '(:start :end)) ;;; we'll be using the start and end from the new parse
+							       (cdddr (find-arg-in-act target :lf)))d)
+		rest)))))
+
+(defun remove-args-in-act (act args)
+  (list* (car act)
+	 (cadr act)
+	 (caddr act)
+	 (remove-args (cdddr act) args)))
