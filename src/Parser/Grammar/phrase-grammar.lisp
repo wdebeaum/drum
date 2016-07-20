@@ -145,26 +145,6 @@
 	 (add-to-conjunct (val (quan ?cmp))
 			  (old ?restr) (new ?restr1)))
 
-#||	 ;; e.g.,  some more (water), some more of the water
-	;;    this allows MORE or LESS to be attached to cardinality specifiers on MASS terms
-	((SPEC (AGR ?agr) (ARG ?arg) (LF ?status) (MASS MASS)
-	       (PRED ?s)
-	       (RESTR ?restr1)
-	       (SUBCAT (% PP (PTYPE of) (SEM ?subsem)))
-	       (QCOMP ?qcomp)
-	       (nobarescpec ?nb)
-	       )
-	 -Spec-comp-mass>  .92 ;; prefer to attach to NP
-	 (head (SPEC (ARG ?arg) (LF ?status) (MASS MASS)
-		     (PRED ?s)
-		     ;;(RESTR (& (QUAN ?!q)))
-		     (restr ?restr)
-		     ;;(SUBCAT (% PP (PTYPE of) (SEM ?subsem)))
-		     (QCOMP -) (nobarescpec ?nb)))
-	 (QUAN (COMPARATIVE +) (VAR ?av) (LF ?cmp) (QCOMP ?qcomp))
-	 (add-to-conjunct (val (quan ?cmp))
-			  (old ?restr) (new ?restr1)))||#
-
 	;;  DETERMINERS:  articles, possessives, quantifiers
 
 	;; e.g., the
@@ -999,7 +979,7 @@
 	       ))
     (compute-sem-features (lf ?!pert-type) (sem ?pert-sem))
     (add-to-conjunct  (val (:GROUND (% *PRO* (status ont::kind) (class ?!pert-type)
-				    (var *) (sem ?pert-sem) (constraint (& (domain-info ?pert-domain-info))))))
+				    (var *) (sem ?pert-sem) (constraint (& (drum ?pert-domain-info))))))
      (old ?con) 
      (new ?newc))
     )
@@ -1816,7 +1796,8 @@
 	       (wh ?w) (WH-VAR ?whv)
 	       (agr ?agr) (RESTR ?spec-restr) (NOSIMPLE -))   ;; NOSIMPLE prevents this rule for a few cases
          (head (N1 (VAR ?v) (SORT PRED) (CLASS ?c) (MASS ?m)
-		(KIND -) (agr ?agr) (RESTR ?r)
+		(KIND -) (agr ?agr) (RESTR ?r) 
+		(agent-nom -)   ;;  this rule can't apply to agent nominalizations directly (they must modified first using rule -agentnom1>
 		(sem ?sem) (transform ?transform)
 		))
 	 ;;(add-to-conjunct (val (SIZE ?card)) (old ?setr) (new ?setr1))
@@ -1869,7 +1850,7 @@
 	  )
          -mass>
          (head (N1 (MASS (? xx MASS bare)) (AGR 3s) (VAR ?v) (CLASS ?c) (RESTR ?r) (sem ?sem)
-		(transform ?transform) (post-subcat -) (simple ?x)
+		(transform ?transform) (post-subcat -) (simple ?x) (agent-nom -)
 		(derived-from-name -) ;; this feature is + only if we have a base N1 derived from a NAME (so no need to build a competing NP!)
 		)))
         
@@ -2813,7 +2794,7 @@
      (ADVBL VAR SEM LEX ATYPE lex headcat transform neg)
      (ADVBL-R VAR SEM LEX ATYPE argument wh lex headcat transform)
      (QUANP CARDINALITY AGR)
-     (N1 lex headcat set-restr refl abbrev nomobjpreps nomsubjpreps)
+     (N1 lex headcat set-restr refl abbrev nomobjpreps nomsubjpreps agent-nom)
      (ADJP lex headcat argument transform)
      )
 
@@ -2890,8 +2871,6 @@
     
 ;;   NEW RULES FOR HANDLING NOMINALIZATIONS
 
-  
-
     ;; and we have explicit nominalizations (current any N of type EVENT-OF-CHANGE)
     ((N1 (SORT PRED)
       (gap -) (var ?v) (agr ?agr)
@@ -2959,6 +2938,7 @@
 	    (comp3-map ?comp-map)
 	    (generated -)
 	    (restr ?r)
+	    (agent-nom -) ;; this rule can't apply to agentive nominalizations
 	    ))
       (add-to-conjunct (val (& (?subjmap ?subjvar))) (old ?r) (new ?newr))
       )
@@ -3066,6 +3046,7 @@
 	    (comp3 ?comp3)
 	    (comp3-map ?comp-map)
 	    (generated -)
+	    (agent-nom -) ;; no agent in agentivenominalizations
 	    ))
      (pp (ptype ?subjpreps) (sem ?subjsem) (gap -) (var ?dv))
      (add-to-conjunct (val (& (?!subjmap ?dv))) (old ?restr) (new ?newrestr)))
@@ -3183,6 +3164,7 @@
 		(subj-map ?!subjmap)
 		(comp3 ?comp3)
 		(comp3-map ?comp-map)
+		(AGENT-NOM -) ;; can't apply to agentive nominalizations
 		))
      (add-to-conjunct (val (& (?!subjmap ?v1))) (old ?restr) (new ?newrestr))
      )
@@ -3222,6 +3204,7 @@
 		(subj-map ?!subjmap)
 		(comp3 ?comp3)
 		(comp3-map ?comp-map)
+		(agent-nom -)
 		))
      (add-to-conjunct (val (& (?!subjmap ?v1))) (old ?restr) (new ?newrestr))
      )
@@ -3296,6 +3279,7 @@
 		(subj-map ?!subjmap)
 		(comp3 ?comp3)
 		(comp3-map ?comp-map)
+		(agent-nom -)
 		))
      (add-to-conjunct (val (& (?!subjmap ?v1))) (old ?restr) (new ?newrestr))
      )
@@ -3637,6 +3621,28 @@
      (N1 sem lf lex headcat transform set-restr refl abbrev)
      (N sem lf mass sort lex headcat transform refl)
      )
+
+    ;; this rule handles agentive nominalizations, wraps an "agent" around the event nominalization
+    ((N1 (SORT PRED)
+      (gap -) (var *) (agr ?agr)
+      (sem ?sem) (mass ?mass)
+      (case (? case sub obj -)) ;; noms aren't case marked, allow any value except posessive
+      (class ont::referential-sem)
+      (agent-nom -)
+      (restr (& (mod
+		 (% *pro* (status F) (class ?class) (constraint ?restr) (var ?v))))
+      
+	     ))
+     -agentnom1> 1
+     (head (n1  (agent-nom +)
+		(var ?v) (gap -) (aux -) (agr ?agr) (sort pred)
+		(sem ?sem)  (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
+		(class ?class) (transform ?transform)
+		(restr ?restr) (agent-nom +)
+		(subj (% NP (var *) (sem ?subjsem)))
+		))
+     )
+    
     
   ;;  ing forms can serve as nominalizations e.g., The loading  note: it goes here as nomobjpreps can't be a head feature!
     ((N1 (SORT PRED)

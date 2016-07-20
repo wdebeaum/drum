@@ -132,11 +132,10 @@
      'concrete)
     ((ONT::PRO ONT::IMPRO ONT::PRO-SET)  ;; Pro's are concrete refs except for the first and second person and demonstrtives, which are handled specially
      (case (find-arg-in-act lf :proform) 
-       (;(ont::ME ont::I ont::YOU ont::*YOU* ont::MY ont::YOUR ont::OUR)
-	(W::ME W::I W::YOU W::*YOU* W::MY W::YOUR W::OUR)
+       ((ont::ME ont::I ont::YOU ont::*YOU* ont::MY ont::YOUR ont::OUR
+		 W::ME W::I W::YOU W::*YOU* W::MY W::YOUR W::OUR)
 	'pro-1st-2nd)
-       (;(ont::here ont::this ont::that ont::those ont::these ont::there ont::today )
-	(W::here W::this W::that W::those W::these W::there W::today )
+       ((ont::here ont::this ont::that ont::those ont::these ont::there ont::today W::here W::this W::that W::those W::these W::there W::today)
 	'diectic)
        (t
 	(if (member (caddr lf) '(ont::EXPLETIVE ont::expletive))
@@ -323,34 +322,34 @@
 		 (if (consp (third lf)) (third (third lf)))))
 	 (val
 	  (case cr
-	    (;(ont::i ont::me ont::my ont::myself)
-	     (W::i W::me W::my W::myself)
+	    ((ont::i ont::me ont::my ont::myself
+	      W::i W::me W::my W::myself)
 	     (list (make-ref-hyp :id id :refers-to speaker)))
-	    (;(ont::you ont::your ont::yourself)
-	     (W::you W::your W::yourself) 
+	    ((ont::you ont::your ont::yourself
+	      W::you W::your W::yourself) 
 	     (list (make-ref-hyp :id id :refers-to addressee)))
-	    (;(ont::we ont::our ont::us ont::ourself)
-	     (W::we W::our W::us W::ourself) 
+	    ((ont::we ont::our ont::us ont::ourself
+		      W::we W::our W::us W::ourself)
 	     (list (make-ref-hyp :id id ;;:refers-to id
 				 :lf-type '(ONT::SET-OF ONT::PERSON)
 				 :refers-to 'ONT::US)))
-	    (;(ont::it ont::its)
-	     (W::it W::its)
+	    ((ont::it ont::its
+		      W::it W::its)
 	     (when (non-expletive lf)
 	       (or (resolve-pro-fn lf '(concrete) '(individual) index (fn-no-human 'ONT::REFERENTIAL-SEM) 3)
 		 (resolve-pro-fn lf '(event wh-term state) '(individual) index #'(lambda (x) T) 3))))
 
-	    (;(ont::itself)
-	     (W::itself)
+	    ((ont::itself
+	      W::itself)
 	     (resolve-reflexive lf index))
 	    
-	    (;(ont::this ont::that ont::these ont::those)
-	     (W::this W::that W::these W::those)
+	    ((ont::this ont::that ont::these ont::those
+			W::this W::that W::these W::those)
 	     (when (non-expletive lf)
 	       (resolve-this-that lf index)))
 	    
-	    (;(ont::they ont::them ont::their)
-	     (W::they W::them W::their)
+	    ((ont::they ont::them ont::their
+			W::they W::them W::their)
 	     (resolve-pro-fn lf '(concrete kind) '(set) index 
 			     #'(lambda (x)
 				 (subtype-check (referent-lf-type x)  'ONT::REFERENTIAL-SEM ))
@@ -372,12 +371,12 @@
 				 3)))
 		 
 	    
-	    (;(ont::here ont::there)
-	     (W::here W::there)
+	    ((ont::here ont::there
+			W::here W::there)
 	     (find-location-ref id lf (- index 1)))
 
-	    (;(ont::tonight ont::today)
-	     (W::tonight W::today)
+	    ((ont::tonight ont::today
+			   W::tonight W::today)
 	      (find-temporal-ref cr lf))
 
 	    (;(ont::which ont::who)  ;; these occur in relative clause fragments

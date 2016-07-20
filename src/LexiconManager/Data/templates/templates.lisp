@@ -978,7 +978,7 @@
 
       (AGENT-THEME-SUBJCONTROL-TEMPL
        (ARGUMENTS
-	(LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar)) ONT::AGENT)
+	(LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::AGENT)
 	(LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required(W::subj (% W::np (W::sem ?lsubjsem) 
 											    (W::lex ?lsubjlex) (W::var ?lsubjvar))))) ONT::FORMAL)
 	))
@@ -987,7 +987,7 @@
       (AGENT-Affected-theme-SUBJCONTROL-TEMPL
        (ARGUMENTS
     ;;;;; (LSUBJ (% NP) AGENT)
-	(LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar)) ONT::AGENT)
+	(LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::AGENT)
     ;;;;; (LCOMP (:parameter xp (:default (% cp (ctype s-to))) (:required (subj ?lsubj))) THEME)
 	(LOBJ (% W::NP) ONT::affected)
 	(LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) 
@@ -998,11 +998,11 @@
 ; He gave her a kiss (give as a light verb)
       (AGENT-AFFECTED-FORMAL-SUBJCONTROL-OBJ-TEMPL
        (ARGUMENTS
-	(LSUBJ (% W::NP (W::lex ?subjlex) (W::var ?subjvar)) ONT::AGENT)
-	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::AFFECTED)
+	(LSUBJ (% W::NP (W::lex ?subjlex) (W::sem ?lsubjsem) (W::var ?subjvar)) ONT::AGENT)
+	(LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?lobjsem) (W::var ?dobjvar)) ONT::AFFECTED)
 	(LCOMP (:parameter xp (:default (% W::NP (W::lf (% ?p (w::class (? x ont::EVENT-OF-CHANGE))))))
-			    (:required  (w::SUBJ (% W::NP (w::var ?subjvar)))
-				       (w::DOBJ (% W::NP (w::var ?dobjvar))))
+			    (:required  (w::SUBJ (% W::NP (w::var ?subjvar) (W::sem ?lsubjsem)))
+				       (w::DOBJ (% W::NP (w::var ?dobjvar) (W::sem ?lobjsem))))
 					  
 	       ) ONT::FORMAL)
 	))
@@ -1010,7 +1010,7 @@
  (AGENT-Affected-THEME-SUBJCONTROL-optional-TEMPL
        (ARGUMENTS
     ;;;;; (LSUBJ (% NP) AGENT)
-	(LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar)) ONT::AGENT)
+	(LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lobjsem) (W::var ?lsubjvar)) ONT::AGENT)
     ;;;;; (LCOMP (:parameter xp (:default (% cp (ctype s-to))) (:required (subj ?lsubj))) THEME)
 	(LOBJ (% W::NP) ONT::affected)
 	(LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required (ont::agent ?lsubjvar))) ONT::FORMAL optional)

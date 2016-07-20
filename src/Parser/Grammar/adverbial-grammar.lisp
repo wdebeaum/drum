@@ -450,12 +450,12 @@
     ;; she in this case was fired
    ((vp- (constraint ?new)
      (tma ?tma) (sem ?argsem)
-     (advbl-needed ?avn)
+     (advbl-needed ?avn) (complex +)
       )
      -adv-vp-pre-complex-s>  .97
      (advbl (SORT BINARY-CONSTRAINT) 
       (ATYPE (? x PRE PRE-VP)) 
-      (ARGUMENT (% S (SEM ($ f::situation))))  
+      (ARGUMENT (% S (SEM ?argsem))) ;;($ f::situation))))  
       (GAP -) 
       (ARG ?v) (VAR ?mod)
       )

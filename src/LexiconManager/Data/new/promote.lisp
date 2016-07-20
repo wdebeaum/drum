@@ -5,7 +5,7 @@
 (define-words :pos W::v :templ AGENT-affected-XP-TEMPL
  :words (
    (W::PROMOTE
-    (wordfeats (W::morph (:forms (-vb) :nom w::promotion)))
+    (wordfeats (W::morph (:forms (-vb) :nom w::promotion :agentnom w::promoter)))
     (senses 
      ((LF-PARENT ont::encourage)
       (example "the flyers promote the idea")

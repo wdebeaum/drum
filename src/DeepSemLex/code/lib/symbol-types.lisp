@@ -16,6 +16,7 @@
   '(member
   ; key		; values (unless just + -)
     abbrev
+    adj-s-prepost
     agr		; 1p 1s 2p 2s 3p 3s
     allow-before
     allow-deleted-comp

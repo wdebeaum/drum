@@ -458,7 +458,7 @@ intersection of an entry's tags and these tags is non-empty."
       (setq formlist (mmapcan (lambda (form)
 				(case form 
 				  ;; normal verb forms
-				  (-vb '(:12s123pbase :3s :ing :past :pastpart :nom :noms))
+				  (-vb '(:12s123pbase :3s :ing :past :pastpart :nom :agentnom))
 				  ;; normal noun forms
 				  (-s-3p '(:sing :plur))
 ;;				  (-load '(:load :load-p)) ;; no longer used
@@ -473,6 +473,7 @@ intersection of an entry's tags and these tags is non-empty."
 				)
 			     forms))
       )
+   
     (when (and (member ':pastpart formlist) (member ':past formlist))
       (when (and (null (find-arg features ':pastpart)) ;; don't generate separate entry for :pastpart if it's the same as :past (i.e. not irreg)
 		 (null (find-arg features ':conflate-past))) ;; only add this once
@@ -482,8 +483,12 @@ intersection of an entry's tags and these tags is non-empty."
 	    (setf (vocabulary-entry-wfeats entry) '((W::MORPH (:FORMS (-VB) :conflate-past)))))
 	  )
 	))
-    (if (member :nom formlist)
-	(setq formlist (cons :noms formlist)))  ;; add the tag to generate the plural nom form as well
+    (if (member :nom features)
+	(setq formlist (cons :noms formlist)))
+    (if (member :agentnom features)
+	(setq formlist (cons :agentnoms formlist)))
+    ;; add the tag to generate the plural nom form as well if a NOM value is present
+    ;;(format t "~%Formlist is ~S forms are ~S" formlist forms)
     (mapcar (lambda (f)
 	      (gen-variant word f features entry))
 	    (remove-duplicates formlist))    
@@ -542,6 +547,18 @@ intersection of an entry's tags and these tags is non-empty."
     (if nom-entry (pushnew word (lexicon-db-base-forms *lexicon-data*)))
    nom-entry)
   )
+
+
+(defun gen-agentnomentry (word form entry)
+   "This generates reuses the code to build NOM entries, with the additional feature :AGENTNOM +"
+   (let* ((nom-entry (gen-nomentry word (case form (:agentnom :nom) (:agentnoms :noms)) entry)))
+     (mapcar #'(lambda (x)
+		 (setf (sense-definition-syntax x)
+		       (cons '(W::Agent-nom +) (sense-definition-syntax x))))
+	     (vocabulary-entry-senses nom-entry))
+     
+     nom-entry
+  ))
  
 (defun gen-variant (base form features entry)
   "takes one form (e.g., :3s :ing) and generates the entry"
@@ -556,12 +573,21 @@ intersection of an entry's tags and these tags is non-empty."
       (setq morph-variant (or irreg (gen-standard-morph-variant form base))))
     (cond
      ((symbolp morph-variant)
-      (cond  ((and (eq form ':nom) irreg) ; irreg must be defined for :nom generation, as  the lexical item that denotes must be specified
-	      (list morph-variant (list form (gen-id morph-variant) (gen-nomentry morph-variant form entry))))
-	     ((eq form :noms)
-	      (let ((morph-variant (or irreg (add-suffix (find-arg features :nom) "S"))))
-		(list morph-variant (list form (gen-id morph-variant) (gen-nomentry morph-variant form entry)))))
-	     (t  (list morph-variant (list form (gen-id base) entry)))))
+      (case form 
+	(:nom
+	 (if irreg ; irreg must be defined for :nom generation, as  the lexical item that denotes must be specified
+	     (list morph-variant (list form (gen-id morph-variant) (gen-nomentry morph-variant form entry)))))
+	(:noms
+	 (let ((morph-variant (or irreg (add-suffix (find-arg features :nom) "S"))))
+	   (list morph-variant (list form (gen-id morph-variant) (gen-nomentry morph-variant form entry)))))
+	(:agentnom
+	 (if irreg ;; a lexical value must have been defined in order to proceed
+	     (list morph-variant (list form (gen-id morph-variant) 
+				       (gen-agentnomentry morph-variant form entry)))))
+	(:agentnoms
+	 (let ((morph-variant (or irreg (add-suffix (find-arg features :agentnom) "S"))))
+	   (list morph-variant (list form (gen-id morph-variant) (gen-agentnomentry morph-variant form entry)))))
+	(otherwise  (list morph-variant (list form (gen-id base) entry)))))
      ((listp morph-variant)
       ;; the variant is itself a compound word
        (let ((nentry (copy-vocabulary-entry entry)))
@@ -882,7 +908,7 @@ intersection of an entry's tags and these tags is non-empty."
      ;;  noun derivatives
      (:sing
       (replace-feat feats 'w::agr 'w::3s))
-     ((:plur :noms)
+     ((:plur :noms :agentnoms)
       (replace-feat feats 'w::agr 'w::3p))
      
      ;;adjective derivatives
@@ -894,7 +920,7 @@ intersection of an entry's tags and these tags is non-empty."
      (-ly nil)
 
      ; nominalizations - has a separate entry generation function as more than the syntactic features change
-     (:nom nil) 
+     ((:nom :agentnom) nil) 
      
      (otherwise 
       (lexiconmanager-warn "Unknown morphological feature ~S in definition of ~S" morphfeat word)
@@ -935,6 +961,7 @@ intersection of an entry's tags and these tags is non-empty."
 
 (defun getworddef (word)
   (let ((entries (getwordDefs word *lexicon-data*)))
+    ;;(format t "~%Entries are ~S" entries)
     (mapcan #'(lambda (e)
 		(get-word-sense-definitions word e *lexicon-data*))
 	    entries)))
