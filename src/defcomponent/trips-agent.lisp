@@ -2,7 +2,7 @@
 ;;;; trips-agent.lisp
 ;;;;
 ;;;; George Ferguson, ferguson@cs.rochester.edu, 30 Mar 2001
-;;;; Time-stamp: <Fri Jan 15 14:17:59 EST 2010 ferguson>
+;;;; Time-stamp: <Wed Jul 20 21:50:04 CDT 2016 lgalescu>
 ;;;;
 
 (in-package :defcomponent)
@@ -269,6 +269,11 @@ of the reply as the value of this function."
        ;; Yes, it's our reply: take the content for the answer
        (logging2:log-message :note (list :received-reply msg))
        (return-from send-and-wait (get-keyword-arg msg :content)))
+      ((is-cancellation-msg msg)
+       ;; got a cancelation message?
+       (format t "got cancellation message!~%")
+       (setq *pending-messages* (list msg))
+       (throw :main-loop nil))
       (t
        ;; No, save for later
        (logging2:log-message :note (list :deferred-message msg))
@@ -331,19 +336,31 @@ Signals an error if the component is not found."
     (send-msg `(,(intern "TELL") :receiver ,(intern name) :content (,(intern "END-CHECK-FOR-CANCELLATION-MSG"))))
     (let (got-cancellation-msg)
       (loop for msg = (component-read-msg *component*)
-	    while (and msg (not (eql (intern "END-CHECK-FOR-CANCELLATION-MSG") (car (get-keyword-arg msg :content)))))
-	    do
-	  ;(format t "msg = ~S (package is ~a, current package is ~a, package when compiled was ~a)~%" msg (symbol-package (car msg)) *package* (symbol-package 'foo))
-	  ;(format t "(g-k-a msg :content) = ~S~%" (get-keyword-arg msg :content))
-	  (append *pending-messages* (list msg))
-	  (dolist (pattern cancellation-patterns)
-	    (when (match-msg-pattern pattern msg)
-	      (format t "got cancellation message!~%")
-	      (setq *pending-messages* (list msg))
-	      (setf got-cancellation-msg t)
-	      )))
+	 while (and msg (not (eql (intern "END-CHECK-FOR-CANCELLATION-MSG") (car (get-keyword-arg msg :content)))))
+	 do
+	 ;(format t "msg = ~S (package is ~a, current package is ~a, package when compiled was ~a)~%" msg (symbol-package (car msg)) *package* (symbol-package 'foo))
+	 ;(format t "(g-k-a msg :content) = ~S~%" (get-keyword-arg msg :content))
+	 ;; (append *pending-messages* (list msg))
+	 ;; (dolist (pattern cancellation-patterns)
+	 ;;   (when (match-msg-pattern pattern msg)
+	 ;;     (format t "got cancellation message!~%")
+	 ;;     (setq *pending-messages* (list msg))
+	 ;;     (setf got-cancellation-msg t)
+	 ;;     ))
+	 ;; LG 2017/07/20 - replaced the above with something a bit cleaner and a little more efficient
+	   (when (is-cancellation-msg msg)
+	     (format t "got cancellation message!~%")
+	     (setq *pending-messages* (list msg))
+	     (setf got-cancellation-msg t))
+	   )
       (when got-cancellation-msg (throw :main-loop nil))
       )))
+
+(defun is-cancellation-msg (msg)
+  "Check if a message matches a cancellation pattern"
+  (consp (member msg (slot-value *component* 'cancellation-patterns)
+		 :test #'(lambda (m p) (match-msg-pattern p m))
+		 )))
 
 (defgeneric defcomponent-cancellation-pattern (pattern &key subscribe))
 

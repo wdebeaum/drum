@@ -159,6 +159,7 @@
       (((pos ADJ) (form er) (comparative +)) "ER")
       (((pos ADJ) (form est) (comparative superl)) "EST")
       (((pos N) (form nom)) nil) ; hack to let :nom "irregular form" work, even though there's no "regular" nom
+      (((pos N) (form agentnom)) nil)
       )
     )
   "An assoc list from syn-feats to regular suffix strings."

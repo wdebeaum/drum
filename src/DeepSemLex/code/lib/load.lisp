@@ -527,7 +527,7 @@
 	    ;; an irregular form
 	    `(let* ((form-name ',(ld-to-dsl-package (first form)))
 		    (morphed (make-word-from-spec ',(second form)))
-		    (pos (if (eq 'nom form-name)
+		    (pos (if (member form-name '(nom agentnom))
 		           'N
 			   (pos *current-morph*)
 			   ))
@@ -556,7 +556,7 @@
 			(-er '(none er est))
 			(-ly '(none ly))
 			(|-S-3P| '(sing plur))
-			(-vb '(|12S123PBASE| |3S| ing past pastpart nom))
+			(-vb '(|12S123PBASE| |3S| ing past pastpart nom agentnom))
 			(-none '(none sing))
 			))
 	      (dolist (sf-suff *syn-feats-to-suffix*)
