@@ -174,9 +174,13 @@
       (compute-sem args)))
 
 (defun compute-sem (args)
-  (let ((lf (second (assoc 'w::lf args)))
-	(semresult (second (assoc 'w::sem args)))
-	)
+  (let* ((lf (second (assoc 'w::lf args)))
+	 (semresult (second (assoc 'w::sem args)))
+	 (domain-info (second (assoc 'w::domain-info args)))
+	 (initial-sem (lxm::get-sem-for-lf (get-core-type lf))))
+    (if domain-info 
+	(setq initial-sem initial-sem
+	      ))
     (match-vals nil semresult (lxm::get-sem-for-lf (get-core-type lf)))))
 
 (defun get-core-type (x)
@@ -308,6 +312,30 @@
 		     (make-var :name (gen-symbol 'sem) :values result)))
        *success*
 	)))
+
+(define-predicate 'w::class-greatest-lower-bound
+  #'(lambda (args)
+      (class-cglb args))
+  )
+
+(defun class-cglb (args) 
+ (let ((in1 (second (assoc 'w::in1 args)))
+        (in2 (second (assoc 'w::in2 args)))
+	(OUT (second (assoc 'w::out args))))
+   (match-vals nil out (compute-class-cglb in1 in2))))
+
+(defun compute-class-CGLB (in1 in2)
+  (cond
+   ((var-p in1)
+    in2)
+   ((var-p in2)
+    in1)
+   ((subtype 'w::sem in1 in2)
+    in1)
+   ((subtype 'w::sem in2 in1)
+    in2)
+   ))
+
 
 (define-predicate 'w::class-least-upper-bound
   #'(lambda (args)

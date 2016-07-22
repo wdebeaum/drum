@@ -921,7 +921,7 @@
 
 ;; top level for change: states, situations, objects
 (define-type ont::change
- :wordnet-sense-keys ("change%1:07:00" "variety%1:07:01" "change%1:06:01" "change%2:30:00" "change%1:04:00")
+ :wordnet-sense-keys ("change%1:07:00" "variety%1:07:01" "change%1:06:01" "change%2:30:00" "change%1:04:00" "change%1:19:00" "change%2:30:02" "change%2:30:08" "change%2:30:01")
   :parent ont::event-of-causation
   :sem (F::Situation (F::Cause F::force))
   :arguments (
@@ -3067,10 +3067,13 @@
 	     )
  )
 
+; merged with ONT::CHANGE
+#|
 (define-type ONT::modify
- :wordnet-sense-keys ("change%1:19:00" "change%2:30:08" "deepen%2:30:02" "vary%2:30:01" "alter%2:30:00" "change%2:30:02" "change%2:30:01" "alter%2:30:01" "modify%2:30:10" "desegregate%2:41:00")
+ :wordnet-sense-keys ("change%1:19:00" "change%2:30:02" "change%2:30:08" "change%2:30:01" "desegregate%2:41:00")
  :parent ONT::adjust
  )
+|#
 
 (define-type ONT::HYDROLYSIS
     :wordnet-sense-keys ("hydrolysis%1:22:00" "hydrolyze%2:30:00" "hydrolyse%2:30:00")
@@ -4059,7 +4062,7 @@
 
 ;; FN
 (define-type ont::hindering
- :wordnet-sense-keys ("hold_back%2:41:00" "keep_back%2:41:00" "keep%2:41:00" "restrain%2:41:01" "keep%2:41:01" "throttle%2:30:01" "confine%2:30:00" "bound%2:30:00" "limit%2:30:01" "trammel%2:30:00" "restrain%2:30:00" "restrict%2:30:00" "forbid%2:41:03" "preclude%2:41:00" "foreclose%2:41:00" "forestall%2:41:01" "handicap%2:33:00" "hinder%2:33:00" "hamper%2:33:00"  "barricade%1:06:00" "obstruction%1:06:00" "crush%2:41:00" "disrupt%2:30:01" "suppress%2:30:00")
+ :wordnet-sense-keys ("hold_back%2:41:00" "keep_back%2:41:00" "keep%2:41:00" "restrain%2:41:01" "keep%2:41:01" "throttle%2:30:01" "confine%2:30:00" "bound%2:30:00" "limit%2:30:01" "trammel%2:30:00" "restrain%2:30:00" "restrict%2:30:00" "forbid%2:41:03" "preclude%2:41:00" "foreclose%2:41:00" "forestall%2:41:01" "handicap%2:33:00" "hinder%2:33:00" "hamper%2:33:00"  "barricade%1:06:00" "obstruction%1:06:00" "crush%2:41:00" "disrupt%2:30:01" "suppress%2:30:00" "compromise%2:32:03")
     :parent ont::inhibit-effect
     )
 

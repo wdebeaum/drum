@@ -3,7 +3,7 @@
 ;;;
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
-;;; Time-stamp: <Wed Jun 29 15:54:02 EDT 2016 jallen>
+;;; Time-stamp: <Wed Jul 20 09:30:35 EDT 2016 jallen>
 
 (in-package "PARSER")
 
@@ -1464,7 +1464,8 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	((numberp val)
 	   val)
 	((consp val) (mapcar #'convert-to-ont-if-in-parser-package 
-			     val))))
+			     val))
+	(t val)))
        
 
 (defun build-modifier (lf-var mod)

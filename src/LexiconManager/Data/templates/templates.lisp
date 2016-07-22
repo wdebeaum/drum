@@ -1007,6 +1007,8 @@
 	       ) ONT::FORMAL)
 	))
 
+; nobody uses this
+#| 
  (AGENT-Affected-THEME-SUBJCONTROL-optional-TEMPL
        (ARGUMENTS
     ;;;;; (LSUBJ (% NP) AGENT)
@@ -1015,7 +1017,8 @@
 	(LOBJ (% W::NP) ONT::affected)
 	(LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required (ont::agent ?lsubjvar))) ONT::FORMAL optional)
 	))
-      
+|#
+
       ;; he had a book reviewed
       (CAUSE-EFFECT-passive-TEMPL
        (ARGUMENTS

@@ -899,8 +899,8 @@
       (multi-element-sequence +)
       )
      -number-sequence2> .97    ;; need at least two consecutive numbers to form a sequence
-     (head (number (val ?l1) (range -) (unit ?unit) (premod -) (ntype (? !nt w::negative w::positive))))
-     (number (val ?l2) (unit ?unit) (premod -) (range -) (ntype (? !nt w::negative w::positive)))
+     (head (number (val ?l1) (range -) (unit ?unit) (premod -) ))
+     (number (val ?l2) (unit ?unit) (premod -) (range -) )
      )
 
     ;;  Letter/number sequences

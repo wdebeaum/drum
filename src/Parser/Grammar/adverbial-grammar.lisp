@@ -503,7 +503,9 @@
 		(aux -) (gap ?gap)
 		(ellipsis -)
 		))
-     (adjp (ARGUMENT (% NP (sem ?sem))) (GAP -)
+     (adjp (ARGUMENT (% NP (sem ?sem))) 
+      (SEM ($ f::abstr-obj (F::type (? ttt ONT::position-reln ont::domain-property))))
+      (GAP -)
       ;; (subjvar ?subjvar)
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
       (ARG ?npvar) (VAR ?mod)
@@ -531,6 +533,7 @@
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
 			 (sem ?sem))) (GAP -)
       ;; (subjvar ?subjvar)
+      (SEM ($ f::abstr-obj (F::type (? ttt ONT::position-reln ont::domain-property))))
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
       (ARG ?npvar) (VAR ?mod)
       ;;(role ?advrole) 
@@ -670,10 +673,10 @@
      (head (S (VAR ?v) (LF ?lf) (LF (% prop (constraint ?con))) (aux -)
 	      (wh -) ;; while possible, its very unlikely
 	      (tma ?tma) (stype (? stp decl imp how-about))
-	      (subjvar ?subjvar) 
+	      (subjvar ?subjvar) (adj-s-prepost -)
 	      )
            )
-     (adjp (ARGUMENT (% NP)) 
+     (adjp (ARGUMENT (% NP)) (set-modifier -)
 	 (gap -) 
 	 (ARG ?subjvar) (VAR ?mod)
 	 )

@@ -1182,6 +1182,7 @@
 		)
     )
 
+; used by ORIENTS-TO
 (define-type ONT::loc-wrt-orientation
     :parent ONT::loc-as-defined-by-reln-to-ground
     )
@@ -1324,6 +1325,7 @@
     )
 
 ;; noun sense of north, south, east, west
+; used by ORIENTS-TO
 (define-type ONT::cardinal-point
     :parent ONT::LOCATION-by-description
     :wordnet-sense-keys ("cardinal_compass_point%1:24:00")

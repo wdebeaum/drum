@@ -204,6 +204,7 @@
 ;;
 (define-type ont::orients-to
   :parent ont::oriented-loc-reln
+  :arguments ((:essential ONT::GROUND ((? of1  f::phys-obj f::abstr-obj) (f::type (? t ONT::CARDINAL-POINT ONT:: LOC-WRT-ORIENTATION)))))
   )
 
 ; figure is on an object

@@ -165,10 +165,10 @@
 	 (head (NP (SEM ?sem) (VAR ?v) (sort pp-word))) (^S))
 
 	;; possessives become determiners - we use an intermediate constit POSSESSOR to allow the modifier "own", as in "his own truck"
-	((DET (LF ONT::DEFINITE) (AGR ?agr) (wh-var ?wh-var) (ARG ?arg) (mass ?m) (poss ?v) (restr ?r) (poss +)
+	((DET (LF ONT::DEFINITE) (AGR ?agr) (wh-var ?wh-var) (ARG ?arg) (mass ?m) (restr ?r) (poss +)
                (NObareSpec +))
 	 -possessor1>
-	 (head (Possessor  (AGR ?agr)  (wh-var ?wh-var) (ARG ?arg) (mass ?m) (poss ?v) (restr ?r))))
+	 (head (Possessor  (AGR ?agr)  (wh-var ?wh-var) (ARG ?arg) (mass ?m) (restr ?r))))
 
 	;;  possessive OWN construction. e.g., his own truck, john's very own house
 	((Possessor  (AGR ?agr) (ARG ?arg) (mass ?m) 
@@ -977,7 +977,7 @@
 	       (transform ?transform) (constraint ?con) (functn ?fn) (comp-op ?dir) (arg ?arg)
 	       (atype ?atype) (comparative ?cmp) (lex ?lx) (argument ?argument)
 	       ))
-    (compute-sem-features (lf ?!pert-type) (sem ?pert-sem))
+    (compute-sem-features (lf ?!pert-type) (sem ?pert-sem) (domain-info ?pert-domain-info))
     (add-to-conjunct  (val (:GROUND (% *PRO* (status ont::kind) (class ?!pert-type)
 				    (var *) (sem ?pert-sem) (constraint (& (drum ?pert-domain-info))))))
      (old ?con) 
@@ -1210,6 +1210,26 @@
 		))
      ?subcat)
 
+   ;; adjectives with an explicit scale, e.g., red in color, high in temperature
+   ((ADJP (ARG ?arg) (VAR ?v) (COMPLEX +) (atype (? atp postpositive predicative-only)) (gap ?gap) (comparative ?comp)
+     (LF (% PROP  (CLASS ?lf)
+	    (VAR ?v) (CONSTRAINT (& (?argmap ?arg) (?reln ?argv) (FUNCTN ?fn) (scale ?newscale) (intensity ?ints) (orientation ?orient)
+				    ))
+	    (transform ?transform) (sem ?sem)
+	    )))
+    -adj-pred-scale>
+    (head (ADJ (LF ?lf) (SUBCAT2 -) (post-subcat -)(VAR ?v) (comparative ?comp)
+	       (ARGUMENT-MAP ?argmap) (prefix -)
+	       (functn ?fn)
+	       (SORT PRED)
+	       (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale1) (F::intensity ?ints) (F::orientation ?orient)))
+	       (transform ?transform)
+	       ))
+    (pp (ptype w::in) (var ?sc-var) (sem  ($ F::ABSTR-OBJ (f::scale ?scale2))))
+    (class-greatest-lower-bound (in1 ?scale1) (in2 ?scale2) (out ?newscale))
+    )
+
+ 
    ;;  the ADJP please "difficult to please" has an ARG that is the GAP in the clause. 
     ((ADJP (ARG ?arg) (VAR ?v) (COMPLEX +) (atype (? atp postpositive predicative-only)) (gap -)
       (LF (% PROP  (CLASS ?lf)
@@ -2970,13 +2990,13 @@
 		(class ?class) (transform ?transform)
 		;; these are dummy vars for trips-lcflex conversion, please don't delete
 		;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
-	      (restr ?restr)
-	    (subj ?subj)
-	    (subj-map ?subjmap)
-	    (comp3 ?comp3)
-	    (comp3-map ?comp-map)
-	    (generated -)
-	    ))
+		(restr ?restr)
+		(subj ?subj)
+		(subj-map ?subjmap)
+		(comp3 ?comp3)
+		(comp3-map ?comp-map)
+		(generated -)
+		))
 ;     (pp (ptype ?nompreps) (sem ?dobjsem) (agr ?agr) (gap -) (var ?dv))
      (pp (ptype ?nompreps) (sem ?dobjsem) (gap -) (var ?dv))
      (add-to-conjunct (val (& (?!dmap ?dv))) (old ?restr) (new ?newrestr))
@@ -3507,7 +3527,7 @@
              (var ?v) 
              (LF (% PROP (VAR ?v) (CLASS ?reln) 
 	            (CONSTRAINT (& (?!submap (% *PRO*
-						(VAR *) (CLASS ?pro-class)
+						(VAR *) (CLASS (:* ?pro-class ?lex))
 						(SEM ?subcatsem) (CONSTRAINT (& (proform ?lex)))))
 										;;(suchthat ?v)))))
 			           (?!argmap ?argvar)))
@@ -3526,6 +3546,7 @@
 	        (sem ?sem) (transform ?trans)
 	        ))
      )
+     
     
     ;;  ELSE modifier on pp advbls
     ((ADVBL (ARG ?argvar) (SUBCATSEM ?subcatsem)
@@ -3642,6 +3663,43 @@
 		(subj (% NP (var *) (sem ?subjsem)))
 		))
      )
+
+    ;; this rule handles rate/activity constructions - e.g., the binding rate or ras on raf
+        ((N1 (SORT PRED) (COMPLEX +)
+	  (gap -) (var ?v) (agr ?agr) (gerund ?ger)
+	  (sem ?sem) (mass ?mass) (pre-arg-already ?npay)
+	  (case ?case)
+	  (class ?class)
+	  (restr ?newrestr)
+	  (subj ?subj)
+	  (subj-map ?subjmap)
+	  (dobj ?dobj)
+	  (dobj-map ?dobjmap) ;; eliminate the dobj-map so we can't assign another
+	  (comp3 ?comp3)
+	  (comp3-map ?comp-map)
+	  (rate-activity-nom (? ratelf ONT::RATE))
+      )
+     -nom-rate> 1.0
+	 (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger) (agr ?agr)
+		    (pre-arg-already ?npay) 
+		    
+		    (sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
+		    (class ?class) (transform ?transform)
+		    ;; these are dummy vars for trips-lcflex conversion, please don't delete
+		    ;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
+		    (restr ?restr)
+		    (subj ?subj)
+		    (subj-map ?subjmap)
+		    (dobj ?dobj)
+		    (dobj-map ?dobjmap)
+		    (comp3 ?comp3)
+		    (comp3-map ?comp-map)
+		    (generated -)
+		    (rate-activity-nom -)
+		    (agent-nom -)
+		    ))
+	 (n (lf (? ratelf ONT::RATE)) (rate-activity-nom -))
+	 )
     
     
   ;;  ing forms can serve as nominalizations e.g., The loading  note: it goes here as nomobjpreps can't be a head feature!
@@ -3704,8 +3762,8 @@
     ((NP (SORT PRED)
       (var ?v) (Class ONT::ANY-SEM) (agr ?agr) (case (? cas sub obj -))
       (LF (% Description (status ont::definite) (var ?v) (Sort Individual) (lex ?lf)
-                (Class ONT::REFERENTIAL-SEM) (constraint (& (NAME-OF ?lf)))
-		(lex ?l) (val ?val) (sem ?sem) (transform ?transform)
+                (Class ONT::SEQUENCE) (constraint (& (NAME-OF ?lf) (val ?val)))
+		(lex ?l) (sem ?sem) (transform ?transform)
                 ))
       (sem ($ (? ft f::phys-obj f::abstr-obj)))
       (postadvbl +) (generated +)
@@ -4941,6 +4999,7 @@
 
 	))
 
+#||
 (parser::augment-grammar
  '((headfeatures
     (N1 var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund generated))
@@ -5058,3 +5117,4 @@
 
 ))
 
+||#

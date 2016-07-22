@@ -1152,7 +1152,7 @@
 	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	    
 	   ))
-     (np (case (? icase obj -)) (var ?iobjvar) (gerund -) (sem ($ (? rcp f::phys-obj f::abstr-obj) (f::intentional +))) (gap -))
+     (np (case (? icase obj -)) (var ?iobjvar) (gerund -) (generated -) (sem ($ (? rcp f::phys-obj f::abstr-obj) (f::intentional +))) (gap -))
      ?dobj
      )
 
@@ -1186,7 +1186,8 @@
 	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	    
 	   ))
-     (np (case (? icase obj -)) (var ?iobjvar) (sem ($ f::phys-obj (f::origin f::living) (f::intentional +) (f::type ont::person))) (gap -))
+     (np (case (? icase obj -)) (var ?iobjvar) (sem ($ f::phys-obj (f::origin f::living) (f::intentional +) (f::type ont::person))) 
+      (generated -) (gap -))
      ?dobj
      )
 

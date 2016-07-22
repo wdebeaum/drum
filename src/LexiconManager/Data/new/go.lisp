@@ -62,7 +62,7 @@
     ((EXAMPLE "Go find it")
      (LF-PARENT ONT::startoff-begin-commence-start)
      (SEM (F::aspect F::unbounded) (F::time-span F::extended))
-     (TEMPL AGENT-effect-SUBJCONTROL-TEMPL (xp (% W::vp (W::vform W::base))))
+     (TEMPL AGENT-effect-SUBJCONTROL-TEMPL (xp (% W::vp (W::vform W::base) (w::complex -))))  
      (SYNTAX (W::morph (:forms NIL)) (W::vform W::base))
      (PREFERENCE 0.97)    ;;;; use any other possible sense first
      )
