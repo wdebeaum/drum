@@ -2,7 +2,7 @@
 ;;;; trips-agent.lisp
 ;;;;
 ;;;; George Ferguson, ferguson@cs.rochester.edu, 30 Mar 2001
-;;;; Time-stamp: <Wed Jul 20 21:50:04 CDT 2016 lgalescu>
+;;;; Time-stamp: <Fri Jul 22 09:59:13 CDT 2016 lgalescu>
 ;;;;
 
 (in-package :defcomponent)
@@ -243,8 +243,9 @@ the returned message will use it as the :in-reply-to parameter."
 
 (defun send-and-wait (msg)
   "Sends MSG. Then reads messages until the reply is received, queueing
-anything that arrives in between for later handling. Returns the :content
-of the reply as the value of this function."
+anything that arrives in between for later handling. If a cancellation
+message arrives, cleans up the pending messages and throws to :main-loop.
+Returns the :content of the reply as the value of this function."
   (let ((tag (get-keyword-arg msg :reply-with)))
     ;; Make sure we have a reply-with tag
     (when (not tag)
@@ -331,7 +332,7 @@ Signals an error if the component is not found."
 	 *component* msg cont verb parameters))
 
 (defun check-for-cancellation-msg ()
-  "Reads messages until there are no more ready, and throws to :main-loop when start-conversation is received"
+  "Reads messages until there are no more ready, and throws to :main-loop when a cancellation message is received."
   (with-slots (name cancellation-patterns) *component*
     (send-msg `(,(intern "TELL") :receiver ,(intern name) :content (,(intern "END-CHECK-FOR-CANCELLATION-MSG"))))
     (let (got-cancellation-msg)
@@ -340,14 +341,6 @@ Signals an error if the component is not found."
 	 do
 	 ;(format t "msg = ~S (package is ~a, current package is ~a, package when compiled was ~a)~%" msg (symbol-package (car msg)) *package* (symbol-package 'foo))
 	 ;(format t "(g-k-a msg :content) = ~S~%" (get-keyword-arg msg :content))
-	 ;; (append *pending-messages* (list msg))
-	 ;; (dolist (pattern cancellation-patterns)
-	 ;;   (when (match-msg-pattern pattern msg)
-	 ;;     (format t "got cancellation message!~%")
-	 ;;     (setq *pending-messages* (list msg))
-	 ;;     (setf got-cancellation-msg t)
-	 ;;     ))
-	 ;; LG 2017/07/20 - replaced the above with something a bit cleaner and a little more efficient
 	   (when (is-cancellation-msg msg)
 	     (format t "got cancellation message!~%")
 	     (setq *pending-messages* (list msg))
