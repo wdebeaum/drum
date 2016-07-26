@@ -4262,6 +4262,24 @@
              )
  )
 
+;; feebleness
+(define-type ONT::feebleness
+ :wordnet-sense-keys ("feebleness%1:26:00")
+ :parent ont::physical-condition
+ )
+
+;; fatigue, tiredness, exhaustion
+(define-type ONT::fatigue
+ :wordnet-sense-keys ("exhaustion%1:26:00" "fatigue%1:26:00" "tiredness%1:26:00")
+ :parent ont::feebleness
+ )
+
+;; weakness
+(define-type ONT::weakness
+ :wordnet-sense-keys ("weakness%1:07:00")
+ :parent ont::feebleness
+ )
+
 ;; health, wellness
 (define-type ONT::health
  :wordnet-sense-keys ("wellness%1:26:00" "wellbeing%1:26:00" "health%1:26:00" "fitness%1:26:00")
@@ -4450,7 +4468,7 @@
 
 ;; condition
 (define-type ONT::medical-condition
- :wordnet-sense-keys ("condition%1:26:05" "sign%1:26:00" "malformation%1:26:00" "pathology%1:26:00" "exhaustion%1:26:00" "fatigue%1:26:00" "irritation%1:26:00" "restlessness%1:07:00" "stress%1:26:01" "tiredness%1:26:00" "weakness%1:07:00") 
+ :wordnet-sense-keys ("condition%1:26:05" "sign%1:26:00" "malformation%1:26:00" "pathology%1:26:00") 
  :parent ONT::medical-disorders-and-conditions
  )
 
@@ -4463,24 +4481,6 @@
 ;; angina
 (define-type ont::angina
  :wordnet-sense-keys ("angina%1:26:01")
- :parent ont::medical-condition
- )
-
-;; arteriosclerosis
-(define-type ont::arteriosclerosis
- :wordnet-sense-keys ("arteriosclerosis%1:26:00")
- :parent ont::medical-condition
- )
-
-;; cholelithiasis (gall stones)
-(define-type ont::cholelithiasis
- :wordnet-sense-keys ("cholelithiasis%1:26:00")
- :parent ont::medical-condition
- )
-
-;; kidney stones
-(define-type ont::kidney-stone
- :wordnet-sense-keys ("kidney_stone%1:17:00")
  :parent ont::medical-condition
  )
 
@@ -4567,6 +4567,12 @@
  :parent ont::mental-psychological-illness-or-disorder
  )
 
+;; stress
+(define-type ont::stress
+ :wordnet-sense-keys ("stress%1:26:01")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
 ;; bruise, contusion, bump
 (define-type ont::injury
  :wordnet-sense-keys ("concussion%1:11:00" "injury%1:26:00" "hurt%1:26:00" "harm%1:26:00" "trauma%1:26:02" "bruise%1:26:00" "contusion%1:26:00" "bump%1:26:00")
@@ -4608,6 +4614,12 @@
 (define-type ont::angina-symp
  :wordnet-sense-keys ("angina%1:26:00")
  :parent ont::medical-symptom
+ )
+
+;; arteriosclerosis
+(define-type ont::arteriosclerosis
+ :wordnet-sense-keys ("arteriosclerosis%1:26:00")
+ :parent ont::disease
  )
 
 (define-type ONT::arthritis
@@ -4733,6 +4745,28 @@
  :parent ONT::disease
  :wordnet-sense-keys ("sexually_transmitted_disease%1:26:00")
  )
+
+;; stones, cholelithiasis (gall stones), kidney stones
+(define-type ont::stones-disease
+ :wordnet-sense-keys ("cholelithiasis%1:26:00" "gallstone%1:17:
+00" "kidney_stone%1:17:00")
+ :parent ont::disease
+ )
+
+#|
+;; cholelithiasis (gall stones)
+(define-type ont::cholelithiasis
+ :wordnet-sense-keys ("cholelithiasis%1:26:00" "gallstone%1:17:
+00")
+ :parent ont::stones-disease
+ )
+
+;; kidney stones
+(define-type ont::kidney-stone
+ :wordnet-sense-keys ("kidney_stone%1:17:00")
+ :parent ont::stones-disease
+ )
+|#
 
 ; for tuberculosis
 (define-type ONT::tuberculosis

@@ -7,7 +7,7 @@
   (w::weakness
   (senses
    ((meta-data :wn ("weakness%1:07:00"))
-    (LF-PARENT ONT::medical-condition)
+    (LF-PARENT ONT::weakness)
     (TEMPL bare-pred-TEMPL)
     )
    )

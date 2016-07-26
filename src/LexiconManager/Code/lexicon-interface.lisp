@@ -491,7 +491,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
   "This checks if any word in the lexicon has the POS and this specified ont-type"
   (if (not (is-trips-pos pos)) (setq pos (penn-tag-to-trips-pos pos)))
   (let* ((poslist (or (trips-pos-list-for-ont-type ont-type) '(w::n)))   ;; if no words have this ont-type, default to N
-	 (res (or (and (equal pos 'W::NAME) (member 'w::N poslist))   ;; names fine with N types
+	 (res (or (and (equal pos 'W::NAME) (member 'w::N poslist) pos)   ;; names fine with N types
 		  (find pos poslist))))
     (print-debug "~%compatibility of ~S and ~S is ~S~%" pos ont-type res)
     res)
@@ -693,11 +693,12 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 
 (defun filter-by-senses (wdef w trips-pos-list penn-tags ont-types wn-sense-keys domain-info &key tagged-senses-only)
   "filter the word definitions to return only senses corresponding to the sense classes in the list. If no such sense exists, a default sense is created on the fly using the available sense and pos information, or defaults if missing"
-  (let* ((pos-list (subst 'w::N 'w::name (merge-pos-info trips-pos-list penn-tags)))  ;; map NAME to N as they are treated equivalently
-	(tagged-senses ont-types)
-	(tagged-senses-remaining tagged-senses)
-	(compatible-defs nil)
-	(other-defs nil)
+  (let* ((orig-pos-list  (merge-pos-info trips-pos-list penn-tags))
+	 (pos-list (subst 'w::N 'w::name orig-pos-list));; map NAME to N as they are treated equivalently
+	 (tagged-senses ont-types)
+	 (tagged-senses-remaining tagged-senses)
+	 (compatible-defs nil)
+	 (other-defs nil)
 	)
     (when wn-sense-keys (dolist (key wn-sense-keys) ; convert wn senses to TRIPS ontology types
 			  (let ((mapped-sense (car (wf::best-ont-type-for-sense-key key))))
@@ -730,13 +731,13 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 		   (setf (lex-entry-pref def) (- (lex-entry-pref def) .01)))
 	       (print-debug "lowering preference for incompatible sense ~S~%" this-lf)
 	       (push def other-defs))
-	    )
+	   ) 
 	  ))
     (print-debug "wdef is ~S~% compatible-defs is ~S~% other-defs are ~S~%" wdef compatible-defs other-defs)
     (when tagged-senses-remaining
       (print-debug "No compatible sense found for ~S in sense list ~S~%" w tagged-senses-remaining)
       (dolist (ont-type tagged-senses-remaining)
-	(dolist (pos pos-list)
+	(dolist (pos orig-pos-list)
 	  (cond ((and pos (compatible-pos-and-ont-type pos ont-type))
 		 ;; create a new entry with the given pos and sense as long as they are compatible
 		 (print-debug "~%point 2")
@@ -1229,13 +1230,13 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	templ)
     (print-debug "received request to add word ~S as ~S ~S ~%" word cat type)
     (if (and (and word cat type) (compatible-pos-and-ont-type cat type))
-	(case cat
+	(case catrequenct
 	  (w::n 
 	   (setq templ 'count-pred-templ)
-	   ;(setq type 'ont::phys-object)
+	   ;(setq type 'ont:proce:phys-object)
 	   (setq res (dynamic-add-lexeme (list word) 'w::n type templ)))
 	  (w::v
-	   (setq templ 'arg0-arg1-xp-templ)
+	   (setq templ 'arg0-arg1-xp-tepl)
 	   ;(setq type 'ont::situation-root)
 	   (setq res (dynamic-add-lexeme (list word) 'w::v type templ)))
 	  (w::adj

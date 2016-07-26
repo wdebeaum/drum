@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.47 2016/07/12 04:50:40 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.48 2016/07/26 05:15:28 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -783,6 +783,7 @@ public class EventExtraction extends Extraction {
                 + createTransportFromXML()
                 + createTransportToXML()
                 + createCelllineXML()
+                + createDrumTermsXML()
                 + "<text>" + escapeXML(text) + "</text>" +
                 "</" + exType + ">";
     }
@@ -913,13 +914,13 @@ public class EventExtraction extends Extraction {
         Extraction ekbTerm = ekbFindExtraction(var);
         KQMLList term = (ekbTerm != null) ? ekbTerm.getValue() : findTermByVar(var, context);
         KQMLList ontInfo = pullCompleteOntInfo(term);
-        String ontText = (ontInfo.size() > 1) ? normalize(ontInfo.get(1).toString()) : "";
+        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
         int start = getKeywordArgInt(":START", term);
         int end = getKeywordArgInt(":END", term);
         String text = removeTags(getTextSpan(start, end));
         String tag = "arg" + roleIndex;
 
-        String dbID = getDBTermIds(term.getKeywordArg(":DRUM"));
+        String dbID = getDBTermIds();
 
         Debug.debug("createArgXML: ready");
 
@@ -952,7 +953,7 @@ public class EventExtraction extends Extraction {
         String id = removePackage(siteval);
         KQMLList varTerm = findTermByVar(siteval, context);
         KQMLList ontInfo = pullCompleteOntInfo(varTerm);
-        String ontText = (ontInfo.size() > 1) ? normalize(ontInfo.get(1).toString()) : "";
+        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
         int start = getKeywordArgInt(":START", varTerm);
         int end = getKeywordArgInt(":END", varTerm);
         String text = removeTags(getTextSpan(start, end));
@@ -990,7 +991,7 @@ public class EventExtraction extends Extraction {
         String id = removePackage(locval);
         KQMLList locTerm = findTermByVar(locval, context);
         KQMLList ontInfo = pullCompleteOntInfo(locTerm);
-        String ontText = (ontInfo.size() > 1) ? normalize(ontInfo.get(1).toString()) : "";
+        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
         int start = getKeywordArgInt(":START", locTerm);
         int end = getKeywordArgInt(":END", locTerm);
         String text = removeTags(getTextSpan(start, end));
@@ -1021,7 +1022,7 @@ public class EventExtraction extends Extraction {
         String id = removePackage(clVar);
         KQMLList clTerm = findTermByVar(clVar, context);
         KQMLList ontInfo = pullCompleteOntInfo(clTerm);
-        String ontText = (ontInfo.size() > 1) ? normalize(ontInfo.get(1).toString()) : "";
+        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
         int start = getKeywordArgInt(":START", clTerm);
         int end = getKeywordArgInt(":END", clTerm);
         String text = removeTags(getTextSpan(start, end));
@@ -1051,7 +1052,7 @@ public class EventExtraction extends Extraction {
         String id = removePackage(locVar);
         KQMLList locTerm = findTermByVar(locVar, context);
         KQMLList ontInfo = pullCompleteOntInfo(locTerm);
-        String ontText = (ontInfo.size() > 1) ? normalize(ontInfo.get(1).toString()) : "";
+        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
         int start = getKeywordArgInt(":START", locTerm);
         int end = getKeywordArgInt(":END", locTerm);
         String text = removeTags(getTextSpan(start, end));
@@ -1081,7 +1082,7 @@ public class EventExtraction extends Extraction {
         String id = removePackage(locVar);
         KQMLList locTerm = findTermByVar(locVar, context);
         KQMLList ontInfo = pullCompleteOntInfo(locTerm);
-        String ontText = (ontInfo.size() > 1) ? normalize(ontInfo.get(1).toString()) : "";
+        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
         int start = getKeywordArgInt(":START", locTerm);
         int end = getKeywordArgInt(":END", locTerm);
         String text = removeTags(getTextSpan(start, end));

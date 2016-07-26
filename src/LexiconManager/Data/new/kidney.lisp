@@ -7,7 +7,7 @@
   ((w::kidney w::stone)
   (senses;;;;; names of diseases/conditions that are count nouns and cannot appear without an article
 	   ((meta-data :wn ("kidney_stone%1:17:00"))
-           (LF-PARENT ONT::kidney-stone)
+           (LF-PARENT ONT::stones-disease)
 	    (TEMPL count-pred-TEMPL)
 	    )
 	   )

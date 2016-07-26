@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.39 2016/07/12 04:27:23 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.40 2016/07/26 05:15:28 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -49,9 +49,7 @@ public class TermExtraction extends Extraction {
         // :ACTIVE bool --> activation
         ACTIVE(":ACTIVE"),
         // :SITE context-term-id: ID for site (residue, domain) on a protein
-        SITE(":SITE"),
-        // :DRUM list --> drum-specific info
-        DRUM(":DRUM");
+        SITE(":SITE");
         private String attrName;
 
         private Attribute(String name) {
@@ -377,12 +375,15 @@ public class TermExtraction extends Extraction {
         if (attributes.get(Attribute.MSEQ) != null) { // complex sequence
             return createComplexTermXML();
         }
-        if (ontType.equalsIgnoreCase("ONT::MUTATION")) { // info from :DRUM
+        if (ontType.equalsIgnoreCase("ONT::MUTATION")) { // info from drumTerms
             return createMutationTermXML();
         }
-        if (ontType.equalsIgnoreCase("ONT::PROTEIN-FAMILY")) { // info from :DRUM
-            return createProtfamTermXML();
-        }
+        /*
+         * TODO: remove; we are now handling these terms with the generic createTermXML()
+         * if (ontType.equalsIgnoreCase("ONT::PROTEIN-FAMILY")) { // info from :DRUM
+         * return createProtfamTermXML();
+         * }
+         */
         return createTermXML();
     }
 
@@ -404,7 +405,7 @@ public class TermExtraction extends Extraction {
         Debug.debug("ruleID: " + ruleID);
 
         // dbids
-        String dbID = getDBTermIds(attributes.get(Attribute.DRUM));
+        String dbID = getDBTermIds();
 
         Debug.debug("pTERM_toXML(): ready");
 
@@ -418,11 +419,12 @@ public class TermExtraction extends Extraction {
                 "lisp=\"" + getLispForm() + "\" " +
                 "rule=\"" + ruleID + "\">"
                 + "<type>" + ontType + "</type>"
+                + createNameXML()
                 + createModsXML()
                 + createFeaturesXML()
-                + createNameXML()
                 + createCorefXML()
                 + createBaseXML()
+                + createDrumTermsXML()
                 + "<text>" + escapeXML(text) + "</text>" +
                 "</" + exType + ">";
     }
@@ -434,7 +436,7 @@ public class TermExtraction extends Extraction {
         Debug.debug("sTERM(" + value + ")");
         String var = pullTermVar(value);
         String id = removePackage(var, false);
-        String ontText = normalize(pullTermOntWord(value));
+        String ontText = normalizeOnt(pullTermOntWord(value));
         String parID = getParagraphID();
 
         String text = removeTags(getTextSpan(start, end));
@@ -446,7 +448,7 @@ public class TermExtraction extends Extraction {
         String aggregate = createAggregateXML((KQMLList) sequence, operator.toString());
         
         // FIXME: do sequences have :DRUM info???
-        String dbID = getDBTermIds(attributes.get(Attribute.DRUM));
+        String dbID = getDBTermIds();
 
         return "<" + exType + " " +
                 "id=\"" + id + "\" " +
@@ -484,7 +486,7 @@ public class TermExtraction extends Extraction {
         Debug.debug("cTERM(" + value + ")");
         String var = pullTermVar(value);
         String id = removePackage(var, false);
-        String ontText = normalize(pullTermOntWord(value));
+        String ontText = normalizeOnt(pullTermOntWord(value));
         String parID = getParagraphID();
 
         String text = removeTags(getTextSpan(start, end));
@@ -494,8 +496,7 @@ public class TermExtraction extends Extraction {
         KQMLObject sequence = attributes.get(Attribute.MSEQ);
         String subterms = createComponentsXML((KQMLList) sequence);
 
-        // FIXME: do sequences have :DRUM info???
-        String dbID = getDBTermIds(attributes.get(Attribute.DRUM));
+        String dbID = getDBTermIds();
 
         return "<" + exType + " " +
                 "id=\"" + id + "\" " +
@@ -511,8 +512,31 @@ public class TermExtraction extends Extraction {
                 + createFeaturesXML()
                 + createNameXML()
                 + createCorefXML()
+                + createDrumTermsXML()
                 + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
                 "</" + exType + ">";
+    }
+
+    /**
+     * Returns a {@code members} element containing members of a protein family.
+     * 
+     * @param term
+     * @return
+     */
+    private String makeDrumTermProtFamXML(KQMLList term) {
+        String members = "";
+        String memberType = getKeywordArgString(":MEMBER-TYPE", term);
+
+        // member DBIDs
+        KQMLObject memberIDs = term.getKeywordArg(":MEMBERS");
+        if (memberIDs != null) {
+            members += "<members type=\"" + memberType + "\" >";
+            for (KQMLObject memberID : (KQMLList) memberIDs) {
+                members += "<member dbid=\"" + normalizeDBID(memberID.stringValue()) + "\"/>";
+            }
+            members += "</members>";
+        }
+        return members;
     }
 
     /**
@@ -534,36 +558,22 @@ public class TermExtraction extends Extraction {
         Debug.debug("mTERM(" + value + ")");
         String var = pullTermVar(value);
         String id = removePackage(var, false);
-        String ontText = normalize(pullTermOntWord(value));
+        String ontText = normalizeOnt(pullTermOntWord(value));
         String parID = getParagraphID();
 
         String text = removeTags(getTextSpan(start, end));
 
         String ruleID = value.getKeywordArg(":RULE").toString();
 
-        // FIXME: do sequences have :DRUM info???
-        KQMLObject dsiInfo = attributes.get(Attribute.DRUM);
-        if ((dsiInfo != null) && !(dsiInfo instanceof KQMLList)) {
-            dsiInfo = null;
-        }
         String mutation = "";
-        if (dsiInfo != null) {
-            KQMLList drumInfo = findTermByHead(":DRUM", (KQMLList) dsiInfo);
-            if (drumInfo == null) {
-                mutation = "<mutation>" + "ONT::TRUE" + "</mutation>";
-            } else {
-                Debug.debug("drumInfo:" + drumInfo);
-                KQMLList mutTerms = findAllTermsByHead("MUTATION", drumInfo);
-                if (mutTerms == null) {
-                    mutation = "<mutation>" + "ONT::TRUE" + "</mutation>";
-                } else {
-                    Debug.debug("mutTerms:" + mutTerms);
-                    for (KQMLObject mutObj : mutTerms) {
-                        mutation += "<mutation>"
-                                + parseMutationToXML((KQMLList) mutObj)
-                                + "</mutation>";
-                    }
+        if (drumTerms.isEmpty()) {
+            mutation = "<mutation>" + "ONT::TRUE" + "</mutation>";
+        } else {
+            for (KQMLList drumTerm : drumTerms) {
+                if (!pullTermHead(drumTerm).equalsIgnoreCase("MUTATION")) {
+                    continue;
                 }
+                mutation += "<mutation>" + parseMutationToXML(drumTerm) + "</mutation>";
             }
         }
 
@@ -581,13 +591,62 @@ public class TermExtraction extends Extraction {
     }
 
     /**
+     * Returns a {@code drum-term} XML element containing grounding information.
+     * <p>
+     * Attributes: {@code dbid}, {@code name}, {@code match-score}, {@code matched-name} <br>
+     * Sub-elements: {@code ont-types}, {@code xrefs}, {@code species}, {@code members}
+     * <p>
+     * Limitations: we only get the first matched name.
+     * 
+     * @return
+     */
+    protected String makeDrumTermXML(KQMLList drumTerm) {
+        if (drumTerm == null)
+            return "";
+        // TODO: find out if other information might be useful
+        KQMLObject dbID = drumTerm.getKeywordArg(":ID");
+        // score may be missing; default is "1"
+        KQMLObject matchScoreObj = drumTerm.getKeywordArg(":SCORE");
+        String matchScore = (matchScoreObj == null) ? "1" : matchScoreObj.stringValue();
+        // name may be missing
+        KQMLObject nameObj = drumTerm.getKeywordArg(":NAME");
+        String name = (nameObj == null) ? null : nameObj.stringValue();
+        // dbxrefs may be missing
+        KQMLObject xRefs = drumTerm.getKeywordArg(":DBXREFS");
+        // species may be missing
+        KQMLObject species = drumTerm.getKeywordArg(":SPECIES");
+        // ont-types must be present!
+        KQMLObject ontTypes = drumTerm.getKeywordArg(":ONT-TYPES");
+        // matches may be missing
+        KQMLObject matches = drumTerm.getKeywordArg(":MATCHES");
+        String matchedName = null;
+        if (matches != null) {
+            KQMLObject firstMatch = ((KQMLList) matches).get(0);
+            matchedName = ((KQMLList) firstMatch).getKeywordArg(":MATCHED").stringValue();
+        }
+        return "<drum-term " +
+                // attributes
+                (dbID == null ? "" : ("dbid=\"" + normalizeDBID(dbID.toString()) + "\" ")) +
+                "match-score=\"" + matchScore + "\" " +
+                (name == null ? "" : ("name=\"" + escapeXML(name) + "\" ")) +
+                (matchedName == null ? "" : ("matched-name=\"" + escapeXML(matchedName) + "\" ")) + ">"
+                // sub-elements
+                + makeDrumTermOntXML((KQMLList) ontTypes)
+                + makeDrumTermProtFamXML(drumTerm)
+                + makeDrumTermXrefsXML((KQMLList) xRefs)
+                + (species == null ? "" : ("<species>" + escapeXML(species.stringValue()) + "</species>")) +
+                "</drum-term>";
+    }
+
+    /**
      * Returns a {@code <term>} XML element representing a protein family term.
      */
+    @Deprecated
     private String createProtfamTermXML() {
         Debug.debug("pfTERM(" + value + ")");
         String var = pullTermVar(value);
         String id = removePackage(var, false);
-        String ontText = normalize(pullTermOntWord(value));
+        String ontText = normalizeOnt(pullTermOntWord(value));
         String parID = getParagraphID();
 
         String text = removeTags(getTextSpan(start, end));
@@ -595,41 +654,16 @@ public class TermExtraction extends Extraction {
         String ruleID = value.getKeywordArg(":RULE").toString();
 
         // dbids
-        String dbID = getDBTermIds(attributes.get(Attribute.DRUM));
+        String dbID = getDBTermIds();
 
         // get members from :DRUM
-        KQMLObject dsiInfo = attributes.get(Attribute.DRUM);
-        if ((dsiInfo != null) && !(dsiInfo instanceof KQMLList)) {
-            dsiInfo = null;
-        }
         String members = "";
-        if (dsiInfo != null) {
-            KQMLList drumInfo = findTermByHead(":DRUM", (KQMLList) dsiInfo);
-            if (drumInfo == null) {
-            } else {
-                Debug.debug("drumInfo:" + drumInfo);
-                KQMLList pfTerms = findAllTermsByHead("TERM", drumInfo);
-                // FIXME: for now, there should be only one TERM, but in the future this may need to be revised
-                if (pfTerms == null) {
-                } else {
-                    Debug.debug("pfTerms:" + pfTerms);
-                    KQMLList pfTerm = (KQMLList) pfTerms.get(0);
-                    
-                    // ok, we know memberType can only be ONT::PROTEIN...
-                    String memberType = getKeywordArgString(":MEMBER-TYPE", pfTerm);
-                    
-                    // member DBIDs
-                    KQMLObject memberIDs = pfTerm.getKeywordArg(":MEMBERS");
-                    if (memberIDs != null) {
-                        members += "<members>";
-                        for (KQMLObject memberID : (KQMLList) memberIDs) {
-                            members += "<member type=\"" + memberType + "\" "
-                                    + "dbid=\"" + normalizeDBID(memberID.stringValue()) + "\" "
-                                    + "/>";
-                        }
-                        members += "</members>";
-                    }
-                }
+        for (KQMLList drumTerm : drumTerms) {
+            // we only look for the first PROTEIN-FAMILY term; there shouldn't be more than one!
+            // N.B.: i made up PROTEIN-FAMILY; currently they use TERM as the head
+            if (pullTermHead(drumTerm).equalsIgnoreCase("PROTEIN-FAMILY")) {
+                members = makeDrumTermProtFamXML(drumTerm);
+                break;
             }
         }
 
@@ -645,6 +679,7 @@ public class TermExtraction extends Extraction {
                 + members
                 + createModsXML()
                 + createFeaturesXML()
+                + createDrumTermsXML()
                 + createNameXML()
                 + createCorefXML()
                 + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
@@ -661,14 +696,14 @@ public class TermExtraction extends Extraction {
         if (nameObj == null) {
             //nop
         } else if (nameObj instanceof KQMLToken) {
-            name = normalize(nameObj.toString());
+            name = normalizeOnt(nameObj.toString());
         } else if (nameObj instanceof KQMLList) {
             for (KQMLObject w: (KQMLList) nameObj) {
                 if (name == null) 
                     name = "";
                 else
                     name += " ";
-                name += normalize(w.toString());
+                name += normalizeOnt(w.toString());
             }
         } else {
             // shouldn't happen
@@ -1119,22 +1154,16 @@ public class TermExtraction extends Extraction {
      * @return
      */
     private String createResSiteFeatureXML() {
-        KQMLObject dsiInfo = attributes.get(Attribute.DRUM);
-        // Debug.debug("dsiInfo:" + dsiInfo);
-        if (! (dsiInfo instanceof KQMLList)) {
+        if (drumTerms.isEmpty()) {
             return "";
         }
-        KQMLList drumInfo = findTermByHead(":DRUM", (KQMLList) dsiInfo);
-        if (drumInfo == null) {
-            return "";
+        for (KQMLList drumTerm : drumTerms) {
+            // we only look for the first AA-SITE term; there shouldn't be more than one!
+            if (pullTermHead(drumTerm).equalsIgnoreCase("AA-SITE")) {
+                return parseAASiteToXML(drumTerm);
+            }
         }
-        // Debug.debug("drumInfo:" + drumInfo);
-        KQMLList siteTerm = findTermByHead("AA-SITE", drumInfo);
-        if (siteTerm == null) {
-            return "";
-        }
-        // Debug.debug("siteTerm:" + siteTerm);
-        return parseAASiteToXML(siteTerm);
+        return "";
     }
 
     private String createIneventFeaturesXML() {
@@ -1172,7 +1201,7 @@ public class TermExtraction extends Extraction {
         String id = removePackage(clVar);
         KQMLList clTerm = findTermByVar(clVar, context);
         KQMLList ontInfo = pullCompleteOntInfo(clTerm);
-        String ontText = (ontInfo.size() > 1) ? normalize(ontInfo.get(1).toString()) : "";
+        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
         int start = getKeywordArgInt(":START", clTerm);
         int end = getKeywordArgInt(":END", clTerm);
         String text = removeTags(getTextSpan(start, end));

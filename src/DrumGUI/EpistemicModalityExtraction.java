@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EpistemicModalityExtraction.java,v 1.8 2016/07/11 22:31:44 lgalescu Exp $
+ * $Id: EpistemicModalityExtraction.java,v 1.9 2016/07/26 05:15:28 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -354,13 +354,13 @@ public class EpistemicModalityExtraction extends Extraction {
         Extraction ekbTerm = ekbFindExtraction(var);
         KQMLList term = (ekbTerm != null) ? ekbTerm.getValue() : findTermByVar(var, context);
         KQMLList ontInfo = pullCompleteOntInfo(term);
-        String ontText = (ontInfo.size() > 1) ? normalize(ontInfo.get(1).toString()) : "";
+        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
         int start = getKeywordArgInt(":START", term);
         int end = getKeywordArgInt(":END", term);
         String text = removeTags(getTextSpan(start, end));
         String tag = "arg" + roleIndex;
 
-        String dbID = getDBTermIds(term.getKeywordArg(":DRUM"));
+        String dbID = getDBTermIds();
 
         Debug.debug("createArgXML: ready");
 

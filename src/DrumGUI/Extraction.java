@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.48 2016/07/08 21:00:42 lgalescu Exp $
+ * $Id: Extraction.java,v 1.49 2016/07/26 05:15:28 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -66,6 +66,8 @@ public class Extraction {
     protected String id;
     /** The ontology type for the extraction */
     protected String ontType;
+    /** DRUM terms */
+    protected ArrayList<KQMLList> drumTerms;
     /** Coreference type for referential expressions */
     @Deprecated
     protected String refType;
@@ -104,6 +106,10 @@ public class Extraction {
         start = getKeywordArgInt(":START", value);
         end = getKeywordArgInt(":END", value);
 
+        // set drumTerms
+        fixDrumTermsFormat();
+        pullDrumTerms();
+
         packRules();
 
         pullCorefInfo();
@@ -140,14 +146,14 @@ public class Extraction {
     /**
      * Pull term head from LF term.
      */
-    protected String pullTermHead(KQMLList term) {
+    protected static String pullTermHead(KQMLList term) {
         return term.get(0).toString();
     }
 
     /**
      * Pull term variable from LF term.
      */
-    protected String pullTermVar(KQMLList term) {
+    protected static String pullTermVar(KQMLList term) {
         return term.get(1).toString();
     }
 
@@ -155,7 +161,7 @@ public class Extraction {
      * Pull term ID from LF term. Note: the term ID does not include the ONT::
      * qualifier present in the LF term.
      */
-    private String pullTermID(KQMLList term) {
+    private static String pullTermID(KQMLList term) {
         return removePackage(pullTermVar(term), false);
     }
 
@@ -165,7 +171,7 @@ public class Extraction {
      * {@code (T W)}. For incomplete terms, with the format {@code (?t V T ...)}
      * the result will consist of only the type: {@code (T)}.
      */
-    protected KQMLList pullCompleteOntInfo(KQMLList term) {
+    protected static KQMLList pullCompleteOntInfo(KQMLList term) {
         KQMLObject ontVal = term.get(2);
         KQMLList result = new KQMLList();
         if (ontVal instanceof KQMLList) {
@@ -185,7 +191,7 @@ public class Extraction {
      * 
      * @see #ontType
      */
-    protected String pullTermOntType(KQMLList term) {
+    protected static String pullTermOntType(KQMLList term) {
         String type;
         if (term == null) {
             return "";
@@ -203,7 +209,7 @@ public class Extraction {
      * Pull "normalized" word from LF term. LF term format: (?t V (:* T W) ...)
      * Result: W
      */
-    protected String pullTermOntWord(KQMLList term) {
+    protected static String pullTermOntWord(KQMLList term) {
         if (term == null) {
             return "";
         }
@@ -214,6 +220,8 @@ public class Extraction {
         }
         return "";
     }
+
+    // EKB
 
     /**
      * Utility method that converts an utterance frame to a document offset.
@@ -273,41 +281,88 @@ public class Extraction {
     }
 
     // // SPECIAL TERMS
+
+    /**
+     * Fix an inconsistency in Parser output.
+     * <p>
+     * WARNING: This is a temporary fix; it should go away eventually!
+     */
+    private void fixDrumTermsFormat() {
+        KQMLObject drum = value.getKeywordArg(":DRUM");
+        if (drum == null) {
+            return;
+        }
+        if (drum instanceof KQMLToken) { // when missing, it may show as ":DRUM -"
+            return;
+        }
+        KQMLList drumTermsList = findTermByHead("ONT::DRUM", (KQMLList) drum);
+        if (drumTermsList != null) {
+            Debug.warn("Fixing DRUM terms format for " + drumTermsList);
+            drumTermsList.set(0, new KQMLToken(":DRUM"));
+            for (KQMLObject term : drumTermsList) {
+                if (!(term instanceof KQMLList)) {
+                    continue;
+                }
+                KQMLList termAsList = (KQMLList) term;
+                termAsList.set(0, new KQMLToken(removePackage(pullTermHead(termAsList))));
+            }
+        }
+    }
+
+    /**
+     * Pull DRUM terms from {@link #value}.
+     * 
+     * @return
+     */
+    protected void pullDrumTerms() {
+        KQMLObject drum = value.getKeywordArg(":DRUM");
+        drumTerms = new ArrayList<KQMLList>();
+        if (drum == null) {
+            return;
+        }
+        if (drum instanceof KQMLToken) { // when missing, it may show as ":DRUM -"
+            return;
+        }
+        KQMLList drumTermsList = findTermByHead(":DRUM", (KQMLList) drum);
+
+        if (drumTermsList == null) {
+            Debug.warn("DRUM terms doesn't include any: " + drum);
+            return;
+        }
+
+        for (KQMLObject item : drumTermsList) {
+            if (!(item instanceof KQMLList)) {
+                continue;
+            }
+            KQMLList term = (KQMLList) item;
+            String termHead = pullTermHead(term);
+            if (termHead.equalsIgnoreCase("TERM")) {
+                term.removeKeywordArg(":MAPPINGS");
+                drumTerms.add(term);
+            } else {
+                drumTerms.add(term);
+            }
+        }
+        Debug.warn("DRUM terms found: " + drumTerms);
+    }
+
     /**
      * Returns list of all DRUM resource IDs, as a single {@link String}, using {@code |} as separator.
      * 
-     * @param dsiInfo
-     *            term {@code :DRUM} attribute value
      * @return
      */
-    protected String getDBTermIds(KQMLObject dsiInfo) {
-        Debug.debug("getDBTermIds():: dsiInfo: " + dsiInfo);
-        if (dsiInfo == null) { // jic, caller shouldn't do this
-            return null;
-        }
-        if (dsiInfo instanceof KQMLToken) { // when missing, it may show as ":DRUM -"
-            return null;
-        }
-        KQMLList drumInfo = findTermByHead(":DRUM", (KQMLList) dsiInfo);
-        if (drumInfo == null) {
-            return null;
-        }
-        Debug.debug("getDBTermIds():: drumInfo:" + drumInfo);
+    protected String getDBTermIds() {
         HashSet<String> ids = new HashSet<String>();
-        for (KQMLObject drumTerm : drumInfo) {
-            // skip head
-            if (drumTerm.toString().equalsIgnoreCase(":DRUM")) {
+        for (KQMLList term : drumTerms) {
+            // only TERM terms have IDs
+            if (!pullTermHead(term).equalsIgnoreCase("TERM")) {
                 continue;
             }
-            if (!pullTermHead((KQMLList) drumTerm).equalsIgnoreCase("TERM")) {
-                continue;
-            }
-            KQMLObject dbID = ((KQMLList) drumTerm).getKeywordArg(":ID");
+            KQMLObject dbID = term.getKeywordArg(":ID");
             if (dbID != null) {
                 ids.add(normalizeDBID(dbID.toString()));
             }
-            KQMLObject dbXrefs = ((KQMLList) drumTerm)
-                    .getKeywordArg(":DBXREFS");
+            KQMLObject dbXrefs = term.getKeywordArg(":DBXREFS");
             if (dbXrefs != null) {
                 if (dbXrefs instanceof KQMLList) {
                     for (KQMLObject dbXref : (KQMLList) dbXrefs) {
@@ -318,15 +373,7 @@ public class Extraction {
                 }
             }
         }
-        String result = null;
-        for (String id : ids) {
-            if (result == null) {
-                result = id;
-            } else {
-                result += "|" + id;
-            }
-        }
-        return result;
+        return join("|", ids);
     }
 
     /**
@@ -350,6 +397,23 @@ public class Extraction {
         }
         Debug.warn("Unrecognized dbid format: " + dbid);
         return dbid;
+    }
+
+    /**
+     * Join a list of strings, using the specified delimiter.
+     * <p>
+     * Note: Java 1.8 String class has a join function doing precisely this.
+     */
+    protected static String join(String delimiter, Iterable<String> elements) {
+        String result = null;
+        for (String elem : elements) {
+            if (result == null) {
+                result = elem;
+            } else {
+                result += (delimiter + elem);
+            }
+        }
+        return result;
     }
 
     /**
@@ -378,9 +442,8 @@ public class Extraction {
     // // PACKAGES
 
     /**
-     * Returns the symbol from a package::symbol token. If
-     * {@code withSpaces=true}, multi-word symbols are returned as a
-     * space-separated word sequence.
+     * Returns the symbol from a {@code package::symbol} token. If {@code withSpaces=true}, multi-word symbols are
+     * returned as a space-separated word sequence.
      */
     protected static String removePackage(String w, boolean withSpaces) {
         if (w != null) {
@@ -410,7 +473,7 @@ public class Extraction {
      * @param name
      * @return normalized name
      */
-    protected static String normalize(String name) {
+    protected static String normalizeOnt(String name) {
         return removePackage(name, false)
                 .replaceAll("-PUNC-SLASH-", "/")
                 .replaceAll("-PUNC-MINUS-", "-")
@@ -700,6 +763,15 @@ public class Extraction {
     }
 
     /**
+     * Creates a lisp form from {@link #shortValue} and returns it as a string.
+     */
+    protected String getLispForm() {
+        return escapeXML(shortValue.toString());
+    }
+
+    // XML
+
+    /**
      * Returns a string representing this extraction in XML format. Should be overridden in subclasses.
      */
     public String toXML() {
@@ -708,11 +780,103 @@ public class Extraction {
     }
 
     /**
-     * Creates a lisp form from {@link #shortValue} and returns it as a string.
+     * Returns a {@code drum-terms} XML element containing grounding information.
+     * 
+     * @return
      */
-    protected String getLispForm() {
-        return escapeXML(shortValue.toString());
+    protected String createDrumTermsXML() {
+        String result = "";
+        if (drumTerms.isEmpty())
+            return result;
+        for (KQMLList term : drumTerms) {
+            if (pullTermHead(term).equalsIgnoreCase("TERM")) {
+                result += makeDrumTermXML(term);
+            }
+        }
+        return "<drum-terms>" + result + "</drum-terms>";
     }
+
+    /**
+     * Returns a {@code drum-term} XML element containing grounding information.
+     * <p>
+     * Attributes: {@code dbid}, {@code name}, {@code match-score}, {@code matched-name} <br>
+     * Sub-elements: {@code ont-types}, {@code xrefs}, {@code species}
+     * <p>
+     * Limitations: we only get the first matched name.
+     * 
+     * @return
+     */
+    protected String makeDrumTermXML(KQMLList drumTerm) {
+        if (drumTerm == null) {
+            return "";
+        }
+        // TODO: find out if other information might be useful
+        KQMLObject dbID = drumTerm.getKeywordArg(":ID");
+        // score may be missing
+        KQMLObject matchScore = drumTerm.getKeywordArg(":SCORE");
+        // name may be missing
+        KQMLObject nameObj = drumTerm.getKeywordArg(":NAME");
+        String name = (nameObj == null) ? null : nameObj.stringValue();
+        // dbxrefs may be missing
+        KQMLObject xRefs = drumTerm.getKeywordArg(":DBXREFS");
+        // species may be missing
+        KQMLObject species = drumTerm.getKeywordArg(":SPECIES");
+        // ont-types must be present!
+        KQMLObject ontTypes = drumTerm.getKeywordArg(":ONT-TYPES");
+        // matches may be missing
+        KQMLObject matches = drumTerm.getKeywordArg(":MATCHES");
+        String matchedName = null;
+        if (matches != null) {
+            KQMLObject firstMatch = ((KQMLList) matches).get(0);
+            matchedName = ((KQMLList) firstMatch).getKeywordArg(":MATCHED").stringValue();
+        }
+        return "<drum-term " +
+                // attributes
+                (dbID == null ? "" : ("dbid=\"" + normalizeDBID(dbID.toString()) + "\" ")) +
+                (matchScore == null ? "" : ("match-score=\"" + matchScore + "\" ")) +
+                (name == null ? "" : ("name=\"" + escapeXML(name) + "\" ")) +
+                (matchedName == null ? "" : ("matched-name=\"" + escapeXML(matchedName) + "\" ")) + ">"
+                // sub-elements
+                + makeDrumTermOntXML((KQMLList) ontTypes)
+                + makeDrumTermXrefsXML((KQMLList) xRefs)
+                + (species == null ? "" : ("<species>" + escapeXML(species.stringValue()) + "</species>")) +
+                "</drum-term>";
+    }
+
+    /**
+     * Returns an {@code xrefs} element containing a set of {@code xref} sub-elements, each of them denoting a
+     * cross-reference into a resource.
+     * 
+     * @param xRefs
+     * @return
+     */
+    protected String makeDrumTermOntXML(KQMLList ontTypes) {
+        String result = "";
+        if (ontTypes == null)
+            return result;
+        for (KQMLObject type : (KQMLList) ontTypes) {
+            result += "<type>" + type.toString() + "</type>";
+        }
+        return "<types>" + result + "</types>";
+    }
+
+    /**
+     * Returns an {@code xrefs} element containing a set of {@code xref} sub-elements, each of them denoting a
+     * cross-reference into a resource.
+     * 
+     * @param xRefs
+     * @return
+     */
+    protected String makeDrumTermXrefsXML(KQMLList xRefs) {
+        String result = "";
+        if (xRefs == null)
+            return result;
+        for (KQMLObject xRef : (KQMLList) xRefs) {
+            result += "<xref dbid=\"" + normalizeDBID(xRef.toString()) + "\"/>";
+        }
+        return "<xrefs>" + result + "</xrefs>";
+    }
+
 
     /**
      * Utility function for replacing special characters in a string so it can

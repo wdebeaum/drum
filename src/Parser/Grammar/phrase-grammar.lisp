@@ -112,8 +112,8 @@
 	 -spec2>
 	 (head (DET (sem ?def) (MASS ?m) (agr ?agr)
 		(LF ?l) (RESTR ?R)))
-	 (ordinal (LF ?q))
-         (add-to-conjunct (val (SEQUENCE ?q)) (old ?r) (new ?newr)))
+	 (ordinal (LF (NTH ?q)))
+         (add-to-conjunct (val (ORDINAL ?q)) (old ?r) (new ?newr)))
 
 	;; one
 	((SPEC (SEM ?def) (var ?v) (AGR ?agr) (MASS count) (ARG ?arg) (lex ?lex) (LF ONT::INDEFINITE) 
@@ -2595,11 +2595,11 @@
      ;;  Special rule for every third, every fifth, ...
     
     ((SPEC (ARG ?arg) (VAR ?v) (agr ?agr) (MASS ?m) (LF ONT::QUANTIFIER)
-           (SUBCAT (% PP (ptype of))) (RESTR (& (QUAN EVERY) (SEQUENCE ?q)))
+           (SUBCAT (% PP (ptype of))) (RESTR (& (QUAN EVERY) (ORDINAL ?q)))
            )
      -quan-every-nth>
      (head (quan (VAR ?v) (agr 3s) (MASS ?m) (LF ONT::EVERY) (STATUS ONT::QUANTIFIER)))
-     (ordinal (LF ?q)))
+     (ordinal (LF (W::NTH ?q))))
 
     ;; every five ....
      ((SPEC (ARG ?arg) (VAR ?v) (agr ?agr) (MASS ?m) (LF ONT::QUANTIFIER)

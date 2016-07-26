@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: CausalityExtraction.java,v 1.9 2016/04/05 21:02:03 lgalescu Exp $
+ * $Id: CausalityExtraction.java,v 1.10 2016/07/26 05:15:27 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -491,11 +491,11 @@ public class CausalityExtraction extends Extraction {
                     "end=\"" + getOffset(end) + "\" />";
         } else {
             KQMLList ontInfo = pullCompleteOntInfo(term);
-            String ontText = (ontInfo.size() > 1) ? normalize(ontInfo.get(1).toString()) : "";
+            String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
             String text = removeTags(getTextSpan(start, end));
 
 
-            String dbID = getDBTermIds(term.getKeywordArg(":DRUM"));
+            String dbID = getDBTermIds();
 
             Debug.debug("createArgXML: ready");
 
@@ -545,10 +545,10 @@ public class CausalityExtraction extends Extraction {
                         "end=\"" + getOffset(end) + "\" />";
             } else {
                 KQMLList ontInfo = pullCompleteOntInfo(term);
-                String ontText = (ontInfo.size() > 1) ? normalize(ontInfo.get(1).toString()) : "";
+                String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
                 String text = removeTags(getTextSpan(start, end));
 
-                String dbID = getDBTermIds(term.getKeywordArg(":DRUM"));
+                String dbID = getDBTermIds();
                 Debug.debug("createSeqArgXML: ready");
 
                 seqArgs += "<arg " +

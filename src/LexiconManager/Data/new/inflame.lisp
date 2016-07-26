@@ -17,5 +17,15 @@
      )
     )
    )
+#|
+  (W::inflammation
+   (SENSES
+    ((meta-data :wn ("inflammation%1:26:00"))
+     (LF-PARENT ONT::inflammation)
+     (TEMPL mass-pred-TEMPL)
+     )
+    )
+   )
+|#
 ))
 

@@ -1108,7 +1108,7 @@
     (let ((rootlf (find-arg (cdar rootterm) :lf)))
       (if rootlf
 	  (cons (replace-arg-in-act (car rootterm) :lf (append (remove-args-in-act rootlf '(:start :end)) ;;; we'll be using the start and end from the new parse
-							       (cdddr (find-arg-in-act target :lf)))d)
+							       (cdddr (find-arg-in-act target :lf))))
 		rest)))))
 
 (defun remove-args-in-act (act args)
