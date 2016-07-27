@@ -236,6 +236,7 @@
    
    ;; is the box on the table?, Is the box this?
      ((ONT::SPEECHACT ?!a ONT::SA_YN-QUESTION :CONTENT ?!rr)
+      (ONT::F ?!rr ?type)
       -ynq> 1
       (ONT::ASK-IF :who *USER* :to *ME* :what ?!rr)
       )
