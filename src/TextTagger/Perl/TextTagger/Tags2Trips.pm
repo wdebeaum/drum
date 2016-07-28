@@ -25,10 +25,11 @@ our %penn2trips_punc = (
   '-LSB-' => '[',
   '-RSB-' => ']',
   '-LCB-' => '{',
-  '-RCB-' => '}',
-  '``' => '"',
-  "''" => '"',
-  '`' => "'"
+  '-RCB-' => '}'
+#  These are more complicated with Unicode, see %penn2trips_word_re
+#  '``' => '"',
+#  "''" => '"',
+#  '`' => "'"
   );
 
 # Stanford's NER and parser convert British spellings to American ones
@@ -116,7 +117,23 @@ our %penn2trips_word_re = (
   'November' => qr/[Nn]ovember/,
   'December' => qr/[Dd]ecember/,
   # it also spells out the cent sign
-  'cents' => qr/cents|\x{00a2}/
+  'cents' => qr/cents|\x{00a2}/,
+  # quote marks and apostrophes become complicated with Unicode, so they're
+  # here instead of in %penn2trips_punc. Note that the "high-reversed-9"
+  # versions of left quotes are omitted because Stanford can't handle them
+  # anyway. Ditto "low" quotes.
+  '``' => qr/``|"|\x{201c}/,
+  "''" => qr/''|"|\x{201d}/,
+  '`' => qr/`|'|\x{2018}/,
+  "'" => qr/'|\x{2019}/,
+  # TODO use @TextTagger::Words::endings to avoid duplication?
+  "'s" => qr/(?:'|\x{2019})s/,
+  "'m" => qr/(?:'|\x{2019})m/,
+  "'d" => qr/(?:'|\x{2019})d/,
+  "'ll" => qr/(?:'|\x{2019})ll/,
+  "'re" => qr/(?:'|\x{2019})re/,
+  "'ve" => qr/(?:'|\x{2019})ve/,
+  "n't" => qr/n(?:'|\x{2019})t/
   );
 # add plurals to the above
 for my $key (keys %penn2trips_word_re) {

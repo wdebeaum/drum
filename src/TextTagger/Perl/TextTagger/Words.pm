@@ -12,6 +12,9 @@ use strict vars;
 # FIXME? "what's-its-name" doesn't get "s" as a word
 # see also the WARNING in Punctuation.pm
 my @endings = qw('s 'm 'd 'll 're 've n't);
+# add copies of the endings with Unicode right single quote instead of ASCII
+# apostrophe
+push @endings, map { my $e = $_; $e =~ s/'/\x{2019}/; $e } @endings;
 my $endings_re = '(?:' . join('|', @endings) . ')$';
 
 sub tag_subwords

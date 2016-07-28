@@ -1327,6 +1327,7 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 <li>They convert ". . ." to "..." (removing spaces).</li>
 <li>They convert " to `` or '', if they think it's the start or end of a quotation, respectively.</li>
 <li>They convert ' to ` in similar situations.</li>
+<li>They convert Unicode quote marks (except low ones and high-reversed-9 ones) to ASCII equivalents using backticks ` and apostrophes ', including right single quotes used as apostrophes in endings like "n't"/"n’t".</li>
 <li>They convert Unicode en-dashes (–) and em-dashes (—) to double ASCII hyphen-minuses (--).</li>
 <li>They insert an extra "." after an abbreviation if they think it's at the end of a sentence, e.g. "...Hewlett-Packard Co. Recently..." becomes "...Hewlett-Packard Co. . Recently...".</li>
 <li>They convert (some) British spellings like "organisation" and "colour" to their American equivalents like "organization" and "color".</li>
