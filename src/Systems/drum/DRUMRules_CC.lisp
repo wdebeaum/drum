@@ -864,8 +864,9 @@
 
 	  
 	  ; Ras activation is required for Raf stimulation.
+	  ; Ras is required for Raf stimulation.
           ((ONT::F ?ev ONT::NECESSITY :FORMAL ?!obj :REASON ?!r)
-	   (ONT::EVENT ?!obj ?!type2)
+	   ((? sp ONT::EVENT ONT::TERM) ?!obj ?!type2)
 	   (ONT::F ?!r ONT::PURPOSE :VAL ?!rVal)
 	   (ONT::EVENT ?!rVal ?!rValType)
            -necessary3>
@@ -882,7 +883,7 @@
 	   )
 
           ((ONT::F ?ev ONT::NECESSITY :FORMAL ?!obj :REASON ?!r)  ; This doesn't parse but let's assume it would be GROUND
-	   (ONT::EVENT ?!obj ?!type2)
+	   ((? sp ONT::EVENT ONT::TERM) ?!obj ?!type2)
 	   (ONT::F ?!r ONT::PURPOSE :GROUND ?!rVal)
 	   (ONT::EVENT ?!rVal ?!rValType)
            -necessary3-gd>

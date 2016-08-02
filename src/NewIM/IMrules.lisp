@@ -398,7 +398,8 @@
    ;;  Evaluations, e.g., good, fine, ...
    ((ONT::SPEECHACT ?!a ONT::SA_EVALUATE :CONTENT ?!vv)
     -evaluation>
-    (ONT::EVALUATE :who *USER* :to *ME* :what ?!vv)
+;    (ONT::EVALUATE :who *USER* :to *ME* :what ?!vv)
+    (ONT::ANSWER :who *USER* :to *ME* :what ?!vv)
     )
 
    ;;  Evaluations, e.g., not too good/bad

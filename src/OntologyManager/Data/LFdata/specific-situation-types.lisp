@@ -2429,7 +2429,8 @@
 
 (define-type ONT::Cancel
  :parent ONT::CAUSE-ACTION
- :arguments ((:OPTIONAL ONT::Formal ((? obj F::PHYS-OBJ F::ABSTR-OBJ) (f::intentional -))))
+ :arguments ((:OPTIONAL ONT::Formal ((? obj F::PHYS-OBJ F::ABSTR-OBJ) (f::intentional -)))
+	     (:OPTIONAL ONT::NEUTRAL ((? obj F::PHYS-OBJ F::ABSTR-OBJ) (f::intentional -))))
  )
 
 

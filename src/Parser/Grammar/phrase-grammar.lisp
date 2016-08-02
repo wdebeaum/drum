@@ -703,7 +703,8 @@
       )
      -N1-qual1-hyphen> 1
      (ADJP (atype (? at attributive-only central )) (LF ?qual) (ARG ?v) (VAR ?adjv) (WH -)
-      (argument (% NP ));;(sem ?nsem))) 
+;      (argument (% NP ));;(sem ?nsem))) 
+      (argument (% NP (sem ?argsem))) 
       (COMPLEX -) (comparative ?com) (Set-modifier -)
       (post-subcat -)
       )
@@ -715,6 +716,7 @@
 	    (PRO -) (postadvbl -) ;; to avoid the ambiguity "the [[red truck] at Avon]" "the [red [truck at Avon]]"
 	    )
       )
+     (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
      (add-to-conjunct (val (:MODS ?adjv)) (old ?r) (new ?con)))
 
     ;; allow modification of measure terms with physical modifiers as long as the scales match. The sems will be different; keep the head sem
@@ -2305,12 +2307,12 @@
                 ))
      (case ?case) (agr 3p)
      (SORT PRED)
-     (MASS mass)
+     (MASS ?mass)
      (VAR *) (WH ?w));; must move WH feature up by hand here as it is explicitly specified in a daughter.
      -np-spec-of-def-plur-pp>
     (SPEC (LF ?spec) (ARG ?v) (VAR ?specvar) (name-spec -) (POSS -);;myrosia 12/27/01 added mass restriction to spec
      (WH ?w)
-     (RESTR ?restr)
+     (RESTR ?restr) (MASS ?mass)
      (SUBCAT (% PP (Ptype ?ptp) (agr |3S|) (SEM ?sem))))
     (head 
      (PP  (VAR ?v) (MASS ?mass) (ptype ?ptp)

@@ -2,6 +2,7 @@
 ;;;; w::and
 ;;;;
 
+#|
 (define-words :pos w::adv
  :words (
 ;; Parentheticals
@@ -15,6 +16,22 @@
 	   )
 )
 ))
+|#
+
+(define-words :pos W::conj :boost-word t
+ :tags (:base500)
+ :words (
+  ((W::and w::not)
+   (wordfeats (w::but-not +))
+   (SENSES
+    ((LF ONT::BUT-EXCEPTION)
+     (non-hierarchy-lf t)
+     (TEMPL SUBCAT-ANY-TEMPL)
+     )
+    )
+   )
+  
+  ))
 
 (define-words 
     :pos W::adv :templ DISC-PRE-TEMPL
