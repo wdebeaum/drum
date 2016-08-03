@@ -835,11 +835,11 @@
  		)
 
 ;; birth, death
-(define-type ONT::lifecycle-event
- :wordnet-sense-keys ("nascence%1:11:00" "nascency%1:11:00" "nativity%1:11:00" "birth%1:11:00" "death%1:11:00" "decease%1:11:00" "expiry%1:11:00")
+(define-type ONT::be-born
+ :wordnet-sense-keys ("nascence%1:11:00" "nascency%1:11:00" "nativity%1:11:00" "birth%1:11:00")
  :parent ONT::life-process
   :sem (f::situation (:default (f::aspect f::dynamic)))
- 		)
+  :arguments ((:essential ONT::affected-result (F::Phys-obj (f::type ont::mammal)))))
 
 (define-type ONT::live
  :wordnet-sense-keys ("exist%2:42:01" "live%2:42:06" "live%2:42:07")
@@ -848,7 +848,7 @@
  		)
 
 (define-type ONT::die
- :wordnet-sense-keys ("demise%1:28:00" "dying%1:28:00" "death%1:28:00" "death%1:26:01" "destruction%1:26:00" "end%1:26:00" "last%1:28:01" "death%1:28:01" "death%1:26:00" "death%1:19:00" "die%2:30:00" "decease%2:30:00" "perish%2:30:00" "go%2:30:00" "exit%2:30:00" "pass_away%2:30:00" "expire%2:30:00" "pass%2:30:11" "kick_the_bucket%2:30:00" "cash_in_one's_chips%2:30:00" "buy_the_farm%2:30:00" "conk%2:30:00" "give-up_the_ghost%2:30:00" "drop_dead%2:30:00" "pop_off%2:30:00" "choke%2:30:01" "croak%2:30:00" "snuff_it%2:30:00" "die%2:30:02")
+ :wordnet-sense-keys ("demise%1:28:00" "dying%1:28:00" "death%1:28:00" "death%1:26:01" "destruction%1:26:00" "end%1:26:00" "last%1:28:01" "death%1:28:01" "death%1:26:00" "death%1:19:00" "die%2:30:00" "decease%2:30:00" "perish%2:30:00" "go%2:30:00" "exit%2:30:00" "pass_away%2:30:00" "expire%2:30:00" "pass%2:30:11" "kick_the_bucket%2:30:00" "cash_in_one's_chips%2:30:00" "buy_the_farm%2:30:00" "conk%2:30:00" "give-up_the_ghost%2:30:00" "drop_dead%2:30:00" "pop_off%2:30:00" "choke%2:30:01" "croak%2:30:00" "snuff_it%2:30:00" "die%2:30:02"  "death%1:11:00" "decease%1:11:00" "expiry%1:11:00")
  :parent ONT::life-process
   :sem (f::situation (:default (f::aspect f::dynamic)))
  		)

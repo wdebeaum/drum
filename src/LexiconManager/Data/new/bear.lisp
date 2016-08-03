@@ -14,15 +14,26 @@
 
 (define-words :pos W::v :templ agent-theme-xp-templ
  :words (
-; begin words manually added from top 100 words in verbnet but not trips --wdebeaum
-  (W::bear
-   (SENSES
-    ((meta-data :origin "verbnet-2.0" :entry-date 20060505 :change-date 20090511 :comments nil :vn ("admire-31.2"))
-     (EXAMPLE "I can't bear it")
-     (LF-PARENT ONT::enduring)
-     (TEMPL experiencer-neutral-xp-templ) ; like admire,adore,appreciate,despise,detest,dislike,loathe,miss,tolerate
-     )
-    )
-   )
+	 (W::bear
+	  (SENSES
+	   ((meta-data :origin "verbnet-2.0" :entry-date 20060505 :change-date 20090511 :comments nil :vn ("admire-31.2"))
+	    (EXAMPLE "I can't bear it")
+	    (LF-PARENT ONT::enduring)
+	    (TEMPL experiencer-neutral-xp-templ) ; like admire,adore,appreciate,despise,detest,dislike,loathe,miss,tolerate
+	    )
+	   )
+	  )
 ))
 
+(define-words :pos W::v :templ agent-affected-create-templ
+ :words (
+	 (W::bear
+	  (wordfeats (W::morph (:forms (-vb) :past w::bore :pastpart w::born :nom w::birth)))
+	  (SENSES
+	   ((meta-data :origin "verbnet-2.0" :entry-date 20060505 :change-date 20090511 :comments nil :vn ("admire-31.2"))
+	    (EXAMPLE "I can't bear it")
+	    (LF-PARENT ONT::be-born)
+	    )
+	   ))
+	 
+	 ))
