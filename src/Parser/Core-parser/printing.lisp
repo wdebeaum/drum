@@ -1904,6 +1904,10 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	  ((ont::to-loc ont::position-reln ont::goal-reln  ont::direction-reln) :result)
 	 ((ont::from-loc ont::from) :source)
 	 )
+	(ont::joining 
+	  ((ont::goal-reln) :result)  ; into
+	 ((ont::from-loc ont::from) :source)
+	 )
 	(ont::change
 	  ((ont::to-loc ont::goal-reln ont::direction-reln) :result)
 	  ((ont::from-loc ont::from) :source))

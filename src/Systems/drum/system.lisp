@@ -175,13 +175,14 @@
 (load "DRUMtermRules.lisp")
 (load "DRUMtermRules_add.lisp")
 (load "DRUMRules_ev.lisp")
+(load "DRUMRules_ev_add.lisp")
 (load "DRUMRules_mod.lisp")
 (load "DRUMRules_CC.lisp")
 (load "DRUMRules_misc.lisp")
 
 (load "symbolmapping.lisp")
 
-(setq im::*extraction-sequence* '((im::drumterms) (im::drumtermsAdd) (im::drum) (im::drummod) (im::drumCC) (im::drumMisc)))
+(setq im::*extraction-sequence* '((im::drumterms) (im::drumtermsAdd) (im::drum) (im::drumRules_ev_add) (im::drummod) (im::drumCC) (im::drumMisc)))
 (setq im::*substitute-terms-in-extraction* t)
 
 ;; domain preferences

@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.49 2016/07/26 05:15:28 lgalescu Exp $
+ * $Id: Extraction.java,v 1.50 2016/08/03 21:33:11 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -68,7 +68,11 @@ public class Extraction {
     protected String ontType;
     /** DRUM terms */
     protected ArrayList<KQMLList> drumTerms;
-    /** Coreference type for referential expressions */
+    /**
+     * Coreference type for referential expressions
+     * 
+     * @deprecated Not used any more, but we may resurrect it.
+     */
     @Deprecated
     protected String refType;
     /** Coreference var for referential expressions */
@@ -432,6 +436,8 @@ public class Extraction {
      * 
      * @param term
      * @return
+     * 
+     * @deprecated We don't use this anymore, but we may resurrect it eventually.
      */
     @Deprecated
     private boolean isRefExpr(KQMLList term) {
@@ -742,6 +748,8 @@ public class Extraction {
      * @param context
      *            Context where the LF term should be found
      * @return String representing the XML formatted term
+     * 
+     * @deprecated We haven't used this in a long time; probably should be removed.
      */
     @Deprecated
     protected String lfTerm_toXML(String xmlobj, String variable,
@@ -793,6 +801,8 @@ public class Extraction {
                 result += makeDrumTermXML(term);
             }
         }
+        if (result.isEmpty())
+            return result;
         return "<drum-terms>" + result + "</drum-terms>";
     }
 

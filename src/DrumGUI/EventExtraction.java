@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.48 2016/07/26 05:15:28 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.50 2016/08/04 05:28:47 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -30,7 +30,8 @@ public class EventExtraction extends Extraction {
         // Roles:
         // AGENT, AFFECTED
         // AFFECTED, AFFECTED1
-        // AGENT, AFFECTED-CREATE
+        // AGENT, AFFECTED-RESULT
+        // etc
         /** */
         AGENT(":AGENT"),
         /** */
@@ -48,7 +49,9 @@ public class EventExtraction extends Extraction {
         /** */
         NEUTRAL2(":NEUTRAL2"),
         /** */
-        FORMAL(":FORMAL");
+        FORMAL(":FORMAL"),
+        /** */
+        RESULT(":RES");
         private String roleName;
         private Role(String name) { roleName = name; }
         public String toString() { return roleName; }
@@ -524,7 +527,10 @@ public class EventExtraction extends Extraction {
      * Makes list of sub-events by expanding sequence arguments.
      * 
      * @return list of sub-events (may be empty)
+     *
+     * @deprecated We don't do this inference (here) any more.
      */
+    @Deprecated
     private ArrayList<EventExtraction> makeSubEventsMaybe() {
         // collect roles that need expansion; roleExpansions: { role => [var, ...], ... }
         LinkedHashMap<Role, ArrayList<String>> roleExpansions =
@@ -586,13 +592,15 @@ public class EventExtraction extends Extraction {
     /**
      * Infers new events by distributive expansion of aggregate role values.
      * <p>
-     * NOTE: This function should call {@code inferSubeventsByDistributiveExpansion(Role, ArrayList)} for each role with
-     * aggregate values. However, currently it does all expansions on its own, in one fell swoop.
+     * NOTE: This function should call {@link #inferSubeventsByDistributiveExpansion(Role, ArrayList)} for each role
+     * with aggregate values. However, currently it does all expansions on its own, in one fell swoop.
      * 
      * @see #inferSubeventsByDistributiveExpansion(Role, ArrayList)
      * @param roleExpansions
      *            list of role expansions
      * @return list of inferred events (an empty list if {@code roleExpansions} is empty or {@code null})
+     * 
+     * @deprecated We don't do this inference (here) any more.
      */
     // TODO: i think i should add an explicit relation bw e1 and e1.1, e1.2, etc.
     // eg: (REL e1 :LOGICALOP-SEQUENCE (e1.1 e1.2 ...))
@@ -600,6 +608,7 @@ public class EventExtraction extends Extraction {
     // 1. we don't have a REL extraction type
     // 2. i am now expansing all roles simultaneously, which makes it impossible to define the type of the raised SEQ
     // operator. instead, i should do it role by role, and infer all REL relations in turn.
+    @Deprecated
     private ArrayList<EventExtraction> inferSubeventsByDistributiveExpansion(
             LinkedHashMap<Role, ArrayList<String>> roleExpansions) {
         ArrayList<EventExtraction> result = new ArrayList<EventExtraction>();
@@ -677,6 +686,8 @@ public class EventExtraction extends Extraction {
      * @param roleValues
      *            values by which {@code role} is expanded
      * @return list of inferred events (an empty list if {@code roleValues} is empty or {@code null})
+     * 
+     * @deprecated We don't do this inference (here) any more.
      */
     // TODO: i think i should add an explicit relation bw e1 and e1.1, e1.2, etc.
     // eg: (REL e1 :LOGICALOP-SEQUENCE (e1.1 e1.2 ...))
@@ -684,6 +695,7 @@ public class EventExtraction extends Extraction {
     // 1. we don't have a REL extraction type
     // 2. i am now expansing all roles simultaneously, which makes it impossible to define the type of the raised SEQ
     // operator. instead, i should do it role by role, and infer all REL relations in turn.
+    @Deprecated
     private ArrayList<EventExtraction> inferSubeventsByDistributiveExpansion(Role role, ArrayList<String> roleValues) {
         ArrayList<EventExtraction> result = new ArrayList<EventExtraction>();
         if ((roleValues == null) || (roleValues.isEmpty())) {

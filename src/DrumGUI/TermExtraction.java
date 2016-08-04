@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.40 2016/07/26 05:15:28 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.41 2016/08/03 21:33:11 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -318,51 +318,6 @@ public class TermExtraction extends Extraction {
         }
     }
     
-    //// TERM OPERATIONS
-    
-    /** 
-     * Instantiates a sequence term to obtain its subterms.
-     * @deprecated Individual terms are extracted already, so there is no need to do it here.
-     *
-     */
-    @Deprecated
-    private KQMLList instantiate(String var) {
-        Debug.debug("instantiate(" + var + ") from " + value);
-        KQMLList varTerm = findTermByVar(var, context);
-        if (var == null) {
-            // TODO: complain
-            Debug.warn("var term not found!");
-            return value;
-        }
-        // clone old value list and update roles
-        KQMLList newValue = new KQMLList();
-        for (KQMLObject o: value) {
-            newValue.add(o);
-        }
-        //... remove operator info
-        newValue.removeKeywordArg(":LOGICALOP-SEQUENCE");
-        newValue.removeKeywordArg(":OPERATOR");
-        //... update var
-        String newValueVar = pullTermVar(value) + "_" + removePackage(var);
-        newValue.set(1, new KQMLToken(newValueVar));
-        //... update ontType
-        String ontType = pullTermOntType(varTerm);
-        newValue.set(2, new KQMLToken(ontType));
-        //... update attributes
-        KQMLList attributes = newValue.subList(3, newValue.size());
-        for  (int i = 0; i < attributes.size(); i += 2) {
-            String key = attributes.get(i).toString();
-            KQMLObject newAttrValue = varTerm.getKeywordArg(key);
-            if (newAttrValue != null) {
-                attributes.set(i+1, newAttrValue);
-            }
-        }
-        // done
-        Debug.debug("instantatied: " + newValue);
-        return newValue;
-    }
-    
-    
     //// XML FORMATTING
     
     /** 
@@ -605,9 +560,8 @@ public class TermExtraction extends Extraction {
             return "";
         // TODO: find out if other information might be useful
         KQMLObject dbID = drumTerm.getKeywordArg(":ID");
-        // score may be missing; default is "1"
-        KQMLObject matchScoreObj = drumTerm.getKeywordArg(":SCORE");
-        String matchScore = (matchScoreObj == null) ? "1" : matchScoreObj.stringValue();
+        // score may be missing
+        KQMLObject matchScore = drumTerm.getKeywordArg(":SCORE");
         // name may be missing
         KQMLObject nameObj = drumTerm.getKeywordArg(":NAME");
         String name = (nameObj == null) ? null : nameObj.stringValue();
@@ -626,10 +580,10 @@ public class TermExtraction extends Extraction {
         }
         return "<drum-term " +
                 // attributes
-                (dbID == null ? "" : ("dbid=\"" + normalizeDBID(dbID.toString()) + "\" ")) +
-                "match-score=\"" + matchScore + "\" " +
-                (name == null ? "" : ("name=\"" + escapeXML(name) + "\" ")) +
-                (matchedName == null ? "" : ("matched-name=\"" + escapeXML(matchedName) + "\" ")) + ">"
+                ((dbID == null) ? "" : ("dbid=\"" + normalizeDBID(dbID.toString()) + "\" ")) +
+                ((matchScore == null) ? "" : ("match-score=\"" + matchScore.toString() + "\" ")) +
+                ((name == null) ? "" : ("name=\"" + escapeXML(name) + "\" ")) +
+                ((matchedName == null) ? "" : ("matched-name=\"" + escapeXML(matchedName) + "\" ")) + ">"
                 // sub-elements
                 + makeDrumTermOntXML((KQMLList) ontTypes)
                 + makeDrumTermProtFamXML(drumTerm)
@@ -640,6 +594,8 @@ public class TermExtraction extends Extraction {
 
     /**
      * Returns a {@code <term>} XML element representing a protein family term.
+     * 
+     * @deprecated Use {@link #createTermXML()}.
      */
     @Deprecated
     private String createProtfamTermXML() {
@@ -752,156 +708,6 @@ public class TermExtraction extends Extraction {
         mods += createModsXML(PolyAttribute.MODN, "mod");
 
         return mods.equals("") ? "" : "<mods>" + mods + "</mods>";
-    }
-
-    /**
-     * @deprecated
-     */
-    private String createDegreeModsXML() {
-        ArrayList<KQMLObject> degrees = polyAttributes.get(PolyAttribute.DEGREE);
-        if ((degrees == null) || degrees.isEmpty()) {
-            return "";
-        }
-        String result = "";
-        for (KQMLObject degTermVar : degrees) {
-            if (!isOntVar(degTermVar.toString())) {
-                Debug.warn(":DEGREE value: expected var, got " + degTermVar);
-                result +=
-                    "<degree>"
-                    + removePackage(degTermVar.toString(), false) +
-                    "</degree>";
-            } else {
-                KQMLList degTerm = findTermByVar(degTermVar.toString(), context);
-                KQMLList ontVal = pullCompleteOntInfo(degTerm);
-                int start = getKeywordArgInt(":START", degTerm);
-                int end = getKeywordArgInt(":END", degTerm);
-                String text = removeTags(getTextSpan(start, end));
-
-                result += "<degree " +
-                        "start=\"" + getOffset(start) + "\" " +
-                        "end=\"" + getOffset(end) + "\"" + ">"
-                        + "<type>" + ontVal.get(0) + "</type>"
-                        + "<text>" + escapeXML(text) + "</text>" +
-                        "</degree>";
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * @deprecated
-     */
-    private String createFrequencyModsXML() {
-        ArrayList<KQMLObject> freqs = polyAttributes.get(PolyAttribute.FREQUENCY);
-        if ((freqs == null) || freqs.isEmpty()) {
-            return "";
-        }
-        String result = "";
-        for (KQMLObject freqTermVar : freqs) {
-            if (!isOntVar(freqTermVar.toString())) {
-                Debug.warn(":FREQUENCY value: expected var, got " + freqTermVar);
-                result +=
-                    "<frequency>"
-                    + removePackage(freqTermVar.toString(), false) +
-                    "</frequency>";
-            } else {
-                KQMLList freqTerm = findTermByVar(freqTermVar.toString(), context);
-                KQMLList ontVal = pullCompleteOntInfo(freqTerm);
-                int start = getKeywordArgInt(":START", freqTerm);
-                int end = getKeywordArgInt(":END", freqTerm);
-                String text = removeTags(getTextSpan(start, end));
-
-                result += "<frequency " +
-                        "start=\"" + getOffset(start) + "\" " +
-                        "end=\"" + getOffset(end) + "\"" + ">"
-                        + "<type>" + ontVal.get(0) + "</type>"
-                        + "<text>" + escapeXML(text) + "</text>" +
-                        "</frequency>";
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * @deprecated
-     */
-    private String createAModsXML() {
-        ArrayList<KQMLObject> mods = polyAttributes.get(PolyAttribute.MODA);
-        if ((mods == null) || mods.isEmpty()) {
-            return "";
-        }
-        String result = "";
-        for (KQMLObject modTerm : mods) {
-            if (modTerm instanceof KQMLList) {
-                KQMLList modTermList = (KQMLList) modTerm;
-                result += "<mod>"
-                        + "<type>" + modTermList.get(0) + "</type>"
-                        + "<value>" + removePackage(modTermList.get(1).toString(), false) + "</value>" +
-                        "</mod>";
-            } else if (isOntVar(modTerm.toString())) { // TODO remove (obsolete)
-                KQMLList modTermFromContext = findTermByVar(modTerm.toString(), context);
-                KQMLList ontVal = pullCompleteOntInfo(modTermFromContext);
-                int start = getKeywordArgInt(":START", modTermFromContext);
-                int end = getKeywordArgInt(":END", modTermFromContext);
-                String text = removeTags(getTextSpan(start, end));
-
-                result += "<mod " +
-                        "start=\"" + getOffset(start) + "\" " +
-                        "end=\"" + getOffset(end) + "\"" + ">"
-                        + "<type>" + ontVal.get(0) + "</type>"
-                        + "<text>" + escapeXML(text) + "</text>" +
-                        "</mod>";
-            } else { // should not happen!
-                Debug.error("unexpected :MODA value: " + modTerm);
-                result += "<mod>"
-                                + removePackage(modTerm.toString(), false) +
-                                "</mod>";
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * @deprecated
-     */
-    private String createNModsXML() {
-        ArrayList<KQMLObject> mods = polyAttributes.get(PolyAttribute.MODN);
-        if ((mods == null) || mods.isEmpty()) {
-            return "";
-        }
-        String result = "";
-        for (KQMLObject modTerm : mods) {
-            if (modTerm instanceof KQMLList) {
-                KQMLList modTermList = (KQMLList) modTerm;
-                result += "<mod>"
-                        + "<type>" + modTermList.get(0) + "</type>"
-                        + "<value>" + removePackage(modTermList.get(1).toString(), false) + "</value>" +
-                        "</mod>";
-            } else if (isOntVar(modTerm.toString())) { // TODO remove (obsolete)
-                KQMLList modTermFromContext = findTermByVar(modTerm.toString(), context);
-                KQMLList ontVal = pullCompleteOntInfo(modTermFromContext);
-                int start = getKeywordArgInt(":START", modTermFromContext);
-                int end = getKeywordArgInt(":END", modTermFromContext);
-                String text = removeTags(getTextSpan(start, end));
-
-                result += "<mod " +
-                        "start=\"" + getOffset(start) + "\" " +
-                        "end=\"" + getOffset(end) + "\"" + ">"
-                        + "<type>" + ontVal.get(0) + "</type>"
-                        + "<text>" + escapeXML(text) + "</text>" +
-                        "</mod>";
-            } else { // should not happen!
-                Debug.error("unexpected :MODN value: " + modTerm);
-                result += "<mod>"
-                        + removePackage(modTerm.toString(), false) +
-                        "</mod>";
-            }
-        }
-
-        return result;
     }
 
     /**

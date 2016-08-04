@@ -24,6 +24,18 @@
           )
 
 #|
+	  ;;;;;;;;;;;; normalizing role names ;;;;;;;;;;;;
+          (((? reln ONT::EVENT) ?ev ?type :RESULT_DRUM ?!res) 
+           -normalize1>
+           100
+	   (?reln ?ev ?type
+	    :rule -normalize1
+	    :RESULT ?!res
+	    )
+          )
+|#
+	  
+#|
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	  ; temporal extractions
 

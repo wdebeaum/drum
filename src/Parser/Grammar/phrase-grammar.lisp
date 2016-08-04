@@ -2679,6 +2679,7 @@
      (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj)))
       (GAP -) (LF ?lf)  (part (% -)) ;; no particle forms
       (SUBJ-MAP ?!reln) (dobj-map ?dobj-map)
+      (dobj-map (? !dmap ONT::NOROLE))  ; to prevent "RAS-induced phosphorylation of ERK and AKT is compromised" from giving a NOROLE to phosphorylation (using a template for "induce")
       ))
      )
 
@@ -2696,6 +2697,7 @@
      (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj)))
       (GAP -) (LF ?lf) (Part (% -))
       (SUBJ-MAP ?!reln) (dobj-map ?dobj-map)
+      (dobj-map (? !dmap ONT::NOROLE))  ; to prevent "RAS-induced phosphorylation of ERK and AKT is compromised" from giving a NOROLE to phosphorylation (using a template for "induce")
       ))
      )
 
