@@ -647,13 +647,15 @@
 	   )
 	  
 
-	  ;; robust rule for explicit constructions for molecules with mutations that look like pathways/complexes, e.g., BRAF-V600E; V12-Ras
+	  ;; robust rule for explicit constructions for molecules with mutations that look like pathways/complexes, e.g., BRAF-V600E; (but not Ras-V12)
 	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
 ;	    ONT::SEQUENCE :ELEMENT-TYPE ?!type :SEQUENCE (?!s1 ?!s2))
 	    (? type ONT::REFERENTIAL-SEM) :SEQUENCE (?!s1 ?!s2) :operator -)  ; gene + mutation = REFERENTIAL-SEM
 	   ((? reln1 ONT::THE) ?!s1 
-	    (:* (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) ?!w) :SEQUENCE - :DRUM ?code)
-            (ONT::THE ?!s2 (:* (? tmp ONT::MUTATION ONT::MOLECULAR-SITE) ?!m2))
+;	    (:* (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) ?!w) :SEQUENCE - :DRUM ?code)
+	    (:* (? t1 ONT::GENE-PROTEIN) ?!w) :SEQUENCE - :DRUM ?code)
+;            (ONT::THE ?!s2 (:* (? tmp ONT::MUTATION ONT::MOLECULAR-SITE) ?!m2))
+            (ONT::THE ?!s2 (:* (? tmp ONT::MUTATION) ?!m2))
 	   -explicit-ref-seq0c>
 	   100
 	   (ONT::TERM ?!obj ?t1
@@ -666,13 +668,15 @@
 	   )
 
 	  ;; same as above -explicit-ref-seq0c, but with reversed sequence elements
-	  ;; robust rule for explicit constructions for molecules with mutations that look like pathways/complexes, e.g., V600E-BRAF; V12-Ras
+	  ;; robust rule for explicit constructions for molecules with mutations that look like pathways/complexes, e.g., V600E-BRAF; (but not V12-Ras)
 	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
 ;	    ONT::SEQUENCE :ELEMENT-TYPE ?!type :SEQUENCE (?!s2 ?!s1))
 	    (? type ONT::REFERENTIAL-SEM) :SEQUENCE (?!s2 ?!s1) :operator -)  ; gene + mutation = REFERENTIAL-SEM
 	   ((? reln1 ONT::THE) ?!s1 
-	    (:* (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) ?!w) :SEQUENCE - :DRUM ?code)
-            (ONT::THE ?!s2 (:* (? tmp ONT::MUTATION ONT::MOLECULAR-SITE) ?!m2))
+;	    (:* (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) ?!w) :SEQUENCE - :DRUM ?code)
+	    (:* (? t1 ONT::GENE-PROTEIN) ?!w) :SEQUENCE - :DRUM ?code)
+;            (ONT::THE ?!s2 (:* (? tmp ONT::MUTATION ONT::MOLECULAR-SITE) ?!m2))
+            (ONT::THE ?!s2 (:* (? tmp ONT::MUTATION) ?!m2))
 	   -explicit-ref-seq0d>
 	   100
 	   (ONT::TERM ?!obj ?t1
@@ -684,7 +688,48 @@
 	    )
 	   )
 
+	  ;; robust rule for explicit constructions for molecules with sits that look like pathways/complexes, e.g., Ras-V12 (or Ras/V12 if this happens)
+	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+;	    ONT::SEQUENCE :ELEMENT-TYPE ?!type :SEQUENCE (?!s1 ?!s2))
+	    (? type ONT::REFERENTIAL-SEM) :SEQUENCE (?!s1 ?!s2) :operator -)  ; gene + mutation = REFERENTIAL-SEM
+	   ((? reln1 ONT::THE) ?!s1 
+;	    (:* (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) ?!w) :SEQUENCE - :DRUM ?code)
+	    (:* (? t1 ONT::GENE-PROTEIN) ?!w) :SEQUENCE - :DRUM ?code)
+;            (ONT::THE ?!s2 (:* (? tmp ONT::MUTATION ONT::MOLECULAR-SITE) ?!m2))
+            (ONT::THE ?!s2 (:* (? tmp ONT::MOLECULAR-SITE) ?!m2))
+	   -explicit-ref-seq0e>
+	   100
+	   (ONT::TERM ?!obj ?t1
+	    :name ?!w
+	    :site ?!s2
+;	    :m-sequence ?!sequence
+	    :drum ?code  ; drum code from t1
+	    :rule -explicit-ref-seq0e
+	    )
+	   )
 
+	  ;; same as above -explicit-ref-seq0e, but with reversed sequence elements
+	  ;; robust rule for explicit constructions for molecules with mutations that look like pathways/complexes, e.g., V12-Ras (or V12/Ras if this happens)
+	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+;	    ONT::SEQUENCE :ELEMENT-TYPE ?!type :SEQUENCE (?!s2 ?!s1))
+	    (? type ONT::REFERENTIAL-SEM) :SEQUENCE (?!s2 ?!s1) :operator -)  ; gene + mutation = REFERENTIAL-SEM
+	   ((? reln1 ONT::THE) ?!s1 
+;	    (:* (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) ?!w) :SEQUENCE - :DRUM ?code)
+	    (:* (? t1 ONT::GENE-PROTEIN) ?!w) :SEQUENCE - :DRUM ?code)
+;            (ONT::THE ?!s2 (:* (? tmp ONT::MUTATION ONT::MOLECULAR-SITE) ?!m2))
+            (ONT::THE ?!s2 (:* (? tmp ONT::MOLECULAR-SITE) ?!m2))
+	   -explicit-ref-seq0f>
+	   100
+	   (ONT::TERM ?!obj ?t1
+	    :name ?!w
+	    :site ?!s2
+;	    :m-sequence ?!sequence
+	    :drum ?code  ; drum code from t1
+	    :rule -explicit-ref-seq0f
+	    )
+	   )
+	  
+	  
 #|
 	  ;; robust rule for explicit constructions for pathways/complexes, e.g., "the Ras-Raf complex/pathway" 
 	  ;; (can only deal with two components because of the limitation of :ASSOC-WITHS)

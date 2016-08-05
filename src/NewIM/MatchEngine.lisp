@@ -620,7 +620,7 @@
 
 (defun make-into-constit (lf)
   (make-constit :cat (car lf)
-			:feats (list* (list :var (cadr lf)) (list :type (caddr lf))
+			:feats (list* (list :var (cadr lf)) (list :LFtype (caddr lf))
 				      (gen-role-features (cdddr lf)))))
 (defun gen-role-features (roles)
   (when roles

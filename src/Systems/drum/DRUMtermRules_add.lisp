@@ -179,6 +179,39 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    :rule -simple-ref-mutation2
 	    ))
 
+	  ;; basic terms (not conjunctions) with molecular site (:ASSOC-WITH), e.g., Ras V12
+	  ((ONT::TERM ?!obj 
+	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :ASSOC-WITHS (?!m))
+            (ONT::TERM ?!m (? tmp ONT::MOLECULAR-SITE))
+	   -simple-ref-site1>
+	   100
+	   (ONT::TERM ?!obj ?t1
+	    :site ?!m
+	    :rule -simple-ref-site1
+	    ))
+
+	  ;; basic terms (not conjunctions) with molecular site (in parentheses), e.g., Ras (V12)
+	  ((ONT::TERM ?!obj 
+	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :PARENTHETICAL ?!m )
+            (ONT::TERM ?!m (? tmp ONT::MOLECULAR-SITE))
+	   -simple-ref-site2>
+	   100
+	   (ONT::TERM ?!obj ?t1
+	    :site ?!m
+	    :rule -simple-ref-site2
+	    ))
+	  
+	  ;; basic terms (not conjunctions) with molecular site (:ASSOC-WITH), e.g., V12 Ras
+	  ((ONT::TERM ?!obj 
+	    (? t1 ONT::MOLECULAR-SITE) :SEQUENCE - :ASSOC-WITHS (?!m))
+            (ONT::TERM ?!m (? tmp ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY))
+	   -simple-ref-site1a>
+	   100
+	   (ONT::TERM ?!m ?tmp   ; note ?!m
+	    :site ?!obj
+	    :rule -simple-ref-site1a
+	    ))
+
 	  ;; basic terms (not conjunctions) with wild type (:MOD)
 	  ((ONT::TERM ?!obj 
 	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :MODS (?!m) )

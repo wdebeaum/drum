@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.41 2016/08/03 21:33:11 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.42 2016/08/04 17:37:01 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -929,28 +929,28 @@ public class TermExtraction extends Extraction {
 
     private String parseAAToXML(KQMLList term) {
         Debug.debug("aa: " + term);
-        KQMLObject aaName = term.getKeywordArg(":NAME");
-        KQMLObject aaCode = term.getKeywordArg(":LETTER");
+        KQMLObject name = term.getKeywordArg(":NAME");
+        KQMLObject code = term.getKeywordArg(":LETTER");
 
-        // FIXME: name and code have quotes! is this right???
+        // FIXME: name and code are KQMLStrings, so we don't use toString() to avoid quotes
         return "<aa>"
-                + ((aaName == null) ? "" : ("<name>" + aaName.toString().replaceAll("\"", "") + "</name>"))
-                + ((aaCode == null) ? "" : "<code>" + (aaCode.toString().replaceAll("\"", "") + "</code>")) +
+                + ((name == null) ? "" : ("<name>" + name.stringValue() + "</name>"))
+                + ((code == null) ? "" : ("<code>" + code.stringValue() + "</code>")) +
                 "</aa>";
 
     }
 
     private String parseAASiteToXML(KQMLList term) {
         Debug.debug("aa-site: " + term);
-        KQMLObject aaName = term.getKeywordArg(":NAME");
-        KQMLObject aaCode = term.getKeywordArg(":LETTER");
-        KQMLObject sitePos = term.getKeywordArg(":INDEX");
+        KQMLObject name = term.getKeywordArg(":NAME");
+        KQMLObject code = term.getKeywordArg(":LETTER");
+        KQMLObject pos = term.getKeywordArg(":INDEX");
 
-        // FIXME: name and code have quotes! is this right???
+        // FIXME: name and code are KQMLStrings, so we don't use toString() to avoid quotes
         return "<site>"
-                + ((aaName == null) ? "" : ("<name>" + aaName.toString().replaceAll("\"", "") + "</name>"))
-                + ((aaCode == null) ? "" : "<code>" + (aaCode.toString().replaceAll("\"", "") + "</code>"))
-                + ((aaName == null) ? "" : ("<pos>" + sitePos.toString() + "</pos>")) +
+                + ((name == null) ? "" : ("<name>" + name.stringValue() + "</name>"))
+                + ((code == null) ? "" : ("<code>" + code.stringValue() + "</code>"))
+                + ((pos == null) ? "" : ("<pos>" + pos.toString() + "</pos>")) +
                 "</site>";
     }
 

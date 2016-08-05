@@ -137,7 +137,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -157,7 +157,7 @@
            60
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-FORMAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -370,7 +370,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-POLARITY1-gd-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -393,7 +393,7 @@
            60
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-POLARITY1-gd-FORMAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :FORMAL ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -619,7 +619,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODA1_1-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -641,7 +641,7 @@
            60
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODA1_1-FORMAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -862,7 +862,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODA1_2-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -884,7 +884,7 @@
            60
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODA1_2-FORMAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -1105,7 +1105,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODN1_1-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -1127,7 +1127,7 @@
            60
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODN1_1-FORMAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -1348,7 +1348,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODN1_2-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -1370,7 +1370,7 @@
            60
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODN1_2-FORMAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -1597,7 +1597,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -1617,7 +1617,7 @@
            60
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-NEUTRAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -1830,7 +1830,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-POLARITY1-gd-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -1853,7 +1853,7 @@
            60
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-POLARITY1-gd-NEUTRAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :NEUTRAL ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -2079,7 +2079,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODA1_1-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -2101,7 +2101,7 @@
            60
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODA1_1-NEUTRAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -2322,7 +2322,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODA1_2-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -2344,7 +2344,7 @@
            60
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODA1_2-NEUTRAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -2565,7 +2565,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODN1_1-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -2587,7 +2587,7 @@
            60
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODN1_1-NEUTRAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -2808,7 +2808,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODN1_2-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -2830,7 +2830,7 @@
            60
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODN1_2-NEUTRAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -3057,7 +3057,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -3077,7 +3077,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-FORMAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -3290,7 +3290,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-POLARITY1-gd-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -3313,7 +3313,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-POLARITY1-gd-FORMAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :FORMAL ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -3539,7 +3539,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODA1_1-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -3561,7 +3561,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODA1_1-FORMAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -3782,7 +3782,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODA1_2-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -3804,7 +3804,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODA1_2-FORMAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -4025,7 +4025,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODN1_1-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -4047,7 +4047,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODN1_1-FORMAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -4268,7 +4268,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODN1_2-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -4290,7 +4290,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODN1_2-FORMAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -4517,7 +4517,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -4537,7 +4537,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-NEUTRAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -4750,7 +4750,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-POLARITY1-gd-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -4773,7 +4773,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-POLARITY1-gd-NEUTRAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :NEUTRAL ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -4999,7 +4999,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODA1_1-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -5021,7 +5021,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODA1_1-NEUTRAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -5242,7 +5242,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODA1_2-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -5264,7 +5264,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODA1_2-NEUTRAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -5485,7 +5485,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODN1_1-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -5507,7 +5507,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODN1_1-NEUTRAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -5728,7 +5728,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODN1_2-EXPERIENCER
             :EXPERIENCER ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -5750,7 +5750,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODN1_2-NEUTRAL
-;            :EXPERIENCER ?!ag
+            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -5977,7 +5977,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-NEUTRAL
             :NEUTRAL ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -5997,7 +5997,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-FORMAL
-;            :NEUTRAL ?!ag
+            :NEUTRAL -
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -6210,7 +6210,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-POLARITY1-gd-NEUTRAL
             :NEUTRAL ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -6233,7 +6233,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-POLARITY1-gd-FORMAL
-;            :NEUTRAL ?!ag
+            :NEUTRAL -
             :FORMAL ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -6459,7 +6459,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODA1_1-NEUTRAL
             :NEUTRAL ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -6481,7 +6481,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODA1_1-FORMAL
-;            :NEUTRAL ?!ag
+            :NEUTRAL -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -6702,7 +6702,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODA1_2-NEUTRAL
             :NEUTRAL ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -6724,7 +6724,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODA1_2-FORMAL
-;            :NEUTRAL ?!ag
+            :NEUTRAL -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -6945,7 +6945,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODN1_1-NEUTRAL
             :NEUTRAL ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -6967,7 +6967,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODN1_1-FORMAL
-;            :NEUTRAL ?!ag
+            :NEUTRAL -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -7188,7 +7188,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODN1_2-NEUTRAL
             :NEUTRAL ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -7210,7 +7210,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODN1_2-FORMAL
-;            :NEUTRAL ?!ag
+            :NEUTRAL -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -7437,7 +7437,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-AGENT
             :AGENT ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -7457,7 +7457,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-FORMAL
-;            :AGENT ?!ag
+            :AGENT -
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -7670,7 +7670,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-POLARITY1-gd-AGENT
             :AGENT ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -7693,7 +7693,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-POLARITY1-gd-FORMAL
-;            :AGENT ?!ag
+            :AGENT -
             :FORMAL ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -7919,7 +7919,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODA1_1-AGENT
             :AGENT ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -7941,7 +7941,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODA1_1-FORMAL
-;            :AGENT ?!ag
+            :AGENT -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -8162,7 +8162,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODA1_2-AGENT
             :AGENT ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -8184,7 +8184,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODA1_2-FORMAL
-;            :AGENT ?!ag
+            :AGENT -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -8405,7 +8405,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODN1_1-AGENT
             :AGENT ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -8427,7 +8427,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODN1_1-FORMAL
-;            :AGENT ?!ag
+            :AGENT -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -8648,7 +8648,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODN1_2-AGENT
             :AGENT ?!ag
-;            :FORMAL ?!obj
+            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -8670,7 +8670,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODN1_2-FORMAL
-;            :AGENT ?!ag
+            :AGENT -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -8897,7 +8897,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-AGENT
             :AGENT ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -8917,7 +8917,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-NEUTRAL
-;            :AGENT ?!ag
+            :AGENT -
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -9130,7 +9130,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-POLARITY1-gd-AGENT
             :AGENT ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -9153,7 +9153,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-POLARITY1-gd-NEUTRAL
-;            :AGENT ?!ag
+            :AGENT -
             :NEUTRAL ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -9379,7 +9379,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODA1_1-AGENT
             :AGENT ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -9401,7 +9401,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODA1_1-NEUTRAL
-;            :AGENT ?!ag
+            :AGENT -
             :NEUTRAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -9622,7 +9622,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODA1_2-AGENT
             :AGENT ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -9644,7 +9644,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODA1_2-NEUTRAL
-;            :AGENT ?!ag
+            :AGENT -
             :NEUTRAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -9865,7 +9865,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODN1_1-AGENT
             :AGENT ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -9887,7 +9887,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODN1_1-NEUTRAL
-;            :AGENT ?!ag
+            :AGENT -
             :NEUTRAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -10108,7 +10108,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODN1_2-AGENT
             :AGENT ?!ag
-;            :NEUTRAL ?!obj
+            :NEUTRAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -10130,7 +10130,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODN1_2-NEUTRAL
-;            :AGENT ?!ag
+            :AGENT -
             :NEUTRAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -10357,7 +10357,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-NEUTRAL
             :NEUTRAL ?!ag
-;            :NEUTRAL1 ?!obj
+            :NEUTRAL1 -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -10377,7 +10377,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-NEUTRAL1
-;            :NEUTRAL ?!ag
+            :NEUTRAL -
             :NEUTRAL1 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -10590,7 +10590,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-POLARITY1-gd-NEUTRAL
             :NEUTRAL ?!ag
-;            :NEUTRAL1 ?!obj
+            :NEUTRAL1 -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -10613,7 +10613,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-POLARITY1-gd-NEUTRAL1
-;            :NEUTRAL ?!ag
+            :NEUTRAL -
             :NEUTRAL1 ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -10839,7 +10839,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODA1_1-NEUTRAL
             :NEUTRAL ?!ag
-;            :NEUTRAL1 ?!obj
+            :NEUTRAL1 -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -10861,7 +10861,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODA1_1-NEUTRAL1
-;            :NEUTRAL ?!ag
+            :NEUTRAL -
             :NEUTRAL1 ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -11082,7 +11082,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODA1_2-NEUTRAL
             :NEUTRAL ?!ag
-;            :NEUTRAL1 ?!obj
+            :NEUTRAL1 -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -11104,7 +11104,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODA1_2-NEUTRAL1
-;            :NEUTRAL ?!ag
+            :NEUTRAL -
             :NEUTRAL1 ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -11325,7 +11325,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODN1_1-NEUTRAL
             :NEUTRAL ?!ag
-;            :NEUTRAL1 ?!obj
+            :NEUTRAL1 -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -11347,7 +11347,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODN1_1-NEUTRAL1
-;            :NEUTRAL ?!ag
+            :NEUTRAL -
             :NEUTRAL1 ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -11568,7 +11568,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODN1_2-NEUTRAL
             :NEUTRAL ?!ag
-;            :NEUTRAL1 ?!obj
+            :NEUTRAL1 -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -11590,7 +11590,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODN1_2-NEUTRAL1
-;            :NEUTRAL ?!ag
+            :NEUTRAL -
             :NEUTRAL1 ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -11817,7 +11817,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-NEUTRAL1
             :NEUTRAL1 ?!ag
-;            :NEUTRAL2 ?!obj
+            :NEUTRAL2 -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -11837,7 +11837,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-NEUTRAL2
-;            :NEUTRAL1 ?!ag
+            :NEUTRAL1 -
             :NEUTRAL2 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -12050,7 +12050,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-POLARITY1-gd-NEUTRAL1
             :NEUTRAL1 ?!ag
-;            :NEUTRAL2 ?!obj
+            :NEUTRAL2 -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -12073,7 +12073,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-POLARITY1-gd-NEUTRAL2
-;            :NEUTRAL1 ?!ag
+            :NEUTRAL1 -
             :NEUTRAL2 ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -12299,7 +12299,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODA1_1-NEUTRAL1
             :NEUTRAL1 ?!ag
-;            :NEUTRAL2 ?!obj
+            :NEUTRAL2 -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -12321,7 +12321,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODA1_1-NEUTRAL2
-;            :NEUTRAL1 ?!ag
+            :NEUTRAL1 -
             :NEUTRAL2 ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -12542,7 +12542,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODA1_2-NEUTRAL1
             :NEUTRAL1 ?!ag
-;            :NEUTRAL2 ?!obj
+            :NEUTRAL2 -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -12564,7 +12564,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODA1_2-NEUTRAL2
-;            :NEUTRAL1 ?!ag
+            :NEUTRAL1 -
             :NEUTRAL2 ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -12785,7 +12785,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODN1_1-NEUTRAL1
             :NEUTRAL1 ?!ag
-;            :NEUTRAL2 ?!obj
+            :NEUTRAL2 -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -12807,7 +12807,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODN1_1-NEUTRAL2
-;            :NEUTRAL1 ?!ag
+            :NEUTRAL1 -
             :NEUTRAL2 ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -13028,7 +13028,7 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODN1_2-NEUTRAL1
             :NEUTRAL1 ?!ag
-;            :NEUTRAL2 ?!obj
+            :NEUTRAL2 -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -13050,7 +13050,7 @@
            50
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODN1_2-NEUTRAL2
-;            :NEUTRAL1 ?!ag
+            :NEUTRAL1 -
             :NEUTRAL2 ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
