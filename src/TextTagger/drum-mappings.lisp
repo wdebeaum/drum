@@ -208,6 +208,8 @@
      (inherit ONT::bird))
    (concept NCIT::C14207 ; Fish
      (inherit ONT::fish))
+    (concept NCIT::C79959 ; WT
+      (inherit ONT::referential-sem)) ; no, one specific wild-type fish should not be used to tag all instances of "WT" :-P
    (concept NCIT::C14234 ; Mammalia
      (inherit ONT::nonhuman-animal)) ; by default
     (concept NCIT::C14225 ; Human

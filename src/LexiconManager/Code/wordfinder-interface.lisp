@@ -477,6 +477,8 @@
 	     ;;(setq feats (append feats (list (list 'w::pertainym (list (list :* pert-lf pert-lf-form) pert-sem)))))
 	     (setq feats (append feats (list (list 'w::pertainym (list :* pert-lf (car pert-lf-form)))
 					     (list 'w::pert-domain-info pert-domain-info))))
+	     (if (member lf '(ONT::MODIFIER ONT::REFERENTIAL-SEM))
+		 (setq lf '(:* ONT::ASSOC-WITH lf-form)))
 	     (setq sem (get-lf-sem 'ont::ASSOC-WITH :no-defaults nil))
 	     (setq domain-info nil))
 	     ;;  no pertainym, so do normal computation off the LF

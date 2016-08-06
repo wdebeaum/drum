@@ -7,6 +7,11 @@
 	'(
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+; took out :SEQUENCE - from the rules below 
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
 	  
 #|
 	  ;; basic terms (not conjunctions) with selected mod (e.g., prefixes auto-, mono-, trans-)
@@ -23,7 +28,7 @@
 |#
 	  ;; basic terms (not conjunctions) with selected mod (e.g., prefixes auto-, mono-, trans-)
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT ONT::MENTAL-CONSTRUCTION ONT::AWARENESS ONT::INFORMATION-FUNCTION-OBJECT) :SEQUENCE - :MODS (?!modA) )
+	    (? t1 ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT ONT::MENTAL-CONSTRUCTION ONT::AWARENESS ONT::INFORMATION-FUNCTION-OBJECT) :MODS (?!modA) )
 	   ; leave out ONT::INCLUSIVE (for co-)  (by the way, co- is now :MANNER, but it does not need to be returned)
             (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))  
 	   -simple-ref-modA2>
@@ -50,7 +55,7 @@
 	  ;; basic terms (not conjunctions) with selected mods that negates/reverses the meaning
 	  ;; (e.g., prefixes de-, non-, un-)
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT ONT::MENTAL-CONSTRUCTION ONT::AWARENESS ONT::INFORMATION-FUNCTION-OBJECT) :SEQUENCE - :MODS (?!modN) )
+	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT ONT::MENTAL-CONSTRUCTION ONT::AWARENESS ONT::INFORMATION-FUNCTION-OBJECT) :MODS (?!modN) )
             (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
 	   -simple-ref-modN2>
 	   100
@@ -75,10 +80,10 @@
 	    :rule -simple-ref-modL1
 	    ))
 ||#
-
+	  
 	  ;; basic terms (not conjunctions) with selected mod (only ONT::ACTIVE)
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT ONT::MENTAL-CONSTRUCTION ONT::AWARENESS ONT::INFORMATION-FUNCTION-OBJECT) :SEQUENCE - :MODS (?!modActive) )
+	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT ONT::MENTAL-CONSTRUCTION ONT::AWARENESS ONT::INFORMATION-FUNCTION-OBJECT) :MODS (?!modActive) )
             (ONT::F ?!modActive (? tmp ONT::ACTIVE))
 	   -simple-ref-modActive1>
 	   100
@@ -89,7 +94,7 @@
 
 	  ;; basic terms (not conjunctions) with selected mod (only ONT::INACTIVE)
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT ONT::MENTAL-CONSTRUCTION ONT::AWARENESS ONT::INFORMATION-FUNCTION-OBJECT) :SEQUENCE - :MODS (?!modActive))
+	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT ONT::MENTAL-CONSTRUCTION ONT::AWARENESS ONT::INFORMATION-FUNCTION-OBJECT) :MODS (?!modActive))
             (ONT::F ?!modActive (? tmp ONT::INACTIVE))
 	   -simple-ref-modActive2>
 	   100
@@ -119,7 +124,7 @@
 	  ;; (e.g., hyper-)
 	  ;; :degree is automatically extracted but for terms it is :MOD, not :DEGREE
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT ONT::MENTAL-CONSTRUCTION ONT::AWARENESS ONT::INFORMATION-FUNCTION-OBJECT) :SEQUENCE - :MODS (?!modD) )
+	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT ONT::MENTAL-CONSTRUCTION ONT::AWARENESS ONT::INFORMATION-FUNCTION-OBJECT) :MODS (?!modD) )
             (ONT::F ?!modD (? tmp ONT::DEGREE-MODIFIER))
 	   -simple-ref-modD2>
 	   100
@@ -158,8 +163,11 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 |#
 	  
 	  ;; basic terms (not conjunctions) with mutation (:ASSOC-WITH)
+	  ;; G12V Ras
+	  ;; Ras G12V (normalized by -n1-mutation>)
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :ASSOC-WITHS (?!m))
+;	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :ASSOC-WITHS (?!m))
+	    (? t1 ONT::GENE-PROTEIN) :ASSOC-WITHS (?!m))
             (ONT::TERM ?!m (? tmp ONT::MUTATION))
 	   -simple-ref-mutation1>
 	   100
@@ -169,8 +177,10 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    ))
 
 	  ;; basic terms (not conjunctions) with mutation (in parentheses)
+	  ;; Ras (G12V)
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :PARENTHETICAL ?!m )
+;	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :PARENTHETICAL ?!m )
+	    (? t1 ONT::GENE-PROTEIN) :PARENTHETICAL ?!m )
             (ONT::TERM ?!m (? tmp ONT::MUTATION))
 	   -simple-ref-mutation2>
 	   100
@@ -179,9 +189,11 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    :rule -simple-ref-mutation2
 	    ))
 
-	  ;; basic terms (not conjunctions) with molecular site (:ASSOC-WITH), e.g., Ras V12
+	  ;; basic terms (not conjunctions) with molecular site (:ASSOC-WITH)
+	  ;; V12 Ras
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :ASSOC-WITHS (?!m))
+;	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :ASSOC-WITHS (?!m))
+	    (? t1 ONT::GENE-PROTEIN) :ASSOC-WITHS (?!m))
             (ONT::TERM ?!m (? tmp ONT::MOLECULAR-SITE))
 	   -simple-ref-site1>
 	   100
@@ -190,9 +202,11 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    :rule -simple-ref-site1
 	    ))
 
-	  ;; basic terms (not conjunctions) with molecular site (in parentheses), e.g., Ras (V12)
+	  ;; basic terms (not conjunctions) with molecular site (in parentheses)
+	  ;; Ras (V12)
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :PARENTHETICAL ?!m )
+;	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :PARENTHETICAL ?!m )
+	    (? t1 ONT::GENE-PROTEIN) :PARENTHETICAL ?!m )
             (ONT::TERM ?!m (? tmp ONT::MOLECULAR-SITE))
 	   -simple-ref-site2>
 	   100
@@ -200,21 +214,25 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    :site ?!m
 	    :rule -simple-ref-site2
 	    ))
-	  
-	  ;; basic terms (not conjunctions) with molecular site (:ASSOC-WITH), e.g., V12 Ras
+
+	  ;; basic terms (not conjunctions) with molecular site (:ASSOC-WITH)
+	  ;; Ras V12
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::MOLECULAR-SITE) :SEQUENCE - :ASSOC-WITHS (?!m))
-            (ONT::TERM ?!m (? tmp ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY))
+	    (? t1 ONT::MOLECULAR-SITE) :ASSOC-WITHS (?!m))
+;            (ONT::TERM ?!m (? tmp ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY))
+            (ONT::TERM ?!m (? tmp ONT::GENE-PROTEIN))
 	   -simple-ref-site1a>
 	   100
-	   (ONT::TERM ?!m ?tmp   ; note ?!m
+	   (ONT::TERM ?!m ?tmp   ; note ?!m, not ?!obj
 	    :site ?!obj
 	    :rule -simple-ref-site1a
 	    ))
 
 	  ;; basic terms (not conjunctions) with wild type (:MOD)
+	  ;; wild type Ras
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :MODS (?!m) )
+;	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :MODS (?!m) )
+	    (? t1 ONT::GENE-PROTEIN) :MODS (?!m) )
             (ONT::F ?!m (:* (? tmp ONT::NATURAL) ?!m2))
 	   -simple-ref-mutation3>
 	   100
@@ -224,8 +242,10 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    ))
 
 	  ;; basic terms (not conjunctions) with wild type (in parentheses)
+	  ;; Ras (wildtype)
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :PARENTHETICAL ?!m )
+;	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :PARENTHETICAL ?!m )
+	    (? t1 ONT::GENE-PROTEIN) :PARENTHETICAL ?!m )
             ((? spec ONT::F ONT::BARE) ?!m (:* (? tmp ONT::NATURAL ONT::WILDTYPE-OBJ) ?!m2))  ; "WILDTYPE-OBJ" added for good measure (see -simple-ref-mutation6)
 	   -simple-ref-mutation4>
 	   100
@@ -236,8 +256,10 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 
 	  ;; TERM substitution: WT is extracted as a TERM
 	  ;; basic terms (not conjunctions) with wild type (in parentheses)
+	  ;; Ras (WT)
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :PARENTHETICAL ?!m )
+;	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :PARENTHETICAL ?!m )
+	    (? t1 ONT::GENE-PROTEIN) :PARENTHETICAL ?!m )
             (ONT::TERM ?!m (? tmp ONT::NATURAL ONT::WILDTYPE-OBJ))  ; "WILDTYPE-OBJ" added for good measure (see -simple-ref-mutation6)
 	   -simple-ref-mutation4b>
 	   100
@@ -247,8 +269,10 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    ))
 
 	  ;; basic terms (not conjunctions) with mutant (:MOD)
+	  ;; mutant Ras (Note that "Ras mutant" is extracted by -EXPLICIT-REF4>)
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :MODS (?!m) )
+;	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :MODS (?!m) )
+	    (? t1 ONT::GENE-PROTEIN) :MODS (?!m) )
             (ONT::F ?!m (:* (? tmp ONT::MUTANT) ?!m2))
 	   -simple-ref-mutation5>
 	   100
@@ -258,9 +282,11 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    ))
 
 	  ;; basic terms (not conjunctions) with mutant (in parentheses)
+	  ;; Ras (mutant)
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :PARENTHETICAL ?!m )
-            ((? spec ONT::F ONT::BARE) ?!m (:* (? tmp ONT::MUTANT ONT::MUTANT-OBJ) ?!m2))  ; "mutant" sometimes come out as a noun, which then needs ONT::BARE
+;	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :PARENTHETICAL ?!m )
+	    (? t1 ONT::GENE-PROTEIN) :PARENTHETICAL ?!m )
+            ((? spec ONT::F ONT::BARE ONT::TERM) ?!m (:* (? tmp ONT::MUTANT ONT::MUTANT-OBJ) ?!m2))  ; "mutant" sometimes come out as a noun, which then needs ONT::BARE
 	   -simple-ref-mutation6>
 	   100
 	   (ONT::TERM ?!obj ?t1
@@ -268,9 +294,11 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    :rule -simple-ref-mutation6
 	    ))
 
+#|	  
 	  ;; basic terms (not conjunctions) with mutant (in parentheses)
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :PARENTHETICAL ?!m )
+;	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :PARENTHETICAL ?!m )
+	    (? t1 ONT::GENE-PROTEIN) :SEQUENCE - :PARENTHETICAL ?!m )
             (ONT::TERM ?!m (? tmp ONT::MUTANT ONT::MUTANT-OBJ))  ; "mutant" sometimes come out as a noun, which then needs ONT::BARE
 	   -simple-ref-mutation6b>
 	   100
@@ -278,11 +306,12 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    :mutation ONT::TRUE
 	    :rule -simple-ref-mutation6b
 	    ))
+|#
 	  
 	  ;; basic terms (not conjunctions) for BODY-PART-VAL (e.g., cytoplasmic)
 	  ;; *** cytoplasmic doesn't work now because it has been removed from the lexicon (waiting for pertainyms to work)
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :MODS (?!modBP) )
+	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :MODS (?!modBP) )
             (ONT::F ?!modBP (? tmp ONT::BODY-PART-VAL))
 	   -simple-ref-modBP>
 	   100
@@ -293,7 +322,7 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 
 	  ;; basic terms (not conjunctions) for BODY-PART (e.g., in the nucleus)  *maybe this parse doesn't come out any more
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :ASSOC-WITHS (?!modBP) )
+	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :ASSOC-WITHS (?!modBP) )
             (ONT::TERM ?!modBP (? tmp ONT::BODY-PART))
 	   -simple-ref-modBP2>
 	   100
@@ -305,7 +334,7 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	  ;; basic terms (not conjunctions) for BODY-PART (e.g., in the nucleus) 
 	  ;; *maybe this doesn't work any more either* :LOC has changed to :LOCATION (see -simple-ref-modBP4)  *** seem to have changed back to :LOC! ***
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :LOC ?!modL )
+	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :LOC ?!modL )
 	   (ONT::F ?!modL (? tmp ONT::IN-LOC ONT::AT-LOC ONT::ON) :GROUND ?!modBP)	   
             (ONT::TERM ?!modBP (? tmp2 ONT::BODY-PART))
 	   -simple-ref-modBP3>
@@ -316,7 +345,7 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    ))
 
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :LOC ?!modL )
+	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :LOC ?!modL )
 	   (ONT::F ?!modL (? tmp ONT::IN-LOC ONT::AT-LOC ONT::ON) :GROUND ?!modBP)	   
             (ONT::TERM ?!modBP (? tmp2 ONT::BODY-PART))
 	   -simple-ref-modBP3-gd>
@@ -328,7 +357,7 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 
 	  ;; basic terms (not conjunctions) for BODY-PART (e.g., in the nucleus)
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :LOCATION ?!modL )
+	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :LOCATION ?!modL )
 	   (ONT::F ?!modL (? tmp ONT::IN-LOC ONT::AT-LOC ONT::ON) :GROUND ?!modBP)	   
             (ONT::TERM ?!modBP (? tmp2 ONT::BODY-PART))
 	   -simple-ref-modBP4>
@@ -339,7 +368,7 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    ))
 
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :LOCATION ?!modL )
+	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :LOCATION ?!modL )
 	   (ONT::F ?!modL (? tmp ONT::IN-LOC ONT::AT-LOC ONT::ON) :GROUND ?!modBP)	   
             (ONT::TERM ?!modBP (? tmp2 ONT::BODY-PART))
 	   -simple-ref-modBP4-gd>
@@ -351,7 +380,7 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 
 	  ;; basic terms (not conjunctions) for cell lines
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :LOC ?!modL )
+	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :LOC ?!modL )
 	   (ONT::F ?!modL (? tmp ONT::IN-LOC ONT::AT-LOC ONT::ON) :GROUND ?!modBP)	   
             (ONT::TERM ?!modBP (? tmp2 ONT::CELL-LINE))
 	   -simple-ref-modCL>
@@ -363,7 +392,7 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    ))
 
 	  ((ONT::TERM ?!obj 
-	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :LOC ?!modL )
+	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :LOC ?!modL )
 	   (ONT::F ?!modL (? tmp ONT::IN-LOC ONT::AT-LOC ONT::ON) :GROUND ?!modBP)	   
             (ONT::TERM ?!modBP (? tmp2 ONT::CELL-LINE))
 	   -simple-ref-modCL-gd>
