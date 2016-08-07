@@ -342,10 +342,19 @@
       (class-lub args)))
 
 (defun class-lub (args) 
- (let ((in1 (second (assoc 'w::in1 args)))
-        (in2 (second (assoc 'w::in2 args)))
-	(OUT (second (assoc 'w::out args))))
-   (match-vals nil out (compute-class-lub in1 in2))))
+ (let* ((in1 (second (assoc 'w::in1 args)))
+	(in2 (second (assoc 'w::in2 args)))
+	(OUT (second (assoc 'w::out args)))
+	(lub (compute-class-lub in1 in2)))
+   (values 
+    (match-vals nil out lub)
+    (cond ((member lub '(ont::referential-sem ont::root)) .9)
+	  ((equal (core-type in1) (core-type in2)) 1)
+	  (t .98)))))
+
+(defun core-type (x)
+  (if (consp x) (second x)
+      x))
 
 (defun compute-class-lub (in1 in2)
   (cond

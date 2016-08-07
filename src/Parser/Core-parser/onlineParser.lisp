@@ -471,7 +471,7 @@
     ;; now boost entries with domain specific info
     (normalize
      (if (get-value c 'w::kr-type)
-	 (* score 1.02)
+	 (* score 1.01)
 	 score))
     ))
 
@@ -729,7 +729,7 @@
 	   (Make-New-BU-Active-Arcs entry (entry-name entry))
 	   (Chart-Extend entry (entry-name entry))))
 
-	;; If the new-score is higher than the next-score, and still non-zero, then
+	;; If the news-score is higher than the next-score, and still non-zero, then
 	;; add it back to the agenda, to get re-processed once it is again the highest
 	;; probability constituent.
 	((> new-score 0)

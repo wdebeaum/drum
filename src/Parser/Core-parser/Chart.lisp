@@ -782,9 +782,9 @@ separate instances of the chart/parser.")
 (Defun extend-arc-with-constit (entry arc bndgs prob)
   "We know the ENTRY extends the arc. here we do it and generate successor arcs/constits"
   (let ((bound-arc (subst-in arc bndgs)))
-    (multiple-value-bind (restList new-bndgsList)
+    (multiple-value-bind (restList new-bndgsList newprob)
       (gen-new-RHsides (cdr (arc-post bound-arc)) 
-		       bndgs)
+		       bndgs prob)
       (mapcar #'(lambda (rest new-bndgs)
 		(let* ((new-arc (if (equal bndgs new-bndgs) bound-arc (subst-in bound-arc new-bndgs)))
 		       (mother (arc-mother new-arc))
@@ -811,7 +811,7 @@ separate instances of the chart/parser.")
 	                ;;(if bndgs
 			  ;; we add to chart immediately since this is the top prob.
 			  (add-entry-to-chart
-			   (subst-in (build-entry new-constit start end (append-if-necessary pre post) id prob prob-aux 
+			   (subst-in (build-entry new-constit start end (append-if-necessary pre post) id newprob prob-aux 
 						  (cons (constit-cat (entry-constit entry)) (arc-first-cat arc))) bndgs))
 			   )
 			)
@@ -825,7 +825,7 @@ separate instances of the chart/parser.")
 					 :start start
 					 :end end
 					 :rule-id (arc-rule-id arc)
-					 :prob prob
+					 :prob newprob
 					 :prob-aux  prob-aux 
 					 :local-vars local-vars
 					 :foot-feats foot-feats
@@ -907,18 +907,19 @@ separate instances of the chart/parser.")
 ;;   Also skips elements that are simply EQ to '-
 ;;   It also checks for the user defined lisp calls
 
-(defun gen-new-RHsides (RHS bndgs)
-  (multiple-value-bind (newRHS new-bndgs)
-      (remove-null-prefix RHS bndgs)
+(defun gen-new-RHsides (RHS bndgs prob)
+  (multiple-value-bind (newRHS new-bndgs newprob)
+      (remove-null-prefix RHS bndgs prob)
      ;; if the next constituent is optional, also generate RHSs where it is skipped
     (let ((next (get-next-rhs-constit newRHS)))
       (if (and next (constit-optional next)
 	       (no-required-gap-check next))
 	  ;; next constit is optional, so generate a RHS without it
-	  (multiple-value-bind (RHSlist new-bndgs-list)
-	      (gen-new-RHsides (cdr newRHS) new-bndgs)
-	    (values (cons newRHS RHSlist) (cons new-bndgs new-bndgs-list)))
-	(values (list newRHS) (list new-bndgs))))))
+	  (multiple-value-bind (RHSlist new-bndgs-list newerprob)
+	      (gen-new-RHsides (cdr newRHS) new-bndgs newprob)
+	    (values (cons newRHS RHSlist) (cons new-bndgs new-bndgs-list)
+		    newerprob))
+	(values (list newRHS) (list new-bndgs) newprob)))))
 
 
 (defun get-next-rhs-constit (rhs)
@@ -931,38 +932,32 @@ separate instances of the chart/parser.")
   "Checks that a consitutent in the RHS does not require a gap. If so, we can't skip"
   (match-vals nil (get-value c 'w::gap) '-))
 
-(defun remove-null-prefix (cl bndgs)
+(defun remove-null-prefix (cl bndgs oldscore)
   (if cl
       (if (not (eq (car cl) '-))
-	  (let ((new-bndgs (match-for-skip (car cl))))
-			   
+	  (multiple-value-bind 
+		(new-bndgs score)
+	      (match-for-skip (car cl))
+	    
 	    (cond ((equal new-bndgs *success*)
-		   (remove-null-prefix (cdr cl) bndgs))
+		   (remove-null-prefix (cdr cl) bndgs (combine-score oldscore score)))
 		  (new-bndgs
 		   (remove-null-prefix (subst-in (cdr cl) new-bndgs)
-				       (append-if-necessary bndgs new-bndgs)))
+				       (append-if-necessary bndgs new-bndgs)
+				       (combine-score oldscore score)))
 		  (t
-		   (values cl bndgs))))
-	(remove-null-prefix (cdr cl) bndgs))
-    (values nil bndgs)))
+		   (values cl bndgs oldscore))))
+	  (remove-null-prefix (cdr cl) bndgs))
+      (values nil bndgs oldscore)))
 
-
-#||(defun remove-null-suffix (cl bndgs)
-  (if cl
-      (if (not (eq (car cl) '-))
-	  (let ((new-bndgs (match-for-skip (subst-in (car cl) bndgs))))
-			   
-	    (cond ((equal new-bndgs *success*)
-		   (remove-null-suffix (cdr cl) bndgs))
-
-(new-bndgs
-		   (remove-null-suffix (cdr cl)
-					 (append bndgs new-bndgs)))
-		  (t
-		   (values (subst-in cl bndgs) bndgs))))
-	(remove-null-prefix (cdr cl) bndgs))
-    (values nil bndgs)))
-||#
+(defun combine-score (old new)
+  "just multiplying but checking for NIL values"
+  (cond ((or (null old) (not (numberp old)))
+	 new)
+	((or (null new)(not (numberp new)))
+	 old)
+	(t (* new old))))
+	
 
 
 (defun match-for-skip (constit)
@@ -976,9 +971,12 @@ separate instances of the chart/parser.")
       (let ((pred (check-for-defined-predicate (constit-cat constit)))
 	    (args (constit-feats constit)))
 	(trace-msg 3 "~%Calling User predicate ~S~%" (cons (constit-cat constit) args))
-	(let ((result (apply pred (list args))))
+	(multiple-value-bind
+	      (result score)
+	    (apply pred (list args))
 	  (trace-msg 3 "~%      --~A" (if result "SUCCEEDED" "FAILED"))
-	  result)
+	  ;;(format t "~%called ~S on ~S score is ~S  result is ~S" (constit-cat constit) args score result)
+	  (values result score))
 	)))
     ;; a var bound to empty constit also should be skipped
     (if (and (var-p constit) (constit-p (var-values constit))

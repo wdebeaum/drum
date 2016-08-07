@@ -1,7 +1,7 @@
 ;;
 ;; trace.lisp
 ;;
-;; Time-stamp: <Wed Jul  1 06:20:25 EDT 2015 jallen>
+;; Time-stamp: <Sat Aug  6 09:34:33 EDT 2016 jallen>
 ;;
 ;; History:
 ;;   ?????? james   - written as part of Chart.lisp.
@@ -199,7 +199,7 @@ failure"
       (when bndgs 
         (multiple-value-bind 
           (rhss new-bndgs)
-          (gen-new-rhsides (subst-in (cdr (arc-post arc)) bndgs) bndgs)
+          (gen-new-rhsides (subst-in (cdr (arc-post arc)) bndgs) bndgs prob)
          (If new-bndgs
 	    (pprint-logical-block (nil nil)
 	      (let ((arcprob (* (if (numberp prob) prob 1) (arc-prob arc) (entry-prob entry))))
