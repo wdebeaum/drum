@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.42 2016/08/04 17:37:01 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.43 2016/08/07 20:37:26 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -669,7 +669,7 @@ public class TermExtraction extends Extraction {
         if (name == null) {
             return "";
         }
-        return "<name>" + name + "</name>";
+        return "<name>" + escapeXML(name) + "</name>";
     }
     
     /**
