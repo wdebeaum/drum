@@ -1,7 +1,7 @@
 /*
  * DrumKB.java
  *
- * $Id: DrumKB.java,v 1.25 2016/04/04 23:28:04 lgalescu Exp $
+ * $Id: DrumKB.java,v 1.26 2016/08/08 23:37:39 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  9 May 2015
  */
@@ -353,6 +353,12 @@ public class DrumKB {
         ekbFile = file;
         ekbFolder = ekbFile.getParent();
         Debug.info("ekbFile set to: " + ekbFile);
+    }
+
+    protected String getEKBFile()
+            throws RuntimeException
+    {
+        return ekbFile.getAbsolutePath();
     }
 
     /**

@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 
 # batch.rb - process a big batch of XML papers in parallel
-# 2015-06-12
+# 2016-08-08
 # William de Beaumont
 #
 # USAGE: set TRIPS_BASE to a reasonable value, and run this program from a
@@ -9,10 +9,11 @@
 #   caffeinate -s script batch.log $TRIPS_BASE/src/Systems/drum/batch.rb
 # some parameters are defined as constants below:
 
-INPUT_DIR='/Users/lgalescu/work/drum/Data/tst'
+INPUT_DIR='/Users/lgalescu/work/drum/Data/PMC/ppp'
+PMCIDS_FILE='/Users/lgalescu/work/drum/Data/PMC/runs/eval2016-batch4.pmcids'
 NUM_TRIPSES=8
-BATCH_SIZE=5 # papers
-PORT_BASE=6201
+BATCH_SIZE=1 # 5 # papers
+PORT_BASE=6260
 
 raise "TRIPS_BASE environment variable unset" unless (ENV.key?('TRIPS_BASE'))
 $: << ENV['TRIPS_BASE'] + '/etc'
@@ -34,7 +35,7 @@ class DrumParseFiles
       # suppress console output (it all goes in the logs too anyway)
       $stdout.reopen('/dev/null','w')
       $stderr.reopen($stdout)
-      exec(ENV['TRIPS_BASE'] + '/bin/trips-drum', *%w{-nouser -mode xml-input -port}, port.to_s, '-logdir', logdir)
+      exec(ENV['TRIPS_BASE'] + '/bin/trips-drum', *%w{-nouser -mode eval -port}, port.to_s, '-logdir', logdir)
     }
     raise "Failed to start TRIPS" if (@trips_pid.nil?)
     sleep 5 # wait for Facilitator to be up before trying to connect
@@ -67,9 +68,12 @@ class DrumParseFiles
 	$stderr.puts "starting #{absolute_path}..."
 	times = Benchmark.measure {
 	  # TODO detect when TRIPS is stuck and die
-	  send_and_wait(KQML[:request, :receiver => :gui, :content =>
-	    KQML[:"load-file", :folder => File.dirname(absolute_path),
-			       :file => File.basename(absolute_path)]
+	  send_and_wait(KQML[:request, :receiver => :drum, :content =>
+#	    KQML[:"load-file", :folder => File.dirname(absolute_path),
+#			       :file => File.basename(absolute_path)]
+	    KQML[:"run-pmcid", :folder => File.dirname(absolute_path),
+			       :pmcid => File.basename(absolute_path),
+			       :"reply-when-done" => true]
 	  ])
 	}
 	$stderr.puts "processing #{absolute_path} took #{times.real} seconds"
@@ -86,7 +90,14 @@ end
 
 port2module = Array.new(NUM_TRIPSES)
 
-papers = Dir[INPUT_DIR + '/*']
+#papers = Dir[INPUT_DIR + '/*']
+papers =
+  File.open(PMCIDS_FILE,'r').
+  each_line.
+  collect { |l|
+    "#{INPUT_DIR}/#{l.chomp}"
+  }.
+  select { |p| File.directory?(p) }
 # sort papers by numeric value
 papers.sort_by! { |p| p.sub(/.*\//,'').to_i }
 NUM_BATCHES = (papers.size * 1.0 / BATCH_SIZE).ceil
@@ -96,11 +107,13 @@ tw = ThreadsWait.new
 NUM_BATCHES.times { |batch_num|
   logdir = "batch%03d" % [batch_num]
   unless (File.exists?(logdir)) # already did this one
-    # get all the xml paragraph input files for this batch of papers
-    input_files = []
-    papers[batch_num * BATCH_SIZE, BATCH_SIZE].each { |p|
-      input_files += Dir[p + '/*.xml']
-    }
+#    # get all the xml paragraph input files for this batch of papers
+#    input_files = []
+#    papers[batch_num * BATCH_SIZE, BATCH_SIZE].each { |p|
+#      input_files += Dir[p + '/*.xml']
+#    }
+    # get the paper input directories for this batch of papers
+    input_files = papers[batch_num * BATCH_SIZE, BATCH_SIZE]
     # try to start this batch by assigning it to the first available
     # thread/module/TRIPS instance/port
     started = false

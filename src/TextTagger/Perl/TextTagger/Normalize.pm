@@ -346,9 +346,9 @@ sub is_bad_match {
     or
       # don't tag a span with an end that is a dash inside a word
       (($lex =~ /^$dash_re/ and
-	$start > 0 and substr($str, $start-1, 1) =~ /\w|$dash_re/) or
+	$start > 0 and substr($str, $start-1, 1) =~ /\w|$dash_re|[\)\]\}]/) or
        ($lex =~ /$dash_re$/ and
-	$end < length($str) and substr($str, $end, 1) =~ /\w|$dash_re/
+	$end < length($str) and substr($str, $end, 1) =~ /\w|$dash_re|[\(\[\{]/
 	))
   );
 }

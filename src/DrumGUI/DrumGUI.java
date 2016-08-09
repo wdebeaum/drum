@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.63 2016/05/14 23:44:01 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.64 2016/08/08 23:37:38 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -137,6 +137,8 @@ public class DrumGUI extends StandardTripsModule {
     private long timeOfLastSystemActivity;
     /** If {@code true}, exit after current dataset is completed */
     private boolean exitUponCompletion = false;
+    /** If not null, reply to this upon completion */
+    private KQMLPerformative replyUponCompletionTo = null;
 
     /**
      * List of run requests that haven't been processed yet. If we're working on a dataset and another request comes
@@ -773,7 +775,8 @@ public class DrumGUI extends StandardTripsModule {
     /**
      * Handler for {@code run-file} requests.
      * <p>
-     * Request format: {@code (run-file :folder "folder" :file "filename" [:exit-when-done false])}.
+     * Request format:
+     * {@code (run-file :folder "folder" :file "filename" [:exit-when-done false] [:reply-when-done false])}.
      * <p>
      * Throws an exception if there is a problem.
      * 
@@ -790,6 +793,10 @@ public class DrumGUI extends StandardTripsModule {
         KQMLObject exitWhenDone = content.getKeywordArg(":exit-when-done");
         if (exitWhenDone != null) {
             exitUponCompletion = StringUtils.stringToBoolean(exitWhenDone.toString());
+        }
+        KQMLObject replyWhenDone = content.getKeywordArg(":reply-when-done");
+        if (replyWhenDone != null) {
+            replyUponCompletionTo = msg;
         }
 
         // set dataset
@@ -820,7 +827,7 @@ public class DrumGUI extends StandardTripsModule {
      * Handler for {@code run-all-files} requests.
      * <p>
      * Request format:
-     * {@code (run-all-files :folder "folder" :select "*.xml" [:single-ekb false] [:exit-when-done false])}.
+     * {@code (run-all-files :folder "folder" :select "*.xml" [:single-ekb false] [:exit-when-done false] [:reply-when-done false])}.
      * <p>
      * Extractions will be placed in a single EKB if {@code :single-ekb} resolves to {@code true}; if this parameter is
      * missing, it defaults to {@code false}.
@@ -846,7 +853,11 @@ public class DrumGUI extends StandardTripsModule {
         if (exitWhenDone != null) {
             exitUponCompletion = StringUtils.stringToBoolean(exitWhenDone.toString());
         }
-        
+        KQMLObject replyWhenDone = content.getKeywordArg(":reply-when-done");
+        if (replyWhenDone != null) {
+            replyUponCompletionTo = msg;
+        }
+
         // set dataset
         try {
             setDatasetWithFilePattern(folder, fileType);
@@ -888,7 +899,8 @@ public class DrumGUI extends StandardTripsModule {
     /**
      * Handler for {@code run-pmcid} requests.
      * <p>
-     * Request format: {@code (run-pmcid :folder "folder" :pmcid "pmcid" [:save-to "ekb-path"] [:exit-when-done false])}
+     * Request format:
+     * {@code (run-pmcid :folder "folder" :pmcid "pmcid" [:save-to "ekb-path"] [:exit-when-done false] [:reply-when-done false])}
      * <p>
      * The data files are assumed to be in a subfolder (named by the value of the {@code :pmcid} parameter) in a given
      * folder (value of the {@code :folder} parameter). All XML files (extension {@literal .xml}) are selected for
@@ -923,6 +935,10 @@ public class DrumGUI extends StandardTripsModule {
         if (exitWhenDone != null) {
             exitUponCompletion = StringUtils.stringToBoolean(exitWhenDone.toString());
         }
+        KQMLObject replyWhenDone = content.getKeywordArg(":reply-when-done");
+        if (replyWhenDone != null) {
+            replyUponCompletionTo = msg;
+        }
 
         // init the EKB
         kb.init();
@@ -942,15 +958,15 @@ public class DrumGUI extends StandardTripsModule {
         // get EKB filename and return it to sender
         try {
             String ekbFilename = kb.saveEKB();
-            KQMLPerformative rmsg = new KQMLPerformative("reply");
-            KQMLList rcontent = new KQMLList();
-            rcontent.add("accepted");
-            if (savetoFile == null) { // tell the caller what the EKB file is
+            if (replyUponCompletionTo == null) {
+                KQMLPerformative rmsg = new KQMLPerformative("reply");
+                KQMLList rcontent = new KQMLList();
+                rcontent.add("accepted");
                 rcontent.add(":result");
                 rcontent.add(new KQMLString(ekbFilename));
+                rmsg.setParameter(":content", rcontent);
+                reply(msg, rmsg);
             }
-            rmsg.setParameter(":content", rcontent);
-            reply(msg, rmsg);
         } catch (Exception e) {
             // e.printStackTrace();
             errorReply(msg, "Error: EKB cannot be saved" + ((saveto == null) ? "" : " to " + saveto));
@@ -1422,6 +1438,21 @@ public class DrumGUI extends StandardTripsModule {
                 // sendExitRequest();
                 try {
                     send(KQMLPerformative.fromString("(request :receiver facilitator :content (exit))"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Debug.fatal("Something's wrong!");
+                }
+            }
+            if ((replyUponCompletionTo != null) && runTaskQueue.isEmpty()) {
+                try {
+                    KQMLPerformative rmsg = new KQMLPerformative("reply");
+                    KQMLList rcontent = new KQMLList();
+                    rcontent.add("done");
+                    rcontent.add(":result");
+                    rcontent.add(new KQMLString(kb.getEKBFile()));
+                    rmsg.setParameter(":content", rcontent);
+                    reply(replyUponCompletionTo, rmsg);
+                    replyUponCompletionTo = null;
                 } catch (Exception e) {
                     e.printStackTrace();
                     Debug.fatal("Something's wrong!");
