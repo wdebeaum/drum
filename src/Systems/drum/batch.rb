@@ -11,7 +11,7 @@
 
 INPUT_DIR='/Users/lgalescu/work/drum/Data/PMC/ppp'
 PMCIDS_FILE='/Users/lgalescu/work/drum/Data/PMC/runs/eval2016-batch4.pmcids'
-NUM_TRIPSES=8
+NUM_TRIPSES=6
 BATCH_SIZE=1 # 5 # papers
 PORT_BASE=6260
 
