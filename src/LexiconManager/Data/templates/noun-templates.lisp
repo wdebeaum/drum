@@ -542,7 +542,7 @@
       W::COUNT))
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::FIGURE)
-     (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::GROUND optional)
+     (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::GROUND) ;optional)
      ))
 
   ;; these are for words like similarity, which have theme (difference between 2 points) and property (difference in charge)
@@ -626,6 +626,14 @@
   (GEN-PART-OF-RELN-TEMPL
    (SYNTAX(W::AGR W::3S) (W::MORPH (:FORMS (-S-3P))) (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +) (W::SORT 
       W::GEN-PART-OF-RELN) (W::MASS W::COUNT))
+   (ARGUMENTS
+    (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::FIGURE)
+    ))
+
+  ; on top of
+  (GEN-PART-OF-RELN-BARE-TEMPL
+   (SYNTAX(W::AGR W::3S) (W::MORPH (:FORMS (-S-3P))) (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +) (W::SORT 
+      W::GEN-PART-OF-RELN) (W::MASS W::BARE))
    (ARGUMENTS
     (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::FIGURE)
     ))

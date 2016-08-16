@@ -522,7 +522,8 @@
 ; figure is trajectory, ground is within the trajectory
 ; via, by way of
 (define-type ont::obj-in-path
- :parent ont::dir-in-terms-of-obj
+; :parent ont::dir-in-terms-of-obj
+ :parent ont::path
  )
 
 
@@ -714,7 +715,8 @@
  :parent ONT::TEMPORAL-MODIFIER
  :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::situation f::time)))
 ;             (:essential ont::GROUND (f::abstr-obj (F::Scale Ont::duration-scale) (F::type ont::time-unit)))
-             (:essential ont::GROUND ((? gd F::abstr-obj F::time) (F::time-scale f::interval)))
+;             (:essential ont::GROUND ((? gd F::abstr-obj F::time) (F::time-scale f::interval)))
+             (:essential ont::GROUND ((? gd F::abstr-obj F::time) (F::Scale Ont::duration-scale) (F::time-scale f::interval) (F::type ont::time-unit)))
   ))
 
 #|
@@ -977,6 +979,6 @@
   :arguments (;(:optional ont::of ((? t f::phys-obj f::situation)))
 	      ;(:essential ont::val (f::abstr-obj (f::measure-function f::value) (f::scale (? sc f::rate-scale ont::money-scale))))
 	      (:optional ont::figure ((? t2 f::phys-obj f::situation)))
-	      (:essential ont::ground (f::abstr-obj (f::measure-function f::value) (f::scale (? sc2 f::rate-scale ont::money-scale))))
+	      (:essential ont::ground (f::abstr-obj (f::measure-function f::value) (f::scale (? sc2 ont::rate-scale ont::money-scale))))
 	      )
   )

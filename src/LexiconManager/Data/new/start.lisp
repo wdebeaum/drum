@@ -19,6 +19,7 @@
  :tags (:base500)
  :words (
   (W::START
+   (wordfeats (W::morph (:forms (-vb) :nom w::start)))
    (SENSES
     ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("begin-55.1-1"))
      ;;(LF-PARENT ONT::START)

@@ -2,6 +2,7 @@
 ;;;; W::END
 ;;;;
 
+
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :tags (:base500)
  :words (
@@ -12,6 +13,7 @@
      (example "the end of the line")
      (TEMPL GEN-PART-OF-RELN-TEMPL)
      )
+    #|
     ((meta-data :origin plow :entry-date 20060803 :change-date nil :comments nil)
      (LF-PARENT ONT::END)
      (example "the end of the range ")
@@ -19,6 +21,7 @@
      ;; Myrosia lowered the preference slightly so that when "the end of the line" parses, it is given preference
      (preference 0.97)
      )
+    |#
     ;; nominalizations of the verb 
 ;    ((LF-PARENT ONT::TIME-POINT)
 ;     (example "the end of the meeting/lesson")
@@ -34,11 +37,12 @@
    )
 ))
 
+
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :tags (:base500)
  :words (
   (W::end
-   (wordfeats (W::morph (:forms (-vb) :nom w::end)))
+;   (wordfeats (W::morph (:forms (-vb) :nom w::end)))
    (SENSES
     ((EXAMPLE "He/It ended the document/meeting")
      (LF-PARENT ONT::STOP)
@@ -52,10 +56,12 @@
      (EXAMPLE "The meeting/story ended")
      (meta-data :origin task-learning :entry-date 20050826 :change-date nil :comments nil)
      )
+    #|
     ((lf-parent ont::end-at-loc) 
      (example "the road ends at the church")
      (TEMPL neutral-location-templ)
      )
+    |#
     )
    )
   

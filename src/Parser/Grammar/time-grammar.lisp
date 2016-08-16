@@ -304,7 +304,7 @@
     ((np (LF (% description (var ?v) (class ont::rate) (status value) (constraint (& (repeats ?v1) (over-period ?per)))))
             (var ?v) (case (? case sub obj)) (SORT PRED) (AGR 3s)
             (time-converted +)
-            (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::scale F::rate-scale)))
+            (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::scale ont::rate-scale)))
             )
      -units-per-period> 
      (head (np (lf ?lf) (sort unit-measure) (wh -) (var ?v1)
@@ -317,7 +317,7 @@
     ((np (LF (% description (var *) (class ont::rate) (status value) (constraint (& (repeats ?v1) (over-period ?per)))))
             (var *) (case (? case sub obj)) (SORT PRED) (AGR 3s)
             (time-converted +)
-            (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::scale F::rate-scale)))
+            (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::scale ont::rate-scale)))
             )
      -units-per-period2> .98
      (head (np (lf ?lf) (sort unit-measure) (wh -) (var ?v1)
@@ -330,14 +330,14 @@
       ((np (LF (% description (var ?v) (class ont::rate) (status value) (constraint (& (repeats ?v1) (over-period ?per)))))
             (var ?v) (case (? case sub obj)) (SORT PRED) (AGR 3s)
             (time-converted +)
-            (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::scale F::rate-scale)))
+            (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::scale ont::rate-scale)))
 	)
        -units-slash-time>
        (head (np (lf ?lfd) (sort unit-measure) (wh -) (var ?v1)
 	          ))
        (punc (lex (? l slash punc-slash)))
        (n (w::agr w::3s) (var ?v)	(LF ?per) (mass count)
-	(sem ($ f::time (f::scale f::duration-scale)))
+	(sem ($ f::time (f::scale ont::duration-scale)))
 	))
   
     ;; e.g., the gdp / gtp ratio
@@ -524,7 +524,7 @@
      -frequency-value-np> 
      (head (value (dow -)
 		  (lf (% description (class ?class) (var ?v) (constraint ?constr) (status value)))
-		  (sem ($ f::abstr-obj (f::scale F::rate-scale)))
+		  (sem ($ f::abstr-obj (f::scale ont::rate-scale)))
 		  (sem ?sem)))
      )
 
@@ -581,7 +581,7 @@
      (adjp (lex (? lex next last))
        (var ?adjv) (arg ?valvar))
      (Head (np (sem ?valsem) (var ?v) (sort unit-measure) (restr ?r)
-	       (sem ($ f::abstr-obj (f::scale F::DURATION-SCALE)))
+	       (sem ($ f::abstr-obj (f::scale ont::DURATION-SCALE)))
 	       ))
      
      )
@@ -1452,7 +1452,7 @@
       (VAR *) (sort pred) (NAME +)
       (lex ?hlex) (headcat ?hcat))
      -durational-date> 1.0
-     (NP (SORT W::UNIT-MEASURE) (SEM (? s ($ ?any (F::SCALE F::TIME-MEASURE-scale))))
+     (NP (SORT W::UNIT-MEASURE) (SEM (? s ($ ?any (F::SCALE ont::TIME-MEASURE-scale))))
       (var ?vdur) (generated -))
      (head (ADVBL (durational -) (bare-advbl -) (var ?v) 
 		  (lf (% PROP (CLASS (? ev ONT::EVENT-TIME-REL)) (var ?v)
@@ -1467,7 +1467,7 @@
       (VAR ?v) (sort pred) (NAME +) (atype ?atype) (arg ?arg) (argument (% S (var ?arg) (sem ($ f::situation)) ))
       (lex ?hlex) (headcat ?hcat))
      -durational-date-constraint> 1.0
-     (NP (SORT W::UNIT-MEASURE) (SEM (? s ($ ?any (F::SCALE F::TIME-MEASURE-scale))))
+     (NP (SORT W::UNIT-MEASURE) (SEM (? s ($ ?any (F::SCALE ont::TIME-MEASURE-scale))))
       (var ?vdur) (generated -))
      (head (ADVBL (durational -) (bare-advbl -) (var ?v) 
 		  (lf (% PROP (CLASS (? ev ONT::EVENT-TIME-REL)) (var ?v)
@@ -1487,7 +1487,7 @@
     -bare-duration-advbl> 
      (NP (SORT W::UNIT-MEASURE) (spec ont::indefinite)   ;; must be indefinite, e.g., "three months", not "this month"
       (LF (% PROP (CLASS ont::duration-scale)))
-      (SEM ($ ?any (F::SCALE F::duration-scale)))
+      (SEM ($ ?any (F::SCALE ont::duration-scale)))
       (var ?v) (generated -))
       )
     

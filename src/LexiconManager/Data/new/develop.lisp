@@ -23,10 +23,10 @@
     |#
 
     ((meta-data :origin cernl :entry-date 20110210 :change-date nil :comments ticket-244)
-     (LF-PARENT ONT::develop)
+     (LF-PARENT ONT::CREATE)
      (example "the patient developed a cough")
 ;     (TEMPL affected-result-xp-templ)
-     (templ AFFECTED-AFFECTED-TEMPL)
+     (templ AFFECTED-AFFECTED-RESULT-ARG-TEMPL)
      )
     
     (

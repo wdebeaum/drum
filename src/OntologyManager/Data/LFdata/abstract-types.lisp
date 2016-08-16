@@ -131,6 +131,29 @@
 		      (:default (F::GRADABILITY +) (F::scale ?!sc)))
   )
 
+;; as hot as it can be
+(define-type ONT::as-much-as
+  :parent ONT::domain-property
+  :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (F::INTENTIONAL -))
+		      (:default (F::GRADABILITY +) (F::scale ?!sc)))
+  )
+
+;;  too hot to go outside
+
+(define-type ONT::TOO-MUCH
+  :parent ONT::domain-property
+  :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (F::INTENTIONAL -))
+		      (:default (F::GRADABILITY +) (F::scale ?!sc)))
+  )
+
+;; so hungry I could cry
+(define-type ONT::SO-MUCH-THAT
+  :parent ONT::domain-property
+  :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (F::INTENTIONAL -))
+		      (:default (F::GRADABILITY +) (F::scale ?!sc)))
+  )
+
+
 ;; for adjective scale values to be translated properly to the akrl, the intensity values (hi, med, lo) need to be defined in the ontology
 (define-type ONT::hi
   :parent ONT::max-val
@@ -370,11 +393,10 @@
 		(:optional ONT::REASON))
     )
 
-;;; This is for speed values - fast, slow, etc. Use LF_Rate for notions
-;;; such as functional nouns "speed" and "rate"
-;; not under physical-property-val b.c. e.g. fast/slow service fast/slow talking
+;;; This is for speed values - fast, slow, etc
 (define-type ONT::Speed-val
  :parent ONT::process-val
+ :sem  (F::abstr-obj (F::scale ont::speed-scale))
  :arguments ((:REQUIRED ONT::FIGURE ((? type F::phys-obj F::situation F::abstr-obj)))   ;; e.g., "rate" is an abstract object
              )
  )
@@ -382,6 +404,7 @@
 (define-type ONT::quantity-related-property-val
  :parent ONT::property-val
  :arguments ((:optional ONT::GROUND)
+	     (:optional ONT::STANDARD)
              )
  )
 
@@ -812,6 +835,11 @@
 (define-type ONT::LOCATION-VAL
  :parent ONT::spatial
  :arguments ((:REQUIRED ONT::FIGURE ((? lof f::phys-obj f::situation f::abstr-obj))))
+ )
+
+(define-type ONT::MIDDLE-LOCATION-VAL
+  :wordnet-sense-keys ("middle%5:00:00:intermediate:00" "middle%5:00:01:central:01" "middle%3:00:00")
+ :parent ONT::LOCATION-VAL
  )
 
 (define-type ONT::TOP-LOCATION-VAL
@@ -1887,6 +1915,7 @@
 		 )
      )
 
+#|
 (define-type ONT::END
  :parent ONT::BOUND
   :wordnet-sense-keys ("end%1:28:00" "end%1:15:01")
@@ -1896,6 +1925,7 @@
  :parent ONT::BOUND
   :wordnet-sense-keys ("beginning%1:28:00")
  )
+|#
 
 ;; the resolution of an image
 (define-type ONT::RESOLUTION
@@ -1942,6 +1972,10 @@
  :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj (F::origin F::artifact)))
              )
  )
+
+(define-type ONT::SPEED-SCALE
+    :parent ONT::TIME-RATE
+    )
 
 ;; dollars -- need a unit definition for '5 dollars'
 (define-type ONT::MONEY-UNIT

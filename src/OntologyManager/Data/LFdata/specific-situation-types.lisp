@@ -62,7 +62,7 @@
 (define-type ONT::earning
  :parent ONT::commerce-collect
  :sem (F::SITUATION (F::Aspect F::dynamic))
- :arguments ((:REQUIRED ONT::FORMAL ((? th12 F::Phys-obj F::Abstr-obj) (f::object-function f::currency) (f::intentional -))))
+ :arguments ((:REQUIRED ONT::affected ((? th12 F::Phys-obj F::Abstr-obj) (f::type ONT::MONEY) (f::object-function f::currency) (f::intentional -))))
  )
 
 (define-type ONT::borrow
@@ -1020,6 +1020,8 @@
 (define-type ONT::Stop
     :wordnet-sense-keys ("lay_off%2:42:00" "quit%2:42:04" "give_up%2:42:00" "cease%2:42:00" "stop%2:42:00" "discontinue%2:42:00" "cease%2:42:13" "terminate%2:42:00"  "terminate%2:30:01" "finish%2:42:00" "stop%2:42:13" "end%2:42:00" "run_out%2:42:00" "expire%2:42:00" "blow_out%2:43:00" "bog_down%2:38:01" "break%2:42:04" "get_off%2:41:00" "halt%2:38:01" "stop%2:38:01" "abort%2:29:00" "terminate%2:30:01")
     :parent ONT::inhibit-effect
+    :arguments ((:ESSENTIAL ONT::affected ((? oc F::Situation)))  
+		)    
  )
 
 ;; added because of importance in bio domain
@@ -2925,9 +2927,11 @@
  :parent ONT::transformation
  )
 
+#|
 (define-type ONT::develop
     :parent ont::transformation ;; GUM change new parent 20121030
   )
+|#
 
 (define-type ONT::life-transformation
  :wordnet-sense-keys ("develop%2:30:00" "fruit%2:36:01")
@@ -3655,6 +3659,7 @@
  :parent ONT::event-of-action
  :sem (F::situation (F::Cause F::Agentive) (F::Time-span F::Extended))
  :arguments ((:ESSENTIAL ONT::agent (F::Phys-obj  (:required (f::origin (? org f::human f::non-human-animal)))))
+	     (:optional ONT::NEUTRAL )
              )
  )
 
@@ -3804,7 +3809,7 @@
   :SEM (F::SITUATION)
   :arguments
   ((:required ONT::AGENT (f::Phys-obj (f::intentional +)))
-   (:required ONT::affected (f::Phys-obj (f::Origin F::Artifact)))
+   (:required ONT::affected (f::Phys-obj (f::Origin F::Artifact) (f::type ONT::ATTIRE)))
    )
   )
 

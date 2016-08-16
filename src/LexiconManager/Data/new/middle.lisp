@@ -48,6 +48,10 @@
      (LF-PARENT ONT::stage-val)
      (preference .98) ;; prefer relational noun sense
      )
+    (
+     (LF-PARENT ONT::MIDDLE-LOCATION-VAL)
+     )
+    
     )
    )
 ))

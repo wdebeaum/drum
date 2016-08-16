@@ -9,7 +9,8 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("top%1:15:00" "top%1:15:01" "top%1:15:02"))
      (LF-PARENT ONT::TOP-location)
-     (TEMPL GEN-PART-OF-RELN-TEMPL)
+;     (TEMPL GEN-PART-OF-RELN-TEMPL)
+     (TEMPL GEN-PART-OF-RELN-BARE-TEMPL)
      )
     )
    )

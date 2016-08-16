@@ -746,6 +746,14 @@
 	(LOBJ (% W::NP) ONT::affected)
 	(LCOMP (:parameter xp (:default (% W::PP (W::ptype W::to)))) ONT::RESULT)
 	))
+
+      (AGENT-NEUTRAL-TOAFFECTED-TEMPL
+       (ARGUMENTS
+	(LSUBJ (% W::NP) ONT::agent)
+	(LOBJ (% W::NP) ONT::NEUTRAL)
+	(LCOMP (:parameter xp (:default (% W::PP (W::ptype W::to)))) ONT::AFFECTED)
+	))
+      
 #||
       (AGENT-AFFECTED-optional-GOAL-TO-TEMPL
        (ARGUMENTS
@@ -1541,6 +1549,13 @@
     (LIOBJ (% W::NP) ONT::AFFECTED)
     ))
 
+  (AGENT-AFFECTED-IOBJ-NEUTRAL-TEMPL
+   (ARGUMENTS
+    (LSUBJ (% W::NP) ONT::AGENT)
+    (LOBJ (% W::NP) ONT::NEUTRAL)
+    ;;;;; maponly)
+    (LIOBJ (% W::NP) ONT::AFFECTED)
+    ))
    
      ;;;;; base the comparison on price
   (AGENT-neutral-THEME-TEMPL
@@ -1854,6 +1869,12 @@
  (AGENT-affected-RESULT-arg-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::AGENT)
+    (LOBJ (% W::NP) ONT::affected-result)
+    ))
+
+ (Affected-affected-RESULT-arg-TEMPL
+   (ARGUMENTS
+    (LSUBJ (% W::NP) ONT::affected)
     (LOBJ (% W::NP) ONT::affected-result)
     ))
 

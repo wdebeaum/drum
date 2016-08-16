@@ -16,7 +16,7 @@
     ((EXAMPLE "make money" "make a profit")
      (LF-PARENT ONT::earning) 
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-THEME-xp-TEMPL)
+     (TEMPL AGENT-affected-xp-TEMPL)
      (meta-data :origin step :entry-date 20081022 :change-date nil :comments step6)
      )
     ((LF-PARENT ONT::transformation) ;; GUM change new parent 20121027
@@ -47,11 +47,13 @@
      (meta-data :origin medadvisor :entry-date 20011126)
      (example "aspirin makes him bleed")
      )
+    #|
     (
      (LF-PARENT ONT::cause-effect) ;; GUM change new parent 20121027
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (TEMPL agent-effect-xp-templ (xp (% W::NP (w::gerund -))))
      )
+    |#
     )
    )
 ))

@@ -182,7 +182,7 @@
 
 (load "symbolmapping.lisp")
 
-(setq im::*extraction-sequence* '((im::drumterms) (im::drumtermsAdd) (im::drum) (im::drumRules_ev_add) (im::drummod) (im::drumCC) (im::drumMisc)))
+(setq im::*extraction-sequence* '((im::drumterms) (im::drumtermsAdd) (im::drum) (im::drum_ev_add) (im::drummod) (im::drumCC) (im::drumMisc)))
 (setq im::*substitute-terms-in-extraction* t)
 
 ;; domain preferences

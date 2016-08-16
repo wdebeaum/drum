@@ -30,12 +30,12 @@
      -advbl-simple>
      (head (adv (WH -) (sem ?sem) (ARGUMENT-MAP ?!argmap) ;;(Sort PRED) 
                 (VAR ?v) (SUBCAT -) (LF ?lf) (implicit-arg -) (constraint ?con)
-		(sem ($ F::ABSTR-OBJ (F::intensity ?ints) (F::orientation ?orient)))
+		(sem ($ F::ABSTR-OBJ (F::intensity ?ints) (F::orientation ?orient) (F::Scale ?scale)))
 		(comparative -) (prefix -)
 		(particle ?p)
 		)
       )
-     (append-conjuncts (conj1 ?con) (conj2 (& (?!argmap ?arg) 
+     (append-conjuncts (conj1 ?con) (conj2 (& (?!argmap ?arg)  (scale ?scale)
 					      (orientation ?orient) (intensity ?ints)))
 		       (new ?newc))
      )
@@ -454,7 +454,8 @@
       )
      -adv-vp-pre-complex-s>  .97
      (advbl (SORT BINARY-CONSTRAINT) 
-      (ATYPE (? x PRE PRE-VP)) 
+;      (ATYPE (? x PRE PRE-VP)) 
+      (ATYPE (? x PRE-VP)) 
       (ARGUMENT (% S (SEM ?argsem))) ;;($ f::situation))))  
       (GAP -) 
       (ARG ?v) (VAR ?mod)
@@ -664,7 +665,7 @@
       (old ?con) (new ?newcon))
      (change-feature-values (OLD ?lf) (NEW ?newlf) (newvalues ((CONSTRAINT ?newcon)))))
 
-    ;; He ran away terrified.
+    ;; He ran away, terrified.  (added comma)
     ((S (LF ?newlf) ;(PREADVBL +)
        (tma ?tma) 
       (adj-s-prepost +)  ;;  we use this to stop such S's from being relative clauses etc
@@ -676,6 +677,7 @@
 	      (subjvar ?subjvar) (adj-s-prepost -)
 	      )
            )
+     (punc (lex w::punc-Comma))
      (adjp (ARGUMENT (% NP)) (set-modifier -)
 	 (gap -) 
 	 (ARG ?subjvar) (VAR ?mod)
@@ -918,7 +920,7 @@
     
 
     ;;  as ADJ as-PP
-    ((ADJP (LF (% PROP (CLASS (:* ONT::SAME-AS-ON-SCALE ?w)) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
+    ((ADJP (LF (% PROP (CLASS (:* ONT::AS-MUCH-AS ?w)) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
       (val ?val) (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap) 
       (argument ?argmt) (premod +) 
       )
@@ -929,28 +931,77 @@
 	    (gap ?gap) (premod -) 
                  ))
      (word (lex w::as))
-     (np (var ?vnp))
+     (np (var ?vnp) (gap -))
      (add-to-conjunct (val (ground ?vnp)) (old ?con) (new ?newc))
      )
 
-    ;; so ADJ that ...
-     ((ADJP (LF (% PROP (CLASS (:* ONT::ENOUGH-ON-SCALE-FOR ?w)) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
+     ;;  as ADJ as-PP
+    ((ADJP (LF (% PROP (CLASS (:* ONT::AS-MUCH-AS ?w)) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
+      (val ?val) (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap) 
+      (argument ?argmt) (premod +) 
+      )
+     -as-adj-as-s>
+     (word (lex W::as))
+     (head (ADJP (lf (% PROP (CLASS (:* ?c ?w)) (VAR ?v) (CONSTRAINT ?con) (sem ?sem)))
+	    (val ?val) (agr ?agr) (mass ?mass) (argument ?argmt) (arg ?arg)
+	    (gap ?gap) (premod -) 
+                 ))
+     (word (lex w::as))
+     (S (var ?sv) (gap -))
+     (add-to-conjunct (val (standard ?sv)) (old ?con) (new ?newc))
+     )
+
+    ;;  as quickly as my dog
+    ((ADVBL (LF (% PROP (CLASS (:* ONT::AS-MUCH-AS ?w)) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
+      (val ?val) (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap) 
+      (argument ?argmt) (premod +) 
+      )
+     -as-adv-as-np>
+     (word (lex W::as))
+     (head (ADVBL (lf (% PROP (CLASS (:* ?c ?w)) (VAR ?v) (CONSTRAINT ?con) (sem ?sem)))
+	    (val ?val) (agr ?agr) (mass ?mass) (argument ?argmt) (arg ?arg)
+	    (gap ?gap) (premod -) 
+                 ))
+     (word (lex w::as))
+     (np (var ?vnp) (gap -))
+     (add-to-conjunct (val (standard ?vnp)) (old ?con) (new ?newc))
+     )
+
+    ;;  as ADV as he can be
+    ((ADVBL (LF (% PROP (CLASS (:* ONT::AS-MUCH-AS ?w)) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
+      (val ?val) (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap) 
+      (argument ?argmt) (premod +) 
+      )
+     -as-adv-as-s>
+     (word (lex W::as))
+     (head (ADVBL (lf (% PROP (CLASS (:* ?c ?w)) (VAR ?v) (CONSTRAINT ?con) (sem ?sem)))
+	    (val ?val) (agr ?agr) (mass ?mass) (argument ?argmt) (arg ?arg)
+	    (gap ?gap) (premod -) 
+                 ))
+     (word (lex w::as))
+     (S (var ?sv) (gap -))
+     (add-to-conjunct (val (standard ?sv)) (old ?con) (new ?newc))
+     )
+
+    ;; so ADJ/ADVBL that ...
+     ((ADJP (LF (% PROP (CLASS (:* ONT::SO-MUCH-THAT ?w)) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
            (val ?val) (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap) 
       (argument ?argmt) (premod +) 
       )
      -so-adj-that>
      (word (lex W::so))
-     (head (ADJP (lf (% PROP (CLASS (:* ?c ?w)) (VAR ?v) (CONSTRAINT ?con) (sem ?sem))) 
+     (head ((? cat ADJP ADVBL)
+	    (lf (% PROP (CLASS (:* ?c ?w)) (VAR ?v) (CONSTRAINT ?con) (sem ?sem))) 
 	    (val ?val) (agr ?agr) (mass ?mass) (argument ?argmt) (arg ?arg)
 	    (gap ?gap) (premod -) 
                  ))
-     (word (lex w::that))
-     (S (var ?vs))
-     (add-to-conjunct (val (ground ?vs)) (old ?con) (new ?newc))
+     ;;(word (lex w::that))
+     (cp (var ?vs) (gap -) (ctype (? ctype W::S-THAT-MISSING W::S-THAT-OVERT)))
+     (add-to-conjunct (val (standard ?vs)) (old ?con) (new ?newc))
      )
-
+#||
     ;; so ADV that ...
-     ((ADVBL (LF (% PROP (CLASS (:* ONT::ENOUGH-ON-SCALE-FOR ?w)) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
+     ((ADVBL (LF (% PROP (CLASS (:* ONT::SO-MUCH-THAT ?w)) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
            (val ?val) (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap) 
       (argument ?argmt) (premod +) 
       )
@@ -964,7 +1015,7 @@
      (S (var ?vs))
      (add-to-conjunct (val (ground ?vs)) (old ?con) (new ?newc))
      )
-
+||#
     ;; TEST: red enough
     ((ADJP (LF (% PROP (CLASS ?c) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
            (val ?val) (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap)
@@ -1211,6 +1262,7 @@
     (pp headcat lex)
     (advbl gap headcat lex neg)
     )
+
 ((vp- (constraint ?new)
      (tma ?tma)
      (gap ?!gap) (var ?v)

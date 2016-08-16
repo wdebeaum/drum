@@ -63,6 +63,6 @@
 	       (F::type ont::any-time-object)
 	       (F::time-function F::Any-time-function)
 	       (F::time-scale F::point)
-	       (f::scale f::time-measure-scale) ;; a default -- we need f::scale to allow role restriction sharing between durations such as abstract quantities w/ times, like five minutes, which are (f::scale f::duration), and ont::time-intervals
+	       (f::scale ont::time-measure-scale) ;; a default -- we need f::scale to allow role restriction sharing between durations such as abstract quantities w/ times, like five minutes, which are (f::scale f::duration), and ont::time-intervals
 	       )
     )

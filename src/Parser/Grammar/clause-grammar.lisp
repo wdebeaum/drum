@@ -1201,7 +1201,7 @@
       (tma ?newtma) (ellipsis +)
       (postadvbl -) (vform ?vf)
       )
-     -vp1-role-modal-nocomp> .8 ;; prefer aux's with complements, only execute if needed
+     -vp1-role-modal-nocomp> .96 ;; prefer aux's with complements, only execute if needed
      (head (aux 
 	    (tma-contrib ?tma-contrib)
 	    (sem-contrib ?sem-contrib)
@@ -1226,7 +1226,7 @@
       (tma ?newtma)
       (postadvbl -) (vform ?vf)
       )
-     -vp1-role-neg-modal-nocomp> .8 ;; prefer aux's with complements, only execute if needed
+     -vp1-role-neg-modal-nocomp> .96 ;; prefer aux's with complements, only execute if needed
      (head (aux 
 	    (tma-contrib ?tma-contrib)
 	    (sem-contrib ?sem-contrib)
@@ -2843,7 +2843,7 @@
 	     ))
        (sem ?sem) (transform ?transform) 
       )
-     -ynq-aux-modal-nocomp> .8 ;; only execute if we have to so we don't explode the search space
+     -ynq-aux-modal-nocomp> .96 ;; only execute if we have to so we don't explode the search space
      (head (aux 
 	    (tma-contrib ?tma-contrib)
 	    (sem-contrib ?sem-contrib)
@@ -3013,7 +3013,7 @@
 	     ))
        (sem ?sem) (transform ?transform) 
       )
-     -ynq-aux-modal-nocomp-neg> .8 ;; only execute if we have to so we don't explode the search space
+     -ynq-aux-modal-nocomp-neg> .96 ;; only execute if we have to so we don't explode the search space
      (head (aux 
 	    (tma-contrib ?tma-contrib)
 	    (sem-contrib ?sem-contrib)

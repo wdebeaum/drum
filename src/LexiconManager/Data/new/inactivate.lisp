@@ -6,12 +6,14 @@
  :words (
    (W::inactivate
      (wordfeats (W::morph (:forms (-vb) :nom w::inactivation)))
-   (SENSES
+     (SENSES
+      #|
      (
      (LF-PARENT ont::stop)
      (templ agent-effect-xp-templ)
      (SEM (F::Aspect F::bounded) (F::time-span F::atomic))
      )
+      |#
       (
        (LF-PARENT ont::stop)
       (templ agent-affected-xp-templ)

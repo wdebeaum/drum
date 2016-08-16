@@ -2635,7 +2635,7 @@
      ((ADJP (ARG ?arg) (VAR ?v) 
 	    (SUBCATMAP ont::affected) (ARGUMENT ?subj)
 	    (atype central) 
-	    (LF (% PROP (class ?lf) (VAR ?v) (constraint ?newc)))           
+	    (LF (% PROP (class ?lf) (VAR ?v) (constraint ?newc)))
       )
      -vp-pastprt-adjp>
      (head
@@ -3002,7 +3002,7 @@
 		(generated -)
 		))
 ;     (pp (ptype ?nompreps) (sem ?dobjsem) (agr ?agr) (gap -) (var ?dv))
-     (pp (ptype ?nompreps) (sem ?dobjsem) (gap -) (var ?dv))
+     (pp (ptype ?nompreps) (sem ?dobjsem) (gap -) (var ?dv) (adjpp -))
      (add-to-conjunct (val (& (?!dmap ?dv))) (old ?restr) (new ?newrestr))
      )
 

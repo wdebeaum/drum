@@ -2,6 +2,7 @@
 ;;;; W::NOW
 ;;;;
 
+#|
 (define-words 
     :pos W::adv :templ DISC-PRE-TEMPL
  :tags (:base500)
@@ -16,6 +17,7 @@
     )
    )
 ))
+|#
 
 (define-words 
     :pos W::adv :templ DISC-PRE-TEMPL

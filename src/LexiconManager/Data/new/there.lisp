@@ -20,7 +20,7 @@
   (W::THERE
    (SENSES
     ((LF-PARENT ONT::pos-wrt-speaker-reln)
-     (SYNTAX (W::IMPRO-CLASS ONT::place)
+     (SYNTAX (W::IMPRO-CLASS ONT::location)
      ))
     ))
   ))
