@@ -248,6 +248,10 @@
   ;; ... except PTMs, most of which we handle by other means
   (concept NCIT::C17019 ; Post-Translational Modification
     (inherit ONT::referential-sem))
+  ;; this has interfering things like "concentration" in it, and isn't that
+  ;; useful otherwise
+  (concept NCIT::C16840 ; Mental Process
+    (inherit ONT::referential-sem))
 (concept NCIT::C16847 ; Technique
   (inherit ONT::procedure))
 (concept NCIT::C2991 ; Disease or Disorder
