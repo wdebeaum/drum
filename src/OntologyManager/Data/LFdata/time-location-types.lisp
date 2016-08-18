@@ -827,7 +827,7 @@
 ;;; some things apply only to time specifications like 5am/noon
 (define-type ONT::time-clock-rel
  :parent ONT::temporal-location
- :arguments ((:ESSENTIAL ONT::GROUND (F::time (F::time-function (? fn F::clock-time F::day-point))))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::time (F::time-function (? fn F::clock-time F::day-point)) (f::time-scale f::point)))
 ;	     (:ESSENTIAL ONT::SIT-VAL (F::situation))
              )
  )

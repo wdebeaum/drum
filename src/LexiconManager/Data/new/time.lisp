@@ -8,7 +8,8 @@
   (W::TIME
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("time%1:28:06"))
-     (LF-PARENT ONT::TIME-point)
+;     (LF-PARENT ONT::TIME-point)
+     (LF-PARENT ONT::TIME-MEASURE-SCALE)
      (example "what time did it arrive")
      (templ other-reln-templ)
      )

@@ -289,7 +289,7 @@
      )
     -s1>
     (np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex) ;; lex needed for expletives?
-      (pp-word -) (changeagr -))
+      (pp-word -) (changeagr -) (gap -))
     (head (vp (lf ?lf) (gap ?g)
               (template (? !x  lxm::propositional-equal-templ))
 	      (subjvar ?npvar)
@@ -965,7 +965,7 @@
 	     (set-modifier -) ;; numbers are set-modifier +, and they don't behave as normal adjps in predicates
 	     (atype (? atp central predicative-only))
 	     ;; md 2008/17/07 eliminated cases with positive post-subcat, they should only happen when an adjective is looking for an argument after an np, not possible in the pred situation
-	     (post-subcat -) 
+	     (post-subcat -)
 	     ))
       )
 
@@ -2122,7 +2122,7 @@
 	   (iobj (% -))
 	   (part (% -));; (part ?part) 
 	   (dobj ?dobj)	(dobj (% ?s3 (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap)))
-	   (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) ))
+	   (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem)))
 	    
 	   )
      
@@ -2646,7 +2646,8 @@
     ((utt (lf (% speechact (var *) (class ont::sa_request) (constraint (& (content ?v))))) (var *)
           )
      -command-imp1>
-     (head (s (stype imp) (wh -) (var ?v) (lf ?lf) (gap -) (advbl-needed -))))
+     (head (s (stype imp) (wh -) (var ?v) (sem ($ F::SITUATION (F::type ONT::EVENT-OF-ACTION)))
+	      (gap -) (advbl-needed -))))
       
     ;; test: bark.
     ;; test: chase the cat.
@@ -2659,7 +2660,10 @@
      -command-imp2>
      (head (vp (gap  -) 
 	    (sem ?sem)
-	    (sem ($ f::situation (f::aspect (? aspc f::dynamic f::stage-level))))
+	    (sem ($ f::situation (f::aspect (? aspc f::dynamic f::stage-level)
+					    )
+		    (f::type ont::event-of-action)
+		    ))
 	    (var ?v) (aux -) (tma ?tma)
 	    (constraint ?con)
 	    (subj (% np (var (% *pro* (class ont::person) (var *) (sem ?subjsem) (constraint (& (proform *you*)))))
@@ -2752,7 +2756,7 @@
      ((utt (lf (% speechact (var **) (class ont::sa_tell) (constraint (& (content ?v))))) (var **)
            (punctype (? x imp decl)))
       
-      -vp-utt-inform> .96
+      -vp-utt-inform> .95
       (head (vp (gap -) (sem ?sem) (sem ($ f::situation (f::cause (? cs f::stimulating f::phenomenal f::mental -))))
 	     (var ?v)
 	     (constraint ?constraint) (class ?class)

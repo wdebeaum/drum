@@ -36,6 +36,8 @@
 
 (define-type ONT::SA_TELL :parent ONT::SPEECH-ACT)
 
+(define-type ONT::GOODBYE :parent ONT::SPEECH-ACT)
+
 (define-type ONT::SA_SUGGEST :parent ONT::SPEECH-ACT)
 
 (define-type ONT::SA_REQUEST :parent ONT::SPEECH-ACT)

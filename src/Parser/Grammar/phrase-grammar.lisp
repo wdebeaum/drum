@@ -615,6 +615,7 @@
      (head (n (sort reln) (lf ?lf)
 	      (subcat ?!subcat)
 	      (subcat (% ?scat (var ?v1) (sem ?ssem) (lf ?lf2) (gap ?gap) )) ;;(sort (? srt pred individual set comparative reln))))
+;;	      (subcat (% ?scat (var ?v1) (sem ?ssem) (lf ?lf2) (gap -) )) ;;(sort (? srt pred individual set comparative reln))))
 	      (SEM ($ ?type (f::scale ?sc)))
 	      (subcat-map ?smap)))
      ?!subcat
@@ -1219,7 +1220,7 @@
 				    ))
 	    (transform ?transform) (sem ?sem)
 	    )))
-    -adj-pred-scale>
+    -adj-pred-scale> 
     (head (ADJ (LF ?lf) (SUBCAT2 -) (post-subcat -)(VAR ?v) (comparative ?comp)
 	       (ARGUMENT-MAP ?argmap) (prefix -)
 	       (functn ?fn)
@@ -1227,7 +1228,7 @@
 	       (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale1) (F::intensity ?ints) (F::orientation ?orient)))
 	       (transform ?transform)
 	       ))
-    (pp (ptype w::in) (var ?sc-var) (sem  ($ F::ABSTR-OBJ (f::scale ?scale2))))
+    (pp (ptype w::in) (var ?sc-var) (sem  ($ F::ABSTR-OBJ (f::scale ?scale2))) (gap ?gap))
     (class-greatest-lower-bound (in1 ?scale1) (in2 ?scale2) (out ?newscale))
     )
 
@@ -3682,6 +3683,8 @@
 	  (comp3 ?comp3)
 	  (comp3-map ?comp-map)
 	  (rate-activity-nom (? ratelf ONT::RATE))
+	  (nomobjpreps ?nop)
+	  (nomsubjpreps ?nsp)
       )
      -nom-rate> 1.0
 	 (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger) (agr ?agr)
@@ -3701,6 +3704,8 @@
 		    (generated -)
 		    (rate-activity-nom -)
 		    (agent-nom -)
+		    (nomobjpreps ?nop)
+		    (nomsubjpreps ?nsp)
 		    ))
 	 (n (lf (? ratelf ONT::RATE)) (rate-activity-nom -))
 	 )

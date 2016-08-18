@@ -51,7 +51,7 @@
 (define-type ONT::property-val
  :parent ONT::domain-property
  :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (f::intentional -))
-		    (:default (f::scale -)
+		    (:default ;(f::scale -)
 		     (f::intensity -) (f::orientation -)))
  :arguments ((:REQUIRED ONT::FIGURE)
 	     (:optional ONT::FORMAL  (f::situation))
@@ -183,6 +183,12 @@
   :arguments ((:OPTIONAL ONT::FIGURE)
               )
   )
+
+(define-type ONT::system
+  :wordnet-sense-keys ("system%1:06:00" "system%1:14:00")
+  :comment "An interconnected group of objects, abstract or physical"
+ :parent ONT::group-object
+ )
 
 (define-type ONT::formation
  :parent ONT::group-object
@@ -755,6 +761,7 @@
 
 (define-type ont::persistence-val
  :parent ont::process-val
+ :sem (F::Abstr-obj (F::scale ONT::TIME-MEASURE-SCALE) (F::TIME-SCALE F::INTERVAL))
  )
 
 (define-type ont::persistent
@@ -1805,6 +1812,12 @@
  :arguments ((:REQUIRED ONT::FIGURE)
 	     (:optional ont::formal)
 	     ))
+
+;; percent
+(define-type ONT::multiple
+ :parent ONT::MATHEMATICAL-TERM
+ :sem (F::Abstr-obj )
+ )
 
 ;; percent
 (define-type ONT::percent
@@ -3951,6 +3964,8 @@
 
 (define-type ont::scale
   :parent ont::abstract-object
+  :arguments ((:ESSENTIAL ONT::figure)
+		)
   )
 
 (define-type ont::any-scale

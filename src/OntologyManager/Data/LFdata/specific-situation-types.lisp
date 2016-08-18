@@ -1020,8 +1020,8 @@
 (define-type ONT::Stop
     :wordnet-sense-keys ("lay_off%2:42:00" "quit%2:42:04" "give_up%2:42:00" "cease%2:42:00" "stop%2:42:00" "discontinue%2:42:00" "cease%2:42:13" "terminate%2:42:00"  "terminate%2:30:01" "finish%2:42:00" "stop%2:42:13" "end%2:42:00" "run_out%2:42:00" "expire%2:42:00" "blow_out%2:43:00" "bog_down%2:38:01" "break%2:42:04" "get_off%2:41:00" "halt%2:38:01" "stop%2:38:01" "abort%2:29:00" "terminate%2:30:01")
     :parent ONT::inhibit-effect
-    :arguments ((:ESSENTIAL ONT::affected ((? oc F::Situation)))  
-		)    
+;    :arguments ((:ESSENTIAL ONT::affected ((? oc F::Situation)))  ; commented this out because we can say "stop the car"
+;		)    
  )
 
 ;; added because of importance in bio domain
@@ -3033,12 +3033,23 @@
  )
 
 (define-type ONT::increase
- :wordnet-sense-keys ("increase%2:30:00" "protuberate%2:42:01" "lengthen%2:30:01")
+ :wordnet-sense-keys ("increase%2:30:00" "lengthen%2:30:01")
  :parent ONT::change-magnitude
  )
 
 (define-type ONT::increase-number
+ :wordnet-sense-keys ("multiply%2:30:00")
  :parent ONT::increase
+ )
+
+(define-type ONT::double
+ :wordnet-sense-keys ("double%2:30:00")
+ :parent ONT::increase-number
+ )
+
+(define-type ONT::triple
+ :wordnet-sense-keys ("triple%2:30:00")
+ :parent ONT::increase-number
  )
 
 ;; rush, hasten, speed up
@@ -3055,6 +3066,11 @@
 (define-type ONT::decrease
  :wordnet-sense-keys ("decrease%2:30:00" "decrease%2:30:01" "diminish%2:30:00" "lessen%2:30:00" "fall%2:30:06" "weaken%2:30:01")
  :parent ONT::change-magnitude
+ )
+
+(define-type ONT::decrease-completely
+ :wordnet-sense-keys ("deplete%2:34:00" "exhaust%2:30:00")
+ :parent ONT::decrease
  )
 
 (define-type ONT::decrease-speed
@@ -3573,7 +3589,8 @@
 ;; outsmart, overcome, beat, vanquish
 (define-type ont::overcome
  :wordnet-sense-keys ("get_the_better_of%2:33:00" "overcome%2:33:03" "defeat%2:33:00")
-  :parent ont::manipulate
+;  :parent ont::manipulate
+  :parent ont::control-manage
   )
 
 ;; manage

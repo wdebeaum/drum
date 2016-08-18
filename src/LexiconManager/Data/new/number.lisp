@@ -11,7 +11,8 @@
     ;; a number is now a quantifier -- all other uses are ont::domain
      ((meta-data :origin plow :entry-date 20060803 :change-date nil :comments nil :wn ("number%1:07:00"))
       (LF-PARENT ONT::quantity)
-      (TEMPL indef-classifier-count-pl-templ)
+;      (TEMPL indef-classifier-count-pl-templ)
+      (templ other-reln-templ)
       (example "a certain number of books on the shelf")
       )
     ((LF-PARENT ONT::number)

@@ -490,18 +490,19 @@
      (add-to-conjunct (val (MODS ?mod)) (old ?lf) (new ?new))
      )
 
-    ;;  resultative construction using adjectives: e.g., wipe the table clean
+    ;;  resultative construction using adjectives with transitives: e.g., wipe the table clean
     ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
       (advbl-needed -) (complex +) (result-present +) (subjvar ?subjvar)(GAP ?gap)
       )
-     -vp-result> .98   ;;  want to prefer explicitly subcategorized attachments
+     -vp-result-withtransitive> .98   ;;  want to prefer explicitly subcategorized attachments
      (head (vp- (VAR ?v) 
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		(DOBJ (% NP (Var ?npvar) (sem ?sem)))
 		(constraint ?con) (tma ?tma) (result-present -)
 		;;(subjvar ?subjvar)
-		(aux -) (gap ?gap)
+		;;(aux -)   c.f., It had gone bad
+		(gap ?gap)
 		(ellipsis -)
 		))
      (adjp (ARGUMENT (% NP (sem ?sem))) 
@@ -514,6 +515,33 @@
       )
      (add-to-conjunct (val (RESULT ?mod)) (old ?con) (new ?new))
      )
+
+        ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
+         ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
+      (advbl-needed -) (complex +) (result-present +) (subjvar ?subjvar)(GAP ?gap)
+      )
+     -vp-result-with-intransitive> .98   ;;  want to prefer explicitly subcategorized attachments
+     (head (vp- (VAR ?v) 
+		(seq -)  ;;  post mods to conjoined VPs is very rare
+		(DOBJ -)
+		(SUBJ (% NP (Var ?npvar) (LEX ?LEX) (sem ?sem)))
+		(constraint ?con) (tma ?tma) (result-present -)
+		;;(subjvar ?subjvar)
+		;;(aux -)   c.f., It had gone bad
+		(gap ?gap)
+		(ellipsis -)
+		))
+     (adjp (ARGUMENT (% NP (sem ?sem))) 
+      (SEM ($ f::abstr-obj (F::type (? ttt ONT::position-reln ont::domain-property))))
+      (GAP -)
+      ;; (subjvar ?subjvar)
+      (SET-MODIFIER -)  ;; mainly eliminate numbers 
+      (ARG ?npvar) (VAR ?mod)
+      ;;(role ?advrole) 
+      )
+     (add-to-conjunct (val (RESULT ?mod)) (old ?con) (new ?new))
+     )
+
      
 
       ;;  resultative construction using adverbs: e.g., sweep the dust into the corner
@@ -527,7 +555,8 @@
 		(DOBJ (% NP (Var ?npvar) (sem ?sem)))
 		(constraint ?con) (tma ?tma) (result-present -)
 		;;(subjvar ?subjvar)
-		(aux -) (gap ?gap)
+		;;(aux -) 
+		(gap ?gap)
 		(ellipsis -)
 		))
 

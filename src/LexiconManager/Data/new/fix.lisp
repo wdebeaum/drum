@@ -19,7 +19,8 @@
   (W::fix
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090522 :comments nil :vn ("price-54.4") :wn ("fix%2:36:01"))
-     (LF-PARENT ONT::control-manage)
+;     (LF-PARENT ONT::control-manage)
+     (LF-PARENT ONT::manipulate)
      (example "fix the price")
      (TEMPL agent-affected-xp-templ)
      (PREFERENCE 0.96)

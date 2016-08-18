@@ -655,6 +655,7 @@
   (setq *active-SA-index* 0)
   (setq *initial-match-trees* nil)
   (setq *active-rules* nil)
+  (setq *inputQ* nil)
   (resetLFstore)
   )
 

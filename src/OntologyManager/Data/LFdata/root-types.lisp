@@ -44,6 +44,9 @@
 	      )
   )
 
+(define-type ONT::ELLIPSIS
+     :parent ONT::SITUATION-ROOT)
+
 (define-type ont::event-of-change 
      :parent ONT::SITUATION-ROOT
      :comment "Events that involve change or force: should ahve an AGENT or AFFECTED role"

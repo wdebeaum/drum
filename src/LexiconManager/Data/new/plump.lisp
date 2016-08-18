@@ -7,7 +7,8 @@
 (w::plump
  (senses
   ((meta-data :origin calo :entry-date 20040112 :change-date 20090504 :comments calo-y1script)
-   (LF-PARENT ONT::increase)
+;   (LF-PARENT ONT::increase)
+   (LF-PARENT ONT::swell)
    (example "plump the pillows")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
    (TEMPL AGENT-affected-XP-TEMPL)
@@ -21,7 +22,8 @@
 ((w::plump (w::up))
  (senses
   ((meta-data :origin calo :entry-date 20040112 :change-date 20090504 :comments calo-y1script)
-   (LF-PARENT ONT::increase)
+;   (LF-PARENT ONT::increase)
+   (LF-PARENT ONT::swell)
    (example "plump up the pillows")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
    (TEMPL AGENT-affected-XP-TEMPL)

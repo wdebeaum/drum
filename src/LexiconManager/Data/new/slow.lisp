@@ -22,7 +22,8 @@
      (wordfeats (W::morph (:forms (-vb) :nom (w::slow w::down))))
    (SENSES
     ((meta-data :origin coordops :entry-date 20070514 :change-date 20090504 :comments nil)
-     (LF-PARENT ONT::decrease)
+;     (LF-PARENT ONT::decrease)
+     (LF-PARENT ONT::decrease-speed)
      (TEMPL agent-templ)
      (example "slow down")
      )

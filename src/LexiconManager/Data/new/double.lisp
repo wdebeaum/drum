@@ -7,13 +7,13 @@
 (w::double
  (senses
   ((meta-data :origin calo :entry-date 20040112 :change-date 20090504 :comments calo-y1script)
-   (LF-PARENT ONT::increase)
+   (LF-PARENT ONT::double)
    (example "double the budget [to 3K]")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
    (TEMPL AGENT-affected-RESULT-OPTIONAL-TEMPL (xp (% W::PP (W::ptype W::to))))
    )
   ((meta-data :origin step :entry-date 20080626 :change-date 20090504 :comments nil)
-   (LF-PARENT ONT::increase)
+   (LF-PARENT ONT::double)
    (example "it doubled in size")
    (templ affected-theme-xp-optional-templ  (xp (% W::PP (W::ptype (? pt w::in W::with)))))
    )
@@ -27,7 +27,8 @@
    (SENSES
     ((meta-data :origin calo-ontology :entry-date 20060117 :change-date 20090731 :wn ("double%5:00:02:multiple:00") :comments caloy3)
      (example "a room with a double bed")
-     (LF-PARENT ONT::large)
+;     (LF-PARENT ONT::large)
+     (LF-PARENT ONT::size-val)
      )
     )
    )

@@ -37,7 +37,8 @@
   (W::SET
    (wordfeats (W::morph (:forms (-vb) :past W::set :ing W::setting)))
    (SENSES
-    ((lf-parent ont::change-device-state)
+    (;(lf-parent ont::change-device-state)
+     (lf-parent ont::manipulate)
      (TEMPL AGENT-affected-RESULT-TEMPL (xp (% w::pp (w::ptype w::to))))
      (Example "Set the knob [to VDC]")
      (meta-data :origin bee :entry-date 20040412 :change-date nil :comments test-s)    

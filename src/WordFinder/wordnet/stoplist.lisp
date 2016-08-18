@@ -2850,6 +2850,13 @@ to_it%4:02:00::
 to_that%4:02:00::
 walk_in%2:38:00::
 in_height%5:00:00:tall:00
+in_time%1:28:00::
+high-level%5:00:00:superior:01
+high-level%5:00:00:high:01
+low-level%5:00:00:low:02
+low-level%3:00:04::
+low-level%5:00:00:inferior:01
+low-level%5:00:00:low:01
 ")
 "List of WordNet sense keys for senses we should avoid using."
 )

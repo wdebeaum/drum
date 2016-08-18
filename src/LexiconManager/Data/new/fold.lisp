@@ -2,6 +2,18 @@
 ;;;; W::fold
 ;;;;
 
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :words (
+  (W::fold
+   (wordfeats (W::morph (:forms (-S-3P) :plur W::fold)))
+   (SENSES
+    ((LF-PARENT ONT::multiple)
+     (example "increase by two fold")
+     )
+    )
+   )
+))
+
 (define-words :pos W::v :templ AGENT-affected-XP-TEMPL
  :words (
   (W::fold
