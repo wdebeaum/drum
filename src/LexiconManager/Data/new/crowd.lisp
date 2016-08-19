@@ -31,11 +31,7 @@
      (LF-PARENT ONT::fill-container)
      (TEMPL agent-goal-affected-templ (xp (% w::pp (w::ptype (? t w::with))))) ; like pack
      )
-    ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("spray-9.7-1-1"))
-     (LF-PARENT ONT::fill-container)
-     (TEMPL agent-affected-goal-templ (xp (% w::pp (w::ptype (? t w::on w::into w::in))))) ; like cram
-     )
-    )
+    
    )
-))
+)))
 

@@ -36,7 +36,7 @@
 
 (define-type ONT::situation-object-modifier
  :parent ONT::PREDICATE
- :sem (F::ABSTR-OBJ (:default (F::GRADABILITY +) (F::scale F::other-scale) (f::intensity ont::hi)))
+ :sem (F::ABSTR-OBJ (:default (F::GRADABILITY +) (F::scale ont::other-scale) (f::intensity ont::hi)))
  :arguments ((:ESSENTIAL ONT::FIGURE ((? tt F::PHYS-OBJ F::situation)))
              )
  )
@@ -186,7 +186,8 @@
  :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation)) ;(F::type ont::event-of-action))) ; takes statives: This suffices for...
 ;;             (:REQUIRED ONT::VAL (F::Situation (F::aspect F::dynamic)))
 	     ;; purposes don't have to be dynamic -- e.g. to store something, to remember, etc.
-	     (:REQUIRED ONT::GROUND ((? xx F::Situation f::abstr-obj f::phys-obj) (F::scale (? !sc f::duration-scale))))
+;	     (:REQUIRED ONT::GROUND ((? xx F::Situation f::abstr-obj f::phys-obj) (F::scale (? !sc ont::duration-scale))))
+	     (:REQUIRED ONT::GROUND ((? xx F::Situation f::abstr-obj f::phys-obj) (F::scale -)))
 	     ;; a separate role because it will be lower priority
 ;	     (:required ont::obj-val (f::abstr-obj)) ;; needed for non-situation ont::vals -- e.g., hit return for more results
 	    ;; (:required ont::REASON (f::abstr-obj)) ;; needed for non-situation ont::vals -- e.g., hit return for more results

@@ -35,6 +35,12 @@
      (example "he went jogging")
      (templ agent-effect-subjcontrol-templ (xp (% W::VP (W::vform W::ing))))
      (meta-data :origin chf :entry-date 20070904 :change-date nil :comments nil))
+    
+    ((meta-data :origin monroe :entry-date 20031217 :change-date nil :comments s15)
+     (lf-parent ont::become)
+     (example "The meat has gone bad")
+     (templ affected-pred-templ)
+     )
      
     ((lf-parent ont::execute)
      (example "he went for a walk")

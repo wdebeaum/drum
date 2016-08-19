@@ -2,6 +2,7 @@
 ;;;; W::ENOUGH
 ;;;;
 
+#||
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :tags (:base500)
  :words (
@@ -22,6 +23,7 @@
     )
    )
 ))
+||#
 
 (define-words :pos W::adv :templ DISC-PRE-TEMPL
  :tags (:base500)
@@ -29,19 +31,24 @@
   ;; Moved words from below
   (W::ENOUGH
    (SENSES
-    ((LF-PARENT ONT::degree-modifier-med)
+    ((LF-PARENT ONT::adequate)
      (TEMPL PRED-S-POST-TEMPL)
      (example "I've talked about it enough")
      (PREFERENCE 0.97)  ;; prefer postpositive interp if available
      )
-   ((LF-PARENT ONT::enough-val)
+   ((LF-PARENT ONT::adequate)
      (templ postpositive-adv-optional-xp-templ)
      (meta-data :origin calo :entry-date 20050216 :change-date nil :comments caloy2)
-     (example "is it quiet enough")
+     (example "is it quiet enough (for you)")
+     )
+   ((LF-PARENT ONT::adequate)
+     (templ postpositive-adv-xp-templ (xp (% w::cp (W::ctype w::s-to))))
+    (example "is it quiet enough to sing")
      )
     )
    )
 ))
+
 
 (define-words :pos W::quan :boost-word t
  :tags (:base500)
@@ -52,12 +59,12 @@
     ((LF ONT::enough)
      (example "enough of the trucks")
      (non-hierarchy-lf t)(TEMPL quan-cardinality-pl-templ) 
-     (SYNTAX (W::agr (? agr w::3s W::3p)) (w::status ont::indefinite-plural))
+     (SYNTAX (W::agr (? agr w::3s W::3p)) (w::status ont::indefinite-plural) (W::negatable +))
      )
     ((LF ONT::enough)
      (example "enough of the water")
      (non-hierarchy-lf t)(TEMPL quan-mass-TEMPL)
-     (SYNTAX (W::agr (? agr W::3s)) (w::status ont::indefinite)) ; -- never plural if mass
+     (SYNTAX (W::agr (? agr W::3s)) (w::status ont::indefinite) (W::negatable +)) ; -- never plural if mass
      )
     )
    )

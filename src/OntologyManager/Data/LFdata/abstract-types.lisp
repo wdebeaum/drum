@@ -1666,7 +1666,7 @@
 (define-type ONT::LENGTH-UNIT
  :wordnet-sense-keys ("linear_measure%1:23:00" "linear_unit%1:23:00" "week%1:28:00" "hebdomad%1:28:00")
  :parent ONT::tangible-unit
- :sem (F::Abstr-obj (F::Scale Ont::length-scale))
+ :sem (F::Abstr-obj (F::Scale Ont::length))
  )
 
 ;; acre, sqare feet
@@ -3989,19 +3989,23 @@
   )
 
 (define-type ont::weight-scale
-  :parent ont::size-scale
+;  :parent ont::size-scale
+  :parent ont::scale
   )
 
 (define-type ont::linear-scale
-  :parent ont::size-scale
+;  :parent ont::size-scale
+  :parent ont::scale
   )
  
 (define-type ont::area-scale
-  :parent ont::size-scale
+;  :parent ont::size-scale
+  :parent ont::scale
   )
 
 (define-type ont::volume-scale
-  :parent ont::size-scale
+;  :parent ont::size-scale
+  :parent ont::scale
   )
 
 (define-type ont::temperature-scale
@@ -4009,10 +4013,15 @@
   )
 
 (define-type ont::money-scale
-  :parent ont::size-scale
+;  :parent ont::size-scale
+  :parent ont::scale
   )
 
 (define-type ont::rate-scale
+  :parent ont::scale
+  )
+
+(define-type ont::ratio-scale
   :parent ont::scale
   )
 
@@ -4029,7 +4038,8 @@
   )
 
 (define-type ont::time-measure-scale
-  :parent ont::scale
+;  :parent ont::scale
+  :parent ont::linear-scale
   )
 
 (define-type ont::duration-scale
@@ -4037,7 +4047,8 @@
   )
 
 (define-type ont::age-scale
-  :parent ont::scale
+;  :parent ont::scale
+  :parent ont::linear-scale
   )
 
 (define-type ont::other-scale

@@ -744,7 +744,7 @@
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
 	(LOBJ (% W::NP) ONT::affected)
-	(LCOMP (:parameter xp (:default (% W::PP (W::ptype W::to)))) ONT::RESULT)
+	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln)))) (w::arg ?dobjvar)))) ONT::RESULT)
 	))
 
       (AGENT-NEUTRAL-TOAFFECTED-TEMPL
@@ -3435,7 +3435,17 @@
 	  (W::ATYPE W::postpositive) (W::ARG ?arg))
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::FIGURE)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ONT::GROUND optional)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ONT::STANDARD optional)
+    ))
+
+ ;;;;; if word is postpositive and takes oblig subcats
+  ;;;;; "money enough" "money enough for all"
+  (postpositive-adj-xp-templ
+   (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ALLOW-DELETED-COMP +) 
+	  (W::ATYPE W::postpositive) (W::ARG ?arg))
+   (ARGUMENTS
+    (ARGUMENT (% W::NP) ONT::FIGURE)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ONT::STANDARD)
     ))
 
   ;; quiet enough for all
@@ -3443,7 +3453,15 @@
    (SYNTAX (W::SORT W::PRED) (W::ALLOW-DELETED-COMP +) (W::ATYPE W::postpositive) (W::ARG ?arg))
    (ARGUMENTS
     (ARGUMENT (% (? W::argcat W::ADVBL W::ADJP)  (w::set-modifier -) (W::sort ?sort)) ONT::FIGURE)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::GROUND optional)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::STANDARD optional)
+    ))
+
+ ;; quiet enough to sing a song
+  (postpositive-adv-xp-templ
+   (SYNTAX (W::SORT W::PRED) (W::ALLOW-DELETED-COMP +) (W::ATYPE W::postpositive) (W::ARG ?arg))
+   (ARGUMENTS
+    (ARGUMENT (% (? W::argcat W::ADVBL W::ADJP)  (w::set-modifier -) (W::sort ?sort)) ONT::FIGURE)
+    (subcat (:parameter xp (:default (% W::cp))) ONT::STANDARD)
     ))
   
 ;   (binary-constraint-S-or-NP-decl-templ

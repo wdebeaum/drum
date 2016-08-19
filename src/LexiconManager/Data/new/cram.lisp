@@ -15,7 +15,7 @@
      (LF-PARENT ONT::Fill-container)
      (example "cram the oranges in/into/on the truck")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL agent-affected-goal-templ (xp (% W::PP (W::ptype (? t w::on W::into W::in)))))
+     (TEMPL agent-affected-goal-templ)
      )
     )
    )

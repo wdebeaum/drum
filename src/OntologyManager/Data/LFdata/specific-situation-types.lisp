@@ -44,9 +44,9 @@
   :sem (F::SITUATION (F::Cause F::Agentive) (F::Trajectory -) (F::Aspect F::Dynamic))
   :arguments (
 ;	      (:optional ont::cost (f::abstr-obj (f::scale f::money-scale)) (:implements money))
-	      (:optional ont::EXTENT (f::abstr-obj (f::scale f::money-scale)) (:implements money))
+	      (:optional ont::EXTENT (f::abstr-obj (f::scale ont::money-scale)) (:implements money))
 	     (:REQUIRED ONT::affected ((? th11 F::Phys-obj F::Abstr-obj F::situation)) (:implements goods))
-	     (:optional ont::neutral (f::abstr-obj (f::scale f::money-scale)) (:implements money))
+	     (:optional ont::neutral (f::abstr-obj (f::scale ont::money-scale)) (:implements money))
 	     (:optional ont::result ((? rcp f::phys-obj f::abstr-obj) (f::intentional +)))
 	     (:optional ont::source ((? sc f::phys-obj f::abstr-obj))) ;; order the book from amazon dot com
              )
@@ -133,7 +133,7 @@
  :sem (F::Situation (F::Trajectory -)(F::Aspect F::dynamic))
  :arguments ((:OPTIONAL ONT::Source  ((? atp F::phys-obj F::abstr-obj) (F::object-function f::currency)))  ;; charge it to/take it from my card/account
 ;             (:OPTIONAL ONT::Cost (f::abstr-obj (F::scale F::money-scale)) (:implements money))
-             (:OPTIONAL ONT::EXTENT (f::abstr-obj (F::scale F::money-scale)) (:implements money))
+             (:OPTIONAL ONT::EXTENT (f::abstr-obj (F::scale ont::money-scale)) (:implements money))
 	     (:optional ont::neutral ) ;; the thing that was paid for
              )
  )
@@ -234,7 +234,7 @@
   :sem (F::SITUATION (F::Cause F::Agentive) (F::Trajectory -) (F::Aspect F::Dynamic))
   :arguments (
 ;	      (:optional ont::cost (f::abstr-obj (f::scale f::money-scale)) (:implements money))
-	      (:optional ont::EXTENT (f::abstr-obj (f::scale f::money-scale)) (:implements money))
+	      (:optional ont::EXTENT (f::abstr-obj (f::scale ont::money-scale)) (:implements money))
 	     (:REQUIRED ONT::affected((? th16 F::Phys-obj F::Abstr-obj f::situation)))
 	     )
   )
@@ -1837,7 +1837,7 @@
  :wordnet-sense-keys ("discharge%2:33:02" "do%2:41:03" "drive%2:42:00" "function%2:35:00" "idle%2:35:00")
  :parent ONT::event-of-state
  :arguments ((:REQUIRED ONT::neutral ((? t F::phys-obj F::abstr-obj )(f::intentional -)))
-	     (:optional ONT::extent (f::abstr-obj (f::scale f::rate-scale)))
+	     (:optional ONT::extent (f::abstr-obj (f::scale ont::rate-scale)))
              )
  )
 
@@ -2746,7 +2746,7 @@
  :sem (F::Situation (f::cause -) (f::trajectory -))
  :arguments ((:REQUIRED ONT::formal ((? ttp F::Situation F::phys-obj) (F::Aspect (? asp f::dynamic f::stage-level)))) 
 ;             (:REQUIRED ONT::Duration  (F::abstr-obj (F::scale F::duration-scale)))
-             (:REQUIRED ONT::EXTENT  (F::abstr-obj (F::scale F::duration-scale)))
+             (:REQUIRED ONT::EXTENT  (F::abstr-obj (F::scale ont::duration-scale)))
              ;;; it will take the truck 5 minutes [to arrive]
              (:OPTIONAL ONT::neutral (f::phys-obj))
              )
@@ -2768,7 +2768,7 @@
  :sem (F::Situation (F::Cause -) (F::Trajectory -))
  :arguments ((:REQUIRED ONT::Formal)
 ;             (:REQUIRED ONT::duration (F::abstr-obj (F::scale F::duration-scale)))
-             (:REQUIRED ONT::EXTENT (F::abstr-obj (F::scale F::duration-scale)))
+             (:REQUIRED ONT::EXTENT (F::abstr-obj (F::scale ont::duration-scale)))
 	     (:optional ont::agent ((? atp f::abstr-obj f::phys-obj) (f::intentional +)) (:implements ONT::affected))
              )
  )
@@ -2982,7 +2982,7 @@
  :sem (F::SITUATION (F::Aspect F::Dynamic))
  :arguments (
              (:OPTIONAL ONT::Agent)
-             (:OPTIONAL ONT::RESULT (f::abstr-obj (f::scale f::color-scale)))
+             (:OPTIONAL ONT::RESULT (f::abstr-obj (f::scale ont::color-scale)))
              )
  )
 
@@ -3738,7 +3738,7 @@
  :arguments ((:OPTIONAL ONT::Agent (F::Phys-obj (F::Mobility F::Movable)))
 ;             (:OPTIONAL ONT::time-duration-rel (F::time (F::time-function f::time-unit)))
 ;	     (:OPTIONAL ONT::time-duration-rel (F::abstr-obj (F::scale f::duration-scale)))
-	     (:OPTIONAL ONT::EXTENT (F::abstr-obj (F::scale f::duration-scale)))
+	     (:OPTIONAL ONT::EXTENT (F::abstr-obj (F::scale ont::duration-scale)))
              ;;; wait for john
              (:OPTIONAL ONT::Formal (F::phys-obj))
              (:OPTIONAL ONT::effect (F::situation))

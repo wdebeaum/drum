@@ -32,7 +32,7 @@
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("spray-9.7-1-1"))
      (LF-PARENT ONT::fill-container)
-     (TEMPL agent-affected-goal-optional-templ (xp (% w::pp (w::ptype (? t w::on w::into w::in))))) ; like pack
+     (TEMPL agent-affected-goal-optional-templ)
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("spray-9.7-1-1"))
      (LF-PARENT ONT::fill-container)

@@ -522,9 +522,10 @@
 ; figure is trajectory, ground is within the trajectory
 ; via, by way of
 (define-type ont::obj-in-path
-; :parent ont::dir-in-terms-of-obj
- :parent ont::path
- )
+    :arguments ((:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj F::Situation)))
+		(:essential ONT::GROUND  (F::Phys-obj (F::form F::object)))) 
+    :parent ont::path
+    )
 
 
 ;; ***************************************************************
@@ -652,7 +653,7 @@
  :parent ONT::PREDICATE
  :sem  (F::abstr-obj)
  :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
-	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::length-scale)))
+	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::length)))
              )
  )
 
@@ -660,7 +661,7 @@
 (define-type ONT::spatial-distance-rel
  :parent ONT::extent-predicate
  :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (f::trajectory +) (F::aspect (? asp F::unbounded F::stage-level)) (F::time-span F::extended)))
-	      (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::length-scale)))
+	      (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::length)))
              )
  )
 
@@ -716,7 +717,7 @@
  :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::situation f::time)))
 ;             (:essential ont::GROUND (f::abstr-obj (F::Scale Ont::duration-scale) (F::type ont::time-unit)))
 ;             (:essential ont::GROUND ((? gd F::abstr-obj F::time) (F::time-scale f::interval)))
-             (:essential ont::GROUND ((? gd F::abstr-obj F::time) (F::Scale Ont::duration-scale) (F::time-scale f::interval) (F::type ont::time-unit)))
+             (:essential ont::GROUND (F::abstr-obj (F::Scale Ont::duration-scale) (F::type ont::time-unit)))
   ))
 
 #|

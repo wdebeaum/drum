@@ -11,7 +11,7 @@
     ;;;; Swier -- Having just crossed Death Valley, I would like to have some water.
     ((LF-PARENT ONT::want)
      (SEM (F::Aspect F::indiv-level))
-     (TEMPL neutral-action-SUBJCONTROL-TEMPL)
+     (TEMPL experiencer-action-SUBJCONTROL-TEMPL)
      (example "I would like to have some water")
      )
     ((LF-PARENT ONT::appreciate)

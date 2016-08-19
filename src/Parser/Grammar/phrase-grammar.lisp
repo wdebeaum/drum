@@ -615,7 +615,6 @@
      (head (n (sort reln) (lf ?lf)
 	      (subcat ?!subcat)
 	      (subcat (% ?scat (var ?v1) (sem ?ssem) (lf ?lf2) (gap ?gap) )) ;;(sort (? srt pred individual set comparative reln))))
-;;	      (subcat (% ?scat (var ?v1) (sem ?ssem) (lf ?lf2) (gap -) )) ;;(sort (? srt pred individual set comparative reln))))
 	      (SEM ($ ?type (f::scale ?sc)))
 	      (subcat-map ?smap)))
      ?!subcat
@@ -1014,15 +1013,15 @@
      -adj-unit-modifier> 1.0
      (ADJP (sort unit-measure) (var ?adjv) 
       (LF (% PROP (constraint (& (GROUND ?adjval)))))
-      (sem ($ F::ABSTR-OBJ (F::scale F::linear-scale))))
-     (head (ADJ (LF ?lf)  (VAR ?v) (SUBCAT -) (sem ($ F::ABSTR-OBJ (F::scale (? scale F::linear-scale))))
+      (sem ($ F::ABSTR-OBJ (F::scale (? sc ont::scale ont::linear-d)))))
+     (head (ADJ (LF ?lf)  (VAR ?v) (SUBCAT -) (sem ($ F::ABSTR-OBJ (F::scale (? sc ont::scale ont::linear-d))))
 		(SORT PRED) ;;(ARGUMENT-MAP ?argmap)
 		(transform ?transform) (constraint ?con)
 	    (atype ?atype) (comparative ?cmp)
 	    (post-subcat -)
 	    ))
      (append-conjuncts (conj1 ?restr) (conj2 ?r) (new ?tempcon))
-     (append-conjuncts (conj1 (& (FIGURE ?arg) (GROUND ?adjval) (scale (? scale F::linear-scale))))
+     (append-conjuncts (conj1 (& (FIGURE ?arg) (GROUND ?adjval) (scale (? sc ont::scale ont::linear-d))))
 		       (conj2 ?tempcon) (new ?newc)))
 
 ;;  a (ten foot)-high fence, a three mile wide path, .. 
@@ -1033,16 +1032,16 @@
      -adj-unit-modifier-HYPHEN> 1.1
      (ADJP (sort unit-measure) (var ?adjv) 
       (LF (% PROP (constraint (& (GROUND ?adjval)))))
-      (sem ($ F::ABSTR-OBJ (F::scale F::linear-scale))))
+      (sem ($ F::ABSTR-OBJ (F::scale (? sc ont::scale ont::linear-d)))))
      (word (lex w::punc-minus))
-     (head (ADJ (LF ?lf)  (VAR ?v) (SUBCAT -) (sem ($ F::ABSTR-OBJ (F::scale (? scale F::linear-scale))))
+     (head (ADJ (LF ?lf)  (VAR ?v) (SUBCAT -) (sem ($ F::ABSTR-OBJ (F::scale (? sc ont::scale ont::linear-d))))
 		(SORT PRED) ;;(ARGUMENT-MAP ?argmap)
 		(transform ?transform) (constraint ?con)
 	    (atype ?atype) (comparative ?cmp)
 	    (post-subcat -)
 	    ))
      (append-conjuncts (conj1 ?restr) (conj2 ?r) (new ?tempcon))
-     (append-conjuncts (conj1 (& (FIGURE ?arg) (GROUND ?adjval) (scale (? scale F::linear-scale))))
+     (append-conjuncts (conj1 (& (FIGURE ?arg) (GROUND ?adjval) (scale (? sc ont::scale ont::linear-d))))
 		       (conj2 ?tempcon) (new ?newc)))
 
    ;; adjectives with deleted complements  JFA 8/02
