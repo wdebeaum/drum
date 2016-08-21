@@ -287,7 +287,7 @@
 ;; and makes it into a structure
 (defun make-typed-sem (tsem)
   (when tsem
-    (let* ((type (car tsem))
+    (let* ((type (make-var-unique (car tsem)))
 	   (flist (cdr tsem))
 	   (required (cdr (assoc :required flist)))
 	   (default (cdr (assoc :default flist)))
@@ -302,6 +302,15 @@
      :features required
      :defaults default)
     )))
+
+(defun make-var-unique (class)
+  (if (and (consp class)
+	   (eq (car class) '?))
+      (list* '? (make-name-unique (cadr class)) (cddr class))
+      class))
+
+(defun make-name-unique (id)
+  (gensym (symbol-name id)))
   
 
 ;; takes an untyped feature list in the format type <feature list>
