@@ -166,7 +166,10 @@
     ))
 
 (defun length-score (i)
-  (compute-length-score (or (entry-size i) 1)))
+  (compute-length-score (or (entry-size i) 
+			    (if (and (numberp (entry-end i)) (numberp (entry-start i)))
+				(- (entry-end i) (entry-start i)))
+			    1)))
 
 (defun length-entry-score (e)
   "computes a factor based on average prob. of a constituent of length L"
@@ -174,11 +177,11 @@
 
 (defun compute-length-score (size)
   "computes a factor based on average prob. of a constituent of length L"
-  (let* ((number-constit (or size 1));; (/ size *word-length*))
+  (let* ((number-constit (/ (or size 1) *word-length*))
 	 (raw-factor (compute-log-factor number-constit))
 	 (over-one (- raw-factor 1))
 	 (factor (if (>= *score-length-multiplier* 1)
-		     raw-factor
+		     	     raw-factor
 		     (if (> *score-length-multiplier* 0)
 			 (+ 1 (* *score-length-multiplier* over-one))
 			 1))))

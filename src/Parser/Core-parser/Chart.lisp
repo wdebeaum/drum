@@ -447,7 +447,9 @@ separate instances of the chart/parser.")
 		:prob (adjust-prob-based-on-skeleton-score prob skeleton)
 		:prob-aux prob-aux 
 		:first-cat first-cat
-		:size (add-up-sizes constit start end)
+		:size (if (and start end)
+			  (- end start)
+			  (add-up-sizes constit start end)) ;; I think this is obsolete
 		:skeleton skeleton)
   ))
 
