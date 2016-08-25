@@ -197,6 +197,8 @@
 (define-type ONT::row-formation
  :wordnet-sense-keys ("row%1:14:00" "row%1:17:00")
  :parent ONT::formation
+ :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj))  ; to distinguish between steps as steps in a plan and steps in a staircase
+             )
  )
 
 ;; crowd, audience
@@ -668,6 +670,8 @@
 (define-type ONT::COLOR-VAL
  :parent ONT::visible-PROPERTY-VAL
  :sem (F::Abstr-obj (F::MEasure-function F::VALUE) (f::scale ont::color-scale))
+ :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj))  ; to distinguish between steps as steps in a plan and steps in a staircase
+             )
  )
 
 (define-type ONT::red

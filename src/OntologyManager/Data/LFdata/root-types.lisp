@@ -68,7 +68,7 @@
      :parent ONT::event-of-change
      :comment "events that involve :agent (whether intentional or not)"
      :sem (F::Situation (F::cause F::force))
-     :arguments ((:essential ONT::agent ((? cau2 F::situation F::Abstr-obj f::phys-obj)))))
+     :arguments ((:essential ONT::agent ((? cau2a F::situation F::Abstr-obj f::phys-obj)))))
 
 #||(define-type ont::event-of-agent-interaction 
      :parent ONT::event-of-action
