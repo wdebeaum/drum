@@ -12,6 +12,25 @@
 
 (parser::augment-grammar
  '((headfeatures
+    (vp vform var neg sem iobj dobj comp3 part cont aux tense-pro gap subj subjvar modal auxname lex headcat transform subj-map template complex)
+    )
+
+ ;; untensed vp
+   ;; test: the dog chased the cat to scare it.
+   ((vp (lf (% prop (class ?c) (var ?v) (constraint ?constraint) (transform ?transf) (tma ?newtma) (sem ?sem)))
+       (agr ?agr) (class ?c) (var ?v) (constraint ?constraint) (tma ?newtma) (sem ?sem) (transform ?transf) )
+     -vp-tns-> 1.0
+     (head
+      (vp- (class ?c) (constraint ?constraint) (tma ?tma) (subj ?subj) 
+       (vform (? vf base passive ing pastpart))
+       (advbl-needed -)
+       ))
+    (add-to-conjunct (val (vform ?vf)) (old ?tma) (new ?newtma))
+    )))
+
+
+(parser::augment-grammar
+ '((headfeatures
     (vp vform var agr neg sem iobj dobj comp3 part cont aux tense-pro gap subj subjvar modal auxname lex headcat transform subj-map template complex)
     (vp- vform var agr neg sem iobj dobj comp3 part cont   tense-pro aux modal auxname lex headcat transform subj-map advbl-needed
 	 passive passive-map template) 
@@ -70,7 +89,7 @@
    ;; the vocative feature prevents multiple vocative constructs, esp one at beginning and one at end
    ((utt (var ?v) (vocative +) (lf (% speechact (var ?sv) (class ?cl) (constraint ?constraint))))
     -vocative-utt> .95    ;; nb: lowered below np-conj rule to eliminate bad interps of utterances like 'john and mary"
-    (head (utt (focus ?foc) (var ?v) (vocative -) (lf (% speechact (var ?sv) (class (? cl ont::sa_tell ont::sa_yn-question ont::sa-request)) (constraint ?con)))
+    (head (utt (focus ?foc) (var ?v) (vocative -) (lf (% speechact (var ?sv) (class (? cl ont::sa_tell ont::sa_yn-question ont::sa_request)) (constraint ?con)))
 	  (punctype -)))
     (np (var ?nv) (lf (% description (status (? nm ont::gname ont::name))))
 	(sem ($ f::phys-obj (f::intentional +) (f::object-function f::occupation)))
@@ -1036,18 +1055,7 @@
      (add-to-conjunct (val (tense ?vf)) (old ?tma1) (new ?newtma))
      ) 
    
-   ;; untensed vp
-   ;; test: the dog chased the cat to scare it.
-   ((vp (lf (% prop (class ?c) (var ?v) (constraint ?constraint) (transform ?transf) (tma ?newtma) (sem ?sem)))
-       (class ?c) (var ?v) (constraint ?constraint) (tma ?newtma) (sem ?sem) (transform ?transf) )
-     -vp-tns-> 1.0
-     (head
-      (vp- (class ?c) (constraint ?constraint) (tma ?tma) (subj ?subj) 
-       (vform (? vf base passive ing pastpart))
-       (advbl-needed -)
-       ))
-    (add-to-conjunct (val (vform ?vf)) (old ?tma) (new ?newtma))
-    )
+  
     
      ;; vp rules 
      ;; test: he said the dog barked.

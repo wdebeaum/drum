@@ -2650,6 +2650,10 @@
      (append-conjuncts (conj1 ?cons) (conj2 (& (ont::affected ?arg))) (new ?newc))
      )
 
+     ; may have been subsumed by -VP-PASTPRT-ADJP>
+     ; If using this rule, need to make part "-" or check for matching part
+     ; Also note that VP- doesn't have headfeatures here
+     #|
     ;; TEST: the loaded truck
     ;; bare passive form as an adjective
     ;; Verb must be passive, and require no complement  
@@ -2663,6 +2667,7 @@
               (VAR ?v)
               )
       ))
+     |#
 
     ;; TEST: the computer-generated dog
     ((ADJP (VAR ?v)  (arg ?dobj) (class ?lf) (atype w::central) (argument (% NP (var ?dobj)))
@@ -2776,6 +2781,7 @@
               (VAR ?v) (transform ?transform)
 ;	      (prefix ?prefix)
 	      (restr ?prefix)
+	      (part (% -))
               )
            )
      (append-conjuncts (conj1 ?prefix) (conj2 (& (?!reln ?arg)))
@@ -2800,6 +2806,7 @@
               (VAR ?v) (transform ?transform)
 ;	      (prefix ?prefix)
 	      (restr ?prefix)
+	      (part (% -))
               )
            )
      (append-conjuncts (conj1 ?prefix) (conj2 (& (?!reln ?arg)))
@@ -2813,7 +2820,7 @@
 
 (parser::augment-grammar 
   '((headfeatures
-     (NP VAR SEM LEX wh case lex headcat transform postadvbl)
+     (NP VAR SEM LEX wh lex headcat transform postadvbl)
      (SPEC POSS POSS-VAR POSS-SEM  transform) 
      (ADVBL VAR SEM LEX ATYPE lex headcat transform neg)
      (ADVBL-R VAR SEM LEX ATYPE argument wh lex headcat transform)
@@ -3002,7 +3009,7 @@
 		(generated -)
 		))
 ;     (pp (ptype ?nompreps) (sem ?dobjsem) (agr ?agr) (gap -) (var ?dv))
-     (pp (ptype ?nompreps) (sem ?dobjsem) (gap -) (var ?dv) (adjpp -))
+     (pp (ptype ?nompreps) (sem ?dobjsem) (gap -) (var ?dv))
      (add-to-conjunct (val (& (?!dmap ?dv))) (old ?restr) (new ?newrestr))
      )
 
@@ -3425,7 +3432,7 @@
     ;;  Words like there, here, tomorrow (no WH terms) are treated as PRO forms
 
     ((NP (PP-WORD +) (PRO +) (SORT (? srt pred set)) (VAR ?v) (SEM ?s) (lex ?lex)
-         (role ?lf) (agr (? agr 3s 3p -))
+         (role ?lf) (agr (? agr 3s 3p -)) (case ?case)
          (LF (% Description (status ont::pRO) (var ?v) (Class ?lf) (SORT (?agr -))
                 (Lex ?lex) (sem ?sem) (transform ?transform) (constraint (% & (proform ?lex)))
                 )))

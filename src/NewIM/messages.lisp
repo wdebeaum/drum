@@ -38,7 +38,8 @@
 	(reply-to-msg msg 'tell :content
 		      (list 'REPLY :content (list 'RESULT :content 
 						  (if (or (null *inputQ*)
-							  (and (eq (list-length *inputQ*) 1) (eq (caar *inputQ*) 'utterance-end)))
+							  (and (eq (list-length *inputQ*) 1) 
+							       (eq (caar *inputQ*) 'utterance-end)))
 						      'NO
 						      'YES)
 						  :context 'dummy)))

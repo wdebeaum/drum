@@ -57,10 +57,15 @@
 (defun make-lf-list (rec)
   "extracts the full LFs for the specified IDS in the REC"
   (mapcar #'(lambda (e)
-	    
+	      (let ((rlf (referent-lf e)))
+		(if (member ':start rlf)
+		    rlf		
 		    (append 
-		     (referent-lf e)
-		     (list :start (referent-start e) :end (referent-end e))))
+		     rlf
+		     (list :start (referent-start e) :end (referent-end e)))
+		    )
+		)
+	      )
 	  
 	  (utt-record-referring-expressions rec)))
 

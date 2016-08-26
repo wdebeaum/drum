@@ -364,7 +364,9 @@
      (prep (LEX ?pt) (headcat ?hc))
      (head (cardinality (lf ?lf)  (var ?v)))
       )
-    
+
+    ; "in" already has a sense that takes an adjective
+    #|
     ;; rule for prepositional subcats with adjectives, such as
     ;; TEST: classify this as benign
     ;; I'd like one in red
@@ -375,6 +377,7 @@
      (prep (LEX ?pt) (headcat ?hc))
      (head (adjp (lf ?lf) (case (? case obj -))  (var ?v) (arg ?arg) (set-modifier -)))  ;; set-modifier - excludes numbers
       )
+    |#
 
     ))  ;; end ADVERBIALS
 

@@ -489,7 +489,8 @@
  :parent ONT::physical-process
  :sem (F::Situation)
  :arguments ((:REQUIRED ONT::agent (F::phys-obj (F::origin F::living)))
-             (:OPTIONAL ONT::affected (F::phys-obj (F::form F::substance))) ;; e.g. an excretion
+	     (:REQUIRED ONT::affected (F::phys-obj (F::origin F::living)))
+             (:OPTIONAL ONT::affected1 (F::phys-obj (F::form F::substance))) ;; e.g. an excretion
 ;	     (:OPTIONAL ONT::property (f::abstr-obj)) ;; he woke up happy
              )
  )
