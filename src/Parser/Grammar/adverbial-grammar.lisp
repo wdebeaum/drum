@@ -196,7 +196,7 @@
     ;;  BINARY-CONSTRAINT adverbials that allow omitted objects, e.g., nearby, near, below, about, ...
     ;; TEST: The dog chased the cat below.
     ((ADVBL (ARG ?arg) (QTYPE ?wh) (FOCUS ?var)
-	    (LF (% *pro* (VAR ?v) (CLASS ?lf) (CONSTRAINT (& (?submap (% *PRO* (var *) (CLASS ONT::REFERENTIAL-SEM)
+	    (LF (% PROP (VAR ?v) (CLASS ?lf) (CONSTRAINT (& (?submap (% *PRO* (var *) (CLASS ONT::ANY-SEM)
 									(SEM ?subcatsem))) (?argmap ?arg)))
                    (sem ?sem) (transform ?trans)))
       ;;(SORT CONSTRAINT)
