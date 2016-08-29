@@ -876,7 +876,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	 (retrieved-sense-info trips-sense-info)
 	 res new-wdef tagged-ont-types part-of-speech-tags domain-tagged-senses replace-vbn-adj
 	 )
-    (print-debug "GET-WORD-DEF: TRIPS senses for ~S are ~S~% tagged senses are ~S~%" w trips-sense-info tagged-senses)
+    (print-debug "~%GET-WORD-DEF: TRIPS senses for ~S are ~S~% tagged senses are ~S~%" w trips-sense-info tagged-senses)
     (cond ((not wdef)
 	   (incf *unknown-word-tokens*)
 	   (pushnew w *unknown-words* :test #'equal)

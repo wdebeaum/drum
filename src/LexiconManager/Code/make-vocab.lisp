@@ -565,20 +565,29 @@
      )
     ))
 
+(defun add-sem-in-template (spec var)
+  (if var
+      (list '? (strip-variable-sign var) spec)
+      spec))
+
 (defun generate-subcat-features (synsemmap roles)
   "Given a synsemmap, generates a corresponding subcat argument for the lexical entry"
   (let* ((argname (word-synsem-map-name synsemmap))
 	 ;; we need to take special care so that if we don't
 	 ;;(semvar (right-var argname '? 'sem))
+	 (sem-in-template (cadr (assoc 'w::sem (word-synsem-map-syntfeat synsemmap))))
 	 (semrestr (get-sem-for-synsemmap synsemmap roles))
 	 (semfeature (when (not (word-synsem-map-maponly synsemmap))
 		       (list 'w::sem
 			     (if semrestr
-				 (make-type-spec semrestr 
-						 :semvar (right-var argname '? 'type) 
-						 :feature-list-sign '$)
-			       (right-var argname '? 'ssem))
-			     )))
+				 (add-sem-in-template 
+				  (make-type-spec semrestr 
+						  :semvar (right-var argname '? 'type) 
+						  :feature-list-sign '$)
+				  sem-in-template)
+			       (right-var argname '? (if sem-in-template (strip-variable-sign sem-in-template)
+							 'ssem))
+			     ))))
 	 )
     
     

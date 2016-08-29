@@ -215,7 +215,7 @@
       (AGENT-AFFECTED-effect-Objcontrol-pred-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::AGENT)
-	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar) (w::sort (? !xx W::unit-measure))) ONT::affected)
+	(LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar) (w::sort (? !xx W::unit-measure))) ONT::affected)
     	(LCOMP (% W::PRED (W::filled -) (W::gap ?gap) (W::argument (% W::np (W::sem ?dobjsem) (W::lex ?dobjlex) (W::var ?dobjvar))))
 	       ont::formal)
 	))
