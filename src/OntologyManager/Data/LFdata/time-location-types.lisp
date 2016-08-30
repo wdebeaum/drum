@@ -756,6 +756,26 @@
  :parent ONT::FREQUENCY
  )
 
+(define-type ONT::always
+ :parent ONT::FREQUENCY
+ )
+
+(define-type ONT::often
+ :parent ONT::FREQUENCY
+ )
+
+(define-type ONT::sometimes
+ :parent ONT::FREQUENCY
+ )
+
+(define-type ONT::seldom
+ :parent ONT::FREQUENCY
+ )
+
+(define-type ONT::never
+ :parent ONT::FREQUENCY
+ )
+
 ;;; for things like per day, a day - must apply to bounded events (no quite stong enough, but as close as we can get with the features we have)
 (define-type ONT::iteration-period
  :parent ONT::temporal-location
@@ -794,6 +814,11 @@
  :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
              )
  )
+
+(define-type ONT::event-time-rel-now
+ :parent ONT::event-time-rel
+ )
+
 
 ;; event times not including situations
 (define-type ONT::event-time

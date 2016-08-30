@@ -69,8 +69,10 @@
     :WN))
 
 (defmacro ld::define-type (type &key parent sem arguments coercions wordnet-sense-keys comment definitions entailments)
-  ;; TODO include comment, definitions, entailments
+  ;; TODO include definitions, entailments
   `(ld::concept ,type
+    ,@(when comment
+      `((ld::comment ,comment)))
     (ld::provenance TRIPS)
     ,@(when parent
       `((ld::inherit ,parent)))
@@ -115,6 +117,8 @@
 		  )
 	      )))
     ;; FIXME what about other features?
+    (when (util::is-variable-name syn-cat)
+      (setf syn-cat t))
     (cond
       ((null head-words)
         syn-cat)
@@ -252,6 +256,16 @@
 	    (cdr templ-call))
         ))
 
+(defun meta-data-comments-to-string (comments)
+  "Convert whatever is in the :comments field of the meta-data of a TRIPS sense
+   to a string."
+  (typecase comments
+    (string comments)
+    (symbol (symbol-name comments))
+    (list (format nil "~{~a~^ ~}" (mapcar #'meta-data-comments-to-string comments)))
+    (otherwise (format nil "~s" comments))
+    ))
+
 (defmacro ld::define-words (&key pos templ boost-word tags words)
   (when templ
     (setf templ (list (util::convert-to-package templ :ONT))))
@@ -327,17 +341,23 @@
 			        ,effective-templ)
 			      *current-provenance*)))
 			,@(when meta-data
-			  (destructuring-bind (&key vn &allow-other-keys)
+			  (destructuring-bind (&key vn comments &allow-other-keys)
 			      ; TODO more meta-data fields
 			      ; in particular :wn, but it's tricky because it
 			      ; often refers to a sense of the wrong word
 			      meta-data
-			    (when vn
-			      `((ld::overlap
-				 ,@(mapcar (lambda (str)
-					     (intern (string-upcase str) :vn))
-					   vn)
-				 )))))
+			    `(
+			      ,@(when vn
+				`((ld::overlap
+				   ,@(mapcar (lambda (str)
+					       (intern (string-upcase str) :vn))
+					     vn)
+				   )))
+			      ,@(when (and comments
+					   (not (eq 'ld::nil comments)))
+			        `((ld::comment
+				   ,(meta-data-comments-to-string comments))))
+			      )))
 			,@(mapcar
 			    (lambda (ex)
 			      `(ld::example (ld::text ,ex)))

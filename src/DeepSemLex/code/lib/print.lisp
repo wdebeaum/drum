@@ -135,6 +135,7 @@
 	,(intern (symbol-name (type-of c)))
 	,@(unless (anonymous-concept-p c) (list (name c)))
 	,@(when (aliases c) (list (cons (repkg 'aliases) (aliases c))))
+	,@(when (comment c) (list (list (repkg 'comment) (comment c))))
 	,@provenance
 	,@(mapcar (lambda (def)
 		    (cons (repkg 'definition) (cdr (listify def))))

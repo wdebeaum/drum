@@ -7,7 +7,8 @@
    (W::CURRENTLY
    (SENSES
     ((meta-data :origin monroe :entry-date 20031217 :change-date nil :comments s15)
-     (LF-PARENT ONT::event-time-rel)
+;     (LF-PARENT ONT::event-time-rel)
+     (LF-PARENT ONT::EVENT-TIME-REL-NOW)
      (LF-FORM W::NOW)
      (example "currently he is president / he is currently president / he is president currently")
      (TEMPL PRED-S-VP-TEMPL)

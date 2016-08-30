@@ -1856,7 +1856,8 @@
  )
 
 ;; width
-(define-type ONT::width
+(define-type ONT::width-scale
+ :wordnet-sense-keys ("width%1:07:00" "diameter%1:07:00")
 ;; :sem (F::Abstr-obj (F::Scale Ont::width))
  :parent ONT::linear-d
  )

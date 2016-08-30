@@ -7,7 +7,8 @@
    ((W::once w::in w::a w::while)
    (SENSES
     ((meta-data :origin cardiac :entry-date 20090319 :change-date nil :comments nil)
-     (LF-PARENT ONT::FREQUENCY)
+;     (LF-PARENT ONT::FREQUENCY)
+     (LF-PARENT ONT::sometimes)
      (lf-form w::sometimes)
      (TEMPL pred-s-post-TEMPL)
      )
@@ -20,7 +21,8 @@
   ((W::once w::in w::awhile)
    (SENSES
     ((meta-data :origin cardiac :entry-date 20090319 :change-date nil :comments nil)
-     (LF-PARENT ONT::FREQUENCY)
+;     (LF-PARENT ONT::FREQUENCY)
+     (LF-PARENT ONT::sometimes)
      (lf-form w::sometimes)
      (TEMPL pred-s-post-TEMPL)
      )

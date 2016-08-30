@@ -90,7 +90,8 @@
  :words (
   ((W::at w::the W::moment)
    (SENSES
-    ((LF-PARENT ONT::event-time-rel)
+    (;(LF-PARENT ONT::event-time-rel)
+     (LF-PARENT ONT::EVENT-TIME-REL-NOW)
      (meta-data :origin asma :entry-date 20110921 :change-date nil :comments nil)
      (TEMPL PRED-S-VP-templ)
      )
@@ -103,7 +104,8 @@
   ((W::at w::present)
    (SENSES
     ((meta-data :origin cernl :entry-date 20110317 :change-date nil :comments nil)
-     (LF-PARENT ONT::event-time-rel)
+;     (LF-PARENT ONT::event-time-rel)
+     (LF-PARENT ONT::EVENT-TIME-REL-NOW)
      (LF-FORM W::NOW)
      (example "at present he is president / he is president at present")
      (TEMPL PRED-S-TEMPL)

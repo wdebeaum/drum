@@ -2237,16 +2237,17 @@
          -unit-np-number-indef-explicit-scale>
 	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r))
  	 (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
-		   (KIND -) (sem ?sem) (sem ($ f::abstr-obj  (f::scale ?sc)))
+		   (KIND -) (sem ?sem) (sem ($ f::abstr-obj  (f::scale ?unit-sc)))
 		   (argument ?argument) (RESTR ?restr)
 		   (post-subcat -)
 		))
 	 (pp (ptype in) (gap -)
-	  (sem ($ f::abstr-obj (F::scale ?sc))))
+	  (sem ($ f::abstr-obj (F::type (? xx ont::domain)))))
+	 ;;(class-greatest-lower-bound (in1 ?unit-sc) (in2 ?explicit-sc) (out ?sc))
          (add-to-conjunct (val (& (value ?num))) (old ?r) (new ?newr))
 	 (add-to-conjunct (val (& (amount (% *PRO* (status ont::indefinite) (class ont::NUMBER) (VAR ?nv) (constraint ?newr)))
 				  (unit ?c)
-				  (scale ?sc))) (old ?restr) (new ?constr))
+				  (scale (? xx ont::domain)))) (old ?restr) (new ?constr))
 	 )
 
    ;;  NP with SPECS that subcategorize for "of" PP's that are count and definite

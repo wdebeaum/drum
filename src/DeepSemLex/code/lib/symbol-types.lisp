@@ -7,7 +7,11 @@
   '(member adj adv art conj cv FP infinitival-to N name neg number-unit ordinal prep pro punc quan uttword V value ^ ^o ^s))
 
 (deftype syn-cat ()
-  '(or pos (member adjp advbl CP NP number PP pred S utt VP VP- word)))
+  '(or pos (member adjp advbl CP NP number PP pred S utt VP VP- word
+		   ;; HACK: include t to represent things like (% ?sc), which
+		   ;; happen in templates
+		   t
+		   )))
 
 (deftype syn-arg ()
   '(member lsubj lobj liobj lcomp subcat subcat2 post-subcat premod argument))

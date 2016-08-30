@@ -7,15 +7,18 @@
  :words (
   (W::NEVER
    (SENSES
-    ((LF-PARENT ONT::FREQUENCY)
+    (;(LF-PARENT ONT::FREQUENCY)
+     (LF-PARENT ONT::never)
      (TEMPL PRED-S-POST-TEMPL)
      (SYNTAX (W::NEG +))
      )
-    ((LF-PARENT ONT::FREQUENCY)
+    (;(LF-PARENT ONT::FREQUENCY)
+     (LF-PARENT ONT::never)
      (TEMPL PRED-S-VP-TEMPL)
      (SYNTAX (W::NEG +))
      )
-    ((LF-PARENT ONT::FREQUENCY)
+    (;(LF-PARENT ONT::FREQUENCY)
+     (LF-PARENT ONT::never)
      (TEMPL PRED-VP-PRE-TEMPL)
      (SYNTAX (W::NEG +))
      )

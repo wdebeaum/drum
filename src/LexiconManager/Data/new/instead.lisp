@@ -10,7 +10,8 @@
    (SENSES
     ((LF-PARENT ONT::CHOICE-OPTION)
      (LF-FORM W::INSTEAD-OF)
-     (TEMPL binary-constraint-S-templ)
+;     (TEMPL binary-constraint-S-templ)
+     (TEMPL binary-constraint-S-implicit-templ)
      )
     )
    )

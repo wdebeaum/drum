@@ -62,6 +62,7 @@
   ((list-of relation) out "the list of relations where this is the source" nil)
   ((list-of relation) in "the list of relations where this is the target" nil)
   ((list-of provenance) provenance "" nil)
+  ((maybe string) comment "" nil)
   )
 
 (defclass-simple relation ()

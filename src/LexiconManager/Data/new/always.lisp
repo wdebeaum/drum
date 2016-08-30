@@ -7,7 +7,8 @@
  :words (
   (W::ALWAYS
    (SENSES
-    ((LF-PARENT ONT::FREQUENCY)
+    (;(LF-PARENT ONT::FREQUENCY)
+     (LF-PARENT ONT::always)
      (TEMPL PRED-VP-PRE-TEMPL)
      )
     )

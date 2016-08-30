@@ -350,6 +350,9 @@
 ;; oops, some confusion about the plurality of this slot...
 (defmacro ld::aliases (&rest names) `(ld::alias ,@names))
 
+(defmacro ld::comment (str)
+  `(setf (comment (current-concept)) ,str))
+
 (defmacro ld::provenance (&body body)
   ;; convert initial symbol to `(name ,symbol)
   (when (symbolp (car body))

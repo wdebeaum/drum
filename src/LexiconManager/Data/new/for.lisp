@@ -135,7 +135,8 @@
  :words (
   ((W::for W::now)
    (SENSES
-    ((LF-PARENT ONT::EVENT-TIME-REL)
+    (;(LF-PARENT ONT::EVENT-TIME-REL)
+     (LF-PARENT ONT::EVENT-TIME-REL-NOW)
      (LF-FORM W::NOW)
      (TEMPL PRED-S-TEMPL)
      )
