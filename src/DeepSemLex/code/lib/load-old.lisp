@@ -16,7 +16,8 @@
   (cond
     ((not (consp x))
       x)
-    ((not (member (car x) '(? ld::? om::? lxm::?)))
+    ;((not (member (car x) '(? ld::? om::? lxm::?)))
+    ((not (util::is-variable-symbol (car x)))
       (mapcar #'convert-variables-to-disjunctions x))
     ((= 2 (length x))
       t)
@@ -134,7 +135,13 @@
         (when (eq :parameter (caadr arg))
 	  (let ((param-name (second (second arg)))
 	        (default (assoc :default (cddr (second arg)))))
+	    ;; FIXME maybe this isn't actually what :default means; there can
+	    ;; also be :required, which suggests that the features from xp may
+	    ;; override the :default ones but not the :required ones, and
+	    ;; otherwise all the :default and :required features are still
+	    ;; there even if an xp parameter is supplied
 	    (if default
+	      ;; TODO also get syn-feats (see also define-template-constant)
 	      `((,param-name ',(get-syn-cat-from-constit (second default))))
 	      (list param-name)
 	      ))))
@@ -171,6 +178,8 @@
 		  `(let ((syn-cat
 			   ,(if (eq :parameter (car constit))
 			     (second constit)
+			     ;; TODO also get syn-feats (see also
+			     ;; define-template-constant)
 			     `',(get-syn-cat-from-constit constit)
 			     )))
 		    (multiple-value-bind (dsl-syn-cat head-word)
@@ -202,6 +211,8 @@
 		(destructuring-bind (syn-arg constit sem-role
 				     &optional optional) arg
 		  `(,(util::convert-to-package syn-arg :ld)
+		    ;; TODO also get syn-feats (where to put them? how to deal
+		    ;; with variables?)
 		    ,(get-syn-cat-from-constit constit)
 		    ,(util::convert-to-package sem-role :ont)
 		    ,@(when optional '(ld::optional))
@@ -211,6 +222,37 @@
     ;; define it as a function anyway so we can always use templates
     ;; the same way
     (defun ,name () (gethash ',name (concepts *db*)))
+    ))
+
+;; debug
+(defun count-variable-occurrences (x &optional o)
+  (cond
+    ;; (? var ...)
+    ((and (listp x) (<= 2 (length x))
+          (util::is-variable-symbol (car x)) ; '? in whatever pkg
+	  (symbolp (second x)))
+      ;; translate to (?var ...)
+      (count-variable-occurrences
+          (cons
+              (intern (concatenate 'string "?" (symbol-name (second x))))
+	      (cddr x))
+	  o))
+    ;; other conses
+    ((consp x)
+      (count-variable-occurrences
+          (cdr x)
+	  (count-variable-occurrences (car x) o)))
+    ;; ?var
+    ((util::is-variable-name x)
+      (let* ((rx (repkg x))
+             (p (assoc rx o)))
+        (if p
+	  (incf (cdr p))
+	  (push (cons rx 1) o)
+	  )
+	o))
+    ;; anything else
+    (t o)
     ))
 
 ;; TODO the use of variables in templates can be complicated, e.g.
@@ -229,6 +271,10 @@
 		        (cdr (assoc 'ld::syntax (cdr templ-spec))) :ld)))
 	      (args (cdr (assoc 'ld::arguments (cdr templ-spec))))
 	      )
+;	  ;; debug
+;	  (let ((var-counts (count-variable-occurrences templ-spec)))
+;	    (when (some (lambda (x) (not (= 1 (cdr x)))) var-counts)
+;	      (format t "template ~s has multiple occurrences of the same variable:~%  ~s~%" name var-counts)))
 	  (setf syn-feats
 	        (delete-if
 		    (lambda (x)
@@ -287,9 +333,14 @@
 	      ,@(when morph
 		`((ld::morph
 		  (ld::forms
-		    ,@(let ((forms (second (member :forms morph))))
-		        (unless (or (null forms) (eq 'ld::nil forms))
-			  forms))
+		    ,@(let* ((have-forms (member :forms morph))
+		             (forms (second have-forms))
+			     (null-forms (or (null forms) (eq 'ld::nil forms))))
+		        (cond
+			  ((not have-forms) nil) ; default regular forms
+			  (null-forms (list '-none)) ; just the base form
+			  (t forms) ; specified forms
+			  ))
 		    ,@(loop for tail = morph then (cddr tail)
 		            for key = (car tail)
 			    for val = (cadr tail)

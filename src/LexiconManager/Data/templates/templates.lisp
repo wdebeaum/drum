@@ -196,6 +196,8 @@
 	(LCOMP (:parameter xp (:default (% W::pp (W::ptype W::with)))) ONT::NEUTRAL)
 	))
 
+      ; nobody uses this
+      #|
       (AGENT-AFFECTED-effect-subjObjcontrol-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::AGENT)
@@ -203,11 +205,12 @@
     	(LCOMP (% W::NP (W::gap ?gap) (w::gerund +))
 	       ont::formal))
 	)
+      |#
 
       (AGENT-AFFECTED-THEME-Objcontrol-pred-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::AGENT)
-	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar) (w::sort (? !xx W::unit-measure))) ONT::affected)
+	(LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar) (w::sort (? !xx W::unit-measure))) ONT::affected)
     	(LCOMP (% W::PRED (W::filled -) (W::gap ?gap) (W::argument (% W::np (W::sem ?dobjsem)  (W::var ?dobjvar)(W::lex ?dobjlex))))
 	       ont::formal)
 	))
@@ -223,7 +226,7 @@
       (AGENT-formal-Objcontrol-adj-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::AGENT)
-	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar) (w::sort (? !xx W::unit-measure))) ONT::NOROLE)
+	(LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar) (w::sort (? !xx W::unit-measure))) ONT::NOROLE)
     	(LCOMP (% W::ADJP (W::filled -) (W::gap ?gap) (w::arg ?dobjvar) (W::argument (% W::np (W::sem ?dobjsem) (W::lex ?dobjlex) (W::var ?dobjvar))))
 	       ont::formal)
 	))
@@ -782,7 +785,7 @@
       (AGENT-AFFECTED-EFFECT-loc-objcontrol-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
-	(LOBJ (% W::NP  (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::affected)
+	(LOBJ (% W::NP  (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::affected)
 	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln ont::position-reln ont::source-reln))))
 					   (w::arg ?dobjvar)
 					   (W::argument (% W::S (W::sem ?dobjsem)  (W::var ?dobjvar) (W::lex ?dobjlex))))))
@@ -1009,8 +1012,8 @@
 	(LSUBJ (% W::NP (W::lex ?subjlex) (W::sem ?lsubjsem) (W::var ?subjvar)) ONT::AGENT)
 	(LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?lobjsem) (W::var ?dobjvar)) ONT::AFFECTED)
 	(LCOMP (:parameter xp (:default (% W::NP (W::lf (% ?p (w::class (? x ont::EVENT-OF-CHANGE))))))
-			    (:required  (w::SUBJ (% W::NP (w::var ?subjvar) (W::sem ?lsubjsem)))
-				       (w::DOBJ (% W::NP (w::var ?dobjvar) (W::sem ?lobjsem))))
+			    (:required  (w::SUBJ (% W::NP (w::var ?subjvar) (W::sem ?lsubjsem) (W::lex ?subjlex)))
+				       (w::DOBJ (% W::NP (w::var ?dobjvar) (W::sem ?lobjsem) (W::lex ?dobjlex))))
 					  
 	       ) ONT::FORMAL)
 	))
@@ -1045,7 +1048,7 @@
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
 ;	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::AFFECTED)
-	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::NOROLE)
+	(LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::NOROLE)
 	(LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to)))
 			   (:required (W::subj (% W::np (W::sem ?dobjsem)
 						  (W::lex ?dobjlex)
@@ -1056,7 +1059,7 @@
  (agent-EFFECT-AFFECTED-OBJCONTROL-optional-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
-	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::AFFECTED)
+	(LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::AFFECTED)
 	(LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to)))
 			   (:required (W::subj (% W::np (W::sem ?dobjsem)
 						  (W::lex ?dobjlex)
@@ -1085,7 +1088,7 @@
     (agent-affected-theme-OBJCONTROL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
-	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::affected)
+	(LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::affected)
     ;;;;; (LCOMP (:parameter xp (:default (% cp (ctype s-to))) (:required (subj ?lobj))) EFFECT)
 	(LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required(W::subj (% W::np (W::sem ?dobjsem) (W::lex ?dobjlex) (W::var ?dobjvar))))) ONT::FORMAL)
 	))
@@ -1094,7 +1097,7 @@
       (agent-theme-OBJCONTROL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
-	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::NOROLE)
+	(LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::NOROLE)
 	(LCOMP (:parameter xp (:default (% W::cp)) ;;(W::ctype W::s-to)))
 			   (:required (W::subj (% W::np (W::sem ?dobjsem)
 						  (W::lex ?dobjlex)
@@ -1119,7 +1122,7 @@
      (experiencer-theme-OBJCONTROL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::experiencer)
-	(LOBJ (% W::NP (W::lex ?dobjlex) (w::sort (? !xx W::WH-DESC)) (W::var ?dobjvar)) ONT::NOROLE)  ;; no WH descriptions work
+	(LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (w::sort (? !xx W::WH-DESC)) (W::var ?dobjvar)) ONT::NOROLE)  ;; no WH descriptions work
 	(LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to)))
 			   (:required (W::subj (% W::np (W::sem ?dobjsem)
 						  (W::lex ?dobjlex)
@@ -1180,7 +1183,7 @@
       (AGENT-affected-OBJCONTROL-PRED-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::AGENT)
-	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::affected)
+	(LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::affected)
     ;;;;; the arg of the pred will be the subject of the verb
 	(LCOMP (:parameter xp (:default (% W::PRED (W::filled -) (W::gap ?gap) (W::argument (% W::np (W::sem ?dobjsem) (W::lex ?dobjlex) 
 											      (W::var ?dobjvar)))))) ONT::RESULT)
@@ -1189,7 +1192,7 @@
       (experiencer-neutral-OBJCONTROL-PRED-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::experiencer)
-	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::neutral)
+	(LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::neutral)
     ;;;;; the arg of the pred will be the object of the verb
 	(LCOMP (:parameter xp (:default (% W::PRED (W::filled -) (W::gap ?gap) (W::argument (% W::np (W::sem ?dobjsem) (W::lex ?dobjlex) 
 											      (W::var ?dobjvar)))))) ONT::formal)
@@ -1797,7 +1800,7 @@
   (agent-addressee-theme-OBJCONTROL-req-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::agent)
-    (LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::agent1)
+    (LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::agent1)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required (W::subj (% W::np (W::sem ?dobjsem)
 		(W::lex ?dobjlex) (W::var ?dobjvar))))) ont::formal)
     ))
@@ -1816,7 +1819,7 @@
    (agent-addressee-theme-OBJCONTROL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::agent)
-    (LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::agent1)
+    (LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::agent1)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required (W::subj (% W::np (W::sem ?dobjsem)
 		(W::lex ?dobjlex) (W::var ?dobjvar))))) ont::formal optional)
     ))
@@ -1825,7 +1828,7 @@
   (agent-addressee-effect-OBJCONTROL-req-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::agent)
-    (LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::agent1)
+    (LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::agent1)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required (W::subj (% W::np (W::sem ?dobjsem)
 		(W::lex ?dobjlex) (W::var ?dobjvar))))) ONT::formal)
     ))
@@ -1834,7 +1837,7 @@
   (agent-addressee-effect-OBJCONTROL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::agent)
-    (LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::agent1)
+    (LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::agent1)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required (W::subj (% W::np (W::sem ?dobjsem)
 		(W::lex ?dobjlex) (W::var ?dobjvar))))) ONT::formal optional)
     ))
@@ -1928,7 +1931,7 @@
 
   (AGENT-ACTION-SUBJCONTROL-TEMPL
    (ARGUMENTS
-    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar)) ONT::AGENT)
+    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::AGENT)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) 
 		       (:required (W::subj (% W::np (W::sem ?lsubjsem) 
 					      (W::lex ?lsubjlex) (W::var ?lsubjvar))))) ONT::FORMAL)
@@ -1937,21 +1940,21 @@
       ;;;;; e.g., He/The computer needs to go
   (neutral-theme-SUBJCONTROL-TEMPL
    (ARGUMENTS
-    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar)) ONT::neutral)
+    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::neutral)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required(W::subj (% W::np (W::sem ?lsubjsem) 
                     (W::lex ?lsubjlex) (W::var ?lsubjvar))))) ont::formal)
     ))
 
    (experiencer-theme-SUBJCONTROL-TEMPL
    (ARGUMENTS
-    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar)) ONT::experiencer)
+    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::experiencer)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required(W::subj (% W::np (W::sem ?lsubjsem) 
                     (W::lex ?lsubjlex) (W::var ?lsubjvar))))) ont::formal)
     ))
 
   (affected-theme-SUBJCONTROL-TEMPL
    (ARGUMENTS
-    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar)) ONT::affected)
+    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::affected)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required(W::subj (% W::np (W::sem ?lsubjsem) 
                     (W::lex ?lsubjlex) (W::var ?lsubjvar))))) ont::formal)
     ))
@@ -1959,7 +1962,7 @@
   ;; added for gotta / CAET tea making
   (neutral-EFFECT-SUBJCONTROL-BASE-TEMPL
    (ARGUMENTS
-    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar)) ONT::neutral)
+    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::neutral)
     (LCOMP (:parameter xp (:default (% W::vp (W::vform W::base))) (:required(W::subj (% W::np (W::sem ?lsubjsem) 
                     (W::lex ?lsubjlex) (W::var ?lsubjvar))))) ONT::FORMAL)
     ))
@@ -1967,14 +1970,14 @@
   
   (neutral-ACTION-SUBJCONTROL-TEMPL
    (ARGUMENTS
-    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar)) ONT::neutral)
+    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::neutral)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required(W::subj (% W::np (W::sem ?lsubjsem) 
                     (W::lex ?lsubjlex) (W::var ?lsubjvar))))) ONT::FORMAL)
     ))
     ;;;;; e.g., I want to go
    (experiencer-ACTION-SUBJCONTROL-TEMPL
    (ARGUMENTS
-    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar)) ONT::experiencer)
+    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::experiencer)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required(W::subj (% W::np (W::sem ?lsubjsem) 
                     (W::lex ?lsubjlex) (W::var ?lsubjvar))))) ONT::FORMAL)
     ))
@@ -1983,7 +1986,7 @@
 (AGENT-EFFECT-OBJCONTROL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::AGENT)
-    (LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::neutral)
+    (LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::neutral)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required (W::subj (% W::np (W::sem ?dobjsem)
 		(W::lex ?dobjlex) (W::var ?dobjvar))))) ONT::FORMAL)
     )
@@ -1991,7 +1994,7 @@
 (AGENT-AFFECTED-EFFECT-OBJCONTROL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::AGENT)
-    (LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::affected)
+    (LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::affected)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required (W::subj (% W::np (W::sem ?dobjsem)
 		(W::lex ?dobjlex) (W::var ?dobjvar))))) ONT::FORMAL)
     ))
@@ -1999,7 +2002,7 @@
  (action-ACTION-OBJCONTROL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::agent)
-    (LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::neutral)
+    (LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::neutral)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) 
 		       (:required (W::subj (% W::np (W::sem ?dobjsem)
 					      (W::lex ?dobjlex) (W::var ?dobjvar))))) 
@@ -2011,7 +2014,7 @@
   (experiencer-ACTION-OBJCONTROL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::experiencer)
-    (LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::neutral)
+    (LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::neutral)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) 
 		       (:required (W::subj (% W::np (W::sem ?dobjsem)
 					      (W::lex ?dobjlex) (W::var ?dobjvar))))) 
@@ -2021,7 +2024,7 @@
    (neutral-ACTION-OBJCONTROL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::neutral)
-    (LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::neutral1)
+    (LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::neutral1)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) 
 		       (:required (W::subj (% W::np (W::sem ?dobjsem)
 					      (W::lex ?dobjlex) (W::var ?dobjvar))))) 
@@ -2031,7 +2034,7 @@
    (agent-neutral-theme-OBJCONTROL-TEMPL
     (ARGUMENTS
      (LSUBJ (% W::NP) ONT::agent)
-     (LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::neutral)
+     (LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::neutral)
      (LCOMP (:parameter xp (:default (% W::vp (W::vform W::ing))) 
 		       (:required (W::subj (% W::np (W::sem ?dobjsem)
 					      (W::lex ?dobjlex) (W::var ?dobjvar))))) 
@@ -2041,7 +2044,7 @@
  (neutral-neutral-theme-OBJCONTROL-TEMPL
     (ARGUMENTS
      (LSUBJ (% W::NP) ONT::neutral)
-     (LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::neutral1)
+     (LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ONT::neutral1)
      (LCOMP (:parameter xp (:default (% W::vp (W::vform W::ing))) 
 		       (:required (W::subj (% W::np (W::sem ?dobjsem)
 					      (W::lex ?dobjlex) (W::var ?dobjvar))))) 
@@ -2087,28 +2090,31 @@
 (AGENT-ACTION-OBJCONTROL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::AGENT)
-    (LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ont::neutral)
+    (LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar)) ont::neutral)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required (W::subj (% W::np (W::sem ?dobjsem)
 		(W::lex ?dobjlex) (W::var ?dobjvar))))) ont::formal)
     ))
 
+; nobody uses this
+#|
   (theme-OBJCONTROL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::neutral)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required (W::subj (% W::np (W::sem ?dobjsem)
 		(W::lex ?dobjlex) (W::var ?dobjvar))))) ont::formal)
     ))
-  
+|#  
+
   (AGENT-EFFECT-SUBJCONTROL-TEMPL
    (ARGUMENTS
-    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar)) ONT::AGENT)
+    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::AGENT)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required(W::subj (% W::np (W::sem ?lsubjsem) 
                     (W::lex ?lsubjlex) (W::var ?lsubjvar))))) ONT::FORMAL)
     ))
 
 (neutral-EFFECT-SUBJCONTROL-TEMPL
    (ARGUMENTS
-    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar)) ONT::neutral)
+    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::neutral)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) 
 		       (:required (W::subj (% W::np (W::sem ?lsubjsem) 
 					     (W::lex ?lsubjlex) (W::var ?lsubjvar))))) ONT::FORMAL)

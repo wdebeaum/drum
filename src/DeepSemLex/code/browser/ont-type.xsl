@@ -56,6 +56,9 @@
 <xsl:template match="concept" mode="def">
  <xsl:variable name="name" select="@name" />
  <h1><xsl:value-of select="@name" /></h1>
+ <xsl:if test="comment">
+  <p>Comment: <xsl:value-of select="comment" /></p>
+ </xsl:if>
  <h2>Relations</h2>
  <xsl:apply-templates select="relation" />
  <h2>Semantic Features</h2>

@@ -229,8 +229,17 @@
 		     (% *PRO* (VAR ?v) (SEM ?sem)
 			(STATUS ont::PRO) (class ?lf) (constraint (& (proform ?lex)))))))
 	  (NObareSpec +) (WH (? wh Q -)) (wh-var ?v))	 
+	 -possessive3-Q>
+	 (head (PRO (CASE POSS) (WH Q)
+		    (STATUS ont::PRO-DET) (SEM ?sem) (VAR ?v) (LF ?lf) (lex ?lex) (input ?i))))
+
+	((possessor (LF ONT::DEFINITE) (AGR ?agr) (ARG ?arg) (MASS ?m)
+	  (RESTR (& (assoc-poss
+		     (% *PRO* (VAR ?v) (SEM ?sem)
+			(STATUS ont::PRO) (class ?lf) (constraint (& (proform ?lex)))))))
+	  (NObareSpec +) (WH -))
 	 -possessive3>
-	 (head (PRO (CASE POSS) (WH (? wh Q -))
+	 (head (PRO (CASE POSS) (WH -)
 		    (STATUS ont::PRO-DET) (SEM ?sem) (VAR ?v) (LF ?lf) (lex ?lex) (input ?i))))
 #||
 	((possessor (LF DEFINITE) (AGR ?agr) (ARG ?arg) (mass ?m)

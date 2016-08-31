@@ -295,7 +295,7 @@
       )
     ((inherit overlap subtype-of)
       (dsl-to-xml-stream (cons '> dsl) xml))
-    ((w::and w::or and or morph)
+    ((w::and w::or and or morph comment)
       (format xml "~&~vt<~(~s~)>" *indent* (repkg (car dsl)))
       (indented
 	(dolist (f (cdr dsl))
