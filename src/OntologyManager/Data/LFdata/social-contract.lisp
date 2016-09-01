@@ -53,7 +53,7 @@
 ;; While the sense of freedom%1:26:00 falls under nonessential-contract, its children
 ;; should fall under a child of governing-principle
 ;; Wordnet doesn't seem to have the correct sense of oppression.
-;; maybe status should fall under the part of the tree with responsible-to-or-for
+;; maybe status should fall under the part of the tree with responsibility
 
 (define-type ont::nonessential-contract
   :parent ont::social-imperative
@@ -89,7 +89,7 @@
   :wordnet-sense-keys ("transgression%1:04:00")
 )
 
-(define-type ont::responsible-to-or-for
+(define-type ont::responsibility
   :parent ont::social-contract
-  :wordnet-sense-keys ("duty%1:04:00" "duty%1:04:02")
+  :wordnet-sense-keys ("duty%1:04:00" "duty%1:04:02" "obligation%1:04:00" "responsibility%1:04:00")
 )

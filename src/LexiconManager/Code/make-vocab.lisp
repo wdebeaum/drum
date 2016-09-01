@@ -566,9 +566,11 @@
     ))
 
 (defun add-sem-in-template (spec var)
-  (if var
-      (list '? (strip-variable-sign var) spec)
-      spec))
+  (if (and (is-variable-name spec) var)
+      var
+      (if var
+	  (list '? (strip-variable-sign var) spec)
+	  spec)))
 
 (defun generate-subcat-features (synsemmap roles)
   "Given a synsemmap, generates a corresponding subcat argument for the lexical entry"

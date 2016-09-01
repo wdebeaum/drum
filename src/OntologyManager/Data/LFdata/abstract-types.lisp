@@ -2827,12 +2827,13 @@
  :parent ONT::science-discipline-PROPERTY-VAL
  )
 
-
+#|
 (define-type ONT::RESPONSIBILITY
  :parent ONT::ORDERED-DOMAIN
  :arguments ((:OPTIONAL ONT::FIGURE)
              )
  )
+|#
 
 #|
 ;;; LF type for movie, theater
