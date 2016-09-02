@@ -1439,7 +1439,7 @@
       (N-N-MOD +) (QUAL -) (relc ?relc) (subcat ?subcat)
       (post-subcat -)
          )
-     -n-plur-n1-> 0.97 ;; prevent this from happening too often
+     -n-plur-n1-> 0.95 ;; prevent this from happening too often
      (n1 (AGR 3p) (abbrev -)
 	 (var ?v1) (sem ?sem) (restr ?modr) 
 	 (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -) (SUBCAT -) (GAP -)

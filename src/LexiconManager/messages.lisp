@@ -92,6 +92,25 @@ message in reply to MSG."
 	(t
 	 nil)))
 
+(defun sanitize-for-kqml (x)
+  "Return a version of x that's safer to output as KQML."
+  (if (consp x)
+    (cons (sanitize-for-kqml (car x)) (sanitize-for-kqml (cdr x)))
+    (let* ((str (format nil "~s" x))
+           (first-char (elt str 0)))
+      (case first-char
+        (#\(
+	  #\) ; for editor balance
+	  ;; turn it into a real list and then santize that
+	  (sanitize-for-kqml (read-from-string str)))
+	(#\#
+	  (warn "double-quoting an expression that is unsafe for KQML: ~a" str)
+	  str)
+	(otherwise
+	  x)
+	))
+    ))
+
 ;; This handles the various message types
 ;; at this point, only REQUEST, TELL, ERROR, SORRY are handled,
 ;; and ERROR and SORRY do nothing.
@@ -166,7 +185,7 @@ message in reply to MSG."
 	get-word-def
 	is-defined-word)
        (let ((result (apply (first content) (rest content))))
-	 (reply msg 'TELL  :content result)))
+	 (reply msg 'TELL  :content (sanitize-for-kqml result))))
 
       ;; Handle external API calls
       ;; we're keeping this around for now for people who still use it (e.g. Nate C.)

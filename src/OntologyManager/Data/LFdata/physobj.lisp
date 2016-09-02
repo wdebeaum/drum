@@ -323,6 +323,10 @@
 		      (F::mobility f::fixed) (f::container +))
     )
 
+(define-type ONT::tall-structure
+  :wordnet-sense-keys ("tower%1:06:00")
+  :parent ONT::man-made-structure
+)
 
 ;how to deal with this?
 ;State and country are too similar. Perhaps country should be a child of state?

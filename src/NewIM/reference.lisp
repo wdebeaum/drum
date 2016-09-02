@@ -736,19 +736,20 @@
 
 (defun find-possible-referents-in-current-sentence (lf-type id access-requirement nums index)
   "returns the objects that meet the access requirement AND that precede the id in the sentence"
-  (let* ((r (get-im-record index))
-	 (focus (utt-record-focus r))
-	 (focus-id (if (referent-p focus) (referent-id focus) focus))
-	 )
-    (let*
-	((accessable-refs (remove-if-not #'(lambda (x) (and (referent-p x) 
-							    (not (eq (referent-id x) id)) ;; can't refer to itself
-							    (member (referent-accessibility x) access-requirement)
-							    (member (referent-num x) nums)
-							    (subtype-check (referent-lf-type x) lf-type)))
-					 (truncate-expressions-at-id id (utt-record-referring-expressions r)))
-	 ))
-      accessable-refs)))
+  (let ((r (get-im-record index)))
+    (when r
+      (let* ((focus (utt-record-focus r))
+	     (focus-id (if (referent-p focus) (referent-id focus) focus))
+	     
+	     (accessable-refs (remove-if-not #'(lambda (x) (and (referent-p x) 
+								(not (eq (referent-id x) id)) ;; can't refer to itself
+								(member (referent-accessibility x) access-requirement)
+								(member (referent-num x) nums)
+								(subtype-check (referent-lf-type x) lf-type)))
+					     (truncate-expressions-at-id id (utt-record-referring-expressions r)))
+	       ))
+      accessable-refs))
+    ))
 
 (defun truncate-expressions-at-id (id exprs)
   "this gathers up all the possible referents up to the ID"

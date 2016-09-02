@@ -3779,7 +3779,8 @@
  :parent ONT::event-of-causation
  :sem (F::situation)
  :arguments ((:REQUIRED ONT::Formal (f::phys-obj (f::intentional +))) ;; check in a person
-	     (:optional ont::result ((? oc f::phys-obj f::situation))) ;; at a hotel, in a program
+	     (:optional ont::neutral ((? oc f::phys-obj f::situation f::abstr-obj))) ;; at a hotel, in a program
+	   
              )
  )
 

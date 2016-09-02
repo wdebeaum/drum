@@ -588,7 +588,7 @@
 						  :feature-list-sign '$)
 				  sem-in-template)
 			       (right-var argname '? (if sem-in-template (strip-variable-sign sem-in-template)
-							 'ssem))
+							 (gensym "ssem")))
 			     ))))
 	 )
     

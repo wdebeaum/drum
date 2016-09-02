@@ -31,6 +31,12 @@
      (example "We enter into an agreement.")
      (templ agent-goal-optional-templ (xp (% W::PP (W::ptype (? t W::into)))))
      )
+
+     ((LF-PARENT ONT::enroll)
+     (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
+     (example "We enter the contest")
+     (templ agent-neutral-templ)
+     )
    ))
 ))
 

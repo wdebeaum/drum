@@ -223,6 +223,14 @@
     (head (uttword (lf (?lf)) (lex ?lex) (sa ?sa)))
     (punc (lex punc-comma) (var ?v1)))
 
+     ;;  e.g., thanks for the gift, sorry that I interrupted
+   ((Utt (lf (% SPEECHACT (VAR *) (CLASS ?sa) (constraint (& (content (?lf :content ?lex :reason ?sc))))))
+         (var *) (uttword +))
+    -utt4b-with-subcat>
+    (head (uttword (lf (?lf)) (lex ?lex) (sa ?sa) (subcat ?!subcat) (subcat (% ?xx (car ?sc)))))
+    ?!subcat
+    (punc (lex punc-comma) (var ?v1)))
+
      
    ;;  the one compound utt rule - allows uttword+ utterance to preceed other utts
    ;; test: hello hello

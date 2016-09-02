@@ -525,9 +525,13 @@ separate instances of the chart/parser.")
 	(push (list skeleton 1) *semantic-skeleton-map*))
     ;; if no cache, get the new value and record it in the cache
     (or cached-skeleton
+	;; a single atom with no roles gets a score of 1
+	(if (and (consp skeleton) (eq (list-length skeleton) 1))
+	    (list skeleton 1))
 	(let ((res (evaluate-skeleton skeleton)))
 	(push res *semantic-skeleton-map*)
-	res))))
+	res)
+	)))
     
 
 (defun evaluate-skeleton (skel)

@@ -678,7 +678,7 @@ intersection of an entry's tags and these tags is non-empty."
 		  (w::kr-type ,(word-sense-definition-kr-type entry))
 		  (w::coerce ,coerce) ;; (? cv ,coerce))
 		  ,@(word-sense-definition-syntax entry)
-		  ,@(make-role-restrictions (word-sense-definition-roles entry))
+		  ;;,@(make-role-restrictions (word-sense-definition-roles entry))
 		  ,@(build-synt-arguments (word-sense-definition-mappings entry) (word-sense-definition-roles entry))
 		  ))
          (remaining-words (word-sense-definition-remaining-words entry))  ;; non-null for multi-word lex entries
