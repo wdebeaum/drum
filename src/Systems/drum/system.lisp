@@ -45,7 +45,7 @@
 	;; average number of letters in a word (not critical)
 	(parser::*word-length* 8)
 	;; boost factor based on length of input covered
-	(parser::*score-length-multiplier* .6)
+	(parser::*score-length-multiplier* .4)
 	;; not clear this is helpful
 	(parser::*score-corner-multiplier* 0)
 	;; indicate we should use POS information
