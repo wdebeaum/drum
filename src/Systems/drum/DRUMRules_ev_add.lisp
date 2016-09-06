@@ -2,7 +2,7 @@
 
 (reset-im-rules 'drum_ev_add)
 
-(mapcar #'(lambda (x) (add-im-rule x 'drumRules_ev_add))  
+(mapcar #'(lambda (x) (add-im-rule x 'drum_ev_add))  
 	'(
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

@@ -96,7 +96,10 @@
 (define-type ont::adjacent
   :wordnet-sense-keys ("adjacent%5:00:00:close:01")
   :parent ont::near-reln
-  :arguments ((:essential ONT::FIGURE ((? of1  f::phys-obj f::abstr-obj))))
+  :arguments ((:essential ONT::FIGURE ((? of1  f::phys-obj f::abstr-obj)))
+	      (:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj)))
+	     
+	      )
   )
 
 ; figure is large distance on the scale
@@ -652,8 +655,10 @@
 (define-type ONT::extent-predicate
  :parent ONT::PREDICATE
  :sem  (F::abstr-obj)
- :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
-	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::length)))
+ :arguments (;(:ESSENTIAL ONT::FIGURE (F::Situation))
+	     (:ESSENTIAL ONT::FIGURE (F::Situation (f::type ont::change-magnitude)))
+;	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::length)))
+	     (:ESSENTIAL ONT::GROUND (F::abstr-obj))  ; no scale (e.g., increase by three dogs)
              )
  )
 

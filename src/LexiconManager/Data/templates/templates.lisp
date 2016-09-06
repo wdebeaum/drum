@@ -2725,7 +2725,15 @@
     (ARGUMENT (% W::NP) ONT::figure)
     (SUBCAT (:parameter xp (:default (% W::NP (W::case (? cas W::obj -))))) ONT::ground)
     ))
-  
+
+; 2 by 4 (ONT::DIMENSION)
+  (binary-constraint-NP-grd-grd1-templ
+   (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? atype W::POST w::pre)))
+   (ARGUMENTS
+    (ARGUMENT (% W::NP) ONT::ground)
+    (SUBCAT (:parameter xp (:default (% W::NP (W::case (? cas W::obj -))))) ONT::ground1)
+    ))
+
   ;;;;; modifiers for measure phrases, e.g. 'or so'
   (binary-constraint-measure-NP-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE W::POST))

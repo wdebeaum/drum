@@ -9,6 +9,7 @@
    (SENSES
     ((LF-PARENT ONT::multiple)
      (example "increase by two fold")
+     (TEMPL SUBSTANCE-UNIT-TEMPL)
      )
     )
    )

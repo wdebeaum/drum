@@ -70,7 +70,8 @@
 
     ((LF-PARENT ONT::dimension)
      (example "8 by 10 (feet)")
-     (TEMPL BINARY-CONSTRAINT-NP-TEMPL
+;     (TEMPL BINARY-CONSTRAINT-NP-TEMPL
+     (TEMPL BINARY-CONSTRAINT-NP-grd-grd1-TEMPL
 	    (xp (% W::NP (W::case (? cas W::obj -)) (w::gerund -)(w::refl -))))
      )
     ((LF-PARENT ONT::originator)
@@ -86,6 +87,13 @@
      (example "the battery is in a closed path by itself" "the door closed by itself")
      (meta-data :origin beetle :entry-date 20090105 :change-date nil :comments beetle-pilots)
      ) ||#  
+
+    ((LF-PARENT ONT::extent-predicate)
+     (example "by two fold")
+     (TEMPL BINARY-CONSTRAINT-S-TEMPL
+	    (xp (% W::NP (W::case (? cas W::obj -)) (w::gerund -)(w::refl -))))
+     )
+    
     )
    )
 ))
