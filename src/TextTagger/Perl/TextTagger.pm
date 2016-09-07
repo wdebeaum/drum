@@ -6,7 +6,7 @@ use TripsModule::TripsModule;
 
 use TextTagger::Util qw(remove_duplicates sets_equal union intersection set_difference tree_subst);
 use TextTagger::Escape qw(escape_for_quotes un_pipe_quote);
-use TextTagger::Tags2Trips qw(tags2trips tag2tripsLattice fillGaps sortTags splitClauses splitSentences reconcileQuotationsAndSentences filter_senses_from_word_blacklist filter_sense_infos_from_penn_pos_whitelist);
+use TextTagger::Tags2Trips qw(tags2trips tag2tripsLattice fillGaps sortTags splitClauses splitSentences reconcileQuotationsAndSentences filter_senses_from_word_blacklist filter_sense_infos_from_penn_pos_whitelist filter_phrases_from_short_sentences);
 use TextTagger::CombineTags qw(combine_tags);
 use TextTagger::ExtraArgs qw(add_extra_args);
 use TextTagger::Config;
@@ -136,6 +136,7 @@ sub handle_parameters {
   $self->{drum_species} = undef;
   $self->{no_sense_words} = [];
   $self->{senses_only_for_penn_poss} = 'all';
+  $self->{min_sentence_length_for_phrases} = 0;
   $self->{xml_tags_mode} = 'keep';
   $self->{parsers_must_agree} = 0;
   $self->{use_wordfinder} = 1;
@@ -261,6 +262,11 @@ sub handle_parameters {
         if (not defined($penn_poss));
       $self->{senses_only_for_penn_poss} = 
 	($penn_poss eq 'all' ? 'all' : [split(/,/, $penn_poss)]);
+    } elsif ($opt eq '-min-sentence-length-for-phrases') {
+      my $min = shift @argv;
+      die "Nonnegative integer argument required for -min-sentence-length-for-phrases"
+        if (not defined($min) or $min !~ /^\d+$/);
+      $self->{min_sentence_length_for_phrases} = $min;
     } elsif ($opt eq '-names-file') {
       my $names_file = shift @argv;
       die "Argument required for -names-file"
@@ -785,6 +791,12 @@ sub getTripsTags
 {
   my ($self, $tags, $msgContent) = @_;
   my $format = ($msgContent->{':format'} || 'lattice');
+  if ($self->{min_sentence_length_for_phrases}) {
+    @$tags =
+      filter_phrases_from_short_sentences(
+        $self->{min_sentence_length_for_phrases}, @$tags
+      );
+  }
   @$tags = filter_senses_from_word_blacklist($self->{no_sense_words}, @$tags);
   if ($format =~ /lattice/i) {
     @$tags = combine_tags($self, @$tags);
@@ -1059,6 +1071,8 @@ sub receive_request
 	  $self->{no_sense_words} = [map { lc($_) } @$value];
 	} elsif ($keyword eq ':senses-only-for-penn-poss') {
 	  $self->{senses_only_for_penn_poss} = $value;
+	} elsif ($keyword eq ':min-sentence-length-for-phrases') {
+	  $self->{min_sentence_length_for_phrases} = $value;
 	} elsif ($keyword eq ':names-file') {
 	  $value = KQML::KQMLStringAtomAsPerlString($value)
 	    if (KQML::KQMLAtomIsString($value));
@@ -1109,6 +1123,7 @@ sub receive_request
 	   ),
 	':no-sense-words', $self->{no_sense_words},
 	':senses-only-for-penn-poss', $self->{senses_only_for_penn_poss},
+	':min-sentence-length-for-phrases', $self->{min_sentence_length_for_phrases},
 	':names-file',
 	  ($self->{names_file} ?
 	    '"' . escape_for_quotes($self->{names_file}) . '"'

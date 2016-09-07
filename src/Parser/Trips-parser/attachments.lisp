@@ -1,7 +1,7 @@
 ;;; attachments .lisp
 ;;
 
-;; Time-stamp: <Sat Jan 24 06:38:55 EST 2015 jallen>
+;; Time-stamp: <Tue Sep  6 14:58:50 EDT 2016 jallen>
 
 ;;
 ;;
@@ -113,7 +113,7 @@
 	  (progn
 	    (trace-msg 2 "~% Applying Skeleton Boost to ~S: orig prob ~S" (entry-name e) (entry-prob e))
 	    (setf (entry-prob e)
-		  (* (entry-prob e) *skeleton-boost-factor*)))
+		  (min (* (entry-prob e) *skeleton-boost-factor*) 1)))
 	  (when (< *skeleton-penalty-factor* 1)
 	    (trace-msg 2 "~% Applying Skeleton Penalty to ~S: orig prob ~S"  (entry-name e) (entry-prob e))
 	    (setf (entry-prob e)

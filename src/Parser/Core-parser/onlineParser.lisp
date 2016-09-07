@@ -275,7 +275,7 @@
 
   (defun insert-in-agenda (item score agenda-bucket)
     (cond ((null agenda-bucket) (list item))
-          ((>= score (agenda-item-score (car agenda-bucket)))
+          ((> score (agenda-item-score (car agenda-bucket)))
            (cons item agenda-bucket))
           (t (cons (car agenda-bucket) 
                    (insert-in-agenda item score (cdr agenda-bucket))))))
@@ -490,7 +490,7 @@
     ;; now boost entries with domain specific info
     (normalize
      (if (get-value c 'w::kr-type)
-	 (* score 1.01)
+	 (min (* score *domain-boosting-factor*) 1)
 	 score))
     ))
 

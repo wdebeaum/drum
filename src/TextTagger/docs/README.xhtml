@@ -343,6 +343,13 @@ TextTagger.)</p>
 <p><code>-use-wordfinder <var>boolean</var></code> (default true)</p>
 <p>When true, TextTagger may instruct LexiconManager to use WordFinder when checking whether a word is in the TRIPS lexicon. When false, WordFinder is never used for such checks. Some checks never use WordFinder in the first place. See also the per-request version, <a href="#sec-3.5.17.">:use-wordfinder</a>.</p>
 </div>
+
+<div class="section">
+<h4>-min-sentence-length-for-phrases</h4>
+<p><code>-min-sentence-length-for-phrases <var>nonnegative-integer</var></code> (default 0)</p>
+<p>Specify the minimum length of a sentence for which TextTagger will output phrase tags (<code>prefer</code> messages) within the sentence. Sentence length is measured in number of tokens (contiguous strings of non-space characters). If there are no sentence tags, the whole input is taken to be one sentence. Note that sentence tags themselves may still generate <code>prefer</code> messages.</p>
+</div>
+
 </div>
 
 <div class="section">
@@ -361,7 +368,7 @@ TextTagger.)</p>
   :reply-with test123)
 (reply :sender TextTagger :receiver test :in-reply-to test123 :content (ok))
 </samp></blockquote>
-<p>TextTagger does not subscribe for this request, so you must specify <code>:receiver TextTagger</code> explicitly (other modules might have their own parameters to set). <code>:default-type</code>, <code>:process-input-utterances</code>, <code>:meta-map-sources</code>, <code>:drum-species</code>, <code>:no-sense-words</code>, <code>:senses-only-for-penn-poss</code>, <code>:xml-tags</code>, <code>:parsers-must-agree</code>, and <code>:use-wordfinder</code> can be set at runtime. <code>-init-taggers</code> cannot be set using <code>set-parameters</code>; use <code>init</code> and <code>fini</code> messages for that (see <a href="#sec-3.3.">below</a>). <code>:remote-meta-map</code>, <code>:names-file</code>, <code>:terms-file</code>, and <code>:xml-input-rules-file</code> can be set, but don't take effect until the related taggers (meta-map, names-from-file, terms-from-file, and xml-input, respectively) are re-initialized (using <code>re-init</code> or <code>fini</code> and <code>init</code>).</p>
+<p>TextTagger does not subscribe for this request, so you must specify <code>:receiver TextTagger</code> explicitly (other modules might have their own parameters to set). <code>:default-type</code>, <code>:process-input-utterances</code>, <code>:meta-map-sources</code>, <code>:drum-species</code>, <code>:no-sense-words</code>, <code>:senses-only-for-penn-poss</code>, <code>:xml-tags</code>, <code>:parsers-must-agree</code>, <code>:use-wordfinder</code>, and <code>:min-sentence-length-for-phrases</code> can be set at runtime. <code>-init-taggers</code> cannot be set using <code>set-parameters</code>; use <code>init</code> and <code>fini</code> messages for that (see <a href="#sec-3.3.">below</a>). <code>:remote-meta-map</code>, <code>:names-file</code>, <code>:terms-file</code>, and <code>:xml-input-rules-file</code> can be set, but don't take effect until the related taggers (meta-map, names-from-file, terms-from-file, and xml-input, respectively) are re-initialized (using <code>re-init</code> or <code>fini</code> and <code>init</code>).</p>
 <p>You can also get the current runtime values of all parameters (including the currently initialized taggers) using the <code>get-parameters</code> request, for example:</p>
 <blockquote><samp>
 (request :receiver TextTagger :content (get-parameters) :sender test :reply-with test456)
@@ -374,6 +381,12 @@ TextTagger.)</p>
     :meta-map-sources (SNOMEDCT)
     :drum-species all
     :no-sense-words (history procedure)
+    :min-sentence-length-for-phrases 0
+    :names-file nil
+    :terms-file nil
+    :xml-tags keep
+    :xml-input-rules-file nil
+    :parsers-must-agree nil
     :use-wordfinder t
     ))
 </samp></blockquote>

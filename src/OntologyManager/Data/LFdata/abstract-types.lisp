@@ -3006,7 +3006,7 @@
 (define-type ONT::QUICK
  :parent ONT::EVENT-DURATION-MODIFIER
  ; Words: (W::QUICK W::FAST W::INSTANT W::INSTANTANEOUS)
-  :wordnet-sense-keys ("quick%5:00:00" "fast%3:00:01" "instantaneous%5:00:00")
+ :wordnet-sense-keys ("fast%3:00:01" "instantaneous%5:00:00:fast:01" "quick%5:00:00:fast:01")
  ; Antonym: NIL (W::SLOW)
  )
 |#
@@ -3014,14 +3014,14 @@
 (define-type ONT::large
  :parent ONT::SIZE-VAL
  ; Words: (W::LARGE W::BIG W::HUGE W::BROAD W::DOUBLE W::VAST W::MASSIVE W::ENORMOUS W::EXTENSIVE W::GIANT W::EXTENDED W::UNLIMITED W::SPACIOUS W::WHOPPING)
-  :wordnet-sense-keys ("broad%5:00:00" "unlimited%3:00:00" "large%3:00:00" "humongous%5:00:00" "huge%5:00:01" "elephantine%5:00:00" "massive%5:00:00" "extensive%5:00:00" "enormous%5:00:00" "double%5:00:00")
+ :wordnet-sense-keys ("unlimited%3:00:00" "large%3:00:00" "humongous%5:00:00:large:00" "huge%5:00:01:large:00" "elephantine%5:00:00:large:00" "enormous%5:00:00:large:00" "massive%5:00:00:large:00" "extensive%5:00:00:large:00" "double%5:00:00:large:00" "broad%5:00:00:large:00")
  ; Antonym: ONT::small (W::SMALL W::LITTLE W::LIMITED W::TINY W::TEENY)
  )
 
 (define-type ONT::small
  :parent ONT::SIZE-VAL
  ; Words: (W::SMALL W::LITTLE W::LIMITED W::TINY W::TEENY)
-  :wordnet-sense-keys ("bantam%5:00:00" "small%3:00:00" "limited%3:00:00" "bitty%5:00:00" "minor%5:00:00")
+ :wordnet-sense-keys ("bantam%5:00:00:small:00" "small%3:00:00" "limited%3:00:00" "bitty%5:00:00:small:00" "minor%5:00:00:limited:00")
  ; Antonym: ONT::large (W::LARGE W::BIG W::HUGE W::BROAD W::DOUBLE W::VAST W::MASSIVE W::ENORMOUS W::EXTENSIVE W::GIANT W::EXTENDED W::UNLIMITED W::SPACIOUS W::WHOPPING)
  )
 
@@ -3064,27 +3064,27 @@
 (define-type ONT::boring
  :parent ONT::FASCINATION-VAL
  ; Words: (W::DULL W::BORING W::UNINTERESTING)
-   :wordnet-sense-keys ("boring%5:00:00" "uninteresting%3:00:00" "uninteresting%3:00:00")
+ :wordnet-sense-keys ("boring%5:00:00:uninteresting:00" "uninteresting%3:00:00" "uninteresting%3:00:00")
  ; Antonym: NIL (W::INTERESTING)
  )
 
 (define-type ONT::HUNGRY
- :wordnet-sense-keys ("hungry%3:00:00" "famished%5:00:00" "hungry%3:00:00" "hungry%3:00:00" "peckish%5:00:00")
+ :wordnet-sense-keys ("hungry%3:00:00" "famished%5:00:00:hungry:00" "hungry%3:00:00" "hungry%3:00:00" "peckish%5:00:00:hungry:00")
  :parent ONT::BODY-PROPERTY-VAL
  ; Words: (W::HUNGRY W::FAMISHED W::PECKISH)
-  :wordnet-sense-keys ("hungry%3:00:00" "famished%5:00:00" "hungry%3:00:00" "hungry%3:00:00" "peckish%5:00:00")
+ :wordnet-sense-keys ("hungry%3:00:00" "famished%5:00:00:hungry:00" "hungry%3:00:00" "hungry%3:00:00" "peckish%5:00:00:hungry:00")
  ; Antonym: NIL (W::THIRSTY)
  )
 
 (define-type ONT::AILING
  :parent ONT::PHYSICAL-SYMPTOM-VAL
- :wordnet-sense-keys ("clammy%3:00:00" "ailing%5:00:00" "nauseated%5:00:00" "dizzy%5:00:00" "ill%3:00:01" "faint%5:00:00" "feverish%5:00:00" "upset%5:00:00" "lightheaded%3:00:00:ill:01")
+ :wordnet-sense-keys ("clammy%3:00:00" "ailing%5:00:00:ill:01" "nauseated%5:00:00:ill:01" "ill%3:00:01" "lightheaded%3:00:00:ill:01" "feverish%5:00:00:ill:01" "dizzy%5:00:00:ill:01" "upset%5:00:00:ill:01" "faint%5:00:00:ill:01")
  ; Words: (W::SICK W::ILL W::UPSET W::GIDDY W::WOOZY W::LIGHTHEADED W::DIZZY W::UNWELL W::FEVERISH W::NAUSEOUS)
  ; Antonym: NIL (W::WELL)
  )
 
 (define-type ONT::DAZED
- :wordnet-sense-keys ("dazed%5:00:00" "lethargic%3:00:00")
+ :wordnet-sense-keys ("lethargic%3:00:00" "dazed%5:00:00:lethargic:00")
  :parent ONT::PHYSICAL-SYMPTOM-VAL
   )
 
@@ -3129,7 +3129,7 @@
 (define-type ONT::EUPHORIC
  :parent ONT::pos-intense-emotional-val
  ; Words: (W::HAPPY W::EUPHORIC)
- :wordnet-sense-keys ("euphoric%3:00:00" "happy%3:00:00" "beaming%5:00:00" "cheerful%3:00:00")
+ :wordnet-sense-keys ("euphoric%3:00:00" "happy%3:00:00" "cheerful%3:00:00" "beaming%5:00:00:cheerful:00")
  ; Antonym: ONT::UNHAPPY (W::UNHAPPY W::MISERABLE)
  )
 
@@ -3147,7 +3147,7 @@
 (define-type ONT::GRATEFUL
  :parent ONT::pos-soft-emotional-val
  ; Words: (W::GLAD W::GRATEFUL W::CHEERFUL W::THANKFUL)
- :wordnet-sense-keys  ("grateful%3:00:00" "glad%3:00:00" "glad%5:00:00")
+ :wordnet-sense-keys ("grateful%3:00:00" "glad%3:00:00" "glad%5:00:00:grateful:00")
  ; Antonym: ONT::UNGRATEFUL (W::SAD W::MELANCHOLY W::UNGRATEFUL)
  )
 
@@ -3206,7 +3206,7 @@
 (define-type ONT::UNHAPPY
  :parent ONT::neg-soft-emotional-val
  ; Words: (W::UNHAPPY W::MISERABLE)
- :wordnet-sense-keys  ("dysphoric%3:00:00" "unhappy%3:00:00" "miserable%5:00:00" "melancholy%5:00:00" "sad%3:00:00" "gloomy%3:00:00:dejected:00")
+ :wordnet-sense-keys ("dysphoric%3:00:00" "unhappy%3:00:00" "sad%3:00:00" "gloomy%3:00:00:dejected:00" "melancholy%5:00:00:sad:00" "miserable%5:00:00:unhappy:00")
  ; Antonym: ONT::EUPHORIC (W::HAPPY W::EUPHORIC)
  )
 
@@ -3227,14 +3227,14 @@
 (define-type ONT::smart
  :parent ONT::INTELLIGENCE-VAL
  ; Words: (W::CLEVER W::INTELLIGENT W::SMART)
- :wordnet-sense-keys  ("cagey%5:00:00" "intelligent%3:00:00" "smart%3:00:00" "bright%5:00:00")
+ :wordnet-sense-keys ("intelligent%3:00:00" "smart%3:00:00" "bright%5:00:00:intelligent:00" "cagey%5:00:00:smart:00")
  ; Antonym: ONT::STUPID (W::STUPID W::DUMB)
  )
 
 (define-type ONT::STUPID
  :parent ONT::INTELLIGENCE-VAL
  ; Words: (W::STUPID W::DUMB)
- :wordnet-sense-keys  ("stupid%3:00:00" "dense%5:00:00" "unintelligent%3:00:00")
+ :wordnet-sense-keys ("stupid%3:00:00" "unintelligent%3:00:00" "dense%5:00:00:stupid:00")
  ; Antonym: ONT::smart (W::CLEVER W::INTELLIGENT W::SMART)
  )
 
@@ -3282,7 +3282,7 @@
 (define-type ONT::BROAD
  :parent ONT::LINEAR-VAL
  ; Words: (W::LOW W::SHORT W::WIDE W::DEEP W::THICK W::FAT W::PLUMP)
-:wordnet-sense-keys ("wide%3:00:00" "fat%3:00:01" "thick%3:00:01" "compact%5:00:00" "chubby%5:00:00" "fat%3:00:01")
+ :wordnet-sense-keys ("wide%3:00:00" "fat%3:00:01" "thick%3:00:01" "chubby%5:00:00:fat:01" "fat%3:00:01" "compact%5:00:00")
 )
 
 (define-type ONT::SLIGHT
@@ -3294,35 +3294,35 @@
 (define-type ONT::COLD
  :parent ONT::TEMPERATURE-VAL
  ; Words: (W::COLD W::COOL)
-:wordnet-sense-keys ("cool%3:00:01" "cool%3:00:03" "cold%5:00:00")
+ :wordnet-sense-keys ("cool%3:00:01" "cool%3:00:03" "cold%5:00:00:cool:03")
  ; Antonym: ONT::WARM (W::HOT W::WARM)
  )
 
 (define-type ONT::WARM
  :parent ONT::TEMPERATURE-VAL
  ; Words: (W::HOT W::WARM)
-:wordnet-sense-keys ("warm%3:00:01" "warm%3:00:03" "hot%5:00:00")
+ :wordnet-sense-keys ("warm%3:00:01" "warm%3:00:03" "hot%5:00:00:warm:03")
  ; Antonym: ONT::COLD (W::COLD W::COOL)
  )
 
 (define-type ONT::CLEAR-WEATHER
  :parent ONT::ATMOSPHERIC-VAL
  ; Words: (W::CLEAR W::FAIR)
-:wordnet-sense-keys ("clear%3:00:03" "clear%3:00:03" "fair%5:00:00")
+ :wordnet-sense-keys ("clear%3:00:03" "clear%3:00:03" "fair%5:00:00:clear:03")
  ; Antonym: ONT::CLOUDY (W::SMOGGY W::OVERCAST W::FOGGY W::HAZY W::CLOUDY)
  )
 
 (define-type ONT::CLOUDY
  :parent ONT::ATMOSPHERIC-VAL
  ; Words: (W::SMOGGY W::OVERCAST W::FOGGY W::HAZY W::CLOUDY)
-:wordnet-sense-keys ("cloudy%3:00:00" "cloud-covered%5:00:00" "brumous%5:00:00" "smoggy%5:00:00")
+ :wordnet-sense-keys ("cloudy%3:00:00" "cloud-covered%5:00:00:cloudy:00" "brumous%5:00:00:cloudy:00" "smoggy%5:00:00:cloudy:00")
  ; Antonym: ONT::CLEAR-WEATHER (W::CLEAR W::FAIR)
  )
 
 (define-type ONT::LIGHTWEIGHT
  :parent ONT::WEIGHT-VAL
  ; Words: (W::LIGHT W::LIGHTWEIGHT)
-:wordnet-sense-keys ("light%3:00:01" "lightweight%5:00:00")
+ :wordnet-sense-keys ("light%3:00:01" "lightweight%5:00:00:light:01")
  ; Antonym: NIL (W::HEAVY)
  )
 
@@ -3355,91 +3355,91 @@
 (define-type ONT::QUIET
  :parent ONT::loudness-VAL
  ; Words: (W::SOFT W::QUIET W::SILENT W::STILL)
-:wordnet-sense-keys ("hushed%5:00:00" "silent%5:00:00" "soft%3:00:04" "quiet%3:00:01")
+ :wordnet-sense-keys ("hushed%5:00:00:soft:04" "soft%3:00:04" "quiet%3:00:01" "silent%5:00:00:quiet:01")
  ; Antonym: ONT::NOISY (W::LOUD W::NOISY)
  )
 
 (define-type ONT::LEFT
  :parent ONT::LOCATION-VAL
  ; Words: (W::LEFT W::LEFTMOST)
-:wordnet-sense-keys ("left%3:00:00" "center%3:00:00" "leftmost%5:00:00")
+ :wordnet-sense-keys ("left%3:00:00" "center%3:00:00" "leftmost%5:00:00:left:00")
  ; Antonym: ONT::RIGHT (W::RIGHT W::RIGHTMOST)
  )
 
 (define-type ONT::RIGHT
  :parent ONT::LOCATION-VAL
  ; Words: (W::RIGHT W::RIGHTMOST)
-:wordnet-sense-keys ("right%3:00:03" "right%3:00:00" "rightmost%5:00:00")
+ :wordnet-sense-keys ("right%3:00:03" "right%3:00:00" "rightmost%5:00:00:right:00")
  ; Antonym: ONT::LEFT (W::LEFT W::LEFTMOST)
  )
 
 (define-type ONT::INTERNAL
  :parent ONT::LOCATION-VAL
  ; Words: (W::INTERNAL W::INNER)
-:wordnet-sense-keys ("internal%3:00:00" "inner%5:00:00")
+ :wordnet-sense-keys ("internal%3:00:00" "inner%5:00:00:internal:00")
  ; Antonym: ONT::EXTERNAL (W::EXTERNAL W::OUTER)
  )
 
 (define-type ONT::EXTERNAL
  :parent ONT::LOCATION-VAL
  ; Words: (W::EXTERNAL W::OUTER)
-:wordnet-sense-keys ("external%3:00:00" "outer%5:00:00")
+ :wordnet-sense-keys ("external%3:00:00" "outer%5:00:00:external:00")
  ; Antonym: ONT::INTERNAL (W::INTERNAL W::INNER)
  )
 
 (define-type ONT::NORTH
  :parent ONT::MAP-LOCATION-VAL
  ; Words: (W::NORTHERN W::NORTH)
-:wordnet-sense-keys ("northwestern%5:00:00" "northeastern%5:00:00" "north%3:00:00" "northerly%5:00:02")
+ :wordnet-sense-keys ("north%3:00:00" "northerly%5:00:02:north:00" "northeastern%5:00:00:north:00" "northwestern%5:00:00:north:00")
  ; Antonym: ONT::SOUTH (W::SOUTHERN W::SOUTH)
  )
 
 (define-type ONT::SOUTH
  :parent ONT::MAP-LOCATION-VAL
  ; Words: (W::SOUTHERN W::SOUTH)
-:wordnet-sense-keys ("southeasterly%5:00:02" "southerly%5:00:02" "southwesterly%5:00:02" "south%3:00:00")
+ :wordnet-sense-keys ("southeasterly%5:00:02:south:00" "southerly%5:00:02:south:00" "southwesterly%5:00:02:south:00" "south%3:00:00")
  ; Antonym: ONT::NORTH (W::NORTHERN W::NORTH)
  )
 
 (define-type ONT::EAST
  :parent ONT::MAP-LOCATION-VAL
  ; Words: (W::EASTERN W::EAST)
-:wordnet-sense-keys ("east%3:00:00" "eastern%5:00:00")
+ :wordnet-sense-keys ("east%3:00:00" "eastern%5:00:00:east:00")
  ; Antonym: ONT::WEST (W::WESTERN W::WEST)
  )
 
 (define-type ONT::WEST
  :parent ONT::MAP-LOCATION-VAL
  ; Words: (W::WESTERN W::WEST)
-:wordnet-sense-keys ("west%3:00:00" "western%5:00:00")
+ :wordnet-sense-keys ("west%3:00:00" "western%5:00:00:west:00")
  ; Antonym: ONT::EAST (W::EASTERN W::EAST)
  )
 
 (define-type ONT::INCOMING
  :parent ONT::DIRECTION-VAL
  ; Words: (W::INCOMING W::INBOUND)
-:wordnet-sense-keys ("incoming%3:00:00" "inbound%5:00:00" "incoming%3:00:00")
+ :wordnet-sense-keys ("incoming%3:00:00" "inbound%5:00:00:incoming:00" "incoming%3:00:00")
  ; Antonym: ONT::OUTGOING (W::OUTGOING W::OUTBOUND)
  )
 
 (define-type ONT::OUTGOING
  :parent ONT::DIRECTION-VAL
  ; Words: (W::OUTGOING W::OUTBOUND)
-:wordnet-sense-keys ("outgoing%3:00:00" "outbound%5:00:00" "outgoing%3:00:00")
+ :wordnet-sense-keys ("outgoing%3:00:00" "outbound%5:00:00:outgoing:00" "outgoing%3:00:00")
  ; Antonym: ONT::INCOMING (W::INCOMING W::INBOUND)
  )
 
 (define-type ONT::RELIABLE
  :parent ONT::CERTAINTY-VAL
  ; Words: (W::RELIABLE W::TRUSTWORTHY W::DEPENDABLE)
-:wordnet-sense-keys ("reliable%3:00:00" "reliable%3:00:00" "trustworthy%3:00:00" "dependable%5:00:00")
+ :wordnet-sense-keys ("reliable%3:00:00" "reliable%3:00:00" "trustworthy%3:00:00" "dependable%5:00:00:trustworthy:00")
  ; Antonym: ONT::UNRELIABLE (W::UNCERTAIN W::UNRELIABLE)
  )
 
 (define-type ONT::UNRELIABLE
  :parent ONT::CERTAINTY-VAL
  ; Words: (W::UNCERTAIN W::UNRELIABLE)
-:wordnet-sense-keys ("unreliable%3:00:00" "unreliable%3:00:00" "unreliable%3:00:00" "uncertain%5:00:00")
+ :wordnet-sense-keys ("unreliable%3:00:00" "unreliable%3:00:00" "unreliable%3:00:00" "uncertain%5:00:00:unreliable:00")
  ; Antonym: ONT::RELIABLE (W::RELIABLE W::TRUSTWORTHY W::DEPENDABLE)
  )
 
@@ -3470,70 +3470,70 @@
 (define-type ONT::correct
  :parent ONT::CORRECTNESS-VAL
  ; Words: (W::PROPER W::CORRECT W::ACCURATE)
-:wordnet-sense-keys ("accurate%5:00:00" "correct%3:00:00" "correct%5:00:00" "proper%3:00:00")
+ :wordnet-sense-keys ("accurate%5:00:00:correct:00" "correct%3:00:00" "correct%5:00:00:proper:00" "proper%3:00:00")
  ; Antonym: ONT::incorrect (W::MISTAKEN W::INACCURATE W::INCORRECT)
  )
 
 (define-type ONT::incorrect
  :parent ONT::CORRECTNESS-VAL
  ; Words: (W::MISTAKEN W::INACCURATE W::INCORRECT)
-:wordnet-sense-keys ("incorrect%3:00:00" "faulty%5:00:00" "false%5:00:00" "inaccurate%3:00:00")
+ :wordnet-sense-keys ("incorrect%3:00:00" "inaccurate%3:00:00" "faulty%5:00:00:inaccurate:00" "false%5:00:00:incorrect:00")
  ; Antonym: ONT::correct (W::PROPER W::CORRECT W::ACCURATE)
  )
 
 (define-type ONT::LOGICAL
  :parent ONT::CORRECTNESS-VAL
  ; Words: (W::VALID W::LEGITIMATE)
-:wordnet-sense-keys ("legitimate%5:00:00" "valid%3:00:00")
+ :wordnet-sense-keys ("valid%3:00:00" "legitimate%5:00:00:valid:00")
  ; Antonym: NIL (W::INVALID)
  )
 
 (define-type ONT::PRECISE
  :parent ONT::PRECISION-VAL
  ; Words: (W::DEAD W::PRECISE)
-:wordnet-sense-keys ("precise%3:00:00" "precise%3:00:00" "dead%5:00:00")
+ :wordnet-sense-keys ("precise%3:00:00" "precise%3:00:00" "dead%5:00:00:precise:00")
  ; Antonym: NIL (W::IMPRECISE)
  )
 
 (define-type ONT::COMMON
  :parent ONT::TYPICALITY-VAL
  ; Words: (W::COMMON W::NORMAL W::USUAL W::REGULAR W::ORDINARY W::STANDARD W::FAMILIAR W::TYPICAL W::CONVENTIONAL W::ORTHODOX W::UNREMARKABLE W::UNEXCEPTIONAL W::ROUTINE)
-:wordnet-sense-keys ("common%3:00:01" "typical%3:00:00" "regular%3:00:00" "conventional%3:00:00" "ordinary%3:00:00" "normal%3:00:01" "everyday%5:00:00" "run-of-the-mill%5:00:00" "common%5:00:00" "conventional%5:00:00" "standard%5:00:00" "familiar%3:00:02" "orthodox%3:00:00" "usual%3:00:00" "regular(a)%5:00:00" "common%5:00:00" "standard%5:00:00" "regular%5:00:00" "typical%5:00:00")
+ :wordnet-sense-keys ("common%3:00:01" "typical%3:00:00" "regular%3:00:00" "conventional%3:00:00" "ordinary%3:00:00" "normal%3:00:01" "run-of-the-mill%5:00:00:ordinary:00" "familiar%3:00:02" "orthodox%3:00:00" "usual%3:00:00" "regular%5:00:00" "everyday%5:00:00" "common%5:00:00" "conventional%5:00:00" "standard%5:00:00" "common%5:00:00" "standard%5:00:00" "regular%5:00:00" "typical%5:00:00")
  ; Antonym: ONT::STRANGE (W::STRANGE W::ODD W::UNUSUAL W::REMARKABLE W::EXTRAORDINARY W::EXCEPTIONAL W::PECULIAR W::WEIRD W::BIZARRE W::UNFAMILIAR W::ABNORMAL W::FUNKY W::UNCONVENTIONAL W::UNCOMMON W::SINGULAR W::FREAKY W::ATYPICAL W::OUTLANDISH W::UNORTHODOX)
  )
 
 (define-type ONT::STRANGE
  :parent ONT::TYPICALITY-VAL
  ; Words: (W::STRANGE W::ODD W::UNUSUAL W::REMARKABLE W::EXTRAORDINARY W::EXCEPTIONAL W::PECULIAR W::WEIRD W::BIZARRE W::UNFAMILIAR W::ABNORMAL W::FUNKY W::UNCONVENTIONAL W::UNCOMMON W::SINGULAR W::FREAKY W::ATYPICAL W::OUTLANDISH W::UNORTHODOX)
-:wordnet-sense-keys ("strange%3:00:00" "abnormal%3:00:00" "bizarre%5:00:00" "bizarre%5:00:00" "bizarre%5:00:00" "especial(a)%5:00:00" "irregular%5:00:00" "atypical%5:00:00" "unconventional%3:00:01" "unconventional%3:00:01" "unconventional%3:00:01" "unconventional%3:00:01" "uncommon%3:00:00" "unusual%3:00:00" "unconventional%3:00:00" "curious%5:00:00" "remarkable%5:00:00" "remarkable%5:00:00" "strange%5:00:01" "atypical%3:00:00" "extraordinary%3:00:00" "extraordinary%3:00:00" "unfamiliar%3:00:00" "uncommon%3:00:00" "funky%5:00:00" "unusual%5:00:00" "odd%5:00:00" "weird%5:00:00" "freaky%5:00:00")
+ :wordnet-sense-keys ("strange%3:00:00" "abnormal%3:00:00" "bizarre%5:00:00:unconventional:01" "bizarre%5:00:00:unconventional:01" "bizarre%5:00:00:unconventional:01" "especial%5:00:00" "atypical%5:00:00:abnormal:00" "unconventional%3:00:01" "unconventional%3:00:01" "unconventional%3:00:01" "unconventional%3:00:01" "uncommon%3:00:00" "unusual%3:00:00" "unconventional%3:00:00" "strange%5:00:01:unfamiliar:00" "atypical%3:00:00" "extraordinary%3:00:00" "extraordinary%3:00:00" "unfamiliar%3:00:00" "uncommon%3:00:00" "unusual%5:00:00:uncommon:00" "irregular%5:00:00" "curious%5:00:00" "remarkable%5:00:00" "remarkable%5:00:00" "funky%5:00:00" "odd%5:00:00" "weird%5:00:00" "freaky%5:00:00")
  ; Antonym: ONT::COMMON (W::COMMON W::NORMAL W::USUAL W::REGULAR W::ORDINARY W::STANDARD W::FAMILIAR W::TYPICAL W::CONVENTIONAL W::ORTHODOX W::UNREMARKABLE W::UNEXCEPTIONAL W::ROUTINE)
  )
 
 (define-type ONT::FINISHED
  :parent ONT::COMPLETION-VAL
  ; Words: (W::COMPLETE W::FINISHED W::UTTER W::COMPLETED W::DONE)
-:wordnet-sense-keys ("finished%3:00:01" "finished%3:00:01" "complete%5:00:00" "accomplished%5:00:00" "done%5:00:00" "complete%3:00:00" "dead(a)%5:00:00" "complete%3:00:00")
+ :wordnet-sense-keys ("finished%3:00:01" "finished%3:00:01" "complete%3:00:00" "dead%5:00:00" "complete%3:00:00" "done%5:00:00:finished:01" "complete%5:00:00:finished:01" "accomplished%5:00:00:complete:00")
  ; Antonym: ONT::INCOMPLETE (W::UNFINISHED W::INCOMPLETE)
  )
 
 (define-type ONT::INCOMPLETE
  :parent ONT::COMPLETION-VAL
  ; Words: (W::UNFINISHED W::INCOMPLETE)
-:wordnet-sense-keys ("incomplete%3:00:00" "unfinished%3:00:01" "incomplete%5:00:00")
+ :wordnet-sense-keys ("incomplete%3:00:00" "unfinished%3:00:01" "incomplete%5:00:00:unfinished:01")
  ; Antonym: ONT::FINISHED (W::COMPLETE W::FINISHED W::UTTER W::COMPLETED W::DONE)
  )
 
 (define-type ONT::good
  :parent ONT::ACCEPTABILITY-VAL
  ; Words: (W::GOOD W::GREAT W::FINE W::NICE W::ACCEPTABLE W::ALRIGHT W::SATISFACTORY W::SUPERB W::OKAY W::OK W::PEACHY W::FAVORABLE W::BEARABLE W::TOLERABLE W::SUPPORTABLE ALL_RIGHT)
-:wordnet-sense-keys ("all_right%5:00:00" "favorable%3:00:02" "acceptable%3:00:00" "tolerable%3:00:00" "nice%3:00:00" "satisfactory%3:00:00" "adequate%5:00:00" "bearable%5:00:00" "satisfactory%5:00:00" "good%3:00:01" "tolerable%3:00:00" "tolerable%3:00:00" "bang-up%5:00:00" "bearable%5:00:00" "alright%5:00:00" "superb%5:00:00" "good%5:00:00")
+ :wordnet-sense-keys ("all_right%5:00:00:satisfactory:00" "favorable%3:00:02" "acceptable%3:00:00" "tolerable%3:00:00" "nice%3:00:00" "satisfactory%3:00:00" "bearable%5:00:00:tolerable:00" "satisfactory%5:00:00:good:01" "good%3:00:01" "tolerable%3:00:00" "tolerable%3:00:00" "bang-up%5:00:00:good:01" "bearable%5:00:00:tolerable:00" "alright%5:00:00:satisfactory:00" "superb%5:00:00:good:01" "good%5:00:00:nice:00" "adequate%5:00:00:satisfactory:00")
  ; Antonym: ONT::bad (W::BAD W::TERRIBLE W::AWFUL W::NASTY W::DREADFUL W::UNACCEPTABLE W::ROTTEN W::UNSUPPORTABLE W::UNBEARABLE W::INTOLERABLE W::INSUFFERABLE W::UNFAVORABLE W::MEDIOCRE W::LOUSY)
  )
 
 (define-type ONT::bad
  :parent ONT::ACCEPTABILITY-VAL
  ; Words: (W::BAD W::TERRIBLE W::AWFUL W::NASTY W::DREADFUL W::UNACCEPTABLE W::ROTTEN W::UNSUPPORTABLE W::UNBEARABLE W::INTOLERABLE W::INSUFFERABLE W::UNFAVORABLE W::MEDIOCRE W::LOUSY)
-:wordnet-sense-keys ("atrocious%5:00:00" "intolerable%3:00:00" "unfavorable%3:00:02" "bad%3:00:00" "impossible%5:00:00" "dirty%5:00:00" "nasty%3:00:00" "icky%5:00:00" "unfavorable%5:00:00" "unsupportable%5:00:00" "unacceptable%3:00:00" "mediocre%5:00:00")
+ :wordnet-sense-keys ("intolerable%3:00:00" "unfavorable%3:00:02" "bad%3:00:00" "nasty%3:00:00" "unfavorable%5:00:00:bad:00" "unsupportable%5:00:00:intolerable:00" "unacceptable%3:00:00" "impossible%5:00:00:intolerable:00" "dirty%5:00:00:nasty:00" "mediocre%5:00:00:bad:00" "icky%5:00:00:bad:00" "atrocious%5:00:00:bad:00")
  ; Antonym: ONT::good (W::GOOD W::GREAT W::FINE W::NICE W::ACCEPTABLE W::ALRIGHT W::SATISFACTORY W::SUPERB W::OKAY W::OK W::PEACHY W::FAVORABLE W::BEARABLE W::TOLERABLE W::SUPPORTABLE ALL_RIGHT)
  )
 
@@ -3547,28 +3547,28 @@
 (define-type ONT::unnoticeable
  :parent ONT::ATTENTION-WORTHY-VAL
  ; Words: (W::UNOBTRUSIVE W::INCONSPICUOUS W::UNNOTICEABLE)
-:wordnet-sense-keys ("unobtrusive%3:00:00" "unobtrusive%3:00:00" "unobtrusive%3:00:00" "inconspicuous%3:00:00" "obscure%5:00:00" "inconspicuous%3:00:00")
+ :wordnet-sense-keys ("unobtrusive%3:00:00" "unobtrusive%3:00:00" "unobtrusive%3:00:00" "inconspicuous%3:00:00" "inconspicuous%3:00:00" "obscure%5:00:00:inconspicuous:00")
  ; Antonym: ONT::OUTSTANDING (W::PROMINENT W::STRIKING W::NOTICEABLE W::PRONOUNCED W::OBTRUSIVE W::CONSPICUOUS)
  )
 
 (define-type ONT::UNCLEAR
  :parent ONT::CLARITY-VAL
  ; Words: (w::unobvious W::UNCLEAR W::OBSCURE W::OPAQUE)
-:wordnet-sense-keys ("ill-defined%3:00:00" "unclear%3:00:00" "opaque%3:00:00" "obscure%5:00:00")
+ :wordnet-sense-keys ("ill-defined%3:00:00" "unclear%3:00:00" "opaque%3:00:00" "obscure%5:00:00:unclear:00")
  ; Antonym: ONT::clear (W::CLEAR w::obvious w::evident)
  )
 
 (define-type ONT::clear
  :parent ONT::CLARITY-VAL
  ; Words: (w::clear W::OBVIOUS W::EVIDENT)
-:wordnet-sense-keys ("apparent%5:00:00" "obvious%3:00:00")
+ :wordnet-sense-keys ("obvious%3:00:00" "apparent%5:00:00:obvious:00")
  ; Antonym: ONT::unclear (W::UNOBVIOUS)
  )
 
 (define-type ONT::BEAUTIFUL
  :parent ONT::BEAUTY-VAL
  ; Words: (W::BEAUTIFUL W::LOVELY W::PRETTY)
-:wordnet-sense-keys ("beautiful%3:00:00" "beautiful%3:00:00" "lovely%5:00:00" "pretty%5:00:00")
+ :wordnet-sense-keys ("beautiful%3:00:00" "beautiful%3:00:00" "lovely%5:00:00:beautiful:00" "pretty%5:00:00:beautiful:00")
  ; Antonym: NIL (W::UGLY)
  )
 
@@ -3587,49 +3587,49 @@
 (define-type ONT::lucky
  :parent ONT::LUCKINESS-VAL
  ; Words: (W::LUCKY W::FORTUNATE)
-:wordnet-sense-keys ("fortunate%3:00:00" "lucky%5:00:00")
+ :wordnet-sense-keys ("fortunate%3:00:00" "lucky%5:00:00:fortunate:00")
  ; Antonym: ONT::unlucky (W::UNFORTUNATE W::UNLUCKY)
  )
 
 (define-type ONT::unlucky
  :parent ONT::LUCKINESS-VAL
  ; Words: (W::UNFORTUNATE W::UNLUCKY)
-:wordnet-sense-keys ("doomed%5:00:00" "unfortunate%3:00:00")
+ :wordnet-sense-keys ("unfortunate%3:00:00" "doomed%5:00:00:unfortunate:00")
  ; Antonym: ONT::lucky (W::LUCKY W::FORTUNATE)
  )
 
 (define-type ONT::primary
  :parent ONT::IMPORTANCE-VAL
  ; Words: (W::IMPORTANT W::MAIN W::MAJOR W::NECESSARY W::CENTRAL W::SERIOUS W::SIGNIFICANT W::ESSENTIAL W::PRIMARY W::SENIOR W::CRITICAL W::VITAL W::CRUCIAL W::INDISPENSABLE)
-:wordnet-sense-keys ("dangerous%5:00:00" "important%3:00:00" "significant%3:00:00" "significant%3:00:00" "important%3:00:00" "senior%3:00:00" "cardinal%5:00:00" "chief(a)%5:00:02" "all-important(a)%5:00:00" "basal%5:00:00" "major(ip)%5:00:00")
+ :wordnet-sense-keys ("dangerous%5:00:00:critical:03" "important%3:00:00" "significant%3:00:00" "significant%3:00:00" "important%3:00:00" "senior%3:00:00" "cardinal%5:00:00:important:00" "chief%5:00:02" "all-important%5:00:00" "major%5:00:00" "basal%5:00:00")
  ; Antonym: ONT::SECONDARY (W::SECONDARY W::MINOR W::JUNIOR W::UNNECESSARY W::UNIMPORTANT W::INSIGNIFICANT)
  )
 
 (define-type ONT::necessary
  :parent ONT::primary
  ; Words: (W::IMPORTANT W::MAIN W::MAJOR W::NECESSARY W::CENTRAL W::SERIOUS W::SIGNIFICANT W::ESSENTIAL W::PRIMARY W::SENIOR W::CRITICAL W::VITAL W::CRUCIAL W::INDISPENSABLE)
-:wordnet-sense-keys ("necessary%3:00:00" "essential%3:00:00" "critical%3:00:03" "crucial%3:00:00" "critical%5:00:00" "essential%5:00:00" "vital%5:00:00" "indispensable%3:00:00" "major(ip)%5:00:00")
+:wordnet-sense-keys ("necessary%3:00:00" "essential%3:00:00" "critical%3:00:03" "crucial%3:00:00" "critical%5:00:00" "essential%5:00:00" "vital%5:00:00" "indispensable%3:00:00" "major%5:00:00")
  ; Antonym: ONT::SECONDARY (W::SECONDARY W::MINOR W::JUNIOR W::UNNECESSARY W::UNIMPORTANT W::INSIGNIFICANT)
  )
 
 (define-type ONT::SECONDARY
  :parent ONT::IMPORTANCE-VAL
  ; Words: (W::SECONDARY W::MINOR W::JUNIOR W::UNNECESSARY W::UNIMPORTANT W::INSIGNIFICANT)
-:wordnet-sense-keys ("junior-grade%5:00:00" "unnecessary%3:00:00" "insignificant%3:00:00" "insignificant%3:00:00" "unimportant%3:00:00" "minor%3:00:06" "junior%3:00:00" "insignificant%5:00:00" "minor(ip)%5:00:00")
+ :wordnet-sense-keys ("junior-grade%5:00:00:junior:00" "unnecessary%3:00:00" "insignificant%3:00:00" "insignificant%3:00:00" "unimportant%3:00:00" "minor%3:00:06" "junior%3:00:00" "minor%5:00:00" "insignificant%5:00:00:minor:06")
  ; Antonym: ONT::SERIOUS (W::IMPORTANT W::MAIN W::MAJOR W::NECESSARY W::CENTRAL W::SERIOUS W::SIGNIFICANT W::ESSENTIAL W::PRIMARY W::SENIOR W::CRITICAL W::VITAL W::CRUCIAL W::INDISPENSABLE)
  )
 
 (define-type ONT::intense
  :parent ONT::INTENSITY-VAL
  ; Words: (W::HIGH W::LOW W::STRONG W::DEEP W::POWERFUL W::SHARP W::INTENSE W::DULL W::SHALLOW W::POTENT)
-:wordnet-sense-keys ("high%3:00:03" "intense%3:00:00" "shrill%5:00:00" "acute%5:00:00" "powerful%3:00:00" "strong%3:00:00" "deep%3:00:01" "high%3:00:02" "intense%3:00:00" "sharp%3:00:04" "potent%5:00:00" "deep%5:00:00" "strong%5:00:00" "deep%5:00:00" "intensive%5:00:00:intense:00")
+ :wordnet-sense-keys ("high%3:00:03" "intense%3:00:00" "powerful%3:00:00" "strong%3:00:00" "deep%3:00:01" "high%3:00:02" "intense%3:00:00" "sharp%3:00:04" "intensive%5:00:00:intense:00" "potent%5:00:00:powerful:00" "strong%5:00:00:powerful:00" "strong%5:00:00:intense:00" "shrill%5:00:00:high:03" "deep%5:00:00:intense:00" "acute%5:00:00:sharp:04")
  ; Antonym: ONT::weak (W::WEAK W::FAINT)
  )
 
 (define-type ONT::weak
  :parent ONT::INTENSITY-VAL
  ; Words: (W::WEAK W::FAINT)
-:wordnet-sense-keys ("weak%3:00:00" "faint%5:00:00" "weak%3:00:00" "low%3:00:02" "low%3:00:01" "shallow%3:00:01" "dull%3:00:04")
+ :wordnet-sense-keys ("weak%3:00:00" "weak%3:00:00" "low%3:00:02" "low%3:00:01" "shallow%3:00:01" "dull%3:00:04" "faint%5:00:00:weak:00")
  ; Antonym: ONT::intense (W::HIGH W::LOW W::STRONG W::DEEP W::POWERFUL W::SHARP W::INTENSE W::DULL W::SHALLOW W::POTENT)
  )
 
@@ -3640,7 +3640,7 @@
 (define-type ONT::USEFUL
  :parent ONT::usefulness-VAL
  ; Words: (W::USEFUL W::PRACTICAL W::FUNCTIONAL)
-:wordnet-sense-keys ("useful%3:00:00" "functional%3:00:02" "functional%3:00:00" "practical%3:00:00" "utilitarian%5:00:00" "practical%5:00:00" "functional%5:00:00")
+ :wordnet-sense-keys ("useful%3:00:00" "functional%3:00:02" "functional%3:00:00" "practical%3:00:00" "practical%5:00:00:applied:00" "utilitarian%5:00:00" "functional%5:00:00")
  ; Antonym: ONT::useless (W::USELESS W::IMPRACTICAL)
  )
 
@@ -3661,7 +3661,7 @@
 (define-type ONT::UNADORNED
  :parent ONT::substantial-property-VAL
  ; Words: (W::BARE W::NAKED W::UNADORNED)
-:wordnet-sense-keys ("unadorned%3:00:00" "plain%5:00:00" "bare%5:00:00" "bare%3:00:00" "naked%5:00:00")
+ :wordnet-sense-keys ("unadorned%3:00:00" "bare%3:00:00" "plain%5:00:00:unadorned:00" "bare%5:00:00:unadorned:00" "naked%5:00:00:bare:00")
  ; Antonym: nil
  )
 
@@ -3675,7 +3675,7 @@
 (define-type ONT::FULL
  :parent ONT::configuration-property-VAL
  ; Words: (W::FULL W::FILLED)
-:wordnet-sense-keys ("full%3:00:00" "filled%5:00:01")
+ :wordnet-sense-keys ("full%3:00:00" "filled%5:00:01:full:00")
  ; Antonym: ONT::UNFILLED (W::EMPTY)
  )
 
@@ -3688,7 +3688,7 @@
  :parent ONT::activity-VAL
  :comment "operating as intended wrt some process"
  ; Words: (W::ACTIVE W::BUSY)
- :wordnet-sense-keys ("busy%3:00:00" "active%3:00:03" "active%3:00:06" "busy%5:00:01")
+ :wordnet-sense-keys ("busy%3:00:00" "active%3:00:03" "active%3:00:06" "busy%5:00:01:active:06")
  ; Antonym: ONT::INACTIVE (W::PASSIVE W::IDLE)
   :arguments ((:required ONT::FIGURE ((? lof f::phys-obj))))
  )
@@ -3714,7 +3714,7 @@
 (define-type ONT::DEPENDENT
  :parent ONT::dependence-val
  ; Words: (W::DEPENDENT W::CONDITIONAL)
- :wordnet-sense-keys ("dependent%5:00:00" "dependent%3:00:00" "conditional%3:00:00")
+ :wordnet-sense-keys ("dependent%3:00:00" "conditional%3:00:00" "dependent%5:00:00:conditional:00")
  ; Antonym: NILx (W::INDEPENDENT)
  )
 
@@ -3725,50 +3725,50 @@
 (define-type ONT::private
  :parent ONT::STATUS-VAL
  ; Words: (W::PERSONAL W::PRIVATE W::SECRET)
-:wordnet-sense-keys ("privy%5:00:00" "personal%3:00:00" "private%3:00:00" "private%5:00:02")
+ :wordnet-sense-keys ("personal%3:00:00" "private%3:00:00" "private%5:00:02:personal:00" "privy%5:00:00:private:00")
  ; Antonym: NIL (W::PUBLIC)
  )
 
 (define-type ONT::hidden
  :parent ONT::visible-property-VAL
  ; Words: (W::HIDDEN W::INVISIBLE W::OBSCURE)
-:wordnet-sense-keys ("invisible%3:00:00" "concealed%5:00:00" "inconspicuous%3:00:00" "obscure%5:00:00")
+ :wordnet-sense-keys ("invisible%3:00:00" "concealed%5:00:00:invisible:00" "inconspicuous%3:00:00" "obscure%5:00:00:inconspicuous:00")
  ; Antonym: NIL (W::VISIBLE)
  )
 
 (define-type ONT::RELEVANT
  :parent ONT::STATUS-VAL
  ; Words: (W::RELEVANT W::APPLICABLE W::PERTINENT)
-:wordnet-sense-keys ("relevant%3:00:00" "relevant%3:00:00" "pertinent%5:00:00" "applicable%5:00:00")
+ :wordnet-sense-keys ("relevant%3:00:00" "relevant%3:00:00" "applicable%5:00:00:relevant:00" "pertinent%5:00:00:relevant:00")
  ; Antonym: NIL (W::IRRELEVANT)
  )
 
 (define-type ONT::SIMILAR
- :wordnet-sense-keys ("like%5:00:00" "corresponding%5:00:00" "comparable%5:00:00" "like%3:00:04" "similar%3:00:04" "alike(p)%3:00:00" "same%3:00:04" "like%3:00:02" "like%3:00:00" "similar%3:00:02")
- :wordnet-sense-keys ("like%5:00:00" "corresponding%5:00:00" "comparable%5:00:00" "like%3:00:04" "similar%3:00:04" "alike(p)%3:00:00" "same%3:00:04" "like%3:00:02" "like%3:00:00" "similar%3:00:02")
+ :wordnet-sense-keys ("like%5:00:00:same:00" "comparable%5:00:00:same:00" "like%3:00:04" "similar%3:00:04" "alike%3:00:00" "same%3:00:04" "like%3:00:02" "like%3:00:00" "similar%3:00:02" "corresponding%5:00:00")
+ :wordnet-sense-keys ("like%5:00:00:same:00" "comparable%5:00:00:same:00" "like%3:00:04" "similar%3:00:04" "alike%3:00:00" "same%3:00:04" "like%3:00:02" "like%3:00:00" "similar%3:00:02" "corresponding%5:00:00")
  :parent ONT::SIMILARITY-VAL
  ; Words: (W::SIMILAR W::LIKE W::ANALOGOUS W::KINDRED)
-:wordnet-sense-keys ("like%3:00:00" "like%3:00:00" "analogous%5:00:00" "similar%3:00:00" "akin(p)%5:00:00")
+ :wordnet-sense-keys ("like%3:00:00" "like%3:00:00" "analogous%5:00:00:similar:00" "similar%3:00:00" "akin%5:00:00")
  ; Antonym: ONT::DIFFERENT (W::DIFFERENT W::SEPARATE W::DISTINCT)
  )
 
 (define-type ONT::DIFFERENT
  :parent ONT::SIMILARITY-VAL
  ; Words: (W::DIFFERENT W::SEPARATE W::DISTINCT)
-:wordnet-sense-keys ("unlike%3:00:00" "unlike%3:00:00" "distinct%5:00:00" "discrete%5:00:00" "different%3:00:00" "separate%3:00:00")
+ :wordnet-sense-keys ("unlike%3:00:00" "unlike%3:00:00" "discrete%5:00:00:separate:00" "different%3:00:00" "separate%3:00:00" "distinct%5:00:00")
  ; Antonym: ONT::SIMILAR (W::SIMILAR W::LIKE W::ANALOGOUS W::KINDRED)
  )
 
 (define-type ONT::EQUAL
  :parent ONT::SIMILARITY-VAL
  ; Words: (W::EQUAL W::EQUIVALENT)
-:wordnet-sense-keys ("equal%3:00:00" "equivalent%5:00:00" "equal%3:00:00")
+ :wordnet-sense-keys ("equal%3:00:00" "equivalent%5:00:00:equal:00" "equal%3:00:00")
  ; Antonym: NIL (W::UNEQUAL)
  )
 
 (define-type ONT::SAME
  :parent ONT::IDENTITY-VAL
- :wordnet-sense-keys ("same%3:00:02" "identical%5:00:00" "same%3:00:02")
+ :wordnet-sense-keys ("same%3:00:02" "same%3:00:02" "identical%5:00:00:same:02")
  ; Antonym: NIL (W::OTHER)
  )
 
@@ -3781,35 +3781,35 @@
 (define-type ONT::near
  :parent ONT::DISTANCE-VAL
  ; Words: (W::CLOSE W::NEAR W::NEARBY)
-:wordnet-sense-keys ("near%3:00:00" "close%3:00:02" "approximate%5:00:00" "close%3:00:02" "nearby%5:00:00")
+ :wordnet-sense-keys ("near%3:00:00" "close%3:00:02" "close%3:00:02" "nearby%5:00:00:near:00" "approximate%5:00:00:close:02")
  ; Antonym: ONT::REMOTE (W::FAR W::REMOTE W::DISTANT W::FARTHER)
  )
 
 (define-type ONT::REMOTE
  :parent ONT::DISTANCE-VAL
  ; Words: (W::FAR W::REMOTE W::DISTANT W::FARTHER)
-:wordnet-sense-keys ("distant%5:00:02" "distant%3:00:02" "far%3:00:00" "distant%5:00:01" "farther%5:00:01")
+ :wordnet-sense-keys ("distant%5:00:02:far:00" "distant%3:00:02" "far%3:00:00" "distant%5:00:01:far:00" "farther%5:00:01:far:00")
  ; Antonym: ONT::near (W::CLOSE W::NEAR W::NEARBY)
  )
 
 (define-type ONT::difficult
  :parent ONT::TASK-COMPLEXITY-VAL
  ; Words: (W::DIFFICULT W::HARD W::COMPLEX W::TOUGH W::COMPLICATED W::TRICKY W::CHALLENGING W::ARDUOUS)
-:wordnet-sense-keys ("difficult%3:00:00" "catchy%5:00:00" "complex%3:00:00" "ambitious%5:00:00" "ambitious%5:00:00" "complex%3:00:00" "rugged%5:00:00" "arduous%5:00:00" "complicated%5:00:00")
+ :wordnet-sense-keys ("difficult%3:00:00" "complex%3:00:00" "ambitious%5:00:00:difficult:00" "ambitious%5:00:00:difficult:00" "complex%3:00:00" "complicated%5:00:00:complex:00" "rugged%5:00:00:difficult:00" "arduous%5:00:00:difficult:00" "catchy%5:00:00:difficult:00")
  ; Antonym: ONT::easy (W::EASY W::SIMPLE)
  )
 
 (define-type ONT::POSSIBLE
  :parent ONT::TASK-COMPLEXITY-VAL
  ; Words: (W::POSSIBLE W::DOABLE)
-:wordnet-sense-keys ("possible%3:00:00" "accomplishable%5:00:00" "possible%3:00:00")
+ :wordnet-sense-keys ("possible%3:00:00" "accomplishable%5:00:00:possible:00" "possible%3:00:00")
  ; Antonym: NIL (W::IMPOSSIBLE)
  )
 
 (define-type ONT::easy
  :parent ONT::TASK-COMPLEXITY-VAL
  ; Words: (W::EASY W::SIMPLE)
-:wordnet-sense-keys ("elementary%5:00:00" "simple%3:00:02" "easy%3:00:01")
+ :wordnet-sense-keys ("simple%3:00:02" "easy%3:00:01" "elementary%5:00:00:easy:01")
  ; Antonym: ONT::difficult (W::DIFFICULT W::HARD W::COMPLEX W::TOUGH W::COMPLICATED W::TRICKY W::CHALLENGING W::ARDUOUS)
  )
 
@@ -3823,28 +3823,28 @@
 (define-type ONT::CERTAIN
  :parent ONT::CONFIDENCE-VAL
  ; Words: (W::CERTAIN W::SURE W::CONFIDENT)
-:wordnet-sense-keys ("certain(p)%3:00:01" "convinced(p)%5:00:00" "sealed%3:00:02" "certain(p)%3:00:02" "indisputable%5:00:00")
+ :wordnet-sense-keys ("certain%3:00:01" "convinced%5:00:00" "sealed%3:00:02" "certain%3:00:02" "indisputable%5:00:00:certain:01")
  ; Antonym: ONT::UNCERTAIN (W::UNCERTAIN W::UNSURE)
  )
 
 (define-type ONT::AVAILABLE
  :parent ONT::AVAILABILITY-VAL
  ; Words: (W::AVAILABLE W::FREE)
-:wordnet-sense-keys ("available%5:00:00" "available%3:00:00" "free%3:00:00")
+ :wordnet-sense-keys ("available%3:00:00" "free%3:00:00" "available%5:00:00:free:00")
  ; Antonym: NIL (W::UNAVAILABLE)
  )
 
 (define-type ONT::unable
  :parent ONT::ABILITY-VAL
  ; Words: (W::UNABLE W::INCAPABLE W::INCOMPETENT)
-:wordnet-sense-keys ("incompetent%3:00:00" "incapable%3:00:00" "unable(p)%5:00:00")
+:wordnet-sense-keys ("incompetent%3:00:00" "incapable%3:00:00" "unable%5:00:00")
  ; Antonym: ONT::able (W::ABLE W::CAPABLE W::COMPETENT)
  )
 
 (define-type ONT::able
  :parent ONT::ABILITY-VAL
  ; Words: (W::ABLE W::CAPABLE W::COMPETENT)
-:wordnet-sense-keys ("competent%3:00:00" "capable%3:00:00" "capable%3:00:00" "competent%3:00:00" "able%5:00:00" "able%5:00:00")
+ :wordnet-sense-keys ("competent%3:00:00" "capable%3:00:00" "capable%3:00:00" "competent%3:00:00" "able%5:00:00:competent:00" "able%5:00:00:capable:00")
  ; Antonym: ONT::unable (W::UNABLE W::INCAPABLE W::INCOMPETENT)
  )
 
@@ -3873,21 +3873,21 @@
 (define-type ONT::manageable
  :parent ONT::MANAGEABILITY-VAL
  ; Words: (W::CONTROLLABLE W::MANAGEABLE)
-:wordnet-sense-keys ("controllable%5:00:00" "manageable%3:00:00")
+ :wordnet-sense-keys ("controllable%5:00:00:manageable:00" "manageable%3:00:00")
  ; Antonym: ONT::unmanageable (W::UNCONTROLLABLE W::UNMANAGEABLE)
  )
 
 (define-type ONT::unmanageable
  :parent ONT::MANAGEABILITY-VAL
  ; Words: (W::UNCONTROLLABLE W::UNMANAGEABLE)
-:wordnet-sense-keys ("indocile%5:00:00" "unmanageable%3:00:00")
+ :wordnet-sense-keys ("indocile%5:00:00:unmanageable:00" "unmanageable%3:00:00")
  ; Antonym: ONT::manageable (W::CONTROLLABLE W::MANAGEABLE)
  )
 
 (define-type ONT::insane
  :parent ONT::REASONABLE-VAL
  ; Words: (W::MAD W::CRAZY W::INSANE)
-:wordnet-sense-keys ("brainsick%5:00:00" "insane%3:00:00")
+ :wordnet-sense-keys ("brainsick%5:00:00:insane:00" "insane%3:00:00")
  ; Antonym: NIL (W::SANE)
  )
 
@@ -3901,14 +3901,14 @@
 (define-type ONT::inadequate
  :parent ONT::ENOUGH-VAL
  ; Words: (W::SHORT W::INADEQUATE W::INSUFFICIENT)
-:wordnet-sense-keys ("inadequate%5:00:00" "insufficient%3:00:00")
+ :wordnet-sense-keys ("inadequate%5:00:00:insufficient:00" "insufficient%3:00:00")
  ; Antonym: ONT::ADEQUATE (W::SUFFICIENT W::ADEQUATE W::ENOUGH)
  )
 
 (define-type ONT::ADEQUATE
  :parent ONT::ENOUGH-VAL
  ; Words: (W::SUFFICIENT W::ADEQUATE W::ENOUGH)
-:wordnet-sense-keys ("adequate%5:00:00" "sufficient%3:00:00")
+ :wordnet-sense-keys ("sufficient%3:00:00" "adequate%5:00:00:sufficient:00")
  ; Antonym: ONT::inadequate (W::SHORT W::INADEQUATE W::INSUFFICIENT)
  )
 
@@ -3929,21 +3929,21 @@
 (define-type ONT::expensive
  :parent ONT::COST-VAL
  ; Words: (W::EXPENSIVE W::PRICEY W::PRICY)
-:wordnet-sense-keys ("costly%5:00:01" "expensive%3:00:00" "expensive%3:00:00")
+ :wordnet-sense-keys ("costly%5:00:01:expensive:00" "expensive%3:00:00" "expensive%3:00:00")
  ; Antonym: ONT::inexpensive (W::CHEAP W::INEXPENSIVE)
  )
 
 (define-type ONT::COMFORTABLE
  :parent ONT::COMFORT-VAL
  ; Words: (W::COMFORTABLE W::COMFY W::COZY)
-:wordnet-sense-keys ("comfortable%3:00:00" "cozy%5:00:00" "comfortable%3:00:00")
+ :wordnet-sense-keys ("comfortable%3:00:00" "comfortable%3:00:00" "cozy%5:00:00:comfortable:00")
  ; Antonym: ONT::uncomfortable (W::UNCOMFORTABLE W::UNEASY)
  )
 
 (define-type ONT::uncomfortable
  :parent ONT::COMFORT-VAL
  ; Words: (W::UNCOMFORTABLE W::UNEASY)
-:wordnet-sense-keys ("awkward%5:00:00" "uncomfortable%3:00:00" "uncomfortable%3:00:01")
+ :wordnet-sense-keys ("uncomfortable%3:00:00" "uncomfortable%3:00:01" "awkward%5:00:00:uncomfortable:01")
  ; Antonym: ONT::COMFORTABLE (W::COMFORTABLE W::COMFY W::COZY)
  )
 
@@ -3957,7 +3957,7 @@
 (define-type ONT::artificial
  :parent ONT::NATURAL-VAL
  ; Words: (W::ARTIFICIAL W::FAKE W::UNNATURAL)
-:wordnet-sense-keys ("fake%5:00:00" "affected%3:00:01" "artificial%3:00:00" "artificial%5:00:00" "unnatural%3:00:00")
+ :wordnet-sense-keys ("affected%3:00:01" "artificial%3:00:00" "unnatural%3:00:00" "artificial%5:00:00:affected:01" "fake%5:00:00:artificial:00")
  ; Antonym: NIL (W::NATURAL)
  )
 

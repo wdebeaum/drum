@@ -58,7 +58,7 @@
 	(parser::*skeleton-constit-cats* '(W::NP W::CP W::VP W::ADVBL W::PP W::S))
 	;; boost constituents that match the skeleton (from stat. parser)
 ;	(parser::*skeleton-boost-factor* 1.1)
-	(parser::*skeleton-boost-factor* 1.05)
+	(parser::*skeleton-boost-factor* 1.04)
 	;; penalty for crossing skeleton constituent boundaries
 	((setf (parser::barrier-penalty parser::*chart*) .99))
 	;;

@@ -3,7 +3,7 @@
 package TextTagger::Tags2Trips;
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT_OK = qw(tag2trips trips2tagNative tags2trips tag2tripsLattice sortTags fillGaps splitClauses splitSentences reconcileQuotationsAndSentences $min_clause_length @penn_clause_tags %penn2trips_punc stanford_word_re cj_word_re $previous_word_ended_with_period filter_senses_from_word_blacklist filter_sense_infos_from_penn_pos_whitelist);
+@EXPORT_OK = qw(tag2trips trips2tagNative tags2trips tag2tripsLattice sortTags fillGaps splitClauses splitSentences reconcileQuotationsAndSentences $min_clause_length @penn_clause_tags %penn2trips_punc stanford_word_re cj_word_re $previous_word_ended_with_period filter_senses_from_word_blacklist filter_sense_infos_from_penn_pos_whitelist filter_phrases_from_short_sentences);
 
 use Data::Dumper;
 use TextTagger::Util qw(lisp_intern string2w union intersection set_difference);
@@ -906,6 +906,59 @@ sub filter_sense_infos_from_penn_pos_whitelist {
 	delete $tag->{'sense-info'};
       }
     }
+  }
+  return @tags;
+}
+
+# return the number of tokens (contiguous non-space substrings) in the given
+# string
+sub count_tokens {
+  my $str = shift;
+  return scalar(@{[$str =~ /\S+/g]});
+}
+
+# given a minimum sentence length in number of tokens, and a list of tags,
+# return the list of tags with any phrase tags from sentences shorter than the
+# minimum removed.
+sub filter_phrases_from_short_sentences {
+  my ($min_sentence_length, @tags) = @_;
+  my @sentences = grep { $_->{type} eq 'sentence' } @tags;
+  unless (@sentences) {
+    # no sentences, make a fake one the length of the input
+    # first, find the span of the input
+    my ($min, $max);
+    for (@tags) {
+      $min = $_->{start} if ((not defined($min)) or $min > $_->{start});
+      $max = $_->{end} if ((not defined($max)) or $max < $_->{end});
+    }
+    # reconstruct text from tags in that span (not alternate-spelling though)
+    my $text = ' 'x($max-$min);
+    for (@tags) {
+      if (exists($_->{lex}) and $_->{type} ne 'alternate-spelling') {
+	substr($text, $_->{start} - $min, $_->{end} - $_->{start}, $_->{lex});
+      }
+    }
+    # add the fake sentence tag with the reconstructed text
+    push @sentences, +{
+      text => $text,
+      start => $min,
+      end => $max
+    };
+  }
+  # get just the short sentences
+  @sentences =
+    grep { count_tokens($_->{text}) < $min_sentence_length } @sentences;
+  if (@sentences) {
+    # remove any phrase tags in the short sentences
+    @tags = grep {
+      my $tag = $_;
+      # not a phrase tag in a short sentence
+      (not (
+        $tag->{type} eq 'phrase' and
+	grep { $_->{start} <= $tag->{start} and $_->{end} >= $tag->{end} }
+	     @sentences
+      ))
+    } @tags;
   }
   return @tags;
 }
