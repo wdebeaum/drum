@@ -1849,7 +1849,7 @@
     :parent ONT::device
     :wordnet-sense-keys ("model%1:09:03")
     :sem (F::Phys-obj (F::Origin F::Artifact))
-    :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::Origin F::Artifact) ))
+    :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::Origin F::Artifact) (f::type ONT::manufactured-object)))
 		)
     )
 

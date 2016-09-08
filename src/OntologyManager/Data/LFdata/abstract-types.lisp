@@ -891,6 +891,10 @@
             )
  )
 
+(define-type ONT::sequence-val-next
+ :parent ONT::sequence-val
+ )
+
 ;;; adjectives like remaining/left over/etc
 (define-type ONT::PART-WHOLE-VAL
  :parent ONT::physical-PROPERTY-VAL
@@ -3247,6 +3251,7 @@
 
 (define-type ONT::linear-dimension
  :parent ONT::LINEAR-VAL
+; :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::type ont::phys-object))))
  :wordnet-sense-keys ("deep%5:00:00" "shallow%3:00:01"   "deep%3:00:01" )
  )
 

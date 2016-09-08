@@ -1,6 +1,6 @@
 # WordNetSQL Makefile
 # William de Beaumont
-# $Date: 2015/10/28 20:41:08 $
+# $Date: 2016/09/07 12:49:30 $
 
 CONFIGDIR=../config
 include $(CONFIGDIR)/defs.mk
@@ -55,6 +55,7 @@ endif
 
 # use this target if you actually want to make wn.db for yourself
 wn.db-no-really: make-wordnet-sql-db.pl glosstags.sqlite glosstag-standoff-to-sql.pl glosstag-standoff-to-sql.xsl get-del-ins.ph fix-glosstag-offsets-manually.pl manual-glosstag-fixes.txt
+	touch $@
 	rm -f wn.db
 	$(PERL) make-wordnet-sql-db.pl $(WORDNET) wn.db
 	sqlite3 wn.db <glosstags.sqlite
@@ -104,4 +105,4 @@ clean:
 
 # wn.db is large and unlikely to need remaking, so we don't clean it unless we want distclean!
 distclean:
-	rm -f wn.db
+	rm -f wn.db wn.db-no-really

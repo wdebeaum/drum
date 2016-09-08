@@ -89,6 +89,7 @@ our %penn2trips_word_re = (
   'minimize' => qr/minimize|minimise/i,
   'minimized' => qr/minimized|minimised/i,
   'minimizing' => qr/minimizing|minimising/i,
+  'neighborhood' => qr/neighborhood|neighbourhood/i,
   'realize' => qr/realize|realise/i,
   'realized' => qr/realized|realised/i,
   'realizing' => qr/realizing|realising/i,

@@ -25,6 +25,12 @@
     ; (example "a time of five minutes")
 ;     (TEMPL reln-subcat-of-units-TEMPL)
 ;     )
+
+    ((LF-PARENT ONT::multiple)
+     (example "increase by two times")
+     (TEMPL SUBSTANCE-UNIT-TEMPL)
+     )
+
     )
    )
 ))

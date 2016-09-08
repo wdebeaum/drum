@@ -803,6 +803,7 @@ intersection of an entry's tags and these tags is non-empty."
     (setf (vocabulary-entry-senses entry)
 	  (mapcar #'(lambda (x)
 		      (let* ((lf-parent (sense-definition-lf-parent x))
+			     (orig-templ (sense-definition-templ x))
 			     (fscale (car (get-sem-feature-value lf-parent 'f::scale)))
 			     ;;(this-sem (sense-definition-sem x))			    
 			     ;;(orientation (cadr (assoc 'f::orientation this-sem)))
@@ -827,12 +828,23 @@ intersection of an entry's tags and these tags is non-empty."
 			      (case feat (:er 'COMPAR-TEMPL) (:est 'SUPERL-TEMPL)))
 			(setf (sense-definition-syntax x)
 			      (list* (list 'W::FUNCTN `,fscale)
+				     (list 'W::FIGURE-SEM (get-figure-sem-from-type lf-parent
+										    orig-templ))
 				     (append (sense-definition-syntax x) templ-feats))))
 			x)
 		senses)))
   entry)
 
-
+(defun get-figure-sem-from-type (type name)
+  (let* (;;(templdef (gethash templ-name (lexicon-db-synt-table *lexicon-data*)))
+	 (descr (get-lf-description type))
+	 (fig-arg (find-if #'(lambda (x)
+			    (eq (sem-argument-role x) 'ont::figure))
+			(if (lf-description-p descr)
+			    (lf-description-arguments descr))))
+	 (restriction (sem-argument-restriction fig-arg)))
+    (list (feature-list-type restriction) (feature-list-features restriction))))
+		  
 
 (defun build-var-description (v feature-list)
   " build-var-description (v feature-list) constructs a variable description from the input

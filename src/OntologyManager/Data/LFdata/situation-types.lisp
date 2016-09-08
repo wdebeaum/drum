@@ -1027,7 +1027,7 @@
  :parent ONT::acting
  :arguments (
 ;	     (:OPTIONAL ONT::Instrument (F::Phys-obj (F::intentional -)))
-	     (:REQUIRED ONT::effect (F::Situation))
+	     (:REQUIRED ONT::formal (F::Situation))
 	     (:OPTIONAL ONT::agent)
 	     ;;(:REQUIRED ONT::agent ((? ag f::abstr-obj F::phys-obj) (F::intentional +)) (:implements cause))
               )

@@ -282,8 +282,11 @@
     ;; otherwise we have to get the lf and template definitions and integrate them
     (sense-definition
      (let* ((res nil)
+	    ;;  Figure sem provides an override for the SEM of the figure role (in comparatives and superlatives)
+	    (figure-sem (cadr (assoc 'w::FIGURE-SEM (sense-definition-syntax sense))))
 	    ;; we have a basic sense definition that needs some extra processing	    
-	    (lfdef (establish-lf word sense))
+	    (lfdef (use-figure-sem-if-present (establish-lf word sense) figure-sem))
+	    
 	    (templdef (gethash (sense-definition-templ sense) synttable))
 	    )
        ;; Error checking first then call the main merge function
@@ -300,6 +303,23 @@
        (add-lf-coercions res)
        res))
     ))
+
+(defun use-figure-sem-if-present (lfdef figure-sem)
+  (if figure-sem
+      (setf (lf-description-arguments lfdef)
+	    (mapcar #'(lambda (x) (replace-figure-sem x figure-sem))
+		    (lf-description-arguments lfdef))))
+  lfdef)
+  
+
+(defun replace-figure-sem (arg figure-sem)
+  (when (eq (sem-argument-role arg) 'ont::FIGURE)
+    (setf (feature-list-type (sem-argument-restriction arg))
+	  (car figure-sem))
+     (setf (feature-list-features (sem-argument-restriction arg))
+	   (cadr figure-sem)))
+  arg)
+      
 
 (defun make-word-sense-from-basic-sense (word remaining-words name wfeat sense templdef lfdef)
   "Given a word and a sense definition, merges in the template and lf definitions, and creates a word sense def"

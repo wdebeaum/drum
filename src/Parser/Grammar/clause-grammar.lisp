@@ -2639,7 +2639,7 @@
      (cp (var ?reason)))
 
     ((utt (var *) (sem ($ f::proposition)) (uttword +)
-      (lf (% speechact (var *) (class (? sa ont::sa_apologize ont::sa_thank)) (constraint (& (content ?reason)))))
+      (lf (% speechact (var *) (class (? sa ont::sa_apologize ont::sa_thank)) (constraint (& (reason ?reason)))))
       (punctype (? x decl imp)))
      -utt-sa-for>
      (head (uttword (lf (?lf)) (lex ?lex) (var ?v) (sa (? sa ont::sa_apologize ont::sa_thank))))

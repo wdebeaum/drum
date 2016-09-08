@@ -96,7 +96,7 @@
 (define-type ont::adjacent
   :wordnet-sense-keys ("adjacent%5:00:00:close:01")
   :parent ont::near-reln
-  :arguments ((:essential ONT::FIGURE ((? of1  f::phys-obj f::abstr-obj)))
+  :arguments ((:essential ONT::FIGURE ) ;((? of1  f::phys-obj f::abstr-obj)))
 	      (:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj)))
 	     
 	      )
@@ -525,7 +525,7 @@
 ; figure is trajectory, ground is within the trajectory
 ; via, by way of
 (define-type ont::obj-in-path
-    :arguments ((:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj F::Situation)))
+    :arguments ((:ESSENTIAL ONT::FIGURE ((? type F::Situation F::phys-obj) (F::type (? path-type ont::motion ont::apply-force ont::route)) (F::trajectory +)))
 		(:essential ONT::GROUND  (F::Phys-obj (F::form F::object)))) 
     :parent ont::path
     )
