@@ -39,6 +39,19 @@ Returns the list of lf-description structures or NIL in case of problems."
       (lfontology-warn "invalid SEM specification for ~S:~%  ~A" name err)
       nil)))
 
+(defun add-ftype-to-sem-features (sem type)
+  (if (member (caar sem) '(:default :required))
+      (insert-ftype-in-required sem type)
+      (append sem (list (list 'f::type type)))))
+
+(defun insert-ftype-in-required (sem type)
+  (when sem
+    (if (eq (caar sem) :required)
+	(cons (append (car sem)  (list (list 'f::type type)))
+	      (cdr sem))
+	(cons (car sem)
+	      (insert-ftype-in-required (cdr sem) type))))
+  )
 
 ;; The main processing function
 ;; Takes a name and unparsed SEM, ARGUMENTS  and parses and adds it to the ontology
@@ -48,7 +61,7 @@ Returns the list of lf-description structures or NIL in case of problems."
 			   args))
 	;;  Note we add the LFType as a feature automatically here
 	 (semfeats (make-typed-sem (cons (car semf)
-					(append (cdr semf) (list (list 'F::TYPE name))))))
+					(add-ftype-to-sem-features (cdr semf) name))))
 	 (parentname nil) (parentargs nil) (parentsem nil)
 	 (semargs nil) ;; argument restrictions coming from sem
 	 (parentstruct (get-lf-parentstruct name pname (ling-ontology-default-lf-root lfontology) (ling-ontology-lf-table lfontology)))
