@@ -205,6 +205,14 @@
        (ONT::ASK-WHAT-IS :who *USER* :to *ME* :what ?!dd :aspect ?foc-type)
        )
 
+      ;;  What next?
+      ((ONT::SPEECHACT ?!a ONT::SA_WH-QUESTION :FOCUS ?!ff :CONTENT ?!rr)
+       (ONT::WH-TERM ?!ff ?foc-type :MOD ?!m1)
+       (ONT::F ?!m1 (? xxx ONT::SEQUENCE-VAL))
+       -Q-next>
+       (ONT::ASK-WHAT-IS :who *USER* :to *ME* :what ?!ff)
+       )
+      
       ;; e.g., What budget are we using?
       
       ((ONT::SPEECHACT ?!a ONT::SA_WH-QUESTION :FOCUS ?!ff :CONTENT ?!rr)
@@ -253,6 +261,14 @@
 		   )
       )
 
+   ;; The dog?
+     ((ONT::SPEECHACT ?!a ONT::SA_YN-QUESTION :CONTENT ?!rr)
+      (?sp ?!rr ?type)
+      -ynq1> 1
+      (ONT::ASK-IF :who *USER* :to *ME* :what ?!rr)
+      )
+        
+   
       ;;==========================================
       ;; REPORTS 
       ;; REPORTS on states of existence e.g., "I'll be at the office soon", "The box is red"

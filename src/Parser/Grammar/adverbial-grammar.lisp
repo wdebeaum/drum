@@ -74,6 +74,7 @@
             (sort (? !sort pp-word double-subcat))
             (subcat ?!sub) (SUBCAT (% ?cat (var ?subv) (sem ?subcatsem) (stype ?stype) (vform ?vform) (gap ?gap))) 
             (subcat-map ?submap) (ARGUMENT-MAP ?argmap)
+	    (subcat2 -) ; to prevent e.g., if... then... to be used here (BINARY-CONSTRAINT-S-DECL-MIDDLE-WORD-SUBCAT-TEMPL)
             (IGNORE -)
 	    (comparative -) (prefix -)
             (sem ?sem))

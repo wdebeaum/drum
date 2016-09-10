@@ -328,8 +328,8 @@
 	    ((ont::you ont::your ont::yourself
 	      W::you W::your W::yourself) 
 	     (list (make-ref-hyp :id id :refers-to addressee)))
-	    ((ont::we ont::our ont::us ont::ourself
-		      W::we W::our W::us W::ourself)
+	    ((ont::we ont::our ont::us ont::ourself ont::ourselves
+		      W::we W::our W::us W::ourself W::ourselves)
 	     (list (make-ref-hyp :id id ;;:refers-to id
 				 :lf-type '(ONT::SET-OF ONT::PERSON)
 				 :refers-to 'ONT::US)))
@@ -448,7 +448,7 @@
 (defun resolve-pro-fn (lf access num index fn count)
   "Personal pronouns should refer to a concrete object matching the criteria in the recent history.
     We check in the current utter1ance for possible referents that come before the pro form"
-  (let ((ans (or (find-possible-referents-in-current-sentence (get-lf-type lf) (second lf) access num index)
+  (let ((ans (or ;(find-possible-referents-in-current-sentence (get-lf-type lf) (second lf) access num index)  ;* not in the current sentence
 		 (search-for-possible-refs (get-lf-type lf) (second lf) access num (- index 1) count fn))))
 
 	(mapcar #'(lambda (a) (bind-to-referent lf a)) ans)))
@@ -725,7 +725,7 @@
 	 (focus-id (if (referent-p focus) (referent-id focus) focus))
 	 )
     (let*
-	((accessable-refs (remove-if-not #'(lambda (x) (and (referent-p x) 
+	((accessable-refs (remove-if-not #'(lambda (x) (and (referent-p x)
 							    (not (eq (referent-id x) id)) ;; can't refer to itself
 							    (member (referent-accessibility x) access-requirement)
 							    (member (referent-num x) nums)

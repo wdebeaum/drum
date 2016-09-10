@@ -359,6 +359,7 @@
      (n (LF (:* ONT::RATIO ?x)) (var ?v) (sem ?sem) (lex ?lex))
      )
 
+    #|
     ((adj (gap ?gap) (var ?v) (lex (?n ?w))
       (input (?n ?w)) (LF (:* ont::quantitive-relation (?n ?w)))
       (sem ($ f::abstr-obj))
@@ -368,7 +369,7 @@
      -n-fold>
      (number (var ?v) (val ?n))
      (word (lex (? w w::fold w::times))))
-     
+    |#
     
 ))
 
