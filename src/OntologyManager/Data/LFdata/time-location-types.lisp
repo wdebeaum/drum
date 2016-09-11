@@ -815,8 +815,9 @@
 
 ;; still, yet, so far, ....
 (define-type ONT::time-rel-so-far
- :parent ONT::event-time-rel
- :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
+; :parent ONT::event-time-rel
+  :parent ONT::EVENT-DURATION-MODIFIER
+  :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
              )
  )
 
@@ -824,6 +825,9 @@
  :parent ONT::event-time-rel
  )
 
+(define-type ONT::event-time-rel-culmination
+ :parent ONT::event-time-rel
+ )
 
 ;; event times not including situations
 (define-type ONT::event-time

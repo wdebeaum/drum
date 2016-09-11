@@ -3974,6 +3974,7 @@
  ; <
 
 (define-type ont::scale
+  :sem (F::Abstr-obj (F::Scale ?!sc))
   :parent ont::abstract-object
   :arguments ((:ESSENTIAL ONT::figure)
 		)
@@ -4049,6 +4050,7 @@
   )
 
 (define-type ont::time-measure-scale
+  :sem (F::Abstr-obj (F::Scale Ont::time-measure-scale))
 ;  :parent ont::scale
   :parent ont::linear-scale
   )
