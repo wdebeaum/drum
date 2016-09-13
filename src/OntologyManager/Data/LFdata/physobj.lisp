@@ -323,7 +323,7 @@
 		      (F::mobility f::fixed) (f::container +))
     )
 
-(define-type ONT::tall-structure
+(define-type ONT::TOWER
   :wordnet-sense-keys ("tower%1:06:00")
   :parent ONT::man-made-structure
 )
