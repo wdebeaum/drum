@@ -331,6 +331,11 @@
  :parent ONT::group-object
  )
 
+(define-type ONT::linear-grouping
+ :wordnet-sense-keys ("line%1:14:01")
+ :parent ONT::sequence
+ )
+
 (define-type ONT::combination
  :wordnet-sense-keys ("combination%1:14:00")
  :parent ONT::group-object

@@ -8,8 +8,8 @@
   (W::LINE
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
-     (LF-PARENT ONT::grouping)
-     (example "a line of housewares")
+     (LF-PARENT ONT::linear-grouping)
+     (example "a line of blocks")
      (templ other-reln-templ)
      )
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
