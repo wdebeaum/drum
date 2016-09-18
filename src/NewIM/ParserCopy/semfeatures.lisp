@@ -117,7 +117,7 @@
     
 (defun build-sem-variable (constit rule-id)
   "Given a constit, build a sem variable"
-  (break)
+  ;;(break)
   (make-var :name (gen-v-num 'sem) ;;(gen-symbol 'sem) 
 	    :values (build-sem-array constit rule-id)))
       
@@ -135,8 +135,15 @@
        (t (format t " ~S " v)))))
   (format t "]"))
 
-;; unifying SEM arrays
+;; This is a top-level function for unifying to sem structures
+(defun unify-sem-structures (sem1 sem2)
+  (multiple-value-bind (result bindings score undos)
+      (unify-sems sem1 sem2 nil)
+    (undo-bindings undos)
+    (values result bindings score)))
 
+;; unifying SEM arrays
+;;   note: not a top level function
 (defun unify-sems (sem1 sem2 undos)
   "unifies two semantic feature vectors and returns the result and a probability reflecting the goodness of match (if flexible-semantic-matching is turned on)"
   (if (and (var-p sem1) (var-p sem2))
@@ -144,15 +151,15 @@
           (arr2 (var-values sem2)))
       (cond
 	((null arr1)
-	 (values sem2 nil nil undos))
+	 (values sem2 nil 1 undos))
 	((null arr2)
-	 (values sem1 nil nil undos))
+	 (values sem1 nil 1 undos))
 	((arrayp arr1)
 	 (cond
 	   ;; usual case, two arrays
 	   ((arrayp arr2)
 	    (if (ident-sem-array arr1 arr2)  ;; if they are ground and identical, we don't need a new copy
-		(values sem1 nil nil undos)
+		(values sem1 nil 1 undos)
 		(multiple-value-bind (ans bndgs prob newundos)
 		    (unify-sem-arrays arr1 arr2 undos)
 		  (if (null ans) 

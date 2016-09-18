@@ -81,6 +81,7 @@
   "builds the basic referent structure from the information in TERM"
   (let* ((lf (find-arg-in-act term :lf))
 	 (id (second lf))
+	 (sem (find-arg-in-act term :sem))
 	 (start (find-arg-in-act term :start))
 	 (end (find-arg-in-act term :end)))
 	   
@@ -98,6 +99,7 @@
       :refers-to (find-arg-in-act lf :refers-to)
       :start start
       :end end
+      :sem sem
       )
      )))
 
@@ -148,16 +150,17 @@
      (let ((lf-type (get-lf-type lf)))
        (if (is-stative lf-type)
 	   'state
-	   (if (not (eq lf-type 'ont::do))  ;; ont::do does not generate a referent
-	       'event))))
+	   (if (subtype-check lf-type 'ont::property-val)
+	       'pred
+	       (if (not (eq lf-type 'ont::do))  ;; ont::do does not generate a referent
+		   'event)))))
     ((ONT::BARE ONT::KIND) 'kind)
     (ONT::WH-TERM 'wh-term)
     (otherwise 'abstract)))
 
 (defun is-stative (lf-type)
-  (or (member lf-type '(ont::salience ont::rely ont::state-of-being ont::share ont::accommodate ont::compliance ont::correlation ont::function ont::lifecycle-stage ont::containment ont::necessity ont::regretting ont::associate ont::confuse))
-	  (subtype-check lf-type 'ont::event-of-state)
-	  ))
+  (subtype-check lf-type 'ont::event-of-state)
+      )
 
 (defun install-hyp-in-referent (ref hyp)
   "We have picked a HYP and now update the discourse state to reflect this"
@@ -212,16 +215,18 @@
 (defun find-possible-hyps (ref index speaker addressee)
   "Returns a list REF-HYPs with referential information added"
   (let* ((lf (referent-lf ref))
+	 (sem (referent-sem ref))
+	 (lf-type (refine-type-from-sem-list (simplify-generic-type (caddr lf)) sem))
 	 (hyps
 	  (case (car lf)
 	   ((ONT::PRO ONT::PRO-SET)
-	    (resolve-personal-pronoun lf index speaker addressee)
+	    (resolve-personal-pronoun lf lf-type index speaker addressee sem)
 	    )
 	   (ONT::IMPRO
-	    (resolve-impro lf index)
+	    (resolve-impro lf sem index)
 	    )
 	   ((ONT::THE ONT::THE-SET)
-	    (resolve-definite-reference lf index speaker addressee))
+	    (resolve-definite-reference lf lf-type sem index speaker addressee))
 	   (ONT::QUANTIFIER
 	    (resolve-quantifier lf index)
 	    )
@@ -315,8 +320,8 @@
 	 (defs (remove-if-not #'(lambda (x) (eq (car x) 'ONT::THE)) candidates)))
     (append pros impros defs)))
     
-(defun resolve-personal-pronoun (lf index speaker addressee)
-  ;;(format t "~%~%REsolving ~S" lf)
+(defun resolve-personal-pronoun (lf lf-type index speaker addressee sem)
+  (trace-msg 2 "~% Attempting to find referent for ~S, lf-type ~S with sem ~S" lf lf-type sem)
   (let* ((id (second lf))
 	 (cr (or (find-arg-in-act lf :proform) 
 		 (if (consp (third lf)) (third (third lf)))))
@@ -336,8 +341,8 @@
 	    ((ont::it ont::its
 		      W::it W::its)
 	     (when (non-expletive lf)
-	       (or (resolve-pro-fn lf '(concrete) '(individual) index (fn-no-human 'ONT::REFERENTIAL-SEM) 3)
-		 (resolve-pro-fn lf '(event wh-term state) '(individual) index #'(lambda (x) T) 3))))
+	       (or (resolve-pro-fn lf lf-type sem '(concrete) '(individual) index (fn-no-human lf-type) 3)
+		 (resolve-pro-fn lf lf-type sem '(event wh-term state) '(individual) index #'(lambda (x) T) 3))))
 
 	    ((ont::itself
 	      W::itself)
@@ -346,25 +351,25 @@
 	    ((ont::this ont::that ont::these ont::those
 			W::this W::that W::these W::those)
 	     (when (non-expletive lf)
-	       (resolve-this-that lf index)))
+	       (resolve-this-that lf sem index)))
 	    
 	    ((ont::they ont::them ont::their
 			W::they W::them W::their)
-	     (resolve-pro-fn lf '(concrete kind) '(set) index 
+	     (resolve-pro-fn lf lf-type sem '(concrete kind) '(set) index 
 			     #'(lambda (x)
-				 (subtype-check (referent-lf-type x)  'ONT::REFERENTIAL-SEM ))
+				 (subtype-check (referent-lf-type x) lf-type ))
 				 3))
 
 	    (;(ont::he ont::him ont::his ont::she ont::her)
 	     (W::he W::him W::his W::she W::her)
-	     (or (resolve-pro-fn lf '(concrete) '(individual) index 
+	     (or (resolve-pro-fn lf lf-type sem '(concrete) '(individual) index 
 				 #'(lambda (x) 
 				     x)
 				     ;;(subtype-check (referent-lf-type x) (if (member cr '(ont::he ont::him ont::his))
 							;;	       'ONT::MALE-PERSON 'ont::female-person)))
 			     3)
 		 ;;   backoff strategy for gendered pronouns - just look for people
-		 (resolve-pro-fn (list* (car lf) (cadr lf) 'ont::person (cdddr lf))
+		 (resolve-pro-fn sem (list* (car lf) (cadr lf) 'ont::person (cdddr lf)) 'ont::person
 				 '(concrete) '(individual) index 
 				 #'(lambda (x) 
 				     (subtype-check (referent-lf-type x) 'ont::person))
@@ -381,7 +386,7 @@
 
 	    (;(ont::which ont::who)  ;; these occur in relative clause fragments
 	     (W::which W::who)  ;; these occur in relative clause fragments
-	     (resolve-relative-pro lf index))
+	     (resolve-relative-pro lf sem index))
 	    )))
 	    
     val))
@@ -415,7 +420,7 @@
 
 (defun build-temporal-ref (lf month day year)
   (let ((datestring (format nil "~A ~S, ~S" (find-month month) day year)))
-  (list (bind-to-referent lf
+  (list (bind-to-referent lf nil
 			  (make-referent :id (second lf)
 					 :implicit t
 					 :lf (append lf (list :month month :day day :year year))
@@ -445,36 +450,36 @@
 	  '(W::IT W::THEM W::HE W::HIM W::SHE W::HER ont::it ont::them ont::he ont::him ont::she ont::her)))
 
     
-(defun resolve-pro-fn (lf access num index fn count)
+(defun resolve-pro-fn (lf lf-type sem access num index fn count)
   "Personal pronouns should refer to a concrete object matching the criteria in the recent history.
     We check in the current utter1ance for possible referents that come before the pro form"
-  (let ((ans (or ;(find-possible-referents-in-current-sentence (get-lf-type lf) (second lf) access num index)  ;* not in the current sentence
-		 (search-for-possible-refs (get-lf-type lf) (second lf) access num (- index 1) count fn))))
+  (let ((ans (or ;(find-possible-referents-in-current-sentence (get-lf-type lf) sem (second lf) access num index)  ;* not in the current sentence
+		 (search-for-possible-refs lf-type (second lf) sem access num (- index 1) count fn)))) 
 
-	(mapcar #'(lambda (a) (bind-to-referent lf a)) ans)))
+	(mapcar #'(lambda (a) (bind-to-referent lf lf-type a)) ans)))
 
 
 
-(defun resolve-this-that (lf index)
+(defun resolve-this-that (lf sem index)
   "this and that allow reference to visually focussed objects as well as discourse concrete and abstract"
-  (let ((possibles (progressive-search-for-possible-refs (get-lf-type lf) (second lf)
+  (let ((possibles (progressive-search-for-possible-refs (get-lf-type lf) (second lf) sem
 							 '(visible-focus concrete event abstract)
 							 (list (classify-num lf))
 							 (- index 1)
 							 1 ;;2
 							 #'(lambda (x) (it-exclusion (referent-lf-type x))))))
-    (mapcar #'(lambda (a) (bind-to-referent lf a)) possibles)))
+    (mapcar #'(lambda (a) (bind-to-referent lf nil a)) possibles)))
 
-(defun resolve-relative-pro (lf index)
+(defun resolve-relative-pro (lf index sem)
   "relative pronouns only arise in the case of fragemented sentences, and thus it should refer to the 
     last viable NP in the previous utterance"
-  (let ((possibles (last (search-for-possible-refs (get-lf-type lf) (second lf)
+  (let ((possibles (last (search-for-possible-refs (get-lf-type lf) (second lf) sem
 							 '(concrete)
 							 (list (classify-num lf))
 							 (- index 1)
 							 1 
 							 #'(lambda (x) x)))))
-    (mapcar #'(lambda (a) (bind-to-referent lf a)) possibles)))
+    (mapcar #'(lambda (a) (bind-to-referent lf nil a)) possibles)))
 
 (defun resolve-reflexive (lf index)
   "reflexives must be in the same sentence!"
@@ -491,21 +496,21 @@
 				  terms)
 		      (remove-if-not #'(lambda (x) (eq (referent-role x) :affected))
 				  terms))))
-    (mapcar #'(lambda (a) (bind-to-referent lf a)) results)))
+    (mapcar #'(lambda (a) (bind-to-referent lf nil a)) results)))
 		   
-(defun progressive-search-for-possible-refs (lf-type id access num index range fn)
+(defun progressive-search-for-possible-refs (lf-type id sem access num index range fn)
   "This searches discourse history one accessibility reln at a time, stopping at the first one found"
   (when access
-    (or (search-for-possible-refs lf-type id (list (car access)) num index range fn)
-	 (progressive-search-for-possible-refs lf-type id (cdr access) num index range fn))))
+    (or (search-for-possible-refs lf-type id sem (list (car access)) num index range fn)
+	 (progressive-search-for-possible-refs lf-type sem id (cdr access) num index range fn))))
 
-(defun search-for-possible-refs (lf-type id access num index range fn)
-  (remove-if-not fn (find-most-salient lf-type id access num index range)))
+(defun search-for-possible-refs (lf-type id sem access num index range fn)
+  (remove-if-not fn (find-most-salient lf-type id sem access num index range)))
 
 (defun sort-by-access (results access)
   results)
 
-(defun resolve-impro (lf index)
+(defun resolve-impro (lf sem index)
   (let* ((id (second lf))
 	 (lf-type (get-lf-type lf))
 	 (cr (find-arg-in-act lf :proform))
@@ -525,7 +530,7 @@
 						       lf (- index 1)))
 		(otherwise
 		 (when (not (member lf-type '(ONT::TIME-LOC)))  ;; certain exclusions where we don't try for a referent
-		   (resolve-pro-fn lf '(concrete) '(individual) index 
+		   (resolve-pro-fn lf lf-type sem '(concrete) '(individual) index 
 				   #'(lambda (x)
 				       (or (null sem) (match-with-subtyping sem (referent-sem x))))
 				   3)))
@@ -543,43 +548,49 @@
       (second type)
       type))
 
-(defun resolve-definite-reference (lf index speaker addressee)
+(defun resolve-definite-reference (lf lf-type sem index speaker addressee)
+  (trace-msg 2 "~% Attempting to find referent for ~S with lf-type ~S and ~s" lf lf-type sem)
   (let* ((id (second lf))
 	 (name (find-arg-in-act lf :name-of))
-	 (lf-type (get-lf-type lf)))   ;;  should really make this into a variable so we can extract a more specific type
-    ;;  need to check for special cases like names
-    (cond
-     ;; proper names
-     (name
-       (if *external-name-resolution*
-	   (resolve-name id lf name)
-	   (standard-definite-reference id index lf lf-type speaker addressee)))
-     ;;  references to explicit times do not use the discourse history
-     ((subtype-check lf-type 'ONT::TIME-LOC)
-      (resolve-temporal-reference lf index))
-     ((and (subtype-check lf-type 'ONT::LOCATION)
-	   (member (find-arg-in-act lf :proform) '(W::THIS ont::this)))
-      (resolve-spatial-reference lf index))
-     ((member :members lf)
-      (resolve-definite-set-reference lf index))
-     ((member :sequence lf)
-      (resolve-definite-sequence-reference lf index))
-     (t   ;; standard definite description
-      (standard-definite-reference id index lf lf-type speaker addressee)
-      ))
+	 ;;(lf-type (get-lf-type lf))  ;;  should really make this into a variable so we can extract a more specific type
+	 ;;  need to check for special cases like names
+	 (res (cond
+		;; proper names
+		(name
+		 (if *external-name-resolution*
+		     (resolve-name id lf name)
+		     (standard-definite-reference id index lf lf-type sem speaker addressee)))
+		;;  references to explicit times do not use the discourse history
+		((subtype-check lf-type 'ONT::TIME-LOC)
+		 (resolve-temporal-reference lf index))
+		((and (subtype-check lf-type 'ONT::LOCATION)
+		      (member (find-arg-in-act lf :proform) '(W::THIS ont::this)))
+		 (resolve-spatial-reference lf index))
+		((member :members lf)
+		 (resolve-definite-set-reference lf sem index))
+		((member :sequence lf)
+		 (resolve-definite-sequence-reference lf sem index))
+		(t   ;; standard definite description
+		 (standard-definite-reference id index lf lf-type sem speaker addressee)
+		 ))))
+    (trace-msg 2 "~%~S resolved to referent ~S" lf res)
+    res
     ))
-    
-(defun standard-definite-reference (id index lf lf-type speaker addressee)
+
+     
+(defun standard-definite-reference (id index lf lf-type sem speaker addressee)
   (let* ((proform (find-arg-in-act lf :proform))
-	 (possibles (find-most-salient lf-type id (if ;(and proform (member proform '(ont::this ont::that ont::these ont::those)))
+	 (possibles (find-most-salient lf-type id sem (if ;(and proform (member proform '(ont::this ont::that ont::these ont::those)))
 						      (and proform (member proform '(W::this W::that W::these W::those)))
-						   '(visible-focus concrete event abstract)
-						   '(concrete wh-term event abstract))
+						      '(visible-focus concrete event abstract)
+						      (if (eq proform 'w::one)
+							  '(concrete abstract)
+							  '(concrete wh-term event abstract)))
 				       (list (classify-num lf))
 				       (- index 1) (if proform 3 200)))
 	 (ans (filter-by-fastmatch-subsumes id (mapcar #'referent-id possibles))))
     (if ans
-	(mapcar #'(lambda (a) (bind-to-referent lf a)) 
+	(mapcar #'(lambda (a) (bind-to-referent lf lf-type a)) 
 		(mapcar #'get-referential-info ans))
 	)))
 
@@ -595,11 +606,11 @@
     (if newlf (cons newlf (remove-if #'(lambda (x) (eq (second x) id)) lfs))
 	lfs)))
 			   
-(defun resolve-definite-set-reference (lf index)
+(defun resolve-definite-set-reference (lf sem index)
   (declare (ignore lf index))
   (format t "Reference resolution to sets not reimplemented yet"))
 
-(defun resolve-definite-sequence-reference (lf index)
+(defun resolve-definite-sequence-reference (lf sem index)
   (declare (ignore lf index))
   (format t "Reference resolution to sequences not reimplemented yet"))
 
@@ -670,18 +681,18 @@
 (defun look-for-mentioned-object (id lf index)
   (declare (ignore id))
   "Looks for most recent ONT::GEO-OBJECT"
-   (let ((ans (find-most-salient 'ont::REFERENTIAL-SEM id '(concrete) '(individual)
+   (let ((ans (find-most-salient 'ont::REFERENTIAL-SEM id nil '(concrete) '(individual)
 				 #'(lambda (x)
 				     (or (subtype-check (referent-lf-type x) 'ONT::LINGUISTIC-OBJECT)  ;; for GUI display act
 					 (and (subtype-check (referent-lf-type x)  'ONT::GEO-OBJECT )
 					      (not (subtype-check  (referent-lf-type x) 'ONT::PERSON))))) index 2)))
     (mapcar #'(lambda (a)
-		(bind-to-referent lf a)) ans))
+		(bind-to-referent lf nil a)) ans))
   )
 
-(defun bind-to-referent (lf ante)
+(defun bind-to-referent (lf lf-type1 ante)
   "Build a new coreferent structure that refers to ANTE"
-  (let ((lf-type (third lf))
+  (let ((lf-type (simplify-generic-type (or lf-type1 (third lf))))
 	(id (second lf))
 	)
     (make-ref-hyp  :id id
@@ -708,35 +719,79 @@
     (if equality
 	(third (car equality)))))
 
-(defun find-most-salient (lf-type id access-requirement num index limit)
+(defun find-most-salient (lf-type id sem access-requirement num index limit)
   "Gathers up potential referents in preference order based on the parameters"
   (when (and (>= index 0) (>= limit 0))
     (if (eq (utt-record-status (get-im-record index)) 'CPSA-failure)
 	;; skip over failed utterances
-	(find-most-salient lf-type id access-requirement num (- index 1) limit)
-	(or (find-possible-referents lf-Type id Access-requirement num index) 
-	    (find-most-salient lf-type id access-requirement num (- index 1) (- limit 1))))
+	(find-most-salient lf-type id sem access-requirement num (- index 1) limit)
+	(or (find-possible-referents lf-Type sem id Access-requirement num index) 
+	    (find-most-salient lf-type id sem access-requirement num (- index 1) (- limit 1))))
     ))
 
-(defun find-possible-referents (lf-type id access-requirement nums index)
+(defun find-possible-referents (lf-type sem id access-requirement nums index)
   "returns the objects that meet the access requirements"
   (let* ((r (get-im-record index))
 	 (focus (utt-record-focus r))
 	 (focus-id (if (referent-p focus) (referent-id focus) focus))
+	 ;; try to update LF from SEM if its REFERENTIAL-SEM
+	 
 	 )
     (let*
 	((accessable-refs (remove-if-not #'(lambda (x) (and (referent-p x)
 							    (not (eq (referent-id x) id)) ;; can't refer to itself
 							    (member (referent-accessibility x) access-requirement)
-							    (member (referent-num x) nums)
+		 					    (member (referent-num x) nums)
 							    (subtype-check (referent-lf-type x) lf-type)))
 					 (utt-record-referring-expressions r)))
 	 )
-      accessable-refs)))
+      (filter-and-reorder-based-on-sem accessable-refs sem))))
 
-(defun find-possible-referents-in-current-sentence (lf-type id access-requirement nums index)
+(defun refine-type-from-sem-list (type sem)
+  (if (eq type 'ONT::REFERENTIAL-SEM)
+      (let ((new (cadr (assoc 'f::type (cddr sem)))))
+	(if (null new)
+	    type
+	    (if (eq new 'ONT::REFERENTIAL-SEM)
+		;; try to refine by sem vector type
+		(map-sem-feature-class-to-lf (cadr sem))
+		new)))))
+
+(defun map-sem-feature-class-to-lf (semtype)
+  (case semtype
+    (F::PHYS-OBJ 'ONT::PHYS-OBJECT)
+    (F::ABSTR-OBJ 'ONT::ABSTRACT-OBJECT)
+    (F::TIME 'ONT::ANY-TIME-OBJECT)
+    (F::SITUATION 'ONT::SITUATION-ROOT)
+    (otherwise semtype)))
+	     
+
+(defun filter-and-reorder-based-on-sem (refs sem)
+  (let ((oldflex (flexible-semantic-matching *chart*)))
+    (setf (flexible-semantic-matching *chart*) t)
+    (trace-msg 2 "Candidate referents are ~S" refs)
+    (let* ((semarray (read-expression sem))
+	   (scores (mapcar #'(lambda (r)
+			       (let ((refsem (read-expression (referent-sem r))))
+				 (multiple-value-bind (result bindings score)
+				     (unify-sem-structures semarray refsem)
+				   (cons (or score .5) r))))
+			   refs)))
+      (format t "~% scored refs are ~S" scores)
+      (setf (flexible-semantic-matching *chart*) oldflex)
+      ;; now we have scored refs, just sor them for now
+      (let ((sorted-refs (sort scores #'> :key #'car)))
+	;; right now we just remove the score and return the ordered list
+	(trace-msg 2 "~%Sorted refs are ~S" sorted-refs)
+	(let ((res (mapcar #'cdr sorted-refs)))
+	  res
+	  )))))
+
+;; doesn't seem to be used at present????????
+(defun find-possible-referents-in-current-sentence (lf-type sem id access-requirement nums index)
   "returns the objects that meet the access requirement AND that precede the id in the sentence"
   (let ((r (get-im-record index)))
+   
     (when r
       (let* ((focus (utt-record-focus r))
 	     (focus-id (if (referent-p focus) (referent-id focus) focus))

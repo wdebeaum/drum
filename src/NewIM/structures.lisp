@@ -149,7 +149,8 @@
   implicit  ;; a flag set to T for objects introduced into the discourse context but not mentioned (typically via the GUI)
   lf        ;; the LF just for ease of processing since its identical to whats in the LFstore
   start
-  end)
+  end
+  sem)
 
 (defstruct ref-hyp
   id        ;; the ID of the object that this is a hypothesis for
