@@ -45,7 +45,8 @@
 	;; average number of letters in a word (not critical)
 	(parser::*word-length* 8)
 	;; boost factor based on length of input covered
-	(parser::*score-length-multiplier* .4)
+;	(parser::*score-length-multiplier* .4)
+	(parser::*score-length-multiplier* .2)
 	;; not clear this is helpful
 	(parser::*score-corner-multiplier* 0)
 	;; indicate we should use POS information
@@ -58,7 +59,8 @@
 	(parser::*skeleton-constit-cats* '(W::NP W::CP W::VP W::ADVBL W::PP W::S))
 	;; boost constituents that match the skeleton (from stat. parser)
 ;	(parser::*skeleton-boost-factor* 1.1)
-	(parser::*skeleton-boost-factor* 1.04)
+;	(parser::*skeleton-boost-factor* 1.04)
+	(parser::*skeleton-boost-factor* 1.02)
 	;; penalty for crossing skeleton constituent boundaries
 	((setf (parser::barrier-penalty parser::*chart*) .99))
 	;;
