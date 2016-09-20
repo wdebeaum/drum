@@ -20,12 +20,14 @@
   (inherit ONT::mrna))
 (concept CHEBI::50906 ; role
   (inherit ONT::chemical))
-; these two are under "role" above in newer ChEBI, but in the older one that
-; CRAFT uses the above term doesn't exist yet, so we map these too
-(concept CHEBI::24432 ; biological role
-  (inherit ONT::chemical))
-(concept CHEBI::33232 ; application
-  (inherit ONT::chemical))
+ ;; these two are under "role" above in newer ChEBI, but in the older one that
+ ;; CRAFT uses the above term doesn't exist yet, so we map these too
+ (concept CHEBI::24432 ; biological role
+   (inherit ONT::chemical))
+ (concept CHEBI::33232 ; application
+   (inherit ONT::chemical))
+  (concept CHEBI::52217 ; pharmaceutical
+    (inherit ONT::pharmacologic-substance))
 ; At the top of ChEBI there's also "subatomic particle" ; (36342), which I'm
 ; not sure how to map yet.
 
@@ -183,8 +185,15 @@
    (inherit ONT::macromolecular-complex))
 (concept NCIT::C812 ; RNA
   (inherit ONT::rna))
-(concept NCIT::C813 ; Messenger RNA
-  (inherit ONT::mrna))
+ ;; various things that are obviously RNA but inexplicably not children of C812
+ (concept NCIT::C28454 ; hnRNA
+   (inherit ONT::rna))
+ (concept NCIT::C26549 ; Untranslated RNA
+   (inherit ONT::rna))
+ (concept NCIT::C813 ; Messenger RNA
+   (inherit ONT::mrna))
+ (concept NCIT::C111298 ; Precursor mRNA (not a child of C813?)
+   (inherit ONT::mrna))
 (concept NCIT::C16403 ; Cell Line
   (inherit ONT::cell-line))
 (concept NCIT::C14250 ; Organism

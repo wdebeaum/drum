@@ -93,6 +93,17 @@ until (STDIN->eof) {
       $need_newline = 1;
     }
   }
+  if (exists($stanza{relationship})) {
+    my @relns = map { [split(/\s+/)] } @{$stanza{relationship}};
+    my @has_role =
+      map { process_id($_->[1]) }
+      grep { $_->[0] eq 'has_role' } @relns;
+    # TODO check @packages? not really necessary for what we use it for
+    if (@has_role) {
+      $concept .= "\n  (> CHEBI::has_role " . join(' ', @has_role) . ")";
+      $need_newline = 1;
+    }
+  }
   $concept .= "\n  " if ($need_newline);
   $concept .= ")\n";
   for (@all_ids) {

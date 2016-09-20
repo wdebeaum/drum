@@ -88,12 +88,23 @@
     (dolist (from froms)
       (let ((from-list (listify-concept-with-senses from))
             (throughs (eval-path-expression
-	     '(
+	     `(
 	       (* 
 	          ;; unless we would get to a TRIPS concept
 	          (unless >inherit #'trips-concept-p)
 	          >inherit ; go up the inheritance hierarchy
 		  )
+	       ;; When using ChEBI, we may have zero or one CHEBI::has_role
+	       ;; relationships in the path. For example, "magnesium oxide"
+	       ;; is_a "molecular entity", but has_role "antacid", which is_a
+	       ;; "pharmaceutical". This lets us get "pharmaceutical". We can't
+	       ;; just write CHEBI::has_role here, since the package might not
+	       ;; be defined.
+	       ,@(let ((chebi-pkg (find-package :chebi)))
+	           (when chebi-pkg
+	             `((? (> ,(intern "HAS_ROLE" chebi-pkg))
+		          (* (unless >inherit #'trips-concept-p) >inherit)
+			  ))))
 	       ;; get only the concepts that actually mapped into trips
 	       (when >inherit #'trips-concept-p)
 	       )

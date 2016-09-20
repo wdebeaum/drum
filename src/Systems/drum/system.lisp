@@ -74,7 +74,7 @@
 	;;
 	(parser::*pruning-frequency* 1000)
 	;;
-	(parser::*beam-width* 20)
+	(parser::*beam-width* 50)
 	;; max number of constituents built before stopping
 	((parser::setmaxnumberentries 6000))
 	;;

@@ -124,16 +124,15 @@ compare the two values with eq and return nil or their shared value."
     (let* ((sublf (ontologymanager::strip-lf-form sub ':*))
 	   (superlf (ontologymanager::strip-lf-form super ':*))
 	   )
-      (cond       
-       ((ontologymanager::subtype sublf superlf)
-		 sub)
-	  
-       ((equal sublf superlf)
-	;; if super has lexical form, we fail
-	(symbolp super)
-	)
-       )
-      ))
+      (cond  
+	;; if SUB is subtype of SUPER and SUPER has no lexical feature, we succeed, other we fail
+	((and (ontologymanager::subtype sublf superlf)
+	      (symbolp super))
+	 sub)
+	;; except when they are identical
+	((equal sublf superlf)
+	 sub)
+      )))
    ((and (syntax-hierarchical-feature-p feat)
 	 (ontologymanager::subtype-in sub super *syntax-type-hierarchy*))
     )
@@ -157,12 +156,13 @@ compare the two values with eq and return nil or their shared value."
        )
       ))
    ((eq sub super)
-    sub)
+    sub) 
    
    (t nil)
    ))
   
 (defun subtype-check (a b)
-  (subtype 'w::sem a b))
+  ;;  for reference resolution, we ignore the lexical feature -- e.g., (:* ont::PERSON w::person) will match (:* ont::MALE-PERSON W::john)
+  (subtype 'w::sem a  (simplify-generic-type b)))
 
 	

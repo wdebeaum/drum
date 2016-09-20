@@ -3548,7 +3548,7 @@
              (var ?v) 
              (LF (% PROP (VAR ?v) (CLASS ?reln) 
 	            (CONSTRAINT (& (?!submap (% *PRO*
-						(VAR *) (CLASS (:* ?pro-class ?lex))
+						(VAR *) (CLASS ?pro-class)
 						(SEM ?subcatsem) (CONSTRAINT (& (proform ?lex)))))
 										;;(suchthat ?v)))))
 			           (?!argmap ?argvar)))

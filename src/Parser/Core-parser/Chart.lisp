@@ -490,7 +490,10 @@ separate instances of the chart/parser.")
 	 (get-simple-type (get-value id 'w::class)))))
 
 (defun get-simple-type (x)
-  (if (consp x) (cadr x) x))
+  (let ((type (if (consp x) (cadr x) x)))
+    (if (symbolp type)
+	type 
+	'bad-type)))
 
 (defun compute-skeleton (constit)
   (when (member (constit-cat constit) '(w::s w::vp w::np w::adjp w::advbl))

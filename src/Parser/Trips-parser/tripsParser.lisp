@@ -977,6 +977,11 @@
       (traverse-tree-for-objects constit-tree)
     ;; I actually doubt that REVERSE is necessary here
     (values (reverse symbol-table) unknowns)))
+
+(defun replace-sem-in-lf (c sem)
+  (setf (constit-feats c)
+              (replace-feat (constit-feats c) 'w::sem sem))
+  c)
   
 (defun traverse-tree-for-objects (constit-tree &optional temp-symbol-table unknowns)
   (flet ((add-to-temp-symbol-table (var val)
@@ -987,13 +992,17 @@
 	   temp-symbol-table))
     (let* ((constit (car constit-tree))
 	   (lf (get-value constit 'w::lf))
+	   (sem (get-value constit 'w::sem))
 	   (input (get-value constit 'w::input))
 	   (notes (get-value constit 'w::notes))
 	   (var (if (constit-p lf) (get-value lf 'w::var))))
       (unless (or (null var) (assoc var (get-temp-symbol-table)))
 	(multiple-value-bind (new-lf pros)
 	    (remove-*pro*-from-lf lf)
-	  (add-to-temp-symbol-table var (if (constit-p new-lf) (add-feature-value new-lf 'w::input input) new-lf))
+	  (add-to-temp-symbol-table var (if (constit-p new-lf) 
+					    (replace-sem-in-lf (add-feature-value new-lf 'w::input input)
+							 sem)
+					    new-lf))
 	  ;; if there were *PRO* objects found, add them too
 	  (if pros
 	      (mapc #'(lambda (x)

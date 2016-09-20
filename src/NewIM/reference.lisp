@@ -386,7 +386,7 @@
 
 	    (;(ont::which ont::who)  ;; these occur in relative clause fragments
 	     (W::which W::who)  ;; these occur in relative clause fragments
-	     (resolve-relative-pro lf sem index))
+	     (resolve-relative-pro lf index sem))
 	    )))
 	    
     val))

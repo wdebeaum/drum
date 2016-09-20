@@ -585,8 +585,13 @@ Signals a condition if EOF is encountered."
 
 (defmethod run-morphy ((this wordnet-manager) (word string))
   "This is a lisp implementation of morphy, the morphological engine in WordNet.  Returns all inflected forms with their part of speech.  First, we lookup the word in all exception lists, then we use the morphological rules of detachment to find possible inflections.  It returns a list of (pos list-of-new-forms) pairs.  I can't guarantee that the results of this will be the same as the real morphy, but they should be close (hopefully only a permutations)."
-  (append (get-exceptions this word)
-          (get-inflected-forms this word)))
+  (let ((irreg (get-exceptions this word))
+        (reg (get-inflected-forms this word)))
+    (append irreg
+            ;; remove the regular forms for POSs that we already have irregular
+	    ;; forms for, so that we end up with a true assoc list with no
+	    ;; duplicate keys
+	    (set-difference reg irreg :key #'car))))
   
 (defmethod get-parts-of-speech ((this wordnet-manager))
   "Returns a list of parts of all speech that the WordNet manager is aware of."
