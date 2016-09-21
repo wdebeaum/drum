@@ -72,7 +72,8 @@
 	;;
 	(parser::*beam-pruning-on* t) 
 	;;
-	(parser::*pruning-frequency* 1000)
+;	(parser::*pruning-frequency* 1000)
+	(parser::*pruning-frequency* 2000)
 	;;
 	(parser::*beam-width* 50)
 	;; max number of constituents built before stopping

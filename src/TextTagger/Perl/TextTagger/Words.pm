@@ -51,11 +51,11 @@ sub tag_words
   my $self = shift;
   my $original_text = shift;
   my @words = ();
-  while ($original_text =~ /[\w']+/g)
+  while ($original_text =~ /[\w'\x{2019}]+/g)
   {
     my ($word, $start, $end) = ($&, $-[0], $+[0]);
     # don't make words that are all punctuation
-    next unless ($word =~ /[^_']/i);
+    next unless ($word =~ /[^_'\x{2019}]/i);
     push @words, { type => ($word =~ /^\d+$/)? "number" : "word",
     		   lex => $word,
       		   start => $start,
