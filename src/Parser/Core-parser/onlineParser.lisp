@@ -529,12 +529,13 @@
 
 (defun get-wordnet-sense-keys (word cats)
   "cleans up sensekeys"
-  (multiple-value-bind (core noncore)
+  (when wf::*use-wordfinder*
+    (multiple-value-bind (core noncore)
 	(wf::wordnet-sense-keys-for-word word cats)
     (values (list :core (mapcar #'(lambda (triple) (reuse-cons (cleanup-sense (car triple)) (cdr triple) triple))
 		  (cadr core)))
 	    (list :non-core (mapcar  #'(lambda (triple) (reuse-cons (cleanup-sense (car triple)) (cdr triple) triple))
-				    (cadr noncore))))))
+				    (cadr noncore)))))))
 
 (defun cleanup-sense (sense)
   "removes odd things like the '(p)' modifier that gets added in wordnet"

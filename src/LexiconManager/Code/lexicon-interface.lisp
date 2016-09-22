@@ -514,9 +514,11 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 
 (defun trips-pos-for-wn-sense-keys (wn-sense-keys)
   "return trips POS tags from wn senses. This check has been added because the statistical POS tagging does not always agree w/ the tagged sense"
-  (remove-duplicates (remove-if #'null (mapcar (lambda (key)
-						 (wf::trips-pos-for-wn-sense-key key))
-					       wn-sense-keys)))
+  (if wf::*use-wordfinder*
+      (remove-duplicates (remove-if #'null (mapcar (lambda (key)
+						     (wf::trips-pos-for-wn-sense-key key))
+						   wn-sense-keys)))
+      wn-sense-keys)
   )
  
 (defun cernl-hack-is-umls-concept (domain-info)
@@ -700,9 +702,10 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	 (compatible-defs nil)
 	 (other-defs nil)
 	)
-    (when wn-sense-keys (dolist (key wn-sense-keys) ; convert wn senses to TRIPS ontology types
-			  (let ((mapped-sense (car (wf::best-ont-type-for-sense-key key))))
-			    (when mapped-sense (pushnew mapped-sense ont-types :test #'equal))))
+    (when (and wf::*use-wordfinder* wn-sense-keys)
+      (dolist (key wn-sense-keys) ; convert wn senses to TRIPS ontology types
+	(let ((mapped-sense (car (wf::best-ont-type-for-sense-key key))))
+	  (when mapped-sense (pushnew mapped-sense ont-types :test #'equal))))
 	  (setq tagged-senses ont-types)
 	  (setq tagged-senses-remaining ont-types))
     ;; search the retrieved word definitions for a matching sense
@@ -1072,8 +1075,10 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
  @visibility public
  "
  (let* ((trips-pos-list (find-arg keylist :trips-parts-of-speech))
-	(wn-sense-keys (remove-if #'wf::stoplist-p
-				  (find-arg keylist :wn-sense-keys)))
+	(wn-sense-keys (when wf::*use-wordfinder*
+			   (remove-if #'wf::stoplist-p
+				      (find-arg keylist :wn-sense-keys))
+			   ))
 	(rawscore (find-arg keylist :score))
 	(score (if (numberp rawscore) (convert-raw-score rawscore) .98))
 	(wn-pos-list (when wn-sense-keys (trips-pos-for-wn-sense-keys wn-sense-keys)))
@@ -1115,7 +1120,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
    ;; now get TRIPS senses from the calling function only
    (setq res (or combined-wdef adjusted-wdef final-wf-wdef))
   
-   (print-debug "~%PROCESS-WORD-REQUEST:  RES is ~S" res)
+   (print-debug "~%PROCESS-WORD-REQUEST:  RES is ~S merged-trips-wn-pos-list = ~S" res merged-trips-wn-pos-list)
    ;; filter the results according to tagging information: senses or pos
    (cond (;(and (not (find 'w::name (merge-pos-info trips-pos-list penn-tags))) ; no sense filtering on names
 	  (or (not (null ont-sense-tags)) (not (null wn-sense-keys)));)
