@@ -408,11 +408,15 @@ separate instances of the chart/parser.")
 
 (defun prune-bucket (bucket beam-width counts)
   (when bucket
-    (let ((c (add-to-count (agenda-item-start (car bucket)) (agenda-item-end (car bucket)) counts)))
-      (if (> c beam-width)
-	  (progn (trace-msg 2 "~%Pruning constit from ~S to ~S"  (agenda-item-start (car bucket)) (agenda-item-end (car bucket)))
-		 (prune-bucket (cdr bucket) beam-width counts))
-	  (cons (car bucket) (prune-bucket (cdr bucket) beam-width counts))))))
+    (if (eq (agenda-item-type (car bucket)) 'entry)
+	(let ((c (add-to-count (agenda-item-start (car bucket)) (agenda-item-end (car bucket)) counts)))
+	  (if (> c beam-width)
+	      (progn (trace-msg 0 "~%Pruning constit ~S from ~S to ~S"  
+				(constit-cat (ENTRY-CONSTIT (agenda-item-entry (car bucket))))
+				(agenda-item-start (car bucket)) (agenda-item-end (car bucket)))
+		     (prune-bucket (cdr bucket) beam-width counts))
+	      (cons (car bucket) (prune-bucket (cdr bucket) beam-width counts))))
+	(cons (car bucket) (prune-bucket (cdr bucket) beam-width counts)))))
 
 (defun show-table (table)
   (dotimes (i (1+ (maxchartsize *chart*)))

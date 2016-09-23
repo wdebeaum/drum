@@ -1,6 +1,6 @@
 (in-package "PARSER")
 ;;
-;; Time-stamp: <Tue Jul 19 20:32:13 EDT 2016 jallen>
+;; Time-stamp: <Thu Sep 22 14:41:24 EDT 2016 jallen>
 
 
 ;;;; This file contains functions converting string input
@@ -73,7 +73,8 @@
   (do ((chars charlist) (i 0) (prefix nil))
       ((null chars))
     ;; trim leading blanks
-    (do () ((not (eql (car chars) #\Space))) (pop chars))
+    (do () ((and (not (eql (car chars) #\Space))
+		 (not (eql (car chars) #\Newline)))) (pop chars))
     (if (null chars) (return nil))
     ;; check for a quoted string
     (if (eql (car chars) :punc-quotemark)
@@ -86,7 +87,7 @@
 	      (setq chars (nthcdr (+ i 2) chars))
 	    (setq chars (cdr chars))))
       (progn
-	(setq i (position #\Space chars)) ; locate next blank, if any
+	(setq i (or (position #\Space chars)  (position #\Newline chars))) ; locate next blank, if any
 	;; copy prefix preceding next blank or end of input
 	(if i (setq prefix (convert-to-word (butlast chars (- (length chars) i))))
 	  (setq prefix (convert-to-word chars)))

@@ -890,36 +890,37 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	     (pushnew w *known-words* :test #'equal)
 	     )
 	   ))
-    (if (not (exclude-from-lookup w (if wdef (list (car (lex-entry-description (car wdef))))) nil)) 
-      (cond (tagged-senses ;; text-tagger information, such as pos or ont-type, accompanies word reqest; loop through each tagged sense and search for a compatible sense in TRIPS or WF; if none found, generate default senses based on the tagged information and adjust sense preferences accordingly (e.g. in CERNL, senses with UMLS info are preferred above others)
+    ;;(if ;;(if (exclude-from-lookup w (if wdef (list (car (lex-entry-description (car wdef))))) nil))
+    ;;	     tagged-senses
+    (cond (tagged-senses ;; text-tagger information, such as pos or ont-type, accompanies word reqest; loop through each tagged sense and search for a compatible sense in TRIPS or WF; if none found, generate default senses based on the tagged information and adjust sense preferences accordingly (e.g. in CERNL, senses with UMLS info are preferred above others)
 	   (dolist (this-sense-keylist tagged-senses)
 	     (let* ((domain-info (find-arg this-sense-keylist :domain-specific-info))
 		    (penn-tags (util::convert-to-package (find-arg this-sense-keylist :penn-parts-of-speech) :w))
 		    (these-ont-types (find-arg this-sense-keylist :ont-types))
-		 
+		    
 		    )
-		 
-		 ;; CERNL/TT hack: TT often assigns VBN tags for adjectives so make a substitution if incompatible POS and ont-type found
-		 (when (and (not (compatible-tagging penn-tags these-ont-types)) (find 'w::VBN penn-tags) (find 'ont::has-medical-condition these-ont-types))
-		   (setq penn-tags (subst 'w::JJ 'w::VBN penn-tags))
-		   (setq this-sense-keylist (subst penn-tags (find-arg this-sense-keylist :penn-parts-of-speech) this-sense-keylist))
-		   (setq replace-vbn-adj t)
-		   )
-	
-		 (when (not (exclude-from-lookup w nil nil))
-		  ;; obtain new senses from WordFinder, if any
-		   (multiple-value-bind (new-wdef new-sense-info)		    
-		       (find-new-senses (process-word-request w this-sense-keylist wdef) retrieved-sense-info domain-info these-ont-types replace-vbn-adj)
-		     (print-debug "new wdef is ~S~%" new-wdef)
-		     (print-debug "retrieved-senses are ~S~% new senses are ~S~%" retrieved-sense-info new-sense-info)
-		     (setq res (append new-wdef res))
-		     (setq part-of-speech-tags (remove-duplicates (append penn-tags part-of-speech-tags)))
-		     (setq tagged-ont-types (remove-duplicates (append these-ont-types tagged-ont-types)))
-		     (setq domain-tagged-senses (remove-duplicates (append domain-info domain-tagged-senses)))
-		     (setq retrieved-sense-info new-sense-info)
-		     ))
+	       
+	       ;; CERNL/TT hack: TT often assigns VBN tags for adjectives so make a substitution if incompatible POS and ont-type found
+	       (when (and (not (compatible-tagging penn-tags these-ont-types)) (find 'w::VBN penn-tags) (find 'ont::has-medical-condition these-ont-types))
+		 (setq penn-tags (subst 'w::JJ 'w::VBN penn-tags))
+		 (setq this-sense-keylist (subst penn-tags (find-arg this-sense-keylist :penn-parts-of-speech) this-sense-keylist))
+		 (setq replace-vbn-adj t)
+		 )
+	       
+	      ;; (when (not (exclude-from-lookup w nil nil))
+		 ;; obtain new senses from WordFinder, if any
+	       (multiple-value-bind (new-wdef new-sense-info)		    
+		   (find-new-senses (process-word-request w this-sense-keylist wdef) retrieved-sense-info domain-info these-ont-types replace-vbn-adj)
+		 (print-debug "new wdef is ~S~%" new-wdef)
+		 (print-debug "retrieved-senses are ~S~% new senses are ~S~%" retrieved-sense-info new-sense-info)
+		 (setq res (append new-wdef res))
+		 (setq part-of-speech-tags (remove-duplicates (append penn-tags part-of-speech-tags)))
+		 (setq tagged-ont-types (remove-duplicates (append these-ont-types tagged-ont-types)))
+		 (setq domain-tagged-senses (remove-duplicates (append domain-info domain-tagged-senses)))
+		 (setq retrieved-sense-info new-sense-info)
+		 )
 
-		 ;; CERNL/TT hack: adjust word sense preferences to prefer external tagging
+	       ;; CERNL/TT hack: adjust word sense preferences to prefer external tagging
 		 (setq res (prefer-more-specific-tagged-senses w res tagged-ont-types penn-tags domain-info)) ; prefer any TT-tagged ont-type
 		 ;; update the domain-specific-info in both the new entries from wordnet (res) and the trips def (wdef)
 		 (setq res (update-domain-info-in-entries res retrieved-sense-info))
@@ -937,7 +938,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
       ;;  even though we don't look up the word, we might refine the sense from tagged information
       ;;   I AM DISABLING THIS FOR NOW AS IT CAUSES PROBLEMS (e.g., changing specifier sense of "this") 
       ;;(setq wdef (refine-existing-entry-with-sense-info wdef tagged-senses))
-      )
+      
     ; combine new or default senses from external sources w/ existing trips senses
     (print-debug "~%After processing RES=~S ~%     WDEF=~S" res wdef)
     (setq res (append res wdef))
@@ -1075,7 +1076,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
  @visibility public
  "
  (let* ((trips-pos-list (find-arg keylist :trips-parts-of-speech))
-	(wn-sense-keys (when wf::*use-wordfinder*
+	(wn-sense-keys (when (and wf::*use-wordfinder* (not (exclude-from-lookup w nil nil)))
 			   (remove-if #'wf::stoplist-p
 				      (find-arg keylist :wn-sense-keys))
 			   ))

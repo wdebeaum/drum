@@ -73,9 +73,9 @@
 	(parser::*beam-pruning-on* t) 
 	;;
 ;	(parser::*pruning-frequency* 1000)
-	(parser::*pruning-frequency* 2000)
+	(parser::*pruning-frequency* 1000)
 	;;
-	(parser::*beam-width* 50)
+	(parser::*beam-width* 10)
 	;; max number of constituents built before stopping
 	((parser::setmaxnumberentries 6000))
 	;;
@@ -105,7 +105,7 @@
 	    (ont::SA_request 2.5)
 	    (ont::SA_YN-QUESTION 2.5)
 	    (ont::SA_WH-QUESTION 2.5)
-	    (w::ISOLATED-CP 1.4)
+	    (w::ISOLATED-CP 1.2)
 	    (w::CP 1.5)  
 	    (w::VP 2)
 	    (w::punc .5))))
