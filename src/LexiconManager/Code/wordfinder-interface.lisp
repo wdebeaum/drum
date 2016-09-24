@@ -460,7 +460,7 @@
        (setq res (create-entry-based-on-entries-of-the-same-type word wid lf lfform sem syntax pos trips-sense-list domain-info score))
         )
       (w::name
-       (setq res (make-unknown-name-entry word score penn-tag tagged-ont-types domain-info))
+       (setq res (make-unknown-name-entry word score penn-tag lflist domain-info))
        )
       (w::adj
        (let ((pertainyms (find-arg-in-act (car domain-info) :pertainyms)))

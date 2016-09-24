@@ -1333,21 +1333,24 @@
    ;; TEST: move it one inch
    ;; TEST: move it two degrees
    ;; TEST: walk a short distance
-   ((advbl (arg ?arg) (role (:* ONT::distance W::quantity)) (var *)
+   ;; TEST: The market fell three percent
+   ((advbl (arg ?arg) ;;(role (:* ONT::distance W::quantity)) 
+     (var *)
 	   (sort binary-constraint)
 	   (LF (% PROP (VAR *) (CLASS ONT::extent-predicate) (sem ?sem)
 		  (CONSTRAINT (& (FIGURE ?arg) (scale ?scale) (GROUND ?v)))))
 	   (atype (? x W::PRE W::POST))
-	   (argument (% (? ARGCAT8043 W::S
-                           W::NP
-			   W::VP)
-			(SEM (? SEM8044 ($ F::SITUATION (F::trajectory +)))))))
+     (argument (% W::S
+                          ;; W::NP
+			  ;; W::VP)
+		  (SEM (? SEM8044 ($ F::event-of-change))))) ;;SITUATION (F::trajectory +)))))))
+     )
     -distance-np-advbl> .97
     (head (np (var ?v) (sort unit-measure) (sem ?sem) 
 	      (bare -) ;; we suppress this rule for distances without a specific amount (e.g., "miles")
 	      ;; the semantic restriction is not sufficient to prevent measure-unit phrases such as "a bit" or "a set" as distances so using the lfs to restrict
 	      (lf (% description (constraint (& (scale ?scale)))))
-	      (sem ($ f::abstr-obj (f::scale (? sc ont::scale ont::linear-d))))
+	      (sem ($ f::abstr-obj (f::scale (? sc ont::scale ont::measure-domain))))
 	      (class  ont::quantity);;(? lft ont::angle-unit ont::length-unit ont::percent ont::distance))
 	      ;; well, 'he walked miles before he reached water'; 'he crawled inches to the next exit' ...; and this restriction prevents the non-unit NPs so if it's reinstated we need two rules
 ;	      (lf (% description (sort set))) ;; this restriction is needed to prevent bare measure units as adverbials

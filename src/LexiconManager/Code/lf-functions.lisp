@@ -149,11 +149,9 @@ structure out of it."
 	       (cond ((equal alf blf) ;; equal -- do nothing
 		     )
 		   ((om::is-sublf alf blf) ;; a is a child of b
-		    (setf (lex-entry-pref adef) .99)
 		    (setf (lex-entry-pref bdef) (- (lex-entry-pref bdef) .01))
 		    )
 		   ((om::is-sublf blf alf) ;; b is a child of a
-		    (setf (lex-entry-pref bdef) .99)
 		    (setf (lex-entry-pref adef) (- (lex-entry-pref adef) .01))
 		    )
 		   ;; orthogonal -- do nothing

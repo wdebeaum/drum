@@ -6,8 +6,8 @@
  :words (
   (W::humidity
    (SENSES
-    ((LF-PARENT ONT::humidity)
-     (meta-data :origin calo-ontology :entry-date 20060712 :change-date nil :wn ("humidity%1:26:00") :comments caloy3)
+    ((LF-PARENT ONT::humidity-scale)
+    
      (TEMPL OTHER-RELN-TEMPL)
      )
     )

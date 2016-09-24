@@ -1785,7 +1785,7 @@
 
 
 (define-type ONT::number-measure-domain
-; :parent ONT::MEASURE-DOMAIN
+ ;; :parent ONT::MEASURE-DOMAIN
  :parent ONT::MATHEMATICAL-TERM
  :arguments ((:REQUIRED ONT::FIGURE (F::Abstr-obj (F::Measure-function F::Term)))
              )
@@ -1834,12 +1834,11 @@
 
 ;; percent
 (define-type ONT::percent
- :wordnet-sense-keys ("percentage%1:24:00" "percent%1:24:00" "per_centum%1:24:00" "pct%1:24:00")
+ :wordnet-sense-keys ("percent%1:24:00" "per_centum%1:24:00" "pct%1:24:00")
 ; :parent ONT::quantitative-relation
- :parent ONT::MATHEMATICAL-TERM
+ :parent ONT::FORMAL-UNIT
  :sem (F::Abstr-obj (F::Scale Ont::percent-scale))
  )
-
 
 (define-type ONT::ratio
  :wordnet-sense-keys ("ratio%1:24:01" "proportion%1:24:00" "ratio%1:24:00")
@@ -1926,9 +1925,9 @@
              )
  )
 
-(define-type ONT::humidity
+(define-type ONT::humidity-scale
  :parent ONT::PHYS-MEASURE-DOMAIN
- :sem (F::Abstr-obj (F::Scale Ont::humidity-scale))
+ :sem (F::Abstr-obj) ;;(F::Scale Ont::humidity-scale))
  :arguments ((:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Scale Ont::humidity-scale)))
              )
  )
@@ -4035,22 +4034,19 @@
   )
 
 (define-type ont::rate-scale
-  :parent ont::scale
+  :parent ont::measure-domain
   )
 
 (define-type ont::ratio-scale
-  :parent ont::scale
+  :parent ont::measure-domain
   )
 
 (define-type ont::percent-scale
-  :parent ont::scale
-  )
+    :wordnet-sense-keys ("percentage%1:24:00" )
+    :parent ont::measure-domain)
+ 
 
 (define-type ont::luminosity-scale
-  :parent ont::scale
-  )
-
-(define-type ont::humidity-scale
   :parent ont::scale
   )
 
