@@ -232,12 +232,37 @@ for my $lemma (keys %lemma_to_entries) {
   }
 }
 
-# output, removing duplicate entries
+# read stoplist/golist from WF
+sub read_stoplist {
+  my $filename = shift;
+  open SL, "<$ENV{TRIPS_BASE}/src/WordFinder/wordnet/$filename"
+    or die "Can't open $filename: $!";
+  my @sl = map {
+    chomp;
+    s/;.*$//;
+    s/^\s*|\s*$//;
+    s/::$//;
+    $_
+  } <SL>;
+  close SL;
+  return @sl;
+}
+
+my %stophash = ();
+for (read_stoplist('stoplist.txt')) {
+  $stophash{$_} = 1;
+}
+for (read_stoplist('golist.txt')) {
+  delete $stophash{$_};
+}
+
+# output, removing duplicate/stoplisted entries
 print STDERR "printing output\n";
 for my $morphed (sort keys %morphed_to_entries) {
   print $morphed;
   my %entries = ();
   for my $entry (@{$morphed_to_entries{$morphed}}) {
+    next if ($stophash{$entry->{sense_key}});
     my $entry_text = join("\t", @{$entry}{qw(penn_pos sense_key)});
     print "\t$entry_text" unless (exists($entries{$entry_text}));
     $entries{$entry_text} = 1;
