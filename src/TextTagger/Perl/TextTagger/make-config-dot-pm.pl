@@ -2,7 +2,7 @@
 # usage: make-config-dot-pm.pl <Config.pm.in >Config.pm
 
 # replace $ENV{foo} with the "compile-time" value of the foo environment variable
-s/\$ENV{(.+?)}/"$ENV{$1}"/g;
+s/\$ENV\{(.+?)}/"$ENV{$1}"/g;
 
 $optional = 1 if (/^# all optional taggers/);
 

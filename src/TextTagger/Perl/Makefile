@@ -3,7 +3,7 @@
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 24 Nov 2005
 # Time-stamp: <Fri Aug 24 10:16:43 EDT 2012 ferguson>
-# $Id: Makefile,v 1.40 2015/10/26 19:15:23 wdebeaum Exp $
+# $Id: Makefile,v 1.41 2016/10/03 16:14:18 wdebeaum Exp $
 #
 
 SHELL=/bin/bash
@@ -71,7 +71,7 @@ Geo/StreetAddress/US.pm:
 Lingua/EN/Sentence.pm:
 	ln -s ../../TextPP/Perl/Lingua
 
-TextTagger/Config.pm: TextTagger/Config.pm.in $(CONFIGDIR)/TextTagger/defs.mk $(shell ls $(OPTIONAL_SRCS) 2>/dev/null)
+TextTagger/Config.pm: TextTagger/Config.pm.in TextTagger/make-config-dot-pm.pl $(CONFIGDIR)/TextTagger/defs.mk $(shell ls $(OPTIONAL_SRCS) 2>/dev/null)
 	(cd TextTagger ; ./make-config-dot-pm.pl) <$< >$@
 
 # let make-config-dot-pm.pl check out missing required sources
