@@ -201,19 +201,21 @@
 
 
 (define-type ONT::geo-formation
-    :wordnet-sense-keys ("land%1:17:00" "grassland%1:15:00")
+    :wordnet-sense-keys ("land%1:17:00" "grassland%1:15:00" "formation%1:17:00")
     :parent ONT::GEO-OBJECT
     :sem (F::Phys-obj (F::origin F::natural) (F::trajectory -))
     )
 
 (define-type ONT::sunken-natural-formation
-    :parent ONT::natural-object
+    :parent ONT::geo-object
+    :wordnet-sense-keys ("depression%1:17:00")
     :sem (F::Phys-obj (F::origin F::natural) (F::trajectory -))
     )
 
 ;; hole
 (define-type ONT::hole
     :parent ONT::sunken-natural-formation
+    :wordnet-sense-keys ("hole%1:17:02")
     )
 
 ;; crater

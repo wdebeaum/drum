@@ -3351,7 +3351,8 @@
 
 (define-type ONT::separation
  :wordnet-sense-keys ("separate%2:35:01" "disunite%2:35:00" "divide%2:35:01" "part%2:35:01" "break%2:41:13" "divide%2:38:00" "divide%2:42:00")
-    :parent ONT::change-state
+    :parent ONT::event-of-causation
+    :comment "abstract, social or physical dissociation"
     :sem (F::SITUATION (:default (F::Cause F::agentive)) (:required (F::trajectory -)))
     :arguments ((:OPTIONAL ONT::Agent)
 		(:OPTIONAL ONT::Agent1)
@@ -3386,6 +3387,7 @@
 ;; this isn't a child of ont::combine-objects because of incompatibility of f::trajectory feature
 (define-type ONT::Joining
  :wordnet-sense-keys ("join%2:35:00" "conjoin%2:35:00")
+ :comment "abstract, social, or physical connection of objects"
  :parent ONT::event-of-causation
  :sem (F::Situation (F::Trajectory -))
  :arguments ((:OPTIONAL ONT::AGENT (F::Phys-obj))
@@ -3776,7 +3778,7 @@
 ;; register for a conference, check in/out at a hotel, enroll in a program
 (define-type ONT::enroll
  :wordnet-sense-keys ("enroll%2:41:00" "inscribe%2:41:00" "enter%2:41:06" "enrol%2:41:00" "recruit%2:41:01" "enter%2:33:00")
- :parent ONT::event-of-causation
+ :parent ONT::joining
  :sem (F::situation)
  :arguments ((:REQUIRED ONT::Formal (f::phys-obj (f::intentional +))) ;; check in a person
 	     (:optional ont::neutral ((? oc f::phys-obj f::situation f::abstr-obj))) ;; at a hotel, in a program
