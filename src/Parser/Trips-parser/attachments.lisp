@@ -1,7 +1,7 @@
 ;;; attachments .lisp
 ;;
 
-;; Time-stamp: <Tue Sep  6 14:58:50 EDT 2016 jallen>
+;; Time-stamp: <Fri Oct  7 15:40:01 EDT 2016 jallen>
 
 ;;
 ;;
@@ -113,13 +113,19 @@
 	  (progn
 	    (trace-msg 2 "~% Applying Skeleton Boost to ~S: orig prob ~S" (entry-name e) (entry-prob e))
 	    (setf (entry-prob e)
-		  (min (* (entry-prob e) *skeleton-boost-factor*) 1)))
+		  (compute-skeleton-boost (entry-prob e) *skeleton-boost-factor*)))
 	  (when (< *skeleton-penalty-factor* 1)
 	    (trace-msg 2 "~% Applying Skeleton Penalty to ~S: orig prob ~S"  (entry-name e) (entry-prob e))
 	    (setf (entry-prob e)
 		  (* (entry-prob e) *skeleton-penalty-factor*))))))
 	  
   e)
+
+(defun compute-skeleton-boost (prob factor)
+  "increase score by factor percent of the difference between prob and 1"
+  (if (> factor 1) (setq factor (- factor 1)))
+  (let ((diff (- 1 prob)))
+    (+ prob (* diff factor))))
 
 ;; =====================
 ;; Call-Reference-Filter
@@ -130,7 +136,7 @@
 ;; make a synchronous call, which will, as a side effect, halt the
 ;; parser until a message is received.  Otherwise, it will call a
 ;; different response function.  Eventually, there will be somethign
-;; to do if Asynchronous Incremental Parsing is Enabled, which would
+;; to do if Asynchronous Incrmental Parsing is Enabled, which would
 ;; not have the effect of halting the parser until an answer comes back
 ;; ScS Apr 18 2005
 

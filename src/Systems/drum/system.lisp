@@ -60,7 +60,7 @@
 	;; boost constituents that match the skeleton (from stat. parser)
 ;	(parser::*skeleton-boost-factor* 1.1)
 ;	(parser::*skeleton-boost-factor* 1.04)
-	(parser::*skeleton-boost-factor* 1.02)
+	(parser::*skeleton-boost-factor* .2)   ;; this is the percent of the difference from prob to 1 that is the boost
 	;; penalty for crossing skeleton constituent boundaries
 	((setf (parser::barrier-penalty parser::*chart*) .99))
 	;;

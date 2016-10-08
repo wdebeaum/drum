@@ -39,10 +39,13 @@
   "Build the tables to drive SEM array building and unification:
     TYPES: the set of sem types allowed; common-features - features shared by all types;
     INDIV-FEATURES - a list, of each type, of the individual features"
-    
   (let* ((max-indiv-size 
-         (apply #'max (mapcar #'list-length indiv-features)))
-         (indiv-feat-list (reduce #'append (mapcar #'cdr indiv-features)))
+	  (if (not (null indiv-features))
+	      (apply #'max (mapcar #'list-length indiv-features))
+	      0))
+         (indiv-feat-list (if (not (null indiv-features))
+			      (reduce #'append (mapcar #'cdr indiv-features))
+			      ))
          (common-size (list-length common-features))
          (start-indiv-count (+ common-size 1))
 	 )
@@ -61,12 +64,11 @@
     (setf (gethash 'common *index-to-feature*) (make-array *sem-size* :initial-element nil))			
     (init-feature-to-index common-features 1 :type 'common)
     (mapcar #'(lambda (x)
-		(setf (gethash (car x) *index-to-feature*) (make-array *sem-size* :initial-element nil))			
-                (init-feature-to-index (cdr x) start-indiv-count :type (car x)))
-            indiv-features)
+		(setf (gethash x *index-to-feature*) (make-array *sem-size* :initial-element nil)))			
+                ;;(init-feature-to-index (cdr x) start-indiv-count :type (car x)))
+            types)
     (setq *default-sem-array* nil) ;;(build-sem-array nil nil))
     (values)))
-
 
 (defun init-feature-to-index (feats index &key (type nil))
   "Builds hash table to map features names to array indices"

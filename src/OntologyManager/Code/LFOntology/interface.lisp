@@ -184,7 +184,7 @@
 ;; Support for feature declarations
 ;;
 
-(defun get-sorted-sem-features (lfontology) 
+ (defun get-sorted-sem-features (lfontology) 
   (let* ((type-table (ling-ontology-feature-type-table lfontology))
 	 (types (get-all-keys type-table)) ;; feature types
 	 (tfeat (mapcar (lambda (type) 
@@ -192,6 +192,7 @@
 			types))
 	 (checked-features nil)
 	 (common-features nil)
+	 (individ-feats nil)
 	 )
     ;; now go over and find common features
     (dolist (typelist tfeat)
@@ -201,14 +202,18 @@
 	  (when (not (eql (first complist) type))
 	    (setq common-features (union common-features (intersection complist feat)))
 	    (setq feat (set-difference feat common-features))
+	    
 	    ))
 	(push (cons type feat) checked-features)
+	(setq individ-feats (append individ-feats feat))
 	))
+    
     `(,types
-      ,common-features
-      ,checked-features)
+      ,(append common-features individ-feats)  ;; we make all feats "common" so they get a unique array position to help handle restrictions that cross multiple SEM types
+      ;;,checked-features)
+      ())
     ))
-		  
+	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Pretty printing 

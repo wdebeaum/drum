@@ -4811,7 +4811,9 @@
 
 ;;; nauseous/sick/sore, chills, nausea, sickness
 ;;; e.g. He feels sick, Her feet are sore
-;;;   other types have nouns, this type has adjectives. For now, keep them separate. —Actually added chills, nausea & sickness too even though they are nouns but because one can feel them, WN has different sense keys for such uses and the illness type noun type use which still is under medical-disorders-and-conditions!
+;;;   other types have nouns, this type has adjectives. For now, keep them separate. 
+;;;  Actually added chills, nausea & sickness too even though they are nouns but because one can feel them, 
+;;;   WN has different sense keys for such uses and the illness type noun type use which still is under medical-disorders-and-conditions!
 (define-type ONT::PHYSICAL-SENSATION
  :wordnet-sense-keys ("nauseous%3:00:00:ill:01" "nauseated%3:00:00:ill:01" "queasy%3:00:00:ill:01" "sickish%3:00:00:ill:01" "chill%1:26:01" "shivering%1:26:00" "nausea%1:26:00" )
  :parent ONT::PERCEPTION

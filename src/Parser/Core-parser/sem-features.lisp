@@ -37,10 +37,13 @@
   "Build the tables to drive SEM array building and unification:
     TYPES: the set of sem types allowed; common-features - features shared by all types;
     INDIV-FEATURES - a list, of each type, of the individual features"
-    
   (let* ((max-indiv-size 
-         (apply #'max (mapcar #'list-length indiv-features)))
-         (indiv-feat-list (reduce #'append (mapcar #'cdr indiv-features)))
+	  (if (not (null indiv-features))
+	      (apply #'max (mapcar #'list-length indiv-features))
+	      0))
+         (indiv-feat-list (if (not (null indiv-features))
+			      (reduce #'append (mapcar #'cdr indiv-features))
+			      ))
          (common-size (list-length common-features))
          (start-indiv-count (+ common-size 1))
 	 )
@@ -59,12 +62,11 @@
     (setf (gethash 'common *index-to-feature*) (make-array *sem-size* :initial-element nil))			
     (init-feature-to-index common-features 1 :type 'common)
     (mapcar #'(lambda (x)
-		(setf (gethash (car x) *index-to-feature*) (make-array *sem-size* :initial-element nil))			
-                (init-feature-to-index (cdr x) start-indiv-count :type (car x)))
-            indiv-features)
+		(setf (gethash x *index-to-feature*) (make-array *sem-size* :initial-element nil)))			
+                ;;(init-feature-to-index (cdr x) start-indiv-count :type (car x)))
+            types)
     (setq *default-sem-array* nil) ;;(build-sem-array nil nil))
     (values)))
-
 
 (defun init-feature-to-index (feats index &key (type nil))
   "Builds hash table to map features names to array indices"
@@ -74,7 +76,6 @@
     (init-feature-to-index (cdr feats) (+ index 1) :type type)
     )
   )
-
 
 ;;
 ;;  Constructing SEM Arrays from a SEM constit build by the reader.
@@ -195,7 +196,7 @@
         (if (var-p v2)
           (setq v2 (chase-down-var v2)))
         (cond
-         ((eq v1 v2)
+         ((equal v1 v2)
           (setf (aref result i) v1))
          ((eq v1 *default-sem-variable*)
           (setf (aref result i) v2)
@@ -214,10 +215,13 @@
              (setq s1-modified t))
             (t 
 	     (if (flexible-semantic-matching *chart*)
+		 ;; note: position 1 (KR-TYPE) is a special case --we don't penalized based on mismatches
 		 (progn
 		   (setq s1-modified t) (setq s2-modified t)
 		   (trace-msg 1 "~%Semantic feature violation found: values ~S and ~S" v1 v2)
-		   (Setq accumulated-prob (* accumulated-prob (compute-sem-failure-penalty i v1 v2))))
+		   (if (not (eql i 1))
+		       (Setq accumulated-prob (* accumulated-prob (compute-sem-failure-penalty i v1 v2)))
+		       (trace-msg 1 "~%No penalty for the KR-TYPE feature in ~S and ~S" v1 v2)))
 		 (setq fail t)))))
          ;; general case, try unifying the standard way
          (t
@@ -245,8 +249,11 @@
 		(if (flexible-semantic-matching *chart*)
 		 (progn
 		   (setq s1-modified t) (setq s2-modified t)
-		   (trace-msg 1 "~%Semantic feature violation found")
-		   (Setq accumulated-prob (* accumulated-prob (compute-sem-failure-penalty i v1 v2))))
+		   (if (not (eql i 1))
+		     (progn
+		       (trace-msg 1 "~%Semantic feature violation found")
+		       (Setq accumulated-prob (* accumulated-prob (compute-sem-failure-penalty i v1 v2))))
+		      (trace-msg 1 "~%No penalty for the KR-TYPE feature in ~S and ~S" v1 v2)))
 		 (setq fail t)))))
 	 )))
     ;;(format t "~%Failed?: ~S:" fail)
@@ -316,7 +323,6 @@
        (t
 	(make-var :name (gen-v-num 'v))))) ;(gen-symbol 'v)))))
     (make-var :name (gen-v-num 'v)))) ;(gen-symbol 'v))))
-
 
 
 (defun var-or-symbol-values (v)

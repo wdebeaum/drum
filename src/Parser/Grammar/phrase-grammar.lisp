@@ -1641,7 +1641,7 @@
     ((N1 (RESTR ?con) (CLASS ?c) (SORT ?sort) (QUAL ?qual) (COMPLEX +)
       (subcat -) (post-subcat -)
       )
-     -N1-appos1> .96
+     -N1-appos1> .98
      (head (N1 (VAR ?v1) (RESTR ?r) (CLASS ?c) (SORT ?sort) (QUAL ?qual) (relc -) (sem ?sem)
 	    (subcat -) (post-subcat -) (complex -) (derived-from-name -) (time-converted -)
 	    )      

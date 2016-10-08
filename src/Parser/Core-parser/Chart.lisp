@@ -402,9 +402,11 @@ separate instances of the chart/parser.")
 (defun prune-agenda (beam-width)
   (format t "~%Pruning agenda with beam width ~S" beam-width)
   (let ((count-table (make-array (list (1+ (maxchartsize *chart*))) :initial-element nil)))
-    (dotimes (i *number-of-buckets-for-agenda*)
+    (do ((i *number-of-buckets-for-agenda* (- i 1)))
+	((= i 0))
       (setf (aref (agenda *chart*) i)
-	    (prune-bucket (aref (agenda *chart*) i) beam-width count-table)))))
+	    (prune-bucket (aref (agenda *chart*) i) beam-width count-table)))
+    ))
 
 (defun prune-bucket (bucket beam-width counts)
   (when bucket
