@@ -136,8 +136,11 @@ sub tag_specialist_info {
 	  $_->{end} == $end and
 	  $_->{'domain-specific-info'}{eui} eq $eui
 	} @terms;
-	if (@old_terms) { # just add the new matched variant to the old term
-	  push @{$old_terms[0]{matches}}, $match;
+	if (@old_terms) { # just add the new POS/matched variant to the old term
+	  push @{$old_terms[0]{'penn-pos'}}, $penn_pos
+	    unless (grep { $_ eq $penn_pos } @{$old_terms[0]{'penn-pos'}});
+	  push @{$old_terms[0]{matches}}, $match
+	    unless (grep { $_ == $match } @{$old_terms[0]{matches}});
 	} else { # make a new term
 	  push @terms, { type => "pos",
 			 lex => $lex,

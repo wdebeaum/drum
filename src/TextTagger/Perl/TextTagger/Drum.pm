@@ -110,7 +110,11 @@ sub tag_drum_terms {
         $citation_form = $1;
       }
       $entry = "$citation_form\t$tag->{start}\t$tag->{end}\n";
-      if ($tag->{'penn-pos'}[0] =~ /^(?:NNP?|AITL)S$/) {
+      if (grep /^(?:NNP?|AITL)$/, @{$tag->{'penn-pos'}[0]}) {
+	print STDERR Data::Dumper->Dump([$tag],['*singular_tag']) if ($debug);
+	$singular_entries{$entry} = 1;
+      }
+      if (grep /^(?:NNP?|AITL)S$/, @{$tag->{'penn-pos'}[0]}) {
 	print STDERR Data::Dumper->Dump([$tag],['*plural_tag']) if ($debug);
 	my $max_match_score = ($plural_entries{$entry} || 0);
 	for (@{$tag->{'domain-specific-info'}{matches}}) {
@@ -120,7 +124,6 @@ sub tag_drum_terms {
 	  if ($debug);
 	$plural_entries{$entry} = $max_match_score;
       } else {
-	$singular_entries{$entry} = 1;
 	# don't bother including non-plural specialist entries that normalize
 	# the same as the original string
 	if (# do a quicker check first
@@ -427,30 +430,48 @@ sub tag_drum_terms {
   if (defined($self->{drum_species})) {
     @terms = grep {
       my $term = $_;
-      not (exists($term->{'domain-specific-info'}{id}) and
-           $term->{'domain-specific-info'}{id} =~ /^UP::(?!SL)/ and
-	   not (exists($term->{'domain-specific-info'}{species}) and
-	        grep { $_ eq $term->{'domain-specific-info'}{species} }
-	    	     @{$self->{drum_species}}));
+      my $keep =
+	(not (exists($term->{'domain-specific-info'}{id}) and
+	      $term->{'domain-specific-info'}{id} =~ /^UP::(?!SL)/ and
+	      not (exists($term->{'domain-specific-info'}{species}) and
+		   grep { $_ eq $term->{'domain-specific-info'}{species} }
+		        @{$self->{drum_species}})));
+      print STDERR "removing UniProt term for wrong species:\n" . Data::Dumper->Dump([$_], ['*tag'])
+	if ($debug and not $keep);
+      $keep;
     } @terms;
   }
   # remove tags on all-lowercase single words that are already in the TRIPS
   # lexicon
   @terms = grep {
-    (not ($_->{lex} =~ /^\p{Ll}+$/ and
-          (word_is_in_trips_lexicon($self, $_->{lex}) or
-	    # check version with a dash if it could be a prefix (is followed by
-	    # something other than whitespace or sentence-final punctuation)
-	    ($_->{end} < length($str) and
-	     substr($str, $_->{end}, 1) !~ /[\s\.\?\!]/ and
-	     word_is_in_trips_lexicon($self, $_->{lex} . '-')))))
+    my $keep =
+      (not ($_->{lex} =~ /^\p{Ll}+$/ and
+	    (word_is_in_trips_lexicon($self, $_->{lex}) or
+	      # check version with a dash if it could be a prefix (is followed
+	      # by something other than whitespace or sentence-final
+	      # punctuation)
+	      ($_->{end} < length($str) and
+	       substr($str, $_->{end}, 1) !~ /[\s\.\?\!]/ and
+	       word_is_in_trips_lexicon($self, $_->{lex} . '-')))));
+    print STDERR "removing tag on all-lowercase single word already in TRIPS lexicon:\n" . Data::Dumper->Dump([$_], ['*tag'])
+      if ($debug and not $keep);
+    $keep;
   } @terms;
   # remove extra tags for amino acids
   @terms = grep {
     my $lex = lc($_->{lex});
     $lex =~ s/s$// if (length($lex) > 6); # depluralize full names
     my $dsi_type = $_->{'domain-specific-info'}{type};
-    $dsi_type eq 'amino-acid' or not grep { lc($_) eq $lex } @amino_acids
+    my $keep =
+      ($dsi_type eq 'amino-acid' or
+       # only exclude 3-4-letter words if they have the right case pattern to
+       # be an amino-acid abbreviation
+       (length($lex) == 3 and $_->{lex} !~ /^[A-Z][a-z]+$/) or
+       (length($lex) == 4 and $_->{lex} !~ /^p[A-Z][a-z]+$/) or
+       not grep { lc($_) eq $lex } @amino_acids);
+    print STDERR "removing extra tag for amino acid:\n" . Data::Dumper->Dump([$_], ['*tag'])
+      if ($debug and not $keep);
+    $keep;
   } @terms;
   # score and sort matches, and propagate max match score to DSI and tag
   for my $tag (@terms) {

@@ -133,6 +133,10 @@ sub characterize_match {
       shift @ac;
       push @a_words, '';
       push @b_words, '';
+      # eat following space in a if any
+      shift @ac if (@ac and $ac[0] =~ /\s/);
+      # eat previous space in b if any
+      shift @bc if (@bc and $bc[0] =~ /\s/);
       if ($bc[0] eq '-') {
 	shift @bc;
       } else {
@@ -140,13 +144,25 @@ sub characterize_match {
 	$a_range_dashes_deleted++
 	  if ($prev_char_was_digit and @ac and $ac[0] =~ /\d/);
       }
+      # eat following space in b if any
+      shift @bc if (@bc and $bc[0] =~ /\s/);
     } elsif ($bc[0] eq '-') {
       shift @bc;
       push @a_words, '';
       push @b_words, '';
-      $b_dashes_deleted++;
-      $b_range_dashes_deleted++
-	if ($prev_char_was_digit and @bc and $bc[0] =~ /\d/);
+      # eat previous space in a if any
+      shift @ac if (@ac and $ac[0] =~ /\s/);
+      # eat following space in b if any
+      shift @bc if (@bc and $bc[0] =~ /\s/);
+      if ($ac[0] eq '-') { # NOTE: this can only happen if we ate a space in a
+	shift @ac;
+      } else {
+	$b_dashes_deleted++;
+	$b_range_dashes_deleted++
+	  if ($prev_char_was_digit and @bc and $bc[0] =~ /\d/);
+      }
+      # eat following space in a if any
+      shift @ac if (@ac and $ac[0] =~ /\s/);
     } elsif ($ac[0] =~ /\s/) {
       $bc[0] =~ /\s/ or die "whitespace/non-whitespace mismatch: $ac[0] ne $bc[0]";
       shift @ac;
@@ -159,7 +175,7 @@ sub characterize_match {
       $ac[0] eq $bc[0] or die "non-letter, non-dash mismatch: $ac[0] ne $bc[0]";
       my $c = shift @ac;
       shift @bc;
-      if ($c =~ /\s/) {
+      if ($c =~ /\s/) { # FIXME? I think this case is already handled above
 	push @a_words, '';
 	push @b_words, '';
       } elsif ($a_words[-1] =~ /\pL$/) {
@@ -184,11 +200,11 @@ sub characterize_match {
     }
   }
   die "junk after a: " . join('', @ac)
-    if (grep { $_ ne '-' } @ac);
-  $a_dashes_deleted += scalar(@ac);
+    if (grep { $_ ne '-' and $_ ne ' ' } @ac);
+  $a_dashes_deleted += scalar(grep { $_ eq '-' } @ac);
   die "junk after b: " . join('', @bc)
-    if (grep { $_ ne '-' } @bc);
-  $b_dashes_deleted += scalar(@bc);
+    if (grep { $_ ne '-' and $_ ne ' ' } @bc);
+  $b_dashes_deleted += scalar(grep { $_ eq '-' } @bc);
   print STDERR "a words = " . join(' ', @a_words) . "\n" .
                "b words = " . join(' ', @b_words) . "\n"
     if ($debug);
