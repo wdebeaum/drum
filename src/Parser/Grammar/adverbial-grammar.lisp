@@ -1357,28 +1357,25 @@
 	      ))
     )
 
-   ;; Added by Myrosia 2004/04/08
-   ;; ing VPs as adverbials
-   ;; assigned a low priority, and restriction for no gaps to limit the application
-   ;; swift 05/03/2004 added aspectual restriction so it doesn't modify static verbs
-   ;; TEST: Barking, the dog chased the cat.
+      ;; ing VPs as adverbials
+      ;; TEST: Barking, the dog chased the cat.
    ;; TEST: The dog chased the cat barking.
    ((advbl (arg ?arg) (sem ($ f::abstr-obj (f::information -) (f::intentional -)))
      (argument (% S (sem ($ f::situation (f::aspect f::dynamic))))) 
      (sort pred) (gap -) (atype (? atp pre post))
      (role ONT::MANNER) (var **)
-     (LF (% PROP (CLASS ONT::Manner) (VAR **) 
+     (LF (% PROP (CLASS ONT::IMPLICIT-OVERLAP) (VAR **) 
 	    (CONSTRAINT (& (FIGURE ?arg) (GROUND ?v)))
 	    (sem ($ f::abstr-obj (f::information -) (f::intentional -)))))
      )
-    -vp-ing-advbl> 0.93
+    -vp-ing-advbl> .98
     (head (vp (vform ing) (var ?v) (gap -) (aux -) (advbl-necessary -)
 	   (constraint ?con)  (transform ?transform) (class ?class)
 	   (subj (% np (sem ?subjsem)))
 	   (subjvar (% *PRO* (VAR *) (gap -) (sem ?subjsem)))
 	   ))
     )
-
+#||   I don't think we can distinguish RESULT well from temporal overlap
  ((advbl (arg ?arg) (sem ($ f::abstr-obj (f::information -) (f::intentional -)))
      (argument (% S (sem ($ f::situation (f::aspect f::dynamic))))) 
      (sort pred) (gap -) (atype (? atp pre post))
@@ -1393,7 +1390,7 @@
 	   (subj (% np (sem ?subjsem)))
 	   (subjvar (% *PRO* (VAR *) (gap -) (sem ?subjsem)))
 	   ))
-    )
+    )||#
 
    ;; the following rule could be handled lexically, with a new sense of IN, but
    ;; its seems idiosyncratic enough to warrant a special rule.

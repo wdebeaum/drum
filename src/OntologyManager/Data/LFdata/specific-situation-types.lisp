@@ -209,7 +209,7 @@
   )
 
 (define-type ONT::Appropriate
- :wordnet-sense-keys ("take%2:32:09" "claim%2:32:03" "take_up%2:38:03" "strike%2:38:08" "take%2:38:00" "assume%2:38:00" "occupy%2:41:04" "take%2:41:00" "fill%2:41:00" "get_hold_of%2:35:00" "take%2:35:00" "catch%2:35:00" "grab%2:35:00" "take_hold_of%2:35:01" "snatch%2:35:02" "take%2:40:15")
+ :wordnet-sense-keys ("take%2:32:09" "claim%2:32:03" "take_up%2:38:03" "strike%2:38:08" "take%2:38:00" "assume%2:38:00" "occupy%2:41:04" "take%2:41:00" "fill%2:41:00" "get_hold_of%2:35:00" "take%2:35:00" "catch%2:35:00" "grab%2:35:00" "take_hold_of%2:35:01" "snatch%2:35:02" "take%2:40:15" "loot%2:40:01" "loot%2:40:00")
  :parent ONT::acquire-by-action
  :sem (F::SITUATION (F::Cause F::Agentive) (F::Trajectory -) (F::Aspect F::Dynamic))
  :arguments ((:REQUIRED ONT::AGENT ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))

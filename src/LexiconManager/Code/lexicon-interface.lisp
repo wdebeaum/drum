@@ -744,7 +744,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	  (cond ((and pos (compatible-pos-and-ont-type pos ont-type))
 		 ;; create a new entry with the given pos and sense as long as they are compatible
 		 (print-debug "~%point 2")
-		 (let ((new-entry (car (make-unknown-word-entry w pos .99 nil (gen-id w) (list ont-type) nil penn-tags (list ont-type) domain-info))))
+		 (let ((new-entry (car (make-unknown-word-entry w pos (find-score-in-domain-info domain-info) nil (gen-id w) (list ont-type) nil penn-tags (list ont-type) domain-info))))
 		   (when new-entry (push new-entry compatible-defs)))
 		 (print-debug "making new sense for ~S as ~S ~S~%" w pos ont-type)
 		 )
@@ -767,6 +767,12 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 
     compatible-defs)
   )
+
+(defun find-score-in-domain-info (info)
+ (let* ((terms (cdr (car info)))
+	(scores (mapcar #'(lambda (x) (find-arg-in-act x :score)) terms)))
+   (or (if scores (apply #'max scores))
+       .97)))
 
 (defun retrieve-multiword-from-trips (words)
   (let ((wdef (retrieve-from-lex (car words)))

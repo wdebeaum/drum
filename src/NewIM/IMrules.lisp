@@ -264,7 +264,7 @@
    ;; The dog?
      ((ONT::SPEECHACT ?!a ONT::SA_YN-QUESTION :CONTENT ?!rr)
       (?sp ?!rr ?type)
-      -ynq1> 1
+      -ynq1> 
       (ONT::ASK-IF :who *USER* :to *ME* :what ?!rr)
       )
         
@@ -286,12 +286,12 @@
      -event-frag1>
     (ONT::REPORT :who *USER* :to *ME* :what ?!vv)
     )
-     
+
    ;; General rule for interpreting NP utts (usually we have more specific rules from context e.g., a question)
-     
+   ;; This has lower priority so we will prefer -frag-none1> and other answers
    ((ONT::SPEECHACT ?!a ONT::SA_IDENTIFY :CONTENT ?!vv)
     ((? x ont::THE ont::THE-SET ont::A ont::INDEF-SET ont::PRO ont::PRO-SET ONT::QUANTIFIER ONT::SM ONT::BARE) ?!vv ?type)
-    -np-answer>
+    -np-answer> 0.98
     (ONT::IDENTIFY :who *USER* :to *ME* :what ?!vv)
     )
 
@@ -319,21 +319,19 @@
     (ONT::FRAGMENT :who *USER* :to *ME* :what ?!v))
    
     
-   ;; e.g., none
+   ;; e.g., none, any, any dog
    ((ONT::SPEECHACT ?!a ONT::SA_IDENTIFY :CONTENT ?!vv)
-    (ONT::A ?!vv ONT::ANY-SEM :QUAN ONT::NONE)
+    (ONT::A ?!vv ONT::ANY-SEM :QUAN (? x ONT::NONE ONT::ANY))
     -frag-none1>
-    (Ont::answer :who *USER* :to *ME* :degree ONT::NONE)
+    (Ont::answer :who *USER* :to *ME* :what ?!vv)
     )
-
- 
 
    ;; ??
    ((ONT::SPEECHACT ?a ONT::SA_IDENTIFY :CONTENT ?!vv)
     (ONT::A ?!vv ?s :SIZE ?!size)
-    (ONT::QUANTITY-TERM ?!size ONT::NUMBER :VALUE ont::NONE)
+    (ONT::QUANTITY-TERM ?!size ONT::NUMBER :VALUE (? x ont::NONE ONT::ANY))
     -frag-none2>
-    (ONT::ANSWER :who *USER* :to *ME* :degree ONT::NONE)
+    (ONT::ANSWER :who *USER* :to *ME* :what ?!vv)
     )
 
    ;; fragment predicates, e.g., severe, very sad, ...

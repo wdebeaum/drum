@@ -398,6 +398,7 @@
  '((headfeatures
     ;; (N1 VAR arg AGR MASS CASE SEM Changeagr lex quantity subcat transform)
     (N1 var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)
+    ;;(N1 var arg lex headcat transform agr mass case sem quantity argument argument-map indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)
     (N var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)  ; this is a copy of N1 so -N-prefix> would pass on the features
     (NAME var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)  ; this is a copy of N1 so -NAME-prefix> would pass on the features
     (UNITMOD var arg lex headcat transform agr mass case sem quantity subcat argument indef-only)
@@ -1236,8 +1237,8 @@
 	       (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale1) (F::intensity ?ints) (F::orientation ?orient)))
 	       (transform ?transform)
 	       ))
-    (pp (ptype w::in) (var ?sc-var) (sem  ($ F::ABSTR-OBJ (f::scale ?scale2))) (gap ?gap))
-    (class-greatest-lower-bound (in1 ?scale1) (in2 ?scale2) (out ?newscale))
+    (pp (ptype w::in) (var ?sc-var) (sem  ($ F::ABSTR-OBJ (f::scale ?!scale2))) (gap ?gap))
+    (class-greatest-lower-bound (in1 ?scale1) (in2 ?!scale2) (out ?newscale))
     )
 
  

@@ -2083,7 +2083,7 @@
      (vp vform agr neg sem var subjvar dobjvar cont  lex headcat tma transform subj-map advbl-needed template)
     (s vform neg cont  lex headcat transform advbl-needed)
     (v lex sem lf neg var agr cont lex transform aux modal tma advbl-needed headcat)
-    (utt sem subjvar dobjvar cont lex headcat transform))
+    (utt subjvar dobjvar cont lex headcat transform))  ;; I removes the SEM as i don't think it makes sense to move up to an S/UTT
 
     ;; ynq questions with be because subjvar must be set properly
     

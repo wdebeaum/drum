@@ -1884,7 +1884,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	 ((ont::position-reln) :location))
 	(ont::motion
 	 ((ont::pos-as-containment-reln) :location)
-	 ((ont::to-loc ont::position-rel ont::goal-reln ont::direction-reln) :result)
+	 ((ont::to-loc ont::position-reln ont::goal-reln ont::direction-reln) :result)
 	 ((ont::from-loc ont::from) :source)
 	 
 	 )
@@ -1920,7 +1920,8 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	 ((ont::degree-modifier) :degree)
 	 )
 	(ont::situation-root
-	 ((ont::reason ont::purpose ont::therefore) :reason)
+	 ((ont::reason ont::purpose) :reason)
+	 ((ont::therefore) :result)
 	 ((ont::extent-predicate) :extent)
 	 ((ont::frequency ont::frequency-val) :frequency)
 	 ((ont::degree-modifier) :degree)
