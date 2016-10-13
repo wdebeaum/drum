@@ -1648,7 +1648,7 @@
 	    )      
       )
      (np (name +) (generated -) (sem ?sem) (class ?lf) (VAR ?v2) (time-converted -))
-     (add-to-conjunct (val (EQ ?v2)) (old ?r) (new ?con)))
+     (add-to-conjunct (val (APPOS-EQ ?v2)) (old ?r) (new ?con)))
 	
    ;; same with comma  the city, avon
     ((N1 (RESTR ?con) (CLASS ?c) (SORT ?sort) (QUAL ?qual) (COMPLEX +) 

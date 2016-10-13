@@ -770,8 +770,9 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 
 (defun find-score-in-domain-info (info)
  (let* ((terms (cdr (car info)))
-	(scores (mapcar #'(lambda (x) (find-arg-in-act x :score)) terms)))
-   (or (if scores (apply #'max scores))
+	(scores (mapcar #'(lambda (x) (find-arg-in-act x :score)) terms))
+	(scores-num (remove-if-not #'numberp scores))) ; domain-info might not have :score
+   (or (if scores-num (apply #'max scores-num))
        .97)))
 
 (defun retrieve-multiword-from-trips (words)

@@ -1416,7 +1416,7 @@
    ;; vp rule with dobj gap
    ;; test: who did he see
    ((vp- (subj ?subj) (subjvar ?subjvar) (dobjvar ?dobjvar)
-     (main +) (gap (% ?s3 (var ?gapvar) (sem ?gapsem) (agr ?gapagr) 
+     (main +) (gap (% ?s3 (var ?gapvar) (sem ?gapsem) (agr ?gapagr) (gap -) 
 		      (case ?dcase) (ptype ?ptype)
 		      ))
      (var ?v) 
@@ -3195,7 +3195,7 @@
      )
     -s-conj1>
     (head (s (stype (? st decl)) (subj ?subj) (var ?v1) (sem ?s1)
-	     (lf (% prop (class ?c1) (tma ?tma)))
+	     (lf (% prop (class ?c1) (tma ?tma))) (gap -)
 	     (advbl-needed -)
 	     ))
     (conj (lf (? lex ont::and ont::or ont::but)) (var ?v3))
@@ -3204,6 +3204,26 @@
     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
     )
+
+  ;; conjoined vps w same subject AND object!
+   ;; test: the dog chased and caught the cat.
+   ((s (stype ?st) (var ?v3) (sem ?sem)
+     (lf (% prop (var ?v3) 
+        (class ?class)
+        (constraint (& (operator ?lex) (sequence (?v1 ?v2)))) (tma ?tma)))
+     )
+    -s-conj1a> 
+    (head (s (stype (? st decl)) (subj ?subj) (var ?v1) (sem ?s1) (gap ?!dobj)
+         (lf (% prop (class ?c1) (tma ?tma)))
+         (advbl-needed -)
+         ))
+    (conj (lf (? lex ont::and ont::or ont::but)) (var ?v3))
+    (vp (subj ?subj) (gap -) (var ?v2) (tma ?tma) (advbl-needed -) (dobj ?!dobj)
+     (class ?c2) (sem ?s2))
+    (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+    (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+    )
+
    
    ;; sentential conjunction
    ;; both ss must be of the same type, decl or imperative

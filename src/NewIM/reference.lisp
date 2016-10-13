@@ -755,7 +755,9 @@
 	    (if (eq new 'ONT::REFERENTIAL-SEM)
 		;; try to refine by sem vector type
 		(map-sem-feature-class-to-lf (cadr sem))
-		new)))))
+	      new)))
+    type
+    ))
 
 (defun map-sem-feature-class-to-lf (semtype)
   (case semtype
@@ -777,7 +779,7 @@
 				     (unify-sem-structures semarray refsem)
 				   (cons (or score .5) r))))
 			   refs)))
-      (format t "~% scored refs are ~S" scores)
+      ;;(format t "~% scored refs are ~S" scores)
       (setf (flexible-semantic-matching *chart*) oldflex)
       ;; now we have scored refs, just sor them for now
       (let ((sorted-refs (sort scores #'> :key #'car)))
