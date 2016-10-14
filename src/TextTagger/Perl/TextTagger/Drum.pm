@@ -110,11 +110,11 @@ sub tag_drum_terms {
         $citation_form = $1;
       }
       $entry = "$citation_form\t$tag->{start}\t$tag->{end}\n";
-      if (grep /^(?:NNP?|AITL)$/, @{$tag->{'penn-pos'}[0]}) {
+      if (grep /^(?:NNP?|AITL)$/, @{$tag->{'penn-pos'}}) {
 	print STDERR Data::Dumper->Dump([$tag],['*singular_tag']) if ($debug);
 	$singular_entries{$entry} = 1;
       }
-      if (grep /^(?:NNP?|AITL)S$/, @{$tag->{'penn-pos'}[0]}) {
+      if (grep /^(?:NNP?|AITL)S$/, @{$tag->{'penn-pos'}}) {
 	print STDERR Data::Dumper->Dump([$tag],['*plural_tag']) if ($debug);
 	my $max_match_score = ($plural_entries{$entry} || 0);
 	for (@{$tag->{'domain-specific-info'}{matches}}) {
