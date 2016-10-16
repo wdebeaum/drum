@@ -2443,7 +2443,7 @@
 
 ;; goals, objectives
 (define-type ONT::goal
- :wordnet-sense-keys ("goal%1:09:00" "end%1:09:02")
+ :wordnet-sense-keys ("goal%1:09:00" "end%1:09:02" "motivation%1:03:00" "want%1:17:00" "demand%1:26:00")
  :parent ONT::ps-object
  )
 

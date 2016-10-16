@@ -81,6 +81,7 @@
   "builds the basic referent structure from the information in TERM"
   (let* ((lf (find-arg-in-act term :lf))
 	 (id (second lf))
+	 (name (find-arg-in-act lf :name-of))
 	 (sem (find-arg-in-act term :sem))
 	 (start (find-arg-in-act term :start))
 	 (end (find-arg-in-act term :end)))
@@ -90,6 +91,7 @@
     (add-to-referent-lookup
      (make-referent
       :id id
+      :name name
       :role (cadr (assoc id grammroles))
       :num (classify-num lf)
       :lf LF
@@ -112,6 +114,7 @@
   (case (first lf) 
     ((ont::the-set ont::indef-set ont::pro-set) 'set)
     ((ont::the ont::a ont::pro ont::F) 'individual)
+    ((ont::bare ont::kind) 'kind)
     (otherwise 'other)))
 
 (defun read-sem (x)
@@ -559,7 +562,7 @@
 		(name
 		 (if *external-name-resolution*
 		     (resolve-name id lf name)
-		     (standard-definite-reference id index lf lf-type sem speaker addressee)))
+		     (standard-definite-reference id index lf lf-type sem speaker addressee name)))
 		;;  references to explicit times do not use the discourse history
 		((subtype-check lf-type 'ONT::TIME-LOC)
 		 (resolve-temporal-reference lf index))
@@ -576,18 +579,17 @@
     (trace-msg 2 "~%~S resolved to referent ~S" lf res)
     res
     ))
-
      
-(defun standard-definite-reference (id index lf lf-type sem speaker addressee)
+(defun standard-definite-reference (id index lf lf-type sem speaker addressee &optional name)
   (let* ((proform (find-arg-in-act lf :proform))
 	 (possibles (find-most-salient lf-type id sem (if ;(and proform (member proform '(ont::this ont::that ont::these ont::those)))
 						      (and proform (member proform '(W::this W::that W::these W::those)))
 						      '(visible-focus concrete event abstract)
 						      (if (eq proform 'w::one)
-							  '(concrete abstract)
-							  '(concrete wh-term event abstract)))
-				       (list (classify-num lf))
-				       (- index 1) (if proform 3 200)))
+							  '(concrete abstract kind) ; kind is also for BARE
+							  '(concrete wh-term event abstract kind)))
+				       (list (classify-num lf) 'kind)
+				       (- index 1) (if proform 3 200) name))
 	 (ans (filter-by-fastmatch-subsumes id (mapcar #'referent-id possibles))))
     (if ans
 	(mapcar #'(lambda (a) (bind-to-referent lf lf-type a)) 
@@ -719,17 +721,17 @@
     (if equality
 	(third (car equality)))))
 
-(defun find-most-salient (lf-type id sem access-requirement num index limit)
+(defun find-most-salient (lf-type id sem access-requirement num index limit &optional name)
   "Gathers up potential referents in preference order based on the parameters"
   (when (and (>= index 0) (>= limit 0))
     (if (eq (utt-record-status (get-im-record index)) 'CPSA-failure)
 	;; skip over failed utterances
-	(find-most-salient lf-type id sem access-requirement num (- index 1) limit)
-	(or (find-possible-referents lf-Type sem id Access-requirement num index) 
-	    (find-most-salient lf-type id sem access-requirement num (- index 1) (- limit 1))))
+	(find-most-salient lf-type id sem access-requirement num (- index 1) limit name)
+	(or (find-possible-referents lf-Type sem id Access-requirement num index name) 
+	    (find-most-salient lf-type id sem access-requirement num (- index 1) (- limit 1) name)))
     ))
 
-(defun find-possible-referents (lf-type sem id access-requirement nums index)
+(defun find-possible-referents (lf-type sem id access-requirement nums index &optional name)
   "returns the objects that meet the access requirements"
   (let* ((r (get-im-record index))
 	 (focus (utt-record-focus r))
@@ -742,7 +744,9 @@
 							    (not (eq (referent-id x) id)) ;; can't refer to itself
 							    (member (referent-accessibility x) access-requirement)
 		 					    (member (referent-num x) nums)
-							    (subtype-check (referent-lf-type x) lf-type)))
+							    (subtype-check (referent-lf-type x) lf-type)
+							    (or (not name) (eq (referent-name x) name))
+							    ))
 					 (utt-record-referring-expressions r)))
 	 )
       (filter-and-reorder-based-on-sem accessable-refs sem))))

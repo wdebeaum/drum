@@ -124,11 +124,11 @@
    ;; for further analysis in the future
    
    ((utt  (var ?v) (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
-     (punc +) (punctype ?p)
+     (punc +) (punctype ?p) (uttword ?uw)
      (lf (% speechact (var ?sv) (class ?cl) (constraint ?constraint)))
      )
    -utt-punctuation>
-   (head (utt (focus ?foc) (ended -) (var ?v) (punc -)
+   (head (utt (focus ?foc) (ended -) (var ?v) (punc -) (uttword ?uw)
 	  (lf (% speechact (var ?sv) (class ?cl) (constraint ?con)))
 	  ))
     (punc (punctype ?p) (lex (? lex w::punc-exclamation-mark w::punc-period w::punc-question-mark w::punc-colon w::ellipses w::punc-comma)))
@@ -232,7 +232,7 @@
     (punc (lex punc-comma) (var ?v1)))
 
      
-   ;;  the one compound utt rule - allows uttword+ utterance to preceed other utts
+   ;;  compound utt rule - allows uttword+ utterance to preceed other utts (once)
    ;; test: hello hello
    ((utt (sa-seq +) (lf (% sa-seq (var *) (class ont::sa-seq) (constraint (& (acts (?v1 ?v2))))))
          (var *))

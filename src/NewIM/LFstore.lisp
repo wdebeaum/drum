@@ -105,7 +105,7 @@
       (if (member (car in) '(:mod :mods))
 	  (breakoutargs (cddr in) args (append mods (if (consp (cadr in)) (cadr in) (list (cadr in)))))
 	  (case (car in) 
-	    ((:start :end :proform :tma)  ;; ignore proform and tma
+	    ((:start :end :proform :tma :coref :refers-to)  ;; ignore proform and tma
 	     (breakoutargs (cddr in) args mods))
 	      ;; otherwise add as an arg
 	    (otherwise

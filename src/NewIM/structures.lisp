@@ -136,7 +136,8 @@
 ;;  REFERENT INFO
 
 (defstruct referent
-  id         ;; the ID (indexing into the LF-store) 
+  id         ;; the ID (indexing into the LF-store)
+  name       ;; the :name-of slot in  the LF if it has one (for proper names)
   role       ;; the grammatical role of this expression if it exists
   lf-type    ;; The LF type
   num        ;; individual or set

@@ -4504,7 +4504,7 @@
       (generated ?generated)
       )
      np-sequence> 
-      (head (NPSEQ (var ?v) (SEM ?s1) (lf ?lf1) (class ?c1) (CASE ?case) (mass ?m1)
+      (head (NPSEQ (var ?v) (SEM ?sem) (lf ?lf1) (class ?c1) (CASE ?case) (mass ?m1)
 		   (generated ?generated1) (separator (? p w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash w::punc-minus))
 		   (time-converted ?rule))))
 

@@ -1577,7 +1577,7 @@
 ;;  This is for "the truck needs repair"
 
 (define-type ONT::NECESSITY
- :wordnet-sense-keys ("want%1:17:00" "need%1:17:00" "demand%1:26:00" "need%1:26:00" "need%2:34:01" "demand%2:42:00" "call_for%2:42:00" "involve%2:42:07" "take%2:42:00" "require%2:42:00" "need%2:42:00" "postulate%2:42:00" "ask%2:42:00" "necessitate%2:42:00" "require%2:34:00" "need%2:34:00" "want%2:34:00" "motivation%1:03:00" "motive%1:03:00" "need%1:03:00")
+ :wordnet-sense-keys ("need%2:34:01" "demand%2:42:00" "necessitate%2:42:00" "require%2:34:00")
  :parent ONT::event-of-state
  :sem (F::SITUATION (F::Aspect F::static) (F::Time-span F::extended) (F::Cause -) (F::Trajectory -))
  ;;; basically any - restriction comes from somewhere else
@@ -2025,6 +2025,7 @@
 
 (define-type ONT::nonverbal-say
     :parent ONT::say
+    :wordnet-sense-keys ("signal%1:10:00" "email%2:32:00" "write%2:32:00" "write%2:38:08")
     :comment "saying using a medium other that speech"
     :arguments ((:ESSENTIAL ONT::Formal)
 		)
@@ -2033,6 +2034,7 @@
 
 (define-type ONT::collaborate
  :parent ONT::agent-interaction
+  :wordnet-sense-keys ("collaborate%2:41:00")
  :arguments ((:REQUIRED ONT::Formal)
              (:REQUIRED ONT::agent)
              )
@@ -2178,6 +2180,7 @@
  )
 
 (define-type ONT::teach-train
+    :wordnet-sense-keys ("teach%2:32:00" "teach%2:30:00" "train%2:31:00" "train%2:41:02" "train%2:41:00" "train%2:41:01""train%2:32:00")
     :parent ONT::SHOW
     )
 
@@ -2241,25 +2244,28 @@
 
 (define-type ONT::calc-add
  :parent ONT::calculation
+ :wordnet-sense-keys ("add%2:31:00")
  :arguments ((:REQUIRED ONT::Formal (F::ABSTR-OBJ) (F::TYPE ONT::MATHEMATICAL-TERM))
 	     (:OPTIONAL ONT::formal1)
              )
  )
 
 (define-type ONT::calc-subtract
- :parent ONT::calculation
- :arguments ((:OPTIONAL ONT::formal1)
+    :wordnet-sense-keys ("subtract%2:31:00")
+    :parent ONT::calculation
+    :arguments ((:OPTIONAL ONT::formal1)
              )
  )
 
 (define-type ONT::calc-multiply
  :parent ONT::calculation
+  :wordnet-sense-keys ("multiply%2:31:00")
  :arguments ((:OPTIONAL ONT::formal1)
              )
  )
 
 (define-type ONT::calc-divide
- :wordnet-sense-keys ("go%2:42:13")
+ :wordnet-sense-keys ("go%2:42:13" "divide%2:31:00")
  :parent ONT::calculation
  :arguments ((:OPTIONAL ONT::formal1)
              )
@@ -2295,17 +2301,6 @@
 	      (:OPTIONAL ONT::agent (F::phys-obj (F::intentional +)) (:implements cause))
 	      )
  )
-
-#|
-; merged with ARCHIVE
-;; store my files on the computer; archive the data
-(define-type ONT::store-info
-  :parent ONT::storing
-  :arguments ((:REQUIRED ONT::Formal ((? ttype F::Abstr-obj f::phys-obj) (f::information (? fi f::data f::information-content))))
-	      (:OPTIONAL ONT::agent (F::phys-obj (F::intentional +)))
-	      )
- )
-|#
 
 (define-type ONT::dig
  :wordnet-sense-keys ("dig%2:35:01" "dig_out%2:35:00")
@@ -3284,7 +3279,7 @@
 
 
 (define-type ONT::add-include
- :wordnet-sense-keys ("include%2:30:00" "introduce%2:38:00")
+ :wordnet-sense-keys ("include%2:30:00" "introduce%2:38:00" "add%2:30:00")
  :parent ONT::adjust
  :sem (F::SITUATION)
  :arguments ((:OPTIONAL ont::result ((? cthm f::situation f::phys-obj F::abstr-obj))))
