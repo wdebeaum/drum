@@ -785,8 +785,9 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
   )
 
 (defun abstract-type (ont-type)
-  (member ont-type '(ont::referential-sem ont::abstract-object ont::modifier ont::predicate ont::situation-root ont::phys-object ont::action ont::organization ont::geographic-region))
-  )
+  (member ont-type '(ont::referential-sem ont::abstract-object ont::modifier ont::predicate ont::situation-root ont::phys-object ont::action)
+	  ;;ont::organization ont::geographic-region))
+  ))
 
 
 (defun find-new-senses (wdef retrieved-sense-info domain-info tagged-ont-types replace-vbn-adj)
@@ -804,7 +805,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 		(and  (equal sense-introduced-this-cycle (list this-lf this-pos)) (is-duplicate-sense this-pos this-lf retrieved-sense-info)))
 
 	       ; add the new sense if it's acceptable (some CERNL hacks here)
-	       (when (not (and tagged-ont-types
+		(when (not (and tagged-ont-types
 			       (abstract-type this-lf)))
 		 (setq res (pushnew def res))
 		 

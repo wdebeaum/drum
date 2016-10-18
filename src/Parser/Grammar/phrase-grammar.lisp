@@ -2,7 +2,6 @@
 ;;;; phrase-grammar.lisp
 ;;;;
 
-
 (in-package :W)
 
 ;; VC verb crossing indicates when there's a verb between a modifier and
@@ -4751,7 +4750,7 @@
    
    ;; a seven 
    ((NP (SORT PRED)
-     (var ?v) (Class ONT::ANY-SEM) (sem ($ (? ft f::phys-obj f::abstr-obj))) (case (? cas sub obj -))
+     (var ?v) (Class ONT::ANY-SEM) (sem ($ f::abstr-obj) (f::intentional -) (f::information f::information-content)) (case (? cas sub obj -))
      (LF (% Description (status ont::indefinite) (var ?v) (Sort Individual) (lex ?lf)
 	    (Class ONT::ORDERING) (constraint (& (:value ?val))) 
 	    (lex ?l) 
@@ -4772,7 +4771,7 @@
 
    ;;  seven out of ten
    ((NP (SORT PRED)
-     (var ?v) (Class ONT::ANY-SEM) (sem ($ (? ft f::phys-obj f::abstr-obj))) (case (? cas sub obj -))
+     (var ?v) (Class ONT::ANY-SEM) (sem ($ f::abstr-obj (f::intentional -) (f::information f::information-content))) (case (? cas sub obj -))
      (LF (% Description (status ont::indefinite) (var ?v) (Sort Individual) (lex ?lf)
 	    (Class ONT::ORDERING) (constraint (& (:value ?val) (:range ?range)))
 	    (lex ?l)
