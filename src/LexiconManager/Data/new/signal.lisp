@@ -2,18 +2,17 @@
 ;;;; W::signal
 ;;;;
 
-#|
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
    (W::signal
    (SENSES
-    ((LF-PARENT ONT::message)
+    (;(LF-PARENT ONT::message)
+     (LF-PARENT ONT::information)
      (meta-data :origin calo :entry-date 20050405 :change-date nil :wn ("signal%1:10:00") :comments projector-purchasing)
      )
     )
    )
 ))
-|#
 
 (define-words :pos W::v 
  :words (

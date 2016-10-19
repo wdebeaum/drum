@@ -98,7 +98,8 @@
  :parent ONT::event-of-causation
  :comment "An AGENT does something that results in loss of possession or control of the AFFECTED"
  :sem (F::SITUATION)
- :arguments ((:REQUIRED ONT::Agent ((? ag F::Phys-obj f::abstr-obj) (F::intentional +)) (:implements donor))
+ :arguments ((:REQUIRED ONT::Agent ((? ag F::Phys-obj f::abstr-obj) ;(F::intentional +)
+				    ) (:implements donor))
 	     ;; can relinquish phys-obj as well as power, authority
              (:REQUIRED ONT::affected ((? tc  F::Phys-obj f::abstr-obj f::situation)))
 	     ;; need to update this to allow organizations as recipients

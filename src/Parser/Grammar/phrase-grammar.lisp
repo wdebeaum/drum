@@ -4750,7 +4750,7 @@
    
    ;; a seven 
    ((NP (SORT PRED)
-     (var ?v) (Class ONT::ANY-SEM) (sem ($ f::abstr-obj) (f::intentional -) (f::information f::information-content)) (case (? cas sub obj -))
+     (var ?v) (Class ONT::ANY-SEM) (sem ($ f::abstr-obj (f::intentional -) (f::information f::information-content))) (case (? cas sub obj -))
      (LF (% Description (status ont::indefinite) (var ?v) (Sort Individual) (lex ?lf)
 	    (Class ONT::ORDERING) (constraint (& (:value ?val))) 
 	    (lex ?l) 
@@ -4833,7 +4833,7 @@
    ;; certains NAMES (esp in the biology domain) are really treat like mass nouns
 	;;   we need this for constructions wwith modifiers, like "phosphorylated HER3"
     ((n1 (SORT PRED)
-      (var ?v) (Class ?lf) (sem ?sem) (agr ?agr) (case (? cas sub obj -)) (derived-from-name -)
+      (var ?v) (Class ?lf) (sem ?sem) (agr ?agr) (case (? cas sub obj -)) (derived-from-name +)  ;; we do this so that this N1 doesn't go through the bare-np rule, since we have the name-np already. But this N1 does allow relative clauses, as in "Ras that is bound to Raf"
       (status ont::name) (lex ?l) (restr ?con) ;(restr (& (w::name-of ?l)))
       (mass mass)
       )

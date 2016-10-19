@@ -6,7 +6,8 @@
  :words (
   (W::paragraph
    (SENSES
-    ((LF-PARENT ONT::information-function-object)
+    (;(LF-PARENT ONT::information-function-object)
+     (LF-PARENT ONT::LINGUISTIC-OBJECT)
      (EXAMPLE "Press the Return key to start a new paragraph")
      (meta-data :origin task-learning :entry-date 20050812 :change-date nil :wn ("paragraph%1:10:00") :comments nil)
      )

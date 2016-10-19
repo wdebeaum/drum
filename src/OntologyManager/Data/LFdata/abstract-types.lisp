@@ -2376,9 +2376,10 @@
     :parent ONT::mental-construction
     :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
 		))
-
+ 
 ;; reason, motivation
 (define-type ONT::motive
+  :wordnet-sense-keys ("motivation%1:03:00")
  :parent ONT::mental-object
  :arguments (
 ;	     (:optional ONT::Associated-information)
@@ -2443,7 +2444,7 @@
 
 ;; goals, objectives
 (define-type ONT::goal
- :wordnet-sense-keys ("goal%1:09:00" "end%1:09:02" "motivation%1:03:00" "want%1:17:00" "demand%1:26:00")
+ :wordnet-sense-keys ("goal%1:09:00" "end%1:09:02" "want%1:17:00" "demand%1:26:00")
  :parent ONT::ps-object
  )
 
