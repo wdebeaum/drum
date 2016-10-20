@@ -47,6 +47,11 @@
      (LF-PARENT ONT::come-to-understand)
      (TEMPL agent-theme-objcontrol-templ)
      )
+    ((EXAMPLE "I found that he can do it")
+     (LF-PARENT ONT::come-to-understand)
+     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-that)))))
+     )
+   
     (
 ;     (LF-PARENT ONT::come-to-understand)
      (LF-PARENT ONT::determine)
