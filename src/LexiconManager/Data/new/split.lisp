@@ -32,7 +32,7 @@
 	   (senses
         
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("break-45.1") :wn ("split%2:30:01" "split%2:35:00"))
-     (LF-PARENT ont::cut)
+     (LF-PARENT ont::break-object)
      (TEMPL affected-templ) ; like crash,tear,break
      (PREFERENCE 0.96)
      )
@@ -42,7 +42,7 @@
 	     (meta-data :origin task-learning :entry-date 20050819 :change-date nil :comments nil)
 	     )	 ||#   
 	    ((meta-data :origin beetle :entry-date 20080716 :change-date nil :comments nil :vn ("separate-23.1-2"))
-	     (LF-PARENT ont::cut)
+	     (LF-PARENT ont::break-object)
 	     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
 	     (TEMPL agent-affected-SOURCE-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? t W::from)))))
 	     (EXAMPLE "a knife splits the wood")

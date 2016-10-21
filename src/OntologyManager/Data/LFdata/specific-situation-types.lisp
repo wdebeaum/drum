@@ -1102,7 +1102,7 @@
 
 (define-type ONT::ATTRACT
  :wordnet-sense-keys ("attract%2:35:00" "attract%2:35:01" "affinity%1:19:01" "affinity%1:19:02")
- :parent ONT::cause-effect
+ :parent ONT::event-of-causation
   :arguments ((:ESSENTIAL ONT::agent ((? oc F::Phys-obj F::Abstr-obj)))
 	      (:ESSENTIAL ONT::affected ((? oc2 F::Phys-obj F::Abstr-obj)))
 	      ))
@@ -3302,7 +3302,7 @@
 
 (define-type ONT::ATTACK
  :wordnet-sense-keys ("attack%2:33:00" "attack%2:32:00" "attack%2:33:02" "attack%2:29:00")
- :parent ONT::OBJECTIVE-INFLUENCE
+ :parent ONT::event-of-causation
  )
 
 ;; for configure, arrange X (into Y) e.g. he arranged them into groups of three

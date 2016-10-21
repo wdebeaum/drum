@@ -85,7 +85,7 @@
 	;;
 	((setf (parser::flexible-semantic-matching parser::*chart*) t))
 	;; boost content words that have domain specific info attached
-	(parser::*domain-boosting-factor* 1.01)
+	(parser::*domain-boosting-factor* .2)  ;; 20% increase on difference forom 1
 	;; have the parser remove tagged constituents that are subparts of other terms with domain info
 	(parser::*filter-texttagger-input* t)
 	;; number of interpretations to obtain before stopping

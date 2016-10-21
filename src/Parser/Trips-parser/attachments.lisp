@@ -1,7 +1,7 @@
 ;;; attachments .lisp
 ;;
 
-;; Time-stamp: <Fri Oct  7 15:40:01 EDT 2016 jallen>
+;; Time-stamp: <Thu Oct 20 09:50:20 EDT 2016 jallen>
 
 ;;
 ;;
@@ -113,7 +113,7 @@
 	  (progn
 	    (trace-msg 2 "~% Applying Skeleton Boost to ~S: orig prob ~S" (entry-name e) (entry-prob e))
 	    (setf (entry-prob e)
-		  (compute-skeleton-boost (entry-prob e) *skeleton-boost-factor*)))
+		  (boost-by-percent (entry-prob e) *skeleton-boost-factor*)))
 	  (when (< *skeleton-penalty-factor* 1)
 	    (trace-msg 2 "~% Applying Skeleton Penalty to ~S: orig prob ~S"  (entry-name e) (entry-prob e))
 	    (setf (entry-prob e)
@@ -121,11 +121,6 @@
 	  
   e)
 
-(defun compute-skeleton-boost (prob factor)
-  "increase score by factor percent of the difference between prob and 1"
-  (if (> factor 1) (setq factor (- factor 1)))
-  (let ((diff (- 1 prob)))
-    (+ prob (* diff factor))))
 
 ;; =====================
 ;; Call-Reference-Filter

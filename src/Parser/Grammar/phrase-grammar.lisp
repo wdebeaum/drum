@@ -1400,7 +1400,7 @@
     ((N1 (RESTR ?new) (CLASS ?c) (SORT ?sort) 
       (QUAL -) (relc -) (subcat ?subcat) (n-sing-already +)  ;; stop this happening more than once
       )
-     -n-sing-hyphen-n1-> 
+     -n-sing-hyphen-n1-> .98
      (n1 (AGR 3s) 
         (var ?v1) (sem ?sem) (restr ?modr) 
       (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -) (SUBCAT -) (GAP -)
@@ -4833,7 +4833,8 @@
    ;; certains NAMES (esp in the biology domain) are really treat like mass nouns
 	;;   we need this for constructions wwith modifiers, like "phosphorylated HER3"
     ((n1 (SORT PRED)
-      (var ?v) (Class ?lf) (sem ?sem) (agr ?agr) (case (? cas sub obj -)) (derived-from-name +)  ;; we do this so that this N1 doesn't go through the bare-np rule, since we have the name-np already. But this N1 does allow relative clauses, as in "Ras that is bound to Raf"
+      (var ?v) (Class ?lf) (sem ?sem) (agr ?agr) (case (? cas sub obj -))
+      (derived-from-name +)  ;; we do this so that this N1 doesn't go through the bare-np rule, since we have the name-np already. But this N1 does allow relative clauses, as in "Ras that is bound to Raf"
       (status ont::name) (lex ?l) (restr ?con) ;(restr (& (w::name-of ?l)))
       (mass mass)
       )

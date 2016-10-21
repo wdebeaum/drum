@@ -490,9 +490,15 @@
     ;; now boost entries with domain specific info
     (normalize
      (if (get-value c 'w::kr-type)
-	 (min (* score *domain-boosting-factor*) 1)
+	 (boost-by-percent score *domain-boosting-factor*)
 	 score))
     ))
+
+(defun boost-by-percent (prob factor)
+  (if (> factor 1) (setq factor (- factor 1)))  ;; we do this to catch left over numbers from prior scoring method
+  (let ((diff (- 1 prob)))
+    (+ prob (* diff factor))))
+
 
 (defun normalize (x)
   "reduces a number to two decimal point precision"

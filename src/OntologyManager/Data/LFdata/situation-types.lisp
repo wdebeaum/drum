@@ -19,9 +19,9 @@
 
 (define-type ONT::cause-effect
     :wordnet-sense-keys ( "cause%2:32:00" "do%2:36:02" "make%2:36:08"
-					  "receive%2:35:00" "drive%2:35:00" "get%2:30:02" "get%2:30:00")
+					  "drive%2:35:00" "get%2:30:02" "get%2:30:00")
  :parent ONT::acting
- :comment "an AGENT causes some event to occur or proposition to become true"
+ :comment "an AGENT causes some event to occur or proposition to become true. Usually the verbs that fall under this category are very general causal verbs that take other events as their arguments and are positive causes- i.e., events are caused to happen as opposed to negative causes as in an event is prevented."
  :sem (F::Situation (F::Cause (? cz F::Force f::agentive)) (F::Trajectory -))
  :arguments ((:ESSENTIAL ONT::agent ((? oc F::Phys-obj F::Abstr-obj F::Situation)))
 	     (:optional ont::affected ((? aff F::SITUATION F::ABSTR-OBJ F::Phys-obj)))
@@ -197,7 +197,7 @@
 
 
 (define-type ONT::Objective-influence
-    :wordnet-sense-keys ("force%1:07:01" "appeal%2:37:00" "keep_up%2:29:00" "assail%2:33:00" "retire%2:33:00" "sensitise%2:39:00" "sound%2:39:01" "stampede%2:38:01" "stampede%2:41:01" "trip%2:38:01" "unbalance%2:42:00" "undo%2:36:00")
+    :wordnet-sense-keys ("force%1:07:01" "appeal%2:37:00" "keep_up%2:29:00" "retire%2:33:00" "sensitise%2:39:00" "sound%2:39:01" "stampede%2:38:01" "stampede%2:41:01" "trip%2:38:01" "unbalance%2:42:00" "undo%2:36:00")
     :parent ONT::EVENT-OF-causation
     :comment "an AGENT influences the AFFECTED role in some way (typically unspecified by the verb)"
     :sem (F::Situation (F::Trajectory -))
