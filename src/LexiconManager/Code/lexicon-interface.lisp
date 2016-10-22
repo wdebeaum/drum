@@ -1064,7 +1064,9 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 		  (remove-if-not #'(lambda (x) (find-arg x :domain-specific-info)) newtypes)
 		  newtypes))
 	 ;; if we have a tagged protein ignore the others
-	 (res  newertypes))
+	 (res  (remove-if #'(lambda (x) (equal (find-arg x :ont-types) '(ont::referential-sem)))
+			  newertypes)))     ;;  MAybe we should keep the POS tags???????
+
     #||(res (if (find-if #'(lambda (x) (member 'ont::PROTEIN (find-arg x :ont-types))) newertypes)
 		  (mapcar #'(lambda (x) (reduce-ont-type x 'ont::protein))
 			  (remove-if-not #'(lambda (x) (member 'ont::PROTEIN (find-arg x :ont-types))) newertypes))

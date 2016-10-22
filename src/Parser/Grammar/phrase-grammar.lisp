@@ -4622,19 +4622,20 @@
     ((ADJP (ARG ?arg) (argument ?a) (sem ?sem) (atype central)
 	   (VAR *) ;(COMPLEX +) -- removed to allow complex adj prenominal modification, e.g. "a natural and periodic state of rest"
 	   (SORT PRED)
-      (LF (% PROP (CLASS ?conj) (VAR *) (sem ?sem) (CONSTRAINT (& (:sequence (?v1 ?v2)))) ;;?members)))
+      (LF (% PROP (CLASS ?class) (VAR *) (sem ?sem) (CONSTRAINT (& (:sequence (?v1 ?v2)) (:operator ?conj))) ;;?members)))
 	     (transform ?transform) (sem ?sem)
 	     )))
           
      -adj-conj1>
-     (ADJP (arg ?arg) (argument ?a) (VAR ?v1) (sem ?s1) (lf ?lf1) (atype central) (post-subcat -)
+     (ADJP (arg ?arg) (argument ?a) (VAR ?v1) (class ?c1) (sem ?s1) (lf ?lf1) (atype central) (post-subcat -)
       (set-modifier -)
       )
      (CONJ (LF ?conj) (but-not -) (but -))
-     (ADJP (arg ?arg)  (argument ?a) (VAR ?v2) (sem ?s2) (lf ?lf2) (atype central) (post-subcat -)
+     (ADJP (arg ?arg)  (argument ?a) (VAR ?v2) (class ?c2) (sem ?s2) (lf ?lf2) (atype central) (post-subcat -)
       (set-modifier -)
       )
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
      ;;(simple-cons (in1 ?v2) (in2 ?lf1) (out ?members))
      )
 

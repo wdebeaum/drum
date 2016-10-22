@@ -600,13 +600,14 @@
    ;; TEST: up and to the right
    ;; TEST: up and down
    ((ADVBL (ARG ?arg) (sem ?sem) (VAR *) (gap ?g)
-	   (LF (% PROP (CLASS ?conj) (VAR *) (sem ?sem) (CONSTRAINT (& (sequence (?v1 ?v2))))
-		  )))
+	   (LF (% PROP (CLASS ?class) (VAR *) (sem ?sem) (CONSTRAINT (& (sequence (?v1 ?v2)) (operator ?conj))
+		  ))))
      -advbl-conj1>
      (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf1) (VAR ?v1)(sem ?sem1))) (gap ?g) (argument ?argmt))
      (CONJ (LF ?conj) (but-not -) (but -))
      (head (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf2) (VAR ?v2) (sem ?sem2))) (gap ?g) (argument ?argmt)))
-     (sem-least-upper-bound (in1 ?sem1) (in2 ?sem2) (out ?sem))
+    (sem-least-upper-bound (in1 ?sem1) (in2 ?sem2) (out ?sem))
+    (class-least-upper-bound (in1 ?lf1) (in2 ?lf2) (out ?class))
     )
 
     ;; down the hill but to the right
