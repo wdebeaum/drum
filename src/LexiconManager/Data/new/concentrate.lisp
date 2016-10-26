@@ -5,6 +5,7 @@
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
 (W::concentrate
+ (wordfeats (W::morph (:forms (-vb) :nom w::concentration)))
    (SENSES
     ((LF-PARENT ONT::scrutiny)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))

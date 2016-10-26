@@ -958,7 +958,7 @@
  :parent ont::event-of-causation
  :arguments ((:REQUIRED ont::affected ((? th9 f::situation F::PHYS-OBJ F::ABSTR-OBJ)))
 ;	     (:REQUIRED ONT::agent ((? ag f::abstr-obj F::phys-obj) (F::intentional +)) (:implements cause))
-	     (:REQUIRED ONT::agent ((? ag f::abstr-obj F::phys-obj)) (:implements cause))
+	     (:REQUIRED ONT::agent ((? ag f::situation f::abstr-obj F::phys-obj)) (:implements cause)) ; situation for "Ras activation"
 	     (:OPTIONAL ont::formal ((? x f::situation F::PHYS-OBJ F::ABSTR-OBJ)))
              )
  )

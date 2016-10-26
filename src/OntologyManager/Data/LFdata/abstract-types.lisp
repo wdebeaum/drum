@@ -1972,7 +1972,7 @@
  )
 
 (define-type ONT::DENSITY
- :wordnet-sense-keys ("density%1:07:00" "concentration%1:07:02")
+ :wordnet-sense-keys ("density%1:07:00" "concentration%1:07:02" "concentration%1:07:03")
  :parent ONT::RATE
  :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
              )
