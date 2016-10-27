@@ -120,7 +120,9 @@
 (setq im::*current-dialog-manager* #'im::extractsequenceIM)
 ;;(setq im::*current-dialog-manager* #'im::extractIM)
 
-(setq im::*substitute-types-in-pros* t)
+;(setq im::*substitute-types-in-pros* t)
+(setq im::*substitute-types-in-pros* nil)
+
 (setq im::*compute-force-from-tmas* t)
 ;; allow highly fragmented parses
 (setq im::*max-allowed-utts-in-turn* 30)
