@@ -2026,7 +2026,7 @@
 
 (define-type ONT::nonverbal-say
     :parent ONT::say
-    :wordnet-sense-keys ("signal%1:10:00" "email%2:32:00" "write%2:32:00" "write%2:38:08")
+    :wordnet-sense-keys ("signal%1:10:00" "email%2:32:00" "write%2:32:00" "write%2:32:08")
     :comment "saying using a medium other that speech"
     :arguments ((:ESSENTIAL ONT::Formal)
 		)
@@ -4416,7 +4416,7 @@
 ; for jaundice
 (define-type ONT::jaundice
  :parent ONT::medical-symptom
- :wordnet-sense-keys ("jaundice%1:09:00")
+ :wordnet-sense-keys ("jaundice%1:26:00")
  )
 
 ; for lightheadedness

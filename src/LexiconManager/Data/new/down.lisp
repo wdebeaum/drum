@@ -8,12 +8,12 @@
   (W::DOWN
    (SENSES
     ((meta-data :origin monroe :entry-date 20060824 :change-date nil :comments nil :wn ("down%3:00:00"))
-     (LF-PARENT ONT::FALLEN-val)
+     (LF-PARENT ONT::inoperable)
      (example "the lines are down")
      (templ predicative-only-adj-templ)
      )
     ((meta-data :origin trips :entry-date 20101231 :change-date nil :comments nil)
-     (LF-PARENT ONT::FALLEN-VAL)
+     (LF-PARENT ONT::inoperable)
      (example "they have lines down")
      (preference .98)
      (TEMPL postpositive-ADJ-TEMPL)

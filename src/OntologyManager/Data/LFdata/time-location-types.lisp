@@ -51,7 +51,7 @@
 ; in, within, inside (of)
 (define-type ont::in-loc
   :parent ont::pos-as-containment-reln
-  :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj)
+  :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj) (f::intentional -) 
 				   )))
   )
 

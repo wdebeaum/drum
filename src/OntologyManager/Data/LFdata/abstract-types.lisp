@@ -1041,10 +1041,10 @@
              )
  )
 
-(define-type ONT::FALLEN-VAL
+(define-type ONT::INOPERABLE
  :parent ONT::configuration-PROPERTY-VAL
- :sem (F::Abstr-obj (F::gradability -))
- )
+ :sem (F::Abstr-obj (F::gradability -) (f::type ont::device)
+ ))
 
 ;; higher-level type for evaluation
 (define-type ont::evaluation-attribute-val

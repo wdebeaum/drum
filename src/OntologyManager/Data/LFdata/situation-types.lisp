@@ -790,9 +790,9 @@
  :wordnet-sense-keys ("be%2:42:03" "be%2:42:05" "savor%2:39:02" "sound%2:39:03")
  :parent ONT::event-of-state
  :sem (F::Situation (F::Aspect F::static) (F::Time-span F::extended) (F::Trajectory -))
- :arguments ((:REQUIRED ONT::neutral ((? oc1 F::Phys-obj F::Abstr-obj F::Situation)))
+ :arguments ((:REQUIRED ONT::neutral )
 	     ;; this is still here until we decide what to do with the formal-pred mappings for be
-	     (:optional ONT::formal ((? oc2 F::Phys-obj F::Abstr-obj F::Situation)))
+	     (:optional ONT::formal (F::Abstr-obj))
 ;             (:ESSENTIAL ONT::PROPERTY ((? oc2 F::abstr-obj))) ;; only properties (preds) -- for event nouns use ont::have-experience or ont::participating
              )
  )
@@ -860,9 +860,6 @@
  :wordnet-sense-keys ("sound%2:39:06" "come_across%2:31:00")
  :parent ONT::HAVE-PROPERTY
  :sem (F::situation (F::Aspect F::stage-level) (F::Time-span F::extended))
- :arguments ((:OPTIONAL ONT::neutral (F::phys-obj (F::origin F::living)))
-	     (:optional ont::formal (f::situation))
-             )
  )
 
 ;;; predicates of comparison, e.g. equals, resembles

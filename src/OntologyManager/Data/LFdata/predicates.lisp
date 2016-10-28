@@ -260,7 +260,7 @@
 ;; under/over/above/below 5 pounds/dollars/feet etc.
 (define-type ONT::SCALE-RELATION
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::FIGURE ((? s F::Phys-obj F::abstr-obj F::situation)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::abstr-obj (f::type ont::domain)))
              (:REQUIRED ONT::GROUND (F::abstr-obj (f::scale ?!sc)))
              )
  )

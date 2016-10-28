@@ -875,7 +875,7 @@
 
       (neutral-PRED-xp-TEMPL
        (ARGUMENTS
-	(LSUBJ (% W::NP (W::var ?subjvar) (W::lex ?lsubjlex)) ONT::neutral)
+	(LSUBJ (% W::NP (W::var ?subjvar) (W::sem ?lsubjsem) (W::lex ?lsubjlex)) ONT::neutral)
     ;;;;;(argument ?lsubj)
     ;;;;; the arg of the pred will be the subject of the verb
 	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar))) (:required (W::filled -)
