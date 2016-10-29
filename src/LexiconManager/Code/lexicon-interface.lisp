@@ -773,7 +773,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	(scores (mapcar #'(lambda (x) (find-arg-in-act x :score)) terms))
 	(scores-num (remove-if-not #'numberp scores))) ; domain-info might not have :score
    (or (if scores-num (apply #'max scores-num))
-       .97)))
+       .98)))
 
 (defun retrieve-multiword-from-trips (words)
   (let ((wdef (retrieve-from-lex (car words)))
@@ -1000,7 +1000,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
     ;; TRIPS domain-specific sense preference adjustment
     (if om::*domain-sense-preferences*
 	(setq res (prefer-domain-senses w res)))
-    (setq res (remove-if #'null res))
+    (setq res (eliminate-redundancies (remove-if #'null res)))
     (if res
 	(progn
 	  (print-debug "returning entries to parser for ~S ~S~%" w res)
@@ -1008,6 +1008,60 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	;; making unknown word entry failed, make generic entry
 	(listify-lex-entry (make-default-unknown-word-entry w nil '(w::n) nil)))
     ))
+
+
+(defun eliminate-redundancies (entries)
+  entries)
+#||
+  "This does a final check to find redundant or subsumed entries from external resources"
+  (when entries
+    (let* ((firstlex (get-feature-from-lex-entry (car entries) 'w::lex)))
+      (multiple-value-bind (entries-with-same-lex others)
+	  (split-list #'(lambda (x) (equal firstlex (get-feature-from-lex-entry x 'W::lex)))
+		      (cdr entries))
+	;;(format t "~% same lex = ~S others =~S" entries-with-same-lex others)
+	(append 
+	 (eliminate-redundancy (cons (car entries) entries-with-same-lex)
+			       (cdr (mapcar #'(lambda (x)
+						(get-feature-from-lex-entry x 'W::LF))
+					    entries)))
+	 (eliminate-redundancies others))
+  ))))||#
+
+(defun eliminate-redundancy (entries remainingtypes)
+  (when entries
+    (if (null remainingtypes)
+	entries
+	(let* ((e (car entries))
+	       (etype (get-feature-from-lex-entry e 'w::lf)))
+	  (if (member etype remainingtypes)
+	      ;; we have a duplicate in there, remove the less preferred and start over
+	      (eliminate-redundancies (mapcar #'(lambda (y) (keep-only-if-best e y))
+					      (cdr entries)))
+	      ;; otherwise there are no duplicates, we check if e should be eliminated
+	      (if (some #'(lambda (x) (om::subtype x etype))
+			remainingtypes)
+		  (eliminate-redundancy (cdr entries) (cdr remainingtypes))
+		  (cons e (eliminate-redundancies 
+			   (remove-if #'(lambda (x) (om::subtype etype (get-feature-from-lex-entry x 'W::LF)))
+				      (cdr entries))))))))))
+
+(defun get-feature-from-lex-entry (entry feat)
+  (when (lex-entry-p entry)
+    (get-generic-type (cadr (assoc feat (cdr (lex-entry-description entry)))))))
+
+(defun keep-only-if-best (e e1)
+  "if e and e1 are the same type, we return the best. If they are different types we return e1. The result
+     is a list with either e eliminated, or all other entries of the same type eliminated"
+  (if (not (eq (get-feature-from-lex-entry e 'w::lf) (get-feature-from-lex-entry e1 'w::lf)))
+      e1
+      ;; there the same type
+      (if (> (lex-entry-pref e) (lex-entry-pref e1))
+	  e
+	  e1)))
+
+(defun get-generic-type (x)
+  (if (consp x) (second x) x))
 
 (defun is-defined-word (w &key (use-wordfinder *use-wordfinder*))
   "Return T iff the word w has a real definition (not just referential-sem)."

@@ -69,7 +69,7 @@
 	 (rootLF (find-lf root lfs))
 	 (input (find-arg-in-act act :words))
 	 (uttnum (find-arg-in-act act :uttnum))
-	 (roles (extract-roles-from-arglist (cdddr rootLF)))
+	 (roles (extract-roles-from-arglist (cdddr rootLF) (second rootLF)))
 	 )
     (setq *im-utt-count* (+ *im-utt-count* 1))
     (log-msg `(LOG-SPEECHACT :input ,input :lf ,lfs :uttnum ,uttnum) *im-utt-count*)
@@ -88,13 +88,13 @@
 			   )
     *im-utt-count*))
 
-(defun extract-roles-from-arglist (lf)
+(defun extract-roles-from-arglist (lf var)
   "finds the grammatical roles LSUBJ, DOBJ, IOBJ in an LF - returns an assoc list"
   (when lf
-    (if (member (car lf) '(:LSUBJ :LOBJ :LIOBJ :AGENT :ADDRESSEE :AFFECTED :CAUSE :THEME))
-	(list* (list (second lf) (car lf))
-	       (extract-roles-from-arglist (cddr lf)))
-	(extract-roles-from-arglist (cddr lf)))))
+    (if (member (car lf) '(:LSUBJ :LOBJ :LIOBJ :AGENT :ADDRESSEE :AFFECTED :CAUSE :THEME :EXPERIENCER :NEUTRAL :FORMAL))
+	(list* (list (second lf) (car lf) var)
+	       (extract-roles-from-arglist (cddr lf) var))
+	(extract-roles-from-arglist (cddr lf) var))))
 
 (defun refine-vague-relations (lfs)
   "tries to refine assoc-with relations"

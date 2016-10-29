@@ -92,7 +92,7 @@
      (make-referent
       :id id
       :name name
-      :role (cadr (assoc id grammroles))
+      :role (cdr (assoc id grammroles))
       :num (classify-num lf)
       :lf LF
       :lf-type (simplify-generic-type (third lf))

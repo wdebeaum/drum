@@ -3,7 +3,7 @@
 ;;;
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
-;;; Time-stamp: <Wed Jul 20 09:30:35 EDT 2016 jallen>
+;;; Time-stamp: <Fri Oct 28 13:13:08 EDT 2016 jallen>
 
 (in-package "PARSER")
 
@@ -869,7 +869,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
   (pprint-logical-block (stream nil :prefix ":(" :suffix ")")
     (cond 
      ;; A hack! always assumes arrays are sems. 
-     ((arrayp values)
+     ((and (arrayp values) (not (stringp values)))
       (let* ((vallist (build-list-from-sem-array values));;(remove-packages (build-list-from-sem-array values)))
 	     )
 	;; Now we go to write features
@@ -890,6 +890,8 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	  (pprint-exit-if-list-exhausted)
 	  (write-char #\Space stream) 
 	  (pprint-newline :fill stream))))
+     ((stringp values)
+      )
      (t
       (format-term values features stream))))
   )
