@@ -47,6 +47,10 @@
      (example "I went to the store with Pete")
      (TEMPL BINARY-CONSTRAINT-S-TEMPL)
      )
+    ((LF-PARENT ONT::with-instrument)
+     (example "I hit it with a hammer")
+     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     )
         )
    )))
 

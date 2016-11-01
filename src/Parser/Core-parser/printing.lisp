@@ -3,7 +3,7 @@
 ;;;
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
-;;; Time-stamp: <Fri Oct 28 13:13:08 EDT 2016 jallen>
+;;; Time-stamp: <Sat Oct 29 14:21:09 EDT 2016 jallen>
 
 (in-package "PARSER")
 
@@ -1935,7 +1935,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	 ((ont::pos-condition) :condition)
 	 ;;((ont::goal-reln) :goal)
 	 ((ont::position-reln ) :location)
-	 ((ont::accompaniment) :partner)
+	 ((ont::accompaniment) :agent1)
 	 ((ont::by-means-of) :method)
 	 ((ont::beneficiary) :beneficiary)
 	 ((ont::from-loc ont::from) :source)

@@ -11,6 +11,11 @@
      (example "a stick of butter/wood")
      (meta-data :origin foodkb :entry-date 20050809 :change-date 20090520 :comment nil)
      )
+    ((LF-PARENT ONT::natural-object)
+     (TEMPL count-pred-templ)
+     (example "a stick of butter/wood")
+     (meta-data :origin foodkb :entry-date 20050809 :change-date 20090520 :comment nil)
+     )
    ))
 ))
 

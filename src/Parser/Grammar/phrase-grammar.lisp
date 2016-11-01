@@ -1015,8 +1015,8 @@
      )
 
     ;;  a (ten foot) high fence, a three mile wide path, .. 
-    ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem) (atype ?atype) (comparative ?cmp)
-      (LF (% PROP (CLASS ont::at-scale-val) (VAR ?v) (CONSTRAINT ?newc)
+    ((ADJP (ARG ?arg) (VAR ?adjv) (sem ?sem) (atype ?atype) (comparative ?cmp)
+      (LF (% PROP (CLASS ont::at-scale-val) (VAR ?adjv) (CONSTRAINT ?newc)
 	     (transform ?transform) (sem ?sem)))
       )
      -adj-unit-modifier> 1.0
@@ -2233,6 +2233,31 @@
 				  (unit ?c)
 				  (scale ?sc))) (old ?restr) (new ?constr))
 	 )
+
+   ;;  special case: "a mile"
+
+	((NP (LF (% description (STATUS ONT::INDEFINITE)
+		    (VAR ?v)
+		    (SORT unit-measure) 
+		    (CLASS ONT::quantity)
+		    (CONSTRAINT ?constr) (argument ?argument)
+		    (sem ?sem) 
+		    ))
+	  (class ont::quantity)
+	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure))
+         -unit-np-number-indef>
+	 (ART (VAR ?nv) (LEX w::a) )
+ 	 (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
+		   (KIND -) (sem ?sem) (sem ($ f::abstr-obj  (f::scale ?sc)))
+		   (argument ?argument) (RESTR ?restr)
+		   (post-subcat -)
+		))
+         (add-to-conjunct (val (& (value 1))) (old ?r) (new ?newr))
+	 (add-to-conjunct (val (& (amount (% *PRO* (status ont::indefinite) (class ont::NUMBER) (VAR ?nv) (constraint ?newr)))
+				  (unit ?c)
+				  (scale ?sc))) (old ?restr) (new ?constr))
+	 )
+
 
    ;;  thirty feet in height 
 	((NP (LF (% description (STATUS ONT::INDEFINITE)

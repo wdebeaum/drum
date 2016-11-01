@@ -24,14 +24,15 @@
 
 
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
- :words (
-  (W::space
-   (SENSES
-    ((EXAMPLE "Space your doses three hours apart ")
-     (LF-PARENT ONT::SPACE)
-     )
-    )
-   )
-))
+(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+	      :words (
+		      (W::space
+		       (SENSES
+			((EXAMPLE "Space your doses three hours apart ")
+			 (LF-PARENT ONT::SPACE)
+			 
+			 )
+			)
+		       )
+		      ))
 

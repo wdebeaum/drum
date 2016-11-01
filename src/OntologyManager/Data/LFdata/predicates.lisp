@@ -249,6 +249,13 @@
              )
  )
 
+(define-type ONT::WITH-INSTRUMENT
+ :parent ONT::PREDICATE
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (f::aspect f::dynamic)))
+             (:REQUIRED ONT::GROUND (F::Phys-obj (F::origin F::artifact) (F::intentional -)))
+             )
+ )
+
 ;; for 'without' adverbials
 (define-type ONT::without
  :parent ONT::PREDICATE
