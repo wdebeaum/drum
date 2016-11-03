@@ -26,11 +26,15 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (meta-data :origin calo :entry-date 20050318 :change-date nil :comments caloy2)
      )
+     ((EXAMPLE "type in the title")
+      (LF-PARENT ONT::put) ;; as in entering text
+      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
+     )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+#|(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
  :words (
 ((W::type (w::in))
     (SENSES
@@ -41,5 +45,5 @@
      )
     )
    )
-))
+)) |#
 

@@ -14,9 +14,9 @@
      (TEMPL AGENT-TEMPL)
      (preference .98)
      )
-    ((EXAMPLE "lay down your weapons")
+   #| ((EXAMPLE "lay down your weapons")
      (LF-PARENT ONT::PUT)
-     )
+     ) |#
     )
    )
 ))
@@ -28,6 +28,7 @@
    (wordfeats (W::morph (:forms (-vb) :past W::lay :pastpart W::laid :ing W::laid)))
    (SENSES
     ((EXAMPLE "lay an egg on the table")
+     (EXAMPLE "lay down your weapons")
      (LF-PARENT ONT::PUT)
      )
     )

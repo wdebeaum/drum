@@ -1470,7 +1470,7 @@
 	    (SEM ?sem) ;;(subcat -) 
 	    (post-subcat -) (gap -) ;;(derived-from-name -) 
 	    (no-postmodifiers -) ;; exclude "the same path as the battery I saw" and cp attaching to "path"
-	    (agr ?agr)
+	    (agr ?agr) (rate-activity-nom -)
 	    ))
 ;     (cp (ctype relc) (VAR ?relv) (ARG ?v) (ARGSEM ?argsem) (agr ?agr)
      (cp (ctype relc) (VAR ?relv) (ARG ?v) (ARGSEM ?sem) (agr ?agr)
@@ -1827,7 +1827,7 @@
 	       (wh ?w) (WH-VAR ?whv)
 	       (agr ?agr) (RESTR ?spec-restr) (NOSIMPLE -))   ;; NOSIMPLE prevents this rule for a few cases
          (head (N1 (VAR ?v) (SORT PRED) (CLASS ?c) (MASS ?m)
-		(KIND -) (agr ?agr) (RESTR ?r) 
+		(KIND -) (agr ?agr) (RESTR ?r) (rate-activity-nom -)
 		(agent-nom -)   ;;  this rule can't apply to agent nominalizations directly (they must modified first using rule -agentnom1>
 		(sem ?sem) (transform ?transform)
 		))
@@ -1853,7 +1853,7 @@
 	  (QCOMP (% ?!cat (VAR ?psvar)))
 	  (QCOMP ?qcomp))
          (head (N1 (VAR ?v) (SORT PRED) (CLASS ?c) (MASS ?m) 
-		   (KIND -) (agr 3p) (RESTR ?r) (sem ?sem)
+		   (KIND -) (agr 3p) (RESTR ?r) (sem ?sem) (rate-activity-nom -)
 		   (transform ?transform)
 		))
 	 ?qcomp ;;(PP (ptype W::THAN) (var ?psvar) (gap -))
@@ -1881,7 +1881,7 @@
 	  )
          -mass>
          (head (N1 (MASS (? xx MASS bare)) (AGR 3s) (VAR ?v) (CLASS ?c) (RESTR ?r) (sem ?sem)
-		(transform ?transform) (post-subcat -) (simple ?x) (agent-nom -)
+		(transform ?transform) (post-subcat -) (simple ?x) (agent-nom -) (rate-activity-nom -)
 		(derived-from-name -) ;; this feature is + only if we have a base N1 derived from a NAME (so no need to build a competing NP!)
 		)))
         
@@ -1897,7 +1897,7 @@
          -np-another> 1.0   
 	 (word (lex w::another))
          (head (N1 (VAR ?v) (SORT PRED) (CLASS ?c) (MASS count)
-		   (KIND -) (agr ?agr) (RESTR ?r)
+		   (KIND -) (agr ?agr) (RESTR ?r) (rate-activity-nom -)
 		   (sem ?sem) (transform ?transform)
 		   ))
 	 ;;(add-to-conjunct (val (SIZE ?card)) (old ?setr) (new ?setr1))
@@ -1928,7 +1928,7 @@
 	       )
 	   (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
 		     (KIND -) (agr ?agr) (sem ?sem) (sem ($ f::abstr-obj (f::scale ?sc)))
-		     (argument ?argument) (RESTR ?restr) (transform ?transform) (post-subcat -)
+		     (argument ?argument) (RESTR ?restr) (transform ?transform) (post-subcat -) (rate-activity-nom -)
 		     ))
 	   (add-to-conjunct (val (& (unit ?c) (scale ?sc))) (old ?restr) (new ?constr))
 	   )
@@ -2051,7 +2051,7 @@
          -bare-plural-count> 
          ;; Myrosia 10/13/03 added a possibility of (mass bare) -- e.g. for "lunches" undergoing this rule
          (head (N1 (SORT PRED) (mass (? mass count bare)) (mass ?m)
-		   (AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r)
+		   (AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -)
 		   (sem ?sem) (transform ?transform)
 		   (post-subcat -)
 		   ))
@@ -2079,7 +2079,7 @@
              (SORT AGGREGATE-UNIT) (SPEC ont::INDEFINITE) (VAR ?v))
          -bare-measure-count> .98
          (head (N1 (SORT AGGREGATE-UNIT) (mass count) (mass ?m)
-		(AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) 
+		(AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -)
 		(sem ?sem)  (sem ($ f::abstr-obj (f::scale ?sc)))
 		(post-subcat -)
 		))
@@ -2095,7 +2095,7 @@
              (SORT UNIT-MEASURE) (SPEC ont::INDEFINITE) (BARE +) (VAR ?v))
 	    -bare-measure-attribute> .98
 	    (head (N1 (SORT ATTRIBUTE-UNIT) (mass count) (mass ?m) (abbrev -) ;; don't allow bare form with abbreviations
-		      (AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) 
+		      (AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -)
 		      (sem ?sem)  (sem ($ f::abstr-obj (f::scale ?sc)))
 		      (post-subcat -) (abbrev -)
 		      ))
@@ -2109,7 +2109,7 @@
              )
          -bare-plural-mass>
          (head (N1 (SORT PRED) (mass mass) (MASS ?m) 
-		(AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) 
+		(AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -)
 		(sem ?sem) (transform ?transform)
 		(post-subcat -)
 		)))
@@ -2124,7 +2124,7 @@
 	     )
          -bare-singular> .98
          (head (N1 (SORT PRED) (MASS  count) (gerund -) (complex -) (name-or-bare ?nob)
-		(AGR 3s) (VAR ?v) (CLASS ?c) (RESTR ?r) 
+		(AGR 3s) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -)
 		(sem ?sem) (transform ?transform)
 		)))
 
@@ -2860,7 +2860,7 @@
      (ADVBL VAR SEM LEX ATYPE lex headcat transform neg)
      (ADVBL-R VAR SEM LEX ATYPE argument wh lex headcat transform)
      (QUANP CARDINALITY AGR)
-     (N1 lex headcat set-restr refl abbrev nomobjpreps nomsubjpreps agent-nom)
+     (N1 lex headcat set-restr refl abbrev nomobjpreps nomsubjpreps agent-nom rate-activity-nom)
      (ADJP lex headcat argument transform)
      )
 
@@ -3685,8 +3685,8 @@
      (NP NAME PRO Changeagr lex headcat transform refl)
      (NPSEQ CASE MASS NAME PRO lex headcat transform)
      (NSEQ CASE MASS NAME lex headcat transform)
-     (N1 sem lf lex headcat transform set-restr refl abbrev)
-     (N sem lf mass sort lex headcat transform refl)
+     (N1 sem lf lex headcat transform set-restr refl abbrev rate-activity-nom)
+     (N sem lf mass sort lex headcat transform refl  rate-activity-nom)
      )
 
     ;; this rule handles agentive nominalizations, wraps an "agent" around the event nominalization
@@ -3710,46 +3710,7 @@
 		))
      )
 
-    ;; this rule handles rate/activity constructions - e.g., the binding rate or ras on raf
-        ((N1 (SORT PRED) (COMPLEX +)
-	  (gap -) (var ?v) (agr ?agr) (gerund ?ger)
-	  (sem ?sem) (mass ?mass) (pre-arg-already ?npay)
-	  (case ?case)
-	  (class ?class)
-	  (restr ?newrestr)
-	  (subj ?subj)
-	  (subj-map ?subjmap)
-	  (dobj ?dobj)
-	  (dobj-map ?dobjmap) ;; eliminate the dobj-map so we can't assign another
-	  (comp3 ?comp3)
-	  (comp3-map ?comp-map)
-	  (rate-activity-nom (? ratelf ONT::RATE))
-	  (nomobjpreps ?nop)
-	  (nomsubjpreps ?nsp)
-      )
-     -nom-rate> 1.0
-	 (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger) (agr ?agr)
-		    (pre-arg-already ?npay) 
-		    
-		    (sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
-		    (class ?class) (transform ?transform)
-		    ;; these are dummy vars for trips-lcflex conversion, please don't delete
-		    ;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
-		    (restr ?restr)
-		    (subj ?subj)
-		    (subj-map ?subjmap)
-		    (dobj ?dobj)
-		    (dobj-map ?dobjmap)
-		    (comp3 ?comp3)
-		    (comp3-map ?comp-map)
-		    (generated -)
-		    (rate-activity-nom -)
-		    (agent-nom -)
-		    (nomobjpreps ?nop)
-		    (nomsubjpreps ?nsp)
-		    ))
-	 (n (lf (? ratelf ONT::RATE)) (rate-activity-nom -))
-	 )
+    
     
     
   ;;  ing forms can serve as nominalizations e.g., The loading  note: it goes here as nomobjpreps can't be a head feature!
@@ -4725,6 +4686,92 @@
 ;;;		       (new ?newc))
 ;;;     )
 
+
+;; the rate/activity construction
+;;  these rules handle complex constructions like "the binding rate/activity of Ras" where
+;;   the arguments attach to the gerund rather than the rate/activity.  It works by storing
+;;   the rate/activity predicate in a new feature RATE-ACTIVITY-NOM. All of the normal NP
+;;   rules require this to be empty. The second rule below "consumes" the feature and builds
+;;   the required LF 
+
+(parser::augment-grammar	 
+  '((headfeatures
+     (N1 sem lf lex headcat transform set-restr refl abbrev)
+     )
+
+    ;; this rule handles rate/activity constructions - e.g., the binding rate or ras on raf
+    ;;  we basically store away the rate.activity predicate and continue pasring as though it
+    ;; wasn't there
+        ((N1 (SORT PRED) (COMPLEX +)
+	  (gap -) (var ?v) (agr ?agr) (gerund ?ger)
+	  (sem ?sem) (mass ?mass) (pre-arg-already ?npay)
+	  (case ?case)
+	  (class ?class)
+	  (restr ?newrestr)
+	  (subj ?subj)
+	  (subj-map ?subjmap)
+	  (dobj ?dobj)
+	  (dobj-map ?dobjmap) ;; eliminate the dobj-map so we can't assign another
+	  (comp3 ?comp3)
+	  (comp3-map ?comp-map)
+	  (rate-activity-nom ?ratelf)
+	  (nomobjpreps ?nop)
+	  (nomsubjpreps ?nsp)
+      )
+     -nom-rate> 1.0
+	 (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger) (agr ?agr)
+		    (pre-arg-already ?npay) 
+		    
+		    (sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
+		    (class ?class) (transform ?transform)
+		    ;; these are dummy vars for trips-lcflex conversion, please don't delete
+		    ;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
+		    (restr ?restr)
+		    (subj ?subj)
+		    (subj-map ?subjmap)
+		    (dobj ?dobj)
+		    (dobj-map ?dobjmap)
+		    (comp3 ?comp3)
+		    (comp3-map ?comp-map)
+		    (generated -)
+		    (rate-activity-nom -)
+		    (agent-nom -)
+		    (nomobjpreps ?nop)
+		    (nomsubjpreps ?nsp)
+		    ))
+	 (n (lf ?ratelf) (sem ($ (? t F::ABSTR-OBJ F::SITUATION) (f::type (? x ONT::DOMAIN ONT::ACTING)))))
+	 )
+
+    ;; this rule then inserts the rate/activity predicate once the arguments have been attached
+
+         ((N1 (SORT PRED) (COMPLEX +)
+	   (gap -) (var *) (agr ?agr) (gerund ?ger)
+	   (sem ?sem) (mass ?mass) (pre-arg-already ?npay)
+	   (case ?case)
+	   (class ?!pred)
+	   (restr (& (figure (% *PRO* (status ont::F) (var ?v) (class ?class)
+				    (constraint ?restr) (sem ?sem)))))
+	   (subj ?subj)
+	   (subj-map ?subjmap)
+	   (dobj ?dobj)
+	   (dobj-map ?dobjmap) 
+	   (rate-activity-nom -)
+	   )
+	  -insert-rate-pred>
+	  (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger) (agr ?agr)
+		     (pre-arg-already ?npay) 
+		     (sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
+		     (class ?class) (transform ?transform)
+		     ;; these are dummy vars for trips-lcflex conversion, please don't delete
+		     ;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
+		     (restr ?restr)
+		     (subj ?subj)
+		     (subj-map ?subjmap)
+		     (generated -)
+		     (rate-activity-nom ?!pred)
+		     ))
+	  )
+    ))
 
 ;; GRAMMAR 4
 ;; allows changing of LF, agr, LF SEM and QUANT feature

@@ -168,7 +168,7 @@
   )
 
 (define-type ONT::surrender
- :wordnet-sense-keys ("concede%2:40:00" "yield%2:40:01" "cede%2:40:01" "grant%2:40:04" "chuck_up_the_sponge%2:33:00" "despair%2:37:00" "relent%2:42:00" "submit%2:33:00" "yield%2:33:00")
+ :wordnet-sense-keys ("cede%2:40:01" "chuck_up_the_sponge%2:33:00" "concede%2:40:00" "despair%2:37:00" "grant%2:40:04" "relent%2:42:00" "submit%2:33:00" "yield%2:33:00" "yield%2:40:01")
   :parent ONT::relinquish
   :comment " an AGENT relinquishes AFFECTED unwillingly"
   )
