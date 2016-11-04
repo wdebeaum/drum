@@ -2821,20 +2821,21 @@ roman_times%1:28:00::
 
 ;; multiwords that ought to be composed (manually added)
 arrive_at%2:38:00::
+for_the_first_time%4:02:00::
+gene_expression%1:19:00::
 hot_air%1:27:00::
 hot_air%1:10:00:: ; non-compositional sense we're ignoring
-phone_number%1:10:00::
-gene_expression%1:19:00::
-young_woman%1:18:00::
-young_girl%1:18:00::
-young_person%1:18:00::
+in_height%5:00:00:tall:00
+in_time%1:28:00::
+lay_down%2:31:00::
 old_person%1:18:00::
-for_the_first_time%4:02:00::
+phone_number%1:10:00::
 to_it%4:02:00::
 to_that%4:02:00::
 walk_in%2:38:00::
-in_height%5:00:00:tall:00
-in_time%1:28:00::
+young_girl%1:18:00::
+young_person%1:18:00::
+young_woman%1:18:00::
 high-level%5:00:00:superior:01
 high-level%5:00:00:high:01
 low-level%5:00:00:low:02

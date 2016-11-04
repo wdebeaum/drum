@@ -1290,6 +1290,18 @@ sub receive_reply
   # ignore
 }
 
+sub receive_error
+{
+  my ($self, $msg) = @_;
+  # ignore
+}
+
+sub receive_sorry
+{
+  my ($self, $msg) = @_;
+  # ignore
+}
+
 sub run {
   my $self = shift;
   $self->SUPER::run();

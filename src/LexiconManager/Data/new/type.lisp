@@ -21,15 +21,19 @@
  (W::type
     (SENSES
     ((EXAMPLE "type the letter")
+     (EXAMPLE "type in the title")
      ;;(LF-PARENT ONT::type)
      (lf-parent ont::author-write-burn-print_reprint_type_retype_mistype) ;; 20120523 GUM change new parent
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (meta-data :origin calo :entry-date 20050318 :change-date nil :comments caloy2)
      )
-     ((EXAMPLE "type in the title")
+
+#|   ((EXAMPLE "type in the title")
       (LF-PARENT ONT::put) ;; as in entering text
       (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     )
+     ) 
+;; commenting out the ont::put sense as "type in" is compositional with regular sense of "type" and of "in"|#
+
     )
    )
 ))
