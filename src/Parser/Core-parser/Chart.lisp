@@ -524,12 +524,12 @@ separate instances of the chart/parser.")
 				   (var-p (cadr x)))
 			       (remove-if-not #'(lambda (x) (member (car x) *essential-roles*))
 				   role-pairs)))
-	     (skel (build-semantic-skeleton var class roles)))
+	     (skel (build-semantic-skeleton var class roles (constit-cat constit))))
 	     
 	     ;;(if roles (format t "~% sleeton map is ~S" *semantic-skeleton-map*))
 	     skel)))
       
-(defun build-semantic-skeleton (id class roles)
+(defun build-semantic-skeleton (id class roles syncat)
   ;; this builds the skeleton and adds to skeleton-map and the var-map if necessary"
   (setq class (if (consp class) (cadr class) class))
   (if (not (assoc id *var-type-map*))
@@ -545,14 +545,14 @@ separate instances of the chart/parser.")
 	;; a single atom with no roles gets a score of 1
 	(if (and (consp skeleton) (eq (list-length skeleton) 1))
 	    (list skeleton 1))
-	(let ((res (evaluate-skeleton skeleton)))
+	(let ((res (evaluate-skeleton skeleton syncat)))
 	(push res *semantic-skeleton-map*)
 	res)
 	)))
     
 
-(defun evaluate-skeleton (skel)
-  (let* ((reply (send-and-wait `(REQUEST :content (EVALUATE-SKELETON ,skel))))
+(defun evaluate-skeleton (skel syncat)
+  (let* ((reply (send-and-wait `(REQUEST :content (EVALUATE-SKELETON ,skel :syncat ,syncat))))
 	 (score (car (or (find-arg reply :score) (find-arg-in-act reply :score)))))
     (list skel (if (numberp score)
 		   (convert-to-adjustment-factor score)

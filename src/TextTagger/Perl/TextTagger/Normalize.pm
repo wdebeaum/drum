@@ -77,18 +77,17 @@ my %word_case_to_index = do {
 # given word.
 # Assumes the word has only letters in it.
 sub characterize_word_case {
-#  no warnings 'experimental::lexical_topic'; # squelch warning for next line
-  my ($_, $bos) = @_;
-       if ($bos and /^\p{Lu}\p{Ll}*$/) {
+  my ($word, $bos) = @_;
+       if ($bos and $word =~ /^\p{Lu}\p{Ll}*$/) {
     return 'sentence-cap';
-  } elsif (/^\p{Lu}$/) {
+  } elsif ($word =~ /^\p{Lu}$/) {
     # counted separately because ambiguous between all-caps and initial-cap
     return 'single-cap';
-  } elsif (/^\p{Lu}+$/) {
+  } elsif ($word =~ /^\p{Lu}+$/) {
     return 'all-caps';
-  } elsif (/^\p{Ll}+$/) {
+  } elsif ($word =~ /^\p{Ll}+$/) {
     return 'no-caps';
-  } elsif (/^\p{Lu}\p{Ll}+$/) {
+  } elsif ($word =~ /^\p{Lu}\p{Ll}+$/) {
     return 'initial-cap';
   } else {
     return 'mixed-caps';

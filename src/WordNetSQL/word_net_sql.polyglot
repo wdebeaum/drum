@@ -382,14 +382,13 @@ sub apply_morph_to_multiword {
 
 # Fill in everything except the ----.
 sub fill_placeholders_in_frame {
-#  no warnings 'experimental::lexical_topic'; # squelch warning for next line
-  my ($_, $prep) = @_;
-  s/\bPP\b/$prep . ' something'/e;
-  s/\bVERB-ing\b/acting/;
-  s/\bV-ing\b/doing/;
-  s/\bINFINITIVE\b/(to) act/;
-  s/\bCLAUSE\b/something is/;
-  return $_;
+  my ($frame, $prep) = @_;
+  $frame =~ s/\bPP\b/$prep . ' something'/e;
+  $frame =~ s/\bVERB-ing\b/acting/;
+  $frame =~ s/\bV-ing\b/doing/;
+  $frame =~ s/\bINFINITIVE\b/(to) act/;
+  $frame =~ s/\bCLAUSE\b/something is/;
+  return $frame;
 }
 
 =item C<apply_frame($frame, $word, $examples)>

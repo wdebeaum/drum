@@ -119,11 +119,11 @@ sub group_tags_by_span {
 # testing whether sense tags are combinable. Right now this just means
 # returning GENE-PROTEIN for each of its subtypes.
 sub lftype_equivalence_class {
-  my $_ = shift;
-  if (/^(GENE|PROTEIN|PROTEIN-FAMILY)$/i) {
+  my $lftype = shift;
+  if ($lftype =~ /^(GENE|PROTEIN|PROTEIN-FAMILY)$/i) {
     return 'GENE-PROTEIN';
   } else {
-    return $_;
+    return $lftype;
   }
 }
 

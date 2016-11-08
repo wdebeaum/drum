@@ -812,7 +812,7 @@
 
 (define-type ONT::squeeze
  :wordnet-sense-keys ("squeeze%2:35:00")
- :parent ONT::apply-force
+ :parent ONT::PUSH
  )
 
 ;;; These are all opposite to movement - stopping, staying, standing etc

@@ -213,19 +213,18 @@ my %xml_entities = (qw(
 # given an XML entity &...;, return the string (usually single character) it
 # represents
 sub translate_xml_entity {
-#  no warnings 'experimental::lexical_topic'; # squelch warning for next line
-  my $_ = shift;
-  if (/^&#x([0-9a-f]+);$/i) { # hexadecimal character reference
+  my $entity = shift;
+  if ($entity =~ /^&#x([0-9a-f]+);$/i) { # hexadecimal character reference
     chr(hex($1));
-  } elsif (/^&#(\d+);$/) { # decimal character reference
+  } elsif ($entity =~ /^&#(\d+);$/) { # decimal character reference
     chr($1);
-  } elsif (/^&([\w-]+);$/) { # named character (entity) reference
+  } elsif ($entity =~ /^&([\w-]+);$/) { # named character (entity) reference
     my $entity_name = $1;
     if (exists($xml_entities{$entity_name})) {
       $xml_entities{$entity_name};
     } else {
-      print STDERR "Warning: ignoring unknown XML entity reference '$_'\n";
-      $_;
+      print STDERR "Warning: ignoring unknown XML entity reference '$entity'\n";
+      $entity;
     }
   }
 }
