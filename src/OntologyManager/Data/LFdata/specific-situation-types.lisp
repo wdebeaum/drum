@@ -113,7 +113,7 @@
 ;; give the man a book / give a book to the man
 ;; the windmill supplies areas with electricity
 (define-type ONT::GIVING
- :wordnet-sense-keys ("give%2:40:00" "offer%1:10:01" "offering%1:10:01" "give%2:40:03" "allow%2:41:01" "fall%2:40:12" "send_in%2:41:00" "giving%1:04:00" )
+ :wordnet-sense-keys ("allow%2:41:01" "give%2:40:00" "give%2:40:03" "giving%1:04:00" "offer%1:10:01" "offering%1:10:01"  "send_in%2:41:00")
  :parent ONT::RELINQUISH
  :comment "To relinquish control of AFFECTED AFFECTED-RESULT, typically voluntarily and possibly in exchange for something"
  :sem (F::SITUATION (f::cause f::agentive) (F::iobj F::recipient))
@@ -168,7 +168,7 @@
   )
 
 (define-type ONT::surrender
- :wordnet-sense-keys ("cede%2:40:01" "chuck_up_the_sponge%2:33:00" "concede%2:40:00" "despair%2:37:00" "grant%2:40:04" "relent%2:42:00" "submit%2:33:00" "yield%2:33:00" "yield%2:40:01")
+ :wordnet-sense-keys ("cede%2:40:01" "chuck_up_the_sponge%2:33:00" "concede%2:40:00" "despair%2:37:00" "give_up%2:41:00" "grant%2:40:04" "relent%2:42:00" "submit%2:33:00" "surrender%2:40:00" "yield%2:33:00" "yield%2:40:01")
   :parent ONT::relinquish
   :comment " an AGENT relinquishes AFFECTED unwillingly"
   )
@@ -782,7 +782,7 @@
 
 ; hit, strike
 (define-type ONT::HITTING
- :wordnet-sense-keys ("collide_with%2:35:00" "run_into%2:35:01" "impinge_on%2:35:00" "strike%2:35:01" "hit%2:35:01" "hit%2:35:03")
+ :wordnet-sense-keys ("collide_with%2:35:00" "hit%2:35:01" "hit%2:35:03" "impinge_on%2:35:00" "run_into%2:35:01" "strike%2:35:01" )
  :parent ONT::MOTION
  :sem (F::SITUATION (F::Trajectory -))
  :arguments ((:OPTIONAL ONT::FORMAL1 ((? o F::Phys-obj f::abstr-obj)))   ;; I added a restriction -- situations, times, etc, don't make much sense here, i think  JFA 1/10
@@ -1059,7 +1059,7 @@
 
 ;; 20120524 GUM change new type
 (define-type ont::cause-produce-reproduce
-  :wordnet-sense-keys ("yield%2:40:02" "produce%2:36:03" "cause%2:36:00" "induce%2:32:00" )
+  :wordnet-sense-keys ("cause%2:36:00" "induce%2:32:00" "produce%2:36:03" "yield%2:40:00" "yield%2:40:02")
     :parent ont::cause-effect
     :arguments ((:ESSENTIAL ONT::affected-result ((? agt F::phys-obj f::abstr-obj f::situation)))
 		)
@@ -2130,7 +2130,7 @@
 
 
 (define-type ont::incur-inherit-receive
-    :wordnet-sense-keys ("get%2:39:14" "inherit%2:40:02" "take%2:31:09")
+    :wordnet-sense-keys ("fall%2:40:12" "get%2:39:14" "inherit%2:40:02" "take%2:31:09")
     :arguments ((:REQUIRED ONT::affected1))
     :parent ont::event-of-undergoing-action
     )

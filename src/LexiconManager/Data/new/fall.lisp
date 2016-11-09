@@ -39,3 +39,17 @@
    )
 ))
 
+(define-words :pos W::v :templ AFFECTED-result-XP-TEMPL
+:words (
+ (W::fall
+  (wordfeats (W::morph (:forms (-vb) :past W::fell :pastpart w::fallen :ing w::falling)))
+  (SENSES
+   ((meta-data :wn ("fall%2:40:12"))
+    (LF-PARENT ONT::incur-inherit-receive)
+    (templ AFFECTED-result-XP-TEMPL (xp (% W::pp (W::ptype W::to))))
+    (example "The estate fell to the oldest daughter")
+   ) 
+  )
+ )
+))
+

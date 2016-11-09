@@ -7,9 +7,10 @@
  :words (
   (W::DRIVE
    (SENSES
-    ((meta-data :origin calo :entry-date 20030605 :change-date nil :wn ("drive%1:06:03") :comments calo-y1script)
+    (
      (LF-PARENT ont::io-device)
      (PREFERENCE 0.98) ; prefer compound
+     (meta-data :origin calo :entry-date 20030605 :change-date nil :wn ("drive%1:06:03") :comments calo-y1script)
      )
     #|
     ((LF-PARENT ONT::driving-trip)
@@ -25,8 +26,9 @@
  :words (
    ((w::drive w::shaft)
    (SENSES
-    ((meta-data :origin LbR :entry-date 20080922 :change-date nil :comments nil)
+    (
      (LF-PARENT ONT::DEVICE)
+     (meta-data :origin LbR :entry-date 20080922 :change-date nil :comments nil)
      )
     )
    )
@@ -39,9 +41,10 @@
    (wordfeats (W::morph (:forms (-vb) :past W::drove :pastpart W::driven :nom w::drive)))
    (SENSES
     ;;;; Drive the cargo to Avon
-    ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("drive-11.5") :wn ("drive%2:38:02"))
+    (
      (LF-PARENT ONT::DRIVE)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
+     (meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("drive-11.5") :wn ("drive%2:38:02"))
      )
     ;;;; Drive to Avon
     ((LF-PARENT ONT::DRIVE)
@@ -49,19 +52,28 @@
      (TEMPL AGENT-TEMPL)
      )
 
-    ((meta-data :origin mobius :entry-date 20070728 :change-date nil :comments engines)
+    (
      (LF-PARENT ONT::cause-to-move)
      (templ agent-affected-xp-templ)
-     (example "The wind drove the boat to the sandbar" "This protein drives the other protein to the nucleus")
+     (example "The wind drove the boat to the sandbar." "This protein drives the other protein to the nucleus." "Drive the ball far out into the field.")
+     (meta-data :origin mobius :entry-date 20070728 :change-date nil :comments engines :wn ("drive%2:35:01"))
      )
-
+#|
+    (
+     (LF-PARENT ONT::hitting) 
+     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
+     (TEMPL AGENT-AFFECTED-GOAL-TEMPL)
+     (example "drive the ball far out into the field")
+     (meta-data :wn ("drive%2:35:01"))
+     )
+|#
     (
      (LF-PARENT ONT::cause-effect) 
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-;     (TEMPL agent-affected-effect-objcontrol-pred-templ)
+;    (TEMPL agent-affected-effect-objcontrol-pred-templ)
      (TEMPL AGENT-formal-Objcontrol-adj-TEMPL)
-     (meta-data :origin medadvisor :entry-date 20011126)
      (example "it drove him crazy")
+     (meta-data :origin medadvisor :entry-date 20011126)
      )
     
     (;(LF-PARENT ONT::control-manage)

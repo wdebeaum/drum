@@ -506,7 +506,7 @@
 
 
 (define-type ONT::Cause-to-Move
- :wordnet-sense-keys ("reflect%2:39:00" "drive%2:35:01" "drive%2:41:02")
+ :wordnet-sense-keys ("drive%2:35:01" "drive%2:41:02" "reflect%2:39:00")
  :parent ont::motion
  :sem (F::Situation (F::Cause F::Force) (f::trajectory +))
  :arguments ((:ESSENTIAL ONT::agent)
@@ -520,7 +520,7 @@
     )
 
 (define-type ONT::apply-force
- :wordnet-sense-keys ("reflect%2:39:00" "drive%2:35:01")
+ :wordnet-sense-keys ("reflect%2:39:00")
  :parent ont::touch
  :sem (F::Situation (F::Cause F::Force) )
  :arguments ((:ESSENTIAL ONT::agent)
