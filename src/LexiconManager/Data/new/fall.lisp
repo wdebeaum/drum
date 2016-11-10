@@ -46,7 +46,8 @@
   (SENSES
    ((meta-data :wn ("fall%2:40:12"))
     (LF-PARENT ONT::incur-inherit-receive)
-    (templ AFFECTED-result-XP-TEMPL (xp (% W::pp (W::ptype W::to))))
+    ;(templ AFFECTED-result-XP-TEMPL (xp (% W::pp (W::ptype W::to))))
+    (TEMPL AFFECTED1-affected-TEMPL (xp (% W::pp (W::ptype W::to))))
     (example "The estate fell to the oldest daughter")
    ) 
   )

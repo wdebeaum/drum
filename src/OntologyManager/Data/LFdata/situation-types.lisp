@@ -214,7 +214,7 @@
  )
 
 (define-type ONT::Body-manipulation
- :wordnet-sense-keys ("hold%2:35:00" "take_hold%2:35:00" "bear%2:35:01" "immobilise%2:35:00")
+ :wordnet-sense-keys ("hold%2:35:00" "take_hold%2:35:00" "bear%2:35:01" "immobilise%2:35:00" "clutch%2:35:00")
  :parent ONT::EVENT-OF-causation
  :comment "and AGENT grasps something to manipulate it"
  :sem (F::Situation (F::Cause F::Agentive))
@@ -506,7 +506,7 @@
 
 
 (define-type ONT::Cause-to-Move
- :wordnet-sense-keys ("drive%2:35:01" "drive%2:41:02" "reflect%2:39:00")
+ :wordnet-sense-keys ("drive%2:35:01" "drive%2:41:02")
  :parent ont::motion
  :sem (F::Situation (F::Cause F::Force) (f::trajectory +))
  :arguments ((:ESSENTIAL ONT::agent)
@@ -520,7 +520,6 @@
     )
 
 (define-type ONT::apply-force
- :wordnet-sense-keys ("reflect%2:39:00")
  :parent ont::touch
  :sem (F::Situation (F::Cause F::Force) )
  :arguments ((:ESSENTIAL ONT::agent)

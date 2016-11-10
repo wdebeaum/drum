@@ -120,7 +120,13 @@
 	(LOBJ (:parameter xp (:default (% W::NP  (w::sort (? !xx W::unit-measure))))) ONT::AFFECTED1)
 	))
 
-      (AFFECTED-affected-as-comp-TEMPL
+       (AFFECTED1-affected-TEMPL
+       (ARGUMENTS
+	(LSUBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::affected1)
+	(LOBJ (:parameter xp (:default (% W::NP  (w::sort (? !xx W::unit-measure))))) ONT::AFFECTED)
+	))
+
+       (AFFECTED-affected-as-comp-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::affected)
 	(LCOMP (:parameter xp (:default (% W::pp (W::ptype W::with)))) ONT::AFFECTED1)

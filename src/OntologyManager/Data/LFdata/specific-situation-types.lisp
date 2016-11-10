@@ -2131,7 +2131,7 @@
 
 (define-type ont::incur-inherit-receive
     :wordnet-sense-keys ("fall%2:40:12" "get%2:39:14" "inherit%2:40:02" "take%2:31:09")
-    :arguments ((:REQUIRED ONT::affected1))
+    :arguments ((:REQUIRED ONT::affected1 ((? tt f::phys-obj f::abstr-obj) (f::intentional -))))
     :parent ont::event-of-undergoing-action
     )
 
