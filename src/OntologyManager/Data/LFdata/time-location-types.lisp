@@ -468,6 +468,7 @@
 
 (define-type ont::source-as-loc
  :parent ont::from
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj)))
  )
 
 ; trajectory starts on the ground
@@ -574,7 +575,7 @@
 
 (define-type ONT::from-loc
  :parent ONT::source-reln
- :arguments ((:ESSENTIAL ONT::FIGURE ( F::situation (F::type ont::event-of-change)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ( F::situation (F::type ont::motion)))
 	     (:ESSENTIAL ONT::GROUND (F::Phys-obj (f::spatial-abstraction (? sa f::spatial-point))))
 	     )
  )

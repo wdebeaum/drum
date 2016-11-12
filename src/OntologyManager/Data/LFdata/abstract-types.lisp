@@ -506,7 +506,7 @@
 (define-type ont::psychological-property-val
     :parent ont::animal-property-val
     :arguments ( ;; stimulus is what provokes the emotion - I am afraid of dogs / storms
-		(:optional ont::stimulus ((? stm f::phys-obj f::situation f::abstr-obj)))
+		;;(:optional ont::stimulus ((? stm f::phys-obj f::situation f::abstr-obj)))
 		;; the object that is involved in a situation, but which is not a stimulus directly
 		;; for example, I am afraid for her, for the project
 		;;(:optional ont::formal (f::situation f::phys-obj f::abstr-obj)))
@@ -974,13 +974,13 @@
 ;; familiar, known
 (define-type ont::familiarity-val
   :parent ont::property-val
-  :arguments ((:optional ont::stimulus))
+  ;;:arguments ((:optional ont::stimulus))
   )
 
 ;; unfamiliar, unknown
 (define-type ont::unfamiliarity-val
   :parent ont::property-val
-  :arguments ((:optional ont::stimulus))
+  ;;:arguments ((:optional ont::stimulus))
   )
 
 ;; typical, normal, usual
