@@ -2,7 +2,7 @@
 # Makefile for TRIPS system
 #
 # George Ferguson, ferguson@cs.rochester.edu, 22 Oct 2001
-# $Id: Makefile.in,v 1.28 2016/01/04 21:02:09 wdebeaum Exp $
+# $Id: Makefile.in,v 1.29 2016/11/12 23:57:04 lgalescu Exp $
 #
 # @configure_input@
 #
@@ -15,7 +15,7 @@ CONFIGS = calo boudreaux lou ralf plow plot \
 	  parser+ speech-demo testing parser-system \
 	  fruitcarts pim cardiac savant step sense joust cernl gloss kitchen \
 	  obtw asma pim-taf gps bolt ict woz web-tools drum lead \
-	  bob cabot
+	  bob cabot cogent
 
 all default install clean distclean compile devel speech compile-java install-java compile-lisp install-lisp compile-speech install-speech clean-lisp::
 	@for c in $(CONFIGS); do \
