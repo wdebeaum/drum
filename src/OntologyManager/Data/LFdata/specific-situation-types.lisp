@@ -3364,6 +3364,12 @@
 		)
     )
 
+(define-type ONT::UNATTACH
+ :wordnet-sense-keys ("disconnect%2:35:00" "disengage%2:35:01")
+ :parent ONT::SEPARATION
+ :sem (F::Situation (F::Aspect F::Dynamic) (F::Cause F::Agentive))
+ )
+
 ;; cut, slice, chop
 (define-type ONT::cut
  :parent ONT::break-object
@@ -3382,7 +3388,7 @@
 
 ;; this isn't a child of ont::combine-objects because of incompatibility of f::trajectory feature
 (define-type ONT::Joining
- :wordnet-sense-keys ("join%2:35:00" "conjoin%2:35:00")
+ :wordnet-sense-keys ("conjoin%2:35:00" "join%2:35:00")
  :comment "abstract, social, or physical connection of objects"
  :parent ONT::event-of-causation
  :sem (F::Situation (F::Trajectory -))
@@ -3402,7 +3408,7 @@
  )
 
 (define-type ONT::ASSOCIATE
- :wordnet-sense-keys ("team%2:33:00" "pair%2:41:00" "pair%2:35:01" "join%2:41:00" "join%2:41:01")
+ :wordnet-sense-keys ("join%2:41:00" "join%2:41:01" "pair%2:35:01" "pair%2:41:00" "team%2:33:00")
  :parent ONT::JOINING
  :sem (F::Situation (F::Aspect F::Dynamic) (F::Cause F::Agentive))
  )
@@ -3431,12 +3437,22 @@
 	     )
  )
 
-(define-type ONT::UNATTACH
- :wordnet-sense-keys ("disconnect%2:35:00" "disengage%2:35:01")
- :parent ONT::SEPARATION
- :sem (F::Situation (F::Aspect F::Dynamic) (F::Cause F::Agentive))
+;; register for a conference, check in/out at a hotel, enroll in a program
+(define-type ONT::enroll
+ :wordnet-sense-keys ("enrol%2:41:00" "enroll%2:41:00" "enter%2:33:00" "enter%2:41:06" "inscribe%2:41:00" "recruit%2:41:01")
+ :parent ONT::joining
+ :sem (F::situation)
+ :arguments ((:REQUIRED ONT::Formal (f::phys-obj (f::intentional +))) ;; check in a person
+	     (:optional ont::neutral ((? oc f::phys-obj f::situation f::abstr-obj))) ;; at a hotel, in a program
+	   
+             )
  )
 
+;; stretch  20120524 GUM change new type
+(define-type ONT::admit
+  :wordnet-sense-keys ("accept%2:40:03")
+  :parent ont::enroll
+ )
 
 ;; cover
 ;; neutral covers formal, or agent causes affected to cover formal
@@ -3770,24 +3786,6 @@
 	     (:essential ont::source (?ttype1 (f::object-function f::instrument)))
              )
   )
-
-;; register for a conference, check in/out at a hotel, enroll in a program
-(define-type ONT::enroll
- :wordnet-sense-keys ("enroll%2:41:00" "inscribe%2:41:00" "enter%2:41:06" "enrol%2:41:00" "recruit%2:41:01" "enter%2:33:00")
- :parent ONT::joining
- :sem (F::situation)
- :arguments ((:REQUIRED ONT::Formal (f::phys-obj (f::intentional +))) ;; check in a person
-	     (:optional ont::neutral ((? oc f::phys-obj f::situation f::abstr-obj))) ;; at a hotel, in a program
-	   
-             )
- )
-
-;; stretch  20120524 GUM change new type
-(define-type ONT::admit
-  :wordnet-sense-keys ("accept%2:40:03")
-  :parent ont::enroll
- )
-
 
 ;; back up/copy the data/files (formal)
 ;; back up the computer (source)
