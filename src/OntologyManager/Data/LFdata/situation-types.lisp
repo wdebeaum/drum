@@ -532,13 +532,9 @@
              )
  )
 
-(define-type ONT::Emptying
- :parent ont::motion
- )
-
-(define-type ONT::Filling
+(define-type ONT::cause-cover
  :wordnet-sense-keys ("impregnate%2:30:00" "saturate%2:30:04" "spread%2:35:13")
- :parent ont::motion
+ :parent ont::event-of-causation
  :arguments ((:ESSENTIAL ONT::affected-result)
              )
  )

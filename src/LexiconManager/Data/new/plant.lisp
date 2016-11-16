@@ -23,7 +23,7 @@
  :words (
   (W::plant
    (SENSES
-    ((LF-PARENT ONT::put)
+    ((LF-PARENT ONT::sow-seed)
      (meta-data :origin task-learning :entry-date 20050829 :change-date nil :comments nil)
      (example "plant the cactus")
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))

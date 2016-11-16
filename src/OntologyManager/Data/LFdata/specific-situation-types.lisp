@@ -279,12 +279,6 @@
   :parent ont::move
   )
 
-
-;(define-type ont::saturate
-;  :wordnet-sense-keys ("saturate%2:30:04")
-;  :parent ont::filling
-;  )
-
 (define-type ONT::move-by-means
  :wordnet-sense-keys ("take%2:38:02" "drive%2:38:11" "take%2:38:11")
 ; :parent ONT::MOVE
@@ -802,6 +796,16 @@
 
 (define-type ONT::PUSH
  :wordnet-sense-keys ("poke%2:35:01" "push%2:38:00" "force%2:38:00" "thrust%2:38:00" "thrust%2:42:01")
+  :parent ONT::apply-force
+ )
+
+(define-type ONT::PUSH-LIQUID
+ :wordnet-sense-keys ("squirt%2:35:00" "squirt%2:35:10" "sprinkle%2:35:01" "spray%2:35:03")
+  :parent ONT::apply-force
+ )
+
+(define-type ONT::RUB-scrape-wipe
+ :wordnet-sense-keys ("rub%2:35:00" "rub%2:39:00" "stroke%2:35:00")
   :parent ONT::apply-force
  )
 
@@ -2195,6 +2199,11 @@
  :parent ONT::PUT
  )
 
+(define-type ONT::SOW-SEED
+ :wordnet-sense-keys ("seed%2:35:01" "sow%2:35:02" "plant%2:35:00")
+ :parent ONT::PUT
+ )
+
 (define-type ONT::Correlation
  :wordnet-sense-keys ("indicate%2:32:02" "argue%2:32:01" "imply%2:32:01" "entail%2:42:01" "imply%2:42:00" "mean%2:42:00" "affirm%2:31:00" "read%2:32:02")
  :parent ONT::event-of-state
@@ -2390,6 +2399,15 @@
  :arguments ((:optional ONT::Affected ((? o1 F::Situation F::Phys-obj f::abstr-obj))))
  )
 
+;; rescue the dog
+(define-type ONT::rescue
+ :wordnet-sense-keys ("rescue%2:41:00" "bring_through%2:41:00" "deliver%2:41:03")
+ :parent ONT:: HELP
+ :sem (F::Situation (F::cause F::agentive) (F::aspect F::dynamic))
+ :arguments ((:REQUIRED ONT::affected ((? ftt f::situation f::abstr-obj f::phys-obj)))
+              )
+ )
+
 ;; this needs to be able to have stative ont::effect, as in 'let him know'
 ;; also need to have phys & abstr objects as in "are pets allowed"
 (define-type ONT::Allow
@@ -2553,10 +2571,10 @@
 
 (define-type ONT::Fill-container
  :wordnet-sense-keys ("fill%2:30:01" "fill_up%2:30:00" "make_full%2:30:00" "charge%2:35:00")
- :parent ONT::FILLING
+ :parent ONT::event-of-causation
  :arguments ((:ESSENTIAL ONT::affected-result (F::phys-obj (F::Container +)))
              )
- )
+ ) 
 
 ;;; The actions of someone else picking up or gathering objects
 ;; collect, gather up
@@ -2588,14 +2606,6 @@
  :parent ont::choosing
  )
 
-(define-type ONT::Unload
- :wordnet-sense-keys ("offload%2:35:00" "unlade%2:35:00" "unload%2:35:00" "drop%2:35:00" "drop_off%2:35:00" "set_down%2:35:00" "put_down%2:35:01" "unload%2:35:02" "discharge%2:35:06")
- :parent ONT::EMPTYING
- :sem (F::Situation (F::Aspect F::Dynamic) (F::Cause F::Agentive) (F::Trajectory -))
- :arguments (
-;	     (:ESSENTIAL ONT::From-Loc (F::Phys-obj (F::Container +)))
-             )
- )
 
 ;; abandon, desert, leave behind
 (define-type ONT::leave-behind
@@ -2694,12 +2704,22 @@
 
 (define-type ONT::empty
  :wordnet-sense-keys ("empty%2:30:01")
- :parent ONT::event-of-causation
+ :parent ONT::cause-come-from
  :arguments ((:OPTIONAL ONT::Agent)
-             (:OPTIONAL ONT::Source)
+             (:OPTIONAL ONT::affected-result (F::phys-obj (F::Container +)))
 	     (:OPTIONAL ONT::affected)
 	     )
  )
+
+(define-type ONT::Unload
+ :wordnet-sense-keys ("offload%2:35:00" "unlade%2:35:00" "unload%2:35:00" "drop%2:35:00" "drop_off%2:35:00" "set_down%2:35:00" "put_down%2:35:01" "unload%2:35:02" "discharge%2:35:06")
+ :parent ONT::EMPTY
+ :sem (F::Situation (F::Aspect F::Dynamic) (F::Cause F::Agentive) (F::Trajectory -))
+ :arguments (
+;	     (:ESSENTIAL ONT::From-Loc (F::Phys-obj (F::Container +)))
+             )
+ )
+
 
 (define-type ONT::remove-from
  :wordnet-sense-keys ("disembarrass%2:40:00")
@@ -3870,7 +3890,7 @@
 
 ;; break a browser, a promise
 (define-type ont::render-ineffective
-    :wordnet-sense-keys ("break%2:32:05")
+    :wordnet-sense-keys ("break%2:30:05")
     :parent ont::change-state-action
     :arguments (
 		(:required ONT::affected ((? th27 f::situation F::Abstr-obj)))
@@ -3933,15 +3953,6 @@
              ;;; Place-2
 ;             (:OPTIONAL ONT::To-loc)
              )
- )
-
-;; rescue the dog
-(define-type ONT::rescue
- :wordnet-sense-keys ("rescue%2:41:00" "bring_through%2:41:00" "deliver%2:41:03")
- :parent ONT::change-state
- :sem (F::Situation (F::cause F::agentive) (F::aspect F::dynamic))
- :arguments ((:REQUIRED ONT::affected ((? ftt f::situation f::abstr-obj f::phys-obj)))
-              )
  )
 
 ;; evacuate an area

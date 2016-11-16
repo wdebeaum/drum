@@ -19,12 +19,12 @@
   (W::fuel
    (SENSES
     ((meta-data :origin "wordnet-3.0" :entry-date 20090501 :change-date nil :comments nil)
-     (LF-PARENT ONT::filling)
+     (LF-PARENT ONT::fill-container)
      (example "fuel the car with unleaded gasoline")
      (TEMPL AGENT-GOAL-affected-TEMPL)
      )
     ((meta-data :origin "wordnet-3.0" :entry-date 20090521 :change-date nil :comments nil)
-     (LF-PARENT ONT::filling)
+     (LF-PARENT ONT::fill-container)
      (example "The tanker fueled in Iran")
      (templ goal-templ)
      (preference .97) 

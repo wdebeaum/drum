@@ -55,7 +55,7 @@
      )
    
     ((LF-PARENT ONT::render-ineffective)
-     (meta-data :origin calo :entry-date 20040908 :change-date nil :comments caloy2 :vn ("break-45.1") :wn ("break%2:29:04" "break%2:30:00" "break%2:30:10" "break%2:30:15" "break%2:35:00" "break%2:38:11" "break%2:41:08"))
+     (meta-data :origin calo :entry-date 20040908 :change-date nil :comments caloy2 :vn ("break-45.1") :wn ("break%2:29:04" "break%2:30:00" "break%2:30:05" "break%2:30:10" "break%2:30:15" "break%2:35:00" "break%2:38:11" "break%2:41:08"))
      (example "the browser broke")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL affected-TEMPL)
