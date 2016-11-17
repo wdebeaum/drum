@@ -10,7 +10,7 @@
      (LF-PARENT ONT::shape-change)
      (TEMPL agent-affected-result-templ (xp (% w::pp (w::ptype w::into)))) ; like carve
      )
-    )
+     )
    )
 ))
 

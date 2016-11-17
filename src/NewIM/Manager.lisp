@@ -313,27 +313,32 @@
   (loop while (do-next channel))
   )
 
+(defun get-w (x)
+  (if (consp x) (third x) nil))
+
+(defun add-lex (lf w)
+  (if w 
+      (append lf (list :lex w))
+      lf))
 
 (defun convert-lf-to-akrl (lf)
   (let* ((var (second lf))
 	 (type (get-ont-type (third lf)))
+	 (w (get-w (third lf)))
 	;; (force (find-arg (cdddr lf) :force))
 	;; (frequency (find-arg (cdddr lf) :frequency))
-	 (is-set (member (car lf) '(ONT::THE-SET ONT::INDEF-SET)))
 	 (akrl 
-   	  (if is-set
-	      (multiple-value-bind
-		    (others members)
-		  (remove-arg (cdddr lf) :member)
-		(list* (map-to-krspec lf) var :instance-of 'ONT::SET :element-type type 
-			       :members members
-			       (remove-args (cdddr lf) '(:proform :start :end)))
-		(list* (map-to-krspec lf) var :instance-of 'ONT::SET :element-type type 
-			   (remove-args (cdddr lf) '(:proform :start :end))
-			   ))
-	      (list* (map-to-krspec lf)  var :instance-of type
-		     (remove-args (cdddr lf) '(:proform :start :end)))
-	      )))
+   	  (cond ((member (car lf) '(ONT::THE-SET ONT::INDEF-SET))
+			 (add-lex (list* (map-to-krspec lf) var :instance-of 'ONT::SET :element-type type 
+					 (remove-args (cdddr lf) '(:proform :start :end))
+					 ) w))
+		 ((member :operator lf)
+		  (add-lex (list* (map-to-krspec lf) var :instance-of 'ONT::SEQUENCE :element-type type 
+				  (remove-args (cdddr lf) '(:proform :start :end))
+				  ) w))
+		 (t (add-lex (list* (map-to-krspec lf)  var :instance-of type 
+				    (remove-args (cdddr lf) '(:proform :start :end))) w))))
+	   )
     ;; now we set the equals value, either to the REFERS-TO, or the COREF links
     (let ((newakrl (replace-role-name akrl :refers-to :equals)))
       ;; if newakrl is EQ to akrl, we didn't find a :refers-to
@@ -668,7 +673,7 @@
   "function for quick parsing of some text and returning the AKRL - used for applications
      where we're doing additional parsing of data beyond the normal dialogue channels 
      (e.g., parsing content on web pages"
-  (let* ((result (parse-text (remove-if-not #'graphic-char-p text)))
+  (let* ((result (parser::parse-text (remove-if-not #'graphic-char-p text)))
 	 (lfs (if (eq (car result) 'COMPOUND-COMMUNICATION-ACT)
 		  (mapcan #'extract-lfs-from-sa (find-arg-in-act result :acts))
 		  (extract-lfs (find-arg-in-act result :terms))))
@@ -678,7 +683,7 @@
     (values `(ONT::AKRL-EXPRESSION :content ,root :context ,krs) newlfs)))
 
 (defun entail (text ids)
-  (let* ((result (car (parse-text (if (stringp text) (remove-if-not #'graphic-char-p text)
+  (let* ((result (car (parser::parse-text (if (stringp text) (remove-if-not #'graphic-char-p text)
 					 text))))
 	 (lfs (if (eq (car result) 'COMPOUND-COMMUNICATION-ACT)
 		  (mapcan #'extract-lfs-from-sa (find-arg-in-act result :acts))

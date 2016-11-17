@@ -2,6 +2,7 @@
 ;;;; W::sewn
 ;;;;
 
+; this is here because the pastpart of sew can be either sewed or sewn
 (define-words :pos W::v :templ agent-affected-xp-templ
  :words (
   (W::sewn

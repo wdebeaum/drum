@@ -2402,7 +2402,7 @@
 ;; rescue the dog
 (define-type ONT::rescue
  :wordnet-sense-keys ("rescue%2:41:00" "bring_through%2:41:00" "deliver%2:41:03")
- :parent ONT:: HELP
+ :parent ONT::HELP
  :sem (F::Situation (F::cause F::agentive) (F::aspect F::dynamic))
  :arguments ((:REQUIRED ONT::affected ((? ftt f::situation f::abstr-obj f::phys-obj)))
               )
@@ -3293,11 +3293,11 @@
 
 ;; add the oranges into the square -- must be trajectory + to allow pp into
 (define-type ONT::combine-objects
+    :comment "symmetric combination of objects, abstract or physical: e.g., X combines with y = y combines with x = x and y combine"
  :wordnet-sense-keys ("merge%2:30:01" "combine%2:30:00" "meld%2:30:00" "coalesce%2:30:00" "fuse%2:30:00" "immix%2:30:00" "commingle%2:30:00" "conflate%2:30:00" "mix%2:30:00" "flux%2:30:00" "blend%2:30:00" "mix_in%2:30:01" "mix%2:30:01" "mix%2:35:00" "mingle%2:35:00" "commix%2:35:00" "unify%2:35:00" "amalgamate%2:35:00")
  :parent ONT::coalesce
  :sem (F::SITUATION (F::Cause F::agentive) (f::trajectory +))
  )
-
 
 (define-type ONT::add-include
  :wordnet-sense-keys ("include%2:30:00" "introduce%2:38:00" "add%2:30:00")
@@ -3440,6 +3440,7 @@
 
 (define-type ONT::ATTACH
  :wordnet-sense-keys ("attach%2:35:01" "attach%2:35:02" "catch%2:35:08" "connect%2:35:00")
+ :comment "Typically Asymmetric joining: e.g. Attach the paper to the wall =/= attach the wall to the paper!"
  :arguments ((:required ont::agent (F::phys-obj (F::origin F::natural))))
  :parent ONT::JOINING
  :sem (F::Situation (F::Aspect F::Dynamic) (F::Cause F::Agentive))

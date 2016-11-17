@@ -17,9 +17,9 @@
      (preference .98)
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("carve-21.2-2"))
-     (example "he carved the turkey")
      ;;(LF-PARENT ONT::cut) ; like chop
      (lf-parent ont::carve-cut) ;; 20120524 GUM change new parent
+     (example "he carved the turkey")
      )
     )
    )
