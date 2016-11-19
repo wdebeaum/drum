@@ -1647,7 +1647,7 @@
 	    )      
       )
      (np (name +) (generated -) (sem ?sem) (class ?lf) (VAR ?v2) (time-converted -))
-     (add-to-conjunct (val (APPOS-EQ ?v2)) (old ?r) (new ?con)))
+     (add-to-conjunct (val (IDENTIFIED-AS ?v2)) (old ?r) (new ?con)))
 	
    ;; same with comma  the city, avon
     ((N1 (RESTR ?con) (CLASS ?c) (SORT ?sort) (QUAL ?qual) (COMPLEX +) 
@@ -4613,11 +4613,13 @@
 	     )))
           
      -adj-conj1>
-     (ADJP (arg ?arg) (argument ?a) (VAR ?v1) (class ?c1) (sem ?s1) (lf ?lf1) (atype central) (post-subcat -)
+     (ADJP (arg ?arg) (argument ?a) (VAR ?v1) 
+      (lf (% PROP (class ?c1))) (sem ?s1) (atype central) (post-subcat -)
       (set-modifier -)
       )
      (CONJ (LF ?conj) (but-not -) (but -))
-     (ADJP (arg ?arg)  (argument ?a) (VAR ?v2) (class ?c2) (sem ?s2) (lf ?lf2) (atype central) (post-subcat -)
+     (ADJP (arg ?arg)  (argument ?a) (VAR ?v2) 
+      (LF (% PROP (class ?c2))) (sem ?s2) (atype central) (post-subcat -)
       (set-modifier -)
       )
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
