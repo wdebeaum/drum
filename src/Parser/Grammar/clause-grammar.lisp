@@ -2736,11 +2736,11 @@
 	       (sem ($ f::situation (f::aspect (? aspc f::dynamic f::stage-level))))
 	       (var ?v) (aux -) (tma ?tma)
 	       (constraint ?con)
-	       (subj (% np (var (% *pro* (status ont::pro) (class (set-of ont::person)) (var *) (sem ?subjsem) (constraint (& (proform us)))))
+	       (subj (% np (var (% *pro* (status ont::pro-set) (class (:* ont::person w::us)) (var *) (sem ?subjsem) (constraint (& (proform us)))))
 			(sem ($ f::phys-obj (f::form f::object) (f::intentional +)))
 			(sem ?subjsem)))
-	       (subjvar (% *pro* (var *) (status ont::pro)
-			   (class (set-of ont::person)) (sem ?subjsem) (constraint (& (proform us)))))
+	       (subjvar (% *pro* (var *) (status ont::pro-set)
+			   (class (:* ont::person w::us)) (sem ?subjsem) (constraint (& (proform us)))))
 	       (class ?c)
 	       (vform base) (postadvbl ?pa) (main ?ma)
 	    (transform ?transform)
@@ -3360,6 +3360,7 @@
 ;; VP conjunction
    ;; both VP must be of the same vform
    ;; he had eaten and slept, to puncture or penetrate or pierce, to fight but accept, 
+   ; This uses this rule: The mouse is caught by the dog and caught by the cat.
    ((vp- (seq +) (vform ?vf) (var *)  (subjvar ?subj)  (subj ?subject) (agr ?agr) (gap ?gap)(subj-map ?subjmap)
      (class ?class) (sem ?sem)
      (constraint (&  (OPERATOR ?lx) 

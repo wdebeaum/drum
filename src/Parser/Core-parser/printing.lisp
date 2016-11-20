@@ -1887,32 +1887,32 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	(ont::motion
 	 ((ont::pos-as-containment-reln) :location)
 	 ((ont::to-loc ont::position-reln ont::goal-reln ont::direction-reln) :result)
-	 ((ont::from-loc ont::from) :source)
+	 ((ont::source-reln) :source)
 	 
 	 )
 	(ont::put
 	 ((ont::to-loc ont::position-reln ont::goal-reln  ont::direction-reln) :result)
-	 ((ont::from-loc ont::from) :source)
+	 ((ont::source-reln) :source)
 	 )
 	(ont::apply-force
 	 ((ont::to-loc ont::position-reln ont::goal-reln  ont::direction-reln) :result)
-	 ((ont::from-loc ont::from) :source)
+	 ((ont::source-reln) :source)
 	 )
 	(ont::giving
 	 ((ont::to-loc) :result)
-	 ((ont::from-loc ont::from) :source)
+	 ((ont::source-reln) :source)
 	 )
 	(ont::acquire 
 	  ((ont::to-loc ont::position-reln ont::goal-reln  ont::direction-reln) :result)
-	 ((ont::from-loc ont::from) :source)
+	 ((ont::source-reln) :source)
 	 )
 	(ont::joining 
 	  ((ont::goal-reln) :result)  ; into
-	 ((ont::from-loc ont::from) :source)
+	 ((ont::source-reln) :source)
 	 )
 	(ont::change
 	  ((ont::to-loc ont::goal-reln ont::direction-reln) :result)
-	  ((ont::from-loc ont::from) :source))
+	  ((ont::source-reln) :source))
 	(ont::phys-object 
 	 ((ont::position-reln ) :location))
 	 ;;((ont::assoc-with) :assoc-with))
@@ -1938,7 +1938,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	 ((ont::accompaniment) :agent1)
 	 ((ont::by-means-of) :method)
 	 ((ont::beneficiary) :beneficiary)
-	 ((ont::from-loc ont::from) :source)
+	 ((ont::source-reln) :source)
 	 ((ont::manner ont::abstract-object-property ) :manner)
 	 ((ont::likelihood ont::qualification) :qualification)
 	 )
