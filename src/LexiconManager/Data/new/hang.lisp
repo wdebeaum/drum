@@ -25,7 +25,11 @@
      (SEM (F::Aspect F::Stage-level) (F::Time-span F::Extended))
      (TEMPL neutral-templ)
      )
+    ((LF-PARENT ONT::ATTACH)
+     (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
+     (TEMPL AGENT-affected2-optional-TEMPL (xp (% W::pp (W::ptype W::to))))
+     )
     )
    )
-))
+  ))
 

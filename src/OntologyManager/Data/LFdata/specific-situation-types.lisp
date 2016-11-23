@@ -351,8 +351,9 @@
  )
 
 ;; tilt,lean
-(define-type ONT::lean
- :parent ONT::MOVE
+(define-type ONT::leaning
+    :comment "The state of being in a position of leaning (against something)"
+ :parent ONT::be-at-loc
  )
 
 ;; pan
@@ -2199,6 +2200,12 @@
  :parent ONT::PUT
  )
 
+(define-type ONT::place-in-position
+ :comment "placing an object in a certain position: e.g., lean, sit, stand,  ..."
+ :wordnet-sense-keys ("lean%2:35:00" "set_down%2:35:00" "seat%2:35:00" "stand%2:35:01" "perch%2:35:10")
+ :parent ONT::PUT
+ )
+
 (define-type ONT::SOW-SEED
  :wordnet-sense-keys ("seed%2:35:01" "sow%2:35:02" "plant%2:35:00")
  :parent ONT::PUT
@@ -2215,10 +2222,12 @@
 
 ;;  something that encodes a message
 (define-type ONT::encodes-message
- :wordnet-sense-keys ("read%2:42:00" "go%2:42:02")
- :arguments ((:REQUIRED ONT::neutral ((? n  F::Phys-obj f::abstr-obj) (f::information f::information-content))))
- :parent ONT::EVENT-OF-STATE
- )
+    :comment "some artifact conveys some message"
+    :wordnet-sense-keys ("read%2:42:00" "go%2:42:02")
+    :arguments ((:REQUIRED ONT::neutral ((? n  F::Phys-obj f::abstr-obj) (f::information f::information-content)))
+		(:OPTIONAL ONT::neutral1 ((? n1 F::Phys-obj f::abstr-obj))))
+    :parent ONT::EVENT-OF-STATE
+    )
 
 (define-type ONT::RELATE
  :wordnet-sense-keys ("associate%2:31:00" "tie_in%2:31:00" "relate%2:31:00" "link%2:31:00" "colligate%2:31:02" "link_up%2:31:00" "connect%2:31:00" "correlate%2:42:00")
@@ -3603,18 +3612,11 @@
 
 ;; for positionals: lie, stand
 (define-type ONT::BE-AT-LOC
+ :comment "relations that indicate an postural attitude as well as a location"
  :wordnet-sense-keys ("sit%2:35:00" "sit_down%2:35:03" "settle%2:30:00" "fall%2:35:00" "hang%2:35:03" "hang%2:35:05" "hang%2:35:06" "hang%2:42:01" "confine%2:41:00" "lie%2:35:00" "trail%2:35:05")
  :parent ONT::BE-AT
  :sem (F::Situation (F::aspect F::stage-level))
  :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj)) ;; formal is restricted to phys-obj; otherwise same as be-at
-             )
- )
-
-(define-type ONT::Posture
- :parent ONT::be-at-loc
- :sem (F::Situation (F::Cause F::Agentive))
- :arguments ((:REQUIRED ONT::Agent)
-             (:ESSENTIAL ONT::Location)
              )
  )
 

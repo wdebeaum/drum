@@ -14,9 +14,6 @@
      (TEMPL AGENT-TEMPL)
      (preference .98)
      )
-   #| ((EXAMPLE "lay down your weapons")
-     (LF-PARENT ONT::PUT)
-     ) |#
     )
    )
 ))
@@ -29,7 +26,7 @@
    (SENSES
     ((EXAMPLE "lay an egg on the table")
      (EXAMPLE "lay down your weapons")
-     (LF-PARENT ONT::PUT)
+     (LF-PARENT ONT::PLACE-IN-POSITION)
      )
     )
    )

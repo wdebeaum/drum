@@ -44,9 +44,10 @@
      (TEMPL neutral-neutral-xp-templ)
      )
 
+
     ((lf-parent ont::encodes-message)
      (Example "The book says to bake the potato.")
-     (TEMPL agent-effect-subjcontrol-templ (xp (% W::cp (W::ctype W::s-to))))
+     (TEMPL neutral-theme-subjcontrol-templ)
      )
 
     ((lf-parent ont::locution)

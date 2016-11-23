@@ -21,7 +21,7 @@
  (W::cover
    (wordfeats (W::morph (:forms (-vb) :past W::covered :ing w::covering)))
    (SENSES
-    ((LF-PARENT ONT::cover)
+    ((LF-PARENT ONT::cause-cover)
      (TEMPL AGENT-affected2-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? pt W::with W::in)))))
  ;    (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "cover the table with the tablecloth")

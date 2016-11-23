@@ -6,7 +6,7 @@
  :words (
 	  (W::tilt
 	  (SENSES
-	   ((LF-PARENT ONT::lean)
+	   ((LF-PARENT ONT::leaning)
 	    (example "the robot's tilt sensor went off")
 	    (meta-data :origin joust :entry-date 20091027 :change-date nil :comments nil :wn nil)
 	    )
@@ -17,12 +17,12 @@
  :words (
    (w::tilt
    (senses
-    ((LF-PARENT ONT::lean)
+    ((LF-PARENT ONT::place-in-position)
      (meta-data :origin lou :entry-date 20041111 :change-date nil :comments lou-sent-entry)
      (example "tilt the camera up a little")
      (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
      )
-     ((LF-PARENT ONT::lean)
+     ((LF-PARENT ONT::place-in-position)
      (meta-data :origin lou :entry-date 20041111 :change-date nil :comments lou-sent-entry)
      (example "tilt up a little")
      (templ agent-templ)
