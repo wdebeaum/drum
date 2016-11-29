@@ -267,8 +267,8 @@
 ;; under/over/above/below 5 pounds/dollars/feet etc.
 (define-type ONT::SCALE-RELATION
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::FIGURE (F::abstr-obj (f::type ont::domain)))
-             (:REQUIRED ONT::GROUND (F::abstr-obj (f::scale ?!sc)))
+ :arguments ((:ESSENTIAL ONT::FIGURE) ;(F::abstr-obj (f::type ont::domain)))  ; I am.../The height is...
+             (:REQUIRED ONT::GROUND (F::abstr-obj (f::scale (? !t ont::duration-scale)))) ;(f::scale ?!sc) )) ; to exclude time related senses e.g., TIME-CULMINATION-REL and TIME-DEADLINE-REL for "within"
              )
  )
 

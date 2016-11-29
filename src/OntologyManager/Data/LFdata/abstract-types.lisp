@@ -582,6 +582,7 @@
 (define-type ONT::age-VAL
   :parent ONT::temporal
   :sem (F::abstr-obj (F::scale ont::age-scale))
+;  :sem (F::abstr-obj (F::scale ont::duration-scale))
  )
 
 ;; for adjectives concerning a linear dimension: tall, fat, short, thick
@@ -1679,7 +1680,7 @@
 (define-type ONT::LENGTH-UNIT
  :wordnet-sense-keys ("linear_measure%1:23:00" "linear_unit%1:23:00" "week%1:28:00" "hebdomad%1:28:00")
  :parent ONT::tangible-unit
- :sem (F::Abstr-obj (F::Scale Ont::length))
+ :sem (F::Abstr-obj (F::Scale ONT::LINEAR-D)) ; Ont::length))  ; e.g., km: not just length but could also be width, height, etc
  )
 
 ;; acre, sqare feet
@@ -4063,7 +4064,8 @@
 
 (define-type ont::age-scale
 ;  :parent ont::scale
-  :parent ont::linear-scale
+;  :parent ont::linear-scale
+  :parent ont::duration-scale
   )
 
 (define-type ont::other-scale

@@ -521,14 +521,15 @@
      (add-to-conjunct (val (RESULT ?mod)) (old ?con) (new ?new))
      )
 
-        ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
+    ;;  resultative construction using adjectives with intransitives: e.g., the water froze solid
+    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
       (advbl-needed -) (complex +) (result-present +) (subjvar ?subjvar)(GAP ?gap)
       )
      -vp-result-with-intransitive> .98   ;;  want to prefer explicitly subcategorized attachments
      (head (vp- (VAR ?v) 
 		(seq -)  ;;  post mods to conjoined VPs is very rare
-		(DOBJ -)
+		(DOBJVAR -)  ; cannot use (dobj -) because dobj is (% - (W::VAR -)) 
 		(SUBJ (% NP (Var ?npvar) (LEX ?LEX) (sem ?sem)))
 		(constraint ?con) (tma ?tma) (result-present -)
 		;;(subjvar ?subjvar)
@@ -537,7 +538,8 @@
 		(ellipsis -)
 		))
      (adjp (ARGUMENT (% NP (sem ?sem))) 
-      (SEM ($ f::abstr-obj (F::type (? ttt ONT::path))))
+;      (SEM ($ f::abstr-obj (F::type (? ttt ONT::path))))
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::domain-property))))
       (GAP -)
       ;; (subjvar ?subjvar)
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
@@ -548,11 +550,41 @@
      )
 
      
-
-      ;;  resultative construction using adverbs: e.g., sweep the dust into the corner
+    ;;  resultative construction using adverbs: e.g., I walked to the store
     ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
-      (advbl-needed -) (complex +) (result-present +) (subjvar ?subjvar)(GAP ?gap)
+;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
+      (advbl-needed -) (complex +) (GAP ?gap)
+      )
+     -vp-result-advbl-intransitive>  
+     (head (vp- (VAR ?v) 
+		(seq -)  ;;  post mods to conjoined VPs is very rare
+		(DOBJVAR -)  ; cannot use (dobj -) because dobj is (% - (W::VAR -)) 
+		(SUBJ (% NP (Var ?npvar) (sem ?sem) (lex ?lex)))  
+		(constraint ?con) (tma ?tma) (result-present -)
+		;;(aux -) 
+		(gap ?gap)
+		(ellipsis -)
+		))
+
+     (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
+			 (sem ?sem))) (GAP -)
+      ;; (subjvar ?subjvar)
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::trajectory))))
+;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
+      (SET-MODIFIER -)  ;; mainly eliminate numbers 
+      (ARG ?npvar) (VAR ?mod)
+      ;;(role ?advrole) 
+      )
+     (add-to-conjunct (val (MOD ?mod)) (old ?con) (new ?new))
+     )
+
+    
+    ;;  resultative construction using adverbs: e.g., sweep the dust into the corner
+    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
+         ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
+;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
+      (advbl-needed -) (complex +) (GAP ?gap)
       )
      -vp-result-advbl>  
      (head (vp- (VAR ?v) 
@@ -568,12 +600,13 @@
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
 			 (sem ?sem))) (GAP -)
       ;; (subjvar ?subjvar)
-      (SEM ($ f::abstr-obj (F::type (? ttt ONT::position-reln ont::path))))
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::trajectory))))
+;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
       (ARG ?npvar) (VAR ?mod)
       ;;(role ?advrole) 
       )
-     (add-to-conjunct (val (RESULT ?mod)) (old ?con) (new ?new))
+     (add-to-conjunct (val (MOD ?mod)) (old ?con) (new ?new))
      )
 
 ;; to kill by immersing in water
@@ -738,6 +771,7 @@
 	    ))
      (advbl (ATYPE POST)
       (ARGUMENT (% NP (sem ?argsem) (constraint ?c)  ))
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln))))
       (arg ?v1) (VAR ?mod) (WH -) (GAP -)
       )
      (add-to-conjunct (val (MODS ?mod)) (old ?restr) (new ?new))

@@ -46,13 +46,13 @@
     ((LF-PARENT ont::near-reln) ; ONT::proximity
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      (example "find a hotel near a zipcode" "he is near the party")
-     (SYNTAX (W::ALLOW-DELETED-COMP +))
+     ;(SYNTAX (W::ALLOW-DELETED-COMP +))
      )
     ((LF-PARENT ont::near-reln) ; ONT::proximity
      (TEMPL BINARY-CONSTRAINT-S-trajectory-TEMPL)
      (example "move it near the triangle")
      (preference .98)
-     (SYNTAX (W::ALLOW-DELETED-COMP +))
+     ;(SYNTAX (W::ALLOW-DELETED-COMP +))
      )
     )
    )

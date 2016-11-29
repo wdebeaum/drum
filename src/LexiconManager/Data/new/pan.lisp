@@ -22,6 +22,7 @@
      (meta-data :origin lou :entry-date 20040319 :change-date nil :comments lou-sent-entry)
      (example "pan the camera up a little")
      (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
+     (TEMPL AGENT-AFFECTED-XP-TEMPL)
      )
      ((LF-PARENT ONT::pan)
      (meta-data :origin lou :entry-date 20041027 :change-date nil :comments lou-sent-entry)

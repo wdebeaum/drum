@@ -50,18 +50,22 @@
     ;;  this is the goal sense, prefers events of change
     ((LF-PARENT ONT::TO-LOC)
      (example "go to the building" "the relocation to the building")
-     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
+;     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
+     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      )
 
     ((LF-PARENT ONT::RESULTING-OBJECT)
      (example "change to a toad")
-     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+;     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      )
 
     ((LF-PARENT ONT::RESULTING-STATE)
      (example "change to a waking state")
-     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+;     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      )
+
    #|| ;; a generalized sense of to
     ((LF-PARENT ONT::TO)
      (TEMPL BINARY-CONSTRAINT-S-TEMPL)

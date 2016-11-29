@@ -2769,7 +2769,7 @@
 
 ;; 20120524 GUM change new type
 (define-type ont::act-behave
-    :wordnet-sense-keys ("act%2:36:04" "act%2:41:00" "act%2:41:07")
+    :wordnet-sense-keys ("act%2:36:04" "act%2:41:00" "act%2:41:07" "behave%2:41:01")
     :parent ont::acting
     :arguments ((:REQUIRED ONT::formal (F::phys-obj)))   ;; the role -- acted as a judges, acts as a catalyst
     )

@@ -10,7 +10,7 @@
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("begin-55.1-1"))
      (LF-PARENT ONT::appropriate)
  ; like begin
-     (templ agent-effect-xp-templ)
+     (templ agent-affected-xp-templ)
      )
     )
    )

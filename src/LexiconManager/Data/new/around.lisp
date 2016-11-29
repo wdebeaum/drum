@@ -25,12 +25,14 @@
      (example "it's around 5 pm")
      (TEMPL BINARY-CONSTRAINT-S-TEMPL)
      )
-    ((LF-PARENT ont::near-reln );ONT::proximity
-     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+    (;(LF-PARENT ont::near-reln );ONT::proximity
+     (LF-PARENT ont::around)
+     ;(TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      (example "he ran around the house")
      (SYNTAX (W::ALLOW-DELETED-COMP +))
      )
-    ((LF-PARENT ont::near-reln );ONT::proximity)
+    ((LF-PARENT ont::pos-as-around );ONT::proximity)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      (example "the house around the corner")
      )

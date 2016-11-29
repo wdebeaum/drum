@@ -294,7 +294,11 @@
 
 ; figure is linear and crosses ground
 ; across
-(define-type ont::pos-as-intersection
+(define-type ont::pos-as-opposite
+ :parent ont::position-as-extent-reln
+ )
+
+(define-type ont::pos-as-around
  :parent ont::position-as-extent-reln
  )
 
@@ -415,19 +419,19 @@
 ; relates a trajectory/event to its end/goal
 (define-type ont::goal-reln
  :parent ont::path
- :arguments ((:ESSENTIAL ONT::FIGURE ((? of F::Situation) (F::trajectory +))))
+ :arguments ((:ESSENTIAL ONT::FIGURE)); ((? of F::Situation) (F::trajectory +))))  ; FIGURE should point to the argument, not the verb
  )
 
 (define-type ONT::resulting-object
  :parent ONT::goal-reln
- :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (f::aspect f::dynamic) (f::type ont::change)))
+ :arguments ((:ESSENTIAL ONT::FIGURE); (F::Situation (f::aspect f::dynamic) (f::type ont::change)))
              (:REQUIRED ONT::GROUND (F::Phys-obj ))
              )
  )
 
 (define-type ONT::resulting-state
  :parent ONT::goal-reln
- :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (f::aspect f::dynamic) (f::type ont::change)))
+ :arguments ((:ESSENTIAL ONT::FIGURE); (F::Situation (f::aspect f::dynamic) (f::type ont::change)))
              (:REQUIRED ONT::GROUND ((? t F::Abstr-obj F::situation)))
              )
  )
@@ -449,7 +453,7 @@
 ; into
 (define-type ont::goal-as-containment
     :parent ONT::goal-reln
-    :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (f::aspect f::dynamic) (f::type ont::motion)))
+    :arguments ((:ESSENTIAL ONT::FIGURE); (F::Situation (f::aspect f::dynamic) (f::type ont::motion)))
 		(:REQUIRED ONT::GROUND (F::Phys-obj  (F::container +)
 			   )))
     )
@@ -471,17 +475,21 @@
  :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj)))
  )
 
+#| ; now this is :RESULT
 ; trajectory starts on the ground
 ; off
 (define-type ont::source-as-on
  :parent ont::from
  )
+|#
 
+#| ; now this is :RESULT
 ; trajectory starts in the ground
 ; out of
 (define-type ont::source-as-containment
  :parent ont::from
  )
+|#
 
 ; constrains direction of motion
 (define-type ont::direction-reln
@@ -526,7 +534,8 @@
 ; figure is trajectory, ground is within the trajectory
 ; via, by way of
 (define-type ont::obj-in-path
-    :arguments ((:ESSENTIAL ONT::FIGURE ((? type F::Situation F::phys-obj) (F::type (? path-type ont::motion ont::apply-force ont::route)) (F::trajectory +)))
+    :arguments (;(:ESSENTIAL ONT::FIGURE ((? type F::Situation F::phys-obj) (F::type (? path-type ont::motion ont::apply-force ont::route)) (F::trajectory +)))
+		(:ESSENTIAL ONT::FIGURE ((? type F::phys-obj) ))
 		(:essential ONT::GROUND  (F::Phys-obj (F::form F::object)))) 
     :parent ont::path
     )
@@ -567,8 +576,10 @@
 ;; close (to)/near a house, a party, a zipcode
 
 (define-type ONT::trajectory
- :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj F::Situation) (F::trajectory +)))
+; :parent ONT::PREDICATE
+ :parent ONT::PATH
+ :arguments (;(:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj F::Situation) (F::trajectory +)))
+	     (:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj F::Situation)))
              (:ESSENTIAL ONT::GROUND (F::Phys-obj))
              )
  )
@@ -585,8 +596,8 @@
  :parent ONT::goal-reln
  :arguments (;(:ESSENTIAL ONT::OF (F::situation (f::type ont::event-of-change)))
 	     ;(:ESSENTIAL ONT::VAL ((? t F::Phys-obj F::abstr-obj)))
-	     (:ESSENTIAL ONT::FIGURE (F::situation (f::type ont::event-of-change)))
-	     (:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj)))
+	     (:ESSENTIAL ONT::FIGURE); (F::situation (f::type ont::event-of-change)))   ; "I walked to the store" FIGURE should point to "I", not "walked"
+	     (:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj) (f::spatial-abstraction ?!sa) (F::form F::geographical-object)) )  ; spatial-abstraction is not enough: many things have spatial-abstraction, e.g., a frog.  Another possibility is (F::object-function F::spatial-object)
 	     )
  )
 
@@ -615,7 +626,7 @@
 	     )
  )
 
-(define-type ONT::via
+(define-type ONT::through
  :parent ONT::TRAJECTORY
  :arguments ((:ESSENTIAL ONT::GROUND (F::Phys-obj (F::spatial-abstraction (? sa F::spatial-point F::spatial-region))))
              )
@@ -626,6 +637,13 @@
   :parent ont::trajectory
   )
 
+(define-type ont::over
+  :parent ont::trajectory
+  )
+
+(define-type ont::around
+  :parent ont::trajectory
+  )
 
 (define-type ONT::direction
  :parent ONT::position-reln
@@ -647,10 +665,11 @@
  )
 
 ;; along/up/down the street
+;; along the river/coast: not F::line/strip
 (define-type ONT::ALONG
  :parent ONT::TRAJECTORY
- :arguments ((:ESSENTIAL ONT::GROUND (F::Phys-obj (F::spatial-abstraction (? sa F::line F::strip))))
-             )
+; :arguments ((:ESSENTIAL ONT::GROUND (F::Phys-obj (F::spatial-abstraction (? sa F::line F::strip))))
+;             )
  )
 
 (define-type ONT::extent-predicate

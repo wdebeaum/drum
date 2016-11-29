@@ -180,7 +180,7 @@
      (LF-PARENT ONT::APPROPRIATE)
      (example "take the project on" "take on the project")
      (SEM (F::Aspect F::bounded) )
-     (TEMPL AGENT-THEME-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-TEMPL)
      )
     )
    )

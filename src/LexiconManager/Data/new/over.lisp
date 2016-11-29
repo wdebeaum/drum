@@ -13,12 +13,14 @@
     ((LF-PARENT ONT::DIRECTION)
      (TEMPL PRED-S-POST-TEMPL)
      )
+
     ((LF-PARENT ONT::pos-as-over)
      (TEMPL BINARY-CONSTRAINT-NP-implicit-TEMPL)
      )
     ((LF-PARENT ONT::pos-as-over)
      (TEMPL BINARY-CONSTRAINT-S-implicit-TEMPL)
      )
+    
     ((LF-PARENT ONT::QMODIFIER)
      (example "sell it for over five dollars")
      (TEMPL NUMBER-OPERATOR-TEMPL)
@@ -47,6 +49,11 @@
     ((LF-PARENT ONT::COMPLETELY)
      (TEMPL BINARY-CONSTRAINT-S-TEMPL)
      (EXAMPLE "I looked over the files")
+     )
+
+    ((LF-PARENT ONT::OVER)
+     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
+     (EXAMPLE "I ran over the hill")
      )
 
     )
