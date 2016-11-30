@@ -3,7 +3,7 @@
 ;;;
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
-;;; Time-stamp: <Sat Oct 29 14:21:09 EDT 2016 jallen>
+;;; Time-stamp: <Tue Nov 29 14:11:44 EST 2016 jallen>
 
 (in-package "PARSER")
 
@@ -1227,16 +1227,18 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	    (if (eql (list-length reduced-val) 0)
 		nil
 		(if (eql (list-length reduced-val) 1)
-		    (if (null (car val))
+		    (car val)
+		    #||(if (null (car val))    ;; this is commented out as it generates stuff that not a valif LF form at times
 			nil
 			(if negated
 			    (list 'ONT::NOT (car reduced-val))
-			    (car val)))
+			    (car val)))||#
 		    (if (eq (car val) '$)
 			(mapcar #'clean-out-vars reduced-val)
-			(if negated
+			(car val)))))
+			#||(if negated
 			    (list 'ONT::NOT (cons 'ont::or reduced-val))
-			    (cons 'ONT::or reduced-val))))))
+			    (cons 'ONT::or reduced-val))))))||#
 	  val)))
    ((consp expr)
     (mapcar #'clean-out-vars expr))

@@ -295,8 +295,16 @@ class IO
       while (tree.nil?)
 	if ((ownp or @kqml_parser.failure_index == @unparsed_input.length) and
 	    not eof?)
-	  @unparsed_input += readline
-	  ownp = obviously_will_not_parse?(@unparsed_input)
+	  line = readline
+	  @unparsed_input += line
+	  #ownp = obviously_will_not_parse?(@unparsed_input)
+	  # Scanning line is less expensive than scanning @unparsed_input, and
+	  # we can do it because we know that ownp just counts "s, so we just
+	  # need to XOR the ownp value for the new line into the old value to
+	  # check whether the total count is odd. (Note that backslash escapes
+	  # can't cross line boundaries, so we won't accidentally say something
+	  # won't parse because the escaping of a " was split up.)
+	  ownp = (ownp ^ obviously_will_not_parse?(line))
 	  unless (ownp)
 	    tree =
 	      @kqml_parser.parse(@unparsed_input, :consume_all_input => false)
