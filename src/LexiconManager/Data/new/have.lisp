@@ -32,7 +32,7 @@
      (TEMPL agent-effect-affected-objcontrol-templ (xp (% W::VP (W::vform (? x W::base W::passive)))))
      )
     ((LF-PARENT ONT::have-experience)
-     (TEMPL neutral-neutral-templ)
+     (TEMPL experiencer-neutral-templ)
      (example "he has a headache")
      (meta-data :origin cardiac :entry-date 20080217 :change-date nil :comments nil)
      )
