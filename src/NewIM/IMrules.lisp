@@ -150,6 +150,14 @@
       (ONT::REQUEST :who *USER* :to ?!v :what ?!theme)
       )
 
+     ;; e.g., You/We buy me a computer
+     ;; I'll move this block.
+     ((ONT::SPEECHACT ?x ONT::SA_TELL :CONTENT ?!theme)
+      (ONT::F ?!theme (? type ONT::EVENT-OF-CHANGE) :AGENT ?!ag :force ?f)  ; restrict the ?type to exclude, e.g., "You are silly"
+      ((? p ONT::PRO-SET ONT::PRO) ?!ag ?t2 :PROFORM (? xx w::I w::WE w::you))
+      -request-to-propose-with-agent>
+      (ONT::REQUEST :who *USER* :to *ME* :what ?!theme)
+      )
   
     ;; basic inform acts  - default for tells if not other matches
    ((ONT::SPEECHACT ?x ONT::SA_TELL :CONTENT ?!c)
