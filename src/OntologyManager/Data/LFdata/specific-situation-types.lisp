@@ -350,11 +350,7 @@
  :parent ONT::MOVE
  )
 
-;; tilt,lean
-(define-type ONT::leaning
-    :comment "The state of being in a position of leaning (against something)"
- :parent ONT::be-at-loc
- )
+
 
 ;; pan
 (define-type ONT::pan
@@ -3618,6 +3614,12 @@
  :sem (F::Situation (F::aspect F::stage-level))
  :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj)) ;; formal is restricted to phys-obj; otherwise same as be-at
              )
+ )
+
+;; tilt,lean
+(define-type ONT::leaning
+    :comment "The state of being in a position of leaning (against something)"
+ :parent ONT::be-at-loc
  )
 
 ;; manipulate, influence

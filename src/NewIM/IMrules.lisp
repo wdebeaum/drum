@@ -582,16 +582,17 @@
 	   -YNQ-response-rule1>
 	   (ONT::ANSWER :who *USER* :to *ME* :what ?!x))
 
-	  ;; i do
+	  ;; I do/I will
 	  ((ONT::SPEECHACT ?!vv ONT::SA_TELL :content ?!x)
-	   (ONT::F ?!x ONT::ELLIPSIS :formal ?!i :force ONT::TRUE)
+	   (ONT::F ?!x ONT::ELLIPSIS :neutral ?!i :force (? f ONT::TRUE ONT::FUTURE))
 	   (ONT::PRO ?!i ONT::PERSON :proform w::I)
 	   -I-do-response-rule>
 	   (ONT::ANSWER :who *USER* :to *ME* :what ont::POS))
 
-	  ;; i don't
+	  ;; I don't/I won't
 	  ((ONT::SPEECHACT ?!vv ONT::SA_TELL :content ?!x)
-	   (ONT::F ?!x ONT::ELLIPSIS :force ONT::FALSE)
+	   (ONT::F ?!x ONT::ELLIPSIS :neutral ?!i :force (? f ONT::FALSE ONT::FUTURENOT))
+	   (ONT::PRO ?!i ONT::PERSON :proform w::I)
 	   -I-dont-response-rule>
 	   (ONT::ANSWER :who *USER* :to *ME* :what ont::NEG))
 
