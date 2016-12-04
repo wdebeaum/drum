@@ -18,3 +18,13 @@
    )
 ))
 
+(define-words :pos W::ADV
+ :words (
+  (W::FEWER
+   (SENSES
+    ((LF-PARENT ONT::LESS-VAL)
+     (TEMPL COMPAR-THAN-templ)
+     )
+    )
+   )
+  ))

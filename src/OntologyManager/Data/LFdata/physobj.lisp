@@ -1765,7 +1765,7 @@
 ;; walk up, down the stairs
 (define-type ONT::STAIRS
     :wordnet-sense-keys ("stairway%1:06:00" "staircase%1:06:00")
-    :parent ONT::route
+    :parent ONT::general-structure
     )
 
 ;; laser

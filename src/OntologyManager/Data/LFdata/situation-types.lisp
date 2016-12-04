@@ -1014,6 +1014,7 @@
 		)
  )
 
+#| ; merged into COMPLETE
 (define-type ONT::succeed
  :wordnet-sense-keys ("hold_one's_own%2:42:00" "succeed%2:41:00" "excel%2:42:00")
  :parent ONT::acting
@@ -1024,7 +1025,7 @@
 	     ;;(:REQUIRED ONT::agent ((? ag f::abstr-obj F::phys-obj) (F::intentional +)) (:implements cause))
               )
  )
-
+|#
 
 ;; tend
 (define-type ONT::be-inclined

@@ -2,11 +2,13 @@
  :words (
    (W::succeed
    (SENSES
-    ((LF-PARENT ONT::succeed)
-      (example "he succeeded")
+    (;(LF-PARENT ONT::succeed)
+     (LF-PARENT ONT::COMPLETE)
+     (example "he succeeded")
       (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
       (TEMPL AGENT-TEMPL))
-    ((LF-PARENT ONT::succeed)
+    (;(LF-PARENT ONT::succeed)
+     (LF-PARENT ONT::COMPLETE)
       (example "he succeeded in singing")
       (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
       (TEMPL AGENT-EFFECT-SUBJCONTROL-TEMPL  (xp (% w::cp (w::ctype w::s-from-ing) (w::ptype (? pt w::at w::in))))))

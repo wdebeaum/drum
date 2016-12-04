@@ -17,3 +17,17 @@
    )
 ))
 
+(define-words :pos W::ADV
+ :words (
+  (W::LESS
+   (SENSES
+    ((LF-PARENT ONT::degree-modifier)
+     (TEMPL PRED-S-POST-TEMPL)
+     (example "Eat less.")
+     )
+    ((LF-PARENT ONT::LESS-VAL)
+     (TEMPL COMPAR-THAN-templ)
+     )
+    )
+   )
+  ))

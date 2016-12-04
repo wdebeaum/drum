@@ -2346,7 +2346,7 @@
   (quan-than-comp  ;; e.g., more than five, more than that
    (SYNTAX (W::QCOMP (% W::PP (W::PTYPE W::THAN) (W::GAP -)))
 			;;(W::SEM ($ F::ABSTR-OBJ (F::INFORMATION F::DATA)))))
-  	   (W::QOF (% W::PP (W::PTYPE W::OF) (W::AGR ?agr1) (W::MASS ?m)))
+  	   (W::QOF (% W::PP (W::PTYPE W::OF) (W::AGR ?agr1) (W::MASS ?m))) 
    ))
   
   (quan-cardinality-templ
@@ -3664,6 +3664,7 @@
   (compar-than-templ 
    (SYNTAX (w::compar-op +) (w::ground-oblig -))
    (arguments
+    (ARGUMENT (% W::NUMBER) ONT::FIGURE) 
     (subcat (% w::PP (w::ptype w::than)) ont::ground)))
 
   

@@ -1016,6 +1016,7 @@
   :parent ONT::object-change
   )
 
+#|
 ;;; My own top frame for situation changes
 (define-type ONT::Situation-Change
  :wordnet-sense-keys ("go%2:42:03" "go%2:42:12")
@@ -1027,6 +1028,7 @@
              ;;(:OPTIONAL ONT::agent ((? agt f::phys-obj f::abstr-obj) (f::intentional +)) (:implements cause))
 	     (:required ont::effect (F::Situation (F::Aspect (? asp F::Dynamic F::Stage-level)))))
  )
+|#
 
 (define-type ONT::Stop
     :wordnet-sense-keys ("lay_off%2:42:00" "quit%2:42:04" "give_up%2:42:00" "cease%2:42:00" "stop%2:42:00" "discontinue%2:42:00" "cease%2:42:13" "terminate%2:42:00"  "terminate%2:30:01" "finish%2:42:00" "stop%2:42:13" "end%2:42:00" "run_out%2:42:00" "expire%2:42:00" "blow_out%2:43:00" "bog_down%2:38:01" "break%2:42:04" "get_off%2:41:00" "halt%2:38:01" "stop%2:38:01" "abort%2:29:00" "terminate%2:30:01")
@@ -1257,14 +1259,16 @@
 
 ;;; Complete takes an action that requires an intentional agent
 (define-type ONT::Complete
- :wordnet-sense-keys ("complete%2:30:02" "finish%2:30:02" "carry_to_term%2:29:00")
- :parent ONT::SITUATION-CHANGE
+ :wordnet-sense-keys ("complete%2:30:02" "finish%2:30:02" "carry_to_term%2:29:00" "hold_one's_own%2:42:00" "succeed%2:41:00" "excel%2:42:00")
+; :parent ONT::SITUATION-CHANGE
+ :parent ONT::ACTING
  :sem (F::Situation (F::Cause F::agentive))
  )
 
 (define-type ONT::progress
  :wordnet-sense-keys ("go%2:30:02" "progress%2:30:00"  "progress%2:38:00"  "progress%2:30:01")
- :parent ONT::SITUATION-CHANGE
+; :parent ONT::SITUATION-CHANGE
+ :parent ONT::ACTIVITY-ONGOING
  :comment "A situation continues to develop"
  :sem (F::Situation (F::Cause F::agentive))
  )

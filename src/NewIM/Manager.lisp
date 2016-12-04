@@ -944,3 +944,19 @@
 		    (list (list b a))))))
 	(list (list b a))
 	)))
+
+(defun sort-symbol-map (symbol-map)
+  "Return a copy of a simple symbol map (just (ont-type symbol) pairs with no
+   lexical items or mapping groups), sorted so that descendant/more specific
+   ont types come before their ancestor/more general ont types. This is used in
+   rule sets generated from the online ontology builder/mapper tool."
+  (stable-sort
+      ;; stable-sort is destructive, so copy the list first
+      (copy-list symbol-map)
+      ;; it suffices to sort in reverse order by the length of the path from
+      ;; the ont type to the root of the ontology hierarchy; ancestors will
+      ;; have shorter paths than descendants
+      #'>
+      :key (lambda (pair) (length (om::get-parents (car pair))))
+      ))
+
