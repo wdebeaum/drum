@@ -32,6 +32,21 @@
 	  ))
       (if (null versions) '(nil) versions))))
 
+;; bioentities is an OBO file, but it uses non-numeric IDs, so instead we go by
+;; the first character (which happens to always match /\w/)
+(defun get-bioentities-files-for-symbol (rv sym)
+  (with-slots (base-dir) rv
+    (let* ((symname (symbol-name sym))
+	   (filename (subseq symname 0 1)))
+      (list (make-pathname :defaults base-dir :name filename :type "lisp")))))
+
+(defresource (BE BioEntities) (
+  :base-dir (pathname-directory #!TRIPS"src;TextTagger;drum-dsl;BE;")
+  :get-files-for-symbol #'get-bioentities-files-for-symbol
+  ))
+
+(defresource (BEL Biological-Expression-Language)) ; also used in bioentities
+
 (def-obo-resource (BTO brenda-tissue-ontology) (:version "119"))
 (def-obo-resource (CHEBI chemical-entities-of-biological-interest))
 (def-obo-resource (CO cell-ontology)) ; NOTE: can't use CL because that's Common Lisp
@@ -57,3 +72,4 @@
 
 (require-resource-version :ont)
 (require-dsl-file #!TRIPS"src;TextTagger;drum-mappings.lisp")
+

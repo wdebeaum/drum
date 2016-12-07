@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.88 2016/07/06 20:22:26 wdebeaum Exp $
+# $Id: Makefile,v 1.89 2016/12/06 21:39:30 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -178,7 +178,7 @@ drum-dbxrefs.tsv: get-uniprot-dbxrefs.pl downloads/uniprot_sprot.dat.gz
 	gunzip -c downloads/uniprot_sprot.dat.gz \
 	| ./$< >$@
 
-OBO_FILES=$(foreach f,BrendaTissueOBO cellosaurus.obo chebi.obo cl-basic.obo efo.obo go.obo unit.obo,downloads/$(f))
+OBO_FILES=$(foreach f,bioentities.obo BrendaTissueOBO cellosaurus.obo chebi.obo cl-basic.obo efo.obo go.obo unit.obo,downloads/$(f))
 # psi-mi25.obo so-xp.obo
 
 obo-terms.tsv: get-obo-terms.pl $(OBO_FILES) Makefile
@@ -224,6 +224,9 @@ ncit-terms.tsv: get-ncit-terms.pl downloads/$(NCIT_ZIPFILE)
 
 specialist.tsv: get-specialist-tsv.pl downloads/LEXICON downloads/inflection.table $(prefix)/src/LexiconManager/Data/new
 	TRIPS_BASE=$(prefix) ./get-specialist-tsv.pl downloads/LEXICON downloads/inflection.table >$@
+
+downloads/bioentities.obo:
+	$(call download_compressed,"https://raw.githubusercontent.com/sorgerlab/bioentities/master/export/bioentities.obo")
 
 # see http://www.obofoundry.org/ for up-to-date links
 
@@ -293,6 +296,10 @@ downloads/LEXICON:
 downloads/inflection.table:
 	$(call download_compressed,"http://lexsrv3.nlm.nih.gov/LexSysGroup/Projects/lexicon/2015/release/LEX/MISC/inflection.table")
 
+drum-dsl/BE/COMPLETE: downloads/bioentities.obo obo-to-dsl.pl
+	./obo-to-dsl.pl <$<
+	touch $@
+
 drum-dsl/BTO/COMPLETE: downloads/BrendaTissueOBO obo-to-dsl.pl
 	./obo-to-dsl.pl <$<
 	touch $@
@@ -325,7 +332,7 @@ drum-dsl/UO/COMPLETE: downloads/unit.obo obo-to-dsl.pl
 	./obo-to-dsl.pl <$<
 	touch $@
 
-drum-dsl: drum-dsl/BTO/COMPLETE drum-dsl/CHEBI/COMPLETE drum-dsl/CO/COMPLETE drum-dsl/EFO/COMPLETE drum-dsl/GO/COMPLETE drum-dsl/UO/COMPLETE
+drum-dsl: drum-dsl/BE/COMPLETE drum-dsl/BTO/COMPLETE drum-dsl/CHEBI/COMPLETE drum-dsl/CO/COMPLETE drum-dsl/EFO/COMPLETE drum-dsl/GO/COMPLETE drum-dsl/UO/COMPLETE
 
 # drum-dsl/MI/COMPLETE
 # drum-dsl/SO/COMPLETE 

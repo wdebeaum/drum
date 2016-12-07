@@ -279,7 +279,7 @@ sub tag_drum_terms {
 		 $match->{'surely-depluralized'}
 		) {
 	  # skip morphed CHEBI and CVCL terms
-	} elsif ($id =~ /^(BTO|CHEBI|CO|EFO|GO|MI|NCIT|UO|SO|ORPHANET):/) { # ontologies with hierarchies
+	} elsif ($id =~ /^(BE|BTO|CHEBI|CO|EFO|GO|MI|NCIT|UO|SO|ORPHANET):/) { # ontologies with hierarchies
 	  push @mapped_ids, $id
 	    unless (exists($mapped_id_to_matches_with_status{$id}));
 	  push @{$mapped_id_to_matches_with_status{$id}}, $match_with_status
@@ -329,7 +329,7 @@ sub tag_drum_terms {
 	  $lftypes = ['PHARMACOLOGIC-SUBSTANCE'];
 	} elsif ($id =~ /^CVCL:/) { # everything's a cell line
 	  $lftypes = ['CELL-LINE'];
-	} elsif ($id =~ /^FA:/) { # everything's a protein family
+	} elsif ($id =~ /^(FA|NEXTPROT-FAMILY):/) { # everything's a protein family
 	  $lftypes = ['PROTEIN-FAMILY'];
 	} elsif ($id =~ /^HP:/) { # everything (that we get) is a disease
 	  # NOTE: technically we could use EFO's hierarchy for this, but that
