@@ -1296,12 +1296,12 @@
 
 ;; kill, destroy
 (define-type ont::destroy
- :wordnet-sense-keys ("destroy%2:35:00" "destroy%2:36:00" "destroy%2:35:01" "down%2:38:00")
+ :wordnet-sense-keys ("destroy%2:35:00" "destroy%2:36:00" "down%2:38:00")
   :parent ont::change-state
    )
 
 (define-type ont::kill
-    :wordnet-sense-keys ("kill%2:35:00" "kill%2:35:01" "kill%2:35:02")
+    :wordnet-sense-keys ("kill%2:35:00" "kill%2:35:01" "kill%2:35:02" "destroy%2:35:01")
     :comment "killing a living being"
     ;;:definitions ((cause-effect :agent (R :agent) :formal (ont::die :affected (R :affected))))
     :arguments ((:ESSENTIAL ONT::affected (F::phys-obj (F::origin F::living))))

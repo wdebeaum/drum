@@ -1427,7 +1427,7 @@
 ;; items in this class don't stand for something, but they can contain representations
 ;; e.g. page, book, display
 (define-type ONT::info-medium
-    :wordnet-sense-keys ("written_communication%1:10:00")
+    :wordnet-sense-keys ("written_communication%1:10:00" "speech%1:10:01")
     :parent ONT::info-holder
     :sem (F::Phys-obj (F::information F::data)) ;; why (f::container -) here?
     )

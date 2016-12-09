@@ -895,7 +895,7 @@
 	(LSUBJ (% W::NP (W::var ?subjvar) (W::lex ?lsubjlex)) ONT::AFFECTED)
        ;;;;; the arg of the pred will be the subject of the verb
 	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar))) (:required(W::filled -) (W::argument ?lsubj) 
-										(W::gap ?gap))) ONT::RESULT)
+										(W::gap ?gap))) ONT::FORMAL)
 	))
 
 

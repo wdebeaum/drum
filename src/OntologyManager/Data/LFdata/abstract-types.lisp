@@ -2468,7 +2468,8 @@
 
 ;; lottery, contest
 (define-type ont::competition
-  :parent ont::process
+  :wordnet-sense-keys ("competition%1:11:00")
+  :parent ont::event-defined-by-activity
   )
 
 ;; game

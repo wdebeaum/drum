@@ -2836,7 +2836,7 @@ walk_in%2:38:00::
 young_girl%1:18:00::
 young_person%1:18:00::
 young_woman%1:18:00::
-high-level%5:00:00:superior:01
+high-level%5:00:00:superior:01  ; note these are real hyphens
 high-level%5:00:00:high:01
 low-level%5:00:00:low:02
 low-level%3:00:04::
@@ -2845,4 +2845,22 @@ low-level%5:00:00:low:01
 walk_around%2:38:00::
 walk_around%2:38:01::
 walk_around%2:41:01::
-
+more_than%3:00:00::
+best_friend%1:18:00::
+come_to%2:39:00::
+come_to%2:42:03::
+come_to%2:41:00::
+math_teacher%1:18:00::
+mathematics_teacher%1:18:00::
+pop_quiz%1:10:00::
+get_over%2:38:00::
+get_across%2:38:00::
+get_well%2:30:00::
+bounce_back%2:30:00::
+get_over%2:36:00::
+get_over%2:30:00::
+get_over%2:33:00::
+cut_across%2:35:00::
+cut_across%2:42:00::
+cut_across%2:38:00::
+cut_through%2:38:00::
