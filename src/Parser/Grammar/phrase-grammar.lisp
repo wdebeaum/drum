@@ -2696,14 +2696,14 @@
     ; TEST: the quickly loaded truck ; the quickly computer generated truck
      ;; Myrosia 11/26/01 we only allow those phrases before the verbs. After the verbs, they should be treated as reduced relative clauses
      ((ADJP (ARG ?arg) (VAR ?v) 
-	    (SUBCATMAP ont::affected) (ARGUMENT ?subj)
+	    (SUBCATMAP (? x ont::affected ont::affected-result)) (ARGUMENT ?subj)
 	    (atype central) 
 	    (LF (% PROP (class ?lf) (VAR ?v) (constraint ?newc)))
       )
      -vp-pastprt-adjp>
      (head
       (vp- (class ?lf) (constraint ?cons) (var ?v)
-	   (SUBJ-MAP ont::affected) (SUBJ ?subj) ;; more general to ask for SUBJ to be AFFECTED role, includes
+	   (SUBJ-MAP (? x ont::affected ont::affected-result)) (SUBJ ?subj) ;; more general to ask for SUBJ to be AFFECTED role, includes
  	                                         ;; the passive as well as unaccusative cases
 	   (gap -) ;;  no gap in the VP
 	   (vform (? pp passive pastpart))

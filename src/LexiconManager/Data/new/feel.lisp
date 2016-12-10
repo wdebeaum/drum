@@ -53,7 +53,7 @@
     ;;;; swift 02/12/02 changed subject to experiencer
     ((LF-PARENT ONT::experiencer-emotion)
      (SEM (F::Aspect F::Stage-Level))
-     (TEMPL neutral-pred-xp-templ)
+     (TEMPL experiencer-pred-xp-templ)
      )
     )
    )

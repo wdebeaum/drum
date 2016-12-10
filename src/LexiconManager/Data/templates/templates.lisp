@@ -890,6 +890,17 @@
 										(W::gap ?gap))) ONT::FORMAL)
 	))
 
+       (experiencer-PRED-xp-TEMPL
+       (ARGUMENTS
+	(LSUBJ (% W::NP (W::var ?subjvar) (W::sem ?lsubjsem) (W::lex ?lsubjlex)) ONT::experiencer)
+    ;;;;;(argument ?lsubj)
+    ;;;;; the arg of the pred will be the subject of the verb
+	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar))) (:required (W::filled -)
+					;(W::argument ?lsubj)
+					 (W::argument (% W::np (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var ?lsubjvar)))
+										(W::gap ?gap))) ONT::FORMAL)
+	))
+
       (AFFECTED-PRED-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP (W::var ?subjvar) (W::lex ?lsubjlex)) ONT::AFFECTED)

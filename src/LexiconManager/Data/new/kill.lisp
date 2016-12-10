@@ -12,7 +12,7 @@
      (meta-data :origin calo-ontology :entry-date 20060119 :change-date nil :comments caloy3)
      )
     ((meta-data :origin step :entry-date 20080705 :change-date nil :comments nil)
-     (LF-PARENT ONT::destroy)
+     (LF-PARENT ONT::kill)
      )
    
     )
