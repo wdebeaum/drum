@@ -333,11 +333,11 @@
 	    ((ont::i ont::me ont::my ont::myself
 	      W::i W::me W::my W::myself)
 	     (list (make-ref-hyp :id id :refers-to speaker)))
-	    ((ont::you ont::your ont::yourself
-	      W::you W::your W::yourself) 
+	    ((;ont::you ont::your ont::yourself
+	      W::you W::your W::yourself W::yourselves) 
 	     (list (make-ref-hyp :id id :refers-to addressee)))
 	    ((ont::we ont::our ont::us ont::ourself ont::ourselves
-		      W::we W::our W::us W::ourself W::ourselves)
+		      W::we W::our W::us W::ourself W::ourselves) ; "we" can refer to "you and I"
 	     (list (make-ref-hyp :id id ;;:refers-to id
 				 :lf-type '(ONT::SET-OF ONT::PERSON)
 				 :refers-to 'ONT::US)))
@@ -347,8 +347,8 @@
 	       (or (resolve-pro-fn lf lf-type sem '(concrete) '(individual) index (fn-no-human lf-type) 3)
 		 (resolve-pro-fn lf lf-type sem '(event wh-term state) '(individual) index #'(lambda (x) T) 3))))
 
-	    ((ont::itself
-	      W::itself)
+	    ((;ont::itself
+	      W::itself w::himself w::herself w::themselves)
 	     (resolve-reflexive lf index))
 	    
 	    ((ont::this ont::that ont::these ont::those
@@ -372,10 +372,10 @@
 							;;	       'ONT::MALE-PERSON 'ont::female-person)))
 			     3)
 		 ;;   backoff strategy for gendered pronouns - just look for people
-		 (resolve-pro-fn sem (list* (car lf) (cadr lf) 'ont::person (cdddr lf)) 'ont::person
+		 (resolve-pro-fn (list* (car lf) (cadr lf) 'ont::person (cdddr lf)) 'ont::person sem  ; note: sem still contains old type, e.g., (F::TYPE ONT::FEMALE-PERSON)
 				 '(concrete) '(individual) index 
-				 #'(lambda (x) 
-				     (subtype-check (referent-lf-type x) 'ont::person))
+				 #'(lambda (x) x)
+				     ;;(subtype-check (referent-lf-type x) 'ont::person))
 				 3)))
 		 
 	    
@@ -456,7 +456,7 @@
 (defun resolve-pro-fn (lf lf-type sem access num index fn count)
   "Personal pronouns should refer to a concrete object matching the criteria in the recent history.
     We check in the current utter1ance for possible referents that come before the pro form"
-  (let ((ans (or ;(find-possible-referents-in-current-sentence (get-lf-type lf) sem (second lf) access num index)  ;* not in the current sentence
+  (let ((ans (or (find-possible-referents-in-current-sentence (get-lf-type lf) sem (second lf) access num index)  ; need for "She talked with *her* friend
 		 (search-for-possible-refs lf-type (second lf) sem access num (- index 1) count fn)))) 
 
 	(mapcar #'(lambda (a) (bind-to-referent lf lf-type a)) ans)))
@@ -495,10 +495,13 @@
 				   terms))
 
 	 ;;  now filter by semantic role
-	 (results (or (remove-if-not #'(lambda (x) (eq (referent-role x) :agent))
-				  terms)
-		      (remove-if-not #'(lambda (x) (eq (referent-role x) :affected))
-				  terms))))
+	 (results (or ;(remove-if-not #'(lambda (x) (eq (referent-role x) :agent))
+			;	  terms)
+		      ;(remove-if-not #'(lambda (x) (eq (referent-role x) :affected))
+			;	     terms)
+		      (remove-if-not #'(lambda (x) (member (car (referent-role x)) *core-roles*)) 
+				     terms)
+		      )))
     (mapcar #'(lambda (a) (bind-to-referent lf nil a)) results)))
 		   
 (defun progressive-search-for-possible-refs (lf-type id sem access num index range fn)

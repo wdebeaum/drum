@@ -1020,9 +1020,11 @@
 	     (transform ?transform) (sem ?sem)))
       )
      -adj-unit-modifier> 1.0
-     (ADJP (sort unit-measure) (var ?adjv) 
+     ;(ADJP (sort unit-measure) (var ?adjv) 
+     (ADJP (var ?adjv) 
       (LF (% PROP (constraint (& (GROUND ?adjval)))))
-      (sem ($ F::ABSTR-OBJ (F::scale (? sc ont::scale ont::linear-d)))))
+      ;(sem ($ F::ABSTR-OBJ (F::scale (? sc ont::scale ont::linear-d)))))
+      )
      (head (ADJ (LF ?lf)  (VAR ?v) (SUBCAT -) (sem ($ F::ABSTR-OBJ (F::scale (? sc ont::scale ont::linear-d))))
 		(SORT PRED) ;;(ARGUMENT-MAP ?argmap)
 		(transform ?transform) (constraint ?con)
@@ -2342,7 +2344,7 @@
                 ))
      (case ?case) (agr 3p)
      (SORT PRED)
-     (MASS ?mass)
+     (MASS count)
      (VAR *) (WH ?w));; must move WH feature up by hand here as it is explicitly specified in a daughter.
      -np-spec-of-def-plur-pp>
     (SPEC (LF ?spec) (ARG ?v) (VAR ?specvar) (name-spec -) (POSS -);;myrosia 12/27/01 added mass restriction to spec
@@ -2447,6 +2449,7 @@
      (ADJP headcat lex)
      )
 
+#|
     ;;  a four cycle engine, a two-trick pony, a one horse town, ...
     ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype central) (comparative -) (argument ?aa)
       (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
@@ -2466,6 +2469,28 @@
 	      (post-subcat -)
 	      ))
     (add-to-conjunct (val (amount ?sz)) (old ?restr) (new ?con)))
+|#
+    
+    ;;  a four cycle engine, a two-trick pony, a one horse town, ...
+    ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype central) (comparative -) (argument ?aa)
+      (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
+	     (CONSTRAINT (& (FIGURE ?arg) 
+			    (GROUND (% *PRO* (status ont::kinD) (var ?nv) 
+				    (CLASS ?c) (CONSTRAINT ?con)))))
+				    
+	     (Sem ?sem)))
+      (transform ?transform))
+     -adj-number-noun> .97    ;; this is very rare 
+     (NUMBER  (val ?sz) (VAR ?nv) (restr -))
+     (Gt (arg1 ?sz) (arg2 0))   ;; negative numbers don't work as cardinailty adjectives!
+     (head (N1 (VAR ?v) (class ?c) (Mass count) (sort PRED)
+	      (KIND -) (one -) ;; don't allow "one" as the N!
+	      (RESTR ?restr) (sem ($ (? ss  F::PHYS-OBJ F::SITUATION-ROOT  F::ABSTR-OBJ))) (sem ?sem)
+	      (transform ?transform) (postadvbl -)
+	      (post-subcat -)
+	      ))
+    (add-to-conjunct (val (amount ?sz)) (old ?restr) (new ?con)))
+
 
       ;; version of adj-number-noun with units -- creates quantities, not sets
     ;; a 10 foot fence, 2 week vacation
@@ -2480,7 +2505,7 @@
       (transform ?transform))
      -adj-number-unit-modifier>
      (NUMBER  (val ?sz) (VAR ?nv) (restr -))
-     (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m) 
+     (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
 	       (KIND -) ;;(agr 3s)   we allow either 61 year old or 61 years old
 	       (sem ?sem)  (sem ($ f::abstr-obj (f::scale ?sc)))
 	       (RESTR ?restr) (transform ?transform)
@@ -2535,7 +2560,7 @@
        
     ((SPEC (AGR ?agr)
       (VAR *) 
-      (ARG ?arg) (lex ?lex) (LF SM) (SUBCAT ?subcat) (Mass MASS)
+      (ARG ?arg) (lex ?lex) (LF ont::SM) (SUBCAT ?subcat) (Mass MASS)
       (unit-spec +)
       (restr (& (quantity ?unit-v)))) ;; mass nouns get QUANTITY in the restriction
      -spec-indef-unit-mass>
@@ -3564,10 +3589,11 @@
 	     (sem ?sem) (transform ?trans)))
       (gap -) (pp-word +)
       (role ?reln)
+      (sem ?sem)
       )
      -how-adj>     
      (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ?pro-class) (lex how))
-     (head (adjp (var ?adjv) (atype ?atype) (arg ?argvar) (LF (% PROP (class ?reln) (constraint ?con)))))
+     (head (adjp (var ?adjv) (atype ?atype) (arg ?argvar) (sem ?sem) (LF (% PROP (class ?reln) (constraint ?con)))))
      (append-conjuncts (conj1 ?con) 
       (conj2 (& (degree (% *PRO* (status *wh-term*) (VAR *) (CLASS ont::degree)
 		   (SEM ?subcatsem) (CONSTRAINT (& (proform ?lex) (suchthat ?adjv)))))))

@@ -1,7 +1,7 @@
 ;;;;
 ;;;; defsys.lisp : Defsystem for the TRAINS/TRIPS IM
 ;;;;
-;;;; $Id: defsys.lisp,v 1.16 2016/01/01 16:00:39 james Exp $
+;;;; $Id: defsys.lisp,v 1.17 2016/12/11 02:31:23 cmteng Exp $
 ;;;;
 
 (unless (find-package :trips)
@@ -100,6 +100,9 @@ the real ones.")
 
 (defvar *symbol-map* nil)
 
+(defvar *core-roles* '(:AGENT :agent1 :AFFECTED :affected1 :EXPERIENCER :NEUTRAL :neutral1 :FORMAL :formal1 :affected-result
+			   :figure :figure1 :ground :ground1))
+
 (when *BA-develop-mode*
   (format *error-output* "~%~%warning: IM in develop mode. To disable this set *develop-mode* to nil~%~%"))
 
@@ -114,7 +117,7 @@ the real ones.")
 (defvar *show-lf-graphs* nil)
 
 (defun initialize nil
-  (defvar *current-dialogue-manager* #'textIM)  ;; the default dialogue manager. This should be set in the system.lisp file - its set here just in case its not!
+  (defvar *current-dialog-manager* #'textIM)  ;; the default dialogue manager. This should be set in the system.lisp file - its set here just in case its not!
  (om::initialize-ontology)
  (init-ont-hierarchy)
  

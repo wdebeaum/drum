@@ -35,14 +35,14 @@
 (defcomponent-handler
     '(request &key :content (any-pending-speech-acts . *))
     #'(lambda (msg args)
-	(reply-to-msg msg 'tell :content
-		      (list 'REPLY :content (list 'RESULT :content 
+	(reply-to-msg msg 'reply :content
+		      (list 'report :content (list 'pending-speech-acts :result 
 						  (if (or (null *inputQ*)
 							  (and (eq (list-length *inputQ*) 1) 
 							       (eq (caar *inputQ*) 'utterance-end)))
 						      'NO
-						      'YES)
-						  :context 'dummy)))
+						      'YES))
+						  :context 'dummy))
 	 )
   :subscribe t)
 

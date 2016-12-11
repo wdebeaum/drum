@@ -91,8 +91,7 @@
 (defun extract-roles-from-arglist (lf var)
   "finds the grammatical roles LSUBJ, DOBJ, IOBJ in an LF - returns an assoc list"
   (when lf
-    (if (member (car lf) '(:AGENT :agent1 :AFFECTED :affected1 :EXPERIENCER :NEUTRAL :neutral1 :FORMAL :formal1 :affected-result
-			   :figure :figure1 :ground :ground1))
+    (if (member (car lf) *core-roles*)  
 	(list* (list (second  lf) (car lf) var)
 	       (extract-roles-from-arglist (cddr lf) var))
 	(extract-roles-from-arglist (cddr lf) var))))

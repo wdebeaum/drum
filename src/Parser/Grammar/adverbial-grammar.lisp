@@ -487,7 +487,7 @@
 		(ellipsis -)
 		))
 
-     (advbl (ATYPE POST) (ARGUMENT (% S (sem ?sem))) (GAP -)
+     (advbl (ATYPE POST) (ARGUMENT (% S (sem ?sem) (subjvar ?subjvar))) (GAP -)
       ;;(subjvar ?subjvar)   ;Not sure why this was here - maybe for purpose clauses. Leaving it in causes many parses to fail as the SUBJVAR in the new VP is wrecked
       (ARG ?v) (VAR ?mod)
       (role ?advrole) 
@@ -1207,6 +1207,20 @@
 		      ))
      )
 
+    ;; TEST: more than five (trucks)
+    ((number (agr ?agr) (VAR ?v) (MASS ?mn) (lf ?lf) (sem ?sem) (premod +) ;;(val ?val)
+	     (nobarespec +) ; this can't be a specifier -- that goes through the cardinality rules
+	     (restr (& (mods (% *PRO* (status ont::F) (class ?lfa) (var ?v1) 
+				(constraint (& (FIGURE ?v) 
+					       (GROUND (% *PRO* (status ont::indefinite) (var *) (class ont::number) (constraint (& (value ?val)))))))))))
+	     )
+     -advbl-bare-number-pre-than>
+     (adv (VAR ?v1) (argument (% number)) (Mass ?m) (lf ?lfa))
+     (word (lex w::than))
+     (head (number (VAR ?v) (lf ?lf) (lex ?l) (agr ?agr) (MASS ?mn) (sem ?sem) (val ?val) (premod -)
+		      ))
+     )
+    
     ;; TEST: eight or so
     ((number (agr ?agr) (VAR ?v) (MASS ?mn) (lf ?lf) (sem ?sem) (premod +) ;;(val ?val)
 	     (nobarespec +) ; this can't be a specifier -- that goes through the cardinality rules
@@ -1396,7 +1410,7 @@
       ;; TEST: Barking, the dog chased the cat.
    ;; TEST: The dog chased the cat barking.
    ((advbl (arg ?arg) (sem ($ f::abstr-obj (f::information -) (f::intentional -)))
-     (argument (% S (sem ($ f::situation (f::aspect f::dynamic))))) 
+     (argument (% S (sem ($ f::situation (f::aspect f::dynamic))) (subjvar ?!subjvar) (subj ?!subj))) 
      (sort pred) (gap -) (atype (? atp pre post))
      (role ONT::MANNER) (var **)
      (LF (% PROP (CLASS ONT::IMPLICIT-OVERLAP) (VAR **) 
@@ -1406,8 +1420,10 @@
     -vp-ing-advbl> .98
     (head (vp (vform ing) (var ?v) (gap -) (aux -) (advbl-necessary -)
 	   (constraint ?con)  (transform ?transform) (class ?class)
-	   (subj (% np (sem ?subjsem)))
-	   (subjvar (% *PRO* (VAR *) (gap -) (sem ?subjsem)))
+	   (subj (% np (sem ?subjsem) (gap -)))
+	   ;(subjvar (% *PRO* (VAR *) (gap -) (sem ?subjsem)))
+	   (subjvar ?!subjvar)
+	   (subj ?!subj)
 	   ))
     )
 #||   I don't think we can distinguish RESULT well from temporal overlap

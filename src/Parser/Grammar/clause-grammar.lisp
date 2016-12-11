@@ -2414,7 +2414,7 @@
     (head (np (wh -) (sort (? x pred unit-measure)) (complex -) (var ?v) (sem ($ ?!type))))
     (punc (punctype ?p) (lex w::punc-question-mark))
     )
-
+   
    ; What next?  What color?
    ((utt (lf (% speechact (var *) (class ont::SA_WH-QUESTION) (constraint (& (content ?v) (focus ?v) (punctype ?p))) )) (var *)
 	 (punc +) (punctype ?p))
@@ -2423,6 +2423,14 @@
     (punc (punctype ?p) (lex w::punc-question-mark))
     )
    
+   ; How big?
+   ((utt (lf (% speechact (var *) (class ont::SA_WH-QUESTION) (constraint (& (content ?v) (focus ?v) (punctype ?p))) )) (var *)
+	 (punc +) (punctype ?p)) 
+    -how-adj-utt-simple-q> .98
+    (head (adjp (wh Q) (sort (? x pp-word)) (complex -) (var ?v) (sem ($ ?!type))))
+    (punc (punctype ?p) (lex w::punc-question-mark))
+    )
+
    ;; complex nps (e.g., disjunctions, conjunctions) are dispreferred over parses with disjunction more deeply attached
     ((utt (lf (% speechact (var *) (class ont::sa_identify) (constraint (& (content ?v))))) (var *))
      -np-utt> .97
