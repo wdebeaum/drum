@@ -773,7 +773,15 @@
 
 ; hit, strike
 (define-type ONT::HITTING
- :wordnet-sense-keys ("collide_with%2:35:00" "hit%2:35:01" "hit%2:35:03" "impinge_on%2:35:00" "run_into%2:35:01" "strike%2:35:01" )
+ :wordnet-sense-keys ("hit%2:35:03" "strike%2:35:01" )
+ :parent ONT::MOTION
+ :sem (F::SITUATION (F::Trajectory -))
+ :arguments ((:OPTIONAL ONT::FORMAL1 ((? o F::Phys-obj f::abstr-obj)))   ;; I added a restriction -- situations, times, etc, don't make much sense here, i think  JFA 1/10
+             )
+ )
+
+(define-type ONT::COLLIDE
+ :wordnet-sense-keys ("collide_with%2:35:00" "run_into%2:35:01" "strike%2:35:01" "collide%2:35:01"  "collide%2:35:00" "crash%2:38:02" "crash%2:38:01")
  :parent ONT::MOTION
  :sem (F::SITUATION (F::Trajectory -))
  :arguments ((:OPTIONAL ONT::FORMAL1 ((? o F::Phys-obj f::abstr-obj)))   ;; I added a restriction -- situations, times, etc, don't make much sense here, i think  JFA 1/10
@@ -1263,6 +1271,7 @@
 ; :parent ONT::SITUATION-CHANGE
  :parent ONT::ACTING
  :sem (F::Situation (F::Cause F::agentive))
+ :arguments ((:essential ont::formal))
  )
 
 (define-type ONT::progress
@@ -2513,7 +2522,7 @@
  )
 
 (define-type ONT::EXECUTE
-  :wordnet-sense-keys ("take%2:41:04" "fulfil%2:36:00" "fulfill%2:36:00" "action%2:36:00" "carry_out%2:36:00" "execute%2:36:00" "accomplish%2:36:00" "carry_through%2:36:00" "perform%2:36:00" "execute%2:36:01" "do%2:36:01" "do%2:41:01" "play%2:36:05""conduct%2:41:00")
+  :wordnet-sense-keys ("take%2:41:04" "fulfil%2:36:00" "fulfill%2:36:00" "action%2:36:00" "carry_out%2:36:00" "execute%2:36:00" "accomplish%2:36:00" "carry_through%2:36:00" "perform%2:36:00" "execute%2:36:01" "do%2:36:01" "do%2:41:01" "play%2:36:05""conduct%2:41:00" "commit%2:41:00" "commit%2:41:01")
  :parent ONT::cause-effect
  :sem (F::Situation (F::Aspect F::Dynamic))
  :arguments ( ;; run the script/program
@@ -2616,7 +2625,7 @@
  )
 
 
-;; abandon, desert, leave behind
+;; abandon, desert, leave behnid
 (define-type ONT::leave-behind
  :wordnet-sense-keys ("leave%2:31:05" "leave%2:30:03" "leave_behind%2:38:00" "abandon%2:31:01" "abandon%2:40:01")
  :parent ONT::intentionally-act

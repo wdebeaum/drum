@@ -905,8 +905,8 @@
        (ARGUMENTS
 	(LSUBJ (% W::NP (W::var ?subjvar) (W::lex ?lsubjlex)) ONT::AFFECTED)
        ;;;;; the arg of the pred will be the subject of the verb
-	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar))) (:required(W::filled -) (W::argument ?lsubj) 
-										(W::gap ?gap))) ONT::FORMAL)
+	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar))) (:required (W::filled -) (W::argument ?lsubj) 
+										 (W::gap ?gap))) ONT::FORMAL)
 	))
 
 
@@ -915,9 +915,9 @@
 	(LSUBJ (% W::NP (W::var ?subjvar) (W::lex ?lsubjlex)) ONT::agent)
     ;;;;; the arg of the pred will be the subject of the verb
 	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar))) 
-			  (:required (W::filled -) 
+			  (:required (W::filled -) ;;(w::argument ?lsubj)
 				     (W::argument (% W::np (W::sem ?lsubjsem) (W::lex ?lsubjlex)
-						     (W::var ?lsubjvar))) 
+						     (W::var ?subjvar))) 
 				     (W::gap ?gap))) ONT::RESULT)
 	))
       
@@ -1363,7 +1363,7 @@
       (AGENT-GOAL-affected-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::AGENT)
-	(LOBJ (% W::NP) ONT::result)
+	(LOBJ (% W::NP) ONT::affected-result)
 	(LCOMP (:parameter xp (:default (% W::pp (W::ptype W::with)))) ONT::affected OPTIONAL)
 	))
       

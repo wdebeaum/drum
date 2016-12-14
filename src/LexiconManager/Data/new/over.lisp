@@ -72,6 +72,20 @@
 )
 ))
 
+(define-words :pos W::adj 
+ :words (
+  (W::over
+   (SENSES
+    (
+     (LF-PARENT ONT::FINISHED)
+     (example "The show is over.")
+     (TEMPL predicative-only-adj-templ)
+     )
+    )
+   )
+))
+
+
 (define-words :pos W::PREP :boost-word t :templ NO-FEATURES-TEMPL
  :tags (:base500)
  :words (

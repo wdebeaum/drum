@@ -2864,3 +2864,7 @@ cut_across%2:35:00::
 cut_across%2:42:00::
 cut_across%2:38:00::
 cut_through%2:38:00::
+pursued%1:18:00::
+chased%1:18:00::
+doomed%1:14:00::
+lost%1:14:00::

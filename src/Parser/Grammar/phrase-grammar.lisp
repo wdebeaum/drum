@@ -1020,11 +1020,9 @@
 	     (transform ?transform) (sem ?sem)))
       )
      -adj-unit-modifier> 1.0
-     ;(ADJP (sort unit-measure) (var ?adjv) 
-     (ADJP (var ?adjv) 
+     (ADJP (sort unit-measure) (var ?adjv) 
       (LF (% PROP (constraint (& (GROUND ?adjval)))))
-      ;(sem ($ F::ABSTR-OBJ (F::scale (? sc ont::scale ont::linear-d)))))
-      )
+      (sem ($ F::ABSTR-OBJ (F::scale (? sc ont::scale ont::linear-d)))))
      (head (ADJ (LF ?lf)  (VAR ?v) (SUBCAT -) (sem ($ F::ABSTR-OBJ (F::scale (? sc ont::scale ont::linear-d))))
 		(SORT PRED) ;;(ARGUMENT-MAP ?argmap)
 		(transform ?transform) (constraint ?con)
@@ -2449,7 +2447,6 @@
      (ADJP headcat lex)
      )
 
-#|
     ;;  a four cycle engine, a two-trick pony, a one horse town, ...
     ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype central) (comparative -) (argument ?aa)
       (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
@@ -2469,28 +2466,6 @@
 	      (post-subcat -)
 	      ))
     (add-to-conjunct (val (amount ?sz)) (old ?restr) (new ?con)))
-|#
-    
-    ;;  a four cycle engine, a two-trick pony, a one horse town, ...
-    ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype central) (comparative -) (argument ?aa)
-      (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
-	     (CONSTRAINT (& (FIGURE ?arg) 
-			    (GROUND (% *PRO* (status ont::kinD) (var ?nv) 
-				    (CLASS ?c) (CONSTRAINT ?con)))))
-				    
-	     (Sem ?sem)))
-      (transform ?transform))
-     -adj-number-noun> .97    ;; this is very rare 
-     (NUMBER  (val ?sz) (VAR ?nv) (restr -))
-     (Gt (arg1 ?sz) (arg2 0))   ;; negative numbers don't work as cardinailty adjectives!
-     (head (N1 (VAR ?v) (class ?c) (Mass count) (sort PRED)
-	      (KIND -) (one -) ;; don't allow "one" as the N!
-	      (RESTR ?restr) (sem ($ (? ss  F::PHYS-OBJ F::SITUATION-ROOT  F::ABSTR-OBJ))) (sem ?sem)
-	      (transform ?transform) (postadvbl -)
-	      (post-subcat -)
-	      ))
-    (add-to-conjunct (val (amount ?sz)) (old ?restr) (new ?con)))
-
 
       ;; version of adj-number-noun with units -- creates quantities, not sets
     ;; a 10 foot fence, 2 week vacation

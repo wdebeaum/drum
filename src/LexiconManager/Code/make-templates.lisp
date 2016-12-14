@@ -88,6 +88,7 @@
 			(w::agr ,(right-var name '? 'w::agr))
 			(w::var ,(right-var name '? 'w::var))
 			(w::lex ,(right-var name '? 'w::lex))
+			(w::subjvar ,(right-var name '? 'w::subjvar))
 			(w::sort ,(right-var name '? 'w::sort))
 			(w::lf ,(right-var name '? 'w::lf))
 			;;			(class ,(right-var name '? 'class))
