@@ -2,7 +2,7 @@
  * ModemDisplay.java
  *
  * David Costello, costello@cs.rochester.edu,  8 Jul 1999
- * $Id: ModemDisplay.java,v 1.5 2007/09/26 17:42:53 blaylock Exp $
+ * $Id: ModemDisplay.java,v 1.6 2016/12/14 19:41:26 wdebeaum Exp $
  *
  */
 
@@ -51,8 +51,10 @@ public class ModemDisplay extends JFrame implements FacilitatorDisplay, ActionLi
     private boolean showMenuBar = true;
     private Facilitator facilitator;
     private JPanel mainpanel;
+    private JLabel statusLine;
     protected Hashtable entries = new Hashtable();
     TrafficViewer trafficViewer = null;
+    StatusViewer statusViewer = null;
     //
     // Constructors
     //
@@ -119,6 +121,8 @@ public class ModemDisplay extends JFrame implements FacilitatorDisplay, ActionLi
 	    // create a menu bar
 	    createMenus();
 	}
+	statusLine = new JLabel(" ");
+	getContentPane().add(statusLine, "South");
     }
     // Create the column headers for the display
     protected JPanel createHeaders() {
@@ -154,6 +158,7 @@ public class ModemDisplay extends JFrame implements FacilitatorDisplay, ActionLi
         // Control menu 
 	menu = new JMenu("View");
 	addMenuItem("Message Traffic", menu);
+	addMenuItem("Module Status", menu);
 	menubar.add(menu);
         // Debug
 	menu = new JMenu("Debug");
@@ -217,6 +222,9 @@ public class ModemDisplay extends JFrame implements FacilitatorDisplay, ActionLi
 	if (trafficViewer != null) {
 	    trafficViewer.add(name);
 	}
+	if (statusViewer != null) {
+	    statusViewer.add(name);
+	}
 	Debug.debug("ModemDisplay.add: done");
     }
     public void remove(String name) {
@@ -243,6 +251,9 @@ public class ModemDisplay extends JFrame implements FacilitatorDisplay, ActionLi
 	if (trafficViewer != null) {
 	    trafficViewer.remove(name);
 	}
+	if (statusViewer != null) {
+	    statusViewer.remove(name);
+	}
 	Debug.debug("ModemDisplay.remove: done");
     }
     public void changeName(String oldname, String newname) {
@@ -262,6 +273,9 @@ public class ModemDisplay extends JFrame implements FacilitatorDisplay, ActionLi
 	entry.setName(newname);
 	if (trafficViewer != null) {
 	    trafficViewer.changeName(oldname, newname);
+	}
+	if (statusViewer != null) {
+	    statusViewer.changeName(oldname, newname);
 	}
 	Debug.debug("ModemDisplay.changeName: done");
     }
@@ -299,9 +313,17 @@ public class ModemDisplay extends JFrame implements FacilitatorDisplay, ActionLi
 	}
 	entry.indicate(which, color);
     }
+    private static boolean statusVerbIs(String status, String verb) {
+        return status.equalsIgnoreCase(verb) ||
+	       status.toUpperCase().startsWith("(" + verb);
+    }
     public void indicateStatus(String name, String status) {
 	if (name.equals("STDIN")) {
 	    // Special case to not show stdin in display
+	    return;
+	} else if (name.equalsIgnoreCase("system")) {
+	    // Special case for system status line
+	    statusLine.setText(status);
 	    return;
 	}
 	ModemDisplayEntry entry = (ModemDisplayEntry)entries.get(name);
@@ -310,14 +332,20 @@ public class ModemDisplay extends JFrame implements FacilitatorDisplay, ActionLi
 	    return;
 	}
 	int color;
-	if (status.equalsIgnoreCase("READY")) {
+	if (statusVerbIs(status, "READY")) {
 	    color = LED.GREEN;
-	} else if (status.equalsIgnoreCase("CONNECTED")) {
+	} else if (statusVerbIs(status, "CONNECTED")) {
+	    color = LED.PINK;
+	} else if (statusVerbIs(status, "WAITING")) {
 	    color = LED.YELLOW;
 	} else {
 	    color = LED.RED;
 	}
 	entry.set(ModemDisplayEntry.ST, color);
+	entry.setToolTipText(status);
+	if (statusViewer != null) {
+	    statusViewer.indicateStatus(name, status);
+	}
     }
     //
     // ActionListener method
@@ -334,6 +362,8 @@ public class ModemDisplay extends JFrame implements FacilitatorDisplay, ActionLi
 	    facilitator.dumpSubscriptions();
 	} else if (cmd.equals("Message Traffic")) {
 	    showMessageTraffic();
+	} else if (cmd.equals("Module Status")) {
+	    showModuleStatus();
 	}
     }
     //
@@ -344,11 +374,17 @@ public class ModemDisplay extends JFrame implements FacilitatorDisplay, ActionLi
 	if (trafficViewer != null) {
 	    trafficViewer.setVisible(false);
 	}
+	if (statusViewer != null) {
+	    statusViewer.setVisible(false);
+	}
     }
     public void showWindow() {
 	setVisible(true);
 	if (trafficViewer != null) {
 	    trafficViewer.setVisible(true);
+	}
+	if (statusViewer != null) {
+	    statusViewer.setVisible(true);
 	}
     }
     //
@@ -358,6 +394,14 @@ public class ModemDisplay extends JFrame implements FacilitatorDisplay, ActionLi
 	    trafficViewer = new TrafficViewer(facilitator);
 	}
 	trafficViewer.setVisible(true);
+    }
+    //
+    // Module Status Viewer
+    void showModuleStatus() {
+	if (statusViewer == null) {
+	    statusViewer = new StatusViewer(facilitator);
+	}
+	statusViewer.setVisible(true);
     }
 }
 

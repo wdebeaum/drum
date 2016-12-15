@@ -2,7 +2,7 @@
 # Makefile for Java Facilitator (formerly Input Manager)
 #
 # David Costello, costello@cs.rochester.edu,  8 Jul 1999
-# $Id: Makefile,v 1.2 2012/08/11 03:31:22 iperera Exp $
+# $Id: Makefile,v 1.3 2016/12/14 19:41:26 wdebeaum Exp $
 #
 
 MAIN    = Facilitator
@@ -26,6 +26,7 @@ SRCS = ClientGroup.java \
 	Registry.java \
 	Sendable.java \
 	SocketClient.java \
+	StatusViewer.java \
 	StderrReader.java \
 	StdinClient.java \
 	Subscription.java \
@@ -50,13 +51,16 @@ CLASSES = $(SRCS:.java=.class) \
 	MatchVerbPattern.class \
 	ModemDisplayEntry.class \
 	RegistryEntry.class \
+	StatusViewer$$1.class \
+	StatusViewer$$NonEditableTableModel.class \
 	Subscription.class \
 	SubscriptionPattern.class \
 	TimeStamper.class
 XTRA = images/LEDgreen.gif \
 	images/LEDoff.gif \
 	images/LEDred.gif \
-	images/LEDyellow.gif
+	images/LEDyellow.gif \
+	images/LEDpink.gif
 
 CONFIGDIR=../config
 include $(CONFIGDIR)/java/prog.mk

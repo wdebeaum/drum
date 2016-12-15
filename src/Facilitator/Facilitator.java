@@ -2,7 +2,7 @@
  * @(#)Facilitator.java
  *
  * David Costello, costello@cs.rochester.edu,  8 Jul 1999
- * $Id: Facilitator.java,v 1.8 2010/04/22 03:20:20 lgalescu Exp $
+ * $Id: Facilitator.java,v 1.9 2016/12/14 19:41:25 wdebeaum Exp $
  */
 package TRIPS.Facilitator;
 
@@ -18,6 +18,7 @@ import java.util.Enumeration;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Arrays;
+import java.util.Map;
 import TRIPS.KQML.KQMLPerformative;
 import TRIPS.KQML.KQMLObject;
 import TRIPS.KQML.KQMLList;
@@ -70,6 +71,9 @@ public class Facilitator extends Thread implements Sendable {
     protected ServerSocket serverSocket;
     protected boolean serverRunning;
     protected Registry registry;
+    protected Hashtable<Sendable, String> clientStatuses =
+      new Hashtable<Sendable, String>();
+    protected String systemStatus = " ";
     protected Log log;
     protected FacilitatorDisplay display = new NullDisplay();
     protected SubscriptionManager subscriptionManager;
@@ -288,6 +292,7 @@ public class Facilitator extends Thread implements Sendable {
 	// Add facilitator itself to the display
 	display.add(getName());
 	display.indicateStatus(getName(), "READY");
+	clientStatuses.put(this, "READY");
 	Debug.debug("initDisplay: done");
     }
     protected void initLog() {
@@ -342,6 +347,7 @@ public class Facilitator extends Thread implements Sendable {
 	String name = client.getName().toUpperCase();
 	display.add(name);
 	display.indicateStatus(name, "CONNECTED");
+	clientStatuses.put(client, "CONNECTED");
 	Debug.debug("Facilitator.add: done");
     }
     /**
@@ -443,6 +449,7 @@ public class Facilitator extends Thread implements Sendable {
 	// Remove from registry also
 	Debug.debug("Facilitator.remove: removing client " + client);
 	registry.remove(client);
+	clientStatuses.remove(client);
 	Debug.debug("Facilitator.remove: done");
     }
     //
@@ -745,13 +752,14 @@ public class Facilitator extends Thread implements Sendable {
 	    }
 	}
 	KQMLObject statusobj = content.get(1);
-	if (statusobj == null || !(statusobj instanceof KQMLToken)) {
-	    errorReply(msg, fromWhom, "TELL MODULE-STATUS: second of :content is not a token");
+	if (statusobj == null) {
+	    errorReply(msg, fromWhom, "TELL MODULE-STATUS: second of :content is not present");
 	    return;
 	}
 	String status = statusobj.toString();
 	// Show status on display
 	display.indicateStatus(sendername, status);
+	clientStatuses.put(fromWhom, status);
     }
     public void receiveTellComponentStatus(KQMLPerformative msg,
 					   Sendable fromWhom,
@@ -763,13 +771,20 @@ public class Facilitator extends Thread implements Sendable {
 	}
 	String who = whoobj.toString();
 	KQMLObject whatobj = content.getKeywordArg(":what");
-	if (whatobj == null || !(whatobj instanceof KQMLToken)) {
-	    errorReply(msg, fromWhom, "TELL COMPONENT-STATUS: :what is not a token");
+	if (whatobj == null) {
+	    errorReply(msg, fromWhom, "TELL COMPONENT-STATUS: :what is not present");
 	    return;
 	}
 	String what = whatobj.toString();
 	// Show status on display
 	display.indicateStatus(who, what);
+	if (who.equalsIgnoreCase("system")) {
+	    systemStatus = what;
+	// store status for this client if :who is in fact their name
+	// (e.g. don't store it for the client for :who system)
+	} else if (registry.lookupClientByName(who) == fromWhom) {
+	    clientStatuses.put(fromWhom, what);
+	}
     }
     public void receiveRequest(KQMLPerformative msg, Sendable fromWhom) {
 	Object contentobj = msg.getParameter(":content");
@@ -800,6 +815,8 @@ public class Facilitator extends Thread implements Sendable {
 		dumpRegistry();
 	    } else if (carstr.equalsIgnoreCase("dump-subscriptions")) {
 		dumpSubscriptions();
+	    } else if (carstr.equalsIgnoreCase("get-status")) {
+	        receiveRequestGetStatus(msg, fromWhom, content);
 	    } else if (carstr.equalsIgnoreCase("start-module")) {
 		try {
 		    launcher.receiveRequestStartModule(content);
@@ -883,7 +900,37 @@ public class Facilitator extends Thread implements Sendable {
 	ClientGroup g = new ClientGroup(name, pg);
 	// Add to registry (so it can be found as a receiver)
 	registry.add(name, g);
-    }		
+    }
+    public void receiveRequestGetStatus(KQMLPerformative msg,
+    					Sendable fromWhom,
+					KQMLList content) {
+        KQMLList replyContent = new KQMLList(new KQMLToken("STATUS"));
+	// add system status if any
+	if (!systemStatus.equals(" ")) {
+	    KQMLList pair = new KQMLList(
+		new KQMLToken("SYSTEM"),
+		new KQMLToken(systemStatus)
+	    );
+	    replyContent.add(pair);
+	}
+	// add each client's status
+	for (Map.Entry<Sendable, String> e : clientStatuses.entrySet()) {
+	    Sendable client = e.getKey();
+	    if (client.getClass() == StdinClient.class) { // skip stdin client
+		continue;
+	    }
+	    String clientName = registry.lookupNameOfClient(client);
+	    if (clientName == null) {
+		clientName = client.getName();
+	    }
+	    KQMLList pair = new KQMLList(
+	        new KQMLToken(clientName),
+		new KQMLToken(e.getValue()) // NOTE: may not actually be a token
+	    );
+	    replyContent.add(pair);
+	}
+        reply("tell", replyContent, msg, fromWhom);
+    }
     public void receiveBroadcast(KQMLPerformative msg,
 				 Sendable fromWhom) {
 	Debug.debug("Facilitator.receiveBroadcast: msg=" + msg);

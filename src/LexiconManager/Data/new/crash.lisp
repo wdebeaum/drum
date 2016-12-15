@@ -7,13 +7,15 @@
   (W::crash
     (wordfeats (W::morph (:forms (-vb) :nom w::crash)))
    (SENSES
-    ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("break-45.1") :wn ("crash%2:35:00" "crash%2:35:01" "crash%2:35:02" "crash%2:38:02"))
-     (LF-PARENT ont::break-object)
-     (TEMPL agent-affected-xp-templ) ; like break,crack,fracture,rip,shatter,chip,splinter,snap
-     (PREFERENCE 0.96)
+    ((LF-PARENT ont::collide)
+     (example "The car crashed into the wall" )
+     (TEMPL affected-affected-templ (xp (% W::PP (W::ptype W::into))))
      )
-    ((LF-PARENT ONT::BREAK-OBJECT)
-     (meta-data :origin calo :entry-date 20040908 :change-date nil :comments caloy2 :vn ("break-45.1") :wn ("crash%2:35:00" "crash%2:35:01" "crash%2:35:02" "crash%2:38:02"))
+    ((LF-PARENT ont::collide)
+     (example "The cars crashed")
+     (TEMPL affected-plural-templ)
+     )
+    ((LF-PARENT ONT::render-ineffective)
      (example "the computer crashed")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL affected-TEMPL)
@@ -23,7 +25,7 @@
      (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
      (example "he crashed the computer")
      )||#
-    ((LF-PARENT ont::break-object)
+    ((LF-PARENT ont::render-ineffective)
      (meta-data :origin calo :entry-date 20040908 :change-date nil :comments caloy2)
      
      (TEMPL agent-affected-xp-templ)

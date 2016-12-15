@@ -2,7 +2,7 @@
  * LED.java
  *
  * George Ferguson, ferguson@cs.rochester.edu, 20 Apr 2000
- * $Id: LED.java,v 1.1.1.1 2005/01/14 19:48:08 ferguson Exp $
+ * $Id: LED.java,v 1.2 2016/12/14 19:41:26 wdebeaum Exp $
  */
 
 package TRIPS.Facilitator;
@@ -21,11 +21,13 @@ public class LED extends JLabel {
     public static final int RED = 1;
     public static final int YELLOW = 2;
     public static final int GREEN = 3;
+    public static final int PINK = 4;
     protected static final String[] iconFilenames = {
 	"images/LEDoff.gif",
 	"images/LEDred.gif",
 	"images/LEDyellow.gif",
-	"images/LEDgreen.gif"
+	"images/LEDgreen.gif",
+	"images/LEDpink.gif"
     };
     //
     // Class variables
