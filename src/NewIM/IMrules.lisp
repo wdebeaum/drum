@@ -183,15 +183,21 @@
      ;; see rule as an answers to a question in generic-Q-model rules
      ;; ellipsis - followup after questions or proposals
 
-     ;; e.g., How about from Atlanta?
+   ;; e.g., How about from Atlanta?
+   #|
       ((ONT::SPEECHACT ?!xx ONT::SA_REQUEST-COMMENT :CONTENT ?!v)
        --ellipsis1>
        (ONT::ELLIPSIS :who *USER* :to *ME* :what ?!v));; :context ?context :prior-index ?index))
+   |#
 
+      ((ONT::SPEECHACT ?!xx ONT::SA_REQUEST-COMMENT :CONTENT ?!v)
+       -request-comment>
+       (ONT::REQUEST-COMMENT :who *USER* :to *ME* :what ?!v))
+      
       ;; e.g., Fill in the author field.   And the title field.
       ((ONT::SPEECHACT ?!xx ONT::SA_IDENTIFY :CONTENT ?!v :mods (?!m))
        (ONT::F ?!m ONT::CONJUNCT)
-       --ellipsis2>
+       -ellipsis2>
        (ONT::ELLIPSIS :who *USER* :to *ME* :what ?!v));; :context ?context :prior-index ?index))
       
    ;;==============================================================
@@ -498,7 +504,7 @@
 
       ;;  e.g., "goodbye."  (Note: "goodbye" without punctuation gives SA_IDENTIFY)
       ((ONT::SPEECHACT ?!x ONT::SA_CLOSE :content ?V1)
-       --close>
+       -close>
        (ONT::CLOSE :who *user* :to *me*  :what ?V1))
       
       ;; do not work: OK, you're welcome

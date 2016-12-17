@@ -276,7 +276,7 @@
     -how-about-s>
     (word (lex (? x how what)) (var ?v1))
     (word (lex about)) 
-    (head ((? cat np vp) (gap -) (var ?v) (lf ?lf) (case (? case obj -)))))
+    (head (np (gap -) (var ?v) (lf ?lf) (case (? case obj -)))))
 
     ;; test: how about horizontally?
     ;; test: what about from the cat?

@@ -13,10 +13,13 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
+import java.awt.Component;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableCellRenderer;
 import TRIPS.KQML.KQMLPerformative;
 
 /**
@@ -48,6 +51,7 @@ public class StatusViewer extends JFrame implements FacilitatorDisplay {
     public boolean isCellEditable(int row, int column) { return false; }
   }
   NonEditableTableModel tableModel;
+  JTable table;
 
   public StatusViewer(Facilitator facilitator) {
     setTitle("TRIPS Module Statuses");
@@ -64,7 +68,8 @@ public class StatusViewer extends JFrame implements FacilitatorDisplay {
     }
     Collections.sort(tableData, rowComparator);
     tableModel = new NonEditableTableModel(tableData, columnHeadings);
-    JTable table = new JTable(tableModel);
+    table = new JTable(tableModel);
+    setNameColumnWidth();
     JScrollPane scroller = new JScrollPane(table);
     getContentPane().add(scroller);
     pack();
@@ -74,6 +79,32 @@ public class StatusViewer extends JFrame implements FacilitatorDisplay {
   // support standalone
   public StatusViewer(Facilitator facilitator, Boolean hideTraffic) {
     this(facilitator);
+  }
+
+  /** Set the max/preferred widths of the name column to the maximum of the
+   * preferred widths of the cells.
+   */
+  void setNameColumnWidth() {
+    // first, get the width of the heading:
+    TableColumn column = table.getColumnModel().getColumn(0);
+    TableCellRenderer r = table.getTableHeader().getDefaultRenderer();
+    // this annoyingly doesn't work for headings like it does for regular cells:
+    //Component c = table.prepareRenderer(r, -1, 0);
+    // but this does:
+    Component c =
+      r.getTableCellRendererComponent(table, cha[0], false, false, -1, 0);
+    int width = c.getPreferredSize().width;
+    // then, get the widths of the cells:
+    int numRows = table.getRowCount();
+    for (int i = 0; i < numRows; i++) {
+      r = table.getCellRenderer(i, 0);
+      c = table.prepareRenderer(r, i, 0);
+      int cellWidth = c.getPreferredSize().width;
+      width = Math.max(width, cellWidth);
+    }
+    width += table.getIntercellSpacing().width;
+    column.setMaxWidth(width);
+    column.setPreferredWidth(width);
   }
 
   /** Return the index of the row whose Module Name value is name. If there is
@@ -113,6 +144,7 @@ public class StatusViewer extends JFrame implements FacilitatorDisplay {
         i,
 	new Vector<String>(Arrays.asList(ra))
       );
+      setNameColumnWidth();
     }
   }
 
@@ -123,6 +155,7 @@ public class StatusViewer extends JFrame implements FacilitatorDisplay {
       Debug.warn("no module named " + name + " connected.");
     } else {
       tableModel.removeRow(i);
+      setNameColumnWidth();
     }
   }
 
@@ -146,6 +179,7 @@ public class StatusViewer extends JFrame implements FacilitatorDisplay {
 	// set the name and put the row back
 	row.set(0, newname);
 	tableModel.insertRow(j, row);
+	setNameColumnWidth();
       }
     }
   }

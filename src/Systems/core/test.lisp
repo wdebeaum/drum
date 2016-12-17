@@ -2,7 +2,7 @@
 ;;;; File: Systems/core/test.lisp
 ;;;; Creator: George Ferguson
 ;;;; Created: Thu Jul 12 15:48:37 2007
-;;;; Time-stamp: <Sat Dec  3 23:36:48 CST 2016 lgalescu>
+;;;; Time-stamp: <Fri Dec 16 12:02:47 CST 2016 lgalescu>
 ;;;;
 ;;;; Based on Test/test-socket.lisp from 14 Jun 1999
 ;;;;
@@ -145,7 +145,10 @@ after each utterance is processed."
 	 (format t "Sample dialogue has ended. Use (START-OVER) to start over.~%"))
 	(t
 	 (incf *test-uttnum*)
-	 (test-one (elt *test-dialog* *test-uttnum*)))))
+	 (test-one (elt *test-dialog* *test-uttnum*))
+	 (when (eql (1+ *test-uttnum*) (length *test-dialog*))
+	   (COMM::send 'test `(TELL :content (component-status :who TEST :what (OK TEST-FINISHED))))
+	   ))))
 
  ;; NEXT3 and NEXT4 here for historical reasons...
 (defun next3 ()

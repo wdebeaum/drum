@@ -2,7 +2,7 @@
  * ModemDisplay.java
  *
  * David Costello, costello@cs.rochester.edu,  8 Jul 1999
- * $Id: ModemDisplay.java,v 1.6 2016/12/14 19:41:26 wdebeaum Exp $
+ * $Id: ModemDisplay.java,v 1.7 2016/12/16 16:39:14 wdebeaum Exp $
  *
  */
 
@@ -331,21 +331,24 @@ public class ModemDisplay extends JFrame implements FacilitatorDisplay, ActionLi
 	    //Debug.error("ModemDisplay.indicateStatus: no entry for name \"" + name + "\"");
 	    return;
 	}
+	if (statusViewer != null) {
+	    statusViewer.indicateStatus(name, status);
+	}
 	int color;
-	if (statusVerbIs(status, "READY")) {
+	if (statusVerbIs(status, "READY") ||
+	    statusVerbIs(status, "OK")) {
 	    color = LED.GREEN;
 	} else if (statusVerbIs(status, "CONNECTED")) {
 	    color = LED.PINK;
 	} else if (statusVerbIs(status, "WAITING")) {
 	    color = LED.YELLOW;
+	} else if (statusVerbIs(status, "UNCHANGED")) {
+	    return; // don't change the color
 	} else {
 	    color = LED.RED;
 	}
 	entry.set(ModemDisplayEntry.ST, color);
 	entry.setToolTipText(status);
-	if (statusViewer != null) {
-	    statusViewer.indicateStatus(name, status);
-	}
     }
     //
     // ActionListener method

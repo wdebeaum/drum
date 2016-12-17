@@ -3587,7 +3587,7 @@
       )
      -how-advbl>     
      (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ?pro-class) (lex how))
-     (head (advbl (var ?adjv) (atype ?atype) (arg ?argvar)  (argument ?argu)
+     (head (advbl (var ?adjv) (atype ?atype) (arg ?argvar)  (argument ?argu) (sort pred) ; to rule out "how about..."
 		  (LF (% PROP (class ?reln) (constraint ?con)))))
      (append-conjuncts (conj1 ?con) 
       (conj2 (& (degree (% *PRO* (status *wh-term*) (VAR *) (CLASS ont::degree)
@@ -4634,7 +4634,10 @@
     ;; and should be changed only if there are compelling counterexamples for predicative-only or attributive-only adjectives
     ;; which I could not find
     ;; Now handles conjunctions and disjunctions
-    ((ADJP (ARG ?arg) (argument ?a) (sem ?sem) (atype central)
+    ;; predicative-only: The cat is alone and afraid
+    ;; attributive-only: The main and only reason
+    ;; postpositive: the cars available and unavailable
+    ((ADJP (ARG ?arg) (argument ?a) (sem ?sem) (atype ?atype1) ;(atype central)
 	   (VAR *) ;(COMPLEX +) -- removed to allow complex adj prenominal modification, e.g. "a natural and periodic state of rest"
 	   (SORT PRED)
       (LF (% PROP (CLASS ?class) (VAR *) (sem ?sem) (CONSTRAINT (& (:sequence (?v1 ?v2)) (:operator ?conj))) ;;?members)))
@@ -4643,12 +4646,14 @@
           
      -adj-conj1>
      (ADJP (arg ?arg) (argument ?a) (VAR ?v1) 
-      (lf (% PROP (class ?c1))) (sem ?s1) (atype central) (post-subcat -)
+      ;(lf (% PROP (class ?c1))) (sem ?s1) (atype central) (post-subcat -)
+      (lf (% PROP (class ?c1))) (sem ?s1) (atype ?atype1) (post-subcat -)
       (set-modifier -)
       )
      (CONJ (LF ?conj) (but-not -) (but -))
      (ADJP (arg ?arg)  (argument ?a) (VAR ?v2) 
-      (LF (% PROP (class ?c2))) (sem ?s2) (atype central) (post-subcat -)
+      ;(LF (% PROP (class ?c2))) (sem ?s2) (atype central) (post-subcat -)
+      (LF (% PROP (class ?c2))) (sem ?s2) (atype ?atype2) (post-subcat -)
       (set-modifier -)
       )
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
