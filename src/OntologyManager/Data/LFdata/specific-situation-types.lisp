@@ -384,7 +384,7 @@
  )
 
 ;; haul, lug
-(define-type ONT::haul
+(define-type ONT::CAUSE-MOVE
   :parent ONT::MOVE
  )
 
@@ -2522,7 +2522,7 @@
  )
 
 (define-type ONT::EXECUTE
-  :wordnet-sense-keys ("take%2:41:04" "fulfil%2:36:00" "fulfill%2:36:00" "action%2:36:00" "carry_out%2:36:00" "execute%2:36:00" "accomplish%2:36:00" "carry_through%2:36:00" "perform%2:36:00" "execute%2:36:01" "do%2:36:01" "do%2:41:01" "play%2:36:05""conduct%2:41:00" "commit%2:41:00" "commit%2:41:01")
+  :wordnet-sense-keys ("fulfil%2:36:00" "fulfill%2:36:00" "action%2:36:00" "carry_out%2:36:00" "execute%2:36:00" "accomplish%2:36:00" "carry_through%2:36:00" "perform%2:36:00" "execute%2:36:01" "do%2:36:01" "do%2:41:01" "play%2:36:05""conduct%2:41:00" "commit%2:41:00" "commit%2:41:01")
  :parent ONT::cause-effect
  :sem (F::Situation (F::Aspect F::Dynamic))
  :arguments ( ;; run the script/program
@@ -2537,7 +2537,7 @@
     )
 
 ;; take a shower (for asma)
-(define-type ont::take
+(define-type ont::take-execute
     :wordnet-sense-keys ("take%2:41:04")
     :parent ont::execute
     :arguments ((:ESSENTIAL ONT::Formal ((? t F::situation)))
@@ -3805,7 +3805,6 @@
              (:OPTIONAL ONT::effect (F::situation))
              )
  )
-
 
 (define-type ONT::Record
  :wordnet-sense-keys ("maintain%2:32:04" "keep%2:32:00" "take%1:04:00")

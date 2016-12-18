@@ -23,7 +23,7 @@
      (PREFERENCE 0.98) ;; prefer agent interp for intransitive
      )
    
-    ((LF-PARENT ONT::haul)
+    ((LF-PARENT ONT::cause-move)
      (example "move the cargo to avon")
      (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
      )

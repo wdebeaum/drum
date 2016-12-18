@@ -53,51 +53,65 @@
      (SEM (F::cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      (templ agent-affected-xp-templ)
      )
+    
     ;;;; Take a path, e.g., The truck takes the route to Avon
     ((LF-PARENT ONT::MOVE-by-means)
      (SEM (F::Aspect F::bounded) (F::time-span F::extended))
+     (example "The truck takes the route to Avon")
      (TEMPL agent-theme-xp-TEMPL)
      )
+    
     ((LF-PARENT ONT::TAKE-TIME)
      (example "the plan took [him] 5 hours")
      (TEMPL neutral-duration-templ)
      )
-    ;;;; it takes 5 hours to complete the plan
+
     ((LF-PARENT ONT::TAKE-TIME)
      (example "it takes 5 hours to  complete the plan")
      (TEMPL THEME-DURATION-EXPLETIVE-TEMPL)
      (SEM (F::Aspect F::stage-level))
      )
+    
     ((LF-PARENT ONT::TAKE-TIME)
      (example "he took 5 hour to work") 
      (TEMPL neutral-DURATION-COMPLEX-SUBJCONTROL-TEMPL)
      )
    
-   ;;;; take notes, pictures
     ((LF-PARENT ONT::create)
      (SEM (F::Cause F::agentive) (F::Aspect F::unbounded) (F::time-span F::extended))
+     (example "take notes; take pictures")
      (TEMPL agent-affected-create-templ)
      )
 
+    #|
     ;;;; take a city the preference is low, so that motion senses,
     ;;;; which are more salient for mobile objects, come up on top
     ((LF-PARENT ONT::appropriate)
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::time-span F::atomic))
      (PREFERENCE 0.96)
      )
-    ;; take the box
+    |#
+    
     ((LF-PARENT ONT::ACQUIRE)
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (preference 1.0) ;; the default 
+     ;(preference 1.0) ;; the default 
+     (example "take the box")
      (template AGENT-AFFECTED-XP-TEMP)
      )
+
+    ((LF-PARENT ONT::cause-move)
+     (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
+     (example "take the bird out of the cage")
+     (template AGENT-AFFECTED-XP-TEMP)
+     )
+    
     ((LF-PARENT ONT::is-compatible-with)
      (SEM (F::Time-span F::extended) (f::trajectory -))
      (example "that projector takes european voltage")
      (templ neutral-neutral-templ)
      (meta-data :origin calo :entry-date 20050308 :change-date nil :comments projector-corpus)
      )
-    ((LF-PARENT ONT::take)
+    ((LF-PARENT ONT::take-execute)
      (example "take action" "take a shower")
      (meta-data :origin asma :entry-date 20111005)
      (templ agent-effect-xp-templ)
