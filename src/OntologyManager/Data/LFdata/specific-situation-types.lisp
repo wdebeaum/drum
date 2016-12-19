@@ -774,17 +774,20 @@
 ; hit, strike
 (define-type ONT::HITTING
  :wordnet-sense-keys ("hit%2:35:03" "strike%2:35:01" )
+ :comment "an agent comes into contact with force with another object, typically harming the other object"
  :parent ONT::MOTION
  :sem (F::SITUATION (F::Trajectory -))
- :arguments ((:OPTIONAL ONT::FORMAL1 ((? o F::Phys-obj f::abstr-obj)))   ;; I added a restriction -- situations, times, etc, don't make much sense here, i think  JFA 1/10
+ :arguments ((:required ONT::affected (F::Phys-obj))
              )
  )
 
 (define-type ONT::COLLIDE
  :wordnet-sense-keys ("collide_with%2:35:00" "run_into%2:35:01" "strike%2:35:01" "collide%2:35:01"  "collide%2:35:00" "crash%2:38:02" "crash%2:38:01")
+ :comment "two objects comes into contact with force with another, typically both being negatively affected - also supports the plural subject that cincludes both objects"
  :parent ONT::MOTION
  :sem (F::SITUATION (F::Trajectory -))
- :arguments ((:OPTIONAL ONT::FORMAL1 ((? o F::Phys-obj f::abstr-obj)))   ;; I added a restriction -- situations, times, etc, don't make much sense here, i think  JFA 1/10
+ :arguments ((:required ONT::affected (F::Phys-obj))
+	     (:optional ONT::affected1 (F::Phys-obj))
              )
  )
 

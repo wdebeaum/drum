@@ -42,7 +42,7 @@
  )
 
 (define-type ONT::CAUSE-Interact
- :wordnet-sense-keys ("interact%2:41:00" "collide%2:35:01")
+ :wordnet-sense-keys ("interact%2:41:00")
  :comment "an AGENT causes some interaction with another agent"
  :parent ONT::CAUSE-EFFECT
  :sem (F::Situation (F::Trajectory -))
