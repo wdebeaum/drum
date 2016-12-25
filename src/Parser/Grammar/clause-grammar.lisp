@@ -500,7 +500,7 @@
      (preadvbl +) (subj ?subj) 
      (advbl-needed -)
      )
-     -wh-setting1> .98 ;; really don't want this to apply before gaps
+     -wh-advbl-q1> .98 ;; really don't want this to apply before gaps
     (advbl
      ;;(argument (% s (sem ?sem) (sem ($ f::situation (f::type f::eventuality)))))
      (var ?advv)
@@ -520,7 +520,7 @@
      (preadvbl +) (subj ?subj) 
      (advbl-needed -)
        )
-    -wh-setting2> .98 ;; don't want this to apply before gaps
+    -wh-advbl-q2> .98 ;; don't want this to apply before gaps
     (np (wh q) (var ?tv) (sem ($ f::time (f::time-scale f::point))))  ;; should only be time points, not intervals
     (head (s (stype ynq) (var ?v) (gap -) (subj ?subj) (tag -)
 	   (lf (% prop (sem ?sem) (class ?c) (constraint ?con) (tma ?tma) (transform ?transform)))
