@@ -31,10 +31,10 @@
 
 (parser::augment-grammar
  '((headfeatures
-    (vp vform var agr neg sem iobj dobj comp3 part cont aux tense-pro gap subj subjvar modal auxname lex headcat transform subj-map template complex)
+    (vp vform var agr neg sem iobj dobj comp3 part cont aux tense-pro gap subj subjvar modal auxname lex headcat transform subj-map template complex ellipsis)
     (vp- vform var agr neg sem iobj dobj comp3 part cont   tense-pro aux modal auxname lex headcat transform subj-map advbl-needed
 	 passive passive-map template) 
-    (s vform var neg sem subjvar dobjvar cont  lex headcat transform)
+    (s vform var neg sem subjvar dobjvar cont  lex headcat transform ellipsis)
     (cp vform var neg sem subjvar dobjvar cont  transform subj-map subj lex)
     (v lex sem lf neg var agr cont aux modal auxname ellipsis tma transform headcat)
     (aux vform var agr neg sem subj iobj dobj comp3 part cont  tense-pro lex headcat transform subj-map advbl-needed
@@ -1416,7 +1416,7 @@
    ;; vp rule with dobj gap
    ;; test: who did he see
    ((vp- (subj ?subj) (subjvar ?subjvar) (dobjvar ?dobjvar)
-     (main +) (gap (% ?s3 (var ?gapvar) (sem ?gapsem) (agr ?gapagr) (gap -) 
+     (main +) (gap (% ?!cat (var ?gapvar) (sem ?gapsem) (agr ?gapagr) (gap -) 
 		      (case ?dcase) (ptype ?ptype)
 		      ))
      (var ?v) 
@@ -1433,7 +1433,7 @@
              (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	     (iobj ?iobj) (iobj (% ?s2 (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))
 	     (part ?part) 
-	     (dobj ?!dobj) (dobj (% np (case (? dcase obj -)) (var ?gapvar) (sem ?gapsem) (agr ?gapagr) (ptype ?ptype))) ;; must have a possibility of np dobj
+	     (dobj ?!dobj) (dobj (% ?!cat (case (? dcase obj -)) (var ?gapvar) (sem ?gapsem) (agr ?gapagr) (ptype ?ptype))) ;; must have a possibility of np dobj
 	     (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -))) 
 	     (subj-map ?lsubj-map) (dobj-map ?!dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	      
@@ -1471,7 +1471,7 @@
 	    (be-there -)
 	   ))
     
-    ?iobj     
+    ?iobj 
     ?dobj
     ?part
     ?comp
@@ -1531,7 +1531,8 @@
 	   ;;(subjvar ?subjvar)
 	   (iobj ?iobj)  (iobj (% ?s2 (var ?iobjvar) (sem ?iobjsem) (gap -) (case (? icase obj -))))
 	   (part ?part) 
-	   (dobj ?dobj)			(dobj (% ?s3 (var ?dobjvar) (sem ?dobjsem) (gap -) (case (? dcase obj -))))
+	   (dobj ?dobj)			
+	   (dobj (% ?s3 (var ?dobjvar) (sem ?dobjsem) (gap -) (case (? dcase obj -))))
 	   (comp3 ?!comp) (comp3 (% ?s4 (var ?!gapvar) (sem ?compsem) (agr ?gapagr) (case (? ccase obj -)) (ptype ?ptype) ))
 	   (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	   
