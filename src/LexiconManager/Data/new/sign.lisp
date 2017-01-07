@@ -26,7 +26,7 @@
       (meta-data :origin task-learning :entry-date 20050825 :change-date nil :comments nil :vn ("image_impression-25.1") :wn ("sign%2:32:02" "sign%2:41:00"))
       (example "sign the requisition form")
       (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
-      (TEMPL AGENT-THEME-XP-TEMPL)
+      (TEMPL AGENT-affected-XP-TEMPL)
      )
     )
    )

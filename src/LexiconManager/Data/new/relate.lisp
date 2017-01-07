@@ -25,7 +25,6 @@
     ((meta-data :origin calo :entry-date 20031230 :change-date nil :comments html-purchasing-corpus)
      (EXAMPLE "It relates this to that")
      (LF-PARENT ONT::RELATE)
-     (SEM (F::Aspect F::bounded))
      (TEMPL neutral-neutral-neutral-xp-templ (xp (% W::pp (W::ptype W::to))))
      )
     )

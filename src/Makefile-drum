@@ -41,6 +41,7 @@ OTHER_PROGRAMS = \
 	Graphviz \
 	TextPP \
 	TextTagger \
+	PubManager \
 	Tools
 
 DATA = \

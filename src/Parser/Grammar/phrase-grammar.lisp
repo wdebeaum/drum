@@ -3518,6 +3518,8 @@
       (sort pp-word)
       (wh-var *)  (WH Q)
       (var ?v) 
+      (IMPRO-CLASS ?pro-class)
+      (GROUNDVAR *)
       (LF (% PROP (VAR ?v) (CLASS ?reln) 
 	     (CONSTRAINT (& (?!submap (% *PRO* (status *wh-term*) (VAR *) (CLASS ?pro-class)
 					 (SEM ?subcatsem) (CONSTRAINT (& (proform ?lex)
@@ -3556,18 +3558,19 @@
       ||#
 
     ;; how adj   e.g., how red
-    ((ADJP  (ARG ?argvar) (SUBCATSEM ?subcatsem)
-      (wh-var *) (WH Q) (SORT PP-WORD)
+    ((ADJP (ARG ?argvar) (SUBCATSEM ?subcatsem)
+      (wh-var *) (WH Q) (SORT PP-WORD) (how +)
       (var ?adjv) (atype ?atype)
       (LF (% PROP (VAR ?adjv) (CLASS ?reln) 
 	     (CONSTRAINT ?newc)
 	     (sem ?sem) (transform ?trans)))
+     ;; (argument (% S (var ?argvar) (sem ?sem1)))
       (gap -) (pp-word +)
       (role ?reln)
       (sem ?sem)
       )
      -how-adj>     
-     (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ?pro-class) (lex how))
+     (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ONT::DEGREE) (lex how))
      (head (adjp (var ?adjv) (atype ?atype) (arg ?argvar) (sem ?sem) (LF (% PROP (class ?reln) (constraint ?con)))))
      (append-conjuncts (conj1 ?con) 
       (conj2 (& (degree (% *PRO* (status *wh-term*) (VAR *) (CLASS ont::degree)
@@ -3577,8 +3580,8 @@
 
      ;; how adv  e.g., how quickly
     ((ADVBL  (ARG ?argvar) (SUBCATSEM ?subcatsem)
-      (wh-var *) (WH Q) (SORT PP-WORD)
-      (var ?adjv) (atype ?atype)
+      (wh-var *) (WH Q) (SORT PP-WORD) (how-advbl +)
+      (var ?adjv) (atype ?atype) (IMPRO-CLASS ont::degree)
       (LF (% PROP (VAR ?adjv) (CLASS ?reln) 
 	     (CONSTRAINT ?newc)
 	     (sem ?sem) (transform ?trans)))
@@ -3586,7 +3589,7 @@
       (role ?reln)
       )
      -how-advbl>     
-     (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ?pro-class) (lex how))
+     (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ont::degree) (lex how))
      (head (advbl (var ?adjv) (atype ?atype) (arg ?argvar)  (argument ?argu) (sort pred) ; to rule out "how about..."
 		  (LF (% PROP (class ?reln) (constraint ?con)))))
      (append-conjuncts (conj1 ?con) 
@@ -3867,13 +3870,29 @@
          (lf (% description (status ont::definite) (class ONT::DEGREE) (VAR ?!whvar) 
                 (constraint (& (:suchthat ?s-v))))))
                 
-     -wh-desc-pred>
-     (head (pred (var ?var) (sem ?npsem) (PRO (? xx INDEF -)) (WH Q) (WH-VAR ?!whvar)
+     -wh-desc-how-pred>
+     (head (pred (var ?var) (arg ?arg) (sem ?npsem) (PRO (? xx INDEF -)) (WH Q) (WH-VAR ?!whvar) (HOW +)
 		 (lf (% prop (class ?npclass) (status ?status) (constraint ?cons) (sort ?npsort)
                    (transform ?transform)
                    ))))
      (s (stype decl) (main -) (lf ?lf-s) (var ?s-v) (sem ?s-sem)
-      (gap (% pred (sem ?npsem) (var ?var))))
+      (gap (% pred (sem ?npsem) (var ?var) (arg ?arg)))
+    ))
+
+ ;; WH-ADVBL e.g., "(I know) how quickly he ran"
+
+    ((np (sort wh-desc)  (gap -) (mass bare) (case (? case SUB OBJ))
+	 (sem ?s-sem) (var ?!whvar) (WH -) (agr ?a)
+         (lf (% description (status ont::definite) (class ONT::DEGREE) (VAR ?!whvar) 
+                (constraint (& (:suchthat ?var)))))
+      )
+                
+     -wh-desc-how-advbl-pred>
+     (head (advbl (var ?var) (PRO (? xx INDEF -)) (WH Q) (WH-VAR ?!whvar) (HOW-ADVBL +)
+		 (arg ?s-v) 
+		 ))
+     (s (stype decl) (main -) (lf ?lf-s) (var ?s-v) (sem ?s-sem)
+      (gap -))
     )
      
 
@@ -3920,7 +3939,7 @@
                    ))))
      (vp (var ?vpvar) (lf ?lf-s) (subjvar ?npvar) 
       (gap -) (CLASS (? !class ont::IN-RELATION ont::HAVE-PROPERTY) )     ;;  "what is aspirin" is not a good NP
-      (advbl-needed -)
+      (advbl-needed -) 
       (subj (% np (sem ?npsem) (var ?npvar)))
       (sem ?s-sem)
       )
@@ -3955,48 +3974,55 @@
             (sem ?s-sem) ;; (sem ?advsem)
          (var ?npvar) 
          (lf (% description (status *wh-term*) (VAR ?npvar) 
-                (class ?advrole) (constraint (& (suchthat ?s-v))) (sort individual)
+                (class ?impro-class) (constraint (& (suchthat ?s-v))) (sort individual)
                 (sem ?advsem)
                 )
              ))
      -wh-desc1a-norole> 0.98
      (head (advbl (pp-word +) 
                   (var ?npvar) 
-            ;;(argument (% S (sem ($ f::situation (f::type F::EVENTUALITY)))))
+		  (how -) (how-advbl -) ;; how ADJ/ADVBL constructions need their own rule
+		  ;;(argument (% S (sem ($ f::situation (f::type F::EVENTUALITY)))))
 	    (argument (% S (sem ?argsem)))
+	    (impro-class ?impro-class)
 	    (wh-var ?xx) ;; this is here to disable the foot feature proposition
-            (role ?advrole) (subcatsem ?advsem)
+            (subcatsem ?advsem)
             (focus ?foc) (arg ?s-v) (wh Q) (lf ?lf1)
             ))
      (s (stype decl) (sem ?argsem) (var ?s-v) (lf ?lf-s) (gap -) ;; no gap here because locations are treated as adjuncts in grammar (except for pred BE!)
-      (advbl-needed -)
+      (advbl-needed -) 
+      (preadvbl -)   ;; we eliminate preadvbl constructs as they are at best awkward -- e.g., where quickly did you run, and lead to bad parses for how quickly did you run
       )
      )
     
-    ;;    e.g., where the dogs are.
+    ;;    e.g., (I know) where the dogs are.
     ;; this is the only case where we have a gap
+    ;;   its complicated, but we promote the ground value in the advbl
+    ;; by overwriting the original implicit ground term (by using the same variable!)
     ((np (sort wh-desc)  (gap -) (mass bare) (case (? case SUB OBJ))
       (sem ?sem) ;; (sem ?advsem)
-      (var ?npvar) 
-      (lf (% description (status *wh-term*) (VAR ?npvar) 
-	     (class ?advrole) (constraint (& (suchthat ?s-v))) (sort individual)
+      (var ?!gv) 
+      (lf (% description (status *wh-term*) (VAR ?!gv) 
+	     (class ?impro-class) (constraint (& (suchthat ?s-v))) (sort individual)
 	     (sem ?advsem)
 	     )
 	  ))
-     -wh-desc1a-be> 0.98
+     -wh-desc1a-be> 
      (head (advbl (pp-word +) 
-                  (var ?npvar)  (sem ?sem)
+                  (var ?advar)  (sem ?sem)
 		  (argument (% S (sem ?argsem)))
+		  (impro-class ?impro-class)
 		  (role ?advrole) (subcatsem ?advsem)
-		  (focus ?foc) (arg ?s-v) (wh Q) (lf ?lf1)
+		  (focus ?foc) (arg ?s-v) (wh Q) 
+		  (groundvar ?!gv)
 		  ))
-     (s (stype decl) (sem ?argsem) (var ?s-v) 
-      (lf (% prop (class (:* ?be-class W::BE))))
-      (gap (% ?xx (var ?npvar) (sem ?sem)))
+     (s (stype decl) (sem ?argsem) (var ?s-v) (ellipsis -)
+      (lf (% prop (class ONT::HAVE-PROPERTY)))
+      (gap (% W::PRED (var ?advar) (sem ?sem)))
       (advbl-needed -)
       )
      )
-
+#||  ;; what does this cover that is not covered 
     ;;  special rule for BE form -- unlike the others, we need a GAP in the S
      ;; e.g., (I know) when/where the train is
     
@@ -4017,18 +4043,18 @@
             (focus ?foc) (arg ?s-v) (wh Q) (lf ?lf1)
             ))
      (s (stype decl) (var ?s-v)
-	(lf (% prop (class ONT::IN-RELATION))) (gap (% NP (var ?npvar)))
-      (advbl-needed -)
+	(lf (% prop (class ONT::BE))) (gap (% NP (var ?npvar)))
+      (ellipsis -) (advbl-needed -)
       )
      )
-
+||#
    
     ;;  WH-term as setting in an S structure 
     ;; e.g., (I know) when/where to go
     ((np (sort wh-desc)  (gap -) (mass bare) (case (? case SUB OBJ))
          (sem ?sem) ;;(sem ?advsem)
          (var ?whvar)
-	 (lf ?wh-lf)
+	 (lf ?gv)
 	 )
      ;; 11/21/2008 swift raising preference here to improve processing of "let me teach you how to X"
      -wh-desc4-norole> 0.98
@@ -4037,6 +4063,7 @@
             (role ?advrole) (subcatsem ?advsem)
             (focus ?foc) (arg ?s-v)
 	    (wh Q) (wh-var ?whvar)
+	    (groundvar ?gv)
 	     (lf ?wh-lf)
             ))
      (cp (ctype s-to) (sem ?argsem) (var ?s-v) (lf ?lf-s) (gap -)

@@ -2235,7 +2235,7 @@
 ;;  something that encodes a message
 (define-type ONT::encodes-message
     :comment "some artifact conveys some message"
-    :wordnet-sense-keys ("read%2:42:00" "go%2:42:02")
+    :wordnet-sense-keys ("read%2:42:00" "go%2:42:02" "represent%2:36:01")
     :arguments ((:REQUIRED ONT::neutral ((? n  F::Phys-obj f::abstr-obj) (f::information f::information-content)))
 		(:OPTIONAL ONT::neutral1 ((? n1 F::Phys-obj f::abstr-obj))))
     :parent ONT::EVENT-OF-STATE
@@ -3348,7 +3348,7 @@
 
 ;; for configure, arrange X (into Y) e.g. he arranged them into groups of three
 (define-type ONT::arranging
- :wordnet-sense-keys ("set_up%2:35:00" "arrange%2:35:00" "reorient%2:30:00" "put%2:35:05" "arrangement%1:09:00" "organization%1:09:00" "organisation%1:09:00" "system%1:09:02" "put_aside%2:35:00" "address%2:32:02")
+ :wordnet-sense-keys ("set_up%2:35:00" "arrange%2:35:00" "reorient%2:30:00" "put%2:35:05" "arrangement%1:09:00" "organization%1:09:00" "organisation%1:09:00" "system%1:09:02" "put_aside%2:35:00" "address%2:32:02" "hairdressing%1:04:00")
  :parent ONT::control-manage
  :sem (F::SITUATION (F::Cause F::agentive) (F::Trajectory -))
  :arguments ((:REQUIRED ONT::Agent  ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
@@ -3930,7 +3930,7 @@
 
 ;; clean (up), tidy (up)
 (define-type ONT::clean
- :wordnet-sense-keys ("clean%2:35:00" "make_clean%2:35:00" "wash%1:04:01")
+ :wordnet-sense-keys ("clean%2:35:00" "make_clean%2:35:00" "wash%1:04:01" "dentalcare%1:04:00")
  :parent ONT::change-state-action
  :sem (F::Situation (F::Cause F::Agentive) (F::Trajectory -))
  )

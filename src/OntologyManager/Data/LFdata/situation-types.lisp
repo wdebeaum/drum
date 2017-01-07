@@ -54,6 +54,7 @@
 
 (define-type ONT::agent-interaction
  :parent ONT::event-of-action
+  :wordnet-sense-keys ("interaction%1:04:00")
  :comment "events that involve the interaction of two or more agents"
  :arguments ((:ESSENTIAL ONT::Agent ((? atp F::phys-obj F::abstr-obj) (F::intentional +)))
 	     (:essential ONT::agent1 ((? cau3 F::Abstr-obj f::phys-obj) (F::intentional +)))
@@ -61,7 +62,7 @@
  )
 
 (define-type ONT::Communication
- :wordnet-sense-keys ("put_across%2:32:00" "pass_along%2:32:00" "pass%2:32:01" "pass_on%2:32:00" "communicate%2:32:01" "intercommunicate%2:32:00" "communicate%2:32:00" "communication%1:03:00")
+ :wordnet-sense-keys ("put_across%2:32:00" "pass_along%2:32:00" "pass%2:32:01" "pass_on%2:32:00" "communicate%2:32:01" "intercommunicate%2:32:00" "communicate%2:32:00" "communication%1:03:00" )
  :parent ONT::agent-interaction
  :comment "activity that involves transfer of information between agents"
  :sem (F::Situation (F::Cause F::agentive) (F::Trajectory -));  (F::Aspect F::bounded) (F::Time-span F::extended))
@@ -515,7 +516,7 @@
  )
 
 (define-type ONT::touch
-    :wordnet-sense-keys ("touch%2:35:00")
+    :wordnet-sense-keys ("touch%2:35:00" "touch%1:04:00")
     :parent ONT::event-of-causation
     )
 

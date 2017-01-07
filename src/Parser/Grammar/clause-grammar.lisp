@@ -985,14 +985,14 @@
      ;; e.g., (the train) is orange
      ;; test: the dog is short.
      ((pred (lf ?lf) (arg ?arg) (argument ?argument) (var ?v) (agr ?agr) (sem ?sem)    
-            (filled -) (adjectival +)
+            (filled -) (adjectival +) (how ?how)
             )
       -pred-adj> 1
       (head (adjp (lf ?lf) (var ?v) (arg ?arg) (argument ?argument) (argument (% ?argcat (var ?arg))) ;;(wh -) eliminated to allow "how red"
 	     (set-modifier -) ;; numbers are set-modifier +, and they don't behave as normal adjps in predicates
 	     (atype (? atp central predicative-only))
 	     ;; md 2008/17/07 eliminated cases with positive post-subcat, they should only happen when an adjective is looking for an argument after an np, not possible in the pred situation
-	     (post-subcat -)
+	     (post-subcat -) (how ?how)
 	     ))
       )
 
@@ -1416,7 +1416,7 @@
    ;; vp rule with dobj gap
    ;; test: who did he see
    ((vp- (subj ?subj) (subjvar ?subjvar) (dobjvar ?dobjvar)
-     (main +) (gap (% ?!cat (var ?gapvar) (sem ?gapsem) (agr ?gapagr) (gap -) 
+     (main +) (gap (% ?!cat (var ?gapvar) (sem ?gapsem) (agr ?gapagr) (arg ?arg) (gap -) 
 		      (case ?dcase) (ptype ?ptype)
 		      ))
      (var ?v) 
@@ -1433,7 +1433,7 @@
              (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	     (iobj ?iobj) (iobj (% ?s2 (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))
 	     (part ?part) 
-	     (dobj ?!dobj) (dobj (% ?!cat (case (? dcase obj -)) (var ?gapvar) (sem ?gapsem) (agr ?gapagr) (ptype ?ptype))) ;; must have a possibility of np dobj
+	     (dobj ?!dobj) (dobj (% ?!cat (case (? dcase obj -)) (var ?gapvar) (arg ?arg) (sem ?gapsem) (agr ?gapagr) (ptype ?ptype))) ;; must have a possibility of np dobj
 	     (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -))) 
 	     (subj-map ?lsubj-map) (dobj-map ?!dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	      
@@ -2050,7 +2050,7 @@
 	    ))
      (clex ?lex)
      )
-    -s-ifa-to> .97 ;; set this below wh-desc1a, but above adv-vp-post
+    -s-ifa-to> .97 ;; set this below wh-descg1a, but above adv-vp-post
     (word (lex (? lex if whether)))
     (head (cp (ctype s-to) (sem ?argsem) (var ?s-v) (lf ?lf-s) (gap -)
 	   (lex ?hlex) (headcat ?hcat) ;; aug-trips

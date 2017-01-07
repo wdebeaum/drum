@@ -45,6 +45,8 @@ tt_conf=''
 dg_conf=''
 nouser=''
 nogui=''
+pm_xml=''
+pm_ppp=''
 data_dir="${TRIPS_BASE}/etc/Data"
 
 while test ! -z "$1"; do
@@ -52,6 +54,8 @@ while test ! -z "$1"; do
 	-port)		port="$2";	shift;;
 	-mode)		mode="$2";	shift;;
 	-tt-conf)	tt_conf="$2";	shift;;
+	-pm-xml)	pm_xml="$2";	shift;;
+	-pm-ppp)	pm_ppp="$2";	shift;;
 	-dg-conf)	dg_conf="$2";	shift;;
 	-data)		data_dir="$2";	shift;;
 	-display)	display="$2";	shift;;
@@ -92,6 +96,10 @@ fi
 
 # set TT configuration file
 tt_conf=${tt_conf:-$TRIPS_BASE/etc/TextTagger-$mode.conf}
+
+# set PM output locations
+pm_xml=${pm_xml:-$TRIPS_BASE/etc/PubManager/pubmed/xml}
+pm_ppp=${pm_ppp:-$TRIPS_BASE/etc/PubManager/pubmed/ppp}
 
 # set DrumGUI configuration file
 dg_conf=${dg_conf:-$TRIPS_BASE/etc/DrumGUI.conf}
@@ -211,6 +219,11 @@ fi
 ( sleep 5; \
   $TRIPS_BASE/bin/TextTagger $port_opt -config-file $tt_conf \
   2>&1 | tee TextTagger.err ) &
+
+# Start PubManager
+( sleep 5; \
+  $TRIPS_BASE/bin/PubManager $port_opt -pmcid-xml-store $pm_xml -pmcid-ppp-store $pm_ppp \
+  2>&1 | tee PubManager.err ) &
 
 # Start Graphviz
 (sleep 5; $TRIPS_BASE/bin/Graphviz $port_opt -display-enabled $graphviz_display 2>&1 | tee Graphviz.err) &

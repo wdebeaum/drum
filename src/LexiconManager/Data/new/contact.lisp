@@ -1,7 +1,7 @@
 ;;;;
 ;;;; W::contact
 ;;;;
-
+#||  ;; use wordnet senses
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
   (W::contact
@@ -12,7 +12,7 @@
      )
     )
    )
-))
+))||#
 
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (

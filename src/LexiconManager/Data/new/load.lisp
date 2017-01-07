@@ -23,7 +23,7 @@
 		   )))
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v 
  :words (
   (W::LOAD
    ;; here the goal is subcategorized for because the meanings of in/into seem not to vary

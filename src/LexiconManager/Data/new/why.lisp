@@ -8,7 +8,7 @@
   (W::WHY
    (SENSES
     ((LF-PARENT ONT::REASON-FOR)
-     (SYNTAX (W::IMPRO-CLASS ONT::reason-for))
+     (SYNTAX (W::IMPRO-CLASS ONT::reason))
      (SEM (F::information F::information-content))
      )
     )

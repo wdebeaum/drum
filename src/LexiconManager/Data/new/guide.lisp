@@ -18,14 +18,14 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v 
  :words (
   (w::guide
    (senses
     ((meta-data :origin coordops :entry-date 20070511 :change-date nil :comments nil :vn ("judgement-33"))
      (LF-PARENT ont::guiding)
      (example "team alpha will guide the activity")
-     (TEMPL agent-theme-xp-templ)
+     (TEMPL agent-affected-xp-templ)
      )
     )
    )

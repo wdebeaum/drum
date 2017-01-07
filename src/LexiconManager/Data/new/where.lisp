@@ -25,7 +25,7 @@
    )
 ))
 
-(define-words :pos W::adv :templ PPWORD-QUESTION-ADV-TEMPL
+(define-words :pos W::adv 
  :tags (:base500)
  :words (
   (W::WHERE

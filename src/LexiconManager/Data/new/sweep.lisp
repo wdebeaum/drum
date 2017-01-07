@@ -8,7 +8,7 @@
    (wordfeats (W::morph (:forms (-vb) :past W::swept :ing W::sweeping)))
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("funnel-9.3-2-1"))
-     (LF-PARENT ONT::move)
+     (LF-PARENT ONT::cause-move)
      ;;(TEMPL agent-affected-source-templ (xp (% w::pp (w::ptype (? t w::off w::from))))) ; like dump
      (TEMPL agent-affected-xp-templ)
      )

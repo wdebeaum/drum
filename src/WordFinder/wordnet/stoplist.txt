@@ -2819,6 +2819,25 @@ past_times%1:28:00::
 present_times%1:28:00::
 roman_times%1:28:00::
 
+;; "be *" verbs, where * is a single word
+;; select sense_key from senses
+;; where ss_type='v'
+;; and lemma like 'be\_%' escape '\'
+;; and not(instr(substr(lemma,4),'_'));
+be_active%2:29:00::
+be_adrift%2:38:00::
+be_after%2:31:00::
+be_amiss%2:31:01::
+be_born%2:30:00::
+be_due%2:42:00::
+be_full%2:34:00::
+be_given%2:42:00::
+be_intimate%2:35:00::
+be_on%2:30:00::
+be_quiet%2:32:00::
+be_sick%2:29:01::
+be_well%2:29:00::
+
 ;; multiwords that ought to be composed (manually added)
 arrive_at%2:38:00::
 for_the_first_time%4:02:00::

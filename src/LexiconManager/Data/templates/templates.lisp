@@ -2334,7 +2334,9 @@
     ))
   
   (quan-mass-templ   ;; e.g., much (water), most of the water, most of the truck
-   (SYNTAX (W::MASS W::MASS) (W::QOF (% W::PP (W::PTYPE W::OF) (W::AGR W::3S))));;(W::MASS W::MASS))))
+   (SYNTAX (W::MASS W::MASS)  (W::status w::SM)
+	   (W::QOF (% W::PP (W::PTYPE W::OF) (W::AGR W::3S)))
+	  )
    (ARGUMENTS
     ))
 

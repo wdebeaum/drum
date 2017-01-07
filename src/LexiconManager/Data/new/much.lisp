@@ -30,18 +30,18 @@
  :tags (:base500)
  :words (
   (W::MUCH
-   (wordfeats (W::status W::indefinite) (W::negatable +) (W::AGR W::3s))
+   (wordfeats (W::status w::SM) (W::negatable +) (W::AGR W::3s))
    (SENSES
     ((LF ONT::MUCH)
      (non-hierarchy-lf t)
      (example "there isn't much water")
      (TEMPL quan-mass-TEMPL)
      )
-    ((LF ONT::MUCH)
+   #|| ((LF ONT::MUCH)
      (non-hierarchy-lf t)
      (example "there isn't much pain")
      (TEMPL quan-bare-TEMPL)
-     )
+     )||#
     ((LF ONT::MUCH)
      (non-hierarchy-lf t)
      (example "there isn't much of the truck left")

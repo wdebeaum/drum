@@ -7,15 +7,19 @@
  :words (
   (W::HOW
    (SENSES
-    ((LF-PARENT ONT::METHOD)
+    ((LF-PARENT ONT::by-means-of)
      (example "how did he do it")
-     (SYNTAX (W::IMPRO-CLASS ONT::by-means-of))
+     (SYNTAX (W::IMPRO-CLASS ONT::method))
+     )
+    ((LF-PARENT ont::at-scale-value)
+     (example "how are you")
+      (TEMPL ppword-question-adv-pred-templ)
+     (syntax (W::IMPRO-CLASS ONT::STATUS))
      )
     )
-   )
-))
+   )))
 
-(define-words :pos W::adv :templ PPWORD-QUESTION-ADV-TEMPL
+(define-words :pos W::adv 
  :tags (:base500)
  :words (
   (W::HOW

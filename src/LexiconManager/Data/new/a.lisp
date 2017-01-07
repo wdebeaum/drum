@@ -380,13 +380,13 @@
 
 (define-words :pos W::quan :boost-word t
  :words (
-   ((W::A W::LOT)
-    (wordfeats (W::negatable +) (W::NOsimple +))
+   ((W::A W::LOT W::of)
+    (wordfeats (W::negatable +))
     (SENSES
      ((LF ONT::PLENTY)
-      (example "alot of water")
+      (example "a lot of water")
       (non-hierarchy-lf t)(TEMPL quan-mass-TEMPL)
-      (SYNTAX (W::agr (? agr W::3s)) (w::status w::indefinite))
+      (SYNTAX (W::agr (? agr W::3s)) (w::status w::sm))
        )
      ((LF ONT::PLENTY)
       (example "a lot of people")
