@@ -418,7 +418,7 @@
     
 (defun make-unknown-word-entry (word pos score feats wid lflist trips-sense-list penn-tag tagged-ont-types domain-info)
   "make an underspecified lexical entry for the unknown word"
-  (print-debug  "~%MAKE-UNKNOWN-WORD-EMTRY: generating word entry for ~S with ~S and ~S ~%" word pos lflist)
+  (print-debug  "~%MAKE-UNKNOWN-WORD-ENTRY: generating word entry for ~S with ~S and ~S ~%" word pos lflist)
   (let* ((lfform (if (listp word) (make-into-symbol word) word))
 	(lf (car lflist))
 	(pos (if (listp pos) (car pos) pos))
