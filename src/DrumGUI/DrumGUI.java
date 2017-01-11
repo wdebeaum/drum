@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.64 2016/08/08 23:37:38 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.66 2017/01/11 06:28:58 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -129,22 +129,20 @@ public class DrumGUI extends StandardTripsModule {
      * clause is represented via the list of words specified in the speech act from the Parser.
      */
     private LinkedHashMap<Integer, ArrayList<KQMLList>> waitingList = new LinkedHashMap<Integer, ArrayList<KQMLList>>();
-    /** Call-back map for keeping track of current load requests. It maps document IDs to call-back IDs. */
-    private LinkedHashMap<String, KQMLPerformative> callBacks = new LinkedHashMap<String, KQMLPerformative>();
-    /** Current call-back ID */
-    private KQMLPerformative currentCallBack = null;
-    /** Time of last activity seen on the rest of the system */
-    private long timeOfLastSystemActivity;
-    /** If {@code true}, exit after current dataset is completed */
-    private boolean exitUponCompletion = false;
-    /** If not null, reply to this upon completion */
-    private KQMLPerformative replyUponCompletionTo = null;
 
     /**
      * List of run requests that haven't been processed yet. If we're working on a dataset and another request comes
      * in, it is queued up here. When a dataset is finished processing, the first request from this list is taken up.
      */
-    private List<RunTask> runTaskQueue = Collections.synchronizedList(new ArrayList<RunTask>());
+    private List<RunTask> taskQueue = Collections.synchronizedList(new ArrayList<RunTask>());
+    /** Current task request (not {@code null} iff it requires a reply) */
+    private KQMLPerformative taskRequest = null;
+    /** If {@code true}, exit after current task is completed */
+    private boolean exitWhenDone = false;
+    /** Reply to the current task upon completion (if {@code false} reply at start */
+    private boolean replyWhenDone = false;
+    /** Send EKB in reply? (can be {@code true} only if {@link #replyWhenDone} is {@code true}) */
+    private boolean replyWithEKB = false;
 
     /**
      * A timer that checks every now and then whether we're idle and have tasks to do. If so, it will pick the first
@@ -153,6 +151,8 @@ public class DrumGUI extends StandardTripsModule {
     private final Timer taskMonitor = new Timer(true);
     /** How often to check for activity status */
     private static final int TS_PERIOD = 2000; // two seconds
+    /** Time of last activity seen on the rest of the system */
+    private long timeOfLastSystemActivity;
 
 
     /**
@@ -284,7 +284,7 @@ public class DrumGUI extends StandardTripsModule {
         }
 
         // task scheduler
-        taskMonitor.schedule(new TaskScheduler(), 5000, TS_PERIOD);
+        taskMonitor.schedule(new TaskScheduler(), TS_PERIOD, TS_PERIOD);
 
         // fragmentsMap initialization
         docMap = new HashMap<Integer, Integer>();
@@ -520,7 +520,7 @@ public class DrumGUI extends StandardTripsModule {
         log("<received>\n" + msg + "\n</received>");
 
         if (contentObject.toString().equals("NIL")) {
-            errorReply(msg, "NIL content in tell");
+            errorReply(msg, "NIL content in request");
             return;
         }
 
@@ -541,13 +541,7 @@ public class DrumGUI extends StandardTripsModule {
                 || verb.equalsIgnoreCase("run-all-files")
                 || verb.equalsIgnoreCase("run-pmcid"))
         {
-            if (dataset.getSelectionSize() > 0) { // if we're busy, we queue this up
-                synchronized (runTaskQueue) {
-                    runTaskQueue.add(new RunTask(msg, content));
-                }
-            } else { // otherwise, send it directly for processing
-                handleRunRequest(msg, content);
-            }
+            handleTaskRequest(msg, content);
         } else if (verb.equalsIgnoreCase("get-status")) {
             // initiate processing of files from folder
             try {
@@ -571,8 +565,20 @@ public class DrumGUI extends StandardTripsModule {
     /**
      * Handles run requests.
      */
-    protected void handleRunRequest(KQMLPerformative msg, KQMLList content) {
+    protected void handleTaskRequest(KQMLPerformative msg, KQMLList content) {
         String verb = content.get(0).toString();
+
+        // if we're busy, we queue up this task
+        if (!dataset.isSelectionEmpty()) {
+            synchronized (taskQueue) {
+                taskQueue.add(new RunTask(msg, content));
+                Debug.debug("Added task to queue: " + content);
+            }
+            return;
+        }
+
+        // otherwise, we proceed
+        Debug.debug("Started working on task: " + content);
         try {
             if (verb.equalsIgnoreCase("load-text") || verb.equalsIgnoreCase("run-text")) {
                 // initiate processing of text
@@ -718,11 +724,49 @@ public class DrumGUI extends StandardTripsModule {
         inputTermsFileExtension = "its";
         Debug.info("Input terms parameters have been reset");
     }
+    
+    /**
+     * Set common task parameters.
+     * 
+     */
+    private void setCommonTaskParameters(KQMLPerformative msg, KQMLList content, boolean reply_when_done,
+            boolean reply_with_ekb) {
+        // last task?
+        KQMLObject exitWhenDoneObj = content.getKeywordArg(":exit-when-done");
+        if (exitWhenDoneObj != null) {
+            exitWhenDone = StringUtils.stringToBoolean(exitWhenDoneObj.toString());
+        } else {
+            exitWhenDone = false;
+        }
+        // task needs ekb at the end?
+        KQMLObject replyWithEKBObj = content.getKeywordArg(":reply-with-ekb");
+        if (replyWithEKBObj != null) {
+            replyWithEKB = StringUtils.stringToBoolean(replyWithEKBObj.toString());
+        } else {
+            replyWithEKB = reply_with_ekb;
+        }
+        // task reply at the end?
+        KQMLObject replyWhenDoneObj = content.getKeywordArg(":reply-when-done");
+        if (replyWhenDoneObj != null) {
+            replyWhenDone = StringUtils.stringToBoolean(replyWhenDoneObj.toString());
+        } else {
+            replyWhenDone = reply_when_done || replyWithEKB;
+        }
+        // task has a callback?
+        if (msg.getParameter(":reply-with") != null) {
+            Debug.info("New task (" + msg.getParameter(":reply-with") + ")");
+            taskRequest = msg;
+        } else {
+            taskRequest = null;
+            Debug.info("New task (no callback)");
+        }
+    }
 
     /**
      * Handler for {@code run-text} requests.
      * <p>
-     * Request format: {@code (run-text :text "text" [:exit-when-done false])}.
+     * Request format:
+     * {@code (run-text :text "text" [:exit-when-done false] [:reply-when-done true] [:reply-with-ekb true])))}.
      * <p>
      * Throws an exception if there is a problem.
      * 
@@ -734,15 +778,15 @@ public class DrumGUI extends StandardTripsModule {
     private void handleRunText(KQMLPerformative msg, KQMLList content)
             throws RuntimeException, IOException
     {
+        // common task parameters
+        setCommonTaskParameters(msg, content, true, true);
+
+        // specific task parameters
         String text = ((KQMLString) content.getKeywordArg(":text")).stringValue();
-        String folder = dataset.getFolder();
-        KQMLObject exitWhenDone = content.getKeywordArg(":exit-when-done");
-        if (exitWhenDone != null) {
-            exitUponCompletion = StringUtils.stringToBoolean(exitWhenDone.toString());
-        }
-        KQMLObject replyWith = msg.getParameter(":reply-with");
 
         // write text to new file
+        String folder = dataset.getFolder();
+        KQMLObject replyWith = msg.getParameter(":reply-with");
         String filename = String.format("TEXT%05d%s", ++runTextCounter,
                 (replyWith != null) ? "_" + replyWith.toString() : "");
         String pathname = folder + File.separator + filename;
@@ -764,9 +808,16 @@ public class DrumGUI extends StandardTripsModule {
         kb.init();
         kb.setID(filename);
 
-        // add callback
-        if (replyWith != null)
-            currentCallBack = msg;
+        // send accepted?
+        if (!replyWhenDone)
+            try {
+                sendAcceptedTask();
+            } catch (Exception e) {
+                e.printStackTrace();
+                errorReply(taskRequest, "Error: EKB cannot be saved");
+                kb.clear();
+                return;
+            }
 
         // go!
         initiateProcessing(false);
@@ -776,7 +827,7 @@ public class DrumGUI extends StandardTripsModule {
      * Handler for {@code run-file} requests.
      * <p>
      * Request format:
-     * {@code (run-file :folder "folder" :file "filename" [:exit-when-done false] [:reply-when-done false])}.
+     * {@code (run-file :folder "folder" :file "filename" [:exit-when-done false] [:reply-when-done true] [:reply-with-ekb false])}.
      * <p>
      * Throws an exception if there is a problem.
      * 
@@ -788,16 +839,12 @@ public class DrumGUI extends StandardTripsModule {
     private void handleRunFile(KQMLPerformative msg, KQMLList content)
             throws RuntimeException
     {
+        // common task parameters
+        setCommonTaskParameters(msg, content, true, false);
+
+        // specific task parameters
         String folder = ((KQMLString) content.getKeywordArg(":folder")).stringValue();
         String filename = ((KQMLString) content.getKeywordArg(":file")).stringValue();
-        KQMLObject exitWhenDone = content.getKeywordArg(":exit-when-done");
-        if (exitWhenDone != null) {
-            exitUponCompletion = StringUtils.stringToBoolean(exitWhenDone.toString());
-        }
-        KQMLObject replyWhenDone = content.getKeywordArg(":reply-when-done");
-        if (replyWhenDone != null) {
-            replyUponCompletionTo = msg;
-        }
 
         // set dataset
         try {
@@ -807,17 +854,24 @@ public class DrumGUI extends StandardTripsModule {
             throw new RuntimeException("Dataset not found.");
         }
 
-        // add callback
-        if (msg.getParameter(":reply-with") != null)
-            currentCallBack = msg;
+        // init the EKB
+        kb.init();
 
         // set id for this run to the basename of the file
         int pos = filename.lastIndexOf(".");
         String basename = pos > 0 ? filename.substring(0, pos) : filename;
-
-        // init the EKB
-        kb.init();
         kb.setID(basename);
+
+        // send accepted?
+        if (!replyWhenDone)
+            try {
+                sendAcceptedTask();
+            } catch (Exception e) {
+                e.printStackTrace();
+                errorReply(taskRequest, "Error: EKB cannot be saved");
+                kb.clear();
+                return;
+            }
 
         // go!
         initiateProcessing(false);
@@ -827,7 +881,7 @@ public class DrumGUI extends StandardTripsModule {
      * Handler for {@code run-all-files} requests.
      * <p>
      * Request format:
-     * {@code (run-all-files :folder "folder" :select "*.xml" [:single-ekb false] [:exit-when-done false] [:reply-when-done false])}.
+     * {@code (run-all-files :folder "folder" :select "*.xml" [:single-ekb false] [:exit-when-done false] [:reply-when-done false] [:reply-with-ekb false])}.
      * <p>
      * Extractions will be placed in a single EKB if {@code :single-ekb} resolves to {@code true}; if this parameter is
      * missing, it defaults to {@code false}.
@@ -842,20 +896,16 @@ public class DrumGUI extends StandardTripsModule {
     private void handleRunAllFiles(KQMLPerformative msg, KQMLList content)
             throws RuntimeException
     {
+        // common task parameters
+        setCommonTaskParameters(msg, content, false, false);
+
+        // specific task parameters
         String folder = ((KQMLString) content.getKeywordArg(":folder")).stringValue();
         String fileType = ((KQMLString) content.getKeywordArg(":select")).stringValue();
         boolean singleEKB = false;
         KQMLObject singleEKBObject = content.getKeywordArg(":single-ekb");
         if (singleEKBObject != null) {
             singleEKB = StringUtils.stringToBoolean(singleEKBObject.toString());
-        }
-        KQMLObject exitWhenDone = content.getKeywordArg(":exit-when-done");
-        if (exitWhenDone != null) {
-            exitUponCompletion = StringUtils.stringToBoolean(exitWhenDone.toString());
-        }
-        KQMLObject replyWhenDone = content.getKeywordArg(":reply-when-done");
-        if (replyWhenDone != null) {
-            replyUponCompletionTo = msg;
         }
 
         // set dataset
@@ -871,6 +921,17 @@ public class DrumGUI extends StandardTripsModule {
             kb.init();
             kb.setID(ekb_id);
 
+            // send accepted?
+            if (!replyWhenDone)
+                try {
+                    sendAcceptedTask();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    errorReply(taskRequest, "Error: EKB cannot be saved");
+                    kb.clear();
+                    return;
+                }
+
             // go!
             initiateProcessing(false);
         } else {
@@ -880,7 +941,7 @@ public class DrumGUI extends StandardTripsModule {
             // harmful. TODO: perhaps worth keeping an eye on this, just in case!
             while (!dataset.isSelectionEmpty()) {
                 // N.B.: we use getFirstSelection() rather than popSelection() b/c we want to keep it in
-                // the dataset until the data item is actually processed; only then we do a pop!
+                // the dataset until the job for the data item is actually created; only then we do a pop!
                 String filename = dataset.getFirstSelection();
                 KQMLPerformative rfRequest = new KQMLPerformative("request");
                 KQMLList rfContent = new KQMLList();
@@ -890,7 +951,7 @@ public class DrumGUI extends StandardTripsModule {
                 rfContent.add(":file");
                 rfContent.add(new KQMLString(filename));
                 rfRequest.setParameter(":content", rfContent);
-                receiveRequest(rfRequest, rfContent);
+                handleTaskRequest(rfRequest, rfContent);
                 dataset.popSelection();
             }
         }
@@ -900,24 +961,51 @@ public class DrumGUI extends StandardTripsModule {
      * Handler for {@code run-pmcid} requests.
      * <p>
      * Request format:
-     * {@code (run-pmcid :folder "folder" :pmcid "pmcid" [:save-to "ekb-path"] [:exit-when-done false] [:reply-when-done false])}
+     * {@code (run-pmcid :folder "folder" :pmcid "pmcid" [:save-to "ekb-path"] [:exit-when-done false] [:reply-when-done false] [:reply-with-ekb false])}
      * <p>
-     * The data files are assumed to be in a subfolder (named by the value of the {@code :pmcid} parameter) in a given
-     * folder (value of the {@code :folder} parameter). All XML files (extension {@literal .xml}) are selected for
-     * processing. It is assumed that the contents of these XML files contain text, optionally mixed with
-     * correctly-balanced XLM tags. The {@code :save-to} value is a path to a file or a directory. In the former case,
-     * the EKB will be save to that file; in the latter case, it will be saved in the specified directory, with a name
-     * computed automatically. It is assumed that a file has an extension (typically, {@literal .ekb}); if none is
-     * found, the path is taken to be a directory.
+     * If the folder is given, the data files are assumed to be in the given folder (value of the {@code :folder}
+     * parameter). All XML files (extension {@literal .xml}) are selected for processing. It is assumed that these XML
+     * files contain text, optionally mixed with correctly-balanced XLM tags. The {@code :save-to} value is a path to a
+     * file or a directory. If a file, the EKB will be saved to that file; if a directory, it will be saved in the
+     * specified directory, with a name computed automatically. It is assumed that a file has an extension (typically,
+     * {@literal .ekb}); if none is found, the path is taken to be a directory.
      * <p>
-     * N.B.: If desired, a file selector might be implemented in the future, similar to the one used by
-     * {@link #handleRunAllFiles()}.
+     * If the folder is not given, a call to {@code PUB-MANAGER} is made to obtain the location of the data. When the
+     * reply with the location is received, the task is recreated, now with the folder being specified.
+     *
+     * TODO: should do a better job checking on "ekb-path".
      */
     private void handleRunPMCID(KQMLPerformative msg, KQMLList content)
             throws RuntimeException
     {
-        String folder = ((KQMLString) content.getKeywordArg(":folder")).stringValue();
-        String pmcid = ((KQMLString) content.getKeywordArg(":pmcid")).stringValue();
+        // for now this is fixed
+        final String pmcidFileType = ".*\\.xml";
+
+        // specific task parameters
+        KQMLObject pmcidObj = content.getKeywordArg(":pmcid");
+        if (pmcidObj == null) {
+            errorReply(msg, "Bad format (missing :pmcid?)");
+            return;
+        }
+        String pmcidFolder = null;
+        String pmcid = ((KQMLString) pmcidObj).stringValue();
+        KQMLObject folderObj = content.getKeywordArg(":folder");
+        String folder = null;
+        if (folderObj == null) {
+            try {
+                KQMLPerformative pullMsg = KQMLPerformative
+                        .fromString("(request :content (pub-pull :pmcid " + pmcid + "))");
+                sendWithContinuation(pullMsg, new PubPullReplyHandler(msg, content));
+                return;
+            } catch (Exception e) {
+                e.printStackTrace();
+                errorReply(msg, "Something terrible just happened!");
+                return;
+            }
+        } else {
+            pmcidFolder = ((KQMLString) folderObj).stringValue();
+        }
+
         KQMLObject savetoObj = content.getKeywordArg(":save-to");
         String saveto = null;
         File savetoFile = null;
@@ -931,14 +1019,9 @@ public class DrumGUI extends StandardTripsModule {
                 savetoFile = null;
             }
         }
-        KQMLObject exitWhenDone = content.getKeywordArg(":exit-when-done");
-        if (exitWhenDone != null) {
-            exitUponCompletion = StringUtils.stringToBoolean(exitWhenDone.toString());
-        }
-        KQMLObject replyWhenDone = content.getKeywordArg(":reply-when-done");
-        if (replyWhenDone != null) {
-            replyUponCompletionTo = msg;
-        }
+
+        // common task parameters
+        setCommonTaskParameters(msg, content, false, false);
 
         // init the EKB
         kb.init();
@@ -955,34 +1038,26 @@ public class DrumGUI extends StandardTripsModule {
             }
         }
 
-        // get EKB filename and return it to sender
-        try {
-            String ekbFilename = kb.saveEKB();
-            if (replyUponCompletionTo == null) {
-                KQMLPerformative rmsg = new KQMLPerformative("reply");
-                KQMLList rcontent = new KQMLList();
-                rcontent.add("accepted");
-                rcontent.add(":result");
-                rcontent.add(new KQMLString(ekbFilename));
-                rmsg.setParameter(":content", rcontent);
-                reply(msg, rmsg);
+        // send accepted?
+        if (!replyWhenDone)
+            try {
+                sendAcceptedTask();
+            } catch (Exception e) {
+                e.printStackTrace();
+                errorReply(taskRequest, "Error: EKB cannot be saved");
+                kb.clear();
+                return;
             }
-        } catch (Exception e) {
-            // e.printStackTrace();
-            errorReply(msg, "Error: EKB cannot be saved" + ((saveto == null) ? "" : " to " + saveto));
-            kb.clear();
-            return;
-        }
 
         // set dataset
-        String oldDataFolder = dataset.getFolder();
         try {
-            String pmcidFolder = folder + File.separator + pmcid;
-            String pmcidFileType = ".*\\.xml";
             setDatasetWithFilePattern(pmcidFolder, pmcidFileType);
             Debug.debug("Number of paragraphs found: " + dataset.getSelectionSize());
         } catch (Exception e) {
-            throw new RuntimeException("Cannot find folder for the PMCID given.");
+            e.printStackTrace();
+            errorReply(msg, "Cannot find folder for the PMCID given");
+            kb.clear();
+            return;
         }
 
         // go!
@@ -1076,14 +1151,7 @@ public class DrumGUI extends StandardTripsModule {
             return;
         }
         kb.setParagraph(documentID, currentInputFile, currentInputData);
-        if (currentCallBack != null) {
-            Debug.debug("STATE: start-paragraph " + documentID + " (callback: "
-                    + currentCallBack.getParameter(":reply-with") + ") ");
-            callBacks.put(documentID, currentCallBack);
-            currentCallBack = null;
-        } else {
-            Debug.debug("STATE: start-paragraph " + documentID + " (callback: none) ");
-        }
+        Debug.debug("STATE: start-paragraph " + documentID);
     }
 
     /** 
@@ -1092,9 +1160,9 @@ public class DrumGUI extends StandardTripsModule {
     private void handleReplyOK(KQMLList content) {
         // TODO: i should do a better job managing requests and replies. here i'm simplifying things based on a few
         // assumptions:
-        // most "ok" replies have no information other than the acknowledgement itself; TT is pretty reliable in
+        // - most "ok" replies have no information other than the acknowledgement itself; TT is pretty reliable in
         // processing requests;
-        // there is one and only one request type that adds information
+        // - there is one and only one request type that adds information
         KQMLList uttnums = (KQMLList) content.getKeywordArg(":uttnums");
         if (uttnums != null) { // this is the one reply we care about
             if (uttnums.isEmpty()) {
@@ -1318,7 +1386,7 @@ public class DrumGUI extends StandardTripsModule {
     /**
      * Marks that we ended processing on the current document.
      * 
-     * @see #finishCurrentInput()
+     * @see #finishCurrentDocument()
      */
     private void documentDone() {
         // done
@@ -1328,7 +1396,7 @@ public class DrumGUI extends StandardTripsModule {
         if (inputTermsFolder != null) {
             this.clearTerms();
         }
-        finishCurrentInput();
+        finishCurrentDocument();
     }
 
     /**
@@ -1343,11 +1411,11 @@ public class DrumGUI extends StandardTripsModule {
         KQMLPerformative perf = new KQMLPerformative("reply");
         KQMLList content = new KQMLList();
         content.add("status");
-        int toDo = dataset.getSelectionSize();
         content.add(":idle");
-        content.add(String.valueOf(toDo == 0));
+        content.add(String.valueOf(dataset.isSelectionEmpty()));
         content.add(":secs-since-last-activity");
         content.add(String.valueOf((now() - timeOfLastSystemActivity) / 1000));
+        int toDo = dataset.getSelectionSize();
         if (toDo > 0) {
             content.add(":dataset");
             String kbId = kb.getID();
@@ -1357,12 +1425,9 @@ public class DrumGUI extends StandardTripsModule {
             if (documentID != null) { // we check, in case we get a call before the first dataset gets going
                 content.add(":current-paragraph");
                 content.add(documentID);
-                if (!callBacks.isEmpty()) {
-                    KQMLPerformative callback = callBacks.get(documentID);
-                    if (callback != null) {
-                        content.add(":current-task");
-                        content.add(callback.getParameter(":reply-with"));
-                    }
+                if (taskRequest != null) {
+                    content.add(":current-task");
+                    content.add(taskRequest.getParameter(":reply-with"));
                 }
             }
         }
@@ -1370,11 +1435,11 @@ public class DrumGUI extends StandardTripsModule {
             content.add(":lines-to-do");
             content.add(String.valueOf(paragraphs.length - paragraphsDone));
         }
-        synchronized (runTaskQueue) {
-            if (!runTaskQueue.isEmpty()) {
+        synchronized (taskQueue) {
+            if (!taskQueue.isEmpty()) {
                 content.add(":scheduled-tasks");
                 KQMLList tasks = new KQMLList();
-                for (RunTask task : runTaskQueue) {
+                for (RunTask task : taskQueue) {
                     tasks.add(task.toString());
                 }
                 content.add(tasks);
@@ -1392,7 +1457,7 @@ public class DrumGUI extends StandardTripsModule {
      * 
      * @see #processSelectedDataset()
      */
-    private void finishCurrentInput() {
+    private void finishCurrentDocument() {
         if (dataset.getSelectionSize() == 0) {
             // this shouldn't happen!
             Debug.debug("no data items to flush!");
@@ -1402,30 +1467,17 @@ public class DrumGUI extends StandardTripsModule {
         // update dataset; see if there's anything left
         String done = dataset.popSelection();
         int remaining = dataset.getSelectionSize();
-        Debug.debug("STATE: Finished data item: " + done + "\n" + remaining + " more to do: "
+        Debug.debug("STATE: Finished data item: " + done + ". " + remaining + " more to do: "
                 + Arrays.toString(dataset.getSelection()));
 
         // update and save the EKB
         kb.setCompletionStatus(remaining == 0);
-        // TODO: do we need to send this file back to anyone?
         try {
             String ekbFile = kb.saveEKB();
             log("<ekb>" + ekbFile + "</ekb>");
         } catch (Exception e) {
-            // TODO: what do we do here? should we throw the exception up?
+            // TODO: what do we do in this situation??? task requester expects something...
             Debug.error("Couldn't save the EKB: " + e);
-        }
-
-        // check if we have a callback on this para
-        Debug.debug("Callbacks:" + callBacks);
-        KQMLPerformative callback = callBacks.remove(documentID);
-        if (callback != null) {
-            if (mode != Mode.STANDALONE) {
-                reply(callback, makeCallBackMessage(documentID));
-            }
-            Debug.warn("Resolved: " + callback.getParameter(":reply-with"));
-        } else {
-            Debug.warn("No callback; moving on.");
         }
 
         // if there are more data items to be processed, keep going
@@ -1433,8 +1485,35 @@ public class DrumGUI extends StandardTripsModule {
             Debug.debug("STATE: Moving on to next document");
             processSelectedDataset();
         } else {
-            // ... otherwise, finish round according to mode
-            if (exitUponCompletion && runTaskQueue.isEmpty()) {
+            // ... otherwise, finish task according to mode
+            if (mode != Mode.STANDALONE) {
+                // if we have a callback on this document
+                if (taskRequest != null) {
+                    if (replyWhenDone) {
+                        if (replyWithEKB) {
+                            reply(taskRequest, makeExtractionsResultMessage(documentID));
+                        } else {
+                            try {
+                                KQMLPerformative rmsg = new KQMLPerformative("reply");
+                                KQMLList rcontent = new KQMLList();
+                                rcontent.add("done");
+                                rcontent.add(":result");
+                                rcontent.add(new KQMLString(kb.getEKBFile()));
+                                rmsg.setParameter(":content", rcontent);
+                                reply(taskRequest, rmsg); // TODO: must ensure taskRequest != null
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Debug.fatal("Something's wrong!");
+                            }
+                        }
+                    }
+                    Debug.warn("Task finished (" + taskRequest.getParameter(":reply-with") + ")");
+                } else {
+                    Debug.warn("Task finished (no callback).");
+                }
+            }
+            // quit?
+            if (exitWhenDone && taskQueue.isEmpty()) {
                 // sendExitRequest();
                 try {
                     send(KQMLPerformative.fromString("(request :receiver facilitator :content (exit))"));
@@ -1443,21 +1522,7 @@ public class DrumGUI extends StandardTripsModule {
                     Debug.fatal("Something's wrong!");
                 }
             }
-            if ((replyUponCompletionTo != null) && runTaskQueue.isEmpty()) {
-                try {
-                    KQMLPerformative rmsg = new KQMLPerformative("reply");
-                    KQMLList rcontent = new KQMLList();
-                    rcontent.add("done");
-                    rcontent.add(":result");
-                    rcontent.add(new KQMLString(kb.getEKBFile()));
-                    rmsg.setParameter(":content", rcontent);
-                    reply(replyUponCompletionTo, rmsg);
-                    replyUponCompletionTo = null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Debug.fatal("Something's wrong!");
-                }
-            }
+            // reset display
             if (display != null) {
                 display.unsetState(Display.State.RUNNING);
                 display.clearSelections();
@@ -1985,10 +2050,12 @@ public class DrumGUI extends StandardTripsModule {
     }
 
     /**
-     * Makes call-back reply to a load request.
-     * @param pid Currently ignored (since we only handle one paragraph at the time).
+     * Makes reply message containing extractions.
+     * 
+     * @param pid
+     *            Currently ignored (since we only handle one paragraph at the time).
      */
-    private KQMLPerformative makeCallBackMessage(String pid) {
+    private KQMLPerformative makeExtractionsResultMessage(String pid) {
         KQMLPerformative perf = new KQMLPerformative("reply");
         KQMLList content = new KQMLList();
         content.add("result");
@@ -2046,6 +2113,24 @@ public class DrumGUI extends StandardTripsModule {
     }
 
     /**
+     * Reply with accepted message.
+     * 
+     * @throws RuntimeException
+     */
+    private void sendAcceptedTask()
+            throws RuntimeException {
+        // get EKB filename and return it to sender
+        String ekbFilename = kb.saveEKB();
+        KQMLPerformative rmsg = new KQMLPerformative("reply");
+        KQMLList rcontent = new KQMLList();
+        rcontent.add("accepted");
+        rcontent.add(":result");
+        rcontent.add(new KQMLString(ekbFilename));
+        rmsg.setParameter(":content", rcontent);
+        reply(taskRequest, rmsg);
+    }
+
+    /**
      * Requests that system exit.
      */
     private void sendExitRequest() {
@@ -2065,7 +2150,6 @@ public class DrumGUI extends StandardTripsModule {
         log("<sent>\n" + msg + "\n</sent>");
         super.send(msg);
     }
-
 
     /**
      * Handler for replies to tag messages for paragraphs.
@@ -2108,6 +2192,51 @@ public class DrumGUI extends StandardTripsModule {
     }
 
     /**
+     * Handler for replies to pub-pull messages.
+     */
+    protected class PubPullReplyHandler implements KQMLContinuation {
+        // original message that triggered the pub-pull message
+        KQMLPerformative msg;
+        KQMLList cmd;
+
+        public PubPullReplyHandler(KQMLPerformative msg, KQMLList content) {
+            this.msg = msg;
+            this.cmd = content;
+        }
+
+        public void receive(KQMLPerformative replyMsg) {
+            log("<received>\n" + replyMsg + "\n</received>");
+            KQMLObject content = replyMsg.getParameter(":content");
+            if (!(content instanceof KQMLList)) {
+                error("Bad message format");
+                return;
+            }
+            String reply = ((KQMLList) content).get(0).toString();
+            if (reply.equalsIgnoreCase("done")) {
+                KQMLObject folder = ((KQMLList) content).getKeywordArg(":output-folder");
+                Debug.debug("Will process pmcid paragraphs from folder: " + folder);
+                // update task params
+                cmd.add(":folder"); cmd.add(folder);
+                msg.setParameter(":content", cmd);
+                // and re-submit the task
+                handleTaskRequest(msg, cmd);
+            }
+            else if (reply.equalsIgnoreCase("failure")) {
+                KQMLObject errorMsg = ((KQMLList) content).getKeywordArg(":msg");
+                if (errorMsg != null) {
+                    errorReply(msg, errorMsg.stringValue());
+                } else {
+                    Debug.debug("Got a failure with no error message");
+                    errorReply(msg, "Unknown error");
+                }
+            } else { // TODO: handle reject
+                error("Cannot handle reply");
+                return;
+            }
+        }
+    }
+
+    /**
      * Class for representing tasks received via one of the {@code run-*} requests.
      */
     protected class RunTask {
@@ -2131,22 +2260,25 @@ public class DrumGUI extends StandardTripsModule {
     /**
      * Scheduler for running tasks off the task queue.
      * 
+     * TODO: Documentation says ScheduledThreadPoolExecutor might be a more flexible replacement for Timer/TimerTask.
+     * 
      * @author lgalescu
-     * @see DrumGUI#runTaskQueue
-     * @see DrumGUI#handleRunRequest(KQMLPerformative, Object)
+     * @see DrumGUI#taskQueue
+     * @see DrumGUI#handleTaskRequest(KQMLPerformative, Object)
      */
     protected class TaskScheduler extends TimerTask {
         public void run() {
-            synchronized (runTaskQueue) {
-                if (runTaskQueue.isEmpty() || (dataset.getSelectionSize() > 0)
+            synchronized (taskQueue) {
+                if (taskQueue.isEmpty() || (dataset.getSelectionSize() > 0)
                         || (now() - timeOfLastSystemActivity < 2500)) // TODO: replace this hack w/ smthg proper
                 /* (we need to wait for the ekb to be written, i think) */
                 {
                     return;
                 }
 
-                RunTask nextTask = runTaskQueue.remove(0);
-                handleRunRequest(nextTask.msg, nextTask.content);
+                RunTask nextTask = taskQueue.remove(0);
+                Debug.debug("Removed task from queue: " + nextTask.content);
+                handleTaskRequest(nextTask.msg, nextTask.content);
             }
         }
     }

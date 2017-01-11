@@ -165,6 +165,7 @@ cat - <<_EOF_ >>/tmp/trips$$
 		  -log true
 		  -display $display_gui
 		  -config "$dg_conf"
+		  -debug $debug
 		  $port_opt
 )))
 _EOF_
@@ -222,7 +223,7 @@ fi
 
 # Start PubManager
 ( sleep 5; \
-  $TRIPS_BASE/bin/PubManager $port_opt -pmcid-xml-store $pm_xml -pmcid-ppp-store $pm_ppp \
+  $TRIPS_BASE/bin/PubManager $port_opt -pmcid-xml-store $pm_xml -pmcid-ppp-store $pm_ppp -debug $debug \
   2>&1 | tee PubManager.err ) &
 
 # Start Graphviz

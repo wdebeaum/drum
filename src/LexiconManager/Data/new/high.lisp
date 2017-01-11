@@ -36,7 +36,7 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("high%3:00:01"))
      (EXAMPLE "a high mountain" "a five foot high building")
 ;     (LF-PARENT ONT::linear-dimension)
-     (LF-PARENT ONT::high-val)
+     (LF-PARENT ONT::height-val)
      )
     ;;;;; we want to use the no-premod meaning first
 ;    ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("high%3:00:01"))

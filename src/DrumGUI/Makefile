@@ -1,7 +1,7 @@
 #
 # Makefile
 #
-# Time-stamp: <Thu Jan 14 16:06:22 CST 2016 lgalescu>
+# Time-stamp: <Fri Jan  6 18:56:06 CST 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  9 Feb 2010
 #
@@ -33,6 +33,7 @@ SRCS =  DrumGUI.java \
 
 CLASSES = $(SRCS:.java=.class) \
 	DrumGUI$$Mode.class \
+	DrumGUI$$PubPullReplyHandler.class \
 	DrumGUI$$TagReplyHandler.class \
 	DrumGUI$$RunTask.class \
 	DrumGUI$$TaskScheduler.class \

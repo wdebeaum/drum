@@ -117,7 +117,7 @@
 
 (defun unify-args (args)
   ;;(let ((arg0 (get-fvalue args :arg0))) ;; (second (first args))))
-    (match-vals nil (get-fvalue args 'w::pattern) (get-fvalue args 'w::value))
+    (match-vals 'w::sem (get-fvalue args 'w::pattern) (get-fvalue args 'w::value))
 ;;		arg0 
     )
 

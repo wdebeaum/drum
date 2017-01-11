@@ -1,7 +1,7 @@
 /*
  * DrumKB.java
  *
- * $Id: DrumKB.java,v 1.26 2016/08/08 23:37:39 lgalescu Exp $
+ * $Id: DrumKB.java,v 1.27 2017/01/11 06:28:58 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  9 May 2015
  */
@@ -347,6 +347,13 @@ public class DrumKB {
         }
     }
 
+    /**
+     * Sets EKB file path.
+     * 
+     * @param file
+     *            The file path
+     * @throws NullPointerException
+     */
     protected void setEKBFile(File file)
             throws NullPointerException
     {
@@ -355,6 +362,11 @@ public class DrumKB {
         Debug.info("ekbFile set to: " + ekbFile);
     }
 
+    /**
+     * Returns the absolute path to the EKB file.
+     * 
+     * @throws RuntimeException
+     */
     protected String getEKBFile()
             throws RuntimeException
     {

@@ -967,7 +967,7 @@ as the clauses end up long enough, and they agree with other sources of clause t
 <td>sense</td>
 <td>X</td>
 <td>X</td>
-<td>Looks up biological mechanism terms for the Deep Reader for Understanding Mechanisms (DRUM).</td>
+<td>Looks up biological mechanism terms for the Deep Reader for Understanding Mechanisms (DRUM). See the section on <a href="#sec-5.6.">The Drum tagger</a>.</td>
 </tr><tr>
 <td>Enju</td>
 <td>clause, phrase, pos</td>
@@ -1224,13 +1224,158 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 </div>
 
 <div class="section">
-<h3>Table of Drum tagger data sources</h3>
+<h3>The Drum tagger</h3>
+<p>The Drum tagger looks up biological mechanism terms for the Deep Reader for Understanding Mechanisms (DRUM). It's more complicated than most of the other taggers included as part of TextTagger, so it deserves its own section.</p>
+
+<div class="section">
+<h4>Building</h4>
+<p>At build time, we fetch a number of data sources (see the table at the end of this section) and use them to build one big table mapping words and phrases ("terms") to the relevant information from those data sources (<code>drum-terms.tsv</code>). That information includes IDs (sometimes called "accession numbers") from those data sources, information about the status of the term as associated with each ID, and the preferred term for the ID. For some sources (right now just UniProt) we also get database cross-references ("dbxrefs") relating the IDs across different sources, and put them in a secondary table (<code>drum-dbxrefs.tsv</code>).</p>
+
+<p>The terms are normalized (by <code>Normalize.pm</code>), but the pre-normalized form of each term is also stored in the table. Normalization converts upper case letters to lower case, removes dashes (including several different dash characters defined in Unicode, as well as the humble ASCII hyphen-minus character), and collapses each string of whitespace to a single ASCII space character. For some data sources we do some extra processing before normalization. Some sources always capitalize their terms, even if that's not how they would appear in ordinary text, so we attempt to undo that. And some sources include greek letters spelled out, like "alpha" instead of "α", so we include both the spelled-out version and a version with the greek letter "unspelled". The table is sorted lexicographically by normalized term, to make searching it faster.</p>
+</div>
+
+<div class="section">
+<h4>Lookup</h4>
+<p>At run time, the Drum tagger takes input from a number of different other taggers, in order to get word and sentence segmentation and part of speech options, as well as alternative spellings<!-- including VariantLists --> for some words. It converts most of these input tags to simple lattice entries, containing only start and end character offsets and an unnormalized word. The singular form of each word that was tagged as a plural noun is also added to the lattice (the word is "depluralized").</p>
+
+<p>This lattice is then matched against the normalized terms from the table (by <code>terms2.cpp</code>). We recursively construct each possible term from contiguous lattice entries, subject to length limits in number of characters (100), and number of lattice entries (20). Each constructed term is normalized, and then looked up in the table.<!-- We don't normalize each lattice entry first, because some of the things normalization removes would come between entries, so we have to normalize the constructed term anyway. --> The table is large enough that we don't want to keep all of it in memory, so we keep it on disk, with a small in-memory index associating every 100th term with its byte offset in the table file. We look up the term in the index to find which 100-term block it would be in, and then read from the start of that block to the search term or the end of the block, whichever comes first. We also use an in-memory Bloom filter to avoid using the disk (or the index) at all most of the time, in the common case where a constructed term is not in the table.</p>
+</div>
+
+<div class="section">
+<h4>Scoring</h4>
+<p>The result of the table lookup has both the unnormalized form of the term constructed from the lattice entries, and the unnormalized form of each matching term from one of our data sources. These two forms are not in general the same, but they do normalize to the same string. We count the ways in which they differ (which can only involve letter case and the presence or absence of dashes; we ignore the specific type of dash used, and the amount of whitespace), and that contributes to a match score, along with the status of the term in the data source it came from, and whether a depluralized lattice entry contributed to the match. Higher scores are better (i.e. they are not costs, but benefits).</p>
+
+<p>The status score is a simple hand-built ranking of the status annotations from all of the data sources, ranging from 0 to 5:</p>
+<table>
+<tr><th>score</th><th>meaning</th><th>status annotations</th></tr>
+<tr><td>5</td><td>the most official name or abbreviation</td>
+<td><code>NM</code>, <code>RecName: <var>*</var></code>, <code>name</code>, <code>Approved<var>*</var></code>, <code>I*</code>, <code>ID</code> (except XFAM)</td></tr>
+<tr><td>4</td><td>an alternative name for the exact same thing</td>
+<td><code>ID</code> (only XFAM), <code>synonym</code>, <code>EXACT synonym</code>, <code>RELATED synonym</code> (only BTO and CVCL)</td></tr>
+<tr><td>3</td><td>something that could be a synonym or related term</td>
+<td><code>RELATED synonym</code> (except BTO and CVCL), <code>SY</code>, <code>DE</code>, <code>WK</code>, <code>AltName: <var>*</var></code>, <code>Synonym</code></td></tr>
+<tr><td>2</td><td>definitely an inexact synonym</td>
+<td><code>NARROW synonym</code>, <code>BROAD synonym</code></td></tr>
+<tr><td>1</td><td>a previous name or abbreviation</td>
+<td><code>PI</code>, <code>Previous<var>*</var></code></td></tr>
+<tr><td>0</td><td>a fake entry added by us</td>
+<td><code>fake</code></td></tr>
+</table>
+<p>(The <code>fake</code> status is for the <code>UP:etc</code> IDs added to the table to replace the excessive number of IDs that certain terms in UniProt have.)</p>
+
+<p>The depluralization score is basically 2 if no depluralization was necessary to match the term, 1 if only one word in the term was depluralized, and 0 if more than one word was depluralized. But we also add the worst (i.e. minimum) score of any depluralized word in the term, which is between 0 and 1. That comes from the Specialist tagger, and it uses only the case/dash match score, because the other two components are not available to it. In total, the depluralization score is still between 0 and 2, because when the base score is 2 there is no worst score for a depluralized word, because there is no depluralized word.</p>
+
+<pre>depluralization_score =
+    _
+   | 2 if 0 lattice entries were depluralized
+  &lt;  1 + (the score of the depluralized entry) if 1 lattice entry was depluralized
+   |_(the minimum score of all depluralized entries) otherwise
+</pre>
+
+<p>The case/dash match score has several components, which are mostly based on counting the number of places in which the two unnormalized forms of the term differ in particular ways. So first we need to characterize those differences. Call the form that appears in the input text A, and the form that appears in the data source B. We align A and B so that the corresponding letters line up, and split them into the same sequence of words, such that if there is a dash in either A or B, it will split the word it is in in both A and B. We also count the dashes in A that aren't in B (<code>dash-no-dash</code>) and vice versa (<code>no-dash-dash</code>). Then we check whether each word matches exactly in A and B (<code>exact</code>), and if they don't, we characterize the case patterns of A's version and B's version and count that pairing of characterizations. The possible case pattern characterizations are:</p>
+<dl>
+<dt><code>sentence-cap</code></dt><dd>The word begins a sentence and is a single capital letter followed by zero or more lower-case letters (this only happens for A, because only the input text has sentences).</dd>
+<dt><code>single-cap</code></dt><dd>The whole word is a single capital letter (except <code>sentence-cap</code>).</dd>
+<dt><code>all-caps</code></dt><dd>All capital letters (except <code>single-cap</code> and <code>sentence-cap</code>).</dd>
+<dt><code>no-caps</code></dt><dd>No capital letters.</dd>
+<dt><code>initial-cap</code></dt><dd>The word is a single capital letter followed by one or more lower-case letters (except <code>sentence-cap</code>).</dd>
+<dt><code>mixed-caps</code></dt><dd>Anything else.</dd>
+</dl>
+
+<p>For example, if the match is at the beginning of a sentence, A is "Foo-BarbAz gLaRcH", and B is "FOObar-bAz GlArCh", then both A and B would be split into the words "foo bar baz glarch", and the following counts would result:</p>
+<ul>
+ <li><code>:dash-no-dash 1</code> (between foo and bar)</li>
+ <li><code>:no-dash-dash 1</code> (between bar and baz)</li>
+ <li><code>:sentence-cap-all-caps 1</code> (beginning-of-sentence Foo vs. FOO)</li>
+ <li><code>:initial-cap-no-caps 1</code> (Bar vs. bar)</li>
+ <li><code>:exact 1</code> (bAz)</li>
+ <li><code>:mixed-caps-mixed-caps 1</code> (GlArCh vs. gLaRcH)</li>
+</ul>
+<p>Note that the non-dash-related counts add up to the total number of words in the term (4). Also note that <code>mixed-caps-mixed-caps</code> does not count as an exact match because caps can be mixed in different ways.</p>
+
+<p>Once we have characterized the match between A and B, we compute the case/dash score based on that characterization. This score has several subcomponents. Ranked from most to least important, they are:</p>
+<dl>
+ <dt><code>short_abbr</code> (2 possible values)</dt>
+  <dd>If B is 3 characters or fewer, and an <code>all-caps</code> word matches a <code>no-caps</code> word in either direction, this score is 0, otherwise it is 1. This is meant to penalize matches between short abbreviations (usually <code>all-caps</code>) and short regular words, e.g. "for" vs. "FOR" (HGNC:12799).</dd>
+ <dt><code>mixed</code> (3)</dt>
+  <dd>This score penalizes mixed-caps mismatches, which are usually obviously wrong. If there are any <code>mixed-caps-mixed-caps</code> matches, this score is 0; otherwise, if there are any non-exact word matches that involve <code>mixed-caps</code> at all, this score is 1; otherwise this score is 2.</dd>
+ <dt><code>exact</code> (2)</dt>
+  <dd>This score rewards exact matches. If there are any <code>exact</code> matches, this score is 1, otherwise it is 0.</dd>
+ <dt><code>acic</code> (3)</dt>
+  <dd>If there are only <code>exact</code> or <code>sentence-cap-no-caps</code> matches, this score is 2; otherwise, if the only non-exact word matches are <code>all-caps-initial-caps</code> (which is particularly common), this score is 1; otherwise this score is 0.</dd>
+ <dt><code>combo</code> (5)</dt>
+  <dd>This score penalizes case mismatches in general, and penalizes having a combination of many different kinds of mismatches. It is computed separately for A and B and then the better (larger) of the two scores is used. It starts at 4, but one point is deducted for each different word case characterization that participates in an inexact match. For this, <code>single-cap</code> is not treated as different from <code>all-caps</code> or <code>initial-cap</code> (but the latter two are still different from each other). Similarly, <code>sentence-cap</code> is not treated as different from <code>single-cap</code>, <code>initial-cap</code>, <code>no-caps</code>. In addition, if the only case mismatch is <code>sentence-cap-no-caps</code>, it doesn't count, and this score is 4. All these exceptions just ensure that matches aren't penalized for things that can't be helped, like the length of words, and whether A is at the beginning of the sentence.</dd>
+ <dt><code>dash</code> (3)</dt>
+  <dd>This score is 2 if there are no dash mismatches, 1 if there is only one kind of dash mismatch, and 0 if there are both <code>dash-no-dash</code> and <code>no-dash-dash</code> mismatches. Dash mismatches are extremely common, so this is the least important component of the score.</dd>
+</dl>
+
+<p>These subcomponents are combined as if they were digits in a number. The base depends on which place the digit is in, since the subcomponents are integers with different ranges. This ensures that the smallest possible change in a more-important subcomponent has a larger effect on the case/dash score than the largest possible change in a less-important subcomponent. The number is then divided by the product of the "bases", minus one. This ensures that the case/dash score is between 0 and 1. The final formula (formatted to emphasize the digits-in-a-number interpretation) is:</p>
+<pre>case_dash_score =
+  (((((((0
+  ) * 2 + short_abbr
+  ) * 3 + mixed
+  ) * 2 + exact
+  ) * 3 + acic
+  ) * 5 + combo
+  ) * 3 + dash
+  ) / 539
+</pre>
+
+<p>Finally, the status score, depluralization score, and case/dash score are themselves combined in a similar way:</p>
+<pre>final_score =
+  ((((0
+  ) * 6 + status_score
+  ) * 3 + depluralization_score
+  ) * 2 + case_dash_score
+  ) / 35
+</pre>
+</div>
+
+<div class="section">
+<h4>Ontology mapping</h4>
+
+<p><em>TODO</em></p>
+</div>
+
+<div class="section">
+<h4>POS tagging</h4>
+
+<p><em>TODO</em></p>
+</div>
+
+<div class="section">
+<h4>Amino acids, protein sites, and mutations</h4>
+
+<p><em>TODO</em></p>
+</div>
+
+<div class="section">
+<h4>miRNAs</h4>
+
+<p><em>TODO</em></p>
+</div>
+
+<div class="section">
+<h4>Miscellaneous</h4>
+
+<p><em>TODO is_bad_match, is_all_prefixes, maybe vs. surely depluralized, word_is_in_trips_lexicon, GO "activity" terms</em></p>
+</div>
+
+<div class="section">
+<h4>Table of data sources</h4>
 <table>
 <tr><th>data source name/link</th><th>ID prefix</th><th>file format</th><th>maps to TRIPS types</th><th>description</th></tr>
 <tr>
+ <td><a href="https://github.com/sorgerlab/bioentities">Bioentities</a></td>
+ <td>BE</td>
+ <td><a href="http://owlcollab.github.io/oboformat/doc/GO.format.obo-1_2.html">OBO</a></td>
+ <td>PROTEIN-FAMILY (possibly more in the future)</td>
+ <td>"Bioentities is a collection of resources for grounding biological entities from text and describing their hierarchical relationships. Resources were developed by manual curation for use by natural language processing and biological modeling teams in the DARPA Big Mechanism and Communicating with Computers programs."</td>
+</tr>
+<tr>
  <td><a href="http://www.brenda-enzymes.info/">BRENDA</a> Tissue Ontology</td>
  <td>BTO</td>
- <td><a href="http://www.geneontology.org/GO.format.obo-1_2.shtml">OBO</a></td>
+ <td>OBO</td>
  <td>CELL, CELL-LINE, INTERNAL-BODY-PART</td>
  <td>"A structured controlled vocabulary for the source of an enzyme. It comprises terms of tissues, cell lines, cell types and cell cultures from uni- and multicellular organisms."</td>
 </tr>
@@ -1326,6 +1471,8 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
  <td>"The Pfam database is a large collection of protein families, each represented by multiple sequence alignments and hidden Markov models (HMMs). ... There are two components to Pfam: Pfam-A and Pfam-B. Pfam-A entries are high quality, manually curated families."</td>
 </tr>
 </table>
+</div>
+
 </div>
 
 </div>

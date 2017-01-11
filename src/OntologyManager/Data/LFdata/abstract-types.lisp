@@ -3264,16 +3264,17 @@
 
 (define-type ONT::HEIGHT-VAL
     :sem (F::Abstr-obj (F::Scale Ont::height-scale))
+    :wordnet-sense-keys ("high%3:00:02" "high%3:00:01" "tall%3:00:00")
     :parent ONT::linear-dimension
     )
 
-(define-type ONT::HIGH-VAL
+#||(define-type ONT::HIGH-VAL
  :parent ONT::linear-dimension
  :wordnet-sense-keys ("high%3:00:02" "high%3:00:01" "tall%3:00:00")
-)
+)||#
 
 (define-type ONT::LOW-VAL
- :parent ONT::linear-dimension
+ :parent ONT::height-val
  :wordnet-sense-keys ("low%3:00:02" "low%3:00:01")
 )
 
