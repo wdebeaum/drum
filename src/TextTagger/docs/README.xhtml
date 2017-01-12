@@ -1229,16 +1229,18 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 
 <div class="section">
 <h4>Building</h4>
-<p>At build time, we fetch a number of data sources (see the table at the end of this section) and use them to build one big table mapping words and phrases ("terms") to the relevant information from those data sources (<code>drum-terms.tsv</code>). That information includes IDs (sometimes called "accession numbers") from those data sources, information about the status of the term as associated with each ID, and the preferred term for the ID. For some sources (right now just UniProt) we also get database cross-references ("dbxrefs") relating the IDs across different sources, and put them in a secondary table (<code>drum-dbxrefs.tsv</code>).</p>
+<p>At build time, we fetch a number of data sources (see the table at the end of this section) and use them to build one big table mapping words and phrases ("terms") to the relevant information from those data sources (<code>drum-terms.tsv</code>). That information includes IDs (sometimes called "accession numbers") from those data sources, information about the status of the term as associated with each ID, and the preferred term for the ID. For some sources (right now just UniProt) we also get database cross-references ("dbxrefs") relating the IDs across different sources, and put them in a secondary table (<code>drum-dbxrefs.tsv</code>). We also convert some data sources to DeepSemLex Lisp format, in order to use their hierarchy information.</p>
 
 <p>The terms are normalized (by <code>Normalize.pm</code>), but the pre-normalized form of each term is also stored in the table. Normalization converts upper case letters to lower case, removes dashes (including several different dash characters defined in Unicode, as well as the humble ASCII hyphen-minus character), and collapses each string of whitespace to a single ASCII space character. For some data sources we do some extra processing before normalization. Some sources always capitalize their terms, even if that's not how they would appear in ordinary text, so we attempt to undo that. And some sources include greek letters spelled out, like "alpha" instead of "α", so we include both the spelled-out version and a version with the greek letter "unspelled". The table is sorted lexicographically by normalized term, to make searching it faster.</p>
 </div>
 
 <div class="section">
 <h4>Lookup</h4>
-<p>At run time, the Drum tagger takes input from a number of different other taggers, in order to get word and sentence segmentation and part of speech options, as well as alternative spellings<!-- including VariantLists --> for some words. It converts most of these input tags to simple lattice entries, containing only start and end character offsets and an unnormalized word. The singular form of each word that was tagged as a plural noun is also added to the lattice (the word is "depluralized").</p>
+<p>At run time, the Drum tagger takes input from a number of different other taggers, in order to get word and sentence segmentation and part of speech options, as well as alternative spellings<!-- including VariantLists --> for some words. It converts most of these input tags to simple lattice entries, containing only start and end character offsets and an unnormalized word. The singular form of each word that was tagged as a plural noun is also added to the lattice (the word is "depluralized"). As a special case, if an input tag changes a word that's all-caps except for a final "s" to all-lower-case, we change it back in the lattice. For example the input "GAPs" might get a tag that spells it "gaps", and we'd change it back to "GAPs". This affects scoring later on.</p>
 
 <p>This lattice is then matched against the normalized terms from the table (by <code>terms2.cpp</code>). We recursively construct each possible term from contiguous lattice entries, subject to length limits in number of characters (100), and number of lattice entries (20). Each constructed term is normalized, and then looked up in the table.<!-- We don't normalize each lattice entry first, because some of the things normalization removes would come between entries, so we have to normalize the constructed term anyway. --> The table is large enough that we don't want to keep all of it in memory, so we keep it on disk, with a small in-memory index associating every 100th term with its byte offset in the table file. We look up the term in the index to find which 100-term block it would be in, and then read from the start of that block to the search term or the end of the block, whichever comes first. We also use an in-memory Bloom filter to avoid using the disk (or the index) at all most of the time, in the common case where a constructed term is not in the table.</p>
+
+<p>We immediately discard a few kinds of bad matches. If the term has a space in it, but one or both ends are inside a word (which can happen due to some of the sub-word splitting that the Words tagger does), we discard that match. For example, we discard a match for "T cell" in "HEK293T cell". And if one or both ends of a term are dashes inside a word, for example "-Ras" in "GEF-Ras", we discard that match. And if the term is entirely composed of prefixes and dashes, joined to the following word without a dash (which can happen when the Affixes tagger is active), we discard that match. For example, we discard the match for (gene) "re-re" in "re-reactivation".</p>
 </div>
 
 <div class="section">
@@ -1267,12 +1269,12 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 
 <pre>depluralization_score =
     _
-   | 2 if 0 lattice entries were depluralized
-  &lt;  1 + (the score of the depluralized entry) if 1 lattice entry was depluralized
-   |_(the minimum score of all depluralized entries) otherwise
+   |  2 <b>if</b> 0 lattice entries were depluralized
+  &lt;   1 + (the score of the depluralized entry) <b>if</b> 1 lattice entry was depluralized
+   |_ (the minimum score of all depluralized entries) <b>otherwise</b>
 </pre>
 
-<p>The case/dash match score has several components, which are mostly based on counting the number of places in which the two unnormalized forms of the term differ in particular ways. So first we need to characterize those differences. Call the form that appears in the input text A, and the form that appears in the data source B. We align A and B so that the corresponding letters line up, and split them into the same sequence of words, such that if there is a dash in either A or B, it will split the word it is in in both A and B. We also count the dashes in A that aren't in B (<code>dash-no-dash</code>) and vice versa (<code>no-dash-dash</code>). Then we check whether each word matches exactly in A and B (<code>exact</code>), and if they don't, we characterize the case patterns of A's version and B's version and count that pairing of characterizations. The possible case pattern characterizations are:</p>
+<p>The case/dash match score has several components, which are mostly based on counting the number of places in which the two unnormalized forms of the term differ in particular ways. So first we need to characterize those differences. Call the form derived from the input text A, and the form derived from the data source B. We align A and B so that the corresponding letters line up, and split them into the same sequence of words, such that if there is a dash in either A or B, it will split the word it is in in both A and B. We also count the dashes in A that aren't in B (<code>dash-no-dash</code>) and vice versa (<code>no-dash-dash</code>). (As a special case, we discard matches that involve such dash mismatches between digits.) Then we check whether each word matches exactly in A and B (<code>exact</code>), and if they don't, we characterize the case patterns of A's version and B's version and count that pairing of characterizations. The possible case pattern characterizations are:</p>
 <dl>
 <dt><code>sentence-cap</code></dt><dd>The word begins a sentence and is a single capital letter followed by zero or more lower-case letters (this only happens for A, because only the input text has sentences).</dd>
 <dt><code>single-cap</code></dt><dd>The whole word is a single capital letter (except <code>sentence-cap</code>).</dd>
@@ -1334,31 +1336,78 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 <div class="section">
 <h4>Ontology mapping</h4>
 
-<p><em>TODO</em></p>
-</div>
+<p>Most of our data sources have is-a hierarchies, or something similar. When we look up a term and get an ID belonging to one of these data sources, we travel up the hierarchy until we reach an ID with a mapping into the TRIPS ontology. These mappings are defined in <code>drum-mappings.lisp</code> (except for BE which defines its own TRIPS mappings). Traversal of the hierarchy, as well as caching, are handled separately from TextTagger by the DeepSemLex TRIPS module. Some data sources use multiple inheritance, so this can result in multiple mappings to different ONT types. If a traversal yields no TRIPS mappings for a match, the match is discarded.</p>
 
-<div class="section">
-<h4>POS tagging</h4>
+<p>For other data sources (and certain parts of those with hierarchies), we have a few ad hoc mapping rules depending on which data source the ID is from:</p>
 
-<p><em>TODO</em></p>
+<p>IDs from GO where the name from GO ends in " activity" but the input text lacks that ending are mapped to <code>ONT::protein</code>. At build time the variant without the ending is added to the table for such terms under the molecular_function concept in GO. We noticed that most of these terms described the activity of some protein, and some of those proteins we didn't get from other sources. If the input <em>does</em> have the " activity" ending, we still tag the part before it as <code>ONT::protein</code>, but put the <code>:domain-specific-info</code> for the whole term only on the word "activity", and map the ID to TRIPS normally.</p>
+
+<p>We skip IDs from CHEBI and CVCL for matches that depend on depluralization.</p>
+
+<p>IDs from HGNC all map to <code>ONT::gene</code>.</p>
+
+<p>IDs from UniProt's subcell terms map to different ONT types depending on the entry type (which is included after the ID in the table). Location entries (<code>ID</code>) map to <code>ONT::cell-part</code>. Topology entries (<code>IT</code>) map to <code>ONT::protein-family</code>. And orientation entries (<code>IO</code>) map to <code>ONT::cell-part</code>.</p>
+
+<p>Other UniProt IDs map to <code>ONT::protein</code>.</p>
+
+<p>PFam IDs map to different ONT types depending on the <code>TP</code> field. "Family" maps to <code>ONT::protein-family</code>, while everything else (Domain, Repeat, Motif) maps to <code>ONT::molecular-domain</code>.</p>
+
+<p>IDs from MeSH SCR map to <code>ONT::pharmacologic-substance</code>.</p>
+
+<p>IDs from CVCL map to <code>ONT::cell-line</code>.</p>
+
+<p>IDs from neXtProt-family (FA) map to <code>ONT::protein-family</code>.</p>
+
+<p>We get IDs from HP via EFO, when they are linked to MeSH and/or DOID. These map to <code>ONT::medical-disorders-and-conditions</code>.</p>
 </div>
 
 <div class="section">
 <h4>Amino acids, protein sites, and mutations</h4>
 
-<p><em>TODO</em></p>
+<p>In addition to the main table lookup and ontology mapping mechanisms, the Drum tagger has a couple of custom specialized sub-taggers. One of them tags amino acids, protein sites, and protein-level mutations, based in large part on this <a href="http://www.hgmd.cf.ac.uk/docs/mut_nom.html">Nomenclature for the description of sequence variations</a>.</p>
+
+<p>Amino acids map to <code>ONT::amino-acid</code>. Sometimes the normal table lookup mechanism also tags an amino acid, but that tag is discarded in favor of the tag from this mechanism. Amino acid tags have <code>:domain-specific-info</code> of type <code>amino-acid</code>, containing the full <code>:name</code> of the amino acid as well as the single <code>:letter</code> abbreviation.</p>
+
+<p>Protein sites map to <code>ONT::molecular-site</code>. Their tags have <code>:domain-specific-info</code> of type <code>aa-site</code>, which include the same fields as those of amino acids, as well as an <code>:index</code> specifying the position of the amino acid in the chain of amino acids that makes up the protein.</p>
+
+<p>Mutations map to <code>ONT::mutation</code> Their tags have <code>:domain-specific-info</code> of type <code>mutation</code>, but they also have a subordinate <code>:type</code> field, which can be one of <code>insertion</code>, <code>deletion</code>, or <code>substitution</code>. Their other fields depend on which sub-type it is and how it was written. They can include:</p>
+<dl>
+<dt><code>:old</code></dt><dd>The amino acid that was deleted (an <code>amino-acid</code>-type <code>:domain-specific-info</code> structure).</dd>
+<dt><code>:new</code></dt><dd>The amino acid(s) that were inserted (can be an <code>amino-acid</code> DSI or a list thereof).</dd>
+<dt><code>:aa-index</code></dt><dd>The amino-acid index where the mutation took place (similar to <code>:index</code> from <code>aa-site</code>)</dd>
+<dt><code>:lower</code></dt><dd>The <code>aa-site</code> DSI for the start of the mutation (the side with the lower index).</dd>
+<dt><code>:upper</code></dt><dd>Ditto for the end/upper index.</dd>
+</dl>
+
 </div>
 
 <div class="section">
 <h4>miRNAs</h4>
 
-<p><em>TODO</em></p>
+<p>The other specialized sub-tagger tags micro RNAs or miRNAs, based on the description of the standard nomenclature for them on <a href="http://en.wikipedia.org/wiki/MicroRNA#Nomenclature">Wikipedia</a>. In short, a miRNA name consists of an optional 3-4 letter species abbreviation, followed by the letters "mir", followed by an ID number in a specific format, which we match but don't do anything further with. The parts may have dashes between them. The case pattern of the "mir" part signifies different possible referents: "miR" refers to the mature form and maps to <code>ONT::molecule</code>; "mir" refers to a precursor or primary form and also maps to <code>ONT::molecule</code>; and "MIR" refers to the gene that encodes them, and maps to <code>ONT::gene</code>. The <code>:domain-specific-info</code> for miRNA tags is of type <code>mirna</code>, and has these fields:</p>
+<dl>
+<dt><code>:type</code></dt><dd>The sub-type of miRNA, one of <code>mature</code>, <code>precursor-or-primary</code>, or <code>gene</code>.</dd>
+<dt><code>:number</code></dt><dd>The number part of the miRNA name, the part that comes after "mir".</dd>
+<dt><code>:species</code> (optional)</dt><dd>The species part of the miRNA name, which comes before "mir", expanded to the full genus+species Latin name. The mapping from species abbreviations to full names is in <code>mirna-species.tsv</code>.</dd>
+</dl>
 </div>
 
 <div class="section">
-<h4>Miscellaneous</h4>
+<h4>Discarding more tags</h4>
 
-<p><em>TODO is_bad_match, is_all_prefixes, maybe vs. surely depluralized, word_is_in_trips_lexicon, GO "activity" terms</em></p>
+<p>At this point we discard any tags with IDs from UniProt for the wrong species, if the <a href="#sec-3.1.8.">-drum-species</a> or <a href="#sec-3.5.16.">:drum-species</a> arguments were given.</p>
+
+<p>We also discard tags for all-lower-case single words that are already in the TRIPS lexicon (including prefixes).</p>
+</div>
+
+<div class="section">
+<h4>POS tagging</h4>
+
+<p>We add one or more of the four noun Penn POS tags (<code>NN</code>, <code>NNP</code>, <code>NNS</code>, <code>NNPS</code>) to each tag output by the Drum tagger. We treat each of the four total values of the two features encoded in these POS tags separately: singular, plural (<code>S</code>), common, and proper (<code>P</code>).</p>
+
+<p>If a tag resulted from one of the specialized taggers built into the Drum tagger rather than the generic table-lookup mechanism, we say it is singular and not plural. Otherwise, if it could have matched using a depluralized lattice entry, we say it can be plural; if it could have matched using no such entries, we say it can be singular. Note that the last two options are not mutually exclusive.</p>
+
+<p>If the input text for a tag contains a capital letter or a digit, we say it can be proper. If it doesn't, or if it consists only of a capital letter followed by lower case letters, spaces, and/or dashes, then we say it can be common. Note that these are not mutually exclusive.</p>
 </div>
 
 <div class="section">
