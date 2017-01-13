@@ -1134,6 +1134,7 @@
     )
 
 (define-type ONT::loc-as-point
+    :wordnet-sense-keys ("point%1:15:00")
     :parent ONT::location
     )
 
@@ -1369,11 +1370,6 @@
 		)
     )
 
-(define-type ONT::POINT
-    :parent ONT::LOCATION
-    :wordnet-sense-keys ("point%1:15:00")
-    :sem (F::Phys-obj (F::spatial-abstraction F::spatial-point))
-    )
 
 ;;; > REPRESENTATIONS
 
@@ -2014,6 +2010,11 @@
     :parent ONT::manufactured-object
     :wordnet-sense-keys ("clothing%1:06:00" "article_of_clothing%1:06:00" "vesture%1:06:00" "wear%1:06:00" "wearable%1:06:00" "habiliment%1:06:00")
     :sem (f::Phys-obj (F::Origin F::Artifact))
+    )
+
+(define-type ONT::washing
+    :parent ONT::attire
+    :wordnet-sense-keys ("laundry%1:06:01")
     )
 
 ;; boudreaux takes samples of environmental materials, fossils, etc.

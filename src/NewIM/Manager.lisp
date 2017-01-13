@@ -941,8 +941,10 @@
 		;;(format t "~%ReSULWAS ~S"  c1)
 		(if c1
 		    (list (list b c1))
-		    (list (list b a))))))
-	(list (list b a))
+		    ;(list (list b a))))))
+		    (list (list b simplified-a))))))
+	;(list (list b a))
+	(list (list b simplified-a))
 	)))
 
 (defun sort-symbol-map (symbol-map)

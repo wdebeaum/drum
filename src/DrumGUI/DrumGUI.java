@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.66 2017/01/11 06:28:58 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.67 2017/01/12 17:57:12 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -994,7 +994,7 @@ public class DrumGUI extends StandardTripsModule {
         if (folderObj == null) {
             try {
                 KQMLPerformative pullMsg = KQMLPerformative
-                        .fromString("(request :content (pub-pull :pmcid " + pmcid + "))");
+                        .fromString("(request :content (pub-pull :pmcid \"" + pmcid + "\"))");
                 sendWithContinuation(pullMsg, new PubPullReplyHandler(msg, content));
                 return;
             } catch (Exception e) {
@@ -1425,10 +1425,10 @@ public class DrumGUI extends StandardTripsModule {
             if (documentID != null) { // we check, in case we get a call before the first dataset gets going
                 content.add(":current-paragraph");
                 content.add(documentID);
-                if (taskRequest != null) {
-                    content.add(":current-task");
-                    content.add(taskRequest.getParameter(":reply-with"));
-                }
+            }
+            if (taskRequest != null) {
+                content.add(":current-task");
+                content.add(taskRequest.getParameter(":reply-with"));
             }
         }
         if (breakLines) {

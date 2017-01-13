@@ -8,7 +8,7 @@
   (senses
    ;;;;; names of medical conditions that take the BARE noun template
    ;;;;; that is, they can take occur with or without an article
-   ((LF-PARENT ONT::illness)
+   ((LF-PARENT ONT::angina-disease)
     (TEMPL bare-pred-TEMPL)
     )
    )

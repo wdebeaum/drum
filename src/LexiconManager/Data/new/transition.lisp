@@ -2,6 +2,7 @@
 ;;;; W::TRANSITION
 ;;;;
 
+#|
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
 ;      :COMMENTS HTML-PURCHASING-CORPUS))))
@@ -12,7 +13,7 @@
       :COMMENTS HTML-PURCHASING-CORPUS))
     ))
   ))
-
+|#
 
 (define-words :pos W::v :templ COUNT-PRED-TEMPL
  :words (

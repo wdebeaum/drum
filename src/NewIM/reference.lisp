@@ -95,7 +95,7 @@
       :role (cdr (assoc id grammroles))
       :num (classify-num lf)
       :lf LF
-      :lf-type (simplify-generic-type (third lf))
+      :lf-type (refine-type-from-sem-list (simplify-generic-type (third lf)) sem)
       :accessibility (classify-accessibility LF)
       :coref (find-arg-in-act lf :coref)
       :refers-to (find-arg-in-act lf :refers-to)
@@ -219,7 +219,8 @@
   "Returns a list REF-HYPs with referential information added"
   (let* ((lf (referent-lf ref))
 	 (sem (referent-sem ref))
-	 (lf-type (refine-type-from-sem-list (simplify-generic-type (caddr lf)) sem))
+	 (lf-type (caddr lf))
+	 ;;(lf-type (refine-type-from-sem-list (simplify-generic-type (caddr lf)) sem))
 	 (hyps
 	  (case (car lf)
 	   ((ONT::PRO ONT::PRO-SET)
@@ -464,7 +465,7 @@
 (defun resolve-pro-fn (lf lf-type sem access num index fn count role)
   "Personal pronouns should refer to a concrete object matching the criteria in the recent history.
     We check in the current utter1ance for possible referents that come before the pro form"
-  (let ((ans (or (find-possible-referents-in-current-sentence (get-lf-type lf) sem (second lf) access num index role)  ; need for "She talked with *her* friend
+  (let ((ans (or (find-possible-referents-in-current-sentence lf-type sem (second lf) access num index role fn)  ; need for "She talked with *her* friend
 		 (search-for-possible-refs lf-type (second lf) sem access num (- index 1) count fn)))) 
 
 	(mapcar #'(lambda (a) (bind-to-referent lf lf-type a)) ans)))
@@ -511,7 +512,7 @@
 		      ;(remove-if-not #'(lambda (x) (eq (referent-role x) :affected))
 			;	     terms)
 		      (remove-if-not #'(lambda (x) (eq (cadr (referent-role x)) id-event))
-				     terms)
+				     possibles)
 		      )))
     (mapcar #'(lambda (a) (bind-to-referent lf nil a)) results)))
 		   
@@ -808,7 +809,7 @@
 	  res
 	  )))))
 
-(defun find-possible-referents-in-current-sentence (lf-type sem id access-requirement nums index role)
+(defun find-possible-referents-in-current-sentence (lf-type sem id access-requirement nums index role fn)
   "returns the objects that meet the access requirement AND that precede the id in the sentence"
   (let ((r (get-im-record index))
 	(event-id (cadr role)))
@@ -820,13 +821,16 @@
 	     (accessable-refs (remove-if-not #'(lambda (x) (and (referent-p x) 
 								(not (eq (referent-id x) id)) ;; can't refer to itself
 								(member (referent-accessibility x) access-requirement)
-								(not (eq event-id (cadr (referent-role x)))) ;; can't be in the same event since its not reflexive
+								(or (null event-id)
+								    (not (eq event-id (cadr (referent-role x))))) ;; can't be in the same event since its not reflexive
+								(not (eq (referent-id x) event-id)) ;; it is not the event itself
 								(member (referent-num x) nums)
 								(subtype-check (referent-lf-type x) lf-type)))
 					     (truncate-expressions-at-id id (utt-record-referring-expressions r)))
-	       ))
-      accessable-refs))
-    ))
+	       )
+	     (filtered-accessable-refs (remove-if-not fn accessable-refs)))
+	filtered-accessable-refs
+    ))))
 
 (defun truncate-expressions-at-id (id exprs)
   "this gathers up all the possible referents up to the ID"

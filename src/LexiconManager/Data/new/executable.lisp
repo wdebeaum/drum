@@ -6,7 +6,7 @@
  :words (
   (W::executable
    (SENSES
-    ((LF-PARENT ONT::software-application)
+    ((LF-PARENT ONT::computer-software)
      (EXAMPLE "run the executable")
      (meta-data :origin task-learning :entry-date 20050817 :change-date nil :comments nil)
      )

@@ -31,7 +31,7 @@
 	  (wordfeats (W::morph (:forms (-vb) :past w::bore :pastpart w::born :nom w::birth)))
 	  (SENSES
 	   ((meta-data :origin "verbnet-2.0" :entry-date 20060505 :change-date 20090511 :comments nil :vn ("admire-31.2"))
-	    (EXAMPLE "I can't bear it")
+	    (EXAMPLE "I was born.")
 	    (LF-PARENT ONT::be-born)
 	    )
 	   ))

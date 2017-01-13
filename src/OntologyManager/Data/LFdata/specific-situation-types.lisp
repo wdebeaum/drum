@@ -937,7 +937,7 @@
  :parent ONT::LOCATED-MOVE-STATE
  :sem (F::SITUATION (F::Aspect F::Unbounded) (F::Cause F::Force) (F::Time-span F::Extended))
  :arguments ((:REQUIRED ONT::affected (F::Phys-obj (F::Mobility F::Movable)))
-	     (:optional ont::effect ((? ef f::abstr-obj f::situation f::phys-obj)))
+	     
              )
  )
 
@@ -961,8 +961,7 @@
   :parent ONT::change
   :arguments ((:REQUIRED ONT::affected ((? oc F::Phys-obj F::Abstr-obj f::situation)) (:implements affected))
 	      ;;(:OPTIONAL ONT::agent ((? ag f::abstr-obj F::phys-obj)(F::intentional +)) (:implements cause))
-	      (:required ont::effect (F::Situation (F::Aspect (? asp F::Dynamic F::Stage-level))))
-	     ;; (:required ont::affected)
+	      
 	      (:required ont::agent((? cs f::phys-obj f::abstr-obj f::situation)))
 	      )
   )
@@ -1841,7 +1840,7 @@
  :wordnet-sense-keys ("savour%2:37:00" "savor%2:37:00" "relish%2:37:00" "bask%2:37:13" "enjoy%2:37:00" "appreciate%2:37:00" "like%2:37:04" "love%2:37:00")
  :parent ONT::experiencer-emotion
  :arguments ((:REQUIRED ONT::Formal ((? t f::phys-obj f::abstr-obj f::situation f::time)))
-             (:ESSENTIAL ONT::neutral ((? s  f::phys-obj f::abstr-obj) (F::intentional +)))
+             (:ESSENTIAL ONT::neutral) ;((? s  f::phys-obj f::abstr-obj) (F::intentional +)))
 	     (:optional ONT::neutral1)
              )
  )
@@ -4671,7 +4670,7 @@
  )
 
 ;; angina
-(define-type ont::angina-symp
+(define-type ont::angina-disease
  :wordnet-sense-keys ("angina%1:26:00")
  :parent ont::medical-symptom
  )
@@ -4765,7 +4764,7 @@
 
 ;; flu
 (define-type ONT::flu
- :parent ONT::disease
+ :parent ONT::breathing-disorder
  :wordnet-sense-keys ("flu%1:26:00" "influenza%1:26:00" "grippe%1:26:00")
  )
 
@@ -4796,7 +4795,7 @@
 
 ; for pneuomnia
 (define-type ONT::pneumonia
- :parent ONT::disease
+ :parent ONT::breathing-disorder
  :wordnet-sense-keys ("pneumonia%1:26:00")
  )
 

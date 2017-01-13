@@ -6,7 +6,7 @@
  :words (
   (w::basketball
   (senses
-   ((LF-PARENT ONT::athletic-game)
+   ((LF-PARENT ONT::court-game)
     (TEMPL bare-PRED-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

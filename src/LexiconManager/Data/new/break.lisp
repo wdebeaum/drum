@@ -2,6 +2,7 @@
 ;;;; w::break
 ;;;;
 
+#|
 (define-words :pos W::n
  :words (
   (w::break
@@ -14,6 +15,7 @@
   ;; crack of the whip, crack of dawn
 )
 ))
+|#
 
 (define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
  :words (

@@ -303,7 +303,8 @@ sub run_pmcid {
   my ($reply_content, $reply) =
     $tm->send_and_wait(
       '(request :receiver drum :content (run-pmcid' .
-      ' :folder ' . quote_for_kqml($input_dir) .
+# LG says this argument is no longer necessary
+#      ' :folder ' . quote_for_kqml($input_dir) .
       ' :pmcid "' . $pmcid . '"' .
       ' :save-to ' . quote_for_kqml($output_file) .
       '))');

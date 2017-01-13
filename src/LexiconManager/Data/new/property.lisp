@@ -11,8 +11,7 @@
      (EXAMPLE "a hypothetical breed property for our dog example")
      (meta-data :origin task-learning :entry-date 20050817 :change-date nil :wn ("property%1:09:00") :comments nil)
      )
-    ((LF-PARENT ONT::possession)
-     
+    ((LF-PARENT ONT::assets)
      (EXAMPLE "don't steal my property")
      (meta-data :origin task-learning :entry-date 20050926 :change-date nil :wn ("property%1:21:00") :comments nil)
      )

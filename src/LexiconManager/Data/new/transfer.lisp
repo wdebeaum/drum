@@ -2,6 +2,7 @@
 ;;;; W::transfer
 ;;;;
 
+#|
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
   (W::transfer
@@ -14,12 +15,13 @@
     )
    )
 ))
+|#
 
 (define-words :pos W::v :templ AGENT-affected-XP-TEMPL
  :words (
   (W::transfer
    ;; adding the morph forms as the doubled consonant with unstressed final syllable is an exception to the morph rule
-   (wordfeats (W::morph (:forms (-vb) :past W::transferred :ing W::transferring)))
+   (wordfeats (W::morph (:forms (-vb) :past W::transferred :ing W::transferring) :nom transfer))
    (SENSES
     ((LF-PARENT ONT::transfer)
      (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))

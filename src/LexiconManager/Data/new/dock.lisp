@@ -18,7 +18,7 @@
  :words (
   (W::dock
    (SENSES
-    ((LF-PARENT ONT::software-application)
+    ((LF-PARENT ONT::computer-software)
      (EXAMPLE "click the icon in the Dock")
      (meta-data :origin task-learning :entry-date 20050822 :change-date nil :comments nil)
      )

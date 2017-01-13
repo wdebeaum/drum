@@ -6,7 +6,7 @@
  :words (
   (w::strength
   (senses
-   ((LF-PARENT ONT::physical-property)
+   ((LF-PARENT ONT::non-measure-ordered-domain)
     (TEMPL mass-pred-TEMPL)
     (meta-data :origin cardiac :entry-date 20080509 :change-date nil :comments LM-vocab)
     (syntax (W::morph (:forms (-none))))

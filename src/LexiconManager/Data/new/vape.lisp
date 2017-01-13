@@ -6,9 +6,9 @@
  :words (
    (W::vape
    (SENSES
-    ((LF-PARENT ONT::DRUG)
-     (example "He is using vape.")
-     (templ mass-pred-templ)
+    ((LF-PARENT ONT::device)
+     (example "He is using a vape.")
+     (templ count-pred-templ)
      )
     )
    )

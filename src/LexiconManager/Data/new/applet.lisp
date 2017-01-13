@@ -6,7 +6,7 @@
  :words (
   (W::applet
    (SENSES
-    ((LF-PARENT ONT::software-application)
+    ((LF-PARENT ONT::computer-program)
      (EXAMPLE "run the applet")
      (meta-data :origin task-learning :entry-date 20050817 :change-date nil :wn ("applet%1:10:00") :comments nil)
      )

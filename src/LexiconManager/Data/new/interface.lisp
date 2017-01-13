@@ -7,7 +7,7 @@
  :words (
 	  (w::interface
 	   (senses
-	    ((lf-parent ont::software-application)
+	    ((lf-parent ont::computer-software)
 	     ;; this is the window on the computer screen
 	     (templ count-pred-templ)
 	     (meta-data :origin bee :entry-date 20040615 :change-date nil :wn ("interface%1:10:00") :comments portability-experiment)

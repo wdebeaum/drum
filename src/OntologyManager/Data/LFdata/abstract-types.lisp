@@ -1525,7 +1525,8 @@
 
 ;; layer (of ozone, chocolate), sheet (of ice, paper), slice
 (define-type ont::sheet
-  :parent ont::non-measure-ordered-domain
+;  :parent ont::non-measure-ordered-domain
+  :parent ONT::GROUP-OBJECT
   )
 
 (define-type ONT::MEASURE-UNIT
@@ -1981,7 +1982,8 @@
 
 (define-type ONT::ASSETS
  :wordnet-sense-keys ("assets%1:21:00")
- :parent ONT::MEASURE-DOMAIN
+; :parent ONT::MEASURE-DOMAIN
+ :parent ONT::FUNCTION-OBJECT
  :sem (F::Abstr-obj (F::Scale Ont::money-scale))
  :arguments ((:REQUIRED ONT::FIGURE ((? fot F::phys-obj F::situation)))
              (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::measure-function F::value) (F::scale ont::money-scale)))
@@ -2487,6 +2489,10 @@
 (define-type ONT::athletic-game
  :wordnet-sense-keys ("athletics%1:04:00" "sport%1:04:00")
  :parent ONT::sport
+ )
+
+(define-type ONT::court-game
+ :parent ONT::athletic-game
  )
 
 ;; chess

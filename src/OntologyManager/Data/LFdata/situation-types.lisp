@@ -329,7 +329,7 @@
  :parent ONT::cogitation
  :arguments ((:REQUIRED ONT::Formal ((? th4 f::phys-obj f::abstr-obj f::situation))) ;;Ground
              (:ESSENTIAL ONT::Agent  ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
-	     (:optional ont::effect (f::situation))
+	     
              )
  )
 
@@ -427,8 +427,7 @@
  :parent ONT::directive
  :comment "the generic directive act"
  :sem (F::Situation (F::Cause F::Agentive))
- :arguments ((:ESSENTIAL ONT::effect ((? t f::situation)))
-             )
+ 
  )
 
 
@@ -454,7 +453,7 @@
  ;;; (?type (information F_Information-content)))
  :arguments ((:ESSENTIAL ONT::formal)
 ;             (:OPTIONAL ONT::associated-information)
-	     (:optional ont::effect ((? ef F::Situation f::abstr-obj)))
+
              )
  )
 
@@ -651,7 +650,6 @@
  :arguments (
 ;	     (:ESSENTIAL ONT::Cost ((? cst f::phys-obj f::abstr-obj))) ; too restrictive (f::abstr-obj (f::scale f::money-scale)))
 	     (:ESSENTIAL ONT::EXTENT ((? cst f::phys-obj f::abstr-obj))) ; too restrictive (f::abstr-obj (f::scale f::money-scale)))
-	     ;;(:optional ont::effect (f::situation))
 	     (:REQUIRED ONT::FORMAL ((? th8 F::Phys-obj F::Abstr-obj F::situation)))
              )
  )
@@ -909,7 +907,7 @@
              (:ESSENTIAL ONT::Formal)
              ;;; Evidence
              (:OPTIONAL ONT::Source)
-	     (:OPTIONAL ONT::Effect (f::situation)) ;; jr 20120806 adding for gloss-owl "X intend Y to Z"
+	    
              )
  )
 
@@ -975,7 +973,6 @@
  :parent ONT::cause-effect
  :arguments ((:OPTIONAL ONT::neutral ((? agt f::abstr-obj f::situation))))
 ;;((:OPTIONAL ONT::Instrument (F::Phys-obj (F::intentional -)))
-;	     (:REQUIRED ONT::effect (F::Situation))
 ;	     (:REQUIRED ONT::Formal ((? obj F::PHYS-OBJ F::ABSTR-OBJ)))
 ;	     (:OPTIONAL ONT::Cause)
 ;	     (:REQUIRED ONT::agent ((? ag f::abstr-obj F::phys-obj) (F::intentional +)) (:implements cause))

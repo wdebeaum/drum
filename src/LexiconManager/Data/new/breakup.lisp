@@ -6,7 +6,7 @@
  :words (
   (w::breakup
   (senses
-	   ((LF-PARENT ONT::event)
+	   ((LF-PARENT ONT::separation)
 	    (TEMPL COUNT-PRED-TEMPL)
 	    (meta-data :origin cardiac :entry-date 20090129 :change-date nil :comments nil)
 	    )

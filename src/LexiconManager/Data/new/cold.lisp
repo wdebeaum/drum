@@ -22,7 +22,7 @@
  :words (
   (w::cold
   (senses;;;;; names of diseases/conditions that are count nouns and cannot appear without an article
-   ((LF-PARENT ONT::illness)
+   ((LF-PARENT ONT::breathing-disorder)
     (TEMPL count-pred-TEMPL)
     )
    )
