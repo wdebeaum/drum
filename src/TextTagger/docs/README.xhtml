@@ -510,26 +510,25 @@ output it.</p>
 <div class="section">
 <h4>:split-clauses</h4>
 <p><code>:split-clauses <var>boolean</var></code> (default nil)</p>
-<p>(only valid with <code>:imitate-keyboard-manager t</code>, implies that
-<code>:type</code> includes <code>clauses</code>) Treat each clause from the Clauses tagger as its own utterance. Note that while other taggers may produce clause tags, only those from the Clauses tagger are used, since it in turn uses the clauses from other taggers to filter its clause boundaries.</p>
+<p>(implies that <code>:type</code> includes <code>clauses</code>) Treat each clause from the Clauses tagger as its own utterance. Note that while other taggers may produce clause tags, only those from the Clauses tagger are used, since it in turn uses the clauses from other taggers to filter its clause boundaries. When used without <code>:imitate-keyboard-manager t</code>, this still adds uttnums and some of the extra messages that that option would, but the messages are packed into the reply rather than sent individually.</p>
 </div>
 
 <div class="section">
 <h4>:split-sentences</h4>
 <p><code>:split-sentences <var>boolean</var></code> (default nil)</p>
-<p>(only valid with <code>:imitate-keyboard-manager t</code>) Treat each sentence as its own utterance.</p>
+<p>Treat each sentence as its own utterance. When used without <code>:imitate-keyboard-manager t</code>, this still adds uttnums and some of the extra messages that that option would, but the messages are packed into the reply rather than sent individually.</p>
 </div>
 
 <div class="section">
 <h4>:paragraph</h4>
-<p><code>:paragraph <var>boolean</var></code> (default t if :split-* is t, nil otherwise)</p>
-<p>(only valid with <code>:imitate-keyboard-manager t</code>) Treat the text as a paragraph. That is, send <code>start-</code> and <code>end-paragraph</code> messages before and after the rest of the messages, respectively. It's useful to set e.g. <code>:split-clauses t :paragraph nil</code> if you're sending the sentences in a paragraph individually through TextTagger, and you want to send <code>start-</code> and <code>end-paragraph</code> yourself.</p>
+<p><code>:paragraph <var>boolean</var></code> (default t if :split-* is t and :imitate-keyboard-manager is t, nil otherwise)</p>
+<p>Treat the text as a paragraph. That is, send <code>start-</code> and <code>end-paragraph</code> messages before and after the rest of the messages, respectively. It's useful to set e.g. <code>:split-clauses t :paragraph nil</code> if you're sending the sentences in a paragraph individually through TextTagger, and you want to send <code>start-</code> and <code>end-paragraph</code> yourself.</p>
 </div>
 
 <div class="section">
 <h4>:next-uttnum</h4>
 <p><code>:next-uttnum <var>integer</var></code> (default 1 + the last uttnum output, or 0 if :paragraph was t last time)</p>
-<p>(only valid with <code>:imitate-keyboard-manager t</code>) Use the given number for the next :uttnum in the output. You can set this to 0 for the first in a sequence of <code>:paragraph nil</code> requests representing a paragraph, and the following requests will use the automatically incremented value.</p>
+<p>Use the given number for the next :uttnum in the output. You can set this to 0 for the first in a sequence of <code>:paragraph nil</code> requests representing a paragraph, and the following requests will use the automatically incremented value.</p>
 </div>
 
 <div class="section">

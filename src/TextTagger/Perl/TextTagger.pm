@@ -819,13 +819,26 @@ sub getTripsTags
   }
 }
 
+# Send a tell message given its :content argument.
+# Also collects contents in an array instead of sending them immediately, if
+# the array exists.
+sub send_tell
+{
+  my ($self, $content) = @_;
+  if (exists($self->{messages_to_send})) {
+    push @{$self->{messages_to_send}}, $content;
+  } else {
+    $self->send_msg(['tell', ':content', $content]);
+  }
+}
+
 sub tellEachTag
 {
   my ($self, $chunkTag, $tripsTags) = @_;
   if (@$tripsTags) {
     for my $tripsTag (@$tripsTags)
     {
-      $self->send_msg(['tell',':content',$tripsTag]);
+      $self->send_tell($tripsTag);
     }
   } else {
     # no tags to tell; instead just output a "word" for the chunk and let the
@@ -834,7 +847,7 @@ sub tellEachTag
     # FIXME should we only do this if :format lattice?
     # FIXME this is missing :extra-tag-args, but the Parser ignores them anyway
     # for word messages.
-    $self->send_msg(['tell',':content',tag2tripsLattice({ %$chunkTag, type => 'word' })])
+    $self->send_tell(tag2tripsLattice({ %$chunkTag, type => 'word' }))
   }
 }
 
@@ -842,10 +855,10 @@ sub imitateKeyboardManagerUtterance
 {
   my ($self, $clauseTag, $tripsTags, $extraTagArgs) = @_;
   my ($text, $uttnum) = ($clauseTag->{text}, $clauseTag->{uttnum});
-  $self->send_msg(['tell',':content',['started-speaking', @$extraTagArgs, ':uttnum',$uttnum]]);
-  $self->send_msg(['tell',':content',['stopped-speaking', @$extraTagArgs, ':uttnum',$uttnum]]);
+  $self->send_tell(['started-speaking', @$extraTagArgs, ':uttnum',$uttnum]);
+  $self->send_tell(['stopped-speaking', @$extraTagArgs, ':uttnum',$uttnum]);
   $self->tellEachTag($clauseTag, $tripsTags);
-  $self->send_msg(['tell',':content',['utterance', @$extraTagArgs, ':uttnum',$uttnum, ':text','"' . escape_for_quotes($text) . '"']]);
+  $self->send_tell(['utterance', @$extraTagArgs, ':uttnum',$uttnum, ':text','"' . escape_for_quotes($text) . '"']);
 }
 
 sub receive_request
@@ -908,11 +921,15 @@ sub receive_request
 	$self->{use_wordfinder} = 0;
       }
 
+      my $split_chunks =
+	($content->{':split-clauses'} =~ /t/i or
+	 $content->{':split-sentences'} =~ /t/i);
+
       my $paragraph = 0;
       $paragraph = 1
 	if (((not exists($content->{':paragraph'})) and
-	    ($content->{':split-clauses'} =~ /t/i or
-	     $content->{':split-sentences'} =~ /t/i)
+	     $content->{':imitate-keyboard-manager'} =~ /t/i and
+	     $split_chunks
 	    ) or
 	    $content->{':paragraph'} =~ /t/i
 	   );
@@ -952,7 +969,8 @@ sub receive_request
 	[qw(sentences_tagger tmst ospl_tagger tmosplt cnlp_tagger tmcnlpt)]
       ) if ($self->{debug});
       $type = ['or', 'sentences', $type]
-        if ($content->{':imitate-keyboard-manager'} =~ /t/i and
+        if (($content->{':imitate-keyboard-manager'} =~ /t/i or
+	     $split_chunks) and
 	    not ($tmst or $tmosplt or $tmcnlpt)
 	   );
       
@@ -967,9 +985,7 @@ sub receive_request
       $tags = reconcileQuotationsAndSentences($tags);
       # only increment uttnum in add_extra_args if we might output multiple
       # utterance messages
-      my $inc_uttnum =
-        ($content->{':split-clauses'} =~ /t/i or
-	 $content->{':split-sentences'} =~ /t/i);
+      my $inc_uttnum = $split_chunks;
       my $extra_tag_args = KQML::KQMLKeywordify($content->{':extra-tag-args'});
       if (exists($extra_tag_args->{':uttnum'})) {
 	die "':split-* t' and ':extra-tag-args (:uttnum *)' are incompatible"
@@ -977,7 +993,8 @@ sub receive_request
 	$self->{next_uttnum} = $extra_tag_args->{':uttnum'};
       }
       @$tags = sortTags(add_extra_args($self, $inc_uttnum, @$tags));
-      if ($content->{':imitate-keyboard-manager'} =~ /t/i)
+      if ($content->{':imitate-keyboard-manager'} =~ /t/i or
+          $split_chunks)
       {
 	push @{$content->{':extra-tag-args'}}, qw(:channel Desktop)
 	  unless (exists($extra_tag_args->{':channel'}));
@@ -1005,7 +1022,12 @@ sub receive_request
 	  ]);
 	}
 
-	$self->send_msg("(tell :content (start-paragraph :id $paragraph_ID))")
+	# don't actually send individual messages unless :ikm t; rather gather
+	# them into this array
+	$self->{messages_to_send} = []
+	  unless ($content->{':imitate-keyboard-manager'} =~ /t/i);
+
+	$self->send_tell("(start-paragraph :id $paragraph_ID)")
 	  if (defined($paragraph_ID));
 	# Get all the trips-format tags for the whole paragraph first, since
 	# getTripsTags can send is-defined-word requests to LXM, and those must
@@ -1023,11 +1045,17 @@ sub receive_request
 	  my $tripsTags = shift @trips_tagses;
 	  $self->imitateKeyboardManagerUtterance($chunkTag, $tripsTags, $content->{':extra-tag-args'});
 	}
-	$self->send_msg("(tell :content (end-paragraph :id $paragraph_ID))")
+	$self->send_tell("(end-paragraph :id $paragraph_ID)")
 	  if (defined($paragraph_ID));
 
-	my @uttnums = @{remove_duplicates([map { $_->[0]{uttnum} } @chunks])};
-	$self->reply_to_msg($msg, "(reply :content (ok :uttnums (" . join(' ', @uttnums) . ")))");
+	if ($content->{':imitate-keyboard-manager'} =~ /t/i) {
+	  my @uttnums = @{remove_duplicates([map { $_->[0]{uttnum} } @chunks])};
+	  $self->reply_to_msg($msg, "(reply :content (ok :uttnums (" . join(' ', @uttnums) . ")))");
+	} else {
+	  my $msgs = $self->{messages_to_send};
+	  delete $self->{messages_to_send};
+	  $self->reply_to_msg($msg, ['reply', ':content', $msgs]);
+	}
       } elsif ($content->{':tell-each-tag'} =~ /t/i)
       {
 	my $chunkTag = { start => 0, end => length($text), text => $text };
