@@ -3,7 +3,7 @@
 # <FILENAME>: Launch SBCL with <MODULE> image
 #
 # George Ferguson, ferguson@cs.rochester.edu, 2 Oct 2003
-# $Id: run-image.sh,v 1.4 2016/03/15 05:17:45 lgalescu Exp $
+# $Id: run-image.sh,v 1.5 2017/01/17 03:42:27 lgalescu Exp $
 #
 
 # Set TRIPS_BASE unless set
@@ -24,4 +24,4 @@ echo TRIPS LISP core build date: $BUILD_DATE
 
 # Exec the actual executable with original args, if any
 # Feb 2004: Adding -batch and -quiet caused the dump to not get any messages
-exec $LISP  --dynamic-space-size 4096 --noinform --core $IMAGE ${1+"$@"} --end-runtime-options --noprint
+exec $LISP  --dynamic-space-size 4096 --noinform --core $IMAGE --end-runtime-options --noprint --end-toplevel-options ${1+"$@"}
