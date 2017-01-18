@@ -1566,6 +1566,9 @@
    (if hier (print-debug "converting ~S in hierarchy ~S~%" (car hier) hier))
   (if hier
       (or (synset-to-ont-type (car hier)) ; convert this synset
+          (let ((head (get-head-adjective wm (car hier)))) ; or try the head adj
+	    (when head
+	      (synset-to-ont-type head)))
           (convert-hierarchy-helper (cdr hier))))) ; or return the rest
 
 (defvar wordnet-synset-to-ont-type-mappings (make-hash-table :test #'equalp))

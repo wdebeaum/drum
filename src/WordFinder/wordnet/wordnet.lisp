@@ -831,6 +831,10 @@ Signals a condition if EOF is encountered."
   "Returns a list of the parents (hypernyms) of a synset."
   (mapcar #'cadr (get-pointers-by-relationship this synset "@")))
 
+(defmethod get-head-adjective ((this wordnet-manager) (synset wordnet-synset))
+  "Returns the head adjective synset of a satellite adjective synset."
+  (when (eq '|s| (get-ss-type synset))
+    (cadar (get-pointers-by-relationship this synset "&"))))
 
 ;; the old get-hierarchy -- doesn't check for infinite loop in hierarchy search
 ;(defmethod get-hierarchy-old ((this wordnet-manager) (synset wordnet-synset))
