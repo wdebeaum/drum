@@ -2,7 +2,7 @@
 ;;;; File: Systems/core/test.lisp
 ;;;; Creator: George Ferguson
 ;;;; Created: Thu Jul 12 15:48:37 2007
-;;;; Time-stamp: <Fri Dec 16 12:02:47 CST 2016 lgalescu>
+;;;; Time-stamp: <Sat Dec 17 11:25:46 CST 2016 lgalescu>
 ;;;;
 ;;;; Based on Test/test-socket.lisp from 14 Jun 1999
 ;;;;
@@ -54,14 +54,33 @@
   (loop for i from 1 to 3
       do (format t ".")
 	 (sleep 1))
-#||
+  #||
   ;; Send start-conversation messages
   (start-conversation)
-||#
-  (format t "~%System started; use (test \"...\") to test single sentences.~%")
-  (format t "Or use (test) followed by (next), (again), or (start-over)~%")
-  (format t "to test the sample dialogue for this scenario.~%")
+  ||#
+  (format t "~%System started.~%")
+  (help)
   )
+
+;;;
+;;; Help
+;;;
+
+(defun help ()
+  "Show a few hints of what one can do"
+  (format t "Use (test \"...\") to test single sentences.~%")
+  (format t "Or use (test) followed by (next), (again), or (start-over)~%")
+  (format t "to test the default sample dialogue for this scenario.~%")
+  (format t "Use (ptest 'dkey) to test the sample dialogue associated with the key \"dkey\". ~%")
+  (format t "To see what sample dialogues keys there are use (show-sample-dialogues).~%")
+  (format t "Use (help) to see again these hints.~%")
+  )
+
+(defun show-sample-dialogues ()
+  "Show keys for sample dialogues"
+  (format t "Sample dialogues: ~{~a~^, ~}"
+	  (sort (mapcar #'car *sample-dialogues*) #'string-lessp)))
+
 
 ;;;
 ;;; Various useful functions

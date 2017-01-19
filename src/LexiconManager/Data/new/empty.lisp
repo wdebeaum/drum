@@ -7,9 +7,16 @@
   (W::EMPTY
    (wordfeats (W::morph (:forms (-vb) :past W::emptied)))
    (SENSES
-    ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090529 :comments nil :vn ("clear-10.3-1"))
-     (LF-PARENT ONT::empty)
-     (TEMPL agent-affected-xp-templ)
+    ((LF-PARENT ONT::EMPTY)
+     (example "empty the oj from the tanker")
+     (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
+     (TEMPL agent-affected-source-templ)
+     )
+
+    ((LF-PARENT ONT::EMPTY)
+     (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
+     (example "empty the truck of oj")
+     (TEMPL AGENT-source-affected-optional-TEMPL)
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090529 :comments nil :vn ("clear-10.3-1"))
      (LF-PARENT ONT::empty)

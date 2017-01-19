@@ -816,6 +816,24 @@
 	       ONT::RESULT optional)
 	))
 
+      (AGENT-AFFECTED-source-optional-TEMPL
+       (ARGUMENTS
+	(LSUBJ (% W::NP) ONT::agent)
+	(LOBJ (% W::NP) ONT::affected)
+	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::source-reln))))))
+			   )
+	       ONT::source optional)
+	))
+
+	(AGENT-AFFECTED-source-TEMPL
+	 (ARGUMENTS
+	  (LSUBJ (% W::NP) ONT::agent)
+	  (LOBJ (% W::NP) ONT::affected)
+	  (LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::source-reln))))))
+			     )
+		 ONT::source)
+	  ))
+
       (AGENT-AFFECTED-loc-optional-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
@@ -887,7 +905,7 @@
 	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar))) (:required (W::filled -)
 					;(W::argument ?lsubj)
 					 (W::argument (% W::np (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var ?lsubjvar)))
-										(W::gap ?gap))) ONT::FORMAL)
+										(w::arg ?subjvar) (W::gap ?gap))) ONT::FORMAL)
 	))
 
        (experiencer-PRED-xp-TEMPL
@@ -1240,13 +1258,7 @@
 	(LCOMP (:parameter xp (:default (% W::pp (W::ptype W::from)))) ONT::SOURCE optional)
 	))
 
-      (AGENT-AFFECTED-SOURCE-OPTIONAL-TEMPL
-       (ARGUMENTS
-	(LSUBJ (% W::NP) ONT::AGENT)
-	(LOBJ (% W::NP) ONT::AFFECTED)
-	(LCOMP (:parameter xp (:default (% W::pp (W::ptype W::from)))) ONT::SOURCE OPTIONAL)
-	))
-
+      
  (affected-AFFECTED-SOURCE-OPTIONAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::affected)
@@ -1287,14 +1299,7 @@
 	(LCOMP (:parameter xp (:default (% W::pp (W::ptype (? pt w::to))))) ONT::FORMAL)
 	))
       
-      (AGENT-affected-SOURCE-TEMPL
-       (ARGUMENTS
-	(LSUBJ (% W::NP) ONT::AGENT)
-	(LOBJ (% W::NP) ONT::affected)
-	(LCOMP (:parameter xp (:default (% W::pp (W::ptype W::from)))) ONT::SOURCE)
-	))
-      
-      (AGENT-result-CO-AGENT-OPTIONAL-TEMPL
+            (AGENT-result-CO-AGENT-OPTIONAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::AGENT)
 	(LIOBJ (% W::NP) ONT::result)
@@ -1365,6 +1370,13 @@
 	(LSUBJ (% W::NP) ONT::AGENT)
 	(LOBJ (% W::NP) ONT::affected-result)
 	(LCOMP (:parameter xp (:default (% W::pp (W::ptype W::with)))) ONT::affected OPTIONAL)
+	))
+
+      (AGENT-SOURCE-affected-optional-TEMPL
+       (ARGUMENTS
+	(LSUBJ (% W::NP) ONT::AGENT)
+	(LOBJ (% W::NP) ONT::affected-result)
+	(LCOMP (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::affected OPTIONAL)
 	))
       
 
