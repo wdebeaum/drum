@@ -55,6 +55,14 @@
 				   )))
   )
 
+(define-type ont::contain-reln
+    :comment "Inverse of IN-LOC"
+    :parent ont::pos-as-containment-reln
+    :arguments ((:ESSENTIAL ONT::FIGURE ((? val f::phys-obj) (f::intentional -)
+					 (f::container +)
+				   )))
+    )
+
 ; figure is outside a container, group or area
 (define-type ont::outside
   :parent ont::pos-as-containment-reln

@@ -26,9 +26,11 @@
    (SENSES
     ((LF-PARENT ONT::ASSOC-WITH)
      (example "the budget of the company is 6000 dollars")
+     (preference .98) ;; prefer CONTAIN-RELN if it works
      (meta-data :origin calo :entry-date 20040901 :change-date nil :comments calo-y2)
+     )
+    ((LF-PARENT ONT::CONTAIN-RELN)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
-     (PREFERENCE 0.97)
      )
     )
    )

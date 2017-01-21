@@ -1449,6 +1449,7 @@
 ;;; A domain is a single-valued function
 (define-type ONT::DOMAIN
  :parent ONT::ABSTRACT-object
+ :wordnet-sense-keys ("attribute%1:03:00")
  :comment "Nouns that name domain/scales, and can serve as relational nouns (e.g., the COLOR of the box)"
  :arguments ((:REQUIRED ONT::FIGURE)
 	     (:optional ont::GROUND)
@@ -1496,11 +1497,13 @@
 ;; comfort, discomfort
 (define-type ONT::comfortableness
  :parent ONT::non-measure-ordered-domain
+ :wordnet-sense-keys ("discomfort%1:26:00" "discomfort%1:12:00")
  )
 
 ;; security, privacy
 (define-type ONT::confidentiality
- :parent  ONT::NON-MEASURE-ORDERED-DOMAIN
+    :wordnet-sense-keys ("privacy%1:07:00" "privacy%1:26:02")
+    :parent  ONT::NON-MEASURE-ORDERED-DOMAIN
  )
 
 ;; protection, insurance
@@ -1510,13 +1513,15 @@
 
 ;; severity, intensity
 (define-type ONT::intensity
- :parent  ONT::NON-MEASURE-ORDERED-DOMAIN
+    :wordnet-sense-keys ("intensity%1:07:00" "intensity%1:07:03")
+    :parent  ONT::NON-MEASURE-ORDERED-DOMAIN
  )
 
 ;; priority
 (define-type ONT::importance
- :parent  ONT::NON-MEASURE-ORDERED-DOMAIN
- )
+    :wordnet-sense-keys ("importance%1:26:00" "importance%1:07:00")
+    :parent  ONT::NON-MEASURE-ORDERED-DOMAIN
+    )
 
 ;; custom, habit, practice, tradition
 (define-type ONT::practice
@@ -2192,7 +2197,8 @@
 
 ;; confidence, authority, trust
 (define-type ont::assurance
-  :parent ont::non-measure-ordered-domain
+    :wordnet-sense-keys ("trust%1:26:00")
+    :parent ont::non-measure-ordered-domain
   )
 
 ;; gist, essence, substance
@@ -2238,7 +2244,7 @@
  )
 
 (define-type ONT::attribute
- :wordnet-sense-keys ("dimension%1:09:00" "attribute%1:09:00" "property%1:09:00" "property%1:07:00" "holding%1:21:00" "belongings%1:21:00" "property%1:21:00" "attribute%1:03:00")
+ :wordnet-sense-keys ("dimension%1:09:00" "attribute%1:09:00" "property%1:09:00" "property%1:07:00" "holding%1:21:00" "belongings%1:21:00" "property%1:21:00")
  :parent ont::abstract-object-nontemporal
  :arguments ((:OPTIONAL ONT::FIGURE ((? lo f::phys-obj f::abstr-obj)))
              )
