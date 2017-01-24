@@ -1459,7 +1459,7 @@
 		  (lf (% PROP (CLASS (? ev ONT::EVENT-TIME-REL)) (var ?v)
 			 (constraint ?constr)))
 		  (atype ?atype) (arg *) (argument ?arg1) (sem ?sem)))
-     (add-to-conjunct (val (displacement ?vdur)) (old ?constr) (new ?newc)))
+     (add-to-conjunct (val (extent ?vdur)) (old ?constr) (new ?newc)))
 
     ;; 2 days ago as an ADVBL
      ((ADVBL (LF (% PROP (CLASS (? ev ONT::EVENT-TIME-REL)) (var ?v)
@@ -1474,7 +1474,7 @@
 		  (lf (% PROP (CLASS (? ev ONT::EVENT-TIME-REL)) (var ?v)
 			 (constraint ?constr)))
 		  (arg ?arg) (argument ?arg1) (sem ?sem)))
-     (add-to-conjunct (val (displacement ?vdur)) (old ?constr) (new ?newc)))
+     (add-to-conjunct (val (extent ?vdur)) (old ?constr) (new ?newc)))
     
     ;; Durational adverbials, e.g., he ran three hours
 

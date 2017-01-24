@@ -1467,7 +1467,7 @@
        (LF (% PROP (var *) (CLASS ONT::EXCLUSIVE) 
 	        (Constraint (& (FIGURE ?arg) (GROUND ?v)))))
       (ATYPE w::post) (focus ?v)
-      (ARGUMENT (% (? x W::VP W::S)))
+      (ARGUMENT (% (? x W::VP W::S) (subjvar ?subjv)))
       (SEM ?sem))
      -myself-as-advbl> .98
      (head (np  (var ?v) (REFL +) (PRO +)
@@ -1481,7 +1481,7 @@
 	        (Constraint (& (FIGURE ?arg) (GROUND ?v)))))
       (ATYPE (? xx w::post w::pre w::pre-vp)) (focus ?v)
       (lex ?hlex) (headcat ?hcat)
-      (ARGUMENT (% (? x W::VP W::S)))
+      (ARGUMENT (% (? x W::VP W::S) (subjvar ?subjv)))
       (SEM ?sem))
      -by-myself-as-advbl> .98
      (word (lex by))
@@ -1494,8 +1494,9 @@
        (LF (% PROP (var *) (CLASS ONT::EXCLUSIVE) 
 	        (Constraint (& (FIGURE ?arg) (GROUND ?v)))))
       (ATYPE (? xx w::post w::pre w::pre-vp)) (focus ?v)
-      (lex ?hlex) (headcat ?hcat)
-      (ARGUMENT (% (? x W::VP W::S)))
+      (lex ?hlex) (headcat ?hcat) 
+      
+      (ARGUMENT (% (? x W::VP W::S) (subjvar ?subjv)))
       (SEM ?sem))
      -all-by-myself-as-advbl> .98
      (word (lex all))

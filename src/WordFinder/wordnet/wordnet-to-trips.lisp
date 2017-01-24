@@ -47,15 +47,6 @@
   (car (second (member :lfs wf-entry)))
   )
 
-(defun remove-wn-sense (ont-type wn-senselist)
-  "remove the sense that corresponds to the given ont-type from the wn sense list"
-  (let ((res wn-senselist))
-    (dolist (sense wn-senselist)
-      (if (equal (get-wf-lf sense) ont-type)
-	  (setq res (remove sense res))))
-     res)
-  )
-
 (defun trips-pos-for-wn-sense-key (wn-sense-key)
   (let ((synset (get-synset-from-sense-key wm wn-sense-key)))
     (when synset
@@ -67,8 +58,10 @@
 (defun process-synsets (word synsets &key senselimit poslist penntags trips-sense-list wn-sense-keys)
   "Each sense returned is associated with a score. Scores begin at .99 and are decremented as we step through the list of senses as a rough means of ranking senses by frequency. WordNet lists senses in order of frequency based on their corpora statistics. The actual sense frequency score is not currently part of the WN download, so we rely on the synset ordering for now to create a relative ranking, which determines which senses are preferred by the parser."
   (let ((ncount 0) (vcount 0) (adjcount 0) (advcount 0)
-	 (nscore .99) (vscore .99) (adjscore .99) (advscore .99)
+	 (nscore 1) (vscore 1) (adjscore 1) (advscore 1) ; we decf before the first sense, so these will be 0.99
 	 senselist n-lftypes v-lftypes adj-lftypes adv-lftypes)
+        ;; get as many as senselimit trips senses for each POS given synsets
+	;; with special handling for names, and verbs mapping to ONT::situation-root
 	(dolist (synset synsets)
 	  (let ((this-pos (convert-wordnet-pos-to-trips (get-pos-string synset))))
 	    (when (find this-pos poslist)
@@ -78,8 +71,7 @@
 			(cond
 			 ((names-excluded poslist)
 			  (when (not (is-instance synset))
-			    (push (convert-synset synset word nscore penntags trips-sense-list) senselist)
-			    (decf nscore .01)
+			    (push (cons this-pos (convert-synset synset word nscore penntags trips-sense-list)) senselist)
 			    (incf ncount))
 			  )
 			 (t ;; otherwise we include any noun in the synset
@@ -87,8 +79,7 @@
 			       (this-lftype (get-wf-lf this-sense))
 			       )
 			  (when (and this-sense (not (member this-lftype n-lftypes)))
-			    (push this-sense senselist)
-			    (decf nscore .01)
+			    (push (cons this-pos this-sense) senselist)
 			    (incf ncount)
 			    (pushnew this-lftype n-lftypes))
 			  )))))
@@ -100,17 +91,18 @@
 		
 			    ;; record ont::situation-root if it's the only mapping 
 			    (when (not (and (> vcount 0) (equal this-lftype 'ont::situation-root)))
-			      (push this-sense senselist)
-			      (decf vscore .01)
+			      (push (cons this-pos this-sense) senselist)
 			      (incf vcount)
 			      (pushnew this-lftype v-lftypes)))
 			  ;; if there are other senses we can discard ont::situation-root
 			  ;; if this verb has at least one sense that is not ont::situation-root, it should have no ont::situation-root senses
 			  ;; but we need it as a default if there are no other verb senses
 			  (when (and (> vcount 1) (member 'ont::situation-root v-lftypes))
-			    (setq senselist (remove-wn-sense 'ont::situation-root senselist))
+			    (setq senselist
+				  (delete 'ont::situation-root senselist
+				      :key (lambda (sense) (get-wf-lf (cdr sense)))))
 			    (decf vcount)
-			    (setq v-lftypes (remove 'ont::situation-root v-lftypes))
+			    (setq v-lftypes (delete 'ont::situation-root v-lftypes))
 			    )
 			  )))
 		(w::adj  (when (< adjcount senselimit)
@@ -118,8 +110,7 @@
 				  (this-lftype (get-wf-lf this-sense))
 				  )
 			     (when (and this-sense (not (member this-lftype adj-lftypes)))
-			       (push this-sense senselist)
-			       (decf adjscore .01)
+			       (push (cons this-pos this-sense) senselist)
 			       (incf adjcount)
 			       (pushnew this-lftype adj-lftypes)))))
 		(w::adv (when (< advcount senselimit)
@@ -127,12 +118,42 @@
 				  (this-lftype (get-wf-lf this-sense))
 				  )
 			     (when (and this-sense (not (member this-lftype adv-lftypes)))
-			       (push this-sense senselist)
-			       (decf advscore .01)
+			       (push (cons this-pos this-sense) senselist)
 			       (incf advcount)
 			       (pushnew this-lftype adv-lftypes)))))
 		(otherwise (print-debug "invalid part of speech encountered ~S~%" this-pos)))
 	      )))
+	;; push fallback TRIPS senses to end of senselist, regardless of
+	;; WordNet sense number
+	(multiple-value-bind (fallback mapped)
+	    ;; first split the list into two
+	    (split-list
+	        (lambda (sense)
+		  (member (get-wf-lf (cdr sense)) '(
+		      ;; the senses that convert-hierarchy (called by
+		      ;; convert-synset) uses when there is no explicit mapping
+		      ;; (we assume there will never be an explicit mapping to
+		      ;; these types)
+		      ont::any-sem		; noun
+		      ont::situation-root	; verb
+		      ont::modifier		; adjective
+		      ont::predicate		; adverb
+		      )))
+		senselist)
+	  ;; then re-concatenate them with fallback senses last
+	  (setf senselist (nconc mapped fallback)))
+	;; assign scores based on reordered senselist, and uncons to get only
+	;; senses and not POSs
+	(setf senselist
+	      (loop for (pos . sense) in senselist
+	      	    for new-score =
+		      (ecase pos
+		        (w::n   (decf   nscore 0.01))
+			(w::v   (decf   nscore 0.01))
+			(w::adj (decf adjscore 0.01))
+			(w::adv (decf advscore 0.01))
+			)
+		    collect (replace-arg-in-act sense :score new-score)))
 	senselist)
 	)
 
@@ -1553,6 +1574,8 @@
         (or result
             ; if we can't find matches for a word, we pick a default based on
             ; the part of speech.
+	    ; (see also process-synsets, where these are pushed to the end of
+	    ; the list and thus scored lower)
             (case (slot-value (car hier-rev) 'ss-type)
                   (|n| 'ONT::ANY-SEM) ; noun
                   (|v| 'ONT::SITUATION-ROOT) ; verb
