@@ -24,6 +24,7 @@
      )    
     )
    )
+   
   ((w::if w::so)
    (SENSES 
     ((TEMPL DISC-PRE-TEMPL)
@@ -31,3 +32,18 @@
     )))
  )
 
+
+(define-words :pos W::conj :boost-word t
+ :tags (:base500)
+ :words (
+  ((W::if W::BUT)
+   (wordfeats (W::conj +) (w::but +))
+   (SENSES
+    ((LF ONT::BUT)
+     (non-hierarchy-lf t)
+     (TEMPL SUBCAT-ANY-TEMPL)
+     )
+    )
+   )
+  
+  ))

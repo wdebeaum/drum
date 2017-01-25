@@ -490,8 +490,7 @@ separate instances of the chart/parser.")
       prob
       (let ((score (cadr skel)))
 	(if (not (numberp score)) (setq score 1))
-	(if (not (eq score 1))
-	    (format t "~%adjusting PROB by ~S" score))
+	(trace-msg 3 "~%adjusting PROB by ~S" score)
 	(* prob score))))
 
 (defun lookup-ont-type-from-skeleton-map (id)
@@ -534,7 +533,7 @@ separate instances of the chart/parser.")
   (setq class (if (consp class) (cadr class) class))
   (if (not (assoc id *var-type-map*))
       (progn (push (list id class) *var-type-map*)
-	     (format t "~%pushing ~S onto var-type-match for ~S" class id)))
+	     (trace-msg 3 "~%pushing ~S onto var-type-match for ~S" class id)))
   (let* ((skeleton (list* class (unpack-roles roles)))
 	 (cached-skeleton (assoc skeleton *semantic-skeleton-map* :test #'equal)))
     ;; the following is for debugging - it provides a quick way to generate a chache from sentences
