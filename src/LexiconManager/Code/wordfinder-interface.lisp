@@ -355,7 +355,7 @@
   (case pos
     (w::n (list (or (find 'w::NN penntags) (find 'w::NNS penntags))))
     (w::name (list (or (find 'w::NNP penntags) (find 'w::NNPS penntags))))
-    (w::adj (list (or (find 'w::jj penntags) (find 'w::jjr penntags) (find 'w::jjs penntags))))
+    (w::adj (list (or (find 'w::jjr penntags) (find 'w::jjs penntags) (find 'w::jj penntags) )))
     (w::adv (list (or (find 'w::rb penntags) (find 'w::rbr penntags) (find 'w::rbs penntags))))
     (w::v (intersection penntags '(w::VB w::VBD w::vbg w::vbp w::vbz w::md)))
     (otherwise penntags))
@@ -463,7 +463,8 @@
        (setq res (make-unknown-name-entry word score penn-tag lflist domain-info))
        )
       (w::adj
-       (let ((pertainyms (find-arg-in-act (car domain-info) :pertainyms)))
+       (let ((pertainyms (find-arg-in-act (car domain-info) :pertainyms))
+	     (compar (if (member 'w::jjr penn-tag) 'compar)))
 	 ;;(format t "~%Pertainymm is ~S from domain info ~S" pertainyms domain-info)
 	 (if pertainyms
 	     (let* ((pert (car pertainyms))
@@ -482,32 +483,48 @@
 	     (setq sem (get-lf-sem 'ont::ASSOC-WITH :no-defaults nil))
 	     (setq domain-info nil))
 	     ;;  no pertainym, so do normal computation off the LF
-	     (setq sem (get-lf-sem lf :no-defaults nil)))
-       ;;(setq lf (list :* lf lfform))
-       (setq syntax (append feats `((w::gap ?gap)
-				    (w::roles ?roles)
-				    (w::arg ?arg)
-				    (w::comp-op ?op)
+	     (progn
+	       (setq lf (change-to-compar-if-needed lf penn-tag))
+	       (setq sem (get-lf-sem lf :no-defaults nil))))
+	 ;;(setq lf (list :* lf lfform))
+	 (setq syntax (append feats `((w::gap ?gap)
+				      (w::roles ?roles)
+				      (w::arg ?arg)
+				      (w::comp-op ?op)
 					; (w::subcat ?subcat)
-				    (W::ARGUMENT (% W::NP
-						    (W::GAP ?argap)
-						    (W::LF ?arglf)
-						    (W::SORT ?argsort)
-						    (W::LEX ?arglex)
-						    (W::VAR ?argvar)
-						    (W::AGR ?argagr)
-						    (W::CASE ?argcase)
-						    (W::SEM ?argsem)))
+				      (W::ARGUMENT (% W::NP
+						      (W::GAP ?argap)
+						      (W::LF ?arglf)
+						      (W::SORT ?argsort)
+						      (W::LEX ?arglex)
+						      (W::VAR ?argvar)
+						      (W::AGR ?argagr)
+						      (W::CASE ?argcase)
+						      (W::SEM ?argsem)))
 					;(w::argument ?argument)
-				    (w::argument-map ont::figure)
-				    (w::subcat-map ?sm)
-				    (w::atype (? atype w::central w::postpositive))
-				    (w::sort w::pred)
-				    (w::allow-deleted-comp +)
-				    (w::post-subcat ?postsub)
-				    (w::set-modifier ?setmod)
-				    (w::filled ?filled)
-				    )))
+				      (w::argument-map ont::figure)
+				      (w::atype (? atype w::central w::postpositive))
+				      (w::sort w::pred)
+				      (w::allow-deleted-comp +)
+				      (w::post-subcat ?postsub)
+				      (w::set-modifier ?setmod)
+				      (w::filled ?filled)
+				      )
+			      (if compar 
+				  '((W::comparative +)
+				    (W::template lxm::compar-templ)
+				    (W::subcat-map ont::ground)
+				    (W::subcat (% W::PP
+						(W::GAP ?subcatgap)
+						(W::LF ?subcatlf)
+						(W::SORT ?subcatsort)
+						(W::LEX ?subcatlex)
+						(W::VAR ?subcatvar)
+						(W::AGR ?subcatagr)
+						(W::CASE ?subcatcase)
+						(W::PTYPE W::THAN)
+						(W::SEM ?subcatsem))))
+				  '((w::subcat-map ?submap)))))
        (when syntax-from-penn-tag (setq syntax (append syntax syntax-from-penn-tag)))
        (setq score (adjust-score-if-participle-adj lfform score trips-sense-list))
        ))
@@ -540,20 +557,21 @@
        (setq res (create-entry-based-on-entries-of-the-same-type word wid lf lfform sem syntax pos trips-sense-list domain-info score))
        )
       (otherwise nil))
-  ;; if we failed to make an entry above, we do a generic one here
-    (when (not res) ;; (find pos '(w::v w::adv w::name w::n))) 
-      (print-debug "making word sense for word ~S with pos ~S lf ~S sem ~S domain-info ~S~%" word pos lf sem domain-info)
-      (let* ((entry (make-word-sense-definition
-                   :name wid
-                   :pos pos
-                   :lf (list ':* lf lfform)
-                   :sem sem ;;(update-sem-with-domain-info sem domain-info)
-                   :boost-word nil
-                   :pref (or score (if domain-info .99 .97))
-                   :syntax syntax
-		   :kr-type domain-info
-		   :specialized (if domain-info t nil)
-		   :mappings maps
+     ;; if we failed to make an entry above, we do a generic one here
+     
+     (when (not res) ;; (find pos '(w::v w::adv w::name w::n))) 
+       (print-debug "making word sense for word ~S with pos ~S lf ~S sem ~S domain-info ~S~%" word pos lf sem domain-info)
+       (let* ((entry (make-word-sense-definition
+		      :name wid
+		      :pos pos
+		      :lf (list ':* lf lfform)
+		      :sem sem ;;(update-sem-with-domain-info sem domain-info)
+		      :boost-word nil
+		      :pref (or score (if domain-info .99 .97))
+		      :syntax syntax
+		      :kr-type domain-info
+		      :specialized (if domain-info t nil)
+		      :mappings maps
 		   :roles roles
                    )))
 ;	(if (and syntax-from-penn-tag (or (eq pos 'w::adj) (eq pos 'w::adv)))
@@ -563,6 +581,16 @@
 	))
     res)
   )
+
+(defun change-to-compar-if-needed (lf penn-tags)
+  "checks for comparative of superative adjectives"
+  (if (consp lf)
+      (if (member 'w::jjr penn-tags)
+	  (list ':* 'ONT::MORE-VAL (third lf))
+	  lf)
+      (if (member 'w::jjr penn-tags)
+	  'ONT::MORE-VAL
+	  lf)))
 
 (defun create-entry-based-on-entries-of-the-same-type (word wid lf lfform sem syntax pos trips-sense-list domain-info score)
   (let ((this-entry (make-replica-entry word lf pos trips-sense-list))

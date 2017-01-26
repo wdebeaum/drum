@@ -71,6 +71,9 @@
 	 (uttnum (find-arg-in-act act :uttnum))
 	 ;;(roles (extract-roles-from-arglist (cdddr rootLF) (second rootLF)))
 	 (roles (mapcan #'(lambda (x) (extract-roles-from-arglist (cdddr x) (second x))) lfs))
+	 ;(recursive-roles (mapcan #'(lambda (x) (list (list (car x) (second x) (add-ancestors (car x) roles))) ) roles))
+	 (recursive-roles (mapcan #'(lambda (x) (list (list (car x) (second x) (cons (third x) (add-ancestors (third x) roles)))) ) roles))
+	 (merged-recursive-roles (remove-duplicates (mapcan #'(lambda (x) (list (merge-role-list (car x) recursive-roles))) recursive-roles) :test #'equal))
 	 )
     (setq *im-utt-count* (+ *im-utt-count* 1))
     (log-msg `(LOG-SPEECHACT :input ,input :lf ,lfs :uttnum ,uttnum) *im-utt-count*)
@@ -82,7 +85,7 @@
 			   :speechactId sa-id
 			  ;; :root root
 			   :lf-ids (mapcar #'second lfs)
-			   :referring-expressions (build-referent-structures-from-terms terms roles)
+			   :referring-expressions (build-referent-structures-from-terms terms merged-recursive-roles)
 			   :input input
 			   :index *im-utt-count*
 			   :uttnum uttnum)
@@ -96,6 +99,41 @@
 	(list* (list (second  lf) (car lf) var)
 	       (extract-roles-from-arglist (cddr lf) var))
 	(extract-roles-from-arglist (cddr lf) var))))
+
+#|
+(defun add-ancestors (id role-list)
+  (let* ((parent (third (assoc id role-list)))
+	 )
+    (if (null parent)
+	NIL
+        (cons parent (add-ancestors parent role-list))
+	)
+  )
+)
+|#
+
+(defun add-ancestors (id role-list)
+  (let* ((sublist (remove-if-not #'(lambda (x) (eq (car x) id)) role-list))
+	 (parents (mapcar #'(lambda (x) (third x) ) sublist))
+	 )
+    (if (null parents)
+	'()
+        (remove-duplicates (append parents (mapcan #'(lambda(x) (add-ancestors x role-list)) parents)))
+    )
+  )
+)
+
+
+(defun merge-role-list (id role-list)
+  (let* (
+	 (sublist (remove-if-not #'(lambda (x) (eq (car x) id)) role-list))
+	 (merged-roles (mapcar #'(lambda (x) (list (second x) (third x))) sublist))
+	 )
+    (cons id merged-roles)
+  )
+)
+
+
 
 (defun refine-vague-relations (lfs)
   "tries to refine assoc-with relations"

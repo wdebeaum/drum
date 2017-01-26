@@ -499,7 +499,9 @@
 	 (terms (utt-record-referring-expressions (get-im-record index)))
 	 (id-ref (car (remove-if-not #'(lambda (x) (eq (referent-id x) id)) terms)))
 	 (id-event (if (referent-p id-ref)
-		       (cadr (referent-role id-ref))))
+		       ;(cadr (referent-role id-ref))
+		       (get-referent-role (referent-role id-ref))
+		       ))
 	 ;; first find possible candidates in the same sentence
 	 (possibles (remove-if-not #'(lambda (x) (and (referent-p x) 
 						      (not (eq (referent-id x) id))
@@ -511,7 +513,9 @@
 			;	  terms)
 		      ;(remove-if-not #'(lambda (x) (eq (referent-role x) :affected))
 			;	     terms)
-		      (remove-if-not #'(lambda (x) (eq (cadr (referent-role x)) id-event))
+		      ;(remove-if-not #'(lambda (x) (eq (cadr (referent-role x)) id-event))
+			;	     possibles)
+		      (remove-if-not #'(lambda (x) (equal (get-referent-role (referent-role x)) id-event) :test #'equal)
 				     possibles)
 		      )))
     (mapcar #'(lambda (a) (bind-to-referent lf nil a)) results)))
@@ -812,8 +816,9 @@
 (defun find-possible-referents-in-current-sentence (lf-type sem id access-requirement nums index role fn)
   "returns the objects that meet the access requirement AND that precede the id in the sentence"
   (let ((r (get-im-record index))
-	(event-id (cadr role)))
-   
+	;(event-ids (cadr role))
+	(event-ids (get-referent-role role))
+	)
     (when r
       (let* ((focus (utt-record-focus r))
 	     (focus-id (if (referent-p focus) (referent-id focus) focus))
@@ -821,9 +826,9 @@
 	     (accessable-refs (remove-if-not #'(lambda (x) (and (referent-p x) 
 								(not (eq (referent-id x) id)) ;; can't refer to itself
 								(member (referent-accessibility x) access-requirement)
-								(or (null event-id)
-								    (not (eq event-id (cadr (referent-role x))))) ;; can't be in the same event since its not reflexive
-								(not (eq (referent-id x) event-id)) ;; it is not the event itself
+								(or (null event-ids)
+								    (not (equal event-ids (get-referent-role (referent-role x)) ))) ;; can't be in the same event since it's not reflexive
+								(not (member (referent-id x) event-ids)) ;; it is not the event itself
 								(member (referent-num x) nums)
 								(subtype-check (referent-lf-type x) lf-type)))
 					     (truncate-expressions-at-id id (utt-record-referring-expressions r)))
@@ -837,7 +842,11 @@
   (if (and exprs (not (eq (referent-id (car exprs)) id)))
       (cons (car exprs) (truncate-expressions-at-id id (cdr exprs)))))
 	  
-	  
+(defun get-referent-role (role)
+    (remove-duplicates (mapcan #'(lambda (x) (copy-list (cadr x))) role))
+)
+
+  
 #||
 (defun sort-refs (refs focus-id)
   "Here we try to order the candidates - currently we prefer referents that have non-null refers-to values since

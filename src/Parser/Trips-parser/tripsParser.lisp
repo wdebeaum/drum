@@ -915,7 +915,6 @@
 ;;  MAKE SPEECH ACT
 ;;
 
-
 (defun make-speech-act (newsa channel focus objects lf unknown-words reliability syntax subj-object words)
   (if (and (eq newsa 'NULL) (null unknown-words))
       (list 'sa-null :reliability 100)
@@ -938,25 +937,25 @@
 		  (otherwise (cons 'or vals)))))))
 	  
 	  (trace-msg 1 "-Speech Act Found: ~s~%" newsa)
- 
-	  (list
-	   newsa
-	   :channel channel
-	   :focus  (undo-constits focus)
-	   :objects (undo-constits  objects)
-	   :root (if (not (member lf '(- :-)))  (undo-constits lf))
-	   :noise unknown-words
-	   ;; gf: 3/10/2000: Need undo-constits here also ("hello please")
-	   :reliability reliability
-	   ;; gf: Added undo-constits calls for :syntax arg to keep
-	   ;;     #S syntax out of KQML stream
-	   :syntax (list :tree (constit-to-list syntax)
-                         :subject (if (not (member (car subj-object) '(- :-))) (undo-constits (car subj-object)))
-		         :object (if (not (member (cadr subj-object) '(- :-))) (undo-constits (cadr subj-object))))
-	   :words (remove-if #'(lambda (x) (member x '(w::START-OF-UTTERANCE w::END-OF-UTTERANCE))) words)
-	   :uttnum *uttnum*)
-	  )))
-  )
+	  (when (assoc lf objects)
+	    (list
+	     newsa
+	     :channel channel
+	     :focus  (undo-constits focus)
+	     :objects (undo-constits  objects)
+	     :root (if (not (member lf '(- :-)))  (undo-constits lf))
+	     :noise unknown-words
+	     ;; gf: 3/10/2000: Need undo-constits here also ("hello please")
+	     :reliability reliability
+	     ;; gf: Added undo-constits calls for :syntax arg to keep
+	     ;;     #S syntax out of KQML stream
+	     :syntax (list :tree (constit-to-list syntax)
+			   :subject (if (not (member (car subj-object) '(- :-))) (undo-constits (car subj-object)))
+			   :object (if (not (member (cadr subj-object) '(- :-))) (undo-constits (cadr subj-object))))
+	     :words (remove-if #'(lambda (x) (member x '(w::START-OF-UTTERANCE w::END-OF-UTTERANCE))) words)
+	     :uttnum *uttnum*)
+	    )))
+    ))
 
 
 

@@ -582,3 +582,21 @@
 	 )
     (match-vals nil out result)
     ))
+
+(define-predicate 'w::combine-status
+    #'(lambda (args)
+	(combine-status args))
+  )
+
+(defun combine-status (args)
+  (let ((in1 (second (assoc 'w::in1 args)))
+        (in2 (second (assoc 'w::in2 args)))
+	(out (second (assoc 'w::out args)))
+	)
+    (if (and (member in1 '(ONT::DEFINITE ONT::DEFINITE-PLURAL))
+	     (member in2 '(ONT::DEFINITE ONT::DEFINITE-PLURAL)))
+	(match-vals nil out 'ONT::DEFINITE-PLURAL)
+        (match-vals nil out 'ONT::INDEFINITE-PLURAL)
+      )
+))
+

@@ -315,7 +315,7 @@
      (advbl-needed ?avn)
      )
     -s1>
-    (np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex) ;; lex needed for expletives?
+    (np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex) ;; lex needed for expletives? 
       (pp-word -) (changeagr -) (gap -))
     (head (vp (lf ?lf) (gap ?g)
               (template (? !x  lxm::propositional-equal-templ))
@@ -3389,6 +3389,26 @@
     
     )
 
+   ; (the dog that) chased and ate the cat
+   ((vp- (seq +) (vform ?vf) (var *)  (subjvar ?subj)  (subj ?subject) (agr ?agr) (gap ?gap)(subj-map ?subjmap)
+     (class ?class) (sem ?sem)
+     (constraint (&  (OPERATOR ?lx) 
+		     (SEQUENCE 
+		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (sem ?sem1) (constraint ?con1))
+		       (% *PRO* (var ?v2) (status ont::f) (class ?c2) (tma ?tma2) (sem ?sem2) (constraint ?con2)))))))
+     
+    -vbar-conj-dobj>
+    (head (vp- (vform ?vf) (subjvar ?subj)  (subj ?subject) (var ?v1) (seq -)  (agr ?agr) (gap ?!dobj)
+	       (advbl-needed -) (class ?c1) (constraint ?con1) (tma ?tma1) (sem ?sem1) (subj-map ?subjmap)
+	   ))
+    (CONJ (lf ?lx) (but-not -)) ;;(? lx or but however plus otherwise so and)))
+    (vp- (vform ?vf) (var ?v2) (subjvar ?subj) (subj ?subject) (agr ?agr) (gap -) (dobj ?!dobj)
+     (Advbl-needed -) (class ?c2) (constraint ?con2)  (tma ?tma2) (sem ?sem2))
+    (sem-least-upper-bound (in1 ?sem1) (in2 ?sem2) (out ?sem))
+    (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+    
+    )
+   
    ;; they had come, seen and conquered
   ;;  starting the VBARSEQ 
    ((VBARSEQ (vform ?vf) (var *) (subjvar ?subj)  (subj ?subject) (gap ?gap)  (agr ?agr)
