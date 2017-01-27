@@ -51,7 +51,7 @@
 ; in, within, inside (of)
 (define-type ont::in-loc
   :parent ont::pos-as-containment-reln
-  :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj) (f::intentional -) 
+  :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj) (f::intentional -) (f::container +)
 				   )))
   )
 
@@ -66,6 +66,8 @@
 ; figure is outside a container, group or area
 (define-type ont::outside
   :parent ont::pos-as-containment-reln
+  :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj) (f::intentional -) (f::container +)
+				   )))
   )
 
 ; out (of), outside (of)

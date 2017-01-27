@@ -375,8 +375,8 @@
 			     3
 			     role)
 		 ;;   backoff strategy for gendered pronouns - just look for people
-		 (if (member lf-type '(ONT::MALE-PERSON ONT::FEMALE-PERSON))
-		     (let ((opposite-type (if (eq lf-type 'ONT::MALE-PERSON)
+		 (if (member (cadr lf-type) '(ONT::MALE-PERSON ONT::FEMALE-PERSON))
+		     (let ((opposite-type (if (eq (cadr lf-type) 'ONT::MALE-PERSON)
 					      'ONT::FEMALE-PERSON 'ONT::MALE-PERSON)))
 		     (resolve-pro-fn (list* (car lf) (cadr lf) 'ont::person (cdddr lf)) 'ont::person sem
 				     '(concrete) '(individual) index 

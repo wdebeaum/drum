@@ -1,7 +1,7 @@
 ;;;;
 ;;;; defsys.lisp : Defsystem for the TRAINS/TRIPS IM
 ;;;;
-;;;; $Id: defsys.lisp,v 1.18 2017/01/12 21:15:24 james Exp $
+;;;; $Id: defsys.lisp,v 1.19 2017/01/26 06:48:13 cmteng Exp $
 ;;;;
 
 (unless (find-package :trips)
@@ -100,8 +100,8 @@ the real ones.")
 
 (defvar *symbol-map* nil)
 
-(defvar *core-roles* '(:AGENT :agent1 :AFFECTED :affected1 :EXPERIENCER :NEUTRAL :neutral1 :FORMAL :formal1 :affected-result
-			   :figure :figure1 :ground :ground1 :assoc-with :assoc-poss ))
+(defvar *core-roles* '(:AGENT :agent1 :AFFECTED :affected1 :affected2 :EXPERIENCER :NEUTRAL :neutral1 :FORMAL :formal1 :affected-result
+			   :figure :figure1 :ground :ground1 :assoc-with :assoc-poss :result :source :transient-result))
 
 (when *BA-develop-mode*
   (format *error-output* "~%~%warning: IM in develop mode. To disable this set *develop-mode* to nil~%~%"))

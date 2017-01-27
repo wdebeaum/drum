@@ -123,6 +123,8 @@
 			       (pushnew this-lftype adv-lftypes)))))
 		(otherwise (print-debug "invalid part of speech encountered ~S~%" this-pos)))
 	      )))
+	;; undo the reversing effect of using push to add to the list
+	(setf senselist (nreverse senselist))
 	;; push fallback TRIPS senses to end of senselist, regardless of
 	;; WordNet sense number
 	(multiple-value-bind (fallback mapped)

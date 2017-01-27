@@ -153,7 +153,7 @@
  :parent ONT::EVENT-OF-causation
  :sem (F::Situation (F::Cause (? c F::Force -)) (F::Aspect F::Dynamic))
  :comment "events of motion through some space (physical or abstract). Even though many motion verbs express simply undergoing motion, all these verbs allow to possibiliity of an AGENT"
- :arguments ((:REQUIRED ONT::affected ((? th1 f::phys-obj f::abstr-obj f::situation f::time)))
+ :arguments ((:REQUIRED ONT::affected ((? th1 f::phys-obj f::abstr-obj f::situation f::time) (F::mobility F::movable)))
              (:OPTIONAL ONT::Source)
              (:OPTIONAL ont::result)
 	     (:OPTIONAL ONT::agent ((? causetype F::phys-obj F::situation F::abstr-obj)))
@@ -554,6 +554,7 @@
  :wordnet-sense-keys ("put%2:35:00" "set%2:35:00" "place%2:35:00" "pose%2:35:02" "position%2:35:00" "lay%2:35:01" "interpose%2:38:01")
  :parent ont::event-of-causation
  :arguments ((:ESSENTIAL ONT::agent)
+	     (:ESSENTIAL ONT::AFFECTED (F::Phys-obj (F::mobility f::movable)))
 	     ;;(:OPTIONAL ONT::Spatial-Loc (F::Phys-obj (F::spatial-abstraction F::Any-spatial-abstraction))
              ;; (:implements goal))
              )

@@ -484,8 +484,9 @@
 	     (setq domain-info nil))
 	     ;;  no pertainym, so do normal computation off the LF
 	     (progn
-	       (setq lf (change-to-compar-if-needed lf penn-tag))
-	       (setq sem (get-lf-sem lf :no-defaults nil))))
+	       (setq sem (get-lf-sem lf :no-defaults nil))
+	       (setq lf (change-to-compar-if-needed lf penn-tag))  ;; we keep the old SEM even if we cahnge theLF
+	       ))
 	 ;;(setq lf (list :* lf lfform))
 	 (setq syntax (append feats `((w::gap ?gap)
 				      (w::roles ?roles)
