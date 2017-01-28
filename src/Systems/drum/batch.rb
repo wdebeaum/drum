@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 
 # batch.rb - process a big batch of XML papers in parallel
-# 2016-10-06
+# 2017-01-27
 # William de Beaumont
 #
 # USAGE: set TRIPS_BASE to a reasonable value, and run this program from a
@@ -11,9 +11,11 @@
 
 #INPUT_DIR='/Users/lgalescu/work/drum/Data/PMC/ppp'
 #PMCIDS_FILE='/Users/lgalescu/work/drum/Data/PMC/runs/eval2016-batch4.pmcids'
-INPUT_DIR='/Users/lgalescu/work/drum/RAS_Machine/data.161006'
+#INPUT_DIR='/Users/lgalescu/work/drum/RAS_Machine/data.161006'
+INPUT_DIR='/Users/lgalescu/work/drum/RAS_Machine/data.170126'
 NUM_TRIPSES=5
-BATCH_SIZE=10 # papers
+#BATCH_SIZE=10 # papers
+BATCH_SIZE=40 # papers
 PORT_BASE=6260
 
 raise "TRIPS_BASE environment variable unset" unless (ENV.key?('TRIPS_BASE'))
@@ -110,8 +112,9 @@ NUM_BATCHES = (papers.size * 1.0 / BATCH_SIZE).ceil
 
 tw = ThreadsWait.new
 
+num_digits = Math.log10(NUM_BATCHES).ceil
 NUM_BATCHES.times { |batch_num|
-  logdir = "batch%03d" % [batch_num]
+  logdir = "batch%0#{num_digits}d" % [batch_num]
   unless (File.exists?(logdir)) # already did this one
 #    # get all the xml paragraph input files for this batch of papers
 #    input_files = []
