@@ -72,7 +72,7 @@
 	 ;;(roles (extract-roles-from-arglist (cdddr rootLF) (second rootLF)))
 	 (roles (mapcan #'(lambda (x) (extract-roles-from-arglist (cdddr x) (second x))) lfs))
 	 ;(recursive-roles (mapcan #'(lambda (x) (list (list (car x) (second x) (add-ancestors (car x) roles))) ) roles))
-	 (recursive-roles (mapcan #'(lambda (x) (list (list (car x) (second x) (cons (third x) (add-ancestors (third x) roles)))) ) roles))
+	 (recursive-roles (mapcan #'(lambda (x) (list (list (car x) (second x) (cons (third x) (add-ancestors (third x) roles (list (car x) (third x)))))) ) roles))
 	 (merged-recursive-roles (remove-duplicates (mapcan #'(lambda (x) (list (merge-role-list (car x) recursive-roles))) recursive-roles) :test #'equal))
 	 )
     (setq *im-utt-count* (+ *im-utt-count* 1))
@@ -112,13 +112,15 @@
 )
 |#
 
-(defun add-ancestors (id role-list)
+(defun add-ancestors (id role-list visited-list) ; check visited-list because some ancestor links create a loop (e.g., A --MOD--> B --FIGURE--> A)
   (let* ((sublist (remove-if-not #'(lambda (x) (eq (car x) id)) role-list))
 	 (parents (mapcar #'(lambda (x) (third x) ) sublist))
+	 (parents-not-visited (remove-if #'(lambda (x) (member x visited-list)) parents))
 	 )
-    (if (null parents)
+    (if (null parents-not-visited)
 	'()
-        (remove-duplicates (append parents (mapcan #'(lambda(x) (add-ancestors x role-list)) parents)))
+      (remove-duplicates (append parents-not-visited
+				 (mapcan #'(lambda(x) (add-ancestors x role-list (append visited-list parents-not-visited))) parents-not-visited)))
     )
   )
 )
