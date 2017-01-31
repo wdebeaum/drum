@@ -44,7 +44,7 @@
      )
     ((EXAMPLE "Sit the box on the desk" )
      ;;(LF-PARENT ONT::BODY-MOVEMENT)
-     (lf-parent ont::ppace-in-position ) ;; 20120523 GUM change new parent
+     (lf-parent ont::place-in-position ) ;; 20120523 GUM change new parent
       (TEMPL AGENT-AFFECTED-goal-TEMPL)
      )
     )
