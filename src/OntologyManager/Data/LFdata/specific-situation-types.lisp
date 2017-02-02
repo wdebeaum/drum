@@ -2275,10 +2275,10 @@
 (define-type ONT::calc-add
  :parent ONT::calculation
  :wordnet-sense-keys ("add%2:31:00")
- :arguments ((:REQUIRED ONT::Formal (F::ABSTR-OBJ) (F::TYPE ONT::MATHEMATICAL-TERM))
-	     (:OPTIONAL ONT::formal1)
-             )
- )
+ :arguments ((:REQUIRED ONT::Formal (F::ABSTR-OBJ (F::TYPE ONT::MATHEMATICAL-TERM)))
+	     (:OPTIONAL ONT::formal1  (F::ABSTR-OBJ (F::TYPE ONT::MATHEMATICAL-TERM)))
+	     
+	     ))
 
 (define-type ONT::calc-subtract
     :wordnet-sense-keys ("subtract%2:31:00")

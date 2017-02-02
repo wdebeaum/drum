@@ -366,7 +366,8 @@
  :arguments (;(:ESSENTIAL ONT::OF (F::Situation))
              ;(:REQUIRED ONT::val (F::situation))
 	     (:ESSENTIAL ONT::FIGURE (F::Situation))
-             (:REQUIRED ONT::GROUND (F::situation))
+	     ;(:REQUIRED ONT::GROUND (F::situation))
+             (:REQUIRED ONT::GROUND ((? at F::abstr-obj F::situation) (F::type (? t ONT::SITUATION-ROOT ONT::DOMAIN ONT::SCALE)))) ; abstr-obj for ONT::DOMAIN/SCALE, e.g., "large in size"
              )
  )
 

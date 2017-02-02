@@ -15,3 +15,17 @@
    )
 ))
 
+(define-words :pos W::v 
+ :words (
+  (W::alternate
+   (wordfeats (W::morph (:forms (-vb) :nom w::arrangement)))
+   (SENSES
+    ((lf-parent ont::arranging)
+     (example "alternate the color of the blocks")
+     (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
+     (TEMPL agent-affected-xp-TEMPL)
+     
+    )
+   )
+   )))
+

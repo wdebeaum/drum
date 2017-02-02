@@ -9,8 +9,8 @@
    (SENSES
     ((meta-data :origin allison :entry-date 20041114 :change-date nil :wn ("backpack%1:06:00") :comments caloy2 :wn-sense (1))
      (LF-PARENT ONT::small-container)
-     (TEMPL pred-subcat-contents-templ)
-     (example "they fit in your backpack or whatever")
+     (TEMPL count-pred-templ)
+     (example "they fit in your backpack")
      )
     )
    )

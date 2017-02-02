@@ -198,7 +198,8 @@
       r))
 
 (defun add-alt (name)
-  (intern (concatenate 'string (symbol-name name) "ALT>")))
+  ;(intern (concatenate 'string (symbol-name name) "ALT>")))
+  (intern (concatenate 'string (symbol-name name) "ALT>" (symbol-name (gen-symbol 'A)))))
   
 (defun explode-LF (r)
   "explodes rules out if they contain features with multiple values (e.g., has 2 MODS)"
