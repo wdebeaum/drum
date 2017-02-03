@@ -179,8 +179,9 @@ OFFLINE requests.")
        ;; <lgalescu 02/29/2016>: we catch errors here and signal that we failed to parse the utterance
        (handler-bind
 	   ((error #'(lambda (err)
-		       (output `(tell :content (failed-to-parse :uttnum ,(get-keyword-arg content :uttnum))))
-		       )))
+	               (let ((*package* (find-package :parser))) ; in case the error came from LXM or WF, we don't want to accidentally put parser:: on the beginning of these symbols as we write them
+		         (output `(tell :content (failed-to-parse :uttnum ,(get-keyword-arg content :uttnum))))
+		         ))))
 	 (mapcar #'parse (get-cached-messages-and-clear))
      #|| ((utterance word phrase start-new-sentence start-sentence started-speaking stopped-speaking word-backto getanswers lattice prefer prefix) 
 					; Most TELLs get passed to PARSE||#

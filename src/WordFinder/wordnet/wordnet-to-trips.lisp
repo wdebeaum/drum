@@ -155,6 +155,7 @@
 			(w::adj (decf adjscore 0.01))
 			(w::adv (decf advscore 0.01))
 			)
+		    when sense ; get rid of nil senses for duplicate or subsumed
 		    collect (replace-arg-in-act sense :score new-score)))
 	senselist)
 	)

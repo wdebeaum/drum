@@ -33,13 +33,13 @@
  :tags (:base500)
  :words (
     (W::BETTER
-   (wordfeats (W::COMPARATIVE +) (W::FUNCTN ONT::ACCEPTABILITY-VAL))
+   (wordfeats (W::COMPARATIVE +)); (W::FUNCTN ONT::ACCEPTABILITY-VAL))
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("better%3:00:00"))
      (LF-PARENT ONT::MORE-VAL)
      (lf-form w::good)
      (TEMPL COMPAR-TEMPL)
-     (SEM (f::orientation ont::more) (f::intensity ont::med))
+     (SEM (f::orientation ont::more) (f::intensity ont::med) (F::SCALE ONT::ACCEPTABILITY-VAL))
      )
     )
    )

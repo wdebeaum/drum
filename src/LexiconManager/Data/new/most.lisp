@@ -7,12 +7,13 @@
  :words (
 ;   )
   (W::MOST
-   (wordfeats (W::COMPARATIVE W::SUPERL) (W::FUNCTN ONT::COMPARE-VAL))
+   (wordfeats (W::COMPARATIVE W::SUPERL)); (W::FUNCTN ONT::COMPARE-VAL))
    (SENSES
     ((LF-PARENT ONT::MAX-VAL)
      (TEMPL SUPERL-TEMPL (xp (% W::pp (W::ptype W::of))))
      (meta-data :origin calo :entry-date 20050505 :change-date nil :wn ("most%3:00:02") :comments projector-purchasing)
      (example "the most fun I've had in years")
+     (SEM (F::SCALE ONT::COMPARE-VAL))
      )
     )
   )

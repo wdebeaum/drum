@@ -5,13 +5,13 @@
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
    (W::farther
-   (wordfeats (W::COMPARATIVE +) (W::FUNCTN ONT::linear-scale))
+   (wordfeats (W::COMPARATIVE +)); (W::FUNCTN ONT::linear-scale))
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("farther%5:00:01:far:00"))
      (LF-PARENT ONT::MORE-VAL)
      (lf-form w::far)
      (TEMPL COMPAR-TEMPL)
-     (SEM (f::orientation ont::more) (f::intensity ont::med))
+     (SEM (f::orientation ont::more) (f::intensity ont::med) (F::SCALE ONT::linear-scale))
      )
     )
    )
