@@ -62,13 +62,14 @@
    )
 ))
 
+
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
   (w::sweet
    (wordfeats (W::MORPH (:FORMS (-LY -ER))))
    (SENSES
     ((meta-data :origin chf :entry-date 20070809 :change-date nil :comments nil)
-     (LF-PARENT ONT::taste-val)
+     (LF-PARENT ONT::sweet-val)
      )
     )
    )

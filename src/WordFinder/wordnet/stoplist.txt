@@ -2887,3 +2887,7 @@ pursued%1:18:00::
 chased%1:18:00::
 doomed%1:14:00::
 lost%1:14:00::
+first_step%1:04:00::
+step_in%2:41:09::
+step_in%2:41:00::
+go_home%2:38:00::

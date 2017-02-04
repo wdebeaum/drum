@@ -59,7 +59,7 @@
   (W::SQUARE
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("square%3:00:00"))
-     (LF-PARENT ONT::SHAPE-val)
+     (LF-PARENT ONT::Square-val)
      )
     )
    )

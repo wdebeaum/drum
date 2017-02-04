@@ -334,6 +334,7 @@
     in1)
    ((subtype 'w::sem in2 in1)
     in2)
+   (t in2)
    ))
 
 

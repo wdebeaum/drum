@@ -81,7 +81,7 @@
      (TEMPL adj-expletive-content-control-TEMPL)
      )
     ((meta-data :origin calo :entry-date 20031223 :change-date nil :wn ("hard%3:00:01") :comments html-purchasing-corpus)
-     (LF-PARENT ONT::Texture-val)
+     (LF-PARENT ONT::hard-val)
      (TEMPL LESS-ADJ-TEMPL)
      )
     )

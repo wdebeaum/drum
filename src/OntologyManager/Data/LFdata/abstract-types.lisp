@@ -690,63 +690,81 @@
 
 (define-type ONT::green
  :parent ONT::color-VAL
+ :sem (F::Abstr-obj (F::scale ONT::GREEN*1--07--00))
  )
 
 (define-type ONT::yellow
  :parent ONT::color-VAL
+ :sem (F::Abstr-obj (F::scale ONT::YELLOW*1--07--00))
  )
 
 (define-type ONT::orange
  :parent ONT::color-VAL
- )
+  :sem (F::Abstr-obj (F::scale ONT::ORANGE*1--07--00))
+  )
 
 (define-type ONT::purple
  :parent ONT::color-VAL
+  :sem (F::Abstr-obj (F::scale ONT::PURPLE*1--07--00))
  )
 
 (define-type ONT::black
  :parent ONT::color-VAL
+  :sem (F::Abstr-obj (F::scale ONT::BLACKNESS*1--07--00))
  )
 
 (define-type ONT::brown
  :parent ONT::color-VAL
+  :sem (F::Abstr-obj (F::scale ONT::BROWNNESS*1--07--00))
  )
 
 (define-type ONT::white
  :parent ONT::color-VAL
+  :sem (F::Abstr-obj (F::scale ONT::white*1--07--00))
  )
 
 (define-type ONT::gold
  :parent ONT::color-VAL
+  :sem (F::Abstr-obj (F::scale ONT::gold*1--07--00))
  )
 
 (define-type ONT::silver
  :parent ONT::color-VAL
+  :sem (F::Abstr-obj (F::scale ONT::silver*1--07--00))
  )
 
 (define-type ONT::magenta
  :parent ONT::color-VAL
+  :sem (F::Abstr-obj (F::scale ONT::magenta*1--07--00))
  )
 
 (define-type ONT::pink
  :parent ONT::color-VAL
+  :sem (F::Abstr-obj (F::scale ONT::pink*1--07--00))
  )
 
 (define-type ONT::tan
  :parent ONT::color-VAL
  )
 
-(define-type ONT::grey
- :parent ONT::color-VAL
- )
-
 (define-type ONT::gray
  :parent ONT::color-VAL
+  :sem (F::Abstr-obj (F::scale ONT::greyness*1--07--00))
  )
 
 (define-type ONT::SHAPE-VAL
   :parent ONT::spatial
- :sem (F::Abstr-obj (F::MEasure-function F::VALUE))
+ :sem (F::Abstr-obj (F::Measure-function F::VALUE))
+ )
+
+(define-type ONT::round-val
+ :parent ONT::shape-VAL
+  :sem (F::Abstr-obj (F::scale ONT::roundness*1--07--00))
+ )
+
+(define-type ONT::square-val
+ :parent ONT::shape-VAL
+  :sem (F::Abstr-obj (F::scale ONT::squareness*1--07--00))
  )
 
 ;; smooth, rough, soft, hard
@@ -754,6 +772,23 @@
  :parent ONT::tangible-PROPERTY-VAL
  :sem (F::Abstr-obj (F::MEasure-function F::VALUE))
  )
+
+(define-type ONT::soft-VAL
+ :parent ONT::texture-VAL
+ :sem (F::Abstr-obj (F::scale ONT::softness*1--07--00))
+ )
+
+(define-type ONT::hard-VAL
+ :parent ONT::texture-VAL
+ :sem (F::Abstr-obj (F::scale ONT::hardness*1--07--00))
+ )
+
+(define-type ONT::smooth-VAL
+ :parent ONT::texture-VAL
+ :sem (F::Abstr-obj (F::scale ONT::smoothness*1--07--00))
+ )
+
+
 
 
 ;; loud, soft, quiet
@@ -1085,6 +1120,28 @@
 ;; delicious, zesty, spicy, salty...
 (define-type ONT::TASTE-VAL
  :parent ONT::tastable-property-val
+ :sem (F::Abstr-obj (F::scale ONT::tastefulness*1--07--00xs))
+ )
+
+(define-type ONT::SWEET-VAL
+ :parent ONT::taste-val
+ :sem (F::Abstr-obj (F::scale ONT::sweetness*1--07--00))
+ )
+
+(define-type ONT::bitter-VAL
+ :parent ONT::taste-val
+ :sem (F::Abstr-obj (F::scale ONT::bitter*1--07--00))
+ )
+
+
+(define-type ONT::tart-VAL
+ :parent ONT::taste-val
+ :sem (F::Abstr-obj (F::scale ONT::tartness*1--07--00))
+ )
+
+(define-type ONT::sour-VAL
+ :parent ONT::taste-val
+ :sem (F::Abstr-obj (F::scale ONT::sourness*1--07--00))
  )
 
 ;; beautiful, ugly

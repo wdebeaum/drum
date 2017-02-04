@@ -12,7 +12,7 @@
 	   )
 )
 ))
-
+#||
 (define-words :pos w::adj :templ central-adj-templ
  :tags (:base500)
  :words (
@@ -25,5 +25,5 @@
      )
     )
    )
-))
+))||#
 

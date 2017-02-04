@@ -31,7 +31,7 @@
    (wordfeats (W::MORPH (:FORMS (-ER -LY))))
    (SENSES
     ((meta-data :origin calo :entry-date 20031223 :change-date nil :wn ("soft%3:00:01") :comments html-purchasing-corpus)
-     (LF-PARENT ONT::Texture-val)
+     (LF-PARENT ONT::soft-val)
      (TEMPL LESS-ADJ-TEMPL)
      )
     ((meta-data :origin calo :entry-date 20031223 :change-date 20090731 :wn ("soft%3:00:04") :comments html-purchasing-corpus)

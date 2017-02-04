@@ -7,6 +7,7 @@
   (W::MOUSE
    (SENSES
     ((LF-PARENT ONT::computer-input-device) (TEMPL COUNT-PRED-TEMPL)
+     (preference .98)
      (META-DATA :ORIGIN CALO :ENTRY-DATE 20040204 :CHANGE-DATE 20051214 :wn ("mouse%1:06:00")
       :COMMENTS HTML-PURCHASING-CORPUS))))
 ))
