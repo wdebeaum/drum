@@ -1085,7 +1085,9 @@
      (S (var ?vs))
      (add-to-conjunct (val (ground ?vs)) (old ?con) (new ?newc))
      )
-||#
+     ||#
+
+     #|
     ;; TEST: red enough
     ((ADJP (LF (% PROP (CLASS ?c) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
            (val ?val) (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap)
@@ -1103,6 +1105,7 @@
      (add-to-conjunct (val (MODS ?advbv)) (old ?con) (new ?newc))
      
      )
+|#
 
     ;;  ADV modification
     ;; TEST: very quickly 

@@ -3764,6 +3764,7 @@
 (define-type ONT::activity-val
     :comment "predicates relating to whether something is acting as intended for some process"
   :parent ONT::property-val
+  :arguments ((:required ONT::FIGURE ((? lof f::phys-obj ))))
  )
 
 (define-type ONT::active
@@ -3772,7 +3773,7 @@
  ; Words: (W::ACTIVE W::BUSY)
  :wordnet-sense-keys ("busy%3:00:00" "active%3:00:03" "active%3:00:06" "busy%5:00:01:active:06")
  ; Antonym: ONT::INACTIVE (W::PASSIVE W::IDLE)
-  :arguments ((:required ONT::FIGURE ((? lof f::phys-obj))))
+  :arguments ((:required ONT::FIGURE ((? lof f::phys-obj) (f::type (? !t2 ont::location)))))
  )
 
 (define-type ONT::INACTIVE
