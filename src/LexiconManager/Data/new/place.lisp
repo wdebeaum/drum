@@ -22,6 +22,7 @@
     ((EXAMPLE "Place the order")
      (LF-PARENT ONT::submit)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
+     (preference .98)
      )
     ((LF-PARENT ONT::put)
      (meta-data :origin plow :entry-date 20050318 :change-date nil :comments nil)

@@ -102,7 +102,12 @@ our %penn2trips_word_re = (
   'recognize' => qr/recognize|recognise/i,
   'recognized' => qr/recognized|recognised/i,
   'recognizing' => qr/recognizing|recognising/i,
+  'rumor' => qr/rumor|rumour/i,
   'rumored' => qr/rumored|rumoured/i,
+  'rumoring' => qr/rumoring|rumouring/i,
+  'savor' => qr/savor|savour/i,
+  'savored' => qr/savored|savoured/i,
+  'savoring' => qr/savoring|savouring/i,
   # Stanford also capitalizes days of the week
   'Monday' => qr/[Mm]onday/,
   'Tuesday' => qr/[Tt]uesday/,
@@ -169,7 +174,7 @@ sub stanford_word_re {
     $re = qr/\Q$word\E|\Q$penn2trips_punc{$word}\E/;
   } elsif (exists($penn2trips_word_re{$word})) {
     $re = $penn2trips_word_re{$word};
-  } elsif ($word =~ /^\w+ors?$/) {
+  } elsif ($word =~ /^\w+ors?$/) { # TODO make this cover -ed and -ing as well as -s
     my $british_version = $word;
     $british_version =~ s/or(s?)$/our$1/;
     $re = qr/$word|$british_version/i;
