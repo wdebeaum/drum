@@ -37,77 +37,30 @@ our %penn2trips_punc = (
 # http://www2.gsu.edu/~wwwesl/egw/jones/differences.htm
 # But Stanford doesn't do all of the conversions from that website. This list
 # only has those it does do (as well as some others we've discovered
-# independently).
+# independently). And many are factored out into the generic US/UK ending
+# processing in sub stanford_word_re.
 our %penn2trips_word_re = (
   # format:
   # 'american' => qr/american|british/i,
-  'favorite' => qr/favorite|favourite/i,
-  'analog' => qr/analog|analogue/i,
+  'analog' => qr/analog|analogue/i, # but not dialogue
   'analyze' => qr/analyze|analyse/i,
-  'center' => qr/center|centre/i,
-  'theater' => qr/theater|theatre/i,
-  'encyclopedia' => qr/encyclopedia|encyclopaedia/i,
-  'maneuver' => qr/maneuver|manoeuvre/i,
-  'defense' => qr/defense|defence/i,
-  'program' => qr/program|programme/i,
-  'organization' => qr/organization|organisation/i,
-  'canceled' => qr/canceled|cancelled/i,
-  'canceling' => qr/canceling|cancelling/i,
-  'traveled' => qr/traveled|travelled/i,
-  'traveling' => qr/traveling|travelling/i,
-  'labeled' => qr/labeled|labelled/i,
-  'labeling' => qr/labeling|labelling/i,
   'analyzed' => qr/analyzed|analysed/i,
   'analyzing' => qr/analyzing|analysing/i,
   'anemia' => qr/anemia|anaemia/i,
   'anesthetic' => qr/anesthetic|anaesthetic/i,
-  'capitalization' => qr/capitalization|capitalisation/i,
-  'capitalize' => qr/capitalize|capitalise/i,
-  'capitalized' => qr/capitalized|capitalised/i,
-  'colored' => qr/colored|coloured/i,
-  'coloring' => qr/coloring|colouring/i,
+  'defense' => qr/defense|defence/i, # but not offen(c|s)e
+  'encyclopedia' => qr/encyclopedia|encyclopaedia/i,
   'estrogen' => qr/estrogen|oestrogen/i,
-  'favored' => qr/favored|favoured/i,
-  'favoring' => qr/favoring|favouring/i,
-  'fiber' => qr/fiber|fibre/i,
-  'flavored' => qr/flavored|flavoured/i,
-  'flavoring' => qr/flavoring|flavouring/i,
+  'favorite' => qr/favorite|favourite/i,
   'gray' => qr/gray|grey/i,
   'hemophilia' => qr/hemophilia|haemophilia/i,
   'hemophiliac' => qr/hemophiliac|haemophiliac/i,
-  'honored' => qr/honored|honoured/i,
-  'honoring' => qr/honoring|honouring/i,
-  'humored' => qr/humored|humoured/i,
-  'humoring' => qr/humoring|humouring/i,
-  'labored' => qr/labored|laboured/i,
-  'laboring' => qr/laboring|labouring/i,
   'leaned' => qr/leaned|leant/i,
   'learned' => qr/learned|learnt/i,
   'leukemia' => qr/leukemia|leukaemia/i,
-  'localize' => qr/localize|localise/i,
-  'localized' => qr/localized|localised/i,
-  'maximize' => qr/maximize|maximise/i,
-  'maximized' => qr/maximized|maximised/i,
-  'maximizing' => qr/maximizing|maximising/i,
-  'minimize' => qr/minimize|minimise/i,
-  'minimized' => qr/minimized|minimised/i,
-  'minimizing' => qr/minimizing|minimising/i,
+  'maneuver' => qr/maneuver|manoeuvre/i,
   'neighborhood' => qr/neighborhood|neighbourhood/i,
-  'practice' => qr/practice|practise/i,
-  'practiced' => qr/practiced|practised/i,
-  'practicing' => qr/practicing|practising/i,
-  'realize' => qr/realize|realise/i,
-  'realized' => qr/realized|realised/i,
-  'realizing' => qr/realizing|realising/i,
-  'recognize' => qr/recognize|recognise/i,
-  'recognized' => qr/recognized|recognised/i,
-  'recognizing' => qr/recognizing|recognising/i,
-  'rumor' => qr/rumor|rumour/i,
-  'rumored' => qr/rumored|rumoured/i,
-  'rumoring' => qr/rumoring|rumouring/i,
-  'savor' => qr/savor|savour/i,
-  'savored' => qr/savored|savoured/i,
-  'savoring' => qr/savoring|savouring/i,
+  'program' => qr/program|programme/i,
   # Stanford also capitalizes days of the week
   'Monday' => qr/[Mm]onday/,
   'Tuesday' => qr/[Tt]uesday/,
@@ -149,7 +102,8 @@ our %penn2trips_word_re = (
   );
 # add plurals to the above
 for my $key (keys %penn2trips_word_re) {
-  $penn2trips_word_re{$key . 's'} = qr/(?:$penn2trips_word_re{$key})s/i;
+  $penn2trips_word_re{$key . 's'} = qr/(?:$penn2trips_word_re{$key})s/i
+    unless (exists($penn2trips_word_re{$key . 's'}));
 }
 
 # We need this for the case where Stanford inserts an extra "." when an
@@ -174,9 +128,19 @@ sub stanford_word_re {
     $re = qr/\Q$word\E|\Q$penn2trips_punc{$word}\E/;
   } elsif (exists($penn2trips_word_re{$word})) {
     $re = $penn2trips_word_re{$word};
-  } elsif ($word =~ /^\w+ors?$/) { # TODO make this cover -ed and -ing as well as -s
-    my $british_version = $word;
-    $british_version =~ s/or(s?)$/our$1/;
+  # common US/UK patterns
+  } elsif ($word =~ /^(\w+)or((?:s|ed|ing)?)$/) { # e.g. favo(u)r
+    my $british_version = $1 . 'our' . $2;
+    $re = qr/$word|$british_version/i;
+  } elsif ($word =~ /^(\w+)iz(e|es|ed|ing|ations?)$/ or # e.g. maximi(z|s)e
+	   $word =~ /^(\w+)ic(e|es|ed|ing)$/) { # e.g. practi(c|s)e
+    my $british_version = $1 . 'is' . $2;
+    $re = qr/$word|$british_version/i;
+  } elsif ($word =~ /^(\w+)el(ed|ing)$/) { # e.g. travel(l)ing
+    my $british_version = $1 . 'ell' . $2;
+    $re = qr/$word|$british_version/i;
+  } elsif ($word =~ /^(\w+)er(s?)$/) { # e.g. theat(er|re)
+    my $british_version = $1 . 're' . $2;
     $re = qr/$word|$british_version/i;
   } elsif ($word eq '.' and $previous_word_ended_with_period) {
     $re = qr/\s(?!\s*\.)|\./; # HACK: we match the following space if this period was inserted, because we need to match something

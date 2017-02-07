@@ -1,4 +1,5 @@
 (load "defsys")
+(dfc:load-component :deepsemlex)
 (in-package :dsl)
 (load "lisp-unit")
 (use-package :lisp-unit)

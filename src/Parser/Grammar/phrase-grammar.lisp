@@ -1370,7 +1370,7 @@
 	       (ATYPE central)
 	       (argument ?argument) (arg ?arg)
 	       (SORT PRED)
-	       (sem ($ F::ABSTR-OBJ (f::scale ?scale)))
+	       ;;(sem ($ F::ABSTR-OBJ (f::scale ?scale)))
 	       (sem ?sem)
 	       (transform ?transform)
 	       ))

@@ -8,6 +8,7 @@
 ;; LexiconManager/OntologyManager loading the same files if DSL is in the same
 ;; Lisp instance as they are.
 (defmacro ld::in-package (name)
+    (declare (ignore name))
   nil)
 
 (defun convert-variables-to-disjunctions (x)
@@ -70,7 +71,7 @@
     :WN))
 
 (defmacro ld::define-type (type &key parent sem arguments coercions wordnet-sense-keys comment definitions entailments)
-  ;; TODO include definitions, entailments
+    (declare (ignore coercions definitions entailments)) ;; TODO include definitions, entailments
   `(ld::concept ,type
     ,@(when comment
       `((ld::comment ,comment)))
@@ -313,6 +314,7 @@
     ))
 
 (defmacro ld::define-words (&key pos templ boost-word tags words)
+    (declare (ignore boost-word)) ; TODO use boost-word
   (when templ
     (setf templ (list (util::convert-to-package templ :ONT))))
   `(with-clean-load-context

@@ -947,7 +947,7 @@
       (add-to-conjunct (val (MODS ?advbv)) (old ?con) (new ?newc))
      
       )
-
+#||
     ;;   more/as/so ADJP than/as/that 
     ;;   e.g., more sensitive than that
     ((ADJP (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
@@ -986,7 +986,7 @@
      ;;(np (var ?vnp))
      (add-to-conjunct (val (& (figure ?arg) (ground ?vg) (?sc-map ?vsc))) (old ?con) (new ?newc))
      )
-
+||#
     
 
     ;;  as ADJ as-PP

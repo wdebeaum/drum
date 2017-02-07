@@ -84,3 +84,4 @@
 
 (defpackage :type-predicates)
 
+(defvar *db* nil) ; set in make-db.lisp

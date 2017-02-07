@@ -1,6 +1,7 @@
 (in-package :dsl)
 
-(defvar *db* (make-instance 'lexicon-and-ontology))
+(unless *db*
+  (setf *db* (make-instance 'lexicon-and-ontology)))
 
 (defun get-or-make-concept (name &optional (concept-type 'concept) provenance)
   "Get the named concept if it exists and extend it to the given subtype of

@@ -45,8 +45,8 @@
    Note that variables are matched greedily, so if the same variable appears as the value of more than one feature in the same feature list, earlier occurrences may unify (and end up in the unified list and bindings) while later ones conflict (and end up in the remainder with the previously-bound value).
    "
   (let (unified-feats
-        (bindingses (mapcar (lambda (x) nil) feature-lists))
-        (remainders (mapcar (lambda (x) nil) feature-lists))
+        (bindingses (mapcar (constantly nil) feature-lists))
+        (remainders (mapcar (constantly nil) feature-lists))
 	(feature-names
 	  (remove-duplicates
 	      (mapcan (lambda (feats) (mapcar #'car feats)) feature-lists)))

@@ -262,7 +262,8 @@
     ;  EX   (PRO)	; Existential there
     ;  IN   (PREP ADV)	; Preposition or subordinating conjunction
     ;  JJ   (ADJ)	; Adjective
-	   (w::JJR  '((w::comparative +)))	; Adjective comparative
+	   (w::JJR  '((w::comparative +)
+		      (W::allow-post-n1-subcat +)))	; Adjective comparative
 	   (w::JJS  '((w::comparative +)))	; Adjective superlative
 	   (w::NN   '((w::morph (:forms (-S-3P))) ; Noun, singular or mass
 		      (w::mass (? mss w::count w::mass))

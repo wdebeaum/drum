@@ -2,6 +2,7 @@
 (in-component :deepsemlex)
 
 (defun echo-message (message args)
+    (declare (ignore message))
   (let ((message (get-keyword-arg args :text)))
     (format t message)))
 (defcomponent-handler
@@ -10,6 +11,7 @@
   :subscribe t)
 
 (defun handle-load-dsl-file (message args)
+    (declare (ignore message))
   (progn 
     (load-dsl-file (get-keyword-arg args :filename))
     (send-msg '(tell :content (DSL-FILE-LOADED)))))
@@ -19,6 +21,7 @@
   :subscribe t)
 
 (defun handle-get-sense (message args)
+    (declare (ignore message))
   (let ((word (get-keyword-arg args :word)))
     (print word)
     (send-msg `(tell :content (SENSE-RESPONSE :word ,word :sense ,(gethash word (senses *db*)))))))
@@ -28,6 +31,7 @@
   :subscribe t)
 
 (defun handle-eval-path-expression (message args)
+    (declare (ignore message))
   (let* ((path (get-keyword-arg args :path))
 	 (word (get-keyword-arg args :word))
 	 (result (eval-path-expression path)))
@@ -40,6 +44,7 @@
   :subscribe t)
 
 (defun get-inherit-path-list (message args)
+    (declare (ignore message))
   (let* ((words (get-keyword-arg args :words))
 	 (uttnum (get-keyword-arg args :uttnum))
 	 (result-list (loop for word in words 
@@ -52,6 +57,7 @@
   :subscribe t)
 
 (defun handle-get-concept (message args)
+    (declare (ignore message))
   (let ((concept (get-keyword-arg args :concept)))
     (print concept)
     (send-msg `(tell :content (CONCEPT-RESPONSE :concept-input ,concept :concept ,(gethash concept (concepts *db*)))))))

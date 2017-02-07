@@ -299,7 +299,7 @@
       (lambda (pkg rv)
         (dolist (f (funcall (get-all-files rv) rv))
 	  (load-dsl-file f
-	      :provenance-name (intern (package-name (pkg rv)) :ld))))
+	      :provenance-name (intern (package-name pkg) :ld))))
       *resource-versions*))
 
 (defresource (ONT)
@@ -439,6 +439,7 @@
 	           (lex-filenum (read-from-string lex-filenum-str))
 		   (row (assoc lex-filenum *wn-lex-file-table* :test #'=))
 		   )
+	        (declare (ignore _))
 	      (unless row
 	        (error "No WN lex file for lex-filenum=~s (from sense-key=~a)" lex-filenum name))
 	      (list (make-pathname
@@ -490,7 +491,8 @@
 	           (second-dash-pos
 		     (or (position #\- name :start (1+ first-dash-pos))
 		         (length name)))
-		   (english-name (subseq name 0 first-dash-pos))
+		   ;; unused
+		   ;(english-name (subseq name 0 first-dash-pos))
 		   (numeric-name (subseq name (1+ first-dash-pos)
 		                         second-dash-pos))
 		   ; between second-dash-pos and the end of the string is the

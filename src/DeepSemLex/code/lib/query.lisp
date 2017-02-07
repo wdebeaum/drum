@@ -211,6 +211,7 @@
 	         (eval-path-expression `(repeat 0 nil ,@(cdr expr)) input db)))
 	 (repeat
 	   (destructuring-bind (_ min-count max-count &rest subexprs) expr
+	       (declare (ignore _))
 	     (let (prev (next input) (once-expr `(1 ,@subexprs)))
 	       ;; get the required number of repetitions to start with
 	       (loop for c from 1 upto min-count
