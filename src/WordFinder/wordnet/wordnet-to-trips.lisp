@@ -57,6 +57,7 @@
 
 (defun process-synsets (word synsets &key senselimit poslist penntags trips-sense-list wn-sense-keys)
   "Each sense returned is associated with a score. Scores begin at .99 and are decremented as we step through the list of senses as a rough means of ranking senses by frequency. WordNet lists senses in order of frequency based on their corpora statistics. The actual sense frequency score is not currently part of the WN download, so we rely on the synset ordering for now to create a relative ranking, which determines which senses are preferred by the parser."
+    (declare (ignore wn-sense-keys))
   (let ((ncount 0) (vcount 0) (adjcount 0) (advcount 0)
 	 (nscore 1) (vscore 1) (adjscore 1) (advscore 1) ; we decf before the first sense, so these will be 0.99
 	 senselist n-lftypes v-lftypes adj-lftypes adv-lftypes)
@@ -243,6 +244,7 @@
 
 (defun get-syntactic-features (constit-type penntags synset lex-filenum)
   "use information from PTB tags to fill in syntactic information such as agreement"
+    (declare (ignore lex-filenum)) ; for now?
   (let ((feats))
 ;    (when (equalp constit-type 'w::N)
     (case constit-type
@@ -2043,6 +2045,7 @@
   (substitute #\_ #\Space (multi-string wordlist :hyphens hyphens)))
 
 (defun get-sense-key-for-word-and-synset (word synset pos)
+    (declare (ignore pos)) ; ?
   (let ((sense-key (car (sense-key-for-word-and-synset word synset))))
     (when (not sense-key)
       (let ((base-forms (car (run-morphy wm word))))
@@ -2096,7 +2099,8 @@
   (let* (
 	 (w (util::convert-to-package (multi-string w) :w))
 	 (synsets (get-all-synsets wm w :use-morphy t))
-	 non-core-senses core-senses)
+	 ;non-core-senses core-senses
+	 )
     (format t "synsets are ~S~%" synsets)
     (dolist (synset synsets)
       (format t "synset is ~S~%" synset)

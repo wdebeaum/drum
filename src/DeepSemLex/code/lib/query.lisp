@@ -294,6 +294,7 @@
 		     (lambda (output-so-far next-output)
 		       (maphash
 			   (lambda (concept paths)
+			       (declare (ignore paths))
 			     (setf (gethash concept output-so-far)
 				   (union (gethash concept output-so-far)
 					  (gethash concept next-output)
