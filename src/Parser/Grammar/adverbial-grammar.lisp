@@ -1388,18 +1388,18 @@
    ;; TEST: walk a short distance
    ;; TEST: The market fell three percent
    ((advbl (arg ?arg) ;;(role (:* ONT::distance W::quantity)) 
-     (var *)
+     (var *) (subj ?anysubj)
 	   (sort binary-constraint)
 	   (LF (% PROP (VAR *) (CLASS ONT::extent-predicate) (sem ?sem)
 		  (CONSTRAINT (& (FIGURE ?arg) (scale ?scale) (GROUND ?v)))))
 	   (atype (? x W::PRE W::POST))
-     (argument (% W::S
+     (argument (% W::S (subjvar ?anysubj)
                           ;; W::NP
 			  ;; W::VP)
-		  (SEM (? SEM8044 ($ F::event-of-change))))) ;;SITUATION (F::trajectory +)))))))
+		  (SEM ($ F::situation (f::type (? xx ont::event-of-action)))))) ;;SITUATION (F::trajectory +)))))))
      )
     -distance-np-advbl> .97
-    (head (np (var ?v) (sort unit-measure) (sem ?sem) 
+    (head (np (var ?v) (sort unit-measure) (sem ?sem)  
 	      (bare -) ;; we suppress this rule for distances without a specific amount (e.g., "miles")
 	      ;; the semantic restriction is not sufficient to prevent measure-unit phrases such as "a bit" or "a set" as distances so using the lfs to restrict
 	      (lf (% description (constraint (& (scale ?scale)))))

@@ -2,10 +2,10 @@
 # Makefile for TripsModule
 #
 # George Ferguson, ferguson@cs.rochester.edu, 16 Feb 1998
-# $Id: Makefile,v 1.10 2015/04/03 15:47:33 wdebeaum Exp $
+# $Id: Makefile,v 1.11 2017/02/08 19:02:42 wdebeaum Exp $
 #
 
-LANGUAGES = java perl ruby javascript
+LANGUAGES = java perl ruby javascript python
 CONFIGDIR = ../config
 
 test_for_language = test -f Makefile-$(1) -a -d $(CONFIGDIR)/$(1:objc=c)

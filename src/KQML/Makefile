@@ -2,14 +2,14 @@
 # Makefile for TRIPS KQML libraries
 #
 # George Ferguson, ferguson@cs.rochester.edu,  3 Sep 2003
-# $Id: Makefile,v 1.10 2015/04/03 15:46:52 wdebeaum Exp $
+# $Id: Makefile,v 1.11 2017/02/08 19:02:41 wdebeaum Exp $
 #
 
 CONFIGDIR=../config
 include $(CONFIGDIR)/defs.mk
 
 # In OSX, also build objc library
-LANGUAGES = c java perl ruby javascript
+LANGUAGES = c java perl ruby javascript python
 # FIXME: 10.6 required
 #\
 #	    $(if $(findstring darwin,$(target)),objc)

@@ -202,7 +202,7 @@
 	((possessor (LF ONT::DEFINITE) (AGR ?agr) (ARG ?arg) (MASS ?m) (RESTR (& (assoc-poss ?v)))
                (NObareSpec +))
 	 -possessive2>
-	 (head (NP (PRO -) (SEM ?sem) (VAR ?v) (agr 3p) (gerund -) (name -) (sort pred))) (^))
+	 (head (NP (PRO -) (SEM ?sem) (VAR ?v) (agr 3p) (gerund -) (name -) (sort pred) (headless -))) (^))
 #||
 	;; plural possessor of relational noun - the engines' wheels
 	;; Myrosia added a restriction (sort pred) to prevent wh-desc prhases appearing in this rule
@@ -2285,6 +2285,7 @@
         ((NP (LF ?r) (SORT ?sort) (VAR ?v) (comma +))
          -np-comma>
          (head (NP (LF ?r) (SORT ?sort) (VAR ?v) (COMPLEX -))) (punc (Lex w::punc-comma)))
+
 	;; reference/citations
 	((NP (LF (% description (STATUS ?spec) (VAR ?v) 
 		    (CLASS ?c) (CONSTRAINT ?newc)
@@ -2305,11 +2306,11 @@
 	 (parenthetical (var ?pv) (arg ?v) (role ?role))
 	 (add-to-conjunct (val (parenthetical ?pv)) (old ?constr) (new ?newc)))
 
-  ((parenthetical (var ?cc) (arg ?arg) (role :identified-as))
+#||	((parenthetical (var ?cc) (arg ?arg) (role :identified-as))
 	 -paren-np> 1
 	 (punc (lex (? x W::START-SQUARE-PAREN W::START-PAREN w::punc-comma)))
 	 (head (np (var ?cc)))
-	 (punc (lex  (? y W::END-SQUARE-PAREN W::END-PAREN w::punc-comma))))
+	 (punc (lex  (? y W::END-SQUARE-PAREN W::END-PAREN w::punc-comma))))||#
 
 	((parenthetical (var ?cc) (arg ?arg) (role :parenthetical))
 	 -paren1> 1
@@ -2630,11 +2631,11 @@
 				    (CONSTRAINT ?constr)))))
 	     (Sem ?sem)))					
       (transform ?transform))
-     -adj-number-unit-modifier>
+     -adj-number-unit-modifier> .97
      (NUMBER  (val ?sz) (VAR ?nv) (restr -))
      (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
 	       (KIND -) ;;(agr 3s)   we allow either 61 year old or 61 years old
-	       (sem ?sem)  (sem ($ f::abstr-obj (f::scale ?sc)))
+	       (sem ?sem)  (sem ($ f::abstr-obj (f::scale ont::linear-d)))
 	       (RESTR ?restr) (transform ?transform)
 	       (postadvbl -) (post-subcat -)
 	       ))
@@ -3133,7 +3134,7 @@
       
       )
      -n1-nom-with-obj> 1
-      (head (n  (var ?v) (gap -) (aux -) (agr ?agr) (sort pred)
+      (head (n  (var ?v) (gap -) (aux -) (agr ?agr) (sort pred) (headless -)
 		(sem ?sem)  (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(LF ?class) (transform ?transform)
             ;; these are dummy vars for trips-lcflex conversion, please don't delete
@@ -3169,7 +3170,7 @@
       
       )
      -n1-nom-without-obj> 1
-      (head (n  (var ?v) (gap -) (aux -) (agr ?agr) (sort pred)
+      (head (n  (var ?v) (gap -) (aux -) (agr ?agr) (sort pred) (headless -)
 		(sem ?sem)  (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(LF ?class) (transform ?transform)
             ;; these are dummy vars for trips-lcflex conversion, please don't delete
@@ -3313,7 +3314,7 @@
       (comp3-map ?comp-map)
       )
      -nom-n-n>
-     (np (AGR 3s) (abbrev -)
+     (np (AGR 3s) (abbrev -) (sort pred) (headless -)
       (var ?v1) 
       (PRO -) (N-N-MOD -) (COMPLEX -) (GAP -)
       (postadvbl -) (post-subcat -) (sem ?dobjsem)
@@ -3351,7 +3352,7 @@
       (comp3-map ?comp-map)
       )
      -nom-n-n-hyphen> 1
-     (np (AGR 3s) (abbrev -)(agr ?agr)
+     (np (AGR 3s) (abbrev -)(agr ?agr) (sort pred) (headless -)
       (var ?v1) 
       (PRO -) (N-N-MOD -) (COMPLEX -) (GAP -)
       (postadvbl -) (post-subcat -) (sem ?dobjsem)
@@ -3391,7 +3392,7 @@
       (comp3-map ?comp-map)
       )
      -nom-n-n-subj> 
-     (np (AGR 3s) (abbrev -) 
+     (np (AGR 3s) (abbrev -) (sort pred) (headless -)
       (var ?v1) 
       (PRO -) (N-N-MOD -) (COMPLEX -) (GAP -)
       (postadvbl -) (post-subcat -) (sem ?subjsem)
@@ -3431,7 +3432,7 @@
       (comp3-map ?comp-map)
       )
      -nom-n-n-subj1> 
-     (np (AGR 3s) (abbrev -) 
+     (np (AGR 3s) (abbrev -) (sort pred) (headless -)
       (var ?v1) 
       (PRO -) (N-N-MOD -) (COMPLEX -) (GAP -)
       (postadvbl -) (post-subcat -) (sem ?subjsem)
@@ -3471,7 +3472,7 @@
       (comp3-map ?comp-map)
       )
      -nom-n-n-dobj> 
-     (np (AGR 3s) (abbrev -) 
+     (np (AGR 3s) (abbrev -) (sort pred) (headless -)
       (var ?v1) 
       (PRO -) (N-N-MOD -) (COMPLEX -) (GAP -)
       (postadvbl -) (post-subcat -) (sem ?subjsem)
