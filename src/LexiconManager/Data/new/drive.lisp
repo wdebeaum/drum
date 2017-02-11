@@ -53,7 +53,7 @@
      )
 
     (
-     (LF-PARENT ONT::cause-to-move)
+     (LF-PARENT ONT::propel)
      (templ agent-affected-xp-templ)
      (example "The wind drove the boat to the sandbar." "This protein drives the other protein to the nucleus." "Drive the ball far out into the field.")
      (meta-data :origin mobius :entry-date 20070728 :change-date nil :comments engines :wn ("drive%2:35:01"))

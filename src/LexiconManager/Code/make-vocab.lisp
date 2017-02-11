@@ -53,6 +53,7 @@
     ;;  for verbs,  nomobjprops and nomsubjpreps  get promoted into the sense
     ;;(format t "~%senses = ~S nomobjpreps = ~S nomsubjpreps = ~S~%" senses nomobjpreps nomsubjpreps)
     (if nomobjpreps (setq senses (mapcar #'(lambda (sensespec)
+					     ;; FIXME? this gets the old syntax entry from the sense, but does nothing with it --wdebeaum
 					     (let ((synt (get-arg-value-list 'syntax sensespec)))
 					       (append sensespec (list (list 'syntax (list 'w::nomobjpreps (list* '? 'objp nomobjpreps))
 									     (list 'w::nomsubjpreps (list* '? 'subjp nomsubjpreps)))))))

@@ -13,7 +13,7 @@
      (TEMPL agent-affected-xp-templ)
      (PREFERENCE 0.96)
      )
-    ((LF-PARENT ONT::cause-to-move)
+    ((LF-PARENT ONT::propel)
      (TEMPL agent-affected-xp-templ)
      (example "he threw the ball")
      (meta-data :origin step :entry-date 20080721 :change-date nil :comments nil)

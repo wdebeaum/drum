@@ -134,34 +134,30 @@ structure out of it."
   (let (adjusted-def checked)
     ;; set lexical preference according to sense specificity
     (dolist (adef wdef)
-      (let* ((afeats (lex-entry-feats adef))
-	     (apref (lex-entry-pref adef))
-	     (alf (strip-out-lf (get-feature-values afeats 'w::lf)))
-	     (aid (lex-entry-id adef))
-	     )
-	(dolist (bdef wdef)
-	   (let* ((bfeats (lex-entry-feats bdef))
-		  (bpref (lex-entry-pref bdef))
-		  (blf (strip-out-lf (get-feature-values bfeats 'w::lf)))
-		  (bid (lex-entry-id bdef))
+      (with-slots ((apref pref) (aid id)) adef
+	(let* ((afeats (lex-entry-feats adef))
+	       (alf (strip-out-lf (get-feature-values afeats 'w::lf))))
+	  (dolist (bdef wdef)
+	    (with-slots ((bfeats feats) (bpref pref) (bid id)) bdef
+	      (let* ((bfeats (lex-entry-feats bdef))
+	             (blf (strip-out-lf (get-feature-values bfeats 'w::lf))))
+		(when (not (is-compared alf blf checked))
+		  (cond ((equal alf blf) ;; equal -- do nothing
+			)
+		      ((om::is-sublf alf blf) ;; a is a child of b
+		       (decf bpref .01)
+		       )
+		      ((om::is-sublf blf alf) ;; b is a child of a
+		       (decf apref .01)
+		       )
+		      ;; orthogonal -- do nothing
+		      (t  nil))
+		  (pushnew (list aid bid) checked :test #'equal)
+		  (pushnew adef adjusted-def)
+		  (pushnew bdef adjusted-def)
 		  )
-	     (when (not (is-compared alf blf checked))
-	       (cond ((equal alf blf) ;; equal -- do nothing
-		     )
-		   ((om::is-sublf alf blf) ;; a is a child of b
-		    (setf (lex-entry-pref bdef) (- (lex-entry-pref bdef) .01))
-		    )
-		   ((om::is-sublf blf alf) ;; b is a child of a
-		    (setf (lex-entry-pref adef) (- (lex-entry-pref adef) .01))
-		    )
-		   ;; orthogonal -- do nothing
-		   (t  nil))
-	     (pushnew (list aid bid) checked :test #'equal)
-	     (pushnew adef adjusted-def)
-	     (pushnew bdef adjusted-def)
-	     )
-	    ))
-	))
+	       )))
+	  )))
     adjusted-def)
   )
 

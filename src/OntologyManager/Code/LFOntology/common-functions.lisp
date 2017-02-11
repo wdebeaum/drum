@@ -10,7 +10,7 @@
 	(t2 (feature-list-type l2)))
     (cond 
      ((null l1) (null l2))
-     ((null l2) (null l1))
+     ((null l2) nil) ; (null l1)
      ((equal-values t1 t2)
       (and (equal-feature-value-list (feature-list-features l1) (feature-list-features l2))
 	   (equal-feature-value-list (feature-list-defaults l1) (feature-list-defaults l2)))

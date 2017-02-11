@@ -1950,6 +1950,12 @@
     (LOBJ (:parameter xp (:default (% W::NP))) ont::formal optional)
     ))
 
+(affected-scale-XP-optional-TEMPL
+   (ARGUMENTS
+    (LSUBJ (% W::NP) ONT::affected)
+    (LOBJ (:parameter xp (:default (% W::NP))) ont::scale optional)
+    ))
+
 (affected-neutral-optional-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::affected)
@@ -2502,12 +2508,12 @@
     (ARGUMENT (% W::NUMBER) ONT::FIGURE)
     ))
 
-   ;; exactly five
-     (NUMBER-OPERATOR-POST-TEMPL
-        (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::POST) (W::MASS W::COUNT))
-          (ARGUMENTS
-	   (ARGUMENT (% W::NUMBER) ONT::FIGURE)
-	   ))
+;; exactly five
+(NUMBER-OPERATOR-POST-TEMPL
+ (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::POST) (W::MASS W::COUNT))
+ (ARGUMENTS
+  (ARGUMENT (% W::NUMBER) ONT::FIGURE)
+  ))
   
   ;;;;; operators that can modifier both quanitifers (e.g., almost all) and numbers
   (QUAN-OPERATOR-TEMPL
@@ -3494,16 +3500,16 @@
     ))
 
   ;; quiet enough for all
-  (postpositive-adv-optional-xp-templ
-   (SYNTAX (W::SORT W::PRED) (W::ALLOW-DELETED-COMP +) (W::ATYPE W::postpositive) (W::ARG ?arg))
+  (post-adv-optional-xp-templ
+   (SYNTAX (W::SORT W::PRED) (W::ALLOW-DELETED-COMP +) (W::ATYPE W::post) (W::ARG ?arg))
    (ARGUMENTS
     (ARGUMENT (% (? W::argcat W::ADVBL W::ADJP)  (w::set-modifier -) (W::sort ?sort)) ONT::FIGURE)
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::STANDARD optional)
     ))
 
  ;; quiet enough to sing a song
-  (postpositive-adv-xp-templ
-   (SYNTAX (W::SORT W::PRED) (W::ALLOW-DELETED-COMP +) (W::ATYPE W::postpositive) (W::ARG ?arg))
+  (post-adv-xp-templ
+   (SYNTAX (W::SORT W::PRED) (W::ALLOW-DELETED-COMP +) (W::ATYPE W::post) (W::ARG ?arg))
    (ARGUMENTS
     (ARGUMENT (% (? W::argcat W::ADVBL W::ADJP)  (w::set-modifier -) (W::sort ?sort)) ONT::FIGURE)
     (subcat (:parameter xp (:default (% W::cp))) ONT::STANDARD)

@@ -1,7 +1,7 @@
 package TextTagger::Normalize;
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT_OK = qw($dash_re unspell_greek_letters normalize uncapitalize characterize_match score_match is_bad_match);
+@EXPORT_OK = qw($dash_re $greek_re unspell_greek_letters normalize uncapitalize characterize_match score_match is_bad_match);
 
 use Data::Dumper;
 
@@ -40,11 +40,14 @@ my %greek = qw(
   omega		ω
 );
 my $greek_alternation = join('|', keys %greek);
-my $greek_re = qr/(?<![a-z])($greek_alternation)(?![a-z])/;
+my $spelled_greek_re = qr/(?<![a-z])($greek_alternation)(?![a-z])/;
+
+# spelled or unspelled (used in gen-ncit-terms.pl)
+our $greek_re = join('|', %greek);
 
 sub unspell_greek_letters {
   my $str = shift;
-  $str =~ s/$greek_re/$greek{$&}/g;
+  $str =~ s/$spelled_greek_re/$greek{$&}/g;
   return $str;
 }
 

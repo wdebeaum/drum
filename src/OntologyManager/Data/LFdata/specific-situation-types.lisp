@@ -20,6 +20,7 @@
 	      )
  )
 
+#||  ;; I think this is a duplicate of ont::place-in-position
 (define-type ont::cause-position
     :comment "events involving causing a state of type ONT::POSITION"
     :parent ont::event-of-causation
@@ -27,7 +28,7 @@
 	     (:optional ont::affected ((? aff F::Phys-obj f::abstr-obj)))
              (:optional ont::affected1 ((? aff1 F::Phys-obj f::abstr-obj)))
 	     )
- )
+ )||#
 
 (define-type ont::retrieve
  :wordnet-sense-keys ("recover%2:40:00" "retrieve%2:40:00" "find%2:40:15" "regain%2:40:00")
@@ -2219,7 +2220,7 @@
 
 (define-type ONT::SOW-SEED
  :wordnet-sense-keys ("seed%2:35:01" "sow%2:35:02" "plant%2:35:00")
- :parent ONT::PUT
+ :parent ONT::PROPEL
  )
 
 (define-type ONT::Correlation
@@ -2334,6 +2335,11 @@
 
 (define-type ONT::dig
  :wordnet-sense-keys ("dig%2:35:01" "dig_out%2:35:00")
+ :parent ONT::cause-to-move
+ )
+
+(define-type ONT::propel
+ :wordnet-sense-keys ("throw%1:04:00" "propel%2:35:00" "throw%2:35:02")
  :parent ONT::cause-to-move
  )
 
@@ -3739,7 +3745,7 @@
  :parent ONT::event-of-action
  :sem (F::situation (F::Cause F::Agentive) (F::Time-span F::Extended))
  :arguments ((:ESSENTIAL ONT::agent (F::Phys-obj  (:required (f::origin (? org f::human f::non-human-animal)))))
-	     (:optional ONT::NEUTRAL )
+	     (:optional ONT::NEUTRAL (F::abstr-obj (f::type ont::information-function-object)))
              )
  )
 

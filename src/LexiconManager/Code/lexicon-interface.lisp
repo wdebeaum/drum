@@ -232,6 +232,7 @@ a basic word definition and no sense definition
 
 (defun generate-underspecified-prepositions-for-entry (w wdef penn-tags)
   "remove all adv entries and add an underspecified one"
+    (declare (ignore penn-tags)) ; unused? --wdebeaum
   (let ((feats `((w::gap ?gap)
 		 (w::ATYPE (? ATYPE w::PRE w::POST w::pre-vp))
 		 (w::sort w::pred)
@@ -409,7 +410,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
   )
 
 (defun convert-number-to-word (mwe)
-  (let (res converted-mwe)
+  (let (converted-mwe)
     (dolist (w mwe)
       (if (numberp w) (push (lexicalize-number w) converted-mwe)
 	(push w converted-mwe)))
@@ -600,10 +601,9 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 		 (this-lf (strip-out-lf (get-feature-values feats 'w::lf)))
 		 matching-triple
 		 )
-	    (dolist (sense-info-triple sense-info-triples)
-	      (if (setq matching-triple (found-sense this-pos this-lf sense-info-triples))
-		  (setq def (update-domain-info def (third matching-triple))))
-	      (pushnew def adjusted-def))))
+	    (if (setq matching-triple (found-sense this-pos this-lf sense-info-triples))
+		(setq def (update-domain-info def (third matching-triple))))
+	    (pushnew def adjusted-def)))
 	adjusted-def)
       ;; if sense-info-triples is NIL, we just return the entries passed in
       wdef))
@@ -618,7 +618,6 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	     (this-lf (strip-out-lf (get-feature-values feats 'w::lf)))
 	     (this-pos (lex-entry-cat def))
 	     (compat  (is-compatible-sense this-lf tagged-senses))
-	     add-more-specific-tagged-def
 	     )
 	;; if no score given give it a default 
 	(if (not (numberp this-pref)) (setq this-pref .97))
@@ -672,23 +671,24 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 
 (defun prefer-domain-senses (w wdef)
   "prefer sense-word pairs specified in om::*domain-sense-preferences*"
+    (declare (ignore w))
   (let ((wdef (remove-if #'null wdef)))
     (dolist (def wdef)
-      (let* ((feats (lex-entry-feats def))
-	     (this-pref (lex-entry-pref def))
-	     (lf-pair (get-feature-values feats 'w::lf))
-	     (this-lf (strip-out-lf lf-pair))
-	     (lex (if (consp lf-pair) (third lf-pair) lf-pair))
-	     (preferred-domain-sense (cadr (assoc lex om::*domain-sense-preferences*)))
-	     )
-	(when preferred-domain-sense
-	  (if (eq this-lf preferred-domain-sense)
-	      (setf (lex-entry-pref def) .99)
-	      ;; demote competing word senses
-	      (if (> (lex-entry-pref def) .97)
-		  (setf (lex-entry-pref def) (- (lex-entry-pref def) .01))))
-	      
-	      (pushnew def wdef)))
+      (with-slots ((this-pref pref)) def
+	(let* ((feats (lex-entry-feats def))
+	       (lf-pair (get-feature-values feats 'w::lf))
+	       (this-lf (strip-out-lf lf-pair))
+	       (lex (if (consp lf-pair) (third lf-pair) lf-pair))
+	       (preferred-domain-sense (cadr (assoc lex om::*domain-sense-preferences*)))
+	       )
+	  (when preferred-domain-sense
+	    (if (eq this-lf preferred-domain-sense)
+		(setf this-pref .99)
+		;; demote competing word senses
+		(if (> this-pref .97)
+		    (decf this-pref .01)))
+		
+		(pushnew def wdef))))
 	)
     wdef)
   )
@@ -859,11 +859,13 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	   (if (and *use-underspecified-prepositions* (eq 'w::in (base-penn-tag part-of-speech-tags)))
 	       (setq res (generate-underspecified-prepositions-for-entry w res part-of-speech-tags))))
 	  
-	  (semantics-from-penn-tag ;; catch the extra semantic tag from penn treebank annotation if it exists but we don't have another treebank filter
-	   (setq res (prefer-senses-in-entry res semantics-from-penn-tag)))
-	  ((or part-of-speech-tags)
-	   (setq res (adjust-pos-preferences res nil part-of-speech-tags)))	  
-	  (t nil))
+	  ; FIXME unreachable code, possibly a mistake? --wdebeaum
+	  ;(semantics-from-penn-tag ;; catch the extra semantic tag from penn treebank annotation if it exists but we don't have another treebank filter
+	  ; (setq res (prefer-senses-in-entry res semantics-from-penn-tag)))
+	  ;((or part-of-speech-tags)
+	  ; (setq res (adjust-pos-preferences res nil part-of-speech-tags)))	  
+	  ;(t nil)
+	  )
     res)
   )
 
@@ -885,7 +887,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	 (first-tagged-sense (car tagged-senses)) ; only one sense for ptb
 	 (trips-sense-info (get-lf w :wdef wdef))	 
 	 (retrieved-sense-info trips-sense-info)
-	 res new-wdef tagged-ont-types part-of-speech-tags domain-tagged-senses replace-vbn-adj
+	 res tagged-ont-types part-of-speech-tags domain-tagged-senses replace-vbn-adj
 	 )
     (print-debug "~%GET-WORD-DEF: TRIPS senses for ~S are ~S~% tagged senses are ~S~%" w trips-sense-info tagged-senses)
     (cond ((not wdef)
@@ -1105,6 +1107,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
     ))
 
 (defun refine-abstract-class (oldclass ont-type)
+    (declare (ignore ont-type)) ; unused? --wdebeaum
   (if (and (consp oldclass) (eq (car oldclass) 'om::?))
       'F::PHYS-OBJ
       oldclass))

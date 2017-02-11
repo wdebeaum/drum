@@ -240,6 +240,7 @@ Sets *LEXICON-FILTER-PREDICATE* to a function that returns true if the
 intersection of an entry's tags and these tags is non-empty."
   (setf *lexicon-filter-predicate*
 	#'(lambda (word pos templ entry-tags)
+	      (declare (ignore word pos templ))
 	    (intersection entry-tags tags))))
 
 ;; A system-definition file can set TRIPS::*lexicon-filter-tags* to a list
@@ -509,6 +510,7 @@ intersection of an entry's tags and these tags is non-empty."
 
 (defun gen-nom-senses (word senses)
   "This is the new gen-nom-senses -- we simply use the Verb entry, changing the POS and morph features"
+    (declare (ignore word)) ; unused? --wdebeaum
   (mapcar #'(lambda (x)
 	      `((lf-parent ,(sense-definition-lf-parent x))
 		(templ ,(sense-definition-templ x)
@@ -520,6 +522,7 @@ intersection of an entry's tags and these tags is non-empty."
 (defun gen-nomentry (word form entry)
    "This is the new method for generating nominalization - we preserve the V entry but change the
    POS and the morph features"
+    (declare (ignore form)) ; unused? --wdebeaum
   (let* ((nom-senses (if word (gen-nom-senses word (vocabulary-entry-senses entry))))
 	 (objpreps (or (find-arg (cadr (assoc 'W::morph (vocabulary-entry-wfeats entry))) :nomobjpreps)
 		       '(w::of)))
@@ -527,9 +530,10 @@ intersection of an entry's tags and these tags is non-empty."
 	 ;; the cases with idiosyncratic subject preps are verbs that do not allow "by"
 	 (subjpreps (or (find-arg (cadr (assoc 'W::morph (vocabulary-entry-wfeats entry))) :nomsubjpreps)
 			'(w::by)))
-	 (nom-lex (if (eq form :nom)
-		      word
-		      (add-suffix word "S")))
+	; unused? --wdebeaum
+	; (nom-lex (if (eq form :nom)
+	;	      word
+	;	      (add-suffix word "S")))
 	 (nom-def (if word (cons word (list 
 				       (cons 'senses (if objpreps
 							 (mapcar #'(lambda (x) (cons (list 'syntax '(w::sort w::pred)
@@ -836,6 +840,7 @@ intersection of an entry's tags and these tags is non-empty."
   entry)
 
 (defun get-figure-sem-from-type (type name)
+    (declare (ignore name)) ; unused? --wdebeaum
   (let* (;;(templdef (gethash templ-name (lexicon-db-synt-table *lexicon-data*)))
 	 (descr (get-lf-description type))
 	 (fig-arg (find-if #'(lambda (x)

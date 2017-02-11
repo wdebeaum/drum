@@ -275,7 +275,7 @@
       (LF (% time-description))
       ))
     
-    ;;  iteration: (he spends three dollars) a day
+    #||;;  iteration: (he spends three dollars) a day
     ((ADVBL (ARG ?arg) 
       (SORT BINARY-CONSTRAINT) (var *)
       (LF (% PROP (var *) (CLASS ONT::ITERATION-PERIOD) 
@@ -290,8 +290,24 @@
 	       (lf (% description (status ont::indefinite) (class ont::time-interval) (constraint (& (scale f::time-measure-scale)))))
 	       ;; exclude things like "lunch"
 	       (mass count)
-	       )))
+	       )))||#
+
+    ((ADVBL (ARG ?arg) 
+      (SORT BINARY-CONSTRAINT) (var *)
+      (LF (% PROP (var *) (CLASS ONT::ITERATION-PERIOD) 
+	     (Constraint (& (FIGURE ?arg) (GROUND ?v)))))
+      (ATYPE w::post) (focus ?v)
+      (lex ?hlex) (headcat ?hcat)
+      (SUBJVAR ?subjvar)
+      (ARGUMENT (% (? x W::VP W::S) (sem ?sss) (subjvar ?subj)))
+      (SEM ?sem))
+     -rate-advbl> .98
+     (head (np (agr 3s) (var ?v)
+	       ;;(sem ($ f::abstr-obj (f::type f::rate)))
+	       (lf (% description (status ont::indefinite) (class ont::rate))
+	      	       )))
     
+    )
     ))
 
 (parser::augment-grammar
@@ -301,10 +317,11 @@
    
     ;; rate expressions
     ;; 7 miles per hour; 7 degrees per second
-    ((np (LF (% description (var ?v) (class ont::rate) (status value) (constraint (& (repeats ?v1) (over-period ?per)))))
+    ((np (LF (% description (var ?v) (class ont::rate) (status ont::indefinite) (constraint (& (repeats ?v1) (over-period ?per)))))
             (var ?v) (case (? case sub obj)) (SORT PRED) (AGR 3s)
             (time-converted +)
-            (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::scale ont::rate-scale)))
+            (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::mobility -)
+		    (f::type ont::rate) (f::scale ont::rate-scale)))
             )
      -units-per-period> 
      (head (np (lf ?lf) (sort unit-measure) (wh -) (var ?v1)
@@ -314,10 +331,11 @@
       ))
 
     ;; $125 a share
-    ((np (LF (% description (var *) (class ont::rate) (status value) (constraint (& (repeats ?v1) (over-period ?per)))))
+    ((np (LF (% description (var *) (class ont::rate) (status ont::indefinite) (constraint (& (repeats ?v1) (over-period ?per)))))
             (var *) (case (? case sub obj)) (SORT PRED) (AGR 3s)
             (time-converted +)
-            (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::scale ont::rate-scale)))
+            (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::mobility -) 
+		    (f::type ont::rate) (f::scale ont::rate-scale)))
             )
      -units-per-period2> .98
      (head (np (lf ?lf) (sort unit-measure) (wh -) (var ?v1)
@@ -327,10 +345,11 @@
 
 
      ;; m/s = meters per second
-      ((np (LF (% description (var ?v) (class ont::rate) (status value) (constraint (& (repeats ?v1) (over-period ?per)))))
-            (var ?v) (case (? case sub obj)) (SORT PRED) (AGR 3s)
+      ((np (LF (% description (var ?v) (class ont::rate) (status indefinite) (constraint (& (repeats ?v1) (over-period ?per)))))
+            (var ?v) (case (? case sub obj)) (SORT UNIT-MEASURE) (AGR 3s)
             (time-converted +)
-            (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::scale ont::rate-scale)))
+            (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::mobility -)
+		    (f::type ont::rate) (f::scale ont::rate-scale)))
 	)
        -units-slash-time>
        (head (np (lf ?lfd) (sort unit-measure) (wh -) (var ?v1)

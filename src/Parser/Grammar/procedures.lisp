@@ -319,10 +319,13 @@
   )
 
 (defun class-cglb (args) 
- (let ((in1 (second (assoc 'w::in1 args)))
+  (let* ((in1 (second (assoc 'w::in1 args)))
         (in2 (second (assoc 'w::in2 args)))
-	(OUT (second (assoc 'w::out args))))
-   (match-vals nil out (compute-class-cglb in1 in2))))
+	(OUT (second (assoc 'w::out args)))
+	(cglb (compute-class-cglb in1 in2)))
+    (if cglb
+	(match-vals nil out cglb)
+	(values (match-vals nil out in2) .9))))
 
 (defun compute-class-CGLB (in1 in2)
   (cond
@@ -334,7 +337,6 @@
     in1)
    ((subtype 'w::sem in2 in1)
     in2)
-   (t in2)
    ))
 
 

@@ -1277,21 +1277,24 @@
 
    ;; post adverb mod of adjective
 
-   ((ADJ1 (ARG ?arg) (VAR ?v) (atype ?atype) (gap ?gap) (ARGUMENT-MAP ?argmap) 
-     (CONSTRAINT ?newc)(SUBCAT ?subcat) (SUBCAT-MAP ?reln)
+   ((ADJ1 (ARG ?arg) (VAR ?v) (atype ?atype) ;;(gap ?gap) 
+     (ARGUMENT-MAP ?argmap) 
+     (CONSTRAINT ?newc) (SUBCAT ?subcat) (SUBCAT-MAP ?reln)
      (transform ?transform) (sem ?sem)
 	     )
-     -advbl-post-adj1>
+     -advbl-post-adj1> .98
      (head (ADJ1 (LF ?lf) (SUBCAT2 -) (post-subcat -)(VAR ?v)  (atype ?atype);;(comparative -)
-		(SUBCAT ?subcat) (SUBCAT-MAP ?reln) (SUBCAT (% ?xx (var ?argv) (gap ?gap)))
+		(SUBCAT ?subcat) (SUBCAT-MAP ?reln) ;;(SUBCAT (% ?xx (var ?argv) (gap ?gap)))
 		(ARGUMENT-MAP ?argmap) (prefix -)
 		(SORT PRED)
+		;;(argument (% ?any (var ?vv) (sem ?argsem)))
 		(sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale) (F::intensity ?ints) (F::orientation ?orient)))
 		(transform ?transform)
 		(constraint ?con)
 		))
-     (advbl (ATYPE (? a POST postpositive)) (VAR ?advbv) ;(ARG ?v) ;;(SORT OPERATOR) 
-            ;(argument (% ADJ1 (sem ?sem)))
+     (advbl (ATYPE POST) (VAR ?advbv) ;(ARG ?v) ;;(SORT OPERATOR) 
+        (SEM ($ F::ABSTR-OBJ (f::type (? ont::position-reln ont::adequate)) ))
+            ;;(argument (% ?any (var ?vv) (sem ?argsem)))
             (gap -)
       )
      
@@ -1299,32 +1302,6 @@
     )
 
    
-  #|| ;; adjectives with an explicit scale, e.g., red in color, high in temperature, apples are larger in size (than oranges)
-   ((ADJ (ARG ?arg) (VAR ?v) (COMPLEX +) (LF ?lf)
-     (atype (? atp postpositive predicative-only)) (gap ?gap) (SORT PRED)
-     (comparative ?comp) (subcat ?subcat) (subcat-map ?subm) (ARGUMENT-MAP ?argmap)
-     (sem ($ F::ABSTR-OBJ (f::scale ?newscale) (F::intensity ?ints) (F::orientation ?orient)))
-          
-     ;;(LF (% PROP  (CLASS ?lf)
-     ;;(VAR ?v) (CONSTRAINT (& (?argmap ?arg) (?reln ?argv) (FUNCTN ?fn) (scale ?newscale) (intensity ?ints) (orientation ?orient)
-     ;;))
-     (transform ?transform) 
-     ;(sem ?sem)
-     )
-    -adj-pred-scale> 
-    (head (ADJ (LF ?lf) (SUBCAT2 -) (post-subcat -)(VAR ?v) (comparative ?comp)
-	       (ARGUMENT-MAP ?argmap) (prefix -)
-	       (subcat ?subcat) (subcat-map ?subm)
-	       (SORT PRED)
-	       (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale1) (F::intensity ?ints) (F::orientation ?orient)))
-	       (transform ?transform)
-	       (FUNCTN -)
-	       ))
-    (pp (ptype w::in) (var ?sc-var) (sem  ($ F::ABSTR-OBJ (f::scale ?!scale2))) (gap ?gap))
-    (class-greatest-lower-bound (in1 ?scale1) (in2 ?!scale2) (out ?newscale))
-    )||#
-
- 
    ;;  the ADJP please "difficult to please" has an ARG that is the GAP in the clause. 
     ((ADJ1 (ARG ?arg) (VAR ?v) (COMPLEX +) (atype (? atp postpositive predicative-only)) (gap -)
       (CONSTRAINT ?newc)

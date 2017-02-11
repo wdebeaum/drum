@@ -1930,25 +1930,25 @@
 ;; width
 (define-type ONT::width-scale
  :wordnet-sense-keys ("width%1:07:00" "diameter%1:07:00")
-;; :sem (F::Abstr-obj (F::Scale Ont::width))
+ :sem (F::Abstr-obj (F::Scale Ont::width-scale))
  :parent ONT::linear-d
  )
 
 ;; height
 (define-type ONT::height-scale
-;; :sem (F::Abstr-obj (F::Scale Ont::height-scale))
+    :sem (F::Abstr-obj (F::Scale Ont::height-scale))
  :parent ONT::linear-d
  )
 
 ;; depth
-(define-type ONT::depth
-;; :sem (F::Abstr-obj (F::Scale Ont::depth))
+(define-type ONT::depth-scale
+    :sem (F::Abstr-obj (F::Scale Ont::depth-scale))
  :parent ONT::linear-d
  )
 
 ;; thickness
 (define-type ONT::thickness
-;; :sem (F::Abstr-obj (F::Scale Ont::thickness))
+ :sem (F::Abstr-obj (F::Scale Ont::thickness))
  :parent ONT::linear-d
  )
 

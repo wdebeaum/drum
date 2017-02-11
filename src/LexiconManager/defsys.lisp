@@ -1,7 +1,7 @@
 ;;;;
 ;;;; defsys.lisp for LexiconManager
 ;;;;
-;;;; $Id: defsys.lisp,v 1.25 2015/08/13 19:18:29 wdebeaum Exp $
+;;;; $Id: defsys.lisp,v 1.26 2017/02/10 19:03:21 wdebeaum Exp $
 ;;;;
 
 (unless (find-package :trips)
@@ -92,11 +92,6 @@
     (setf (mk::component-depends-on system)
 	  (append (mk::component-depends-on system) (list :wordfinder)))))
 
-(defmethod mk:operate-on-system :after ((name (eql :lxm)) (operation (eql :load)) &rest args)
-  (format *trace-output* "~&~%;;; lxm: initializing lexicon~%~%")
-  (initialize-lexicon)
-)
-
 (defun initialize-lexicon (&key (kr-in-lexicon *kr-in-lexicon*)
 			   (kr-boost *kr-sense-boost*)
 			   (no-kr-probability *no-kr-probability*)
@@ -144,6 +139,12 @@ via nate's transforms."
      ;; Or all entries in one file (if  such a file exists)
      (let ((*package* (find-package :lxm)))
        (load #!TRIPS"src;LexiconManager;Data/new/all-lex.lisp")))))
+
+(defmethod mk:operate-on-system :after ((name (eql :lxm)) (operation (eql :load)) &rest args)
+    (declare (ignore args))
+  (format *trace-output* "~&~%;;; lxm: initializing lexicon~%~%")
+  (initialize-lexicon)
+)
 
 (defun load-lexicon ()
   (mk:load-system :lxm)

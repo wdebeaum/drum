@@ -154,10 +154,6 @@ apply first.")
 		 :ontology-code-kr
 		 ))
 
-(defmethod mk:operate-on-system :after ((name (eql :om)) (operation (eql :load)) &rest args)
-  (format *trace-output* "~&~%;;; om: initializing ontology~%~%")
-  (initialize-ontology))
-
 (defun initialize-ontology (&key (kr t) (lf t))
   "loads the data into the ontologies *lf-ontology* and *kr-ontology*"      
   (when lf
@@ -178,6 +174,11 @@ apply first.")
       ;; add the base hierarchy to the KR
       (add-kr-ontology-to-hierarchy *kr-ontology* type-hierarchy)
       )))
+
+(defmethod mk:operate-on-system :after ((name (eql :om)) (operation (eql :load)) &rest args)
+    (declare (ignore args))
+  (format *trace-output* "~&~%;;; om: initializing ontology~%~%")
+  (initialize-ontology))
 
 (defun load-scenario (scenario)
   "Loads the ontology additions for the given SCENARIO (name).

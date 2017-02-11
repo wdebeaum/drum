@@ -7,7 +7,7 @@
 
 use lib "./Perl";
 use TextTagger::Util qw(lisp_intern);
-use TextTagger::Normalize qw(unspell_greek_letters normalize uncapitalize $dash_re);
+use TextTagger::Normalize qw(unspell_greek_letters normalize uncapitalize $dash_re $greek_re);
 use File::Path qw(make_path);
 
 use strict vars;
@@ -65,7 +65,7 @@ close FLAT
 # and remove the "(wt) Allele" part of the name.
 #
 
-for my $id (%id_to_name) {
+for my $id (keys %id_to_name) {
   my $name = $id_to_name{$id};
   if ($name =~ /(?:$dash_re| )\w+ allele$/ and exists($id_to_parents{$id})) {
     my $prefix = $`;
@@ -96,6 +96,53 @@ for my $code (keys %id_to_name) {
     $synonym = uncapitalize_each_word($synonym);
     next if ($synonym =~ /^\Q$concept_name\E(?:(?: wt)? allele)?$/);
     add_entries($synonym, $code, $concept_name, 'synonym');
+  }
+}
+
+#
+# Add entries for "FOO" derived from "FOO gene" or "FOO protein" where "FOO"
+# looks like an abbreviation and doesn't already have an entry.
+#
+
+# add entries first to this table, so we don't mistake entries we added earlier
+# this way for entries already in the original table
+my %new_n2un2e = ();
+
+for my $normalized (keys %normalized_to_unnormalized_to_entries) {
+  if ($normalized =~ / (gene|protein)$/) {
+    my $unnormalized_to_entries =
+      $normalized_to_unnormalized_to_entries{$normalized};
+    for my $unnormalized (keys %{$unnormalized_to_entries}) {
+      my $prefix = $unnormalized;
+      $prefix =~ s/ (gene|protein)$//i;
+      if ($unnormalized =~ / ([Gg]ene|[Pp]rotein)$/ and # no all-caps PROTEIN
+	  $prefix =~ /^([0-9A-Z]|$dash_re|$greek_re)+$/) {
+	my $normalized_prefix = normalize($prefix);
+	unless (
+	  exists($normalized_to_unnormalized_to_entries{$normalized_prefix}) and
+	  exists($normalized_to_unnormalized_to_entries{$normalized_prefix}{$prefix})
+	) {
+	  my $entries = ($new_n2un2e{$normalized_prefix}{$prefix} ||= []);
+	  my $i = 0;
+	  my @old_ids = grep { ($i++) % 3 == 0 } @$entries;
+	  my $new_entries = $unnormalized_to_entries->{$unnormalized};
+	  for (my $j = 0; $j < @$new_entries; $j += 3) {
+	    my $new_id = $new_entries->[$j];
+	    push @$entries, @{$new_entries}[$j..($j+2)]
+	      unless (grep { $_ eq $new_id } @old_ids);
+	  }
+	}
+      }
+    }
+  }
+}
+
+# add entries from temporary table to final table
+for my $n (keys %new_n2un2e) {
+  my $un2e = ($normalized_to_unnormalized_to_entries{$n} ||= {});
+  my $new_un2e = $new_n2un2e{$n};
+  for my $un (keys %{$new_un2e}) {
+    $un2e->{$un} = $new_un2e->{$un};
   }
 }
 

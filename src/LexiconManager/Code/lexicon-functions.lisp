@@ -591,7 +591,7 @@ Historical note: the only reason we need to do this is because not ALL lfs get p
 
 (defun find-categories-in-wdef (poslist wdef)
    (remove-if #'null (mapcar (lambda (d)
-			       (let* ((feats (lex-entry-feats d))
+			       (let* (; (feats (lex-entry-feats d)) ; unused? --wdebeaum
 				      (this-pos (lex-entry-cat d)))
 				(find this-pos poslist)))
 			     wdef))

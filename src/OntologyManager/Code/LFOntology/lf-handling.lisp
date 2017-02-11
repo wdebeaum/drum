@@ -404,6 +404,7 @@ allowed."
   (multiple-value-bind
       (parent form)
       (get-lf-parent-and-form lf form-operator)
+      (declare (ignore parent))
     ;;      (or form lf)      
     (if package
 	(intern (symbol-name form) package)
@@ -416,6 +417,7 @@ allowed."
   (multiple-value-bind
       (parent form)
       (get-lf-parent-and-form lf form-operator)
+      (declare (ignore form))
     parent
     )
   )

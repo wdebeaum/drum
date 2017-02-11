@@ -393,6 +393,7 @@
 (defun adjust-score-if-participle-adj (word score trips-sense-list)
 "reduce score if this adjective has the same form as a verb participle, e.g. placed, made
  to reduce competition with derivational grammar rules for e.g. reduced relative clauses"
+   (declare (ignore word))
  (when  (find 'w::v trips-sense-list :key #'second)
    (setq score .96)) ; only use adj if verb senses fail
   score)
@@ -419,13 +420,14 @@
     
 (defun make-unknown-word-entry (word pos score feats wid lflist trips-sense-list penn-tag tagged-ont-types domain-info)
   "make an underspecified lexical entry for the unknown word"
+    (declare (ignore tagged-ont-types))
   (print-debug  "~%MAKE-UNKNOWN-WORD-ENTRY: generating word entry for ~S with ~S and ~S ~%" word pos lflist)
   (let* ((lfform (if (listp word) (make-into-symbol word) word))
 	(lf (car lflist))
 	(pos (if (listp pos) (car pos) pos))
 	(penn-tag (reconcile-penntags-and-pos penn-tag pos))
 	(syntax-from-penn-tag (penn-tag-to-trips-syntax penn-tag))
-	 syntax sem maps roles wagr wmass res replica-entry fulllf)
+	 syntax sem maps roles wagr wmass res replica-entry)
      
     ;; assign underspecified syntactic and semantic features depending on part of speech
      (case pos

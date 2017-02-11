@@ -97,10 +97,13 @@
     (if verbose
 	(format t "wordfinder: loading WordNet data: ~A~%" *wordnet-basepath*))
     ;; Initialize it (from wordnet/wordnet-to-trips.lisp)
+    ;; (CMUCL warns that this function is undefined at this point, but it's OK
+    ;; because it will be defined by the time this function is called.)
     (setup-wordnet *wordnet-basepath*)))
 
 ;; Else !*use-wordfinder*
 (defun init-wordfinder (&key (verbose t))
+    (declare (ignore verbose))
   nil)
 )
 

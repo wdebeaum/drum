@@ -54,12 +54,13 @@
      (example "pan the camera down" "pan down the camera")
      (TEMPL PARTICLE-TEMPL)
      )
-    ((LF-PARENT ONT::SCALE-RELATION)
+    ;;  this is definitely not a binary SCALE-RELATION -- thinking just using DIRECTION sense for now
+    #||((LF-PARENT ONT::SCALE-RELATION)
      (TEMPL BINARY-CONSTRAINT-S-or-NP-TEMPL)
      (example "his weight / the temperature is down")
      (SYNTAX (W::ALLOW-DELETED-COMP +) (w::degree-adv +))
      (meta-data :origin cardiac :entry-date 20080428 :change-date nil :comments nil)
-     )
+     )||#
     )
    )
 ))
