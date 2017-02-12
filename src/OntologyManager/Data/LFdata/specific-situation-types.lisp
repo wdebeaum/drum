@@ -2218,11 +2218,6 @@
  :parent ONT::PUT
  )
 
-(define-type ONT::SOW-SEED
- :wordnet-sense-keys ("seed%2:35:01" "sow%2:35:02" "plant%2:35:00")
- :parent ONT::PROPEL
- )
-
 (define-type ONT::Correlation
  :wordnet-sense-keys ("indicate%2:32:02" "argue%2:32:01" "imply%2:32:01" "entail%2:42:01" "imply%2:42:00" "mean%2:42:00" "affirm%2:31:00" "read%2:32:02"  "underlie%2:42:00")
  :parent ONT::event-of-state
@@ -2343,6 +2338,10 @@
  :parent ONT::cause-to-move
  )
 
+(define-type ONT::SOW-SEED
+ :wordnet-sense-keys ("seed%2:35:01" "sow%2:35:02" "plant%2:35:00")
+ :parent ONT::PROPEL
+ )
 
 (define-type ONT::Cause-Action
  :parent ONT::CAUSE-effect

@@ -702,13 +702,15 @@
 	(LSUBJ (% W::NP) ONT::AGENT)
 	(LOBJ (:parameter xp (:default (% W::NP))) ONT::PATH)
 	))
-      
+
+      #| ; there is another AGENT-SOURCE-affected-OPTIONAL-TEMPL further down
       (AGENT-SOURCE-affected-OPTIONAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::AGENT)
 	(LOBJ (% W::NP) ONT::SOURCE)
 	(LCOMP (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::affected OPTIONAL)
 	))
+      |#
 
       (AGENT-AFFECTED-EFFECT-OPTIONAL-TEMPL
        (ARGUMENTS
