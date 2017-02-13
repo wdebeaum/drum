@@ -505,8 +505,9 @@
 
 
 (defun normalize (x)
-  "reduces a number to two decimal point precision"
-  (coerce (/ (round x .0001) 10000) 'short-float))
+  x)
+#||  "reduces a number to two decimal point precision"
+  (coerce (/ (round x .0001) 10000) 'short-float))||#
 
 (defvar *wn-wsd-enabled* nil)   ;; turns on WSD to WN sense
 

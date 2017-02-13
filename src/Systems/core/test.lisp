@@ -2,7 +2,7 @@
 ;;;; File: Systems/core/test.lisp
 ;;;; Creator: George Ferguson
 ;;;; Created: Thu Jul 12 15:48:37 2007
-;;;; Time-stamp: <Sat Dec 17 11:25:46 CST 2016 lgalescu>
+;;;; Time-stamp: <Fri Feb  3 09:40:00 CST 2017 lgalescu>
 ;;;;
 ;;;; Based on Test/test-socket.lisp from 14 Jun 1999
 ;;;;
@@ -247,7 +247,8 @@ then invoke TEST-ALL to test all its utterances."
   ;; Send start-conversation messages
   (format t "~%Starting conversation~%")
   (COMM:send 'test
-   '(broadcast :content (tell :content (start-conversation))))
+	     '(broadcast :content (tell :content (start-conversation))))
+  (COMM::send 'test `(TELL :content (component-status :who TEST :what (OK))))
   ;; Wait to print listener prompt
   (sleep 2)
   )
