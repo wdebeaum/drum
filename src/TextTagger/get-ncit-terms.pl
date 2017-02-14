@@ -25,11 +25,12 @@ sub uncapitalize_each_word {
 
 sub add_entries {
   my ($term, $code, $concept_name, $status) = @_;
+  $code =~ s/^C//;
   push @{$normalized_to_unnormalized_to_entries{normalize($term)}{$term}},
-      "NCIT:$code", $concept_name, $status;
+       [$code, $concept_name, $status];
   my $greek = unspell_greek_letters($term);
   push @{$normalized_to_unnormalized_to_entries{normalize($greek)}{$greek}},
-      "NCIT:$code", $concept_name, $status
+       [$code, $concept_name, $status]
     if ($greek ne $term);
 }
 
@@ -123,12 +124,11 @@ for my $normalized (keys %normalized_to_unnormalized_to_entries) {
 	  exists($normalized_to_unnormalized_to_entries{$normalized_prefix}{$prefix})
 	) {
 	  my $entries = ($new_n2un2e{$normalized_prefix}{$prefix} ||= []);
-	  my $i = 0;
-	  my @old_ids = grep { ($i++) % 3 == 0 } @$entries;
+	  my @old_ids = map { $_->[0] } @$entries;
 	  my $new_entries = $unnormalized_to_entries->{$unnormalized};
-	  for (my $j = 0; $j < @$new_entries; $j += 3) {
-	    my $new_id = $new_entries->[$j];
-	    push @$entries, @{$new_entries}[$j..($j+2)]
+	  for my $new_entry (@$new_entries) {
+	    my $new_id = $new_entry->[0];
+	    push @$entries, $new_entry
 	      unless (grep { $_ eq $new_id } @old_ids);
 	  }
 	}
@@ -159,7 +159,11 @@ for my $normalized (sort keys %normalized_to_unnormalized_to_entries) {
     } else {
       print "\t,";
     }
-    print join("\t", '', $unnormalized, @{$normalized_to_unnormalized_to_entries{$normalized}{$unnormalized}});
+    print join("\t", '', $unnormalized,
+      map { ("NCIT:C$_->[0]", $_->[1], $_->[2]) } # flatten and add NCIT:C pref.
+      sort { $a->[0] <=> $b->[0] } # sort by (numeric part of) ID
+      @{$normalized_to_unnormalized_to_entries{$normalized}{$unnormalized}}
+    );
   }
   print "\n";
 }

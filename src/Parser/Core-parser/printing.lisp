@@ -3,7 +3,8 @@
 ;;;
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
-;;; Time-stamp: <Tue Nov 29 14:11:44 EST 2016 jallen>
+
+;;; Time-stamp: <Tue Feb  7 13:36:58 EST 2017 jallen>
 
 (in-package "PARSER")
 
@@ -1924,6 +1925,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	 ((ont::degree-modifier) :degree)
 	 )
 	(ont::situation-root
+	 ((ont::goal-reln) :result)
 	 ((ont::reason ont::purpose) :reason)
 	 ((ont::therefore) :result)
 	 ((ont::extent-predicate) :extent)

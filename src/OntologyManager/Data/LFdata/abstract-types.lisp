@@ -201,6 +201,13 @@
              )
  )
 
+(define-type ONT::column-formation
+ :wordnet-sense-keys ("pile%1:14:00" "column%1:14:00" "column%1:25:02")
+ :parent ONT::formation
+ :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj))  ; to distinguish between steps as steps in a plan and steps in a staircase
+             )
+ )
+
 ;; crowd, audience
 (define-type ont::social-group
  :wordnet-sense-keys ("social_group%1:14:00")

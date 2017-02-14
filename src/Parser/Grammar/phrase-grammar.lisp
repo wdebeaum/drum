@@ -1236,6 +1236,7 @@
     ;; adjectives that map to predicates with subcats, e.g.,  close to avon
     ;; The resulting adjective phrase is marked as predicative only, because really it cannot be used otherwise
     ;; ?? the afraid of dogs man ???
+    ;; subcat is not passed up, so no "apples are larger than pears than oranges"
      ((ADJ1 (ARG ?arg) (VAR ?v) (COMPLEX +) (atype (? atp postpositive predicative-only)) (gap ?gap)
       	     (CONSTRAINT ?newc) (ARGUMENT-MAP ?argmap)
 	     (transform ?transform) (sem ?sem)
@@ -1276,7 +1277,8 @@
     )
 
    ;; post adverb mod of adjective
-
+   ;; apples are larger on the outside than pears
+   ;; apples are larger than pears on the outside
    ((ADJ1 (ARG ?arg) (VAR ?v) (atype ?atype) ;;(gap ?gap) 
      (ARGUMENT-MAP ?argmap) 
      (CONSTRAINT ?newc) (SUBCAT ?subcat) (SUBCAT-MAP ?reln)
@@ -1293,7 +1295,7 @@
 		(constraint ?con)
 		))
      (advbl (ATYPE POST) (VAR ?advbv) ;(ARG ?v) ;;(SORT OPERATOR) 
-        (SEM ($ F::ABSTR-OBJ (f::type (? ont::position-reln ont::adequate)) ))
+        (SEM ($ F::ABSTR-OBJ (f::type (? ont::position-reln ont::adequate)) ))  ; e.g. on the outside, enough
             ;;(argument (% ?any (var ?vv) (sem ?argsem)))
             (gap -)
       )
@@ -1770,7 +1772,7 @@
 (parser::augment-grammar
   '((headfeatures
      (N1 var arg lex headcat transform agr mass case sem quantity indef-only refl abbrev nomobjpreps)
-     (ADJ1 arg  lex headcat transform argument subcat allow-deleted-comp subcat-map constraint))
+     (ADJ1 arg  lex headcat transform argument subcat allow-deleted-comp subcat-map)); constraint))
 
      ;; adjectives with an explicit scale, e.g., red in color, high in temperature, apples are larger in size (than oranges)
    ((ADJ1 (ARG ?arg) (VAR ?v) (COMPLEX +) (LF ?lf)
@@ -1797,6 +1799,30 @@
     (class-greatest-lower-bound (in1 ?scale1) (in2 ?!scale2) (out ?newscale))
     )
 
+   ;; adjectives with a standard, e.g., He is tall for a midget.
+   ((ADJ1 (ARG ?arg) (VAR ?v) (COMPLEX +) (LF ?lf)
+     (atype (? atp postpositive predicative-only)) (gap ?gap) (SORT PRED)
+     (comparative -) (ARGUMENT-MAP ?argmap) (constraint ?newcon)
+     ;(sem ($ F::ABSTR-OBJ (f::scale ?newscale) (F::intensity ?ints) (F::orientation ?orient)))
+     (subcat -) (subcat-map -)
+     (transform ?transform) 
+     (sem ?sem)
+     )
+    -adj-standard> 
+    (head (ADJ1 (LF ?lf) (SUBCAT2 -) (post-subcat -)(VAR ?v) (comparative -) ;(comparative ?comp)
+		(ARGUMENT-MAP ?argmap) (prefix -)
+		(ARGUMENT (% ?x (sem ?argsem) (lex ?arglex)))
+	       ;(subcat ?subcat) (subcat-map ?subm)
+	       (SORT PRED) (constraint ?con)
+	       (sem ?sem) ;(sem ($ F::ABSTR-OBJ (f::scale ?scale1) (F::intensity ?ints) (F::orientation ?orient)))
+	       (transform ?transform)
+	       (FUNCTN -)
+	       ))
+    (pp (ptype w::for) (var ?!pp-var) (sem ?argsem) (gap ?gap))
+    (append-conjuncts (conj1 ?con) (conj2 (& (standard ?!pp-var))) (new ?newcon))
+    )
+
+   
     ((N1 (sort pred) (var ?v) (class ?lf) (qual -) (COMPLEX +)
       (restr (& (?smap ?v1) (?amap ?v2)))
       (subcat -) (argument -)
@@ -2586,7 +2612,7 @@
 				    
 	     (Sem ?sem)))
       (transform ?transform))
-     -adj-number-noun> .97    ;; this is very rare 
+     -adj-number-noun> .98    ;; this is very rare 
      (NUMBER  (val ?sz) (VAR ?nv) (restr -))
      (Gt (arg1 ?sz) (arg2 0))   ;; negative numbers don't work as cardinailty adjectives!
      (head (N (VAR ?v) (LF ?c) (Mass count) (sort PRED)
@@ -2608,7 +2634,7 @@
 				    (CONSTRAINT ?constr)))))
 	     (Sem ?sem)))					
       (transform ?transform))
-     -adj-number-unit-modifier> .97
+     -adj-number-unit-modifier> .98
      (NUMBER  (val ?sz) (VAR ?nv) (restr -))
      (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
 	       (KIND -) ;;(agr 3s)   we allow either 61 year old or 61 years old

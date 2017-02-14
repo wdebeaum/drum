@@ -3358,6 +3358,7 @@
  :arguments ((:REQUIRED ONT::Agent  ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
              (:REQUIRED ONT::Formal ((? thm F::phys-obj f::abstr-obj f::situation)))
 	     (:OPTIONAL ONT::Result ((? res F::phys-obj f::abstr-obj)))
+	     (:OPTIONAL ONT::AFFECTED-RESULT ((? res F::phys-obj f::abstr-obj)))
 ;	     (:OPTIONAL ONT::Content ((? ct F::phys-obj f::abstr-obj f::situation f::time))) ;; sort by time, price, size, color, etc.
              )
  )
