@@ -1,6 +1,6 @@
 # Log.pm
 #
-# Time-stamp: <Fri Feb  3 14:59:32 CST 2017 lgalescu>
+# Time-stamp: <Tue Feb 14 11:38:14 CST 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 29 Apr 2016
 #
@@ -105,7 +105,7 @@ __END__
 
 =head1 NAME
 
-Log::Basic - a few basic logging utilities
+util::Log - a few basic logging utilities
 
 =head1 VERSION
 
@@ -113,15 +113,15 @@ version 1.1
 
 =head1 SYNOPSIS
 
-  use Log;
-  $Log::DebugLevel = 3;
+  use util::Log;
+  $util::Log::DebugLevel = 3;
   INFO "Nice day, today!";
   WARN "It may be raining on %s!", "Tuesday";
   DEBUG 2, "It will be raining for %d days", 3; # will print
   DEBUG 4, "Expected rain amount: %.2f inches", 2.09; # will not print
   ERROR "You can't take the car because you don't own one!";
   {
-    local $Log::Quiet = 1;
+    local $util::Log::Quiet = 1;
     DEBUG 1, "Be sure to take your umbrella!"; # will not print
   }
   DEBUG 1, "Umbrella not found!";
@@ -133,29 +133,33 @@ This logger uses the following (admittedly, idiosyncratic) conventions:
 
 =over
 
-=item 1. C<INFO> and C<FATAL> messages are always printed.
+=item 1. B<INFO> and B<FATAL> messages are always printed.
 
-=item 2. Setting C<$Log::Quiet> to C<1> disables all C<WARN>, C<DEBUG> 
-and C<ERROR> messages.
+=item 2. Setting B<$util::Log::Quiet> to C<1> disables all B<WARN>, B<DEBUG> 
+and B<ERROR> messages.
 
-=item 3. C<DEBUG> messages include a level that controls whether they should 
-be printed. If that level is lower or equal to C<$Log::DebugLevel>, 
-the message is printed (unless overriden by C<$Log::Quiet>).
+=item 3. B<DEBUG> messages include a level that controls whether they should 
+be printed. If that level is lower or equal to B<$util::Log::DebugLevel>, 
+the message is printed (unless overridden by B<$util::Log::Quiet>).
 
 =back
 
 Also, as can be seen in the examples above, this logger's functions can use 
-C<sprintf> formatting.
+B<sprintf> formatting.
 
-All logging messages are printed to C<STDERR>.
+All logging messages are printed to B<stderr>.
 
-All logging messages except for C<INFO> may print the file and line that 
-generated the message. You can turn this off by setting C<$Log::CallerInfo> to 
-C<1> (default is C<0>). 
+All logging messages except for B<INFO> may print the file and line that 
+generated the message. You can turn this off by setting 
+B<$util::Log::CallerInfo> to C<1> (default is C<0>).
 
 =head1 DEPENDENCIES
 
 None.
+
+=head1 SEE ALSO
+
+L<Carp>
 
 =head1 BUGS AND LIMITATIONS
 

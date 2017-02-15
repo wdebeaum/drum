@@ -3,7 +3,7 @@
 <!-- DTD schema for the EKB
 
 Author: Lucian Galescu <lgalescu@ihmc.us> 03/04/2016
-$Id: ekb.dtd,v 1.12 2016/06/12 16:26:41 lgalescu Exp $
+$Id: ekb.dtd,v 1.13 2017/02/14 23:11:34 lgalescu Exp $
 
 When the EKB is used for annotation, textual elements must be present (eg, <input>, <text>, @start, @end, @uttnum, @paragraph). 
 
@@ -30,7 +30,10 @@ ISO 8601, regular or extended.
 -->
 <!ENTITY % filepath "CDATA">
 
-<!-- Section types (fixed vocab) -->
+<!-- Document type (fixed vocab) -->
+<!ENTITY % doctype "(text|article)">
+
+<!-- Section type (fixed vocab) -->
 <!ENTITY % sectype "(title|abstract|introduction|background|methods|results|discussion|conclusion)">
 
 <!-- A type in the TRIPS ontology (uses 'ONT::' prefix) -->
@@ -80,6 +83,8 @@ Structural definition of the EKB data and metadata.
 
 <!-- 2.2 Textual input -->
 <!ELEMENT input (paragraphs,sentences)>
+<!ATTLIST input
+  type %doctype; #IMPLIED>
 
 <!-- One or more input documents
 

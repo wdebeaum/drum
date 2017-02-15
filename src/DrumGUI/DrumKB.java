@@ -1,7 +1,7 @@
 /*
  * DrumKB.java
  *
- * $Id: DrumKB.java,v 1.27 2017/01/11 06:28:58 lgalescu Exp $
+ * $Id: DrumKB.java,v 1.28 2017/02/14 23:11:33 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  9 May 2015
  */
@@ -200,6 +200,11 @@ public class DrumKB {
     Document ekb;
 
     /**
+     * The document type (currently: "text" or "article").
+     */
+    String docType;
+
+    /**
      * A flag signifying that the {@link #ekb} needs to be re-made.
      */
     private boolean _ekb_needs_update;
@@ -230,6 +235,7 @@ public class DrumKB {
         ekbFolder = null;
         _ekb_needs_update = false;
         completionStatus = false;
+        docType = "text";
         paragraphs = new ArrayList<Paragraph>();
         sentences = new ArrayList<Sentence>();
         extractions = new ArrayList<Extraction>();
@@ -246,6 +252,7 @@ public class DrumKB {
         ekbFolder = null;
         _ekb_needs_update = false;
         completionStatus = false;
+        docType = "text";
         paragraphs.clear();
         sentences.clear();
         extractions.clear();
@@ -282,6 +289,22 @@ public class DrumKB {
     }
 
     /**
+     * @return the docType
+     */
+    protected String getDocType() {
+        return docType;
+    }
+
+    /**
+     * @param docType
+     *            the docType to set
+     */
+    protected void setDocType(String docType) {
+        this.docType = docType;
+        _ekb_needs_update = true;
+    }
+
+    /**
      * Generates a timestamp recording the time when this EKB was created. The format for the timestamp is:
      * {@literal "yyyyMMdd'T'HHmmss"}.
      * 
@@ -303,6 +326,7 @@ public class DrumKB {
      */
     protected void setCompletionStatus(boolean completionStatus) {
         this.completionStatus = completionStatus;
+        _ekb_needs_update = true;
     }
 
     /**
@@ -730,22 +754,26 @@ public class DrumKB {
      * @throws DOMException
      */
     private Element makeInputElement(Document doc) throws DOMException {
-        Element result = doc.createElement("input");
+        Element input = doc.createElement("input");
+        // @id
+        Attr typeAttr = doc.createAttribute("type");
+        typeAttr.setValue(docType);
+        input.setAttributeNode(typeAttr);
         // paragraphs
         Element parasElement = doc.createElement("paragraphs");
         for (Paragraph p : paragraphs) {
             Element pElement = makeParagraphElement(p, doc);
             parasElement.appendChild(pElement);
         }
-        result.appendChild(parasElement);
+        input.appendChild(parasElement);
         // utterances
         Element sentsElem = doc.createElement("sentences");
         for (Sentence s : sentences) {
             Element sElement = makeSentenceElement(s, doc);
             sentsElem.appendChild(sElement);
         }
-        result.appendChild(sentsElem);
-        return result;
+        input.appendChild(sentsElem);
+        return input;
     }
 
     /**

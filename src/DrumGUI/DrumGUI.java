@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.67 2017/01/12 17:57:12 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.68 2017/02/14 23:11:33 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -1026,6 +1026,7 @@ public class DrumGUI extends StandardTripsModule {
         // init the EKB
         kb.init();
         kb.setID(pmcid);
+        kb.setDocType("article");
         if (saveto != null) {
             if (savetoFolder != null) {
                 Debug.debug("Setting EKB folder to: " + saveto);
