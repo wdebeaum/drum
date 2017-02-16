@@ -7,7 +7,7 @@
    (W::bowl
    (SENSES
     ((LF-PARENT ONT::tableware)
-     (TEMPL pred-subcat-contents-templ)
+     
      (example "a bowl of soup")
      (meta-data :origin calo-ontology :entry-date 20060630 :change-date nil :wn ("bowl%1:06:00" "bowl%1:06:01") :comment nil)
      )

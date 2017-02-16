@@ -1308,6 +1308,7 @@
 ;;; These are the location that relate to well-formed physical objects - e.g. the top of smth
 (define-type ONT::object-dependent-location
     :wordnet-sense-keys ("region%1:15:00")
+    :COMMENT "these are locations defined relative to another object"
     :parent ONT::LOCATION
     :arguments ((:OPTIONAL ONT::FIGURE (F::PHYS-OBJ (F::Form F::object)))
 		)
@@ -1320,6 +1321,11 @@
 
 (define-type ONT::BOTTOM-LOCATION
     :wordnet-sense-keys ("bottom%1:15:00" "bottom%1:15:01")
+    :parent ONT::object-dependent-location
+    )
+
+(define-type ONT::END-LOCATION
+    :wordnet-sense-keys ("end%1:15:00" "end%1:15:02")
     :parent ONT::object-dependent-location
     )
 

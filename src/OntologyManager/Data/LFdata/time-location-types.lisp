@@ -56,8 +56,8 @@
   )
 
 (define-type ont::contain-reln
-    :comment "Inverse of IN-LOC"
-    :parent ont::pos-as-containment-reln
+    :comment "a kind of Inverse of IN-LOC, but can't be used as a result location"
+    :parent ont::predicate
     :arguments ((:ESSENTIAL ONT::FIGURE ((? val f::phys-obj) (f::intentional -)
 					 (f::container +)
 				   )))
@@ -527,7 +527,7 @@
 (define-type ont::dir-in-terms-of-obj
  :parent ont::direction-reln
  :arguments (;(:ESSENTIAL ONT::OF (F::situation (F::type ont::motion)))
-	     (:ESSENTIAL ONT::FIGURE (F::situation (F::type ont::motion)))
+	     (:ESSENTIAL ONT::FIGURE (F::phys-obj (F::mobility ont::movable)))
 	     )
  )
 

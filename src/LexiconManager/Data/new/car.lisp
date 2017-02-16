@@ -13,7 +13,7 @@
      )
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("car%1:06:01"))
      (LF-PARENT ONT::BOXCAR)
-     (TEMPL pred-subcat-contents-templ)
+     
      (PREFERENCE 0.98)
      )
     )

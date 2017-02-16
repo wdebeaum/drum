@@ -3352,7 +3352,7 @@
 
 ;; for configure, arrange X (into Y) e.g. he arranged them into groups of three
 (define-type ONT::arranging
- :wordnet-sense-keys ("set_up%2:35:00" "arrange%2:35:00" "reorient%2:30:00" "put%2:35:05" "arrangement%1:09:00" "organization%1:09:00" "organisation%1:09:00" "system%1:09:02" "put_aside%2:35:00" "address%2:32:02" "hairdressing%1:04:00")
+ :wordnet-sense-keys ("set_up%2:35:00" "arrange%2:35:00" "reorient%2:30:00" "put%2:35:05" "arrangement%1:09:00" "organization%1:09:00" "organisation%1:09:00" "system%1:09:02" "put_aside%2:35:00" "address%2:32:02" "hairdressing%1:04:00" "alternate%2:30:01")
  :parent ONT::control-manage
  :sem (F::SITUATION (F::Cause F::agentive) (F::Trajectory -))
  :arguments ((:REQUIRED ONT::Agent  ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))

@@ -18,7 +18,7 @@
    )
 ))
 
-(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+(define-words :pos W::adj :templ postpositive-ADJ-TEMPL
  :tags (:base500)
  :words (
   (W::LEFT
@@ -31,7 +31,7 @@
    )
 ))
 
-(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+(define-words :pos W::adj :templ Central-ADJ-TEMPL
  :words (
   ((W::LEFT W::OVER)
    (SENSES

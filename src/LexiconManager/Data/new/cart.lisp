@@ -8,7 +8,7 @@
    (wordfeats (W::MORPH (:forms (-S-3P))))
    (SENSES
     ((LF-PARENT ONT::vehicle-container)
-     (TEMPL pred-subcat-contents-templ)
+     
      (meta-data :origin fruit-carts :entry-date 20041103 :change-date nil :comments nil)
      (example "put the banana in the cart")
      )

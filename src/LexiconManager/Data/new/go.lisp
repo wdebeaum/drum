@@ -114,7 +114,7 @@
      )
     ))
   ))
-
+#||  I think all of these are compositional
 (define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
  :words (
   ((W::go W::on)
@@ -147,6 +147,7 @@
     )
    )
 ))
+||#
 
 #||(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
  :words (
