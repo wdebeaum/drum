@@ -804,7 +804,7 @@
  )
 
 (define-type ONT::PUSH
- :wordnet-sense-keys ("poke%2:35:01" "push%2:38:00" "force%2:38:00" "thrust%2:38:00" "thrust%2:42:01")
+ :wordnet-sense-keys ("poke%2:35:01" "push%2:38:00" "force%2:38:00" "thrust%2:38:00" "thrust%2:42:01" "wedge%2:35:00")
   :parent ONT::apply-force
  )
 
@@ -824,7 +824,7 @@
  )
 
 (define-type ONT::squeeze
- :wordnet-sense-keys ("squeeze%2:35:00")
+ :wordnet-sense-keys ("squeeze%2:35:00" "squeeze%2:35:05")
  :parent ONT::PUSH
  )
 
@@ -2328,13 +2328,16 @@
 	      )
  )
 
-(define-type ONT::dig
- :wordnet-sense-keys ("dig%2:35:01" "dig_out%2:35:00")
+(define-type ONT::dig-scoop
+ :wordnet-sense-keys ("dig%2:35:01" "dig_out%2:35:00" "scoop%2:35:01"
+				    "ladle%2:35:00" "ladle%2:35:01" "spoon%2:35:00" "hoe%2:36:00")
+ :comment "To move something incrementally, typically using a tool"
  :parent ONT::cause-to-move
  )
 
 (define-type ONT::propel
  :wordnet-sense-keys ("throw%1:04:00" "propel%2:35:00" "throw%2:35:02")
+ :comment "causing to move by a push and release activity"
  :parent ONT::cause-to-move
  )
 
@@ -3301,8 +3304,8 @@
  )
 
 (define-type ONT::crush
- :wordnet-sense-keys ("squash%2:35:00" "crush%2:35:00" "squelch%2:35:00" "mash%2:35:00" "squeeze%2:35:05")
- :parent ONT::damage
+ :wordnet-sense-keys ("squash%2:35:00" "crush%2:35:00" "squelch%2:35:00" "mash%2:35:00")
+ :parent ONT::push
  )
 
 (define-type ONT::dent

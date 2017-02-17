@@ -14,7 +14,7 @@
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("spray-9.7-2"))
      ;(LF-PARENT ONT::fill-container)
      (LF-PARENT ONT::ARRANGING)
-     (TEMPL agent-affected-templ)
+     (TEMPL agent-affected-xp-templ)
      )
     )
    )
