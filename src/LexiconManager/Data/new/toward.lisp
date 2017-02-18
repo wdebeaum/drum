@@ -7,7 +7,7 @@
  :words (
   (W::TOWARD
    (SENSES
-    ((LF-PARENT ONT::TO-LOC)
+    ((LF-PARENT ONT::TOWARDS)
      (TEMPL BINARY-CONSTRAINT-S-TEMPL)
      )
     )

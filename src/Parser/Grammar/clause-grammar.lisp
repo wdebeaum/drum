@@ -1656,7 +1656,8 @@
 	   (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	   
 	   ))
-    (advbl (particle +) (var ?adv-v)  (arg ?v) (argument (% s (sem ?sem))) (gap -))
+    ;(advbl (particle +) (var ?adv-v)  (arg ?v) (argument (% s (sem ?sem))) (gap -))
+    (advbl (particle +) (var ?adv-v)  (arg ?dobjvar) (argument (% s (sem ?dobjsem))) (gap -))
     ?dobj
     ?comp
     )

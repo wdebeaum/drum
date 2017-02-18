@@ -525,6 +525,7 @@
     ;;  resultative construction using adjectives with intransitives: e.g., the water froze solid
     ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
+      (SUBJ (% NP (Var ?npvar) (LEX ?LEX) (sem ?sem)))
       (advbl-needed -) (complex +) (result-present +) (subjvar ?subjvar)(GAP ?gap)
       )
      -vp-result-with-intransitive> .98   ;;  want to prefer explicitly subcategorized attachments
@@ -555,6 +556,8 @@
     ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
 ;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
+      (SUBJ (% NP (Var ?npvar) (sem ?sem) (lex ?lex)))
+      (subjvar ?npvar)
       (advbl-needed -) (complex +) (GAP ?gap)
       )
      -vp-result-advbl-intransitive>  
@@ -562,6 +565,7 @@
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		(DOBJVAR -)  ; cannot use (dobj -) because dobj is (% - (W::VAR -)) 
 		(SUBJ (% NP (Var ?npvar) (sem ?sem) (lex ?lex)))  
+		(subjvar ?npvar)
 		(constraint ?con) (tma ?tma) (result-present -)
 		;;(aux -) 
 		(gap ?gap)
@@ -569,9 +573,10 @@
 		))
 
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
-			 (sem ?sem))) (GAP -)
+			 (sem ?sem) (var ?npvar)))
+      (GAP -)
       ;; (subjvar ?subjvar)
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::trajectory))))
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln))))
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
       (ARG ?npvar) (VAR ?mod)
@@ -601,7 +606,7 @@
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
 			 (sem ?sem))) (GAP -)
       ;; (subjvar ?subjvar)
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::trajectory))))
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln))))
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
       (ARG ?npvar) (VAR ?mod)

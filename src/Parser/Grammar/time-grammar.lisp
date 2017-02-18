@@ -1036,10 +1036,10 @@
     
 
     ;;  e.g., ENGINE E 1
-    
+   
     ((name (lex ?seq) (lf ?cl) (SEM ?sem) (agr 3s) (name +) (generated +)
       )
-     -noun-nname2> 0.96
+     -noun-nname2> 0.98 ;0.96  ; increased to 0.98 so "block 1 and block 3" would parse
      ;; Myrosia 10/26/03 added (name -) to prevent cases like "aspirin 7" or "pittsford 8"
      ;; also lowered the probability considerably to avoid overgeneration
      ;; swift 09/22/11 removing the sem restriction to allow "unit 1" "scenario 2" etc.

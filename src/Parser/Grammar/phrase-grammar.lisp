@@ -4416,7 +4416,7 @@
     ((NP (ATTACH ?a) (var ?v) (agr 3p) (SEM ?sem)  
       (LF (% Description (Status ?status) (var ?v) 
 	     (class ?class)
-	     (constraint (& (:operator ?op) (:sequence ?members)))
+	     (constraint (& (operator ?op) (sequence ?members)))
 	     (sem ?sem) (CASE ?case1)
 	     (mass ?m1) 
 	     ))
@@ -4446,7 +4446,7 @@
      ((NP (ATTACH ?a) (var ?v) (agr 3p) (SEM ?sem)  
       (LF (% Description (Status ?status) (var ?v) 
 	     (class ?class)
-	     (constraint (& (:operator ?op) (:sequence ?members) (:except ?exception)))
+	     (constraint (& (operator ?op) (sequence ?members) (except ?exception)))
 	     (sem ?sem) (CASE ?case1)
 	     (mass ?m1) 
 	     ))
@@ -4477,7 +4477,7 @@
      ((NP (ATTACH ?a) (var ?v) (agr 3p) (SEM ?sem)  
       (LF (% Description (Status ?status) (var ?v) 
 	     (class ?class)
-	     (constraint (& (:operator ?op) (:sequence ?members) (:except ?exception)))
+	     (constraint (& (operator ?op) (sequence ?members) (except ?exception)))
 	     (sem ?sem) (CASE ?case1)
 	     (mass ?m1) 
 	     ))
@@ -4510,7 +4510,7 @@
     ((NP (ATTACH ?a) (var ?v) (agr 3p) (SEM ?sem)  
       (LF (% Description (Status ?status) (var ?v) 
 	     (class ?class)
-	     (constraint (& (:operator ?op) (:sequence ?members)))
+	     (constraint (& (operator ?op) (sequence ?members)))
 	     (sem ?sem) (CASE ?case1)
 	     (mass ?m1) 
 	     ))
@@ -4694,7 +4694,7 @@
      ((NP (ATTACH ?a) (var *) (agr 3p) (SEM ?sem)  
       (LF (% Description (status ont::definite) (var *) 
 	     (class ?c1)
-	     (constraint (& (:sequence ?lf1)))
+	     (constraint (& (sequence ?lf1)))
 	     (sem ?sem) (CASE ?case1)
 	     (mass ?m1) 
 	     ))
@@ -4824,7 +4824,7 @@
     ((ADJP (ARG ?arg) (argument ?a) (sem ?sem) (atype ?atype1) ;(atype central)
 	   (VAR *) ;(COMPLEX +) -- removed to allow complex adj prenominal modification, e.g. "a natural and periodic state of rest"
 	   (SORT PRED)
-      (LF (% PROP (CLASS ?class) (VAR *) (sem ?sem) (CONSTRAINT (& (:sequence (?v1 ?v2)) (:operator ?conj))) ;;?members)))
+      (LF (% PROP (CLASS ?class) (VAR *) (sem ?sem) (CONSTRAINT (& (sequence (?v1 ?v2)) (operator ?conj))) ;;?members)))
 	     (transform ?transform) (sem ?sem)
 	     )))
           
@@ -5056,7 +5056,7 @@
      (nobarespec +) ;; bare numbers can't be specifiers     
      (agr (? a 3s 3p))
      )
-    -np-score> 0.98
+    -np-score> 0.97
     (art (lex w::a))
     (head (number (lex ?l) (val ?val) (agr (? a 3s 3p));(number-only +)
 		  (restr ?restr) (var ?v)))

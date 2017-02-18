@@ -553,10 +553,10 @@
 (define-type ONT::put
  :wordnet-sense-keys ("put%2:35:00" "set%2:35:00" "place%2:35:00" "pose%2:35:02" "position%2:35:00" "lay%2:35:01" "interpose%2:38:01")
  :parent ont::event-of-causation
+ :sem (F::Situation (F::trajectory +))
  :arguments ((:ESSENTIAL ONT::agent)
 	     (:ESSENTIAL ONT::AFFECTED (F::Phys-obj (F::mobility f::movable)))
-	     ;;(:OPTIONAL ONT::Spatial-Loc (F::Phys-obj (F::spatial-abstraction F::Any-spatial-abstraction))
-             ;; (:implements goal))
+	     
              )
  )
 

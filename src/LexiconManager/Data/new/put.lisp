@@ -44,6 +44,7 @@
      (meta-data :origin vn-analysis :entry-date unknown :change-date 20040617 :comments change-lf)
      (example "put the oj into the tanker")
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
+     (TEMPL AGENT-AFFECTED-XP-TEMPL)
      )
     ;; removing b.c. of conflict with making tea data Nov 2010
 ;    ((meta-data :origin calo :entry-date 20040505 :change-date nil :comments y1-variations)
