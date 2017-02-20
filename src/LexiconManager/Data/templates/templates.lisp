@@ -790,6 +790,14 @@
 	       ONT::RESULT)
 	))
 
+      (AGENT-RESULT-AFFECTED-TEMPL
+       (ARGUMENTS
+	(LSUBJ (% W::NP) ONT::agent)
+	(LOBJ (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln ont::position-reln ont::source-reln)))) (w::arg ?dobjvar) (w::particle +))))
+	       ONT::RESULT)
+	(LCOMP (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::affected)
+	))
+      
       (AGENT-AFFECTED-EFFECT-loc-objcontrol-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
