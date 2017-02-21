@@ -339,6 +339,7 @@
  :parent ont::pos-relative-wrt-trajectory
  )
 
+#|
 ; ground is the trajectory
 (define-type ont::pos-located-in-trajectory
  :parent ont::position-w-trajectory-reln
@@ -359,6 +360,8 @@
 (define-type ont::pos-midway
  :parent ont::pos-located-in-trajectory
  )
+
+|#
 
  ; <
 

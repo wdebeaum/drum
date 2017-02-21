@@ -7,7 +7,8 @@
   (W::BEGINNING
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
-     (LF-PARENT ont::pos-start-of-trajectory) ;ONT::LINE-DEPENDENT-LOCATION)
+     ;(LF-PARENT ont::pos-start-of-trajectory) ;ONT::LINE-DEPENDENT-LOCATION)
+     (LF-PARENT ONT::STARTPOINT)
      (TEMPL GEN-PART-OF-RELN-TEMPL)
      )
     #|

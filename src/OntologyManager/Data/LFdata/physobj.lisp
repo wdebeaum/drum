@@ -1179,6 +1179,16 @@
     :parent ONT::loc-as-defined-by-reln-to-ground
     )
 
+(define-type ONT::startpoint
+    :parent ONT::loc-wrt-ground-as-spatial-obj
+    :wordnet-sense-keys ("beginning%1:15:00" "beginning%1:09:00")
+    )
+
+(define-type ONT::endpoint
+    :parent ONT::loc-wrt-ground-as-spatial-obj
+    :wordnet-sense-keys ("end%1:15:00" "end%1:15:02")
+    )
+
 (define-type ONT::waypoint
     :parent ONT::loc-wrt-ground-as-spatial-obj
     )
@@ -1324,10 +1334,12 @@
     :parent ONT::object-dependent-location
     )
 
+#|
 (define-type ONT::END-LOCATION
     :wordnet-sense-keys ("end%1:15:00" "end%1:15:02")
     :parent ONT::object-dependent-location
     )
+|#
 
 (define-type ONT::SIDE-LOCATION
     :wordnet-sense-keys ("side%1:15:02")
@@ -1363,6 +1375,7 @@
 		)
     )
 
+#|
 ;; middle of the road
 (define-type ONT::location-reln
     :parent ONT::LOCATION
@@ -1377,6 +1390,7 @@
     :arguments ((:OPTIONAL ONT::FIGURE (F::PHYS-OBJ (F::spatial-abstraction (? sa F::line F::strip))))
 		)
     )
+|#
 
 
 ;;; > REPRESENTATIONS
@@ -2605,3 +2619,197 @@
     )
 ; <
 ; <
+
+
+;;;;;;;;;;;;;;;
+; the group-object hierarchy is a duplicate of group-object-abstr in abstract-object 
+;;;;;;;;;;;;;;;
+
+(define-type ont::group-object
+ :wordnet-sense-keys ("mathematical_group%1:09:00" "group%1:09:00" "chemical_group%1:27:00" "radical%1:27:00" "group%1:27:00" "group%1:03:00" "grouping%1:03:00")
+ ;:parent ont::abstract-object-nontemporal
+ :parent ont::phys-object
+;  :sem (F::Abstr-obj (f::group +)) ; group feature not defined for abstract objects
+  :arguments ((:OPTIONAL ONT::FIGURE)
+              )
+  )
+
+(define-type ONT::system
+  :wordnet-sense-keys ("system%1:06:00" "system%1:14:00")
+  :comment "An interconnected group of objects, abstract or physical"
+ :parent ONT::group-object
+ )
+
+(define-type ONT::formation
+ :parent ONT::group-object
+ )
+
+(define-type ONT::row-formation
+ :wordnet-sense-keys ("row%1:14:00" "row%1:17:00")
+ :parent ONT::formation
+ :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj))  ; to distinguish between steps as steps in a plan and steps in a staircase
+             )
+ )
+
+(define-type ONT::column-formation
+ :wordnet-sense-keys ("pile%1:14:00" "column%1:14:00" "column%1:25:02")
+ :parent ONT::formation
+ :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj))  ; to distinguish between steps as steps in a plan and steps in a staircase
+             )
+ )
+
+;; crowd, audience
+(define-type ont::social-group
+ :wordnet-sense-keys ("social_group%1:14:00")
+  :parent ont::group-object
+  ;:sem (F::Abstr-obj (F::information F::information-content) (f::intentional +) (F::Object-Function F::Occupation) (F::Container -))
+  :sem (F::phys-obj (f::intentional +) (F::Object-Function F::Occupation) (F::Container -))
+  :arguments ((:OPTIONAL ONT::FIGURE ((? lof f::phys-obj f::abstr-obj))))
+  )
+
+;; swift 20110928 crew defined for obtw demo
+(define-type ont::crew-phys
+    :parent ont::social-group
+    )
+
+(define-type ONT::organization
+ :wordnet-sense-keys ("organization%1:14:00" "organisation%1:14:00")
+ :parent ONT::social-group
+ )
+
+;; these subtypes came about because of generation issues
+;; commerce, finance, business, marketing
+(define-type ONT::enterprise
+ :parent ONT::organization
+ )
+
+;; institution
+(define-type ONT::institution
+ :parent ONT::organization
+ )
+
+;; an institution created for conduction business
+;; company
+(define-type ONT::company
+ :parent ONT::institution
+ )
+
+;; google, amazon, isp
+(define-type ONT::internet-organization
+ :parent ONT::organization
+ )
+
+;; bank
+(define-type ONT::financial-institution
+ :parent ONT::institution
+ )
+
+;; apple, ibm, hp
+(define-type ONT::electronics-company
+ :parent ONT::company
+ )
+
+;; officemax, officedepot
+(define-type ONT::office-supply-company
+ :parent ONT::company
+ )
+
+;; fetch, gnu
+(define-type ONT::software-company
+ :parent ONT::company
+ )
+
+;; court
+(define-type ONT::legal-organization
+ :parent ONT::organization
+ )
+
+;; market
+(define-type ONT::financial-organization
+ :parent ONT::organization
+ )
+
+;; government, gsa, darpa
+(define-type ONT::federal-organization
+ :wordnet-sense-keys ("government%1:14:00" "authorities%1:14:00" "regime%1:14:00")
+ :parent ONT::organization
+ )
+
+;; ieee
+(define-type ONT::professional-organization
+ :parent ONT::organization
+ )
+
+;; ansi
+(define-type ONT::regulatory-organization
+ :parent ONT::organization
+ )
+
+(define-type ONT::airline
+ :parent ONT::enterprise
+ )
+
+;; affiliate, partner, subsidiary
+(define-type ONT::affiliate
+ :parent ONT::company
+ )
+
+;; affiliate, partner, subsidiary
+(define-type ONT::supplier
+ :parent ONT::company
+ )
+
+;; sri
+(define-type ONT::research-institution
+ :parent ONT::company
+ )
+
+;; university, college
+(define-type ONT::academic-institution
+    :parent ONT::research-institution
+ )
+
+;; fedex, ups
+(define-type ONT::shipping-company
+ :parent ONT::company
+ )
+
+(define-type ONT::military-group
+ :wordnet-sense-keys ("military_unit%1:14:00" "military_force%1:14:00" "military_group%1:14:00" "force%1:14:01")
+ :parent ONT::social-group
+ )
+
+(define-type ONT::collection
+ :wordnet-sense-keys ("collection%1:14:00" "aggregation%1:14:00" "accumulation%1:14:00" "assemblage%1:14:01")
+ :parent ONT::group-object
+ )
+
+(define-type ONT::sequence
+ :wordnet-sense-keys ("ordering%1:14:00" "order%1:14:00" "ordination%1:14:00")
+ :parent ONT::group-object
+ )
+
+(define-type ONT::linear-grouping
+ :wordnet-sense-keys ("line%1:14:01")
+ :parent ONT::sequence
+ )
+
+(define-type ONT::combination
+ :wordnet-sense-keys ("combination%1:14:00")
+ :parent ONT::group-object
+ )
+
+;; layer (of ozone, chocolate), sheet (of ice, paper), slice
+(define-type ont::sheet
+;  :parent ont::non-measure-ordered-domain
+  :parent ONT::GROUP-OBJECT
+  )
+
+;; a number/amount/quantity of X
+(define-type ONT::QUANTITY
+ :wordnet-sense-keys ("measure%1:03:00" "quantity%1:03:00" "amount%1:03:00")
+; :parent ONT::DOMAIN-PROPERTY
+ :parent ONT::GROUP-OBJECT
+ :arguments ((:ESSENTIAL ONT::FIGURE)
+             )
+ )

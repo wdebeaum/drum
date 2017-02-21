@@ -175,8 +175,13 @@
              )
  )
 
+;;;;;;;;;;;;;;;
+; the group-object-abstr hierarchy is a duplicate of group-object in phys-object 
+; (Note: ONT::SHEET and ONT::QUANTITY are under GROUP-OBJECT-ABSTR too.)
+; (Note 2: wordnet mappings are identical in the two hierarchies.)
+;;;;;;;;;;;;;;;
 
-(define-type ont::group-object
+(define-type ont::group-object-abstr
  :wordnet-sense-keys ("mathematical_group%1:09:00" "group%1:09:00" "chemical_group%1:27:00" "radical%1:27:00" "group%1:27:00" "group%1:03:00" "grouping%1:03:00")
   :parent ont::abstract-object-nontemporal
 ;  :sem (F::Abstr-obj (f::group +)) ; group feature not defined for abstract objects
@@ -184,168 +189,168 @@
               )
   )
 
-(define-type ONT::system
+(define-type ONT::system-abstr
   :wordnet-sense-keys ("system%1:06:00" "system%1:14:00")
   :comment "An interconnected group of objects, abstract or physical"
- :parent ONT::group-object
+ :parent ONT::group-object-abstr
  )
 
-(define-type ONT::formation
- :parent ONT::group-object
+(define-type ONT::formation-abstr
+ :parent ONT::group-object-abstr
  )
 
-(define-type ONT::row-formation
+(define-type ONT::row-formation-abstr
  :wordnet-sense-keys ("row%1:14:00" "row%1:17:00")
- :parent ONT::formation
+ :parent ONT::formation-abstr
  :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj))  ; to distinguish between steps as steps in a plan and steps in a staircase
              )
  )
 
-(define-type ONT::column-formation
+(define-type ONT::column-formation-abstr
  :wordnet-sense-keys ("pile%1:14:00" "column%1:14:00" "column%1:25:02")
- :parent ONT::formation
+ :parent ONT::formation-abstr
  :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj))  ; to distinguish between steps as steps in a plan and steps in a staircase
              )
  )
 
 ;; crowd, audience
-(define-type ont::social-group
+(define-type ont::social-group-abstr
  :wordnet-sense-keys ("social_group%1:14:00")
-  :parent ont::group-object
+  :parent ont::group-object-abstr
   :sem (F::Abstr-obj (F::information F::information-content) (f::intentional +) (F::Object-Function F::Occupation) (F::Container -))
   :arguments ((:OPTIONAL ONT::FIGURE ((? lof f::phys-obj f::abstr-obj))))
   )
 
 ;; swift 20110928 crew defined for obtw demo
-(define-type ont::crew
-    :parent ont::social-group
+(define-type ont::crew-abstr
+    :parent ont::social-group-abstr
     )
 
-(define-type ONT::organization
+(define-type ONT::organization-abstr
  :wordnet-sense-keys ("organization%1:14:00" "organisation%1:14:00")
- :parent ONT::social-group
+ :parent ONT::social-group-abstr
  )
 
 ;; these subtypes came about because of generation issues
 ;; commerce, finance, business, marketing
-(define-type ONT::enterprise
- :parent ONT::organization
+(define-type ONT::enterprise-abstr
+ :parent ONT::organization-abstr
  )
 
 ;; institution
-(define-type ONT::institution
- :parent ONT::organization
+(define-type ONT::institution-abstr
+ :parent ONT::organization-abstr
  )
 
 ;; an institution created for conduction business
 ;; company
-(define-type ONT::company
- :parent ONT::institution
+(define-type ONT::company-abstr
+ :parent ONT::institution-abstr
  )
 
 ;; google, amazon, isp
-(define-type ONT::internet-organization
- :parent ONT::organization
+(define-type ONT::internet-organization-abstr
+ :parent ONT::organization-abstr
  )
 
 ;; bank
-(define-type ONT::financial-institution
- :parent ONT::institution
+(define-type ONT::financial-institution-abstr
+ :parent ONT::institution-abstr
  )
 
 ;; apple, ibm, hp
-(define-type ONT::electronics-company
- :parent ONT::company
+(define-type ONT::electronics-company-abstr
+ :parent ONT::company-abstr
  )
 
 ;; officemax, officedepot
-(define-type ONT::office-supply-company
- :parent ONT::company
+(define-type ONT::office-supply-company-abstr
+ :parent ONT::company-abstr
  )
 
 ;; fetch, gnu
-(define-type ONT::software-company
- :parent ONT::company
+(define-type ONT::software-company-abstr
+ :parent ONT::company-abstr
  )
 
 ;; court
-(define-type ONT::legal-organization
- :parent ONT::organization
+(define-type ONT::legal-organization-abstr
+ :parent ONT::organization-abstr
  )
 
 ;; market
-(define-type ONT::financial-organization
- :parent ONT::organization
+(define-type ONT::financial-organization-abstr
+ :parent ONT::organization-abstr
  )
 
 ;; government, gsa, darpa
-(define-type ONT::federal-organization
+(define-type ONT::federal-organization-abstr
  :wordnet-sense-keys ("government%1:14:00" "authorities%1:14:00" "regime%1:14:00")
- :parent ONT::organization
+ :parent ONT::organization-abstr
  )
 
 ;; ieee
-(define-type ONT::professional-organization
- :parent ONT::organization
+(define-type ONT::professional-organization-abstr
+ :parent ONT::organization-abstr
  )
 
 ;; ansi
-(define-type ONT::regulatory-organization
- :parent ONT::organization
+(define-type ONT::regulatory-organization-abstr
+ :parent ONT::organization-abstr
  )
 
-(define-type ONT::airline
- :parent ONT::enterprise
- )
-
-;; affiliate, partner, subsidiary
-(define-type ONT::affiliate
- :parent ONT::company
+(define-type ONT::airline-abstr
+ :parent ONT::enterprise-abstr
  )
 
 ;; affiliate, partner, subsidiary
-(define-type ONT::supplier
- :parent ONT::company
+(define-type ONT::affiliate-abstr
+ :parent ONT::company-abstr
+ )
+
+;; affiliate, partner, subsidiary
+(define-type ONT::supplier-abstr
+ :parent ONT::company-abstr
  )
 
 ;; sri
-(define-type ONT::research-institution
- :parent ONT::company
+(define-type ONT::research-institution-abstr
+ :parent ONT::company-abstr
  )
 
 ;; university, college
-(define-type ONT::academic-institution
-    :parent ONT::research-institution
+(define-type ONT::academic-institution-abstr
+    :parent ONT::research-institution-abstr
  )
 
 ;; fedex, ups
-(define-type ONT::shipping-company
- :parent ONT::company
+(define-type ONT::shipping-company-abstr
+ :parent ONT::company-abstr
  )
 
-(define-type ONT::military-group
+(define-type ONT::military-group-abstr
  :wordnet-sense-keys ("military_unit%1:14:00" "military_force%1:14:00" "military_group%1:14:00" "force%1:14:01")
- :parent ONT::social-group
+ :parent ONT::social-group-abstr
  )
 
-(define-type ONT::collection
+(define-type ONT::collection-abstr
  :wordnet-sense-keys ("collection%1:14:00" "aggregation%1:14:00" "accumulation%1:14:00" "assemblage%1:14:01")
- :parent ONT::group-object
+ :parent ONT::group-object-abstr
  )
 
-(define-type ONT::sequence
+(define-type ONT::sequence-abstr
  :wordnet-sense-keys ("ordering%1:14:00" "order%1:14:00" "ordination%1:14:00")
- :parent ONT::group-object
+ :parent ONT::group-object-abstr
  )
 
-(define-type ONT::linear-grouping
+(define-type ONT::linear-grouping-abstr
  :wordnet-sense-keys ("line%1:14:01")
- :parent ONT::sequence
+ :parent ONT::sequence-abstr
  )
 
-(define-type ONT::combination
+(define-type ONT::combination-abstr
  :wordnet-sense-keys ("combination%1:14:00")
- :parent ONT::group-object
+ :parent ONT::group-object-abstr
  )
 
 
@@ -1595,7 +1600,7 @@
 ;; layer (of ozone, chocolate), sheet (of ice, paper), slice
 (define-type ont::sheet
 ;  :parent ont::non-measure-ordered-domain
-  :parent ONT::GROUP-OBJECT
+  :parent ONT::GROUP-OBJECT-abstr
   )
 
 (define-type ONT::MEASURE-UNIT
@@ -1616,7 +1621,7 @@
 (define-type ONT::QUANTITY
  :wordnet-sense-keys ("measure%1:03:00" "quantity%1:03:00" "amount%1:03:00")
 ; :parent ONT::DOMAIN-PROPERTY
- :parent ONT::GROUP-OBJECT
+ :parent ONT::GROUP-OBJECT-abstr
  :arguments ((:ESSENTIAL ONT::FIGURE)
              )
  )

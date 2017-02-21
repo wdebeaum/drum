@@ -9,7 +9,8 @@
   (W::END
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("end%1:15:00"))
-     (LF-PARENT ont::pos-end-of-trajectory);ONT::LINE-DEPENDENT-LOCATION)
+     ;(LF-PARENT ont::pos-end-of-trajectory);ONT::LINE-DEPENDENT-LOCATION)
+     (LF-PARENT ONT::ENDPOINT)
      (example "the end of the line")
      (TEMPL GEN-PART-OF-RELN-TEMPL)
      )
