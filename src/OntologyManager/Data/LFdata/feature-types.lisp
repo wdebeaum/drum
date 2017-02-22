@@ -9,7 +9,7 @@
     :features (F::object-function F::origin F::form F::mobility F::group F::spatial-abstraction F::intentional F::information F::container F::kr-type f::type F::trajectory)
     :defaults (
 	       (F::type ont::phys-object)
-	       (F::object-function F::ANY-object-function) 
+	       ;;(F::object-function F::ANY-object-function)
 	       (F::origin F::any-origin) (F::Form F::ANY-form)
 	       (F::mobility F::ANY-Mobility) (F::group -)
 	       (F::Spatial-abstraction (? sab F::spatial-point F::spatial-region))
@@ -28,7 +28,7 @@
 	       (F::Locative -)
 	       (f::origin f::any-origin)
 	       (f::iobj -)
-	       ))
+	       )) 
 
 ;; swier added gradability feature
 ;; swift added orientation and intensity
@@ -42,7 +42,7 @@
 	       (F::intentional -)
 	       (F::information -) (F::container -)
 	       (F::Measure-function -) (F::scale -)
-	       (F::object-function F::ANY-object-function)
+	       ;;(F::object-function -)
 	       (f::origin f::any-origin)
 	       ))
 

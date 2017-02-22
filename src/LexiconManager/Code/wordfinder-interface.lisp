@@ -613,7 +613,7 @@
                    :sem sem
                    :boost-word nil
                    :pref (or score .99)
-                   :syntax syntax
+                   :syntax (combine-syntax-features (word-sense-definition-syntax this-sense) syntax)
                    :kr-type domain-info
 		   :specialized (if domain-info t nil)
 		   :mappings maps
@@ -623,6 +623,12 @@
 	       ))
 	     res
 	     ))))
+
+(defun combine-syntax-features (newfeats defaultfeats)
+  "remove any default feats defines in newfeats"
+  (let ((defined-feats (mapcar #'car newfeats)))
+    (append newfeats (remove-if #'(lambda (x) (member (car x) defined-feats))
+				defaultfeats))))
 
 (defun ing-form (word)
   "T if word ends in ING"

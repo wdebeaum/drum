@@ -671,6 +671,12 @@
             )
  )
 
+(define-type ont::direction-down
+    :parent ONT::DIRECTION)
+
+(define-type ont::direction-up
+    :parent ONT::DIRECTION)
+
 ;; north, south, east, west
 (define-type ont::cardinal-direction
   :parent ont::direction

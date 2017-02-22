@@ -2858,7 +2858,9 @@
 	     ;;(:ESSENTIAL ONT::Agent (F::Phys-obj (F::intentional +)))
 	     ;; for "An open switch creates a gap / FN: "it created fanatics during the Aphgan war"
 	     ;; the process creates compression
-	     (:OPTIONAL ONT::agent((? cs F::Phys-obj f::abstr-obj) ))
+	     (:OPTIONAL ONT::agent ((? cs F::Phys-obj f::abstr-obj) ))
+	     (:essential ont::affected-result ((? aff  F::Phys-obj f::abstr-obj) 
+					       (f::type (? x ONT::PHYS-OBJECT ont::mental-construction))))
 	     (:OPTIONAL ONT::result ((? res F::Phys-obj f::abstr-obj) (F::intentional -))) ;; he made a box from paper
              )
  )

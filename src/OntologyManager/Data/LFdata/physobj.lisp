@@ -1882,31 +1882,31 @@
 (define-type ONT::projector
     :wordnet-sense-keys ("projector%1:06:00")
     :parent ONT::MACHINE
-    :sem (F::Phys-obj (F::mobility F::non-self-moving)(f::form f::object) (F::object-function F::instrument))
+    :sem (F::Phys-obj (F::mobility F::non-self-moving)(f::form f::object) 
+		      (F::object-function F::instrument))
     )
 
 (define-type ONT::computer
     :wordnet-sense-keys ("computer%1:06:00" "computing_machine%1:06:00" "computing_device%1:06:00" "data_processor%1:06:00" "electronic_computer%1:06:00" "information_processing_system%1:06:00")
     :parent ONT::MACHINE
-    :sem (F::Phys-obj (F::mobility F::non-self-moving)(f::form f::object) (F::object-function F::instrument))
-    )
+    :sem (F::Phys-obj (F::mobility F::non-self-moving)(f::form f::object) 
+		      (F::object-function (? xx F::provides-service-on-off f::provides-service-up-down))
+    )) 
 
 ;; powerbook, ibook
 (define-type ONT::computer-model
     :parent ONT::computer
-    :sem (F::Phys-obj (F::mobility F::non-self-moving)(F::object-function F::instrument))
     )
 
 ;; ibm, macintosh, dell
 (define-type ONT::computer-make
     :parent ONT::computer
-    :sem (F::Phys-obj (F::mobility F::non-self-moving)(F::object-function F::instrument))
     )
 
 ;; laptop, pc
 (define-type ONT::computer-type
     :parent ONT::computer
-    :sem (F::Phys-obj (F::mobility F::non-self-moving)(F::object-function F::instrument))
+    
     )
 
 ;; a physical arrangement of components, e.g. a stereo system

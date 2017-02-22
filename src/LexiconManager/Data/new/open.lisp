@@ -31,16 +31,16 @@
    (SENSES
     ((meta-data :origin step :entry-date 20080624 :change-date nil :comments nil :wn ("open%3:00:01"))
      (EXAMPLE "it's open") ;; basic use should not generate a purpose impro
-     (LF-PARENT ONT::OPENNESS-VAL)
+     (LF-PARENT ONT::active-open)
      )
     ;; changed adj-purpose-optional to adj-purpose
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("open%3:00:01"))
      (EXAMPLE "that's open for business")
-     (LF-PARENT ONT::OPENNESS-VAL)
+     (LF-PARENT ONT::active-open)
      (TEMPL ADJ-PURPOSE-TEMPL)
      )
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("open%3:00:01"))
-     (LF-PARENT ONT::OPENNESS-VAL)
+     (LF-PARENT ONT::active-open)
      (example "the stores open are ...")
      (TEMPL postpositive-ADJ-TEMPL)
      )

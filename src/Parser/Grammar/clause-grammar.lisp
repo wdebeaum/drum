@@ -1003,9 +1003,10 @@
        )
       -pred-advbl> 0.98 ;; don't use it if a regular advbl interpretation is possible
       ;; md: argument should be % np, if an adverbial does not apply to nps, don't use it
-      (head (advbl (lf ?lf) (var ?v) (arg ?arg) (argument ?argument) (argument (% np (var ?arg)))
-	     (wh (? wh - q)) (sort (? srt binary-constraint pp-word pred))
-	     (gap ?gap)
+      (head (advbl (lf ?lf) (var ?v) (arg ?arg) (argument ?argument) 
+		   (argument (% np (var ?arg))) (sem ?sem)
+		   (wh (? wh - q)) (sort (? srt binary-constraint pp-word pred))
+		   (gap ?gap)
 	     ))
       )
 

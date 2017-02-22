@@ -220,12 +220,18 @@
 (define-feature F::object-function
  ;;; I think it's nice, but I haven't used it anywhere
  ;;;(F_Any-Functn
- :values ((F::Vehicle)
-          (F::Representation)
+ :values (
+	  (F::Instrument
+	   (F::provides-service
+	    (F::Vehicle)
+	    (f::provides-service-on-off) ;; things that can be on/off
+	    (f::provides-service-open-closed) ;; things that can be open/closed
+	    (F::provides-service-up-down))   ;; thing that are up/down
+	   )
+          (F::Representation) 
           (F::software)
 	  (f::currency)
-          (F::Instrument)
-          (F::occupation)
+	  (F::occupation)
           (F::Garment)
           (F::Furniture)
           (F::Covering)

@@ -167,3 +167,6 @@
     :arguments ((:OPTIONAL ONT::FIGURE )
 		)
  )
+
+(define-type ont::remaining-part
+    :parent ont::part)

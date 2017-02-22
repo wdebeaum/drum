@@ -8,12 +8,12 @@
   (W::DOWN
    (SENSES
     ((meta-data :origin monroe :entry-date 20060824 :change-date nil :comments nil :wn ("down%3:00:00"))
-     (LF-PARENT ONT::inoperable)
+     (LF-PARENT ONT::inactive-down)
      (example "the lines are down")
      (templ predicative-only-adj-templ)
      )
     ((meta-data :origin trips :entry-date 20101231 :change-date nil :comments nil)
-     (LF-PARENT ONT::inoperable)
+     (LF-PARENT ONT::inactive-down)   
      (example "they have lines down")
      (preference .98)
      (TEMPL postpositive-ADJ-TEMPL)
@@ -46,11 +46,11 @@
  :words (
   (W::DOWN
    (SENSES
-    ((LF-PARENT ONT::direction)
+    ((LF-PARENT ONT::direction-down)
      (example "he walked down the road/ down the wall")
      (TEMPL BINARY-CONSTRAINT-S-TEMPL)
      )
-    ((LF-PARENT ONT::DIRECTION)
+    ((LF-PARENT ONT::DIRECTION-down)
      (example "pan the camera down" "pan down the camera")
      (TEMPL PARTICLE-TEMPL)
      )
@@ -91,4 +91,3 @@
     )
    )
 ))
-

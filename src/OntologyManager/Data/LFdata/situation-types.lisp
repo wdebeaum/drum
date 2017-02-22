@@ -26,8 +26,9 @@
  :arguments ((:ESSENTIAL ONT::agent ((? oc F::Phys-obj F::Abstr-obj F::Situation)))
 	     (:optional ont::affected ((? aff F::SITUATION F::ABSTR-OBJ F::Phys-obj)))
 	     (:optional ont::result ((? res1 F::SITUATION F::ABSTR-OBJ)))
-	     (:optional ont::formal ((? res2 F::SITUATION F::ABSTR-OBJ))) ;; here for now while we decide the FORMAL/RESULT issue
-	     )
+	     (:optional ont::formal ((? res2 F::SITUATION F::ABSTR-OBJ)
+				     (F::type (? ftype ONT::SITUATION-ROOT ONT::PROPERTY-VAL ONT::POSITION-RELN)) ;; here for now while we decide the FORMAL/RESULT issue
+				     )))
  )
 
 (define-type ONT::inhibit-effect

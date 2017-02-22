@@ -8,11 +8,11 @@
   (W::REST
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("rest%1:24:00"))
-     (LF-PARENT ONT::PART)
+     (LF-PARENT ONT::remaining-PART)
      (TEMPL GEN-PART-OF-RELN-TEMPL)
      )
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("rest%1:24:00"))
-     (LF-PARENT ONT::PART)
+     (LF-PARENT ONT::remaining-PART)
      )
     )
    )

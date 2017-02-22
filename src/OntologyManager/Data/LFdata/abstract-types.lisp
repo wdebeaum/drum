@@ -195,6 +195,7 @@
  :parent ONT::group-object-abstr
  )
 
+
 (define-type ONT::formation-abstr
  :parent ONT::group-object-abstr
  )
@@ -1088,11 +1089,6 @@
  :arguments ((:optional ONT::GROUND)
              )
  )
-
-(define-type ONT::INOPERABLE
- :parent ONT::configuration-PROPERTY-VAL
- :sem (F::Abstr-obj (F::gradability -) (f::type ont::device)
- ))
 
 ;; higher-level type for evaluation
 (define-type ont::evaluation-attribute-val
@@ -3775,36 +3771,100 @@
 
 (define-type ONT::activity-val
     :comment "predicates relating to whether something is acting as intended for some process"
-  :parent ONT::property-val
-  :arguments ((:required ONT::FIGURE ((? lof f::phys-obj ))))
- )
+    :parent ONT::property-val
+    :sem (F::Abstr-obj (F::gradability -))
+    :arguments ((:required ONT::FIGURE ((? lof f::phys-obj)
+					   (f::type (? !t2 ont::location))
+					   (F::object-function F::provides-service)))
+	      ))
 
 (define-type ONT::active
  :parent ONT::activity-VAL
  :comment "operating as intended wrt some process"
  ; Words: (W::ACTIVE W::BUSY)
  :wordnet-sense-keys ("busy%3:00:00" "active%3:00:03" "active%3:00:06" "busy%5:00:01:active:06")
- ; Antonym: ONT::INACTIVE (W::PASSIVE W::IDLE)
-  :arguments ((:required ONT::FIGURE ((? lof f::phys-obj) (f::type (? !t2 ont::location)))))
+ 
  )
+
+(define-type ONT::ACTIVE-ON
+    :parent ONT::ACTIVE
+    :comment "operating as intended, typically due to some switching on/off"
+    :wordnet-sense-keys ("on%3:00:02")
+    :arguments ((:required ONT::FIGURE (f::phys-obj 
+					(f::type (? !t2 ont::location))
+					(F::object-function F::provides-service-on-off))))
+    )
+
+(define-type ONT::ACTIVE-up
+    :parent ONT::ACTIVE
+    :comment "operating as intended, typically for ongoing available services using up/down"
+    :wordnet-sense-keys ("functioning%3:00:00")
+    :arguments ((:required ONT::FIGURE (f::phys-obj 
+					(f::type (? !t2 ont::location))
+					(F::object-function F::provides-service-up-down))))
+    )
+
+(define-type ONT::ACTIVE-open
+    :parent ONT::ACTIVE
+    :comment "operating as intended, typically a physcal location with operating hours"
+     :wordnet-sense-keys ("OPEN%3:00:02")
+    :arguments ((:required ONT::FIGURE (f::phys-obj 
+					(f::type (? !t2 ont::location))
+					(F::object-function F::provides-service-open-closed))))
+    )
 
 (define-type ONT::INACTIVE
  :parent ONT::activity-VAL
  :comment "not operating as intended wrt some process"
-:wordnet-sense-keys ("passive%3:00:01" "idle%3:00:00")
+ :wordnet-sense-keys ("passive%3:00:01" "idle%3:00:00")
  ; Antonym: ONT::active (W::ACTIVE W::BUSY)
  )
 
+(define-type ONT::INACTIVE-OFF
+    :parent ONT::INACTIVE
+    :comment "not operating as intended, typically due to some switching on/off"
+    :wordnet-sense-keys ("off%3:00:01")
+    :arguments ((:required ONT::FIGURE (f::phys-obj 
+					(f::type (? !t2 ont::location))
+					(F::object-function F::provides-service-on-off))))
+    )
+
+(define-type ONT::INACTIVE-down
+    :parent ONT::INACTIVE
+    :comment "not operating is intended, typically for ongoing available services using up/down"
+    :wordnet-sense-keys ("inoperative%3:00:00")
+    :arguments ((:required ONT::FIGURE (f::phys-obj 
+					(f::type (? !t2 ont::location))
+					(F::object-function F::provides-service-up-down))))
+    )
+
+(define-type ONT::INACTIVE-closed
+    :parent ONT::INACTIVE
+    :comment "not operating as intended,  typically a physcal location with operating hours"
+    :wordnet-sense-keys ("closed%3:00:01")
+    :arguments ((:required ONT::FIGURE (f::phys-obj 
+					(f::type (? !t2 ont::location))
+					(F::object-function F::provides-service-open-closed))))
+    )
+
 (define-type ONT::NOT-IN-WORKING-ORDER-VAL
  :parent ONT::inactive
- :comment "broken/not-operational"
- :sem (F::Abstr-obj (F::gradability -))
+ :comment "broken/not-operational more permanently - needs fixing, not switching on"
  )
+
+(define-type ONT::IN-WORKING-ORDER-VAL
+ :parent ONT::activity-val
+ :comment "operational but not necessarily on"
+
+ )
+
+
 
 (define-type ONT::dependence-val
  :parent ONT::property-val
  :arguments ((:optional ONT::GROUND ((? lof f::phys-obj f::abstr-obj))))  ;;  independent/dependent of X
  )
+
 
 (define-type ONT::DEPENDENT
  :parent ONT::dependence-val

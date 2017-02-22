@@ -20,3 +20,14 @@
    )
 ))
 
+(define-words :pos W::n 
+ :words (
+  (W::stack
+   (SENSES
+    (
+     (LF-PARENT ONT::column-formation)
+;     (TEMPL classifier-count-pl-templ)
+     (TEMPL other-reln-templ)
+     (EXAMPLE "A row of ducks")
+     )))
+  ))
