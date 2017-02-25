@@ -44,10 +44,12 @@
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      (prototypical-word t)
      )
+    #|
     ((LF-PARENT ont::clean)
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      (meta-data :origin asma :entry-date 20111004)
      )
+    |#
     ((LF-PARENT ONT::increase)
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      (example "use of wind energy picked up after the oil shortage")

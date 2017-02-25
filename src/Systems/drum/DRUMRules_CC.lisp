@@ -165,7 +165,9 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; via ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	  
 	  ; Ras activates Erk via Raf.
-          ((ONT::EVENT ?ev ?type :AGENT ?!ag :AFFECTED ?!obj :MODS (?!m))
+
+	  #|
+	  ((ONT::EVENT ?ev ?type :AGENT ?!ag :AFFECTED ?!obj :MODS (?!m))
 	   (ONT::F ?!m ONT::OBJ-IN-PATH :VAL ?!mVal)
 	   (ONT::TERM ?!mVal ?!type)   
            -via>
@@ -195,26 +197,27 @@
             )
 	   |#
           )
+	  |#
 
           ((ONT::EVENT ?ev ?type :AGENT ?!ag :AFFECTED ?!obj :MODS (?!m))
 	   (ONT::F ?!m ONT::OBJ-IN-PATH :GROUND ?!mVal)
 	   (ONT::TERM ?!mVal ?!type)   
-           -via-gb>
+           -via-gd>
            100
            (ONT::EVENT *1 ONT::MODULATE
-            :rule -via-A-gb
+            :rule -via-A-gd
 	    :AGENT ?!ag
             :AFFECTED ?!mVal
 	    :TYPE ONT::CONTROL-MANAGE ; this is invented---there is nothing corresponding to this event in the LF
             )
 	   (ONT::EVENT *2 ONT::MODULATE
-	    :rule -via-B-gb
+	    :rule -via-B-gd
 	    :AGENT ?!mVal
 	    :AFFECTED ?!obj
 	    :TYPE ONT::CONTROL-MANAGE ; this is invented---there is nothing corresponding to this event in the LF
 	    )
            (ONT::CC *3 ONT::BY-MEANS-OF
-            :rule -via-C-gb
+            :rule -via-C-gd
 	    :factor-sequence (*1 *2)
             :OUTCOME ?ev
             )
@@ -229,7 +232,9 @@
 
 	  
 	  ; Ras binds to Raf via S338.  
-          ((ONT::EVENT ?ev ONT::BIND :AGENT ?!ag :AFFECTED ?!obj :MODS (?!m))
+
+	  #|
+	  ((ONT::EVENT ?ev ONT::BIND :AGENT ?!ag :AFFECTED ?!obj :MODS (?!m))
 	   (ONT::F ?!m (:* ONT::OBJ-IN-PATH ?!w) :VAL ?!locVal)
            (ONT::TERM ?!locVal (? locType ONT::MOLECULAR-SITE ONT::MOLECULAR-DOMAIN ONT::AMINO-ACID ONT::RESIDUE ONT::TERMINUS))
            -via2>
@@ -240,6 +245,7 @@
 	    :site ?!locVal
             )
 	   )
+	  |#
 
           ((ONT::EVENT ?ev ONT::BIND :AGENT ?!ag :AFFECTED ?!obj :MODS (?!m))
 	   (ONT::F ?!m (:* ONT::OBJ-IN-PATH ?!w) :GROUND ?!locVal)
@@ -258,7 +264,9 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; bmo ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	  
 	  ; Ras activates Erk by binding to Raf.
-          ((ONT::EVENT ?ev ?type :AGENT ?!ag :METHOD ?!bmo :PASSIVE -)
+
+	  #|
+	  ((ONT::EVENT ?ev ?type :AGENT ?!ag :METHOD ?!bmo :PASSIVE -)
 	   (ONT::F ?!bmo ONT::BY-MEANS-OF :VAL ?!bmoVal)
 	   (ONT::EVENT ?!bmoVal ?!bmoValType :AGENT -)
            -bmo1>
@@ -274,6 +282,7 @@
 	    :AGENT ?!ag
 	    )
 	   )
+	  |#
 
           ((ONT::EVENT ?ev ?type :AGENT ?!ag :METHOD ?!bmo :PASSIVE -)
 	   (ONT::F ?!bmo ONT::BY-MEANS-OF :GROUND ?!bmoVal)
@@ -337,7 +346,9 @@
 	  |#
 	  
 	  ; Ras activates Erk by inducing the binding to Raf.
-          ((ONT::EVENT ?ev ?type :AGENT ?!ag :METHOD ?!bmo :PASSIVE -)
+
+	  #|
+	  ((ONT::EVENT ?ev ?type :AGENT ?!ag :METHOD ?!bmo :PASSIVE -)
 	   (ONT::F ?!bmo ONT::BY-MEANS-OF :VAL ?!bmoVal)
 	   (ONT::CC ?!bmoVal ?!bmoValType :FACTOR -)
            -bmo1-cc>
@@ -353,6 +364,7 @@
 	    :FACTOR ?!ag
 	    )
 	   )
+	  |#
 
           ((ONT::EVENT ?ev ?type :AGENT ?!ag :METHOD ?!bmo :PASSIVE -)
 	   (ONT::F ?!bmo ONT::BY-MEANS-OF :GROUND ?!bmoVal)
@@ -403,7 +415,9 @@
 	  ; Note: We are passing on the AFFECTED only for these events.  In general we shouldn't.
 	  ; For example: I scared him by jumping off the bridge.
 	  ; Ras activates Erk by phosphorylation.
-          ((ONT::EVENT ?ev ?type :AGENT ?!ag :AFFECTED ?!obj :METHOD ?!bmo :PASSIVE -)
+
+	  #|
+	  ((ONT::EVENT ?ev ?type :AGENT ?!ag :AFFECTED ?!obj :METHOD ?!bmo :PASSIVE -)
 	   (ONT::F ?!bmo ONT::BY-MEANS-OF :VAL ?!bmoVal)
 	   (ONT::EVENT ?!bmoVal ?!bmoValType :AGENT - :AFFECTED -)
            -bmo1b>
@@ -420,6 +434,7 @@
 	    :AFFECTED ?!obj
 	    )
 	   )
+	  |#
 
           ((ONT::EVENT ?ev ?type :AGENT ?!ag :AFFECTED ?!obj :METHOD ?!bmo :PASSIVE -)
 	   (ONT::F ?!bmo ONT::BY-MEANS-OF :GROUND ?!bmoVal)
@@ -442,7 +457,9 @@
 	  
 					; should have a rule that generates AFFECTED-RESULT too
 	  ; Raf activates Erk by being stimulated by Ras.
-          ((ONT::EVENT ?ev ?type :AGENT ?!ag :METHOD ?!bmo :PASSIVE -)
+
+	  #|
+	  ((ONT::EVENT ?ev ?type :AGENT ?!ag :METHOD ?!bmo :PASSIVE -)
 	   (ONT::F ?!bmo ONT::BY-MEANS-OF :VAL ?!bmoVal)
 	   (ONT::EVENT ?!bmoVal ?!bmoValType :PASSIVE +)
            -bmo1a>
@@ -458,6 +475,7 @@
 	    :AFFECTED ?!ag
 	    )
           )
+	  |#
 
           ((ONT::EVENT ?ev ?type :AGENT ?!ag :METHOD ?!bmo :PASSIVE -)
 	   (ONT::F ?!bmo ONT::BY-MEANS-OF :GROUND ?!bmoVal)
@@ -478,6 +496,8 @@
 
 	  
 	  ; By binding to Ras, Raf is activated.
+
+	  #|
 	  ((ONT::EVENT ?ev ?type :AFFECTED ?!obj :METHOD ?!bmo :PASSIVE +)
 	   (ONT::F ?!bmo ONT::BY-MEANS-OF :VAL ?!bmoVal)
 	   (ONT::EVENT ?!bmoVal ?!bmoValType :AGENT - :AFFECTED ?!bmoAff)
@@ -494,6 +514,7 @@
 	    :AGENT ?!obj
 	    )
           )
+	  |#
 
 	  ((ONT::EVENT ?ev ?type :AFFECTED ?!obj :METHOD ?!bmo :PASSIVE +)
 	   (ONT::F ?!bmo ONT::BY-MEANS-OF :GROUND ?!bmoVal)
@@ -516,6 +537,8 @@
 					; should have a rule that generates AFFECTED-RESULT too
 	  ; By phosphorylation, Raf is activated.
 	  ; By phosphorylation by Ras, Raf is activated.
+
+	  #|
 	  ((ONT::EVENT ?ev ?type :AFFECTED ?!obj :METHOD ?!bmo :PASSIVE +)
 	   (ONT::F ?!bmo ONT::BY-MEANS-OF :VAL ?!bmoVal)
 	   (ONT::EVENT ?!bmoVal ?!bmoValType :AFFECTED - :AFFECTED-RESULT -)
@@ -532,6 +555,7 @@
 	    :AFFECTED ?!obj
 	    )
           )
+	  |#
 
 	  ((ONT::EVENT ?ev ?type :AFFECTED ?!obj :METHOD ?!bmo :PASSIVE +)
 	   (ONT::F ?!bmo ONT::BY-MEANS-OF :GROUND ?!bmoVal)
@@ -580,6 +604,8 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; because ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 	  ; Because Ras activates Raf, Erk is stimulated.
+
+	  #|
           ((ONT::EVENT ?ev ?type :REASON ?!r)
 	   (ONT::F ?!r ONT::REASON :VAL ?!rVal)
 	   (ONT::EVENT ?!rVal ?!rValType)
@@ -592,6 +618,7 @@
 	    :TYPE ONT::REASON
             )
           )
+	  |#
 
           ((ONT::EVENT ?ev ?type :REASON ?!r)   ; "because" is not FIGURE/GROUND yet, but it would be if it is to match "due to" etc below
 	   (ONT::F ?!r ONT::REASON :GROUND ?!rVal)
@@ -608,6 +635,8 @@
 	  
 	  ; (DUE-TO is subtype of REASON; both -reason and -reason2 will fire in some cases)
 	  ; The activation of Raf is due to the stimulation of Ras.  
+
+	  #|
           ((ONT::EVENT ?ev ?type)  ; note: all free variables
 	   (ONT::F ?!r ONT::DUE-TO :OF ?ev :VAL ?!rVal)
 	   (ONT::EVENT ?!rVal ?!rValType)
@@ -620,6 +649,7 @@
 	    :TYPE ONT::DUE-TO
             )
           )
+	  |#
 
           ((ONT::EVENT ?ev ?type)  ; note: all free variables
 	   (ONT::F ?!r ONT::DUE-TO :FIGURE ?ev :GROUND ?!rVal)
@@ -639,7 +669,9 @@
 	  
 	                             ;; Not true in general?  I sat down to watch tv.  I went to the store to buy bread.
 	  ; Ras activates Raf to stimulate Erk.
-          ((ONT::EVENT ?ev ?type :REASON ?!r)
+
+	  #|
+	  ((ONT::EVENT ?ev ?type :REASON ?!r)
 	   (ONT::F ?!r ONT::PURPOSE :VAL ?!rVal)
 	   (ONT::EVENT ?!rVal ?!rValType)
            -purpose>
@@ -651,6 +683,7 @@
 	    :TYPE ONT::PURPOSE
             )
 	   )
+	  |#
 
           ((ONT::EVENT ?ev ?type :REASON ?!r)
 	   (ONT::F ?!r ONT::PURPOSE :GROUND ?!rVal)
@@ -689,6 +722,7 @@
 	   )
 	  |#
 
+	  #|
           ((ONT::EVENT ?ev ?type :REASON ?!r)
 	   (ONT::F ?!r ONT::THEREFORE :VAL ?!rVal)
 	   (ONT::EVENT ?!rVal ?!rValType)
@@ -701,6 +735,7 @@
 	    :TYPE ONT::THEREFORE
             )
 	   )
+	  |#
 
           ((ONT::EVENT ?ev ?type :REASON ?!r)
 	   (ONT::F ?!r ONT::THEREFORE :GROUND ?!rVal)
@@ -718,7 +753,9 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; result ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	  
 	  ; Raf is activated as a result of Ras stimulation.
-          ((ONT::EVENT ?ev ?type :MANNER ?!r1)
+
+	  #|
+	  ((ONT::EVENT ?ev ?type :MANNER ?!r1)
 	   (ONT::F ?!r1 ONT::MANNER :VAL ?!r2)
 	   (ONT::TERM ?!r2 ONT::OUTCOME :OF ?!r3)   ; term substitution
 	   (ONT::EVENT ?!r3 ?!r3Type)
@@ -731,6 +768,7 @@
 	    :TYPE ONT::OUTCOME
             )
 	   )
+	  |#
 
           ((ONT::EVENT ?ev ?type :MANNER ?!r1)
 	   (ONT::F ?!r1 ONT::MANNER :GROUND ?!r2)
@@ -766,6 +804,8 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; in a Ras-(in)dependent manner ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 	  ; Raf activates Erk in a Ras-dependent manner
+
+	  #|
           ((ONT::EVENT ?ev ?type :MANNER ?!r1)
 	   (ONT::F ?!r1 ONT::MANNER :VAL ?!r2)
 	   (ONT::TERM ?!r2 ?t2 :MODS (?!r3))            ; need to fix ?t2 for "way", "fashion"
@@ -783,6 +823,7 @@
 	    :NEUTRAL1 -
             )
 	   )
+	  |#
 
           ((ONT::EVENT ?ev ?type :MANNER ?!r1)
 	   (ONT::F ?!r1 ONT::MANNER :GROUND ?!r2)
@@ -865,6 +906,8 @@
 	  
 	  ; Ras activation is required for Raf stimulation.
 	  ; Ras is required for Raf stimulation.
+
+	  #|
           ((ONT::F ?ev ONT::NECESSITY :FORMAL ?!obj :REASON ?!r)
 	   ((? sp ONT::EVENT ONT::TERM) ?!obj ?!type2)
 	   (ONT::F ?!r ONT::PURPOSE :VAL ?!rVal)
@@ -881,6 +924,7 @@
 	    :TYPE ONT::NECESSITY
             )
 	   )
+	  |#
 
           ((ONT::F ?ev ONT::NECESSITY :FORMAL ?!obj :REASON ?!r)  ; This doesn't parse but let's assume it would be GROUND
 	   ((? sp ONT::EVENT ONT::TERM) ?!obj ?!type2)
@@ -905,7 +949,9 @@
 	  
 	  ; Ras/Ras stimulation suffices for the activation of Raf.
 	  ; Ras/Ras stimulation suffices to activate Raf.
-          ((ONT::F ?ev ONT::SUFFICIENCY :NEUTRAL ?!obj :REASON ?!r)
+
+	  #|
+	  ((ONT::F ?ev ONT::SUFFICIENCY :NEUTRAL ?!obj :REASON ?!r)
 	   ((? reln ONT::TERM ONT::EVENT) ?!obj ?!type2)
 	   (ONT::F ?!r ONT::PURPOSE :VAL ?!rVal)
 	   (ONT::EVENT ?!rVal ?!rValType)
@@ -921,6 +967,7 @@
 	    :TYPE ONT::SUFFICIENCY
             )
 	   )
+	  |#
 	  
           ((ONT::F ?ev ONT::SUFFICIENCY :NEUTRAL ?!obj :REASON ?!r)
 	   ((? reln ONT::TERM ONT::EVENT) ?!obj ?!type2)

@@ -14,6 +14,6 @@ if (param('lang') =~ /^(es)$/) {
 }
 print header(-type=>'text/xml', -charset=>'UTF-8');
 print qq(<?xml version="1.0" encoding="UTF-8"?>\n);
-print_synset_xml('', param('synset_offset'), param('ss_type'), $lang);
+print_synset_xml('', scalar(param('synset_offset')), scalar(param('ss_type')), $lang);
 disconnect_from_db();
 

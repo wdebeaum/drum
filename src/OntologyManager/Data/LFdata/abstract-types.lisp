@@ -177,7 +177,7 @@
 
 ;;;;;;;;;;;;;;;
 ; the group-object-abstr hierarchy is a duplicate of group-object in phys-object 
-; (Note: ONT::SHEET and ONT::QUANTITY are under GROUP-OBJECT-ABSTR too.)
+; (Note: ONT::SHEET-abstr and ONT::QUANTITY-abstr are under GROUP-OBJECT-ABSTR too.)
 ; (Note 2: wordnet mappings are identical in the two hierarchies.)
 ;;;;;;;;;;;;;;;
 
@@ -1594,7 +1594,7 @@
  )
 
 ;; layer (of ozone, chocolate), sheet (of ice, paper), slice
-(define-type ont::sheet
+(define-type ont::sheet-abstr
 ;  :parent ont::non-measure-ordered-domain
   :parent ONT::GROUP-OBJECT-abstr
   )
@@ -1614,7 +1614,7 @@
  )
 
 ;; a number/amount/quantity of X
-(define-type ONT::QUANTITY
+(define-type ONT::QUANTITY-abstr
  :wordnet-sense-keys ("measure%1:03:00" "quantity%1:03:00" "amount%1:03:00")
 ; :parent ONT::DOMAIN-PROPERTY
  :parent ONT::GROUP-OBJECT-abstr

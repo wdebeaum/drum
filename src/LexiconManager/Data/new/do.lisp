@@ -43,7 +43,8 @@
 	      (senses
 	       ((lf-parent ont::objective-influence)
 		(example "It did damage to a battery")
-		(TEMPL agent-RESULT-TO-AFFECTED-optional-TEMPL) 
+		(TEMPL agent-RESULT-TO-AFFECTED-optional-TEMPL)
+		(preference .98)
 		(meta-data :origin bee :entry-date 20040805 :change-date nil :comments portability-followup)
 		)
 	       ))

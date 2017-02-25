@@ -4105,7 +4105,8 @@
     ;; wh-term as gap
     ;; (tell me) what to do in avon, (I have) nothing to do    
  ((np (sort wh-desc)  (gap -) (mass bare) (case (? case SUB OBJ))
-	 (sem ?s-sem) (var ?npvar) (WH -) (agr ?a)
+	 ;(sem ?s-sem) (var ?npvar) (WH -) (agr ?a)
+	 (sem ?npsem) (var ?npvar) (WH -) (agr ?a)
          (lf (% description (status ?status) (VAR ?npvar) 
                 (constraint ?constraint) (sort ?npsort)
                 (sem ?npsem)  (class ?npclass) (transform ?transform)

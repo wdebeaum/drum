@@ -38,9 +38,10 @@
   (W::position
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090507 :comments nil :vn ("put-9.1") :wn ("position%2:35:00"))
-     (LF-PARENT ONT::arranging)
-     (TEMPL agent-theme-xp-templ) ; like arrange
-     (PREFERENCE 0.96)
+     ;(LF-PARENT ONT::arranging)
+     (LF-PARENT ONT::put)
+     (TEMPL agent-affected-xp-templ) ; like arrange
+     ;(PREFERENCE 0.96)
      )
     )
    )

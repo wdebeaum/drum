@@ -47,6 +47,14 @@
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL AGENT-affected-xp-TEMPL (xp (% W::pp (W::ptype W::to))))
      )
+
+    ((LF-PARENT ONT::put)
+     (meta-data :origin vn-analysis :entry-date unknown :change-date 20040617 :comments change-lf)
+     (example "stick the box in the corner")
+     (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
+     (TEMPL AGENT-AFFECTED-GOAL-TEMPL)
+     )
+    
     
     ))
   ))

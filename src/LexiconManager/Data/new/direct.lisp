@@ -8,18 +8,22 @@
   (w::direct
    (wordfeats (W::morph (:forms (-vb) :nom w::direction)))
    (senses
+    #|
     ((meta-data :origin coordops :entry-date 20070511 :change-date nil :comments nil :vn ("judgement-33"))
      (LF-PARENT ont::guiding)
      (example "team alpha will direct the activity")
      (TEMPL agent-affected-xp-templ)
      )
+    |#
     ((meta-data :origin coordops :entry-date 20070511 :change-date nil :comments nil :vn ("judgement-33"))
-     (LF-PARENT ont::guiding)
+     ;(LF-PARENT ont::guiding)
+     (LF-PARENT ont::manage)
      (example "team alpha will direct")
      (TEMPL agent-templ)
      )
 
-    ((LF-PARENT ONT::control-manage)
+    (;(LF-PARENT ONT::control-manage)
+     (LF-PARENT ont::manage)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL agent-affected-xp-templ)
      (example "the supervisor directs the crew")

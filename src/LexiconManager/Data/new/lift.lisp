@@ -25,7 +25,9 @@
  ; like raise,lower
      )
     ((example "wait until the fog lifts")
-    (lf-parent ont::disperse)
+     ;(lf-parent ont::disperse)
+     (lf-parent ont::decrease)
+     (TEMPL AFFECTED-TEMPL)
     )
   )
  )
