@@ -560,6 +560,7 @@
 
 ;; ***************************************************************
 
+#|
 ;; the idea in the document?
 (define-type ONT::spatial-loc
  :parent ONT::PREDICATE
@@ -579,6 +580,7 @@
              )
              )
  )
+|#
 
 ;; among, next to, adjacent to, nearby
 ;; the house/party around the corner, he walked around the party/the house
@@ -635,6 +637,7 @@
 	     )
  )
 
+#|
 ;; for from phrases that modify nouns, like "the girl from california" "the plane from rochester"
 (define-type ONT::source-loc
  :parent ONT::predicate
@@ -642,6 +645,7 @@
 	     (:ESSENTIAL ont::FIGURE  (f::phys-obj ))
 	     )
  )
+|#
 
 (define-type ONT::through
  :parent ONT::TRAJECTORY

@@ -22,6 +22,7 @@
    )
 ))
 
+#|
 (define-words :pos W::ADV
  :words (
    ((W::down w::to)
@@ -40,6 +41,7 @@
     )
    )
 ))
+|#
 
 (define-words :pos W::ADV
  :tags (:base500)
@@ -65,6 +67,7 @@
    )
 ))
 
+#|
 (define-words :pos W::ADV
  :words (
  ((W::DOWN w::of)
@@ -79,6 +82,7 @@
    )
 ))
 
+
 (define-words :pos W::ADV
  :words (
  ((W::down w::from)
@@ -91,3 +95,4 @@
     )
    )
 ))
+|#

@@ -27,6 +27,7 @@
    )
 ))
 
+#|
 (define-words :pos W::ADV
  :words (
     ((W::up w::from)
@@ -58,17 +59,18 @@
     )
    )   
 ))
+|#
 
 (define-words :pos W::ADV
  :tags (:base500)
  :words (
   (W::UP
    (SENSES
-    ((LF-PARENT ONT::DIRECTION)
+    ((LF-PARENT ONT::DIRECTION-UP)
      (example "the swelling is moving up his leg")
      (TEMPL BINARY-CONSTRAINT-S-TEMPL)
      )
-    ((LF-PARENT ONT::DIRECTION)
+    ((LF-PARENT ONT::DIRECTION-UP)
      (example "pan the camera UP")
      (TEMPL PARTICLE-TEMPL)
      )
@@ -83,6 +85,7 @@
    )
 ))
 
+#|
 (define-words :pos W::ADV
  :words (
   ((W::up w::of)
@@ -108,4 +111,5 @@
     )
    )
 ))
+|#
 

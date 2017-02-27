@@ -19,7 +19,8 @@
  :words (
    (W::online
    (SENSES
-    ((LF-PARENT ONT::SPATIAL-LOC)
+    (;(LF-PARENT ONT::SPATIAL-LOC)
+     (LF-PARENT ONT::CONVENTIONAL-POSITION-RELN)
      (TEMPL PRED-S-VP-TEMPL)
      (example "he went online")
      (meta-data :origin calo-ontology :entry-date 20060418 :change-date nil :comments nil)
