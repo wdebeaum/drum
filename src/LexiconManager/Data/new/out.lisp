@@ -13,15 +13,9 @@
      (example "the bridge is out")
      (templ predicative-only-adj-templ)
      )
-    ((meta-data :origin trips :entry-date 20080328 :change-date 20081028 :comments nil)
-     (LF-PARENT ONT::enough-val)
-     ;; MD: this is marked as predicative-only because you cannot say "the out sugar", and otherwise it creates ambiguities with "out" as a particle
-     (TEMPL predicative-adj-optional-xp-TEMPL (XP (% W::PP (W::Ptype W::of))))
-     (example "out of sugar" "out of breath" "out of time")
-     )
-    )
+    
    )
-))
+)))
 
 (define-words :pos W::ADV
  :words (
@@ -29,12 +23,19 @@
    (SENSES
     (;(LF-PARENT ONT::source-as-containment)
      (LF-PARENT ONT::OUTSIDE)
-     (example "it is out of the bag")
+     (example "it is out of the bag") 
      (TEMPL BINARY-CONSTRAINT-S-TEMPL)
      )
-    ((LF-PARENT ONT::situated-out)
+    ((LF-PARENT ONT::inadequate)
+     ;; MD: this is marked as predicative-only because you cannot say "the out sugar", and otherwise it creates ambiguities with "out" as a particle
+     (preference .98)
+     (TEMPL  BINARY-CONSTRAINT-S-TEMPL)
+     (example "out of sugar" "out of breath" "out of time")
+     )
+    ((LF-PARENT ONT::original-material)
+     (example "make it out of stone")
      (meta-data :origin calo-ontology :entry-date 20060126 :change-date nil :comments caloy3)
-     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
+     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
      )
     )
    )

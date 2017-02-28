@@ -450,6 +450,7 @@ separate instances of the chart/parser.")
 ;;  constit start end rhs name rule-id prob)
 
 (defun build-entry (constit start end rhs rule-id prob prob-aux first-cat)
+  ;;(format t "~%Building entry from rule ~S from ~S to ~S" rule-id start end)
   (let ((skeleton (if  *semantic-skeleton-scoring-enabled*
 		       (compute-skeleton constit))))
     (make-entry :constit constit
@@ -476,7 +477,7 @@ separate instances of the chart/parser.")
 (defvar *semantic-skeleton-map* nil)
 (defvar *var-type-map* nil)
 (defvar *semantic-skeleton-score-factor* .1)
-(defvar *essential-roles* '(ont::agent ont::agent1 ont::affected ont::affected1 ont::neutral ont::neutral1 ont::formal ont::result ont::affected-result ont::of ont::val ont::figure ont::ground))
+(defvar *essential-roles* '(ont::agent ont::agent1 ont::affected ont::affected1 ont::neutral ont::neutral1 ont::formal ont::result ont::affected-result ont::of ont::val ont::figure ont::ground ont::experiencer ont::source ont::transient-result))
 
 ;; set this variable to a set of scored skeleton debugging
 (defvar *debug-skeleton-info* 
@@ -494,9 +495,11 @@ separate instances of the chart/parser.")
 	(* prob score))))
 
 (defun lookup-ont-type-from-skeleton-map (id)
-  (cond ((symbolp id)
+  (cond ((eq id '<var>)
+	 id)
+	((symbolp id)
 	 (let ((entry (assoc id *var-type-map*)))
-	   (cadr entry)))
+	   (values (cadr entry) (caddr entry))))
 	((constit-p id)  ;; this is an IMPRO, find type directly
 	 (get-simple-type (get-value id 'w::class)))))
 
@@ -515,30 +518,39 @@ separate instances of the chart/parser.")
 		      (format t "~%~% FOUNDS SEQUENCE from constit ~S" constit)))
 	     (var (get-value lf 'w::var))
 	     (constraint (if lf (get-value lf 'w::constraint)))
-	     (role-pairs (if (and constraint (not (eq constraint '-)) 
+	     (role-pairs (if (and constraint (not (eq constraint '-))
 				  (not (var-p constraint)))
 			     (constit-feats constraint)))
-	     ;; find all bound essential roles
-	     (roles (remove-if #'(lambda (x)
-				   (var-p (cadr x)))
+	     ;; find all essential roles, convert unbound values to constant <VAR>
+	     (found-bound-role nil)
+	     (roles (mapcar #'(lambda (x)
+				   (if (var-p (cadr x)) 
+				       (list (car x) '<var>)
+				       (progn (setq found-bound-role t)
+					      x)))
 			       (remove-if-not #'(lambda (x) (member (car x) *essential-roles*))
 				   role-pairs)))
-	     (skel (build-semantic-skeleton var class roles (constit-cat constit))))
+	      ;;(xxy (format t "~% cleaned up pairs are ~S" roles))
+	     (skel (build-semantic-skeleton var complete-class (if found-bound-role roles) ;; only pass in roles if there is at least one bound value
+					    (constit-cat constit))))
 	     
 	     ;;(if roles (format t "~% sleeton map is ~S" *semantic-skeleton-map*))
 	     skel)))
       
 (defun build-semantic-skeleton (id class roles syncat)
   ;; this builds the skeleton and adds to skeleton-map and the var-map if necessary"
-  (setq class (if (consp class) (cadr class) class))
+  ;;(format t "~% Building skeleton for ~S constituent ~S with roles ~S " syncat id roles)
+  (let ((word (if (consp class) (caddr class))))
+    (setq class (if (consp class) (cadr class) class))
   (if (not (assoc id *var-type-map*))
-      (progn (push (list id class) *var-type-map*)
+      (progn (push (list id class word) *var-type-map*)
 	     (trace-msg 3 "~%pushing ~S onto var-type-match for ~S" class id)))
   (let* ((skeleton (list* class (unpack-roles roles)))
 	 (cached-skeleton (assoc skeleton *semantic-skeleton-map* :test #'equal)))
     ;; the following is for debugging - it provides a quick way to generate a chache from sentences
     (if (and *generate-skeletons* (not cached-skeleton) (> (list-length skeleton) 1))
 	(push (list skeleton 1) *semantic-skeleton-map*))
+    ;;(if cached-skeleton (format t "~%found cached info: ~S:" cached-skeleton))
     ;; if no cache, get the new value and record it in the cache
     (or cached-skeleton
 	;; a single atom with no roles gets a score of 1
@@ -547,7 +559,7 @@ separate instances of the chart/parser.")
 	(let ((res (evaluate-skeleton skeleton syncat)))
 	(push res *semantic-skeleton-map*)
 	res)
-	)))
+	))))
     
 
 (defun evaluate-skeleton (skel syncat)
@@ -574,11 +586,18 @@ separate instances of the chart/parser.")
 (defun unpack-roles (roles)
   (when roles
     (let ((rolename (keywordify (caar roles))))
-      (list* rolename
-	     (lookup-ont-type-from-skeleton-map (cadar roles))
-	     (unpack-roles (cdr roles))))))
-
-
+      (multiple-value-bind
+	    (type word)
+	  (lookup-ont-type-from-skeleton-map (cadar roles))
+	(multiple-value-bind 
+	      (rest-types rest-words)
+	    (unpack-roles (cdr roles))
+	  (values (list* rolename
+			 type
+			 rest-types)
+		  (list* rolename
+			 word
+			 rest-words)))))))
 
 #||
 (defun get-length (w start end)

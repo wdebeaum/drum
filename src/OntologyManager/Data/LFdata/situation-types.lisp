@@ -27,7 +27,7 @@
 	     (:optional ont::affected ((? aff F::SITUATION F::ABSTR-OBJ F::Phys-obj)))
 	     (:optional ont::result ((? res1 F::SITUATION F::ABSTR-OBJ)))
 	     (:optional ont::formal ((? res2 F::SITUATION F::ABSTR-OBJ)
-				     (F::type (? ftype ONT::SITUATION-ROOT ONT::PROPERTY-VAL ONT::POSITION-RELN)) ;; here for now while we decide the FORMAL/RESULT issue
+				     (F::type (? ftype ONT::SITUATION-ROOT ONT::PROPERTY-VAL));; ONT::POSITION-RELN)) ;; here for now while we decide the FORMAL/RESULT issue
 				     )))
  )
 

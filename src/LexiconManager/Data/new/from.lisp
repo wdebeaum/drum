@@ -19,6 +19,13 @@
      (example  "to go from a waking to a sleeping state")
      (preference .97) ;; prefer from-loc if applicable
      )
+    
+    ((LF-PARENT ONT::original-material)
+     (example "make it from stone")
+     (meta-data :origin calo-ontology :entry-date 20060126 :change-date nil :comments caloy3)
+     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     )
+    
     ;; for nontrajectory nouns
     ((LF-PARENT ONT::source-as-loc)
      (example "the train from atlanta" "the book from the library")

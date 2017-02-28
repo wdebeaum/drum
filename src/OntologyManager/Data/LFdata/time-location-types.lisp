@@ -445,6 +445,14 @@
              )
  )
 
+(define-type ONT::original-material
+ :parent ONT::predicate
+ :arguments ((:ESSENTIAL ONT::FIGURE
+			 (F::Situation (f::aspect f::dynamic) (f::type ont::event-of-creation)))
+             (:REQUIRED ONT::GROUND (F::Phys-obj ))
+             )
+ )
+
 (define-type ONT::resulting-state
  :parent ONT::goal-reln
  :arguments ((:ESSENTIAL ONT::FIGURE 

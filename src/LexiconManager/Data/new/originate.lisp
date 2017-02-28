@@ -12,14 +12,14 @@
       (META-DATA :ORIGIN calo-ontology :ENTRY-DATE 20060426 :CHANGE-DATE NIL
 		 :COMMENTS nil)
       (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-      (templ affected-create-templ)
+      (templ affected-templ)
       )
      ((LF-PARENT ONT::START)
       (EXAMPLE "he originated the idea")
       (META-DATA :ORIGIN calo-ontology :ENTRY-DATE 20060426 :CHANGE-DATE NIL
 		 :COMMENTS nil)
       (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-      (templ agent-affected-create-templ)
+      (templ agent-affected-xp-templ)
       )
     
     )
