@@ -271,12 +271,20 @@
     (head (s (stype how-about) (var ?v) (lf (constraint ?c)) (advbl-needed -))
           ))
 
-   ;; test: how about chasing the cat?
+   ;; test: how about chasing the cat? How about the dog?
+   ((s (stype how-about) (lf (constraint (& (content ?v)))))
+    -how-about-np>
+    (word (lex (? x how what)) (var ?v1))
+    (word (lex about)) 
+    (head (np (gap -) (var ?v) (lf ?lf) (case (? case obj -)))))
+
+   ;; test: how about you do it
    ((s (stype how-about) (lf (constraint (& (content ?v)))))
     -how-about-s>
     (word (lex (? x how what)) (var ?v1))
     (word (lex about)) 
-    (head (np (gap -) (var ?v) (lf ?lf) (case (? case obj -)))))
+    (head (S (gap -) (stype decl) (vform pres)
+	     (var ?v) (lf ?lf) (case (? case obj -)))))
 
     ;; test: how about horizontally?
     ;; test: what about from the cat?

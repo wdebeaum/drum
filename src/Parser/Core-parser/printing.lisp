@@ -4,7 +4,7 @@
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
 
-;;; Time-stamp: <Tue Feb  7 13:36:58 EST 2017 jallen>
+;;; Time-stamp: <Tue Feb 28 10:08:21 EST 2017 jallen>
 
 (in-package "PARSER")
 
@@ -1873,12 +1873,23 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
       old-role-name))
 
 (defun return-first-refinement (new-names old-role-name existing-roles)
-  (if new-names
-      (if (not (or (eq (car new-names) old-role-name) (member (car new-names) existing-roles)))
-	  (car new-names)
-	  (return-first-refinement (cdr new-names) old-role-name existing-roles))
-      old-role-name))
-					    
+  (let ((really-new-names (remove-if #'(lambda (x)
+				  (eq x old-role-name)) new-names)))
+    (cond 
+      ;; first case checks for relational roles that we can have multiple versions of
+      ((member (car really-new-names)
+		   '(:result :source :transient-result))
+	   (car really-new-names))
+      ;; otherwise we look for first one that doesn't already exist
+      ((member (car really-new-names) existing-roles)
+       (return-first-refinement really-new-names old-role-name existing-roles))
+      ;; otherwise, the first one is the answer
+      (really-new-names 
+       (car really-new-names))
+      ;; none left, retrn original name
+      (t old-role-name))))
+
+      					    
 						
 (setq *role-mapping-table*
       '(

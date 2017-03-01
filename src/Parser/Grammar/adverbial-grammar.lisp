@@ -399,7 +399,7 @@
      (ADJP VAR ATYPE SORT ARG COMP-OP PRED ARGUMENT lex headcat transform post-subcat) 
      (NUMBER VAR AGR lex headcat transform)
      (VP vform var agr neg sem subj iobj dobj comp3 part cont gap class subjvar lex headcat transform subj-map tma aux template)
-     (VP- vform var agr neg sem subj iobj dobj comp3 part cont gap class subjvar lex headcat transform subj-map tma aux passive passive-map template)
+     (VP- vform var agr neg sem subj iobj dobj dobjvar comp3 part cont gap class subjvar lex headcat transform subj-map tma aux passive passive-map template)
      (S vform neg cont stype gap sem subjvar dobjvar var  lex headcat transform subj)
      (N1 case VAR AGR MASS SEM Changeagr class reln sort lex headcat transform set-restr)
      (NP case VAR AGR MASS SEM Changeagr class reln sort lex headcat transform status)
@@ -487,7 +487,7 @@
 		(ellipsis -)
 		))
 
-     (advbl (ATYPE POST) (ARGUMENT (% S (sem ?sem) (subjvar ?subjvar))) (GAP -)
+     (advbl (particle -) (ATYPE POST) (ARGUMENT (% S (sem ?sem) (subjvar ?subjvar))) (GAP -)
       ;;(subjvar ?subjvar)   ;Not sure why this was here - maybe for purpose clauses. Leaving it in causes many parses to fail as the SUBJVAR in the new VP is wrecked
      ;; the SUBJVAR is required in the argument to be able to pass in the subject for things like "the dog walked barking".
       (ARG ?v) (VAR ?mod)
@@ -582,17 +582,18 @@
       (ARG ?npvar) (VAR ?mod)
       ;;(role ?advrole) 
       )
-     (add-to-conjunct (val (MOD ?mod)) (old ?con) (new ?new))
+     (add-to-conjunct (val (RESULT ?mod)) (old ?con) (new ?new))
      )
 
     
     ;;  resultative construction using adverbs: e.g., sweep the dust into the corner
+    ;; only allow one of these
     ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
 ;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
-      (advbl-needed -) (complex +) (GAP ?gap)
+      (advbl-needed -) (complex +) (GAP ?gap) (result-present +)
       )
-     -vp-result-advbl>  
+     -vp-result-advbl-no-particle>  
      (head (vp- (VAR ?v) 
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		(DOBJ (% NP (Var ?npvar) (sem ?sem)))
@@ -612,12 +613,42 @@
       (ARG ?npvar) (VAR ?mod)
       ;;(role ?advrole) 
       )
-     (add-to-conjunct (val (MOD ?mod)) (old ?con) (new ?new))
+     (add-to-conjunct (val (RESULT ?mod)) (old ?con) (new ?new))
      )
 
-;; to kill by immersing in water
- ((vp- (constraint ?new) (tma ?tma) (class ?class) (sem ?sem) (var ?v)
+    ;; put the box down in the corner
+    ;;  we can allow two RESULTS if the first one is a particle
+     ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
+;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
+      (advbl-needed -) (complex +) (GAP ?gap) ;(result-present +)
+      )
+     -vp-result-advbl-particle>  
+     (head (vp- (VAR ?v) (particle +)
+		(seq -)  ;;  post mods to conjoined VPs is very rare
+		(DOBJ (% NP (Var ?npvar) (sem ?sem)))
+		(constraint ?con) (tma ?tma) (result-present -)
+		;;(subjvar ?subjvar)
+		;;(aux -) 
+		(gap ?gap)
+		(ellipsis -)
+		))
+
+     (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
+			 (sem ?sem))) (GAP -)
+      ;; (subjvar ?subjvar)
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln))))
+;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
+      (SET-MODIFIER -)  ;; mainly eliminate numbers 
+      (ARG ?npvar) (VAR ?mod)
+      ;;(role ?advrole) 
+      )
+     (add-to-conjunct (val (RESULT ?mod)) (old ?con) (new ?new))
+     )
+
+    ;; to kill by immersing in water
+    ((vp- (constraint ?new) (tma ?tma) (class ?class) (sem ?sem) (var ?v)
+      ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
       (advbl-needed -) (complex +) (GAP ?!gap)
       )
      -adv-ganged-gap-vp-post> 
@@ -767,7 +798,7 @@
     ;; TEST: The dog at the store.
     ;; TEST: The route from the house to the store.
     ((N1 (RESTR ?new) (POSTADVBL +) (COMPLEX +)) 
-     -adv-np-post> .98
+     -adv-np-post> 
      (head (N1 (VAR ?v1) ;; (POSTADVBL -) 
 	    (SEM ?argsem)  (RESTR ?restr) ;;(gerund -)   Have to allow gerunds e.g., the debating at the house.
 	    (post-subcat -) (SORT PRED)

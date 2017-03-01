@@ -202,7 +202,13 @@
       ((ONT::SPEECHACT ?!xx ONT::SA_REQUEST-COMMENT :CONTENT ?!v)
        -request-comment>
        (ONT::REQUEST-COMMENT :who *USER* :to *ME* :what ?!v))
-      
+
+   ;; how about you do it  -- if the argument is a sentence we make it a propose
+   ((ONT::SPEECHACT ?!xx ONT::SA_REQUEST-COMMENT :CONTENT ?!v)
+    (ONT::F ?!v ONT::EVENT-OF-ACTION)
+    -request-comment-as-propose>
+    (ONT::PROPOSE :who *USER* :to *ME* :what ?!v))
+   
       ;; e.g., Fill in the author field.   And the title field.
       ((ONT::SPEECHACT ?!xx ONT::SA_IDENTIFY :CONTENT ?!v :mods (?!m))
        (ONT::F ?!m ONT::CONJUNCT)

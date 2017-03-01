@@ -2536,7 +2536,7 @@
  :parent ONT::cause-effect
  :sem (F::Situation (F::Aspect F::Dynamic))
  :arguments ( ;; run the script/program
-	     (:optional ont::neutral ((? thm f::abstr-obj f::situation)))
+	     (:optional ont::neutral ((? thm f::abstr-obj f::situation) (f::type (? tt ONT::PROCEDURE ONT::EVENT-OF-ACTION ))))
 	     )
  )
 
