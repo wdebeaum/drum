@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.68 2017/02/14 23:11:33 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.69 2017/03/01 23:40:40 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -731,6 +731,14 @@ public class DrumGUI extends StandardTripsModule {
      */
     private void setCommonTaskParameters(KQMLPerformative msg, KQMLList content, boolean reply_when_done,
             boolean reply_with_ekb) {
+        // task has a callback?
+        if (msg.getParameter(":reply-with") != null) {
+            Debug.info("New task (" + msg.getParameter(":reply-with") + ")");
+            taskRequest = msg;
+        } else {
+            taskRequest = null;
+            Debug.info("New task (no callback)");
+        }
         // last task?
         KQMLObject exitWhenDoneObj = content.getKeywordArg(":exit-when-done");
         if (exitWhenDoneObj != null) {
@@ -739,6 +747,7 @@ public class DrumGUI extends StandardTripsModule {
             exitWhenDone = false;
         }
         // task needs ekb at the end?
+        replyWithEKB = false;
         KQMLObject replyWithEKBObj = content.getKeywordArg(":reply-with-ekb");
         if (replyWithEKBObj != null) {
             replyWithEKB = StringUtils.stringToBoolean(replyWithEKBObj.toString());
@@ -746,19 +755,12 @@ public class DrumGUI extends StandardTripsModule {
             replyWithEKB = reply_with_ekb;
         }
         // task reply at the end?
+        replyWhenDone = false;
         KQMLObject replyWhenDoneObj = content.getKeywordArg(":reply-when-done");
         if (replyWhenDoneObj != null) {
             replyWhenDone = StringUtils.stringToBoolean(replyWhenDoneObj.toString());
         } else {
             replyWhenDone = reply_when_done || replyWithEKB;
-        }
-        // task has a callback?
-        if (msg.getParameter(":reply-with") != null) {
-            Debug.info("New task (" + msg.getParameter(":reply-with") + ")");
-            taskRequest = msg;
-        } else {
-            taskRequest = null;
-            Debug.info("New task (no callback)");
         }
     }
 
@@ -809,7 +811,7 @@ public class DrumGUI extends StandardTripsModule {
         kb.setID(filename);
 
         // send accepted?
-        if (!replyWhenDone)
+        if ((taskRequest != null) && !replyWhenDone)
             try {
                 sendAcceptedTask();
             } catch (Exception e) {
@@ -863,7 +865,7 @@ public class DrumGUI extends StandardTripsModule {
         kb.setID(basename);
 
         // send accepted?
-        if (!replyWhenDone)
+        if ((taskRequest != null) && !replyWhenDone)
             try {
                 sendAcceptedTask();
             } catch (Exception e) {
@@ -922,7 +924,7 @@ public class DrumGUI extends StandardTripsModule {
             kb.setID(ekb_id);
 
             // send accepted?
-            if (!replyWhenDone)
+            if ((taskRequest != null) && !replyWhenDone)
                 try {
                     sendAcceptedTask();
                 } catch (Exception e) {
@@ -1040,7 +1042,7 @@ public class DrumGUI extends StandardTripsModule {
         }
 
         // send accepted?
-        if (!replyWhenDone)
+        if ((taskRequest != null) && !replyWhenDone)
             try {
                 sendAcceptedTask();
             } catch (Exception e) {

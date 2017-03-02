@@ -1476,7 +1476,7 @@
     ((N1 (RESTR ?new) (SORT ?sort) (sem ?sem) (class (? c ONT::REFERENTIAL-SEM))
       (N-N-MOD +) (QUAL -) (relc -) (subcat ?subcat) (gap ?gap))
       
-     -n-sing-n1-> 0.96 ;; prevent this from happening too often
+     -n-sing-n1-> 0.98 ;; prevent this from happening too often
      (n1 (AGR 3s) (abbrev -) (generated -)
         (var ?v1) (restr ?modr)  (gerund -)   ;; we expect gerunds as modifiers to be adjectives, not N1
 	;;  removed this to handle things like "computing services"

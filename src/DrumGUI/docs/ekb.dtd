@@ -3,7 +3,7 @@
 <!-- DTD schema for the EKB
 
 Author: Lucian Galescu <lgalescu@ihmc.us> 03/04/2016
-$Id: ekb.dtd,v 1.13 2017/02/14 23:11:34 lgalescu Exp $
+$Id: ekb.dtd,v 1.14 2017/03/01 23:40:51 lgalescu Exp $
 
 When the EKB is used for annotation, textual elements must be present (eg, <input>, <text>, @start, @end, @uttnum, @paragraph). 
 
@@ -71,7 +71,7 @@ Structural definition of the EKB data and metadata.
 
 <!-- 2.1 ROOT ELEMENT
 
-@attr id	An identifier for the input data (may be empty).
+@attr id	A textual identifier for the input data (may be empty). 
 @attr complete	A boolean; false iff input data was not processed completely.
 @attr timestamp A Datetime timestamp.
 -->
@@ -82,7 +82,7 @@ Structural definition of the EKB data and metadata.
   timestamp %datetime; #IMPLIED>
 
 <!-- 2.2 Textual input -->
-<!ELEMENT input (paragraphs,sentences)>
+<!ELEMENT input (paragraphs?,sentences?)>
 <!ATTLIST input
   type %doctype; #IMPLIED>
 
@@ -91,7 +91,7 @@ Structural definition of the EKB data and metadata.
 @fixme Documents are called 'paragraphs' for historical reasons. In the future
        I may change this, and call input units 'documents' instead.
 -->
-<!ELEMENT paragraphs (paragraph)+>
+<!ELEMENT paragraphs (paragraph)*>
 <!-- Input document.
 
 @attr id	A unique document identifier.
@@ -106,7 +106,7 @@ Structural definition of the EKB data and metadata.
   sec-type %sectype; #IMPLIED>
 
 <!-- Sentences derived from the input documents -->
-<!ELEMENT sentences (sentence)+>
+<!ELEMENT sentences (sentence)*>
 <!-- Input sentence
 
 @attr id	A unique sentence identifier (typically a number).
@@ -122,7 +122,8 @@ Structural definition of the EKB data and metadata.
 <!-- Entities
 
 @attr id	A unique identifier.
-@attr refid An identifier (or a list of them, separated by commas) from which this term has been derived.
+@attr refid	An identifier (or a list of them, separated by commas) from
+                which this term has been derived. 
 @attr dbid	An identifier linking the entity to entities in external
                 ontologies or databases. 
 @attr paragraph	Id of the document this entity was extracted from.
@@ -136,16 +137,16 @@ Structural definition of the EKB data and metadata.
 
 @fixme Modifiers ('mods') change the meaning of the 'type'. As such, I
        probably should move them under 'type'. Applies to all assertions!
-@fixme The dbid attribute is kludgy; I should replace it with an 'xref' element.
+@fixme The 'dbid' attribute is not necessary anymore. Should become obsolete!
 @fixme I'm not sure why a mutation is a different type of TERM; I suppose I
        could make it into a regular one, with the mutation info under
        'features'?
 @fixme Replace :utnnum with :sentence.
 -->
-<!ELEMENT TERM (type|mutation|aggregate|components|members|mods|features|name|coref|assoc-with|text)*>
+<!ELEMENT TERM (type|drum-terms|mutation|aggregate|components|members|mods|features|name|coref|assoc-with|text)*>
 <!ATTLIST TERM
   id NMTOKEN #REQUIRED
-  refid %dbid; #IMPLIED
+  refid CDATA #IMPLIED
   dbid %dbid; #IMPLIED
   paragraph NMTOKEN #IMPLIED
   uttnum CDATA #IMPLIED
@@ -155,13 +156,13 @@ Structural definition of the EKB data and metadata.
   rule CDATA #IMPLIED>
 
 <!-- Events -->
-<!ELEMENT EVENT (type|negation|polarity|force|modality|epistemic-modality|mods|
+<!ELEMENT EVENT (type|drum-terms|negation|polarity|force|modality|epistemic-modality|mods|features|
                  aggregate|
                  predicate|arg1|arg2|arg3|arg|
                  site|location|from-location|to-location|cell-line|text)*>
 <!ATTLIST EVENT
   id NMTOKEN #REQUIRED
-  refid %dbid; #IMPLIED
+  refid CDATA #IMPLIED
   start %integer; #IMPLIED
   end %integer; #IMPLIED
   uttnum CDATA #IMPLIED
@@ -173,7 +174,7 @@ Structural definition of the EKB data and metadata.
 <!ELEMENT CC (type|negation|polarity|force|modality|epistemic-modality|arg|text)*>
 <!ATTLIST CC
   id NMTOKEN #REQUIRED
-  refid %dbid; #IMPLIED
+  refid CDATA #IMPLIED
   start %integer; #IMPLIED
   end %integer; #IMPLIED
   uttnum CDATA #IMPLIED
@@ -182,10 +183,10 @@ Structural definition of the EKB data and metadata.
   rule CDATA #IMPLIED>
 
 <!-- Epistemic knowledge -->
-<!ELEMENT EPI (type|negation|polarity|force|modality|arg1|arg2|ar|text)*>
+<!ELEMENT EPI (type|negation|polarity|force|modality|arg1|arg2|arg3|arg|text)*>
 <!ATTLIST EPI
   id NMTOKEN #REQUIRED
-  refid %dbid; #IMPLIED
+  refid CDATA #IMPLIED
   start %integer; #IMPLIED
   end %integer; #IMPLIED
   uttnum CDATA #IMPLIED
@@ -197,7 +198,7 @@ Structural definition of the EKB data and metadata.
 <!ELEMENT MODALITY (type|negation|polarity|epistemic-modality|arg1|arg2|arg|text)*>
 <!ATTLIST MODALITY
   id NMTOKEN #REQUIRED
-  refid %dbid; #IMPLIED
+  refid CDATA #IMPLIED
   start %integer; #IMPLIED
   end %integer; #IMPLIED
   uttnum CDATA #IMPLIED
@@ -216,9 +217,13 @@ Such a term represent an aggregate, via a logical operator, of other terms.
 <!ATTLIST aggregate
   operator NMTOKEN #REQUIRED>
 
-<!-- Members of a protein family 
+<!-- Members of a protein family
+@attr type	Ont type for all members (probably always "ONT::PROTEIN").
 -->
 <!ELEMENT members (member)+>
+<!ATTLIST members
+  type NMTOKEN #IMPLIED
+>
 
 <!-- Components of a molecular complex 
 Such a term represents a set of component parts, each being another term.
@@ -243,13 +248,48 @@ For protein families, members are identified by cross-references to other resour
   dbid %dbid; #IMPLIED
   type NMTOKEN #IMPLIED>
 
+<!-- Grounding terms
+List of terms grounded in specific bioresources.
+-->
+<!ELEMENT drum-terms (drum-term)+>
+<!-- A grounding term for an entity
+@attr dbid	Identifier in a specific resource.
+@attr name	Accepted name for the term
+@attr match-score	A real number (between 0.0 and 1.0); signifies how
+                        closely the entity name matches the name(s) of this
+			particular term.
+@attr matched-name	The name for the term that most closely matches the
+                        entity name.
+-->
+<!ELEMENT drum-term (types|xrefs|species|members)*>
+<!ATTLIST drum-term
+  dbid %dbid; #IMPLIED
+  name CDATA #IMPLIED
+  match-score CDATA #IMPLIED
+  matched-name CDATA #IMPLIED>
+<!-- Drum term types
+-->
+<!ELEMENT types (type)+>
+<!-- Cross references
+-->
+<!ELEMENT xrefs (xref)+>
+<!-- A cross reference
+A link between a drum term and a term in a different resource.
+-->
+<!ELEMENT xref EMPTY>
+<!ATTLIST xref
+  dbid %dbid; #REQUIRED>
+<!-- Species (organism)
+-->
+<!ELEMENT species (#PCDATA)>
+
 <!-- Assertion or property type.
 Common to: all entities, predicates, most features, etc.
 Generally, this is an onttype, but in some cases it's a regular string.
 
 @fixme It probably should be always an onttype.
 -->
-<!ELEMENT type (#PCDATA)>
+<!ELEMENT type (%onttype;)>
 
 <!-- Modifiers
 Note: At least one modifier must be present!
@@ -261,8 +301,9 @@ Common to: TERM, EVENT.
 Common to: TERM and EVENT.
 
 @fixme: Different representations for TERM and EVENT: why?
+@fixme: I don't think we need start and end attributes
 -->
-<!ELEMENT degree (type,(value|text))>
+<!ELEMENT degree (type|value|text)*>
 <!ATTLIST degree
   start %integer; #IMPLIED
   end %integer; #IMPLIED>
@@ -270,19 +311,26 @@ Common to: TERM and EVENT.
 <!-- Frequency modifier
 
 @fixme Shouldn't allow #PCDATA here!
+@fixme: I don't think we need start and end attributes
 -->
-<!ELEMENT frequency (#PCDATA|type|value)*>
+<!ELEMENT frequency (#PCDATA|type|value|text)*>
+<!ATTLIST frequency
+  start %integer; #IMPLIED
+  end %integer; #IMPLIED>
 
 <!-- Other modifier
 
 @fixme Should look for a more specific solution.
+@fixme Shouldn't allow #PCDATA here!
 -->
-<!ELEMENT mod (type,value)>
+<!ELEMENT mod (#PCDATA|type|value)*>
 
 <!-- Modifier value -->
 <!ELEMENT value (#PCDATA)>
 
-<!-- Entity features -->
+<!-- Event or entity features
+Only 'inevent' can appear as an event feature!
+-->
 <!ELEMENT features (active|location|mutation|site|cell-line|inevent|bound-to|ptm)*>
 
 <!-- Entity not-features -->
@@ -303,7 +351,7 @@ Values can be TRUE or FALSE.
        likely be added in the future.
 @fixme There is no need for structural elements when an id is given.
 -->
-<!ELEMENT site ((name,code,pos)|(type,text))?>
+<!ELEMENT site ((name?,code?,pos)|(type,text))?>
 <!ATTLIST site
   id NMTOKEN #IMPLIED
   start %integer; #IMPLIED
@@ -413,8 +461,8 @@ Note: This is a fixed set.
   id NMTOKEN #REQUIRED>
 
 <!-- Bound-to feature
-@id ID of term this term is bound to. May be empty, if not known.
-@event ID of the binding event.
+@id	ID of term this term is bound to. May be empty, if not known.
+@event	ID of the binding event.
 -->
 <!ELEMENT bound-to EMPTY>
 <!ATTLIST bound-to
@@ -452,12 +500,12 @@ Common to: EVENT and EPI.
 
 <!-- Coref attributes
 
-@attr id	 for the referenced element.
-@attr type reference type.
+@attr id	ID for the referenced element.
+@attr type	Reference type.
 -->
 <!ATTLIST coref
-  type NMTOKEN #REQUIRED
-  id NMTOKEN #IMPLIED>
+  id NMTOKEN #IMPLIED
+  type NMTOKEN #IMPLIED>
 
 <!-- Assoc-with feature -->
 <!ELEMENT assoc-with EMPTY>
@@ -481,7 +529,8 @@ Common to: EVENT and EPI.
 <!ATTLIST epistemic-modality
   id NMTOKEN #REQUIRED>
 
-<!-- Event predicate -->
+<!-- Event predicate
+-->
 <!ELEMENT predicate (type,text?)>
 <!ATTLIST predicate
   id NMTOKEN #IMPLIED
@@ -524,7 +573,7 @@ all events and relations.
   start %integer; #IMPLIED
   end %integer; #IMPLIED>
 
-<!ELEMENT arg3 (type?)>
+<!ELEMENT arg3 (type?,text?)>
 <!ATTLIST arg3
   id NMTOKEN #REQUIRED
   role NMTOKEN #REQUIRED
