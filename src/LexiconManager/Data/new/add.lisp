@@ -11,7 +11,7 @@
   ((LF-PARENT ont::add-include)
    (example "add a wireless card to the order" "add the oranges into the cart")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
-   (TEMPL agent-affected-GOAL-optional-TEMPL)
+   (TEMPL agent-affected-GOAL-optional-new-TEMPL)
    )
   ((meta-data :origin calo :entry-date 20050324 :change-date 20090522 :comments caloy2)
    (LF-PARENT ONT::calc-add)

@@ -1911,6 +1911,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	(ont::apply-force
 	 ((ont::to-loc ont::position-reln ont::goal-reln  ont::direction-reln) :result)
 	 ((ont::source-reln) :source)
+	 ((ont::obj-in-path ont::trajectory) :transient-result)
 	 )
 	(ont::giving
 	 ((ont::to-loc) :result)

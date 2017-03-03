@@ -821,7 +821,18 @@
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
 	(LOBJ (% W::NP) ONT::affected)
-	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln ont::position-reln))))))
+	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln ont::position-reln ont::source-reln))))))
+			   )
+	       ONT::RESULT optional)
+	))
+
+     ; this is AGENT-AFFECTED-goal-optional-TEMPL with the arg mapped to the dobj
+     ; (need to sort out the entries using AGENT-AFFECTED-goal-optional-TEMPL and AGENT-AFFECTED-goal-TEMPL)
+     (AGENT-AFFECTED-goal-optional-new-TEMPL
+       (ARGUMENTS
+	(LSUBJ (% W::NP) ONT::agent)
+	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::affected)
+	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln ont::position-reln ont::source-reln)))) (w::arg ?dobjvar)))
 			   )
 	       ONT::RESULT optional)
 	))

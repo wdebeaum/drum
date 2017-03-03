@@ -582,7 +582,7 @@
       (ARG ?npvar) (VAR ?mod)
       ;;(role ?advrole) 
       )
-     (add-to-conjunct (val (RESULT ?mod)) (old ?con) (new ?new))
+     (add-to-conjunct (val (mod ?mod)) (old ?con) (new ?new))  ; do not change the mod to RESULT!  TRANSIENT-RESULT also uses this rule
      )
 
     
@@ -607,13 +607,13 @@
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
 			 (sem ?sem))) (GAP -)
       ;; (subjvar ?subjvar)
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln))))
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln)) (F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln )))) ; take the trajectory senses instead of the position-as-extent-reln senses of words such as "across"
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
       (ARG ?npvar) (VAR ?mod)
       ;;(role ?advrole) 
       )
-     (add-to-conjunct (val (RESULT ?mod)) (old ?con) (new ?new))
+     (add-to-conjunct (val (mod ?mod)) (old ?con) (new ?new))  ; do not change the mod to RESULT!  TRANSIENT-RESULT also uses this rule
      )
 
     ;; put the box down in the corner
@@ -624,7 +624,7 @@
       (advbl-needed -) (complex +) (GAP ?gap) ;(result-present +)
       )
      -vp-result-advbl-particle>  
-     (head (vp- (VAR ?v) (particle +)
+     (head (vp- (VAR ?v) 
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		(DOBJ (% NP (Var ?npvar) (sem ?sem)))
 		(constraint ?con) (tma ?tma) (result-present -)
@@ -635,7 +635,7 @@
 		))
 
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
-			 (sem ?sem))) (GAP -)
+			 (sem ?sem))) (GAP -) (particle +)
       ;; (subjvar ?subjvar)
       (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln))))
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
@@ -803,13 +803,13 @@
 	    (SEM ?argsem)  (RESTR ?restr) ;;(gerund -)   Have to allow gerunds e.g., the debating at the house.
 	    (post-subcat -) (SORT PRED)
 	    (no-postmodifiers -) ;; exclude "the same path as the battery" and advbl attaching to "path"
-	    (particle -)  ;; exclude particles as they should attach to the verb
 	    
 	    ))
      (advbl (ATYPE POST)
       (ARGUMENT (% NP (sem ?argsem) (constraint ?c)  ))
       (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln))))
       (arg ?v1) (VAR ?mod) (WH -) (GAP -)
+      (particle -)  ;; exclude particles as they should attach to the verb
       )
      (add-to-conjunct (val (MODS ?mod)) (old ?restr) (new ?new))
      )

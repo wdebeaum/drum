@@ -284,12 +284,6 @@
 ;             )
  )
 
-; figure is linear and adjacent to ground
-; along, alongside (of)
-(define-type ont::linear-extent
- :parent ont::position-as-extent-reln
- )
-
 ; figure is distributed over ground
 ; over
 (define-type ont::pos-as-over
@@ -302,15 +296,6 @@
  :parent ont::pos-as-over
  )
 
-; figure is linear and crosses ground
-; across
-(define-type ont::pos-as-opposite
- :parent ont::position-as-extent-reln
- )
-
-(define-type ont::pos-as-around
- :parent ont::position-as-extent-reln
- )
 
 ; *********************************************
 ;
@@ -322,6 +307,22 @@
 ; ?? how do these relate to the ont::path subtree?
 (define-type ont::position-w-trajectory-reln
  :parent ont::position-reln
+ )
+
+; figure is linear and crosses ground
+; across
+(define-type ont::pos-as-opposite
+ :parent ont::position-w-trajectory-reln
+ )
+
+(define-type ont::pos-as-around
+ :parent ont::position-w-trajectory-reln
+ )
+
+; figure is linear and adjacent to ground
+; along, alongside (of)
+(define-type ont::linear-extent
+ :parent ont::position-w-trajectory-reln
  )
 
 ; ground is in the trajectory
