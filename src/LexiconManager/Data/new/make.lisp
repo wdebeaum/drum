@@ -28,6 +28,7 @@
      (LF-PARENT ONT::transformation) ;; GUM change new parent 20121027
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "make that triangle a big triangle")
+     (preference .98)
      (TEMPL AGENT-affected-RESULT-TEMPL)
      (meta-data :origin fruitcarts :entry-date 20050427 :change-date nil :comments fruitcart-11-4)
      )

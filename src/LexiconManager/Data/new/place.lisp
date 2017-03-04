@@ -27,6 +27,7 @@
     ((LF-PARENT ONT::put)
      (meta-data :origin plow :entry-date 20050318 :change-date nil :comments nil)
      (example "place the book on the table")
+     (TEMPL AGENT-AFFECTED-GOAL-TEMPL)
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      )
     )
