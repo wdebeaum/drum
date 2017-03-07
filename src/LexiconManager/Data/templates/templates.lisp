@@ -65,14 +65,17 @@
     
       (AGENT-goal-XP-TEMPL
        (ARGUMENTS
-	(LSUBJ (% W::NP) ONT::AGENT)
+	(LSUBJ  (% W::NP) ONT::AGENT)
 	(LOBJ (:parameter xp (:default (% W::NP))) ONT::RESULT)
 	))
 
       (AGENT-goal-optional-TEMPL
        (ARGUMENTS
-	(LSUBJ (% W::NP) ONT::AGENT)
-	(LOBJ (:parameter xp (:default (% W::NP))) ONT::RESULT optional)
+	(LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::AGENT)
+	(LCOMP (:parameter xp (:default (% W::ADVBL))
+			  (:required (W::argument (% W::np (W::sem ?lsubjsem) 
+					     (W::lex ?lsubjlex) (W::var ?lsubjvar)))))
+	      ONT::RESULT optional)
 	))
 
       (theme-goal-XP-TEMPL
@@ -822,7 +825,8 @@
 	(LSUBJ (% W::NP) ONT::agent)
 	(LOBJ (% W::NP) ONT::affected)
 	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln ont::position-reln ont::source-reln))))))
-			   )
+			   (:required (W::argument (% W::np (W::sem ?objsem) 
+					     (W::lex ?objlex) (W::var ?objvar)))))
 	       ONT::RESULT optional)
 	))
 
@@ -2008,6 +2012,13 @@
                     (W::lex ?lsubjlex) (W::var ?lsubjvar))))) ont::formal)
     ))
 
+  (agent-effect-SUBJCONTROL-TEMPL
+   (ARGUMENTS
+    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::agent)
+    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:require d(W::subj (% W::np (W::sem ?lsubjsem) 
+                    (W::lex ?lsubjlex) (W::var ?lsubjvar))))) ont::formal)
+    ))
+
   (affected-theme-SUBJCONTROL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::affected)
@@ -2171,7 +2182,7 @@
 (neutral-EFFECT-SUBJCONTROL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::neutral)
-    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) 
+    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to)))
 		       (:required (W::subj (% W::np (W::sem ?lsubjsem) 
 					     (W::lex ?lsubjlex) (W::var ?lsubjvar))))) ONT::FORMAL)
     ))
@@ -2259,6 +2270,13 @@
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::neutral)
     (LOBJ (:parameter xp (:default (% W::NP))) ONT::neutral1)
+    (LCOMP (:parameter xp2 (:default(% W::ADJP (w::set-modifier -)))) ont::formal optional)
+    ))
+
+(experiencer-neutral-adj-predicate-optional-templ		
+   (ARGUMENTS
+    (LSUBJ (% W::NP) ONT::experiencer)
+    (LOBJ (:parameter xp (:default (% W::NP))) ONT::neutral)
     (LCOMP (:parameter xp2 (:default(% W::ADJP (w::set-modifier -)))) ont::formal optional)
     ))
 

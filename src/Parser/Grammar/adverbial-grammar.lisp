@@ -505,6 +505,7 @@
      (head (vp- (VAR ?v) 
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		(DOBJ (% NP (Var ?npvar) (sem ?sem)))
+		(COMP3 (% -))
 		(constraint ?con) (tma ?tma) (result-present -)
 		;;(subjvar ?subjvar)
 		;;(aux -)   c.f., It had gone bad
@@ -597,6 +598,7 @@
      (head (vp- (VAR ?v) 
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		(DOBJ (% NP (Var ?npvar) (sem ?sem)))
+		(COMP3 (% -))
 		(constraint ?con) (tma ?tma) (result-present -)
 		;;(subjvar ?subjvar)
 		;;(aux -) 

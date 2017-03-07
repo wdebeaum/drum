@@ -20,7 +20,7 @@
    (SENSES
     ((EXAMPLE "this projector is specifically geared for home theater")
      (LF-PARENT ONT::ACCOMMODATE)
-     (TEMPL agent-affected-theme-TEMPL (xp (% W::pp (W::ptype (? pt W::for w::to)))))
+     (TEMPL agent-affected-xp-TEMPL)
      (meta-data :origin calo :entry-date 20050527 :change-date nil :comments projector-purchasing)
      )
     ))

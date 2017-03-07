@@ -2521,7 +2521,7 @@
  :parent ONT::CAUSE-EFFECT
  :sem (F::situation (F::Aspect F::Dynamic))
  :arguments ((:REQUIRED ONT::AFFECTED ((? AFF F::PHYS-OBJ F::ABSTR-OBJ)))
-	     (:REQUIRED ONT::formal ((? eff F::ABSTR-OBJ f::situation)))
+	     (:REQUIRED ONT::formal (f::situation (f::type ont::event-of-action)))
              ;(:ESSENTIAL ONT::Stative ((? stts F::situation)))
              )
  )
@@ -3450,7 +3450,7 @@
              ;;; Part-2 or Parts
              (:OPTIONAL ONT::affected1 (F::Phys-obj (f::intentional -)))
              ;;; Whole
-             (:ESSENTIAL ONT::Result (F::Phys-obj))
+             (:ESSENTIAL ONT::Result (F::Abstr-obj (f::type (? pred ONT::PREDICATE ONT::POSITION-RELN))))
              ;;; My definition - anything that joins
 ;             (:OPTIONAL ONT::Instrument (F::phys-obj (F::intentional -)))
              ;;; if there is a spatial component, the location of a join
@@ -3959,7 +3959,7 @@
  :wordnet-sense-keys ("submit%2:32:01" "subject%2:32:04")
  :parent ONT::giving
  :sem (F::situation)
- :arguments ((:REQUIRED ONT::affected ((? oc F::Phys-obj F::Abstr-obj f::situation)))
+ :arguments ((:REQUIRED ONT::affected ((? oc F::Phys-obj F::Abstr-obj)))
 	     (:REQUIRED ONT::Agent)
              )
  )

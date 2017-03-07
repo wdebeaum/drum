@@ -12,7 +12,10 @@
      )
     ;;;;; expletive it
     ((LF ONT::EXPLETIVE)
-     (non-hierarchy-lf t)(SYNTAX (W::CASE W::SUB) (W::expletive +))
+     (preference .98)
+     (non-hierarchy-lf t)
+     (SYNTAX (W::CASE W::SUB) 
+	     (W::expletive +))
      )
     )
    )

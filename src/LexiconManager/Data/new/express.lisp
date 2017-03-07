@@ -20,7 +20,7 @@
       (meta-data :origin calo-ontology :entry-date 20051209 :change-date 20090506 :comments Express)
       ;; this verb doesn't participate in the alternation
       (TEMPL agent-theme-to-addressee-optional-templ)
-      (PREFERENCE 0.98)
+      ;;(PREFERENCE 0.98)
       )
           
      ((meta-data :origin BOB :entry-date 20141212 :change-date nil :comments nil)

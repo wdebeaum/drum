@@ -362,12 +362,10 @@
 
 ;; in that event
 (define-type ONT::situated-in
- :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
-	     ;(:REQUIRED ONT::GROUND (F::situation))
-            #|| (:REQUIRED ONT::GROUND ((? at F::abstr-obj F::situation) (F::type (? t ONT::SITUATION-ROOT ONT::DOMAIN ONT::SCALE)))) ; abstr-obj for ONT::DOMAIN/SCALE, e.g., "large in size"
-	     ||# 
-	     ;; SITUATED-IN shouldn't be used for scales!
+ :parent ONT::SITUATION-OBJECT-MODIFIER
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? xxx F::Situation 
+					 F::PHYS-OBJ)))
+	   	     ;; SITUATED-IN shouldn't be used for scales!
 	     (:REQUIRED ONT::GROUND (F::situation (F::type (? t ONT::SITUATION-ROOT))))
              )
  )
@@ -375,7 +373,7 @@
 ;; out of the meeting
 (define-type ONT::situated-out
  :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? xxx F::Situation F::PHYS-OBJ)))
              (:REQUIRED ONT::GROUND (F::situation))
              )
  )

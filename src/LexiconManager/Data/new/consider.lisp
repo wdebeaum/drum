@@ -13,7 +13,7 @@
      )
     ((LF-PARENT ONT::believe)
      (example "he considered the speaker a genius")
-     (TEMPL neutral-neutral-adj-predicate-optional-templ)
+     (TEMPL experiencer-neutral-adj-predicate-optional-templ)
      (meta-data :origin calo :entry-date 20060124 :change-date nil :comments meeting-understanding)
      )
     )

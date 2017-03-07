@@ -33,12 +33,25 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL agent-effect-affected-objcontrol-templ (xp (% W::cp (W::ctype W::s-to))))
      )
+    ;; I got to clean the yard
+    ((LF-PARENT ONT::cause-effect)
+     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
+     (TEMPL agent-effect-subjcontrol-templ)
+     )
+
+    ((LF-PARENT ONT::cause-effect) ;; GUM change new parent 20121027
+     (example "he got them confused")
+     (meta-data :origin medadvisor :entry-date 20020814 :change-date nil :comments nil)
+     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
+     (TEMPL agent-affected-effect-objcontrol-pred-templ)
+     )
   
     ((lf-parent ont::acquire)
      (example "get the book used")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic) (F::trajectory -))
      (TEMPL agent-affected-objcontrol-pred-templ)
      )
+
     ((LF-PARENT ONT::BECOME)
      (meta-data :origin medadvisor :entry-date 20020814 :change-date nil :comments nil)
      (example "he gets nauseous")
@@ -49,12 +62,7 @@
      (TEMPL agent-theme-xp-templ)
      (PREFERENCE 0.97)
      )
-    ((LF-PARENT ONT::cause-effect) ;; GUM change new parent 20121027
-     (example "he got them confused")
-     (meta-data :origin medadvisor :entry-date 20020814 :change-date nil :comments nil)
-     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-affected-effect-objcontrol-pred-templ)
-     )
+    
     ((LF-PARENT ONT::acquire)
      (example "he got the tapes")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
@@ -98,9 +106,11 @@
      )
     )
     )
-))
+   ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+
+
+#||(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
  :words (
   ((W::get (W::off))
    (wordfeats (W::morph (:forms (-vb) :ing W::getting :past W::got :pastpart W::gotten)))
@@ -113,7 +123,7 @@
      )
     )
    )
-))
+))||#
 
 (define-words :pos W::v :templ AGENT-affected-XP-TEMPL
  :words (

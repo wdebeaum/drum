@@ -416,10 +416,9 @@
  :words (
   (W::IN
    (SENSES
-    ;; takes an event ont::of
     ((LF-PARENT ONT::situated-in)
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
-     (example "in that case" "in that event" "in the meeting" "in that price range")
+     (example "in that event" "in the meeting")
      )
     #||((LF-PARENT ONT::time-deadline-rel)
      (TEMPL BINARY-CONSTRAINT-adj-postpos-TEMPL)
@@ -447,7 +446,7 @@
      (TEMPL BINARY-CONSTRAINT-S-TEMPL)
      )
     #||((LF-PARENT ONT::TIME-deadline-rel)
-     (TEMPL BINARY-CONSTRAINT-S-TEstimeMPL)
+     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
      (example "he will run in 5 minutes")
      )||#
     ;; takes a phys-obj ont::of
