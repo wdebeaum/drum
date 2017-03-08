@@ -13,10 +13,12 @@
      (meta-data :origin calo :entry-date 20040507 :change-date nil :comments calo-y1variants)
      )
     ((LF-PARENT ONT::UP)
-     (TEMPL BINARY-CONSTRAINT-S-or-NP-TEMPL)
+     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      (meta-data :origin plot :entry-date 20080609 :change-date nil :comments nil)
      (example "let's practice up to here" "all the way up to my shins")
      )
+
+    
 ;; 3/2011 removing sit-val role for event-time-rel
 ;    ((LF-PARENT ONT::event-time-rel)
 ;     (example "practice up to this step")
@@ -76,10 +78,16 @@
      )
     
     ((LF-PARENT ONT::SCALE-RELATION)
-     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
+     (TEMPL PREDICATIVE-ONLY-ADJ-TEMPL)
      (example "his weight / the temperature is up (X)")
      (SYNTAX (W::ALLOW-DELETED-COMP +) (w::degree-adv +))
      (meta-data :origin cardiac :entry-date 20080428 :change-date nil :comments nil)
+     )
+
+    ((LF-PARENT ONT::COMPLETELY)
+     (TEMPL PARTICLE-MANNER-TEMPL)
+     (meta-data :origin plot :entry-date 20080609 :change-date nil :comments nil)
+     (example "let's practice up to here" "all the way up to my shins")
      )
     )
    )

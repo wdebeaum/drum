@@ -21,7 +21,7 @@
     ((ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf) (VAR ?v) (constraint ?newc);(CONSTRAINT (& (?!argmap ?arg)))
                               (sem ?sem) (transform ?transform)))
             ;;(SORT CONSTRAINT)
-      (role ?lf) (particle ?p)
+      (role ?lf) (particle ?p) (particle-role-map ?prm)
       ;; Myrosia 10/25/03 - this is just a stupid trick to make these go into vp-post-role rules
       ;; which ask for subcatsem
       ;; needs to be cleaned up with better role handling in the grammar
@@ -32,7 +32,7 @@
                 (VAR ?v) (SUBCAT -) (LF ?lf) (implicit-arg -) (constraint ?con)
 		(sem ($ F::ABSTR-OBJ (F::intensity ?ints) (F::orientation ?orient) (F::Scale ?scale)))
 		(comparative -) (prefix -)
-		(particle ?p)
+		(particle ?p) (particle-role-map ?prm)
 		)
       )
      (append-conjuncts (conj1 ?con) (conj2 (& (?!argmap ?arg)  (scale ?scale)

@@ -2924,7 +2924,16 @@
 
 ;;;;;  PARTICLES
   (PARTICLE-templ
-   (SYNTAX (W::SORT W::PRED) (W::ATYPE W::POST) (W::PARTICLE +))
+   (SYNTAX (W::SORT W::PRED) (W::ATYPE W::POST) (W::PARTICLE +)
+	   (W::particle-role-map W::result))
+   (ARGUMENTS
+    (ARGUMENT (% W::NP) ONT::FIGURE)
+    )
+   )
+
+  (PARTICLE-manner-templ
+   (SYNTAX (W::SORT W::PRED) (W::ATYPE W::POST) (W::PARTICLE +)
+	   (W::particle-role-map W::manner))
    (ARGUMENTS
     (ARGUMENT (% W::S) ONT::FIGURE)
     )

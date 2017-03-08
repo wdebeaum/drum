@@ -1643,7 +1643,7 @@
     )
 
    
- ;;  test: load up the oranges  ;; note: example isobsolete as up will be compositional!!!
+ ;;  test: move up the blocks
    ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar) (main +)
       (class ?c) (var ?v) 
      (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
@@ -1656,7 +1656,7 @@
      )
     -vp-compositional-particle-role> 1
     (head (v (aux -) (var ?v)
-	   (lf ?c) (sem ?sem) (sem ($ f::situation (f::type ont::situation-root)))  (vform ?tense-pro)
+	   (lf ?c) (sem ?sem) (sem ($ f::situation (f::type ont::event-of-change)))  (vform ?tense-pro)
 	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -) )) ;; note double matching required
 	   (iobj (% -))
 	   (part (% -)) ;;(part (% part))
@@ -1666,7 +1666,37 @@
 	   
 	   ))
     ;(advbl (particle +) (var ?adv-v)  (arg ?v) (argument (% s (sem ?sem))) (gap -))
-    (advbl (particle +) (var ?adv-v)  (arg ?dobjvar) (argument (% s (sem ?dobjsem))) (gap -))
+    (advbl (particle +) (particle-role-map result) (var ?adv-v) (arg ?dobjvar) 
+     (argument (% np (sem ?dobjsem))) (gap -))
+    ?dobj
+    ?comp
+    )
+
+   ;;  test: clean up your room
+   ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar) (main +)
+      (class ?c) (var ?v) 
+     (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+		      (lcomp ?compvar)
+		      (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
+		      (?iobj-map ?iobjvar) (?comp3-map ?compvar)
+		      (manner ?adv-v)
+		      ))
+     (postadvbl -)
+     )
+    -vp-compositional-particle-manner-role> 1
+    (head (v (aux -) (var ?v)
+	   (lf ?c) (sem ?sem) (sem ($ f::situation (f::type ont::event-of-change)))  (vform ?tense-pro)
+	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -) )) ;; note double matching required
+	   (iobj (% -))
+	   (part (% -)) ;;(part (% part))
+	   (dobj ?dobj)			(dobj (% ?s3 (var ?dobjvar) (sem ?dobjsem) (case (? dcase obj -)) ))
+	   (comp3 ?comp)		(comp3 (% ?s4 (var ?compvar) (sem ?compsem) (case (? ccase obj -))))
+	   (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
+	   
+	   ))
+    ;(advbl (particle +) (var ?adv-v)  (arg ?v) (argument (% s (sem ?sem))) (gap -))
+    (advbl (particle +) (particle-role-map manner) (var ?adv-v) (arg ?v) 
+     (argument (% s (sem ?sem))) (gap -))
     ?dobj
     ?comp
     )

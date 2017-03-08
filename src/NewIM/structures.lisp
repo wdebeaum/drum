@@ -151,7 +151,8 @@
   lf        ;; the LF just for ease of processing since its identical to whats in the LFstore
   start
   end
-  sem)
+  sem
+  notes)
 
 (defstruct ref-hyp
   id        ;; the ID of the object that this is a hypothesis for
