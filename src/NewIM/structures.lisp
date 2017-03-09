@@ -152,7 +152,7 @@
   start
   end
   sem
-  notes)
+  )
 
 (defstruct ref-hyp
   id        ;; the ID of the object that this is a hypothesis for

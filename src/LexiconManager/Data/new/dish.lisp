@@ -11,7 +11,9 @@
      (example "a dish of food")
      (meta-data :origin calo-ontology :entry-date 20060630 :change-date nil :wn ("dish%1:06:00") :comment nil)    
      )
+    ((LF-PARENT ONT::food)
+     (example "he ate a pasta dish")
+     )
     )
-   )
-))
+   )))
 

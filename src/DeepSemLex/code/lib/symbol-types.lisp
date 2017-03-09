@@ -65,6 +65,7 @@
     numerical-form	; numercal-both numerical-comp
     operator	; one-of
     particle
+    particle-role-map ; result manner (sem roles?)
     pointer
     pos		; (see deftype pos)
     poss

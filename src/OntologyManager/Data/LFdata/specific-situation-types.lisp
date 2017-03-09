@@ -2536,6 +2536,7 @@
  :parent ONT::cause-effect
  :sem (F::Situation (F::Aspect F::Dynamic))
  :arguments ( ;; run the script/program
+	     (:essential ont::agent (F::PHYS-OBJ (f::intentional +) (F::type ont::human)))
 	     (:optional ont::neutral ((? thm f::abstr-obj f::situation) (f::type (? tt ONT::PROCEDURE ONT::EVENT-OF-ACTION ))))
 	     )
  )

@@ -229,7 +229,9 @@
 		 (progn
 		   (setq s1-modified t) (setq s2-modified t)
 		   (trace-msg 1 "~%Semantic feature violation found: values ~S and ~S" v1 v2)
-		   (Setq accumulated-prob (* accumulated-prob (compute-sem-failure-penalty i v1 v2))))
+		   (if (not (eql i 1))
+		       (Setq accumulated-prob (* accumulated-prob (compute-sem-failure-penalty i v1 v2)))
+		       (trace-msg 1 "~%No penalty for the KR-TYPE feature in ~S and ~S" v1 v2)))
 		 (setq fail t)))))
          ;; general case, try unifying the standard way
          (t
@@ -257,8 +259,11 @@
 		(if (flexible-semantic-matching *chart*)
 		 (progn
 		   (setq s1-modified t) (setq s2-modified t)
-		   (trace-msg 1 "~%Semantic feature violation found")
-		   (Setq accumulated-prob (* accumulated-prob (compute-sem-failure-penalty i v1 v2))))
+		   (if (not (eql i 1))
+		     (progn
+		       (trace-msg 1 "~%Semantic feature violation found")
+		       (Setq accumulated-prob (* accumulated-prob (compute-sem-failure-penalty i v1 v2))))
+		      (trace-msg 1 "~%No penalty for the KR-TYPE feature in ~S and ~S" v1 v2)))
 		 (setq fail t)))))
 	 )))
     ;;(format t "~%Failed?: ~S:" fail)

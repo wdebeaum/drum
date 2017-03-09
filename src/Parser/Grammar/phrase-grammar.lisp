@@ -1969,7 +1969,7 @@
 	;; TEST: a dog, the dog, the dogs, some water, the five dogs
 
 
-        ((NP (LF (% description (STATUS ?spec) (VAR ?v)   ;;(SORT individual)
+        ((NP (LF (% description (STATUS ?newspec) (VAR ?v)   ;;(SORT individual)
 		    (CLASS ?c) (CONSTRAINT ?con1)
 		    (sem ?sem)  (transform ?transform)
 		    ))
@@ -1985,6 +1985,7 @@
 		(agent-nom -)   ;;  this rule can't apply to agent nominalizations directly (they must modified first using rule -agentnom1>
 		(sem ?sem) (transform ?transform)
 		))
+	 (recompute-spec (spec ?spec) (agr ?agr) (result ?newspec))
 	 ;;(add-to-conjunct (val (SIZE ?card)) (old ?setr) (new ?setr1))
 	 (append-conjuncts (conj1 ?spec-restr) (conj2 ?r) (new ?con1))
 	 )
