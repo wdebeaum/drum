@@ -606,21 +606,22 @@
 	     (dolist (this-sense sense-defs)
 	       (setq maps (word-sense-definition-mappings this-sense))
 	       (setq roles (word-sense-definition-roles this-sense))
-	       (let* ((new-entry (make-word-sense-definition
-                   :name wid
-                   :pos pos
-                   :lf `(:* ,lf ,lfform)
-                   :sem sem
-                   :boost-word nil
-                   :pref (or score .99)
-                   :syntax (combine-syntax-features (word-sense-definition-syntax this-sense) syntax)
-                   :kr-type domain-info
-		   :specialized (if domain-info t nil)
-		   :mappings maps
-		   :roles roles
-                   )))
-		 (push (make-lexicon-entry word new-entry) res)
-	       ))
+	       (if (consistent-features (word-sense-definition-syntax this-sense) syntax)
+		   (let* ((new-entry (make-word-sense-definition
+				      :name wid
+				      :pos pos
+				      :lf `(:* ,lf ,lfform)
+				      :sem sem
+				      :boost-word nil
+				      :pref (or score .99)
+				      :syntax (combine-syntax-features (word-sense-definition-syntax this-sense) syntax)
+				      :kr-type domain-info
+				      :specialized (if domain-info t nil)
+				      :mappings maps
+				      :roles roles
+				      )))
+		     (push (make-lexicon-entry word new-entry) res)
+		     )))
 	     res
 	     ))))
 
@@ -629,6 +630,19 @@
   (let ((defined-feats (mapcar #'car newfeats)))
     (append newfeats (remove-if #'(lambda (x) (member (car x) defined-feats))
 				defaultfeats))))
+
+(defun consistent-features (feats1 feats2)
+  (if feats1
+      (let* ((feat (caar feats1))
+	     (val (cadar feats1))
+	     (feats2val (cadr (assoc feat feats2))))
+	(if (or (member feat '(W::morph))  ;; some features are exempted
+		(null feats2val)
+		(equal feats2val val))
+	    (consistent-features (cdr feats1) feats2)
+	    ))
+      T))
+	
 
 (defun ing-form (word)
   "T if word ends in ING"
