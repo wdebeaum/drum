@@ -11,7 +11,7 @@
      (TEMPL agent-affected-xp-templ)
      )
     ((LF-PARENT ONT::evoke-joy)
-     (TEMPL agent-neutral-xp-templ (xp (% W::pp (W::ptype W::in)))))
+     (TEMPL affected-agent-as-comp-templ (xp (% W::pp (W::ptype W::in)))))
     )
    )
 ))

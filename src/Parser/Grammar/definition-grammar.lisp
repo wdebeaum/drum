@@ -1,7 +1,7 @@
 ;;;;
 ;;;; robust.lisp
 ;;;;
-;;;; Time-stamp: <Fri Jul 25 23:10:17 EDT 2014 jallen>
+;;;; Time-stamp: <Sat Mar  4 13:04:28 EST 2017 jallen>
 ;;;;
 
 (in-package :W)
@@ -143,7 +143,7 @@
      ((ADJP (ARG ?arg) (VAR ?v) (COMPLEX +) (atype (? atp postpositive predicative-only)) (gap ?gap)
        (argument ?argument)
       (LF (% PROP  (CLASS ?lf)
-	     (VAR ?v) (CONSTRAINT (& (subcat ?subcat) (:of ?arg) (?reln ?argv) (FUNCTN ?fn) (scale ?scale) (intensity ?ints) (orientation ?orient) 
+	     (VAR ?v) (CONSTRAINT (& (subcat ?subcat) (:figure ?arg) (?reln ?argv) (FUNCTN ?fn) (scale ?scale) (intensity ?ints) (orientation ?orient) 
 						      ))
 	     (transform ?transform) (sem ?sem)
 	     )))

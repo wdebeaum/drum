@@ -2,7 +2,7 @@
 ;;;; W::compose
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-create-templ
+(define-words :pos W::V :templ agent-affected-xp-templ
  :words (
   (W::compose
    (SENSES

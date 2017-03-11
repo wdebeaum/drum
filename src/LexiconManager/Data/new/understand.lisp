@@ -10,7 +10,6 @@
     ((LF-PARENT ONT::understand)
       (meta-data :origin "trips" :entry-date 20060315 :change-date nil :comments nil :wn ("understand%2:31:00" "understand%2:31:01"))
      (example "I understand the plan")
-     (SEM (F::Aspect F::Stage-level))
      (TEMPL experiencer-theme-xp-templ)
      )
     ((LF-PARENT ONT::KNOW)

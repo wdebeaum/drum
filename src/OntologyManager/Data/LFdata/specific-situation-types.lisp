@@ -801,6 +801,7 @@
 (define-type ONT::PULL
  :wordnet-sense-keys ("force%2:35:01" "draw%2:35:03" "pull%2:35:00" "pull%2:35:04" "trigger%2:33:00")
  :parent ONT::apply-force
+ :arguments ((:optional ONT::source (F::abstr-obj (f::type ONT::SOURCE-RELN))))
  )
 
 (define-type ONT::PUSH
@@ -2857,10 +2858,12 @@
  :sem (F::SITUATION (:required (F::Cause F::agentive) (F::Trajectory -))(:default (F::Aspect F::bounded)))
  :arguments (;;(:REQUIRED ONT::FORMAL ((? th F::Phys-obj F::Abstr-obj F::situation)))
 	     ;;(:ESSENTIAL ONT::Agent (F::Phys-obj (F::intentional +)))
-	     ;; for "An open switch creates a gap / FN: "it created fanatics during the Aphgan war"
+	     ;; for "An open switch creates a gap / FN: "it created fanatics during the Afgan war"
 	     ;; the process creates compression
 	     (:OPTIONAL ONT::agent ((? cs F::Phys-obj f::abstr-obj) ))
 	     (:essential ont::affected-result ((? aff  F::Phys-obj f::abstr-obj) 
+					       (f::type (? x ONT::PHYS-OBJECT ont::mental-construction))))
+	     (:essential ont::affected ((? aff  F::Phys-obj f::abstr-obj) 
 					       (f::type (? x ONT::PHYS-OBJECT ont::mental-construction))))
 	     (:OPTIONAL ONT::result ((? res F::Phys-obj f::abstr-obj) (F::intentional -))) ;; he made a box from paper
              )
@@ -2925,7 +2928,7 @@
 
 ;; write a book (about trucks), write your name
 (define-type ONT::write
- :wordnet-sense-keys ("create_verbally%2:36:00" "complete%2:32:00")
+ :wordnet-sense-keys ("create_verbally%2:36:00" "write%2:32:00")
  :parent ONT::CREATE
  :arguments ((:optional ont::affected-result ((? tt F::phys-obj F::abstr-obj) (F::information (? inf f::data F::information-content))))
 
@@ -2934,7 +2937,14 @@
 
 ;; 20120523 GUM change new type
 (define-type ont::author-write-burn-print_reprint_type_retype_mistype
+     :wordnet-sense-keys ("type%2:32:00" "write%2:36:01")
     :parent ont::write
+    )
+
+(define-type ont::enter-on-form
+    :wordnet-sense-keys ("complete%2:32:00")
+    :parent ont::write
+    
     )
 
 #|
@@ -3085,6 +3095,7 @@
 
 (define-type ONT::change-magnitude
  :wordnet-sense-keys ("change_magnitude%2:30:00" "change_intensity%2:39:00")
+ :arguments ((:essential ONT::scale (f::abstr-obj (F::scale ont::domain))))
  :parent ONT::adjust
  )
 
@@ -3824,9 +3835,9 @@
  :wordnet-sense-keys ("maintain%2:32:04" "keep%2:32:00" "take%1:04:00")
  :parent ONT::event-of-action
  :sem (F::situation)
- :arguments ((:optional ONT::Formal ((? oc F::Phys-obj F::Abstr-obj F::Situation)))
+ :arguments (;;(:optional ONT::Formal ((? oc F::Phys-obj F::Abstr-obj F::Situation)))
              (:REQUIRED ONT::Agent)
-	     (:optional ont::neutral (?ttype (f::information f::information-content)))
+	     (:optional ont::neutral (F::situation (f::type ont::event-of-change)))
              )
  )
 
@@ -4179,13 +4190,6 @@
     :arguments ((:optional ont::neutral (f::situation))  ;; the action that is affecting the object
 		)
     )
-
-;; undergo treatment
-(define-type ont::undergo
-    :wordnet-sense-keys ("catch_it%2:41:00" "clear%2:40:07" "come_out%2:32:00")
-    :parent ont::have-experience
-    )
-
 
 ;; Added by myrosia for "differentiate", "factorise" etc.
 (define-type ONT::function-calculation

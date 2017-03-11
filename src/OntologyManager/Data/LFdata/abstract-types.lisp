@@ -62,6 +62,7 @@
 					;	     (:optional ONT::Purpose-implicit ((? pi f::phys-obj f::abstr-obj f::situation)))
 	     (:optional ONT::REASON ((? pi f::phys-obj f::abstr-obj f::situation)))
 	     (:OPTIONAL ONT::GROUND)
+	     (:optional ont::standard)
 	     (:optional ont::norole)
              )
  )
@@ -72,6 +73,21 @@
  :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj (f::intentional +) (f::type ont::organism))
 	     ))
  )
+
+(define-type ONT::dead
+ :parent ONT::living-val
+ :wordnet-sense-keys  ("dead%3:00:01"  "dead%3:00:02")
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj (f::intentional +) (f::type ont::organism))
+	     ))
+ )
+
+(define-type ONT::alive
+ :parent ONT::living-val
+ :wordnet-sense-keys  ("live%3:00:00")
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj (f::intentional +) (f::type ont::organism))
+	     ))
+ )
+
 
 (define-type ONT::behavioral-property
  :parent ONT::property-val
@@ -2091,7 +2107,7 @@
 
 
 (define-type ONT::Physical-discrete-domain
- :wordnet-sense-keys ("conformation%1:07:00" "contour%1:07:00" "configuration%1:07:00" "form%1:07:01" "shape%1:07:00" "shape%1:03:00" "form%1:03:00")
+ :wordnet-sense-keys ("form%1:07:01" "shape%1:03:00" "form%1:03:00")
  :parent ONT::DISCRETE-DOMAIN
  :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
              )
@@ -2436,7 +2452,7 @@
 
 ;; idea
 (define-type ONT::mental-object
- :wordnet-sense-keys ("cognition%1:03:00" "knowledge%1:03:00" "noesis%1:03:00" "grounds%1:10:00" "reason%1:10:00")
+ :wordnet-sense-keys ("cognition%1:03:00" "noesis%1:03:00" "grounds%1:10:00" "reason%1:10:00")
  :parent ONT::mental-construction
 ;; :sem (F::Abstr-obj (F::container +))
  :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
@@ -2444,6 +2460,12 @@
 	     (:optional ont::FORMAL (f::situation))
              )
  )
+
+(define-type ONT::knowledge-belief
+    :wordnet-sense-keys ("knowledge%1:03:00")
+    :parent ONT::mental-construction
+    :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
+		))
 
 (define-type ONT::FEELING
     :wordnet-sense-keys ("feeling%1:03:00" "bother%1:09:00" "worry%1:09:00" "sorrow%1:09:00" "distress%1:12:02" "restlessness%1:12:00")
@@ -2659,8 +2681,15 @@
  )
 
 (define-type ont::language
+    :wordnet-sense-keys ("language%1:10:00")
  :parent ont::linguistic-object
  )
+
+
+(define-type ont::question
+    :wordnet-sense-keys ("question%1:10:00")
+    :parent ont::linguistic-object
+    )
 
 ;; prefix, suffix
 (define-type ont::linguistic-component
@@ -2680,12 +2709,14 @@
 
 ;;; there is ont::graphic-symbol; this should be related somehow
 (define-type ONT::punctuation
- :parent ONT::linguistic-object
+    :wordnet-sense-keys ("punctuation%1:10:00")
+    :parent ONT::linguistic-object
  )
 
 ;; letters of the alphabet
 (define-type ONT::letter-symbol
- :parent ONT::linguistic-object
+    :wordnet-sense-keys ("letter%1:10:01")
+    :parent ONT::linguistic-object
 ; :sem (F::Abstr-obj (F::information F::data))
  )
 
@@ -2835,13 +2866,12 @@
 ;;; ----------------------------------------------------------
 
 (define-type ONT::CONSTRAINT
- :wordnet-sense-keys ("control%1:04:00" "restriction%1:09:00" "limitation%1:09:00")
- :wordnet-sense-keys ("control%1:04:00" "restriction%1:09:00" "limitation%1:09:00")
- :parent ONT::SITUATION
- :arguments ((:OPTIONAL ONT::FIGURE)
-;	     (:optional ont::associated-information)
-             )
- )
+    :wordnet-sense-keys ( "restriction%1:09:00" "limitation%1:09:00")
+    :parent ONT::SITUATION
+    :arguments ((:OPTIONAL ONT::FIGURE)
+		(:optional ont::formal)
+		)
+    )
 
 (define-type ONT::NAME
  :parent ONT::IDENTIFICATION
@@ -4055,6 +4085,8 @@
 
 (define-type ONT::inadequate
  :parent ONT::ENOUGH-VAL
+ :arguments ((:required ONT::GROUND (f::phys-obj (f::type ont::material)))
+	     (:required ONT::FIGURE ((? xx  F::phys-obj abstr-obj))))
  ; Words: (W::SHORT W::INADEQUATE W::INSUFFICIENT)
  :wordnet-sense-keys ("inadequate%5:00:00:insufficient:00" "insufficient%3:00:00")
  ; Antonym: ONT::ADEQUATE (W::SUFFICIENT W::ADEQUATE W::ENOUGH)

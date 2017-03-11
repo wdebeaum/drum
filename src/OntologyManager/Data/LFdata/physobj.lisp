@@ -1419,8 +1419,7 @@
 ;; items in this class "stand for" something, and have ont::of arguments
 (define-type ont::direct-representation
     :parent ONT::info-holder
-    :arguments (
-;		(:optional ONT::Associated-information)
+    :arguments ((:optional ONT::formal)
 		)
     )
 

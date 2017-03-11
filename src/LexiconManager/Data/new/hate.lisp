@@ -16,7 +16,7 @@
      (meta-data :origin calo :entry-date 20050425 :change-date 20090511 :comments projector-purchasing)
      (SEM (F::Aspect F::indiv-level))
      (example "I hate to dance")
-     (TEMPL neutral-action-objcontrol-templ)
+     (TEMPL experiencer-action-objcontrol-templ)
      )
     )
    )

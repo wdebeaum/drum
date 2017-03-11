@@ -10,7 +10,7 @@
      (meta-data :origin calo :entry-date 20050425 :change-date 20090508 :comments projector-purchasing)
      (SEM (F::Aspect F::indiv-level))
      (example "I detest oranges")
-     (TEMPL agent-neutral-xp-templ)
+     (TEMPL experiencer-neutral-xp-templ)
      )
     )
    )

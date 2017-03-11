@@ -2,7 +2,7 @@
 ;;;; W::authorize
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v 
  :words (
   (W::authorize
    (wordfeats (W::morph (:forms (-vb) :nom W::authorization)))

@@ -20,7 +20,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v 
  :words (
   ((W::fill (W::up))
    (SENSES
@@ -37,12 +37,11 @@
  :words (
   ((W::fill (W::out))
    (SENSES
-     ((LF-PARENT ONT::write)
+     ((LF-PARENT ONT::enter-on-form)
       (meta-data :origin calo :entry-date 20040622 :change-date nil :comments y2)
       (example "fill out the requisition form")
       (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
-      (TEMPL AGENT-THEME-XP-TEMPL)
-     )
+      )
     )
    )
 ))
@@ -51,11 +50,11 @@
  :words (
   ((W::fill (W::in))
    (SENSES
-     ((LF-PARENT ONT::write)
+     ((LF-PARENT ONT::enter-on-form)
       (meta-data :origin calo :entry-date 20040622 :change-date nil :comments y2)
       (example "fill in the requisition form")
       (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
-      (TEMPL AGENT-THEME-XP-TEMPL)
+      (TEMPL AGENT-affected-XP-TEMPL)
      )
      ((LF-PARENT ONT::write)
       (meta-data :origin plow :entry-date 20080924 :change-date nil :comments nil)

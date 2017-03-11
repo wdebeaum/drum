@@ -59,6 +59,7 @@ use TextTagger::OneSentencePerLine;
 use TextTagger::Prescriptions;
 use TextTagger::Punctuation;
 use TextTagger::Quotations;
+use TextTagger::RomanNumerals;
 use TextTagger::Sentences;
 use TextTagger::SpacedChunks;
 use TextTagger::StreetAddresses;

@@ -2,7 +2,7 @@
 ;;;; W::chronicle
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :templ agent-neutral-xp-templ
  :words (
   (W::chronicle
    (SENSES

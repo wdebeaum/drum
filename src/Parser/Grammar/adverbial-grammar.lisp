@@ -609,7 +609,8 @@
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
 			 (sem ?sem))) (GAP -)
       ;; (subjvar ?subjvar)
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln)) (F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln )))) ; take the trajectory senses instead of the position-as-extent-reln senses of words such as "across"
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln))))
+	      ;;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln )))) ; take the trajectory senses instead of the position-as-extent-reln senses of words such as "across"
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
       (ARG ?npvar) (VAR ?mod)
@@ -809,7 +810,7 @@
 	    ))
      (advbl (ATYPE POST)
       (ARGUMENT (% NP (sem ?argsem) (constraint ?c)  ))
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln))))
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::predicate))))
       (arg ?v1) (VAR ?mod) (WH -) (GAP -)
       (particle -)  ;; exclude particles as they should attach to the verb
       )

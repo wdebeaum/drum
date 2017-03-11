@@ -38,8 +38,8 @@
    (wordfeats (W::morph (:forms (-vb) :past W::broke :pastpart W::broken :ing W::breaking :nom w::break)))
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090601 :comments nil :vn ("cheat-10.6") :wn ("break%2:42:04"))
-     (LF-PARENT ONT::remove-from)
-     (TEMPL agent-source-affected-optional-templ)
+     (LF-PARENT ONT::stop)
+     (TEMPL agent-effect-affected-objcontrol-templ)
      (PREFERENCE 0.96)
      (example "She finally broke herself of smoking cigarettes")
      )

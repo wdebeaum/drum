@@ -11,7 +11,7 @@
 	   (senses
 	    ((lf-parent ont::write)
 	     (example "Draw a line / he drew a picture [for her]")
-	     (templ agent-affected-create-templ )
+	     (templ agent-affected-xp-templ )
 	     (meta-data :origin bee :entry-date 20040609 :change-date 20090506 :comments portability-experiment)
 	     )
 	    ((LF-PARENT ONT::PULL)

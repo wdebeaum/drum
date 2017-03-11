@@ -2,14 +2,13 @@
 ;;;; W::write
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-create-TEMPL
+(define-words :pos W::v :templ AGENT-affected-TEMPL
  :tags (:base500)
  :words (
   (W::write
    (wordfeats (W::morph (:forms (-vb) :past W::wrote :pastpart W::written :ing W::writing)))
    (SENSES
     ((EXAMPLE "Write the letter")
-     ;;(LF-PARENT ONT::write)
      (lf-parent ont::author-write-burn-print_reprint_type_retype_mistype) ;; 20120523 GUM change new parent
      (prototypical-word t)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))

@@ -18,7 +18,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-theme-XP-TEMPL
+(define-words :pos W::v :templ AGENT-neutral-XP-TEMPL
  :words (
   (W::tape
    (SENSES

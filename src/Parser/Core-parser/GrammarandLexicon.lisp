@@ -770,7 +770,7 @@
 
 (defun gen-permanent-symbol (name)
   "These are permanetly unique symbols -- e.g., VAR names used in the LF"
-    (gentemp (string name)))
+    (gentemp (string name) *parser-package* ))
 
 
 (let ((new-*-gensym-needed t)

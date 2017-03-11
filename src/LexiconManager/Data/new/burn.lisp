@@ -20,7 +20,7 @@
       ;;(LF-PARENT ONT::write)
       (lf-parent ont::author-write-burn-print_reprint_type_retype_mistype) ;; 20120523 GUM change new parent
       (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-      (preference .94)
+      (preference .97)
       )
      )
     )

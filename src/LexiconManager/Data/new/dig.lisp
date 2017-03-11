@@ -7,7 +7,7 @@
   (W::dig
    (wordfeats (W::morph (:forms (-vb) :past W::dug)))
    (SENSES
-    ((LF-PARENT ONT::dig)
+    ((LF-PARENT ONT::dig-scoop)
      (example "dig a hole")
      )
     )

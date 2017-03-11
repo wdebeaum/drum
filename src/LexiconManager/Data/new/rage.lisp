@@ -8,7 +8,7 @@
      (wordfeats (W::morph (:forms (-vb) :nom w::rage)))
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("marvel-31.3-2"))
-     (LF-PARENT ONT::disliking)
+     (LF-PARENT ONT::manner-say)
      (TEMPL agent-neutral-xp-templ (xp (% w::pp (w::ptype (? p w::about w::against))))) ; like mind,worry
      )
     ((example "He raged")

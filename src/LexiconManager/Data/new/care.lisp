@@ -21,7 +21,7 @@
    (SENSES
     ((LF-PARENT ONT::care)
      (SEM (F::Aspect F::Stage-Level))
-     (TEMPL neutral-THEME-XP-TEMPL (xp (% W::PP (W::ptype (? p W::for W::about)))))
+     (TEMPL experiencer-THEME-XP-TEMPL (xp (% W::PP (W::ptype (? p W::for W::about)))))
      (example "I don't care about it")
      )
     ((LF-PARENT ONT::care)

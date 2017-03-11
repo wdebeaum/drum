@@ -110,6 +110,7 @@
 
 ;; out, over
 (define-type ONT::location-distance-modifier
+    :arguments ((:required ONT::FIGURE (F::SITUATION (F::TYPE ONT::EVENT-OF-ACTION))))
  :parent ONT::PREDICATE
  )
 

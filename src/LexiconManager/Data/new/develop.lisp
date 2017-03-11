@@ -32,7 +32,7 @@
     (
      (LF-PARENT ONT::CREATE)
      (example "We developed a theory")
-     (TEMPL agent-affected-create-templ)
+     (TEMPL agent-affected-xp-templ)
      )
 
     )

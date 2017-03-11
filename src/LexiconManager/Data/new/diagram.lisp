@@ -14,11 +14,11 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v 
  :words (
     (w::diagram
      (senses
-      ((lf-parent ont::write)
+      ((lf-parent ont::record)
        (example "diagram this object")
        (templ agent-neutral-xp-templ)	     
        (meta-data :origin calo-ontology :entry-date 20060713 :change-date 20090506 :comments caloy3)

@@ -478,7 +478,7 @@
 ;; obsolete::If semantic interpretation is enabled, a discourse variable must be
 ;;     created for the VAR feature
 (defun instantiateVAR (constit)
-  "This creats a new constant to be the unqiue value of the VAR feature. We also add the HEADCAT
+  "This creats a new constant to be the unique value of the VAR feature. We also add the HEADCAT
     feature here, which is used in Collins probability functions"
   (setf (constit-feats constit)
 	(append (constit-feats constit) (list (list 'w::headcat (constit-cat constit)))))

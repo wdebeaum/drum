@@ -2,7 +2,7 @@
 ;;;; W::engender
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-create-templ
+(define-words :pos W::V :templ agent-affected-xp-templ
  :words (
   (W::engender
    (wordfeats (W::morph (:forms (-vb) :past W::engendered :ing W::engendering)))
