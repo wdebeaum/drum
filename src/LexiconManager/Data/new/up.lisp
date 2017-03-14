@@ -70,7 +70,7 @@
    (SENSES
     ((LF-PARENT ONT::DIRECTION-UP)
      (example "the swelling is moving up his leg")
-     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      )
     ((LF-PARENT ONT::DIRECTION-UP)
      (example "pan the camera UP")

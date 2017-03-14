@@ -41,6 +41,7 @@
  :tags (:base500)
  :words (
   (W::TO
+   (wordfeats (w::result-only +))
    (SENSES
     ((LF-PARENT ONT::PURPOSE)
      (example "aspirin is used to treat headaches")

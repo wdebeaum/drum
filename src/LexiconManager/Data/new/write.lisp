@@ -2,7 +2,7 @@
 ;;;; W::write
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-TEMPL
+(define-words :pos W::v :templ AGENT-affected-xp-TEMPL
  :tags (:base500)
  :words (
   (W::write

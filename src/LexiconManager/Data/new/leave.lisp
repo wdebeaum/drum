@@ -15,7 +15,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v 
  :tags (:base500)
  :words (
   (W::leave
@@ -26,15 +26,17 @@
      (example "leave him the truck")
       (TEMPL AGENT-RECIPIENT-affected-TEMPL )
      )
-    ;;;; swier -- the truck will leave from Boston for Rochester
+    #||;; now compositional
+     ;;;; swier -- the truck will leave from Boston for Rochester
     ((LF-PARENT ONT::DEPART)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL GO-FROM-TO-TEMPL (xp1 (% W::PP (W::ptype W::from))) (xp2 (% W::PP (W::ptype W::for))))
      (preference .98)
-     )
+     )||#
     ((LF-PARENT ONT::DEPART)
      (meta-data :origin asma :entry-date 20111004)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
+     (templ agent-neutral-xp-templ)
      (example "he left the house")   
      )
     ((LF-PARENT ONT::DEPART)

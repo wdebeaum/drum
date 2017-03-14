@@ -543,7 +543,7 @@
 (define-type ont::dir-in-terms-of-obj
  :parent ont::direction-reln
  :arguments (;(:ESSENTIAL ONT::OF (F::situation (F::type ont::motion)))
-	     (:ESSENTIAL ONT::FIGURE (F::phys-obj (F::mobility ont::movable)))
+	     (:ESSENTIAL ONT::FIGURE (F::phys-obj (F::mobility f::movable)))
 	     )
  )
 

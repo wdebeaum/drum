@@ -95,6 +95,7 @@ apply first.")
 		 "physobj"
 		 "situation-types"
 		 "abstract-types"
+		 "property-val"
 		 "specific-situation-types"
 		 "social-contract"
 		 ))

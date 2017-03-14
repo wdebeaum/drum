@@ -10,7 +10,7 @@
 	 ;;lex headcat removed --me
      (PP KIND MASS NAME agr SEM SORT PRO SPEC CLASS transform)
      ;;(ADVBLS FOCUS VAR SEM SORT ATYPE ARG SEM ARGUMENT NEG TO QTYPE lex transform)
-     (ADVBL VAR SORT ARGSORT ATYPE SEM ARGUMENT lex headcat transform neg)
+     (ADVBL VAR SORT ARGSORT ATYPE SEM ARGUMENT lex headcat transform neg result-only)
      (ADV SORT ATYPE CONSTRAINT SA-ID PRED NEG TO LEX HEADCAT SEM ARGUMENT SUBCAT IGNORE transform)
      )	       	       
 
@@ -577,13 +577,13 @@
 			 (sem ?sem) (var ?npvar)))
       (GAP -)
       ;; (subjvar ?subjvar)
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln))))
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln)))) ;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ))))
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
       (ARG ?npvar) (VAR ?mod)
       ;;(role ?advrole) 
       )
-     (add-to-conjunct (val (mod ?mod)) (old ?con) (new ?new))  ; do not change the mod to RESULT!  TRANSIENT-RESULT also uses this rule
+     (add-to-conjunct (val (result ?mod)) (old ?con) (new ?new))  ; The RESULT will be remapped to TRANSIENT-RESULT
      )
 
     
@@ -616,7 +616,7 @@
       (ARG ?npvar) (VAR ?mod)
       ;;(role ?advrole) 
       )
-     (add-to-conjunct (val (mod ?mod)) (old ?con) (new ?new))  ; do not change the mod to RESULT!  TRANSIENT-RESULT also uses this rule
+     (add-to-conjunct (val (result ?mod)) (old ?con) (new ?new))  ; The RESULT will be remapped to TRANSIENT-RESULT
      )
 
     ;; put the box down in the corner
@@ -803,12 +803,33 @@
     ((N1 (RESTR ?new) (POSTADVBL +) (COMPLEX +)) 
      -adv-np-post> 
      (head (N1 (VAR ?v1) ;; (POSTADVBL -) 
-	    (SEM ?argsem)  (RESTR ?restr) ;;(gerund -)   Have to allow gerunds e.g., the debating at the house.
+	    (SEM ?argsem) 
+	    (RESTR ?restr) ;;(gerund -)   Have to allow gerunds e.g., the debating at the house.
 	    (post-subcat -) (SORT PRED)
 	    (no-postmodifiers -) ;; exclude "the same path as the battery" and advbl attaching to "path"
 	    
 	    ))
-     (advbl (ATYPE POST)
+     (advbl (ATYPE POST) 
+      (result-only -)  ;; only allow adverbials that may be interpreted as something other than a result
+      (ARGUMENT (% NP (sem ?argsem) (constraint ?c)  ))
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::predicate ont::position-reln))))
+      (arg ?v1) (VAR ?mod) (WH -) (GAP -)
+      (particle -)  ;; exclude particles as they should attach to the verb
+      )
+     (add-to-conjunct (val (MODS ?mod)) (old ?restr) (new ?new))
+     )
+
+    ((N1 (RESTR ?new) (POSTADVBL +) (COMPLEX +)) 
+     -adv-np-event-post>   ;; event nominals allows result adverbials
+     (head (N1 (VAR ?v1) ;; (POSTADVBL -) 
+	       (SEM ($ (f::situation (F::event-of-change))))
+	       (RESTR ?restr) ;;(gerund -)   Have to allow gerunds e.g., the debating at the house.
+	       (post-subcat -) (SORT PRED)
+	       (no-postmodifiers -) ;; exclude "the same path as the battery" and advbl attaching to "path"
+	    
+	    ))
+     (advbl (ATYPE POST) 
+      (result-only +)  ;; allows result adverbials (others already handled by -adv-np-post>
       (ARGUMENT (% NP (sem ?argsem) (constraint ?c)  ))
       (SEM ($ f::abstr-obj (F::type (? ttt ont::predicate))))
       (arg ?v1) (VAR ?mod) (WH -) (GAP -)

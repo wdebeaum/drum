@@ -6,6 +6,7 @@
  :tags (:base500)
  :words (
   (W::INTO
+   (wordfeats (w::result-only +))
    (SENSES
     
     ((LF-PARENT ONT::resulting-object)

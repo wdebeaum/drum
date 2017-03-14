@@ -846,16 +846,17 @@
 	(third (car equality)))))
 
 (defun find-most-salient-relaxed (lf-type id sem access-requirement num index limit &optional name)
-  (or  (find-most-salient lf-type id sem access-requirement num index limit  name)
-       (if (not (eq lf-type 'ont::referential-sem))
-	   (if (member (cadr lf-type) '(ONT::MALE-PERSON ONT::FEMALE-PERSON))
-	       (let ((opposite-type (if (eq (cadr lf-type) 'ONT::MALE-PERSON)
+ (let ((lf-type-simp (simplify-generic-type lf-type)))
+  (or  (find-most-salient lf-type-simp id sem access-requirement num index limit  name)
+       (if (not (eq lf-type-simp 'ont::referential-sem))
+	   (if (member lf-type-simp '(ONT::MALE-PERSON ONT::FEMALE-PERSON))
+	       (let ((opposite-type (if (eq lf-type-simp 'ONT::MALE-PERSON)
 					'ONT::FEMALE-PERSON 'ONT::MALE-PERSON)))
 		 (remove-if-not
 		  #'(lambda (x) 
 		      (not (subtype-check (referent-lf-type x) opposite-type)))
-		  (find-most-salient (om::get-parent (simplify-generic-type lf-type)) id sem access-requirement num index limit  name)))
-	       (find-most-salient (om::get-parent (simplify-generic-type lf-type)) id sem access-requirement num index limit  name)))))
+		  (find-most-salient (om::get-parent lf-type-simp) id sem access-requirement num index limit  name)))
+	       (find-most-salient (om::get-parent lf-type-simp) id sem access-requirement num index limit  name))))))
 
 (defun find-most-salient (lf-type id sem access-requirement num index limit &optional name)
   "Gathers up potential referents in preference order based on the parameters"

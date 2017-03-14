@@ -422,9 +422,8 @@
  :parent ONT::MOVE
  :sem (F::SITUATION (:required (F::Cause F::Agentive))(:default (F::Aspect F::unbounded) (F::Time-span F::extended)))
  :arguments ((:ESSENTIAL ONT::AGENT (F::Phys-obj (F::origin (? o f::non-human-animal F::human))) (:implements FORMAL))
-	     (:optional ont::neutral )  ;; the path, road, as in "walk the path"
-             )
- )
+	     (:optional ont::neutral (F::phys-obj (f::type ont::geo-object))  ;; the path, road, as in "walk the path, walk the hills"
+             )))
 
 (define-type ONT::swim
  :wordnet-sense-keys ("float%2:38:01" "swim%2:38:01")
@@ -464,8 +463,9 @@
 ;; takes a formal object -- walk the dog; walk the patient over to the xray facility
 (define-type ONT::walking
  :wordnet-sense-keys ("walk%2:38:05" "walk%2:38:00" "walk%2:38:02" "walk%2:38:04")
- :parent ONT::self-locomote
- :arguments ((:ESSENTIAL ONT::affected(F::Phys-obj (F::origin (? o f::non-human-animal F::human))))
+ :parent ONT::cause-move
+ :arguments ((:ESSENTIAL ONT::affected (F::Phys-obj (F::origin (? o f::non-human-animal F::human))
+						    (F::mobility f::movable)))
              )
  )
 
@@ -666,8 +666,8 @@
  :wordnet-sense-keys ("depart%2:38:01" "part%2:38:00" "start%2:38:02" "start_out%2:38:00" "set_forth%2:38:00" "set_off%2:38:00" "set_out%2:38:00" "take_off%2:38:00")
 ; :parent ONT::DEPARTING
  :parent ONT::EVENT-OF-ACTION
- :sem (F::SITUATION (F::Aspect F::Bounded) (F::Cause F::Force) (F::Time-span F::Atomic))
- :arguments ((:OPTIONAL ONT::Source))
+ :sem (F::SITUATION (F::Aspect F::Bounded) (F::Cause F::Force) (F::Time-span F::Atomic)) 
+ :arguments ((:OPTIONAL ONT::neutral))  ;; as in "I left the party"
  )
 
 ;;; A more abstract motion. Involves object changing places, but
@@ -2642,7 +2642,7 @@
  :wordnet-sense-keys ("leave%2:31:05" "leave%2:30:03" "leave_behind%2:38:00" "abandon%2:31:01" "abandon%2:40:01")
  :parent ONT::intentionally-act
  :arguments ((:REQUIRED ONT::AGENT ((? ag f::abstr-obj F::Phys-obj) (F::intentional +)))
-	     (:REQUIRED ONT::affected((? tt F::phys-obj F::abstr-obj f::situation)))
+	     (:REQUIRED ONT::affected (F::phys-obj (F::mobility f::movable)))
              )
  )
 

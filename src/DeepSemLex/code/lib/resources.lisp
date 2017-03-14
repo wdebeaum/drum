@@ -313,6 +313,7 @@
 	    '("abstract-types"
 	      "physobj"
 	      "predicates"
+	      "property-val"
 	      "root-types"
 	      "situation-types"
 	      "social-contract"

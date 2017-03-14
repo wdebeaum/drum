@@ -1654,7 +1654,7 @@
 		      ))
      (postadvbl -)
      )
-    -vp-compositional-particle-role> 1
+    -vp-compositional-particle-role> 
     (head (v (aux -) (var ?v)
 	   (lf ?c) (sem ?sem) (sem ($ f::situation (f::type ont::event-of-change)))  (vform ?tense-pro)
 	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -) )) ;; note double matching required
@@ -1683,7 +1683,7 @@
 		      ))
      (postadvbl -)
      )
-    -vp-compositional-particle-manner-role> 1
+    -vp-compositional-particle-manner-role> 
     (head (v (aux -) (var ?v)
 	   (lf ?c) (sem ?sem) (sem ($ f::situation (f::type ont::event-of-change)))  (vform ?tense-pro)
 	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -) )) ;; note double matching required

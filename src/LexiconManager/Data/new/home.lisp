@@ -10,8 +10,7 @@
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
      (LF-PARENT ONT::relative-location)
      (TEMPL BARE-PRED-TEMPL)
-     (preference .97)  ;; prefer the adverbial if its possible
-     (example "he is at home")
+     (example "he is at home" "I left home")
      )
     )
    )

@@ -2012,13 +2012,6 @@
                     (W::lex ?lsubjlex) (W::var ?lsubjvar))))) ont::formal)
     ))
 
-  (agent-effect-SUBJCONTROL-TEMPL
-   (ARGUMENTS
-    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::agent)
-    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:require d(W::subj (% W::np (W::sem ?lsubjsem) 
-                    (W::lex ?lsubjlex) (W::var ?lsubjvar))))) ont::formal)
-    ))
-
   (affected-theme-SUBJCONTROL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::affected)
