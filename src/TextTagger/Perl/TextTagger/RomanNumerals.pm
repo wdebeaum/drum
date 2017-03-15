@@ -27,8 +27,18 @@ sub parse_roman_numeral {
 sub tag_roman_numerals {
   my ($self, $text) = @_;
   my @tags = ();
-  while ($text =~ /\b[ivxlcdm]+\b/gi) {
+  while ($text =~ 
+	 # pure version
+         # /\b[ivxlcdm]+\b/gi
+         # with exceptions for music notation
+	 /\b[IVXLCDMivxlcdm]+(?!(?=\w)[^2-7bdoø])/g
+	) {
     my $tag = { type => "number", match2tag() };
+
+    # another music exception: take off a "d" if the previous letter is i or v
+    $tag->{lex} =~ s/(?<=[IViv])d$//;
+    $tag->{end} = $tag->{start} + length($tag->{lex});
+
     my $islower = ($tag->{lex} =~ /[c-x]/);
     my $isupper = ($tag->{lex} =~ /[C-X]/);
     # disallow mixed case

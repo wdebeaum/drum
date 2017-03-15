@@ -314,3 +314,16 @@
 
 00482893 v
 119+1
+
+00191178 r
+-and others ('et al.' is used as an abbreviation of `et alii' (masculine plural) or `et aliae' (feminine plural) or `et alia' (neuter plural) when referring to a number of people); "the data reported by Smith et al."  
++and others (`et al.' is used as an abbreviation of `et alii' (masculine plural) or `et aliae' (feminine plural) or `et alia' (neuter plural) when referring to a number of people); "the data reported by Smith et al."  
+-191178|r|12|15|lem|||'et
+-191178|r|12|15|pos|NN||
+-191178|r|16|20|lem|||al.'
+-191178|r|16|20|pos|NN||
++191178|r|13|15|lem|||et
++191178|r|13|15|pos|NN||
++191178|r|16|19|lem|||al.
++191178|r|16|19|pos|NN||
+
