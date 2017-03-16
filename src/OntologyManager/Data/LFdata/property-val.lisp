@@ -65,6 +65,13 @@
 ;             )
  )
 
+(define-type ont::phosphorilated
+    :parent ont::physical-property-val
+    :arguments (;(:ESSENTIAL ONT::of (F::phys-obj (f::type (? t ont::molecular-part ont::chemical))))
+                (:ESSENTIAL ONT::figure (F::phys-obj (f::type (? t2 ont::molecular-part ont::chemical))))
+		)
+)
+
 ;;; big/large/small
 (define-type ONT::Size-val
  :parent ONT::physical-property-val

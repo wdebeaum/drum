@@ -26,8 +26,14 @@
  )
 
 ;; example, illustration, instance
-(define-type ONT::representation
+(define-type ONT::example
  :parent ONT::kind
+ )
+
+(define-type ONT::representation
+ :parent ONT::mental-construction
+ :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
+		)
  )
 
 (define-type ONT::grouping
