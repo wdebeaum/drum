@@ -184,7 +184,7 @@
 
 (define-type ONT::PURPOSE
  :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation)) ;(F::type ont::event-of-action))) ; takes statives: This suffices for...
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (F::type ont::event-of-action))); maybe takes statives: This suffices for...
 ;;             (:REQUIRED ONT::VAL (F::Situation (F::aspect F::dynamic)))
 	     ;; purposes don't have to be dynamic -- e.g. to store something, to remember, etc.
 ;	     (:REQUIRED ONT::GROUND ((? xx F::Situation f::abstr-obj f::phys-obj) (F::scale (? !sc ont::duration-scale))))

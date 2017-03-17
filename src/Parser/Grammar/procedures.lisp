@@ -194,7 +194,7 @@
     (if domain-info 
 	(setq initial-sem initial-sem
 	      ))
-    (match-vals nil semresult (lxm::get-sem-for-lf (get-core-type lf)))))
+    (match-vals nil semresult (read-expression (lxm::get-sem-for-lf (get-core-type lf))))))
 
 (defun get-core-type (x)
   (if (consp x)

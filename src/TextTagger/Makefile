@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.89 2016/12/06 21:39:30 wdebeaum Exp $
+# $Id: Makefile,v 1.90 2017/03/16 13:52:44 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -145,6 +145,9 @@ alternate-spellings.tsv:
 	| perl -n -e "unless (\$$_ =~ /'''/ or \$$_ =~ / \\|\\| Y \\|\\| / or not \$$_ =~ /^ \\|\\| /) { chomp; s/^ \\|\\| //; s/ \\|\\|\\s*\$$//; s/ \\|\\| /\\t/g; print \"\$$_\\n\"; }" \
 	| cut -f1,2 \
 	>$@
+
+distclean::
+	rm -f alternate-spellings.tsv
 endif
 
 #
@@ -338,7 +341,7 @@ drum-dsl: drum-dsl/BE/COMPLETE drum-dsl/BTO/COMPLETE drum-dsl/CHEBI/COMPLETE dru
 # drum-dsl/SO/COMPLETE 
 
 clean::
-	rm -rf specialist.tsv drum-terms.tsv obo-terms.tsv hgnc-terms.tsv uniprot-terms.tsv ncit-terms.tsv drum-dsl
+	rm -rf specialist.tsv drum-terms.tsv drum-dbxrefs.tsv obo-terms.tsv hgnc-terms.tsv uniprot-terms.tsv uniprot-subcell-terms.tsv nextprot-family-terms.tsv ncit-terms.tsv pfam-terms.tsv mesh-scr-terms.tsv drum-dsl
 endif
 
 distclean:: clean
