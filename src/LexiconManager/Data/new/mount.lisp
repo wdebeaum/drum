@@ -14,6 +14,7 @@
       ((meta-data :origin text-processing :entry-date 20091204 :change-date nil :comments TimeBank)
      (LF-PARENT ONT::increase)
      (example "the death toll mounted")
+     (TEMPL AFFECTED-TEMPL)
      )
     )
    )

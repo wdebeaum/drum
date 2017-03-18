@@ -1005,6 +1005,12 @@ finding a PTY to run Minipar on. Also note that you can't use this tagger with
 <a href="#sec-3.9."><code>text-to-lattice-test.pl</code></a>, since it requires
 a real KQML connection to talk to the Minipar TRIPS module.</td>
 </tr><tr>
+<td>Music</td>
+<td>sense</td>
+<td></td>
+<td></td>
+<td>Tags music-related terms and abbreviations, such as pitches, intervals, and chords.</td>
+</tr><tr>
 <td>NamedEntities</td>
 <td>named-entity</td>
 <td>X</td>
@@ -1183,7 +1189,7 @@ foo BarBaz don't 123,456 12EA56
 <tr><td>punctuation</td><td>Punctuation, StanfordCoreNLP</td></tr>
 <tr><td>quotation</td><td>Quotations</td></tr>
 <tr><td>sentence</td><td>OneSentencePerLine, Sentences, StanfordCoreNLP</td></tr>
-<tr><td>sense</td><td>ChemicalFormulae, Disambiguator, Drum, Gold, MetaMap, WordNet</td></tr>
+<tr><td>sense</td><td>ChemicalFormulae, Disambiguator, Drum, Gold, MetaMap, Music, WordNet</td></tr>
 <tr><td>spaced-chunk</td><td>SpacedChunks</td></tr>
 <tr><td>street-address</td><td>StreetAddresses</td></tr>
 <tr><td>subnumber</td><td>Words</td></tr>
@@ -1203,6 +1209,7 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 <tr><th>LF type</th><th>Tagger(s)</th></tr>
 <tr><td>ALLERGY-MEDICATION</td><td>Asma</td></tr>
 <tr><td>CHEMICAL</td><td>ChemicalFormulae</td></tr>
+<tr><td>CHORD</td><td>Music</td></tr>
 <tr><td>FEMALE-PERSON</td><td>PersonalNames</td></tr>
 <tr><td>GEOGRAPHIC-REGION</td><td>NamedEntities, StanfordCoreNLP, Terms</td></tr>
 <tr><td>LOCATION-ID</td><td>StreetAddresses</td></tr>
@@ -1210,6 +1217,8 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 <tr><td>MALE-PERSON</td><td>PersonalNames</td></tr>
 <tr><td>ORGANIZATION</td><td>NamedEntities, StanfordCoreNLP</td></tr>
 <tr><td>PERSON</td><td>NamedEntities, PersonalNames, StanfordCoreNLP</td></tr>
+<tr><td>PITCH</td><td>Music</td></tr>
+<tr><td>PITCH-INTERVAL</td><td>Music</td></tr>
 <tr><td>QUICK-RELIEF-DRUG</td><td>Asma</td></tr>
 <tr><td>REFERENTIAL-SEM</td><td>Alphanumerics, CapitalizedNames, NamesFromFile, StanfordCoreNLP</td></tr>
 <tr><td>many different types</td><td>Drum, MetaMap</td></tr>

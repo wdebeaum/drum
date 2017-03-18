@@ -13,6 +13,7 @@
 )
 ))
 
+#|
 (define-words :pos W::v :templ AGENT-affected-XP-TEMPL
  :words (
 ((w::bump (w::up))
@@ -26,4 +27,5 @@
   )
  )
 ))
+|#
 

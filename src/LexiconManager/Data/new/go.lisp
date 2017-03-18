@@ -173,7 +173,7 @@
      (TEMPL AFFECTED-TEMPL)
      (meta-data :origin cardiac :entry-date 20090226 :change-date 20090504 :comments nil))
     ))
-))||#
+))
 
 (define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
  :words (
@@ -187,7 +187,7 @@
     ))
 ))
 
-#||(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
  :words (
   ((W::go W::out)
    (wordfeats (W::morph (:forms (-vb) :3s W::goes :past W::went :pastpart W::gone)))

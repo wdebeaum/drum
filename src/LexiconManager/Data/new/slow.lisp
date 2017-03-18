@@ -2,6 +2,7 @@
 ;;;; w::slow
 ;;;;
 
+#|
 (define-words :pos W::v :templ AGENT-affected-XP-TEMPL
  :words (
 ((w::slow (w::down))
@@ -15,11 +16,12 @@
   )
  )
 ))
+|#
 
 (define-words :pos W::V :templ agent-affected-xp-templ
  :words (
-   ((W::slow (w::down))
-     (wordfeats (W::morph (:forms (-vb) :nom (w::slow w::down))))
+   ((w::slow) ;(W::slow (w::down))
+     ;(wordfeats (W::morph (:forms (-vb) :nom (w::slow w::down))))
    (SENSES
     ((meta-data :origin coordops :entry-date 20070514 :change-date 20090504 :comments nil)
 ;     (LF-PARENT ONT::decrease)

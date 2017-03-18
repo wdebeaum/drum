@@ -31,7 +31,7 @@ sub tag_roman_numerals {
 	 # pure version
          # /\b[ivxlcdm]+\b/gi
          # with exceptions for music notation
-	 /\b[IVXLCDMivxlcdm]+(?!(?=\w)[^2-7bdoø])/g
+	 /\b[IVXLCDMivxlcdm]+(?!(?=\w)(?![2-7bdoø]\b))/g
 	) {
     my $tag = { type => "number", match2tag() };
 

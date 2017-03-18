@@ -2845,6 +2845,7 @@ gene_expression%1:19:00::
 hot_air%1:27:00::
 hot_air%1:10:00:: ; non-compositional sense we're ignoring
 in_height%5:00:00:tall:00
+in_height%5:00:00::
 in_time%1:28:00::
 lay_down%2:31:00::
 old_person%1:18:00::
@@ -2857,10 +2858,12 @@ young_person%1:18:00::
 young_woman%1:18:00::
 high-level%5:00:00:superior:01  ; note these are real hyphens
 high-level%5:00:00:high:01
+high-level%5:00:00::
 low-level%5:00:00:low:02
 low-level%3:00:04::
 low-level%5:00:00:inferior:01
 low-level%5:00:00:low:01
+low-level%5:00:00::
 walk_around%2:38:00::
 walk_around%2:38:01::
 walk_around%2:41:01::

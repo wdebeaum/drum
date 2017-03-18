@@ -75,6 +75,7 @@ use TextTagger::Drum;
 use TextTagger::Enju;
 use TextTagger::MetaMap;
 use TextTagger::Minipar;
+use TextTagger::Music;
 use TextTagger::NamedEntities;
 use TextTagger::NamesFromFile;
 use TextTagger::PersonalNames;

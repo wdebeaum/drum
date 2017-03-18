@@ -109,6 +109,7 @@ for my $pos (keys %wn_pos_to_trips_pos) {
     for my $i (1..$w_cnt) {
       my $word = shift @rest;
       my $lex_id = hex(shift @rest);
+      $word =~ s/\(.*//; # remove parens from end of adj lemmas
       push @sense_words, [$word, sense_key($word, $ss_type, $lex_filenum, $lex_id)];
     }
     my $proper_name = 0;

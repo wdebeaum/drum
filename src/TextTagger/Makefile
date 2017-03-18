@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.90 2017/03/16 13:52:44 wdebeaum Exp $
+# $Id: Makefile,v 1.91 2017/03/17 16:17:02 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -109,7 +109,7 @@ install:: wn-multiwords.tsv
 clean::
 	rm -rf wn-multiwords.tsv
 
-wn-multiwords.tsv: get-wn-multiwords.pl $(CONFIGDIR)/WordFinder/defs.lisp $(prefix)/etc/WordNetSQL/WordNetSQL.pm $(prefix)/etc/util/add_suffix.ph
+wn-multiwords.tsv: get-wn-multiwords.pl $(CONFIGDIR)/WordFinder/defs.lisp $(prefix)/etc/WordNetSQL/WordNetSQL.pm $(prefix)/etc/util/add_suffix.ph ../WordFinder/wordnet/stoplist.txt
 	TRIPS_BASE=$(prefix) ./get-wn-multiwords.pl $(WORDNET_BASEPATH) >wn-multiwords.tsv
 endif
 

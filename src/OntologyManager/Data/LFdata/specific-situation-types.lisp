@@ -805,7 +805,7 @@
  )
 
 (define-type ONT::PUSH
- :wordnet-sense-keys ("poke%2:35:01" "push%2:38:00" "force%2:38:00" "thrust%2:38:00" "thrust%2:42:01" "wedge%2:35:00")
+ :wordnet-sense-keys ("poke%2:35:01" "push%2:38:00" "force%2:38:00" "thrust%2:38:00" "thrust%2:42:01" "wedge%2:35:00" "bump%2:35:00")
   :parent ONT::apply-force
  )
 
