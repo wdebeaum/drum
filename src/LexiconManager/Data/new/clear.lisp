@@ -21,7 +21,7 @@
     ((meta-data :origin trips :entry-date 20060414 :change-date 20090529 :comments nil :vn ("clear-10.3-1"))
      (LF-PARENT ONT::cause-come-from)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-affected-SOURCE-TEMPL (xp (% W::PP (W::ptype (? ptp W::from W::off)))))
+     (TEMPL AGENT-affected-source-TEMPL (xp (% W::PP (W::ptype (? ptp W::from W::off)))))
      ;;;; swier --
      (example "clear the dust from the monitor")
      )

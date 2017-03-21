@@ -10,7 +10,7 @@
     ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("funnel-9.3-2-1"))
      (LF-PARENT ONT::put)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     ;;(TEMPL AGENT-affected-SOURCE-TEMPL (xp (% W::PP (W::ptype (? t W::off W::from)))))
+     
      (TEMPL agent-affected-xp-templ)
      )
     

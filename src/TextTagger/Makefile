@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.91 2017/03/17 16:17:02 wdebeaum Exp $
+# $Id: Makefile,v 1.92 2017/03/20 15:41:52 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -155,7 +155,7 @@ endif
 #
 ifneq (,$(wildcard Perl/TextTagger/Drum.pm))
 
-all:: drum-terms.tsv drum-dsl specialist.tsv drum-dbxrefs.tsv
+all:: drum-terms.tsv drum-dsl specialist.tsv drum-dbxrefs.tsv go_protmods.tsv
 
 install:: mirna-species.tsv drum-terms.tsv drum-dsl specialist.tsv drum-dbxrefs.tsv
 	$(INSTALL_DATA) mirna-species.tsv $(etcdir)/$(MODULE)
@@ -186,6 +186,12 @@ OBO_FILES=$(foreach f,bioentities.obo BrendaTissueOBO cellosaurus.obo chebi.obo 
 
 obo-terms.tsv: get-obo-terms.pl $(OBO_FILES) Makefile
 	TRIPS_BASE=$(prefix) ./get-obo-terms.pl $(OBO_FILES) >$@
+
+go_protmods.obo: go_protmods.pl downloads/go.obo
+	./go_protmods.pl -o $@ downloads/go.obo
+
+go_protmods.tsv: get-obo-terms.pl go_protmods.obo
+	TRIPS_BASE=$(prefix) ./get-obo-terms.pl go_protmods.obo >$@
 
 hgnc-terms.tsv: get-hgnc-terms.pl downloads/protein-coding_gene.txt.gz
 	gunzip -c <downloads/protein-coding_gene.txt.gz \

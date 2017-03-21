@@ -156,6 +156,8 @@ the file, with dashes. No need to unpack it.</li>
 
 <li>To use the Drum tagger, you need to get the ASCII MeSH SCR file <code>c2015.bin.gz</code>, either from <a href="http://www.nlm.nih.gov/mesh/filelist.html">the MeSH website</a> (where you will have to register and agree to a "memorandum of understanding"), or from IHMC's <a href="https://sharebox.ihmc.us/public.php?service=files&amp;t=3a8588532fd22e790ecfa37a16849d88">ownCloud</a> (where you need to sign in with your IHMC login/password). As of this writing it looks like MeSH might not be offering SCR by itself, you'd have to get the whole ASCII MeSH and pull out SCR yourself. Either way, put the file in <code>/usr/local/share/mesh/</code> (don't decompress it, the Makefile will do that for you).</li>
 
+<li>The following Perl modules are also required to build one of the data files for the Drum tagger (<code>go_protmods.tsv</code>): Getopt::Long, Set::Scalar, File::Slurp. If you're using MacPorts, you can install the corresponding packages by downcasing the module name, turning <code>::</code> into <code>-</code> and prepending <code>p5-</code>: <code>sudo port install p5-getopt-long p5-set-scalar p5-file-slurp</code>.</li>
+
 <li>Note that the TextTagger Makefile also downloads and processes some files for you, depending on what parts of it are included in your checkout.</li>
 
 </ul>

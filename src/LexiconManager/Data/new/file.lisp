@@ -14,7 +14,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
  :words (
  (W::file
    (SENSES
@@ -23,12 +23,12 @@
      (example "file the document")
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      )
-     ((LF-PARENT ONT::submit)
+     #||((LF-PARENT ONT::submit)
      (meta-data :origin calo-ontology :entry-date 20051214 :change-date 20090501 :comments nil)
      (example "file for protection")
      (templ agent-theme-xp-templ (xp (% W::pp (W::ptype W::for))))
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     )
+     )||#
     )
    )
 ))

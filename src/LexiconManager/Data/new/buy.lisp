@@ -16,7 +16,7 @@
     ((lf-parent ont::purchase)
      (example "buy the book from amazon dot com")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic) (F::trajectory -))
-     (TEMPL agent-affected-SOURCE-templ (xp (% W::PP (W::ptype (? pt w::on W::at W::from)))))
+     (TEMPL agent-affected-xp-templ)
      )
     )
    )

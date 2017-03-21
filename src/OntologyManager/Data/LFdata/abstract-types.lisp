@@ -50,6 +50,7 @@
 ;; purpose, function
 (define-type ont::utility
  :parent ont::function-object
+ :wordnet-sense-keys ("utility%1:07:00")
   :arguments ((:REQUIRED ONT::FIGURE)
              )
  )
@@ -1501,16 +1502,14 @@
              )
  )
 
-;; I want a computer/a service contract for under 1000 dollars (sense of 'for')
-;; here we want attachment to the object
+;;  
 (define-type ONT::VALUE-COST
  :wordnet-sense-keys ("change%1:21:02" "return%1:21:00" "issue%1:21:00" "take%1:21:00" "takings%1:21:00" "proceeds%1:21:00" "yield%1:21:00" "payoff%1:21:02")
  :wordnet-sense-keys ("change%1:21:02" "return%1:21:00" "issue%1:21:00" "take%1:21:00" "takings%1:21:00" "proceeds%1:21:00" "yield%1:21:00" "payoff%1:21:02")
- :parent ONT::COST-RELATION
-  :arguments ((:REQUIRED ont::FIGURE ((? lo f::phys-obj f::abstr-obj)))
-	      (:REQUIRED ONT::GROUND (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
-             )
- )
+ :parent ONT::abstract-object-nontemporal
+  :arguments ((:REQUIRED ONT::FIGURE (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
+	      )
+  )
 
 ;; unique lf for price
 (define-type ONT::PRICE

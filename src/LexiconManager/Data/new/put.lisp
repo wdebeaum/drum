@@ -53,13 +53,6 @@
      (TEMPL AGENT-RESULT-AFFECTED-TEMPL)
      )
     
-    ;; removing b.c. of conflict with making tea data Nov 2010
-;    ((meta-data :origin calo :entry-date 20040505 :change-date nil :comments y1-variations)
-;     (EXAMPLE "put it on my account")
-;     (LF-PARENT ONT::commerce-pay)
-;     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-;     (TEMPL AGENT-AFFECTED-SOURCE-TEMPL (xp (% W::pp (W::ptype (? pt W::on)))))
-;     )
     )
    )
 ))

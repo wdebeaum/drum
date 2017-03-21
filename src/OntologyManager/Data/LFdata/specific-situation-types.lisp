@@ -69,7 +69,7 @@
 
 ;; make/earn money, a profit
 (define-type ONT::earning
- :parent ONT::commerce-collect
+ :parent ONT::acquire
  :sem (F::SITUATION (F::Aspect F::dynamic))
  :arguments ((:REQUIRED ONT::affected ((? th12 F::Phys-obj F::Abstr-obj) (f::type ONT::MONEY) (f::object-function f::currency) (f::intentional -))))
  )
@@ -664,11 +664,11 @@
 
 (define-type ONT::DEPART
  :wordnet-sense-keys ("depart%2:38:01" "part%2:38:00" "start%2:38:02" "start_out%2:38:00" "set_forth%2:38:00" "set_off%2:38:00" "set_out%2:38:00" "take_off%2:38:00")
-; :parent ONT::DEPARTING
  :parent ONT::EVENT-OF-ACTION
  :sem (F::SITUATION (F::Aspect F::Bounded) (F::Cause F::Force) (F::Time-span F::Atomic)) 
- :arguments ((:OPTIONAL ONT::neutral))  ;; as in "I left the party"
- )
+ :arguments ((:OPTIONAL ONT::neutral)  ;; I left the party
+	     (:optional ONT::source  ;; as in "I left from the party"
+			)))
 
 ;;; A more abstract motion. Involves object changing places, but
 ;;; possibly through a sequence of motions
@@ -2502,7 +2502,7 @@
   )
 
 (define-type ONT::USE
- :wordnet-sense-keys ("use%1:04:01" "habit%1:04:02" "use_of_goods_and_services%1:22:00" "use%1:22:00" "usance%1:22:00" "economic_consumption%1:22:00" "consumption%1:22:00" "use%1:07:02" "use%1:07:00" "role%1:07:00" "purpose%1:07:00" "function%1:07:00" "exercise%1:04:03" "employment%1:04:01" "utilisation%1:04:00" "utilization%1:04:00" "usage%1:04:00" "use%1:04:00" "practical_application%1:04:00" "application%1:04:02" "use%2:41:03" "use%2:41:04" "apply%2:41:01" "practice%2:41:01" "use%2:41:14" "expend%2:34:00" "use%2:34:00" "habituate%2:34:00" "use%2:34:02" "use%2:34:01" "utilize%2:34:00" "utilise%2:34:00" "apply%2:34:00" "employ%2:34:00")
+ :wordnet-sense-keys ("use%1:04:01" "habit%1:04:02" "use_of_goods_and_services%1:22:00" "use%1:22:00" "usance%1:22:00" "economic_consumption%1:22:00" "consumption%1:22:00" "use%1:07:02" "exercise%1:04:03" "employment%1:04:01" "utilisation%1:04:00" "utilization%1:04:00" "usage%1:04:00" "use%1:04:00" "practical_application%1:04:00" "application%1:04:02" "use%2:41:03" "use%2:41:04" "apply%2:41:01" "practice%2:41:01" "use%2:41:14" "expend%2:34:00" "use%2:34:00" "habituate%2:34:00" "use%2:34:02" "use%2:34:01" "utilize%2:34:00" "utilise%2:34:00" "apply%2:34:00" "employ%2:34:00")
  :parent ONT::CAUSE-effect
  :sem (F::SITUATION (F::Cause F::agentive))
  ;;; an object used in action
@@ -2667,6 +2667,7 @@
  :parent ONT::event-of-causation
  :arguments ((:REQUIRED ONT::Agent)
 	     (:required ont::source)
+	     (:optional ont::affected-result (F::phys-obj))
              )
  )
 
@@ -2708,7 +2709,6 @@
  )
 
 (define-type ONT::push-out-of
-; :parent ONT::come-out-of
  :parent ONT::cause-out-of
  )
 

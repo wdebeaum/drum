@@ -15,7 +15,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :templ AGENT-NEUTRAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::record

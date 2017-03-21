@@ -91,5 +91,5 @@
 
 (define-type ont::responsibility
   :parent ont::social-contract
-  :wordnet-sense-keys ("duty%1:04:00" "duty%1:04:02" "obligation%1:04:00" "responsibility%1:04:00")
+  :wordnet-sense-keys ("duty%1:04:00" "duty%1:04:02" "obligation%1:04:00" "responsibility%1:04:00" "role%1:04:01" "role%1:09:00")
 )

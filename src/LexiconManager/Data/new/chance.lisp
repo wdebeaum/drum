@@ -20,7 +20,7 @@
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("occurrence-48.3"))
      (LF-PARENT ONT::happen)
      (example "he chanced to see it")
-     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
+     
      (TEMPL experiencer-Theme-subjcontrol-TEMPL  (xp (% W::cp (W::ctype W::s-to))))
      (SYNTAX (w::exclude-passive +))
      )
