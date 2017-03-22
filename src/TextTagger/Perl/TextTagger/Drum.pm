@@ -16,6 +16,7 @@ my $debug = 0;
 
 my ($terms_in, $terms_out, $terms_pid);
 my ($dbxrefs_in, $dbxrefs_out, $dbxrefs_pid);
+my ($protmods_in, $protmods_out, $protmods_pid);
 my %mirna_species = ();
 
 sub init_drum_tagger {
@@ -29,6 +30,11 @@ sub init_drum_tagger {
 		     $ENV{TRIPS_BASE} . "/etc/TextTagger/drum-dbxrefs.tsv");
   binmode $dbxrefs_in, ':utf8';
   binmode $dbxrefs_out, ':utf8';
+  $protmods_pid = open2($protmods_in, $protmods_out,
+  		     $ENV{TRIPS_BASE} . "/bin/terms2",
+		     $ENV{TRIPS_BASE} . "/etc/TextTagger/go_protmods.tsv");
+  binmode $protmods_in, ':utf8';
+  binmode $protmods_out, ':utf8';
   open MS, "<$ENV{TRIPS_BASE}/etc/TextTagger/mirna-species.tsv"
     or die "Failed to open mirna-species.tsv: $!";
   while (<MS>) {
@@ -73,94 +79,14 @@ sub is_all_prefixes {
   return 0;
 }
 
-my @amino_acids; # forward declaration
-
-sub tag_drum_terms {
-  my ($self, $str, @input_tags) = @_;
-  # get prefixes and dashes for is_all_prefixes
-  my @prefixes = grep {
-    $_->{type} eq 'prefix' or
-    ($_->{type} eq 'punctuation' and $_->{lex} =~ $dash_re)
-  } @input_tags;
-  # send words, alternative spellings, and Specialist alternatives to terms2
-  print $terms_out "_BEGIN_WORD_LATTICE_\n";
-  print STDERR "to drum terms:\n_BEGIN_WORD_LATTICE_\n" if ($debug);
-  my %entries = (); # avoid printing duplicate entries from different tags
-  # keep the start offsets of sentences so we can use the fact that a match is
-  # at the start of a sentence while scoring its case match
-  my %sentence_starts = ();
-  # map citation form, start, and end for NNS and NNPS tags from specialist
-  # that we might use to get the respective NN/NNP form from drum-terms.tsv, to
-  # the maximum match score found for those specialist tags
-  my %plural_entries = ();
-  # some entries can be both plural and singular (e.g. "AMP"), so keep a record
-  # of the singular ones too
-  my %singular_entries = ();
-  # also record entries from VariantLists tagger to avoid throwing them out for
-  # being too short and not matching exactly
-  my %listed_variant_entries = ();
-  for my $tag (@input_tags) {
-    my $entry = undef;
-    if ($tag->{source} eq 'specialist') {
-      my $citation_form = $tag->{'domain-specific-info'}{'citation-form'};
-      # if something looks like a pluralized acronym (e.g. GAPs), but
-      # specialist downcases it (gaps), put it back to the upcased version
-      if ($tag->{lex} =~ /^([A-Z0-9]+)s$/ and
-	  $citation_form eq lc($1)) {
-        $citation_form = $1;
-      }
-      $entry = "$citation_form\t$tag->{start}\t$tag->{end}\n";
-      if (grep /^(?:NNP?|AITL)$/, @{$tag->{'penn-pos'}}) {
-	print STDERR Data::Dumper->Dump([$tag],['*singular_tag']) if ($debug);
-	$singular_entries{$entry} = 1;
-      }
-      if (grep /^(?:NNP?|AITL)S$/, @{$tag->{'penn-pos'}}) {
-	print STDERR Data::Dumper->Dump([$tag],['*plural_tag']) if ($debug);
-	my $max_match_score = ($plural_entries{$entry} || 0);
-	for (@{$tag->{'domain-specific-info'}{matches}}) {
-	  $max_match_score = $_->{score} if ($max_match_score < $_->{score});
-	}
-	print STDERR Data::Dumper->Dump([$max_match_score],['max_match_score'])
-	  if ($debug);
-	$plural_entries{$entry} = $max_match_score;
-      } else {
-	# don't bother including non-plural specialist entries that normalize
-	# the same as the original string
-	if (# do a quicker check first
-      	    length($citation_form) == $tag->{end} - $tag->{start} and
-            normalize($citation_form) eq
-	      normalize(substr($str, $tag->{start},
-			       $tag->{end} - $tag->{start}))
-	   ) {
-	  next;
-	}
-      }
-    } elsif ($tag->{type} eq 'sentence') {
-      $sentence_starts{$tag->{start}} = 1;
-      next;
-    } elsif (grep { $_ eq $tag->{type} } qw(word prefix ending number punctuation subword subnumber alternate-spelling)) {
-      # make the word lattice entry to give to terms2
-      $entry = "$tag->{lex}\t$tag->{start}\t$tag->{end}\n";
-      if ($tag->{source} eq 'variant_lists') {
-	$listed_variant_entries{$entry} = 1;
-      }
-    } else {
-      next;
-    }
-    next if (exists($entries{$entry}));
-    $entries{$entry} = 1;
-    print $terms_out $entry;
-    print STDERR $entry if ($debug);
-  }
-  print $terms_out "_END_WORD_LATTICE_\n";
-  print STDERR "_END_WORD_LATTICE_\n" if ($debug);
-  my @terms;
-  # while terms2 does its thing, do some of our own tagging here
-  push @terms, @{tag_protein_sites_and_mutations($self, @input_tags)},
-  	       @{tag_mirnas($self, $str, @input_tags)};
-  # then read tags from terms2 and assign them lftypes
-  while (my $term = <$terms_in>) {
-    print STDERR "from drum terms:\n$term" if ($debug);
+# this was pulled out of the middle of tag_drum_terms so it could be reused for
+# tag_protmods
+sub read_from_terms2 {
+  my $stream = shift;
+  our ($self, $str, @prefixes, %sentence_starts, %plural_entries, %singular_entries, %listed_variant_entries);
+  my @terms = ();
+  while (my $term = <$stream>) {
+    print STDERR "from drum/protmod terms:\n$term" if ($debug);
     chomp $term;
     last if ($term eq '');
     # if we get a subset of the input lattice back, store it and reconstruct
@@ -171,7 +97,7 @@ sub tag_drum_terms {
       $input_variant = '';
       my $prev_end;
       my $entry;
-      while (($entry = <$terms_in>) and $entry ne "_END_WORD_LATTICE_\n") {
+      while (($entry = <$stream>) and $entry ne "_END_WORD_LATTICE_\n") {
 	print STDERR $entry if ($debug);
 	push @used_entries, $entry;
 	chomp $entry;
@@ -182,7 +108,7 @@ sub tag_drum_terms {
       }
       print STDERR $entry if ($debug);
       # continue with the next line after the lattice
-      $term = <$terms_in>;
+      $term = <$stream>;
       print STDERR $term if ($debug);
       chomp $term;
     }
@@ -202,8 +128,22 @@ sub tag_drum_terms {
     next if (@used_entries > 1 and
     	     $end < length($str) and substr($str, $end, 1) =~ /\w/ and
 	     is_all_prefixes($start, $end, \@prefixes));
-    # TODO factor some stuff out of this loop that doesn't depend on
-    # $matched_variant
+    # compute depluralization fields for matches (which don't depend on
+    # $matched_variant)
+    my $num_maybe_depluralized =
+      grep { exists($plural_entries{$_}) } @used_entries;
+    my $num_surely_depluralized =
+      grep { exists($plural_entries{$_}) and 
+	     not exists($singular_entries{$_})
+	   } @used_entries;
+    my $min_depluralization_score = 1;
+    if ($num_maybe_depluralized > 0) {
+      for (@used_entries) {
+	$min_depluralization_score = $plural_entries{$_}
+	  if (exists($plural_entries{$_}) and
+	      $plural_entries{$_} < $min_depluralization_score);
+      }
+    }
     while (@rest) {
       my $matched_variant = shift(@rest); # unnormalized
       my $skip = 0; # should we skip this variant?
@@ -231,21 +171,9 @@ sub tag_drum_terms {
 	}
 	next;
       }
-      my $num_maybe_depluralized =
-        grep { exists($plural_entries{$_}) } @used_entries;
-      my $num_surely_depluralized =
-        grep { exists($plural_entries{$_}) and 
-	       not exists($singular_entries{$_})
-	     } @used_entries;
       if ($num_maybe_depluralized > 0) {
 	$match->{'maybe-depluralized'} = $num_maybe_depluralized;
 	$match->{'surely-depluralized'} = $num_surely_depluralized;
-	my $min_depluralization_score = 1;
-	for (@used_entries) {
-	  $min_depluralization_score = $plural_entries{$_}
-	    if (exists($plural_entries{$_}) and
-	        $plural_entries{$_} < $min_depluralization_score);
-	}
 	$match->{'depluralization-score'} = $min_depluralization_score;
       }
       print STDERR Data::Dumper->Dump([$match],['*match']) if ($debug);
@@ -426,6 +354,100 @@ sub tag_drum_terms {
       }
     }
   }
+  return [@terms];
+}
+
+my @amino_acids; # forward declaration
+
+sub tag_drum_terms {
+  (our $self, our $str, my @input_tags) = @_;
+  # get prefixes and dashes for is_all_prefixes
+  our @prefixes = grep {
+    $_->{type} eq 'prefix' or
+    ($_->{type} eq 'punctuation' and $_->{lex} =~ $dash_re)
+  } @input_tags;
+  # send words, alternative spellings, and Specialist alternatives to terms2
+  print $terms_out "_BEGIN_WORD_LATTICE_\n";
+  print STDERR "to drum terms:\n_BEGIN_WORD_LATTICE_\n" if ($debug);
+  my %entries = (); # avoid printing duplicate entries from different tags
+  # keep the start offsets of sentences so we can use the fact that a match is
+  # at the start of a sentence while scoring its case match
+  our %sentence_starts = ();
+  # map citation form, start, and end for NNS and NNPS tags from specialist
+  # that we might use to get the respective NN/NNP form from drum-terms.tsv, to
+  # the maximum match score found for those specialist tags
+  our %plural_entries = ();
+  # some entries can be both plural and singular (e.g. "AMP"), so keep a record
+  # of the singular ones too
+  our %singular_entries = ();
+  # also record entries from VariantLists tagger to avoid throwing them out for
+  # being too short and not matching exactly
+  our %listed_variant_entries = ();
+  for my $tag (@input_tags) {
+    my $entry = undef;
+    if ($tag->{source} eq 'specialist') {
+      my $citation_form = $tag->{'domain-specific-info'}{'citation-form'};
+      # if something looks like a pluralized acronym (e.g. GAPs), but
+      # specialist downcases it (gaps), put it back to the upcased version
+      if ($tag->{lex} =~ /^([A-Z0-9]+)s$/ and
+	  $citation_form eq lc($1)) {
+        $citation_form = $1;
+      }
+      $entry = "$citation_form\t$tag->{start}\t$tag->{end}\n";
+      if (grep /^(?:NNP?|AITL)$/, @{$tag->{'penn-pos'}}) {
+	print STDERR Data::Dumper->Dump([$tag],['*singular_tag']) if ($debug);
+	$singular_entries{$entry} = 1;
+      }
+      if (grep /^(?:NNP?|AITL)S$/, @{$tag->{'penn-pos'}}) {
+	print STDERR Data::Dumper->Dump([$tag],['*plural_tag']) if ($debug);
+	my $max_match_score = ($plural_entries{$entry} || 0);
+	for (@{$tag->{'domain-specific-info'}{matches}}) {
+	  $max_match_score = $_->{score} if ($max_match_score < $_->{score});
+	}
+	print STDERR Data::Dumper->Dump([$max_match_score],['max_match_score'])
+	  if ($debug);
+	$plural_entries{$entry} = $max_match_score;
+      } else {
+	# don't bother including non-plural specialist entries that normalize
+	# the same as the original string
+	if (# do a quicker check first
+      	    length($citation_form) == $tag->{end} - $tag->{start} and
+            normalize($citation_form) eq
+	      normalize(substr($str, $tag->{start},
+			       $tag->{end} - $tag->{start}))
+	   ) {
+	  next;
+	}
+      }
+    } elsif ($tag->{type} eq 'sentence') {
+      $sentence_starts{$tag->{start}} = 1;
+      next;
+    } elsif (grep { $_ eq $tag->{type} } qw(word prefix ending number punctuation subword subnumber alternate-spelling)) {
+      # make the word lattice entry to give to terms2
+      $entry = "$tag->{lex}\t$tag->{start}\t$tag->{end}\n";
+      if ($tag->{source} eq 'variant_lists') {
+	$listed_variant_entries{$entry} = 1;
+      }
+    } else {
+      next;
+    }
+    next if (exists($entries{$entry}));
+    $entries{$entry} = 1;
+    print $terms_out $entry;
+    print STDERR $entry if ($debug);
+  }
+  print $terms_out "_END_WORD_LATTICE_\n";
+  print STDERR "_END_WORD_LATTICE_\n" if ($debug);
+  my @terms;
+  # while terms2 does its thing, do some of our own tagging here
+  push @terms, @{tag_protein_sites_and_mutations($self, @input_tags)},
+  	       @{tag_mirnas($self, $str, @input_tags)},
+	       @{tag_protmods(\%entries)};
+  # then read tags from terms2 and assign them lftypes
+  # FIXME? should merge terms with identical IDs but different matches, but
+  # that's almost certainly not going to come up except within calls to
+  # read_from_terms2 (not across them), where it's already handled
+  push @terms, @{read_from_terms2($terms_in)};
   # remove UniProt terms for wrong species
   if (defined($self->{drum_species})) {
     @terms = grep {
@@ -442,10 +464,11 @@ sub tag_drum_terms {
     } @terms;
   }
   # remove tags on all-lowercase single words that are already in the TRIPS
-  # lexicon
+  # lexicon (unless they're protmods)
   @terms = grep {
     my $keep =
       (not ($_->{lex} =~ /^\p{Ll}+$/ and
+      	    (not exists($_->{'penn-pos'})) and # not protmod
 	    (word_is_in_trips_lexicon($self, $_->{lex}) or
 	      # check version with a dash if it could be a prefix (is followed
 	      # by something other than whitespace or sentence-final
@@ -492,6 +515,7 @@ sub tag_drum_terms {
   # add noun POSs, with plural feature depending on whether the matched variant
   # used one of the %plural_entries, and the proper feature depending on case
   for my $tag (@terms) {
+    next if ($tag->{'penn-pos'}); # already have a POS
     # compute plural/singular feature
     my $plural = 0;
     my $singular = 0;
@@ -556,6 +580,64 @@ sub tag_drum_terms {
 	}
       }
     }
+  }
+  return [@terms];
+}
+
+# tag protein modifications from go_protmods.obo
+sub tag_protmods {
+  my $entries = shift;
+  our $str;
+  print $protmods_out "_BEGIN_WORD_LATTICE_\n";
+  print STDERR "to protmod terms:\n_BEGIN_WORD_LATTICE_\n[see above]\n" if ($debug);
+  # reuse entries from main drum tagger
+  print $protmods_out keys %$entries;
+  # add entries for (base/derived/inflected) forms of protein modifications
+  while ($str =~ /(\S+?)at(?:es?|ed|ing|ion)\b/g) {
+    my %tag = match2tag();
+    my $entry = "protein $1ation\t$tag{start}\t$tag{end}\n";
+    print $protmods_out $entry;
+    print STDERR $entry if ($debug);
+  }
+  print $protmods_out "_END_WORD_LATTICE_\n";
+  print STDERR "_END_WORD_LATTICE_\n" if ($debug);
+  my @terms =
+    grep {
+      my $tag = $_;
+      # make sure the match is of the form we're looking for, and not plural
+      my $keep =
+	grep { $_->{matched} =~ /^protein \S+ation$/ and
+	       not exists($_->{'depluralization-score'})
+	     } @{$tag->{'domain-specific-info'}{matches}};
+      print STDERR "removing protmod tag with matches:\n" .
+		   Data::Dumper->Dump([$tag->{'domain-specific-info'}{matches}],
+				      ['*matches'])
+	if ($debug and not $keep);
+      $keep
+    } @{read_from_terms2($protmods_in)};
+  for my $tag (@terms) {
+    # assign POS based on ending
+    if ($tag->{lex} =~ /ate$/) {
+      $tag->{'penn-pos'} = [qw(VB VBP)];
+    } elsif ($tag->{lex} =~ /ates$/) {
+      # technically could also be NNS, but it's much more likely to be VBZ here
+      $tag->{'penn-pos'} = [qw(VBZ)];
+    } elsif ($tag->{lex} =~ /ated$/) {
+      $tag->{'penn-pos'} = [qw(VBD VBN)];
+    } elsif ($tag->{lex} =~ /ating$/) {
+      $tag->{'penn-pos'} = [qw(VBG)];
+    } elsif ($tag->{lex} =~ /ation$/) {
+      $tag->{'penn-pos'} = [qw(NN)];
+    } else {
+      die "WTF: $tag->{lex}";
+    }
+    # delete mappings to ONT::biological-process (too generic)
+    $tag->{lftype} = [grep { $_ ne 'BIOLOGICAL-PROCESS' } @{$tag->{lftype}}];
+    $tag->{'domain-specific-info'}{'ont-types'} =
+      [grep { $_ ne 'BIOLOGICAL-PROCESS' } @{$tag->{'domain-specific-info'}{'ont-types'}}];
+    $tag->{'domain-specific-info'}{mappings} =
+      [grep { $_->{':to'} ne 'ONT::BIOLOGICAL-PROCESS' }
+	    @{$tag->{'domain-specific-info'}{mappings}}];
   }
   return [@terms];
 }

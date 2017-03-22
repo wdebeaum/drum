@@ -32,10 +32,10 @@ my $bond_re = qr/(?: - | = | ::? )/x;
 my $chemical_formula_re = qr/
   (?<! \S )
   R? $bond_re? \(?
-  $element_re \d{3}
+  $element_re \d{0,3}
   (?:
     (?:
-      (?: $element_re | \) ) \d{3} | \(
+      (?: $element_re | \) ) \d{0,3} | \(
     )
     $bond_re?
   )*

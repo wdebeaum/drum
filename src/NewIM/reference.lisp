@@ -5,7 +5,7 @@
 
 (defun Do-discourse-reference (index)
   (let ((refs (find-possible-antecedents-in-act index)))
-    (format t "~% possible referents are ~S" refs)
+    ;;(trace-msg 2 "~% possible referents are ~S" refs)
     ;; Here's where we would do something intelligent - right now we remove any referents that follow a RE in the same sentence
     (mapcar #'(lambda (rr)
 		(setf (referent-ref-hyps rr)
@@ -122,8 +122,8 @@
 (defun classify-num (lf)
   (case (first lf) 
     ((ont::the-set ont::indef-set ont::pro-set) 'set)
-    ((ont::the ont::a ont::pro ont::F) 'individual)
-    ((ont::bare ont::kind) 'kind)
+    ((ont::the ont::a ont::pro ont::F ont::bare) 'individual)
+    ((ont::kind) 'kind)
     (otherwise 'other)))
 
 (defun read-sem (x)
@@ -506,7 +506,7 @@
 	(prior post)
       (split-list-at-id id id-order)
     (mapcar #'(lambda (x)
-		(if (member (ref-hyp-id x) prior)
+		(if (member (ref-hyp-coref x) prior)
 		    (setf (ref-hyp-score x)
 			  (list* :history-posn 0 :order 'prior
 				(ref-hyp-score x)))
@@ -932,7 +932,7 @@
 	  )))))
 
 (defun find-possible-referents-in-current-sentence (lf-type sem id access-requirement nums index role fn)
-  "returns the objects that meet the access requirement AND that precede the id in the sentence"
+  "returns the objects that meet the access requirement AND whether it precedes the id in the sentence"
   (let ((r (get-im-record index))
 	;(event-ids (cadr role))
 	(event-ids (get-referent-role role))

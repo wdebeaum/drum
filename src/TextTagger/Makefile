@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.92 2017/03/20 15:41:52 wdebeaum Exp $
+# $Id: Makefile,v 1.93 2017/03/21 17:28:48 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -157,11 +157,12 @@ ifneq (,$(wildcard Perl/TextTagger/Drum.pm))
 
 all:: drum-terms.tsv drum-dsl specialist.tsv drum-dbxrefs.tsv go_protmods.tsv
 
-install:: mirna-species.tsv drum-terms.tsv drum-dsl specialist.tsv drum-dbxrefs.tsv
+install:: mirna-species.tsv drum-terms.tsv drum-dsl specialist.tsv drum-dbxrefs.tsv go_protmods.tsv
 	$(INSTALL_DATA) mirna-species.tsv $(etcdir)/$(MODULE)
 	$(INSTALL_DATA) drum-terms.tsv $(etcdir)/$(MODULE)
 	$(INSTALL_DATA) specialist.tsv $(etcdir)/$(MODULE)
 	$(INSTALL_DATA) drum-dbxrefs.tsv $(etcdir)/$(MODULE)
+	$(INSTALL_DATA) go_protmods.tsv $(etcdir)/$(MODULE)
 
 # This file is in CVS, so we don't really need this rule, but it's here to
 # document how the file was made in the first place. The database is a lot

@@ -56,6 +56,8 @@
   (inherit ONT::macromolecular-complex))
 (concept GO::0003674 ; molecular function
   (inherit ONT::biological-process))
+ (concept GO::0006464 ; cellular protein modification process
+   (inherit ONT::post-translational-modification))
 ; oddly, the Gene Ontology doesn't have a concept for just "gene"
 
 ;;; PSI-MI (Molecular Interactions)
