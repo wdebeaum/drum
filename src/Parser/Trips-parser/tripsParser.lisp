@@ -495,7 +495,7 @@
 
 (defun remove-false-starts (max)
   "These removes a few cases where the statistical parser uses constructions like NP <- NP PP,
-    we need to remove the sub NP"
+   we need to remove the sub NP"
   (dotimes (i max)
     (clean-up-posn i)))
 
@@ -544,8 +544,11 @@
 
 (defun prepare-input-for-parser-one (in isprefix)
  
-  (let* ((new-tokens (if isprefix (list (convert-to-word (coerce (string-upcase (second in)) 'list)))
+  (let* ((new-tokens (if (or isprefix (not (position-if #'(lambda (x) (member x *break-chars*)) (second in))))
+			 (list (convert-to-word (coerce (string-upcase (second in)) 'list)))
+			 ;; if break chars we must tokenize
 			 (tokenize (second in))))
+			      
 	 (number-of-tokens (length new-tokens))
 	 (frame (find-value in :frame))
 	 (start (if (eql (find-value in :index) 1) 1 (car frame)))

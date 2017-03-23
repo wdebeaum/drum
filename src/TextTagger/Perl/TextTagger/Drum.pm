@@ -593,9 +593,19 @@ sub tag_protmods {
   # reuse entries from main drum tagger
   print $protmods_out keys %$entries;
   # add entries for (base/derived/inflected) forms of protein modifications
-  while ($str =~ /(\S+?)at(?:es?|ed|ing|ion)\b/g) {
+  while ($str =~ /(\S+\s+)?(\S+?)at(?:es?|ed|ing|ion)\b/g) {
     my %tag = match2tag();
-    my $entry = "protein $1ation\t$tag{start}\t$tag{end}\n";
+    my ($word1, $word2prefix) = ($1, $2);
+    my $entry;
+    if (defined($word1)) {
+      my $word1length = length($word1);
+      $word1 =~ s/\s+$/ /;
+      $entry =
+        "protein $word1$word2prefix" . "ation\t$tag{start}\t$tag{end}\n" .
+        "protein $word2prefix" . "ation\t" . ($tag{start} + $word1length) . "\t$tag{end}\n";
+    } else { # only 1 word
+      $entry = "protein $word2prefix" . "ation\t$tag{start}\t$tag{end}\n";
+    }
     print $protmods_out $entry;
     print STDERR $entry if ($debug);
   }
@@ -606,7 +616,7 @@ sub tag_protmods {
       my $tag = $_;
       # make sure the match is of the form we're looking for, and not plural
       my $keep =
-	grep { $_->{matched} =~ /^protein \S+ation$/ and
+	grep { $_->{matched} =~ /^protein (?:\S+\s+)?\S+ation$/ and
 	       not exists($_->{'depluralization-score'})
 	     } @{$tag->{'domain-specific-info'}{matches}};
       print STDERR "removing protmod tag with matches:\n" .
