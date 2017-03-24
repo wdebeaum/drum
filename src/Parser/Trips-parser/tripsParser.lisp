@@ -544,7 +544,8 @@
 
 (defun prepare-input-for-parser-one (in isprefix)
  
-  (let* ((new-tokens (if (or isprefix (not (position-if #'(lambda (x) (member x *break-chars*)) (second in))))
+  (let* ((new-tokens (if ;;(or 
+			  isprefix ;;(not (position-if #'(lambda (x) (member x *break-chars*)) (second in))))
 			 (list (convert-to-word (coerce (string-upcase (second in)) 'list)))
 			 ;; if break chars we must tokenize
 			 (tokenize (second in))))

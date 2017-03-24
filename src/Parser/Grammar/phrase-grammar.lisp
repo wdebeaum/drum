@@ -4921,7 +4921,7 @@
      (N1 sem lf lex headcat transform set-restr refl abbrev)
      )
 
-    ;; this rule handles rate/activity constructions - e.g., the binding rate or ras on raf
+    ;; this rule handles rate/activity constructions - e.g., the binding rate of ras on raf
     ;;  we basically store away the rate.activity predicate and continue pasring as though it
     ;; wasn't there
         ((N1 (SORT PRED) (COMPLEX +)
@@ -4961,7 +4961,9 @@
 		    (nomobjpreps ?nop)
 		    (nomsubjpreps ?nsp)
 		    ))
-	 (n (lf ?ratelf) (sem ($ (? t F::ABSTR-OBJ F::SITUATION) (f::type (? x ONT::DOMAIN ONT::ACTING)))))
+	 (n (lf ?ratelf) (sem ($ (? t F::ABSTR-OBJ F::SITUATION)
+				 ;(f::type (? x ONT::DOMAIN ONT::ACTING))))) ; ACTING: activity
+				 (f::type (? x ONT::DOMAIN ONT::ACTIVITY-EVENT ONT::ABILITY-EVENT ONT::LEVEL ONT::QUANTITY))))) ; rate, height, activity, level, amount
 	 )
 
     ;; this rule then inserts the rate/activity predicate once the arguments have been attached

@@ -32,10 +32,10 @@
    (W::activity-verb-doesnotexist
      (wordfeats (W::morph (:forms (-vb) :nom W::activity :nomsubjpreps (w::of w::by) :nomobjpreps (w::on))))
      (SENSES
-      ((LF-PARENT ONT::ACTING)  
+      ((LF-PARENT ONT::ACTIVITY-EVENT)  
        (TEMPL agent-affected-xp-templ)
 	)
-      ((LF-PARENT ONT::ACTING)  
+      ((LF-PARENT ONT::ACTIVITY-EVENT)  
         (TEMPL agent-templ)
 	)
 

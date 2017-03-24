@@ -316,7 +316,7 @@
 	    (>= (agenda-item-score e) threshold)
 	    ;; e is empty (should not happen but does very rarely), reset the top
 	    (progn 
-	      (format t "~%~% TOP BUCKET WAS EMPTY -- RESETTING~%~%")
+	      (trace-msg 2 "~%~% TOP BUCKET WAS EMPTY -- RESETTING~%~%")
 	      (setf (top-bucket *chart*) (find-new-top-bucket (top-bucket *chart*)))
 	      (if (> (top-bucket *chart*) 0) (agenda-item-pending threshold))
 	      )))))

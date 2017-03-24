@@ -4,7 +4,7 @@
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
 
-;;; Time-stamp: <Tue Feb 28 10:08:21 EST 2017 jallen>
+;;; Time-stamp: <Sun Mar 19 09:05:47 EDT 2017 jallen>
 
 (in-package "PARSER")
 
@@ -1884,7 +1884,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	   (car really-new-names))
       ;; otherwise we look for first one that doesn't already exist
       ((member (car really-new-names) existing-roles)
-       (return-first-refinement really-new-names old-role-name existing-roles))
+       (return-first-refinement (cdr really-new-names) old-role-name existing-roles))
       ;; otherwise, the first one is the answer
       (really-new-names 
        (car really-new-names))
