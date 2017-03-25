@@ -2,7 +2,7 @@
 
 # go_protmods.pl
 #
-# Time-stamp: <Mon Mar 20 10:59:31 CDT 2017 lgalescu>
+# Time-stamp: <Fri Mar 24 15:10:27 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 13 Mar 2017
 #
@@ -24,6 +24,11 @@
 # 2017/03/19 lgalescu v3.0
 # - cleaned up; significant re-factoring.
 # - Moved to TRIPS/TextTagger component (updated packages).
+# 2017/03/24 lgalescu v4.0
+# - Fixed bug that prevented synonyms from being added.
+# - Added extra synonyms.
+# - Added filter so only synonyms that pass the lexicalization test
+#   are included.
 
 #----------------------------------------------------------------
 # Usage:
@@ -92,10 +97,21 @@ my $go;
 # root of sub-ontology 
 my $root = 'GO:0006464'; # cellular protein modification process)
 
+### Specific 
 # undesirable term ids in the output OBO (might otherwise be included)
 my @exclusions = qw/GO:0035551 GO:0032446/;
 # desirable term ids in the output OBO (might otherwise be excluded)
 my @inclusions = qw/GO:0006493/;
+# additional synonyms
+my %extra_synonyms =
+  (
+   'GO:0018101' => [ "protein deimination" ],
+   'GO:0018180' => [ "protein desulfurisation",
+		     "protein desulphurisation",
+		     "protein desulphurization" ],
+   'GO:0006477' => [ "protein sulphation" ],
+   'GO:0018342' => [ "protein isoprenylation" ], # Wikipedia, NCIT
+  );
 
 # lexicon
 my %lexicon;
@@ -128,6 +144,11 @@ exit 0;
 ###================================================================
 ## Subs
 #
+
+# test for inclusion
+sub is_lex_protmod {
+  return $_[0] =~ /^protein .*ion$/;
+}
 
 # main function: look for protein modifications that are good candidates
 # for lexicalization
@@ -168,7 +189,8 @@ sub get_protmods {
     # check name to see if it's what we're looking for
     # TODO: look in synonyms as well!
     #       eg: GO:0008612 (protein hypusination)
-    unless (grep { $_ =~ /^protein .*ion$/ } $name) {
+    #       eg: GO:0018119 (protein S-nitrosylation)
+    unless (is_lex_protmod($name)) {
       $mods{$mod}{skipped} = 1;
       next;
     }
@@ -199,24 +221,23 @@ sub get_protmods {
       local $Data::Dumper::Indent = 0;
       warn sprintf("$mod has %d proper parents: %s\n",
 		   scalar(@{ $mods{$mod}{is_a} }),
-		   Dumper($mods{$mod}{is_a}))
-	if $debug;
+		   Dumper($mods{$mod}{is_a}));
     }
     if (scalar(@{ $mods{$mod}{is_a} }) == 0) {
       $mods{$mod}{is_d} = [ new_parents($mod) ];
     }
   }
-  warn sprintf("Found %d matching descendants.\n",
-	       -1 + grep { in_network($_) } keys %mods)
-    if $debug;
-  if (%lexicon) {
-    warn sprintf("Lexicon:\n\t%d matched\n\t%d matched with prefixes\n\t%d not matched (%s)\n",
-		 scalar(grep {$lexicon{$_} > 0} keys %lexicon),
-		 scalar(grep {$lexicon{$_} == 2} keys %lexicon),
-		 scalar(grep {$lexicon{$_} == 0} keys %lexicon),
-		 join(", ", grep {$lexicon{$_} == 0} keys %lexicon)
-		)
-      if $debug;
+  if ($debug) {
+    warn sprintf("Found %d matching descendants.\n",
+		 -1 + grep { in_network($_) } keys %mods);
+    if (%lexicon) {
+      warn sprintf("Lexicon:\n\t%d matched\n\t%d matched with prefixes\n\t%d not matched (%s)\n",
+		   scalar(grep {$lexicon{$_} > 0} keys %lexicon),
+		   scalar(grep {$lexicon{$_} == 2} keys %lexicon),
+		   scalar(grep {$lexicon{$_} == 0} keys %lexicon),
+		   join(", ", grep {$lexicon{$_} == 0} keys %lexicon)
+		  );
+    }
   }
 }
 
@@ -368,10 +389,19 @@ ontology: go_protmods\n\n", _timestamp();
     printf $obo "id: %s\n", $id;
     printf $obo "name: %s\n", $name;
     printf $obo "namespace: biological_process\n";
-    my @syns = $go->get_term_synonyms($id, 'synonym', 'EXACT' => 1);
+    my @syns = $go->get_term_synonyms($id, 'EXACT' => 1);
+    my @new_syns = (exists $extra_synonyms{$id}) ?
+      @{ $extra_synonyms{$id} } : ();
+    foreach my $syn (@new_syns) {
+      # check that GO doesn't have it
+      next if grep { $syn eq $_} @syns;
+      printf $obo "synonym: \"%s\" EXACT []\n", $syn;	
+    }
     foreach my $syn (@syns) {
+      # keep only the ones likely to be lexicalized
+      next unless is_lex_protmod($syn);
       # eliminate more verbose synonyms
-      next if is_more_specific($syn, $name);
+      next if any { is_more_specific($syn, $_) } $name, @syns, @new_syns;
       # eliminate shortcuts; we're going to deal with these later
       next if $name eq "protein " .  $syn;
       printf $obo "synonym: \"%s\" EXACT []\n", $syn;

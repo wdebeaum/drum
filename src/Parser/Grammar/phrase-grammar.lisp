@@ -2852,14 +2852,14 @@
 
     ; TEST: the quickly loaded truck ; the quickly computer generated truck
      ;; Myrosia 11/26/01 we only allow those phrases before the verbs. After the verbs, they should be treated as reduced relative clauses
-     ((ADJP (ARG ?arg) (VAR ?v) 
+     ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem)
 	    (SUBCATMAP (? x ont::affected ont::affected-result)) (ARGUMENT ?subj)
 	    (atype central) 
 	    (LF (% PROP (class ?lf) (VAR ?v) (constraint ?newc)))
       )
      -vp-pastprt-adjp>
      (head
-      (vp- (class ?lf) (constraint ?cons) (var ?v)
+      (vp- (class ?lf) (constraint ?cons) (var ?v) (sem ?sem)
 	   (SUBJ-MAP (? x ont::affected ont::affected-result)) (SUBJ ?subj) ;; more general to ask for SUBJ to be AFFECTED role, includes
  	                                         ;; the passive as well as unaccusative cases
 	   (gap -) ;;  no gap in the VP
@@ -2891,13 +2891,13 @@
 
     ;; TEST: the computer-generated dog
     ((ADJP (VAR ?v)  (arg ?dobj) (class ?lf) (atype w::central) (argument (% NP (var ?dobj)))
-      (vform passive) (constraint ?constraint)
+      (vform passive) (constraint ?constraint) (sem ?sem)
       (LF (% prop (class ?lf) (var ?v)
 	     (constraint 
 	      (& (?!reln (% *PRO* (status ont::kind) (var ?v-n) (class ?nc) (constraint ?nr) (sem ?sem)))
 		 (?dobj-map ?dobj))))))
      -adj-passive+subj-hyphen> 1
-     (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (var ?v-n) 
+     (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
       (sem ?sem) (relc -) (abbrev -)
 	 )
      (punc (lex w::punc-minus))
@@ -2910,13 +2910,13 @@
 
     ;; TEST: the computer generated dog
     ((ADJP (VAR ?v)  (arg ?dobj) (class ?lf) (atype w::central) (argument (% NP (var ?dobj)))
-      (vform passive) (constraint ?constraint)
+      (vform passive) (constraint ?constraint) (sem ?sem)
       (LF (% prop (class ?lf) (var ?v)
 	     (constraint 
-	      (& (?!reln (% *PRO* (status ont::kind) (var ?v-n) (class ?nc) (constraint ?nr)))
+	      (& (?!reln (% *PRO* (status ont::kind) (var ?v-n) (class ?nc) (constraint ?nr) (sem ?sem)))
 		 (?dobj-map ?dobj))))))
      -adj-passive+subj> 
-     (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -)(var ?v-n) 
+     (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
       (sem ?sem) (relc -) (abbrev -)
 	 )
      (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj)))
@@ -2987,7 +2987,7 @@
 ;    
     ;;  bare ing form as an adjective (e.g., the running truck)
     ((ADJP (ARG ?arg) (VAR ?v)  (SUBCATMAP ?!reln) (atype attributive-only)
-           (ARGUMENT ?subj)
+           (ARGUMENT ?subj) (sem ?sem)
            (LF (% PROP (class ?lf) (VAR ?v) 
 ;                  (CONSTRAINT (& (?!reln ?arg) (mod ?prefix)))
                   (CONSTRAINT ?newc)
@@ -2996,7 +2996,7 @@
            )
      -adj-ing> ;;0.98
      (head (V (VFORM (? vf ING)) (COMP3 (% - )) ;;(DOBJ (% -)) 
-	      (GAP -) (LF ?lf) 
+	      (GAP -) (LF ?lf) (sem ?sem)
               (SUBJ-MAP ?!reln) (SUBJ ?subj)
               (VAR ?v) (transform ?transform)
 ;	      (prefix ?prefix)
@@ -3012,7 +3012,7 @@
 
   ;; the phosphorylating Ras (phosphorylating has an optional LOC role)
  ((ADJP (ARG ?arg) (VAR ?v)  (SUBCATMAP ?!reln) (atype attributive-only)
-           (ARGUMENT ?subj)
+           (ARGUMENT ?subj) (sem ?sem)
            (LF (% PROP (class ?lf) (VAR ?v) 
 ;                  (CONSTRAINT (& (?!reln ?arg) (mod ?prefix)))
                   (CONSTRAINT ?newc)
@@ -3021,7 +3021,7 @@
            )
      -adj-ing-opt-comp3> 0.98
      (head (V (VFORM (? vf ING)) (COMP3 (% ?!xx (w::optional +)))
-	      (GAP -) (LF ?lf) 
+	      (GAP -) (LF ?lf) (sem ?sem)
               (SUBJ-MAP ?!reln) (SUBJ ?subj)
               (VAR ?v) (transform ?transform)
 ;	      (prefix ?prefix)
