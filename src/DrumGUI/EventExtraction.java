@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.50 2016/08/04 05:28:47 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.52 2017/03/25 20:55:51 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -766,6 +766,19 @@ public class EventExtraction extends Extraction {
         String text = removeTags(getTextSpan(start, end));
         Debug.debug("toXML: ready");
 
+        // for PTMs we want a name
+        String nameElement = "";
+        if (ontType.equalsIgnoreCase("ONT::PTM")) {
+            if (!drumTerms.isEmpty()) {
+                // just get the first one
+                KQMLList firstTerm = drumTerms.get(0);
+                KQMLObject nameObj = firstTerm.getKeywordArg(":name");
+                if (nameObj != null) {
+                    nameElement = "<name>" + nameObj.stringValue() + "</name>";
+                }
+            }
+        }
+
         String ruleID = getKeywordArgString(":RULE", value);    
         if (ruleID == null) {
             Debug.warn("No :RULE? value=" + value);
@@ -779,7 +792,7 @@ public class EventExtraction extends Extraction {
                 "lisp=\"" + getLispForm() + "\" " +
                 "rule=\"" + ruleID + "\">"
                 + "<type>" + ontType + "</type>"
-                // + "<value>" + value + "</value>"
+                + nameElement
                 + createNegationXML()
                 + createPolarityXML()
                 + createForceXML()
@@ -932,14 +945,11 @@ public class EventExtraction extends Extraction {
         String text = removeTags(getTextSpan(start, end));
         String tag = "arg" + roleIndex;
 
-        String dbID = getDBTermIds();
-
         Debug.debug("createArgXML: ready");
 
         return "<" + tag + " " +
                 "id=\"" + id + "\" " +
                 "role=\"" + role + "\" " +
-                (dbID == null ? "" : ("dbid=\"" + dbID + "\" ")) +
                 "start=\"" + getOffset(start) + "\" " +
                 "end=\"" + getOffset(end) + "\"" + ">"
                 + "<type>" + ontInfo.get(0) + "</type>"
@@ -1000,6 +1010,10 @@ public class EventExtraction extends Extraction {
         } else if (locmodObj instanceof KQMLToken) { // TODO: remove (obsolete)
             locmod = locmodObj.toString();
         }
+        String locmodAttr = "";
+        if (locmod != null) {
+            locmodAttr = "mod=\"" + removePackage(locmod, false) + "\" ";
+        }
         String id = removePackage(locval);
         KQMLList locTerm = findTermByVar(locval, context);
         KQMLList ontInfo = pullCompleteOntInfo(locTerm);
@@ -1011,7 +1025,7 @@ public class EventExtraction extends Extraction {
 
         return "<location " +
                 "id=\"" + id + "\" " +
-                "mod=\"" + removePackage(locmod, false) + "\" " +
+                locmodAttr +
                 "start=\"" + getOffset(start) + "\" " +
                 "end=\"" + getOffset(end) + "\"" + ">"
                 + "<type>" + ontInfo.get(0) + "</type>"

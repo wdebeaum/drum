@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: CausalityExtraction.java,v 1.10 2016/07/26 05:15:27 lgalescu Exp $
+ * $Id: CausalityExtraction.java,v 1.11 2017/03/25 20:55:50 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -494,9 +494,6 @@ public class CausalityExtraction extends Extraction {
             String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
             String text = removeTags(getTextSpan(start, end));
 
-
-            String dbID = getDBTermIds();
-
             Debug.debug("createArgXML: ready");
 
             return "<arg " +
@@ -548,7 +545,6 @@ public class CausalityExtraction extends Extraction {
                 String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
                 String text = removeTags(getTextSpan(start, end));
 
-                String dbID = getDBTermIds();
                 Debug.debug("createSeqArgXML: ready");
 
                 seqArgs += "<arg " +

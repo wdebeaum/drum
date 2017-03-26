@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: ModalityExtraction.java,v 1.23 2016/07/26 05:15:28 lgalescu Exp $
+ * $Id: ModalityExtraction.java,v 1.24 2017/03/25 20:55:51 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -331,8 +331,6 @@ public class ModalityExtraction extends Extraction {
         int end = getKeywordArgInt(":END", term);
         String text = removeTags(getTextSpan(start, end));
         String tag = "arg" + roleIndex;
-
-        String dbID = getDBTermIds();
 
         Debug.debug("createArgXML: ready");
 

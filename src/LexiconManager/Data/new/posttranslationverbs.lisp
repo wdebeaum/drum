@@ -6,6 +6,8 @@
  :words (
   ;; # PTMs involving addition by an enzyme in vivo
   ;; ## PTMs involving addition of hydrophobic groups for membrane localization
+
+  #|| LG20170324 now we get these from TT/go_protmods
   (W::myristoylate
   ;; I've seen this used, but it is uncommon.  Mostly the nominalized form
    (wordfeats (W::morph (:forms (-vb) :nom w::myristoylation)))
@@ -33,6 +35,7 @@
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
+  ||#
 
   (W::farnesylate
   ;; child of isoprenylate?
@@ -41,21 +44,25 @@
     ((LF-PARENT ONT::farnesylation))
     ))
 
+  #|| LG20170324 now we get these from TT/go_protmods
   (W::geranylgeranylate
   ;; child of isoprenylate?
    (wordfeats (W::morph (:forms (-vb) :nom w::geranylgeranylation)))
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
+  ||#
 
+  ;; Glypiation is not in GO, NCIT, etc.
   (W::glypiate
    (wordfeats (W::morph (:forms (-vb) :nom w::glypiation)))
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
-
+  
   ;; ## PTMs involving addition of cofactors for enhanced enzymatic activity
 
+  #|| LG20170324 now we get these from TT/go_protmods
   (W::lipoylate
    (wordfeats (W::morph (:forms (-vb) :nom w::lipoylation)))
    (SENSES
@@ -70,6 +77,7 @@
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
+  ||#
 
   ;; skipping retinylidene Schiff base formation
 
@@ -81,13 +89,13 @@
 
   ;; ## PTMs involving addition of smaller chemical groups
 
-
+  #|| LG20170324 now we get these from TT/go_protmods
   (W::acylate
    (wordfeats (W::morph (:forms (-vb) :nom w::acylation)))
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
-
+  ||#
 
   (W::acetylate
     ;; Child of acylate
@@ -103,6 +111,7 @@
 ;    ((LF-PARENT ONT::post-translational-modification))
 ;    ))
 
+  #|| LG20170324 now we get these from TT/go_protmods
   (W::formylate
     ;; Child of acylate
    (wordfeats (W::morph (:forms (-vb) :nom w::formylation)))
@@ -115,7 +124,8 @@
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
-
+  ||#
+  
   (W::methylate
     ;; Child of alkylate
    (wordfeats (W::morph (:forms (-vb) :nom w::methylation :nomobjpreps (w::on w::of))))
@@ -132,6 +142,7 @@
 
   ;; skipping amide bond formation
 
+  #|| LG20170324 now we get these from TT/go_protmods
   (W::amidate
     ;; child of "amide bond formation"
    (wordfeats (W::morph (:forms (-vb) :nom w::amidation)))
@@ -161,13 +172,16 @@
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
+  ||#
 
+  ;; novel PTM; not in GO or NCIT 
   (W::butyrylate
    (wordfeats (W::morph (:forms (-vb) :nom w::butyrylation)))
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
 
+  ;; this may be a synonym or child of GO:0018214 (carboxylation)
   ((W::gamma W::carboxylate)
    (wordfeats (W::morph (:forms (-vb) :nom (w::gamma w::carboxylation) :past (w::gamma w::carboxylated))))
    (SENSES
@@ -188,63 +202,58 @@
     ))
 
   (W::polysialylate
-    ;; child of glycosylate
+    ;; child of GO:1990743 sialylation
    (wordfeats (W::morph (:forms (-vb) :nom w::polysialylation)))
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
 
+  #|| LG20170324 now we get these from TT/go_protmods
   (W::malonylate
    (wordfeats (W::morph (:forms (-vb) :nom w::malonylation)))
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
-
+  ||#
+  
   (W::hydroxylate
    (wordfeats (W::morph (:forms (-vb) :nom w::hydroxylation :nomobjpreps (w::on w::of))))
    (SENSES
     ((LF-PARENT ONT::hydroxylation))
     ))
 
+  #|| LG20170324 now we get these from TT/go_protmods
   (W::iodinate
    (wordfeats (W::morph (:forms (-vb) :nom w::iodination)))
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
+  ||#
 
-  ;; ribosylation usu means ADP-ribosylation; it is sometimes used without "ADP", though
+  
+  ;; from PSI-MOD; ADP-ribosylation is a common PTM, not sure if this is used as synonym
   (W::ribosylate
    (wordfeats (W::morph (:forms (-vb) :nom w::ribosylation :nomobjpreps (w::on w::of))))
    (SENSES
     ((LF-PARENT ONT::ribosylation))
     ))
 
-  ;;; LG: for whatever reason, this is practically never picked up; instead,
-  ;;; the simple w::ribosylate is preferred, with an :assoc-with link to w::adp
-  ;; ((W::ADP W::ribosylate)
-  ;;  (wordfeats (W::morph (:forms (-vb) :nom (w::ADP w::ribosylation) :nomobjpreps (w::on w::of))))
-  ;;  (SENSES
-  ;;   ((LF-PARENT ONT::ribosylation))
-  ;;   ))
-
-  ;;; LG: trying compound word to get around the fact that the current assumption
-  ;;; in the lexicon is that in a phrasal verb the first word must be the verb
-  ;;; it is still less preferred than the simple w::ribosylate (see above)
-  (W::ADP-ribosylate
-   (wordfeats (W::morph (:forms (-vb) :nom w::ADP-ribosylation :past w::ADP-ribosylated :ing w::ADP-ribosylating :nomobjpreps (w::on w::of))))
+  ;;; LG: trying this for the compound (doesn't work without accounting for the dash)
+  ((W::ADP W::punc-minus W::ribosylate)
+   (wordfeats (W::morph (:forms (-vb) :nom (W::ADP W::punc-minus W::ribosylation) :past (W::ADP W::punc-minus W::ribosylated) :ing (W::ADP W::punc-minus W::ribosylating) :nomobjpreps (w::on w::of))))
    (SENSES
     ((LF-PARENT ONT::ribosylation))
     ))
 
-
   ;; skipping nucleotide addition
 
+  #|| LG20170324 now we get these from TT/go_protmods
   (W::oxidate
    (wordfeats (W::morph (:forms (-vb) :nom w::oxidation)))
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
-
+  ||#
 
   ;; skipping phosphate ester (O-linked) or phosphoramidate (N-linked) formation
 
@@ -262,13 +271,16 @@
 ;     (templ agent-affected-loc-optional-templ))  ;; subcat for location to improve attachment decisions
 ;    ))
 
+  #|| LG20170324 now we get these from TT/go_protmods
   (W::adenylylate
   ;; child of phosphate ester (O-linked) or phosphoramidate (N-linked) formation
    (wordfeats (W::morph (:forms (-vb) :nom w::adenylylation)))
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
+  ||#
 
+  ;; novel PTM; not in GO or NCIT 
   (W::propionylate
    (wordfeats (W::morph (:forms (-vb) :nom w::propionylation)))
    (SENSES
@@ -289,6 +301,7 @@
     ((LF-PARENT ONT::post-translational-modification))
     ))
 
+  #|| LG20170324 now we get these from TT/go_protmods
   (W::succinylate
    (wordfeats (W::morph (:forms (-vb) :nom w::succinylation)))
    (SENSES
@@ -300,7 +313,8 @@
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
-
+  ||#
+  
   ;; ## PTMs involving non-enzymatic additions in vivo
 
   (W::glycate
@@ -361,6 +375,7 @@
     ((LF-PARENT ONT::ubiquitination))
     ))
 
+  #|| LG20170324 now we get these from TT/go_protmods
   (W::Neddylate
    (wordfeats (W::morph (:forms (-vb) :nom w::Neddylation)))
    (SENSES
@@ -387,7 +402,8 @@
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
-
+  ||#
+  
   (W::deamidate
    (wordfeats (W::morph (:forms (-vb) :nom w::deamidation)))
    (SENSES
@@ -417,7 +433,3 @@
     ((LF-PARENT ONT::post-translational-modification))
     ))
 ))
-
-
-
-
