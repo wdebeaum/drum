@@ -958,6 +958,7 @@
 (define-type ont::has-medical-condition
   :parent ont::physical-val
   :arguments ((:essential ONT::FIGURE (F::phys-obj (F::origin F::human) (F::intentional +))))
+  :wordnet-sense-keys ("deaf%3:00:00" "blind%3:00:00" "mute%5:00:01:inarticulate:00")
   )
 
 ;; lightheaded, tired

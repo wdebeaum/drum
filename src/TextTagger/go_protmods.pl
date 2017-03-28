@@ -2,7 +2,7 @@
 
 # go_protmods.pl
 #
-# Time-stamp: <Fri Mar 24 15:10:27 CDT 2017 lgalescu>
+# Time-stamp: <Mon Mar 27 17:30:17 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 13 Mar 2017
 #
@@ -112,6 +112,12 @@ my %extra_synonyms =
    'GO:0006477' => [ "protein sulphation" ],
    'GO:0018342' => [ "protein isoprenylation" ], # Wikipedia, NCIT
   );
+
+# TODO [20170327]: the following is a temporary fix to keep INDRA and Ben
+# happy in the short term. Should be removed once we have a permanent solution
+# for handling prefixes for these modifications (the ones in the lexicon go
+# through the Affixes tagger, but these ones don't)
+push @exclusions, qw/GO:0006470/;
 
 # lexicon
 my %lexicon;
