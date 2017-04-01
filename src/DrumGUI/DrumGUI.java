@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.69 2017/03/01 23:40:40 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.70 2017/03/31 23:00:00 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -143,6 +143,10 @@ public class DrumGUI extends StandardTripsModule {
     private boolean replyWhenDone = false;
     /** Send EKB in reply? (can be {@code true} only if {@link #replyWhenDone} is {@code true}) */
     private boolean replyWithEKB = false;
+    /** If {@code true}, call EKBAgent to do inference on the raw EKB for current task */
+    private boolean doInference = false;
+    /** Inferred EKB as received from EKBAgent */
+    private KQMLString inferredEKBAsKQMLString = null;
 
     /**
      * A timer that checks every now and then whether we're idle and have tasks to do. If so, it will pick the first
@@ -762,13 +766,16 @@ public class DrumGUI extends StandardTripsModule {
         } else {
             replyWhenDone = reply_when_done || replyWithEKB;
         }
+        
+        // TODO
+        doInference = false;
     }
 
     /**
      * Handler for {@code run-text} requests.
      * <p>
      * Request format:
-     * {@code (run-text :text "text" [:exit-when-done false] [:reply-when-done true] [:reply-with-ekb true])))}.
+     * {@code (run-text :text "text" [:exit-when-done false] [:reply-when-done true] [:reply-with-ekb true] [:do-inference false])))}.
      * <p>
      * Throws an exception if there is a problem.
      * 
@@ -785,6 +792,14 @@ public class DrumGUI extends StandardTripsModule {
 
         // specific task parameters
         String text = ((KQMLString) content.getKeywordArg(":text")).stringValue();
+
+        // TODO: we'll want to do this for all tasks, but i'm starting here
+        KQMLObject doInferenceObj = content.getKeywordArg(":do-inference");
+        if (doInferenceObj != null) {
+            doInference = StringUtils.stringToBoolean(doInferenceObj.toString());
+        } else {
+            doInference = false;
+        }
 
         // write text to new file
         String folder = dataset.getFolder();
@@ -1494,7 +1509,21 @@ public class DrumGUI extends StandardTripsModule {
                 if (taskRequest != null) {
                     if (replyWhenDone) {
                         if (replyWithEKB) {
-                            reply(taskRequest, makeExtractionsResultMessage(documentID));
+                            if (doInference) {
+                                // we ask EKBAgent to do inference and let the handler reply
+                                KQMLPerformative perf = new KQMLPerformative("request");
+                                KQMLList content = new KQMLList();
+                                content.add("do-ekb-inference");
+                                content.add(":ekb");
+                                content.add(new KQMLString(kb.getEKBFile()));
+                                content.add(":return-string");
+                                content.add("t");
+                                perf.setParameter(":content", content);
+                                sendWithContinuation(perf, new DoInferenceReplyHandler(taskRequest, documentID));
+                            } else {
+                                // we take care if it here
+                                reply(taskRequest, makeExtractionsResultMessage(documentID));
+                            }
                         } else {
                             try {
                                 KQMLPerformative rmsg = new KQMLPerformative("reply");
@@ -2067,6 +2096,11 @@ public class DrumGUI extends StandardTripsModule {
         content.add(":extractions");
         content.add(new KQMLString(kb.toXML()));
         perf.setParameter(":content", content);
+        if (doInference) {
+            // TODO: Add inferred ekb
+            content.add(":inferred-ekb");
+            content.add(inferredEKBAsKQMLString);
+        }
         return perf;
     }
 
@@ -2236,6 +2270,46 @@ public class DrumGUI extends StandardTripsModule {
                 error("Cannot handle reply");
                 return;
             }
+        }
+    }
+
+    /**
+     * Handler for replies to do-ekb-inference messages.
+     */
+    protected class DoInferenceReplyHandler implements KQMLContinuation {
+        private KQMLPerformative task;
+        private String documentID;
+
+        public DoInferenceReplyHandler(KQMLPerformative task, String documentID) {
+            // TODO Auto-generated constructor stub
+            this.task = task;
+            this.documentID = documentID;
+        }
+
+        public void receive(KQMLPerformative replyMsg) {
+            log("<received>\n" + replyMsg + "\n</received>");
+            KQMLObject content = replyMsg.getParameter(":content");
+            if (!(content instanceof KQMLList)) {
+                error("Bad message format");
+                return;
+            }
+            String reply = ((KQMLList) content).get(0).toString();
+            if (reply.equalsIgnoreCase("done")) {
+                inferredEKBAsKQMLString = (KQMLString) ((KQMLList) content).getKeywordArg(":result");
+            }
+            else if (reply.equalsIgnoreCase("failure")) {
+                // we log the error, but otherwise don't do anything
+                KQMLObject errorMsg = ((KQMLList) content).getKeywordArg(":msg");
+                if (errorMsg != null) {
+                    Debug.debug("Got a failure:" + errorMsg);
+                } else {
+                    Debug.debug("Got a failure with no error message");
+                }
+            } else { // TODO: handle reject
+                error("Cannot handle reply");
+            }
+            // finally, reply to the original message
+            reply(taskRequest, makeExtractionsResultMessage(documentID));
         }
     }
 

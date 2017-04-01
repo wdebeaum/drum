@@ -223,6 +223,11 @@ fi
   $TRIPS_BASE/bin/PubManager $port_opt -cache $pm_cache -debug $debug \
   2>&1 | tee PubManager.err ) &
 
+# Start EKBAgent
+( sleep 5; \
+  $TRIPS_BASE/bin/EKBAgent $port_opt  \
+  2>&1 | tee EKBAgent.err ) &
+
 # Start Graphviz
 (sleep 5; $TRIPS_BASE/bin/Graphviz $port_opt -display-enabled $graphviz_display 2>&1 | tee Graphviz.err) &
 

@@ -1,6 +1,6 @@
 # EKBAgent.pm
 #
-# Time-stamp: <Tue Mar 28 17:11:32 CDT 2017 lgalescu>
+# Time-stamp: <Fri Mar 31 17:27:55 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 13 Feb 2017
 #
@@ -8,6 +8,28 @@
 #----------------------------------------------------------------
 # Description:
 # A TRIPS Agent for handling EKBs
+
+# Messaging:
+#
+# 1. EKB inference
+# on receiving:
+#   (REQUEST 
+#    :content (do-ekb-inference :ekb "EKB_PATH" [:return-string B])
+#    :reply-with R1)
+# runs inference on the EKB read from file with path EKB_PATH, saves
+# result to a new file, and, if all is well, sends:
+#   (REPLY :in-reply-to R1
+#     :content (done :result "EKB"))
+# where:
+# - EKB is:
+#   - the KQML-stringified EKB when B is TRUE
+#   - the name of the file containing the inferred EKB, when B is FALSE
+# Note: If :return-string is ommitted, the result is the file name
+
+# 2. AKRL-to-EKB
+# IN:
+# OUT:
+#
 
 package EKBAgent;
 use TripsModule::TripsModule;
@@ -60,12 +82,19 @@ sub receive_request {
       return;
     }
     $ekb_file = KQML::KQMLStringAtomAsPerlString($ekb_file);
+    # does caller want actual EKB as string?
+    my $return_string = TripsModule::boolean_opt(':return-string',
+						 $content->{':return-string'} // 0);
     # is pub EKB?
     # so far, this was an external parameter; i think i should make it part of the EKB encoding itself!!! [FIXME]
     # do inference
-    my $result = $self->do_inference($ekb_file);
+    my $result = $self->do_inference($ekb_file,
+				     { return_string => $return_string});
     if ($result) {
-      $self->reply_to_msg($msg, "(reply :content (done :result \"".$result."\"))");
+      $self->reply_to_msg($msg,
+			  "(reply :content (done :result \"".
+			  escape_string($result) .
+			  "\"))");
     } else {
       $self->reply_to_msg($msg, "(reply :content (failure :reason \"Couldn't do it.\"))");
     }
@@ -105,7 +134,7 @@ sub receive_request {
 # runs DRUM reasoner over an EKB file, saves the result into another EKB file
 # returns the resulting EKB file on success, and undef on error.
 sub do_inference {
-  my ($self, $ekb_file) = @_;
+  my ($self, $ekb_file, $opts) = @_;
 
   # ingest source EKB
   my $ekb = EKB->new($ekb_file)
@@ -125,6 +154,9 @@ sub do_inference {
   # save
   $ekb->save();
   # return
+  if (ref($opts) eq 'HASH' and $opts->{return_string}) {
+    return $ekb->toString();
+  }
   return $res_file;
 }
 

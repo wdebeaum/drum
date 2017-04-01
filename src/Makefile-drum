@@ -42,6 +42,7 @@ OTHER_PROGRAMS = \
 	TextPP \
 	TextTagger \
 	PubManager \
+	EKB \
 	Tools
 
 DATA = \
