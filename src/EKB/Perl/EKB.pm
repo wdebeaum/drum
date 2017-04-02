@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Mon Mar 27 15:13:22 CDT 2017 lgalescu>
+# Time-stamp: <Sat Apr  1 19:01:29 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.17 2017/03/27 20:14:24 lgalescu Exp $
+# $Id: EKB.pm,v 1.18 2017/04/02 00:01:46 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -76,6 +76,8 @@
 # - Added method for making terms for complexes.
 # 2017/03/23 v1.10.0	lgalescu
 # - Added method for making terms for complexes.
+# 2017/04/01 v1.11.0	lgalescu
+# - Added filter() method; updated crop().
 
 # TODO:
 # - maybe split off XML Node extensions into a separate package (EKB::EKBNode?)
@@ -83,7 +85,7 @@
 
 package EKB;
 
-$VERSION = '1.10.0';
+$VERSION = '1.11.0';
 
 =head1 NAME
 
@@ -563,9 +565,16 @@ sub info {
 Removes all input and assertion elements except those for the utterance 
 with the uttnum $sid.
 
+This method will reduce the paragraph to just the desired sentence. As of this
+version, sentences don't have frame numbers to identify precisely the region
+in the paragraph from which they are derived. Therefore, cropping the
+paragraph to the desired sentence is heuristic. However, to ensure that the
+result is valid, there are some fairly strict checks. If anything is amiss, it
+will fail rather than produce an invalid EKB. For example, EKBs derived from
+XML inputs are likely to fail.
+
 =cut
 
-# select sentence-level sub-EKB
 sub crop {
   my $self = shift;
   my $sid = shift;
@@ -635,34 +644,8 @@ sub crop {
   $pnode->appendText($ptext);
   # ok, we succeeded thus far. now, clean up!
   # remove unwanted paragraphs and the corresponding sentences and assertions
-  my $paras_node = $pnode->parentNode;
-  my $sents_node = $snode->parentNode;
-  foreach my $p ($self->get_paragraphs()) {
-    my $p_id = $p->getAttribute('id');
-    next if ($p_id eq $pid);
-    $paras_node->removeChild($p);
-    # remove sentences
-    foreach my $s ($self->get_sentences($p_id)) {
-      $sents_node->removeChild($s);
-    }
-    # remove assertions
-    map { $self->remove_assertion($_) }
-      $self->get_assertions({ paragraph => $p_id });
-    DEBUG 0, "Removed para $p_id";
-    DEBUG 3, "%d assertions left", scalar($self->get_assertions());
-  }
-  # remove unwanted sentences and the corresponding assertions
-  foreach my $s (@psents) {
-    my $s_id = $s->getAttribute('id');
-    next if ($s_id eq $sid);
-    # remove sentences\
-    $sents_node->removeChild($s);
-    # remove assertions
-    map { $self->remove_assertion($_) }
-      $self->get_assertions({ uttnum => $s_id });
-    DEBUG 3, "Removed sentence $s_id";
-    DEBUG 3, "%d assertions left", scalar($self->get_assertions());
-  }
+  $self->filter({ paragraphs => [ $pid ],
+		  sentences => [ $sid ] });
   # adjust frame numbers on remaining assertions
   foreach my $a ($self->get_assertions()) {
       my $s = $a->getAttribute('start');
@@ -670,6 +653,98 @@ sub crop {
       my $e = $a->getAttribute('end');
       set_attribute($a, 'end', $e - $shift);
   }
+}
+
+=head2 filter()
+
+Generic filter for removing paragraphs and/or sentences and related assertions.
+
+Unlike crop(), this method does not attempt to keep frame numbers valid after
+paragraphs are removed. 
+
+=cut
+
+sub filter {
+  my $self = shift;
+  my $opts = shift;
+
+  return unless (defined($opts) and ref($opts) eq 'HASH');
+
+  if (exists $opts->{paragraphs} ) {
+    my @to_keep = @{ $opts->{paragraphs} };
+    if (scalar(@to_keep)) {
+      DEBUG 2, "Will keep paragraphs: %s", Dumper(\@to_keep);
+      foreach my $p ($self->get_paragraphs) {
+	my $p_id = $p->getAttribute('id');	
+	next if grep { $p_id eq $_ } @to_keep;
+	DEBUG 2, "Removing paragraph: %s", $p_id;
+	$self->remove_paragraph($p_id);
+      }
+    }
+  }
+  if (exists $opts->{sentences}) {
+    my @to_keep = @{ $opts->{sentences} };
+    if (scalar(@to_keep)) {
+      DEBUG 2, "Will keep sentences: %s", Dumper(\@to_keep);
+      foreach my $s ($self->get_sentences) {
+	my $s_id = $s->getAttribute('id');	
+	next if grep { $s_id eq $_ } @to_keep;
+	DEBUG 2, "Removing paragraph: %s", $s_id;
+	$self->remove_sentence($s_id);
+      }
+    }
+  }
+}
+
+sub remove_paragraph {
+  my ($self, $pid) = @_;
+  my $para = $self->get_paragraph($pid)
+    or return;
+  ($para->parentNode)->removeChild($para);
+  my @sids = map { $_->getAttribute('id') } $self->get_sentences($pid);
+  foreach my $sid (@sids) {
+    $self->remove_sentence($sid);
+  }
+  DEBUG 3, "Removed paragraph $pid";
+}
+
+=head2 remove_sentence( $sid )
+
+Removes the sentence with the id $sid and all assertions derived from it. As a
+side effect, if the paragraph to which it belongs has no remaining sentences
+in the EKB, that paragraph is removed as well.
+
+=cut
+
+# TODO: make it take either an id or the node itself
+sub remove_sentence {
+  my ($self, $sid) = @_;
+  my $sent = $self->get_sentence($sid)
+    or return;
+  my $pid = $sent->getAttribute('pid');
+  ($sent->parentNode)->removeChild($sent);
+  my @as = $self->get_assertions({ uttnum => $sid });
+  foreach my $a (@as) {
+    $self->remove_assertion($a);
+  }
+  DEBUG 3, "Removed sentence $sid";
+  DEBUG 3, "%d assertions left", scalar($self->get_assertions());
+  if (scalar($self->get_sentences($pid)) == 0) {
+    $self->remove_paragraph($pid);
+  }
+}
+
+=head2 remove_assertion( $a )
+
+Removes an XML representation of an assertion from the EKB document.
+
+=cut
+
+# TODO: make it take either an id or the node itself
+sub remove_assertion {
+  my ($self, $a) = @_;
+  ($a->parentNode)->removeChild($a);
+  DEBUG 2, "Removed assertion: %s", $a;
 }
 
 # 4. EKB getters and setters
@@ -913,25 +988,9 @@ TODO: should be renamed to better reflect actual meaning
 =cut
 
 sub add_assertion {
-  my $self = shift;
-  my ($node) = @_;
-  $self->get_document()->documentElement()->appendChild($node);
-  DEBUG 2, "Added new assertion: %s", $node;
-}
-
-=head2 remove_assertion( $node )
-
-Removes an XML representation of an assertion from the EKB document.
-
-TODO: should be renamed to better reflect actual meaning
-
-=cut
-
-sub remove_assertion {
-  my $self = shift;
-  my ($node) = @_;
-  $self->get_document()->documentElement()->removeChild($node);
-  DEBUG 2, "Removed assertion: %s", $node;
+  my ($self, $a) = @_;
+  $self->get_document()->documentElement()->appendChild($a);
+  DEBUG 2, "Added new assertion: %s", $a;
 }
 
 =head2 derive_assertion( $id, $atype )
