@@ -35,6 +35,7 @@
 		      (#\` #\^)
 		      (#\~ :punc-tilde)
 		      (#\# :hashmark)
+		      (#\& :punc-and)
 		      (#\U+2013 :punc-minus))) ;;:punc-en-dash)))
 
 (defvar *break-chars* (cons '#\space (mapcar #'car *punc-list*)))

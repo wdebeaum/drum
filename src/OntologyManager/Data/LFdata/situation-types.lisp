@@ -16,8 +16,8 @@
 (define-type ont::ABILITY-EVENT
  :wordnet-sense-keys ("ability%1:07:00" "ability%1:09:00")
     :parent ont::event-of-action
-)
-
+    :arguments ((:required ont::FORMAL)
+		))
 
 #|
 (define-type ont::act

@@ -7,7 +7,7 @@
   (W::punc-slash
    (SENSES
     ((LF (W::SLASH))
-     (non-hierarchy-lf t)(SYNTAX (W::punctype W::decimalpoint))
+     (non-hierarchy-lf t)
      )
     )
    )
