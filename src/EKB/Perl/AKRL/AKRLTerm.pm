@@ -1,6 +1,6 @@
 # ARKL.pm
 #
-# Time-stamp: <Thr Mar  9 14:00:00 CST 2017 rcarff>
+# Time-stamp: <Mon Apr  3 09:41:11 CDT 2017 lgalescu>
 #
 # Author: Roger Carff <rcarff@ihmc.us>, 1 Mar 2017
 #
@@ -314,7 +314,7 @@ sub getKeys
         return undef;
     }
 
-    keys $self->{_hashref};
+    keys %{ $self->{_hashref} };
 }
 
 =head2 getValueForKey($key, $index)

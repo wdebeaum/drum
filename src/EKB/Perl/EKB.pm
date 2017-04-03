@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Sat Apr  1 19:01:29 CDT 2017 lgalescu>
+# Time-stamp: <Mon Apr  3 14:32:13 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.18 2017/04/02 00:01:46 lgalescu Exp $
+# $Id: EKB.pm,v 1.20 2017/04/03 19:33:13 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -78,6 +78,8 @@
 # - Added method for making terms for complexes.
 # 2017/04/01 v1.11.0	lgalescu
 # - Added filter() method; updated crop().
+# 2017/04/01 v1.11.1	lgalescu
+# - Remove XML declaration from result of toString().
 
 # TODO:
 # - maybe split off XML Node extensions into a separate package (EKB::EKBNode?)
@@ -85,7 +87,7 @@
 
 package EKB;
 
-$VERSION = '1.11.0';
+$VERSION = '1.11.1';
 
 =head1 NAME
 
@@ -402,17 +404,20 @@ sub read {
 
 =head2 toString( )
 
-Returns a serialization of the EKB document as a string.
+Returns a serialization of the EKB document root element as a string.
 
 This is just a wrapper around the C<toString> function in
-L<XML::LibXML::Document>.
+L<XML::LibXML::Node>.
+
+Caveat emptor: This method produces a serialization of the "ekb" root node,
+not of the document itself, therefore there will be no XML declaration.
 
 =cut
 
 sub toString {
   my $self = shift;
-  
-  $self->get_document()->toString(1);
+
+  $self->get_document()->documentElement()->toString(1);
 }
 
 =head2 print( $filepath )

@@ -104,7 +104,7 @@ sub getTokens
         return undef;
     }
 
-    my @keys = keys $self->{_akrlObjectHash};
+    my @keys = keys %{ $self->{_akrlObjectHash} };
     \@keys;
 }
 

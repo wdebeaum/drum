@@ -1,9 +1,9 @@
 # Drum.pm
 #
-# Time-stamp: <Mon Mar 20 21:10:25 CDT 2017 lgalescu>
+# Time-stamp: <Mon Apr  3 09:28:20 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  1 Jun 2016
-# $Id: Drum.pm,v 1.4 2017/03/21 04:16:05 lgalescu Exp $
+# $Id: Drum.pm,v 1.5 2017/04/03 14:29:05 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -42,6 +42,8 @@
 # - Updated following refactoring in EKB.pm.
 # 2017/03/19 v1.7.4	lgalescu
 # - Updated following refactoring in EKB.pm.
+# 2017/03/19 v1.7.5	lgalescu
+# - Fixed version required for List::Util.
 
 #----------------------------------------------------------------
 # Usage:
@@ -56,7 +58,7 @@ use warnings;
 
 use Data::Dumper;
 use XML::LibXML;
-use List::Util qw(all any first min max uniq);
+use List::Util 1.45 qw(all any first min max uniq);
 
 use EKB;
 use EKB::Match;

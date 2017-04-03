@@ -29,9 +29,9 @@ sub tag_variant_lists {
       ( \w+ ) # shared prefix
       ( # variant suffix list
         # numbers with optional single letters
-        (?<! \d ) \d+ \p{L}? (?: / \d+ \p{L}? )+ |
-	(?<! [A-Z] ) [A-Z] (?: / [A-Z] )+ | # capital latin letters
-	(?<! \p{greek} ) \p{greek} (?: / \p{greek} )+ # greek letters
+        (?<! \d ) \d+ \p{L}? (?: [/&] \d+ \p{L}? )+ |
+	(?<! [A-Z] ) [A-Z] (?: [/&] [A-Z] )+ | # capital latin letters
+	(?<! \p{greek} ) \p{greek} (?: [/&] \p{greek} )+ # greek letters
       )
       (?! \w ) # word doesn't continue
     =xg) {
@@ -45,7 +45,7 @@ sub tag_variant_lists {
     my @prefixes =
       map { substr($prefix, $_) }
           @{remove_duplicates([map { $_->{start} } @$prefix_tags])};
-    my @suffixes = split('/', $suffixes);
+    my @suffixes = split(m=[/&]=, $suffixes);
     print STDERR Data::Dumper->Dump([$prefix, $suffixes, $start, $middle, \@prefixes, \@suffixes], [qw(prefix suffixes start middle *prefixes *suffixes)])
       if ($debug);
     # discard first since we should already get it as a normal word

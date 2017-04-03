@@ -78,7 +78,7 @@ sub normalizeId {
 }
 
 sub uniq {
-    keys { map { $_ => 1 } @_ }
+    keys %{{ map { $_ => 1 } @_ }};
 }
 
 # toEKB Methods
