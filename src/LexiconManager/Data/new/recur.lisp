@@ -9,7 +9,7 @@
    (SENSES
     ((LF-PARENT ONT::REPEAT)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (templ theme-templ)
+     (templ affected-templ)
      (example "the pattern recurs in this document")
      (meta-data :origin calo-ontology :entry-date 20060713 :change-date nil :comments caloy3)
      )

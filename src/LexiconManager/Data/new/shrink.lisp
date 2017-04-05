@@ -23,7 +23,7 @@
      (meta-data :origin "verbnet-2.0" :entry-date 20060608 :change-date 20090504 :comments nil :vn ("flinch-40.5" "other_cos-45.4") :wn ("shrink%2:30:02" "shrink%2:30:01" "shrink%2:30:00" "shrink%2:38:00"))
      )
     ((LF-PARENT ONT::shrink)
-     (TEMPL THEME-TEMPL)
+     (TEMPL affected-TEMPL)
      (EXAMPLE "The kids shrank")
      (meta-data :origin "verbnet-2.0" :entry-date 20060608 :change-date 20090504 :comments nil :vn ("flinch-40.5" "other_cos-45.4") :wn ("shrink%2:30:02" "shrink%2:30:01" "shrink%2:30:00" "shrink%2:38:00"))
      )

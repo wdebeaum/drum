@@ -526,10 +526,18 @@
     )
 
 (define-type ONT::MANUFACTURED-OBJECT
-    :wordnet-sense-keys ("instrumentation%1:06:00" "instrumentality%1:06:00" "device%1:06:00" "artifact%1:03:00" "artefact%1:03:00")
+    :wordnet-sense-keys ("instrumentation%1:06:00" "instrumentality%1:06:00" "artifact%1:03:00" "artefact%1:03:00")
     :parent ONT::PHYS-OBJECT
     :sem (F::Phys-obj (:required (F::origin F::artifact))(:default (F::Form F::solid-object)))
     )
+
+(define-type ONT::technology
+ :parent ONT::manufactured-object
+ :wordnet-sense-keys ("technology%1:04:00" "technology%1:06:00")
+ 
+ :arguments ((:essential ONT::FIGURE)
+	     )
+ )
 
 (define-type ONT::BLOCK
     :parent ONT::manufactured-object
@@ -1216,8 +1224,6 @@
     :wordnet-sense-keys ("left%1:15:00")
     )
 
-
-
 (define-type ONT::setting
     :parent ONT::location
     :wordnet-sense-keys ("setting%1:26:00" "background%1:26:00" "scope%1:26:00")
@@ -1473,18 +1479,13 @@
 
 (define-type ont::mail
     :parent ONT::direct-representation
-    :wordnet-sense-keys ("letter%1:10:00" "missive%1:10:00")
+    :wordnet-sense-keys ("letter%1:10:00" "missive%1:10:00" "mail%1:10:01" "mail%1:10:00")
     )
 
 ;; email, spam
 (define-type ont::email
     :wordnet-sense-keys ("electronic_mail%1:10:00" "e-mail%1:10:00" "email%1:10:00")
     :parent ONT::mail
-    )
-
-(define-type ONT::message
-    :parent ont::direct-representation
-
     )
 
 ;; copy, backup, cc, bcc

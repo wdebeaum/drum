@@ -13,11 +13,10 @@
     :arguments ((:required ont::FORMAL)
 		))
 
-(define-type ont::ABILITY-EVENT
+(define-type ont::ABILITY-STATE
  :wordnet-sense-keys ("ability%1:07:00" "ability%1:09:00")
-    :parent ont::event-of-action
-    :arguments ((:required ont::FORMAL)
-		))
+    :parent ont::event-of-state
+    :arguments ((:essential ont::FORMAL)))
 
 #|
 (define-type ont::act
@@ -74,7 +73,8 @@
  )
 
 (define-type ONT::Communication
- :wordnet-sense-keys ("put_across%2:32:00" "pass_along%2:32:00" "pass%2:32:01" "pass_on%2:32:00" "communicate%2:32:01" "intercommunicate%2:32:00" "communicate%2:32:00" "communication%1:03:00" )
+ :wordnet-sense-keys ("put_across%2:32:00" "pass_along%2:32:00" "pass%2:32:01" "pass_on%2:32:00" "communicate%2:32:01" "intercommunicate%2:32:00" "communicate%2:32:00" "communication%1:10:01" 
+"communication%1:24:00")
  :parent ONT::agent-interaction
  :comment "activity that involves transfer of information between agents"
  :sem (F::Situation (F::Cause F::agentive) (F::Trajectory -));  (F::Aspect F::bounded) (F::Time-span F::extended))
@@ -653,7 +653,8 @@
              )
  )
 
-(define-type ONT::Appearance
+(define-type ONT::perceptual-Appearance
+    :wordnet-sense-keys ("appearance%1:07:00" "facial_expression$+%1:10:00" "countenance%1:07:00" "countenance%1:08:00")
  :parent ONT::PERCEPTION
  )
 
@@ -872,7 +873,7 @@
 
 ;;; predicates of comparison, e.g. equals, resembles
 (define-type ONT::OBJECT-COMPARE
-  :wordnet-sense-keys ("resemble%2:42:00")
+  :wordnet-sense-keys ("resemble%2:42:00" "match%2:42:00" "coordinate%2:30:01")
  :parent ONT::event-of-state
  :sem (F::Situation (F::Trajectory -))
  :arguments ((:REQUIRED ONT::NEUTRAL ((? oc F::Phys-obj F::Abstr-obj F::Situation F::time F::proposition)))

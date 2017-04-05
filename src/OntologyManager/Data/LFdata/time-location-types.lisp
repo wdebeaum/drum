@@ -755,10 +755,12 @@
 
 ;;; A class for temporal modifiers introduced by adjectives or adverbials
 (define-type ONT::temporal-modifier
- :parent ONT::TEMPORAL-PREDICATE
- :arguments ((:ESSENTIAL ONT::FIGURE ((? of F::Phys-obj f::situation f::abstr-obj f::time)))
-             )
- )
+    :parent ONT::TEMPORAL-PREDICATE
+    :arguments ((:ESSENTIAL ONT::FIGURE ((? of F::Phys-obj f::situation f::abstr-obj f::time)))
+		(:essential ont::scale)
+		(:essential ont::standard)
+		)
+    )
 
 ;; the delayed cargo, a scheduled meeting
 (define-type ONT::scheduled-time-modifier
@@ -780,6 +782,7 @@
  :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::situation f::time)))
 ;             (:essential ont::GROUND (f::abstr-obj (F::Scale Ont::duration-scale) (F::type ont::time-unit)))
 ;             (:essential ont::GROUND ((? gd F::abstr-obj F::time) (F::time-scale f::interval)))
+	    
              (:essential ont::GROUND (F::abstr-obj (F::Scale Ont::duration-scale) (F::type ont::time-unit)))
   ))
 

@@ -1,7 +1,7 @@
 ;;;;
 ;;;; robust.lisp
 ;;;;
-;;;; Time-stamp: <Sat Mar  4 13:04:28 EST 2017 jallen>
+;;;; Time-stamp: <Wed Mar 29 17:11:13 EDT 2017 jallen>
 ;;;;
 
 (in-package :W)
@@ -19,7 +19,8 @@
     ((definition (var ?v)  (lf ?lf))
       -defn-no-gap> .97
      (head (cp (var ?v) (lf ?lf) (subj-map ?!s) (ctype (? x w::s-to)) ;; make sure there's a subj-map (avoid parses for "there is" etc)
-      (subjvar (% *PRO* (var *) (class ont::ROLE-REF) (constraint (& (:context-rel :lsubj)))))
+	       (subj (% ?xx (sem ?subjsem)))
+      (subjvar (% *PRO* (var *) (class ont::ROLE-REF) (sem ?subjsem) (constraint (& (:context-rel :lsubj)))))
       (gap -)
       )))
 
@@ -27,26 +28,43 @@
     ((definition (var ?v) (lf ?lf))
       -defn-gap> 1
      (head (cp (var ?v) (lf ?lf)
-	   (subjvar (% *PRO* (var *) (class ont::ROLE-REF) (constraint (& (:context-rel :lsubj)))))
-	   (gap (% NP (gap -)
-		   (var (% *PRO* (var **) (class ont::ROLE-REF) (constraint (& (:context-rel :dobj)))))))
-	   )))
+	       (subj (% ?xx (sem ?subjsem)))
+	       (dobj (% ?yy (sem ?dobjsem)))
+	       (subjvar (% *PRO* (var *) (class ont::ROLE-REF) (sem ?subjsem) (constraint (& (:context-rel :lsubj)))))
+	       (gap (% NP (gap -)
+			(var (% *PRO* (var **) (class ont::ROLE-REF) (sem ?dobjsem)
+				(constraint (& (:context-rel :dobj)))))))
+		)))
 
     ;;  making bread, make bread   (no gap in VP)
     ((definition (var ?v) (lf ?lf))
-      -defn-ing> .97
+      -defn-ing>
      (head (vp (var ?v) (lf ?lf) (vform (? vf w::ing w::base)) (gap -)
-	       (subjvar (% *PRO* (var *) (class ont::ROLE-REF) (constraint (& (:context-rel :lsubj)))))
+	       (subj (% ?xx (sem ?subjsem)))
+	       (subjvar (% *PRO* (var *) (class ont::ROLE-REF) (sem ?subjsem)
+			   (constraint (& (:context-rel :lsubj)))))
 	       )))
 
     ;; ING with gap, preferred e.g., go into
     ((definition (var ?v) (lf ?lf))
-      -defn-ing-GAP> .99
+      -defn-ing-GAP>
      (head (vp (var ?v) (lf ?lf) (vform (? vf w::ing w::base))
-	       (subjvar (% *PRO* (var *) (class ont::ROLE-REF) (constraint (& (:context-rel :lsubj)))))
-	       (gap (% NP (gap -)
+	       (subj (% ?xx (sem ?subjsem)))
+	       (dobj (% ?yy (sem ?dobjsem)))
+	       (subjvar (% *PRO* (var *) (class ont::ROLE-REF) (sem ?subjsem)
+			   (constraint (& (:context-rel :lsubj)))))
+	       (gap (% NP (gap -) (sem ?dobjsem)
 		       (var (% *PRO* (var **) (class ont::ROLE-REF) (constraint (& (:context-rel :dobj))))))))
 	       ))
+
+    #|| ;; ING with VP gap, e.g. "to do well"
+    ((definition (var ?v) (lf ?lf))
+      -defn-ing-GAP-vp> .98
+     (head (vp (var ?v) (lf ?lf) (vform (? vf w::ing w::base))
+	       (subjvar (% *PRO* (var *) (class ont::ROLE-REF) (constraint (& (:context-rel :lsubj)))))
+	       (gap (% VP (gap -)
+		       (var (% *PRO* (var **) (class ont::ROLE-REF) (constraint (& (:context-rel :dobj))))))))
+	       ))||#
     
     
     ;;complex definitions

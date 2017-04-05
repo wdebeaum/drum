@@ -9,7 +9,7 @@
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("disassemble-23.3") :wn ("unbutton%2:35:00"))
      (LF-PARENT ONT::unattach)
-     (TEMPL agent-affected-theme-optional-templ (xp (% w::pp (w::ptype w::from)))) ; like disconnect
+     (TEMPL agent-affected-source-optional-templ)
      )
     )
    )

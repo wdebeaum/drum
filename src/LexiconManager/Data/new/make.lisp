@@ -16,7 +16,7 @@
     ((EXAMPLE "make money" "make a profit")
      (LF-PARENT ONT::earning) 
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-affected-xp-TEMPL)
+     (TEMPL AGENT-neutral-xp-TEMPL)
      (meta-data :origin step :entry-date 20081022 :change-date nil :comments step6)
      )
     ((LF-PARENT ONT::transformation) ;; GUM change new parent 20121027

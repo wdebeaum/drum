@@ -21,7 +21,7 @@
      (example "they allow smoking"
 	      ))
     
-     (;;(LF-PARENT ONT::ACCOMMODATE)
+     (
       (lf-parent ont::accommodate-allow) ;; 20120524 GUM change new parent
       (example "the budget allows for a thousand dollars")
       (TEMPL neutral-neutral-templ (xp (% W::pp (W::ptype W::for))))

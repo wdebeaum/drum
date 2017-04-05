@@ -12,7 +12,7 @@
 	     (example "apply the rule [to this example]")
 	     (SEM (F::ASPECT F::DYNAMIC) (F::cause f::agentive))
 	     (meta-data :origin lam :entry-date 20050425 :change-date nil :comments lam-initial)
-	     (templ agent-affected-theme-optional-templ  (xp (% W::PP (w::ptype w::to))))
+	     (templ agent-affected-goal-optional-templ  (xp (% W::PP (w::ptype w::to))))
 	     )
 	    ((EXAMPLE "apply for funding")
 	     ;(LF-PARENT ONT::REQUEST)

@@ -20,7 +20,7 @@
     ;;;; Loop up to avon
     ((LF-PARENT ONT::circular-move)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL THEME-TEMPL)
+     (TEMPL affected-TEMPL)
      )
     )
    )

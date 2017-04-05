@@ -11,7 +11,7 @@
       :COMMENTS HTML-PURCHASING-CORPUS))))
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :templ agent-neutral-xp-templ
  :words (
   (W::net
    (SENSES

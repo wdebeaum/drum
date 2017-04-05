@@ -8,7 +8,7 @@
 (parser::augment-grammar
   '((headfeatures
 	 ;;lex headcat removed --me
-     (PP KIND MASS NAME agr SEM SORT PRO SPEC CLASS transform)
+     (PP KIND MASS NAME agr SEM SORT PRO SPEC CLASS transform gap)
      ;;(ADVBLS FOCUS VAR SEM SORT ATYPE ARG SEM ARGUMENT NEG TO QTYPE lex transform)
      (ADVBL VAR SORT ARGSORT ATYPE SEM ARGUMENT lex headcat transform neg result-only)
      (ADV SORT ATYPE CONSTRAINT SA-ID PRED NEG TO LEX HEADCAT SEM ARGUMENT SUBCAT IGNORE transform)
@@ -287,10 +287,12 @@
        )
       -pp-conj1>
       (head (PP (PTYPE ?pt) (var ?v1) (case ?c) (sem ?s1)
-       (LF (% ?sort1 (class ?c1) (status ?status)))
-       ))
+		(gap ?gap)
+		(LF (% ?sort1 (class ?c1) (status ?status)))
+		))
       (CONJ (LF ?conj) (var ?vc) (but-not -) (but -))
       (PP (PTYPE ?pt) (var ?v2) (case ?c) (sem ?s2)
+       (gap ?gap)
        (LF (% ?sort2 (class ?c2)))
        )
       (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
@@ -305,10 +307,12 @@
       )
      -pp-conj-but-not1>
      (head (PP (PTYPE ?pt) (var ?v1) (case ?c) (sem ?s1)
+	       (gap ?gap)
 	       (LF (% ?sort1 (class ?c1) (status ?status)))
 	       ))
      (CONJ (LF ?conj) (var ?vc) (but-not +))
      (PP (PTYPE ?pt) (var ?v2) (case ?c) (sem ?s2)
+      (gap ?gap)
       (LF (% ?sort2 (class ?c2)))
       )
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
@@ -323,11 +327,13 @@
       )
      -pp-conj-but-not-comma>
      (head (PP (PTYPE ?pt) (var ?v1) (case ?c) (sem ?s1)
+	       (gap ?gap)
 	       (LF (% ?sort1 (class ?c1) (status ?status)))
 	       ))
      (punc (lex w::punc-comma))
      (CONJ (LF ?conj) (var ?vc) (but-not +))
      (PP (PTYPE ?pt) (var ?v2) (case ?c) (sem ?s2)
+      (gap ?gap)
       (LF (% ?sort2 (class ?c2)))
       )
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))

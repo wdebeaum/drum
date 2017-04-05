@@ -9,7 +9,6 @@
    (SENSES
     ((meta-data :origin calo :entry-date 20040119 :change-date nil :wn ("test%1:04:02") :comments caloy2)
      (LF-PARENT ONT::gathering-event)
-     (TEMPL OTHER-RELN-THEME-TEMPL)
      (example "this is a test")
      )
     )

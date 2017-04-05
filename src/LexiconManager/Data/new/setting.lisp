@@ -7,7 +7,7 @@
   (W::setting
    (SENSES
     ((meta-data :origin calo :entry-date 20041206 :change-date 20090513 :comments caloy2)
-     (LF-PARENT ONT::set-up-device)
+     (LF-PARENT ONT::status)
      (TEMPL OTHER-RELN-THEME-TEMPL)
      (example "those are the default settings")
      )

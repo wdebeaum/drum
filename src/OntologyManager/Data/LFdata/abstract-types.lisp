@@ -950,37 +950,36 @@
  )
 
 (define-type ONT::discipline
-  :wordnet-sense-keys ("subject%1:09:00::" "subject_area%1:09:00::" "subject_field%1:09:00::" "field%1:09:00::" "field_of_study%1:09:00::" "study%1:09:02::")
+  :wordnet-sense-keys ("subject%1:09:00::" "subject_area%1:09:00::" "subject_field%1:09:00::" "field%1:09:00::" "field_of_study%1:09:00::" "study%1:09:02::" "technology%1:09:00")
   :parent ONT::function-OBJECT
   :sem (F::Abstr-obj)
   :arguments ((:essential ONT::FIGURE)
 	      )
  )
 
-;; technology, nanotechnology, biotechnology
-(define-type ONT::technology
- :parent ONT::discipline
- :sem (F::Abstr-obj)
- :arguments ((:essential ONT::FIGURE)
-	     )
- )
-
 (define-type ONT::information-function-object
  :parent ONT::FUNCTION-OBJECT
+ :wordnet-sense-keys ("communication%1:03:00" "criminal_record%1:10:00" )
  :sem (F::Abstr-obj (F::information F::information-content) (F::intentional -) (F::container +))
  :arguments (
 ;	     (:optional ONT::Associated-information)
 	     )
  )
 
+(define-type ONT::message
+     :wordnet-sense-keys ("message%1:10:01")
+    :parent ont::information-function-object
+    )
+
 (define-type ONT::composition
   :comment "composition, e.g., result of event-of-creation"
+  :wordnet-sense-keys ("composition%1:07:01" "composition%1:07:02" "composition%1:04:01")
  :parent ONT::information-function-object
  )
 
 ;; information
 (define-type ONT::information
- :wordnet-sense-keys ("information%1:10:00" "info%1:10:00")
+ :wordnet-sense-keys ("information%1:10:00" "info%1:10:00" "indication%1:10:00")
  :parent ONT::information-function-object
  )
 
@@ -1435,7 +1434,7 @@
  )
 
 (define-type ont::language
-    :wordnet-sense-keys ("language%1:10:00")
+    :wordnet-sense-keys ("language%1:10:00" "dialect%1:10:00")
  :parent ont::linguistic-object
  )
 
@@ -1508,6 +1507,7 @@
  :wordnet-sense-keys ("change%1:21:02" "return%1:21:00" "issue%1:21:00" "take%1:21:00" "takings%1:21:00" "proceeds%1:21:00" "yield%1:21:00" "payoff%1:21:02")
  :parent ONT::abstract-object-nontemporal
   :arguments ((:REQUIRED ONT::FIGURE (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
+	      (:REQUIRED ONT::GROUND (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
 	      )
   )
 
@@ -1677,7 +1677,7 @@
 
 ;; song, rhapsody
 (define-type ONT::music
- :wordnet-sense-keys ("music%1:10:00")
+ :wordnet-sense-keys ("music%1:10:00" "musical_genre%1:10:00")
  :parent ONT::composition
  )
 ;; For epa and bee

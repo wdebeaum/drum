@@ -10,7 +10,7 @@
     (
      (LF-PARENT ONT::flutter)
      (example "the flag fluttered in the breeze" "his heart fluttered when she walked in")
-     (TEMPL theme-templ)
+     (TEMPL affected-templ)
      (meta-data :origin cardiac :entry-date 20081215 :change-date nil :comments LM-vocab)
      )
     )

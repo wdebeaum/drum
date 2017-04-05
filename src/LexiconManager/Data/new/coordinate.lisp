@@ -27,7 +27,7 @@
     ;; need this template to go through the adjectival passive rule
      ((LF-PARENT ONT::coordinating)
      (example "coordinate the details")
-     (TEMPL AGENT-THEME-xp-TEMPL)
+     (TEMPL AGENT-affected-xp-TEMPL)
      )
     )
    )

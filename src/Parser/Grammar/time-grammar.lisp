@@ -957,7 +957,7 @@
       )
       -mixed-sequence2> .98  
       (head (mixed-sequence (val ?lf) (unit -))) ;; (lex ?l1) 
-      (number (val ?l2) (unit ?unit) (premod -) (ntype (? !nt w::negative w::positive)))
+      (number (val ?l2) (unit ?unit) (range -) (premod -) (ntype (? !nt w::negative w::positive)))
       (add-to-end-of-list (list ?lf) (val ?l2) (newlist ?newlist)))
 
     ;; last case, a mixed sequence may start with a sequence of numbers

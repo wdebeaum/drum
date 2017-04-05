@@ -3511,6 +3511,7 @@
       ;;(class ?class)
       ;;(restr ?newrestr)
       (subj ?subj)
+      (subjvar ?v1)
       ;;(subj-map -)
       ;;(dobj ?!dobj)
       ;;(dobj-map -)
@@ -3526,7 +3527,7 @@
 		;; these are dummy vars for trips-lcflex conversion, please don't delete
 		;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
 		(restr ?restr)
-		(subj ?subj)
+		(subj (% NP (var ?v1)))
 		(subj-map ?!subjmap)
 		(comp3 ?comp3)
 		(comp3-map ?comp-map)
