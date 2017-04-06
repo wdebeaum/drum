@@ -3,8 +3,10 @@ require Exporter;
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(tag_roman_numerals);
 
+use charnames ':full';
 use TextTagger::Util qw(match2tag);
 
+use utf8;
 use strict vars;
 
 my %letter2value = qw(I 1 V 5 X 10 L 50 C 100 D 500 M 1000);
@@ -31,7 +33,7 @@ sub tag_roman_numerals {
 	 # pure version
          # /\b[ivxlcdm]+\b/gi
          # with exceptions for music notation
-	 /\b[IVXLCDMivxlcdm]+(?!(?=\w)(?![2-7bdoø]\b))/g
+	 /\b[IVXLCDMivxlcdm]+(?!(?=\w)(?![2-7bdo\N{LATIN SMALL LETTER O WITH STROKE}](?!\pL)))/g
 	) {
     my $tag = { type => "number", match2tag() };
 
