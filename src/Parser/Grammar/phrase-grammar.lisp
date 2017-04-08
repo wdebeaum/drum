@@ -2950,17 +2950,17 @@
     
     ;; TEST: the Ras dependent activation
     ((ADJP (VAR ?v) (arg ?arg) (class ?lf) (atype w::central) (argument ?argument)
-      (constraint ?constraint)
+      (constraint ?constraint) 
       (LF (% prop (class ?lf) (var ?v)
 	     (constraint 
 	      (& (?sc-map (% *PRO* (status ont::BARE) (var ?v-n) (class ?nc) (constraint ?nr) (sem ?sem)))
 		  (?arg-map ?arg))))))
      -adj-subcat-nohyphen> 1
      (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (var ?v-n) 
-      (sem ?sem) (relc -) (abbrev -)
+      (sem ?sem) (relc -) (abbrev -) (gerund -)
 	 )
 ;     (punc (lex w::punc-minus))
-     (head (ADJ (var ?v) (SUBCAT (% PP (var ?sc)))
+     (head (ADJ (var ?v) (SUBCAT (% PP (var ?sc) (sem ?sem)))
       (GAP -) 
       (LF ?lf)
       (SUBCAT-MAP ?sc-map)
@@ -2999,6 +2999,8 @@
 	      (GAP -) (LF ?lf) (sem ?sem)
               (SUBJ-MAP ?!reln) (SUBJ ?subj)
               (VAR ?v) (transform ?transform)
+	      (SEM ($ F::situation (f::type ont::event-of-action)))
+	      (COMP3-map -)
 ;	      (prefix ?prefix)
 	      (restr ?prefix)
 	      (part (% -))
@@ -3019,7 +3021,7 @@
                   (transform ?transform)
 		  ))
            )
-     -adj-ing-opt-comp3> 0.98
+     -adj-ing-opt-comp3> 0.97
      (head (V (VFORM (? vf ING)) (COMP3 (% ?!xx (w::optional +)))
 	      (GAP -) (LF ?lf) (sem ?sem)
               (SUBJ-MAP ?!reln) (SUBJ ?subj)

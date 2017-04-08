@@ -1,7 +1,7 @@
 ;;;;
 ;;;; robust.lisp
 ;;;;
-;;;; Time-stamp: <Wed Mar 29 17:11:13 EDT 2017 jallen>
+;;;; Time-stamp: <Fri Apr  7 15:21:36 EDT 2017 jallen>
 ;;;;
 
 (in-package :W)
@@ -92,7 +92,7 @@
       (lf ?lf))
       -defn-adj> 1
      (head (adjp (lf ?lf) (var ?v)
-		 (arg (% *PRO* (var *) (class ont::ROLE-REF) (gap -) (constraint (& (:context-rel :of))))))))
+		 (arg (% *PRO* (var *) (class ont::ROLE-REF) (gap -) (constraint (& (:context-rel :figure))))))))
 
      ;; ADVBL definitions
     ((definition (var ?v) 
@@ -100,7 +100,7 @@
       (lf ?lf))
       -defn-advbl> .96    ;; want to make sure VP interpretations are preferred
      (head (advbl (lf ?lf) (var ?v) (gap -)
-		 (arg (% *PRO* (var *) (class ont::ROLE-REF) (gap -) (constraint (& (:context-rel :of))))))))
+		 (arg (% *PRO* (var *) (class ont::ROLE-REF) (gap -) (constraint (& (:context-rel :figure))))))))
 
     ;; rule to handle explicit argument typing e.g., "(of leaves) green"
 
@@ -193,7 +193,7 @@
 		(transform ?transform)
 		))
       (prep (lex ?ptp))
-      (add-to-conjunct  (val (:of ?gapvar)) (old ?con) (new ?new))
+      (add-to-conjunct  (val (:figure ?gapvar)) (old ?con) (new ?new))
       )
 
    #|| ;;  prescription rules

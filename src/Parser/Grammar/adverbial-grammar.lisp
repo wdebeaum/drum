@@ -1519,6 +1519,7 @@
    ;; in a harsh way, in a certain manner, --> manner adverbial
    ((advbl (arg ?arg) (sem ($ f::abstr-obj (f::information -) (f::intentional -)))
      (argument (% S (sem ($ f::situation (f::aspect f::dynamic))))) 
+     (subjvar ?subjvar) (subj ?subj)
      (sort pred) (gap -) (atype (? atp pre post))
      (var *)
      (LF (% PROP (CLASS ONT::Manner) (VAR *) 
