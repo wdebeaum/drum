@@ -8,7 +8,7 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin calo :entry-date 20050418 :change-date nil :wn ("opaque%3:00:00") :comments projector-purchasing)
-     (LF-PARENT ONT::resolution-val)
+     (LF-PARENT ONT::opaque-val)
      (example "an opaque projector")
      )
     )
@@ -26,6 +26,6 @@
     (SYNTAX (W::morph (:forms (-ly))))
     )
    )
-)
+  )
 ))
 

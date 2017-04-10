@@ -7,7 +7,7 @@
  :words (
   (W::CERTAIN
    (SENSES
-    ((lf-parent ont::specificity-val)
+    ((lf-parent ont::specific-val)
      (example "a certain number of results")
      )
     ((LF-PARENT ONT::CERTAIN)

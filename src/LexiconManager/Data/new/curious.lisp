@@ -1,6 +1,3 @@
-;;;;
-;;;; W::curious
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -8,12 +5,12 @@
    (wordfeats (W::morph (:FORMS (-er -LY))))
    (SENSES
     ((meta-data :origin calo :entry-date 20050527 :change-date nil :wn ("curious%3:00:00") :comments projector-purchasing)
-     (LF-PARENT ONT::psychological-property-val)
+     (lf-parent ont::interested-val)
      (example "a curious person" "he is curious")
      (templ central-adj-experiencer-templ)
      )
     ((meta-data :origin calo :entry-date 20050527 :change-date nil :wn ("curious%3:00:00") :comments projector-purchasing)
-     (LF-PARENT ONT::psychological-property-val)
+     (lf-parent ont::interested-val)
      (example "a curious person" "he is curious")
      (templ central-adj-content-templ)
      )

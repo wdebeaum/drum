@@ -1,13 +1,10 @@
-;;;;
-;;;; W::yearly
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
    (W::yearly
    (SENSES
     ((meta-data :origin calo :entry-date 20040504 :change-date nil :wn ("yearly%3:01:00") :comments calo-y1variants)
-     (LF-PARENT ONT::frequency-val)
+     (lf-parent ont::specified-period-val)
      (example "they have yearly meetings")
      )
     )

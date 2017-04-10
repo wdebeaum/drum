@@ -1,34 +1,30 @@
-;;;;
-;;;; w::a
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
-  ;; entry patterned on difficult	 
   ((w::a W::bitch)
    (wordfeats (W::morph (:forms (-none))))
    (SENSES
     ((meta-data :origin csli-ts :entry-date 20070313 :change-date nil :comments nil :wn nil)
-     (LF-PARENT ONT::task-complexity-val)
+     (lf-parent ont::difficult)
      (example "Programmers are a bitch to interview")
      (templ adj-content-templ)
      (preference .97) ;; reduce competition with the article
      )
     ((meta-data :origin csli-ts :entry-date 20070313 :change-date nil :comments nil :wn nil)
-     (LF-PARENT ONT::task-complexity-val)
+     (lf-parent ont::difficult)
      (example "Programmers are a bitch for managers")
      (templ adj-content-affected-XP-templ  (xp (% w::pp (w::ptype w::for))))
      (preference .97) ;; reduce competition with the article
      )
     ((meta-data :origin csli-ts :entry-date 20070321 :change-date nil :comments nil :wn ("hard%3:00:06"))
      (EXAMPLE "it's a bitch to see him")
-     (LF-PARENT ONT::task-complexity-VAL)
+     (lf-parent ont::difficult)
      (TEMPL adj-expletive-content-xp-TEMPL (XP (% W::CP (W::CTYPE W::s-to))))
      (preference .97) ;; reduce competition with the article
      )
     ((meta-data :origin csli-ts :entry-date 20070321 :change-date nil :comments nil :wn ("hard%3:00:06"))
      (example "Programmers are a bitch for managers to interview")
-     (LF-PARENT ONT::task-complexity-VAL)
+     (lf-parent ont::difficult)
      (TEMPL adj-expletive-content-control-TEMPL)
      (preference .97) ;; reduce competition with the article
      )

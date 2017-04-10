@@ -23,10 +23,14 @@
    (wordfeats (W::MORPH (:FORMS (-ER -LY))))
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("dark%3:00:01"))
-     (LF-PARENT ONT::LIGHT-VAL)
+     (LF-PARENT ONT::DARK-VAL)
      (TEMPL LESS-ADJ-TEMPL)
+     (example "they were sitting in a dark corner")
      )
+    ((LF-PARENT ONT::dark-in-color-val)
+     (example "dark green")
+     (meta-data :origin adjective reorganization :entry-date 20170317 :change-date nil :comments nil)
+     )    
     )
    )
 ))
-

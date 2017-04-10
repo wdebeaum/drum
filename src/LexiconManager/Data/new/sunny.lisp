@@ -1,6 +1,3 @@
-;;;;
-;;;; W::sunny
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -8,7 +5,7 @@
     (wordfeats (W::MORPH (:FORMS (-ER))))
     (SENSES
      ((meta-data :origin plow :entry-date 20060615 :change-date nil :wn ("sunny%5:00:00:clear:00") :comments pq)
-      (LF-PARENT ONT::atmospheric-val)
+      (lf-parent ont::sunny-val)
      )
     )
    )

@@ -1,6 +1,3 @@
-;;;;
-;;;; w::wild
-;;;;
 
 (define-words :pos W::n :templ MASS-PRED-TEMPL
  :words (
@@ -21,17 +18,17 @@
    (SENSES
     ((meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
      (example "I am wild / an angry person")
-     (LF-PARENT ONT::EMOTIONAL-VAL)
+     (LF-PARENT ONT::wild-val)
      (templ central-adj-experiencer-templ)
      )
     ((meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
      (example "I am wild about her")
-     (LF-PARENT ONT::EMOTIONAL-VAL)
+     (LF-PARENT ONT::wild-val)
      (TEMPL ADJ-THEME-XP-TEMPL (xp (% W::PP (w::ptype (? pt w::about)))))
      )
     ((meta-data :origin adj-devel :entry-date 20080926 :change-date nil :comments nil :wn ("happy%3:00:00"))
      (example "a wild idea")
-     (LF-PARENT ONT::typicality-VAL)
+     (LF-PARENT ONT::atypical-val)
      (templ central-adj-templ)
      (sem (f::gradability +) (f::intensity ont::med) (f::orientation ont::less))
      )
@@ -46,7 +43,6 @@
     (SENSES
      ((example "wild type EGFR")
       (LF-PARENT ONT::NATURAL)
-;      (templ central-adj-experiencer-templ)
       )))))
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
@@ -56,7 +52,6 @@
     (SENSES
      ((example "wild-type EGFR")
       (LF-PARENT ONT::NATURAL)
-;      (templ central-adj-experiencer-templ)
       )))))
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
@@ -66,7 +61,6 @@
     (SENSES
      ((example "wildtype EGFR")
       (LF-PARENT ONT::NATURAL)
-;      (templ central-adj-experiencer-templ)
       )))
    ))
 

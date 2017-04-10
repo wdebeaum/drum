@@ -6,7 +6,7 @@
  :words (
    ((W::off w::kilter)
    (SENSES
-    ((LF-PARENT ONT::not-in-working-order-val)
+    ((LF-PARENT ONT::defective-val)
      (meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
      )
     )

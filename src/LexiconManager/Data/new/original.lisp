@@ -1,6 +1,3 @@
-;;;;
-;;;; W::ORIGINAL
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -9,7 +6,7 @@
    (wordfeats (W::morph (:forms (-LY))) (W::comp-op -))
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("original%5:00:01:first:00"))
-     (LF-PARENT ONT::SEQUENCE-VAL)
+     (lf-parent ont::first-val)
      )
     )
    )

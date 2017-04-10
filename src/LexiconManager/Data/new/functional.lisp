@@ -11,7 +11,7 @@
      (LF-PARENT ONT::USEFUL)
      )
     ((meta-data :origin trips :entry-date 20090915 :change-date nil :comments nil)
-     (LF-PARENT ONT::active)
+     (LF-PARENT ONT::in-working-order-val)
      )
     )
    )

@@ -1,6 +1,3 @@
-;;;;
-;;;; W::KING
-;;;;
 
 (define-words :pos W::n :templ count-pred-templ
  :tags (:base500)
@@ -21,7 +18,7 @@
    (SENSES
     ((meta-data :origin calo-ontology :entry-date 20060117 :change-date nil :comments caloy3)
      (example "a room with a king bed")
-     (LF-PARENT ONT::Size-Val)
+     (lf-parent ont::predefined-size-val)
      )
     )
    )

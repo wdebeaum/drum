@@ -1,6 +1,3 @@
-;;;;
-;;;; W::habitual
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -8,7 +5,7 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin csli-ts :entry-date 20070320 :change-date nil :wn ("frequent%3:00:00") :comments nil)
-     (LF-PARENT ONT::common)
+     (lf-parent ont::typical-val)
      (example "they had habitual meetings")
      )
     )

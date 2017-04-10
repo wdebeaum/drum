@@ -17,7 +17,7 @@
    (SENSES
     ((EXAMPLE "the cost doesn't balance the effort")
      (LF-PARENT ONT::object-compare)
-     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
+     (SEM (F::Aspect F::static) (F::Time-span F::extended))
      (TEMPL neutral-neutral-templ)
      (meta-data :origin calo :entry-date 20050425 :change-date nil :comments projector-purchasing)
      )

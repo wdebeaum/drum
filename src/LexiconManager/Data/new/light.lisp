@@ -79,7 +79,7 @@
    ((w::light-headed)
    (SENSES
     (
-     (LF-PARENT ONT::AILING)
+     (LF-PARENT ONT::DIZZY-VAL)
      (example "do you feel light-headed")
      (templ central-adj-templ)
      )
@@ -92,7 +92,7 @@
    ((w::light w::headed)
    (SENSES
     (
-     (LF-PARENT ONT::AILING)
+     (LF-PARENT ONT::DIZZY-VAL)
      (example "do you feel light headed")
      (templ central-adj-templ)
      )
@@ -105,7 +105,7 @@
    ((w::light (w::headed))
    (SENSES
     ((meta-data :origin chf :entry-date 20070904 :change-date 20090731 :comments nil :wn nil)
-     (LF-PARENT ONT::AILING)
+     (LF-PARENT ONT::DIZZY-VAL)
      (example "do you feel lightheaded")
      (templ central-adj-templ)
      )
@@ -140,6 +140,10 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("light%3:00:05"))
      (LF-PARENT ONT::LIGHT-VAL)
      (TEMPL LESS-ADJ-TEMPL)
+     )
+    ((LF-PARENT ont::light-in-color-val)
+     (example "light green")
+     (meta-data :origin adjective reorganization :entry-date 20170317 :change-date nil :comments nil)
      )
     )
    )

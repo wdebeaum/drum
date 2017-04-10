@@ -1,6 +1,3 @@
-;;;;
-;;;; w::spontaneous
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -9,7 +6,7 @@
    (SENSES
     ((meta-data :origin task-learning :entry-date 20060524 :change-date nil :wn ("spontaneous%3:00:00" "spontaneous%5:00:00:unscripted:00") :comments nil)
      (example "a spontaneous solution")
-     (LF-PARENT ONT::status-val)
+     (lf-parent ont::impulsive-val)
      )
     )
    )

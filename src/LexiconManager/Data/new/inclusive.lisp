@@ -1,6 +1,3 @@
-;;;;
-;;;; w::inclusive
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -9,7 +6,7 @@
    (SENSES
     ((meta-data :origin plow :entry-date 20060530 :change-date nil :wn ("inclusive%3:00:00") :comments pq)
      (example "an inclusive resort")
-     (LF-PARENT ONT::status-val)
+     (lf-parent ont::public-val)
      )
     )
    )

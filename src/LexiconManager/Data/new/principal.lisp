@@ -1,6 +1,3 @@
-;;;;
-;;;; W::principal
-;;;;
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
@@ -19,7 +16,7 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin caloy3 :entry-date 20070330 :change-date nil :comments y3-test-data :wn ("main%5:00:00:important:00") )
-     (LF-PARENT ONT::IMPORTANCE-VAL)
+     (lf-parent ont::primary)
      )
     )
    )

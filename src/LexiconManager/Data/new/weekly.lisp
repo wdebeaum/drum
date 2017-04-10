@@ -1,13 +1,10 @@
-;;;;
-;;;; W::weekly
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
   (W::weekly
    (SENSES
     ((meta-data :origin calo :entry-date 20040504 :change-date nil :wn ("weekly%3:01:00") :comments calo-y1variants)
-     (LF-PARENT ONT::frequency-val)
+     (lf-parent ont::specified-period-val)
      (example "they have weekly meetings")
      )
     )

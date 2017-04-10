@@ -1,6 +1,3 @@
-;;;;
-;;;; w::old
-;;;;
 
 (define-words :pos W::n
  :words (
@@ -20,7 +17,7 @@
    (wordfeats (W::MORPH (:FORMS (-ER))))
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("old%5:00:00:preceding:00"))
-     (LF-PARENT ONT::AGE-VAL)
+     (lf-parent ont::old-val)
      )
     )
    )
@@ -31,7 +28,7 @@
    ((w::old w::fashioned)
    (SENSES
     ((meta-data :origin windenergy :entry-date 20080521 :change-date nil :comments nil)
-     (LF-PARENT ONT::modernity-val)
+     (LF-PARENT ONT::not-current-val)
      )
     )
    )

@@ -1,6 +1,3 @@
-;;;;
-;;;; W::bold
-;;;;
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
@@ -19,12 +16,12 @@
   (W::bold
    (SENSES
     ((meta-data :origin calo :entry-date 20040915 :change-date nil :wn ("bold%3:00:00") :comments caloy2)
-     (LF-PARENT ONT::boldness-val)
+     (lf-parent ont::bold-val)
      (example "bold person")
      (templ central-adj-experiencer-templ)
      )
     ((meta-data :origin calo :entry-date 20040915 :change-date nil :wn ("ambitious%3:00:00") :comments caloy2)
-     (LF-PARENT ONT::boldness-val)
+     (lf-parent ont::bold-val)
      (example "bold idea")
      (templ central-adj-content-templ)
      )

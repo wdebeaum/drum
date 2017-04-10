@@ -1,6 +1,3 @@
-;;;;
-;;;; W::standard
-;;;;
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
@@ -22,7 +19,7 @@
    (SENSES
     ((meta-data :origin calo :entry-date 20031223 :change-date 20090731 :wn ("standard%5:00:00:common:01") :comments html-purchasing-corpus)
      (EXAMPLE "They are unusual")
-     (LF-PARENT ONT::COMMON)
+     (lf-parent ont::typical-val)
      (sem (f::gradability +) (f::intensity ont::med) (f::orientation ont::more))
      )
     )

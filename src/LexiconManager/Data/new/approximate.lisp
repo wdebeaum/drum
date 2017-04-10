@@ -1,6 +1,3 @@
-;;;;
-;;;; W::approximate
-;;;;
 
 (define-words :pos W::v :templ agent-theme-xp-templ
  :words (
@@ -20,7 +17,7 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin calo :entry-date 20040416 :change-date nil :wn ("approximate%5:00:00:inexact:00") :comments caloy2)
-     (LF-PARENT ONT::precision-val)
+     (lf-parent ont::not-precise-val)
      )
     )
    )

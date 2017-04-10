@@ -1,6 +1,3 @@
-;;;;
-;;;; W::visual
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -8,7 +5,7 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin calo :entry-date 20050418 :change-date nil :wn ("visual%3:01:04" "visual%5:00:00:visible:00") :comments projector-purchasing)
-     (LF-PARENT ONT::mode)
+     (lf-parent ont::sensory-mode-val)
      (example "is there any difference in the visual output")
      )
     )

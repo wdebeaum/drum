@@ -1,6 +1,3 @@
-;;;;
-;;;; W::unexpected
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -9,10 +6,9 @@
     (SENSES
      ((meta-data :origin calo :entry-date 20031223 :change-date nil :wn ("unexpected%3:00:00") :comments html-purchasing-corpus)
       (EXAMPLE "an unexpected surprise")
-      (LF-PARENT ONT::expectation-val)
+      (lf-parent ont::not-likely-val)
       (SEM (F::GRADABILITY F::+))
       )
-     ;; it is unexpected that...
      )
     )
 ))

@@ -1,6 +1,3 @@
-;;;;
-;;;; W::awake
-;;;;
 
 (define-words :pos W::v 
  :words (
@@ -25,7 +22,7 @@
   (W::awake
    (SENSES
     ((meta-data :origin cardiac :entry-date 20080828 :change-date nil :comments nil)
-     (LF-PARENT ONT::body-property-VAL)
+     (lf-parent ont::awake-val)
      (example "he is asleep")
      )
     )

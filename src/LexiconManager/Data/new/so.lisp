@@ -1,13 +1,10 @@
-;;;;
-;;;; w::so
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
   ((w::so w::so)
    (SENSES
     ((meta-data :origin cardiac :entry-date 20080422 :change-date nil :comments nil)
-     (LF-PARENT ONT::ACCEPTABILITY-VAL)
+     (lf-parent ont::neutral-acceptability-val)
      (SEM (F::GRADABILITY F::+) (f::orientation ont::neutral) (f::intensity ont::-))
      (TEMPL LESS-ADJ-TEMPL)
      )
@@ -116,8 +113,6 @@
    (SENSES
     ((LF (W::WAIT))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_DISCOURSE-MANAGE))
-     ;; beetle fix -- do not use "so" in this sense unless it's stand-alone
-     ;; if it is joined with something, it really should work as a regular adverbial
      (preference 0.9)
      )
     )

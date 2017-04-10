@@ -45,7 +45,7 @@
    (wordfeats (W::MORPH (:FORMS (-ER -LY))))
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("slow%3:00:01"))
-     (LF-PARENT ONT::SPEED-VAL)
+     (LF-PARENT ONT::SLOW-VAL)
      (TEMPL LESS-ADJ-TEMPL)
      )
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("slow%3:00:01"))

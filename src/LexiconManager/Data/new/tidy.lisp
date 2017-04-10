@@ -1,6 +1,3 @@
-;;;;
-;;;; W::tidy
-;;;;
 
 (define-words :pos W::v :templ AGENT-affected-XP-TEMPL
  :words (
@@ -38,7 +35,7 @@
 	  (w::tidy
 	   (wordfeats (W::MORPH (:FORMS (-ER -LY))))
 	   (senses
-	    ((lf-parent ont::orderliness-val)
+     ((lf-parent ont::tidy-val)
 	     (meta-data :origin lam :entry-date 20050425 :change-date nil :wn ("tidy%3:00:00") :comments lam-initial)
 	     (example "a tidy solution")
 	     )

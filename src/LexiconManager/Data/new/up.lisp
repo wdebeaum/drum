@@ -93,6 +93,18 @@
    )
 ))
 
+(define-words :pos W::adj
+ :tags (:base500)
+ :words (
+  (w::up
+  (senses
+   ((LF-PARENT ONT::in-working-order-val)
+    (TEMPL central-adj-templ)
+    )
+   )
+)
+))
+
 #|
 (define-words :pos W::ADV
  :words (

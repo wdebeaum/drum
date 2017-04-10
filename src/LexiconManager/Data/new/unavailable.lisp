@@ -1,6 +1,3 @@
-;;;;
-;;;; W::UNAVAILABLE
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -9,12 +6,12 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("unavailable%3:00:00"))
      (EXAMPLE "that's unavailable [to him]")
-     (LF-PARENT ONT::AVAILABILITY-VAL)
+     (lf-parent ont::not-available-val)
      (TEMPL central-adj-optional-xp-TEMPL (XP (% W::PP (W::PTYPE W::to))))
      )
     ((meta-data :origin windmills :entry-date 20080606 :change-date nil :comments nil :wn ("available%5:00:00:disposable:00"))
      (example "it is unavailable in 4 MW capacity")
-     (LF-PARENT ONT::availability-val)
+     (lf-parent ont::not-available-val)
      (SEM (F::GRADABILITY F::-))
      (TEMPL adj-subcat-property-templ)
      )

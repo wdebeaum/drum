@@ -1,6 +1,3 @@
-;;;;
-;;;; W::lean
-;;;;
 
 (define-words :pos W::V :templ agent-affected-xp-templ
  :words (
@@ -15,7 +12,6 @@
      (TEMPL agent-templ) ; like (lie
      )
     ((EXAMPLE "lean the box against the desk" )
-     ;;(LF-PARENT ONT::BODY-MOVEMENT)
      (lf-parent ont::place-in-position) ;; 20120523 GUM change new parent
       (TEMPL AGENT-AFFECTED-goal-TEMPL)
      )
@@ -27,11 +23,10 @@
 (define-words :pos W::adj 
   :templ CENTRAL-ADJ-TEMPL
  :words (
-	  ;; additions for food-kb
 	  (W::LEAN
 	   (SENSES
 	    (
-	     (LF-PARENT ONT::fat-content)
+      (lf-parent ont::lean-val)
 	     (meta-data :origin foodkb :entry-date 20050811 :change-date nil :wn ("lean%3:00:04") :comments nil)
 	     (example "he only eats lean meat")
 	     (SEM (F::GRADABILITY F::+))

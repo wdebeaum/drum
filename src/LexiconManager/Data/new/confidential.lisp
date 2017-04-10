@@ -1,6 +1,3 @@
-;;;;
-;;;; W::confidential
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -8,7 +5,7 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin chf :entry-date 20070809 :change-date nil :comments nil)
-     (LF-PARENT ONT::safety-val)
+     (lf-parent ont::secret-val)
      )
     )
    )

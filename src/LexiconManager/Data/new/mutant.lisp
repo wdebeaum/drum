@@ -1,13 +1,10 @@
-;;;;
-;;;; w::mutant
-;;;;
 
 (define-words :pos W::adj 
  :tags (bio)
  :words (
    ((W::mutant)
     (SENSES
-     ((LF-PARENT ONT::MUTANT)
+     ((lf-parent ont::strange)
       (templ CENTRAL-ADJ-TEMPL)
       (example "mutant EGFR")
       )))))

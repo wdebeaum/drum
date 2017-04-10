@@ -7,7 +7,7 @@
   (W::DEAD
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("dead%3:00:01"))
-     (LF-PARENT ONT::LIVING-VAL)
+     (LF-PARENT ONT::DEAD)
      )
     ((LF-PARENT ONT::PRECISE)
      (example "dead center")

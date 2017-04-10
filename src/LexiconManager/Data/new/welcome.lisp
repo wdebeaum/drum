@@ -1,6 +1,3 @@
-;;;;
-;;;; w::welcome
-;;;;
 
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
@@ -22,7 +19,7 @@
    (SENSES
     ((meta-data :origin calo :entry-date 20031223 :change-date 20061106 :wn ("welcome%3:00:00") :comments html-purchasing-corpus :comlex (ADJ-TO-INF))
      (example "a welcome change")
-     (LF-PARENT ONT::pleasant-VAL)
+     (lf-parent ont::pleasing-val)
      (TEMPL central-adj-templ)
      (SEM (f::gradability +) (f::orientation ont::more) (f::intensity ont::med))
      )

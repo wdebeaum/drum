@@ -1,6 +1,3 @@
-;;;;
-;;;; W::FLAT
-;;;;
 
 (define-words :pos W::n
  :words (
@@ -21,7 +18,7 @@
    (SENSES
     ((meta-data :origin calo :entry-date 20040407 :change-date 20090731 :wn ("flat%5:00:00:planar:00") :comments y1v4)
      (EXAMPLE "a flat screen" "a flat stomach")
-     (LF-PARENT ONT::SLIGHT)
+     (lf-parent ont::thin-val)
      )
     )
    )

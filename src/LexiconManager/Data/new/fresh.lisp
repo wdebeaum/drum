@@ -13,7 +13,7 @@
      (TEMPL LESS-ADJ-TEMPL)
      )
     ((meta-data :origin step :entry-date 20080721 :change-date nil :comments nil)
-     (LF-PARENT ONT::AGE-VAL)
+     (LF-PARENT ONT::FRESH-VAL)
      (example "fresh produce")
      (TEMPL LESS-ADJ-TEMPL)
      )

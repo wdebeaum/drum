@@ -1,6 +1,3 @@
-;;;;
-;;;; w::digital
-;;;;
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
@@ -16,12 +13,11 @@
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
-  ;; what about the digital age, the digital divide?
   (W::digital
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin calo :entry-date 20041119 :change-date nil :wn ("digital%3:00:00") :comments caloy2)
-     (LF-PARENT ONT::mode)
+     (lf-parent ont::digital-val)
      (example "a digital circuit")
      )
     )

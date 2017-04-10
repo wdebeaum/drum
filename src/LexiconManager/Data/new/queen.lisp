@@ -1,6 +1,3 @@
-;;;;
-;;;; W::QUEEN
-;;;;
 
 (define-words :pos W::n
  :words (
@@ -19,7 +16,7 @@
    (SENSES
     ((meta-data :origin calo-ontology :entry-date 20060117 :change-date nil :comments caloy3)
      (example "a room with a queen bed")
-     (LF-PARENT ONT::Size-Val)
+     (lf-parent ont::predefined-size-val)
      )
     )
    )

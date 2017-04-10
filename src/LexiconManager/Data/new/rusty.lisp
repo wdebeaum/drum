@@ -9,7 +9,7 @@
    (wordfeats (W::morph (:FORMS (-er -LY))))
    (SENSES
     ((meta-data :origin cardiac :entry-date 20090130 :change-date nil :comments nil)
-     (LF-PARENT ONT::modernity-val)
+     (LF-PARENT ONT::not-fresh-val)
      (example "his exercise skills are a little rusty")
      )
     )

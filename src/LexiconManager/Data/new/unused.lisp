@@ -1,6 +1,3 @@
-;;;;
-;;;; W::UNUSED
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -8,7 +5,7 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("unused%5:00:00:inactive:03"))
      (EXAMPLE "the box is unused")
-     (LF-PARENT ONT::AVAILABILITY-VAL)
+     (lf-parent ont::not-usable-val)
      (TEMPL central-ADJ-TEMPL)
      )
     )

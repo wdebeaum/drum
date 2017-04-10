@@ -1,6 +1,3 @@
-;;;;
-;;;; w::sore
-;;;;
 
 (define-words :pos W::n
  :words (
@@ -19,7 +16,7 @@
    (wordfeats (W::morph (:FORMS (-er -LY))))
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("sore%5:00:00:painful:00"))
-     (LF-PARENT ont::physical-symptom-val)
+     (lf-parent ont::pained-val)
      (templ central-adj-templ)
      )
     )

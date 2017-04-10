@@ -8,8 +8,8 @@
    (W::theoretical
     (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
-    ((meta-data :origin calo-ontology :entry-date 20051214 :change-date 20090818 :wn ("theoretical%3:00:00" "theoretical%3:00:00") :comments nil)
-     (LF-PARENT ONT::has-been-done-val)
+    ((meta-data :origin calo-ontology :entry-date 20051214 :change-date 20090818 :wn ("theoretical%3:00:01") :comments nil)
+     (LF-PARENT ONT::theoretical-val)
      (example "theoretical physics")
      )
     ((meta-data :origin adj-reorg :entry-date 20090818 :change-date 20090915 :comments nil)

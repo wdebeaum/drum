@@ -8,11 +8,11 @@
    (W::still
    (SENSES
     ((meta-data :origin calo-ontology :entry-date 20060711 :change-date nil :wn ("still%5:00:01:nonmoving:00") :comments caloy3)
-     (LF-PARENT ONT::motion-VAL)
+     (LF-PARENT ONT::static-val)
      (example "a still image")
      )
     ((meta-data :origin ?? :entry-date 20080925 :change-date 20090731 :comments nil)
-     (LF-PARENT ONT::QUIET)
+     (LF-PARENT ONT::silent-val)
      (example "a still night")
      )
     )

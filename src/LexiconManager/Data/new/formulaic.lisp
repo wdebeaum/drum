@@ -1,6 +1,3 @@
-;;;;
-;;;; W::formulaic
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -8,7 +5,7 @@
    (SENSES
     ((meta-data :origin step :entry-date 20080818 :change-date nil :comments nil)
      (EXAMPLE "a formulaic response")
-     (LF-PARENT ONT::stereotypicality-VAL)
+     (lf-parent ont::stereotypical-val)
      )
     )
    )

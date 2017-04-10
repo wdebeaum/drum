@@ -1,6 +1,3 @@
-;;;;
-;;;; W::on
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -32,7 +29,7 @@
    (SENSES
     ((example "use what you have on hand")
      (meta-data :origin monroe :entry-date 20031217 :change-date nil :wn ("on_hand%5:00:00:available:00") :comments s15)
-     (LF-PARENT ONT::availability-val)
+     (lf-parent ont::available)
      (SEM (F::GRADABILITY F::-))
      (TEMPL postpositive-adj-templ)
      )
@@ -64,7 +61,6 @@
   :templ CENTRAL-ADJ-TEMPL
  :tags (:base500)
  :words (
-;            ))    
 	  (w::on
 	   (senses
 	    (;(lf-parent ont::artifact-property-val)
@@ -134,7 +130,6 @@
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      (example "it is on the corner")
      )
-    ;;;;; on drugs, on antibiotics
     ((LF-PARENT ONT::on-medication)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      )

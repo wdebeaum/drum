@@ -1,6 +1,3 @@
-;;;;
-;;;; w::narrow
-;;;;
 
 (define-words :pos W::v :templ agent-affected-xp-templ
  :words (
@@ -22,7 +19,7 @@
    (SENSES
     ((meta-data :origin calo :entry-date 20031223 :change-date 20090731 :wn ("narrow%3:00:00") :comments html-purchasing-corpus)
      (EXAMPLE "a narrow ridge")
-     (LF-PARENT ONT::SLIGHT)
+     (lf-parent ont::narrow-val)
      )
     )
    )

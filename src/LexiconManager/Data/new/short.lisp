@@ -1,6 +1,3 @@
-;;;;
-;;;; w::short
-;;;;
 
 (define-words 
     :pos W::n :templ COUNT-PRED-TEMPL
@@ -34,7 +31,7 @@
    (wordfeats (W::MORPH (:FORMS (-ER -LY))))
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("short%3:00:01"))
-     (LF-PARENT ONT::height-val)
+     (LF-PARENT ONT::short-val)
      (TEMPL LESS-ADJ-TEMPL)
      )
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("short%3:00:02"))
@@ -56,7 +53,7 @@
   ((w::short w::of w::breath)
    (senses
    ((meta-data :origin chf :entry-date 20070910 :change-date nil :comments chf-dialogues)
-   (lf-parent ont::physical-symptom-val)
+   (lf-parent ont::breathless-val)
    (templ less-adj-templ)
    (example "he is short of breath")
    )))

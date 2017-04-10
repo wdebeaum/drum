@@ -1,6 +1,3 @@
-;;;;
-;;;; W::semantic
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -8,7 +5,7 @@
     (SENSES
      ((meta-data :origin calo-ontology :entry-date 20060426 :change-date nil :wn ("semantic%3:01:00") :comments nil)
       (EXAMPLE "the semantic desktop")
-      (LF-PARENT ONT::STATUS-val)
+      (lf-parent ont::semantic-val)
       )
      )
     )

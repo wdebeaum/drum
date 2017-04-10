@@ -1,6 +1,3 @@
-;;;;
-;;;; W::attentive
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -8,7 +5,7 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin calo :entry-date 20081016 :change-date nil :comments nil)
-     (LF-PARENT ONT::attention-val)
+     (lf-parent ont::attentive-val)
      (templ central-adj-experiencer-templ)
      )
     )

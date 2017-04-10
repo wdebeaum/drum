@@ -1,6 +1,3 @@
-;;;;
-;;;; W::heartbreaking
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -9,7 +6,7 @@
    (SENSES
     ((meta-data :origin cardiac :entry-date 20090129  :change-date nil :comments nil :wn ("happy%3:00:00"))
      (example "unhappy news")
-     (LF-PARENT ONT::EMOTIONAL-VAL)
+     (lf-parent ont::grievous-val)
      (templ central-adj-content-templ)
      )
     )

@@ -1,6 +1,3 @@
-;;;;
-;;;; w::out
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :tags (:base500)
@@ -8,7 +5,6 @@
   (W::OUT
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date 20081028 :comments nil)
-     ;; MD: this is marked as predicative-only because you cannot say "the out bulb", or at least not easily, and it was creating major ambiguities in multi-sentence cases with "burn out"
      (LF-PARENT ONT::NOT-IN-WORKING-ORDER-val)
      (example "the bridge is out")
      (templ predicative-only-adj-templ)
@@ -82,7 +78,7 @@
    ((w::out w::of w::breath)
    (senses
    ((meta-data :origin chf :entry-date 20071227 :change-date nil :comments nil)
-   (lf-parent ont::physical-symptom-val)
+   (lf-parent ont::breathless-val)
    (templ less-adj-templ)
    (example "he is out of breath")
    )))
@@ -92,7 +88,7 @@
  :words (
    ((W::out w::of w::whack)
    (SENSES
-    ((LF-PARENT ONT::not-in-working-order-val)
+    ((LF-PARENT ONT::defective-val)
      (meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
      )
     )
@@ -103,7 +99,7 @@
  :words (
    ((W::out w::of w::kilter)
    (SENSES
-    ((LF-PARENT ONT::not-in-working-order-val)
+    ((LF-PARENT ONT::defective-val)
      (meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
      )
     )

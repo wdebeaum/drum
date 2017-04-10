@@ -1,6 +1,3 @@
-;;;;
-;;;; W::RIGOROUS
-;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -9,7 +6,7 @@
    (SENSES
     ((meta-data :origin calo :entry-date 20031223 :change-date nil :wn ("rigorous%5:00:00:demanding:00") :comments html-purchasing-corpus)
      (EXAMPLE "stringent guidelines")
-     (LF-PARENT ONT::BINDING-VAL)
+     (lf-parent ont::demanding-val)
      )
     )
    )
