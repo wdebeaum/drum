@@ -28,7 +28,7 @@
      )
     ((LF-PARENT ONT::dizzy-val)
      (example "was sick and faint from hunger")
-     (meta-data :origin adjective reorganization :entry-date 20170317 :change-date nil :comments nil)
+     (meta-data :origin adjective-reorganization :entry-date 20170317 :change-date nil :comments nil)
      )    
     )
    )

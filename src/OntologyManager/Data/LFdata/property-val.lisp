@@ -1666,7 +1666,7 @@
 
 (define-type ont::verified-val
  :parent ont::can-be-verified-val 
- :wordnet-sense-keys ("verified%5:00:00:proved:00" "tested%5:00:00:proved" )
+ :wordnet-sense-keys ("verified%5:00:00:proved:00" "tested%5:00:00:proved:00" )
 )
 
 (define-type ont::not-verified-val

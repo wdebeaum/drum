@@ -13,7 +13,7 @@
      )
     ((LF-PARENT ONT::artificial)
      (example "false teeth")
-     (meta-data :origin adjective reorganization :entry-date 20170317 :change-date nil :comments nil)
+     (meta-data :origin adjective-reorganization :entry-date 20170317 :change-date nil :comments nil)
      )
    )
   )

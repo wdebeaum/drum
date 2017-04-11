@@ -2868,9 +2868,9 @@
 	     ;; the process creates compression
 	     (:OPTIONAL ONT::agent ((? cs F::Phys-obj f::abstr-obj) ))
 	     (:essential ont::affected-result ((? aff  F::Phys-obj f::abstr-obj) 
-					       (f::type (? x ONT::PHYS-OBJECT ont::mental-construction))))
+					       (f::type (? x ONT::PHYS-OBJECT ont::mental-construction ont::information-function-object))))
 	     (:essential ont::affected ((? aff  F::Phys-obj f::abstr-obj) 
-					       (f::type (? x ONT::PHYS-OBJECT ont::mental-construction))))
+					       (f::type (? x ONT::PHYS-OBJECT ont::mental-construction ont::information-function-object))))
 	     (:OPTIONAL ONT::result ((? res F::Phys-obj f::abstr-obj) (F::intentional -))) ;; he made a box from paper
              )
  )
@@ -3820,6 +3820,8 @@
  :arguments ((:REQUIRED ONT::agent ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
 	     (:optional ont::formal)
 	     (:optional ont::formal1)
+	     (:optional ont::neutral)
+	     (:optional ont::neutral1)
              )
  )
 

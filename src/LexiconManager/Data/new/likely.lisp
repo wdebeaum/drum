@@ -9,7 +9,7 @@
      (SEM (F::GRADABILITY F::+))
      (TEMPL central-adj-xp-TEMPL (XP (% W::cp (W::ctype W::s-to))))
      )
-    ((meta-data :origin adjective reorganization :entry-date 20170322 :change-date nil :comments nil)
+    ((meta-data :origin adjective-reorganization :entry-date 20170322 :change-date nil :comments nil)
      (EXAMPLE "It's a likely excuse")
      (lf-parent ont::nonactual)
     )

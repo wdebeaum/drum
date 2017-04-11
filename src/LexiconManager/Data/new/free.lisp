@@ -49,7 +49,7 @@
      )
     ((LF-PARENT ONT::free-val)
      (example "after the Civil War he was a free man")
-     (meta-data :origin adjective reorganization :entry-date 20170317 :change-date nil :comments nil)
+     (meta-data :origin adjective-reorganization :entry-date 20170317 :change-date nil :comments nil)
      )
     )
    )

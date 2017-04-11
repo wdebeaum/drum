@@ -654,7 +654,7 @@
  )
 
 (define-type ONT::perceptual-Appearance
-    :wordnet-sense-keys ("appearance%1:07:00" "facial_expression$+%1:10:00" "countenance%1:07:00" "countenance%1:08:00")
+    :wordnet-sense-keys ("appearance%1:07:00" "facial_expression%1:10:00" "countenance%1:07:00" "countenance%1:08:00")
  :parent ONT::PERCEPTION
  )
 

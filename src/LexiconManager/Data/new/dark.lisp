@@ -29,7 +29,7 @@
      )
     ((LF-PARENT ONT::dark-in-color-val)
      (example "dark green")
-     (meta-data :origin adjective reorganization :entry-date 20170317 :change-date nil :comments nil)
+     (meta-data :origin adjective-reorganization :entry-date 20170317 :change-date nil :comments nil)
      )    
     )
    )

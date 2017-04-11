@@ -143,7 +143,7 @@
      )
     ((LF-PARENT ont::light-in-color-val)
      (example "light green")
-     (meta-data :origin adjective reorganization :entry-date 20170317 :change-date nil :comments nil)
+     (meta-data :origin adjective-reorganization :entry-date 20170317 :change-date nil :comments nil)
      )
     )
    )

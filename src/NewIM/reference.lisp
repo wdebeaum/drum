@@ -743,7 +743,7 @@
 					       (- index 1) (if proform 3 200) name))
 	 (ans possibles)) ;;  I can't remember why I did this -- (filter-by-fastmatch-subsumes id (mapcar #'referent-id possibles))))
     (if ans
-	(mapcar #'(lambda (a) (score-and-build-hyp lf lf-type a sem)) 
+	(mapcar #'(lambda (a) (score-and-build-hyp id lf-type a sem)) 
 		ans) ;;(mapcar #'get-referential-info ans))
 	))))
 

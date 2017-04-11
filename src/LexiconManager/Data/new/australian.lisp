@@ -16,7 +16,7 @@
  :words (
    (w::australian
    (SENSES
-    ((meta-data :origin adjective reorganization :entry-date 20170403 :change-date nil :comments nil :wn nil :comlex nil)
+    ((meta-data :origin adjective-reorganization :entry-date 20170403 :change-date nil :comments nil :wn nil :comlex nil)
      (lf-parent ont::nationality-val)
      )
     )

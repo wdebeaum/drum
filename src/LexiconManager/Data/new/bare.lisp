@@ -23,7 +23,7 @@
      )
     ((LF-PARENT ont::not-clothed-val)
      (example "He was bare from waist up.")
-     (meta-data :origin adjective reorganization :entry-date 20170317 :change-date nil :comments nil)
+     (meta-data :origin adjective-reorganization :entry-date 20170317 :change-date nil :comments nil)
      )
     )
    )

@@ -11,7 +11,7 @@
      (LF-PARENT ONT::actual)
      )
     ((LF-PARENT ONT::authentic-val)
-     (meta-data :origin adjective reorganization :entry-date 20170317 :change-date nil :comments nil)
+     (meta-data :origin adjective-reorganization :entry-date 20170317 :change-date nil :comments nil)
      )  
     )
    )

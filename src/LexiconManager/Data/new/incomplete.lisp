@@ -13,7 +13,7 @@
      )
     ((LF-PARENT ONT::incomplete)
      (example "the analysis is incomplete")
-     (meta-data :origin adjective reorganization :entry-date 20170317 :change-date nil :comments nil)
+     (meta-data :origin adjective-reorganization :entry-date 20170317 :change-date nil :comments nil)
      )
     )
    )
