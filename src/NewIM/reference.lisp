@@ -13,31 +13,39 @@
     
     (set-processing-status index 'reference)))
 
-(defun eliminate-unlikely-referents (refs)
+(defun eliminate-unlikely-referents (orig-refs)
   "this imposes various heuristics and constraints to reduce the set of possible referents"
   
-  (let 
+  (let* 
       ;; first eliminate same sentence antecedents that occur after the referring expression, unless there are no other possibilities
-      ((newrefs (mapcar #'(lambda (rr)
+      ((refs (remove-invalid-referents orig-refs))
+       (newrefs (mapcar #'(lambda (rr)
 			    (let ((reduced-refs (remove-if #'(lambda (x) (member 'post (ref-hyp-score x)))
 							   (referent-ref-hyps rr))))
 			      (if reduced-refs
 				  (setf (referent-ref-hyps rr) reduced-refs))))
-			refs))
+			refs)))
        ;; other filters here
        )
-    ))
+    )
 
-(defun install-referents (refs)
+(defun remove-invalid-referents (refs)
+  (remove-if #'(lambda (x) (not (referent-p x))) refs))
+
+
+(defun install-referents (orig-refs)
   ;; here we should pick referents while imposes reflexivity constraints on the answers
-  ;;(format t "REFS are ~S" (remove-if #'(lambda (x) (null (referent-ref-hyps x))) refs))
-  (let* ((first-choices (remove-if #'null
+  ;; we basically assign referents sequentially through the list, eliminating use of that referent by any
+  ;;    later terms that would violate reflexivity constraints
+ 
+  (let* ((refs (remove-invalid-referents orig-refs))
+	 (first-choices (remove-if #'null
 				   (mapcar #'(lambda (ref) (if (car (referent-ref-hyps ref))
-						    (list (car (referent-ref-hyps ref))
-							  (get-role-events (referent-role ref)))))
+							       (list (car (referent-ref-hyps ref))
+								     (get-role-events (referent-role ref)))))
 				refs)))
 	 (violation-found (check-reflexivity-constraints first-choices)))
-    (trace-msg 1 "~%reflexivity violation found is ~S" violation-found)
+    (if violation-found (trace-msg 1 "~%reflexivity violation found is ~S" violation-found))
     (if (null violation-found)
 	(mapcar #'(lambda (x)
 		    (install-hyp-in-referent x (car (referent-ref-hyps x))))
@@ -46,14 +54,21 @@
 	(let* ((offending-id (ref-hyp-id  violation-found))
 	       (offending-referent (find-if #'(lambda (x) (eq (referent-id x) offending-id)) refs)))
 	  (trace-msg 1 "~% Removing first choice for ~S due to reflexivity constraints" offending-id)
-	  (setf (referent-ref-hyps offending-referent)
-		(cdr (referent-ref-hyps offending-referent)))
-	  ;; now try again
-	  (install-referents refs)
-    ))))
+	  (if (referent-p offending-referent)
+	      (progn
+		(setf (referent-ref-hyps offending-referent)
+		      (cdr (referent-ref-hyps offending-referent)))
+	    
+		;; now try again
+		(install-referents refs)
+		)
+	      ;;  Bad error here, report and just abandon installing referents
+	      (progn
+		(format t "WARNING: couldn't find affending referent: ~S" offending-id)
+		nil))))))
   
 (defun check-reflexivity-constraints (choices)
-  "check possible solution for violations of reflexivity: the choices are of form (<REH-HYP> <list of events that this is a direct role of>)"
+  "check possible solutions for violations of reflexivity: the choices are of form (<REH-HYP> <list of events that this is a direct role of>)"
   (when choices
     (let* ((first (caar choices))
 	   (first-events (cadar choices))
