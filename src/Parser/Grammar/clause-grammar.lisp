@@ -2728,7 +2728,7 @@
     ((utt (lf (% speechact (var *) (class ont::sa_request) (constraint (& (content ?v))))) (var *)
           )
      -command-imp1>
-     (head (s (stype imp) (wh -) (var ?v) (sem ($ F::SITUATION (F::type ONT::EVENT-OF-ACTION)))
+     (head (s (stype imp) (wh -) (var ?v) (sem ($ F::SITUATION (F::type ONT::EVENT-OF-change)))
 	      (gap -) (advbl-needed -))))
       
     ;; test: bark.
@@ -2744,7 +2744,7 @@
 	    (sem ?sem)
 	    (sem ($ f::situation (f::aspect (? aspc f::dynamic f::stage-level)
 					    )
-		    (f::type ont::event-of-action)
+		    (f::type ont::event-of-change)
 		    ))
 	    (var ?v) (aux -) (tma ?tma)
 	    (constraint ?con)

@@ -1218,7 +1218,7 @@
 
     ;;  COMPARATIVE CONSTRUCTIONS
 
-    ;; TEST: more efficiently
+  #||  ;; TEST: more efficiently
     ((ADV (LF ONT::MORE-VAL) (COMPARATIVE +) (ALLOW-POST-N1-SUBCAT +) (ARGUMENT-MAP FIGURE) (functn ?pred)
       (SUBCAT (% PP (PTYPE W::THAN) (VAR ?v))) 
       (subcat-map GROUND) (argument ?argument) (sort ?s) (arg ?a) (atype ?at) (var ?v)
@@ -1262,7 +1262,7 @@
      (word (lex least))
      (head (adv (LF ?pred) (sort ?s) (arg ?a) (atype ?at) (var ?v) (sem ?sem)))
      )
-  
+  ||#
     ;; qmodifiers with bare numbers
     ;; TEST: exactly five
     ((number (agr ?agr) (VAR ?v) (MASS ?mn) (lf ?lf) (sem ?sem) (premod +) ;;(val ?val)

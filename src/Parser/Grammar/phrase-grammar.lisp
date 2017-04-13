@@ -1341,7 +1341,8 @@
      (transform ?transform) (argument-map ont::figure) (argument ?argument)  (arg ?arg)
      )
      -more-adj-compar> 1.0
-    (ADV (compar-op +) (lf (:* ?pred ?xx)) (ground-oblig ?go) (SUBCAT ?ground-subcat) (SUBCAT-MAP ?ground-smap))
+    (ADV (lf (:* ?pred ?xx)) (comparative (? cmp + superl))
+     (ground-oblig ?go) (SUBCAT ?ground-subcat) (SUBCAT-MAP ?ground-smap))
     (head (ADJ (LF (:* ?lftype ?w)) (var ?v) 
 	       (SUBCAT2 -) (post-subcat -)(VAR ?v) (comparative -)
 	       (SUBCAT ?subcat) 

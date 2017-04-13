@@ -968,7 +968,9 @@
 
 (define-type ONT::message
      :wordnet-sense-keys ("message%1:10:01")
-    :parent ont::information-function-object
+     :parent ont::information-function-object
+     :arguments ((:optional ONT::formal (F::prop)))
+	     
     )
 
 (define-type ONT::composition

@@ -1415,6 +1415,7 @@
 ;;INFO-Holder needs much more work
 (define-type ONT::INFO-HOLDER
     :parent ONT::PHYS-REPRESENTATION
+    :arguments ((:optional ONT::formal))
     )
 
 ;; channel
@@ -1425,9 +1426,8 @@
 ;; items in this class "stand for" something, and have ont::of arguments
 (define-type ont::direct-representation
     :parent ONT::info-holder
-    :arguments ((:optional ONT::formal)
-		)
     )
+    
 
 ;; items in this class represent comments on something, and have ont::of arguments
 (define-type ont::annotation
@@ -1443,7 +1443,7 @@
     :parent ONT::info-holder
     :wordnet-sense-keys ("document%1:06:00" "document%1:21:00")
     :arguments (
-;		(:optional ONT::Associated-information)
+;;		(:optional ONT::Associated-information)
 		)
     )
 

@@ -196,7 +196,8 @@
 (define-type ONT::owe
  :wordnet-sense-keys ("owe%2:40:01")
  :parent ONT::state-of-being
- :arguments ((:OPTIONAL ONT::formal1 ((? rcp F::Phys-obj f::abstr-obj)))
+ :arguments ((:OPTIONAL ONT::neutral1 ((? rcp F::Phys-obj f::abstr-obj)))
+	     (:optional ont::neutral2 )
              )
   )
 
@@ -2580,7 +2581,9 @@
 (define-type ONT::afford
  :wordnet-sense-keys ("afford%2:34:00")
  :parent ONT::expensiveness
- )
+  :arguments ((:optional ONT::neutral1 ((? sc F::phys-obj F::abstr-obj)))
+	      )
+  )
 
 (define-type ONT::COSTS
  :wordnet-sense-keys ("cost%2:42:00" "be%2:42:09")
@@ -2773,6 +2776,7 @@
   :comment "the part remaining is the good part"
   :arguments ((:OPTIONAL ONT::Agent)
 	      (:OPTIONAL ONT::AFFECTED1)
+	      (:optional ont::source)
 	      )
  )
 
