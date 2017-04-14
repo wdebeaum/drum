@@ -1376,7 +1376,7 @@
     ;(ADV (compar-op +) (lf (:* ?pred ?xx)) (ground-oblig ?go) (SUBCAT ?ground-subcat))
      (head (ADJ (LF (:* ?lftype ?w)) (LF ?oldlf)
 		(var ?v) 
-	       (SUBCAT2 -) (post-subcat -)(VAR ?v) (comparative +)
+	       (SUBCAT2 -) (post-subcat -)(VAR ?v) (comparative (? xxx + superl))
 	       (SUBCAT ?subcat) 
 	       (subcat-map ?subcat-map)
 	       (ATYPE central)
