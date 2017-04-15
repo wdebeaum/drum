@@ -519,6 +519,9 @@ sub domainSpecificInfo2trips {
 	  push @$trips, ":$key", $info->{$key};
 	}
       }
+    } elsif (grep { $_ eq $info->{type} } qw(pitch-sequence progression)) {
+      push @$trips, ':members', domainSpecificInfo2trips($info->{members})
+        if (exists($info->{members}));
     } else {
       die "Unknown type of domain-specific-info: $info->{type}\n" . Data::Dumper->Dump([$info],['*info']);
     }
