@@ -8,7 +8,7 @@
   (W::VOICE
    (SENSES
     ((meta-data :origin boudreaux :entry-date 20031024)
-     (LF-PARENT ONT::MEDIUM)
+     (LF-PARENT ONT::discrete-property-val)
      )
     )
    )

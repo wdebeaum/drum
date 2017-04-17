@@ -6,8 +6,13 @@
  :words (
   (W::further
    (SENSES
-    ((LF-PARENT ONT::PART-WHOLE-val)
+    ((LF-PARENT ONT::remaining-val)
      (example "there are no further problems")
+     (SEM (F::GRADABILITY F::-))
+     (meta-data :origin calo-ontology :entry-date 20060124 :change-date nil :wn nil :comments caloy3)
+     )
+    ((LF-PARENT ONT::remote)
+     (example "standing at further end of the clearing")
      (SEM (F::GRADABILITY F::-))
      (meta-data :origin calo-ontology :entry-date 20060124 :change-date nil :wn ("further%5:00:00:far:00") :comments caloy3)
      )

@@ -28,3 +28,15 @@
    )
 ))
 
+
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+  (W::SIDE
+   (SENSES
+    ((meta-data :origin adjective-reorganization :entry-date 20170313 :change-date nil)
+     (LF-PARENT ONT::side-location-val)
+     (EXAMPLE "side porch")
+     )
+    )
+   )
+))

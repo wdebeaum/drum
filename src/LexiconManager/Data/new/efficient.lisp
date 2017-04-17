@@ -1,4 +1,5 @@
 
+#|
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
    (W::efficient
@@ -10,6 +11,7 @@
     )
    )
 ))
+|#
 
 (define-words :pos W::adj 
   :templ CENTRAL-ADJ-TEMPL

@@ -7,7 +7,7 @@
    (W::DISADVANTAGE
     (SENSES
      ((meta-data :origin calo :entry-date 20031230 :change-date nil :wn ("disadvantage%1:07:00") :comments html-purchasing-corpus)
-      (LF-PARENT ONT::ACCEPTABILITY-VAL)
+      (LF-PARENT ONT::discrete-property-val)
       )
      )
     )

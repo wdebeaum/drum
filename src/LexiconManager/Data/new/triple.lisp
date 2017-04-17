@@ -7,7 +7,7 @@
    (W::triple
    (SENSES
     ((meta-data :origin cardiac :entry-date 20090129 :change-date nil :wn ("triple%5:00:01:multiple:00") :comments LM-vocab)
-      (LF-PARENT ONT::Size-Val)
+      (LF-PARENT ONT::n-tuple-Val)
      )
     )
    )

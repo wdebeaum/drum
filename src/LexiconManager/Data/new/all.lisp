@@ -22,7 +22,7 @@
    (SENSES
     ((meta-data :origin plow :entry-date 20060530 :change-date nil :comments pq)
      (example "an all inclusive resort")
-     (LF-PARENT ONT::status-val)
+     (LF-PARENT ONT::public-val)
      )
     )
    )

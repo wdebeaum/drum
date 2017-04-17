@@ -1,14 +1,14 @@
 
-(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
- :words (
-  (W::conventional
-   (wordfeats (W::morph (:FORMS (-LY))))
-   (SENSES
-    ((meta-data :origin lam :entry-date 20050422 :change-date 20080818 :wn ("conventional%3:00:00") :comments lam-initial)
-     (lf-parent ont::conventionality-val) ;; changed from ont::uniqueness-val
-     )
-    ))
-))
+;(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+; :words (
+;  (W::conventional
+;   (wordfeats (W::morph (:FORMS (-LY))))
+;   (SENSES
+;    ((meta-data :origin lam :entry-date 20050422 :change-date 20080818 :wn ("conventional%3:00:00") :comments lam-initial)
+;     (lf-parent ont::conventionality-val) ;; changed from ont::uniqueness-val
+;     )
+;    ))
+;))
 
 (define-words :pos W::adj
  :words (

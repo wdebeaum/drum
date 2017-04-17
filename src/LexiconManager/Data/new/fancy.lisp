@@ -17,7 +17,7 @@
    (SENSES
     ((meta-data :origin calo :entry-date 20041122 :change-date nil :wn ("fancy%3:00:00") :comments caloy2)
      (EXAMPLE "I don't need anything fancy")
-     (lf-parent ont::fancy-val)
+     (lf-parent ont::not-plain-val)
      )
     )
    )

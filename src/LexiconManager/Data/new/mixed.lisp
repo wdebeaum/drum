@@ -6,7 +6,7 @@
  :words (
   ((W::MIXED (W::UP))
    (SENSES
-    ((LF-PARENT ONT::CORRECTNESS-VAL)
+    ((LF-PARENT ONT::puzzled-VAL)
      )
     )
    )

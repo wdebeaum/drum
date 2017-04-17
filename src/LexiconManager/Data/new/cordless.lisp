@@ -8,7 +8,7 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin plow :entry-date 20060615 :change-date 20090915 :wn ("cordless%3:01:00") :comments pqx)
-     (LF-PARENT ONT::substantial-property-val)
+     (LF-PARENT ONT::cordless-val)
      )
     )
    )

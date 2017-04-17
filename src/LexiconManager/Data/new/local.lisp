@@ -7,9 +7,9 @@
   (W::LOCAL
    (wordfeats (w::comp-op w::less))
    (SENSES
-    ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("local%3:00:01"))
+    ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn nil)
      (EXAMPLE "This problem is local [to the area]")
-     (LF-PARENT ONT::DISTANCE-VAL)
+     (LF-PARENT ONT::local-VAL)
      (TEMPL ADJ-CO-THEME-TEMPL)
      (SEM (f::orientation ont::less) (f::intensity ont::med))
      )

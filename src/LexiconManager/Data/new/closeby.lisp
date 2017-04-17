@@ -6,7 +6,7 @@
  :words (
   (W::CLOSEBY
    (SENSES
-    ((LF-PARENT ONT::DISTANCE-VAL)
+    ((LF-PARENT ONT::near)
      (example "the houses are close by")
      (TEMPL ADJ-THEME-TEMPL)
      (SEM (f::orientation ont::less) (f::intensity ont::hi))

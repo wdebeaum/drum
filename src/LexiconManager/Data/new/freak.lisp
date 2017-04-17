@@ -8,7 +8,7 @@
    (SENSES
     ((meta-data :origin plow :entry-date 20060802 :change-date nil :comments weather)
      (EXAMPLE "freak storms are popping up")
-     (LF-PARENT ONT::typicality-val)
+     (LF-PARENT ONT::strange)
      (sem (f::gradability +) (f::intensity ont::med) (f::orientation ont::less))
      )
     )

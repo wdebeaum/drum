@@ -7,7 +7,7 @@
   ;; negative polarity
   ((W::at w::all)
    (SENSES
-   ((LF-PARENT ONT::availability-val)
+   ((LF-PARENT ONT::discrete-property-val)
     (templ postpositive-adj-templ)
      (meta-data :origin cardiac :entry-date 20090120 :change-date nil :comments LM-vocab)
      (example "none at all" "no plan at all")

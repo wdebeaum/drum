@@ -22,13 +22,13 @@
   (W::RIGHT
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("right%3:00:02"))
-     (lf-parent ont::correctness-val)
+     (lf-parent ont::correct)
      (example "that's right/the right choice")
      (templ central-adj-templ)
      )
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("right%5:00:00:appropriate:00"))
      (EXAMPLE "that's right for him ")
-     (lf-parent ont::correctness-val)
+     (lf-parent ont::correct)
      (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE W::For))))
      (SYNTAX (W::allow-deleted-comp -))
      )

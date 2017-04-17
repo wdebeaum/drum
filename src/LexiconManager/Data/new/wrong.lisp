@@ -22,7 +22,7 @@
  :words (
    (W::WRONG
    (SENSES
-    ((LF-PARENT ONT::correctness-val)
+    ((LF-PARENT ONT::incorrect)
      (example "I might have spelled the name wrong")
      (TEMPL pred-vp-templ)
      (meta-data :origin plow :entry-date 20050922 :change-date nil :comments nil)

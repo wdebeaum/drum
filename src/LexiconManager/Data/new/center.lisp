@@ -43,7 +43,7 @@
  :words (
    (w::center
      (senses
-      ((lf-parent ont::location-val)
+      ((lf-parent ont::middle-location-val)
        (meta-data :origin step :entry-date 20080705 :change-date nil :comments step5)
        )
       ))

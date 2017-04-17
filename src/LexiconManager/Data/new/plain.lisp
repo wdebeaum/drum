@@ -13,7 +13,7 @@
      (LF-PARENT ONT::CLEAR)
      (SEM (F::GRADABILITY F::+))
      )
-    ((LF-PARENT ont::not-fancy-val)
+    ((LF-PARENT ont::plain-val)
      (example "plain food")
      (meta-data :origin adjective-reorganization :entry-date 20170317 :change-date nil :comments nil)
      )

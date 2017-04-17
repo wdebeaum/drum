@@ -6,7 +6,7 @@
  :words (
    (W::nuclear
    (SENSES
-    ((LF-PARENT ONT::substantial-property-val)
+    ((LF-PARENT ONT::nuclear-val)
      (meta-data :origin caloy3 :entry-date 20070330 :change-date 20090915 :comments y3-test-data)
      )
 

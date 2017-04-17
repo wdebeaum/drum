@@ -21,7 +21,7 @@
  :words (
 	  (w::zero
 	   (senses
-	    ((lf-parent ont::number-related-property-val)
+	    ((lf-parent ont::zero-val)
 	     (meta-data :origin beetle :entry-date 20081112 :change-date 20090915 :comments pilot5)
 	     (example "a zero voltage means that terminals are connected")
 	     ;; this sentence is possible but unlikely, hence a low preference

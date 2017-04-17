@@ -13,6 +13,7 @@
    )
 ))
 
+#|
 (define-words :pos w::N 
  :words (
   ((w::south w::american)
@@ -22,6 +23,19 @@
 	    ))
 )
 ))
+|#
+
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+   ((w::south w::american)
+   (SENSES
+    ((meta-data :origin adjective-reorganization :entry-date 20170403 :change-date nil :comments nil :wn nil)
+     (lf-parent ont::regional-identity-val)
+     )
+    )
+   )
+))
+
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :tags (:base500)

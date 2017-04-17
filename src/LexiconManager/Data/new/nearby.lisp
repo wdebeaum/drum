@@ -8,7 +8,7 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("nearby%5:00:00:near:00"))
      (EXAMPLE "they went to nearby schools")
-     (LF-PARENT ONT::DISTANCE-VAL)
+     (LF-PARENT ONT::near)
      (TEMPL ADJ-THEME-TEMPL)
      (SEM (f::orientation ont::less) (f::intensity ont::hi))
      )

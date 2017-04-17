@@ -55,7 +55,7 @@
   (W::split
    (SENSES
     ((meta-data :origin monroe :entry-date 20031217 :change-date nil :wn ("split%5:00:02:divided:00") :comments s3)
-     (LF-PARENT ONT::PART-WHOLE-val)
+     (LF-PARENT ONT::split-val)
      (SEM (F::GRADABILITY F::-))
      )
     )

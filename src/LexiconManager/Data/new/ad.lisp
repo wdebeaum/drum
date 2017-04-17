@@ -17,7 +17,7 @@
    (SENSES
     ((meta-data :origin task-learning :entry-date 20060524 :change-date nil :wn ("ad_hoc%5:00:00:unplanned:00" "ad_hoc%5:00:00:specific:00") :comments nil)
      (example "an ad hoc solution")
-     (LF-PARENT ONT::status-val)
+     (LF-PARENT ONT::not-premeditated-val)
      )
     )
    )

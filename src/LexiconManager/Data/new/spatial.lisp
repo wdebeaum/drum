@@ -8,7 +8,7 @@
      (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin calo-ontology :entry-date 20051214 :change-date nil :wn ("spatial%3:01:00") :comments nil)
-     (LF-PARENT ONT::size-val)
+     (LF-PARENT ONT::spatial)
      (example "spatial requirements")
      )
     )

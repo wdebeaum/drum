@@ -48,7 +48,7 @@
    (wordfeats (W::MORPH (:FORMS (-ER))) (W::COMP-OP W::LESS))
    (SENSES
     ((meta-data :origin monroe :entry-date 20031217 :change-date nil :comments nil)
-     (LF-PARENT ONT::DISTANCE-VAL)
+     (LF-PARENT ONT::near)
      (example "the houses are close by")
      (TEMPL ADJ-THEME-TEMPL)
      (SEM (f::orientation ont::less) (f::intensity ont::hi))

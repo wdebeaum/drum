@@ -49,7 +49,7 @@
      (TEMPL attributive-only-adj-templ)
      )
     ((meta-data :origin cernl :entry-date 20110314 :change-date nil :comments ticket-243)
-     (LF-PARENT ONT::availability-val)
+     (LF-PARENT ONT::available)
      (example "infiltrates that were not present on the scan")
      )
     )

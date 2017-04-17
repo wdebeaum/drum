@@ -21,7 +21,7 @@
    (SENSES
     ((meta-data :origin plow :entry-date 20060531 :change-date 20090818 :comments pq405)
      (example "a round trip ticket")
-     (LF-PARENT ONT::temporal)
+     (LF-PARENT ONT::route-topology-val)
      )
     )
    )

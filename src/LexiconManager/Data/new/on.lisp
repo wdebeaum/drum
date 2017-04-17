@@ -5,7 +5,7 @@
    (SENSES
     ((meta-data :origin plow :entry-date 20060629 :change-date 20090818 :wn ("on_time%5:00:00:punctual:00") :comments pq)
      (example "flights with on time arrival")
-     (LF-PARENT ONT::temporal)
+     (LF-PARENT ONT::scheduled-time-modifier)
      )
     )
    )
@@ -17,7 +17,7 @@
    (SENSES
     ((meta-data :origin plow :entry-date 20060530 :change-date nil :comments pq0404)
      (example "on site laundry facilities")
-     (LF-PARENT ONT::location-val)
+     (LF-PARENT ONT::on-site-val)
      )
     )
    )
@@ -76,7 +76,7 @@
  :words (
   ((W::ON W::PURPOSE)
    (SENSES
-    ((LF-PARENT ONT::INTENTIONALITY-val)
+    ((LF-PARENT ONT::intentional-val)
      (TEMPL PRED-S-POST-templ)
      )
     )

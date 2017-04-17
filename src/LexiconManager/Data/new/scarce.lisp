@@ -8,7 +8,7 @@
   (W::scarce
     (wordfeats (W::MORPH (:FORMS (-er -LY))))
    (SENSES
-    ((LF-PARENT ONT::number-related-property-val)
+    ((LF-PARENT ONT::scarce-val)
      (meta-data :origin cardiac :entry-date 20080508 :change-date 20090915 :comments LM-vocab)
      )
     )

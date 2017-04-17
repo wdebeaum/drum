@@ -7,7 +7,7 @@
   (W::expandable
    (SENSES
     ((meta-data :origin calo :entry-date 20041119 :change-date nil :wn ("expandable%5:00:00:expansive:00") :comments caloy2)
-     (LF-PARENT ONT::property-val)
+     (LF-PARENT ONT::expandable-val)
      (example "an expandable platform")
      )
     )

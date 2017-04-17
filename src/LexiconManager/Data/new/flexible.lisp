@@ -8,7 +8,7 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin calo :entry-date 20041119 :change-date nil :wn ("flexible%3:00:02") :comments caloy2)
-     (LF-PARENT ONT::property-val)
+     (LF-PARENT ONT::flexible-val)
      (example "a flexible arrangement")
      )
     )

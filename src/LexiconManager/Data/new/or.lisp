@@ -7,11 +7,11 @@
  :words (
   ((W::or W::so)
    (SENSES
-    ((LF-PARENT ONT::precision-val)
+    ((LF-PARENT ONT::not-precise-val)
      (LF-FORM W::approximate)
      (TEMPL binary-constraint-measure-NP-templ)
      )
-    ((LF-PARENT ONT::precision-val)
+    ((LF-PARENT ONT::not-precise-val)
      (LF-FORM W::approximate)
      (TEMPL number-operator-post-templ)
      )

@@ -2,6 +2,7 @@
 ;;;; w::serbian
 ;;;;
 
+#|
 (define-words :pos w::N 
  :words (
   (w::serbian
@@ -11,6 +12,19 @@
 	    ))
 )
 ))
+|#
+
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+   (w::serbian
+   (SENSES
+    ((meta-data :origin adjective-reorganization :entry-date 20170403 :change-date nil :comments nil :wn nil)
+     (lf-parent ont::nationality-val)
+     )
+    )
+   )
+))
+
 
 (define-words :pos W::name
  :words (

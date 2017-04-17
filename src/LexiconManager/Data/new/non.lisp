@@ -7,7 +7,7 @@
  :words (
 	  ((w::non w::zero)
 	   (senses
-	    ((lf-parent ont::number-related-property-val)
+	    ((lf-parent ont::non-zero-val)
 	     (meta-data :origin beetle :entry-date 20080221 :change-date 20090915 :comments pilot1)
 	     (example "non-zero value")
 	     )

@@ -1,4 +1,5 @@
 
+#|
 (define-words :pos w::N 
  :words (
   (w::asian
@@ -8,4 +9,15 @@
 	    ))
 )
 ))
+|#
 
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+   (w::asian
+   (SENSES
+    ((meta-data :origin adjective-reorganization :entry-date 20170413 :change-date nil :comments nil :wn nil)
+     (lf-parent ont::regional-identity-val)
+     )
+    )
+   )
+))

@@ -3,7 +3,7 @@
  :words (
 	(W::awesomely
 	  (SENSES
-    ((lf-parent ont::great-val)
+    ((lf-parent ont::acceptability-val)
 	    (TEMPL ADJ-OPERATOR-TEMPL)	    
 	    (example "his ankles are awesomely strong" "he is awesomely healthy")
 	    (SEM (f::gradability +) (f::orientation f::pos) (f::intensity f::hi))

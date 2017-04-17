@@ -8,7 +8,7 @@
    (SENSES
     ((meta-data :origin plow :entry-date 20060530 :change-date nil :comments pq0404)
      (example "on site laundry facilities")
-     (LF-PARENT ONT::location-val)
+     (LF-PARENT ONT::on-site-val)
      )
     )
    )

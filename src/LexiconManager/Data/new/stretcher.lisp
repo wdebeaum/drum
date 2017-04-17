@@ -18,7 +18,7 @@
  :words (
   ((W::STRETCHER W::BOUND)
    (SENSES
-    ((LF-PARENT ONT::BODY-PROPERTY-VAL)
+    ((LF-PARENT ONT::discrete-property-val)
      )
     )
    )

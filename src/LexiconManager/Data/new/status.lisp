@@ -6,7 +6,7 @@
  :words (
   ((W::status W::post)
    (SENSES
-    ((LF-PARENT ONT::sequence-VAL)
+    ((LF-PARENT ONT::discrete-property-VAL)
      (meta-data :origin cernl :entry-date 20101029 :change-date nil :wn ("former%3:00:00") :comments nil)
      (EXAMPLE "history of diverticulitis, status post cholecystectomy")
      )

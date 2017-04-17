@@ -82,7 +82,7 @@
  :words (
    ((W::IN W::touch)
    (SENSES
-    ((LF-PARENT ONT::social-interaction-val)
+    ((LF-PARENT ONT::in-touch-val)
      (TEMPL central-adj-templ)
      )
     )
@@ -108,7 +108,7 @@
    (SENSES
     ((EXAMPLE "he is in position")
      (meta-data :origin trips :entry-date 20070503 :change-date nil :comments nil :wn ("ready%3:00:00"))
-     (LF-PARENT ONT::AVAILABILITY-VAL)
+     (LF-PARENT ONT::AVAILABLE-VAL)
      (TEMPL CENTRAL-ADJ-XP-TEMPL)
      (SYNTAX (W::atype W::predicative-only))
      )
