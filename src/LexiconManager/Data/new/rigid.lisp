@@ -7,7 +7,7 @@
   (W::rigid
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
-    ((meta-data :origin adjective reorganization :entry-date 20170412 :change-date nil)
+    ((meta-data :origin adjective-reorganization :entry-date 20170412 :change-date nil)
      (LF-PARENT ONT::not-flexible-val)
      (example "a rigid plastic")
      )

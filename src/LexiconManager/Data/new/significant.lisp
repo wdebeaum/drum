@@ -24,7 +24,7 @@
      (LF-PARENT ONT::primary)
      (EXAMPLE "A significant change in tax laws.")
      )
-    ((meta-data :origin adjective reorganization :entry-date 20170413 :change-date nil :comments nil :wn ("significant%5:00:00:considerable:00"))
+    ((meta-data :origin adjective-reorganization :entry-date 20170413 :change-date nil :comments nil :wn ("significant%5:00:00:considerable:00"))
      (LF-PARENT ONT::substantial-val)
      (EXAMPLE "He won by a significant margin.")
      )

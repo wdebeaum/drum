@@ -31,7 +31,7 @@
 ;     (LF-PARENT ONT::large)
      (LF-PARENT ONT::n-tuple-val)
      )
-    ((meta-data :origin adjective reorganization :entry-date 20170413 :change-date nil :wn ("double%5:00:00:large:00"))
+    ((meta-data :origin adjective-reorganization :entry-date 20170413 :change-date nil :wn ("double%5:00:00:large:00"))
      (example "a room with a double bed")
 ;     (LF-PARENT ONT::large)
      (LF-PARENT ONT::predefined-size-val)

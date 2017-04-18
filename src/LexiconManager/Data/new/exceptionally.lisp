@@ -7,7 +7,7 @@
   (w::exceptionally
   (senses((TEMPL ADJ-ADV-OPERATOR-TEMPL)
      (lf-parent ont::degree-modifier-high)
-            (meta-data :origin adjective reorganization :entry-date 20170413 :change-date nil :comments nil)
+            (meta-data :origin adjective-reorganization :entry-date 20170413 :change-date nil :comments nil)
             )
            )
 )

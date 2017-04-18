@@ -1559,10 +1559,21 @@
      W::AGR ?agr))
    (ARGUMENTS
     (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar) (W::case ?lsubjcase) (W::agr ?lsubjagr)) NOROLE)
-    (LCOMP (% W::VP- (W::vform W::passive) (W::subj (% W::NP (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var 
-            ?lsubjvar) (W::case ?lsubjcase) (W::agr ?lsubjagr))) (W::roles ?croles) (W::subj-map ?subj-map 
-       ) (W::tranform ?transform) (W::class ?cclass) (W::constraint ?constraint) (W::tma ?tma) (W::subjvar 
-         ?subjvar) (W::dobjvar ?dobjvar)) NOROLE)
+    
+    (LCOMP (% W::VP- (W::vform W::passive) 
+	      (W::subj (% W::NP (W::sem ?lsubjsem) 
+			  (W::lex ?lsubjlex) 
+			  (W::var  ?lsubjvar) 
+			  (W::case ?lsubjcase) 
+			  (W::agr ?lsubjagr))) 
+	      (W::roles ?croles) 
+	      (W::subj-map ?subj-map)
+	      (W::tranform ?transform) 
+	      (W::class ?cclass) 
+	      (W::constraint ?constraint) 
+	      (W::tma ?tma) 
+	      (W::subjvar ?subjvar) 
+	      (W::dobjvar ?dobjvar)) NOROLE)
     ))
   
   (PERFECTIVE-TEMPL
