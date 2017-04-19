@@ -1,9 +1,9 @@
 # Drum.pm
 #
-# Time-stamp: <Mon Apr  3 09:28:20 CDT 2017 lgalescu>
+# Time-stamp: <Tue Apr 18 23:15:23 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  1 Jun 2016
-# $Id: Drum.pm,v 1.5 2017/04/03 14:29:05 lgalescu Exp $
+# $Id: Drum.pm,v 1.7 2017/04/19 04:22:04 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -44,6 +44,13 @@
 # - Updated following refactoring in EKB.pm.
 # 2017/03/19 v1.7.5	lgalescu
 # - Fixed version required for List::Util.
+# 2017/04/18 v1.8.0	lgalescu
+# - Added option for adding (or not) binding features.
+# - Made all options false by default (the stuff they add is easily inferrable
+#   and it makes graphs difficult to read)
+# 2017/04/18 v1.9.0	lgalescu
+# - Added a couple of rules for "complex forming" and one for removing useless
+#   PRODUCE events.
 
 #----------------------------------------------------------------
 # Usage:
@@ -51,7 +58,7 @@
 
 package EKB::Reasoner::Drum;
 
-$VERSION = '1.7.3';
+$VERSION = '1.9.0';
 
 use strict 'vars';
 use warnings;
@@ -104,8 +111,9 @@ sub _init {
 sub default_options {
   my $self = shift;
   $self->options(
-		 add_amount_changes => 1,
+		 add_amount_changes => 0,
 		 add_complex => 0,
+		 add_binding_features => 0,
 		);
 }
 
@@ -165,7 +173,7 @@ sub default_options {
 	
       # check for referrers (excluding self-reference)
       my @referrers =
-	grep {$_->getAttribute('id') ne $r_id }
+	grep { $_->getAttribute('id') ne $r_id }
 	$ekb->find_referrers($r_id);
       return 0 unless (scalar(@referrers) == 0);
 
@@ -204,6 +212,44 @@ sub default_options {
 	   $rule->name(), $c_id);
 	
       $c->parentNode->removeChild($c);
+
+      return 1;
+    }
+   },
+
+   {
+    ## delete ONT::PRODUCE events that duplicate :RES relations
+    # < E ont::produce :affected-result Y
+    # < E1 * :res|:result:affected-result Y
+    # < ! * :<any> E
+    name => "EKR:RemoveProduce",
+    constraints => ['EVENT[type[.="ONT::PRODUCE"] and not(arg1) and arg2[@role=":AFFECTED-RESULT"]]'],
+    handler => sub {
+      my ($rule, $ekb, $e) = @_;
+      my $e_id = $e->getAttribute('id');
+
+      # < E :affected-result Y
+      my $y_id = $e->findvalue('arg2/@id');
+
+      # < E1 * :res|:result:affected-result Y
+      my @referrers =
+	grep { get_child_node_regex_attr($_, qr{^arg},
+					 { 'role' => [OP_OR,
+						      ':RES',
+						      ':RESULT',
+						      ':AFFECTED-RESULT'] } ) }
+	grep { $_->getAttribute('id') ne $e_id }
+	$ekb->find_referrers($y_id, 'EVENT');
+      return 0 if (scalar(@referrers) == 0);
+
+      # < ! * :<any> E
+      $ekb->find_referrers($e_id)
+	&& return 0;
+      
+      INFO "Rule %s matches %s (ref in: %s)",
+	$rule->name(), $e_id, join(",", map {$_->getAttribute('id')} @referrers );
+	
+      $e->parentNode->removeChild($e);
 
       return 1;
     }
@@ -625,8 +671,7 @@ sub default_options {
     # < Y:cell
     # > E/location/IN-LOC:Y
     # - E/agent
-    # ?? X probably should be a PROTEIN; maybe a GENE would work too?
-    name => "EKR:FixExpressByCell",
+    name => "EKR:ExpressByCell",
     constraints => ['EVENT[type[.="ONT::EXPRESS"] and arg1[@role=":AGENT"] and arg2[@role=":AFFECTED-RESULT"]]'],
     handler => sub {
       my ($rule, $ekb, $e) = @_;
@@ -671,7 +716,7 @@ sub default_options {
     # < Y:cell
     # > E/location/IN-LOC:Y
     # WARNING: adds EKB cross-refs
-    name => "EKR:FixExpressByCellNoResult",
+    name => "EKR:ExpressByCellNoResult",
     constraints => ['EVENT[type[.="ONT::EXPRESS"] and not(arg1) and arg2[@role=":AFFECTED"]]'],
     handler => sub {
       my ($rule, $ekb, $e) = @_;
@@ -1102,19 +1147,21 @@ sub default_options {
 	my $y1_id = $y1->getAttribute('id');
 	$ekb->add_assertion($y1);
 
-	# > + X1/not-features/bound-to[Y]
-	$ekb->add_notfeature($x1, 'bound-to' => { id => $y_id,
-						  event => $e_id });
-	# > + Y/not-features/bound-to[X1] 
-	$ekb->add_notfeature($y, 'bound-to' => { id => $x1_id,
+	if ($rule->reasoner()->option('add_binding_features')) {
+	  # > + X1/not-features/bound-to[Y]
+	  $ekb->add_notfeature($x1, 'bound-to' => { id => $y_id,
+						    event => $e_id });
+	  # > + Y/not-features/bound-to[X1] 
+	  $ekb->add_notfeature($y, 'bound-to' => { id => $x1_id,
+						   event => $e_id });
+	  # > + X/features/bound-to[Y1]
+	  $ekb->add_feature($x, 'bound-to' => { id => $y1_id,
+						event => $e_id });
+	  # > + Y1/features/bound-to[X]
+	  $ekb->add_feature($y1, 'bound-to' => { id => $x_id,
 						 event => $e_id });
-	# > + X/features/bound-to[Y1]
-	$ekb->add_feature($x, 'bound-to' => { id => $y1_id,
-					      event => $e_id });
-	# > + Y1/features/bound-to[X]
-	$ekb->add_feature($y1, 'bound-to' => { id => $x_id,
-					       event => $e_id });
-
+	}
+	
 	# > + Z:MACROMOLECULAR-COMPLEX(components:(X,Y1))
 	my $z_name =
 	  ($x_name && $y_name)
@@ -1288,19 +1335,21 @@ sub default_options {
 	my $y1_id = $y1->getAttribute('id');
 	$ekb->add_assertion($y1);
 
-	# > + X1/not-features/bound-to[Y]
-	$ekb->add_notfeature($x1, 'bound-to' => { id => $y_id,
-						  event => $e_id });
-	# > + Y/not-features/bound-to[X1] 
-	$ekb->add_notfeature($y, 'bound-to' => { id => $x1_id,
+	if ($rule->reasoner()->option('add_binding_features')) {
+	  # > + X1/not-features/bound-to[Y]
+	  $ekb->add_notfeature($x1, 'bound-to' => { id => $y_id,
+						    event => $e_id });
+	  # > + Y/not-features/bound-to[X1] 
+	  $ekb->add_notfeature($y, 'bound-to' => { id => $x1_id,
+						   event => $e_id });
+	  # > + X/features/bound-to[Y1]
+	  $ekb->add_feature($x, 'bound-to' => { id => $y1_id,
+						event => $e_id });
+	  # > + Y1/features/bound-to[X]
+	  $ekb->add_feature($y1, 'bound-to' => { id => $x_id,
 						 event => $e_id });
-	# > + X/features/bound-to[Y1]
-	$ekb->add_feature($x, 'bound-to' => { id => $y1_id,
-					      event => $e_id });
-	# > + Y1/features/bound-to[X]
-	$ekb->add_feature($y1, 'bound-to' => { id => $x_id,
-					       event => $e_id });
-
+	}
+	
 	# > + Z:MACROMOLECULAR-COMPLEX(components:(X,Y1))
 	my $z_name =
 	  ($x_name && $y_name)
@@ -1631,7 +1680,7 @@ sub default_options {
 
    {
     ## eg, X1 and X2 associate; association between X1 and X2
-    ## => X1 and X2 bind to form X1/X2 complex
+    ## => X1 and X2 bind into X1/X2 complex
     # < E:BIND(affected:T, !agent, !site)
     # < ! E/mods/mod/type[ONT::MANNER-UNDO]
     # < T:TERM[aggregate[AND(X1,X2,...)]]
@@ -1782,7 +1831,7 @@ sub default_options {
    
    {
     ## X binds to Y, X is bound to Y
-    ## => X not bound to Y and Y not bound to X bind to form an X/Y complex
+    ## => X binds Y into X/Y complex
     # < E:bind(r1:X,r2:Y,!negation)
     # < ! E/mods/mod/type[ONT::MANNER-UNDO]
     # < r1=AGENT && r2=AFFECTED || r1=AFFECTED && r2=AFFECTED1
@@ -1880,12 +1929,14 @@ sub default_options {
 			       refs => [ $e_id ],
 			       rule => $rule->name,
 			     );
-	# > ~ X[not-features/bound-to:Y]
-	$ekb->add_notfeature($x, 'bound-to' => { id => $y_id,
-						 event => $e_id });
-	# > ~ Y[not-features/bound-to:X] 
-	$ekb->add_notfeature($y, 'bound-to' => { id => $x_id,
-						 event => $e_id });
+	if ($rule->reasoner()->option('add_binding_features')) {
+	  # > ~ X[not-features/bound-to:Y]
+	  $ekb->add_notfeature($x, 'bound-to' => { id => $y_id,
+						   event => $e_id });
+	  # > ~ Y[not-features/bound-to:X] 
+	  $ekb->add_notfeature($y, 'bound-to' => { id => $x_id,
+						   event => $e_id });
+	}
       } else {
 	
       # add: X1=X
@@ -1902,19 +1953,21 @@ sub default_options {
       #remove_elements($y1, 'features/inevent/event[@id="'.$e_id.'"]');
       $ekb->add_assertion($y1);
 
-      # > + X1=X[bound-to:Y1]
-      $ekb->add_feature($x1, 'bound-to' => { id => $y1_id,
-					     event => $e_id });
-      # > + Y1/features/bound-to[id=X1]
-      $ekb->add_feature($y1, 'bound-to' => { id => $x1_id,
-					     event => $e_id });
-      # > ~ X[not-features/bound-to:Y]
-      $ekb->add_notfeature($x, 'bound-to' => { id => $y_id,
+      if ($rule->reasoner()->option('add_binding_features')) {
+	# > + X1=X[bound-to:Y1]
+	$ekb->add_feature($x1, 'bound-to' => { id => $y1_id,
 					       event => $e_id });
-      # > ~ Y[not-features/bound-to:X] 
-      $ekb->add_notfeature($y, 'bound-to' => { id => $x_id,
+	# > + Y1/features/bound-to[id=X1]
+	$ekb->add_feature($y1, 'bound-to' => { id => $x1_id,
 					       event => $e_id });
-
+	# > ~ X[not-features/bound-to:Y]
+	$ekb->add_notfeature($x, 'bound-to' => { id => $y_id,
+						 event => $e_id });
+	# > ~ Y[not-features/bound-to:X] 
+	$ekb->add_notfeature($y, 'bound-to' => { id => $x_id,
+						 event => $e_id });
+      }
+      
       # > + Z:MACROMOLECULAR-COMPLEX(components:(X1,Y1))
       my $z_name =
 	($x_name && $y_name)
@@ -2279,7 +2332,144 @@ sub default_options {
     }
    },
 
-   ## increase/decrease in ptm results in increase/decrease of the modified protein
+   ## TODO: increase/decrease in ptm results in increase/decrease of the modified protein
+
+   {## X1 and X2 form a complex
+    ## =>
+    ## X1 and X2 bind into X1/X2 complex
+    # < E ont::produce :agent X :affected-result Y
+    # < X ont::molecular-part :aggregate (X1 X2 ...)
+    # < Y ont::macromolecular-complex
+    # > E ont::bind :agent X :result Y
+    # > T X1' = X1, ...
+    # > Y ont::macromolecular-complex :components (X1' X2' ...)
+    name => "EKR:ComplexFormation1",
+    constraints => ['EVENT[type[.="ONT::PRODUCE"] and not(negation) and arg1[@role=":AGENT"] and arg2[@role=":AFFECTED-RESULT"]]'],
+    handler => sub {
+      my ($rule, $ekb, $e) = @_;
+      my $e_id = $e->getAttribute('id');
+
+      # < X ont::molecular-part 
+      my $x_id = $e->findvalue('arg1/@id');
+      my $x = $ekb->get_assertion($x_id, "TERM")
+	or return 0;
+      my $x_type = get_slot_value($x, 'type');
+      $ont_bioents->is_a($x_type, 'ONT::MOLECULAR-PART')
+	or return 0;
+      # < X :aggregate (X1 X2 ...)
+      match_node($x, { SX => { 'aggregate'
+			       => { AX => { 'operator' => "AND" } }
+			      } })
+	or return 0;
+      
+      # < Y ont::macromolecular-complex
+      my $y_id = $e->findvalue('arg2/@id');
+      my $y = $ekb->get_assertion($y_id, "TERM")
+	or return 0;
+      my $y_type = get_slot_value($y, 'type');
+      $ont_bioents->is_a($y_type, 'ONT::MACROMOLECULAR-COMPLEX')
+	or return 0;
+      # < ! E :result 
+      get_child_node_regex_attr($e, qr{^arg}, { role => ":RESULT" } )
+	and return 0;
+
+      INFO "Rule %s matches event %s (agent:%s, affected-result:%s)", 
+	$rule->name, $e_id, $x_id, $y_id;
+
+      # > E ont::bind :agent X :result Y
+      my $arg2 = get_child_node($e, 'arg2');
+      set_attribute($arg2, 'role' => ":RESULT");
+      set_slot_value($e, 'type' => "ONT::BIND");
+      append_to_attribute($e, 'rule', $rule->name);
+      # > Y ont::macromolecular-complex :components (M1 M2 ...)
+      my @comp_ids =
+	map { $_->getAttribute('id') }
+	$x->findnodes('aggregate/member');
+      # > T X1' = X1, ...
+      my @comps;
+      foreach my $x1_id (@comp_ids) {
+	my $x1 = $ekb->get_assertion($x1_id, "TERM")
+	  or next;
+	my $cx1 = $ekb->clone_assertion($x1, {rule => $rule->name});
+	my $cx1_id = $cx1->getAttribute('id');
+	$ekb->add_assertion($cx1);
+	push @comps, make_node("component", { id => $cx1_id });
+      }
+      if (@comps) {
+	$y->appendChild(make_node("components", @comps));
+      }
+
+      return 1;
+      }
+   },
+
+   {## X1 and X2 bind to form a complex
+    ## =>
+    ## X1 and X2 bind into X1/X2 complex
+    # < E ont::bind :agent X :res Y
+    # < X ont::molecular-part :aggregate (X1 X2 ...)
+    # < Y ont::macromolecular-complex
+    # > E ont::bind :agent X :result Y
+    # > T X1' = X1, ...
+    # > Y ont::macromolecular-complex :components (X1' X2' ...)
+    name => "EKR:ComplexFormation2",
+    constraints => ['EVENT[type[.="ONT::BIND"] and not(negation) and not(mods/mod/type[.="ONT::MANNER-UNDO"]) and arg1[@role=":AGENT"] and arg2[@role=":RES"]]'],
+    handler => sub {
+      my ($rule, $ekb, $e) = @_;
+      my $e_id = $e->getAttribute('id');
+
+      # < X ont::molecular-part 
+      my $x_id = $e->findvalue('arg1/@id');
+      my $x = $ekb->get_assertion($x_id, "TERM")
+	or return 0;
+      my $x_type = get_slot_value($x, 'type');
+      $ont_bioents->is_a($x_type, 'ONT::MOLECULAR-PART')
+	or return 0;
+      # < X :aggregate (X1 X2 ...)
+      match_node($x, { SX => { 'aggregate'
+			       => { AX => { 'operator' => "AND" } }
+			      } })
+	or return 0;
+      
+      # < Y ont::macromolecular-complex
+      my $y_id = $e->findvalue('arg2/@id');
+      my $y = $ekb->get_assertion($y_id, "TERM")
+	or return 0;
+      my $y_type = get_slot_value($y, 'type');
+      $ont_bioents->is_a($y_type, 'ONT::MACROMOLECULAR-COMPLEX')
+	or return 0;
+      # < ! E :result 
+      get_child_node_regex_attr($e, qr{^arg}, { role => ":RESULT" } )
+	and return 0;
+
+      INFO "Rule %s matches event %s (agent:%s, affected-result:%s)", 
+	$rule->name, $e_id, $x_id, $y_id;
+
+      # > E ont::bind :agent X :result Y
+      my $arg2 = get_child_node($e, 'arg2');
+      set_attribute($arg2, 'role' => ":RESULT");
+      append_to_attribute($e, 'rule', $rule->name);
+      # > Y ont::macromolecular-complex :components (M1 M2 ...)
+      my @comp_ids =
+	map { $_->getAttribute('id') }
+	$x->findnodes('aggregate/member');
+      # > T X1' = X1, ...
+      my @comps;
+      foreach my $x1_id (@comp_ids) {
+	my $x1 = $ekb->get_assertion($x1_id, "TERM")
+	  or next;
+	my $cx1 = $ekb->clone_assertion($x1, {rule => $rule->name});
+	my $cx1_id = $cx1->getAttribute('id');
+	$ekb->add_assertion($cx1);
+	push @comps, make_node("component", { id => $cx1_id });
+      }
+      if (@comps) {
+	$y->appendChild(make_node("components", @comps));
+      }
+
+      return 1;
+      }
+   },
    
   );
 

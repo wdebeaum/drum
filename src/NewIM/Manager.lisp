@@ -374,7 +374,7 @@
 	   'ONT::A
 	 'ONT::THE)))
     ((LAMBDA ONT::A) 'ONT::a)
-    ((ONT::TERM ONT::EVENT ONT::EPI ONT::CC ONT::MODALITY) spec)
+    ((ONT::TERM ONT::EVENT ONT::EPI ONT::CC ONT::MODALITY) (car spec))
     ((ONT::F) 'ONT::RELN)
     (ONT::KIND 'ONT::KIND)
     (otherwise 'ONT::a)))  ; this includes ONT::TERM (2017/04/17: now ONT::TERM is passed through as itself)

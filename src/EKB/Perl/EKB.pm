@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Mon Apr  3 14:32:13 CDT 2017 lgalescu>
+# Time-stamp: <Tue Apr 18 17:39:28 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.20 2017/04/03 19:33:13 lgalescu Exp $
+# $Id: EKB.pm,v 1.22 2017/04/19 04:21:18 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -65,7 +65,7 @@
 # - Added toString method.
 # 2017/03/11 v1.7.0	lgalescu
 # - Improved pod.
-# - Reimplemented add_X_r() methods.
+# - Reimplemented &add_X_r methods.
 # 2017/03/19 v1.8.0	lgalescu
 # - Changed some utility functions to methods.
 # - Improved normalization.
@@ -79,7 +79,10 @@
 # 2017/04/01 v1.11.0	lgalescu
 # - Added filter() method; updated crop().
 # 2017/04/01 v1.11.1	lgalescu
-# - Remove XML declaration from result of toString().
+# - Remove XML declaration from result of &toString.
+# 2017/04/18 v1.11.2	lgalescu
+# - Fixed &normalize so it works on EKBs that are not the result of reading
+#   (no sentences).
 
 # TODO:
 # - maybe split off XML Node extensions into a separate package (EKB::EKBNode?)
@@ -87,7 +90,7 @@
 
 package EKB;
 
-$VERSION = '1.11.1';
+$VERSION = '1.11.2';
 
 =head1 NAME
 
@@ -229,6 +232,7 @@ our @EXPORT = qw(
 		  make_arg
 
 		  set_attribute
+		  append_to_attribute
 
 		  check_protein_equivs
                );
@@ -486,17 +490,19 @@ sub normalize {
   
   # fix sentence ids
   my @sentences = $self->get_sentences();
-  my $first_uid = $sentences[0]->getAttribute('id');
   my @assertions = $self->get_assertions();
-  if ($first_uid != 1) {
-    foreach my $s (@sentences) {
-      my $uid = $s->getAttribute('id');
-      set_attribute($s, 'id', 1 + $uid - $first_uid); 
-    }
-    # fix uttnums (sentence id refs)
-    foreach my $a (@assertions) {
-      my $uttnum = $a->getAttribute('uttnum');
-      set_attribute($a, 'uttnum', 1 + $uttnum - $first_uid);
+  if (@sentences) {
+    my $first_uid = $sentences[0]->getAttribute('id');
+    if ($first_uid != 1) {
+      foreach my $s (@sentences) {
+	my $uid = $s->getAttribute('id');
+	set_attribute($s, 'id', 1 + $uid - $first_uid); 
+      }
+      # fix uttnums (sentence id refs)
+      foreach my $a (@assertions) {
+	my $uttnum = $a->getAttribute('uttnum');
+	set_attribute($a, 'uttnum', 1 + $uttnum - $first_uid);
+      }
     }
   }
   # cleanup assertions

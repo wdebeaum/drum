@@ -76,9 +76,9 @@
 	  
 	  (dolist (this-lf lflist) 
 	    (when (not (member (list pos this-lf) senselist :test #'equal)) ;; skip duplicate senses
-	      ;; check for hidden names: tagged as N, not penn taged as NNS and starts with a capital  (not sure what problem this solved - isit obsolete?)
+	    #||  ;; check for hidden names: tagged as N, not penn taged as NNS and starts with a capital  (not sure what problem this solved - isit obsolete?)
 	      (if (and (eq pos 'w::n) (not (member 'w::nns penntag))
-		       (is-instance this-wf-entry)) (setq pos 'w::name))
+		       (is-instance this-wf-entry)) (setq pos 'w::name))||#
 	      (let* ((score (get-wf-score this-wf-entry))
 		     (feats (get-wf-feats this-wf-entry))
 		     (wf-word (get-wf-word this-wf-entry))

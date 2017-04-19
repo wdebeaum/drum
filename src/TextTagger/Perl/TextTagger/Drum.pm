@@ -538,8 +538,9 @@ sub tag_drum_terms {
     my $proper = ($tag->{lex} =~ /[A-Z0-9]/);
     my $common = (
       (not $proper) or
-      # just initial-capitalized
-      $tag->{lex} =~ /^[A-Za-z](?:[a-z\s]|$dash_re)+$/
+      # just sentence-initial-capitalized
+      ($tag->{lex} =~ /^[A-Za-z](?:[a-z\s]|$dash_re)+$/ and
+       $sentence_starts{$tag->{start}})
     );
     # encode as Penn POS
     $tag->{'penn-pos'} = [

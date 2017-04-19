@@ -1,6 +1,6 @@
 # Reasoner.pm
 #
-# Time-stamp: <Mon Feb  6 12:48:10 CST 2017 lgalescu>
+# Time-stamp: <Tue Apr 18 17:29:19 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 22 May 2016
 #
@@ -222,7 +222,8 @@ sub info_rule_counts {
     my $count = 0;
     map { $count += $self->{log}{$r_name}{$_} }
       (keys %{ $self->{log}{$r_name} });
-    INFO("Rule %s applied %d times.", $r_name, $count);
+    INFO("Rule %s applied %d times.", $r_name, $count)
+      if $count;
   }
 }
 
