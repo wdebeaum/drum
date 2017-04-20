@@ -66,7 +66,11 @@ my @data = ( "ONT::PTM" => 1,
 	     "ONT::ACTIVITY" => 1,
 	     "ONT::NO-CHANGE" => 1,
 	     "ONT::TRANSFORM" => 1,
-	     "ONT::INTERACT" => 1
+	     "ONT::INTERACT" => 1,
+	     # EPI values
+	     "ONT::LEARN" => 1,
+	     # CC values
+	     "ONT::DEPENDENT" => 1
 	   );
 
 sub new {

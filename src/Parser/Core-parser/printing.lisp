@@ -4,7 +4,7 @@
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
 
-;;; Time-stamp: <Sun Mar 19 09:05:47 EDT 2017 jallen>
+;;; Time-stamp: <Wed Apr 19 10:39:18 EDT 2017 jallen>
 
 (in-package "PARSER")
 
@@ -1216,7 +1216,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	  (cons '&
 		(list (cons v (third x))))))))
 
-(defun clean-out-vars (expr)
+#||(defun clean-out-vars (expr)
   (cond
    ((isvar expr)
     (let* ((vnam (second expr))
@@ -1243,6 +1243,32 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	  val)))
    ((consp expr)
     (mapcar #'clean-out-vars expr))
+   (t expr)))||#
+
+(defun clean-out-vars (expr)
+  (cond
+   ((isvar expr)
+    (let* ((vnam (second expr))
+       (val (third expr))
+       (negated (fourth expr));;(eql (char (symbol-name vname) 0) #\!))
+       )
+      (if (listp val)
+      (let ((reduced-val (remove-if #'null val)))
+        (if (eql (list-length reduced-val) 0)
+        nil
+        (if (eql (list-length reduced-val) 1)
+            (car reduced-val)
+	    (if (eq (car reduced-val) '$)
+            (mapcar #'clean-out-vars reduced-val)
+            (car val)))))
+      val)))
+   ((consp expr)
+    (if (eq (car expr) 'w::sem)
+	(if (consp (cadr expr))
+	    (list 'w::sem (third (cadr expr)))
+	    expr)  ; when we have (sem -)
+	(mapcar #'clean-out-vars expr))
+    )
    (t expr)))
 
 (defun build-spec (status)

@@ -43,10 +43,12 @@ use AKRL::AKRLList;
 use DRUM::DRUMTerm;
 use DRUM::DRUMAASite;
 use DRUM::DRUMMutation;
+use Ont::BioEntities;
+use Ont::BioEvents;
 use StringParser;
 use util::Log;
 use Data::Dumper;
-local $util::Log::Caller_Info = 0;
+local $util::Log::Caller_Info = 1;
 
 use strict;
 use warnings FATAL => 'all';
@@ -56,6 +58,9 @@ my $AKRL_ERROR_MISSING_TOKEN = -11;
 my $AKRL_ERROR_MISSING_INSTANCE_OF = -12;
 my $AKRL_ERROR_INVALID_KEY = -13;
 my $AKRL_ERROR_MISSING_VALUE = -14;
+
+my $ont_events = Ont::BioEvents->new();
+my $ont_bioents = Ont::BioEntities->new();
 
 # Helper Methods
 
@@ -68,13 +73,36 @@ removing all '|' characters.
 
 sub normalizeId {
     my ($id) = @_;
-    my $normalizedId = $id;
-    if (defined($normalizedId))
+    my @parsed = split(/:+/, $id);
+
+    my $normalizedId = "";
+
+    if (scalar(@parsed) == 2)
     {
-        $normalizedId =~ s/::/:/g;
-        $normalizedId =~ s/\|//g;
+        my $part2 = $parsed[1];
+        $part2 =~ s/\|//g;
+        $normalizedId = $parsed[0] . ":" . $part2;
+        return $normalizedId;
     }
-    return $normalizedId;
+    @parsed = split(/_/, $id);
+    if (scalar(@parsed) == 2)
+    {
+        my $part2 = $parsed[1];
+        $part2 =~ s/\|//g;
+        $normalizedId = $parsed[0] . ":" . $part2;
+        return $normalizedId;
+    }
+
+    WARN("Unrecognized dbid format: $id");
+    return $id;
+
+#    my $normalizedId = $id;
+#    if (defined($normalizedId))
+#    {
+#        $normalizedId =~ s/::/:/g;
+#        $normalizedId =~ s/\|//g;
+#    }
+#    return $normalizedId;
 }
 
 sub uniq {
@@ -149,6 +177,228 @@ sub add_feature {
     return undef;
 }
 
+sub trimLeadingAndTrailingQuotes
+{
+    my ($string) = @_;
+    if (defined($string))
+    {
+        $string =~ s/^\s+|\s+$//g;
+        $string =~ s/^"|"$//g;
+    }
+    return $string;
+}
+
+sub addMutationToFromChildNode
+{
+    my ($mutationNode, $type, $name, $code) = @_;
+    if (!defined($mutationNode) or !defined($type))
+    {
+        return;
+    }
+
+    if (!defined ($name) and !defined($code))
+    {
+        return;
+    }
+    my $aaType = EKB::make_node($type);
+    my $aa = EKB::make_node("aa");
+    if (defined ($name))
+    {
+        EKB::add_child($aa, EKB::make_slot_node("name", trimLeadingAndTrailingQuotes($name)));
+    }
+    if (defined ($code))
+    {
+        EKB::add_child($aa, EKB::make_slot_node("code", trimLeadingAndTrailingQuotes($code)));
+    }
+    EKB::add_child($aaType, $aa);
+    EKB::add_child($mutationNode, $aaType);
+}
+
+sub processDRUMMutationInfo
+{
+    my ($node, $ekb, $drumMutations) = @_;
+    if (!defined($drumMutations) || scalar($drumMutations) <= 0)
+    {
+        return 0;
+    }
+    if (!defined ($ekb))
+    {
+        return 1;
+    }
+    if (!defined ($node))
+    {
+        return 2;
+    }
+
+    # process each DRUM Mutation Info
+    foreach my $mutation (@{$drumMutations})
+    {
+        my $mutationNode = EKB::make_node("mutation");
+        if (defined($mutation->getType()))
+        {
+            EKB::add_child($mutationNode, EKB::make_slot_node("type", $mutation->getType()));
+        }
+        if (defined($mutation->getPosition))
+        {
+            EKB::add_child($mutationNode, EKB::make_slot_node("pos", $mutation->getPosition()));
+        }
+        addMutationToFromChildNode ($mutationNode, "aa-from", $mutation->getFromName(), $mutation->getFromCode());
+        addMutationToFromChildNode ($mutationNode, "aa-to", $mutation->getToName(), $mutation->getToCode());
+        if (EKB::get_children_by_name_regex($mutationNode, "") > 0)
+        {
+            EKB::add_child($node, $mutationNode);
+        }
+    }
+
+    return 0;
+}
+
+sub processDRUMAASites
+{
+    my ($node, $ekb, $drumAASites) = @_;
+    if (!defined($drumAASites) || scalar($drumAASites) <= 0)
+    {
+        return 0;
+    }
+    if (!defined ($ekb))
+    {
+        return 1;
+    }
+    if (!defined ($node))
+    {
+        return 2;
+    }
+
+    my $tmpString = "";
+
+    # process any DRUM AA-Sites
+    foreach my $aasite (@{$drumAASites})
+    {
+        my $aasiteNode = EKB::make_node("site");
+        $tmpString = $aasite->getName();
+        if (defined($tmpString))
+        {
+            EKB::add_child($aasiteNode, EKB::make_slot_node("name", trimLeadingAndTrailingQuotes($tmpString)));
+        }
+        $tmpString = $aasite->getCode();
+        if (defined($tmpString))
+        {
+            EKB::add_child($aasiteNode, EKB::make_slot_node("code", trimLeadingAndTrailingQuotes($tmpString)));
+        }
+        $tmpString = $aasite->getPosition();
+        if (defined($tmpString))
+        {
+            EKB::add_child($aasiteNode, EKB::make_slot_node("pos", $tmpString));
+        }
+        my $features = EKB::make_node("features");
+        EKB::add_child($features, $aasiteNode);
+        EKB::add_child($node, $features);
+    }
+
+    return 0;
+}
+
+sub processDRUMTerms
+{
+    my ($node, $ekb, $drumTerms) = @_;
+
+    if (!defined($drumTerms) || scalar(@$drumTerms) <= 0)
+    {
+        return 0;
+    }
+
+    my @dbid = ();
+    my $drumTermsNode = undef;
+    my $tmpString = undef;
+
+    $drumTermsNode = EKB::make_node("drum-terms");
+    foreach my $drumTerm (@{$drumTerms})
+    {
+        # append id to the dbid string
+        my $id = $drumTerm->getID;
+        if (defined ($id))
+        {
+            #normalize the id
+            $id = normalizeId($id);
+            push (@dbid, $id);
+        }
+
+        # find the matched-name from the list of matches
+        my $matches = $drumTerm->getMatches();
+        my $matchedName = undef;
+        if (defined ($matches) && ref($matches) eq "ARRAY" && $matches > 0)
+        {
+            foreach my $match (@$matches)
+            {
+                if ($match->getScore() == $drumTerm->getScore())
+                {
+                    $matchedName = $match->getMatched();
+                    if (defined ($matchedName))
+                    {
+                        $matchedName =~ s/\"//g;
+                    }
+                    last;
+                }
+            }
+        }
+        my $name = $drumTerm->getName();
+        if (defined($name))
+        {
+            $name =~ s/\"//g;
+        }
+
+        my $drumTermNode = make_node("drum-term",
+            {  dbid => $id,
+                'match-score' => $drumTerm->getScore(),
+                'matched-name' => $matchedName,
+                name => $name
+            });
+        # Add the Ont Types
+        my $ontTypes = $drumTerm->getOntTypes();
+        if (defined ($ontTypes) && ref($ontTypes) eq "ARRAY" && $ontTypes > 0)
+        {
+            my $types = EKB::make_node("types");
+            foreach my $ontType (@$ontTypes)
+            {
+                EKB::add_child($types, EKB::make_slot_node("type", $ontType));
+            }
+            EKB::add_child($drumTermNode, $types)
+        }
+        # Add any DBXRefs
+        my $dbxRefs = $drumTerm->getDBXRefs();
+        if (defined ($dbxRefs) && ref($dbxRefs) eq "ARRAY" && $dbxRefs > 0)
+        {
+            my $xrefs = EKB::make_node("xrefs");
+            foreach my $xref (@$dbxRefs)
+            {
+                if (defined($xref))
+                {
+                    $xref = normalizeId($xref);
+                    #normalize the id before appending to dbid array
+                    push (@dbid, $xref);
+                    EKB::add_child($xrefs, EKB::make_node("xref", {dbid => $xref}));
+                }
+            }
+            EKB::add_child($drumTermNode, $xrefs)
+        }
+        # Add any Species
+        $tmpString = $drumTerm->getSpecies();
+        if (defined($tmpString))
+        {
+            EKB::add_child($drumTermNode, EKB::make_slot_node("species", trimLeadingAndTrailingQuotes($tmpString)));
+        }
+        EKB::add_child($drumTermsNode, $drumTermNode);
+    }
+    @dbid = uniq(@dbid);
+
+    if (scalar(@dbid) > 0)
+    {
+        $ekb->modify_assertion($node, $drumTermsNode);
+    }
+
+    return \@dbid;
+}
+
 =head2 createEKBEvent($ekb, $akrl, $akrlList)
 
 Returns the given $arkl object as an EKB 'EVENT' node.
@@ -189,17 +439,27 @@ sub createEKBEvent
         return 2;
     }
 
+    if (!$ont_events->has($instanceOf))
+    {
+        WARN("Ignoring event with type: $instanceOf");
+        return 3;
+    }
+
     # create a new assertion based on the instanceOf.
     my $eventElementName = "EVENT";
     if ($instanceOf eq "ONT::LEARN")
     {
         $eventElementName = "EPI";
     }
+    elsif ($instanceOf eq "ONT::DEPENDENT")
+    {
+        $eventElementName = "CC";
+    }
 
     $event = $ekb->make_assertion ($eventElementName, {
-        id   => $tmpString,
-        rule => $akrl->getValuesAsStringForKey (":RULE")
-    });
+            id   => $tmpString,
+            rule => $akrl->getValuesAsStringForKey (":RULE")
+        });
 
     $ekb->add_assertion($event);
 
@@ -218,6 +478,15 @@ sub createEKBEvent
     # Add the Affected
     add_arg(":AFFECTED", $akrl->getValueForKey (":AFFECTED"), $ekb, $event, $akrlList);
 
+    # Add the Factor
+    add_arg(":FACTOR", $akrl->getValueForKey (":FACTOR"), $ekb, $event, $akrlList);
+
+    # Add the Outcome
+    add_arg(":OUTCOME", $akrl->getValueForKey (":OUTCOME"), $ekb, $event, $akrlList);
+
+    # Add the Affected-result
+    add_arg(":AFFECTED-RESULT", $akrl->getValueForKey (":AFFECTED-RESULT"), $ekb, $event, $akrlList);
+
     # Add the Formal
     add_arg(":FORMAL", $akrl->getValueForKey (":FORMAL"), $ekb, $event, $akrlList);
 
@@ -226,20 +495,20 @@ sub createEKBEvent
 
     # Check for Cell Location
     my $locNode = add_child_with_id("location", $akrl->getValueForKey (":LOC"), $ekb, $event, $akrlList);
-#    if (defined($locNode))
-#    {
-#        $tmpString = $akrl->getValueForKey (":LOCMOD");
-#        if (defined ($tmpString))
-#        {
-#            if (ref ($tmpString) eq "ARRAY")
-#            {
-#                shift @$tmpString;
-#                $tmpString = shift @$tmpString;
-#            }
-#
-#            EKB::set_attribute($child, "mod", removePrefix($tmpString, "ONT::"));
-#        }
-#    }
+    #    if (defined($locNode))
+    #    {
+    #        $tmpString = $akrl->getValueForKey (":LOCMOD");
+    #        if (defined ($tmpString))
+    #        {
+    #            if (ref ($tmpString) eq "ARRAY")
+    #            {
+    #                shift @$tmpString;
+    #                $tmpString = shift @$tmpString;
+    #            }
+    #
+    #            EKB::set_attribute($child, "mod", removePrefix($tmpString, "ONT::"));
+    #        }
+    #    }
 
     # Check for Modifiers (:MODN)
     $tmpString = $akrl->getValuesAsArrayForKey(":MODN");
@@ -288,128 +557,16 @@ sub createEKBEvent
 
     # Check for To Location
     my $toLoc = add_child_with_id ("to-location", $akrl->getValueForKey (":TO"), $ekb, $event, $akrlList);
-    if (defined($toLoc))
-    {
-        # Add the Result
-        add_arg(":RES", $akrl->getValueForKey (":TO"), $ekb, $event, $akrlList);
-    }
+    #    if (defined($toLoc))
+    #    {
+    #        # Add the Result
+    #        add_arg(":RES", $akrl->getValueForKey (":TO"), $ekb, $event, $akrlList);
+    #    }
 
     # process the DRUM Terms
-    my $drumTerms = parseDRUMTerms($akrl->getValueForKey(":drum"));
-    my $drumTermsNode = undef;
-    if (defined($drumTerms) && scalar(@$drumTerms) > 0)
-    {
-	$drumTermsNode = EKB::make_node("drum-terms");
-        foreach my $drumTerm (@{$drumTerms})
-        {
-            # append id to the dbid string
-            my $id = $drumTerm->getID;
+    processDRUMTerms($event, $ekb, parseDRUMTerms($akrl->getValueForKey(":drum")));
 
-            # find the matched-name from the list of matches
-            my $matches = $drumTerm->getMatches();
-            my $matchedName = undef;
-            if (defined ($matches) && ref($matches) eq "ARRAY" && $matches > 0)
-            {
-                foreach my $match (@$matches)
-                {
-                    if ($match->getScore() == $drumTerm->getScore())
-                    {
-                        $matchedName = $match->getMatched();
-                        if (defined ($matchedName))
-                        {
-                            $matchedName =~ s/\"//g;
-                        }
-                        last;
-                    }
-                }
-            }
-            my $name = $drumTerm->getName();
-            if (defined($name))
-            {
-                $name =~ s/\"//g;
-            }
-
-            my $drumTermNode = make_node("drum-term",
-					 {  dbid => $id,
-					    'match-score' => $drumTerm->getScore(),
-					    'matched-name' => $matchedName,
-					    name => $name
-					 });
-            # Add the Ont Types
-            my $ontTypes = $drumTerm->getOntTypes();
-            if (defined ($ontTypes) && ref($ontTypes) eq "ARRAY" && $ontTypes > 0)
-            {
-                my $types = EKB::make_node("types");
-                foreach my $ontType (@$ontTypes)
-                {
-                    EKB::add_child($types, EKB::make_slot_node("type", $ontType));
-                }
-                EKB::add_child($drumTermNode, $types)
-            }
-            # Add any DBXRefs
-            my $dbxRefs = $drumTerm->getDBXRefs();
-            if (defined ($dbxRefs) && ref($dbxRefs) eq "ARRAY" && $dbxRefs > 0)
-            {
-                my $xrefs = EKB::make_node("xrefs");
-                foreach my $xref (@$dbxRefs)
-                {
-                    if (defined($xref))
-                    {
-                        $xref = normalizeId($xref);
-                        EKB::add_child($xrefs, EKB::make_slot_node("xref", $xref));
-                    }
-                }
-                EKB::add_child($drumTermNode, $xrefs)
-            }
-            # Add any Species
-            $tmpString = $drumTerm->getSpecies();
-            if (defined($tmpString))
-            {
-                EKB::add_child($drumTermNode, EKB::make_slot_node("species", trimLeadingAndTrailingQuotes($tmpString)));
-            }
-            EKB::add_child($drumTermsNode, $drumTermNode);
-	}
-	$ekb->modify_assertion($event, $drumTermsNode);
-    }
-    
     return $event;
-}
-
-sub trimLeadingAndTrailingQuotes
-{
-    my ($string) = @_;
-    if (defined($string))
-    {
-        $string =~ s/^\s+|\s+$//g;
-        $string =~ s/^"|"$//g;
-    }
-    return $string;
-}
-
-sub addMutationToFromChildNode
-{
-    my ($mutationNode, $type, $name, $code) = @_;
-    if (!defined($mutationNode) or !defined($type))
-    {
-        return;
-    }
-
-    if (!defined ($name) and !defined($code))
-    {
-        return;
-    }
-    my $aaType = EKB::make_node($type);
-    my $aa = EKB::make_node("aa");
-    if (defined ($name))
-    {
-        EKB::add_child($aa, EKB::make_slot_node("name", trimLeadingAndTrailingQuotes($name)));
-    }
-    if (defined ($code))
-    {
-        EKB::add_child($aa, EKB::make_slot_node("code", trimLeadingAndTrailingQuotes($code)));
-    }
-    EKB::add_child($aaType, $aa);
-    EKB::add_child($mutationNode, $aaType);
 }
 
 =head2 createEKBTerm($ekb, $akrl, $akrlList)
@@ -447,6 +604,19 @@ sub createEKBTerm
     {
         INFO (" - An AKRL Term with the id: $tmpString, has already been processed.");
         return $term;
+    }
+
+    # Add the type
+    my $instanceOf = $akrl->getValueForKey(":ELEMENT-TYPE");
+    if (!defined($instanceOf))
+    {
+        $instanceOf = $akrl->getInstanceOf();
+    }
+
+    if (!$ont_bioents->has($instanceOf))
+    {
+        WARN("Ignoring term with type: $instanceOf");
+        return 3;
     }
 
     # figure out if this is an Aggregate, Complex, or Regular Term
@@ -499,12 +669,7 @@ sub createEKBTerm
     $ekb->add_assertion($term);
 
     # Add the type
-    $tmpString = $akrl->getValueForKey(":ELEMENT-TYPE");
-    if (!defined($tmpString))
-    {
-        $tmpString = $akrl->getInstanceOf();
-    }
-    modify_assertion("type", $tmpString, $ekb, $term);
+    modify_assertion("type", $instanceOf, $ekb, $term);
 
     # Add the name
     modify_assertion("name", removePrefix($akrl->getValueForKey(":NAME"), "W::"), $ekb, $term);
@@ -524,148 +689,16 @@ sub createEKBTerm
     add_feature("mutation", $akrl->getValueForKey(":MUTATION"), $ekb, $term, $akrlList);
 
     # process any DRUM Mutation Info
-    my $drumMutations = parseDRUMMutations($akrl->getValueForKey(":drum"));
-    if (defined ($drumMutations) && $drumMutations > 0)
-    {
-        foreach my $mutation (@{$drumMutations})
-        {
-            my $mutationNode = EKB::make_node("mutation");
-            if (defined($mutation->getType()))
-            {
-                EKB::add_child($mutationNode, EKB::make_slot_node("type", $mutation->getType()));
-            }
-            if (defined($mutation->getPosition))
-            {
-                EKB::add_child($mutationNode, EKB::make_slot_node("pos", $mutation->getPosition()));
-            }
-            addMutationToFromChildNode ($mutationNode, "aa-from", $mutation->getFromName(), $mutation->getFromCode());
-            addMutationToFromChildNode ($mutationNode, "aa-to", $mutation->getToName(), $mutation->getToCode());
-            if (EKB::get_children_by_name_regex($mutationNode, "") > 0)
-            {
-                EKB::add_child($term, $mutationNode);
-            }
-        }
-    }
+    processDRUMMutationInfo($term, $ekb, parseDRUMMutations($akrl->getValueForKey(":drum")));
 
     # process any DRUM AA-Sites
-    my $drumAASites = parseDRUMAASites($akrl->getValueForKey(":drum"));
-    if (defined ($drumAASites) && $drumAASites > 0)
-    {
-        foreach my $aasite (@{$drumAASites})
-        {
-            my $aasiteNode = EKB::make_node("site");
-            $tmpString = $aasite->getName();
-            if (defined($tmpString))
-            {
-                EKB::add_child($aasiteNode, EKB::make_slot_node("name", trimLeadingAndTrailingQuotes($tmpString)));
-            }
-            $tmpString = $aasite->getCode();
-            if (defined($tmpString))
-            {
-                EKB::add_child($aasiteNode, EKB::make_slot_node("code", trimLeadingAndTrailingQuotes($tmpString)));
-            }
-            $tmpString = $aasite->getPosition();
-            if (defined($tmpString))
-            {
-                EKB::add_child($aasiteNode, EKB::make_slot_node("pos", $tmpString));
-            }
-            my $features = EKB::make_node("features");
-            EKB::add_child($features, $aasiteNode);
-            EKB::add_child($term, $features);
-        }
-    }
+    processDRUMAASites($term, $ekb, parseDRUMAASites($akrl->getValueForKey(":drum")));
 
     # process the DRUM Terms
-    my $drumTerms = parseDRUMTerms($akrl->getValueForKey(":drum"));
-    my @dbid = ();
-    my $drumTermsNode = undef;
-    if (defined($drumTerms) && scalar(@$drumTerms) > 0)
+    my $dbids = processDRUMTerms ($term, $ekb, parseDRUMTerms($akrl->getValueForKey(":drum")));
+    if (defined($dbids) and ref($dbids) eq "ARRAY")
     {
-        $drumTermsNode = EKB::make_node("drum-terms");
-        foreach my $drumTerm (@{$drumTerms})
-        {
-            # append id to the dbid string
-            my $id = $drumTerm->getID;
-            if (defined ($id))
-            {
-                #normalize the id before appending to dbid array
-                push (@dbid, normalizeId($id));
-            }
-
-            # find the matched-name from the list of matches
-            my $matches = $drumTerm->getMatches();
-            my $matchedName = undef;
-            if (defined ($matches) && ref($matches) eq "ARRAY" && $matches > 0)
-            {
-                foreach my $match (@$matches)
-                {
-                    if ($match->getScore() == $drumTerm->getScore())
-                    {
-                        $matchedName = $match->getMatched();
-                        if (defined ($matchedName))
-                        {
-                            $matchedName =~ s/\"//g;
-                        }
-                        last;
-                    }
-                }
-            }
-            my $name = $drumTerm->getName();
-            if (defined($name))
-            {
-                $name =~ s/\"//g;
-            }
-
-            my $drumTermNode = make_node("drum-term",
-                {  dbid => $id,
-                    'match-score' => $drumTerm->getScore(),
-                    'matched-name' => $matchedName,
-                    name => $name
-                });
-            # Add the Ont Types
-            my $ontTypes = $drumTerm->getOntTypes();
-            if (defined ($ontTypes) && ref($ontTypes) eq "ARRAY" && $ontTypes > 0)
-            {
-                my $types = EKB::make_node("types");
-                foreach my $ontType (@$ontTypes)
-                {
-                    EKB::add_child($types, EKB::make_slot_node("type", $ontType));
-                }
-                EKB::add_child($drumTermNode, $types)
-            }
-            # Add any DBXRefs
-            my $dbxRefs = $drumTerm->getDBXRefs();
-            if (defined ($dbxRefs) && ref($dbxRefs) eq "ARRAY" && $dbxRefs > 0)
-            {
-                my $xrefs = EKB::make_node("xrefs");
-                foreach my $xref (@$dbxRefs)
-                {
-                    if (defined($xref))
-                    {
-                        $xref = normalizeId($xref);
-                        #normalize the id before appending to dbid array
-                        push (@dbid, $xref);
-
-                        EKB::add_child($xrefs, EKB::make_slot_node("xref", $xref));
-                    }
-                }
-                EKB::add_child($drumTermNode, $xrefs)
-            }
-            # Add any Species
-            $tmpString = $drumTerm->getSpecies();
-            if (defined($tmpString))
-            {
-                EKB::add_child($drumTermNode, EKB::make_slot_node("species", trimLeadingAndTrailingQuotes($tmpString)));
-            }
-            EKB::add_child($drumTermsNode, $drumTermNode);
-        }
-        @dbid = uniq(@dbid);
-        if (scalar(@dbid) > 0)
-        {
-#            EKB::add_child($term, $drumTermsNode);
-            $ekb->modify_assertion($term, ({dbid => join("|", @dbid)}, $drumTermsNode));
-
-        }
+        $ekb->modify_assertion($term, ({ dbid => join("|", @$dbids) }));
     }
 
     return $term;

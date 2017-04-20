@@ -606,9 +606,18 @@
 	   ;;  If val is not a variable, then it must be a value
 	   ;; check if it is (or is not) in the value-list
 	   ((not (var-p val))
-	    (if (not var-exclude)
-		(member-match feat val value-list)
-	      (non-member-match feat val value-list)))
+	    (let ((compat-vals (if (not var-exclude)
+				   (member-match feat val value-list)
+				   (non-member-match feat val value-list))))
+	      ;; if one one then we have a constant result, if more than one we need a variable
+	      (cond ((null compat-vals) nil)
+		    ((symbolp compat-vals) compat-vals)
+		    ((eq (list-length compat-vals) 1)
+		     (car compat-vals))
+		    ((equal compat-vals value-list)  ;; reuse old variable if every value matched!
+		     var)
+		    (t
+		     (make-var :name (gen-v-num 'v) :values compat-vals)))))
                  
 	   ;; otherwise, VAL is a variable
 	   (t ;;(var-p val)
@@ -698,7 +707,7 @@
 
 (defun member-match (feat val vlist)
    (declare (optimize (speed 3) (safety 0) (debug 0)))
-   (some #'(lambda (v)
+   (remove-if-not  #'(lambda (v)
              (or (if (eq val v) v)
                 (compat feat val v)))
 	   vlist))
