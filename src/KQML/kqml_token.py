@@ -3,10 +3,14 @@
 # From the pykqml library available at:
 # https://github.com/bgyori/pykqml
 # Relicensed under GPL 2+ (same as TRIPS) with permission.
+# Slightly modified to better match the equivalent libraries in other
+# languages, and to retain greater compatibility with old versions, by William
+# de Beaumont.
 
-import StringIO
+import re
+from KQML import KQMLObject
 
-class KQMLToken(object):
+class KQMLToken(KQMLObject):
     def __init__(self, s=None):
         if s is None:
             self.data = ''
@@ -16,80 +20,53 @@ class KQMLToken(object):
     def length(self):
         return len(self.data)
 
-    def char_at(self, n):
-        return self.data[n]
-
-    def equals(self, other):
-        return self.__eq__(self, other)
+    def __len__(self):
+        return len(self.data)
 
     def equals_ignore_case(self, s):
-        if isinstance(s, KQMLToken):
+        if isinstance(s, KQMLToken) or isinstance(s, basestring):
             return (self.data.lower() == s.lower())
+
+    def lower(self):
+        return self.data.lower()
+
+    def upper(self):
+        return self.data.upper()
 
     def write(self, out):
         out.write(self.data)
 
     def to_string(self):
-        out = StringIO.StringIO()
-        try:
-            self.write(out)
-        except Exception:
-            pass
-        return out.getvalue()
+        return self.data
 
     def string_value(self):
-        return self.__str__()
-
-    def get_package(self):
-        results = self.parse_package()
-        return results[0]
+        return self.data
 
     def has_package(self):
         pkg = self.get_package()
         return (pkg is not None)
 
-    def get_name(self):
-        results = self.parse_package()
-        return results[1]
+    def get_package(self):
+        package, bare_name = self.parse_package()
+        return package
 
-    KEYWORD_PACKAGE_NAME = 'KEYWORD'
+    def get_name(self):
+        package, bare_name = self.parse_package()
+        return bare_name
 
     def is_keyword(self):
-        package_name = self.get_package()
-        return (KEYWORD_PACKAGE_NAME.lower() == package_name)
+        return self.data.startswith(':')
 
     def parse_package(self):
-        package_name = None
-        bare_name = ''
-        quoted = False
-        chars = iter([c for c in self.data])
-        i = 0
-        while i <= len(chars):
-            c = chars[i]
-            if c == '|':
-                quoted = not quoted
-                bare_name += c
-            elif (not quoted) and (c == ':'):
-                if bare_name == '':
-                    package_name = KEYWORD_PACKAGE_NAME
-                else:
-                    package_name = bare_name
-                    bare_name = ''
-                if i == len(chars)-1:
-                    raise Exception('token ends in a colon: ' + self.data)
-                i += 1
-                c = chars[i]
-                if c == ':':
-                    if i == len(chars)-1:
-                        raise Exception('token ends in a colon: ' + self.data)
-                else:
-                    i -= 1
-            else:
-                bare_name += c
-        if quoted:
-            raise Exception('no closing bar: ' + self.data)
-
-        return (package_name, bare_name)
+        g1 = re.match('([^:]+)::([^:]+)$', self.data)
+        g2 = re.match('([^:]+)::(\|[^\|]*\|)$', self.data)
+        if g1:
+            package, bare_name = g1.groups()
+        elif g2:
+            package, bare_name = g2.groups()
+        else:
+            package, bare_name = (None, self.data)
+        return package, bare_name
 
     def __getitem__(self, *args):
         return self.data.__getitem__(*args)
@@ -98,14 +75,10 @@ class KQMLToken(object):
         return self.to_string()
 
     def __repr__(self):
-        s = self.to_string()
-        s = s.replace('\n', '\\n')
-        return s
+        return self.to_string()
 
     def __eq__(self, other):
-        if not isinstance(other, KQMLToken):
-            return False
-        elif self.data == other.data:
-            return True
+        if isinstance(other, KQMLToken):
+            return self.data == other.data
         else:
-            return False
+            return self.data == other

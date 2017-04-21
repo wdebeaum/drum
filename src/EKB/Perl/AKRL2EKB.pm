@@ -405,9 +405,95 @@ Returns the given $arkl object as an EKB 'EVENT' node.
 
 =cut
 
-sub createEKBEvent
+sub createEKB_Event
 {
     my ($ekb, $akrl, $akrlList) = @_;
+
+    if (!defined ($akrl))
+    {
+        return 10;
+    }
+
+    # make sure the instanceOf is in the list of acceptable Ontologies
+    my $instanceOf = $akrl->getInstanceOf();
+    if (!defined ($instanceOf))
+    {
+        return 11;
+    }
+
+    if (!$ont_events->has($instanceOf))
+    {
+        WARN("Ignoring event with type: $instanceOf");
+        return 12;
+    }
+
+    return createEKB_RELN("EVENT", $ekb, $akrl, $akrlList);
+}
+
+=head2 createEKB_EPI($ekb, $akrl, $akrlList)
+
+Returns the given $arkl object as an EKB 'EPI' node.
+
+=cut
+
+sub createEKB_EPI
+{
+    my ($ekb, $akrl, $akrlList) = @_;
+
+    if (!defined ($akrl))
+    {
+        return 10;
+    }
+
+    # make sure the instanceOf is in the list of acceptable Ontologies
+    my $instanceOf = $akrl->getInstanceOf();
+    if (!defined ($instanceOf))
+    {
+        return 11;
+    }
+
+    return createEKB_RELN("EPI", $ekb, $akrl, $akrlList);
+}
+
+=head2 createEKB_CC($ekb, $akrl, $akrlList)
+
+Returns the given $arkl object as an EKB 'CC' node.
+
+=cut
+
+sub createEKB_CC
+{
+    my ($ekb, $akrl, $akrlList) = @_;
+
+    if (!defined ($akrl))
+    {
+        return 10;
+    }
+
+    # make sure the instanceOf is in the list of acceptable Ontologies
+    my $instanceOf = $akrl->getInstanceOf();
+    if (!defined ($instanceOf))
+    {
+        return 11;
+    }
+
+    return createEKB_RELN("CC", $ekb, $akrl, $akrlList);
+}
+
+=head2 createEKBReln($type, $ekb, $akrl, $akrlList)
+
+Returns the given $arkl object as an EKB 'EVENT' node.
+
+=cut
+
+sub createEKB_RELN
+{
+    my ($eventElementName, $ekb, $akrl, $akrlList) = @_;
+
+    if (!defined($eventElementName))
+    {
+        $eventElementName = "EVENT";
+    }
 
     if (!defined ($akrl))
     {
@@ -439,23 +525,7 @@ sub createEKBEvent
         return 2;
     }
 
-    if (!$ont_events->has($instanceOf))
-    {
-        WARN("Ignoring event with type: $instanceOf");
-        return 3;
-    }
-
     # create a new assertion based on the instanceOf.
-    my $eventElementName = "EVENT";
-    if ($instanceOf eq "ONT::LEARN")
-    {
-        $eventElementName = "EPI";
-    }
-    elsif ($instanceOf eq "ONT::DEPENDENT")
-    {
-        $eventElementName = "CC";
-    }
-
     $event = $ekb->make_assertion ($eventElementName, {
             id   => $tmpString,
             rule => $akrl->getValuesAsStringForKey (":RULE")
@@ -464,7 +534,7 @@ sub createEKBEvent
     $ekb->add_assertion($event);
 
     # Add the type
-    modify_assertion("type", $akrl->getInstanceOf(), $ekb, $event);
+    modify_assertion("type", $instanceOf, $ekb, $event);
 
     # Check for negation
     modify_assertion("negation", $akrl->getValueForKey(":NEGATION"), $ekb, $event);
@@ -723,11 +793,19 @@ sub addEKBAssertion
 
     my $indicator = $akrl->getIndicator();
     my $ekbTerm = undef;
-    if ($indicator eq "ONT::RELN")
+    if ($indicator eq "ONT::EVENT" or $indicator eq "ONT::RELN")
     {
-        $ekbTerm = createEKBEvent($ekb, $akrl, $akrlList);
+        $ekbTerm = createEKB_Event($ekb, $akrl, $akrlList);
     }
-    elsif ($indicator eq "ONT::A" or $indicator eq "ONT::THE")
+    elsif ($indicator eq "ONT::EPI")
+    {
+        $ekbTerm = createEKB_EPI($ekb, $akrl, $akrlList);
+    }
+    elsif ($indicator eq "ONT::CC")
+    {
+        $ekbTerm = createEKB_CC($ekb, $akrl, $akrlList);
+    }
+    elsif ($indicator eq "ONT::TERM" or $indicator eq "ONT::A" or $indicator eq "ONT::THE")
     {
         $ekbTerm = createEKBTerm($ekb, $akrl, $akrlList);
     }

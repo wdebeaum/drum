@@ -705,12 +705,20 @@
 		     synfeats))))
       (build-constit-in-rule cat feats (car lfg) head rule)))))||#
 
+#|
 (defun member-match (feat val vlist)
    (declare (optimize (speed 3) (safety 0) (debug 0)))
    (remove-if-not  #'(lambda (v)
              (or (if (eq val v) v)
                 (compat feat val v)))
 	   vlist))
+|#
+
+(defun member-match (feat val vlist)
+  (declare (optimize (speed 3) (safety 0) (debug 0)))
+  (remove-if #'null (mapcar #'(lambda (v) (compat feat val v)) vlist))
+  )
+
 
 (defun non-member-match (feat val vlist)
   (if (every #'(lambda (v)

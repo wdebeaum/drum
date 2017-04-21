@@ -8,6 +8,8 @@
 
 import logging
 
+logger = logging.getLogger('KQMLDispatcher')
+
 class KQMLDispatcher(object):
     def __init__(self, rec, inp, agent_name):
         super(KQMLDispatcher, self).__init__()
@@ -54,11 +56,11 @@ class KQMLDispatcher(object):
             pass
 
     def dispatch_message(self, msg):
-        verb = msg.get_verb()
+        verb = msg.head()
         if verb is None:
             self.receiver.receive_message_missing_verb(msg)
             return
-        reply_id_obj = msg.get_parameter(':in-reply-to')
+        reply_id_obj = msg.get('in-reply-to')
         if reply_id_obj is not None:
             reply_id = reply_id_obj.string_value().upper()
             try:
@@ -70,7 +72,7 @@ class KQMLDispatcher(object):
                 pass
 
         vl = verb.lower()
-        content = msg.get_parameter(':content')
+        content = msg.get('content')
         content_msg_types = ['ask-if','ask-all','ask-one','stream-all','tell', 
                             'untell', 'deny', 'insert', 'uninsert', 
                             'delete-one', 'delete-all', 'undelete', 'achieve', 
