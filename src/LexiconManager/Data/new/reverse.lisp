@@ -19,7 +19,7 @@
  :words (
   (W::reverse
    (SENSES
-    ((LF-PARENT ONT::ROTATE)
+    ((LF-PARENT ONT::reverse)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (meta-data :origin task-learning :entry-date 20050823 :change-date nil :comments nil)
      (example "reverse the sort order")

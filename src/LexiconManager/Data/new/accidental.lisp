@@ -15,3 +15,18 @@
    )
 ))
 
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+;not sure about the template
+;a musical notation that makes a note sharp or flat or natural although that is not part of the key signature
+ :words (
+  (W::ACCIDENTAL
+   (SENSES
+    ((LF-PARENT ONT::ACCIDENTAL)
+     (example "the accidental alters the pitch of the note")
+     (meta-data :wn ("accidental%1:10:00"))
+     )
+    )
+   )
+))
+
+

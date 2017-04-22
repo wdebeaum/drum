@@ -10,6 +10,11 @@
      (LF-PARENT ONT::measure-domain)
      (TEMPL OTHER-RELN-TEMPL)
      )
+    ((meta-data :wn ("scale%1:10:00"))
+     (LF-PARENT ONT::MUSIC-SCALE)
+     ; any set of musical notes ordered by fundamental frequency or pitch
+     (EXAMPLE "Scales are typically listed from low to high pitch.")
+     )
     )
    )
 ))

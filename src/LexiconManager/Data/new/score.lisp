@@ -2,6 +2,20 @@
 ;;;; W::score
 ;;;;
 
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+;a written form of a musical composition
+ :words (
+  (W::SCORE
+   (SENSES
+    ((LF-PARENT ONT::MUSICAL-DOCUMENT)
+     (example "he studied the score of the sonata")
+     (meta-data :wn ("score%1:10:00"))
+     )
+    )
+   )
+))
+
+
 (define-words :pos W::v 
  :words (
   (W::score

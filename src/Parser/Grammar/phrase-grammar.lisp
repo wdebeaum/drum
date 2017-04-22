@@ -2899,7 +2899,7 @@
 		 (?dobj-map ?dobj))))))
      -adj-passive+subj-hyphen> 1
      (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
-      (sem ?sem) (relc -) (abbrev -)
+      (sem ?sem) (relc -) (abbrev -) (gap -)
 	 )
      (punc (lex w::punc-minus))
      (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj)))
@@ -2918,7 +2918,7 @@
 		 (?dobj-map ?dobj))))))
      -adj-passive+subj> 
      (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
-      (sem ?sem) (relc -) (abbrev -)
+      (sem ?sem) (relc -) (abbrev -) (gap -)
 	 )
      (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj)))
       (GAP -) (LF ?lf) (Part (% -))
@@ -4624,7 +4624,7 @@
     ;;  But not construction, e,g,. apples but not pears, apples not pears, 
      ((NP (ATTACH ?a) (var ?v) (agr ?agr) (SEM ?sem) (gerund ?ger) 
       (LF (% Description (Status ?status) (var ?v) 
-	     (class ?class)
+	     (class ?c1)
 	     (constraint (& (operator but-not) (sequence (?v1)) (except ?exception)))
 	     (sem ?sem) (CASE ?c)
 	     (mass ?m1) 
@@ -4645,7 +4645,7 @@
 ;;  But not construction, e,g,. apples but not pears, apples not pears, 
      ((NP (ATTACH ?a) (var ?v) (agr ?agr) (SEM ?s1) (gerund ?ger) 
       (LF (% Description (Status ?status) (var ?v) 
-	     (class ?cl)
+	     (class ?c1)
 	     (constraint (& (operator ont::and) (sequence (?v1)) (except ?exception)))
 	     (sem ?s1) (CASE ?c)
 	     (mass ?m1) 

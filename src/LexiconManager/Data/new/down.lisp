@@ -47,7 +47,7 @@
    (SENSES
     ((LF-PARENT ONT::direction-down)
      (example "he walked down the road/ down the wall")
-     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      )
     ((LF-PARENT ONT::DIRECTION-down)
      (example "pan the camera down" "pan down the camera")

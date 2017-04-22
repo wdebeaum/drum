@@ -19,3 +19,17 @@
    )
 ))
 
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+;any of 24 major or minor diatonic scales that provide the tonal framework for a piece of music
+ :words (
+  (W::KEY
+   (SENSES
+    ((LF-PARENT ONT::KEY)
+     (example "play music in the key of C.")
+     (meta-data :wn ("key%1:10:00"))
+     )
+    )
+   )
+))
+
+

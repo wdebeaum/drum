@@ -2,6 +2,19 @@
 ;;;; w::beat
 ;;;;
 
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :words (
+  (W::BEAT
+   (SENSES
+    ((LF-PARENT ONT::BEAT)
+     (example "the piece has a fast beat" "the piece shows a fast beat")
+     (meta-data :wn ("beat%1:10:00"))
+     (TEMPL OTHER-RELN-TEMPL)
+     )
+    )
+   )
+))
+
 (define-words :pos W::v :templ agent-theme-xp-templ
  :words (
   (w::beat

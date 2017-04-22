@@ -98,6 +98,7 @@ apply first.")
 		 "property-val"
 		 "specific-situation-types"
 		 "social-contract"
+                 "music-terminology"
 		 ))
 
 (mk:defsystem :ontology-code-lf

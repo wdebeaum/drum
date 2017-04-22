@@ -18,6 +18,11 @@
 		   (example "delete this step")
 		   (meta-data :origin plow :entry-date 20080718 :change-date nil :comments task-editing)
 		   )
+                  ((LF-PARENT ONT::whole-step)
+                   ;a musical interval of two semitones
+                   (example "determine general melodic interval distances of a step.")
+                   (meta-data :wn ("step%1:10:00"))
+                   )
  		  ))
 ))
 

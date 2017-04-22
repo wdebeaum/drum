@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Tue Apr 18 17:39:28 CDT 2017 lgalescu>
+# Time-stamp: <Fri Apr 21 23:22:07 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.22 2017/04/19 04:21:18 lgalescu Exp $
+# $Id: EKB.pm,v 1.26 2017/04/22 04:23:53 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -83,6 +83,15 @@
 # 2017/04/18 v1.11.2	lgalescu
 # - Fixed &normalize so it works on EKBs that are not the result of reading
 #   (no sentences).
+# 2017/04/21 v1.12.0	lgalescu
+# - &make_assertion now creates an id, if not given
+# - new utility function for parsing attribute/properties arguments
+# - improved &add_complex_r method
+# 2017/04/21 v1.13.0	lgalescu
+# - some cleanup
+# - added XPath filter to &assertion_args. made &get_children_by_name_regex and
+#   &get_child_node_regex_attr obsolete.
+
 
 # TODO:
 # - maybe split off XML Node extensions into a separate package (EKB::EKBNode?)
@@ -90,7 +99,7 @@
 
 package EKB;
 
-$VERSION = '1.11.2';
+$VERSION = '1.12.0';
 
 =head1 NAME
 
@@ -1037,15 +1046,14 @@ sub derive_assertion {
       ERROR "No assertion found with id=%s", $refid;
       return undef;
     };
-  make_node( $atype // get_assertion_type($ref),
-	     { id => $self->new_id,
-	       refid => $refid,
-	       paragraph => $ref->getAttribute('paragraph'),
-	       uttnum => $ref->getAttribute('uttnum'),
-	       start => $ref->getAttribute('start'),
-	       end => $ref->getAttribute('end') },
-	     make_slot_node( text => get_slot_value($ref, 'text') )
-	   );
+  $self->make_assertion( $atype // get_assertion_type($ref),
+			 { refid => $refid,
+			   paragraph => $ref->getAttribute('paragraph'),
+			   uttnum => $ref->getAttribute('uttnum'),
+			   start => $ref->getAttribute('start'),
+			   end => $ref->getAttribute('end') },
+			 make_slot_node( text => get_slot_value($ref, 'text') )
+		       );
 }
 
 =head2 clone_assertion( $a, $options )
@@ -1088,6 +1096,7 @@ sub clean_assertion {
   my ($self, $a) = @_;
   # remove unnecessary attributes
   $a->removeAttribute('lisp');
+  DEBUG 2, "Cleaning up: %s", $a;
   # remove unnecessary stuff from args & pseudoargs
   map { $self->_clean_arg($_) } ( $self->assertion_args($a),
 				  $self->assertion_pseudoargs($a) );
@@ -1135,7 +1144,11 @@ The optional @content argument specifies the attributes and the slots of  the
 assertion. It is passsed directly to
 L<make_node()|/make_node(_$name,_$attributes,_@children_)>. Assertion
 attributes correspond  directly to the XML element's attributes; assertion
-slots correspond to the  XML element's children. 
+properties must be XML nodes and they will be added as children in the 
+assertion's XML Element representation. 
+
+If an id for the assertion is not specified in $attributes, a new id is 
+generated for the assertion. 
 
 =cut
 
@@ -1145,9 +1158,19 @@ sub make_assertion {
   is_assertion_type($atype)
     or do {
       ERROR "Unknown assertion type: %s", $atype;
+      # local $Data::Dumper::Terse = 1;
+      # local $Data::Dumper::Indent = 0;
+      # for my $frame (-3..0) {
+      # 	my @cntxt = caller(-$frame);
+      # 	ERROR "Trace [%d]: %s", -$frame, Dumper(\@cntxt);
+      # }
       return undef;
     };
-  make_node($atype, @content);
+  my ($attributes, @properties) = _parse_node_args(@content);
+  unless (defined($attributes) and exists $attributes->{'id'}) {
+    $attributes->{'id'} = $self->new_id;
+  }
+  make_node($atype, $attributes, @properties);
 }
 
 =head2 modify_assertion( $a, $attributes, @properties )
@@ -1175,11 +1198,7 @@ See: L<append_to_attribute()|/>
 sub modify_assertion {
   my $self = shift;
   my ($a, @content) = @_;
-  my $attrs;
-  if (@content && ((! defined $content[0]) || (ref($content[0]) eq 'HASH'))) {
-    $attrs = shift @content;
-  }
-  my @children = @content;
+  my ($attrs, @children) = _parse_node_args(@content);
   {
     local $Data::Dumper::Terse = 1;
     local $Data::Dumper::Indent = 0;
@@ -1204,7 +1223,7 @@ sub modify_assertion {
   # set children and warn on replacements
   foreach my $child (@children) {
     my $cname = $child->nodeName;
-    unless (lc($cname) eq 'arg') {
+    unless (lc($cname) =~ m/^arg/) {
       my @s = $a->getChildrenByTagName($cname);
       if (scalar(@s) == 1) {
 	$a->removeChild($s[0]);
@@ -1231,9 +1250,14 @@ sub modify_assertion {
 
 =head2 make_complex_term( $ids, $attributes, @properties )
 
+Makes a complex term with component ids given in the list referenced by $ids.
+
+The $ids argument is required (but can be a reference to an empty list). The
+other arguments are optional.
+
 Examples:
 
-make_complex_term
+my $c = make_complex_term([$term_id1, $term_id2], {rule => 'MY_RULE'});
 
 =cut
 
@@ -1252,6 +1276,17 @@ sub make_complex_term {
 
 
 =head2 make_aggregate_term( $ids, $operator, $attributes, @properties )
+
+Makes an aggregate term with member ids given in the list referenced by $ids,
+joined by $operator.
+
+The $ids argument is required and has to be a reference to a (possibly empty)
+list of ids. The $operator argument is required and must be a string. The
+other arguments are optional.
+
+Examples:
+
+my $a = make_aggregate_term([$term_id1, $term_id2], 'AND', {rule => 'MY_RULE'});
 
 =cut
 
@@ -1339,11 +1374,12 @@ This is mostly a wrapper around L<add_assertion_r()|/add_assertion_r(_$atype,_%a
 sub add_event_r {
   my $self = shift;
   my $id = $self->add_assertion_r('EVENT', @_);
-  # FIXME: the following is for backward compatibility; should be removed!
-  my $a = $self->get_assertion($id);
-  my $p = get_slot_value($a, 'predicate');
-  if (! defined $p) {
-    $self->modify_assertion($a, make_predicate(get_slot_value($a, 'type')));
+  { # FIXME: the following is for backward compatibility; should be removed!
+    my $a = $self->get_assertion($id);
+    my $p = get_slot_value($a, 'predicate');
+    if (! defined $p) {
+      $self->modify_assertion($a, make_predicate(get_slot_value($a, 'type')));
+    }
   }
   return $id;
 }
@@ -1372,16 +1408,7 @@ sub add_complex_r {
   my $self = shift;
   my %args = @_;
 
-  my $a;
-
-  if ($args{refs}) {
-    my $base_id = shift @{ $args{refs} };
-    $a = $self->derive_assertion($base_id, 'TERM')
-      # FIXME: this is not robust, but bad things can happen if we go on!
-      or FATAL "Could not derive assertion from id=%s", $base_id;
-  } else {
-    $a = $self->make_assertion('TERM');
-  }
+  my $a = $self->make_assertion('TERM');
   
   # get components and name
   my @comp_ids;
@@ -1410,9 +1437,8 @@ sub add_complex_r {
   my @comp_nodes;
   foreach my $c_id (@comp_ids) {
     my $c = $self->get_assertion($c_id);
-    my $c1_id = $self->new_id;
-    my $c1 = clone_node($c, $c1_id);
-    set_attribute($c1, 'rule', $args{rule});
+    my $c1 = $self->clone_assertion($c, { rule => $args{rule} });
+    my $c1_id = $c1->getAttribute('id');
     $self->add_assertion($c1);
     push @comp_nodes, make_node("component", { id => $c1_id });
   }
@@ -1473,23 +1499,14 @@ sub add_arg {
     ERROR "Cannot add argument to node: %s", $a;
     return;
   }
-  # find all args (only if a position is given!)
+  # if a position is given, we heuristically make sure there is no clash 
   if (defined $pos) {
-    $pos = $pos // 1;
     while ($a->exists("./arg${pos}")) {
       $pos++;
     }
-  } else {
-    $pos = "";
   }
-  # make new arg node
-  my $argNode = make_arg($role => $argId, $pos);
-  # we want to insert it in the appropriate place
-  my @args = get_children_by_name_regex($a, qr{^arg});
-  # TODO: what if this is the first arg?
-  my $lastArg = $args[-1] // undef;
-  no warnings "uninitialized";	# supress warnings if $lastArg == undef
-  $a->insertAfter($argNode, $lastArg);
+  # make new arg node and add it to the assertion
+  $a->appendChild(make_arg($role => $argId, $pos));
 }
 
 =head2 add_feature( $a, $feature, $value )
@@ -1599,11 +1616,32 @@ sub is_relation {
 }
 
 
+=head2 assertion_args( $a, $filter )
+
+Returns list of (main) arguments for relational assertion $a.
+
+If $a is not a relational assertion, it returns an empty list.
+
+If the optional $filter argument is given, it must be an XPath predicate. The
+result will be only those arguments matching the filter.
+
+=cut
+
 sub assertion_args {
-  my ($self, $a) = @_;
+  my ($self, $a, $filter) = @_;
   return () unless $self->is_relation($a);
-  return get_children_by_name_regex($a, qr{^arg});
+  my @args = $a->findnodes('./*[starts-with(name(),"arg")]' . ($filter // ""));
+  DEBUG 2, "Args: %s", join(",", @args);
+  return @args;
 }
+
+=head2 assertion_pseudoargs( $a )
+
+Returns list of pseudo-arguments (or satellite arguments) for relational assertion $a.
+
+If $a is not a relational assertion, it returns an empty list.
+
+=cut
 
 sub assertion_pseudoargs {
   my ($self, $a) = @_;
@@ -1729,26 +1767,22 @@ sub get_children_by_name {
 }
 
 # get child nodes whose tag name matches a regex
-# FIXME: i think the only reason we need this is because of arg slots!
-# they ought to be normalized and ths should probably become obsolete
-# FIXME: at any rate, as a first step, i should add a get_relation_args()
-# function instead of relying on this low-level function
+# OBSOLETE as of 2017/04/21 -- will delete in a month
 sub get_children_by_name_regex {
   my ($node, $tagRegex) = @_;
-  my @children = $node->childNodes();
-  my @result;
-  foreach my $child (@children) {
-    if ($child->nodeName =~ $tagRegex) {
-      push @result, $child;
-    }
+  { my ($package, $filename, $line, $callsub) = caller(1);
+    WARN "get_children_by_name_regex is now obsolete. Called from: $callsub at $filename:$line";
   }
-  return @result;
+  return grep { $_->nodeName =~ $tagRegex } $node->childNodes();
 }
 
 # get child node with matching type and given attributes (optional)
-# TODO: maybe return as list?
+# OBSOLETE as of 2017/04/21 -- will delete in a month
 sub get_child_node_regex_attr {
   my ($node, $slot, $conds) = @_;
+  { my ($package, $filename, $line, $callsub) = caller(1);
+    WARN "get_children_by_name_regex is now obsolete. Called from: $callsub at $filename:$line";
+  }
   my @cNodes = get_children_by_name_regex($node, $slot);
   return undef if scalar(@cNodes) == 0;
   DEBUG 3, "cNodes:\n%s", join("\n", @cNodes);
@@ -2127,7 +2161,7 @@ sub __assert_eq {
 }
 
 # remove package from symbol
-sub __remove_package {
+sub _remove_package {
   my $s = shift;
   $s =~ s/^[A-Z]+:://;
   return $s;
@@ -2140,7 +2174,16 @@ sub _timestamp
   sprintf("%4d%02d%02dT%02d%02d%02d",$year+1900,$mon+1,$mday,$hour,$min,$sec);
 }
 
-
+# parse argument list for functions that take ($attribute, @children), where
+# $attribute is optional
+sub _parse_node_args {
+  my @args = @_;
+  my $attributes = undef;
+  if (@args && (ref($args[0]) eq 'HASH')) {
+    $attributes = shift @args;
+  }
+  return ($attributes, @args);
+}
 
 1;
 

@@ -2,7 +2,7 @@
 
 # ekr_drum.pl
 #
-# Time-stamp: <Sun Mar  5 23:55:39 CST 2017 lgalescu>
+# Time-stamp: <Fri Apr 21 13:16:22 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  6 Jun 2016
 #
@@ -18,6 +18,8 @@
 # 2017/02/06 v1.0.1	lgalescu
 # - adapted to work as part of EKB TRIPS component
 # 2017/03/04 v1.0.2	lgalescu
+# 2017/04/21 v1.0.3	lgalescu
+# - changed short name of -ekr-options
 
 #----------------------------------------------------------------
 # Usage:
@@ -59,7 +61,7 @@ our (
 
 GetOptions(
 	   'pub' 		=> \$opt_pub,
-	   'ko|ekr-options=s' 	=> \$opt_ekr_options,
+	   'ro|ekr-options=s' 	=> \$opt_ekr_options,
 	   'd|debug=i' 		=> \$debugLevel,
 	   'h|help' 		=> \$help,
 	  ) or die "Something's wrong";

@@ -9,7 +9,14 @@
    (SENSES
     ((LF-PARENT ONT::domain)
      (META-DATA :ORIGIN task-learning :ENTRY-DATE 20050926 :CHANGE-DATE NIL :wn ("measure%1:03:00")
-      :COMMENTS nil))))
+      :COMMENTS nil))
+    ((LF-PARENT ONT::BAR-MEASURE)
+     ;musical notation for a repeating pattern of musical beats
+     (EXAMPLE "the orchestra omitted the last twelve bars of the song")
+     (meta-data :wn ("measure%1:10:00"))
+     (TEMPL OTHER-RELN-TEMPL)
+     )
+))
 ))
 
 (define-words :pos W::V 

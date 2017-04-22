@@ -1,6 +1,6 @@
 # Compare.pm
 #
-# Time-stamp: <Fri Mar 24 15:20:33 CDT 2017 lgalescu>
+# Time-stamp: <Fri Apr 21 16:44:49 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  4 May 2016
 #
@@ -46,6 +46,8 @@
 # 2017/03/24 v2.1.0	lgalescu
 # - Added option to ignore sentence diffs (assumes they are identical even
 #   when they're not).
+# 2017/04/21 v2.1.1	lgalescu
+# - Fixed bug.
 
 # TODO (in order of importance):
 # - try to find node "substitutions"
@@ -58,7 +60,7 @@
 
 package EKB::Compare;
 
-$VERSION = '2.0.2';
+$VERSION = '2.1.1';
 
 use strict 'vars';
 use warnings;
@@ -894,8 +896,8 @@ sub cmp_args {
   my ($i1, $i2, $options) = @_;
 
   # we group all args together
-  my @args1 = get_children_by_name_regex($i1, qr{^arg});
-  my @args2 = get_children_by_name_regex($i2, qr{^arg});
+  my @args1 = $self->ekb1()->assertion_args($i1);
+  my @args2 = $self->ekb2()->assertion_args($i2);
 
   {
     DEBUG 2, "args: %d vs. %s", scalar(@args1), scalar(@args2);
@@ -934,6 +936,8 @@ sub cmp_args {
 # these are sub-elements that refer to other EKB items
 # TODO: there may be corner cases where either the @id doesn't resolve to any
 # EKB item, or there is no @id at all!
+# FIXME: this should be renamed, as it used for other things than actual
+# pseudo/satellite args!
 sub cmp_pseudo_args {
   my $self = shift;
   my ($i1, $i2, $name, $options) = @_;
@@ -1273,7 +1277,7 @@ sub _options_to_string {
       }
       sprintf("%s => %s", $opt, $val);
     }
-    sort @Options;
+    sort keys %options;
   return $result;
 }
 
