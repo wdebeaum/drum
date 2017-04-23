@@ -7,7 +7,7 @@
   ;; a musical interval of eight tones
   (W::OCTAVE
    (SENSES
-    ((LF-PARENT ONT::PITCH-UNIT)
+    ((LF-PARENT ONT::OCTAVE)
      (example "a tune played one octave up")
      (meta-data :wn ("octave%1:10:00"))
      )

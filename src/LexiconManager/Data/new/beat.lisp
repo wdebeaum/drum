@@ -7,7 +7,7 @@
   (W::BEAT
    (SENSES
     ((LF-PARENT ONT::BEAT)
-     (example "the piece has a fast beat" "the piece shows a fast beat")
+     (example "the first beat of the measure")
      (meta-data :wn ("beat%1:10:00"))
      (TEMPL OTHER-RELN-TEMPL)
      )

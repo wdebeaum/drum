@@ -1679,7 +1679,7 @@
 
 ;; song, rhapsody
 (define-type ONT::music
- :wordnet-sense-keys ("music%1:10:00" "musical_genre%1:10:00")
+ :wordnet-sense-keys ("music%1:10:00")
  :parent ONT::composition
  )
 ;; For epa and bee

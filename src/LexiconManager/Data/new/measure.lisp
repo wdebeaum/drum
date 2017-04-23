@@ -12,7 +12,7 @@
       :COMMENTS nil))
     ((LF-PARENT ONT::BAR-MEASURE)
      ;musical notation for a repeating pattern of musical beats
-     (EXAMPLE "the orchestra omitted the last twelve bars of the song")
+     (EXAMPLE "the orchestra omitted the last twelve measures of the song")
      (meta-data :wn ("measure%1:10:00"))
      (TEMPL OTHER-RELN-TEMPL)
      )
