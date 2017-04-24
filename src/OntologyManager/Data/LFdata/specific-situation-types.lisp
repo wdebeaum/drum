@@ -2573,6 +2573,7 @@
   :sem (F::Situation (F::Aspect F::unbounded) (F::time-span F::extended) )
   :arguments ((:ESSENTIAL ONT::Formal ((? t F::phys-obj F::abstr-obj F::situation)))
              (:ESSENTIAL ONT::Agent ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
+	      (:ESSENTIAL ONT::NEUTRAL ((? t F::phys-obj F::abstr-obj F::situation)))
              )
  )
 

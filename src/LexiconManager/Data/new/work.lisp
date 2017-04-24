@@ -77,7 +77,7 @@
      (LF-PARENT ONT::working)
      (example "he worked on the problem")
      (SEM (F::Cause F::agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (templ agent-theme-xp-templ (xp (% W::PP (W::ptype (? p W::on)))))
+     (templ agent-neutral-xp-templ (xp (% W::PP (W::ptype (? p W::on)))))
      )
     ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("cooperate-71-3"))
      (LF-PARENT ONT::working)

@@ -8,7 +8,7 @@
  :words (
   (W::PITCH
    (SENSES
-    ((LF-PARENT ONT::NOTE-PITCH)
+    ((LF-PARENT ONT::PITCH)
      (example "the melody usually has a high pitch")
      (meta-data :wn ("note%1:10:04" "pitch%1:07:00"))
      )

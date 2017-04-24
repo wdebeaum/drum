@@ -1,5 +1,12 @@
 (in-package :om)
 
+(define-type ONT::PITCH-SCALE
+ :parent ONT::PHYS-MEASURE-DOMAIN
+ :sem (F::Abstr-obj (F::Scale ONT::pitch-scale))
+ :arguments ((:ESSENTIAL ONT::EXTENT (F::abstr-obj (F::scale ont::pitch-scale) (F::measure-function F::value)))
+             )
+ )
+
 (define-type ONT::SOUND-UNIT
  :parent ONT::MEASURE-UNIT
  :sem (F::abstr-obj)
@@ -15,7 +22,7 @@
 
 (define-type ONT::PITCH-UNIT
  :parent ONT::SOUND-UNIT
- :sem (F::abstr-obj)
+ :sem (F::Abstr-obj (F::scale ONT::pitch-scale))
 )
 
 (define-type ONT::NOTE-LENGTH-UNIT
@@ -83,7 +90,7 @@
  :wordnet-sense-keys ("key%1:10:00")
 )
 
-(define-type ONT::NOTE-PITCH
+(define-type ONT::PITCH
  :parent ONT::MUSIC-COMPOSITION-ELEMENT
  :sem (F::abstr-obj)
  :wordnet-sense-keys ("note%1:10:04" "pitch%1:07:00")

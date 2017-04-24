@@ -679,7 +679,7 @@
  :parent ONT::position-reln
  :arguments (;(:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj F::Situation) (F::trajectory +) 
 		;		      (f::type (? tt ONT::MOTION ONt::APPLY-FORCE ONT::PUT))))
-	     (:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj F::abstr-obj)))
+	     (:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj F::abstr-obj F::situation))) ; meeting is SITUATION (move the meeting up the stairs)
 	     (:ESSENTIAL ONT::GROUND (F::Phys-obj))
             )
  )

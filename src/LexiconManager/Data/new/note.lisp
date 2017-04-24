@@ -13,7 +13,7 @@
      )
     ((meta-data :wn ("note%1:10:04" "pitch%1:07:00"))
      ; the property of sound that varies with variation in the frequency of vibration
-     (LF-PARENT ONT::NOTE-PITCH)
+     (LF-PARENT ONT::PITCH)
      (EXAMPLE "hit the high note")
      )
     )

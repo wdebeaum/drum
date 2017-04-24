@@ -22,6 +22,7 @@
                    ;a musical interval of two semitones
                    (example "determine general melodic interval distances of a step.")
                    (meta-data :wn ("step%1:10:00"))
+		   (TEMPL ATTRIBUTE-UNIT-TEMPL)
                    )
  		  ))
 ))
