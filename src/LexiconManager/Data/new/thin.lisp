@@ -1,3 +1,6 @@
+;;;;
+;;;; w::thin
+;;;; 
 
 (define-words :pos W::V 
   :templ agent-affected-xp-templ

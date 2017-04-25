@@ -1,3 +1,6 @@
+;;;;
+;;;; w::south
+;;;; 
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :tags (:base500)

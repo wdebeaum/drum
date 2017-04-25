@@ -1,6 +1,10 @@
+;;;;
+;;;; W::muzzy
+;;;;
 
 (define-words :pos W::adj :templ ADJ-EXPERIENCER-TEMPL
  :words (
+;   )
   (W::muzzy
     (wordfeats (W::morph (:FORMS (-er -LY))))
    (SENSES

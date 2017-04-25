@@ -1,3 +1,6 @@
+;;;;
+;;;; W::glutinous
+;;;;
 
 (define-words :pos W::adj 
   :templ CENTRAL-ADJ-TEMPL

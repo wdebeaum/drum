@@ -1,3 +1,6 @@
+;;;;
+;;;; w::fat
+;;;;
 
 (define-words :pos W::n
  :words (

@@ -1,3 +1,6 @@
+;;;;
+;;;; w::down
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :tags (:base500)
@@ -53,6 +56,7 @@
      (example "pan the camera down" "pan down the camera")
      (TEMPL PARTICLE-TEMPL)
      )
+    ;;  this is definitely not a binary SCALE-RELATION -- thinking just using DIRECTION sense for now
     #||((LF-PARENT ONT::SCALE-RELATION)
      (TEMPL BINARY-CONSTRAINT-S-or-NP-TEMPL)
      (example "his weight / the temperature is down")

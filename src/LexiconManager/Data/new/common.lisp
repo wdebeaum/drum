@@ -1,3 +1,6 @@
+;;;;
+;;;; w::common
+;;;;
 
 (define-words :pos W::adj
  :tags (:base500)

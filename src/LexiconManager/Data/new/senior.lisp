@@ -1,3 +1,6 @@
+;;;;
+;;;; w::senior
+;;;;
 
 (define-words :pos W::n
  :words (

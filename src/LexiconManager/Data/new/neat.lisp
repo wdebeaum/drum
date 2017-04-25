@@ -1,7 +1,11 @@
+;;;;
+;;;; w::neat
+;;;;
 
 (define-words :pos W::adj 
   :templ CENTRAL-ADJ-TEMPL
  :words (
+;          
 	  (w::neat
 	   (wordfeats (W::MORPH (:FORMS (-ER -LY))))
 	   (senses

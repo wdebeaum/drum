@@ -1,6 +1,10 @@
+;;;;
+;;;; w::a
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
+  ;; entry patterned on difficult
   ((w::a W::bitch)
    (wordfeats (W::morph (:forms (-none))))
    (SENSES

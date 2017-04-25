@@ -1,3 +1,6 @@
+;;;;
+;;;; W::last
+;;;;
 
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :tags (:base500)
@@ -29,6 +32,7 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("last%5:00:00:closing:00" "last%3:00:00"))
      (lf-parent ont::last-val)
      (example "it was the last day they met")
+     ;;(preference .95)
      )
     )
    )
@@ -37,6 +41,7 @@
 (define-words :pos W::ADV
  :tags (:base500)
  :words (
+;   )
   (W::LAST
    (SENSES
     ((LF-PARENT ONT::SEQUENCE-POSITION)

@@ -1,3 +1,6 @@
+;;;;
+;;;; w::european
+;;;;
 
 #|
 (define-words :pos w::N 

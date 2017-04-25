@@ -1,3 +1,6 @@
+;;;;
+;;;; w::auto
+;;;;
 
 (define-words :pos W::adj
  :words (

@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.93 2017/03/21 17:28:48 wdebeaum Exp $
+# $Id: Makefile,v 1.94 2017/04/24 20:04:21 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -175,7 +175,7 @@ install:: mirna-species.tsv drum-terms.tsv drum-dsl specialist.tsv drum-dbxrefs.
 #	'$$a = $$1 if (/^ID   (\w+)-/i);  push @{$$h{$$a}}, $$1 if (/^DE   ([A-Z]\w* \w*) mir/i and  not grep { $$_ eq $$1 } @{$$h{$$a}});  END {  print map { $$_ . join("", map { "\t$$_" } @{$$h{$$_}}) . "\n" }  sort keys %h;  }' \
 #	>$@
 
-drum-terms.tsv: merge-terms-files.pl obo-terms.tsv hgnc-terms.tsv uniprot-terms.tsv uniprot-subcell-terms.tsv nextprot-family-terms.tsv pfam-terms.tsv mesh-scr-terms.tsv ncit-terms.tsv
+drum-terms.tsv: merge-terms-files.pl obo-terms.tsv hgnc-terms.tsv uniprot-terms.tsv uniprot-subcell-terms.tsv nextprot-family-terms.tsv pfam-terms.tsv mesh-scr-terms.tsv ncit-terms.tsv hlsm-terms.tsv
 	./$^ >$@
 
 drum-dbxrefs.tsv: get-uniprot-dbxrefs.pl downloads/uniprot_sprot.dat.gz
@@ -230,6 +230,9 @@ $(info NCIT_ZIPFILE=$(NCIT_ZIPFILE))
 
 # also writes drum-dsl/NCIT/*
 ncit-terms.tsv: get-ncit-terms.pl downloads/$(NCIT_ZIPFILE)
+	./$+ >$@
+
+hlsm-terms.tsv: get-hlsm-terms.pl downloads/small_molecule.csv
 	./$+ >$@
 
 specialist.tsv: get-specialist-tsv.pl downloads/LEXICON downloads/inflection.table $(prefix)/src/LexiconManager/Data/new
@@ -297,6 +300,12 @@ downloads/Pfam-A.seed.gz:
 # see http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/ReadMe.txt
 downloads/$(NCIT_ZIPFILE):
 	$(call download,$(NCIT_WEBSITE)$(NCIT_ZIPFILE))
+
+# HMS LINCS Small Molecule database
+# see http://lincs.hms.harvard.edu/db/sm/
+downloads/small_molecule.csv:
+	mkdir -p downloads
+	curl --compressed -L "http://lincs.hms.harvard.edu/db/sm/?search=&output_type=.csv" -o $@
 
 # see http://lexsrv3.nlm.nih.gov/Specialist/Home/index.html
 

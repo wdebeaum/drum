@@ -1,3 +1,6 @@
+;;;;
+;;;; W::unlikely
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -9,6 +12,7 @@
      (SEM (F::GRADABILITY F::+))
      (TEMPL central-ADJ-xp-TEMPL (XP (% W::cp (W::ctype W::s-to))))
      )
+    ;; it is unlikely that...
     )
    )
 ))

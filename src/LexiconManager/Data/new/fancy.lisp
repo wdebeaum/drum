@@ -1,3 +1,6 @@
+;;;;
+;;;; w::fancy
+;;;;
 
 (define-words :pos W::V :templ agent-theme-xp-templ
  :words (

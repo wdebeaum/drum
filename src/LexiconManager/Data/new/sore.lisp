@@ -1,3 +1,6 @@
+;;;;
+;;;; w::sore
+;;;; 
 
 (define-words :pos W::n
  :words (

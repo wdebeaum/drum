@@ -1,3 +1,6 @@
+;;;;
+;;;; w::right
+;;;; 
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :tags (:base500)
@@ -8,6 +11,8 @@
      (LF-PARENT ont::right-loc);ONT::object-dependent-location)
      (example "to the right of the building")
      (TEMPL GEN-PART-OF-RELN-TEMPL)
+     ;; enforced subcat to reduce ambiguity, but prevents "on the right" unless we add another grammar rule
+     ;;     (TEMPL other-reln-subcat-required-templ) 
      )
    ((LF-PARENT ont::social-contract)
      (example "the right to sing")
@@ -21,6 +26,7 @@
  :words (
   (W::RIGHT
    (SENSES
+    ;; This first sense seems redundant with the second
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("right%3:00:02"))
      (lf-parent ont::correct)
      (example "that's right/the right choice")

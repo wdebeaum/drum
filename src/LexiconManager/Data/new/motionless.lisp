@@ -1,3 +1,6 @@
+;;;;
+;;;; w::motionless
+;;;;
 
 (define-words :pos W::adj
  :words (

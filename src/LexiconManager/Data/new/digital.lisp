@@ -1,3 +1,6 @@
+;;;;
+;;;; w::digital
+;;;;
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
@@ -13,6 +16,7 @@
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
+  ;; what about the digital age, the digital divide?
   (W::digital
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES

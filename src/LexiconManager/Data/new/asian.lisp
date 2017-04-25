@@ -1,3 +1,7 @@
+;;;;
+;;;; w::asian
+;;;;
+
 
 #|
 (define-words :pos w::N 

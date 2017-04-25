@@ -1,3 +1,6 @@
+;;;;
+;;;; w::inherent
+;;;;
 
 (define-words :pos W::adj
  :words (

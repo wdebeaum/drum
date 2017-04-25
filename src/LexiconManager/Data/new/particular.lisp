@@ -1,6 +1,10 @@
+;;;;
+;;;; W::PARTICULAR
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
+;   )
   (W::PARTICULAR
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES

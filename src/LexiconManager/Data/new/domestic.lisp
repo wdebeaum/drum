@@ -1,7 +1,11 @@
+;;;;
+;;;; W::domestic
+;;;;
 
 (define-words :pos W::adj 
   :templ CENTRAL-ADJ-TEMPL
  :words (
+;            ))
 	   (W::domestic
 	   (SENSES
 	    (

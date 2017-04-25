@@ -1,3 +1,6 @@
+;;;;
+;;;; w::narrow
+;;;;
 
 (define-words :pos W::v :templ agent-affected-xp-templ
  :words (

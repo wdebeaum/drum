@@ -1,3 +1,6 @@
+;;;;
+;;;; W::stifling
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (

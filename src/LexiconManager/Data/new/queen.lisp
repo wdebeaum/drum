@@ -1,3 +1,6 @@
+;;;;
+;;;; W::QUEEN
+;;;;
 
 (define-words :pos W::n
  :words (

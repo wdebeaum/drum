@@ -1,3 +1,6 @@
+;;;;
+;;;; W::former
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (

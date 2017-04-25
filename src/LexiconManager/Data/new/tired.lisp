@@ -1,6 +1,10 @@
+;;;;
+;;;; W::tired
+;;;;
 
 (define-words :pos W::adj :templ ADJ-EXPERIENCER-TEMPL
  :words (
+  ;; later - derive from verb
   (W::tired
    (wordfeats (W::morph (:FORMS ( -LY))))
    (SENSES

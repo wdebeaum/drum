@@ -1,3 +1,6 @@
+;;;;
+;;;; W::BUILT-IN
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (

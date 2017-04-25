@@ -1,3 +1,6 @@
+;;;;
+;;;; w::dynamic
+;;;;
 
 (define-words :pos W::adj
  :words (

@@ -1,7 +1,11 @@
+;;;;
+;;;; W::dry
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :tags (:base500)
  :words (
+;   )
     (W::dry
    (wordfeats (W::MORPH (:FORMS (-ER -LY))))
    (SENSES
@@ -9,6 +13,7 @@
      (lf-parent ont::dry-val)
      (TEMPL LESS-ADJ-TEMPL)
      )
+    ;; a dry cough
     )
    )
 ))

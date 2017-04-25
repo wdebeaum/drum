@@ -1,3 +1,6 @@
+;;;;
+;;;; W::laborious
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -13,6 +16,7 @@
      (lf-parent ont::difficult)
      (TEMPL adj-expletive-content-xp-templ (XP (% W::CP (W::CTYPE W::s-to))))
      )
+    ;; laborious breathing -- task-complexity-val???
     )
    )
 ))

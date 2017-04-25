@@ -1,3 +1,6 @@
+;;;;
+;;;; w::on
+;;;; 
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -130,6 +133,7 @@
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      (example "it is on the corner")
      )
+    ;;;;; on drugs, on antibiotics
     ((LF-PARENT ONT::on-medication)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      )

@@ -1,3 +1,6 @@
+;;;;
+;;;; W::unexpected
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -9,6 +12,7 @@
       (lf-parent ont::not-likely-val)
       (SEM (F::GRADABILITY F::+))
       )
+     ;; it is unexpected that...
      )
     )
 ))

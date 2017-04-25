@@ -1,3 +1,6 @@
+;;;;
+;;;; w::efficient
+;;;;
 
 #|
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
@@ -19,7 +22,7 @@
 	  (w::efficient
 	   (senses
      ((lf-parent ont::efficient-val)
-	     (meta-data :origin bee :entry-date 20040608 :change-date nil :wn ("efficient%3:00:00") :comments portability-experiment)
+      (meta-data :origin bee :entry-date 20040608 :change-date nil :wn ("efficient%3:00:00") :comments portability-experiment)
 	     )
 	    ))
 ))

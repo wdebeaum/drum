@@ -1,6 +1,10 @@
+;;;;
+;;;; W::SOLID
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
+;    )
    (W::SOLID
     (wordfeats (W::MORPH (:FORMS (-LY))))
     (SENSES

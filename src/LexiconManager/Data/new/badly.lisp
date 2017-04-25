@@ -1,6 +1,10 @@
+;;;;
+;;;; W::badly
+;;;;
 
 (define-words :pos W::adv :templ PRED-VP-TEMPL 
  :words (
+;; defining these independently from the adj form to get the right handling in cardiac
  	 (W::badly
 	  (SENSES
     ((lf-parent ont::bad)

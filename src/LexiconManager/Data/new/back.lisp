@@ -1,3 +1,6 @@
+;;;;
+;;;; w::back
+;;;;
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :tags (:base500)
@@ -16,6 +19,9 @@
 (define-words :pos W::n
  :tags (:base500)
  :words (
+;; physical systems, digestive, reproductive,. ...    
+;; those are adjectives 
+;; external
   (w::back
   (senses((LF-PARENT ONT::external-body-part)
     (TEMPL body-part-reln-templ)

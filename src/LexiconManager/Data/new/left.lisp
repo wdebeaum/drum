@@ -1,3 +1,6 @@
+;;;;
+;;;; w::left
+;;;; 
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :tags (:base500)
@@ -8,6 +11,8 @@
      (LF-PARENT ont::left-loc);ONT::object-dependent-location)
      (example "to the left of the building")
      (TEMPL GEN-PART-OF-RELN-TEMPL)
+     ;; enforced subcat to reduce ambiguity, but prevents "on the left" unless we add another grammar rule 
+     ;;     (TEMPL other-reln-subcat-required-templ) 
      )
     )
    )

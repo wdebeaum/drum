@@ -1,3 +1,6 @@
+;;;;
+;;;; w::junior
+;;;;
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (

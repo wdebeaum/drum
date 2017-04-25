@@ -1,3 +1,6 @@
+;;;;
+;;;; w::unbearably
+;;;; 
 
 (define-words :pos w::adv
  :words (

@@ -1,3 +1,6 @@
+;;;;
+;;;; w::wild
+;;;; 
 
 (define-words :pos W::n :templ MASS-PRED-TEMPL
  :words (
@@ -43,6 +46,7 @@
     (SENSES
      ((example "wild type EGFR")
       (LF-PARENT ONT::NATURAL)
+;      (templ central-adj-experiencer-templ)
       )))))
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
@@ -52,6 +56,7 @@
     (SENSES
      ((example "wild-type EGFR")
       (LF-PARENT ONT::NATURAL)
+;      (templ central-adj-experiencer-templ)
       )))))
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
@@ -61,6 +66,7 @@
     (SENSES
      ((example "wildtype EGFR")
       (LF-PARENT ONT::NATURAL)
+;      (templ central-adj-experiencer-templ)
       )))
    ))
 

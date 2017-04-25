@@ -1,3 +1,6 @@
+;;;;
+;;;; W::weary
+;;;;
 
 (define-words :pos W::V :templ agent-theme-xp-templ
  :words (

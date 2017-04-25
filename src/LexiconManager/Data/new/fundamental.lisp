@@ -1,3 +1,6 @@
+;;;;
+;;;; w::fundamental
+;;;;
 
 (define-words :pos W::adj
  :words (

@@ -1,3 +1,6 @@
+;;;;
+;;;; W::exact
+;;;;
 
 (define-words :pos W::v 
  :words (

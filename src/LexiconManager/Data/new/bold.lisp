@@ -1,3 +1,6 @@
+;;;;
+;;;; W::bold
+;;;;
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (

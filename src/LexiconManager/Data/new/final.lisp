@@ -1,7 +1,11 @@
+;;;;
+;;;; W::FINAL
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :tags (:base500)
  :words (
+;   )
   (W::FINAL
    (wordfeats (W::comp-op -) (w::morph (:forms (-ly))))
    (SENSES

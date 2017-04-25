@@ -1,6 +1,11 @@
+;;;;
+;;;; w::fidgety
+;;;;
 
 (define-words :pos w::adj 
  :words (
+;   )
+;; derive from verb
   (w::fidgety
   (senses((lf-parent ont::restless-val)
 	    (templ central-adj-templ)

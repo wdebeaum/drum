@@ -265,6 +265,8 @@ sub read_from_terms2 {
 	  # ONT::physical-condition, which we think is too general.
 	  # (see bob:#5, #12)
 	  $lftypes = ['MEDICAL-DISORDERS-AND-CONDITIONS'];
+	} elsif ($id =~ /^PC:/) { # everything (that we get) is a drug
+	  $lftypes = ['PHARMACOLOGIC-SUBSTANCE'];
 	}
 	if (defined($lftypes)) {
 	  my @old_terms = grep {
@@ -1035,7 +1037,7 @@ sub score_match {
   # 1 = previous name/abbr
   # 0 = fake
   my $status_score;
-  if ($m->{status} =~ /^(?:NM|RecName: .*|name|Approved.*|I\*)$/) {
+  if ($m->{status} =~ /^(?:NM|RecName: .*|[Nn]ame|Approved.*|I\*)$/) {
     $status_score = 5;
   } elsif ($m->{status} eq 'ID') {
     if ($pkg eq 'XFAM') {
@@ -1043,7 +1045,7 @@ sub score_match {
     } else {
       $status_score = 5;
     }
-  } elsif ($m->{status} =~ /^(?:EXACT )?synonym$/) {
+  } elsif ($m->{status} =~ /^(?:(?:EXACT )?synonym|Alternative Name)$/) {
     $status_score = 4;
   } elsif ($m->{status} eq 'RELATED synonym') {
     if ($pkg =~ /^(?:BTO|CVCL)$/) {

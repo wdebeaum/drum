@@ -1,3 +1,6 @@
+;;;;
+;;;; W::special
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :tags (:base500)

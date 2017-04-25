@@ -1,3 +1,6 @@
+;;;;
+;;;; w::clammy
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (

@@ -1,3 +1,6 @@
+;;;;
+;;;; w::IN
+;;;; 
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :tags (:base500)
@@ -298,11 +301,13 @@
     :pos W::adv :templ pred-s-post-templ
  :tags (:base500)
  :words (
+;; Added by myrosia for Bee corpus
 	    (w::in
 	     (senses
 	      ((lf-parent ont::manner)
 	       (meta-data :origin bee :entry-date 20040407 :change-date 20080417 :comments (test-s36 test-s37)) 
 	       (example "in general" "in particular" "in short" "in series" "in parallel" "in full" "in earnest" "the room is done in green")
+	       ;; a restriction of ADJP with no argument
 	       (templ binary-constraint-S-templ (xp (% w::ADJP (w::var ?var) (w::sem ?sem) (w::set-modifier -))))
 	       (preference 0.93)
 	       )
@@ -421,6 +426,7 @@
      (example "the device placed in five minutes")
      (preference .98)
      )
+    ;; like within
     ((LF-PARENT ONT::scale-relation)
      (meta-data :origin calo :entry-date 20040423 :change-date nil :comments calo-y1v5)
      (example "is there a computer in that price range")
@@ -428,6 +434,7 @@
      (lf-form w::within)
      (preference .92) ;; prefer direction
      )||#
+    ;;;;;need specific constraints that we're lacking now
     ((LF-PARENT ONT::TIME-span-rel)
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      (example "he ran the race in June" "in the middle of the night")
@@ -440,6 +447,7 @@
      (TEMPL BINARY-CONSTRAINT-S-TEMPL)
      (example "he will run in 5 minutes")
      )||#
+    ;; takes a phys-obj ont::of
     ((LF-PARENT ont::in-loc) ;ONT::SPATIAL-LOC)
      (example "the dog is in the park")
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
@@ -455,6 +463,7 @@
      (TEMPL PRED-S-POST-TEMPL)
      (preference 0.98)
      )
+    ;; in the air (excluded by ont::spatial-loc)
     )
    )
 ))

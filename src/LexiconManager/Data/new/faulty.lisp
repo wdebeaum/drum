@@ -1,3 +1,6 @@
+;;;;
+;;;; w::faulty
+;;;;
 
 (define-words :pos W::adj 
   :templ CENTRAL-ADJ-TEMPL

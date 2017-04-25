@@ -1,3 +1,6 @@
+;;;;
+;;;; w::writeable
+;;;;
 
 (define-words :pos W::adj
  :words (

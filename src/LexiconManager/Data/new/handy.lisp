@@ -1,6 +1,10 @@
+;;;;
+;;;; W::HANDY
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
+;   )
   (W::HANDY
    (wordfeats (W::MORPH (:FORMS (-ER -LY))))
    (SENSES

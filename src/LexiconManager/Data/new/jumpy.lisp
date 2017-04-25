@@ -1,6 +1,11 @@
+;;;;
+;;;; w::jumpy
+;;;;
 
 (define-words :pos w::adj 
  :words (
+;   )
+;; derive from verb
   (w::jumpy
   (senses((lf-parent ont::restless-val)
 	    (templ central-adj-templ)

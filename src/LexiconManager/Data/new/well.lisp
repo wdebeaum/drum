@@ -1,3 +1,6 @@
+;;;;
+;;;; w::well
+;;;; 
 
 (define-words :pos W::adj 
  :tags (:base500)
@@ -17,6 +20,7 @@
 (define-words :pos W::adv :templ DISC-PRE-TEMPL
  :tags (:base500)
  :words (
+     ;; MD 2008/06/09 FIXME -- should this really be disc-templ? Smth else?
   (W::WELL
    (SENSES
     ((LF-PARENT ONT::SpeakerStatus)

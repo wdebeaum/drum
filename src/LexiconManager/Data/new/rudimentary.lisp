@@ -1,3 +1,6 @@
+;;;;
+;;;; w::rudimentary
+;;;;
 
 (define-words :pos W::adj
  :words (

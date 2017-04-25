@@ -1,7 +1,11 @@
+;;;;
+;;;; w::missing
+;;;;
 
 (define-words :pos W::adj 
   :templ CENTRAL-ADJ-TEMPL
  :words (
+;	    ))
 	  (w::missing
 	   (senses
      ((lf-parent ont::not-available-val)

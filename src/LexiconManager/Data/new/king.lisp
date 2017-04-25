@@ -1,3 +1,6 @@
+;;;;
+;;;; w::king
+;;;; 
 
 (define-words :pos W::n :templ count-pred-templ
  :tags (:base500)

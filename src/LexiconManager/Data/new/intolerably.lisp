@@ -1,3 +1,6 @@
+;;;;
+;;;; w::intolerably
+;;;; 
 
 (define-words :pos w::adv
  :words (

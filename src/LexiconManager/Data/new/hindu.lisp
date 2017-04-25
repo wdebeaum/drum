@@ -1,3 +1,6 @@
+;;;;
+;;;; w::hindu
+;;;; 
 
 ;(define-words :pos w::N 
 ; :words (

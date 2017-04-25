@@ -1,3 +1,6 @@
+;;;;
+;;;; w::tall
+;;;; 
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -8,6 +11,13 @@
      (EXAMPLE "a tall building")
      (lf-parent ont::tall-val)
      )
+    ;;;;; we want to use the no-premod meaning first 
+;    ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("tall%3:00:00"))                                  
+;     (EXAMPLE "a 5 foot tall building")
+;     (LF-PARENT ONT::Linear-D)  
+;     (TEMPL ADJ-PREMOD-TEMPL)   
+;     (PREFERENCE 0.98) 
+;     ) 
     )
    )
 ))

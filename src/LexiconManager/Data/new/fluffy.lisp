@@ -1,3 +1,6 @@
+;;;;
+;;;; W::fluffy
+;;;;
 
 (define-words :pos W::adj 
   :templ CENTRAL-ADJ-TEMPL

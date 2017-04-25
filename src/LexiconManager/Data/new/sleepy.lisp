@@ -1,6 +1,10 @@
+;;;;
+;;;; W::sleepy
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
+;   )
    (W::sleepy
    (wordfeats (W::morph (:FORMS (-er -LY))))
    (SENSES

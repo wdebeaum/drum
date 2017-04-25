@@ -1,3 +1,6 @@
+;;;;
+;;;; w::so
+;;;; 
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -113,6 +116,8 @@
    (SENSES
     ((LF (W::WAIT))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_DISCOURSE-MANAGE))
+     ;; beetle fix -- do not use "so" in this sense unless it's stand-alone
+     ;; if it is joined with something, it really should work as a regular adverbial 
      (preference 0.9)
      )
     )

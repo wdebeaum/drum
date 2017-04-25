@@ -1,6 +1,11 @@
+;;;;
+;;;; w::restless
+;;;;
 
 (define-words :pos w::adj 
  :words (
+;   )
+;; derive from verb
   (w::restless
   (senses((lf-parent ont::restless-val)
 	    (templ central-adj-templ)

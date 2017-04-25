@@ -1,3 +1,6 @@
+;;;;
+;;;; W::nauseous
+;;;;
 
 (define-words :pos W::adj :templ ADJ-EXPERIENCER-TEMPL
  :words (

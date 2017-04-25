@@ -1,6 +1,10 @@
+;;;;
+;;;; w::breathless
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
+;   )))
    (w::breathless
     (wordfeats (W::MORPH (:FORMS (-LY))))
    (senses

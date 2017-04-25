@@ -1,6 +1,10 @@
+;;;;
+;;;; W::potential
+;;;;
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
+;   )
   (W::potential
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES

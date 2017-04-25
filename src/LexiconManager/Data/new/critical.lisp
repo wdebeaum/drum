@@ -1,3 +1,6 @@
+;;;;
+;;;; w::critical
+;;;;
 
 (define-words :pos W::adj :templ adj-purpose-optional-templ
  :words (

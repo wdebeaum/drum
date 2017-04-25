@@ -1,3 +1,6 @@
+;;;;
+;;;; w::awake
+;;;;
 
 (define-words :pos W::v 
  :words (

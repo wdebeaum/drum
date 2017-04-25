@@ -1,3 +1,6 @@
+;;;;
+;;;; w::orthodox
+;;;;
 
 (define-words :pos W::adj
  :words (

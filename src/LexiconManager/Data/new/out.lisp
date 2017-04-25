@@ -1,3 +1,6 @@
+;;;;
+;;;; w::out
+;;;; 
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :tags (:base500)
@@ -5,6 +8,7 @@
   (W::OUT
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date 20081028 :comments nil)
+     ;; MD: this is marked as predicative-only because you cannot say "the out bulb", or at least not easily, and it was creating major ambiguities in multi-sentence cases with "burn out"
      (LF-PARENT ONT::NOT-IN-WORKING-ORDER-val)
      (example "the bridge is out")
      (templ predicative-only-adj-templ)
