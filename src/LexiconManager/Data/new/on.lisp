@@ -68,7 +68,8 @@
 	   (senses
 	    (;(lf-parent ont::artifact-property-val)
 	     (lf-parent ont::active-on)
-	     (templ central-adj-templ) ; predicative-only-adj-templ)
+	     ;(templ central-adj-templ)
+	     (templ predicative-only-adj-templ)
 	     (Example "The switch is on -- predicative only, because 'the on switch' is not at all the same;  The off position/state")
 	     (meta-data :origin bee :entry-date 20040408 :change-date nil :wn ("on%3:00:00") :comments test-s)
 	     )

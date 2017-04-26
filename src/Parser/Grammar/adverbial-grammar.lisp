@@ -615,8 +615,10 @@
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
 			 (sem ?sem))) (GAP -)
       ;; (subjvar ?subjvar)
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln))))
-	      ;;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln )))) ; take the trajectory senses instead of the position-as-extent-reln senses of words such as "across"
+			 (SEM ($ f::abstr-obj
+				 (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ont::pos-as-containment-reln ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ))))
+					;(F::type (? ttt ont::path ont::position-reln))))
+	      ;;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ont::on ont::at-loc )))) ; take the trajectory senses instead of the position-as-extent-reln senses of words such as "across"
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
       (ARG ?npvar) (VAR ?mod)
@@ -1464,7 +1466,7 @@
 			  ;; W::VP)
 		  (SEM ($ F::situation (f::type (? xx ont::event-of-action)))))) ;;SITUATION (F::trajectory +)))))))
      )
-    -distance-np-advbl> .97
+    -distance-np-advbl> 1.0 ;.97
     (head (np (var ?v) (sort unit-measure) (sem ?sem)  
 	      (bare -) ;; we suppress this rule for distances without a specific amount (e.g., "miles")
 	      ;; the semantic restriction is not sufficient to prevent measure-unit phrases such as "a bit" or "a set" as distances so using the lfs to restrict

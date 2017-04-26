@@ -68,7 +68,7 @@
  :words (
   (W::UP
    (SENSES
-    ((LF-PARENT ONT::DIRECTION-UP)
+    ((LF-PARENT ONT::DIRECTION-UP-GROUND)
      (example "the swelling is moving up his leg")
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      )
@@ -77,7 +77,7 @@
      (TEMPL PARTICLE-TEMPL)
      )
     
-    ((LF-PARENT ONT::SCALE-RELATION)
+   ((LF-PARENT ONT::DIRECTION-UP)
      (TEMPL PREDICATIVE-ONLY-ADJ-TEMPL)
      (example "his weight / the temperature is up (X)")
      (SYNTAX (W::ALLOW-DELETED-COMP +) (w::degree-adv +))

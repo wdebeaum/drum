@@ -2982,6 +2982,7 @@
 
 (define-type ont::functionality-val
  :parent ont::object-affordances-val 
+ :arguments ((:essential ONT::FIGURE (F::PHYS-OBJ (F::ORIGIN F::ARTIFACT) (F::object-function f::provides-service-up-down))))
  :comment "properties relating to  whether something is functioning as intended"
 )
 
@@ -3021,7 +3022,9 @@
 ;; operating/active as intended?
 (define-type ont::activity-val
  :parent ont::object-affordances-val 
- :arguments ((:required ONT::FIGURE ((? lof f::phys-obj )(f::type (? !t2 ont::location ))(F::object-function F::provides-service )))) 
+ :arguments ((:required ONT::FIGURE ((? lof f::phys-obj )
+				     ;;(f::type (? !t2 ont::location ))
+				     (F::object-function F::provides-service )))) 
 ; :sem (F::Abstr-obj (F::gradability - ))
  :comment "properties relating to whether something is operating/active as intended"
 )
@@ -3036,14 +3039,16 @@
 (define-type ont::active-open
  :parent ont::active 
  :wordnet-sense-keys ("open%3:00:02" )
- :arguments ((:required ONT::FIGURE (f::phys-obj (f::type (? !t2 ont::location ))(F::object-function F::provides-service-open-closed )))) 
+ :arguments ((:required ONT::FIGURE (f::phys-obj 
+						 (F::object-function F::provides-service-open-closed )))) 
  :comment "operating as intended, typically a physcal location with operating hours"
 )
 
 (define-type ont::active-on
  :parent ont::active 
  :wordnet-sense-keys ("on%3:00:00" "on%3:00:02" )
- :arguments ((:required ONT::FIGURE (f::phys-obj (f::type (? !t2 ont::location ))(F::object-function F::provides-service-on-off )))) 
+ :arguments ((:required ONT::FIGURE (f::phys-obj (f::type (? !t2 ont::location ))
+						 (F::object-function F::provides-service-on-off )))) 
  :comment "operating as intended, typically due to some switching on/off"
 )
 
@@ -3062,14 +3067,16 @@
 (define-type ont::inactive-off
  :parent ont::inactive 
  :wordnet-sense-keys ("off%3:00:02" "off%3:00:00" )
- :arguments ((:required ONT::FIGURE (f::phys-obj (f::type (? !t2 ont::location ))(F::object-function F::provides-service-on-off )))) 
+ :arguments ((:required ONT::FIGURE (f::phys-obj (f::type (? !t2 ont::location ))
+						 (F::object-function F::provides-service-on-off )))) 
  :comment "not operating as intended, typically due to some switching on/off"
 )
 
 (define-type ont::inactive-closed
  :parent ont::inactive 
  :wordnet-sense-keys ("closed%3:00:01" "blocked%5:00:00:closed:01" )
- :arguments ((:required ONT::FIGURE (f::phys-obj (f::type (? !t2 ont::location ))(F::object-function F::provides-service-open-closed )))) 
+ :arguments ((:required ONT::FIGURE (f::phys-obj ;;(f::type (? !t2 ont::location ))
+						 (F::object-function F::provides-service-open-closed )))) 
  :comment "not operating as intended,  typically a physcal location with operating hours"
 )
 

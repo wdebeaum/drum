@@ -45,7 +45,8 @@
 	   (senses
 	    (;(lf-parent ont::artifact-property-val)
 	     (lf-parent ont::inactive-off)
-	     (templ central-adj-templ)
+	     ;(templ central-adj-templ)
+	     (templ predicative-only-adj-templ)
 	     (Example "The switch is off -- predicative only, because 'the off switch' is not at all the same")
 	     (meta-data :origin bee :entry-date 20040408 :change-date nil :wn ("off%3:00:00") :comments test-s)
 	     )

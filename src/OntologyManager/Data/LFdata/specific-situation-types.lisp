@@ -3392,6 +3392,7 @@
              (:REQUIRED ONT::Formal ((? thm F::phys-obj f::abstr-obj f::situation)))
 	     (:OPTIONAL ONT::Result ((? res F::phys-obj f::abstr-obj)))
 	     (:OPTIONAL ONT::AFFECTED-RESULT ((? res F::phys-obj f::abstr-obj)))
+	     (:OPTIONAL ONT::AFFECTED1 ((? res F::phys-obj f::abstr-obj f::situation)))
 ;	     (:OPTIONAL ONT::Content ((? ct F::phys-obj f::abstr-obj f::situation f::time))) ;; sort by time, price, size, color, etc.
              )
  )
@@ -3399,6 +3400,11 @@
 
 (define-type ONT::reverse  ; need to distinguish this from "invert"; they share a synset
  :parent ONT::arranging
+ )
+
+(define-type ONT::exchange
+ :parent ONT::arranging
+ :wordnet-sense-keys ("exchange%2:40:00" "exchange%2:30:00" "exchange%2:40:02" "transpose%2:30:00" "transpose%2:30:02" "transpose%2:36:00" "transpose%2:30:01")
  )
 
 (define-type ONT::set-up-device
@@ -3586,7 +3592,7 @@
 ;; )
 
 (define-type ONT::EXISTS
-  :wordnet-sense-keys ("be%2:42:00" "exist%2:42:00" "be%2:42:04" "dwell%2:42:01" "consist%2:42:00" "lie%2:42:01" "lie_in%2:42:00" "be%2:42:012" "play%2:36:04" "reach_one's_nostrils%2:39:00" "abound%2:42:00")
+  :wordnet-sense-keys ("be%2:42:00" "exist%2:42:00" "be%2:42:04" "dwell%2:42:01" "consist%2:42:00" "lie%2:42:01" "lie_in%2:42:00" "be%2:42:012" "play%2:36:04" "abound%2:42:00")
  :parent ONT::BE
  :sem (F::Situation (F::aspect F::stage-level) (F::time-span F::extended)(F::cause -) (F::locative F::located) (F::trajectory -))
  :arguments ((:REQUIRED ONT::neutral)

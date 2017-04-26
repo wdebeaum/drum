@@ -1050,7 +1050,7 @@
   )
 
 (defun get-role-events (role)
-  (mapcan #'(lambda (x) (cadr x)) role))
+  (flatten (mapcar #'(lambda (x) (cadr x)) role)))
   
 #||
 (defun sort-refs (refs focus-id)

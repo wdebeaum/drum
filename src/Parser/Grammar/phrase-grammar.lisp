@@ -111,7 +111,7 @@
 	 -spec2>
 	 (head (DET (sem ?def) (MASS ?m) (agr ?agr)
 		(LF ?l) (RESTR ?R)))
-	 (ordinal (LF (NTH ?q)))
+	 (ordinal (LF (NTH ?q)) (lex (? !lex w::half w::quarter)))
          (add-to-conjunct (val (ORDINAL ?q)) (old ?r) (new ?newr)))
 
 	;; one
@@ -410,10 +410,10 @@
     )
    
    ;; common nouns without modifiers, e.g. boxcar, juice, trains
-   ((N1 (SORT (? sort PRED UNIT-MEASURE)) (CLASS ?lf) (name-or-bare +)
+   ((N1 (SORT (? sort PRED UNIT-MEASURE)) (CLASS ?lf) (name-or-bare +) (one ?one) ; so we can exclude (one +) in -n-sing-n1->
      (POSTADVBL -) (QUAL -) (RESTR ?r) (subcat ?subcat) (simple +))
     -N1_1>
-    (head (n (SORT (? sort PRED UNIT-MEASURE)) (LF ?lf) (RESTR ?r) (punc -) 
+    (head (n (SORT (? sort PRED UNIT-MEASURE)) (LF ?lf) (RESTR ?r) (punc -) (one ?one)
 	     (subj-map -)   ;; we have a separate rule for nominalizations
 	     (subcat ?subcat) (SEM ($ ?type (f::scale ?sc)))
 	   )
@@ -1440,7 +1440,7 @@
      ) 
      -name-n1> .98
      (np (name +) (generated -) ;; don't allow numbers or times here
-         (VAR ?v1))
+         (VAR ?v1) (gap -))
      (head (N1 (VAR ?v2) (relc -) (sem ?sem) (sem ($ (? x F::ABSTR-OBJ F::PHYS-OBJ))) ;;  F::SITUATION)))
 	    (RESTR ?r) (CLASS ?c) (SORT PRED) (name-mod -)
 	    ;;(subj-map -)  ;; nominalized verbs have their own rules
@@ -1448,6 +1448,7 @@
 	    (post-subcat -)
 	    (postadvbl -) 
 	    (generated -)
+	    (gap -)
 	    )
       )
      (add-to-conjunct (val (ASSOC-WITH ?v1)) (old ?r) (new ?new)))
@@ -1487,7 +1488,7 @@
       (SUBCAT ?ignore) (GAP -) (kr-type ?kr-type)
       (postadvbl -) (post-subcat -) 
       )
-     (head (N1 (VAR ?v2) (QUAL -) (subcat ?subcat) (sort ?sort)
+     (head (N1 (VAR ?v2) (QUAL -) (subcat ?subcat) (sort ?sort) (one -) ; exclude the referential-sem w::one
 	       (sem ?sem)  (class (? c ONT::REFERENTIAL-SEM))
 	       (generated -)
 	       ;;(sem ($ (? x F::ABSTR-OBJ F::PHYS-OBJ))) ;;If we put this in, the SEM info doesn't get passed up!!
@@ -2609,7 +2610,7 @@
     ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype central) (comparative -) (argument ?aa)
       (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
 	     (CONSTRAINT (& (FIGURE ?arg) 
-			    (GROUND (% *PRO* (status ont::kinD) (var ?nv) 
+			    (GROUND (% *PRO* (status ont::kind) (var ?nv) 
 				    (CLASS ?c) (CONSTRAINT ?con)))))
 				    
 	     (Sem ?sem)))
@@ -2617,17 +2618,18 @@
      -adj-number-noun> .98    ;; this is very rare 
      (NUMBER  (val ?sz) (VAR ?nv) (restr -))
      (Gt (arg1 ?sz) (arg2 0))   ;; negative numbers don't work as cardinailty adjectives!
-     (head (N (VAR ?v) (LF ?c) (Mass count) (sort PRED)
+     (head (N1 (VAR ?v) (class ?c) ;(LF ?c) ; changed N to N1 because some N's need to change to pred (via N1-RELN1)
+	       (Mass count) (sort PRED)  
 	      (KIND -) (agr 3s) (one -) ;; don't allow "one" as the N!
 	      (RESTR ?restr) (sem ($ (? ss  F::PHYS-OBJ F::SITUATION-ROOT  F::ABSTR-OBJ)))
 	      (transform ?transform) (postadvbl -)
-	      (post-subcat -)
+	      (post-subcat -) (gap -)
 	      ))
     (add-to-conjunct (val (amount ?sz)) (old ?restr) (new ?con)))
 
       ;; version of adj-number-noun with units -- creates quantities, not sets
     ;; a 10 foot fence, 2 week vacation
-    ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype ?atype) (comparative -) (argument ?aa)
+    ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype attributive-only) (comparative -) (argument ?aa)
       (SORT unit-measure)
       (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
 	     (CONSTRAINT (& (FIGURE ?arg) 
@@ -2648,7 +2650,7 @@
      )
 
     ;; and often has a hyphen
-    ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype ?atype) (comparative -) (argument ?aa)
+    ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype attributive-only) (comparative -) (argument ?aa)
       (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
 	     (CONSTRAINT (& (FIGURE ?arg) 
 			    (GROUND (% *PRO* (status ont::inDEFINITE) (var ?nv) 

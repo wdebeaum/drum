@@ -154,7 +154,8 @@
 (define-type ONT::GEO-OBJECT
     :wordnet-sense-keys ("location%1:03:00")
     :parent ONT::phys-OBJECT
-    :sem (F::Phys-obj (F::form F::geographical-object) (:default (F::object-function F::spatial-object)))
+    :sem (F::Phys-obj (F::form F::geographical-object))
+		      ;;(:default (F::object-function F::spatial-object)))
     )
 
 ;; a place in space
@@ -163,7 +164,7 @@
     :sem (F::Phys-obj (F::origin F::non-living)
 		      (F::Form F::Geographical-Object)
 ;		   (F::Object-Function F::Place)
-		      (F::Object-Function F::Spatial-object)
+		      ;;(F::Object-Function F::Spatial-object)
 		      )
     :arguments (;(:OPTIONAL ONT::OF ((? lof F::Phys-obj)))
 ; this needs to be less restrictive as long as it's used for "where" clauses, e.g. the party where he met her
@@ -321,9 +322,9 @@
     :parent ONT::man-made-structure
     :sem (F::Phys-obj (F::spatial-abstraction (? sa F::spatial-point F::spatial-region))
 		      (F::origin F::Artifact)(F::trajectory -)
-		      (f::object-function f::building)
+		      (f::object-function f::provides-service-open-closed)
 		      (F::mobility f::fixed) (f::container +))
-    )
+   ) 
 
 (define-type ONT::TOWER
   :wordnet-sense-keys ("tower%1:06:00")
@@ -930,42 +931,42 @@
 
 (define-type ONT::public-service-facility
     :parent ONT::facility
-    :sem (F::Phys-obj (F::object-function F::Building))
+   ;; :sem (F::Phys-obj (F::object-function F::Building))
     )
 
 ;; lab, laboratory
 (define-type ONT::research-facility
     :parent ONT::facility
     :wordnet-sense-keys ("research_center%1:06:00" "lab%1:06:00" "laboratory%1:06:00" "research_lab%1:06:00" "research_laboratory%1:06:00" "science_lab%1:06:00" "science_laboratory%1:06:00")
-    :sem (F::Phys-obj (F::object-function F::Building))
+    ;;:sem (F::Phys-obj (F::object-function F::Building))
     )
 
 ;; pool, gym
 (define-type ONT::athletic-facility
     :parent ONT::facility
     :wordnet-sense-keys ("athletic_facility%1:06:00")
-    :sem (F::Phys-obj (F::object-function F::Building))
+    ;;:sem (F::Phys-obj (F::object-function F::Building))
     )
 
 ;; office
 (define-type ONT::business-facility
     :parent ONT::facility
     :wordnet-sense-keys ("office_building%1:06:00")
-    :sem (F::Phys-obj (F::object-function F::Building))
+    ;;:sem (F::Phys-obj (F::object-function F::Building))
     )
 
 ;; store, shop
 (define-type ONT::commercial-facility
     :parent ONT::facility
     :wordnet-sense-keys ("shop%1:06:00")
-    :sem (F::Phys-obj (F::object-function F::Building))
+    ;;:sem (F::Phys-obj (F::object-function F::Building))
     )
 
 ;; disco
 (define-type ONT::entertainment-establishment
     :parent ONT::commercial-facility
     :wordnet-sense-keys ("discotheque%1:06:00")
-    :sem (F::Phys-obj (F::object-function F::Building))
+    ;;:sem (F::Phys-obj (F::object-function F::Building))
     )
 
 ;; cafe, etc.
@@ -990,27 +991,27 @@
 (define-type ONT::drinking-establishment
     :parent ONT::entertainment-establishment
     :wordnet-sense-keys ("barroom%1:06:00" "bar%1:06:00" "saloon%1:06:00" "ginmill%1:06:00" "taproom%1:06:00")
-    :sem (F::Phys-obj (F::object-function F::Building))
+    ;;:sem (F::Phys-obj (F::object-function F::Building))
     )
 
 ;; warehouse
 (define-type ONT::storage-facility
     :parent ONT::facility
     :wordnet-sense-keys ("warehouse%1:06:00" "storage_warehouse%1:06:00")
-    :sem (F::Phys-obj (F::object-function F::Building))
+    ;;:sem (F::Phys-obj (F::object-function F::Building))
     )
 
 ;; factory, plant
 (define-type ONT::production-facility
     :parent ONT::facility
     :wordnet-sense-keys ("factory%1:06:00" "manufacturing_plant%1:06:00" "manufactory%1:06:00")
-    :sem (F::Phys-obj (F::object-function F::Building))
+    ;;:sem (F::Phys-obj (F::object-function F::Building))
     )
 
 (define-type ONT::transportation-facility
     :parent ONT::facility
     :wordnet-sense-keys ("terminal%1:06:00" "terminus%1:06:01" "depot%1:06:00")
-    :sem (F::Phys-obj (F::object-function F::Building))
+    ;;:sem (F::Phys-obj (F::object-function F::Building))
     )
 
 (define-type ont::airport
@@ -1030,32 +1031,32 @@
 (define-type ONT::lodging
     :wordnet-sense-keys ("housing%1:06:00" "lodging%1:06:00" "living_accommodations%1:06:00")
     :parent ONT::facility
-    :sem (F::Phys-obj (F::object-function F::Building))
+    ;;:sem (F::Phys-obj (F::object-function F::Building))
     )
 
 (define-type ONT::health-care-facility
     :parent ONT::facility
     :wordnet-sense-keys ("hospital%1:06:00" "hospital%1:14:00" "fire_department%1:14:00" "police_department%1:14:00")
-    :sem (F::Phys-obj (F::object-function F::Building))
+    ;;:sem (F::Phys-obj (F::object-function F::Building))
     )
 
 (define-type ONT::education-facility
     :parent ONT::facility
     :wordnet-sense-keys ("school%1:06:00" "university%1:06:00" "college%1:06:00")
-    :sem (F::Phys-obj (F::object-function F::Building))
+   ;; :sem (F::Phys-obj (F::object-function F::Building))
     )
 
 (define-type ONT::religious-facility
     :parent ONT::facility
     :wordnet-sense-keys ("place_of_worship%1:06:00" "house_of_prayer%1:06:00" "house_of_god%1:06:00" "house_of_worship%1:06:00")
-    :sem (F::Phys-obj (F::object-function F::Building))
+    ;;:sem (F::Phys-obj (F::object-function F::Building))
     )
 
 ;; hotel, inn, guesthouse
 (define-type ONT::accommodation
     :parent ONT::lodging
     :wordnet-sense-keys ("hotel%1:06:00")
-    :sem (F::Phys-obj (F::object-function F::Building))
+    ;;:sem (F::Phys-obj (F::object-function F::Building))
     )
 
 (define-type ONT::bedandbreakfast
