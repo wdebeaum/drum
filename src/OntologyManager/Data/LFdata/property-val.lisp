@@ -1655,6 +1655,7 @@
 ;; hungry, sleepy
 (define-type ont::body-property-val
  :parent ont::body-related-property-val 
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Phys-obj (f::origin (? org f::human f::non-human-animal)))))
  :comment "properties having to do with human/animal body conditions or states"
 )
 
@@ -1739,13 +1740,14 @@
 ;; mute, deaf, blind
 (define-type ont::has-medical-condition
   :parent ont::body-related-property-val
-  :arguments ((:essential ONT::FIGURE (F::phys-obj (F::origin F::human) (F::intentional +))))
+  :arguments ((:essential ONT::FIGURE (F::phys-obj (f::origin (? org f::human f::non-human-animal)) (F::intentional +))))
   :wordnet-sense-keys ("deaf%3:00:00" "blind%3:00:00" "mute%5:00:01:inarticulate:00")
   )
 
 ;; healthy or ailing
 (define-type ont::healthiness-val
   :parent ont::body-related-property-val
+  :arguments ((:ESSENTIAL ONT::FIGURE (F::Phys-obj (f::origin (? org f::human f::non-human-animal)))))
 )
 
 (define-type ont::healthy-val
@@ -3446,6 +3448,7 @@
 ;; happy, sad, gloomy...
 (define-type ont::emotional-val
  :parent ont::psychological-property-val 
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Phys-obj (f::origin (? org f::human f::non-human-animal)))))
  :comment "state of having a particular emotion"
 )
 

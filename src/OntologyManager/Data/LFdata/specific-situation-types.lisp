@@ -2514,17 +2514,22 @@
 
 (define-type ONT::USE
  :wordnet-sense-keys ("use%1:04:01" "habit%1:04:02" "use_of_goods_and_services%1:22:00" "use%1:22:00" "usance%1:22:00" "economic_consumption%1:22:00" "consumption%1:22:00" "use%1:07:02" "exercise%1:04:03" "employment%1:04:01" "utilisation%1:04:00" "utilization%1:04:00" "usage%1:04:00" "use%1:04:00" "practical_application%1:04:00" "application%1:04:02" "use%2:41:03" "use%2:41:04" "apply%2:41:01" "practice%2:41:01" "use%2:41:14" "expend%2:34:00" "use%2:34:00" "habituate%2:34:00" "use%2:34:02" "use%2:34:01" "utilize%2:34:00" "utilise%2:34:00" "apply%2:34:00" "employ%2:34:00")
- :parent ONT::CAUSE-effect
+ ;:parent ONT::CAUSE-effect
+ :parent ONT::ACTING
  :sem (F::SITUATION (F::Cause F::agentive))
  ;;; an object used in action
- :arguments ((:REQUIRED ONT::formal ((? oc F::Phys-obj F::Abstr-obj F::Situation)))
+ :arguments (;(:REQUIRED ONT::formal ((? oc F::Phys-obj F::Abstr-obj F::Situation)))
              ;;; use a book as a hammer; use force as a catalyst
-             (:OPTIONAL ONT::Formal1 ((? oc1 F::Phys-obj F::Abstr-obj F::Situation)))
+             (:OPTIONAL ONT::Formal1 ((? oc1 F::Phys-obj F::Abstr-obj F::Situation)))  ; change this too?
              ;;; use a book to do something
 ;             (:OPTIONAL ONT::Purpose (F::Situation))
              (:OPTIONAL ONT::REASON (F::Situation))
 	     ;; _the car_ uses petrol to run; _the battery_ uses a chemical reaction to maintain voltage
 	     (:optional ONT::Affected ((? obj f::abstr-obj f::phys-obj)))
+	     (:optional ont::result ((? res1 F::SITUATION F::ABSTR-OBJ))) ; copied from CAUSE-EFFECT
+	     (:optional ont::formal ((? res2 F::SITUATION F::ABSTR-OBJ)
+				     (F::type (? ftype ONT::SITUATION-ROOT ONT::PROPERTY-VAL));; ONT::POSITION-RELN)) ;; here for now while we decide the FORMAL/RESULT issue
+				     ))   ; copied from CAUSE-EFFECT
              )
  )
 
@@ -2545,11 +2550,17 @@
 
 (define-type ONT::EXECUTE
   :wordnet-sense-keys ("fulfil%2:36:00" "fulfill%2:36:00" "action%2:36:00" "carry_out%2:36:00" "execute%2:36:00" "accomplish%2:36:00" "carry_through%2:36:00" "perform%2:36:00" "execute%2:36:01" "do%2:36:01" "do%2:41:01" "play%2:36:05""conduct%2:41:00" "commit%2:41:00" "commit%2:41:01")
- :parent ONT::cause-effect
- :sem (F::Situation (F::Aspect F::Dynamic))
+ ;:parent ONT::cause-effect
+  :parent ONT::ACTING
+  :sem (F::Situation (F::Aspect F::Dynamic))
  :arguments ( ;; run the script/program
 	     (:essential ont::agent (F::PHYS-OBJ (f::intentional +) (F::origin F::human)))
 	     (:optional ont::neutral ((? thm f::abstr-obj f::situation) (f::type (? tt ONT::PROCEDURE ONT::EVENT-OF-ACTION ))))
+	     (:optional ont::result ((? res1 F::SITUATION F::ABSTR-OBJ))) ; copied from CAUSE-EFFECT
+	     (:optional ont::formal ((? res2 F::SITUATION F::ABSTR-OBJ)
+				     (F::type (? ftype ONT::SITUATION-ROOT ONT::PROPERTY-VAL));; ONT::POSITION-RELN)) ;; here for now while we decide the FORMAL/RESULT issue
+				     ))   ; copied from CAUSE-EFFECT
+	     
 	     )
  )
 

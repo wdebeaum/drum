@@ -596,11 +596,13 @@
 	  ;; robust rule for explicit constructions, e.g., "the Rasaeo protein" where "Rasaeo" is unknown
 	  ;; Note: I think the unknown word must be capitalized and be preceded by "the"
 	  ;; works somewhat for, e.g., Ib-V-IX complex
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET ONT::WH-TERM) ?!obj 
 	    (:* ?!type (? word W::PROTEIN W::GENE W::DRUG W::KINASE W::SITE W::POSITION W::MOLECULE W::DOMAIN W::PROMOTER W::MRNA W::TRANSCRIPT W::RECEPTOR-TYROSINE-KINASE W::PATHWAY W::COMPLEX W::PROTEINS W::GENES W::DRUGS W::KINASES W::SITES W::POSITIONS W::MOLECULES W::DOMAINS W::PROMOTERS W::MRNAS W::TRANSCRIPTS W::RECEPTOR-TYROSINE-KINASES W::PATHWAYS W::COMPLEXES))
 	    :ASSOC-WITHS (?!name))
 ;	   (?reln1 ?!name (:* (? type1 ONT::REFERENTIAL-SEM) ?w) :NAME-OF ?!name1 :DRUM ?code)
-	   (?reln1 ?!name (:* (? type1 ONT::REFERENTIAL-SEM) ?!w) :NAME-OF ?!name1 :DRUM -)   ;; make sure it is not a known term; no :DRUM info
+	   (?reln1 ?!name (:* (? type1 ONT::REFERENTIAL-SEM) ?!w)
+		   ;:NAME-OF ?!name1
+		   :DRUM -)   ;; make sure it is not a known term; no :DRUM info
 	   -explicit-ref-robust>
 	   90 ; lower priority than -explicit-ref-pathway2
 	   (ONT::TERM ?!obj ?!type
