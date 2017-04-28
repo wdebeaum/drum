@@ -7,7 +7,7 @@
   (W::STARTUP
    (SENSES
     ((EXAMPLE "a startup task")
-     (lf-parent ont::task-purpose-val) ;; what? -- wdebeaum
+     (lf-parent ont::startup-val)
      (templ adj-content-templ)
      )
     )

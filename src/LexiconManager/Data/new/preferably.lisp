@@ -7,7 +7,7 @@
  :words (
   (W::preferably
    (SENSES
-    ((LF-PARENT ONT::preference-val)
+    ((LF-PARENT ONT::preferred-val)
      (LF-FORM W::preferable)
      (TEMPL DISC-TEMPL)
      )

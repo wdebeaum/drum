@@ -17,7 +17,7 @@
  :words (
   (W::landscape
    (SENSES
-    ((LF-PARENT ONT::ORIENTATION-VAL)
+    ((LF-PARENT ONT::LANDSCAPE-VAL)
      (EXAMPLE "lay out the document in landscape orientation")
      (meta-data :origin task-learning :entry-date 20050923 :change-date nil :comments nil)
      )

@@ -6,7 +6,7 @@
  :words (
   (W::portrait
    (SENSES
-    ((LF-PARENT ONT::ORIENTATION-VAL)
+    ((LF-PARENT ONT::PORTRAIT-VAL)
      (EXAMPLE "lay out the document in portait orientation")
      (meta-data :origin task-learning :entry-date 20050912 :change-date nil :comments nil)
      )

@@ -9,7 +9,7 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date 20061106 :comments nil :wn ("fair%5:00:00:moderate:00") :comlex (ADJ-PP-FOR))
      (example "a good book")
-     (LF-PARENT ONT::ACCEPTABILITY-VAL)
+     (LF-PARENT ONT::good-VAL)
      (SEM (f::gradability +) (f::orientation ont::less) (f::intensity ont::lo))
      (TEMPL central-adj-templ)
      )
@@ -28,7 +28,7 @@
 ;;;     )
     ((meta-data :origin trips :entry-date 20060824 :change-date 20061106 :comments nil :wn ("fair%5:00:00:moderate:00") :comlex (ADJ-PP-FOR))
      (EXAMPLE "a solution good for him")
-     (LF-PARENT ONT::ACCEPTABILITY-VAL)
+     (LF-PARENT ONT::good-VAL)
      (SEM (f::gradability +) (f::orientation ont::less) (f::intensity ont::lo))
      ;; this is another indirect sense of "for"
      ;; the main sense is adj-purpose-templ for cases such as "this is good for treating cancer"

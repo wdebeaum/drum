@@ -17,7 +17,7 @@
  :words (
   ((W::upside w::down)
    (SENSES
-    ((LF-PARENT ONT::ORIENTATION-VAL)
+    ((LF-PARENT ONT::INVERTED-VAL)
      (EXAMPLE "flip the object upside down")
      (meta-data :origin task-learning :entry-date 20050831 :change-date nil :comments nil)
      )

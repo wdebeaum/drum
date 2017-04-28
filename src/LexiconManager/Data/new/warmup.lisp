@@ -7,7 +7,7 @@
   (W::WARMUP
    (SENSES
     ((EXAMPLE "a warmup task")
-     (lf-parent ont::task-purpose-val)
+     (lf-parent ont::startup-val)
      (TEMPL adj-content-TEMPL)
      (SYNTAX (W::atype W::attributive-only))
      )
