@@ -36,6 +36,10 @@
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      (example "the house around the corner")
      )
+    ((LF-PARENT ont::pivot )
+     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     (example "rotate around the origin")
+     )
     )
    )
 ))
@@ -45,7 +49,7 @@
  :words (
    (W::Around
    (SENSES
-    ((LF (W::against))
+    ((LF (W::around))
      (non-hierarchy-lf t))
     )
    )

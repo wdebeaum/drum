@@ -307,6 +307,10 @@
 ; ?? how do these relate to the ont::path subtree?
 (define-type ont::position-w-trajectory-reln
  :parent ont::position-reln
+ :arguments (;(:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj F::Situation) (F::trajectory +)))
+	     (:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj F::Situation)))
+             (:ESSENTIAL ONT::GROUND (F::Phys-obj))
+             )
  )
 
 ; figure is linear and crosses ground

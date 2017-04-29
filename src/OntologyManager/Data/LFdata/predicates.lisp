@@ -506,3 +506,11 @@
 	      (:ESSENTIAL ONT::FIGURE (F::SITUATION (f::type ont::event-of-change) (F::trajectory -)))
 	      (:ESSENTIAL ONT::GROUND ((? gd F::SITUATION F::abstr-obj F::phys-obj)))
   ))
+
+; rotate around/about this axis/origin, flip along this axis
+; invert the notes around G4 (musica)
+(define-type ONT::pivot
+  :parent ONT::PREDICATE
+  :arguments ((:ESSENTIAL ONT::FIGURE ((? fig F::SITUATION) (f::type (? t ONT::MOTION ONT::ROTATE))))
+	      (:ESSENTIAL ONT::GROUND ((? gd F::abstr-obj)))
+  ))
