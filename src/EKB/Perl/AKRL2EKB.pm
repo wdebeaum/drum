@@ -1,6 +1,6 @@
 # ARKL2EKB.pm
 #
-# Time-stamp: <Tue Mar 28 17:38:08 CDT 2017 lgalescu>
+# Time-stamp: <Sun Apr 30 23:15:35 CDT 2017 lgalescu>
 #
 # Author: Roger Carff <rcarff@ihmc.us>, 9 Mar 2017
 #
@@ -545,8 +545,14 @@ sub createEKB_RELN
     # Add the Agent
     add_arg(":AGENT", $akrl->getValueForKey (":AGENT"), $ekb, $event, $akrlList);
 
+    # Add the Agent1
+    add_arg(":AGENT1", $akrl->getValueForKey (":AGENT1"), $ekb, $event, $akrlList);
+
     # Add the Affected
     add_arg(":AFFECTED", $akrl->getValueForKey (":AFFECTED"), $ekb, $event, $akrlList);
+
+    # Add the Affected1
+    add_arg(":AFFECTED1", $akrl->getValueForKey (":AFFECTED1"), $ekb, $event, $akrlList);
 
     # Add the Factor
     add_arg(":FACTOR", $akrl->getValueForKey (":FACTOR"), $ekb, $event, $akrlList);
@@ -556,6 +562,15 @@ sub createEKB_RELN
 
     # Add the Affected-result
     add_arg(":AFFECTED-RESULT", $akrl->getValueForKey (":AFFECTED-RESULT"), $ekb, $event, $akrlList);
+
+    # Add the NEUTRAL
+    add_arg(":NEUTRAL", $akrl->getValueForKey (":NEUTRAL"), $ekb, $event, $akrlList);
+
+    # Add the NEUTRAL1
+    add_arg(":NEUTRAL1", $akrl->getValueForKey (":NEUTRAL1"), $ekb, $event, $akrlList);
+
+    # Add the NEUTRAL2
+    add_arg(":NEUTRAL2", $akrl->getValueForKey (":NEUTRAL2"), $ekb, $event, $akrlList);
 
     # Add the Formal
     add_arg(":FORMAL", $akrl->getValueForKey (":FORMAL"), $ekb, $event, $akrlList);
