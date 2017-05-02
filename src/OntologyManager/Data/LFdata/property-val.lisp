@@ -1476,7 +1476,7 @@
 (define-type ONT::orange
  :parent ONT::color-VAL
   :sem (F::Abstr-obj (F::scale ONT::ORANGE*1--07--00))
- :wordnet-sense-keys ("orange%5:00:00:chromatic:00)")
+ :wordnet-sense-keys ("orange%5:00:00:chromatic:00")
   )
 
 (define-type ONT::purple
