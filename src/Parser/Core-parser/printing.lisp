@@ -1984,7 +1984,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	 ;;((ont::goal-reln) :goal)
 	 ((ont::position-reln ) :location)
 	 ((ont::accompaniment) :agent1)
-	 ((ont::by-means-of) :method)
+	 ((ont::by-means-of ont::with-instrument) :method)
 	 ((ont::beneficiary) :beneficiary)
 	 ((ont::source-reln) :source)
 	 ((ont::manner ont::abstract-object-property ont::pivot) :manner)

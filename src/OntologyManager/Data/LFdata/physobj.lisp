@@ -2229,7 +2229,7 @@
 (define-type ONT::tableware
     :wordnet-sense-keys ("tableware%1:06:00")
     :parent ONT::manufactured-object
-    :sem (F::Phys-obj (F::container +) (F::form F::solid-object) (F::origin F::artifact)(f::trajectory -) (f::object-function f::instrument))
+    :sem (F::Phys-obj (F::form F::solid-object) (F::origin F::artifact)(f::trajectory -))
     :arguments ((:OPTIONAL ONT::CONTENTS)
 		)
     )
@@ -2238,7 +2238,7 @@
 (define-type ONT::cutlery
     :wordnet-sense-keys ("cutlery%1:06:00")
     :parent ONT::tableware
-    :sem (F::Phys-obj (F::container +) (F::form F::solid-object) (F::origin F::artifact)(f::trajectory -) (f::object-function f::instrument))
+    :sem (F::Phys-obj (F::form F::solid-object) (F::origin F::artifact)(f::trajectory -) (f::object-function f::instrument))
     )
 
 
@@ -2250,16 +2250,19 @@
 
 (define-type ont::cup
     :parent ont::tableware
+    :sem (F::Phys-obj (F::container +))
     :wordnet-sense-keys ("cup%1:06:00")
     )
 
 (define-type ont::mug
     :parent ont::tableware
+    :sem (F::Phys-obj (F::container +))
     :wordnet-sense-keys ("mug%1:06:00")
     )
 
 (define-type ont::glass
     :parent ont::tableware
+    :sem (F::Phys-obj (F::container +))
     :wordnet-sense-keys ("glass%1:06:00")
     )
 
@@ -2541,6 +2544,7 @@
 (define-type ONT::SOUP
     :wordnet-sense-keys ("soup%1:13:00")
     :parent ONT::MEALS
+    :sem (f::phys-obj (F::form F::liquid))
     )
 
 (define-type ONT::CEREALS

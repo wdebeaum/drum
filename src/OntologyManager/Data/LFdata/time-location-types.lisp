@@ -66,8 +66,9 @@
 ; figure is outside a container, group or area
 (define-type ont::outside
   :parent ont::pos-as-containment-reln
-  :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj) (f::intentional -) ;;(f::container +)  getting problems with things like "pull the plug out of the wall"
-				   )))
+  :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj) (f::intentional -)
+				       (f::container +)  ;; having container + causes problems with things like "pull the plug out of the wall"
+				       )))
   )
 
 ; out (of), outside (of)

@@ -255,7 +255,7 @@
  :parent ONT::PREDICATE
  :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (f::type ont::event-of-action)
 						   (f::aspect f::dynamic)))
-             (:REQUIRED ONT::GROUND (F::Phys-obj (F::origin F::artifact) (F::intentional -)))
+             (:REQUIRED ONT::GROUND (F::Phys-obj (F::origin F::artifact) (F::intentional -) (F::OBJECT-FUNCTION F::INSTRUMENT)))
              )
  )
 
