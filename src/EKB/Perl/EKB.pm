@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Fri Apr 21 23:22:07 CDT 2017 lgalescu>
+# Time-stamp: <Mon May  8 17:56:58 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.26 2017/04/22 04:23:53 lgalescu Exp $
+# $Id: EKB.pm,v 1.27 2017/05/08 23:34:22 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -91,15 +91,24 @@
 # - some cleanup
 # - added XPath filter to &assertion_args. made &get_children_by_name_regex and
 #   &get_child_node_regex_attr obsolete.
-
+# 2017/04/?? v1.14.0	lgalescu
+# - a fair amount of cleanup
+# - added &infer_assertion method to replace all &add_X_r methods, which used
+#   some odd conventions, and are being phased out. the new method will be used
+#   uniformly for all types of assertions
+# - added utility functions for making components properties and complex names
+# - improved method for finding aggregate members (recursively)
+# - added methods for some commonly inferred assertions: &causes, &increases 
+#   and &decreases
+# - moved a few methods into package functions
 
 # TODO:
-# - maybe split off XML Node extensions into a separate package (EKB::EKBNode?)
+# - maybe split off non-OO extensions for manipulating XML objects into a separate package?
 # - add DTD validation
 
 package EKB;
 
-$VERSION = '1.12.0';
+$VERSION = '1.14.0';
 
 =head1 NAME
 
@@ -143,19 +152,16 @@ c. Editing
   $ekb->make_aggregate_term($ids, $operator, $attributes, @properties);
 
 
-d. Other
+d. Non-OO utility functions:
 
-  $boolean = $ekb->is_relation($a);
-
-
-Non-OO utility functions:
-
+  $b = is_relation($a);
   $t = get_assertion_type($a);
+  @args = assertion_args($a, $filter);
+  @xargs = assertion_xargs($a);
   set_slot_value($n, $name, $value);
   $v = get_slot_value($n, $name);  
   $p = make_slot_node($pname => $pvalue);
   @plist = make_slot_nodes( $n1 => $v1, $n2 => $v2, ...);
-
 
   ...
 
@@ -226,6 +232,11 @@ require Exporter;
 our @ISA = qw(Exporter);
 
 our @EXPORT = qw(
+		  is_relation
+		  get_assertion_type
+		  is_assertion_type
+
+		  assertion_args assertion_xargs
 		  get_child_node
 		  get_children_by_name_regex
 		  get_child_node_regex_attr
@@ -239,6 +250,7 @@ our @EXPORT = qw(
 		  make_slot_node make_slot_nodes
 		  make_predicate
 		  make_arg
+		  make_components make_complex_name
 
 		  set_attribute
 		  append_to_attribute
@@ -978,32 +990,43 @@ sub find_referrers {
   return @result;
 }
 
-# find instances of aggregate terms
-sub find_instances {
-  my $self = shift;
-  my ($id) = @_; 
+=head2 find_members_rec( $id, $op_list )
 
-  my ($node) = $self->get_assertion($id);
-  return () unless $node;
-  DEBUG 3, "find_instances(%s)", $id;
+Find recursively the members of an aggregate term with the given identifier.
+
+If present, $op_list must be a reference to a list of allowable operators. If
+not present, all operators are allowed. 
+
+If $id is the identifier of a term that is not an aggregate, this method will
+return just the term itself. 
+
+=cut
+
+# find instances of aggregate terms
+sub find_members_rec {
+  my $self = shift;
+  my ($id, $ops) = @_;
+
+  my $a = $self->get_assertion($id);
+  return () unless $a;
+  DEBUG 2, "find_members_rec(%s, %s)", $id, $ops ? "[".join(",", @$ops)."]" : "undef";
     
   # check if this is an aggregate term
-  if ($node->exists('aggregate')) {
-    my @memberIds =
-      map { $_->getAttribute('id')}
-      $node->findnodes('aggregate/member');
-    DEBUG 2, "aggregate: %s -> (%s)", $id, "@memberIds";
-    return map { $self->find_instances($_) } @memberIds;
-  } else {
-    return ($node);
-  }
+  my $op = $a->findvalue('./aggregate/@operator');
+  DEBUG 3, "op found: \"%s\"", $op;
+  # and the operator matches the desired ones
+  return ($a) unless $op and (!defined($ops) or (grep {$op eq $_} @$ops));
+  my @memberIds =
+    map { $_->getAttribute('id')}
+    $a->findnodes('aggregate/member');
+  DEBUG 2, "aggregate: %s -> (%s)", $id, "@memberIds";
+  return map { $self->find_members_rec($_, $ops) } @memberIds;
 }
+
 
 =head2 add_assertion( $node )
 
 Adds an XML representation of an assertion to the EKB document.
-
-TODO: should be renamed to better reflect actual meaning
 
 =cut
 
@@ -1011,6 +1034,7 @@ sub add_assertion {
   my ($self, $a) = @_;
   $self->get_document()->documentElement()->appendChild($a);
   DEBUG 2, "Added new assertion: %s", $a;
+  $a;
 }
 
 =head2 derive_assertion( $id, $atype )
@@ -1056,16 +1080,17 @@ sub derive_assertion {
 		       );
 }
 
-=head2 clone_assertion( $a, $options )
+=head2 clone_assertion( $a, $attributes )
 
-Creates a new assertion as a full clone of $a.
+Creates a new assertion as a clone of $a.
 
 The new assertion will be a deep copy of the old, cleaned up and with a new 
 ID. The derivational history is kept via the C<refid> attribute.
 
-The $options argument is a reference to a hash of attribute-value pairs. If 
-given, the new assertion's attributes are set accordingly. Currently the 
-only attribute supported is C<rule>.
+If the optional $attributes argument is given, the new assertion's attributes
+are set accordingly. Currently the only attribute supported is C<rule>. This
+behavior might change to support an unrestricted list of attribute-value
+pairs.
 
 If successful, returns the newly created assertion. If an assertion with 
 the given ID doesn't exist, returns C<undef>. 
@@ -1074,13 +1099,13 @@ the given ID doesn't exist, returns C<undef>.
 
 sub clone_assertion {
   my $self = shift;
-  my ($ref, $opts) = @_;
+  my ($ref, $attrs) = @_;
   my $a = clone_node($ref, $self->new_id);
   $self->clean_assertion($a);
-  if (ref($opts) eq 'HASH') {
+  if (ref($attrs) eq 'HASH') {
     # should we append the rule???
-    if (defined $opts->{'rule'}){
-      	set_attribute($a, 'rule', $opts->{'rule'});
+    if (defined $attrs->{'rule'}){
+      	set_attribute($a, 'rule' => $attrs->{'rule'});
     }
   }
   $a;
@@ -1098,8 +1123,7 @@ sub clean_assertion {
   $a->removeAttribute('lisp');
   DEBUG 2, "Cleaning up: %s", $a;
   # remove unnecessary stuff from args & pseudoargs
-  map { $self->_clean_arg($_) } ( $self->assertion_args($a),
-				  $self->assertion_pseudoargs($a) );
+  map { $self->_clean_arg($_) } assertion_args($a), assertion_xargs($a);
 }
 
 # note: this is only useful for args extracted from text.
@@ -1218,7 +1242,7 @@ sub modify_assertion {
     delete $attrs->{'rule'};
   }
   # set all other attributes
-  set_attributes($a, %$attrs);
+  set_attributes($a, $attrs);
 
   # set children and warn on replacements
   foreach my $child (@children) {
@@ -1263,15 +1287,10 @@ my $c = make_complex_term([$term_id1, $term_id2], {rule => 'MY_RULE'});
 
 sub make_complex_term {
   my $self = shift;
-  my ($ids, @content) = @_;
-  my $a = $self->make_assertion( 'TERM',
-				 @content );
-  my @comps
-    = map { make_node("component", { id => $_ }) } @$ids;
-  if (@comps) {
-    $a->appendChild(make_node("components", @comps));
-  }
-  $a;
+  my $ids = shift;
+  $self->make_assertion( 'TERM',
+			 @_,
+			 make_components(@$ids) );
 }
 
 
@@ -1302,7 +1321,6 @@ sub make_aggregate_term {
   }
   $a;
 }
-
 
 =head2 add_assertion_r( $atype, %args )
 
@@ -1341,13 +1359,44 @@ sub add_assertion_r {
   } else {
     $a = $self->make_assertion($atype);
   }
-  $self->modify_assertion($a,
-			  \%args,
-			  @slots );
-
+  $self->modify_assertion($a, \%args, @slots);
   $self->add_assertion($a);
 
   return $a->getAttribute('id');
+}
+
+=head2 infer_assertion( $atype, $attributes, @properties )
+
+Creates and adds an assertion of the given type to the EKB document.
+
+If the C<refid> attribute is set in $attributes, the new assertion is
+derived from the assertion with the first id.
+
+Returns the id of the new assertion on success, and C<undef> on failure.
+
+=cut
+
+sub infer_assertion {
+  my $self = shift;
+  my $atype = shift;
+  my ($attrs, @children) = _parse_node_args(@_);
+  my $a;
+  my @refs = (exists $attrs->{refid}) ? split(",", $attrs->{refid}) : ();
+  # derive or make new assertion 
+  if (@refs) {
+    my $base_id = $refs[0];
+    $a = $self->derive_assertion($base_id, $atype)
+      # FIXME: this is not robust, but bad things can happen if we go on!
+      or FATAL "Could not derive assertion from id=%s", $base_id;
+  } else {
+    $a = $self->make_assertion($atype);
+  }
+  # add modifications
+  $self->modify_assertion($a, $attrs, @children);
+  # store
+  $self->add_assertion($a);
+  # return
+  $a->getAttribute('id');
 }
 
 =head2 add_term_r( %args )
@@ -1355,6 +1404,8 @@ sub add_assertion_r {
 Creates and adds a TERM assertion to the EKB.
 
 This is just a wrapper around L<add_assertion_r()|/add_assertion_r(_$atype,_%args_)>.
+
+NOTE: PHASED-OUT
 
 =cut
 
@@ -1367,7 +1418,11 @@ sub add_term_r {
 
 Creates and adds an EVENT assertion to the EKB.
 
+Returns the id of the inferred event.
+
 This is mostly a wrapper around L<add_assertion_r()|/add_assertion_r(_$atype,_%args_)>.
+
+NOTE: PHASED-OUT
 
 =cut
 
@@ -1391,25 +1446,34 @@ sub add_event_r {
 
 # This is a more specific version of L<add_term_r()|/add_term_r(_%args_)>.
 
-# ...
+# This function has side effects: it infers bound versions of all components!
 
-# TODO: iirc, the idea was to move much of the work done in the reasoner when
-# inferring complexes into this function. This is still work in progress!
-# It is only used once in Drum.pm, where it is guarded by an option only used for
-# testing.
-
+# Example:
+	# $z_id =
+	#   $ekb->add_complex_r( refs => [ $e_id ],
+	# 		         comps => [ $x_id, $y_id ],
+	# 		         rule => $rule->name,
+	# 		       );
 
 # =cut
 
 # idea: complex(X,Y)
 #	= complex(X,Y) if X, Y are simple entities
 #	= complex(X,Y1,Y2,...) if X is simple entity and Y=complex(Y1,Y2,...)
+# TODO (maybe)
 sub add_complex_r {
   my $self = shift;
   my %args = @_;
 
-  my $a = $self->make_assertion('TERM');
-  
+  if ($args{refs}) {
+    my $base_id = shift @{ $args{refs} };
+    $a = $self->derive_assertion($base_id, 'TERM')
+      # FIXME: this is not robust, but bad things can happen if we go on!
+      or FATAL "Could not derive assertion from id=%s", $base_id;
+  } else {
+    $a = $self->make_assertion('TERM');
+  }
+
   # get components and name
   my @comp_ids;
   my $name = "";
@@ -1422,9 +1486,7 @@ sub add_complex_r {
       if (($c_type eq "ONT::MACROMOLECULAR-COMPLEX") &&
 	  (my $c_comp = get_child_node($c, 'components')))
 	{
-	  push @comp_ids,
-	    map { $_->getAttribute('id') }
-	    $c_comp->childNodes();
+	  push @comp_ids, map { $_->getAttribute('id') } $c_comp->childNodes();
 	} else {
 	  push @comp_ids, $c_id;
 	}
@@ -1452,18 +1514,15 @@ sub add_complex_r {
 			  make_slot_nodes( type => "ONT::MACROMOLECULAR-COMPLEX",
 					   name => $name ),
 			  $comps_node );
-
+  $self->add_assertion($a);
   return $a->getAttribute('id');
 }
 
-=head2 add_cause_r( %args )
-
-Creates and adds a CC assertion to the EKB.
-
-This is mostly a wrapper around L<add_assertion_r()|/add_assertion_r(_$atype,_%args_)>.
-
-=cut
-
+# =head2 add_cause_r( %args )
+# Creates and adds a CC assertion to the EKB.
+# This is mostly a wrapper around L<add_assertion_r()|/add_assertion_r(_$atype,_%args_)>.
+# =cut
+# OBSOLETE
 sub add_cause_r {
   my $self = shift;
   my $id = $self->add_assertion_r('CC', @_);
@@ -1475,6 +1534,80 @@ sub add_cause_r {
   }
   return $id;
 }
+
+=head2 causes( $fid, $oid, $attrs )
+
+Infers a CC assertion, setting the factor and the outcome to $fid and $oid,
+respectively. 
+
+If given, $attrs specifies additional attributes to be set for the new
+assertion.
+
+Returns the id of the inferred event.
+
+See L<infer_assertion(_$atype,_$attributes,_@properties_)>
+
+=cut
+
+sub causes {
+  my $self = shift;
+  my ($factor_id, $outcome_id, $attrs) = @_;
+  my $c = $self->infer_assertion( "CC",
+				  $attrs,
+				  make_slot_node(type => 'ONT::CAUSE'),
+				  make_arg(':FACTOR' => $factor_id),
+				  make_arg(':OUTCOME' => $outcome_id) );
+  $c->getAttribute('id');
+}
+
+=head2 increases( $id, $attrs )
+
+Infers an EVENT assertion representing a (quantitative) increase of whatever
+is represented by the assertion with the id $id.
+
+If given, $attrs specifies additional attributes to be set for the new
+assertion.
+
+Returns the id of the inferred event.
+
+See L<add_event_r>
+
+=cut
+
+#TODO: should change to use add_assertion_r directly
+sub increases {
+  my $self = shift;
+  my ($affected_id, $attrs) = @_;
+  $self->add_event_r( refs => [$attrs->{refid}],
+		      rule => $attrs->{rule},
+		      slots => [ make_slot_node(type => 'ONT::INCREASE'), 
+				 make_arg(':AFFECTED' => $affected_id) ] );
+}
+
+=head2 decreases( $id, $attrs )
+
+Infers an EVENT assertion representing a (quantitative) decrease of whatever
+is represented by the assertion with the id $id.
+
+If given, $attrs specifies additional attributes to be set for the new
+assertion.
+
+Returns the id of the inferred event.
+
+See L<add_event_r>
+
+=cut
+
+#TODO: should change to use add_assertion_r directly
+sub decreases {
+  my $self = shift;
+  my ($affected_id, $attrs) = @_;
+  $self->add_event_r( refs => [$attrs->{refid}],
+		      rule => $attrs->{rule},
+		      slots => [ make_slot_node(type => 'ONT::DECREASE'), 
+				 make_arg(':AFFECTED' => $affected_id) ] );
+}
+
 
 =head2 add_arg( $a, $role, $id, $pos )
 
@@ -1495,7 +1628,7 @@ sub add_arg {
   my $self = shift;
   my ($a, $role, $argId, $pos) = @_;
   # assert that the modified assertion is a proper relation
-  unless ($self->is_relation($a)) {
+  unless (is_relation($a)) {
     ERROR "Cannot add argument to node: %s", $a;
     return;
   }
@@ -1544,6 +1677,12 @@ sub add_feature {
     # eventually i think this will go away, but first the ekb.dtd will have to
     # be revised to prohibit these complex "features" (TODO)
 
+  }
+
+  {
+    local $Data::Dumper::Terse = 1;
+    local $Data::Dumper::Indent = 0;
+    DEBUG 2, "Adding feature %s = %s to %s", $feature, Dumper($value), $a;
   }
   my $fs = get_child_node($a, "features");
   if (! defined $fs) {
@@ -1602,58 +1741,6 @@ sub add_notfeature {
   $fs->addChild($f);
 }
 
-=head2 is_relation( $a )
-
-Returns 1 iff $a is a relational assertion.
-
-=cut
-
-sub is_relation {
-  my ($self, $a) = @_;
-  return 0 unless defined $a;
-  # TODO: add check that $a is a proper assertion
-  return any {$_ eq $a->nodeName} @relationTypes;  
-}
-
-
-=head2 assertion_args( $a, $filter )
-
-Returns list of (main) arguments for relational assertion $a.
-
-If $a is not a relational assertion, it returns an empty list.
-
-If the optional $filter argument is given, it must be an XPath predicate. The
-result will be only those arguments matching the filter.
-
-=cut
-
-sub assertion_args {
-  my ($self, $a, $filter) = @_;
-  return () unless $self->is_relation($a);
-  my @args = $a->findnodes('./*[starts-with(name(),"arg")]' . ($filter // ""));
-  DEBUG 2, "Args: %s", join(",", @args);
-  return @args;
-}
-
-=head2 assertion_pseudoargs( $a )
-
-Returns list of pseudo-arguments (or satellite arguments) for relational assertion $a.
-
-If $a is not a relational assertion, it returns an empty list.
-
-=cut
-
-sub assertion_pseudoargs {
-  my ($self, $a) = @_;
-  return () unless $self->is_relation($a);
-  return (
-	  get_children_by_name($a, 'location'),
-	  get_children_by_name($a, 'cell-line'),
-	  get_children_by_name($a, 'site'),
-	  get_children_by_name($a, 'from-location'),
-	  get_children_by_name($a, 'to-location')
-	 );
-}
 
 # 5. Text operations
 
@@ -1745,6 +1832,59 @@ sub is_assertion_type {
   any { $atype eq $_ } @extractionTypes; 
 }
 
+=head2 is_relation( $a )
+
+Returns 1 iff $a is a relational assertion.
+
+=cut
+
+sub is_relation {
+  my $a = shift;
+  return 0 unless (defined $a) ;
+  my $atype = get_assertion_type($a);
+  return any {$_ eq $atype} @relationTypes;  
+}
+
+=head2 assertion_args( $a, $filter )
+
+Returns list of (main) arguments for relational assertion $a.
+
+If $a is not a relational assertion, it returns an empty list.
+
+If the optional $filter argument is given, it must be an XPath predicate. The
+result will be only those arguments matching the filter.
+
+=cut
+
+sub assertion_args {
+  my ($a, $filter) = @_;
+  return () unless is_relation($a);
+  my @args = $a->findnodes('./*[starts-with(name(),"arg")]' . ($filter // ""));
+  DEBUG 2, "Args: %s", join(",", @args);
+  return @args;
+}
+
+=head2 assertion_xargs( $a )
+
+Returns list of satellite ('extra') arguments for relational assertion $a.
+
+If $a is not a relational assertion, it returns an empty list.
+
+=cut
+
+sub assertion_xargs {
+  my $a = shift;
+  return () unless is_relation($a);
+  return (
+	  get_children_by_name($a, 'location'),
+	  get_children_by_name($a, 'cell-line'),
+	  get_children_by_name($a, 'site'),
+	  get_children_by_name($a, 'from-location'),
+	  get_children_by_name($a, 'to-location')
+	 );
+}
+
+
 =head2 get_child_node( $node, $name )
 
 Returns the first child of C<node> with given tag name.
@@ -1763,6 +1903,15 @@ Returns all children of C<node> with given tag name.
 =cut
 
 sub get_children_by_name {
+  eval { $_[0]->nodeType == XML_ELEMENT_NODE }
+    or do {
+      local $Data::Dumper::Terse = 1;
+      local $Data::Dumper::Indent = 0;
+      for my $frame (-3..0) {
+	my @cntxt = caller(-$frame);
+	WARN "Trace [%d]: %s", -$frame, Dumper(\@cntxt);
+      }
+    };
   return $_[0]->getChildrenByTagName($_[1]);
 }
 
@@ -1845,6 +1994,7 @@ sub set_slot_value {
 sub remove_elements {
   my ($node, $path) = @_;
   my @toDelete = $node->findnodes($path);
+  return unless @toDelete;
   foreach my $elem (@toDelete) {
     my $parent = $elem->parentNode;
     $parent->removeChild($elem);
@@ -1915,6 +2065,8 @@ A slot node has the form C<E<lt>pnameE<gt>pvalueE<lt>/pnameE<gt>>. More
 complex property nodes (with attributes and/or children) should be created
 using L<make_node()|/make_node(_$name,_$attributes,_@children_)>.
 
+TODO: rename to make_slot
+
 =cut
 
 sub make_slot_node {
@@ -1930,6 +2082,8 @@ Makes a list of slot nodes with the given names and content.
 
 See L<make_slot_node()|/make_slot_node(_$pname,_$pvalue_)>.
 
+TODO: rename to make_slots
+
 =cut
 
 # usage: make_slot_nodes(a => v, b => w ...)
@@ -1942,6 +2096,33 @@ sub make_slot_nodes {
   return @nodelist;
 }
 
+=head2 make_components( @ids )
+
+Creates a components property and returns it. 
+
+If the list of ids is empty, it will return C<undef>.
+
+=cut
+
+sub make_components {
+  # make all component references
+  my @comps = map { make_node("component", { id => $_ }) } @_;
+  # make components node
+  my $comps_node;
+  if (@comps) {
+    $comps_node = make_node("components", @comps);
+  }
+  $comps_node; 
+}
+
+sub make_complex_name {
+  my @names = map { get_slot_value($_, "name") } @_;
+  return
+    (any { ! defined($_) } @names)
+    ? "COMPLEX"
+    : join("/", @names);
+}
+
 # deep clone node
 sub clone_node {
   my ($node, $id) = @_;
@@ -1949,11 +2130,12 @@ sub clone_node {
   # remove id, if any
   if ($clone->hasAttribute('id')) {
     $clone->removeAttribute('id');
-    append_to_attribute($clone, 'refid', $node->getAttribute('id'));
+    # FIXME: should we really do this here (instead of on demand)?!?
+    append_to_attribute($clone, 'refid' => $node->getAttribute('id'));
   }
   # set id, if given
   if (defined $id) {
-    set_attribute($clone, 'id', $id);
+    set_attribute($clone, 'id' => $id);
   }
   return $clone;
 }
@@ -1982,12 +2164,9 @@ sub make_node {
   my ($name, @args) = @_;
   my $node = XML::LibXML::Element->new( $name );
   # parse args
-  my $attrs;
-  if (@args && (ref($args[0]) eq 'HASH')) {
-    $attrs = shift @args;
-    set_attributes($node, %$attrs);
-  }
-  add_children($node, @args);
+  my ($attrs, @children) = _parse_node_args(@args);
+  set_attributes($node, $attrs);
+  add_children($node, @children);
   return $node;
 }
 
@@ -2026,9 +2205,10 @@ Sets or replaces values for a set of node attributes.
 =cut
 
 sub set_attributes {
-  my ($node, %attrs) = @_;
-  foreach my $attr (keys %attrs) {
-    set_attribute($node, $attr, $attrs{$attr});
+  my ($node, $attrs) = @_;
+  return unless defined $attrs;
+  foreach my $attr (keys %$attrs) {
+    set_attribute($node, $attr => $attrs->{$attr});
   }
 }
 
@@ -2041,7 +2221,7 @@ sub append_to_attribute {
   my $new_avalue = $node->getAttribute($aname);
   $new_avalue .= $sep if ($new_avalue);
   $new_avalue .= $avalue;
-  set_attribute($node, $aname, $new_avalue);
+  set_attribute($node, $aname => $new_avalue);
 }
 
 =head2 add_child( $node, $child)

@@ -1,6 +1,6 @@
 # Compare.pm
 #
-# Time-stamp: <Fri Apr 21 16:44:49 CDT 2017 lgalescu>
+# Time-stamp: <Fri Apr 28 16:42:43 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  4 May 2016
 #
@@ -48,6 +48,8 @@
 #   when they're not).
 # 2017/04/21 v2.1.1	lgalescu
 # - Fixed bug.
+# 2017/04/28 v2.1.2	lgalescu
+# - Synced w/ EKB.pm interface.
 
 # TODO (in order of importance):
 # - try to find node "substitutions"
@@ -56,11 +58,11 @@
 # - there are a couple FIXME notes below
 # - improve how diffs are set and got
 # - consider whether it might be appropriate to add a similarity score 
-#   and obtain the best alignement through global optimization
+#   and obtain the best alignment through global optimization
 
 package EKB::Compare;
 
-$VERSION = '2.1.1';
+$VERSION = '2.1.2';
 
 use strict 'vars';
 use warnings;
@@ -896,8 +898,8 @@ sub cmp_args {
   my ($i1, $i2, $options) = @_;
 
   # we group all args together
-  my @args1 = $self->ekb1()->assertion_args($i1);
-  my @args2 = $self->ekb2()->assertion_args($i2);
+  my @args1 = assertion_args($i1);
+  my @args2 = assertion_args($i2);
 
   {
     DEBUG 2, "args: %d vs. %s", scalar(@args1), scalar(@args2);

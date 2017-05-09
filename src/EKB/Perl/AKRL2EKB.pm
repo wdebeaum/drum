@@ -1,6 +1,6 @@
 # ARKL2EKB.pm
 #
-# Time-stamp: <Sun Apr 30 23:15:35 CDT 2017 lgalescu>
+# Time-stamp: <Mon May  8 18:12:15 CDT 2017 lgalescu>
 #
 # Author: Roger Carff <rcarff@ihmc.us>, 9 Mar 2017
 #
@@ -770,6 +770,12 @@ sub createEKBTerm
         }
     }
 
+    # Add active feature
+    my $active_value =  $akrl->getValueForKey(":ACTIVE");
+    if (defined $active_value) {
+      $ekb->add_feature($term, 'active' => removePrefix($active_value, "ONT::"));
+    }
+    
     # Add any Mutations
     add_feature("mutation", $akrl->getValueForKey(":MUTATION"), $ekb, $term, $akrlList);
 
