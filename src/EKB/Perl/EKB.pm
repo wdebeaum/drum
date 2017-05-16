@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Mon May  8 17:56:58 CDT 2017 lgalescu>
+# Time-stamp: <Mon May 15 17:37:01 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.27 2017/05/08 23:34:22 lgalescu Exp $
+# $Id: EKB.pm,v 1.29 2017/05/15 22:38:33 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -101,6 +101,8 @@
 # - added methods for some commonly inferred assertions: &causes, &increases 
 #   and &decreases
 # - moved a few methods into package functions
+# 2017/05/15 v1.14.1	lgalescu
+# - added initialization from string
 
 # TODO:
 # - maybe split off non-OO extensions for manipulating XML objects into a separate package?
@@ -108,7 +110,7 @@
 
 package EKB;
 
-$VERSION = '1.14.0';
+$VERSION = '1.14.1';
 
 =head1 NAME
 
@@ -121,6 +123,7 @@ OO interface:
   use EKB;
   $ekb = EKB->new(); # creates new, empty EKB
   $ekb = EKB->new($filepath); # creates new EKB, read from file
+  $ekb = EKB->new($string); # creates new EKB, read from string
 
 a. EKB operations
 
@@ -152,7 +155,7 @@ c. Editing
   $ekb->make_aggregate_term($ids, $operator, $attributes, @properties);
 
 
-d. Non-OO utility functions:
+Non-OO utility functions:
 
   $b = is_relation($a);
   $t = get_assertion_type($a);
@@ -267,15 +270,16 @@ my @extractionTypes = ( @entityTypes, @relationTypes );
 
 =head1 CONSTRUCTOR
 
-=head2 new( $filepath, @options )
+=head2 new( $input, @options )
 
 Creates a new EKB. All arguments are optional.
 
-With no arguments, returns an empty EKB object.
+With no arguments, returns an empty EKB object (ie, one backed by an empty
+document).
 
-If $filepath is given, it reads the EKB from the respective file; 
-on success, it returns a new EKB object backed by the document read, 
-and on failure it returns C<undef>.
+If given, $input may be either a filename, or a string. The EKB returned is
+backed by the document resulting from parsing the XML off the file or the
+suring, respectively. On failure it returns C<undef>.
 
 A second argument may be provided, which can set various options. 
 
@@ -290,21 +294,36 @@ sub new {
   my $class = shift;
   my $self = {
 	      file => undef,
+	      string => undef,
 	      options => undef,
-	      document  => undef,
+	      # DOM
+	      document => undef,
 	      # gensym counters
 	      symbol_table => {},
 	     };
   if (@_) {
-    $self->{file} = shift;    
+    my $input = shift;
+    no warnings;
+    if (-f $input) {
+      $self->{file} = $input;
+    } else {
+      $self->{string} = $input;
+    }
     $self->{options} = shift;
   }
   bless $self, $class;
   if ($self->{file}) {
     $self->read()
       or return undef;
+  } elsif ($self->{string}) {
+    $self->fromString()
+      or return undef;
   } else {
     $self->init();
+  }
+  # add a timestamp, if it doesn't have one
+  unless ($self->get_attr('timestamp')) {
+    $self->set_attr('timestamp', _timestamp());
   }
   return $self;
 }
@@ -374,7 +393,6 @@ sub init {
   my $root = $doc->createElement("ekb");
   $doc->setDocumentElement($root);
   $self->{document} = $doc;
-  $self->set_attr("timestamp", _timestamp());
   1;
 }
 
@@ -398,11 +416,6 @@ sub read {
   DEBUG 2, "Initializing EKB from $file with options:\n%s",
     Dumper($self->{options});
 
-  unless (-f $file) {
-    ERROR "$file: $!";
-    return;
-  }
-
   my $xml_options = $self->get_option('xml') // {};
   # remove blank nodes, unless specified otherwise by the caller
   unless (exists $xml_options->{no_blanks}) {
@@ -416,6 +429,44 @@ sub read {
   } || do
   {
     ERROR "Error reading EKB from $file: %s", $@;
+    return;
+  };
+    
+  # if we have PMC (article) input, mark it up
+  if ($self->is_article()) {
+    $self->tag_pub_sections();
+  }
+  
+  1;
+}
+
+=head2 fromString( $string )
+
+Sets the document to one read from the given string.
+
+=cut
+
+# also handles XML::LibXML::Parser options, passed to load_xml
+sub fromString {
+  my $self = shift;
+  my $string = $self->{string};
+
+  DEBUG 2, "Initializing EKB from string with options:\n%s",
+    Dumper($self->{options});
+
+  my $xml_options = $self->get_option('xml') // {};
+  # remove blank nodes, unless specified otherwise by the caller
+  unless (exists $xml_options->{no_blanks}) {
+    $xml_options->{no_blanks} = 1;
+  }
+  DEBUG 2, "Reading EKB from string with options:\n%s", Dumper($xml_options);
+
+  eval {
+    $self->{document} = XML::LibXML->load_xml(string => $string,
+					      %$xml_options);
+  } || do
+  {
+    ERROR "Error reading EKB from string: %s", $@;
     return;
   };
     
@@ -687,12 +738,21 @@ sub crop {
   }
 }
 
-=head2 filter()
+=head2 filter( $options )
 
 Generic filter for removing paragraphs and/or sentences and related assertions.
 
 Unlike crop(), this method does not attempt to keep frame numbers valid after
 paragraphs are removed. 
+
+$options is a reference to a hash. The only keys handled are C<paragraphs> and
+C<sentences>. The value for each such key is a reference to a list of ids. The
+result of the filter is such that only the paragraphs and/or sentences
+indicated are kept. 
+
+Caveat: The way this method works when both paragraphs and sentences are
+specified might not be what you expect. Also, its behavior might change in the
+future, so don't rely on the current behavior! 
 
 =cut
 
@@ -721,7 +781,7 @@ sub filter {
       foreach my $s ($self->get_sentences) {
 	my $s_id = $s->getAttribute('id');	
 	next if grep { $s_id eq $_ } @to_keep;
-	DEBUG 2, "Removing paragraph: %s", $s_id;
+	DEBUG 2, "Removing sentence: %s", $s_id;
 	$self->remove_sentence($s_id);
       }
     }
@@ -764,19 +824,6 @@ sub remove_sentence {
   if (scalar($self->get_sentences($pid)) == 0) {
     $self->remove_paragraph($pid);
   }
-}
-
-=head2 remove_assertion( $a )
-
-Removes an XML representation of an assertion from the EKB document.
-
-=cut
-
-# TODO: make it take either an id or the node itself
-sub remove_assertion {
-  my ($self, $a) = @_;
-  ($a->parentNode)->removeChild($a);
-  DEBUG 2, "Removed assertion: %s", $a;
 }
 
 # 4. EKB getters and setters
@@ -1035,6 +1082,19 @@ sub add_assertion {
   $self->get_document()->documentElement()->appendChild($a);
   DEBUG 2, "Added new assertion: %s", $a;
   $a;
+}
+
+=head2 remove_assertion( $a )
+
+Removes an XML representation of an assertion from the EKB document.
+
+=cut
+
+# TODO: make it take either an id or the node itself
+sub remove_assertion {
+  my ($self, $a) = @_;
+  ($a->parentNode)->removeChild($a);
+  DEBUG 2, "Removed assertion: %s", $a;
 }
 
 =head2 derive_assertion( $id, $atype )

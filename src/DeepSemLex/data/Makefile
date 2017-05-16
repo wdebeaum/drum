@@ -15,10 +15,19 @@ RESOURCE_SUBDIRS=PropBank/frames OntoNotes/sense-inventories VerbNet WordNet
 all: $(RESOURCE_SUBDIRS:%=%/COMPLETE)
 
 clean:
-	rm -rf $(RESOURCE_SUBDIRS)
+	rm -rf $(RESOURCE_SUBDIRS) TRIPS
 
-$(RESOURCE_SUBDIRS):
+$(RESOURCE_SUBDIRS) TRIPS:
 	mkdir -p $@
+
+TRIPS/COMPLETE: TRIPS/trips-ont-dsl.xml
+	touch $@
+
+TRIPS/trips-ont-dsl.lisp: ../code/converters/trips-ont-to-dsl.sh ../code/converters/trips-ont-to-dsl.lisp | TRIPS
+	cd ../code/converters ; ./trips-ont-to-dsl.sh >../../data/$@
+
+TRIPS/trips-ont-dsl.xml: TRIPS/trips-ont-dsl.lisp ../code/converters/dsl-to-xml.sh ../code/converters/dsl-to-xml.lisp $(wildcard $(TRIPS_BASE)/src/OntologyManager/Data/LFdata/*.lisp)
+	cd ../code/converters ; ./dsl-to-xml.sh <../../data/$< >../../data/$@
 
 ON_SIS=$(shell ls $(ONTONOTES)/data/english/metadata/sense-inventories/*.xml \
 	       |$(PERL) -n -e 'print "$$1\n" if (/\/([^\/-]+-[nv])\.xml$$/);')
