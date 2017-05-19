@@ -10,6 +10,7 @@
 (define-type ONT::SOUND-UNIT
  :parent ONT::MEASURE-UNIT
  :sem (F::abstr-obj)
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? t F::ABSTR-OBJ)))) ; music
 )
 
 #|
