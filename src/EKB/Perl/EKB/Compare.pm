@@ -1,6 +1,6 @@
 # Compare.pm
 #
-# Time-stamp: <Fri Apr 28 16:42:43 CDT 2017 lgalescu>
+# Time-stamp: <Sat May 20 09:49:26 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  4 May 2016
 #
@@ -44,12 +44,17 @@
 # 2017/03/04 v2.0.2	lgalescu
 # - Fixed: issue causing an uninitialized value warning in &cmp_args.
 # 2017/03/24 v2.1.0	lgalescu
-# - Added option to ignore sentence diffs (assumes they are identical even
+# - Added option to ignore uttnum diffs (assumes they are identical even
 #   when they're not).
 # 2017/04/21 v2.1.1	lgalescu
 # - Fixed bug.
 # 2017/04/28 v2.1.2	lgalescu
 # - Synced w/ EKB.pm interface.
+# 2017/05/17 v2.2.0	lgalescu
+# - Code cleanup.
+# - Fixed a bug.
+# - Added possibility of comparing "ungrounded" EKBs (no text).
+# - Changed representation of diffs. 
 
 # TODO (in order of importance):
 # - try to find node "substitutions"
@@ -69,7 +74,7 @@ use warnings;
 
 use Data::Dumper;
 use Algorithm::Diff qw(sdiff);
-use List::Util qw(min max all any first);
+use List::Util qw(min max all any first uniq);
 use XML::LibXML;
 use Test::Deep::NoTest qw(eq_deeply set subsetof);
 
@@ -79,20 +84,20 @@ use Ont::BioEntities;
 use Ont::BioEvents;
 use util::Log;
 
-our @Options = qw/no_normalization 
-		  ignore_sentence_diffs
-		  ignore_ekb_id 
-		  ignore_ekb_complete 
-		  ignore_dbid 
-		  ignore_pred_type 
-		  only_uttnums 
+our @Options = qw/normalize
+		  ignore_text
+		  same_uttnums
+		  ignore_dbid
+		  ignore_pred_type
+		  attributes
+		  uttnums
 		  strict_ont_match/;
 
 # note about extraction mappings ($self->{x_map})
 # 1. this is reset for each sentence!
 # idea:
-#  $id1 ~~ $id2 iff $x_map{1}{$id1}{$id2}==1 [=> $x_map{2}{$id2}{$id1}==1]
-#  $id1 !~ $id2 iff $x_map{1}{$id1}{$id2}==0 [=> $x_map{2}{$id2}{$id1}==0]
+#  $id1 ~~ $id2 iff $x_map{ref}{$id1}{$id2}==1 [=> $x_map{hyp}{$id2}{$id1}==1]
+#  $id1 !~ $id2 iff $x_map{ref}{$id1}{$id2}==0 [=> $x_map{hyp}{$id2}{$id1}==0]
 
 # bio ontologies
 my $ont_events = Ont::BioEvents->new();
@@ -118,7 +123,7 @@ sub new {
   }
   # options: set defaults
   my %options = _default_options();
-  # ... and read the caller-deinfed ones
+  # ... and read the caller-defined ones
   my %opts = @call_opts;
   while (my($key, $val) = each %opts) {
     my $lkey = lc($key);
@@ -134,12 +139,20 @@ sub new {
 	      ekb2 => $ekb2,
 	      # options: options for compare()
 	      options => \%options,
-	      # result: match or no match
+	      # result: 1 = match, 0 = no match
 	      result => undef,
 	      # diffs: structure w/ detailed diffs
-	      diffs => {},
+	      diffs => { attributes => undef,
+			 sentences => undef,
+			 assertions => undef,
+		       },
 	      # summary at assertion level
-	      summary => {},
+	      summary => { ref => 0, # count in ekb1
+			   hyp => 0, # count in ekb2
+			   eql => 0, # count of assertions common to ekb1 and ekb2
+			   del => 0, # count of assertions unique in ekb1
+			   ins => 0, # count of assertions unique in ekb2
+			 },
 	      # sentence mapping from ekb1 to ekb2
 	      s_map => {},
 	      # EKB assertion mapping from ekb1 to ekb2 (temporary)
@@ -153,13 +166,14 @@ sub new {
 
 sub _default_options {
   return
-    ( no_normalization => 0,
-      ignore_ekb_id => 0,
-      ignore_ekb_complete => 0,
+    ( normalize => 1,
+      ignore_text => 0,
+      same_uttnums => 0,
       ignore_dbid => 0,
       ignore_pred_type => 0,
       strict_ont_match => 0,
-      only_uttnums => [],
+      attributes => [],
+      uttnums => [],
     );
 }
 
@@ -217,31 +231,43 @@ sub summary {
 sub compare {
   my $self = shift;
 
-  unless ($self->option('no_normalization')) {
+  if ($self->option('normalize')) {
     $self->ekb1()->normalize();
     $self->ekb2()->normalize();
+  }
+
+  if ($self->option('uttnums')) {
+    $self->ekb1()->filter({ sentences => $self->option('uttnums') });
   }
 
   my @tests =
     (
      # ekb meta info
-     $self->option('ignore_ekb_id')
-     || $self->cmp_ekb_attribute('id'),
-     $self->option('ignore_ekb_complete')
-     || $self->cmp_ekb_attribute('complete'),
-
+     $self->cmp_ekb_attributes(),
+     
      # inputs (by sentence)
-     $self->cmp_ekb_input(),
+     $self->option('ignore_text')
+     || $self->cmp_ekb_input(),
 
      # EKB assertions (by sentence)
      $self->cmp_ekb_assertions()
     );
 
+  DEBUG 1, "TESTS: %s", Dumper(\@tests);
+  
   return $self->result(min @tests);
 }
 
 
 ### function for matching EKB attributes
+
+sub cmp_ekb_attributes {
+  my $self = shift;
+
+  my @attrs = @{$self->option('attributes')};
+  return 1 unless @attrs;
+  return min( map {$self->cmp_ekb_attribute($_)} @attrs );
+}
 
 sub cmp_ekb_attribute {
   my $self = shift;
@@ -249,12 +275,11 @@ sub cmp_ekb_attribute {
 
   my $v1 = $self->ekb1()->get_attr($attr);
   my $v2 = $self->ekb2()->get_attr($attr);
-  my $result = ($v1) && ($v2) && ($v1 eq $v2) ? 1 : 0;
-  if (! $result) {
-    $self->diffs()->{"/ekb/\@$attr"}{prev} = $v1 // "";
-    $self->diffs()->{"/ekb/\@$attr"}{new} = $v2 // "";
-  }
-  return $result;
+  return 1 if __assert_eq($v1, $v2);
+  $self->add_diff('attributes', { attr => $attr,
+				  ref => $v1 // "",
+				  hyp => $v2 // "" });
+  0;
 }
 
 
@@ -264,107 +289,159 @@ sub cmp_ekb_input {
   my $self = shift;
 
   my @sentences1 = $self->ekb1()->get_sentences();
-  # apply only_uttnums filter
-  my $only_uttnums = $self->option('only_uttnums');
-  my $have_uttnums = (scalar(@$only_uttnums) > 0);
-  if ($have_uttnums) {
-    @sentences1 =
-      grep { my $id = $_->getAttribute('id');
-	     first { $id eq $_} @$only_uttnums }
-      @sentences1;
-    DEBUG 2, "Doing only %s", "@sentences1";
+  DEBUG 1, "REF sentences: %s", @sentences1;
+  if (0) { # obsolete -- now we filter in advance (see &compare)
+    # apply only_uttnums filter
+    my $uttnums = $self->option('uttnums');
+    my $have_uttnums = (scalar(@$uttnums) > 0);
+    if ($have_uttnums) {
+      @sentences1 =
+	grep { my $id = $_->getAttribute('id');
+	       first { $id eq $_} @$uttnums }
+	@sentences1;
+      DEBUG 2, "Doing only %s", "@sentences1";
+    }
   }
   # are we assuming sentences are the same?
-  if ($self->option('ignore_sentence_diffs')) {
+  if ($self->option('same_uttnums')) {
     foreach my $s (@sentences1) {
       my $sid1 = $s->getAttribute('id');
-      $self->{s_map}{$sid1} = $sid1;
+      $self->{'s_map'}{$sid1} = $sid1;
     }
     return 1;
   }
     
   my @sentences2 = $self->ekb2()->get_sentences();
+  DEBUG 1, "HYP sentences: %s", "@sentences2";
+  # TODO: should compare text from paragraph instead!
   my @s_texts1 = map { $_->textContent } @sentences1;
   my @s_texts2 = map { $_->textContent } @sentences2;
   my @diffs = sdiff( \@s_texts1, \@s_texts2 );
-  DEBUG 3, "%s", Dumper(@diffs);
+  DEBUG 3, "sentence diffs: %s", Dumper(\@diffs);
   my ($i1, $i2) = (0, 0);
   my $result = 1;
   foreach my $diff (@diffs) {
-    DEBUG 3, "%s", Dumper($diff);
+    DEBUG 3, "diff: %s", Dumper($diff);
     my $d = $diff->[0];
-    my ($sid1, $path1, $sid2, $path2);
+    my ($sid1, $sid2);
     if ($i1 < scalar(@sentences1)) {
       $sid1 = $sentences1[$i1]->getAttribute('id');
-      $path1 = sprintf("/ekb/input/sentences/sentence[\@id=%s]", $sid1);
     }
     if ($i2 < scalar(@sentences2)) {
       $sid2 = $sentences2[$i2]->getAttribute('id');
-      $path2 = sprintf("/ekb/input/sentences/sentence[\@id=%s]", $sid2);
     }
     if ($d eq 'u') { # unchanged
-      $self->{s_map}{$sid1} = $sid2;
+      $self->{'s_map'}{$sid1} = $sid2;
       $i1++; $i2++;
     } elsif ($d eq '-') { # deletion
-      $self->diffs()->{$path1}{prev} = $diff->[1];
+      $self->add_diff('sentences', { ref => $sid1 });
       $i1++;
       $result = 0;
     } elsif ($d eq '+') { # insertion
-      if ($have_uttnums) {
+      if ($self->option('uttnums')) {
 	# ignore if we restrict to specific uttnums
+	# TODO: should still include insertions between matches!
       } else {
-	$self->diffs()->{$path2}{new} = $diff->[2];
-	$i2++;
+	$self->add_diff('sentences', { hyp => $sid2 });
 	$result = 0;
       }
+      $i2++;
     } elsif ($d eq 'c') { # changed
-      $self->diffs()->{$path1}{prev} = $diff->[1];
-      $self->diffs()->{$path2}{new} = $diff->[2];
+      $self->add_diff('sentences', { ref => $sid1,
+				     hyp => $sid2 });
       $i1++;
       $i2++;
       $result = 0;
     }
   }
+  DEBUG 2, "cmp_ekb_input => $result";
   return $result;
 }
 
 
-### function for matching all EKB assertions (items)
+### function for matching all EKB assertions
 
 # N.B.: assertions are compared only for matching sentences
 sub cmp_ekb_assertions {
   my $self = shift;
 
-  DEBUG 1, "s_map: %s", Dumper($self->{s_map});
+  DEBUG 1, "s_map: %s", Dumper($self->{'s_map'});
 
   # sentences to work on
-  my @uttnums = keys($self->{s_map});
+  my @uttnums = keys($self->{'s_map'});
 
-  # apply only_uttnums filter (and validate)
-  my $only_uttnums = $self->option('only_uttnums');
-  if (@$only_uttnums) {
-    eq_deeply($only_uttnums, subsetof(@uttnums))
-      or FATAL "Some requested uttnums cannot be found in the EKB (%s)",
-      "@{$only_uttnums}";
-    @uttnums = @$only_uttnums;
-  }
-  
-  return
+  if ((! $self->option('ignore_text')) and @uttnums) {
     all { $_ == 1 }
-    map { $self->cmp_ekb_assertions_for_utt($_) }
-    sort { $a <=> $b }
-    @uttnums;
+      map { $self->cmp_ekb_assertions_for_utt($_) }
+      sort { $a <=> $b }
+      @uttnums;
+  } else {
+    $self->cmp_ekb_assertions_all();  
+  }
 }
 
+### match all EKB assertions
+sub cmp_ekb_assertions_all {
+  my $self = shift;
 
-### function for matching all EKB assertions (items) for a sentence
+  my @items1 = $self->ekb1()->get_assertions();
+  my @items2 = $self->ekb2()->get_assertions();
+
+  my $count1 = scalar(@items1);
+  my $count2 = scalar(@items2);
+
+  $self->summary()->{'ref'} += $count1;
+  $self->summary()->{'hyp'} += $count2;
+  
+  { 
+    local $Data::Dumper::Terse = 1;
+    local $Data::Dumper::Indent = 0;
+    DEBUG 1, "comparing assertions: n=<%d, %d>", $count1, $count2;
+  }
+    
+  $self->reset_x_map();
+  my $result = $self->cmp_ekb_items(\@items1, \@items2);
+    
+  # items unique to ekb1
+  my @uniq1 =
+    grep { ! $self->has_match($_, 'ref') }
+    @items1;
+  foreach my $i1 (@uniq1) {
+    DEBUG 1, "Deletion: %s ", $i1->getAttribute('id');
+    $self->add_diff('assertions', { ref => $i1->getAttribute('id') });
+    $result = 0;
+  }
+  my $deletions = scalar(@uniq1);
+  $self->summary()->{del} += $deletions;
+  $self->summary()->{eql} += ($count1 - $deletions);
+
+  # items unique to ekb2
+  my @uniq2 =
+    grep { ! $self->has_match($_, 'hyp') }
+    @items2;
+  foreach my $i2 (@uniq2) {
+    DEBUG 1, "Insertion: %s ",$i2->getAttribute('id');
+    $self->add_diff('assertions', { hyp => $i2->getAttribute('id') });
+    $result = 0;
+  }
+  $self->summary()->{ins} += scalar(@uniq2);
+
+  # done!
+  {
+    DEBUG 3, "x_map:\n %s", Dumper($self->{'x_map'});
+  }
+    
+  return $result;
+}
+
+### match all EKB assertions for a sentence
 
 # sid1: sentence id in ekb1
 sub cmp_ekb_assertions_for_utt {
   my $self = shift;
   my ($sid1) = @_;
 
-  my $sid2 = $self->{s_map}{$sid1};
+  my $sid2 = $self->{'s_map'}{$sid1};
 
   my @items1 =
     sort { _span_cmp(_get_span($a), _get_span($b)) }
@@ -375,8 +452,8 @@ sub cmp_ekb_assertions_for_utt {
   my $count1 = scalar(@items1);
   my $count2 = scalar(@items2);
 
-  $self->summary()->{all}{1} += $count1;
-  $self->summary()->{all}{2} += $count2;
+  $self->summary()->{'ref'} += $count1;
+  $self->summary()->{'hyp'} += $count2;
   
   { 
     local $Data::Dumper::Terse = 1;
@@ -390,33 +467,40 @@ sub cmp_ekb_assertions_for_utt {
     
   # items unique to ekb1
   my @uniq1 =
-    grep { ! $self->has_match($_, 1) }
+    grep { ! $self->has_match($_, 'ref') }
     @items1;
   foreach my $i1 (@uniq1) {
     my $span1 = _get_span($i1);
-    DEBUG 3, "Deletion: [%d, %d] %s ", $span1->[0], $span1->[1], $i1->getAttribute('id');
-    push @{ $self->diffs()->{utt}{$sid1}{$span1->[0]}{$span1->[1]}{prev} }, $i1;
+    DEBUG 1, "Deletion: [%d, %d] %s ", $span1->[0], $span1->[1], $i1->getAttribute('id');
+    $self->add_diff('assertions', { ref => $i1->getAttribute('id'),
+				    sid => $sid1,
+				    start => $span1->[0],
+				    end => $span1->[1] });
     $result = 0;
   }
-  $self->summary()->{del} += scalar(@uniq1);
-  $self->summary()->{eql} += ($count1 - scalar(@uniq1));
+  my $deletions = scalar(@uniq1);
+  $self->summary()->{del} += $deletions;
+  $self->summary()->{eql} += ($count1 - $deletions);
 
   # items unique to ekb2
   my @uniq2 =
     sort { _span_cmp(_get_span($a), _get_span($b)) }
-    grep { ! $self->has_match($_, 2) }
+    grep { ! $self->has_match($_, 'hyp') }
     @items2;
   foreach my $i2 (@uniq2) {
     my $span2 = _get_span($i2);
-    DEBUG 3, "Insertion: [%d, %d] %s ", $span2->[0], $span2->[1], $i2->getAttribute('id');
-    push @{ $self->diffs()->{utt}{$sid1}{$span2->[0]}{$span2->[1]}{new} }, $i2;
+    DEBUG 1, "Insertion: [%d, %d] %s ", $span2->[0], $span2->[1], $i2->getAttribute('id');
+    $self->add_diff('assertions', { hyp => $i2->getAttribute('id'),
+				    sid => $sid1,
+				    start => $span2->[0],
+				    end => $span2->[1] });
     $result = 0;
   }
   $self->summary()->{ins} += scalar(@uniq2);
 
   # done!
   {
-    DEBUG 3, "x_map:\n %s", Dumper($self->{x_map});
+    DEBUG 3, "x_map:\n %s", Dumper($self->{'x_map'});
   }
     
   return $result;
@@ -513,8 +597,8 @@ sub cmp_ekb_item {
     
   # shortcut if we'd looked at any of this before
   return 1 if $self->matched($i1, $i2);
-  return 0 if ($self->has_match($i1, 1)
-	       || $self->has_match($i2, 2)
+  return 0 if ($self->has_match($i1, 'ref')
+	       || $self->has_match($i2, 'hyp')
 	       || $self->not_matched($i1, $i2));
 
   {
@@ -729,7 +813,7 @@ sub cmp_attribute {
 
   DEBUG 2, "matching attribute %s: %s ~~ %s", $attr, $a1, $a2; 
     
-  return 1 if ((! $a1) && (! $a2));
+  return 1 if (! $a1) && (! $a2);
   return 0 unless $a1;
   return 0 unless $a2;
   return ($a1 eq $a2);
@@ -818,7 +902,7 @@ sub cmp_mutation {
   return 1 if ((! $mut1) && (! $mut2));
   return 0 unless $mut1 && $mut2;
 
-  # we serialize them and compare as strings
+  # shortcut: we serialize them and compare as strings
   (my $ser_mut1 = $mut1->toString(0)) =~ s/>\s+</></mg;
   (my $ser_mut2 = $mut2->toString(0)) =~ s/>\s+</></mg;
 
@@ -835,7 +919,7 @@ sub cmp_aggregate {
   return 1 if ((! $agg1) && (! $agg2));
   return 0 unless $agg1 && $agg2;
 
-  # FIXME: should we perhaps not short-circuit here?
+  # FIXME: should we perhaps *not* short-circuit here?
   return
     $self->cmp_attribute($agg1, $agg2, 'operator')
     &&
@@ -931,8 +1015,7 @@ sub cmp_args {
     return 0 unless $a1 && $a2;
     return 0 unless $self->cmp_ekb_item($a1, $a2, $options);
   }
-
-  return 1;
+  1;
 }
 
 # these are sub-elements that refer to other EKB items
@@ -1089,7 +1172,7 @@ sub cmp_ont_slot {
 # TODO: simplify this structure; maybe make it a class?
 sub reset_x_map {
   my $self = shift;
-  $self->{x_map} = {};
+  $self->{'x_map'} = {};
 }
 
 # record matching result
@@ -1110,18 +1193,18 @@ sub record_match {
   return 1 if $self->matched($i1, $i2);
   my $id1 = $i1->getAttribute('id');
   my $id2 = $i2->getAttribute('id');
-  if ($self->has_match($i1, 1)) {
+  if ($self->has_match($i1, 'ref')) {
     ERROR "cannot re-match %s to %s (now: %s ~~ %s)",
-      $id1, $id2, $id1, $self->{x_map}{1}{$id1};
+      $id1, $id2, $id1, $self->{'x_map'}{'ref'}{$id1};
     return 0;
   }
-  if ($self->has_match($i2, 2)) {
+  if ($self->has_match($i2, 'hyp')) {
     ERROR "cannot re-match %s to %s (now: %s ~~ %s)",
-      $id1, $id2, $self->{x_map}{2}{$id2}, $id2;
+      $id1, $id2, $self->{'x_map'}{'hyp'}{$id2}, $id2;
     return 0;
   }
-  $self->{x_map}{1}{$id1}{$id2} = 1;
-  $self->{x_map}{2}{$id2}{$id1} = 1;
+  $self->{'x_map'}{'ref'}{$id1}{$id2} = 1;
+  $self->{'x_map'}{'hyp'}{$id2}{$id1} = 1;
   DEBUG 2, "matched: %s ~~ %s", $id1, $id2;
   return 1;
 }
@@ -1137,8 +1220,8 @@ sub record_no_match {
     ERROR "Cannot unmatch previous match: %s ~~ %s", $id1, $id2;
     return 0;
   }
-  $self->{x_map}{1}{$id1}{$id2} = 0;
-  $self->{x_map}{2}{$id2}{$id1} = 0;
+  $self->{'x_map'}{'ref'}{$id1}{$id2} = 0;
+  $self->{'x_map'}{'hyp'}{$id2}{$id1} = 0;
   DEBUG 2, "No match: %s ~~ %s", $id1, $id2;
   return 1;
 }
@@ -1149,9 +1232,9 @@ sub seen_before {
   my $id1 = $i1->getAttribute('id');
   my $id2 = $i2->getAttribute('id');
   return
-    (exists $self->{x_map}{1}{$id1})
+    (exists $self->{'x_map'}{'ref'}{$id1})
     &&
-    (exists $self->{x_map}{1}{$id1}{$id2});
+    (exists $self->{'x_map'}{'ref'}{$id1}{$id2});
 }
 
 sub matched {
@@ -1160,8 +1243,8 @@ sub matched {
   return 0 unless $self->seen_before($i1, $i2);
   my $id1 = $i1->getAttribute('id');
   my $id2 = $i2->getAttribute('id');
-  DEBUG 3, "matched(%s, %s) = %s", $id1, $id2, $self->{x_map}{1}{$id1}{$id2};
-  return $self->{x_map}{1}{$id1}{$id2};
+  DEBUG 3, "matched(%s, %s) = %s", $id1, $id2, $self->{'x_map'}{'ref'}{$id1}{$id2};
+  return $self->{'x_map'}{'ref'}{$id1}{$id2};
 }
 
 sub not_matched {
@@ -1170,29 +1253,44 @@ sub not_matched {
   return 0 unless $self->seen_before($i1, $i2);
   my $id1 = $i1->getAttribute('id');
   my $id2 = $i2->getAttribute('id');
-  DEBUG 3, "not_matched(%s, %s) = %s", $id1, $id2, $self->{x_map}{1}{$id1}{$id2};
-  return !$self->{x_map}{1}{$id1}{$id2};
+  DEBUG 3, "not_matched(%s, %s) = %s", $id1, $id2, $self->{'x_map'}{'ref'}{$id1}{$id2};
+  return !$self->{'x_map'}{'ref'}{$id1}{$id2};
 }
 
-# nb: $source is 1 or 2
+# nb: $source is 'ref' or 'hyp'
 sub has_match {
   my $self = shift;
   my ($item, $source) = @_;
-  ($source == 1) || ($source == 2)
-    or FATAL "2nd argument must be 1 or 2";
+  ($source eq 'ref') || ($source eq 'hyp')
+    or FATAL "2nd argument must be 'ref' or 'hyp'";
     
   my $id = $item->getAttribute('id');
-  return 0 unless (exists $self->{x_map}{$source}{$id});
+  return 0 unless (exists $self->{'x_map'}{$source}{$id});
   DEBUG 3, "has_match(%s, %d) = %s", $id, $source,
-    any { $self->{x_map}{$source}{$id}{$_} }
-    keys %{ $self->{x_map}{$source}{$id} };
+    any { $self->{'x_map'}{$source}{$id}{$_} }
+    keys %{ $self->{'x_map'}{$source}{$id} };
   return
-    any { $self->{x_map}{$source}{$id}{$_} }
-    keys %{ $self->{x_map}{$source}{$id} };
+    any { $self->{'x_map'}{$source}{$id}{$_} }
+    keys %{ $self->{'x_map'}{$source}{$id} };
 }
 
 
-### diff printing
+### diffs
+
+sub add_diff {
+  my $self = shift;
+  my ($section, $diff) = @_;
+  push @{ $self->diffs->{$section} }, $diff;
+}
+
+sub get_diffs {
+  my $self = shift;
+  my ($section) = @_;
+  if (defined $self->diffs->{$section}) {
+    return @{ $self->diffs->{$section} };
+  }
+  return ();
+}
 
 sub diffs_as_string {
   my $self = shift;
@@ -1220,6 +1318,8 @@ sub diffs_as_string {
   # counts table
   $result .= "------\nAssertion counts:\n";
   my $summary = $self->summary();
+  DEBUG 1, "summary: %s", Dumper($summary);
+
   $result .= sprintf(" REF\t%d\n",
 		     $summary->{del} + $summary->{eql});
   $result .= sprintf(" HYP\t%d\n",
@@ -1236,31 +1336,59 @@ sub diffs_as_string {
     
   # meta info
   $result .= "------\nDiffs:\n\n";
-    
-  $result .= $self->_diff_value('/ekb/@id');
-  $result .= $self->_diff_value('/ekb/@complete');
-    
-  # sentences
-  my @s_paths =
-    sort { s_path_id($a) <=> s_path_id($b) }
-  grep {$_ =~ m{^/ekb/input/sentences/sentence}}
-  keys %{$self->diffs};
-  foreach my $s (@s_paths) {
-    $result .= $self->_diff_input($s);
+
+  # attributes
+  foreach my $diff ($self->get_diffs('attributes')) {
+    $result .= sprintf("EKB attribute: %s\n< %s\n> %s\n",
+		       $diff->{attr},
+		       $diff->{ref},
+		       $diff->{hyp});
   }
-    
-  # extractions, by utt and spans
-  foreach my $sid (sort {$a<=>$b} keys %{$self->diffs()->{utt}}) {
+  
+  # sentences
+  $result .= sprintf("Input:\n")
+    if $self->get_diffs('sentences');
+  foreach my $diff ($self->get_diffs('sentences')) {
+    $result .= sprintf("< %s\n", $self->ekb1->get_sentence($diff->{'ref'}))
+      if (exists $diff->{'ref'});
+    $result .= sprintf("> %s\n", $self->ekb2->get_sentence($diff->{'hyp'}))
+      if (exists $diff->{'hyp'});
+  }
+  DEBUG 1, "result: %s", $result;
+
+  # assertions, by utt and spans
+  my @a_diffs = sort _diff_cmp $self->get_diffs('assertions');
+  my @a_diff_sids = uniq map { $_->{sid} } grep {exists $_->{sid}} @a_diffs;
+  $result .= "Assertions (by sentence):\n"
+    if (@a_diff_sids);
+  foreach my $sid (@a_diff_sids) {
     my $utt = $self->ekb1()->get_sentence($sid);
     $result .= sprintf("uttnum=%d %s\n", $sid, $utt->textContent);
-    foreach my $s (sort {$a<=>$b} keys %{$self->diffs()->{utt}{$sid}}) {
-      foreach my $e (sort {$a<=>$b} keys %{$self->diffs()->{utt}{$sid}{$s}}) {
-	DEBUG 2, "utt: %d span: [%d, %d]", $sid, $s, $e;
-	$result .= $self->_diff_span($sid, $s, $e);
+    foreach my $diff (grep { $_->{sid} eq $sid } @a_diffs) {
+      if (exists $diff->{'ref'}) {
+	$result .= sprintf("< %s\n",
+			   $self->ekb1->get_assertion($diff->{'ref'})->toString(1));
       }
+      $result .= sprintf("> %s\n",
+			 $self->ekb2()->get_assertion($diff->{'hyp'})->toString(1))
+	if exists $diff->{'hyp'};
     }
   }
-  return $result;
+  # assertions, ungrounded
+  my @a_diff_nos = grep {!exists $_->{sid}} @a_diffs;
+  $result .= "Assertions (ungrounded):\n"
+    if (@a_diff_nos);
+  foreach my $diff (@a_diff_nos) {
+    if (exists $diff->{'ref'}) {
+      $result .= sprintf("< %s\n",
+			 $self->ekb1->get_assertion($diff->{'ref'})->toString(1));
+    }
+    $result .= sprintf("> %s\n",
+		       $self->ekb2()->get_assertion($diff->{'hyp'})->toString(1))
+      if exists $diff->{'hyp'};
+  }
+
+  $result;
 }
 
 sub _options_to_string {
@@ -1283,60 +1411,6 @@ sub _options_to_string {
   return $result;
 }
 
-sub _diff_value {
-  my $self = shift;
-  my ($path) = @_;
-    
-  if (exists $self->diffs()->{$path}) {
-    return
-      sprintf("%s\n< %s\n> %s\n",
-	      $path,
-	      $self->diffs()->{$path}{prev},
-	      $self->diffs()->{$path}{new});
-  }
-  return "";
-}
-
-sub _diff_input {
-  my $self = shift;
-  my ($path) = @_;
-    
-  my $result = "";
-  if (exists $self->diffs()->{$path}) {
-    $result = sprintf("%s\n", $path);
-    $result .= sprintf("< %s\n", $self->diffs()->{$path}{prev})
-      if (exists $self->diffs()->{$path}{prev});
-    $result .= sprintf("> %s\n", $self->diffs()->{$path}{new})
-      if (exists $self->diffs()->{$path}{new});
-  } else {
-    WARN "path not found in \%{$self->diffs}: %s", $path;
-  }
-  return $result;
-}
-
-sub _diff_span {
-  my $self = shift;
-  my ($sid, $start, $end) = @_;
-    
-  my $result = "";
-  if (exists $self->diffs()->{utt}{$sid}{$start}{$end}) {
-    $result = sprintf("%d,%d\n", $start, $end);
-    $result .=
-      join("",
-	   map { sprintf("< %s\n", $_->toString(1)) }
-	   @{ $self->diffs()->{utt}{$sid}{$start}{$end}{prev} })
-      if (exists $self->diffs()->{utt}{$sid}{$start}{$end}{prev});
-    $result .=
-      join("",
-	   map { sprintf("> %s\n", $_->toString(1)) }
-	   @{ $self->diffs()->{utt}{$sid}{$start}{$end}{new} })
-      if (exists $self->diffs()->{utt}{$sid}{$start}{$end}{new});
-  } else {
-    WARN "span not found in diffs: [%d, %d]", $start, $end;
-  }
-  return $result;
-}
-
 
 ### operations on spans
 
@@ -1347,7 +1421,6 @@ sub _get_span {
   my $start = $x->getAttribute('start');
   my $end = $x->getAttribute('end');
   unless (defined $start and defined $end) {
-    ERROR "No :start or :end in %s", $x;
     $start = 0;
     $end = 0;
   }
@@ -1397,6 +1470,16 @@ sub _span_distance {
 	       abs($span2->[1] - $span1->[1]) );
 }
 
+# diff comparison (use only for sorting assertion diffs!!)
+sub _diff_cmp($$) {
+  my ($a, $b) = @_;
+  return (!defined($a->{sid}) or !defined($b->{sid}) or $a->{sid} <=> $b->{sid})
+    || (!defined($a->{start}) or !defined($b->{start}) or $a->{start} <=> $b->{start})
+    || (!defined($a->{end}) or !defined($b->{end}) or $a->{end} <=> $b->{end})
+    || (!defined($a->{ref}) or !defined($b->{ref}) or $a->{ref} cmp $b->{ref})
+    || (!defined($a->{hyp}) or !defined($b->{hyp}) or $a->{hyp} cmp $b->{hyp});
+}
+
 ### handling options
 
 # opts: hashref
@@ -1430,10 +1513,12 @@ sub __option_is {
 
 ### other utilities
 
+# returns 1 if operands are either undefined or they are equal
 sub __assert_eq {
   my ($a, $b) = @_;
+  return 1 if (! defined $a) && (! defined $b);
   return 1 if ($a eq $b);
-  ERROR "assertion failed: (\"%s\" eq \"%s\")", $a, $b;
+  DEBUG 3, "assertion failed: (\"%s\" eq \"%s\")", $a, $b;
   return 0;
 }
 

@@ -2,7 +2,7 @@
 
 # test.pl
 #
-# Time-stamp: <Fri Mar 24 14:39:17 CDT 2017 lgalescu>
+# Time-stamp: <Sat May 20 09:47:10 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  5 Feb 2016
 #
@@ -48,12 +48,12 @@ our (
 
 GetOptions(
 	   'no-norm' => \&opt_handler,
+	   'ignore-text' => \&opt_handler,
 	   'ignore-sentence-diffs' => \&opt_handler,
-	   'ignore-ekb-id' => \&opt_handler,
-	   'ignore-ekb-complete' => \&opt_handler,
 	   'ignore-dbid' => \&opt_handler,
 	   'ignore-pred-type' => \&opt_handler,
-	   'only-uttnums=s' => \&opt_handler,
+	   'attributes=s' => \&opt_handler,
+	   'uttnums=s' => \&opt_handler,
 	   'debug|d=i' => \$debugLevel,
 	  ) or die "Something's wrong";
 
@@ -61,19 +61,19 @@ sub opt_handler {
     my ($opt_name, $opt_value) = @_;
 
     if ($opt_name eq 'no-norm') {
-	$cmp_opts{no_normalization} = 1;
+	$cmp_opts{normalize} = 0;
+    } elsif ($opt_name eq 'ignore-text') {
+	$cmp_opts{ignore_text} = 1;
     } elsif ($opt_name eq 'ignore-sentence-diffs') {
 	$cmp_opts{ignore_sentence_diffs} = 1;
-    } elsif ($opt_name eq 'ignore-ekb-id') {
-	$cmp_opts{ignore_ekb_id} = 1;
-    } elsif ($opt_name eq 'ignore-ekb-complete') {
-	$cmp_opts{ignore_ekb_complete} = 1;
     } elsif ($opt_name eq 'ignore-dbid') {
 	$cmp_opts{ignore_dbid} = 1;
     } elsif ($opt_name eq 'ignore-pred-type') {
 	$cmp_opts{ignore_pred_type} = 1;
-    } elsif ($opt_name eq 'only-uttnums') {
-	$cmp_opts{only_uttnums} = [ split(/,/, $opt_value) ];
+    } elsif ($opt_name eq 'attributes') {
+	$cmp_opts{attributes} = [ split(/,/, $opt_value) ];
+    } elsif ($opt_name eq 'uttnums') {
+	$cmp_opts{uttnums} = [ split(/,/, $opt_value) ];
     }
 }
 
