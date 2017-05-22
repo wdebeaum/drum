@@ -687,7 +687,14 @@
 ; :parent ONT::ordered-DOMAIN
  :parent ONT::ABSTRACT-OBJECT
  :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::phys-obj F::Abstr-obj))) ;; noise, water
-	     (:essential ont::GROUND (f::abstr-obj   (F::INFORMATION F::INFORMATION-CONTENT)))
+	     (:essential ont::GROUND (f::abstr-obj   (F::INFORMATION F::INFORMATION-CONTENT))) ; a level of 5
+             )
+ )
+
+(define-type ONT::dynamics
+ :wordnet-sense-keys ("dynamics%1:09:00")
+ :parent ONT::ABSTRACT-OBJECT
+ :arguments ((:ESSENTIAL ONT::FIGURE ) 
              )
  )
 

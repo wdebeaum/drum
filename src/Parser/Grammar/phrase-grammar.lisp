@@ -2629,7 +2629,8 @@
 
       ;; version of adj-number-noun with units -- creates quantities, not sets
     ;; a 10 foot fence, 2 week vacation
-    ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype attributive-only) (comparative -) (argument ?aa)
+    ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype attributive-only) (comparative -)
+	   (argument (% ?aa (sem ?argsem)))
       (SORT unit-measure)
       (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
 	     (CONSTRAINT (& (FIGURE ?arg) 
@@ -2642,15 +2643,18 @@
      (NUMBER  (val ?sz) (VAR ?nv) (restr -))
      (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
 	       (KIND -) ;;(agr 3s)   we allow either 61 year old or 61 years old
-	       (sem ?sem)  (sem ($ f::abstr-obj (f::scale ont::linear-d)))
+	       (sem ?sem)  (sem ($ f::abstr-obj (f::scale ?sc))) ;(sem ($ f::abstr-obj (f::scale ont::linear-d)))
 	       (RESTR ?restr) (transform ?transform)
 	       (postadvbl -) (post-subcat -)
+	       (argument (% ?aa2 (sem ?argsem))) ; ?aa2 is a PP; not the same as ?aa in the LHS, which is an NP.  But they have the same sem
 	       ))
      (add-to-conjunct (val (& (amount ?sz) (unit ?c))) (old ?restr) (new ?constr))
      )
 
     ;; and often has a hyphen
-    ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype attributive-only) (comparative -) (argument ?aa)
+    ; two-step (pitch) interval, but not a two-step staircase
+    ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype attributive-only) (comparative -)
+	   (argument (% ?aa (sem ?argsem)))
       (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
 	     (CONSTRAINT (& (FIGURE ?arg) 
 			    (GROUND (% *PRO* (status ont::inDEFINITE) (var ?nv) 
@@ -2659,13 +2663,15 @@
 	     (Sem ?sem)))
       (SORT unit-measure)
       (transform ?transform))
-     -adj-number-unit-modifier-hyphen> 1.1
+     -adj-number-unit-modifier-hyphen> 0.98
      (NUMBER  (val ?sz) (VAR ?nv) (restr -))
      (Punc (lex W::punc-minus))
      (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m) 
-	       (KIND -) (agr 3s) (sem ?sem)  (sem ($ f::abstr-obj (f::scale ?sc)))
+	       (KIND -) (agr 3s)
+	       (sem ?sem)  (sem ($ f::abstr-obj (f::scale ?sc)))
 	       (RESTR ?restr) (transform ?transform)
 	       (postadvbl -) (post-subcat -)
+	       (argument (% ?aa2 (sem ?argsem))) ; ?aa2 is a PP; not the same as ?aa in the LHS, which is an NP.  But they should have the same sem
 	       ))
      (add-to-conjunct (val (& (amount ?sz) (unit ?c) (scale ?sc))) (old ?restr) (new ?constr))
      )
@@ -3993,7 +3999,7 @@
 		    ))
 	  (postadvbl +)
 	  )
-	 -NP-adj-missing-head> .96
+	 -NP-adj-missing-head> .97 ; .96
 	 (head (spec  (poss -) (restr ?restr)
                       (lf ?spec) (arg *) (agr |3P|) (var ?v)))
 	 (ADJP (LF ?l1) (ARG *) (set-modifier -)

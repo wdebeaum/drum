@@ -373,6 +373,7 @@
 
 ;; sway, rock, quake
 (define-type ONT::move-back-and-forth
+ :wordnet-sense-keys ("move_back_and_forth%2:38:00")
  :parent ONT::MOVE
  )
 
@@ -1060,6 +1061,15 @@
 (define-type ONT::deactivate
     :comment "Stoping the running of some ongoing process or object that causes a process"
     :parent ONT::stop
+ )
+
+(define-type ONT::pause
+  :wordnet-sense-keys ("pause%2:42:00" "pause%2:32:01")
+  :parent ONT::inhibit-effect
+ :arguments ((:OPTIONAL ONT::EXTENT (F::abstr-obj (F::scale ont::duration-scale)))
+             ;;; wait for john
+             ;(:OPTIONAL ONT::Formal (F::phys-obj))
+             )
  )
 
 
@@ -2896,6 +2906,13 @@
              )
  )
 
+(define-type ONT::imitate
+ :wordnet-sense-keys ("simulate%2:36:04" "simulate%2:36:02" "imitate%2:36:03")
+  :parent ONT::CREATE
+  :arguments ((:ESSENTIAL ONT::neutral)
+	      )
+  )
+
 (define-type ONT::cause-make-things
  :wordnet-sense-keys ("create_from_raw_material%2:36:00" "create_from_raw_stuff%2:36:00")
   :parent ONT::CREATE
@@ -3856,6 +3873,13 @@
 	     (:optional ont::neutral1)
              )
  )
+
+(define-type ONT::hesitate
+  :wordnet-sense-keys ("hesitate%2:42:00")
+  :parent ont::event-of-awareness
+  :arguments ((:REQUIRED ONT::agent ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
+	      )
+  )
 
 (define-type ONT::wait
  :wordnet-sense-keys ("wait%2:42:00" "await%2:31:00")

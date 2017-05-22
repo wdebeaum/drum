@@ -328,7 +328,7 @@
     (head (vp (lf ?lf) (gap ?g)
               (template (? !x  lxm::propositional-equal-templ))
 	      (subjvar ?npvar)
-	      (subj (% np (sem ?npsem) (var ?npvar) (lex ?lex)))
+	      (subj (% np (sem ?npsem) (var ?npvar) (lex ?lex)  (agr ?a)))
 	      (var ?v) (vform fin) (agr ?a)
 	      (advbl-needed ?avn)
 	      (neg ?neg)
@@ -352,7 +352,7 @@
      (pp-word -) (changeagr -) (subcat-map ont::formal))
     (head (vp (lf ?lf) (gap ?g) (template lxm::propositional-equal-templ)
 	      (subjvar ?npvar)
-	      (subj (% np (sem ?npsem) (var ?npvar) (lex ?lex)))
+	      (subj (% np (sem ?npsem) (var ?npvar) (lex ?lex) (agr ?a)))
 	      (var ?v) (vform fin) (agr ?a)
 	      (advbl-needed ?avn)
 	      (neg ?neg)
@@ -375,7 +375,7 @@
      (pp-word -) (changeagr -) (comp3-map ont::formal))
     (head (vp (lf ?lf) (gap ?g) (template lxm::propositional-equal-templ)
 	      (subjvar ?npvar)
-	      (subj (% np (sem ?npsem) (var ?npvar) (lex ?lex)))
+	      (subj (% np (sem ?npsem) (var ?npvar) (lex ?lex) (agr ?a)))
 	      (var ?v) (vform fin) (agr ?a)
 	      (advbl-needed ?avn)
 	      (neg ?neg)
@@ -1182,7 +1182,8 @@
      ?dobj
      )
 
-   ;; the indirect object beneficiary construction
+    ;; the indirect object beneficiary construction
+    ; eat me a sandwich
     ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar)
       (var ?v) (class ?c) (gap ?gap) 
       (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
@@ -2176,7 +2177,7 @@
 	   ;; no uniform & unique lf's for main verb be uses, so have to match the lex
 	   ;; unless we can match the lf-form be
 	   (lex (? lx am are is was were ^s))
-	   (subj ?subj) (subj (% ?s1 (var ?subjvar) (sem ?subjsem) (lex ?subjlex) (gap -))) ;; note double matching required
+	   (subj ?subj) (subj (% ?s1 (var ?subjvar) (sem ?subjsem) (lex ?subjlex) (agr ?subjagr) (gap -))) ;; note double matching required
 	   (iobj (% -))
 	   (part (% -));; (part ?part) 
 	   (dobj ?dobj)	(dobj (% ?s3 (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap)))
@@ -2221,16 +2222,16 @@
 	    (transform ?transform)
 	    )))
     -s-ynq-be-neg>
-      (head (v (sem ?sem) (aux -)
+      (head (v (sem ?sem) (aux -) (var ?v)
 	   (advbl-needed ?avn)
 	   (lf ?belf)
 	   (subj-map ?subj-map) (dobj-map ?dobj-map) (comp3-map ?comp3-map)
-	   (agr ?a) 
+	   (agr ?subjagr) 
 	   (tma ?tma) (vform ?vf) (transform ?transform)
 	   ;; no uniform & unique lf's for main verb be uses, so have to match the lex
 	   ;; unless we can match the lf-form be
 	   (lex (? lx am are is was were ^s))
-	   (subj ?subj) (subj (% ?s1 (var ?subjvar) (sem ?subjsem) (lex ?subjlex) (gap -))) ;; note double matching required
+	   (subj ?subj) (subj (% ?s1 (var ?subjvar) (sem ?subjsem) (lex ?subjlex) (agr ?subjagr) (gap -))) ;; note double matching required
 	   (iobj (% -))
 	    (part (% -)) ;; (part ?part) 
 	   (dobj ?dobj)	(dobj (% ?s3 (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap)))
@@ -2241,7 +2242,7 @@
        )
       (neg (lex n^t))
     ;;?subj
-    (np (var ?subjvar) (case (? npcase sub -)) (sem ?subjsem) (wh -) (sort (? !sort wh-desc)) (gap -) (lex ?subjlex) )  ;; lots of restrictions on this np to eliminate sentences like "is where the people"
+    (np (var ?subjvar) (agr ?subjagr) (case (? npcase sub -)) (sem ?subjsem) (wh -) (sort (? !sort wh-desc)) (gap -) (lex ?subjlex) )  ;; lots of restrictions on this np to eliminate sentences like "is where the people"
     ?dobj
       ?comp
       (append-conjuncts (conj1 (& (tense (? vf past pres)) (negation +))) (conj2 ?tma) (new ?newtma))
@@ -2289,7 +2290,7 @@
 	   ;; no uniform & unique lf's for main verb be uses, so have to match the lex
 	   ;; unless we can match the lf-form be
 	   (lex (? lx am are is was were ^s))
-	   (subj ?subj) (subj (% ?s1 (var ?subjvar) (sem ?subjsem) (lex ?subjlex) (gap -))) ;; note double matching required
+	   (subj ?subj) (subj (% ?s1 (var ?subjvar) (sem ?subjsem) (lex ?subjlex) (agr ?subjagr) (gap -))) ;; note double matching required
 	   (iobj (% -))
 	   (part (% -))		 
 	   (dobj ?!dobj) (dobj (% ?!s3 (case (? dcase obj -)) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap ?gap)))
@@ -2348,7 +2349,7 @@
 	   ;; no uniform & unique lf's for main verb be uses, so have to match the lex
 	   ;; unless we can match the lf-form be
 	   (lex (? lx are is was were ^s))
-	   (subj ?subj) (subj (% ?s1 (case sub) (var ?subjvar) (sem ?subjsem) (lex ?subjlex) (gap -))) ;; note double matching required
+	   (subj ?subj) (subj (% ?s1 (case sub) (var ?subjvar) (sem ?subjsem) (lex ?subjlex) (agr ?subjagr) (gap -))) ;; note double matching required
 	   (iobj (% -))
 	   (part (% -))
 	   (dobj ?dobj)	(dobj (% ?s3 (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap -)))
@@ -2657,7 +2658,8 @@
 	    (advbl-needed ?avn)
 	    (lf ?belf)
 	    (subj-map ?subj-map) (dobj-map ?dobj-map) (comp3-map ?comp3-map)
-	    (agr ?a) 
+	    ;(agr ?a) 
+	    (agr ?gagr)
 	    (tma ?tma) (vform ?vf) (transform ?transform)
 	    ;; no uniform & unique lf's for main verb be uses, so have to match the lex
 	    ;; unless we can match the lf-form be
@@ -2980,7 +2982,7 @@
 		      (case (? ccase obj -)) (subj-map ?rsubjmap) 
 		      (constraint ?con) (subjvar ?subjvar) (tma ?tma1)
 		      (var ?compvar) (sem ?compsem) (gap ?gap) (subj (% ?s1 (lex ?subjlex) (case sub) (var ?subjvar)
-									(sem ?subjsem) (gap -)))
+									(sem ?subjsem) (agr ?a) (gap -)))
 		      (dobj ?dobj)
 		      (advbl-needed -)
 		      ))
@@ -3022,7 +3024,7 @@
 		      (case (? ccase obj -)) (subj-map ?rsubjmap) 
 		      (constraint ?con) (subjvar ?subjvar) (tma ?tma1)
 		      (var ?compvar) (sem ?compsem) (gap ?gap) (subj (% ?s1 (lex ?subjlex) (case sub) (var ?subjvar)
-									(sem ?subjsem) (gap -)))
+									(agr ?a) (sem ?subjsem) (gap -)))
 		      (dobj ?dobj)
 		      (advbl-needed -)
 		      ))
@@ -3106,7 +3108,7 @@
 	    (ellipsis +) (contraction -)
 	    (sem ?sem) (vform ?vf) (vform (? vf pres past fut))
 	    (var ?v) (tma ?tma1) (agr ?a)
-	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
+	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -))) ;; note double matching required
 	    (subj-map ?lsubj-map)
 	     (transform ?transform)
 	    (advbl-needed -)

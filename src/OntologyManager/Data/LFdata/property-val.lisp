@@ -1332,6 +1332,7 @@
 ;; taste
 (define-type ont::tastable-property-val
  :parent ont::sensory-property-val 
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Phys-obj (F::OBJECT-FUNCTION F::COMESTIBLE))))
 )
 
 (define-type ont::tasteful-val
