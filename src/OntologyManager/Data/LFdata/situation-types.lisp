@@ -108,8 +108,8 @@
   :parent ONT::representative
   )
 
-(define-type ONT::lie
-  :wordnet-sense-keys ("lie%2:32:00")
+(define-type ONT::misinform
+  :wordnet-sense-keys ("misinform%2:32:00")
     :parent ONT::representative
     )
 

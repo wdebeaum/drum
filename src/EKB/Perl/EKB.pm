@@ -3,7 +3,7 @@
 # Time-stamp: <Mon May 15 17:37:01 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.29 2017/05/15 22:38:33 lgalescu Exp $
+# $Id: EKB.pm,v 1.30 2017/05/22 19:20:05 rcarff Exp $
 #
 
 #----------------------------------------------------------------
@@ -152,8 +152,8 @@ c. Editing
   $ekb->add_feature($a, $feature => $value);
   $ekb->add_notfeature($a, $feature => $value);
   $ekb->make_complex_term($ids, $attributes, @properties);
+  $ekb->make_conjoined_event($ids, $operator, $attributes, @properties);
   $ekb->make_aggregate_term($ids, $operator, $attributes, @properties);
-
 
 Non-OO utility functions:
 
@@ -550,6 +550,8 @@ Normalizes the EKB. Specifically, it modifies the EKB so that:
 =item - lisp code is removed;
 
 =item - duplicative information is removed from event arguments.
+
+=item - arg# child elements are renamed to arg child elements.
 
 =back
 
@@ -1181,6 +1183,7 @@ sub clean_assertion {
   my ($self, $a) = @_;
   # remove unnecessary attributes
   $a->removeAttribute('lisp');
+
   DEBUG 2, "Cleaning up: %s", $a;
   # remove unnecessary stuff from args & pseudoargs
   map { $self->_clean_arg($_) } assertion_args($a), assertion_xargs($a);
@@ -1213,6 +1216,7 @@ sub _clean_arg {
     next if $aname eq 'mod' and $t eq 'location';
     $arg->removeAttribute($aname);
   }
+
   DEBUG 2, "Clean version: %s", $arg;
 }
 
@@ -1354,6 +1358,34 @@ sub make_complex_term {
 }
 
 
+=head2 make_conjoined_event( $ids, $operator, $attributes, @properties )
+
+Makes a conjoined event with member ids given in the list referenced by $ids,
+joined by $operator.
+
+The $ids argument is required and has to be a reference to a (possibly empty)
+list of ids. The $operator argument is required and must be a string. The
+other arguments are optional.
+
+Examples:
+
+my $a = make_conjoined_event([$term_id1, $term_id2], 'AND', {rule => 'MY_RULE'});
+
+=cut
+
+sub make_conjoined_event {
+  my $self = shift;
+  my ($ids, $operator, @content) = @_;
+  my $a = $self->make_assertion( 'EVENT',
+      @content );
+  my @comps
+      = map { make_node("member", { id => $_ }) } @$ids;
+  if (@comps) {
+    $a->appendChild(make_node("aggregate", {operator => $operator}, @comps));
+  }
+  $a;
+}
+
 =head2 make_aggregate_term( $ids, $operator, $attributes, @properties )
 
 Makes an aggregate term with member ids given in the list referenced by $ids,
@@ -1373,9 +1405,9 @@ sub make_aggregate_term {
   my $self = shift;
   my ($ids, $operator, @content) = @_;
   my $a = $self->make_assertion( 'TERM',
-				 @content );
+      @content );
   my @comps
-    = map { make_node("member", { id => $_ }) } @$ids;
+      = map { make_node("member", { id => $_ }) } @$ids;
   if (@comps) {
     $a->appendChild(make_node("aggregate", {operator => $operator}, @comps));
   }
@@ -1722,12 +1754,13 @@ Examples:
 
 sub add_feature {
   my $self = shift;
-  my ($a, $feature, $value) = @_;
+  my ($a, $feature, @value) = @_;
   unless (defined $feature) {
     WARN "Tried to add an undefined feature.";
     return;
   }
-  unless (defined $value) {
+
+  unless (scalar(@value) > 0) {
     WARN "Tried to set feature $feature to an undefined value.";
 
     # FIXME: we let things go through even when we don't have a value.
@@ -1742,7 +1775,7 @@ sub add_feature {
   {
     local $Data::Dumper::Terse = 1;
     local $Data::Dumper::Indent = 0;
-    DEBUG 2, "Adding feature %s = %s to %s", $feature, Dumper($value), $a;
+    DEBUG 2, "Adding feature %s = %s to %s", $feature, Dumper(@value), $a;
   }
   my $fs = get_child_node($a, "features");
   if (! defined $fs) {
@@ -1750,10 +1783,10 @@ sub add_feature {
     $a->addChild($fs);
   }
   my $fnode;
-  if (ref($value) eq 'HASH') {
-    $fnode = make_node($feature, $value);
+  if (ref($value[0]) ne '') {
+    $fnode = make_node($feature, @value);
   } else { # assuming scalar; TODO: validate
-    $fnode = make_slot_node($feature, $value);
+    $fnode = make_slot_node($feature, $value[0]);
   }
   $fs->addChild($fnode);
 }
@@ -1778,12 +1811,12 @@ Examples:
 
 sub add_notfeature {
   my $self = shift;
-  my ($a, $feature, $value) = @_;
+  my ($a, $feature, @value) = @_;
   unless (defined $feature) {
     WARN "Tried to add an undefined feature.";
     return;
   }
-  unless (defined $value) {
+  unless (scalar(@value) > 0) {
     WARN "Tried to set feature $feature to an undefined value.";
     return;
   }
@@ -1793,10 +1826,10 @@ sub add_notfeature {
     $a->addChild($fs);
   }
   my $f;
-  if (ref($value) eq 'HASH') {
-    $f = make_node($feature, $value);
+  if (ref($value[0]) ne '') {
+    $f = make_node($feature, @value);
   } else { # assuming scalar; TODO: validate
-    $f = make_slot_node($feature, $value);
+    $f = make_slot_node($feature, $value[0]);
   }
   $fs->addChild($f);
 }

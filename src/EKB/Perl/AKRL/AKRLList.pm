@@ -46,7 +46,7 @@ sub parseAKRL
     my $AKRLObject = 0;
     if ($size > 0 and ref(@$list[0]) eq 'ARRAY')
     {
-        INFO ("Parsing $size AKRL Objects\n");
+        DEBUG (10, "Parsing $size AKRL Objects\n");
         foreach my $item (@$list)
         {
             $AKRLObject = new AKRL::AKRLTerm ($item);
@@ -61,7 +61,7 @@ sub parseAKRL
     }
     else
     {
-        INFO ("Parsing one AKRL Object\n");
+        DEBUG (10, "Parsing one AKRL Object\n");
 
         $AKRLObject = new AKRL::AKRLTerm ($list);
         if (!defined($AKRLObject) or !ref($AKRLObject))

@@ -7,8 +7,8 @@ our @ISA = qw(Exporter);
 @EXPORT = qw(parseString keywordify removePrefix);
 
 use util::Log;
-local $AKRL::Log::Caller_Info = 0;
-local $AKRL::Log::Quiet = 1;
+local $util::Log::Caller_Info = 0;
+local $util::Log::Quiet = 1;
 
 use strict;
 use warnings FATAL => 'all';
@@ -39,7 +39,7 @@ sub newContext {
 
 sub resetContext {
     my($self) = @_;
-    INFO ("resetContext: resetting context");
+    DEBUG (10, "resetContext: resetting context");
     $self->{'state'} = $START;
     $self->{'text'} = '';
     $self->{'hashnum'} = 0;
@@ -47,7 +47,7 @@ sub resetContext {
 
 sub initContext {
     my($self) = @_;
-    INFO ("initContext: initializing context");
+    DEBUG (10, "initContext: initializing context");
     $self->{'expr'} = [];
     $self->{'stack'} = [ $self->{'expr'} ];
 }
@@ -55,7 +55,7 @@ sub initContext {
 sub emptyContext {
     my($self) = @_;
     my $result = ($#{$self->{'stack'}} < 0);
-    INFO ("emptyContext: returning " . ($result ? 'true' : 'false'));
+    DEBUG (10, "emptyContext: returning " . ($result ? 'true' : 'false'));
     $result;
 }
 
@@ -69,7 +69,7 @@ sub pushContext {
     push(@$currentref, $newref);
     # Push onto context stack
     push(@$stackref, $newref);
-    INFO ("pushContext: depth now " . ($#{$stackref}+1));
+    DEBUG (10, "pushContext: depth now " . ($#{$stackref}+1));
 }
 
 # Pops to the previous list being filled
@@ -77,14 +77,14 @@ sub popContext {
     my($self) = @_;
     my $stackref = $self->{'stack'};
     pop(@$stackref);
-    INFO ("popContext: depth now " . ($#{$stackref}+1));
+    DEBUG (10, "popContext: depth now " . ($#{$stackref}+1));
 }
 
 # Sets the current element to the empty string (different from undef)
 sub startElement {
     my($self, $ch) = @_;
     $self->{'element'} = '';
-    INFO ("startElement: element=\"\"");
+    DEBUG (10, "startElement: element=\"\"");
 }
 
 # Adds a character to the current element (token/word/string)
@@ -94,7 +94,7 @@ sub addCharToElement {
         $self->{'element'} = '';
     }
     $self->{'element'} .= $ch;
-    INFO ("addCharToElement: element=\"%s\"" , $self->{'element'});
+    DEBUG (10, "addCharToElement: element=\"%s\"" , $self->{'element'});
 }
 
 # Adds the current element to the current list being filled and resets element
@@ -104,16 +104,16 @@ sub addElementToContext {
     my $currentref = $stackref->[$#{$stackref}];
     # Add element to current list
     if (defined($self->{'element'})) {
-        INFO ("addElementToContext: element=\"%s\"" , $self->{'element'});
+        DEBUG (10, "addElementToContext: element=\"%s\"" , $self->{'element'});
         push(@$currentref, $self->{'element'});
-        INFO ("addElementToContext: length now " . ($#{$currentref}+1));
+        DEBUG (10, "addElementToContext: length now " . ($#{$currentref}+1));
         undef($self->{'element'});
     }
 }
 
 sub parseChar {
     my($ch, $context) = @_;
-    INFO("parseChar: ch=%s", $ch);
+    DEBUG (10, "parseChar: ch=%s", $ch);
     # Sanity check
     if (!ref($context)) {
         DEBUG(2, "parseChar: done (error: bad context)");
@@ -222,12 +222,12 @@ sub parseChar {
     }
     # If after all this we have balanced parens, we are done
     if ($context->{'state'} != $START && emptyContext($context)) {
-        INFO ("parseChar: done (perf complete)");
+        DEBUG (10, "parseChar: done (perf complete)");
         $context->{'state'} = $DONE;
         return $context->{'expr'};
     }
     # Otherwise we're still processing
-    INFO ("parseChar: done (continuing)");
+    DEBUG (10, "parseChar: done (continuing)");
     return undef;
 }
 

@@ -1,0 +1,72 @@
+#
+# Drum Bob EKB Tests.
+#
+# This file contains assertions which are sent to the Drum and Bob
+# systems in order to generate EKB which is then compared.  Non-blank
+# lines which do not start with a '#' character are considered assertions.
+#
+
+# Active examples
+Active p53 activates Mdm2.
+
+# Aggregate examples
+Ras and raf bind erk.
+
+# By Means Of examples
+Ras binds raf by means of mrk.
+
+# CC examples
+RAS induces cell proliferation.
+SMAD4 depends on CD25.
+
+# Cell examples
+RAS is activated in pancreatic cells.
+
+# Complex examples
+MAP-2-K-1/MAPK-1 is depleted.
+Ras/Raf binds to Erk.
+The RAS AKT complex is depleted.
+
+# Conjoined Examples
+GTP binds and activates RAS.
+GTP binds RAF and RAS activates MRK.
+GTP binds or activates RAS.
+
+# EPI Examples
+The paper shows that mek activates erk.
+The paper determined that mek activates erk.
+I think mek activates erk.
+
+# EPI and CC Example
+#Activated RAS controls RAF which determines RAS-induced cellular responses such as cell proliferation.
+
+# Event with DRUM info Example
+LCK phosphorylates CD3E.
+
+# INEVENT example
+Activated Ras controls diverse signaling pathways.
+
+# Location Examples
+RAS is translocated to the nucleus.
+RAS moves from the nucleus to the cytosol.
+
+# MODALITY Examples
+Ras may bind Raf.
+
+# Modifier Examples
+DUSP-6 dephosphorylates mark-1 on tyrosine.
+
+# Mutation Examples
+Ras S123Y is phosphorylated at T124.
+
+# Negation Examples
+Ras is not phosphorylated.
+
+# Sequence Examples
+Sos-1/Grb2/E3b1 is activated.
+
+# Site Examples
+RAS is phosphorylated at S123.
+
+# Transcription Examples
+SMAD4-SMAD2 complex increases transcription of CD25.

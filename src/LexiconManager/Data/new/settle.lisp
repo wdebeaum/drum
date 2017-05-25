@@ -25,11 +25,11 @@
  :words (
 ((W::settle (w::down))
    (SENSES
-    ((LF-PARENT ont::wait)
+    ((LF-PARENT ont::subduing)
      (example "settle down")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-TEMPL)
-     (preference .97) ;; prefer transitive
+     (TEMPL affected-TEMPL)
+     ;(preference .97) ;; prefer transitive
      (meta-data :origin plow :entry-date 20050922 :change-date nil :comments nil)
      )
     ((LF-PARENT ont::subduing)

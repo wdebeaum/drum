@@ -18,10 +18,10 @@
  :words (
 ((W::chill w::out)
    (SENSES
-    ((LF-PARENT ont::wait)
+    ((LF-PARENT ont::subduing)
      (example "chill out")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-TEMPL)
+     (TEMPL affected-TEMPL)
      (meta-data :origin plow :entry-date 20050922 :change-date nil :comments nil)
      )
     )

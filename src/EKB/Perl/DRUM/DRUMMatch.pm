@@ -9,7 +9,7 @@ our @ISA = qw(Exporter);
 use StringParser;
 use util::Log;
 use Data::Dumper;
-local $AKRL::Log::Caller_Info = 0;
+local $util::Log::Caller_Info = 0;
 
 use strict;
 use warnings FATAL => 'all';

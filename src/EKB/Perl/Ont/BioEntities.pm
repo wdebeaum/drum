@@ -62,9 +62,7 @@ my @data = (# biomolecular branch
 	    # N.B: this is everything that's not specifically mapped to
 	    # a cell component subclass
 	    'ONT::CELL-PART' => 1,
-	    # ???
 	    'ONT::CELL' => 1,
-	    'ONT::MUTATION' => 1,
 	   );
 
 sub new {

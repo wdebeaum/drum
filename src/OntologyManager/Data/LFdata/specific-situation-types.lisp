@@ -1064,7 +1064,7 @@
  )
 
 (define-type ONT::pause
-  :wordnet-sense-keys ("pause%2:42:00" "pause%2:32:01")
+  :wordnet-sense-keys ("pause%2:42:00" "pause%2:32:01" "wait%2:42:00" "wait%2:42:01")
   :parent ONT::inhibit-effect
  :arguments ((:OPTIONAL ONT::EXTENT (F::abstr-obj (F::scale ont::duration-scale)))
              ;;; wait for john
@@ -1449,6 +1449,11 @@
  :wordnet-sense-keys ("deplore%2:32:01" "lament%2:32:00" "bewail%2:32:00" "bemoan%2:32:00" "atone%2:37:00")
  :parent ONT::experiencer-emotion
  )
+
+(define-type ONT::hesitate
+  :wordnet-sense-keys ("hesitate%2:42:00")
+  :parent ont::experiencer-emotion
+  )
 
 (define-type ONT::enduring
  :wordnet-sense-keys ("digest%2:31:03" "endure%2:31:00" "stick_out%2:31:00" "stomach%2:31:00" "bear%2:31:00" "stand%2:31:00" "tolerate%2:31:00" "support%2:31:04" "brook%2:31:00" "abide%2:31:00" "suffer%2:31:00" "put_up%2:31:00" "last_out%2:42:00")
@@ -2906,7 +2911,7 @@
              )
  )
 
-(define-type ONT::imitate
+(define-type ONT::imitate-simulate
  :wordnet-sense-keys ("simulate%2:36:04" "simulate%2:36:02" "imitate%2:36:03")
   :parent ONT::CREATE
   :arguments ((:ESSENTIAL ONT::neutral)
@@ -3873,13 +3878,6 @@
 	     (:optional ont::neutral1)
              )
  )
-
-(define-type ONT::hesitate
-  :wordnet-sense-keys ("hesitate%2:42:00")
-  :parent ont::event-of-awareness
-  :arguments ((:REQUIRED ONT::agent ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
-	      )
-  )
 
 (define-type ONT::wait
  :wordnet-sense-keys ("wait%2:42:00" "await%2:31:00")

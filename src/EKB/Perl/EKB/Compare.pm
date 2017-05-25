@@ -368,7 +368,8 @@ sub cmp_ekb_assertions {
   DEBUG 1, "s_map: %s", Dumper($self->{'s_map'});
 
   # sentences to work on
-  my @uttnums = keys($self->{'s_map'});
+  my $s_map = $self->{'s_map'};
+  my @uttnums = keys(%$s_map);
 
   if ((! $self->option('ignore_text')) and @uttnums) {
     all { $_ == 1 }
@@ -677,7 +678,7 @@ sub cmp_EVENT {
   # type test
   push @tests,
     $self->cmp_ont_slot($i1, $i2, 'type');
-  
+
   unless (__option_is($options, 'deep', 0)) {
     push @tests,
       $self->cmp_text_slot($i1, $i2, 'negation'),
@@ -964,6 +965,8 @@ sub cmp_members {
 sub cmp_predicate {
   my $self = shift;
   my ($i1, $i2) = @_;
+
+  return 1 if ($self->option('ignore_text'));
 
   my ($pred1) = $i1->findnodes('./predicate');
   my ($pred2) = $i2->findnodes('./predicate');

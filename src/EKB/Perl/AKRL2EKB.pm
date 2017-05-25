@@ -45,6 +45,7 @@ use DRUM::DRUMAASite;
 use DRUM::DRUMMutation;
 use Ont::BioEntities;
 use Ont::BioEvents;
+use Ont::GenericTerms;
 use StringParser;
 use util::Log;
 use Data::Dumper;
@@ -61,6 +62,77 @@ my $AKRL_ERROR_MISSING_VALUE = -14;
 
 my $ont_events = Ont::BioEvents->new();
 my $ont_bioents = Ont::BioEntities->new();
+my $ont_genericTerms = Ont::GenericTerms->new();
+
+=head2 Processed Event Role Arguments
+
+eventRoleArguments is an array which contains all AKRL properties which will
+be turned into EKB Event arg's.
+
+=cut
+
+my @eventRoleArguments = (":AGENT",
+                        ":AGENT1",
+                        ":AFFECTED",
+                        ":AFFECTED1",
+                        ":FACTOR",
+                        ":OUTCOME",
+                        ":AFFECTED-RESULT",
+                        ":NEUTRAL",
+                        ":NEUTRAL1",
+                        ":NEUTRAL2",
+                        ":FORMAL",
+                        ":EXPERIENCER");
+
+=head2 Event Modifiers
+
+A list of Event Modifiers to process.  These are turned into child slot
+nodes of the parent event.
+
+=cut
+
+my @eventModifiers = ("NEGATION", "POLARITY", "FORCE");
+
+=head2 Poly Modifiers
+
+A mapping of Poly Modifiers to process.  These are turned into child nodes
+of the parent event or term and contain child slot nodes for type and value.
+The mapping is from AKRL attribute to EKB node name.
+
+=cut
+
+my %polyModifiers = (":DEGREE" => "degree",
+                     ":FREQUENCY" => "frequency",
+                     ":MODN" => "mod",
+                     ":MODA" => "mod");
+
+=head2 Event Features
+
+A mapping of Event Features to process.  These are turned into child nodes
+of the parent event.  The mapping is from AKRL attribute to EKB node name.
+
+=cut
+
+my %eventFeatures = (":SITE" => "site",
+                     ":LOC" => "location",
+                     ":FROM" => "from-location",
+                     ":TO" => "to-location",
+                     ":CELL-LINE" => "cell-line",
+                     ":EPI" => "epistemic-modality");
+
+=head2 Term Features
+
+A mapping of Term Features to process.  These are turned into child nodes
+of the parent term's feature child node.  The mapping is from AKRL attribute
+to EKB feature name.
+
+=cut
+
+my %termFeatures = (":ACTIVE" => "active",          # Only one and remove package prefix
+                    ":LOC" => "location",           # Can have multiple and remove package prefix
+                    ":SITE" => "site",              # Only one and remove package prefix
+                    ":CELL-LINE" => "cell-line",    # Only one and remove package prefix
+                    ":MUTATION" => "mutation");     # Can have multiple, If Boolean or not Ont Var then text, else ID attribute.
 
 # Helper Methods
 
@@ -71,7 +143,8 @@ removing all '|' characters.
 
 =cut
 
-sub normalizeId {
+sub normalizeId
+{
     my ($id) = @_;
     my @parsed = split(/:+/, $id);
 
@@ -95,87 +168,245 @@ sub normalizeId {
 
     WARN("Unrecognized dbid format: $id");
     return $id;
-
-#    my $normalizedId = $id;
-#    if (defined($normalizedId))
-#    {
-#        $normalizedId =~ s/::/:/g;
-#        $normalizedId =~ s/\|//g;
-#    }
-#    return $normalizedId;
 }
 
-sub uniq {
+=head2 removePackage ($word)
+
+Removes the package prefix from the provided word and returns it.
+
+=cut
+
+sub removePackage
+{
+    my ($word) = @_;
+    $word =~ s/^[A-Za-z]+:://g;
+    return $word;
+}
+
+=head2 normalizeOnt($word)
+
+Normalized the ontology in the provided word by first removing the package
+and then converting any special character encodings back to the special
+character.
+
+=cut
+
+sub normalizeOnt
+{
+    my ($word) = @_;
+    if (!defined ($word))
+    {
+        return $word;
+    }
+    $word = removePackage($word);
+    $word =~ s/-PUNC-SLASH-/\//g;
+    $word =~ s/-PUNC-MINUS-/-/g;
+    $word =~ s/-PUNC-EN-DASH-/-/g;
+    $word =~ s/-PUNC-PERIOD-/./g;
+    $word =~ s/-PUNC-PERIOD/./g;
+    $word =~ s/-PUNC-COMMA-/,/g;
+    $word =~ s/-START-PAREN-/(/g;
+    $word =~ s/START-PAREN-/(/g;
+    $word =~ s/-END-PAREN-/)/g;
+    $word =~ s/-END-PAREN/)/g;
+    $word =~ s/ /_/g;;
+    return $word;
+}
+
+=head2 uniq(@_)
+
+Given a list of objects, this will return a list which contains only the
+unique objects in the list.
+
+=cut
+
+sub uniq
+{
     keys %{{ map { $_ => 1 } @_ }};
 }
 
 # toEKB Methods
 
-sub modify_assertion {
+=head2 add_slot_node ($attribute, $value, $ekb, $node)
+
+Helper method which adds a slot node with the given attribute and value to
+the specified node, but only if the value is defined.
+
+=cut
+
+sub add_slot_node
+{
     my ($attribute, $value, $ekb, $node) = @_;
     if (defined ($value))
     {
-        $ekb->modify_assertion ($node, (EKB::make_slot_node($attribute, $value)));
+        $ekb->modify_assertion ($node, make_slot_node($attribute, $value));
         return 1;
     }
     return undef;
 }
 
-sub add_arg {
-    my ($arg, $value, $ekb, $node, $akrlList) = @_;
+=head2 add_arg ($role, $value, $ekb, $node, $akrlList)
+
+Helper method to add an arg to the specified node with the given role and
+value if the value is defined.  Also, if the value it defined then try to
+recursively process it and another ID in the provided AKRL List.
+
+=cut
+
+sub add_arg
+{
+    my ($role, $value, $ekb, $node, $akrlList) = @_;
     if (defined ($value))
     {
-        my $argNode = $ekb->add_arg($node, $arg, removePrefix($value, "ONT::"));
-
-        my $refAKRLObj = $akrlList->getObjectWithToken($value);
-        if (defined ($refAKRLObj))
-        {
-            # RECUSIVE CALL HERE TO ADD THE TERMS. ALSO DO NOT WORRY ABOUT THE TYPE HERE
-            addEKBAssertion($ekb, $refAKRLObj, $akrlList);
-        }
-
+        my $argNode = $ekb->add_arg($node, $role, removePackage($value));
+        addEKBAssertion($value, $ekb, $akrlList);
         return $argNode;
     }
     return undef;
 }
 
-sub add_child_with_id {
+=head2 add_child_with_id_attribute ($child, $id, $ekb, $node, $akrlList)
+
+Helper method which add a child node with an attribute id to the provided node,
+if the id is defined.  Also, if the id is defined, it is recursively processed
+as another AKRL object.
+
+=cut
+
+sub add_child_with_id_attribute
+{
     my ($child, $id, $ekb, $node, $akrlList) = @_;
     if (defined ($id))
     {
-        my $childNode = EKB::make_node($child,
-            { id => removePrefix($id, "ONT::")
-            });
-        EKB::add_child($node, $childNode);
-
-        my $refAKRLObj = $akrlList->getObjectWithToken($id);
-        if (defined ($refAKRLObj))
-        {
-            # RECUSIVE CALL HERE TO ADD THE TERMS. ALSO DO NOT WORRY ABOUT THE TYPE HERE
-            addEKBAssertion($ekb, $refAKRLObj, $akrlList);
-        }
+        my $childNode = make_node($child, { id => removePackage($id) });
+        $ekb->modify_assertion($node, $childNode);
+        addEKBAssertion($id, $ekb, $akrlList);
         return $childNode;
     }
     return undef;
 }
 
-sub add_feature {
-    my ($feature, $id, $ekb, $node, $akrlList) = @_;
-    if (defined ($id))
+=head2 add_poly_modifiers ($node, $ekb, $akrl)
+
+Helper method to add the poly modifiers contained in the AKRL object as ekb
+to the provided node.
+
+=cut
+
+sub add_poly_modifiers
+{
+    my ($node, $ekb, $akrl) = @_;
+    # Check for PolyModifiers
+    my $modsNode = make_node("mods");
+    my $foundOne = undef;
+    foreach my $polyModifier (keys(%polyModifiers))
     {
-        my $featureNode = $ekb->add_feature($node, $feature => { id => removePrefix($id, "ONT::") });
-
-        my $refAKRLObj = $akrlList->getObjectWithToken($id);
-        if (defined ($refAKRLObj))
+        my $value = $akrl->getValuesAsArrayForKey($polyModifier);
+        if (defined($value) and ref($value) eq "ARRAY" and scalar(@$value) > 0)
         {
-            # RECUSIVE CALL HERE TO ADD THE TERMS. ALSO DO NOT WORRY ABOUT THE TYPE HERE
-            addEKBAssertion($ekb, $refAKRLObj, $akrlList);
+            foreach my $mod (@$value)
+            {
+                if (ref($mod) eq "ARRAY" and scalar(@$mod) > 2)
+                {
+                    $foundOne = "true";
+                    my $modNode = make_node ($polyModifiers{$polyModifier}, (
+                            make_slot_node("type", @$mod[1]),
+                            make_slot_node("value", removePackage(@$mod[2], "W::"))
+                        ));
+                    $modsNode->appendChild($modNode);
+                }
+            }
         }
-
-        return $featureNode;
     }
+    if (defined($foundOne))
+    {
+        $ekb->modify_assertion($node, $modsNode)
+    }
+}
+
+=head2 add_feature_smart ($feature, $value, $ekb, $node, $akrlList)
+
+Helper method to add a feature to the provided node.  The value is checked to
+see how the feature should be added.  Boolean and non-Ontology Vars are added
+as slot nodes and Ontology vars are added as features with id's which are
+recursively processeds as new AKRL objects.
+
+=cut
+
+sub add_feature_smart
+{
+    my ($feature, $value, $ekb, $node, $akrlList) = @_;
+
+    my $featureAdded = undef;
+
+    if (defined ($value))
+    {
+        if (ref($value) eq 'ARRAY')
+        {
+            foreach my $val (@$value)
+            {
+                $featureAdded = add_feature($feature, $val, $ekb, $node, $akrlList);
+            }
+        }
+        elsif (ref($value) eq '')
+        {
+            if ($value =~ /(?i)\AONT::(TRUE|FALSE)\z/ or !($value =~ /(?i)\AONT::[VX][0-9]+\z/))
+            { # Boolean or Not an Ont Var
+                $featureAdded = $ekb->add_feature($node, $feature => removePackage($value));
+            }
+            else # Is an Ont Var
+            {
+                $featureAdded = $ekb->add_feature($node, $feature => { id => removePackage($value) });
+                addEKBAssertion($value, $ekb, $akrlList);
+            }
+        }
+    }
+    return $featureAdded;
+}
+
+# Add any INEVENTS
+=head2 add_inevent_feature ($akrl, $ekb, $node, $akrlList)
+
+Helper method to add inevent/event children to the provided node.  All event
+id's are recursively processed as AKRL objects.
+
+=cut
+
+sub add_inevent_feature
+{
+    my ($akrl, $ekb, $node, $akrlList) = @_;
+    my $inevents = $akrl->getValuesAsArrayForKey(":INEVENT");
+    if (defined ($inevents))
+    {
+        if (ref ($inevents) eq "ARRAY")
+        {
+            if (scalar(@$inevents) > 0)
+            {
+                my @children = ();
+                foreach my $eventId (@$inevents)
+                {
+                    addEKBAssertion($eventId, $ekb, $akrlList);
+                    push (@children, make_node("event", { id => removePackage($eventId) }));
+                }
+                return $ekb->add_feature ($node, "inevent", @children);
+            }
+        }
+        else
+        {
+            addEKBAssertion($inevents, $ekb, $akrlList);
+            return $ekb->add_feature ($node, "inevent", make_node("event", { id => removePackage($inevents) }));
+        }
+    }
+
     return undef;
 }
+
+=head2 trimLeadingAndTrailingQuotes ($string)
+
+The provided string is stripped of any leading and trailing quotes and
+then returned.
+
+=cut
 
 sub trimLeadingAndTrailingQuotes
 {
@@ -193,25 +424,27 @@ sub addMutationToFromChildNode
     my ($mutationNode, $type, $name, $code) = @_;
     if (!defined($mutationNode) or !defined($type))
     {
-        return;
+        return -1;
     }
 
     if (!defined ($name) and !defined($code))
     {
-        return;
+        return -2;
     }
-    my $aaType = EKB::make_node($type);
-    my $aa = EKB::make_node("aa");
+    my $aaType = make_node($type);
+    my $aa = make_node("aa");
     if (defined ($name))
     {
-        EKB::add_child($aa, EKB::make_slot_node("name", trimLeadingAndTrailingQuotes($name)));
+        $aa->appendChild(make_slot_node("name", trimLeadingAndTrailingQuotes($name)));
     }
     if (defined ($code))
     {
-        EKB::add_child($aa, EKB::make_slot_node("code", trimLeadingAndTrailingQuotes($code)));
+        $aa->appendChild(make_slot_node("code", trimLeadingAndTrailingQuotes($code)));
     }
-    EKB::add_child($aaType, $aa);
-    EKB::add_child($mutationNode, $aaType);
+    $aaType->appendChild($aa);
+    $mutationNode->appendChild($aaType);
+
+    return 0;
 }
 
 sub processDRUMMutationInfo
@@ -233,20 +466,20 @@ sub processDRUMMutationInfo
     # process each DRUM Mutation Info
     foreach my $mutation (@{$drumMutations})
     {
-        my $mutationNode = EKB::make_node("mutation");
+        my $mutationNode = make_node("mutation");
         if (defined($mutation->getType()))
         {
-            EKB::add_child($mutationNode, EKB::make_slot_node("type", $mutation->getType()));
+            $mutationNode->appendChild(make_slot_node("type", $mutation->getType()));
         }
         if (defined($mutation->getPosition))
         {
-            EKB::add_child($mutationNode, EKB::make_slot_node("pos", $mutation->getPosition()));
+            $mutationNode->appendChild(make_slot_node("pos", $mutation->getPosition()));
         }
-        addMutationToFromChildNode ($mutationNode, "aa-from", $mutation->getFromName(), $mutation->getFromCode());
-        addMutationToFromChildNode ($mutationNode, "aa-to", $mutation->getToName(), $mutation->getToCode());
-        if (EKB::get_children_by_name_regex($mutationNode, "") > 0)
+        my $retFrom = addMutationToFromChildNode ($mutationNode, "aa-from", $mutation->getFromName(), $mutation->getFromCode());
+        my $retTo =   addMutationToFromChildNode ($mutationNode, "aa-to", $mutation->getToName(), $mutation->getToCode());
+        if (($retFrom >= 0) || ($retTo >= 0))
         {
-            EKB::add_child($node, $mutationNode);
+            $node->appendChild($mutationNode);
         }
     }
 
@@ -274,25 +507,23 @@ sub processDRUMAASites
     # process any DRUM AA-Sites
     foreach my $aasite (@{$drumAASites})
     {
-        my $aasiteNode = EKB::make_node("site");
+        my @siteInfo = ();
         $tmpString = $aasite->getName();
         if (defined($tmpString))
         {
-            EKB::add_child($aasiteNode, EKB::make_slot_node("name", trimLeadingAndTrailingQuotes($tmpString)));
+            push (@siteInfo, make_slot_node("name", trimLeadingAndTrailingQuotes($tmpString)));
         }
         $tmpString = $aasite->getCode();
         if (defined($tmpString))
         {
-            EKB::add_child($aasiteNode, EKB::make_slot_node("code", trimLeadingAndTrailingQuotes($tmpString)));
+            push (@siteInfo, make_slot_node("code", trimLeadingAndTrailingQuotes($tmpString)));
         }
         $tmpString = $aasite->getPosition();
         if (defined($tmpString))
         {
-            EKB::add_child($aasiteNode, EKB::make_slot_node("pos", $tmpString));
+            push (@siteInfo, make_slot_node("pos", $tmpString));
         }
-        my $features = EKB::make_node("features");
-        EKB::add_child($features, $aasiteNode);
-        EKB::add_child($node, $features);
+        my $aasiteNode = $ekb->add_feature ($node, "site", @siteInfo);
     }
 
     return 0;
@@ -311,7 +542,7 @@ sub processDRUMTerms
     my $drumTermsNode = undef;
     my $tmpString = undef;
 
-    $drumTermsNode = EKB::make_node("drum-terms");
+    $drumTermsNode = make_node("drum-terms");
     foreach my $drumTerm (@{$drumTerms})
     {
         # append id to the dbid string
@@ -357,18 +588,18 @@ sub processDRUMTerms
         my $ontTypes = $drumTerm->getOntTypes();
         if (defined ($ontTypes) && ref($ontTypes) eq "ARRAY" && $ontTypes > 0)
         {
-            my $types = EKB::make_node("types");
+            my $types = make_node("types");
             foreach my $ontType (@$ontTypes)
             {
-                EKB::add_child($types, EKB::make_slot_node("type", $ontType));
+                $types->appendChild(make_slot_node("type", $ontType));
             }
-            EKB::add_child($drumTermNode, $types)
+            $drumTermNode->appendChild($types)
         }
         # Add any DBXRefs
         my $dbxRefs = $drumTerm->getDBXRefs();
         if (defined ($dbxRefs) && ref($dbxRefs) eq "ARRAY" && $dbxRefs > 0)
         {
-            my $xrefs = EKB::make_node("xrefs");
+            my $xrefs = make_node("xrefs");
             foreach my $xref (@$dbxRefs)
             {
                 if (defined($xref))
@@ -376,18 +607,18 @@ sub processDRUMTerms
                     $xref = normalizeId($xref);
                     #normalize the id before appending to dbid array
                     push (@dbid, $xref);
-                    EKB::add_child($xrefs, EKB::make_node("xref", {dbid => $xref}));
+                    $xrefs->appendChild(make_node("xref", {dbid => $xref}));
                 }
             }
-            EKB::add_child($drumTermNode, $xrefs)
+            $drumTermNode->appendChild($xrefs)
         }
         # Add any Species
         $tmpString = $drumTerm->getSpecies();
         if (defined($tmpString))
         {
-            EKB::add_child($drumTermNode, EKB::make_slot_node("species", trimLeadingAndTrailingQuotes($tmpString)));
+            $drumTermNode->appendChild(make_slot_node("species", trimLeadingAndTrailingQuotes($tmpString)));
         }
-        EKB::add_child($drumTermsNode, $drumTermNode);
+        $drumTermsNode->appendChild($drumTermNode);
     }
     @dbid = uniq(@dbid);
 
@@ -421,7 +652,7 @@ sub createEKB_Event
         return 11;
     }
 
-    if (!$ont_events->has($instanceOf))
+    if (!$ont_events->has($instanceOf) and $instanceOf ne "ONT::SEQUENCE")
     {
         WARN("Ignoring event with type: $instanceOf");
         return 12;
@@ -509,7 +740,7 @@ sub createEKB_RELN
     my $tmpString = $akrl->getToken();
     if (defined $tmpString)
     {
-        $tmpString = removePrefix($tmpString, "ONT::");
+        $tmpString = removePackage($tmpString);
     }
 
     # if an assertion with this id already exists, then return it.
@@ -525,128 +756,97 @@ sub createEKB_RELN
         return 2;
     }
 
-    # create a new assertion based on the instanceOf.
-    $event = $ekb->make_assertion ($eventElementName, {
-            id   => $tmpString,
-            rule => $akrl->getValuesAsStringForKey (":RULE")
-        });
+    # figure out if this is an Aggregate, Complex, or Regular Term
+    my $seqIds = $akrl->getValueForKey (":SEQUENCE");
+    if (!defined($seqIds))
+    {
+        $seqIds = $akrl->getValueForKey (":M-SEQUENCE");
+    }
+    if (defined($seqIds) and ref($seqIds) eq "ARRAY")
+    {
+        my @cleanIds = map { removePackage($_) } @$seqIds;
+
+        my $operator = $akrl->getValueForKey(":OPERATOR");
+        if (defined ($operator))
+        {
+            # This is a conjoined Event
+            $event = $ekb->make_conjoined_event (
+                            \@cleanIds,
+                            removePackage($operator),
+                            {
+                                id   => $tmpString,
+                                rule => $akrl->getValuesAsStringForKey (":RULE")
+                            });
+        }
+
+        foreach my $seqId (@$seqIds)
+        {
+            addEKBAssertion($seqId, $ekb, $akrlList);
+        }
+    }
+
+    if (!defined($event))
+    {
+        # create a new assertion based on the instanceOf.
+        $event = $ekb->make_assertion ($eventElementName, {
+                id   => $tmpString,
+                rule => $akrl->getValuesAsStringForKey (":RULE")
+            });
+    }
 
     $ekb->add_assertion($event);
 
     # Add the type
-    modify_assertion("type", $instanceOf, $ekb, $event);
+    add_slot_node("type", $instanceOf, $ekb, $event);
 
-    # Check for negation
-    modify_assertion("negation", $akrl->getValueForKey(":NEGATION"), $ekb, $event);
-
-    # Add the force
-    modify_assertion("force", $akrl->getValueForKey(":FORCE"), $ekb, $event);
-
-    # Add the Agent
-    add_arg(":AGENT", $akrl->getValueForKey (":AGENT"), $ekb, $event, $akrlList);
-
-    # Add the Agent1
-    add_arg(":AGENT1", $akrl->getValueForKey (":AGENT1"), $ekb, $event, $akrlList);
-
-    # Add the Affected
-    add_arg(":AFFECTED", $akrl->getValueForKey (":AFFECTED"), $ekb, $event, $akrlList);
-
-    # Add the Affected1
-    add_arg(":AFFECTED1", $akrl->getValueForKey (":AFFECTED1"), $ekb, $event, $akrlList);
-
-    # Add the Factor
-    add_arg(":FACTOR", $akrl->getValueForKey (":FACTOR"), $ekb, $event, $akrlList);
-
-    # Add the Outcome
-    add_arg(":OUTCOME", $akrl->getValueForKey (":OUTCOME"), $ekb, $event, $akrlList);
-
-    # Add the Affected-result
-    add_arg(":AFFECTED-RESULT", $akrl->getValueForKey (":AFFECTED-RESULT"), $ekb, $event, $akrlList);
-
-    # Add the NEUTRAL
-    add_arg(":NEUTRAL", $akrl->getValueForKey (":NEUTRAL"), $ekb, $event, $akrlList);
-
-    # Add the NEUTRAL1
-    add_arg(":NEUTRAL1", $akrl->getValueForKey (":NEUTRAL1"), $ekb, $event, $akrlList);
-
-    # Add the NEUTRAL2
-    add_arg(":NEUTRAL2", $akrl->getValueForKey (":NEUTRAL2"), $ekb, $event, $akrlList);
-
-    # Add the Formal
-    add_arg(":FORMAL", $akrl->getValueForKey (":FORMAL"), $ekb, $event, $akrlList);
-
-    # Check for Sites
-    add_child_with_id ("site", $akrl->getValueForKey (":SITE"), $ekb, $event, $akrlList);
-
-    # Check for Cell Location
-    my $locNode = add_child_with_id("location", $akrl->getValueForKey (":LOC"), $ekb, $event, $akrlList);
-    #    if (defined($locNode))
-    #    {
-    #        $tmpString = $akrl->getValueForKey (":LOCMOD");
-    #        if (defined ($tmpString))
-    #        {
-    #            if (ref ($tmpString) eq "ARRAY")
-    #            {
-    #                shift @$tmpString;
-    #                $tmpString = shift @$tmpString;
-    #            }
-    #
-    #            EKB::set_attribute($child, "mod", removePrefix($tmpString, "ONT::"));
-    #        }
-    #    }
-
-    # Check for Modifiers (:MODN)
-    $tmpString = $akrl->getValuesAsArrayForKey(":MODN");
-    if (defined($tmpString) and ref($tmpString) eq "ARRAY" and scalar(@$tmpString) > 0)
+    # Add the modifiers
+    foreach my $modifier (@eventModifiers)
     {
-        my $modsNode = make_node("mods");
-        my $foundOne = undef;
-        foreach my $mod (@$tmpString)
-        {
-            if (ref($mod) eq "ARRAY" and scalar(@$mod) > 2)
-            {
-                $foundOne = "true";
-                my $modNode = EKB::make_node ("mod", (
-                        EKB::make_slot_node("type", @$mod[1]),
-                        EKB::make_slot_node("value", removePrefix(@$mod[2], "W::"))
-                    ));
-                EKB::add_child($modsNode, $modNode);
-            }
-        }
-        if (defined($foundOne))
-        {
-            EKB::add_child($event, $modsNode);
-        }
+        add_slot_node(lc($modifier), $akrl->getValueForKey(":".$modifier), $ekb, $event);
     }
 
     # Check for Modality (:MODALITY)
     $tmpString = $akrl->getValueForKey(":MODALITY");
-    if (defined($tmpString) and ref($tmpString) eq "ARRAY" and scalar(@$tmpString) > 2)
+    if (defined($tmpString))
     {
-        modify_assertion("modality", @$tmpString[2], $ekb, $event);
+        if (ref($tmpString) eq "ARRAY" and scalar(@$tmpString) > 2)
+        {
+            add_slot_node("modality", @$tmpString[2], $ekb, $event);
 
-        # id = $akrl->getToken();
-        my $modId = removePrefix($akrl->getToken(), "ONT::V");
+            # id = $akrl->getToken();
+            my $modId = removePrefix($akrl->getToken(), "ONT::V");
 
-        my $modalityNode = $ekb->make_assertion ("MODALITY", {
-                id   => 'X'.$modId,
-                rule => "-MODALITY"
-            });
-        modify_assertion("type", @$tmpString[1], $ekb, $modalityNode);
-        add_arg(":EVENT", "V".$modId, $ekb, $modalityNode, $akrlList);
-        $ekb->add_assertion($modalityNode);
+            my $modalityNode = $ekb->make_assertion ("MODALITY", {
+                    id   => 'X'.$modId,
+                    rule => "-MODALITY"
+                });
+            add_slot_node("type", @$tmpString[1], $ekb, $modalityNode);
+            add_arg(":EVENT", "V".$modId, $ekb, $modalityNode, $akrlList);
+            $ekb->add_assertion($modalityNode);
+        }
+        else
+        {
+            add_slot_node ("modality", $tmpString, $ekb, $event);
+        }
     }
 
-    # Check for From Location
-    add_child_with_id ("from-location", $akrl->getValueForKey (":FROM"), $ekb, $event, $akrlList);
+    # Add Mods
+    add_poly_modifiers($event, $ekb, $akrl);
 
-    # Check for To Location
-    my $toLoc = add_child_with_id ("to-location", $akrl->getValueForKey (":TO"), $ekb, $event, $akrlList);
-    #    if (defined($toLoc))
-    #    {
-    #        # Add the Result
-    #        add_arg(":RES", $akrl->getValueForKey (":TO"), $ekb, $event, $akrlList);
-    #    }
+    # Add INEVENT Features
+    add_inevent_feature($akrl, $ekb, $event, $akrlList);
+
+    # Add event role arguments
+    foreach my $role (@eventRoleArguments)
+    {
+        add_arg($role, $akrl->getValueForKey ($role), $ekb, $event, $akrlList);
+    }
+
+    # Add Other Event Features
+    foreach my $feature (keys(%eventFeatures))
+    {
+        add_child_with_id_attribute ($eventFeatures{$feature}, $akrl->getValueForKey ($feature), $ekb, $event, $akrlList);
+    }
 
     # process the DRUM Terms
     processDRUMTerms($event, $ekb, parseDRUMTerms($akrl->getValueForKey(":drum")));
@@ -678,16 +878,16 @@ sub createEKBTerm
     my $tmpString = $akrl->getToken();
     if (defined $tmpString)
     {
-        $tmpString = removePrefix($tmpString, "ONT::");
+        $tmpString = removePackage($tmpString);
     }
 
-    INFO ("Processing AKRL Term Element with id: $tmpString");
+    DEBUG (10, "Processing AKRL Term Element with id: $tmpString");
 
     # if an assertion with this id already exists, then return it.
     my $term = $ekb->get_assertion($tmpString);
     if (defined($term))
     {
-        INFO (" - An AKRL Term with the id: $tmpString, has already been processed.");
+        DEBUG (10, " - An AKRL Term with the id: $tmpString, has already been processed.");
         return $term;
     }
 
@@ -698,7 +898,7 @@ sub createEKBTerm
         $instanceOf = $akrl->getInstanceOf();
     }
 
-    if (!$ont_bioents->has($instanceOf))
+    if (!$ont_bioents->has($instanceOf) and !$ont_genericTerms->has($instanceOf))
     {
         WARN("Ignoring term with type: $instanceOf");
         return 3;
@@ -712,13 +912,13 @@ sub createEKBTerm
     }
     if (defined($seqIds) and ref($seqIds) eq "ARRAY")
     {
-        my @cleanIds = map { removePrefix($_, "ONT::") } @$seqIds;
+        my @cleanIds = map { removePackage($_) } @$seqIds;
 
         my $operator = $akrl->getValueForKey(":OPERATOR");
         if (defined ($operator))
         {
             # This is an Aggregate Term
-            $term = $ekb->make_aggregate_term (\@cleanIds, removePrefix($operator, "ONT::"),{
+            $term = $ekb->make_aggregate_term (\@cleanIds, removePackage($operator),{
                     id   => $tmpString,
                     rule => $akrl->getValuesAsStringForKey (":RULE")
                 });
@@ -734,17 +934,12 @@ sub createEKBTerm
 
         foreach my $seqId (@$seqIds)
         {
-            my $refAKRLObj = $akrlList->getObjectWithToken($seqId);
-            if (defined ($refAKRLObj))
-            {
-                # RECUSIVE CALL HERE TO ADD THE TERMS. ALSO DO NOT WORRY ABOUT THE TYPE HERE
-                addEKBAssertion($ekb, $refAKRLObj, $akrlList);
-            }
+            addEKBAssertion($seqId, $ekb, $akrlList);
         }
     }
     else
     {
-        INFO (" - Creating a new EKB 'TERM' assertion.");
+        DEBUG (10, " - Creating a new EKB 'TERM' assertion.");
         # create a new assertion
         $term = $ekb->make_assertion("TERM", {
                 id   => $tmpString,
@@ -754,36 +949,28 @@ sub createEKBTerm
     $ekb->add_assertion($term);
 
     # Add the type
-    modify_assertion("type", $instanceOf, $ekb, $term);
+    add_slot_node("type", $instanceOf, $ekb, $term);
 
     # Add the name
-    modify_assertion("name", removePrefix($akrl->getValueForKey(":NAME"), "W::"), $ekb, $term);
+    add_slot_node("name", normalizeOnt($akrl->getValueForKey(":NAME")), $ekb, $term);
 
-    # Add any Features
-    my $inevents = $akrl->getValuesAsArrayForKey(":INEVENT");
-    if (defined ($inevents) and ref ($inevents) eq "ARRAY" and scalar(@$inevents) > 0)
+    # Add Mods
+    add_poly_modifiers($term, $ekb, $akrl);
+
+    # Add Term Features
+    foreach my $feature (keys(%termFeatures))
     {
-        my $inevent = $ekb->add_feature ($term, "inevent");
-        foreach my $eventId (@$inevents)
-        {
-            add_child_with_id("event", $eventId, $ekb, $inevent, $akrlList);
-        }
+        add_feature_smart($termFeatures{$feature}, $akrl->getValueForKey($feature), $ekb, $term, $akrlList)
     }
 
-    # Add active feature
-    my $active_value =  $akrl->getValueForKey(":ACTIVE");
-    if (defined $active_value) {
-      $ekb->add_feature($term, 'active' => removePrefix($active_value, "ONT::"));
-    }
-    
-    # Add any Mutations
-    add_feature("mutation", $akrl->getValueForKey(":MUTATION"), $ekb, $term, $akrlList);
+    # process any DRUM AA Sites features
+    processDRUMAASites($term, $ekb, parseDRUMAASites($akrl->getValueForKey(":drum")));
+
+    # Add any INEVENTS
+    add_inevent_feature($akrl, $ekb, $term, $akrlList);
 
     # process any DRUM Mutation Info
     processDRUMMutationInfo($term, $ekb, parseDRUMMutations($akrl->getValueForKey(":drum")));
-
-    # process any DRUM AA-Sites
-    processDRUMAASites($term, $ekb, parseDRUMAASites($akrl->getValueForKey(":drum")));
 
     # process the DRUM Terms
     my $dbids = processDRUMTerms ($term, $ekb, parseDRUMTerms($akrl->getValueForKey(":drum")));
@@ -795,7 +982,7 @@ sub createEKBTerm
     return $term;
 }
 
-=head2 addEKBAssertion($ekb, $akrl, $akrlList)
+=head2 addEKBAssertion($akrlId, $ekb, $akrlList)
 
 Creates an appropriate EKB assertion (EVENT or TERM) from the $akrl and adds it to
 the provided $ekb.  All children of the $akrl are also added to the $ekb and the
@@ -805,7 +992,24 @@ assertion is returned.
 
 sub addEKBAssertion
 {
-    my ($ekb, $akrl, $akrlList) = @_;
+    my ($akrlId, $ekb, $akrlList, $isTopLevel) = @_;
+
+    if (!defined ($akrlId))
+    {
+        return undef;
+    }
+
+    if (ref($akrlId) eq "ARRAY")
+    {
+        my @idList = @$akrlId;
+        foreach my $id (@idList)
+        {
+            addEKBAssertion($id, $ekb, $akrlList);
+        }
+        return 1;
+    }
+
+    my $akrl = $akrlList->getObjectWithToken($akrlId);
 
     if (!defined ($akrl))
     {
@@ -814,7 +1018,7 @@ sub addEKBAssertion
 
     my $indicator = $akrl->getIndicator();
     my $ekbTerm = undef;
-    if ($indicator eq "ONT::EVENT" or $indicator eq "ONT::RELN")
+    if ($indicator eq "ONT::EVENT")
     {
         $ekbTerm = createEKB_Event($ekb, $akrl, $akrlList);
     }
@@ -826,9 +1030,20 @@ sub addEKBAssertion
     {
         $ekbTerm = createEKB_CC($ekb, $akrl, $akrlList);
     }
-    elsif ($indicator eq "ONT::TERM" or $indicator eq "ONT::A" or $indicator eq "ONT::THE")
+    elsif ($indicator eq "ONT::TERM")
     {
         $ekbTerm = createEKBTerm($ekb, $akrl, $akrlList);
+    }
+    elsif (!defined($isTopLevel) or $isTopLevel ne 'true')
+    {
+        if ($indicator eq "ONT::RELN")
+        {
+            $ekbTerm = createEKB_Event($ekb, $akrl, $akrlList);
+        }
+        elsif ($indicator eq "ONT::A" or $indicator eq "ONT::THE")
+        {
+            $ekbTerm = createEKBTerm($ekb, $akrl, $akrlList);
+        }
     }
 
     return $ekbTerm;
@@ -864,12 +1079,13 @@ sub toEKB
         return undef;
     }
 
+    INFO ("toEKB - Asked to process these ids: " . join(", ", @$ids));
     my $ekb = EKB->new;
     my $ekbObject = undef;
     foreach my $key (@$ids)
     {
-        INFO ("Processing AKRL TERM with ID: $key");
-        $ekbObject = addEKBAssertion($ekb, ($akrlList->getObjectWithToken($key)), $akrlList);
+        DEBUG (10, "Processing AKRL TERM with ID: $key");
+        addEKBAssertion($key, $ekb, $akrlList, 'true');
     }
 
     return $ekb;

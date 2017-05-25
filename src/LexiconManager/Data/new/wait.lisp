@@ -8,7 +8,7 @@
 ;   )
   (W::wait
    (SENSES
-    ((LF-PARENT ONT::WAIT)
+    ((LF-PARENT ONT::PAUSE)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL AGENT-TIME-DURATION-TEMPL)
      (example "wait five minutes")
