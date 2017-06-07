@@ -39,7 +39,8 @@ Arguments:
     -saveResultsFolder <folder>
 
     If specified then any EKB comparisons will be saved in the specified
-    folder.  Separate files for Drum EKB, Bob EKB, AKRL, and DIFF are created
+    folder.  If not specified then they are stored in './ekb-agent-tests'.
+    Separate files for Drum EKB, Bob EKB, AKRL, and DIFF are created
     using the assertion as the filename prefix followed by "-drum.ekb",
     "-bob.ekb", ".akrl", and "-DIFF.txt" respectively.
 
@@ -58,7 +59,7 @@ Usage:
           perl EKBAgent.pl -testFile AKRL/drumBobTestsAll.txt
 
         This will compare all assertions in the specified file and display the results
-        on the console.
+        on the console. Results are stored in './ekb-agent-tests'.
 
           perl EKBAgent.pl -testFile AKRL/drumBobTestsAll.txt -saveResultsFolder ARKL/results
 
@@ -163,7 +164,7 @@ sub handle_parameters {
   my @argv = @{$self->{argv}};
 
   $self->{compareEnabled} = 0;
-  $self->{saveResultsFolder} = undef;
+  $self->{saveResultsFolder} = 'ekb-agent-tests';
   $self->{testing} = 0;
 
   eval {
@@ -293,9 +294,6 @@ sub receive_request {
     {
       if ($self->{testing})
       {
-        # Send the no so the dagent will reset and we can then process another auto test.
-        sleep 1;
-        $self->send_msg('(request :content (tag :text "no" :IMITATE-KEYBOARD-MANAGER t))');
         sleep 1;
         if ($self->{testing})
         {
@@ -436,6 +434,7 @@ sub sendNextTest
 
   if (!defined($test))
   {
+    $self->send_msg('(BROADCAST :CONTENT (TELL :CONTENT (START-CONVERSATION)))');
     INFO "*********************************";
     INFO "*** Finished all Test Strings ***";
     INFO "*********************************";
@@ -451,6 +450,7 @@ sub sendNextTest
     return 0;
   }
 
+  $self->send_msg('(BROADCAST :CONTENT (TELL :CONTENT (START-CONVERSATION)))');
   $self->send_msg('(request :content (tag :text "'.$test.'" :IMITATE-KEYBOARD-MANAGER t))');
 
   #    $self->{uttnum} = $self->{uttnum} + 1;

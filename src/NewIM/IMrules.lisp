@@ -228,6 +228,7 @@
       ;; WH Questions 
       ;;   e.g. what is the budget
 
+      #|
       ; This rule might not fire any more.  "What is the budget?" is matched by -roleQ1-rev
       ((ONT::SPEECHACT ?!a ONT::SA_WH-QUESTION :FOCUS ?!ff :CONTENT ?!rr)
        (ONT::WH-TERM ?!ff ?foc-type)
@@ -243,6 +244,7 @@
        -roleQ1-rev>
        (ONT::ASK-WHAT-IS :who *USER* :to *ME* :what ?!dd :aspect ?foc-type)
        )
+      |#
 
       ;;  What next?
       ((ONT::SPEECHACT ?!a ONT::SA_WH-QUESTION :FOCUS ?!ff :CONTENT ?!rr)

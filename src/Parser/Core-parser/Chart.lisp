@@ -684,7 +684,7 @@ separate instances of the chart/parser.")
 	(push (list (rule-id r1) (remove-if #'var-values v1s)) *empty-v1s*)
 	(if (some #'var-values empty-v1s)
 	    (break "A variable ~S in rule ~S that was originally empty is now set. Empty vars are ~S" 
-		   (some #'var-values empty-v1s) 0(rule-id r1) empty-v1s)))
+		   (some #'var-values empty-v1s) (rule-id r1) empty-v1s)))
     (values)))
 
 (defun gather-all-vars (rule)

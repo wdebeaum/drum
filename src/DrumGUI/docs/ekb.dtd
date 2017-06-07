@@ -3,7 +3,7 @@
 <!-- DTD schema for the EKB
 
 Author: Lucian Galescu <lgalescu@ihmc.us> 03/04/2016
-$Id: ekb.dtd,v 1.14 2017/03/01 23:40:51 lgalescu Exp $
+$Id: ekb.dtd,v 1.15 2017/05/25 23:43:09 lgalescu Exp $
 
 When the EKB is used for annotation, textual elements must be present (eg, <input>, <text>, @start, @end, @uttnum, @paragraph). 
 
@@ -17,16 +17,14 @@ Core entities function as data types.
 
 <!-- Boolean -->
 <!ENTITY % boolean "(true|false)">
-<!-- Datetime
-ISO 8601, regular or extended.
 
-@fixme Restrict timestamp to only the extended Datetime format, which is
-       preferred in various XML schemas.
+<!-- Datetime
+ISO 8601 date format, regular or extended.
 -->
 <!ENTITY % datetime "CDATA">
 
 <!-- File path
-@fixme Probably not a good idea to use these; should use URIs instead.
+@fixme Probably not a good idea; should use URIs instead.
 -->
 <!ENTITY % filepath "CDATA">
 
@@ -142,8 +140,15 @@ Structural definition of the EKB data and metadata.
        could make it into a regular one, with the mutation info under
        'features'?
 @fixme Replace :utnnum with :sentence.
+@fixme id should be ID; refid should be of type IDREFS
+@fixme most attributes (start, end, uttnum, paragraph, text, lisp, rule)
+       probably should go into a dedicated sub-element, eg:
+       <provenance>
+         <text start="22" end="24" uttnum=3" paragraph="2">MEK</text>
+         <extracted-by name="TRIPS/DRUM" type="auto" rule="RULE1" lisp="(...)"/>
+       </provenance>
 -->
-<!ELEMENT TERM (type|drum-terms|mutation|aggregate|components|members|mods|features|name|coref|assoc-with|text)*>
+<!ELEMENT TERM (type|drum-terms|mutation|aggregate|components|members|mods|features|not-features|name|coref|assoc-with|text)*>
 <!ATTLIST TERM
   id NMTOKEN #REQUIRED
   refid CDATA #IMPLIED
@@ -155,7 +160,10 @@ Structural definition of the EKB data and metadata.
   lisp %lispform; #IMPLIED
   rule CDATA #IMPLIED>
 
-<!-- Events -->
+<!-- Events
+
+@fixme Drop arg1, arg2, arg3...
+-->
 <!ELEMENT EVENT (type|drum-terms|negation|polarity|force|modality|epistemic-modality|mods|features|
                  aggregate|
                  predicate|arg1|arg2|arg3|arg|
@@ -295,7 +303,7 @@ Generally, this is an onttype, but in some cases it's a regular string.
 Note: At least one modifier must be present!
 Common to: TERM, EVENT.
 -->
-<!ELEMENT mods (degree*,frequency*,mod*)>
+<!ELEMENT mods (degree|frequency|mod)*>
 
 <!-- Degree modifier
 Common to: TERM and EVENT.
@@ -329,12 +337,19 @@ Common to: TERM and EVENT.
 <!ELEMENT value (#PCDATA)>
 
 <!-- Event or entity features
-Only 'inevent' can appear as an event feature!
 -->
-<!ELEMENT features (active|location|mutation|site|cell-line|inevent|bound-to|ptm)*>
+<!ELEMENT features (inevent|active|location|mutation|site|cell-line|bound-to|ptm)*>
 
 <!-- Entity not-features -->
 <!ELEMENT not-features (location|mutation|site|cell-line|bound-to|ptm)*>
+
+<!-- In-event "feature"
+
+@fixme: is this really a feature?!?
+-->
+<!ELEMENT inevent EMPTY>
+<!ATTLIST inevent
+  id NMTOKEN #REQUIRED>
 
 <!-- Activity feature
 Values can be TRUE or FALSE.
@@ -392,7 +407,7 @@ Note: The 'mod' attribute is present only in EVENT locations.
   start %integer; #IMPLIED
   end %integer; #IMPLIED>
 
-<!-- Mutation (feature or definition in a TERM represnting a mutation)
+<!-- Mutation (feature or definition in a TERM representing a mutation)
 Unspecified mutant proteins use the feature <mutation>TRUE</mutation>.
 Wild-type proteins use the feature <mutation>FALSE</mutation>.
 Specified mutations are structured objects.
@@ -446,20 +461,6 @@ Note: This is a fixed set.
   start %integer; #REQUIRED
   end %integer; #REQUIRED>
 
-<!-- In-event feature
-
-@fixme The semantics of this is not entirely clear; therefore, it might change
-       in the future.
--->
-<!ELEMENT inevent (event+)>
-<!-- Event reference
-
-@attr id	 Id for an event.
--->
-<!ELEMENT event EMPTY>
-<!ATTLIST event
-  id NMTOKEN #REQUIRED>
-
 <!-- Bound-to feature
 @id	ID of term this term is bound to. May be empty, if not known.
 @event	ID of the binding event.
@@ -469,7 +470,7 @@ Note: This is a fixed set.
   id NMTOKEN #REQUIRED
   event NMTOKEN #REQUIRED>
 
-<!-- Ptm feature
+<!-- PTM feature
 @type Ont-type of the modification.
 @event ID of the modification event.
 -->

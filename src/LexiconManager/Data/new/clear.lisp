@@ -46,7 +46,8 @@
   (W::clear
    (wordfeats (W::morph (:forms (-vb) :nom w::clearance)))
    (SENSES
-    ((LF-PARENT ONT::allow)
+    (;(LF-PARENT ONT::allow)
+     (LF-PARENT ONT::approve-authorize)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "clear the plan")
      )

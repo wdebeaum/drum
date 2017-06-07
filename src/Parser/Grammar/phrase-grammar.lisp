@@ -2900,7 +2900,7 @@
 
     ;; TEST: the computer-generated dog
     ((ADJP (VAR ?v)  (arg ?dobj) (class ?lf) (atype w::central) (argument (% NP (var ?dobj)))
-      (vform passive) (constraint ?constraint) (sem ?sem)
+      (vform passive) (constraint ?constraint) (sem ?sem2) ;(sem ?sem)
       (LF (% prop (class ?lf) (var ?v)
 	     (constraint 
 	      (& (?!reln (% *PRO* (status ont::kind) (var ?v-n) (class ?nc) (constraint ?nr) (sem ?sem)))
@@ -2910,7 +2910,7 @@
       (sem ?sem) (relc -) (abbrev -) (gap -)
 	 )
      (punc (lex w::punc-minus))
-     (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj)))
+     (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj))) (sem ?sem2)
       (GAP -) (LF ?lf)  (part (% -)) ;; no particle forms
       (SUBJ-MAP ?!reln) (dobj-map ?dobj-map)
       (dobj-map (? !dmap ONT::NOROLE))  ; to prevent "RAS-induced phosphorylation of ERK and AKT is compromised" from giving a NOROLE to phosphorylation (using a template for "induce")
@@ -2919,7 +2919,7 @@
 
     ;; TEST: the computer generated dog
     ((ADJP (VAR ?v)  (arg ?dobj) (class ?lf) (atype w::central) (argument (% NP (var ?dobj)))
-      (vform passive) (constraint ?constraint) (sem ?sem)
+      (vform passive) (constraint ?constraint) (sem ?sem2) ;(sem ?sem)
       (LF (% prop (class ?lf) (var ?v)
 	     (constraint 
 	      (& (?!reln (% *PRO* (status ont::kind) (var ?v-n) (class ?nc) (constraint ?nr) (sem ?sem)))
@@ -2928,7 +2928,7 @@
      (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
       (sem ?sem) (relc -) (abbrev -) (gap -)
 	 )
-     (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj)))
+     (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj))) (sem ?sem2)
       (GAP -) (LF ?lf) (Part (% -))
       (SUBJ-MAP ?!reln) (dobj-map ?dobj-map)
       (dobj-map (? !dmap ONT::NOROLE))  ; to prevent "RAS-induced phosphorylation of ERK and AKT is compromised" from giving a NOROLE to phosphorylation (using a template for "induce")
@@ -5150,7 +5150,7 @@
       )
      -n1-from-name> 1
      (head (name (lex ?l) (sem ?sem) 
-		 (sem ($ (? type f::PHYS-OBJ f::situation) (f::type (? x ont::molecular-part ont::cell-part ont::chemical ont::physical-process))))
+		 (sem ($ (? type f::PHYS-OBJ f::situation) (f::type (? x ont::molecular-part ont::cell-part ont::chemical ont::physical-process ont::organization))))
 		 (var ?v) (agr ?agr) (lf ?lf) (class ?class)
 	    (full-name ?fname) (time-converted ?tc)
 	    ;; swift 11/28/2007 removing gname rule & passing up generated feature (instead of restriction (generated -))

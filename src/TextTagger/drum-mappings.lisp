@@ -274,6 +274,8 @@
 ;  (inherit ONT::manufactured-object))
 (concept NCIT::C17132 ; Signaling Pathway
   (inherit ONT::signaling-pathway))
+(concept NCIT::C19711 ; Professional Organization or Group
+  (inherit ONT::professional-organization))
 
 ;;; BRENDA Tissue Ontology
 (concept BTO::0000000 ; tissues, cell types and enzyme sources

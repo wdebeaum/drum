@@ -7,7 +7,7 @@
  :words (
   (W::perhaps
    (SENSES
-    ((LF (W::UNSURE-POS))
+    ((LF (ONT::UNSURE-POS))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      )
     )

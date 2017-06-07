@@ -6,7 +6,7 @@
  :words (
   (W::yeah
    (SENSES
-    ((LF (W::POS))
+    ((LF (ONT::POS))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      )
     )
@@ -17,7 +17,7 @@
  :words (
   ((W::yeah W::yeah)
    (SENSES
-    ((LF (W::POS))
+    ((LF (ONT::POS))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      )
     )

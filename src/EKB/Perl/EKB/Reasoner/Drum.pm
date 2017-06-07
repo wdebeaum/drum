@@ -1,9 +1,9 @@
 # Drum.pm
 #
-# Time-stamp: <Fri Apr 28 16:47:32 CDT 2017 lgalescu>
+# Time-stamp: <Mon May 29 14:10:39 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  1 Jun 2016
-# $Id: Drum.pm,v 1.11 2017/05/08 23:34:22 lgalescu Exp $
+# $Id: Drum.pm,v 1.12 2017/05/29 19:19:08 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -61,6 +61,10 @@
 # - Consolidated addition of binding features into new rule: AddBindingFeatures.
 # - Synced w/ EKB.pm (much, much cleaner code now).
 # - Many small style and efficiency improvements.
+# 2017/05/26 v1.12.0	lgalescu
+# - updated to conform to new representation for 'inevent' features.
+# - fixed one bug (highly improbable the situation ever occurred).
+# - added new rules (EKR::dePTM, EKR:AddComplexName)
 
 #----------------------------------------------------------------
 # Usage:
@@ -68,7 +72,7 @@
 
 package EKB::Reasoner::Drum;
 
-$VERSION = '1.11.0';
+$VERSION = '1.12.0';
 
 use strict 'vars';
 use warnings;
@@ -123,7 +127,7 @@ sub default_options {
   $self->options(
 		 add_amount_changes => 0,
 		 add_binding_features => 0,
-		 add_binding_features_new => 0,
+		 add_binding_features_rule => 0,
 		);
 }
 
@@ -157,7 +161,8 @@ sub default_options {
 	$arg->removeAttribute('id');
 	$count++;
       }
-      return $count;
+
+      $count;
     }
    },
    
@@ -190,7 +195,7 @@ sub default_options {
       # > -C
       $c->parentNode->removeChild($c);
 
-      return 1;
+      1;
     }
    },
 
@@ -226,7 +231,7 @@ sub default_options {
 	
       $ekb->remove_assertion($r);
 
-      return 1;
+      1;
     }
    },
    
@@ -262,7 +267,7 @@ sub default_options {
       # > - E
       $ekb->remove_assertion($e);
 
-      return 1;
+      1;
     }
    },
    
@@ -283,24 +288,39 @@ sub default_options {
     
       set_slot_value($t, 'type', "ONT::PROTEIN");
 	
-      return 1;
+      1;
     }
    },
 
    {
-    ## Remove dangling :inevent features (event doesn't exist or it doesn't
+    ## name unnamed complexes using component names
+    name => "EKR:AddComplexName",
+    constraints => ['TERM[type[.="ONT::MACROMOLECULAR-COMPLEX"] and components and not(name)]'],
+    handler => sub {
+      my ($rule, $ekb, $t) = @_;
+      my @comps =
+	map { $ekb->get_assertion($_, "TERM") }
+	map { $_->value } $t->findnodes('components/component/@id');;
+      $ekb->modify_assertion($t,
+			     make_slot_node( name => make_complex_name(@comps) ));
+      1;
+    }
+   },
+
+   {
+    ## Remove dangling 'inevent' features (event doesn't exist or it doesn't
     ## have an arg pointing to the term)
-    # < TERM[@id=$t_id and features/inevent/event[@id=$e]]
+    # < TERM[@id=$t_id and //inevent[@id=$e]]
     #   ! *[@id=$e and arg*[@id=$t_id]]
-    # > - TERM/features/inevent/event[@id=$e]
+    # > - TERM//inevent[@id=$e]
     name => "EKR:FixDanglingInevent",
-    constraints => ['TERM[features/inevent/event]'],
+    constraints => ['TERM[features/inevent]'],
     handler => sub {
       my ($rule, $ekb, $t) = @_;
 	
       my $t_id = $t->getAttribute('id');
       
-      my @e_ids = map { $_->value } $t->findnodes('features/inevent/event/@id');
+      my @e_ids = map { $_->value } $t->findnodes('features/inevent/@id');
       my $count = 0;
       foreach my $e_id (@e_ids) {
 	my $e = $ekb->get_assertion($e_id);
@@ -310,20 +330,20 @@ sub default_options {
 	INFO "Rule %s matches term %s (inevent: %s)",
 	  $rule->name(), $t_id, $e_id;
 
-	remove_elements($t, 'features/inevent/event[@id="'.$e_id.'"]');
+	remove_elements($t, 'features/inevent[@id="'.$e_id.'"]');
 	    
 	$count++;
       }
-      return $count;
+      $count;
     }
    },
 
    {
     ## when <mod><type>ONT::NEG</type><value>NOT</value></mod>
     ## flip <negation>
-    # < E:*[mods/mod[type[.="ONT::NEG"] and value[.="NOT"]]]
-    # > - E:/mods/mod[type[.="ONT::NEG"] and value[.="NOT"]]
-    # > ~ E:negation[flip()]
+    # < E[mods/mod[type=ONT::NEG and value=NOT]]
+    # > - E/mods/mod[type=ONT::NEG and value=NOT]
+    # > ~ E[negation=flip()]
     name => 'EKR:ModNegNot',
     constraints => ['*/mods/mod[type[.="ONT::NEG"] and value[.="NOT"]]'],
     handler => sub {
@@ -336,22 +356,22 @@ sub default_options {
       INFO("Rule %s matches %s",
 	   $rule->name, $r_id);
 
-      # > ~ E:negation[flip()]
+      # > ~ E[negation=flip()]
       my $neg = get_slot_value($r, 'negation');
       if (defined $neg) {
 	if ($neg eq '+') {
-	  $r->get_slot_value('negation', '+');
+	  $r->set_slot_value('negation', '-');
 	} else {
-	  $r->get_slot_value('negation', '-');
+	  $r->set_slot_value('negation', '+');
 	}
       } else {
 	$r->addChild(make_slot_node( negation => '+' ));
       }
 
-      # > - E:/mods/mod[type[.="ONT::NEG"] and value[.="NOT"]]
+      # > - E:/mods/mod[type=ONT::NEG and value=NOT]
       remove_elements($r, 'self::*/mods/mod[type[.="ONT::NEG"] and value[.="NOT"]]');
 
-      return 1;
+      1;
     }
    },
    
@@ -405,7 +425,7 @@ sub default_options {
       }
       set_slot_value($t, 'type', "ONT::PROTEIN");
 
-      return 1;
+      1;
     }
    },
 
@@ -471,7 +491,7 @@ sub default_options {
       # update rule attribute
       append_to_attribute($t, 'rule', $rule->name());
 
-      return 1;
+      1;
     }
    },
 
@@ -534,7 +554,7 @@ sub default_options {
       $comp_feat->setAttribute('operator', "AND");
       map { $_->setNodeName('member') } @comps;
 
-      return 1;
+      1;
     }
    },
    
@@ -582,7 +602,7 @@ sub default_options {
 					  make_node("location", { id => $l_id }) ] );
       }
 		     
-      return 1;
+      1;
     }
    },
 
@@ -631,7 +651,7 @@ sub default_options {
 	}
       }
 
-      return 1;
+      1;
     }
    },
 
@@ -676,7 +696,7 @@ sub default_options {
       # - E/agent
       $e->removeChild($y_arg);
 
-      return 1;
+      1;
     }
    },
 
@@ -713,7 +733,7 @@ sub default_options {
       # - E/agent
       $e->removeChild($y_arg);
 
-      return 1;
+      1;
     }
    },
 
@@ -741,56 +761,54 @@ sub default_options {
       
       $ekb->remove_assertion($t);
 
-      return 1;
+      1;
     }
    },
 
    {
     ## eg, unphosphorylated X [<does-something>]
     ## => X[not-ptm:PHOSPHORYLATION]
-    # < X:*[inevent/id=E]
-    # < X/type is_a ONT::MOLECULAR-PART
-    # < E:*(affected:X)
-    # < E/type is_a ONT::PTM 
-    # < ! E/negation
-    # < E/mods/mod/type[ONT::MANNER-UNDO]
-    # < ! X//inevent/event[id=E]
-    # > ?~ X/type[ONT::PROTEIN]
-    # > + X/not-features/ptm[id=E]
-    # > - X//inevent/event[id=E]
+    # < X[//inevent/@id=E]
+    # < X[type(is_a)ONT::MOLECULAR-PART]
+    # < E[affected:X]
+    # < E[type(is_a)ONT::PTM]
+    # < ! E[negation]
+    # < E[mods/mod/type=ONT::MANNER-UNDO]
+    # > ~ X[type=s/ONT::GENE/ONT::PROTEIN/]
+    # > + X/not-features/ptm[@id=E]
+    # > - X//inevent[@id=E]
     name => 'EKR:InEventUnPTM',
     constraints => ['TERM[features/inevent]'],
     handler => sub {
       my ($rule, $ekb, $x) = @_;
       my $x_id = $x->getAttribute('id');
 
-      # < X/type is_a ONT::MOLECULAR-PART
+      # < X[type(is_a)ONT::MOLECULAR-PART]
       my $x_type = get_slot_value($x, 'type');
       $ont_bioents->is_a($x_type, 'ONT::MOLECULAR-PART')
 	or return 0;
 
-      # < X:*[inevent/id=E]
+      # < X[//inevent/@id=E]
       my @inevents =
 	grep {
-	  # < E/type is_a ONT::PTM 
+	  # < E[type(is_a)ONT::PTM]
 	  $ont_events->is_a(get_slot_value($_, 'type'), 'ONT::PTM')
-	    &&
-	    # < ! E/negation
-	    # < E/mods/mod/type[ONT::MANNER-UNDO]
-	    # < E:*(affected:X)
-	    match_node($_, { SX => { 'negation'
-				     => [OP_NOT, '+'],
-				     'mods/mod'
-				     => { SX => { 'type' => 'ONT::MANNER-UNDO',
-						  'value' => 'UN-' } },
-				     'arg2'
-				     => { AX => { 'role' => ':AFFECTED',
-						  'id' => $x_id } }
-				   } })
-	  }
+	  &&
+	  # < ! E[negation]
+	  # < E[mods/mod/type=ONT::MANNER-UNDO]
+	  # < E[affected:X]
+	  match_node($_, { SX => { 'negation'
+				   => [OP_NOT, '+'],
+				   'mods/mod'
+				   => { SX => { 'type' => 'ONT::MANNER-UNDO',
+						'value' => 'UN-' } },
+				   'arg2'
+				   => { AX => { 'role' => ':AFFECTED',
+						'id' => $x_id } }
+				 } })
+	}
 	map { $ekb->get_assertion($_) }
-	map { $_->value }
-	$x->findnodes('features/inevent/event/@id');
+	map { $_->value } $x->findnodes('features/inevent/@id');
       return 0 unless @inevents;
 
       my $count = 0;
@@ -798,36 +816,36 @@ sub default_options {
 	my $e_id = $e->getAttribute('id');
 	my $e_type = get_slot_value($e, 'type');
 
-	INFO "Rule %s matches term %s/%s (affected-by: %s/%s)", 
+	INFO "Rule %s matches term %s[t=%s] (affected-by: %s[t=%s])", 
 	  $rule->name, $x_id, $x_type, $e_id, $e_type;
 
-	# > ?~ X/type[.=ONT::PROTEIN]
+	# > ~ X[type=s/ONT::GENE/ONT::PROTEIN/]
 	set_slot_value($x, 'type', 'ONT::PROTEIN')
 	  if $ont_bioents->is_a('ONT::GENE', $x_type);
 
-	# > - X//inevent/event[id=E]
-	remove_elements($x, 'features/inevent/event[@id="'.$e_id.'"]');
+	# > - X//inevent[@id=E]
+	remove_elements($x, 'features/inevent[@id="'.$e_id.'"]');
 
-	# > + X/not-features/ptm[id=E]
+	# > + X/not-features/ptm[@id=E]
 	$ekb->add_notfeature($x, 'ptm' => { type => $e_type,
 					    event => $e_id });
-	    
+
 	$count++;
       }
-	
-      return $count;
+
+      $count;
     }
    },
 
    {
     ## X not bound to Y
     ## => X[not-bound-to:Y]
-    # < X:*[inevent/id=E]
+    # < X:*[inevent[@id=E]]
     # < X/type is_a ONT::MOLECULAR-PART
     # < E:bind(affected:X,affected1:Y,negation:+)
     # < Y/type is_a <bio_entity>
     # < ! E/arg*[result:*]
-    # > - X//inevent/event[id=E]
+    # > - X//inevent[@id=E]
     # > + X/not-features/bound-to[Y]
     # > + Y/not-features/bound-to[X]
     # NB: we don't remove E, even when it's got no other referrers, since it
@@ -865,7 +883,7 @@ sub default_options {
 	  }
 	map { $ekb->get_assertion($_) }
 	map { $_->value }
-	$x->findnodes('features/inevent/event/@id');	
+	$x->findnodes('features/inevent/@id');	
       return 0 unless @inevents;
 
       DEBUG 2, "%s: got %d inevents: (%s)",
@@ -885,11 +903,11 @@ sub default_options {
 	$ont_bioents->has($y_type)
 	  or next;
 
-	INFO "Rule %s matches term %s/%s in %s/%s(*, %s/%s)", 
+	INFO "Rule %s matches term %s[t=%s] in %s[t=%s](*, %s[t=%s])", 
 	  $rule->name, $x_id, $x_type, $e_id, $e_type, $y_id, $y_type;
 
-	# > - X//inevent/event[E]
-	remove_elements($x, 'features/inevent/event[@id="'.$e_id.'"]');
+	# > - X//inevent[@id=E]
+	remove_elements($x, 'features/inevent[@id="'.$e_id.'"]');
 
 	# > + X/not-features/bound-to[Y]
 	$ekb->add_notfeature($x, 'bound-to' => { id => $y_id,
@@ -901,7 +919,7 @@ sub default_options {
 	$count++;
       }
       
-      return $count;
+      $count;
     }
    },
    
@@ -909,52 +927,53 @@ sub default_options {
     ## phosphorylated X [by Y] [<does-something>]
     ## => non-phosphorylated X is phosphorylated [by Y] to phospho-X
     ##    phospho-X [<does-something>]
-    # < X:*[inevent/id=E]
-    # < X/type is_a ONT::MOLECULAR-PART
-    # < E:*(affected:X,!negation)
-    # < E/type is_a ONT::PTM 
-    # < ! E/mods/mod/type[ONT::MANNER-UNDO]
-    # < ! E/arg*[result:*]
-    # > ?~ X/type[ONT::PROTEIN]
-    # > + X/features/ptm[id=E]
-    # > + X1=X[not-features/ptm[id=E]]
-    # > ~ E:*(result:X)
-    # > + E:*(affected:X1)
-    # > - X//inevent/event[id=E]
+    # < X[//inevent/@id=E]
+    # < X[type(is_a)ONT::MOLECULAR-PART]
+    # < E[affected:X]
+    # < E[type(is_a)ONT::PTM]
+    # < ! E[mods/mod/type=ONT::MANNER-UNDO]
+    # < ! E[negation)
+    # < ! E[result]
+    # > ~ X[type=s/ONT::GENE/ONT::PROTEIN/]
+    # > + X[features/ptm[@id=E]]
+    # > + X1=X[not-features/ptm[@id=E]]
+    # > ~ E[result:X]
+    # > + E[affected:X1]
+    # > - X//inevent[@id=E]
     name => 'EKR:InEventPTM',
     constraints => ['TERM[features/inevent]'],
     handler => sub {
       my ($rule, $ekb, $x) = @_;
       my $x_id = $x->getAttribute('id');
 
-      # < X/type is_a ONT::MOLECULAR-PART
+      # < X[type(is_a)ONT::MOLECULAR-PART]
       my $x_type = get_slot_value($x, 'type');
       $ont_bioents->is_a($x_type, 'ONT::MOLECULAR-PART')
 	or return 0;
 
-      # < X:*[inevent/id=E]
+      # < X[//inevent/@id=E]
       my @inevents =
 	grep {
-	  # < E/type is_a ONT::PTM 
+	  # < E[type(is_a)ONT::PTM]
 	  $ont_events->is_a(get_slot_value($_, 'type'), 'ONT::PTM')
-	    &&
-	    # < ! E/mods/mod/type[ONT::MANNER-UNDO]
-	    # < E:*(affected:X, !negation)
-	    match_node($_, { SX => { 'negation' 
-				     => [OP_NOT, '+'],
-				     'mods/mod/type' 
-				     => [OP_NOT, 'ONT::MANNER-UNDO'],
-				     'arg2' 
-				     => { AX => { 'role' => ':AFFECTED',
-						  'id' => $x_id } }
-				   } })
-	    &&
-	    # < ! E/arg*[result:*]
-	    ! assertion_args($_, '[@role=":RESULT"]')
-	  }
+	  &&
+	  # < ! E[mods/mod/type=ONT::MANNER-UNDO]
+	  # < ! E[negation)
+	  # < E[affected:X]
+	  match_node($_, { SX => { 'negation' 
+				   => [OP_NOT, '+'],
+				   'mods/mod/type' 
+				   => [OP_NOT, 'ONT::MANNER-UNDO'],
+				   'arg2' 
+				   => { AX => { 'role' => ':AFFECTED',
+						'id' => $x_id } }
+				 } })
+	  &&
+	  # < ! E[result]
+	  ! assertion_args($_, '[@role=":RESULT"]')
+	}
 	map { $ekb->get_assertion($_) }
-	map { $_->value }
-	$x->findnodes('features/inevent/event/@id');	
+	map { $_->value } $x->findnodes('features/inevent/@id');	
       return 0 unless @inevents;
 
       my $count = 0;
@@ -962,53 +981,53 @@ sub default_options {
 	my $e_id = $e->getAttribute('id');
 	my $e_type = get_slot_value($e, 'type');
 
-	INFO "Rule %s matches term %s/%s (affected-by: %s/%s)", 
+	INFO "Rule %s matches term %s[t=%s] (affected-by: %s[t=%s])", 
 	  $rule->name, $x_id, $x_type, $e_id, $e_type;
 
-	# > ?~ X/type[.=ONT::PROTEIN]
+	# > ~ X[type=s/ONT::GENE/ONT::PROTEIN/]
 	set_slot_value($x, 'type', 'ONT::PROTEIN')
 	  if $ont_bioents->is_a('ONT::GENE', $x_type);
 
-	# > - X//inevent/event[id=E]
-	remove_elements($x, 'features/inevent/event[@id="'.$e_id.'"]');
+	# > - X//inevent[@id=E]
+	remove_elements($x, 'features/inevent[@id="'.$e_id.'"]');
 
 	# > + X1=X
 	my $x1 = $ekb->clone_assertion($x, {rule => $rule->name});
 	my $x1_id = $x1->getAttribute('id');
 	$ekb->add_assertion($x1);
 
-	# > + X/features/ptm[id=E]
+	# > + X[features/ptm[@id=E]]
 	$ekb->add_feature($x, 'ptm' => { type => $e_type,
 					 event => $e_id });
-	# > + X1/not-features/ptm[id=E]
+	# > + X1[not-features/ptm[@id=E]]
 	$ekb->add_notfeature($x1, 'ptm' => { type => $e_type,
 					     event => $e_id });
-	# > ~ E:*(affected:X1)
+	# > ~ E[affected:X1]
 	my ($x_arg) = assertion_args($e, '[@role=":AFFECTED"]');
 	set_attribute($x_arg, 'id' => $x1_id);
-	# > + E:*(result:X)
+	# > + E[result:X]
 	$ekb->add_arg($e, ':RESULT' => $x_id);
 
 	$count++;
       }
 	
-      return $count;
+      $count;
     }
    },
 
    {
     ## X bound/E to Y */E2; X binding/E to Y */E2
     ## => unbound X binds to unbound Y to form X/Y complex
-    # < X:*[inevent/id=E]
+    # < X:*[inevent[@id=E]]
     # < X/type is_a ONT::MOLECULAR-PART
     # < E:bind(r1:X,r2:Y,!negation)
     # < r1=AGENT && r2=AFFECTED || r1=AFFECTED && r2=AFFECTED1
     # < Y/type is_a <bio_entity>
     # < ! E/arg*[result:*]
     # < ! E/mods/mod/type[ONT::MANNER-UNDO]
-    # ? & dependsOn ^(X//inevent/event/id[!E])
-    # ? & dependsOn ^(Y//inevent/event/id[!E])
-    # > - X//inevent/event[id=E]
+    # ? & dependsOn ^(X//inevent/@id[.!=E])
+    # ? & dependsOn ^(Y//inevent/@id[.!=E])
+    # > - X//inevent[@id=E]
     # > + X1=X
     # > + Y1=Y
     # > + X1/not-features/bound-to[Y]
@@ -1071,8 +1090,7 @@ sub default_options {
 	  ! assertion_args($_, '[@role=":RESULT"]')
 	}
 	map { $ekb->get_assertion($_, 'EVENT') }
-	map { $_->value }
-	$x->findnodes('features/inevent/event/@id');	
+	map { $_->value } $x->findnodes('features/inevent/@id');	
       return 0 unless @inevents;
 
       DEBUG 2, "%s: got %d inevents: (%s)",
@@ -1092,11 +1110,11 @@ sub default_options {
 	$ont_bioents->has($y_type)
 	  or next;
 
-	INFO "Rule %s matches term %s/%s in %s/%s(*, %s/%s)", 
+	INFO "Rule %s matches term %s[t=%s] in %s[t=%s](*, %s[t=%s])", 
 	  $rule->name, $x_id, $x_type, $e_id, $e_type, $y_id, $y_type;
 
-	# > - X//inevent/event[E]
-	remove_elements($x, 'features/inevent/event[@id="'.$e_id.'"]');
+	# > - X//inevent[@id=E]
+	remove_elements($x, 'features/inevent[@id="'.$e_id.'"]');
 
 	# > + X1=X
 	# NB: since X participates in E, we cannot break it up if it's an aggregate
@@ -1158,23 +1176,23 @@ sub default_options {
 	$count++;
       }
 
-      return $count;
+      $count;
     }
    },
 
    {
     ## Y-bound X 
     ## => unbound X binds to unbound Y to form X/Y complex
-    # < X:*[inevent/id=E]
+    # < X:*[inevent[@id=E]]
     # < X/type is_a ONT::MOLECULAR-PART
     # < E:bind(r1:Y,r2:X,!negation)
     # < r1=AGENT && r2=AFFECTED 
     # < Y/type is_a <bio_entity>
     # < ! E/arg*[result:*]
     # < ! E/mods/mod/type[ONT::MANNER-UNDO]
-    # ? & dependsOn ^(X//inevent/event/id[!E])
-    # ? & dependsOn ^(Y//inevent/event/id[!E])
-    # > - X//inevent/event[id=E]
+    # ? & dependsOn ^(X//inevent/@id[.!=E])
+    # ? & dependsOn ^(Y//inevent/@id[.!=E])
+    # > - X//inevent[@id=E]
     # > + X1=X
     # > + Y1=Y
     # > + X1/not-features/bound-to[Y]
@@ -1225,7 +1243,7 @@ sub default_options {
 	  }
 	map { $ekb->get_assertion($_) }
 	map { $_->value }
-	$x->findnodes('features/inevent/event/@id');	
+	$x->findnodes('features/inevent/@id');	
       return 0 unless @inevents;
 
       DEBUG 2, "%s: got %d inevents: (%s)",
@@ -1245,11 +1263,11 @@ sub default_options {
 	$ont_bioents->has($y_type)
 	  or next;
 
-	INFO "Rule %s matches term %s/%s in %s/%s(*, %s/%s)", 
+	INFO "Rule %s matches term %s[t=%s] in %s[t=%s](*, %s[t=%s])", 
 	  $rule->name, $x_id, $x_type, $e_id, $e_type, $y_id, $y_type;
 
-	# > - X//inevent/event[E]
-	remove_elements($x, 'features/inevent/event[@id="'.$e_id.'"]');
+	# > - X//inevent[@id=E]
+	remove_elements($x, 'features/inevent[@id="'.$e_id.'"]');
 
 	# > + X1=X
 	# NB: since X participates in E, we cannot break it up if it's an aggregate
@@ -1312,17 +1330,17 @@ sub default_options {
 	$count++;
       }
 	
-      return $count;
+      $count;
     }
    },
    
    {
     ## activated X
-    # < X/inevent[E]
+    # < X/inevent[@id=E]
     # < X/type is_a ONT::MOLECULAR-PART
     # < E:activate(affected:X,!negation)
     # < ! E/arg*[result:*]
-    # > - X//inevent/event[E]
+    # > - X//inevent[@id=E]
     # > + X1=X
     # > + X1//active[FALSE]
     # > + X//active[TRUE]
@@ -1360,7 +1378,7 @@ sub default_options {
 	  }
 	map { $ekb->get_assertion($_) }
 	map { $_->value }
-	$x->findnodes('features/inevent/event/@id');	
+	$x->findnodes('features/inevent/@id');	
       return 0 unless @inevents;
 
       my $count = 0;
@@ -1368,11 +1386,11 @@ sub default_options {
 	my $e_id = $e->getAttribute('id');
 	my $e_type = get_slot_value($e, 'type');
 
-	INFO "Rule %s matches term %s/%s in %s/%s(*)", 
+	INFO "Rule %s matches term %s[t=%s] in %s/[t=%s]", 
 	  $rule->name, $x_id, $x_type, $e_id, $e_type;
 
-	# > - X//inevent/event[E]
-	remove_elements($x, 'features/inevent/event[@id="'.$e_id.'"]');
+	# > - X//inevent[@id=E]
+	remove_elements($x, 'features/inevent[@id="'.$e_id.'"]');
 
 	# > + X1=X[active[FALSE]]
 	my $x1 = $ekb->clone_assertion($x, {rule => $rule->name});
@@ -1403,7 +1421,7 @@ sub default_options {
 	$count++;
       }
 	
-      return $count;
+      $count;
     }
    },
    
@@ -1472,57 +1490,61 @@ sub default_options {
       }
 
       # - Y :inevent E
-      remove_elements($y, 'features/inevent/event[@id="'.$e_id.'"]');
+      remove_elements($y, 'features/inevent[@id="'.$e_id.'"]');
 	
-      return 1;
+      1;
       }
    },
 
    {## X1 and X2 bind to form a complex
     ## =>
     ## X1 and X2 bind into X1/X2 complex
-    # < E ont::bind :agent X :res Y
-    # < X ont::molecular-part :aggregate (X1 X2 ...)
-    # < Y ont::macromolecular-complex
-    # > E :result Y
-    # > T X1' = X1, ...
-    # > Y ont::macromolecular-complex :components (X1' X2' ...)
+    # < E[type=ont::bind][agent:X][res:Y]
+    # < ! E[result]
+    # < X[type=ont::molecular-part][aggregate:(X1 X2 ...)]
+    # < Y[type=ont::macromolecular-complex]
+    # > E[result:Y]
+    # > X1' = X1, ...
+    # > Y[type=ont::macromolecular-complex][components:(X1' X2' ...)]
     name => "EKR:ComplexFormation2",
     constraints => ['EVENT[type[.="ONT::BIND"] and not(negation) and not(mods/mod/type[.="ONT::MANNER-UNDO"]) and arg1[@role=":AGENT"] and arg2[@role=":RES"]]'],
     handler => sub {
       my ($rule, $ekb, $e) = @_;
       my $e_id = $e->getAttribute('id');
 
-      # < X ont::molecular-part 
+      # < E[res:Y]
+      my ($arg_res) = assertion_args($e, '[@role=":RES"]');
+      # < ! E[result]
+      assertion_args($e, '[@role=":RESULT"]')
+	and return 0;
+	
+      # < X[type=ont::molecular-part] 
       my $x_id = $e->findvalue('arg1/@id');
       my $x = $ekb->get_assertion($x_id, "TERM")
 	or return 0;
       my $x_type = get_slot_value($x, 'type');
       $ont_bioents->is_a($x_type, 'ONT::MOLECULAR-PART')
 	or return 0;
-      # < X :aggregate (X1 X2 ...)
+      # < X[aggregate:(X1 X2 ...)]
       my @members =
 	grep { $_->getAttribute('id') ne $x_id }
 	$ekb->find_members_rec($x_id, ["AND", "BOTH"]);
       return 0 unless @members; # if T is a member, it is the only one!
       my @member_ids = map { $_->getAttribute('id') } @members;
 
-      # < Y ont::macromolecular-complex
-      my $y_id = $e->findvalue('arg2/@id');
+      # < Y[type=ont::macromolecular-complex]
+      my $y_id = $arg_res->getAttribute('id');
       my $y = $ekb->get_assertion($y_id, "TERM")
 	or return 0;
       my $y_type = get_slot_value($y, 'type');
       $ont_bioents->is_a($y_type, 'ONT::MACROMOLECULAR-COMPLEX')
 	or return 0;
-      # < ! E :result 
-      assertion_args($e, '[@role=":RESULT"]')
-	and return 0;
 
       INFO "Rule %s matches event %s (agent:%s, affected-result:%s)", 
 	$rule->name, $e_id, $x_id, $y_id;
 
-      # > E :result Y
-      set_attribute(get_child_node($e, 'arg2'), 'role' => ":RESULT");
+      # > E[result:Y]
+      set_attribute($arg_res, 'role' => ":RESULT");
       append_to_attribute($e, 'rule', $rule->name);
       
       # > X1' = X1, ...
@@ -1531,7 +1553,7 @@ sub default_options {
 	map { $ekb->add_assertion($_) }
 	map { $ekb->clone_assertion($_, {rule => $rule->name}) } @members;
 
-      # > Y ont::macromolecular-complex :components (X1' X2' ...)
+      # > Y[type=ont::macromolecular-complex][components:(X1' X2' ...)]
       if (@comp_ids) {
 	my $y_name = make_complex_name(@members);
 	$ekb->modify_assertion($y,
@@ -1539,7 +1561,7 @@ sub default_options {
 			       make_components(@comp_ids));
       }
 
-      return 1;
+      1;
       }
    },
    
@@ -1550,7 +1572,7 @@ sub default_options {
     # < ! E/mods/mod/type[ONT::MANNER-UNDO]
     # < X aggregate[AND(X1,X2,...)]
     # < X type[. is_a <bio_entity>]
-    # & dependsOn ^(X1//inevent/event/id) ...
+    # & dependsOn ^(X1//inevent/@id) ...
     # > + E:BIND(affected:X1,affected:X2,...)
     # > + X1'=X1, X2'=X2, ...
     # > + X1'/features/bound-to(X2',...), ...
@@ -1598,13 +1620,13 @@ sub default_options {
       return 0 unless @members; # if T is a member, it is the only one!
       my @member_ids = map { $_->getAttribute('id') } @members;
 
-      INFO "Rule %s matches event %s (affected:%s/%s)", 
+      INFO "Rule %s matches event %s (affected:%s[t=%s])", 
 	$rule->name, $e_id, $t_id, $t_type;
 
-      # & dependsOn ^(X1//inevent/event/id) ...
+      # & dependsOn ^(X1//inevent/@id) ...
       map { $rule->reasoner()->dependsOn($_) }
 	map { $_->getAttribute('id') }
-	map { $_->findnodes('features/inevent/event') } @members;
+	map { $_->findnodes('features/inevent') } @members;
 
       my @comp_ids =
 	map { $_->getAttribute('id') }
@@ -1648,7 +1670,7 @@ sub default_options {
 	}
       }
 
-      return 1;
+      1;
     }
    },
 
@@ -1659,7 +1681,7 @@ sub default_options {
     # < ! E/mods/mod/type[ONT::MANNER-UNDO]
     # < T:TERM[aggregate[AND(X1,X2,...)]]
     # < T/type is_a <bio_entity>
-    # & dependsOn ^(X21//inevent/event/id) ...
+    # & dependsOn ^(X21//inevent/@id) ...
     # > + E:BIND(affected:X1,affected:X2,...)
     # > + X1'=X1, X2'=X2, ...
     # > + X1'/features/bound-to(X2',...), ...
@@ -1707,13 +1729,13 @@ sub default_options {
       return 0 unless @members; # if T is a member, it is the only one!
       my @member_ids = map { $_->getAttribute('id') } @members;
 
-      INFO "Rule %s matches event %s (affected:%s/%s)", 
+      INFO "Rule %s matches event %s (affected:%s[t=%s])", 
 	$rule->name, $e_id, $t_id, $t_type;
 
-      # & dependsOn ^(X1//inevent/event/id) ...
+      # & dependsOn ^(X1//inevent/@id) ...
       map { $rule->reasoner()->dependsOn($_) }
 	uniq map { $_->getAttribute('id') }
-	map { $_->findnodes('features/inevent/event') } @members;
+	map { $_->findnodes('features/inevent') } @members;
 
       my @comp_ids =
 	map { $_->getAttribute('id') }
@@ -1759,7 +1781,7 @@ sub default_options {
 	}
       }
 
-      return 1;
+      1;
     }
    },
    
@@ -1772,10 +1794,10 @@ sub default_options {
     # < X/type is_a <bio_entity>
     # < Y/type is_a <bio_entity>
     # < ! arg*(result:*)
-    # < ! X//inevent/event[id=E]
-    # < ! Y//inevent/event[id=E]
-    # & dependsOn ^(X//inevent/event/id)
-    # & dependsOn ^(Y//inevent/event/id)
+    # < ! X//inevent[@id=E]
+    # < ! Y//inevent[@id=E]
+    # & dependsOn ^(X//inevent/@id)
+    # & dependsOn ^(Y//inevent/@id)
     # > + X1=X
     # > + Y1=Y
     # > + X1/features/bound-to(Y1)
@@ -1824,8 +1846,8 @@ sub default_options {
       my $x_type = get_slot_value($x, 'type');
       $ont_bioents->has($x_type)
 	or return 0;
-      # < ! X/features/inevent/event[id=E]
-      $x->findnodes('features/inevent/event[@id="'.$e_id.'"]')
+      # < ! X//inevent[@id=E]
+      $x->findnodes('features/inevent[@id="'.$e_id.'"]')
 	and return 0;
 
       # < Y/type is_a <bio_entity>
@@ -1836,20 +1858,20 @@ sub default_options {
       my $y_type = get_slot_value($y, 'type');
       $ont_bioents->has($y_type)
 	or return 0;
-      # < ! Y/features/inevent/event[id=E]
-      $y->findnodes('features/inevent/event[@id="'.$e_id.'"]')
+      # < ! Y//inevent[@id=E]
+      $y->findnodes('features/inevent[@id="'.$e_id.'"]')
 	and return 0;
   
-      INFO "Rule %s matches event %s w/ args (%s/%s, %s/%s)", 
+      INFO "Rule %s matches event %s w/ args (%s[n=%s], %s[n=%s])", 
 	$rule->name, $e_id, $x_id, $x_name, $y_id, $y_name;
 
-      # & dependsOn ^(X/features/inevent/event/id)
+      # & dependsOn ^(X//inevent/@id)
       map { $rule->reasoner()->dependsOn($_) }
-	map { $_->value } $x->findnodes('features/inevent/event/@id');	
+	map { $_->value } $x->findnodes('features/inevent/@id');	
 	  
-      # & dependsOn ^(Y/features/inevent/event/id)
+      # & dependsOn ^(Y//inevent/@id)
       map { $rule->reasoner()->dependsOn($_) }
-	map { $_->value } $y->findnodes('features/inevent/event/@id');
+	map { $_->value } $y->findnodes('features/inevent/@id');
       
       if ($rule->reasoner()->option('add_binding_features')) {
 	# > ~ X[not-features/bound-to:Y]
@@ -1866,14 +1888,14 @@ sub default_options {
       my $x1 = $ekb->clone_assertion($x, {rule => $rule->name});
       my $x1_id = $x1->getAttribute('id');
       # remove inevent E feature, if there
-      #remove_elements($x1, 'features/inevent/event[@id="'.$e_id.'"]');
+      #remove_elements($x1, 'features/inevent[@id="'.$e_id.'"]');
       $ekb->add_assertion($x1);
       
       # > + Y1=Y
       my $y1 = $ekb->clone_assertion($y, {rule => $rule->name});
       my $y1_id = $y1->getAttribute('id');
       # remove inevent E feature, if there
-      #remove_elements($y1, 'features/inevent/event[@id="'.$e_id.'"]');
+      #remove_elements($y1, 'features/inevent[@id="'.$e_id.'"]');
       $ekb->add_assertion($y1);
       
       # > + Z:MACROMOLECULAR-COMPLEX(components:(X1,Y1))
@@ -1907,73 +1929,75 @@ sub default_options {
 	$ekb->causes($e_id, $e3_id, {refid => "$e_id", rule => $rule->name});
       }
 
-      return 1;
+      1;
     }
    },
 
    {
-    ## PTMs: eg, X is phosphorylated [by Y] 
-    ## => non-phosphorylated X is phosphorylated [by Y] to phospho-X
-    # < E:*(affected:X)
-    # < E/type is_a ONT::PTM 
-    # < ! E/negation
-    # < ! E/mods/mod/type[ONT::MANNER-UNDO]
-    # < ! E/arg*[result:*]
-    # < X/type is_a ONT::MOLECULAR-PART
-    # < ! X//inevent/event[id=E]
-    # & dependsOn ^(X//inevent/event/id)
-    # > ?~ X/type[ONT::PROTEIN]
-    # > + X/not-features/ptm[id=E]
-    # > + X1=X[features/ptm[id=E]]
-    # > + E:*(result:X1)
-    # > + E1:increase(affected:X1) 
-    # > + C1:cause(factor:E,outcome:E1)
-    # > + E2:decrease(affected:X)
-    # > + C2:cause(factor:E,outcome:E2)
-    name => 'EKR:PTM',
-    constraints => ['EVENT[not(negation) and not(mods/mod/type[.="ONT::MANNER-UNDO"]) and arg2[@role=":AFFECTED"]]'],
+    ## dePTMs: eg, X is dephosphorylated [by Y] 
+    ## => phosphorylated X is dephosphorylated [by Y] to unphosphorylated X
+    # < E[type(is_a)ONT::PTM]
+    # < E[mods/mod/type=ONT::MANNER-UNDO]
+    # < ! E[negation]
+    # < ! E[result:*]
+    # < E[affected:X]
+    # < X[type(is_a)ONT::MOLECULAR-PART]
+    # < ! X[//inevent/@id=E]
+    # & dependsOn X//inevent/@id
+    # > ~ X[type=s/ONT::GENE/ONT::PROTEIN/]
+    # > + X[features/ptm[@id=E]]
+    # > + X1=X[not-features/ptm[@id=E]]
+    # > + E[result:X1]
+    # > + E1[type=ont::increase][affected:X1] 
+    # > + C1[type=ont::cause][factor:E,outcome:E1]
+    # > + E2[type=ont::decrease][affected:X]
+    # > + C2[type=ont::cause][factor:E,outcome:E2]
+    name => 'EKR:dePTM',
+    constraints => ['EVENT[not(negation) and mods/mod/type[.="ONT::MANNER-UNDO"] and arg2[@role=":AFFECTED"]]'],
     handler => sub {
       my ($rule, $ekb, $e) = @_;
       my $e_id = $e->getAttribute('id');
-      # < E/type is_a ONT::PTM 
+      # < E[type(is_a)ONT::PTM]
       my $e_type = get_slot_value($e, 'type');
       $ont_events->is_a($e_type, "ONT::PTM")
 	or return 0;
-      # < ! E/arg*[result:*]
+      # < ! E[result:*]
       assertion_args($e, '[@role=":RESULT"]')
 	and return 0;
-      # < X/type is_a ONT::MOLECULAR-PART
-      my $x_id = $e->findvalue('arg2/@id');
+      # < E[affected:X]
+      my ($arg_x) = assertion_args($e, '[@role=":AFFECTED"]');
+      my $x_id = $arg_x->getAttribute('id');
       my $x = $ekb->get_assertion($x_id, 'TERM')
 	or return 0;
+      # < X[type(is_a)ONT::MOLECULAR-PART]
       my $x_type = get_slot_value($x, 'type');
       $ont_bioents->is_a($x_type, 'ONT::MOLECULAR-PART')
 	or return 0;
-      # < ! X//inevent/event[id=E]
-      $x->findnodes('features/inevent/event[@id="'.$e_id.'"]')
+      # < ! X[//inevent/@id=E]
+      $x->findnodes('features/inevent[@id="'.$e_id.'"]')
 	and return 0;
 	
-      INFO "Rule %s matches event %s (affected:%s/%s)", 
+      INFO "Rule %s matches event %s (affected:%s[t=%s])", 
 	$rule->name, $e_id, $x_id, $x_type;
 
-      # & dependsOn ^(X//inevent/event/id)
+      # & dependsOn X//inevent/@id
       map { $rule->reasoner()->dependsOn($_) }
-	map { $_->value } $x->findnodes('features/inevent/event/@id');	
+	map { $_->value } $x->findnodes('features/inevent/@id');	
 
-      # > ?~ X/type[.=ONT::PROTEIN]
+      # > ~ X[type=s/ONT::GENE/ONT::PROTEIN/]
       set_slot_value($x, 'type' => 'ONT::PROTEIN')
 	if $ont_bioents->is_a('ONT::GENE', $x_type);
       # > + X1=X
       my $x1 = $ekb->clone_assertion($x, {rule => $rule->name});
       $ekb->add_assertion($x1);
       my $x1_id = $x1->getAttribute('id');
-      # > + X/not-features/ptm[id=E]
-      $ekb->add_notfeature($x, 'ptm' => { type => $e_type,
-					  event => $e_id });
-      # > + X1/features/ptm[id=E]
-      $ekb->add_feature($x1, 'ptm' => { type => $e_type,
-					event => $e_id });
-      # > + E:*(result:X1)
+      # > + X[features/ptm[@id=E]]
+      $ekb->add_feature($x, 'ptm' => { type => $e_type,
+				       event => $e_id });
+      # > + X1[not-features/ptm[@id=E]]
+      $ekb->add_notfeature($x1, 'ptm' => { type => $e_type,
+					   event => $e_id });
+      # > + E[result:X1]
       $ekb->add_arg($e, ':RESULT' => $x1_id);
 
       if ($rule->reasoner()->option('add_amount_changes')) {
@@ -1989,7 +2013,91 @@ sub default_options {
 	$ekb->causes($e_id, $e2_id, {refid => "$e_id", rule => $rule->name});
       }
 
-      return 1;
+      1;
+    }
+   },
+
+   {
+    ## PTMs: eg, X is phosphorylated [by Y] 
+    ## => non-phosphorylated X is phosphorylated [by Y] to phospho-X
+    # < E[type(is_a)ONT::PTM]
+    # < ! E[negation]
+    # < ! E[mods/mod/type=ONT::MANNER-UNDO]
+    # < ! E[result:*]
+    # < E[affected:X]
+    # < X[type(is_a)ONT::MOLECULAR-PART]
+    # < ! X[//inevent/@id=E]
+    # & dependsOn X//inevent/@id
+    # > ~ X[type=s/ONT::GENE/ONT::PROTEIN/]
+    # > + X[not-features/ptm[@id=E]]
+    # > + X1=X[features/ptm[@id=E]]
+    # > + E[result:X1]
+    # > + E1[type=ont::increase][affected:X1] 
+    # > + C1[type=ont::cause][factor:E,outcome:E1]
+    # > + E2[type=ont::decrease][affected:X]
+    # > + C2[type=ont::cause][factor:E,outcome:E2]
+    name => 'EKR:PTM',
+    constraints => ['EVENT[not(negation) and not(mods/mod/type[.="ONT::MANNER-UNDO"]) and arg2[@role=":AFFECTED"]]'],
+    handler => sub {
+      my ($rule, $ekb, $e) = @_;
+      my $e_id = $e->getAttribute('id');
+      # < E[type(is_a)ONT::PTM]
+      my $e_type = get_slot_value($e, 'type');
+      $ont_events->is_a($e_type, "ONT::PTM")
+	or return 0;
+      # < ! E[result:*]
+      assertion_args($e, '[@role=":RESULT"]')
+	and return 0;
+      # < E[affected:X]
+      my ($arg_x) = assertion_args($e, '[@role=":AFFECTED"]');
+      my $x_id = $arg_x->getAttribute('id');
+      my $x = $ekb->get_assertion($x_id, 'TERM')
+	or return 0;
+      # < X[type(is_a)ONT::MOLECULAR-PART]
+      my $x_type = get_slot_value($x, 'type');
+      $ont_bioents->is_a($x_type, 'ONT::MOLECULAR-PART')
+	or return 0;
+      # < ! X[//inevent/@id=E]
+      $x->findnodes('features/inevent[@id="'.$e_id.'"]')
+	and return 0;
+	
+      INFO "Rule %s matches event %s (affected:%s[t=%s])", 
+	$rule->name, $e_id, $x_id, $x_type;
+
+      # & dependsOn X//inevent/@id
+      map { $rule->reasoner()->dependsOn($_) }
+	map { $_->value } $x->findnodes('features/inevent/@id');	
+
+      # > ~ X[type=s/ONT::GENE/ONT::PROTEIN/]
+      set_slot_value($x, 'type' => 'ONT::PROTEIN')
+	if $ont_bioents->is_a('ONT::GENE', $x_type);
+      # > + X1=X
+      my $x1 = $ekb->clone_assertion($x, {rule => $rule->name});
+      $ekb->add_assertion($x1);
+      my $x1_id = $x1->getAttribute('id');
+      # > + X[not-features/ptm[@id=E]]
+      $ekb->add_notfeature($x, 'ptm' => { type => $e_type,
+					  event => $e_id });
+      # > + X1[features/ptm[@id=E]]
+      $ekb->add_feature($x1, 'ptm' => { type => $e_type,
+					event => $e_id });
+      # > + E[result:X1]
+      $ekb->add_arg($e, ':RESULT' => $x1_id);
+
+      if ($rule->reasoner()->option('add_amount_changes')) {
+	# > + E1:increase(affected:X1) 
+	my $e1_id = 
+	  $ekb->increases($x1_id, {refid => "$e_id", rule => $rule->name});
+	# > + C1:cause(factor:E,outcome:E1)
+	$ekb->causes($e_id, $e1_id, {refid => "$e_id", rule => $rule->name});
+	# > + E2:decrease(affected:X)
+	my $e2_id =
+	  $ekb->decreases($x_id, {refid => "$e_id", rule => $rule->name});
+	# > + C2:cause(factor:E,outcome:E2)
+	$ekb->causes($e_id, $e2_id, {refid => "$e_id", rule => $rule->name});
+      }
+
+      1;
     }
    },
 
@@ -2001,8 +2109,8 @@ sub default_options {
     # < ! E/negation
     # < ! E/arg*[result:*]
     # < X/type is_a <bio_entity>
-    # < ! X//inevent/event[E]
-    # & dependsOn ^(X/features/inevent/event/id)
+    # < ! X//inevent[@id=E]
+    # & dependsOn ^(X//inevent/@id)
     # > + X//active[FALSE]
     # > + X1=X
     # > + X1//active[TRUE]
@@ -2027,11 +2135,11 @@ sub default_options {
       # < ! E/arg*[result:*]
       assertion_args($e, '[@role=":RESULT"]')
 	and return 0;
-      # < ! X/features/inevent/event[id=E]
-      $x->findnodes('features/inevent/event[@id="'.$e_id.'"]')
+      # < ! X//inevent[@id=E]
+      $x->findnodes('features/inevent[@id="'.$e_id.'"]')
 	and return 0;
 
-      INFO "Rule %s matches event %s (affected:%s/%s)", 
+      INFO "Rule %s matches event %s (affected:%s[t=%s])", 
 	$rule->name, $e_id, $x_id, $x_type;
 
       # check if $x is :affected by other events (? WHY ?)
@@ -2047,10 +2155,9 @@ sub default_options {
       # WARN "%s is also affected by: (%s)",
       #   $x_id, join(" ", map {$_->getAttribute('id')} @affectedBy);
 
-      # & dependsOn ^(X/features/inevent/event/id)
+      # & dependsOn ^(X//inevent/@id)
       map { $rule->reasoner()->dependsOn($_) }
-	map { $_->getAttribute('id') }
-	$x->findnodes('features/inevent/event');	
+	map { $_->value } $x->findnodes('features/inevent/@id');	
 
       # > + X1=X
       my $x1 = $ekb->clone_assertion($x, {rule => $rule->name});
@@ -2077,7 +2184,7 @@ sub default_options {
 	$ekb->causes($e_id, $e2_id, {refid => "$e_id", rule => $rule->name});
       }
       
-      return 1;
+      1;
     }
    },
 
@@ -2089,8 +2196,8 @@ sub default_options {
     # < ! E/negation
     # < ! E/arg*[result:*]
     # < X/type is_a <bio_entity>
-    # < ! X//inevent/event[E]
-    # & dependsOn ^(X/features/inevent/event/id[!E])
+    # < ! X//inevent[@id=E]
+    # & dependsOn ^(X//inevent/@id[.!=E])
     # > + X1:X
     # > + X//active[TRUE]
     # > + X1//active[FALSE]
@@ -2115,11 +2222,11 @@ sub default_options {
       # < ! E/arg*[result:*]
       assertion_args($e, '[@role=":RESULT"]')
 	and return 0;
-      # < ! X//inevent/event[E]
-      $x->findnodes('features/inevent/event[@id="'.$e_id.'"]')
+      # < ! X//inevent[@id=E]
+      $x->findnodes('features/inevent[@id="'.$e_id.'"]')
 	and return 0;
 
-      INFO "Rule %s matches event %s (affected:%s/%s)", 
+      INFO "Rule %s matches event %s (affected:%s[t=%s])", 
 	$rule->name, $e_id, $x_id, $x_type;
 
       # check if $x is :affected by other events (? WHY ?)
@@ -2135,10 +2242,9 @@ sub default_options {
       # WARN "%s is also affected by: (%s)",
       #   $x_id, join(" ", map {$_->getAttribute('id')} @affectedBy);
 
-      # & dependsOn ^(X/features/inevent/event/id)
+      # & dependsOn ^(X//inevent/@id)
       map { $rule->reasoner()->dependsOn($_) }
-	map { $_->getAttribute('id') }
-	$x->findnodes('features/inevent/event');	
+	map { $_->value } $x->findnodes('features/inevent/@id');	
 
       # > + X1=X
       my $x1 = $ekb->clone_assertion($x, {rule => $rule->name});
@@ -2165,7 +2271,7 @@ sub default_options {
 	$ekb->causes($e_id, $e2_id, {refid => "$e_id", rule => $rule->name});
       }
       
-      return 1;
+      1;
     }
    },
 
@@ -2180,15 +2286,14 @@ sub default_options {
     handler => sub {
       my ($rule, $ekb, $t) = @_;
 
-      return 0 unless $rule->reasoner()->option('add_binding_features_new');
+      return 0 unless $rule->reasoner()->option('add_binding_features_rule');
 
       my $t_id = $t->getAttribute('id');
 
       my @comp_terms =
 	grep { $ont_bioents->is_a(get_slot_value($_, 'type'), 'ONT::MOLECULAR-PART') }
 	map { $ekb->get_assertion($_, "TERM") }
-	map { $_->getAttribute('id') }
-	$t->findnodes('components/component');
+	map { $_->value } $t->findnodes('components/component/@id');
       DEBUG 2, "comp_terms: %s", "@comp_terms";
 
       my @comp_ids = map { $_->getAttribute('id') } @comp_terms;
@@ -2209,7 +2314,7 @@ sub default_options {
 	}
       }
       
-      return 1;
+      1;
     }    
    },
    

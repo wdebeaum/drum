@@ -34,7 +34,7 @@
    
     ((LF-PARENT ONT::original-material)
      (example "make it out of stone")
-     (preference .98)
+     ;;(preference .98)  let semantic restrictions discourage this when appropriate
      (meta-data :origin calo-ontology :entry-date 20060126 :change-date nil :comments caloy3)
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      )

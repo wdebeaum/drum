@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Mon May 15 17:37:01 CDT 2017 lgalescu>
+# Time-stamp: <Mon May 29 14:17:49 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.30 2017/05/22 19:20:05 rcarff Exp $
+# $Id: EKB.pm,v 1.32 2017/05/29 19:18:44 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -103,6 +103,10 @@
 # - moved a few methods into package functions
 # 2017/05/15 v1.14.1	lgalescu
 # - added initialization from string
+# 2017/05/25 v1.14.2	lgalescu
+# - slight modification of the format for the 'inevent' feature
+# 2017/05/29 v1.14.3	lgalescu
+# - added a bit more documentation
 
 # TODO:
 # - maybe split off non-OO extensions for manipulating XML objects into a separate package?
@@ -110,7 +114,7 @@
 
 package EKB;
 
-$VERSION = '1.14.1';
+$VERSION = '1.14.3';
 
 =head1 NAME
 
@@ -1311,6 +1315,7 @@ sub modify_assertion {
   # set children and warn on replacements
   foreach my $child (@children) {
     my $cname = $child->nodeName;
+    # TODO: should we be able to modify args through this method, as well?!?
     unless (lc($cname) =~ m/^arg/) {
       my @s = $a->getChildrenByTagName($cname);
       if (scalar(@s) == 1) {
@@ -1338,7 +1343,8 @@ sub modify_assertion {
 
 =head2 make_complex_term( $ids, $attributes, @properties )
 
-Makes a complex term with component ids given in the list referenced by $ids.
+Makes a macomolecular complex term with component ids given in the list
+referenced by $ids.
 
 The $ids argument is required (but can be a reference to an empty list). The
 other arguments are optional.
@@ -1357,6 +1363,21 @@ sub make_complex_term {
 			 make_components(@$ids) );
 }
 
+=head2 make_complex_name( $components )
+
+Makes a name for a macomolecular complex term from the names of its components. If any component doesn't have a name, it returns just the string "COMPLEX".
+
+TODO: This function ought to be called automatically by EKB::make_complex_term().
+
+=cut
+
+sub make_complex_name {
+  my @names = map { get_slot_value($_, "name") } @_;
+  return
+    (any { ! defined($_) } @names)
+    ? "COMPLEX"
+    : join("/", @names);
+}
 
 =head2 make_conjoined_event( $ids, $operator, $attributes, @properties )
 
@@ -1376,8 +1397,7 @@ my $a = make_conjoined_event([$term_id1, $term_id2], 'AND', {rule => 'MY_RULE'})
 sub make_conjoined_event {
   my $self = shift;
   my ($ids, $operator, @content) = @_;
-  my $a = $self->make_assertion( 'EVENT',
-      @content );
+  my $a = $self->make_assertion( 'EVENT', @content );
   my @comps
       = map { make_node("member", { id => $_ }) } @$ids;
   if (@comps) {
@@ -1741,17 +1761,24 @@ Adds a C<feature> node to an assertion's list of features.
 For simple features, $value is a scalar (eg, 'TRUE'). Other features are
 defined by their attributes, in which case $value is a reference to a hashlist
 of attribute-value pairs.
- 
+
+Returns the feature element just created.
+
 Examples:
 
   $ekb->add_feature($a, 'active' => 'TRUE');
   $ekb->add_feature($a, 'location' => { id => 'T12345' });
   $ekb->add_feature($a, 'bound-to' => { id => 'T12346', event => 'E23456' });
   $ekb->add_feature($a, 'ptm' => { type => 'ONT::PHOSPHORYLATION', event => 'E23457' });
-  $feat = $ekb->add_feature($a, 'inevent');
+  $ekb->add_feature($a, 'inevent' => { id => 'E23458' });
 
 =cut
 
+# FIXME: Roger changed the signature to have values as a list; in all
+# likelihood, this is to accommodate "complex" features, so he can pass on
+# children. since the feature nodes are being simplified, i think this will
+# become unnecessary. at any rate, this doesn't look like it can hurt in any
+# way.
 sub add_feature {
   my $self = shift;
   my ($a, $feature, @value) = @_;
@@ -1769,6 +1796,9 @@ sub add_feature {
     # (specifically, by adding children).
     # eventually i think this will go away, but first the ekb.dtd will have to
     # be revised to prohibit these complex "features" (TODO)
+
+    # update (2017/05/24): i think complex features have disappeared, now that
+    # i changed the inevent element and moved it inside mods
 
   }
 
@@ -2206,14 +2236,6 @@ sub make_components {
     $comps_node = make_node("components", @comps);
   }
   $comps_node; 
-}
-
-sub make_complex_name {
-  my @names = map { get_slot_value($_, "name") } @_;
-  return
-    (any { ! defined($_) } @names)
-    ? "COMPLEX"
-    : join("/", @names);
 }
 
 # deep clone node

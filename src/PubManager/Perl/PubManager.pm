@@ -8,8 +8,8 @@ use strict vars;
 use Cwd qw(abs_path);
 use File::Spec::Functions;
 use PubManager::Utils qw(setOutputFolder setXMLOutputFolder processPMCDoc getErrorMsg getErrorCode setDebug);
-use PubManager::Log;
-local $PubManager::Log::Caller_Info = 0;
+use util::Log;
+local $util::Log::Caller_Info = 0;
 
 # This will Flush STDOUT if it is not commented out.
 #BEGIN { $| = 1 }

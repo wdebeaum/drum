@@ -402,7 +402,7 @@
   '((headfeatures
      (ADJ VAR ATYPE SORT ARG PRED ARGUMENT lex headcat transform)
      ;; MD 2008/07/17 added post-subcat as a head feature so that it doesn't lead to overgeneration
-     (ADJP VAR ATYPE SORT ARG COMP-OP PRED ARGUMENT lex headcat transform post-subcat) 
+     (ADJP VAR ATYPE SORT ARG COMP-OP PRED ARGUMENT lex headcat transform post-subcat sem) 
      (NUMBER VAR AGR lex headcat transform)
      (VP vform var agr neg sem subj iobj dobj comp3 part cont gap class subjvar lex headcat transform subj-map tma aux template)
      (VP- vform var agr neg sem subj iobj dobj dobjvar comp3 part cont gap class subjvar lex headcat transform subj-map tma aux passive passive-map template)
@@ -532,14 +532,14 @@
     ;;  resultative construction using adjectives with intransitives: e.g., the water froze solid
     ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
-      (SUBJ (% NP (Var ?npvar) (LEX ?LEX) (sem ?sem)))
+      (SUBJ (% NP (Var ?npvar) (LEX ?LEX) (agr ?agr) (sem ?sem)))
       (advbl-needed -) (complex +) (result-present +) (subjvar ?subjvar)(GAP ?gap)
       )
      -vp-result-with-intransitive> .98   ;;  want to prefer explicitly subcategorized attachments
      (head (vp- (VAR ?v) 
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		(DOBJVAR -)  ; cannot use (dobj -) because dobj is (% - (W::VAR -)) 
-		(SUBJ (% NP (Var ?npvar) (LEX ?LEX) (sem ?sem)))
+		(SUBJ (% NP (Var ?npvar) (LEX ?LEX)  (agr ?agr)(sem ?sem)))
 		(constraint ?con) (tma ?tma) (result-present -)
 		;;(subjvar ?subjvar)
 		;;(aux -)   c.f., It had gone bad
@@ -563,15 +563,15 @@
     ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
 ;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
-      (SUBJ (% NP (Var ?npvar) (sem ?sem) (lex ?lex)))
-      (subjvar ?npvar)
+      (SUBJ (% NP (Var ?npvar) (sem ?sem) (agr ?agr) (lex ?lex)))
+      (subjvar ?npvar) (result-present +)
       (advbl-needed -) (complex +) (GAP ?gap)
       )
      -vp-result-advbl-intransitive>  
      (head (vp- (VAR ?v) 
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		(DOBJVAR -)  ; cannot use (dobj -) because dobj is (% - (W::VAR -)) 
-		(SUBJ (% NP (Var ?npvar) (sem ?sem) (lex ?lex)))  
+		(SUBJ (% NP (Var ?npvar) (agr ?agr) (sem ?sem) (lex ?lex)))  
 		(subjvar ?npvar)
 		(constraint ?con) (tma ?tma) (result-present -)
 		;;(aux -) 
@@ -981,7 +981,7 @@
     
     ((ADJP (LF (% PROP (CLASS ?c) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
            (val ?val) (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap) 
-      (argument ?argmt) (premod +) 
+      (argument ?argmt) (premod +) (sem ?sem)
       )
      -advbl-adj-pre>
      (advbl (ATYPE PRE) (VAR ?advbv) (ARG ?v) ;;(SORT OPERATOR) 
@@ -990,7 +990,7 @@
       )
      (head (ADJP (lf (% PROP (CLASS ?c) (VAR ?v) (CONSTRAINT ?con) (sem ?sem))) 
 	    (val ?val) (agr ?agr) (mass ?mass) (argument ?argmt) (arg ?arg)
-	    (gap ?gap) (premod -) 
+	    (gap ?gap) (premod -) (sem ?sem)
                  ))
      (add-to-conjunct (val (MODS ?advbv)) (old ?con) (new ?newc))
      
@@ -1492,7 +1492,7 @@
     -vp-ing-advbl> .98
     (head (vp (vform ing) (var ?v) (gap -) (aux -) (advbl-necessary -)
 	   (constraint ?con)  (transform ?transform) (class ?class)
-	   (subj (% np (sem ?subjsem) (gap -)))
+	   (subj (% np (var ?subjvar) (agr ?subjagr) (sem ?subjsem) (gap -)))
 	   ;(subjvar (% *PRO* (VAR *) (gap -) (sem ?subjsem)))
 	   (subjvar ?!subjvar)
 	   (subj ?!subj)

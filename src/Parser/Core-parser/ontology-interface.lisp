@@ -117,7 +117,7 @@ compare the two values with eq and return nil or their shared value."
   ;; Note: sub, super may come from different hierarchies
   (declare (optimize (speed 3) (safety 0) (debug 0)))
   (cond
-   ((or (ontology-hierarchical-feature-p feat) (keywordp feat))
+   ((or (ontology-hierarchical-feature-p feat) (keywordp feat) (numberp feat))
     ;; we should be conscious of lexical info here
     (let* ((sublf (ontologymanager::strip-lf-form sub ':*))
 	   (superlf (ontologymanager::strip-lf-form super ':*)))

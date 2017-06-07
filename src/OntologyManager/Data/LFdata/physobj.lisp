@@ -635,7 +635,7 @@
 
 
 (define-type ONT::person
-    :wordnet-sense-keys ("person%1:03:00" "individual%1:03:00" "someone%1:03:00" "somebody%1:03:00" "mortal%1:03:00" "soul%1:03:00" "witch%1:18:01")
+    :wordnet-sense-keys ("person%1:03:00" "individual%1:03:00" "someone%1:03:00" "somebody%1:03:00" "mortal%1:03:00" "soul%1:03:00" "imaginary_being%1:18:00")
     :parent ONT::mammal ;; umls
     :sem (F::Phys-obj (F::form F::solid-object)
 		      (F::spatial-abstraction F::spatial-point)

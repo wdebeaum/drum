@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.43 2016/08/07 20:37:26 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.44 2017/05/25 23:43:09 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -761,13 +761,13 @@ public class TermExtraction extends Extraction {
      */
     private String createFeaturesXML() {
         String features = "";
+        features += createIneventFeaturesXML();
         features += createActivityFeatureXML();
         features += createLocationFeatureXML(); // cellular location
         features += createMutationFeatureXML(); // mutations (for proteins, etc.)
         features += createDomSiteFeatureXML(); // domain
         features += createResSiteFeatureXML(); // residue
         features += createCelllineXML(); // cell-line
-        features += createIneventFeaturesXML(); // TODO: replace w/ more specific features: binding, etc
 
         return features.equals("")
             ? ""
@@ -972,6 +972,10 @@ public class TermExtraction extends Extraction {
         return "";
     }
 
+    /**
+     * Returns a list of {@code inevent} "features".
+     * TODO: re-think whether these are really "features" or something else!
+     */
     private String createIneventFeaturesXML() {
         ArrayList<KQMLObject> inEvents = polyAttributes.get(PolyAttribute.INEVENT);
         Debug.warn("poly :INEVENT of " + id + " =  " + inEvents);
@@ -985,11 +989,11 @@ public class TermExtraction extends Extraction {
             } else {
                 KQMLList inEvTerm = findTermByVar(inEvVar.toString(), context);
                 // TODO: get more info?
-                result += "<event id=\"" + removePackage(inEvVar.toString(), false) + "\" />";
+                result += "<inevent id=\"" + removePackage(inEvVar.toString(), false) + "\" />";
             }
         }
 
-        return "<inevent>" + result + "</inevent>";
+        return result;
     }
 
     /**

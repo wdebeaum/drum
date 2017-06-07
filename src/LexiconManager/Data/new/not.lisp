@@ -134,7 +134,7 @@
  :words (
   ((W::not W::on W::your W::life)
    (SENSES
-    ((LF (W::NEG))
+    ((LF (ONT::NEG))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      )
     )
@@ -145,7 +145,7 @@
  :words (
    ((W::not w::that w::I W::know W::of)
    (SENSES
-    ((LF (W::UNSURE-NEG))
+    ((LF (ONT::UNSURE-NEG))
      (meta-data :origin cardiac :entry-date 20080814 :change-date nil :comments nil)
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      (preference .97)
@@ -158,7 +158,7 @@
  :words (
    ((W::not w::that w::I w::^m W::aware W::of)
    (SENSES
-    ((LF (W::UNSURE-NEG))
+    ((LF (ONT::UNSURE-NEG))
      (meta-data :origin cardiac :entry-date 20080814 :change-date nil :comments nil)
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      (preference .97)

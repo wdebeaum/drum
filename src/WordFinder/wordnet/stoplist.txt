@@ -2896,3 +2896,10 @@ step_in%2:41:00::
 go_home%2:38:00::
 let%1:04:00::    ; possible but uncommon sense
 reach_one's_nostrils%2:39:00::
+change_over%2:30:01::
+change_over%2:30:02::
+turn_on%2:35:00::
+switch_on%2:35:00::
+turn_off%2:35:00::
+switch_off%2:35:00::
+turn_out%2:35:01::

@@ -90,7 +90,7 @@
  :words (
   ((W::I W::think W::not)
    (SENSES
-    ((LF (W::UNSURE-NEG))
+    ((LF (ONT::UNSURE-NEG))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      (preference .97)
      )
@@ -102,7 +102,7 @@
  :words (
   ((W::I W::think W::so)
    (SENSES
-    ((LF (W::UNSURE-POS))
+    ((LF (ONT::UNSURE-POS))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      (preference .97)
      )
@@ -114,7 +114,7 @@
  :words (
    ((W::I w::do w::n^t W::think W::so)
    (SENSES
-    ((LF (W::UNSURE-NEG))
+    ((LF (ONT::UNSURE-NEG))
      (meta-data :origin cardiac :entry-date 20080814 :change-date nil :comments nil)
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      (preference .97)
@@ -128,7 +128,7 @@
   ;; added here for now until they are handled compositionally
    ((W::I W::believe W::so)
    (SENSES
-    ((LF (W::UNSURE-POS))
+    ((LF (ONT::UNSURE-POS))
      (meta-data :origin cardiac :entry-date 20080814 :change-date nil :comments nil)
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      )
@@ -140,7 +140,7 @@
  :words (
    ((W::I w::do w::n^t W::believe W::so)
    (SENSES
-    ((LF (W::UNSURE-NEG))
+    ((LF (ONT::UNSURE-NEG))
      (meta-data :origin cardiac :entry-date 20080814 :change-date nil :comments nil)
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      (preference .97)
@@ -154,7 +154,7 @@
 ;   )
   ((W::I W::guess W::not)
    (SENSES
-    ((LF (W::UNSURE-NEG))
+    ((LF (ONT::UNSURE-NEG))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      (preference .97)
      )
@@ -166,7 +166,7 @@
  :words (
   ((W::I W::guess W::so)
    (SENSES
-    ((LF (W::UNSURE-POS))
+    ((LF (ONT::UNSURE-POS))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      (preference .97)
      )
@@ -178,7 +178,7 @@
  :words (
   ((W::I W::guess)
    (SENSES
-    ((LF (W::UNSURE-POS))
+    ((LF (ONT::UNSURE-POS))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      (preference .97)
      )
@@ -190,7 +190,7 @@
  :words (
     ((W::I W::suppose W::so)
    (SENSES
-    ((LF (W::UNSURE-POS))
+    ((LF (ONT::UNSURE-POS))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      (preference .97)
      )

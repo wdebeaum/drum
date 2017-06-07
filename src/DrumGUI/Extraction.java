@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.50 2016/08/03 21:33:11 lgalescu Exp $
+ * $Id: Extraction.java,v 1.51 2017/05/26 16:08:58 rcarff Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -486,7 +486,7 @@ public class Extraction {
                 .replaceAll("-PUNC-EN-DASH-", "-")
                 .replaceAll("-PUNC-PERIOD-", ".")
                 .replaceAll("-PUNC-PERIOD", ".")
-                .replaceAll("-PUNC-COMMA-", ".")
+                .replaceAll("-PUNC-COMMA-", ",")
                 .replaceAll("-START-PAREN-", "(")
                 .replaceAll("START-PAREN-", "(")
                 .replaceAll("-END-PAREN-", ")")

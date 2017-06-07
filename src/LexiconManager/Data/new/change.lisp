@@ -28,6 +28,7 @@
    ))
 ))
 
+#|
 (define-words :pos W::v :templ agent-affected-xp-templ
  :words (
   ((W::change (w::over)) ; not sure this works with morphology -- wdebeaum
@@ -39,4 +40,4 @@
     )
    )
 ))
-
+|#

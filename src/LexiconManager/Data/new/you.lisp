@@ -44,7 +44,7 @@
  :words (
    ((W::you W::bet)
    (SENSES
-    ((LF (W::POS))
+    ((LF (ONT::POS))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      (preference .97)
      )
@@ -56,7 +56,7 @@
  :words (
    ((W::you W::betcha)
    (SENSES
-    ((LF (W::POS))
+    ((LF (ONT::POS))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      (preference .97)
      )

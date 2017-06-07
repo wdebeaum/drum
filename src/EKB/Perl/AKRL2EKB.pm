@@ -120,6 +120,16 @@ my %eventFeatures = (":SITE" => "site",
                      ":CELL-LINE" => "cell-line",
                      ":EPI" => "epistemic-modality");
 
+=head2 Event Feature Children
+
+A mapping of Event Feature children to process.  These are turned into child nodes
+of the parent event's feature child node  The mapping is from AKRL attribute
+to EKB node name.
+
+=cut
+
+my %eventFeatureChildren = (":INEVENT" => "inevent");      # Can have multiple and remove package prefix
+
 =head2 Term Features
 
 A mapping of Term Features to process.  These are turned into child nodes
@@ -132,6 +142,7 @@ my %termFeatures = (":ACTIVE" => "active",          # Only one and remove packag
                     ":LOC" => "location",           # Can have multiple and remove package prefix
                     ":SITE" => "site",              # Only one and remove package prefix
                     ":CELL-LINE" => "cell-line",    # Only one and remove package prefix
+                    ":INEVENT" => "inevent",        # Can have multiple and remove package prefix
                     ":MUTATION" => "mutation");     # Can have multiple, If Boolean or not Ont Var then text, else ID attribute.
 
 # Helper Methods
@@ -345,7 +356,7 @@ sub add_feature_smart
         {
             foreach my $val (@$value)
             {
-                $featureAdded = add_feature($feature, $val, $ekb, $node, $akrlList);
+                $featureAdded = add_feature_smart($feature, $val, $ekb, $node, $akrlList);
             }
         }
         elsif (ref($value) eq '')
@@ -362,43 +373,6 @@ sub add_feature_smart
         }
     }
     return $featureAdded;
-}
-
-# Add any INEVENTS
-=head2 add_inevent_feature ($akrl, $ekb, $node, $akrlList)
-
-Helper method to add inevent/event children to the provided node.  All event
-id's are recursively processed as AKRL objects.
-
-=cut
-
-sub add_inevent_feature
-{
-    my ($akrl, $ekb, $node, $akrlList) = @_;
-    my $inevents = $akrl->getValuesAsArrayForKey(":INEVENT");
-    if (defined ($inevents))
-    {
-        if (ref ($inevents) eq "ARRAY")
-        {
-            if (scalar(@$inevents) > 0)
-            {
-                my @children = ();
-                foreach my $eventId (@$inevents)
-                {
-                    addEKBAssertion($eventId, $ekb, $akrlList);
-                    push (@children, make_node("event", { id => removePackage($eventId) }));
-                }
-                return $ekb->add_feature ($node, "inevent", @children);
-            }
-        }
-        else
-        {
-            addEKBAssertion($inevents, $ekb, $akrlList);
-            return $ekb->add_feature ($node, "inevent", make_node("event", { id => removePackage($inevents) }));
-        }
-    }
-
-    return undef;
 }
 
 =head2 trimLeadingAndTrailingQuotes ($string)
@@ -833,8 +807,12 @@ sub createEKB_RELN
     # Add Mods
     add_poly_modifiers($event, $ekb, $akrl);
 
-    # Add INEVENT Features
-    add_inevent_feature($akrl, $ekb, $event, $akrlList);
+
+    # Add Event Feature Children
+    foreach my $feature (keys(%eventFeatureChildren))
+    {
+        add_feature_smart($eventFeatureChildren{$feature}, $akrl->getValueForKey($feature), $ekb, $event, $akrlList)
+    }
 
     # Add event role arguments
     foreach my $role (@eventRoleArguments)
@@ -965,9 +943,6 @@ sub createEKBTerm
 
     # process any DRUM AA Sites features
     processDRUMAASites($term, $ekb, parseDRUMAASites($akrl->getValueForKey(":drum")));
-
-    # Add any INEVENTS
-    add_inevent_feature($akrl, $ekb, $term, $akrlList);
 
     # process any DRUM Mutation Info
     processDRUMMutationInfo($term, $ekb, parseDRUMMutations($akrl->getValueForKey(":drum")));

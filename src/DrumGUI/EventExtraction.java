@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.52 2017/03/25 20:55:51 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.53 2017/05/25 23:43:09 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -1274,11 +1274,11 @@ public class EventExtraction extends Extraction {
     /**
      * Returns a {@code <features>} XML element representing the term features,
      * or the empty string if no such information exists.
-     * TODO: remove once inevent is moved under mods
+     * TODO: re-think whether this is really a "feature" or something else!
      */
     private String createFeaturesXML() {
         String features = "";
-        features += createIneventModsXML();
+        features += createIneventFeaturesXML();
 
         return features.equals("")
                 ? ""
@@ -1286,11 +1286,9 @@ public class EventExtraction extends Extraction {
     }
 
     /**
-     * TODO: this probably ought to go under <mods>
-     * 
-     * @return
+     * Returns a list of {@code inevent} features.
      */
-    private String createIneventModsXML() {
+    private String createIneventFeaturesXML() {
         ArrayList<KQMLObject> inEvents = polyMods.get(PolyModifier.INEVENT);
         Debug.warn("poly :INEVENT of " + id + " =  " + inEvents);
         if ((inEvents == null) || inEvents.isEmpty()) {
@@ -1303,11 +1301,11 @@ public class EventExtraction extends Extraction {
             } else {
                 KQMLList inEvTerm = findTermByVar(inEvVar.toString(), context);
                 // TODO: get more info?
-                result += "<event id=\"" + removePackage(inEvVar.toString(), false) + "\" />";
+                result += "<inevent id=\"" + removePackage(inEvVar.toString(), false) + "\" />";
             }
         }
 
-        return "<inevent>" + result + "</inevent>";
+        return result;
     }
 
     //// LISP FORMATTING

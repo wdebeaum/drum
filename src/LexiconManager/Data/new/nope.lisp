@@ -6,7 +6,7 @@
  :words (
   (W::nope
    (SENSES
-    ((LF (W::NEG))
+    ((LF (ONT::NEG))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      )
     )

@@ -11,8 +11,8 @@ use File::Path qw(make_path);
 use File::Spec::Functions;
 use File::Copy qw(move);
 use Data::Dumper;
-use PubManager::Log;
-local $PubManager::Log::Caller_Info = 0;
+use util::Log;
+local $util::Log::Caller_Info = 0;
 
 # Disable smartmatch warnings
 no if $] >= 5.017011, warnings => 'experimental::smartmatch';
@@ -770,6 +770,8 @@ sub saveToFile {
     my $xml = $elem->toString();
     # clean up a bit
     $xml =~ s/^\s+//mg;
+    $xml =~ s/\n/ /g;
+    $xml =~ s/\r/ /g;
     print $xfh $xml;
     close $xfh;
 

@@ -1,6 +1,6 @@
 # Compare.pm
 #
-# Time-stamp: <Sat May 20 09:49:26 CDT 2017 lgalescu>
+# Time-stamp: <Thu May 25 18:23:47 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  4 May 2016
 #
@@ -55,6 +55,9 @@
 # - Fixed a bug.
 # - Added possibility of comparing "ungrounded" EKBs (no text).
 # - Changed representation of diffs. 
+# 2017/05/25 v2.2.1	lgalescu
+# - Updated for new format of inevent features. For now, this is backwards
+#   compatible.
 
 # TODO (in order of importance):
 # - try to find node "substitutions"
@@ -62,12 +65,13 @@
 # - keep track of why things failed (failure diagnostics)
 # - there are a couple FIXME notes below
 # - improve how diffs are set and got
+#   - one easy solution: add trackers to EKB elements!
 # - consider whether it might be appropriate to add a similarity score 
 #   and obtain the best alignment through global optimization
 
 package EKB::Compare;
 
-$VERSION = '2.1.2';
+$VERSION = '2.2.1';
 
 use strict 'vars';
 use warnings;
@@ -864,7 +868,11 @@ sub cmp_mods {
   my %mods1 = __get_mods($mods1);
   my %mods2 = __get_mods($mods2);
   DEBUG 2, "\nmods1: %s\nmods2: %s", Dumper(\%mods1), Dumper(\%mods2);
-  return eq_deeply(\%mods1, \%mods2);
+  my @tests =
+    (
+     eq_deeply(\%mods1, \%mods2)
+    );
+  return min(@tests);
 }
 
 sub cmp_features {
@@ -1113,11 +1121,14 @@ sub cmp_features_site {
   return eq_deeply(\@elems1, set(@elems2));
 }
 
+# this is the old format; see cmp_mods_inevent for the new style
 sub cmp_features_inevent {
   my $self = shift;
   my ($f1, $f2) = @_;
-  my @elems1 = $f1->findnodes('./inevent/event');
-  my @elems2 = $f2->findnodes('./inevent/event');
+  # FIXME: these XPath expressions match both the old style, and the new style.
+  # eventually the old style should be removed
+  my @elems1 = $f1->findnodes('./inevent/event[@id] | ./inevent[@id]');
+  my @elems2 = $f2->findnodes('./inevent/event[@id] | ./inevent[@id]');
 
   return 1 if (! @elems1) && (! @elems2);
   return 0 unless @elems1 && @elems2;
@@ -1368,10 +1379,9 @@ sub diffs_as_string {
     my $utt = $self->ekb1()->get_sentence($sid);
     $result .= sprintf("uttnum=%d %s\n", $sid, $utt->textContent);
     foreach my $diff (grep { $_->{sid} eq $sid } @a_diffs) {
-      if (exists $diff->{'ref'}) {
-	$result .= sprintf("< %s\n",
-			   $self->ekb1->get_assertion($diff->{'ref'})->toString(1));
-      }
+      $result .= sprintf("< %s\n",
+			 $self->ekb1->get_assertion($diff->{'ref'})->toString(1))
+	if exists $diff->{'ref'};
       $result .= sprintf("> %s\n",
 			 $self->ekb2()->get_assertion($diff->{'hyp'})->toString(1))
 	if exists $diff->{'hyp'};

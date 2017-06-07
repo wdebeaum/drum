@@ -47,6 +47,7 @@
    )
 ))
 
+#|
 (define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
  :words (
   ((W::turn (W::off))
@@ -76,6 +77,7 @@
      )
     ))
   ))
+|#
 
 (define-words :pos W::v :templ agent-affected-xp-templ
  :words (

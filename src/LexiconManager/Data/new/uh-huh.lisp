@@ -6,7 +6,7 @@
  :words (
   (W::uh-huh
    (SENSES
-    ((LF (W::POS))
+    ((LF (ONT::POS))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      (meta-data :origin calo :entry-date 20041119 :change-date nil :comments caloy2)
      )

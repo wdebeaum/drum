@@ -2,7 +2,7 @@
 #
 # ekb_test.pl
 #
-# Time-stamp: <Tue Feb 28 18:00:20 CST 2017 lgalescu>
+# Time-stamp: <Sat Apr  1 18:32:41 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Jun 2016
 #
@@ -244,8 +244,6 @@ GetOptions(
 	   'dto|delete-test-options=s' => \$delTestOpts,
 	  ) or die "Something's wrong";
 
-die $usage if $help;
-
 $options = $options // "";
 
 unless (scalar(@tsdFiles) > 0) {
@@ -297,7 +295,7 @@ exit 0;
 sub t_new {
   my $tsd = shift @tsdFiles;
   if (-f $tsd) {
-    FATAL "TSD file exists already: $tsd"
+    FATAL "TSD file exists already: $tsd";
   }
   my $test = EKB::Test->new( tsd => $tsd,
 			     options => $options );
@@ -307,7 +305,7 @@ sub t_new {
 sub t_add {
   my $tsd = shift @tsdFiles;
   unless (-f $tsd) {
-    FATAL "Cannot find TSD file: $tsd"
+    FATAL "Cannot find TSD file: $tsd";
   }
   my $test = EKB::Test->new( tsd => $tsd );
 

@@ -7,7 +7,7 @@
   (W::yup
    (SENSES
     ((meta-data :origin monroe :entry-date 20031217 :change-date nil :comments s11)
-     (LF (W::POS))
+     (LF (ONT::POS))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      )
     )

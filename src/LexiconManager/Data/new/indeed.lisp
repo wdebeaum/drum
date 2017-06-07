@@ -22,7 +22,7 @@
  :words (
   (W::INDEED
    (SENSES
-    ((LF (W::POS))
+    ((LF (ONT::POS))
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      )
     )
