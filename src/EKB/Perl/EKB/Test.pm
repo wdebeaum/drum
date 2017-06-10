@@ -1,6 +1,6 @@
 # Test.pm
 #
-# Time-stamp: <Fri Feb  3 15:03:23 CST 2017 lgalescu>
+# Time-stamp: <Fri Jun  9 14:50:14 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Jun 2016
 #
@@ -25,10 +25,13 @@
 # - Save diffs to file only when there are some.
 # 2016/10/18 v1.2.3 lgalescu
 # - Changed slightly the structure of the output.
+# 2017/06/04 v1.2.4 lgalescu
+# - Changed test matching to use the EKB id and the name of the folder of
+#   the input file as test set and, respectively, test case names.
 
 package EKB::Test;
 
-$VERSION = '1.2.3';
+$VERSION = '1.2.4';
 
 use strict 'vars';
 use warnings;
@@ -36,11 +39,11 @@ use open qw(:utf8 :std);
 
 use Data::Dumper;
 
-use Cwd qw(realpath);
-use File::Basename;
-use File::Path  qw(make_path);
-use File::Spec::Functions;
+use File::Basename; # basename fileparse
+use File::Path qw(make_path);
+use File::Spec::Functions; # catfile catdir
 use File::Slurp;
+use List::Util qw(first);
 
 use EKB;
 use EKB::Compare;
@@ -650,7 +653,9 @@ sub run {
 }
 
 # a match against a test is successful iff the ekb was generated from the
-# test's' input
+# test's input
+# we verify this by looking at paragraph/@file; ekb id must match test name
+# and lastdir must match the test set name
 sub match_ekb_hyp {
   my $self = shift;
   my ($ekb_file) = @_;
@@ -661,20 +666,17 @@ sub match_ekb_hyp {
     return 0;
   }
   my ($para) = $ekb->get_paragraphs();
-  my $in_file = realpath $para->getAttribute('file');
-  unless ($in_file) {
-    ERROR "Could not get input file from: %s. Skipping it.", $ekb_file;
-    return 0;
+  my ($input_fn, $input_dir) = fileparse($para->getAttribute('file'),
+					 ".txt");
+  return unless $self->name eq basename($input_dir);
+  my $tname = first { $ekb->get_attr('id') eq $_ } $self->tests();
+  if ($tname) {
+    INFO "Matched %s against %s:%s.",
+      $ekb_file, $self->name, $tname;
+    $self->test_set_hyp($tname, $ekb_file, $ekb);
+    return 1;
   }
-  DEBUG 2, "%s => %s", $ekb_file, $in_file;
-  foreach my $tname ($self->tests()) {
-    my $test_in = realpath $self->test_get_input($tname);
-    if ($test_in eq $in_file) {
-      INFO "Matched %s against test \"%s\".", $ekb_file, $tname;
-      $self->test_set_hyp($tname, $ekb_file, $ekb);
-      return 1;
-    }
-  }
+  ERROR "Could not match %s. Skipping it.", $ekb_file;
   return 0;
 }
 

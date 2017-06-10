@@ -1,6 +1,6 @@
 # Compare.pm
 #
-# Time-stamp: <Thu May 25 18:23:47 CDT 2017 lgalescu>
+# Time-stamp: <Tue Jun  6 22:15:21 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  4 May 2016
 #
@@ -58,8 +58,11 @@
 # 2017/05/25 v2.2.1	lgalescu
 # - Updated for new format of inevent features. For now, this is backwards
 #   compatible.
+# 2017/06/04 v2.3.0	lgalescu
+# - Added a number of set utilities.
+# - Changed default dbid comparison to use set overlap rather than strict equality.
 
-# TODO (in order of importance):
+# TODO (in order of importance and/or urgency):
 # - try to find node "substitutions"
 # - profile: it can be slow on big EKBs!
 # - keep track of why things failed (failure diagnostics)
@@ -71,7 +74,7 @@
 
 package EKB::Compare;
 
-$VERSION = '2.2.1';
+$VERSION = '2.3.0';
 
 use strict 'vars';
 use warnings;
@@ -613,21 +616,21 @@ sub cmp_ekb_item {
       $i1->getAttribute('id'), $i2->getAttribute('id');
   }
     
-  my $name = $i1->nodeName;
-  my $name2 = $i2->nodeName;
+  my $aname = $i1->nodeName;
 
-  return 0 unless ($name2 eq $name);
+  return 0 unless ($aname eq $i2->nodeName);
 
-  return $self->cmp_TERM($i1, $i2, $options) if ($name eq TERM);
-  return $self->cmp_EVENT($i1, $i2, $options) if ($name eq EVENT);
-  return $self->cmp_EPI($i1, $i2, $options) if ($name eq EPI);
-  return $self->cmp_CC($i1, $i2, $options) if ($name eq CC);
-  return $self->cmp_MODALITY($i1, $i2, $options) if ($name eq MODALITY);
+  return $self->cmp_TERM($i1, $i2, $options) if ($aname eq TERM);
+  return $self->cmp_EVENT($i1, $i2, $options) if ($aname eq EVENT);
+  return $self->cmp_EPI($i1, $i2, $options) if ($aname eq EPI);
+  return $self->cmp_CC($i1, $i2, $options) if ($aname eq CC);
+  return $self->cmp_MODALITY($i1, $i2, $options) if ($aname eq MODALITY);
 }
 
 
 ### functions for matching extractions
 
+# TODO: add drum-terms?
 sub cmp_TERM {
   my $self = shift;
   my ($i1, $i2, $options) = @_;
@@ -663,7 +666,7 @@ sub cmp_TERM {
       unless (__option_is($options, 'deep', 0) and $result);
 
   DEBUG 2, "==> %s", $result;
-  return $result;
+  $result;
 }
 
 sub cmp_EVENT {
@@ -705,7 +708,7 @@ sub cmp_EVENT {
       unless (__option_is($options, 'deep', 0) and $result);
 
   DEBUG 2, "==> %s", $result;
-  return $result;
+  $result;
 }
 
 sub cmp_CC {
@@ -738,7 +741,7 @@ sub cmp_CC {
       unless (__option_is($options, 'deep', 0) and $result);
 
   DEBUG 2, "==> %s", $result;
-  return $result;
+  $result;
 }
 
 sub cmp_EPI {
@@ -771,7 +774,7 @@ sub cmp_EPI {
       unless (__option_is($options, 'deep', 0) and $result);
 
   DEBUG 2, "==> %s", $result;
-  return $result;
+  $result;
 }
 
 sub cmp_MODALITY {
@@ -803,7 +806,7 @@ sub cmp_MODALITY {
       unless (__option_is($options, 'deep', 0) and $result);
 
   DEBUG 2, "==> %s", $result;
-  return $result;
+  $result;
 }
 
 
@@ -824,10 +827,13 @@ sub cmp_attribute {
   return ($a1 eq $a2);
 }
 
+# NB: $set_cmp is restricted to 'strict'; any other value is equivalent to undef
 sub cmp_attribute_aslist {
   my $self = shift;
-  my ($i1, $i2, $attr, $delim) = @_;
-    
+  my ($i1, $i2, $attr, $delim, $set_cmp) = @_;
+
+  $set_cmp //= '';
+  
   my $a1 = $i1->getAttribute($attr);
   my $a2 = $i2->getAttribute($attr);
     
@@ -836,9 +842,14 @@ sub cmp_attribute_aslist {
   return 1 if ((! $a1) && (! $a2));
   return 0 unless $a1;
   return 0 unless $a2;
-  my @l1 = split($delim, $a1);
-  my @l2 = split($delim, $a2);
-  return eq_deeply(\@l1, set(@l2));
+  my @l1 = split(/\Q$delim/, $a1);
+  my @l2 = split(/\Q$delim/, $a2);
+  my $result =
+    ($set_cmp eq 'strict')
+    ? __set__is_equal(\@l1, \@l2)
+    : (scalar(__set__intersection(\@l1, \@l2)) > 0);
+  DEBUG 2, "cmp_attribute_aslist($attr, $a1 ~~ $a2) ==> $result";
+  $result;
 }
 
 # compare slot whose value is some text
@@ -875,6 +886,7 @@ sub cmp_mods {
   return min(@tests);
 }
 
+# TODO: should also compare not-features!
 sub cmp_features {
   my $self = shift;
   my ($i1, $i2) = @_;
@@ -950,6 +962,8 @@ sub cmp_components {
 }
 
 # this applies to protein family members, for which the dbid is the defining feature
+# WARNING: this assumes the dbid is unique per member; if this changes in the future,
+# this function will cease to work properly!
 sub cmp_members {
   my $self = shift;
   my ($i1, $i2) = @_;
@@ -967,7 +981,7 @@ sub cmp_members {
     map { $_->getAttribute('dbid') }
     @elems2;
    
-  return eq_deeply(\@dbids1, set(@dbids2));
+  return __set__is_equal(\@dbids1, \@dbids2);
 }
 
 sub cmp_predicate {
@@ -1010,7 +1024,7 @@ sub cmp_args {
 					arg => $_ } }
     @args2;
 
-  return 0 unless eq_deeply([keys %rolemap1], set(keys %rolemap2));
+  return 0 unless __set__is_equal([keys %rolemap1], [keys %rolemap2]);
   foreach my $role (keys %rolemap1) {
     my $a1 = (defined $rolemap1{$role}{id}) 
       ? $self->ekb1()->get_assertion($rolemap1{$role}{id})
@@ -1118,7 +1132,7 @@ sub cmp_features_site {
     DEBUG 2, "sites: %s ~~ %s", Dumper(\@elems1), Dumper(\@elems2);
   }
     
-  return eq_deeply(\@elems1, set(@elems2));
+  return __set__is_equal(\@elems1, \@elems2);
 }
 
 # this is the old format; see cmp_mods_inevent for the new style
@@ -1313,14 +1327,7 @@ sub diffs_as_string {
     DEBUG 2, "diffs: %s", Dumper($self->diffs);
   }
     
-  # FIXME temporary, should do things differently!
-  sub s_path_id {
-    my $path = shift;
-    $path =~ m{\@id=(\d+)};
-    return $1;
-  }
-    
-    my $result;
+  my $result;
 
   # options
   $result .= sprintf("Options: %s\n", $self->_options_to_string());
@@ -1533,6 +1540,32 @@ sub __assert_eq {
   return 1 if ($a eq $b);
   DEBUG 3, "assertion failed: (\"%s\" eq \"%s\")", $a, $b;
   return 0;
+}
+
+# set operations (use only for lists of scalars!)
+sub __set__is_member {
+  my ($elem, $list) = @_;
+  any { $_ eq $elem } @$list;
+}
+sub __set__is_included {
+  my ($list1, $list2) = @_;
+  all { __set__is_member($_, $list2) } @$list1;
+}
+sub __set__is_equal {
+  my ($list1, $list2) = @_;
+  __set__is_included($list1, $list2) and __set__is_included($list2, $list1);
+}
+sub __set__uniq {
+  my %m = map { $_ => 1 } @{$_[0]};
+  keys %m;
+}
+sub __set__union {
+  my ($list1, $list2) = @_;
+  __set__uniq([@$list1, @$list2]);
+}
+sub __set__intersection {
+  my ($list1, $list2) = @_;
+  grep { __set__is_member($_, $list2) } @$list1;
 }
 
 1;

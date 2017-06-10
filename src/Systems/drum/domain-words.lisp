@@ -27,6 +27,7 @@
 ;;;;;
 ; barley paper
 
+#|
 (define-words :pos W::n 
 :words (
  ((w::Cly)
@@ -82,3 +83,4 @@
    )
 ))
 
+|#

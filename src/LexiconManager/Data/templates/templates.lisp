@@ -913,7 +913,7 @@
       (propositional-equal-templ
        (ARGUMENTS
       	(LSUBJ (% W::NP (W::agr ?agr) (sem ?sem) (w::gerund -) (w::subcat-map ont::formal)) ONT::neutral)
-	(LOBJ (% W::CP) ONT::neutral1)
+	(LOBJ (% W::CP (w::ctype w::s-that)) ONT::neutral1)
 	))
 
       (neutral-neutral-equal-templ

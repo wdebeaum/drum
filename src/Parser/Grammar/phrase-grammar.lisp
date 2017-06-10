@@ -3411,7 +3411,7 @@
      (np (AGR 3s) (abbrev -) (sort pred) (headless -)
       (var ?v1) 
       (PRO -) (N-N-MOD -) (COMPLEX -) (GAP -)
-      (postadvbl -) (post-subcat -) (sem ?subjsem)
+      (postadvbl -) (post-subcat -) (sem ?subjsem) (lex ?subjlex) (agr ?subjagr)
       )
      
      (head (n1  (var ?v) (gap -) (aux -)(case ?case)  (gerund ?ger) (agr ?agr)
@@ -3423,7 +3423,7 @@
 		;; these are dummy vars for trips-lcflex conversion, please don't delete
 		;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
 		(restr ?restr)
-		(subj ?subj)
+		(subj ?subj) (subj (% ?s1 (lex ?subjlex) (agr ?subjagr) (var ?v1) (sem ?subjsem) (gap -)))
 		(subj-map ?!subjmap)
 		(comp3 ?comp3)
 		(comp3-map ?comp-map)
@@ -3451,7 +3451,7 @@
      (np (AGR 3s) (abbrev -) (sort pred) (headless -)
       (var ?v1) 
       (PRO -) (N-N-MOD -) (COMPLEX -) (GAP -)
-      (postadvbl -) (post-subcat -) (sem ?subjsem)
+      (postadvbl -) (post-subcat -) (sem ?subjsem) (lex ?subjlex) (agr ?subjagr)
       )
      
      (head (n1  (var ?v) (gap -) (aux -)(case ?case)  (gerund ?ger) (agr ?agr)
@@ -3463,7 +3463,7 @@
 		;; these are dummy vars for trips-lcflex conversion, please don't delete
 		;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
 		(restr ?restr)
-		(subj ?subj)
+		(subj ?subj) (subj (% ?s1 (lex ?subjlex) (agr ?subjagr) (var ?v1) (sem ?subjsem) (gap -)))
 		(subj-map ?!subjmap)
 		(comp3 ?comp3)
 		(comp3-map ?comp-map)
@@ -3491,7 +3491,7 @@
      (np (AGR 3s) (abbrev -) (sort pred) (headless -)
       (var ?v1) 
       (PRO -) (N-N-MOD -) (COMPLEX -) (GAP -)
-      (postadvbl -) (post-subcat -) (sem ?subjsem)
+      (postadvbl -) (post-subcat -) (sem ?subjsem) (lex ?subjlex) (agr ?subjagr) 
       )
      
      (head (n1  (var ?v) (gap -) (aux -)(case ?case)  (gerund ?ger) (agr ?agr)
@@ -3503,7 +3503,7 @@
 		;; these are dummy vars for trips-lcflex conversion, please don't delete
 		;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
 		(restr ?restr)
-		(dobj ?dobj)
+		(dobj ?dobj) (dobj (% ?s1 (lex ?subjlex) (agr ?subjagr) (var ?v1) (sem ?subjsem) (gap -)))
 		(dobj-map ?!dobjmap)
 		(comp3 ?comp3)
 		(comp3-map ?comp-map)

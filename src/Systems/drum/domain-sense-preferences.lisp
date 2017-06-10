@@ -11,6 +11,7 @@
 				       (W::ASSOCIATION ONT::ATTACH)
 				       (W::INTERACT ONT::BIND-INTERACT)
 				       (W::interaction ONT::BIND-INTERACT)
+				       (W::FDA ONT::PROFESSIONAL-ORGANIZATION) ; as opposed to PROTEIN
 				       ))
 
 

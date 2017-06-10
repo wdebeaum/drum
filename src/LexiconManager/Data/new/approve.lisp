@@ -5,7 +5,7 @@
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
   (W::approve
-   (wordfeats (W::morph (:forms (-vb) :nom approval)))
+   (wordfeats (W::morph (:forms (-vb) :nom W::approval :nomsubjpreps (w::of w::by) :nomobjpreps (w::for))))
    (SENSES
     ((EXAMPLE "approve the purchase")
      ;(LF-PARENT ONT::allow)

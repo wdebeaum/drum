@@ -3,7 +3,7 @@
 <!-- DTD schema for the EKB
 
 Author: Lucian Galescu <lgalescu@ihmc.us> 03/04/2016
-$Id: ekb.dtd,v 1.15 2017/05/25 23:43:09 lgalescu Exp $
+$Id: ekb.dtd,v 1.1 2017/06/09 03:54:39 lgalescu Exp $
 
 When the EKB is used for annotation, textual elements must be present (eg, <input>, <text>, @start, @end, @uttnum, @paragraph). 
 
