@@ -1764,9 +1764,9 @@
        (subj ?!dobj) (subj-map ?dobj-map) 
      ;;       (dobj (% -)) 
      (dobj ?comp3) (dobj-map ?comp3-map)     
-       (iobj ?iobj) (iobj-map ?iobj-map)
-       (comp3 (% pp (ptype by) (sem ?!subj-sem))) (comp3-map ?subj-map)
-       (part ?part)) 
+     (iobj ?iobj) (iobj-map ?iobj-map)
+     (comp3 (% pp (ptype by) (sem ?!subj-sem))) (comp3-map ?subj-map)
+     (part ?part)) 
     -v-passive-by> 1.0
     (head (v (vform pastpart) (lex (? !lx been)) (exclude-passive -);; exclude be
 	     (subj (% np (lex ?subjlex) (sem ?!subj-sem) (agr ?subjagr) (sem ($ ?!type))))
@@ -1809,6 +1809,42 @@
 	   (iobj ?!iobj) 
 	   (comp3 ?comp3) (comp3-map (% -))
 	   (part ?part))))
+
+   ;; the dog was computer generated.  It is FDA approved.
+   
+   ((vp- (vform passive)  (passive +)
+     (subj-map ?subj-map) (subj ?subj)
+     ;;(dobj (% np (sem ?sem) (var ?v-n) (agr ?a) (lex ?lex) (gap -) (RESTR ?nr))) 
+     ;;(dobj-map ?subj-map)
+     (class ?class)
+     (iobj ?iobj) (iobj-map ?iobj-map)
+     (subjvar ?subjvar)
+     ;;(comp3 ?comp3) (comp3-map ?comp3-map)
+     (constraint (& (ont::agent ?v-n)
+			   ;;(% *PRO* (class ?nc) (status ont::bare) (constraint ?nr) (var ?v-n)))
+		    (?subj-map ?subjvar)
+		    (?dobj-map  ?dobjvar)
+		    (?iobj-map ?iobjvar)))
+		    
+     (part ?part)) 
+    -v-passive+prenom-subj> 
+    (np (sort ?sort) (LF (% description (status (? x ont::bare ont::name)))) ;;(RESTR ?nr) (status ?status) 
+     (complex -) (gerund -) (var ?v-n) 
+     (sem ?sem) (relc -) (abbrev -) (gap -) (agr ?a) (lex ?lex)
+     )
+    (head (v (vform passive) (lex (? !lx been)) (exclude-passive -);; exclude be
+	     (lf ?class)
+	     (subj (% np (lex ?subjlex) (sem ?!subj-sem) (agr ?subjagr) (var ?subjvar) (sem ($ ?!type))))
+	     (subj-map ?subj-map) (iobj-map ?iobj-map)
+	     ;;(dobj ?!dobj) 
+	     (dobj-map ?dobj-map) (dobj (% ?s3 (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap)))
+	     (iobj ?iobj)  (iobj (% ?s2  (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))     
+	     (comp3 (% -));; (comp3-map ?comp3-map)
+	     (part ?part)
+	     (restr ?con)
+	     ))
+    )
+    
    
    ;;;   ;;  e.g., terminal 1 is separated by a gap from a positive terminal
    ;;; "by" comes before a subcategorized pp argument
