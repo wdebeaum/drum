@@ -1,6 +1,6 @@
 # Compare.pm
 #
-# Time-stamp: <Tue Jun  6 22:15:21 CDT 2017 lgalescu>
+# Time-stamp: <Mon Jun 12 18:06:23 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  4 May 2016
 #
@@ -61,20 +61,24 @@
 # 2017/06/04 v2.3.0	lgalescu
 # - Added a number of set utilities.
 # - Changed default dbid comparison to use set overlap rather than strict equality.
+# 2017/06/11 v2.4.0	lgalescu
+# - Now keeping track of some diff details.
+# - Diff output includes highlights (summary indicators of where diffs are).
+# - Fixed some bugs.
+# - Fixed order of diffs in output so deletions tend to appear before insertions.
 
 # TODO (in order of importance and/or urgency):
 # - try to find node "substitutions"
 # - profile: it can be slow on big EKBs!
-# - keep track of why things failed (failure diagnostics)
-# - there are a couple FIXME notes below
-# - improve how diffs are set and got
+# - there are quite a few FIXMEs and TODOs below
+# - improve how diffs are set and shown
 #   - one easy solution: add trackers to EKB elements!
 # - consider whether it might be appropriate to add a similarity score 
-#   and obtain the best alignment through global optimization
+#   and obtain the best alignment through global optimization over x_map
 
 package EKB::Compare;
 
-$VERSION = '2.3.0';
+$VERSION = '2.4.0';
 
 use strict 'vars';
 use warnings;
@@ -101,7 +105,6 @@ our @Options = qw/normalize
 		  strict_ont_match/;
 
 # note about extraction mappings ($self->{x_map})
-# 1. this is reset for each sentence!
 # idea:
 #  $id1 ~~ $id2 iff $x_map{ref}{$id1}{$id2}==1 [=> $x_map{hyp}{$id2}{$id1}==1]
 #  $id1 !~ $id2 iff $x_map{ref}{$id1}{$id2}==0 [=> $x_map{hyp}{$id2}{$id1}==0]
@@ -159,10 +162,11 @@ sub new {
 			   eql => 0, # count of assertions common to ekb1 and ekb2
 			   del => 0, # count of assertions unique in ekb1
 			   ins => 0, # count of assertions unique in ekb2
+			   sub => 0, # count of assertions unique in ekb2
 			 },
 	      # sentence mapping from ekb1 to ekb2
 	      s_map => {},
-	      # EKB assertion mapping from ekb1 to ekb2 (temporary)
+	      # EKB assertion mapping from ekb1 to ekb2 (sparse crosstab)
 	      x_map => {}
 	     };
   bless $self, $class;
@@ -259,10 +263,8 @@ sub compare {
      # EKB assertions (by sentence)
      $self->cmp_ekb_assertions()
     );
-
-  DEBUG 1, "TESTS: %s", Dumper(\@tests);
   
-  return $self->result(min @tests);
+  return $self->result(min(@tests));
 }
 
 
@@ -406,8 +408,8 @@ sub cmp_ekb_assertions_all {
     local $Data::Dumper::Indent = 0;
     DEBUG 1, "comparing assertions: n=<%d, %d>", $count1, $count2;
   }
-    
-  $self->reset_x_map();
+  
+  # $self->reset_x_map();
   my $result = $self->cmp_ekb_items(\@items1, \@items2);
     
   # items unique to ekb1
@@ -469,16 +471,19 @@ sub cmp_ekb_assertions_for_utt {
     DEBUG 1, "comparing assertions for utt pair <%s, %s>: n=<%d, %d>",
       $sid1, $sid2, $count1, $count2;
   }
-    
-  $self->reset_x_map();
+  
+  # $self->reset_x_map();
   my $result = $self->cmp_ekb_items(\@items1, \@items2);
-    
+
   # items unique to ekb1
   my @uniq1 =
     grep { ! $self->has_match($_, 'ref') }
     @items1;
   foreach my $i1 (@uniq1) {
     my $span1 = _get_span($i1);
+    # susbstitution?
+    
+    
     DEBUG 1, "Deletion: [%d, %d] %s ", $span1->[0], $span1->[1], $i1->getAttribute('id');
     $self->add_diff('assertions', { ref => $i1->getAttribute('id'),
 				    sid => $sid1,
@@ -525,7 +530,7 @@ sub cmp_ekb_items {
 
   my $result = 1;
 
-  # the following is an optimization that's expensive, but has not
+  # the following is an optimization that's expensive, and has not
   # demonstrated (yet) any benefit, so i'm not using it 
   if (0) {
     # to maximize chances we're getting the easy ones right,
@@ -581,18 +586,19 @@ sub cmp_ekb_items {
     my $match =
       first { $self->cmp_ekb_item($i1, $_, $options) }
       @candidates;
-    # short-circuit if we're not interested in a deep match
     if ($match) {
       # keep track of this id
       # TODO: optimization: if item has a match, no need to add it
       $tmp_matched2{$match->getAttribute('id')} = 1;
     } elsif (__option_is($options, 'deep', 0)) {
+      # short-circuit if we're not interested in a deep match
       return 0;
+    } else {
+      $result = 0;
     }
-    $result &&= 1;
   }
-  DEBUG 2, "==> %s", $result;
-  return $result;
+  DEBUG 2, "cmp_ekb_items ==> %s", $result;
+  $result;
 }
 
 
@@ -637,34 +643,34 @@ sub cmp_TERM {
 
   __assert_eq($i1->nodeName, "TERM") && __assert_eq($i2->nodeName, "TERM")
     or return 0;
-
-  my @tests = ();
-
-  # overlap test
-  push @tests,
-    _span_overlap(_get_span($i1), _get_span($i2));
-
-  # type test
-  push @tests,
-    $self->cmp_ont_slot($i1, $i2, 'type');
   
-  unless (__option_is($options, 'deep', 0)) {
-    push @tests,
-      $self->option('ignore_dbid')
-      || $self->cmp_attribute_aslist($i1, $i2, 'dbid', '|'),
-      $self->cmp_text_slot($i1, $i2, 'name'),
-      $self->cmp_mods($i1, $i2),
-      $self->cmp_features($i1, $i2),
-      $self->cmp_mutation($i1, $i2),
-      $self->cmp_aggregate($i1, $i2),
-      $self->cmp_components($i1, $i2),
-      $self->cmp_members($i1, $i2);
+  # overlap test; if this fails, we bail
+  my $result = _span_overlap(_get_span($i1), _get_span($i2));
+
+  # contents test
+  my %tests = ();
+  if ($result) {
+    # type test; the only one performed for shallow matches
+    $tests{'type'} = $self->cmp_ont_slot($i1, $i2, 'type');
+  
+    unless (__option_is($options, 'deep', 0)) {
+      $tests{'dbid'} = $self->cmp_attribute_aslist($i1, $i2, 'dbid', '|')
+	unless $self->option('ignore_dbid');
+      $tests{'name'} = $self->cmp_text_slot($i1, $i2, 'name');
+      $tests{'mods'} = $self->cmp_mods($i1, $i2);
+      $tests{'features'} = $self->cmp_features($i1, $i2);
+      $tests{'mutation'} = $self->cmp_mutation($i1, $i2);
+      $tests{'aggregate'} = $self->cmp_aggregate($i1, $i2);
+      $tests{'components'} = $self->cmp_components($i1, $i2);
+      $tests{'members'} = $self->cmp_members($i1, $i2);
+    }
   }
     
-  my $result = min(@tests);
-  $self->record_result($i1, $i2, $result)
+  $result &&= min(values(%tests));
+  DEBUG 3, "result($i1,$i2,deep=%s) ==> %s", __option($options,'deep'), $result;
+  DEBUG 3, "tests ==> %s", Dumper(\%tests);
+  $self->record_result($i1, $i2, $result, \%tests)
       unless (__option_is($options, 'deep', 0) and $result);
-
   DEBUG 2, "==> %s", $result;
   $result;
 }
@@ -676,37 +682,39 @@ sub cmp_EVENT {
   __assert_eq($i1->nodeName, "EVENT") && __assert_eq($i2->nodeName, "EVENT")
     or return 0;
     
-  my @tests = ();
+  # overlap test; if this fails, we bail
+  my $result = _span_overlap(_get_span($i1), _get_span($i2));
   
-  # overlap test
-  push @tests,
-    _span_overlap(_get_span($i1), _get_span($i2));
+  # contents test
+  my %tests = ();
+  if ($result) {
+    # type test; the only one performed for shallow matches
+    $tests{'type'} = $self->cmp_ont_slot($i1, $i2, 'type');
 
-  # type test
-  push @tests,
-    $self->cmp_ont_slot($i1, $i2, 'type');
-
-  unless (__option_is($options, 'deep', 0)) {
-    push @tests,
-      $self->cmp_text_slot($i1, $i2, 'negation'),
-      $self->cmp_text_slot($i1, $i2, 'polarity'),
-      $self->cmp_text_slot($i1, $i2, 'modality'),
-      $self->cmp_pseudo_args($i1, $i2, 'epistemic-modality', { deep => 0 }),
-      $self->cmp_mods($i1, $i2),
-      $self->cmp_aggregate($i1, $i2),
-      $self->cmp_predicate($i1, $i2),
-      $self->cmp_args($i1, $i2, { deep => 0 }),
-      $self->cmp_pseudo_args($i1, $i2, 'site'),
-      $self->cmp_pseudo_args($i1, $i2, 'location'),
-      $self->cmp_pseudo_args($i1, $i2, 'from-location'),
-      $self->cmp_pseudo_args($i1, $i2, 'to-location'),
-      $self->cmp_pseudo_args($i1, $i2, 'cell-line');
+    unless (__option_is($options, 'deep', 0)) {
+      $tests{'negation'} = $self->cmp_text_slot($i1, $i2, 'negation');
+      $tests{'polarity'} = $self->cmp_text_slot($i1, $i2, 'polarity');
+      $tests{'modality'} = $self->cmp_text_slot($i1, $i2, 'modality');
+      $tests{'epistemic-modality'} 
+	= $self->cmp_pseudo_args($i1, $i2, 'epistemic-modality', { deep => 0 });
+      $tests{'mods'} = $self->cmp_mods($i1, $i2);
+      $tests{'aggregate'} = $self->cmp_aggregate($i1, $i2);
+      $tests{'predicate'} = $self->cmp_predicate($i1, $i2);
+      # FIXME: $result &&= # now we add details in cmp_args
+      $tests{'args'} = $self->cmp_args($i1, $i2, { deep => 0 });
+      $tests{'site'} = $self->cmp_pseudo_args($i1, $i2, 'site');
+      $tests{'location'} = $self->cmp_pseudo_args($i1, $i2, 'location');
+      $tests{'from-location'} = $self->cmp_pseudo_args($i1, $i2, 'from-location');
+      $tests{'to-location'} = $self->cmp_pseudo_args($i1, $i2, 'to-location');
+      $tests{'cell-line'} = $self->cmp_pseudo_args($i1, $i2, 'cell-line');
+    }
   }
 
-  my $result = min(@tests);
-  $self->record_result($i1, $i2, $result)
-      unless (__option_is($options, 'deep', 0) and $result);
-
+  $result &&= min(values(%tests));
+  DEBUG 3, "result($i1,$i2,deep=%s) ==> %s", __option($options,'deep'), $result;
+  DEBUG 3, "tests ==> %s", Dumper(\%tests);
+  $self->record_result($i1, $i2, $result, \%tests)
+    unless (__option_is($options, 'deep', 0) and $result);
   DEBUG 2, "==> %s", $result;
   $result;
 }
@@ -718,28 +726,26 @@ sub cmp_CC {
   __assert_eq($i1->nodeName, "CC") && __assert_eq($i2->nodeName, "CC")
     or return 0;
 
-  my @tests = ();
-
-  # overlap test
-  push @tests,
-    _span_overlap(_get_span($i1), _get_span($i2));
-
-  # type test
-  push @tests,
-    $self->cmp_ont_slot($i1, $i2, 'type');
+  # overlap test; if this fails, we bail
+  my $result = _span_overlap(_get_span($i1), _get_span($i2));
   
-  unless (__option_is($options, 'deep', 0)) {
-    push @tests,
-      $self->cmp_text_slot($i1, $i2, 'negation'),
-      $self->cmp_text_slot($i1, $i2, 'polarity'),
-      $self->cmp_text_slot($i1, $i2, 'modality'),
-      $self->cmp_args($i1, $i2, { deep => 0 });
+  # contents test
+  my %tests = ();
+  if ($result) {
+    # type test; the only one performed for shallow matches
+    $tests{'type'} = $self->cmp_ont_slot($i1, $i2, 'type');
+  
+    unless (__option_is($options, 'deep', 0)) {
+      $tests{'negation'} = $self->cmp_text_slot($i1, $i2, 'negation');
+      $tests{'polarity'} = $self->cmp_text_slot($i1, $i2, 'polarity');
+      $tests{'modality'} = $self->cmp_text_slot($i1, $i2, 'modality');
+      $tests{'args'} = $self->cmp_args($i1, $i2, { deep => 0 });
+    }
   }
-
-  my $result = min(@tests);
-  $self->record_result($i1, $i2, $result)
+  
+  $result &&= min(values(%tests));
+  $self->record_result($i1, $i2, $result, \%tests)
       unless (__option_is($options, 'deep', 0) and $result);
-
   DEBUG 2, "==> %s", $result;
   $result;
 }
@@ -751,28 +757,26 @@ sub cmp_EPI {
   __assert_eq($i1->nodeName, "EPI") or return 0;
   __assert_eq($i2->nodeName, "EPI") or return 0;
 
-  my @tests = ();
+  # overlap test; if this fails, we bail
+  my $result = _span_overlap(_get_span($i1), _get_span($i2));
   
-  # overlap test
-  push @tests,
-    _span_overlap(_get_span($i1), _get_span($i2));
-
-  # type test
-  push @tests,
-    $self->cmp_ont_slot($i1, $i2, 'type');
+  # contents test
+  my %tests = ();
+  if ($result) {
+    # type test; the only one performed for shallow matches
+    $tests{'type'} = $self->cmp_ont_slot($i1, $i2, 'type');
   
-  unless (__option_is($options, 'deep', 0)) {
-    push @tests,
-      $self->cmp_text_slot($i1, $i2, 'negation'),
-      $self->cmp_text_slot($i1, $i2, 'polarity'),
-      $self->cmp_text_slot($i1, $i2, 'modality'),
-      $self->cmp_args($i1, $i2, { deep => 0 });
+    unless (__option_is($options, 'deep', 0)) {
+      $tests{'negation'} = $self->cmp_text_slot($i1, $i2, 'negation');
+      $tests{'polarity'} = $self->cmp_text_slot($i1, $i2, 'polarity');
+      $tests{'modality'} = $self->cmp_text_slot($i1, $i2, 'modality');
+      $tests{'args'} = $self->cmp_args($i1, $i2, { deep => 0 });
+    }
   }
 
-  my $result = min(@tests);
-  $self->record_result($i1, $i2, $result)
+  $result &&= min(values(%tests));
+  $self->record_result($i1, $i2, $result, \%tests)
       unless (__option_is($options, 'deep', 0) and $result);
-
   DEBUG 2, "==> %s", $result;
   $result;
 }
@@ -784,27 +788,25 @@ sub cmp_MODALITY {
   __assert_eq($i1->nodeName, "MODALITY") && __assert_eq($i2->nodeName, "MODALITY")
     or return 0;
 
-  my @tests = ();
-
-  # overlap test
-  push @tests,
-    _span_overlap(_get_span($i1), _get_span($i2));
-
-  # type test
-  push @tests,
-    $self->cmp_ont_slot($i1, $i2, 'type');
+  # overlap test; if this fails, we bail
+  my $result = _span_overlap(_get_span($i1), _get_span($i2));
   
-  unless (__option_is($options, 'deep', 0)) {
-    push @tests,
-      $self->cmp_text_slot($i1, $i2, 'negation'),
-      $self->cmp_text_slot($i1, $i2, 'polarity'),
-      $self->cmp_args($i1, $i2, { deep => 0 });
+  # contents test
+  my %tests = ();
+  if ($result) {
+    # type test; the only one performed for shallow matches
+    $tests{'type'} = $self->cmp_ont_slot($i1, $i2, 'type');
+  
+    unless (__option_is($options, 'deep', 0)) {
+      $tests{'negation'} = $self->cmp_text_slot($i1, $i2, 'negation');
+      $tests{'polarity'} = $self->cmp_text_slot($i1, $i2, 'polarity');
+      $tests{'args'} = $self->cmp_args($i1, $i2, { deep => 0 });
+    }
   }
 
-  my $result = min(@tests);
-  $self->record_result($i1, $i2, $result)
+  $result &&= min(values(%tests));
+  $self->record_result($i1, $i2, $result, \%tests)
       unless (__option_is($options, 'deep', 0) and $result);
-
   DEBUG 2, "==> %s", $result;
   $result;
 }
@@ -822,9 +824,8 @@ sub cmp_attribute {
   DEBUG 2, "matching attribute %s: %s ~~ %s", $attr, $a1, $a2; 
     
   return 1 if (! $a1) && (! $a2);
-  return 0 unless $a1;
-  return 0 unless $a2;
-  return ($a1 eq $a2);
+  return 0 unless $a1 && $a2;
+  ($a1 eq $a2) + 0;
 }
 
 # NB: $set_cmp is restricted to 'strict'; any other value is equivalent to undef
@@ -849,7 +850,7 @@ sub cmp_attribute_aslist {
     ? __set__is_equal(\@l1, \@l2)
     : (scalar(__set__intersection(\@l1, \@l2)) > 0);
   DEBUG 2, "cmp_attribute_aslist($attr, $a1 ~~ $a2) ==> $result";
-  $result;
+  $result + 0;
 }
 
 # compare slot whose value is some text
@@ -859,10 +860,9 @@ sub cmp_text_slot {
   my $t1 = get_slot_value($i1, $slot);
   my $t2 = get_slot_value($i2, $slot);
   return 1 if ((! $t1) && (! $t2));
-  return 0 unless $t1;
-  return 0 unless $t2;
+  return 0 unless ($t1 && $t2);
   DEBUG 2, "%s: %s ~~ %s => %s", $slot, $t1, $t2, ($t1 eq $t2);
-  return ($t1 eq $t2);
+  ($t1 eq $t2) + 0;
 }
 
 # FIXME: <frequency> items appear to be polymorphous and this might fail!
@@ -879,11 +879,7 @@ sub cmp_mods {
   my %mods1 = __get_mods($mods1);
   my %mods2 = __get_mods($mods2);
   DEBUG 2, "\nmods1: %s\nmods2: %s", Dumper(\%mods1), Dumper(\%mods2);
-  my @tests =
-    (
-     eq_deeply(\%mods1, \%mods2)
-    );
-  return min(@tests);
+  eq_deeply(\%mods1, \%mods2);
 }
 
 # TODO: should also compare not-features!
@@ -907,7 +903,7 @@ sub cmp_features {
      $self->cmp_features_inevent($feats1, $feats2),
      $self->cmp_pseudo_args($feats1, $feats2, 'bound-to', { deep => 0 }),
     );
-  return min(@tests);
+  min(@tests);
 }
 
 # polymorphic:
@@ -927,7 +923,7 @@ sub cmp_mutation {
   (my $ser_mut1 = $mut1->toString(0)) =~ s/>\s+</></mg;
   (my $ser_mut2 = $mut2->toString(0)) =~ s/>\s+</></mg;
 
-  return $ser_mut1 eq $ser_mut2;
+  ($ser_mut1 eq $ser_mut2) + 0;
 }
 
 sub cmp_aggregate {
@@ -941,10 +937,9 @@ sub cmp_aggregate {
   return 0 unless $agg1 && $agg2;
 
   # FIXME: should we perhaps *not* short-circuit here?
-  return
-    $self->cmp_attribute($agg1, $agg2, 'operator')
-    &&
-    $self->cmp_pseudo_args($agg1, $agg2, 'member');
+  $self->cmp_attribute($agg1, $agg2, 'operator')
+  &&
+  $self->cmp_pseudo_args($agg1, $agg2, 'member');
 }
 
 sub cmp_components {
@@ -956,9 +951,7 @@ sub cmp_components {
 
   return 1 if ((! $comp1) && (! $comp2));
   return 0 unless $comp1 && $comp2;
-
-  return
-    $self->cmp_pseudo_args($comp1, $comp2, 'component');
+  $self->cmp_pseudo_args($comp1, $comp2, 'component');
 }
 
 # this applies to protein family members, for which the dbid is the defining feature
@@ -981,7 +974,7 @@ sub cmp_members {
     map { $_->getAttribute('dbid') }
     @elems2;
    
-  return __set__is_equal(\@dbids1, \@dbids2);
+  __set__is_equal(\@dbids1, \@dbids2);
 }
 
 sub cmp_predicate {
@@ -995,26 +988,25 @@ sub cmp_predicate {
 
   return 1 if ((! $pred1) && (! $pred2));
   return 0 unless $pred1 && $pred2;
-
-  return
-    $self->option('ignore_pred_type')
-    || $self->cmp_text_slot($pred1, $pred2, 'type')
-
+  return 1 if $self->option('ignore_pred_type');
+  $self->cmp_text_slot($pred1, $pred2, 'type'); #FIXME: cmp_ont_slot!?!
 }
 
 sub cmp_args {
   my $self = shift;
   my ($i1, $i2, $options) = @_;
 
-  # we group all args together
   my @args1 = assertion_args($i1);
   my @args2 = assertion_args($i2);
 
   {
     DEBUG 2, "args: %d vs. %s", scalar(@args1), scalar(@args2);
   }
+
+  # shortcut if both are empty
+  return 1 if (! @args1) && (! @args2);
     
-  # we sort them by role (assuming unique arg per role)
+  # sort args by role (assuming unique arg per role)
   my %rolemap1 =
     map { $_->getAttribute('role') => { id => $_->getAttribute('id'), 
 					arg => $_ } }
@@ -1024,23 +1016,42 @@ sub cmp_args {
 					arg => $_ } }
     @args2;
 
-  return 0 unless __set__is_equal([keys %rolemap1], [keys %rolemap2]);
-  foreach my $role (keys %rolemap1) {
+  # FIXME: do not shortcut
+  #return 0 unless __set__is_equal([keys %rolemap1], [keys %rolemap2]);
+  my %tests = ();
+  foreach my $role (uniq keys(%rolemap1), keys(%rolemap2))   {
+    if (! (exists $rolemap1{$role} && exists $rolemap2{$role})) {
+      # role present only in one assertion
+      $tests{$role} = 0;
+      next;
+    }
     my $a1 = (defined $rolemap1{$role}{id}) 
       ? $self->ekb1()->get_assertion($rolemap1{$role}{id})
       : undef;
     my $a2 = (defined $rolemap2{$role}{id})
       ? $self->ekb2()->get_assertion($rolemap2{$role}{id})
       : undef;
-    # fix for cases where the role arg is not extracted
-    if ((! $a1) && (! $a2)) {
-      return
+    if ($a1 && $a2) {
+      DEBUG 3, "cmp_args: => 2";
+      $tests{$role} = $self->cmp_ekb_item($a1, $a2, $options);
+    }      
+    elsif ((! $a1) && (! $a2)) {
+      # no assertions for these args; we just look at the type
+      DEBUG 3, "cmp_args: => 0";
+      $tests{$role} =
 	$self->cmp_text_slot($rolemap1{$role}{arg}, $rolemap2{$role}{arg}, 'type');
     }
-    return 0 unless $a1 && $a2;
-    return 0 unless $self->cmp_ekb_item($a1, $a2, $options);
+    else { 
+      DEBUG 3, "cmp_args: => 1";
+      $tests{$role} = 0;
+    }
   }
-  1;
+  my $result = min(values(%tests));
+  DEBUG 3, "tests ==> %s", Dumper(\%tests);
+  $self->record_result($i1, $i2, $result, {arg => \%tests})
+    unless (__option_is($options, 'deep', 0) and $result);
+  DEBUG 2, "cmp_args ==> %s", $result;
+  $result;
 }
 
 # these are sub-elements that refer to other EKB items
@@ -1070,17 +1081,21 @@ sub cmp_pseudo_args {
     map { $_->getAttribute('id') }
     @elems2;
 
-  DEBUG 3, "cmp_pseudo_args:\n\@items1=%s, \@items2=%s",
-    Dumper(\@items1), Dumper(\@items2);
-
+  {
+    local $Data::Dumper::Terse = 1;
+    local $Data::Dumper::Indent = 0;
+    DEBUG 3, "cmp_pseudo_args:\n\@items1=%s\@items2=%s",
+      Dumper(\@items1), Dumper(\@items2);
+  }
+  
   # if there are missing assertions, we shortcut
   return 0 unless scalar(@items1) == scalar(@items2);
 
   # TODO: pseudo_args that have no referent should be compared, too!
   # TODO: some pseudo-args have other attributes beside id
 
-  return $self->cmp_ekb_items(\@items1, \@items2,
-			      __options($options, 'deep' => 0));
+  $self->cmp_ekb_items(\@items1, \@items2,
+		       __options($options, 'deep' => 0));
 }
 
 # polymorphic:
@@ -1099,8 +1114,7 @@ sub cmp_features_mutation {
 
   return 1 if (! $mut1) && (! $mut2);
   return 0 unless $mut1 && $mut2;
-
-  return ($mut1->textContent eq $mut2->textContent);
+  ($mut1->textContent eq $mut2->textContent) + 0;
 }
 
 # polymorphic:
@@ -1183,15 +1197,14 @@ sub cmp_ont_slot {
   my $t1 = get_slot_value($i1, $slot);
   my $t2 = get_slot_value($i2, $slot);
   return 1 if ((! $t1) && (! $t2));
-  return 0 unless $t1;
-  return 0 unless $t2;
+  return 0 unless $t1 && $t2;
   if ($ont_events->has($t1)) {
-    return $ont_events->is_a($t1, $t2) || $ont_events->is_a($t2, $t1);
+    return 0 + ($ont_events->is_a($t1, $t2) || $ont_events->is_a($t2, $t1));
   }
   if ($ont_bioents->has($t1)) {
-    return $ont_bioents->is_a($t1, $t2) || $ont_bioents->is_a($t2, $t1);
+    return 0 + ($ont_bioents->is_a($t1, $t2) || $ont_bioents->is_a($t2, $t1));
   }
-  return ($t1 eq $t2);
+  ($t1 eq $t2) + 0;
 }
 
 
@@ -1203,14 +1216,17 @@ sub reset_x_map {
   $self->{'x_map'} = {};
 }
 
-# record matching result
+# record matching result for two assertions, using their ids
 sub record_result {
   my $self = shift;
-  my ($i1, $i2, $result) = @_;
+  my ($i1, $i2, $result, $tests) = @_;
   if ($result) {
     $self->record_match($i1, $i2);
   } else {
-    $self->record_no_match($i1, $i2);
+    $self->record_no_match($i1, $i2, $tests);
+  }
+  {
+    DEBUG 3, "x_map ($i1, $i2): %s", Dumper($self->{'x_map'});
   }
 }
 
@@ -1222,26 +1238,40 @@ sub record_match {
   my $id1 = $i1->getAttribute('id');
   my $id2 = $i2->getAttribute('id');
   if ($self->has_match($i1, 'ref')) {
-    ERROR "cannot re-match %s to %s (now: %s ~~ %s)",
+    ERROR "Cannot re-match %s to %s (now: %s ~~ %s)",
       $id1, $id2, $id1, $self->{'x_map'}{'ref'}{$id1};
     return 0;
   }
   if ($self->has_match($i2, 'hyp')) {
-    ERROR "cannot re-match %s to %s (now: %s ~~ %s)",
+    ERROR "Cannot re-match %s to %s (now: %s ~~ %s)",
       $id1, $id2, $self->{'x_map'}{'hyp'}{$id2}, $id2;
     return 0;
   }
   $self->{'x_map'}{'ref'}{$id1}{$id2} = 1;
   $self->{'x_map'}{'hyp'}{$id2}{$id1} = 1;
+  # prune previous non-matches
+  foreach my $hid (keys %{$self->{'x_map'}{'ref'}{$id1}}) {
+    unless ($self->{'x_map'}{'ref'}{$id1}{$hid}) {
+      delete $self->{'x_map'}{'ref'}{$id1}{$hid};
+      delete $self->{'x_map'}{'hyp'}{$hid}{$id1};
+      delete $self->{'x_map'}{'diff'}{$id1}{$hid};	
+    }
+  }
+  foreach my $rid (keys %{$self->{'x_map'}{'hyp'}{$id2}}) {
+    unless ($self->{'x_map'}{'hyp'}{$id2}{$rid}) {
+      delete $self->{'x_map'}{'hyp'}{$id2}{$rid};
+      delete $self->{'x_map'}{'ref'}{$rid}{$id2};
+      delete $self->{'x_map'}{'diff'}{$rid}{$id2};	
+    }
+  }
   DEBUG 2, "matched: %s ~~ %s", $id1, $id2;
-  return 1;
+  1;
 }
 
 # record a no-match
 sub record_no_match {
   my $self = shift;
-  my ($i1, $i2) = @_;
-  return 1 if $self->not_matched($i1, $i2);
+  my ($i1, $i2, $tests) = @_;
   my $id1 = $i1->getAttribute('id');
   my $id2 = $i2->getAttribute('id');
   if ($self->matched($i1, $i2)) {
@@ -1250,8 +1280,12 @@ sub record_no_match {
   }
   $self->{'x_map'}{'ref'}{$id1}{$id2} = 0;
   $self->{'x_map'}{'hyp'}{$id2}{$id1} = 0;
+  if ($tests) {
+    map {$self->{'x_map'}{'diff'}{$id1}{$id2}{$_} = $tests->{$_}} keys %$tests;
+    DEBUG 3, "diffs($id1,$id2) = %s", Dumper($self->{'x_map'}{'diff'}{$id1}{$id2});
+  }
   DEBUG 2, "No match: %s ~~ %s", $id1, $id2;
-  return 1;
+  1;
 }
 
 sub seen_before {
@@ -1294,7 +1328,7 @@ sub has_match {
     
   my $id = $item->getAttribute('id');
   return 0 unless (exists $self->{'x_map'}{$source}{$id});
-  DEBUG 3, "has_match(%s, %d) = %s", $id, $source,
+  DEBUG 3, "has_match(%s, %s) = %s", $id, $source,
     any { $self->{'x_map'}{$source}{$id}{$_} }
     keys %{ $self->{'x_map'}{$source}{$id} };
   return
@@ -1379,6 +1413,7 @@ sub diffs_as_string {
 
   # assertions, by utt and spans
   my @a_diffs = sort _diff_cmp $self->get_diffs('assertions');
+  DEBUG 3, "sorted diffs: %s", Dumper(\@a_diffs);
   my @a_diff_sids = uniq map { $_->{sid} } grep {exists $_->{sid}} @a_diffs;
   $result .= "Assertions (by sentence):\n"
     if (@a_diff_sids);
@@ -1386,10 +1421,12 @@ sub diffs_as_string {
     my $utt = $self->ekb1()->get_sentence($sid);
     $result .= sprintf("uttnum=%d %s\n", $sid, $utt->textContent);
     foreach my $diff (grep { $_->{sid} eq $sid } @a_diffs) {
-      $result .= sprintf("< %s\n",
-			 $self->ekb1->get_assertion($diff->{'ref'})->toString(1))
-	if exists $diff->{'ref'};
-      $result .= sprintf("> %s\n",
+      if (exists $diff->{'ref'}) {
+	$result .= sprintf("<<< %s\n%s\n",
+			   $self->diff_highlights($diff->{'ref'}),
+			   $self->ekb1->get_assertion($diff->{'ref'})->toString(1));
+      }
+      $result .= sprintf(">>> \n%s\n",
 			 $self->ekb2()->get_assertion($diff->{'hyp'})->toString(1))
 	if exists $diff->{'hyp'};
     }
@@ -1400,15 +1437,54 @@ sub diffs_as_string {
     if (@a_diff_nos);
   foreach my $diff (@a_diff_nos) {
     if (exists $diff->{'ref'}) {
-      $result .= sprintf("< %s\n",
+      $result .= sprintf("<<< %s\n%s\n",
+			 $self->diff_highlights($diff->{'ref'}),
 			 $self->ekb1->get_assertion($diff->{'ref'})->toString(1));
     }
-    $result .= sprintf("> %s\n",
+    $result .= sprintf(">>> \n%s\n",
 		       $self->ekb2()->get_assertion($diff->{'hyp'})->toString(1))
       if exists $diff->{'hyp'};
   }
 
   $result;
+}
+
+# creates a string highlighting the "problem" areas
+# if REF assertion was matched unsuccessfully against multiple HYP assertions,
+# this picks only what is obviously changed
+sub diff_highlights {
+  my $self = shift;
+  my $aid = shift;
+  return "" unless exists $self->{'x_map'}{'diff'}{$aid};
+  my $diff = $self->{'x_map'}{'diff'}{$aid};
+  my %summary; # flattened hash of "problems", in aggregate
+  my $n = 0;
+  foreach my $hid (keys %$diff) {
+    foreach my $k (keys %{$diff->{$hid}}) {
+      next if $k eq "args"; #FIXME: this should disappear 
+      if ($k eq "arg") {
+	foreach my $r (keys %{$diff->{$hid}{$k}}) {
+	  my $p = $k . ":" . $r;
+	  $summary{$p} += $diff->{$hid}{$k}{$r};
+	}
+      }
+      else {
+	$summary{$k} += $diff->{$hid}{$k};
+      }
+    }
+    $n++;
+  }
+  DEBUG 2, "summary diffs (%s): %s", $aid, Dumper(\%summary);
+  my (@n, @m);
+  foreach my $p (keys %summary) {
+    if ($summary{$p} == 0) {
+      push(@n, $p);
+    }
+    elsif ($summary{$p} < $n) {
+      push(@m, $p);
+    }
+  }
+  sprintf("!(%s) ~(%s)", join(" ", @n), join(" ", @m));
 }
 
 sub _options_to_string {
@@ -1496,9 +1572,12 @@ sub _diff_cmp($$) {
   return (!defined($a->{sid}) or !defined($b->{sid}) or $a->{sid} <=> $b->{sid})
     || (!defined($a->{start}) or !defined($b->{start}) or $a->{start} <=> $b->{start})
     || (!defined($a->{end}) or !defined($b->{end}) or $a->{end} <=> $b->{end})
+    || ((exists($a->{ref}) and !exists($b->{ref})) ? -1 : 0)
+    || ((exists($a->{hyp}) and !exists($b->{hyp})) ? 1 : 0)
     || (!defined($a->{ref}) or !defined($b->{ref}) or $a->{ref} cmp $b->{ref})
     || (!defined($a->{hyp}) or !defined($b->{hyp}) or $a->{hyp} cmp $b->{hyp});
 }
+
 
 ### handling options
 
@@ -1555,13 +1634,9 @@ sub __set__is_equal {
   my ($list1, $list2) = @_;
   __set__is_included($list1, $list2) and __set__is_included($list2, $list1);
 }
-sub __set__uniq {
-  my %m = map { $_ => 1 } @{$_[0]};
-  keys %m;
-}
 sub __set__union {
   my ($list1, $list2) = @_;
-  __set__uniq([@$list1, @$list2]);
+  uniq(@$list1, @$list2);
 }
 sub __set__intersection {
   my ($list1, $list2) = @_;

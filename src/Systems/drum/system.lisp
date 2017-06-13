@@ -17,8 +17,8 @@
   (:dfc-component       :deepsemlex	   #!TRIPS"src;DeepSemLex;code;lib;")
 )
 
-;; add WebParser to the system when we have its source directory
-(when (probe-file #!TRIPS"src;WebParser")
+;; add WebParser to the system when we have it
+(when (probe-file #!TRIPS"src;WebParser;defsys.lisp")
   (nconc (assoc :drum trips::*trips-systems*)
 	 (list '(:dfc-component :webparser #!TRIPS"src;WebParser;"))))
 
@@ -193,3 +193,6 @@
 ;; domain preferences
 (load "domain-sense-preferences")
 (load "domain-words.lisp")
+
+; lg
+;(parser::traceon 2)
