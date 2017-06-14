@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Mon May 29 14:17:49 CDT 2017 lgalescu>
+# Time-stamp: <Tue Jun 13 09:59:25 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.32 2017/05/29 19:18:44 lgalescu Exp $
+# $Id: EKB.pm,v 1.33 2017/06/13 14:59:58 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -107,6 +107,10 @@
 # - slight modification of the format for the 'inevent' feature
 # 2017/05/29 v1.14.3	lgalescu
 # - added a bit more documentation
+# 2017/06/13 v1.14.4	lgalescu
+# - modified normalization: now dangling IDs in arguments are left alone -- they
+#   are required for graphs to look good.
+#
 
 # TODO:
 # - maybe split off non-OO extensions for manipulating XML objects into a separate package?
@@ -956,12 +960,16 @@ sub get_assertions {
   my $self = shift;
   my ($atype, $opt_attrs) = @_;
 
-  DEBUG 2, "atype=%s, attrs=%s", $atype, $opt_attrs;
-
   if (ref($atype) eq "HASH") {
     $opt_attrs = $atype;
     $atype = undef;
   }
+  {
+    local $Data::Dumper::Terse = 1;
+    local $Data::Dumper::Indent = 0;
+    DEBUG 2, "atype=%s, attrs=%s", $atype, Dumper($opt_attrs);
+  }
+
   my $doc = $self->get_document()
     or return undef;
   (! $atype) || is_assertion_type($atype)
@@ -1202,15 +1210,13 @@ sub _clean_arg {
   my $id = $arg->getAttribute('id')
     # if no id, we leave it alone
     or return;
-  # if id is a dangling reference, we remove it, and leave it alone
-  # TODO: might want to reconsider
+  # if id is a dangling reference, we leave it alone
   unless ($self->get_assertion($id)) {
-    $arg->removeAttribute('id');
     return;
   }
   # remove all content
   $arg->removeChildNodes();
-  # remove all but selected (arg-dependent) atributes
+  # remove all but selected (arg-dependent) attributes
   my $t = $arg->nodeName;
   my @attributes = $arg->attributes();
   foreach my $attr (@attributes) {

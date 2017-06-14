@@ -166,13 +166,13 @@
 	;; possessives become determiners - we use an intermediate constit POSSESSOR to allow the modifier "own", as in "his own truck"
 	((DET (LF ONT::DEFINITE) (AGR ?agr) (wh-var ?wh-var) (ARG ?arg) (mass ?m) (restr ?r) (poss +)
                (NObareSpec +))
-	 -possessor1>
+	 -possessor1> 1
 	 (head (Possessor  (AGR ?agr)  (wh-var ?wh-var) (ARG ?arg) (mass ?m) (restr ?r))))
 
 	;;  possessive OWN construction. e.g., his own truck, john's very own house
 	((Possessor  (AGR ?agr) (ARG ?arg) (mass ?m) 
 	  (restr ?newr) (own +))  ;; no-bare-spec is not + to allow "his own"
-	 -possessor2>
+	 -possessor2> 1
 	 (head (Possessor  (AGR ?agr) (ARG ?arg) (mass ?m) (poss ?poss) (restr ?r) (own -)))
 	 (adjp (lex W::own) (lf ?lf) (arg ?arg) (var ?av))
 	 (add-to-conjunct (val (:mod ?av));;(% *PRO* (STATUS ONT::F) (CLASS ?lf) (VAR ?av) 
@@ -184,7 +184,7 @@
 	;; Myrosia added a restriction (sort pred) to prevent wh-desc prhases appearing in this rule
 	((possessor (LF ONT::DEFINITE) (AGR ?agr) (ARG ?arg) (MASS ?m) (RESTR (& (assoc-poss ?v)))
                (NObareSpec +))
-	 -possessive1> 
+	 -possessive1>  1
 	 (head (NP (PRO (? xx - INDEF)) (gerund -) (generated -) (time-converted -) (SEM ?sem) (VAR ?v) (sort pred))) (^S))
 
 
@@ -201,7 +201,7 @@
 	;; Myrosia added a restriction (sort pred) to prevent wh-desc prhases appearing in this rule
 	((possessor (LF ONT::DEFINITE) (AGR ?agr) (ARG ?arg) (MASS ?m) (RESTR (& (assoc-poss ?v)))
                (NObareSpec +))
-	 -possessive2>
+	 -possessive2> 1
 	 (head (NP (PRO -) (SEM ?sem) (VAR ?v) (agr 3p) (gerund -) (name -) (sort pred) (headless -))) (^))
 #||
 	;; plural possessor of relational noun - the engines' wheels
@@ -219,7 +219,7 @@
 			 ;;(% *PRO* (VAR ?v) (SEM ?sem)
 			 ;;(STATUS ONT::PRO) (class ?lf) (constraint (& (proform ?lex)))))))
 	      (NObareSpec +))	 
-	 -possessive3-whose-rel-clause>
+	 -possessive3-whose-rel-clause> 1
 	 (head (PRO (CASE POSS) (WH R) 
 		    (STATUS ont::PRO-DET) (SEM ?sem) (VAR ?v) (LF ?lf) (lex ?lex) (input ?i))))
 
@@ -228,7 +228,7 @@
 		     (% *PRO* (VAR ?v) (SEM ?sem)
 			(STATUS ont::PRO) (class ?lf) (constraint (& (proform ?lex)))))))
 	  (NObareSpec +) (WH (? wh Q -)) (wh-var ?v))	 
-	 -possessive3-Q>
+	 -possessive3-Q> 1
 	 (head (PRO (CASE POSS) (WH Q)
 		    (STATUS ont::PRO-DET) (SEM ?sem) (VAR ?v) (LF ?lf) (lex ?lex) (input ?i))))
 
@@ -237,7 +237,7 @@
 		     (% *PRO* (VAR ?v) (SEM ?sem)
 			(STATUS ont::PRO) (class ?lf) (constraint (& (proform ?lex)))))))
 	  (NObareSpec +) (WH -))
-	 -possessive3>
+	 -possessive3> 1
 	 (head (PRO (CASE POSS) (WH -)
 		    (STATUS ont::PRO-DET) (SEM ?sem) (VAR ?v) (LF ?lf) (lex ?lex) (input ?i))))
 #||
@@ -396,7 +396,7 @@
 (parser::augment-grammar
  '((headfeatures
     ;; (N1 VAR arg AGR MASS CASE SEM Changeagr lex quantity subcat transform)
-    (N1 var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)
+    (N1 var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated rate-activity-nom)
     ;;(N1 var arg lex headcat transform agr mass case sem quantity argument argument-map indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)
     (N var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)  ; this is a copy of N1 so -N-prefix> would pass on the features
     (NAME var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)  ; this is a copy of N1 so -NAME-prefix> would pass on the features
@@ -606,7 +606,7 @@
       (RESTR (& (scale ?sc)))
      (qual -) (postadvbl -) (subcat -)
      )
-    -N1-reln1> ;;.98 ;; prefer attaching complement
+    -N1-reln1> .995
     (head (n  (sort reln) (lf ?lf) (allow-deleted-comp +)
 	   (sem ?ssem)  (SEM ($ ?type (f::scale ?sc)))
 	   (subcat (% ?argcat (sem ?argsem)))
@@ -1484,7 +1484,7 @@
 	;;  removed this to handle things like "computing services"
 	;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
       (sem ?n-sem)
-      (CLASS ?modc) (PRO -) (N-N-MOD -) ;;(COMPLEX -)   can't require COMPLEX - any more -- e.g., "p53 expression levels"
+      (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -)   ;;  can't require COMPLEX - any more -- e.g., "p53 expression levels"  -- now we can!!
       (SUBCAT ?ignore) (GAP -) (kr-type ?kr-type)
       (postadvbl -) (post-subcat -) 
       )
@@ -2342,7 +2342,7 @@
 	            (Lex ?lex) (sem ?sem) (transform ?transform)
 		    (constraint (& (proform ?lex)))
 		    )))
-         -wh-pro1>
+         -wh-pro1> .995
          (head (pro (PP-WORD -) (AGR ?agr) (LEX ?lex) (LF ?s)
 		    (sem ?sem) (transform ?transform)
 	            (VAR ?v) (WH Q))))    ;; removed R as NP 
@@ -4931,18 +4931,18 @@
 
 (parser::augment-grammar	 
   '((headfeatures
-     (N1 sem lf lex headcat transform set-restr refl abbrev)
+     (N1 lf lex headcat transform set-restr refl abbrev)
      )
 
     ;; this rule handles rate/activity constructions - e.g., the binding rate of ras on raf
-    ;;  we basically store away the rate.activity predicate and continue pasring as though it
+    ;;  we basically store away the rate.activity predicate and continue parsing as though it
     ;; wasn't there
         ((N1 (SORT PRED) (COMPLEX +)
 	  (gap -) (var ?v) (agr ?agr) (gerund ?ger)
 	  (sem ?sem) (mass ?mass) (pre-arg-already ?npay)
 	  (case ?case)
 	  (class ?class)
-	  (restr ?newrestr)
+	  (restr ?restr)
 	  (subj ?subj)
 	  (subj-map ?subjmap)
 	  (dobj ?dobj)
@@ -4983,7 +4983,7 @@
 
          ((N1 (SORT PRED) (COMPLEX +)
 	   (gap -) (var *) (agr ?agr) (gerund ?ger)
-	   (sem ?sem) (mass ?mass) (pre-arg-already ?npay)
+	   (sem ?newsem) (mass ?mass) (pre-arg-already ?npay)
 	   (case ?case)
 	   (class ?!pred)
 	   (restr (& (figure (% *PRO* (status ont::F) (var ?v) (class ?class)
@@ -5007,6 +5007,7 @@
 		     (generated -)
 		     (rate-activity-nom ?!pred)
 		     ))
+	  (compute-sem-features (lf ?!pred) (sem ?newsem))
 	  )
     ))
 

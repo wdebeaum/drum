@@ -426,7 +426,7 @@
    ;; test: what will chase the cat?
    ((utt (lf (% speechact (var *) (class ont::sa_wh-question) (constraint (& (content ?v) (focus ?foc)))))
          (var *) (qtype ?type) (punctype ?p))
-    -decl-wh-question1> .96
+    -decl-wh-question1> .98
     (head (s (stype (? st decl imp)) (wh q) (gap -) (wh-var ?foc) (var ?v) (advbl-needed -))))
    
    
@@ -2314,7 +2314,7 @@
      (gap (% ?!s3 (case ?dcase) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap -)))
      (advbl-needed ?avn)
      )
-    -s-ynq-be-gap> 0.97
+    -s-ynq-be-gap> 0.96  ;; downgrade this until we find an example that needs this rule!!  Why do we not require the V to be ONT::BE or ONT::EQUAL????
     (head (v (aux -)
 	   
 	   (var ?v) ;; propagate up explicitly because not a head feature	   
@@ -2822,16 +2822,14 @@
 	)
      -lets-imp> 1.0 ;; get let's to go through this rule instead of command-imp2
      (word (lex let))
-     (np (lex us))
+     (np (lex us) (var ?npvar))
      (head (vp (gap  -) (sem ?sem)
 	       (sem ($ f::situation (f::aspect (? aspc f::dynamic f::stage-level))))
 	       (var ?v) (aux -) (tma ?tma)
 	       (constraint ?con)
-	       (subj (% np (var (% *pro* (status ont::pro-set) (class (:* ont::person w::us)) (var *) (sem ?subjsem) (constraint (& (proform us)))))
-			(sem ($ f::phys-obj (f::form f::object) (f::intentional +)))
+	       (subj (% np (var ?npvar)
 			(sem ?subjsem)))
-	       (subjvar (% *pro* (var *) (status ont::pro-set)
-			   (class (:* ont::person w::us)) (sem ?subjsem) (constraint (& (proform us)))))
+	       (subjvar ?npvar)
 	       (class ?c)
 	       (vform base) (postadvbl ?pa) (main ?ma)
 	    (transform ?transform)
