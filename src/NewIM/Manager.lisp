@@ -328,7 +328,7 @@
 	;; (force (find-arg (cdddr lf) :force))
 	;; (frequency (find-arg (cdddr lf) :frequency))
 	 (akrl 
-   	  (cond ((member (car lf) '(ONT::THE-SET ONT::INDEF-SET))
+   	  (cond ((member (car lf) '(ONT::THE-SET ONT::INDEF-SET ONT::PRO-SET))
 			 (add-lex (list* (map-to-krspec lf) var :instance-of 'ONT::SET :element-type type 
 					 (remove-args (cdddr lf) '(:proform :start :end))
 					 ) w))
@@ -368,7 +368,7 @@
 (defun map-to-krspec (spec)
   (case (car spec)
     ((ONT::THE ONT::QUANTITY-TERM ONT::THE-SET) 'ONT::the)
-    (ONT::PRO
+    ((ONT::PRO ONT::PRO-SET)
      (let ((crel (find-arg-in-act spec :context-rel)))
        (if (member crel '(W::SOMEONE W::SOMETHING))
 	   'ONT::A

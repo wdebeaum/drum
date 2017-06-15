@@ -1722,7 +1722,7 @@
    ;; test: the dog was given (me)
    ((v (vform passive) (passive +)
      (subj ?!dobj) (subj-map ?dobj-map) 
-     (dobj (% -)) (agent-map ?subj-map)
+     (dobj (% -)) (agent-map ?subj-map) (agent-sem ?subjsem)
      (iobj ?iobj) (iobj-map ?iobj-map)
      (comp3 ?comp3) (part ?part) (comp3-map ?comp-map)
 ;     (prefix ?prefix)
@@ -1731,6 +1731,7 @@
     -v-passive> 1.0 
     (head (v (vform pastpart) (lex (? !lx been)) ;; exclude be
 	   (subj ?subj) (subj-map ?subj-map) ;; please don't remove - this is needed for trips-tflex conversion
+	   (subj (% ?s (sem ?subjsem)))
 	   (dobj ?!dobj) (dobj-map ?dobj-map) (exclude-passive -)
 	   (iobj ?iobj) (iobj-map ?iobj-map)
 	   (comp3 ?comp3) (comp3-map ?comp-map)
@@ -1738,23 +1739,26 @@
 ;	   (prefix ?prefix)
 	   (restr ?prefix)
 	   )))
-   
+
    ;; test:  the dog is taken care of
    ((v (vform passive)  (passive +)
-     (subj (% np (lex ?subjlex) (sem ?dobjsem) (var ?dobjvar) (agr ?dobjagr)))
+     (subj (% np (lex ?dobjlex) (sem ?dobjsem) (var ?dobjvar) (agr ?dobjagr)))
      (subj-map ?dobj-map) 
-     (dobj (% prep (lex ?pt))) (dobj-map -)
+     ;(dobj (% prep (lex ?pt)))
+     (dobj (% -)) 
+     (dobj-map -)
      (iobj ?iobj) (iobj-map ?iobj-map)
      (comp3 ?comp3) (part ?part) (comp3-map ?comp-map)
      )
     -v-passive-pp> 1.0
     (head (v (vform pastpart) (lex (? !lx been)) (exclude-passive -);; exclude be
 	   (subj (% np (lex ?subjlex) (sem ($ ?!type))))
-	   (dobj (% pp (ptype ?pt) (sem ?dobjsem) (var ?dobjvar) (agr ?dobjagr)))
+	   (dobj (% pp (ptype ?pt) (lex ?dobjlex) (sem ?dobjsem) (var ?dobjvar) (agr ?dobjagr)))
 	   (dobj-map ?dobj-map)
 	   (iobj ?iobj) (iobj-map ?iobj-map)
 	   (comp3 ?comp3) (comp3-map ?comp-map)
 	   (part ?part)))
+    (prep (lex ?pt))
     )
 
    ;; test: the dog was given me by him
@@ -1775,7 +1779,8 @@
 	     (iobj ?iobj) 	  
 	     (comp3 ?comp3) (comp3-map ?comp3-map)
 	     (part ?part)))
-)
+    )
+   
    ;; test: i was given the dog
    ;;  passive form with indirect object
    ((v (vform passive)  (passive +)
@@ -1811,7 +1816,6 @@
 	   (part ?part))))
 
    ;; the dog was computer generated.  It is FDA approved.
-   
    ((vp- (vform passive)  (passive +)
      (subj-map ?subj-map) (subj ?subj)
      ;;(dobj (% np (sem ?sem) (var ?v-n) (agr ?a) (lex ?lex) (gap -) (RESTR ?nr))) 
@@ -1820,7 +1824,7 @@
      (iobj ?iobj) (iobj-map ?iobj-map)
      (subjvar ?subjvar)
      ;;(comp3 ?comp3) (comp3-map ?comp3-map)
-     (constraint (& (ont::agent ?v-n)
+     (constraint (& (?ag-map ?v-n) ;(ont::agent ?v-n)
 			   ;;(% *PRO* (class ?nc) (status ont::bare) (constraint ?nr) (var ?v-n)))
 		    (?subj-map ?subjvar)
 		    (?dobj-map  ?dobjvar)
@@ -1833,7 +1837,7 @@
      (sem ?sem) (relc -) (abbrev -) (gap -) (agr ?a) (lex ?lex)
      )
     (head (v (vform passive) (lex (? !lx been)) (exclude-passive -);; exclude be
-	     (lf ?class)
+	     (lf ?class) (agent-map ?ag-map) (agent-sem ?sem)
 	     (subj (% np (lex ?subjlex) (sem ?!subj-sem) (agr ?subjagr) (var ?subjvar) (sem ($ ?!type))))
 	     (subj-map ?subj-map) (iobj-map ?iobj-map)
 	     ;;(dobj ?!dobj) 
@@ -3192,7 +3196,7 @@
 	   (vform ?vform)
 	   (agr ?a)
 	   (sem ($ f::situation (f::aspect ?aspect) (f::time-span ?time)))
-	   (subj ?subj) (subj (% ?s1 (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
+	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
 	   (iobj (% -)) (part (% -)) (dobj (% -))
 	   (comp3 ?comp) 
 	   (comp3 (% vp- (class ?class)  (constraint ?con1) (tma ?tma1) (var ?var)

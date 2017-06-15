@@ -50,7 +50,8 @@
 	  ; MUTATION and BIOLOGICAL-PROCESS are in EVENT-OF-CHANGE (the latter is matched in drumrules_ev)
 	  ; PHYS-OBJECT contains MUTANT-OBJ and WILDTYPE-OBJ (the latter two are matched in drumrules_ev)
 	  
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 ;	    (:* (? t1 ONT::EVENT-OF-CHANGE ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT) ?w) :SEQUENCE - :DRUM ?code)
 
 ; took out EVENT-OF-CHANGE: it doesn't work well with term substitution (e.g., phosphorylation would lose all the AGENT/AFFECTED/etc roles when not returned with the TERM)
@@ -67,7 +68,8 @@
 	    ))
 
 	  ; the first protein
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	  ?reln ?!obj
 ;	    (:* (? t1 ONT::EVENT-OF-CHANGE ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT) ?w) :SEQUENCE - :DRUM ?code)
 
 ; took out EVENT-OF-CHANGE: it doesn't work well with term substitution (e.g., phosphorylation would lose all the AGENT/AFFECTED/etc roles when not returned with the TERM)
@@ -148,7 +150,8 @@
 
 
 	  ;; just the word "wildtype"
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	    ?reln ?!obj
 	    (:* (? type ONT::WILDTYPE-OBJ) ?!w)
 	    :DRUM ?code)
 	   -explicit-ref-mutation7>
@@ -162,7 +165,8 @@
 	   )
 
 	  ;; just the word "mutant"
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	    ?reln ?!obj
 	    (:* (? type ONT::MUTANT-OBJ) ?!w)
 	    :DRUM ?code)
 	   -explicit-ref-mutation8>
@@ -187,7 +191,8 @@
 ;	    ))
 
 	  ;; logical sequences (e.g. conjunctions)
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ ONT::MEDICAL-DISORDERS-AND-CONDITIONS) ;  ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ instead of ONT::PHYS-OBJECT.  Is this good?
 	    :SEQUENCE ?!sequence  :operator ?!op )
 	   -logicalOp-ref>
@@ -254,10 +259,12 @@
 	  ;; robust rule for explicit constructions, e.g., "ras protein" --- protein :ASSOC-WITH ras
 	  ;; "pathway" uses -explicit-ref-pathway1/2 rules
 	  ;; "complex" should uses another rule
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (:* ?!type (? word W::PROTEIN W::GENE W::DRUG W::KINASE W::SITE W::POSITION W::MOLECULE W::DOMAIN W::PROMOTER W::MRNA W::TRANSCRIPT W::RECEPTOR-TYROSINE-KINASE W::PATHWAY W::COMPLEX W::PROTEINS W::GENES W::DRUGS W::KINASES W::SITES W::POSITIONS W::MOLECULES W::DOMAINS W::PROMOTERS W::MRNAS W::TRANSCRIPTS W::RECEPTOR-TYROSINE-KINASES W::PATHWAYS W::COMPLEXES))  ; mutation comes out as a verb in LIFE-TRANSFORMATION with AFFECTED protein (we get a TRANSFORM event for this)
 	    :ASSOC-WITHS (?!name))
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name
+	    ?reln1 ?!name
 ;	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART) ?!w) :DRUM ?code)
 	    ; this is to avoid mapping to "kinase domain"
 	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::MUTATION) (? !w W::PROTEIN W::GENE W::DRUG W::KINASE W::SITE W::POSITION W::MOLECULE W::DOMAIN W::PROMOTER W::MRNA W::TRANSCRIPT W::RECEPTOR-TYROSINE-KINASE W::PATHWAY W::COMPLEX W::PROTEINS W::GENES W::DRUGS W::KINASES W::SITES W::POSITIONS W::MOLECULES W::DOMAINS W::PROMOTERS W::MRNAS W::TRANSCRIPTS W::RECEPTOR-TYROSINE-KINASES W::PATHWAYS W::COMPLEXES)) :DRUM ?code)
@@ -284,10 +291,12 @@
 	   )
 
 	  ; Ras/Raf proteins
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (:* ?!type (? word W::PROTEIN W::GENE W::DRUG W::KINASE W::SITE W::POSITION W::MOLECULE W::DOMAIN W::PROMOTER W::MRNA W::TRANSCRIPT W::RECEPTOR-TYROSINE-KINASE W::PATHWAY W::COMPLEX W::PROTEINS W::GENES W::DRUGS W::KINASES W::SITES W::POSITIONS W::MOLECULES W::DOMAINS W::PROMOTERS W::MRNAS W::TRANSCRIPTS W::RECEPTOR-TYROSINE-KINASES W::PATHWAYS W::COMPLEXES))  ; mutation comes out as a verb in LIFE-TRANSFORMATION with AFFECTED protein (we get a TRANSFORM event for this)
 	    :ASSOC-WITHS (?!name))
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name
+	    ?reln1 ?!name
 ;	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART) ?!w) :DRUM ?code)
 	    ; this is to avoid mapping to "kinase domain"
 	    (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::MUTATION) :SEQUENCE ?!seq :OPERATOR -)  ; only type, no w
@@ -315,10 +324,12 @@
 	   )
 
 	  ; Ras and Raf proteins
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (:* ?!type (? word W::PROTEIN W::GENE W::DRUG W::KINASE W::SITE W::POSITION W::MOLECULE W::DOMAIN W::PROMOTER W::MRNA W::TRANSCRIPT W::RECEPTOR-TYROSINE-KINASE W::PATHWAY W::COMPLEX W::PROTEINS W::GENES W::DRUGS W::KINASES W::SITES W::POSITIONS W::MOLECULES W::DOMAINS W::PROMOTERS W::MRNAS W::TRANSCRIPTS W::RECEPTOR-TYROSINE-KINASES W::PATHWAYS W::COMPLEXES))  ; mutation comes out as a verb in LIFE-TRANSFORMATION with AFFECTED protein (we get a TRANSFORM event for this)
 	    :ASSOC-WITHS (?!name))
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name
+	    ?reln1 ?!name
 ;	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART) ?!w) :DRUM ?code)
 	    ; this is to avoid mapping to "kinase domain"
 	    (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::MUTATION) :SEQUENCE ?!seq :OPERATOR ?!op)
@@ -350,12 +361,14 @@
 	  ;; robust rule for explicit constructions, e.g., "the protein Erk" --- Erk :ASSOC-WITH protein
 	  ;; "the pathway Ras/Raf parses the same as the Ras/Raf pathway", so no need for another rule?
 	  ;; "the complex Raf-Raf" doesn't parse correctly
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 ;	    (:* (? type ONT::CHEMICAL ONT::MOLECULAR-PART) ?!w) :DRUM ?code
 	    ; this is to avoid mapping to "kinase domain"
 	    (:* (? type ONT::CHEMICAL ONT::MOLECULAR-PART ONT::MUTATION) (? !w W::PROTEIN W::GENE W::DRUG W::KINASE W::SITE W::POSITION W::MOLECULE W::DOMAIN W::PROMOTER W::MRNA W::TRANSCRIPT W::RECEPTOR-TYROSINE-KINASE W::PATHWAY W::COMPLEX W::PROTEINS W::GENES W::DRUGS W::KINASES W::SITES W::POSITIONS W::MOLECULES W::DOMAINS W::PROMOTERS W::MRNAS W::TRANSCRIPTS W::RECEPTOR-TYROSINE-KINASES W::PATHWAYS W::COMPLEXES)) :DRUM ?code
 	    :ASSOC-WITHS (?!name))	    
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name
+	    ?reln1 ?!name
 	    (:* ?!type1 (? word W::PROTEIN W::GENE W::DRUG W::KINASE W::SITE W::POSITION W::MOLECULE W::DOMAIN W::PROMOTER W::MRNA W::TRANSCRIPT W::RECEPTOR-TYROSINE-KINASE W::PATHWAY W::COMPLEX W::PROTEINS W::GENES W::DRUGS W::KINASES W::SITES W::POSITIONS W::MOLECULES W::DOMAINS W::PROMOTERS W::MRNAS W::TRANSCRIPTS W::RECEPTOR-TYROSINE-KINASES W::PATHWAYS W::COMPLEXES))  ; mutation comes out as a verb in LIFE-TRANSFORMATION with AFFECTED protein (we get a TRANSFORM event for this)
 	    )
 	   -explicit-ref1-rev>
@@ -376,12 +389,14 @@
 	  ;; robust rule for explicit constructions, e.g., "the protein Erk"  protein :APPOS-EQ Erk
 	  ;; "the pathway Ras/Raf parses the same as the Ras/Raf pathway", so no need for another rule?
 	  ;; "the complex Raf-Raf" doesn't parse correctly
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 ;	    (:* (? type ONT::CHEMICAL ONT::MOLECULAR-PART) ?!w) :DRUM ?code
 	    ; this is to avoid mapping to "kinase domain"
 	    (:* (? type ONT::CHEMICAL ONT::MOLECULAR-PART ONT::MUTATION) (? !w W::PROTEIN W::GENE W::DRUG W::KINASE W::SITE W::POSITION W::MOLECULE W::DOMAIN W::PROMOTER W::MRNA W::TRANSCRIPT W::RECEPTOR-TYROSINE-KINASE W::PATHWAY W::COMPLEX W::PROTEINS W::GENES W::DRUGS W::KINASES W::SITES W::POSITIONS W::MOLECULES W::DOMAINS W::PROMOTERS W::MRNAS W::TRANSCRIPTS W::RECEPTOR-TYROSINE-KINASES W::PATHWAYS W::COMPLEXES)) :DRUM ?code
 	    )	    
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name
+	    ?reln1 ?!name
 	    (:* ?!type1 (? word W::PROTEIN W::GENE W::DRUG W::KINASE W::SITE W::POSITION W::MOLECULE W::DOMAIN W::PROMOTER W::MRNA W::TRANSCRIPT W::RECEPTOR-TYROSINE-KINASE W::PATHWAY W::COMPLEX W::PROTEINS W::GENES W::DRUGS W::KINASES W::SITES W::POSITIONS W::MOLECULES W::DOMAINS W::PROMOTERS W::MRNAS W::TRANSCRIPTS W::RECEPTOR-TYROSINE-KINASES W::PATHWAYS W::COMPLEXES))  ; mutation comes out as a verb in LIFE-TRANSFORMATION with AFFECTED protein (we get a TRANSFORM event for this)
 	    :APPOS-EQ ?!obj
 	    )
@@ -398,12 +413,14 @@
 	  ;; robust rule for explicit constructions, e.g., "the proteins Ras/Raf"  protein :APPOS-EQ a sequence
 	  ;; "the pathway Ras/Raf parses the same as the Ras/Raf pathway", so no need for another rule?
 	  ;; "the complex Raf-Raf" doesn't parse correctly
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 ;	    (:* (? type ONT::CHEMICAL ONT::MOLECULAR-PART) ?!w) :DRUM ?code
 	    ; this is to avoid mapping to "kinase domain"
 	    (? type ONT::CHEMICAL ONT::MOLECULAR-PART ONT::MUTATION) :SEQUENCE ?!seq :OPERATOR -
 	    )	    
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name
+	    ?reln1 ?!name
 	    (:* ?!type1 (? word W::PROTEIN W::GENE W::DRUG W::KINASE W::SITE W::POSITION W::MOLECULE W::DOMAIN W::PROMOTER W::MRNA W::TRANSCRIPT W::RECEPTOR-TYROSINE-KINASE W::PATHWAY W::COMPLEX W::PROTEINS W::GENES W::DRUGS W::KINASES W::SITES W::POSITIONS W::MOLECULES W::DOMAINS W::PROMOTERS W::MRNAS W::TRANSCRIPTS W::RECEPTOR-TYROSINE-KINASES W::PATHWAYS W::COMPLEXES))  ; mutation comes out as a verb in LIFE-TRANSFORMATION with AFFECTED protein (we get a TRANSFORM event for this)
 	    :APPOS-EQ ?!obj
 	    )
@@ -421,12 +438,14 @@
 	  ;; robust rule for explicit constructions, e.g., "the proteins Ras and Raf"  protein :APPOS-EQ a sequence
 	  ;; "the pathway Ras/Raf parses the same as the Ras/Raf pathway", so no need for another rule?
 	  ;; "the complex Raf-Raf" doesn't parse correctly
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 ;	    (:* (? type ONT::CHEMICAL ONT::MOLECULAR-PART) ?!w) :DRUM ?code
 	    ; this is to avoid mapping to "kinase domain"
 	    (? type ONT::CHEMICAL ONT::MOLECULAR-PART ONT::MUTATION) :SEQUENCE ?!seq :OPERATOR ?!op
 	    )	    
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name
+	    ?reln1 ?!name
 	    (:* ?!type1 (? word W::PROTEIN W::GENE W::DRUG W::KINASE W::SITE W::POSITION W::MOLECULE W::DOMAIN W::PROMOTER W::MRNA W::TRANSCRIPT W::RECEPTOR-TYROSINE-KINASE W::PATHWAY W::COMPLEX W::PROTEINS W::GENES W::DRUGS W::KINASES W::SITES W::POSITIONS W::MOLECULES W::DOMAINS W::PROMOTERS W::MRNAS W::TRANSCRIPTS W::RECEPTOR-TYROSINE-KINASES W::PATHWAYS W::COMPLEXES))  ; mutation comes out as a verb in LIFE-TRANSFORMATION with AFFECTED protein (we get a TRANSFORM event for this)
 	    :APPOS-EQ ?!obj
 	    )
@@ -445,12 +464,15 @@
 	  ;; robust rule for "SOS1's RasGEF domain"
 	  ;; "domain" :ASSOC-WITH RasGEF :ASSOC-POSS SOS1  (Note: the :ASSOC-WITH is the domain but could be tagged as CELL-LINE (e.g., SH2) or PROTEIN (e.g., RASGEF, RBD))
 	  ;; added MUTATION to ?type1 (SOS1's G12V site)
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (:* ?!type (? word W::SITE W::POSITION W::DOMAIN))  ; mutation comes out as a verb in LIFE-TRANSFORMATION with AFFECTED protein (we get a TRANSFORM event for this)
 	    :ASSOC-WITHS (?!name) :ASSOC-POSS ?!name2)
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name
+	    ?reln1 ?!name
 	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::MUTATION) ?!w) :DRUM ?code)
-	   ((? reln2 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name2 
+	   (;(? reln2 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name2
+	    ?reln2 ?!name2
 	    (:* (? type2 ONT::CHEMICAL ONT::MOLECULAR-PART) ?!w2) :DRUM ?code2)
 	   -explicit-ref1b>
 	   100
@@ -473,13 +495,16 @@
 	  ;; robust rule for "The RasGEF domain of SOS1"
 	  ;; "domain" :ASSOC-WITH RasGEF :MOD of ... :VAL SOS1  (Note: the :ASSOC-WITH is the domain but could be tagged as CELL-LINE (e.g., SH2) or PROTEIN (e.g., RASGEF, RBD))
 	  ;; added MUTATION to ?type1 (The G12V site)
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (:* ?!type (? word W::SITE W::POSITION W::DOMAIN))  ; mutation comes out as a verb in LIFE-TRANSFORMATION with AFFECTED protein (we get a TRANSFORM event for this)
 	    :ASSOC-WITHS (?!name) :MODS (?!mod))
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name
+	    ?reln1 ?!name
 	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::MUTATION) ?!w) )
 	   (ONT::F ?!mod (:* ONT::ASSOC-WITH W::OF) :GROUND ?!name2)
-	   ((? reln2 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name2 
+	   (;(? reln2 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name2
+	    ?reln2 ?!name2
 	    (:* (? type2 ONT::CHEMICAL ONT::MOLECULAR-PART) ?!w2) :DRUM ?code)
 	   -explicit-ref1c>
 	   100
@@ -494,13 +519,16 @@
 	  ;; robust rule for "The RasGEF domain on SOS1"
 	  ;; "domain" :ASSOC-WITH RasGEF :MOD of ... :VAL SOS1  (Note: the :ASSOC-WITH is the domain but could be tagged as CELL-LINE (e.g., SH2) or PROTEIN (e.g., RASGEF, RBD))
 	  ;; added MUTATION to ?type1 (The G12V site)
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (:* ?!type (? word W::SITE W::POSITION W::DOMAIN))  ; mutation comes out as a verb in LIFE-TRANSFORMATION with AFFECTED protein (we get a TRANSFORM event for this)
 	    :ASSOC-WITHS (?!name) :LOC ?!loc)
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name
+	    ?reln1 ?!name
 	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::MUTATION) ?!w) )
 	   (ONT::F ?!loc ONT::ON :GROUND ?!name2)
-	   ((? reln2 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name2 
+	   (;(? reln2 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name2
+	    ?reln2 ?!name2
 	    (:* (? type2 ONT::CHEMICAL ONT::MOLECULAR-PART) ?!w2) :DRUM ?code)
 	   -explicit-ref1d>
 	   100
@@ -513,10 +541,12 @@
 	   )
 
 	  ;; robust rule for explicit constructions, returning both words, e.g., "ASPP2 fragment"
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (:* ?!type (? word W::FRAGMENT))
 	    :ASSOC-WITHS (?!name))
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name
+	    ?reln1 ?!name
 	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART) ?!w) :DRUM ?code)
 	   -explicit-ref2>
 	   100
@@ -528,10 +558,12 @@
 	   )
 
 	  ;; robust rule for explicit constructions, e.g., "EGFR wildtype"
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (:* ?!type (? word W::WILDTYPE W::WILD-TYPE W::WILD-PUNC-MINUS-TYPE W::WT))
 	    :ASSOC-WITHS (?!name))
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name
+	    ?reln1 ?!name
 	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART) ?!w) :DRUM ?code)
 	   -explicit-ref3>
 	   100
@@ -544,10 +576,12 @@
 	   )
 
 	  ;; robust rule for explicit constructions, e.g., "EGFR mutant"
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (:* ?!type (? word W::MUTANT))
 	    :ASSOC-WITHS (?!name))
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name
+	    ?reln1 ?!name
 	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART) ?!w) :DRUM ?code)
 	   -explicit-ref4>
 	   100
@@ -561,10 +595,12 @@
 
 	  ;; robust rule for explicit constructions, with both a mutation and the word "mutant" e.g., "D770_N771insNPG EGFR mutant"
 	  ;; we don't need a similar rule for wildtype
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (:* ?!type (? word W::MUTANT))
 	    :ASSOC-WITHS (?!name1 ?!name2))
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name1 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name1
+	    ?reln1 ?!name1
 	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART) ?!w1) :DRUM ?code)
             ((? spec ONT::THE) ?!name2 (:* (? tmp ONT::MUTATION) ?!w2))
 	   -explicit-ref5>
@@ -580,7 +616,8 @@
 	  ;; basic terms (not conjunctions) with mutation :ASSOC-WITH protein, e.g., Ras G12V
 	  ;; Note: this is circular
 	  ;; Note: this might not fire anymore "Ras G12V" is now Ras :ASSOC-WITH G12V, not the other way
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (:* (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) ?!w) :SEQUENCE - :DRUM ?code)
             ((? spec ONT::THE ONT::BARE) ?!m (:* (? tmp ONT::MUTATION) ?!m2) :ASSOC-WITHS (?!obj))
 	   -explicit-ref6>
@@ -596,7 +633,8 @@
 	  ;; robust rule for explicit constructions, e.g., "the Rasaeo protein" where "Rasaeo" is unknown
 	  ;; Note: I think the unknown word must be capitalized and be preceded by "the"
 	  ;; works somewhat for, e.g., Ib-V-IX complex
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET ONT::WH-TERM) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET ONT::WH-TERM) ?!obj
+	    ?reln ?!obj
 	    (:* ?!type (? word W::PROTEIN W::GENE W::DRUG W::KINASE W::SITE W::POSITION W::MOLECULE W::DOMAIN W::PROMOTER W::MRNA W::TRANSCRIPT W::RECEPTOR-TYROSINE-KINASE W::PATHWAY W::COMPLEX W::PROTEINS W::GENES W::DRUGS W::KINASES W::SITES W::POSITIONS W::MOLECULES W::DOMAINS W::PROMOTERS W::MRNAS W::TRANSCRIPTS W::RECEPTOR-TYROSINE-KINASES W::PATHWAYS W::COMPLEXES))
 	    :ASSOC-WITHS (?!name))
 ;	   (?reln1 ?!name (:* (? type1 ONT::REFERENTIAL-SEM) ?w) :NAME-OF ?!name1 :DRUM ?code)
@@ -636,10 +674,12 @@
 ;;; but now we won't get "MAPK pathway"
 	  ;; robust rule for explicit constructions for one element pathways/complexes, e.g., "MAPK pathway", "XYZ complex"
 	  ;; higher priority than rule EXPLICIT-REF-ROBUST
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (:* ?type (? word W::PATHWAY W::COMPLEX))
 	    :ASSOC-WITHS (?!name1))
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name1 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name1
+	    ?reln1 ?!name1
 ;	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::SIGNALING-PATHWAY) ?w) :DRUM ?code)
 ;	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULE ONT::GENE) ?!w) :DRUM ?code)  ; to avoid "Ras S338" (S338 :ASSOC-WITH Ras) being extracted as an m-sequence (Ras S338)
 	    ; replaced MOLECULE and GENE by MOLECULAR-PART; the "Ras S338" comment is probably not applicable any more
@@ -661,15 +701,18 @@
 	   )
 
 	  ;; the PI3KC2-beta RBD-Ras complex
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (:* ?type (? word W::PATHWAY W::COMPLEX))
 	    :ASSOC-WITHS (?!name1 ?!name2))
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name1 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name1
+	    ?reln1 ?!name1
 ;	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::SIGNALING-PATHWAY) ?w) :DRUM ?code)
 ;	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULE ONT::GENE) ?!w) :DRUM ?code)  ; to avoid "Ras S338" (S338 :ASSOC-WITH Ras) being extracted as an m-sequence (Ras S338)
 	    ; replaced MOLECULE and GENE by MOLECULAR-PART; the "Ras S338" comment is probably not applicable any more
 	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART) ?!w) :DRUM ?code)  ; to avoid "Ras S338" (S338 :ASSOC-WITH Ras) being extracted as an m-sequence (Ras S338)
-	   ((? reln2 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name2 
+	   (;(? reln2 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name2
+	    ?reln2 ?!name2
 ;	    (:* (? type1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::SIGNALING-PATHWAY) ?w) :DRUM ?code)
 ;	    (:* (? type2 ONT::CHEMICAL ONT::MOLECULE ONT::GENE) ?!w2) :DRUM ?code2)  ; to avoid "Ras S338" (S338 :ASSOC-WITH Ras) being extracted as an m-sequence (Ras S338)
 	    ; replaced MOLECULE and GENE by MOLECULAR-PART; the "Ras S338" comment is probably not applicable any more
@@ -697,16 +740,19 @@
 
 	  ;; robust rule for explicit constructions for pathways/complexes, e.g., "MEK/ERK pathway", "Ras/Raf complex"
 	  ;; new construction; might have replaced -explicit-ref-seq0
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (:* (? type ONT::SIGNALING-PATHWAY ONT::MACROMOLECULAR-COMPLEX) ?!w)
 	    :ASSOC-WITHS (?!name))
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name 
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!name
+	    ?reln1 ?!name
 ;	    (? type1 ONT::SEQUENCE) :SEQUENCE ?!sequence)
 	    (? type1 ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART)
 	    :SEQUENCE ?!sequence
  	    :SEQUENCE (?!s1 ?s2 ?s3)  ; this is so to match a superset of -explicit-ref-seq0b
 	    :operator -)  ; ":operator -" is here to exclude logical sequences (e.g., Ras and Raf)
-	   ((? reln1s ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!s1
+	   (;(? reln1s ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!s1
+	    ?reln1s ?!s1
 	    (:* (? type1s ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART) ?!w1s)
 	    :SEQUENCE - :drum ?code1s)
 	   -explicit-ref-seq0a>
@@ -726,17 +772,20 @@
 	   )
 
 	  ;; robust rule for explicit constructions for pathways/complexes, e.g., "a complex of Ras/Raf"
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 	    (:* (? type ONT::SIGNALING-PATHWAY ONT::MACROMOLECULAR-COMPLEX) ?!w)
 	    :ASSOC-WITHS (?!name))
 	   (ONT::F ?!name ONT::ASSOC-WITH :GROUND ?!nVal)
-	   ((? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!nVal
+	   (;(? reln1 ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!nVal
+	    ?reln1 ?!nVal
 ;	    (? type1 ONT::SEQUENCE) :SEQUENCE ?!sequence)
 	    (? type1 ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART)
 	    :SEQUENCE ?!sequence
  	    :SEQUENCE (?!s1 ?s2 ?s3)  ; this is so to match a superset of -explicit-ref-seq0b
 	    :operator -)
-	   ((? reln1s ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!s1
+	   (;(? reln1s ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!s1
+	    ?reln1s ?!s1
 	    (:* (? type1s ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART) ?!w1s)
 	    :SEQUENCE - :drum ?code1s)
 	   -explicit-ref-seq0a2>
@@ -758,13 +807,15 @@
 	  ;; robust rule for explicit constructions for pathways/complexes (without the word "pathway" or "complex"), e.g., "Ras/Raf/Mek"
 	  ;; We do not make the combined type PATHWAY or MACROMOLECULAR-COMPLEX because it could be either
 	  ; works only up to three elements because of :SEQUENCE (?!s1 ?s2 ?s3)
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 ;	    ONT::SEQUENCE :ELEMENT-TYPE ?!type :SEQUENCE ?!sequence)
 	    (? type ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART)
 	    :SEQUENCE ?!sequence
 	    :SEQUENCE (?!s1 ?s2 ?s3)  ; this is to stop "the first protein" from matching ("first" is :sequence (nth 1))
 	    :operator -)
-	   ((? reln1s ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!s1
+	   (;(? reln1s ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!s1
+	    ?reln1s ?!s1
 	    (:* (? type1s ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART) ?!w1s)
 	    :SEQUENCE - :drum ?code1s)
 	   -explicit-ref-seq0b>
@@ -785,7 +836,8 @@
 	  
 
 	  ;; robust rule for explicit constructions for molecules with mutations that look like pathways/complexes, e.g., BRAF-V600E; (but not Ras-V12)
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 ;	    ONT::SEQUENCE :ELEMENT-TYPE ?!type :SEQUENCE (?!s1 ?!s2))
 	    (? type ONT::REFERENTIAL-SEM) :SEQUENCE (?!s1 ?!s2) :operator -)  ; gene + mutation = REFERENTIAL-SEM
 	   ((? reln1 ONT::THE) ?!s1 
@@ -806,7 +858,8 @@
 
 	  ;; same as above -explicit-ref-seq0c, but with reversed sequence elements
 	  ;; robust rule for explicit constructions for molecules with mutations that look like pathways/complexes, e.g., V600E-BRAF; (but not V12-Ras)
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 ;	    ONT::SEQUENCE :ELEMENT-TYPE ?!type :SEQUENCE (?!s2 ?!s1))
 	    (? type ONT::REFERENTIAL-SEM) :SEQUENCE (?!s2 ?!s1) :operator -)  ; gene + mutation = REFERENTIAL-SEM
 	   ((? reln1 ONT::THE) ?!s1 
@@ -826,7 +879,8 @@
 	   )
 
 	  ;; robust rule for explicit constructions for molecules with sits that look like pathways/complexes, e.g., Ras-V12 (or Ras/V12 if this happens)
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 ;	    ONT::SEQUENCE :ELEMENT-TYPE ?!type :SEQUENCE (?!s1 ?!s2))
 	    (? type ONT::REFERENTIAL-SEM) :SEQUENCE (?!s1 ?!s2) :operator -)  ; gene + mutation = REFERENTIAL-SEM
 	   ((? reln1 ONT::THE) ?!s1 
@@ -847,7 +901,8 @@
 
 	  ;; same as above -explicit-ref-seq0e, but with reversed sequence elements
 	  ;; robust rule for explicit constructions for molecules with mutations that look like pathways/complexes, e.g., V12-Ras (or V12/Ras if this happens)
-	  (((? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj 
+	  ((;(? reln ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET) ?!obj
+	    ?reln ?!obj
 ;	    ONT::SEQUENCE :ELEMENT-TYPE ?!type :SEQUENCE (?!s2 ?!s1))
 	    (? type ONT::REFERENTIAL-SEM) :SEQUENCE (?!s2 ?!s1) :operator -)  ; gene + mutation = REFERENTIAL-SEM
 	   ((? reln1 ONT::THE) ?!s1 
