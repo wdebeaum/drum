@@ -249,10 +249,10 @@ sub read_from_terms2 {
 	} elsif ($id =~ /^XFAM::\|?PF/) { # ONT type depends on $tp
 	  if ($tp eq 'Family') {
 	    $lftypes = ['PROTEIN-FAMILY'];
+	    push @dbxrefs, get_dbxrefs($id);
 	  } else { # Domain, Repeat, Motif
 	    $lftypes = ['MOLECULAR-DOMAIN'];
 	  }
-	  push @dbxrefs, get_dbxrefs($id);
 	} elsif ($id =~ /^MESH:/) { # everything (that we get) is a drug
 	  $lftypes = ['PHARMACOLOGIC-SUBSTANCE'];
 	} elsif ($id =~ /^CVCL:/) { # everything's a cell line

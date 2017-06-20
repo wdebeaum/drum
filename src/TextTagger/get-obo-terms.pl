@@ -14,6 +14,7 @@ use TextTagger::OBOParser qw(read_header read_stanza remove_trailing_modifier);
 use TextTagger::ChemicalFormulae qw(is_chemical_element);
 use TextTagger::Normalize qw(unspell_greek_letters normalize);
 use IO::Handle;
+do "../util/add_suffix.polyglot" or die;
 
 use strict vars;
 
@@ -123,6 +124,20 @@ for my $obo_file_name (@ARGV) {
   close $fh;
 }
 
+# remove regular plural "synonyms"
+for my $singular (keys %normalized_word_to_obo_info) {
+  my $plural = add_suffix($singular, 's');
+  if (exists($normalized_word_to_obo_info{$plural})) {
+    my @singular_infos = @{$normalized_word_to_obo_info{$singular}};
+    @{$normalized_word_to_obo_info{$plural}} =
+      grep {
+	my $plural_id = $_->{id};
+	not ($_->{status} =~ /synonym$/ and
+	     grep { $_->{id} eq $plural_id } @singular_infos)
+      } @{$normalized_word_to_obo_info{$plural}};
+  }
+}
+
 # return the list of info structures reachable via repeated is_a links (not
 # including the original ID's info)
 sub get_ancestors {
@@ -166,6 +181,7 @@ for my $word (keys %normalized_word_to_obo_info) {
 for my $word (sort keys %normalized_word_to_obo_info) {
   next if (length($word) == 1); # no single letters, please
   next if ($word =~ /\bper(?:cent)?\b/); # ignore multiword rate terms so TRIPS parser can treat them compositionally
+  next unless (@{$normalized_word_to_obo_info{$word}}); # ignore words all of whose info has been removed
   print $word;
   # group by unnormalized word
   my %unnormalized_word_to_obo_info = ();

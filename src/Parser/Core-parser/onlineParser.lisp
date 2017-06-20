@@ -1098,17 +1098,24 @@
 	   (word (caddr pre))
 	   (root (car (cdddr pre)))
 	   (newterms (car (cddddr pre)))
+	   (newlf (find-if #'(lambda (x) (eq root (find-arg-in-act x :var))) newterms))
+	   (input (find-arg-in-act newlf :input))
 	   (oldterms (find-arg-in-act act :terms)))
+
+     ;; (format t "~%New LF=~S. Oldterms are ~S" newlf oldterms)
       
       ;; we can't use exact matching for :START here because 
       ;; there's a few cases where the start/end doesn't match -- specifically the sequence NP occus in a larger phrases -- as in 
-      ;;  prepositional phrases where the prep does not contribute meaning, so we look for these
+      ;;  prepositional phrases where the prep does not contribute meaning, and in some cases with terms built by *PRO* constructions
       (multiple-value-bind
 	    (targets rest)
 	  (split-list #'(lambda (x)
-			  (and (not (member (car (find-arg-in-act x :lf)) '(ont::F ont::speechact)))
-			       (<= (find-arg-in-act x :start) start) 
-			       (eq end (find-arg-in-act x :end))))
+			  ;;(format t "~%CHECKING ~S" x)
+			  (let ((thislf (find-arg-in-act x :lf)))
+			    (and (not (member (car thislf) '(ont::F ont::speechact)))
+				 (<= (find-arg-in-act x :start) start) 
+				 (>= (find-arg-in-act x :end) start)
+				 (equal input (find-arg-in-act thislf :name-of)))))
 		      oldterms)
 	(if targets
 	    ;; find the minimal one

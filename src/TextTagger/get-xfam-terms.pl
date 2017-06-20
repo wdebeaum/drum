@@ -64,6 +64,7 @@ while ($_ = ($next_line || <>)) {
 	 map { +{ unnormalized => downcase_initial($_), status => 'PI' } }
 	     split(/;\s*/, $line);
   } elsif ($code eq 'AC') { # ACcession number
+    $line =~ s/\.\d+$//; # remove version number
     $current_ac = "XFAM:$line";
   } elsif ($code eq 'DE') { # DEscription
     push @current_infos,

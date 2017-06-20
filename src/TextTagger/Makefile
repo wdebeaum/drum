@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.96 2017/06/06 14:30:50 wdebeaum Exp $
+# $Id: Makefile,v 1.98 2017/06/20 02:17:21 lgalescu Exp $
 #
 
 MODULE = TextTagger
@@ -42,6 +42,13 @@ ifneq (,$(wildcard CVS))
 %.pl:
 	cvs update $@
 endif
+
+#
+# This makefile creates important resources; if anything fails we prevent it
+# from creating empty or partial files which could negatively affect the
+# system's behavior
+#
+.DELETE_ON_ERROR:
 
 #
 # Rules for those using terms.c (see also several sections using this below)
@@ -127,7 +134,7 @@ downloads/names.zip:
 	$(call download_compressed,https://www.ssa.gov/oact/babynames/names.zip)
 
 personal-names.tsv: get-personal-names.sh downloads/names.zip
-	./$+ >$@
+	./$^ >$@
 
 endif
 
@@ -178,28 +185,28 @@ install:: mirna-species.tsv drum-terms.tsv drum-dsl specialist.tsv drum-dbxrefs.
 drum-terms.tsv: merge-terms-files.pl obo-terms.tsv hgnc-terms.tsv uniprot-terms.tsv uniprot-subcell-terms.tsv nextprot-family-terms.tsv pfam-terms.tsv mesh-scr-terms.tsv ncit-terms.tsv hlsm-terms.tsv
 	./$^ >$@
 
-drum-dbxrefs.tsv: get-uniprot-dbxrefs.pl downloads/uniprot_sprot.dat.gz
+drum-dbxrefs.tsv: get-uniprot-dbxrefs.pl downloads/uniprot_sprot.dat.gz uniprot-species.pl
 	gunzip -c downloads/uniprot_sprot.dat.gz \
 	| ./$< >$@
 
-OBO_FILES=$(foreach f,bioentities.obo BrendaTissueOBO cellosaurus.obo chebi.obo cl-basic.obo efo.obo go.obo unit.obo,downloads/$(f))
+OBO_FILES:=$(addprefix downloads/,bioentities.obo BrendaTissueOBO cellosaurus.obo chebi.obo cl-basic.obo efo.obo go.obo unit.obo)
 # psi-mi25.obo so-xp.obo
 
-obo-terms.tsv: get-obo-terms.pl $(OBO_FILES) Makefile
-	TRIPS_BASE=$(prefix) ./get-obo-terms.pl $(OBO_FILES) >$@
+obo-terms.tsv: get-obo-terms.pl $(OBO_FILES) | Makefile
+	TRIPS_BASE=$(prefix) ./$^ >$@
 
 go_protmods.obo: go_protmods.pl downloads/go.obo
 	./go_protmods.pl -o $@ downloads/go.obo
 
 go_protmods.tsv: get-obo-terms.pl go_protmods.obo
-	TRIPS_BASE=$(prefix) ./get-obo-terms.pl go_protmods.obo >$@
+	TRIPS_BASE=$(prefix) ./$^ >$@
 
 hgnc-terms.tsv: get-hgnc-terms.pl downloads/protein-coding_gene.txt.gz
 	gunzip -c <downloads/protein-coding_gene.txt.gz \
 	| ./get-hgnc-terms.pl \
 	>$@
 
-uniprot-terms.tsv: get-uniprot-terms.pl downloads/uniprot_sprot.dat.gz
+uniprot-terms.tsv: get-uniprot-terms.pl downloads/uniprot_sprot.dat.gz uniprot-species.pl
 	gunzip -c <downloads/uniprot_sprot.dat.gz \
 	| ./get-uniprot-terms.pl \
 	>$@
@@ -230,10 +237,10 @@ $(info NCIT_ZIPFILE=$(NCIT_ZIPFILE))
 
 # also writes drum-dsl/NCIT/*
 ncit-terms.tsv: get-ncit-terms.pl downloads/$(NCIT_ZIPFILE)
-	./$+ >$@
+	./$^ >$@
 
 hlsm-terms.tsv: get-hlsm-terms.pl downloads/small_molecule.csv
-	./$+ >$@
+	./$^ >$@
 
 specialist.tsv: get-specialist-tsv.pl downloads/LEXICON downloads/inflection.table $(prefix)/src/LexiconManager/Data/new
 	TRIPS_BASE=$(prefix) ./get-specialist-tsv.pl downloads/LEXICON downloads/inflection.table >$@

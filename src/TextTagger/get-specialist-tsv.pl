@@ -145,6 +145,13 @@ while (<INFL>) {
 }
 close INFL;
 
+# a few manual er/or citation form corrections
+$eui_to_citation{E0016301} = 'chelator';
+$eui_to_citation{E0022854} = 'dilator';
+$eui_to_citation{E0024545} = 'effector';
+$eui_to_citation{E0034634} = 'inhibitor';
+$eui_to_citation{E0059156} = 'suppressor';
+
 for my $normalized (sort keys %inflected_to_eui_pos_list) {
   next if (length($normalized) == 1); # no single letters please
   print $normalized;
