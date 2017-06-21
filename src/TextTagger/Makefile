@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.98 2017/06/20 02:17:21 lgalescu Exp $
+# $Id: Makefile,v 1.99 2017/06/20 15:10:30 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -192,8 +192,8 @@ drum-dbxrefs.tsv: get-uniprot-dbxrefs.pl downloads/uniprot_sprot.dat.gz uniprot-
 OBO_FILES:=$(addprefix downloads/,bioentities.obo BrendaTissueOBO cellosaurus.obo chebi.obo cl-basic.obo efo.obo go.obo unit.obo)
 # psi-mi25.obo so-xp.obo
 
-obo-terms.tsv: get-obo-terms.pl $(OBO_FILES) | Makefile
-	TRIPS_BASE=$(prefix) ./$^ >$@
+obo-terms.tsv: get-obo-terms.pl $(OBO_FILES) Makefile
+	TRIPS_BASE=$(prefix) ./get-obo-terms.pl $(OBO_FILES) >$@
 
 go_protmods.obo: go_protmods.pl downloads/go.obo
 	./go_protmods.pl -o $@ downloads/go.obo

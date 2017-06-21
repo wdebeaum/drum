@@ -203,10 +203,10 @@ sub read_from_terms2 {
 	    $name =~ / activity$/ and $matched_variant !~ / activity$/i) {
 	  # special case for GO molecular_function terms with "activity" removed
 	  $lftypes = ['PROTEIN'];
-	} elsif ($id =~ /^(?:CHEBI|CVCL):/ and
+	} elsif ($id =~ /^CVCL:/ and
 		 $match->{'surely-depluralized'}
 		) {
-	  # skip morphed CHEBI and CVCL terms
+	  # skip morphed CVCL terms
 	} elsif ($id =~ /^(BE|BTO|CHEBI|CO|EFO|GO|MI|NCIT|UO|SO|ORPHANET):/) { # ontologies with hierarchies
 	  push @mapped_ids, $id
 	    unless (exists($mapped_id_to_matches_with_status{$id}));

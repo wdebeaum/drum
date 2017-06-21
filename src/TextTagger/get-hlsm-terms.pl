@@ -13,6 +13,11 @@ sub unquote {
   return (($str =~ /^"(.*?)"$/) ? $1 : $str);
 }
 
+# the file uses DOS line endings, and lines may contain newlines without
+# carriage returns, so we must explicitly set the record separator to get whole
+# "lines"
+$/ = "\r\n";
+
 my $headings = <>; # skip headings
 
 my %norm2unnorm2entries = ();
