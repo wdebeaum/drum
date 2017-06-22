@@ -36,15 +36,21 @@
 ;;;; :::::::          The problem was that the WH feature was propagating up and the sentence came out as a question
 ;;;; :::::::          and the WH-TERM was not built.
     ;;;; I know how to.../ I know where he is
-   ((LF-PARENT ONT::FAMILIAR)
+   (;(LF-PARENT ONT::FAMILIAR)
+    (LF-PARENT ONT::know)
     (TEMPL experiencer-theme-xp-templ (xp (% W::NP (W::sort W::wh-desc))))
     )
+   
     ((LF-PARENT ONT::FAMILIAR)
-     (SEM (F::Aspect F::Stage-level))
+     ;(SEM (F::Aspect F::Stage-level))
      (example "I know him ")
      (TEMPL experiencer-neutral-TEMPL )
      )
 
+    ((LF-PARENT ONT::know)
+     (example "I know the answer ") 
+     (TEMPL experiencer-neutral-TEMPL )
+     )
     ((LF-PARENT ONT::KNOW)
      (example "I know")
      (TEMPL experiencer-templ)

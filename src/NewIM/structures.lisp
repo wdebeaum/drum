@@ -152,6 +152,7 @@
   start
   end
   sem
+  index
   )
 
 (defstruct ref-hyp
@@ -162,6 +163,7 @@
   coref     ;; the LF var that it refers to
   kr-context   ;; new context for this hypotheis (adds to or replaces stuff in referent context
   score     ;; TBA - some indication of likelihood among the hypotheses
+  index
   )
   
 (defstruct pattern-info

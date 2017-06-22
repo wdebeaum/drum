@@ -10,13 +10,16 @@
     ((LF-PARENT ONT::REFERENTIAL-SEM)
      (SEM (F::origin (? !n F::human)))
      (TEMPL pronoun-wh-templ)
-     (SYNTAX (W::agr (? agr W::3s W::3p)) (W::wh W::Q) (W::case W::obj) (W::sing-lf-only +))
+     (SYNTAX (W::agr (? agr W::3s W::3p)) (W::wh W::Q)
+	     (w::case (? c w::sub w::obj))) ;(W::case W::obj) (W::sing-lf-only +))
      )
+    #|
     ((LF-PARENT ONT::REFERENTIAL-SEM)
      (SEM (F::origin (? !n F::human)))
      (TEMPL pronoun-wh-templ)
      (SYNTAX (W::agr W::3s) (W::wh W::Q) (W::case W::sub))
      )
+    |#
     )
    )
 ))

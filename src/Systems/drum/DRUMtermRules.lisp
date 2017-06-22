@@ -651,7 +651,10 @@
 	   )
 
 	  ;; robust rule for pronouns, e.g., it, itself, we
-	  (((? reln ONT::PRO ONT::PRO-SET) ?!obj (:* ?!type ?!w) :PROFORM ?!pro
+	  ; note: the type might be replaced by coref type
+	  (((? reln ONT::PRO ONT::PRO-SET) ?!obj
+	    ;(:* ?!type ?!w) :PROFORM ?!pro
+	    ?!type :PROFORM ?!pro ; took out the ?!w because coref substitution would remove the ?!w
 	    )
 	   -robustPro>
 	   100
@@ -662,6 +665,20 @@
 	    )
 	   )
 
+	  ; what, which, who (but not "what protein")
+	  ; note: the type might be replaced by coref type
+	  (((? reln ONT::WH-TERM) ?!obj
+	    ;(:* ?!type ?!w) :PROFORM ?!what
+	    ?!type :PROFORM ?!what
+	    )
+	   -robustWhat>
+	   100
+	   (ONT::TERM ?!obj ?!type
+	    :pro ?!what
+;	    :drum ?code
+	    :rule -robustWhat
+	    )
+	   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; pathways/complexes

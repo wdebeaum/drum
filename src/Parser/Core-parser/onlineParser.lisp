@@ -16,7 +16,7 @@
 ;;;
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with this program; if not, write to the Free Software
-;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+;;; Foundation, Inc., 675 MassAve, Cambridge, MA 02139, USA.
 ;;;======================================================================
 ;;
 ;;  A SERIAL BU PARSER FOR USE IN SPEECH APPLICATIONS, WHERE WORDS
@@ -1114,8 +1114,10 @@
 			  (let ((thislf (find-arg-in-act x :lf)))
 			    (and (not (member (car thislf) '(ont::F ont::speechact)))
 				 (<= (find-arg-in-act x :start) start) 
-				 (>= (find-arg-in-act x :end) start)
-				 (equal input (find-arg-in-act thislf :name-of)))))
+				 (or (= (find-arg-in-act x :end) end)
+				     ;; the following covers cases where sequences are expanded in the input - e.g., "Smad1/3/5 ends up as (smad 1 / smad 3 / smad 5"
+				     (and (> (find-arg-in-act x :end) start)
+					  (null (set-difference input (find-arg-in-act thislf :name-of))))))))
 		      oldterms)
 	(if targets
 	    ;; find the minimal one

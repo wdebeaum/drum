@@ -24,6 +24,7 @@
 							   (referent-ref-hyps rr))))
 			      (if reduced-refs
 				  (setf (referent-ref-hyps rr) reduced-refs))))
+
 			refs)))
        ;; other filters here
        )
@@ -74,10 +75,11 @@
 	   (first-events (cadar choices))
 	   (coref (ref-hyp-coref first))
 	   (first-conflict
-	    (find-if #'(lambda (x)
+	    (if (not (null coref)) ; skip :coref NIL
+		(find-if #'(lambda (x)
 			 (and (eq coref (ref-hyp-coref (car x)))
 			      (intersection first-events (cadr x))))
-		     (cdr choices))))
+		     (cdr choices)))))
       (if first-conflict
 	  (progn
 	    ;;(format t "~% reflexivity violation found for ~S in choices  ~S" (car choices) (cdr choices))
@@ -153,7 +155,7 @@
   (if val
       (format t " ~S ~S~%" tag val)))
 
-(defun build-referent-structure (term grammroles)
+(defun build-referent-structure (term grammroles index)
   "builds the basic referent structure from the information in TERM"
   (let* ((lf (find-arg-in-act term :lf))
 	 (id (second lf))
@@ -178,6 +180,7 @@
       :start start
       :end end
       :sem sem
+      :index index
       )
      )))
 
@@ -231,8 +234,11 @@
 	   'state
 	   (if (subtype-check lf-type 'ont::property-val)
 	       'pred
-	       (if (not (eq lf-type 'ont::do))  ;; ont::do does not generate a referent
-		   'event)))))
+	     (if (subtype-check lf-type 'ont::situation-root)
+		 (if (not (eq lf-type 'ont::do))  ;; ont::do does not generate a referent
+		   'event)
+	       'pred
+	       )))))
     ((ONT::BARE ONT::KIND) 'kind)
     (ONT::WH-TERM 'wh-term)
     (otherwise 'abstract)))
@@ -255,10 +261,12 @@
 	(setf (referent-coref ref) (ref-hyp-coref hyp))
 	(if (ref-hyp-lf-type hyp)
 	    (setf (referent-lf-type ref) (simplify-lf-type (ref-hyp-lf-type hyp) (referent-lf ref))))
+	#|
 	(if (and (referent-lf-type ref)
 		 (not (eq (referent-lf-type ref) (simplify-generic-type (third lf)))))
 	    (setq lf (cons (car lf) (cons (cadr lf) (cons (referent-lf-type ref)
 							       (cdddr lf))))))
+	|#
 	(if (ref-hyp-sem hyp)
 	    (setf (referent-sem ref) (ref-hyp-sem hyp)))
 	;; add to the LF
@@ -304,7 +312,7 @@
   "Returns a list REF-HYPs with referential information added"
   (let* ((lf (referent-lf ref))
 	 (sem (referent-sem ref))
-	 (lf-type (caddr lf))
+	 (lf-type (referent-lf-type ref)) ;(lf-type (caddr lf))
 	 ;;(lf-type (refine-type-from-sem-list (simplify-generic-type (caddr lf)) sem))
 	 (hyps
 	  (case (car lf)
@@ -425,13 +433,15 @@
 	    ((ont::we ont::our ont::us ont::ourself ont::ourselves
 		      W::we W::our W::us W::ourself W::ourselves) ; "we" can refer to "you and I"
 	     (list (make-ref-hyp :id id ;;:refers-to id
-				 :lf-type '(ONT::SET-OF ONT::PERSON)
+				 ;:lf-type '(ONT::SET-OF ONT::PERSON)
 				 :refers-to 'ONT::US)))
 	    ((ont::it ont::its
 		      W::it W::its)
 	     (when (non-expletive lf)
-	       (or (resolve-pro-fn lf lf-type sem '(concrete) '(individual) index (fn-no-human lf-type) 3 role)
-		 (resolve-pro-fn lf lf-type sem '(event wh-term state) '(individual) index #'(lambda (x) T) 3 role))))
+	       (resolve-pro-fn lf lf-type sem '(concrete kind event wh-term state) '(individual) index (fn-no-human lf-type) 3 role)
+	       ;(or (resolve-pro-fn lf lf-type sem '(concrete) '(individual) index (fn-no-human lf-type) 3 role)
+		   ;(resolve-pro-fn lf lf-type sem '(event wh-term state) '(individual) index #'(lambda (x) T) 3 role))
+	       ))
 
 	    ((;ont::itself
 	      W::itself w::himself w::herself w::themselves)
@@ -440,7 +450,7 @@
 	    ((ont::this ont::that ont::these ont::those
 			W::this W::that W::these W::those)
 	     (when (non-expletive lf)
-	       (resolve-this-that lf sem index)))
+	       (resolve-this-that lf lf-type sem index)))
 	    
 	    ((ont::they ont::them ont::their
 			W::they W::them W::their)
@@ -483,7 +493,7 @@
 
 	    (;(ont::which ont::who)  ;; these occur in relative clause fragments
 	     (W::which W::who)  ;; these occur in relative clause fragments
-	     (resolve-relative-pro lf index sem))
+	     (resolve-relative-pro lf lf-type index sem))
 	    )))
 	    
     val))
@@ -544,12 +554,12 @@
 
 (defun third-person-pro (pro)
   (member (find-arg pro :proform)
-	  '(W::IT W::THEM W::HE W::HIM W::SHE W::HER ont::it ont::them ont::he ont::him ont::she ont::her)))
+	  '(W::IT W::THEY W::THEM W::HE W::HIM W::SHE W::HER ont::it ont::they ont::them ont::he ont::him ont::she ont::her)))
 
     
 (defun resolve-pro-fn (lf lf-type sem access num index fn count role)
   "Personal pronouns should refer to a concrete object matching the criteria in the recent history.
-    We check in the current utter1ance for possible referents that come before the pro form"
+    We check in the current utterance for possible referents that come before the pro form"
   (let* ((id (second lf)))
     (multiple-value-bind
 	  (possible-hyps id-order)
@@ -564,7 +574,7 @@
 	      (remove-duplicate-ref-hyps
 	       (tag-as-prior-sentence (mapcar #'(lambda (x) 
 						  (score-and-build-hyp (second lf) lf-type x sem))
-					      (search-for-possible-refs lf-type (second lf) sem access num (- index 1) count fn))))))
+					      (search-for-possible-refs lf-type (second lf) sem access num (- index 1) count fn)) index))))
 	(append current-sentence-hyps prior-sentence-hyps)))))
   
 (defun tag-order-in-sentence (id id-order refs)
@@ -608,17 +618,19 @@
 	(cons (car ref-hyps) (remove-rest (cdr ref-hyps) (cdr corefs))))))
       
 
-(defun tag-as-prior-sentence (refs)
+(defun tag-as-prior-sentence (refs index)
   (mapcar #'(lambda (x)
+	      (let ((history-posn (- index (ref-hyp-index x)))) ; note: negative for referents after index
 	       (setf (ref-hyp-score x)
-			  (list* :history-posn 1
-				(ref-hyp-score x))))
+			  (list* :history-posn history-posn 
+				(ref-hyp-score x)))))
 	  refs)
   refs)
 
-(defun resolve-this-that (lf sem index)
+(defun resolve-this-that (lf lf-type sem index)
   "this and that allow reference to visually focussed objects as well as discourse concrete and abstract"
-  (let ((possibles (progressive-search-for-possible-refs (get-lf-type lf) (second lf) sem
+  (let ((possibles (progressive-search-for-possible-refs lf-type ;(get-lf-type lf)
+							 (second lf) sem
 							 '(visible-focus concrete event abstract)
 							 (list (classify-num lf))
 							 (- index 1)
@@ -626,10 +638,11 @@
 							 #'(lambda (x) (it-exclusion (referent-lf-type x))))))
     (mapcar #'(lambda (a) (bind-to-referent lf nil a)) possibles)))
 
-(defun resolve-relative-pro (lf index sem)
+(defun resolve-relative-pro (lf lf-type index sem)
   "relative pronouns only arise in the case of fragemented sentences, and thus it should refer to the 
     last viable NP in the previous utterance"
-  (let ((possibles (last (search-for-possible-refs (get-lf-type lf) (second lf) sem
+  (let ((possibles (last (search-for-possible-refs lf-type ;(get-lf-type lf)
+						   (second lf) sem
 							 '(concrete)
 							 (list (classify-num lf))
 							 (- index 1)
@@ -881,6 +894,7 @@
 		   :sem (if (and (var-p newsem) (arrayp (var-values newsem)))
 			    (cons '$ (build-list-from-sem-array (var-values newsem))))
 		   :score score
+		   :index (referent-index ante)
 		   )))
 
 (defun score-sem (id ante sem)
@@ -937,8 +951,10 @@
     (if (eq (utt-record-status (get-im-record index)) 'CPSA-failure)
 	;; skip over failed utterances
 	(find-most-salient lf-type id sem access-requirement num (- index 1) limit name)
-	(or (find-possible-referents lf-Type sem id Access-requirement num index name) 
+	(append (find-possible-referents lf-Type sem id Access-requirement num index name)
 	    (find-most-salient lf-type id sem access-requirement num (- index 1) (- limit 1) name)))
+	;(or (find-possible-referents lf-Type sem id Access-requirement num index name) 
+	    ;(find-most-salient lf-type id sem access-requirement num (- index 1) (- limit 1) name)))
     ))
 
 (defun find-possible-referents (lf-type sem id access-requirement nums index &optional name)
@@ -964,9 +980,9 @@
 (defun refine-type-from-sem-list (type sem)
   (if (eq type 'ONT::REFERENTIAL-SEM)
       (let ((new (cadr (assoc 'f::type (cddr sem)))))
-	(if (null new)
+	(if (null new) 
 	    type
-	    (if (eq new 'ONT::REFERENTIAL-SEM)
+	    (if (and (eq new 'ONT::REFERENTIAL-SEM) (not (consp (second sem))))  ; if sem is e.g., (? 3132 (F::PHYS-OBJ F::ABSTR-OBJ F::SITUATION))
 		;; try to refine by sem vector type
 		(map-sem-feature-class-to-lf (cadr sem))
 	      new)))
@@ -1014,7 +1030,8 @@
       (let* ((focus (utt-record-focus r))
 	     (focus-id (if (referent-p focus) (referent-id focus) focus))
 	     
-	     (accessable-refs (remove-if-not #'(lambda (x) (and (referent-p x) 
+	     (accessable-refs (remove-if-not #'(lambda (x) (and (referent-p x)
+								(not (member 'ONT::PRO (referent-lf x))) ; not another pronoun
 								(not (eq (referent-id x) id)) ;; can't refer to itself
 								(member (referent-accessibility x) access-requirement)
 								(or (null event-ids)

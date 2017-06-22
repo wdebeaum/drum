@@ -85,7 +85,7 @@
 			   :speechactId sa-id
 			  ;; :root root
 			   :lf-ids (mapcar #'second lfs)
-			   :referring-expressions (build-referent-structures-from-terms terms merged-recursive-roles)
+			   :referring-expressions (build-referent-structures-from-terms terms merged-recursive-roles *im-utt-count*)
 			   :input input
 			   :index *im-utt-count*
 			   :uttnum uttnum)
@@ -175,8 +175,8 @@
     (setf (utt-record-referring-expressions rec) (append (utt-record-referring-expressions rec)
 					    (build-referent-structures-from-terms relevant-terms)))))
     
-(defun build-referent-structures-from-terms (terms roles)
-  (mapcar #'(lambda (term) (build-referent-structure term roles))
+(defun build-referent-structures-from-terms (terms roles index)
+  (mapcar #'(lambda (term) (build-referent-structure term roles index))
 		      terms))
 
 
