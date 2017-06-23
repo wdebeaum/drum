@@ -418,8 +418,9 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
     )
 
 (defun remove-noninitial-hyphens (mwe)
-  (if (and (find 'w::punc-minus mwe) (not (equal 'w::punc-minus (first mwe))))
-      (remove 'w::punc-minus mwe) mwe))
+  mwe)
+#||  (if (and (find 'w::punc-minus mwe) (not (equal 'w::punc-minus (first mwe))))
+      (remove 'w::punc-minus mwe) mwe))||#
 
 			
 (defun make-default-unknown-word-entry (w trips-pos-list penn-tags tagged-sense)

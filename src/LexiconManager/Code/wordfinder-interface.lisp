@@ -84,7 +84,7 @@
 		     (wf-word (get-wf-word this-wf-entry))
 		     (domain-info (get-wf-domain-info this-wf-entry))
 		     (wid (gen-id wf-word))
-		     (w (if (and (listp w) (find 'w::punc-minus w)) (remove 'w::punc-minus w) w)) ;; handle hyphenation 
+		     ;;(w (if (and (listp w) (find 'w::punc-minus w)) (remove 'w::punc-minus w) w)) ;; handle hyphenation 
 		     (new-entry (make-unknown-word-entry w pos score feats wid (list this-lf) trips-sense-list penntag ont-sense-tags domain-info)))
 		(when new-entry
 		  (pushnew (list pos this-lf) senselist :test #'equal)

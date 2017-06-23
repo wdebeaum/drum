@@ -276,7 +276,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule60_0_EXPERIENCER_FORMAL))
@@ -607,7 +607,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -945,7 +945,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -1278,7 +1278,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -1611,7 +1611,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -1944,7 +1944,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -2272,7 +2272,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule60_0_EXPERIENCER_NEUTRAL))
@@ -2603,7 +2603,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -2941,7 +2941,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -3274,7 +3274,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -3607,7 +3607,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -3940,7 +3940,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -4268,7 +4268,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_EXPERIENCER_FORMAL))
@@ -4599,7 +4599,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -4937,7 +4937,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -5270,7 +5270,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -5603,7 +5603,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -5936,7 +5936,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -6264,7 +6264,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_EXPERIENCER_NEUTRAL))
@@ -6595,7 +6595,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -6933,7 +6933,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -7266,7 +7266,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -7599,7 +7599,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -7932,7 +7932,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -8260,7 +8260,7 @@
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL_FORMAL))
@@ -8591,7 +8591,7 @@
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -8929,7 +8929,7 @@
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -9262,7 +9262,7 @@
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -9595,7 +9595,7 @@
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -9928,7 +9928,7 @@
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -10256,7 +10256,7 @@
           ((?!reln0 ?ev
             (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_AGENT_FORMAL))
@@ -10587,7 +10587,7 @@
           ((?!reln0 ?ev
             (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -10925,7 +10925,7 @@
           ((?!reln0 ?ev
             (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -11258,7 +11258,7 @@
           ((?!reln0 ?ev
             (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -11591,7 +11591,7 @@
           ((?!reln0 ?ev
             (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -11924,7 +11924,7 @@
           ((?!reln0 ?ev
             (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -12252,7 +12252,7 @@
           ((?!reln0 ?ev
             (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_AGENT_NEUTRAL))
@@ -12583,7 +12583,7 @@
           ((?!reln0 ?ev
             (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -12921,7 +12921,7 @@
           ((?!reln0 ?ev
             (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -13254,7 +13254,7 @@
           ((?!reln0 ?ev
             (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -13587,7 +13587,7 @@
           ((?!reln0 ?ev
             (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -13920,7 +13920,7 @@
           ((?!reln0 ?ev
             (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -14248,7 +14248,7 @@
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL_NEUTRAL1))
@@ -14579,7 +14579,7 @@
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -14917,7 +14917,7 @@
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -15250,7 +15250,7 @@
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -15583,7 +15583,7 @@
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -15916,7 +15916,7 @@
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -16244,7 +16244,7 @@
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL1_NEUTRAL2))
@@ -16575,7 +16575,7 @@
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -16913,7 +16913,7 @@
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -17246,7 +17246,7 @@
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -17579,7 +17579,7 @@
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -17912,7 +17912,7 @@
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? !pro W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))

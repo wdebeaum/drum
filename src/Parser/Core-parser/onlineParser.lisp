@@ -1117,7 +1117,7 @@
 				 (or (= (find-arg-in-act x :end) end)
 				     ;; the following covers cases where sequences are expanded in the input - e.g., "Smad1/3/5 ends up as (smad 1 / smad 3 / smad 5"
 				     (and (> (find-arg-in-act x :end) start)
-					  (null (set-difference input (find-arg-in-act thislf :name-of))))))))
+					  (null (subsetp input (find-arg-in-act thislf :name-of))))))))
 		      oldterms)
 	(if targets
 	    ;; find the minimal one
