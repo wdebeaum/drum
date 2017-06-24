@@ -2,7 +2,7 @@
 #
 # ekb_test.pl
 #
-# Time-stamp: <Sat Apr  1 18:32:41 CDT 2017 lgalescu>
+# Time-stamp: <Fri Jun 23 09:56:11 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Jun 2016
 #
@@ -34,7 +34,9 @@
 # - Fixed bug (optimization in v1.2 was not correct).
 # - Simplified code a bit.
 # 2017/02/03 v1.3.3     lgalescu
-# - adapted to work as part of EKB TRIPS component
+# - Adapted to work as part of EKB TRIPS component
+# 2017/06/22 v1.3.4	lgalescu
+# - Added individual test results to overall summary.
 
 #----------------------------------------------------------------
 # Usage:
@@ -164,7 +166,7 @@ BEGIN {
 use strict 'vars';
 use warnings;
 
-my $VERSION = "1.3.3";
+my $VERSION = "1.3.4";
 
 # local (TRIPS) Perl libraries
 use lib "$main::TRIPS_BASE/etc/";
@@ -406,22 +408,22 @@ sub t_run {
   my ($n, $p, $f, $s) = (0, 0, 0, 0);
   # assertion counts
   my ($del, $ins, $eql) = (0, 0, 0);
-  foreach my $test (@testsets) {
-    $test->run($options);
+  foreach my $testset (@testsets) {
+    $testset->run($options);
     if ($outDir) {
-      $test->save_run_results($outDir);
+      $testset->save_run_results($outDir);
     }
-    foreach my $tname ($test->tests()) {
-      my $test1 = $test->get_test($tname);
-      if (exists $test1->{result}) {
-	if ($test1->{result}) {
+    foreach my $tname ($testset->tests()) {
+      my $test = $testset->get_test($tname);
+      if (exists $test->{result}) {
+	if ($test->{result}) {
 	  $p++;
 	} else {
 	  $f++;
 	}
-	$del += $test1->{comp}->summary()->{del};
-	$ins += $test1->{comp}->summary()->{ins};
-	$eql += $test1->{comp}->summary()->{eql};
+	$del += $test->{comp}->summary()->{del};
+	$ins += $test->{comp}->summary()->{ins};
+	$eql += $test->{comp}->summary()->{eql};
       }
     }
   }
@@ -446,9 +448,20 @@ sub t_run {
   printf " INS\t%${w}d\n", $ins;
   printf " EQL\t%${w}d (%.2f%%)\n", $eql, 100*$eql/($del + $eql);
   printf "\n";
+  printf "========\n";
+  printf "Tests\n";
+  foreach my $testset (@testsets) {
+    foreach my $tname ($testset->tests()) {
+      my $test = $testset->get_test($tname);
+      printf "%s::%s %s\n",
+	$testset->name,
+	$tname,
+	(exists $test->{result}) ? ($test->{result} ? "passed" : "failed") : "skipped";
+    }
+  }
   
   if ($outDir) {
-    printf "Details can be found in %s\n", $outDir;
+    printf "\nDetails can be found in %s\n", $outDir;
   }
 }
 

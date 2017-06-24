@@ -78,7 +78,8 @@
     :wordnet-sense-keys ("complex%1:27:00")
 ;    :parent ONT::MOLECULE
     :parent ONT::MOLECULAR-PART
-    :arguments ((:required ONT::CONTENTS (F::Phys-obj (f::type ont::molecular-part))))
+    :arguments (;(:required ONT::CONTENTS (F::Phys-obj (f::type ont::molecular-part))))
+		(:required ONT::FIGURE (F::Phys-obj (f::type ont::molecular-part))))
     )
 
 (define-type ONT::RNA

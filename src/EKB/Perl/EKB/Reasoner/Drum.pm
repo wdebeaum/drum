@@ -1,9 +1,9 @@
 # Drum.pm
 #
-# Time-stamp: <Mon May 29 14:10:39 CDT 2017 lgalescu>
+# Time-stamp: <Fri Jun 23 10:01:46 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  1 Jun 2016
-# $Id: Drum.pm,v 1.12 2017/05/29 19:19:08 lgalescu Exp $
+# $Id: Drum.pm,v 1.13 2017/06/23 15:03:22 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -62,9 +62,11 @@
 # - Synced w/ EKB.pm (much, much cleaner code now).
 # - Many small style and efficiency improvements.
 # 2017/05/26 v1.12.0	lgalescu
-# - updated to conform to new representation for 'inevent' features.
-# - fixed one bug (highly improbable the situation ever occurred).
-# - added new rules (EKR::dePTM, EKR:AddComplexName)
+# - Updated to conform to new representation for 'inevent' features.
+# - Fixed one bug (highly improbable the situation ever occurred).
+# - Added new rules (EKR::dePTM, EKR:AddComplexName)
+# 2017/05/30 v1.12.1	lgalescu
+# - Updated one last occurrence of add_assertion_r.
 
 #----------------------------------------------------------------
 # Usage:
@@ -72,7 +74,7 @@
 
 package EKB::Reasoner::Drum;
 
-$VERSION = '1.12.0';
+$VERSION = '1.12.1';
 
 use strict 'vars';
 use warnings;
@@ -566,6 +568,7 @@ sub default_options {
     #         arg[@id=$t_id]
     #         location[@id=$l_id]]
     # WARNING: adds assertions
+    # FIXME: should perhaps be restricted to ont::molecular-part terms?!?
     name => "EKR:LocateTerm",
     constraints => ['TERM[features/location]'],
     handler => sub {
@@ -591,15 +594,15 @@ sub default_options {
       # a single location feature pointing to the aggregate??
       foreach my $loc_term (@loc_terms) {
 	my $l_id = $loc_term->getAttribute('id');
-	$ekb->add_assertion_r( 'EVENT',
-			       refs => [$t_id],
-			       start => $start,
-			       end => $end,
-			       rule => $rule->name,
-			       slots => [ make_slot_node(type => 'ONT::LOCALIZATION'),
-					  make_predicate('ONT::BE-AT-LOC'),
-					  make_arg(':NEUTRAL' => $t_id),
-					  make_node("location", { id => $l_id }) ] );
+	$ekb->infer_assertion( 'EVENT',
+			       { refid => $t_id,
+				 start => $start,
+				 end => $end,
+				 rule => $rule->name },
+			       make_slot_node(type => 'ONT::LOCALIZATION'),
+			       make_predicate('ONT::BE-AT-LOC'),
+			       make_arg(':NEUTRAL' => $t_id),
+			       make_node("location", { id => $l_id }) );
       }
 		     
       1;
@@ -1145,8 +1148,8 @@ sub default_options {
 	my $z_name = make_complex_name($x, @y_members);
 	my $z_id =
 	  $ekb->infer_assertion( "TERM",
-				 { refid => "$e_id",
-				   rule => $rule->name},
+				 { refid => $e_id,
+				   rule => $rule->name },
 				 make_slot_nodes(type => 'ONT::MACROMOLECULAR-COMPLEX',
 						 name => $z_name),
 				 make_components($x_id, @y_comp_ids) );
@@ -1300,8 +1303,8 @@ sub default_options {
 	my $z_name = make_complex_name($x, @y_members);
 	my $z_id =
 	  $ekb->infer_assertion( "TERM",
-				 { refid => "$e_id",
-				   rule => $rule->name},
+				 { refid => $e_id,
+				   rule => $rule->name },
 				 make_slot_nodes(type => 'ONT::MACROMOLECULAR-COMPLEX',
 						 name => $z_name),
 				 make_components($x_id, @y_comp_ids) );
@@ -1647,8 +1650,8 @@ sub default_options {
       my $z_name = make_complex_name(@members);
       my $z_id =
 	$ekb->infer_assertion( "TERM",
-			       { refid => "$e_id",
-				 rule => $rule->name},
+			       { refid => $e_id,
+				 rule => $rule->name },
 			       make_slot_nodes(type => 'ONT::MACROMOLECULAR-COMPLEX',
 					       name => $z_name),
 			       make_components(@comp_ids) );
@@ -1757,8 +1760,8 @@ sub default_options {
 
       my $z_id =
 	$ekb->infer_assertion( "TERM",
-			       { refid => "$e_id",
-				 rule => $rule->name},
+			       { refid => $e_id,
+				 rule => $rule->name },
 			       make_slot_nodes(type => 'ONT::MACROMOLECULAR-COMPLEX',
 					       name => $z_name),
 			       make_components(@comp_ids) );
@@ -1902,8 +1905,8 @@ sub default_options {
       my $z_name = make_complex_name($x, $y);
       my $z_id =
 	$ekb->infer_assertion( "TERM",
-			       { refid => "$e_id",
-				 rule => $rule->name},
+			       { refid => $e_id,
+				 rule => $rule->name },
 			       make_slot_nodes(type => 'ONT::MACROMOLECULAR-COMPLEX',
 					       name => $z_name),
 			       make_components($x1_id, $y1_id) );

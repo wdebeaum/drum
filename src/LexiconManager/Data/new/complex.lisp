@@ -14,7 +14,8 @@
     ((LF-PARENT ONT::MACROMOLECULAR-COMPLEX)
      (meta-data :origin BOB :entry-date 20141229 :change-date nil :wn ("complex%1:27:00"))
 ;     (templ pred-subcat-contents-templ (xp (% W::PP (W::ptype (? xx W::of W::with)))))
-     (templ pred-subcat-contents-templ)
+     ;(templ pred-subcat-contents-templ)
+     (templ other-reln-templ)
      )
 
     )

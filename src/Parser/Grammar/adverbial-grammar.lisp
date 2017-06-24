@@ -726,6 +726,7 @@
     ;; imperative:
     ;; TEST: After you get approval, purchase it.
     ;; after I get a raise, how about a seventeen inch flat screen (how-about)
+    ;; if the dog barks, will the cat run away
     ((S (LF ?newlf) (PREADVBL +)
        (tma ?tma)
         )
@@ -736,7 +737,7 @@
             )
      (head (S (VAR ?v) (LF ?lf) (LF (% prop (constraint ?con))) (SEM ?argsem) (aux -)
 	      (wh -) ;; while possible, its very unlikely
-	      (tma ?tma) (stype (? stp decl imp how-about))
+	      (tma ?tma) ;;(stype (? stp decl imp how-about))
 	      )
            )
      (add-to-conjunct (val (MODS ?mod)) (old ?con) (new ?newcon))

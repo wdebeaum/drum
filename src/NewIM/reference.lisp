@@ -212,7 +212,7 @@
 
 (defun classify-accessibility (lf)
   (case (car lf)
-    ((ONT::THE ONT::THE-SET ONT::A ONT::INDEF-SET)
+    ((ONT::THE ONT::THE-SET ONT::A ONT::INDEF-SET ONT::BARE)
      'concrete)
     ((ONT::PRO ONT::IMPRO ONT::PRO-SET)  ;; Pro's are concrete refs except for the first and second person and demonstrtives, which are handled specially
      (case (find-arg-in-act lf :proform) 
@@ -239,7 +239,7 @@
 		   'event)
 	       'pred
 	       )))))
-    ((ONT::BARE ONT::KIND) 'kind)
+    (ONT::KIND 'kind)
     (ONT::WH-TERM 'wh-term)
     (otherwise 'abstract)))
 
@@ -662,19 +662,13 @@
 	 ;; first find possible candidates in the same sentence
 	 (possibles (remove-if-not #'(lambda (x) (and (referent-p x) 
 						      (not (eq (referent-id x) id))
-						      (eq (referent-accessibility x) 'concrete)))
+						      (member (referent-accessibility x) '(concrete kind))))
 				   terms))
-
 	 ;;  now filter by semantic role
-	 (results (or ;(remove-if-not #'(lambda (x) (eq (referent-role x) :agent))
-			;	  terms)
-		      ;(remove-if-not #'(lambda (x) (eq (referent-role x) :affected))
-			;	     terms)
-		      ;(remove-if-not #'(lambda (x) (eq (cadr (referent-role x)) id-event))
-			;	     possibles)
-		      (remove-if-not #'(lambda (x) (equal (get-referent-role (referent-role x)) id-event) :test #'equal)
+	 (results (remove-if-not #'(lambda (x) (intersection (get-referent-role (referent-role x)) id-event))
 				     possibles)
-		      )))
+	   ))
+    
     (mapcar #'(lambda (a) (bind-to-referent lf nil a)) results)))
 		   
 (defun progressive-search-for-possible-refs (lf-type id sem access num index range fn)

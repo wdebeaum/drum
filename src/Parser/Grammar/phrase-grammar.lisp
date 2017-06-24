@@ -4706,7 +4706,7 @@
     )
     
         ;; sequences in the bio domain especially can become an NP
-     ((NP (ATTACH ?a) (var *) (agr 3p) (SEM ?sem)  
+     ((NP (ATTACH ?a) (var *) (agr 3p) (SEM ?sem) (class ?c1)
       (LF (% Description (status ont::definite) (var *) 
 	     (class ?c1)
 	     (constraint (& (sequence ?lf1)))

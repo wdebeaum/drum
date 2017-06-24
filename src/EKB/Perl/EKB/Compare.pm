@@ -1,6 +1,6 @@
 # Compare.pm
 #
-# Time-stamp: <Mon Jun 12 18:06:23 CDT 2017 lgalescu>
+# Time-stamp: <Fri Jun 23 09:54:56 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  4 May 2016
 #
@@ -66,6 +66,8 @@
 # - Diff output includes highlights (summary indicators of where diffs are).
 # - Fixed some bugs.
 # - Fixed order of diffs in output so deletions tend to appear before insertions.
+# 2017/06/13 v2.4.1	lgalescu
+# - Added test for features in events.
 
 # TODO (in order of importance and/or urgency):
 # - try to find node "substitutions"
@@ -78,7 +80,7 @@
 
 package EKB::Compare;
 
-$VERSION = '2.4.0';
+$VERSION = '2.4.1';
 
 use strict 'vars';
 use warnings;
@@ -698,6 +700,7 @@ sub cmp_EVENT {
       $tests{'epistemic-modality'} 
 	= $self->cmp_pseudo_args($i1, $i2, 'epistemic-modality', { deep => 0 });
       $tests{'mods'} = $self->cmp_mods($i1, $i2);
+      $tests{'features'} = $self->cmp_features($i1, $i2);
       $tests{'aggregate'} = $self->cmp_aggregate($i1, $i2);
       $tests{'predicate'} = $self->cmp_predicate($i1, $i2);
       # FIXME: $result &&= # now we add details in cmp_args
