@@ -1117,6 +1117,7 @@
 				 (or (= (find-arg-in-act x :end) end)
 				     ;; the following covers cases where sequences are expanded in the input - e.g., "Smad1/3/5 ends up as (smad 1 / smad 3 / smad 5"
 				     (and (> (find-arg-in-act x :end) end)
+					  (consp (find-arg-in-act thislf :name-of))
 					  (subsetp input (find-arg-in-act thislf :name-of))))))) ; there might not be a :name-of
 		      oldterms)
 	(if targets

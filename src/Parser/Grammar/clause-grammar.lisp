@@ -1430,7 +1430,7 @@
      
    ;; vp rule with dobj gap
    ;; test: who did he see
-   ((vp- (subj ?subj) (subjvar ?subjvar) (dobjvar ?dobjvar)
+   ((vp- (subj ?subj) (subjvar ?subjvar) (dobjvar ?gapvar) ;(dobjvar ?dobjvar)
      (main +) (gap (% ?!cat (var ?gapvar) (sem ?gapsem) (agr ?gapagr) (arg ?arg) (gap -) 
 		      (case ?dcase) (ptype ?ptype)
 		      ))
