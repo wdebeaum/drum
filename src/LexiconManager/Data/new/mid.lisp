@@ -33,7 +33,7 @@
   (W::mid
    (SENSES
     ((meta-data :origin step :entry-date 20080528 :change-date nil :comments nil)
-     (lf-parent ont::mid-stage-val)
+     (lf-parent ont::middle-val)
      (example "the mid-80's" "a mid-life crises")
      )
     )

@@ -8,7 +8,7 @@
    (wordfeats (W::morph (:FORMS (-er -LY))))
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("sick%3:00:01" "sick%5:00:02:ill:01"))
-     (LF-PARENT ONT::AILING)
+     (LF-PARENT ONT::AILING-val)
      (templ central-adj-templ)
      )
     )

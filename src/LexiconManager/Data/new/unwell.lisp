@@ -7,7 +7,7 @@
    (W::unwell
    (SENSES
     ((meta-data :origin chf :entry-date 20070904 :change-date 20090731 :comments nil :wn nil)
-     (LF-PARENT ONT::AILING)
+     (LF-PARENT ONT::AILING-val)
      (example "he is unwell")
      (templ central-adj-templ)
      )

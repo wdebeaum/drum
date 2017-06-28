@@ -846,21 +846,44 @@ sub tag_protein_sites_and_mutations {
 	type => 'aa-site',
 	'index' => $tag->{lex}
       };
+      my $new_tag = +{
+	type => 'sense',
+	lex => $output_tags[-1]{lex} . ' ' . $tag->{lex}, # FIXME get dash
+	start => $output_tags[-1]{start},
+	end => $tag->{end},
+	lftype => ['MOLECULAR-SITE']
+      };
       # only include amino acid parts of DSI if it's a specific one
-      unless (grep { $_ eq lc($output_tags[-1]{lex}) } @generic_aa_words) {
+      if (grep { $_ eq lc($output_tags[-1]{lex}) } @generic_aa_words) {
+	# if the word before the number is a generic AA, look for a previous
+	# specific one too
+	if (defined($output_tags[-2]) and
+	    $output_tags[-2]{end} + 1 == $output_tags[-1]{start} and
+	    $output_tags[-2]{lftype}[0] eq 'AMINO-ACID' and
+	    (not grep {
+	      $_->{start} == $output_tags[-2]{end} and
+	      $_->{end} == $output_tags[-1]{start} and
+	      $_->{lex} !~ /^$dash_re$/
+	    } @input_tags) and
+	    (not grep { $_ eq lc($output_tags[-2]{lex}) } @generic_aa_words)
+	   ) {
+	  $new_tag->{start} = $output_tags[-2]{start};
+	  $new_tag->{lex} = $output_tags[-2]{lex} . ' ' . $new_tag->{lex}; # FIXME get dash
+	  $dsi = +{
+	    %{$output_tags[-2]{'domain-specific-info'}},
+	    %$dsi
+	  };
+	}
+      } else {
+	# if the word before the number is a specific AA already, include its
+	# DSI
 	$dsi = +{
 	  %{$output_tags[-1]{'domain-specific-info'}},
 	  %$dsi
 	};
       }
-      push @output_tags, +{
-	type => 'sense',
-	lex => $output_tags[-1]{lex} . ' ' . $tag->{lex}, # FIXME get dash
-	start => $output_tags[-1]{start},
-	end => $tag->{end},
-	lftype => ['MOLECULAR-SITE'],
-	'domain-specific-info' => $dsi
-      };
+      $new_tag->{'domain-specific-info'} = $dsi;
+      push @output_tags, $new_tag;
     }
     next unless (defined($lftype));
     push @output_tags, +{

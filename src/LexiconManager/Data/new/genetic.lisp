@@ -20,7 +20,7 @@
     (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin cardiac :entry-date 20080520 :change-date nil :comments nil)
-     (LF-PARENT ONT::hereditary)
+     (LF-PARENT ONT::hereditary-val)
      (example "a genetic disorder")
      (templ central-adj-templ)
      )

@@ -10,6 +10,7 @@
     ((LF-PARENT ONT::OCTAVE)
      (example "a tune played one octave up")
      (meta-data :wn ("octave%1:10:00"))
+     (TEMPL ATTRIBUTE-UNIT-TEMPL)
      )
     )
    )

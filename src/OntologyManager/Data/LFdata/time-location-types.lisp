@@ -19,7 +19,7 @@
  :arguments (;(:ESSENTIAL ONT::OF ((? of F::Phys-obj F::Situation f::abstr-obj)))
 	     ;(:ESSENTIAL ONT::val ((? val F::Phys-obj F::Situation f::abstr-obj)))
 	     (:ESSENTIAL ONT::FIGURE ((? fig F::Phys-obj F::Situation f::abstr-obj)))
-	     (:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj F::Situation f::abstr-obj)))
+	     (:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj F::Situation f::abstr-obj)) (f::type (? !t ONT::TIME-MEASURE-SCALE)))
              )
  )
 
@@ -51,7 +51,9 @@
 ; in, within, inside (of)
 (define-type ont::in-loc
   :parent ont::pos-as-containment-reln
-  :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj) (f::intentional -) (f::container +)
+  :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj f::abstr-obj) ; measure (music)
+					(f::type (? t ont::phys-object ont::information-function-object))
+				       (f::intentional -) (f::container +)
 				   )))
   )
 
@@ -566,7 +568,8 @@
 ; via, by way of
 (define-type ont::obj-in-path
     :arguments (;(:ESSENTIAL ONT::FIGURE ((? type F::Situation F::phys-obj) (F::type (? path-type ont::motion ont::apply-force ont::route)) (F::trajectory +)))
-		(:ESSENTIAL ONT::FIGURE ((? type F::phys-obj) ))
+		;(:ESSENTIAL ONT::FIGURE ((? type F::phys-obj) ))
+		(:ESSENTIAL ONT::FIGURE ((? type F::Situation F::phys-obj) (F::type (? t F::route F::event-of-change)) )) ; I go to the post office via ...; The route to Avon via...
 		(:essential ONT::GROUND  (F::Phys-obj (F::form F::object)))) 
     :parent ont::path
     )
@@ -805,7 +808,8 @@
 ;             (:essential ont::GROUND (f::abstr-obj (F::Scale Ont::duration-scale) (F::type ont::time-unit)))
 ;             (:essential ont::GROUND ((? gd F::abstr-obj F::time) (F::time-scale f::interval)))
 	    
-             (:essential ont::GROUND (F::abstr-obj (F::Scale Ont::duration-scale) (F::type ont::time-unit)))
+             ;(:essential ont::GROUND (F::abstr-obj (F::Scale Ont::duration-scale) (F::type ont::time-unit)))
+             (:essential ont::GROUND ((? gd F::abstr-obj F::time) (F::Scale Ont::duration-scale) (F::type ont::time-unit ont::time-interval)))
   ))
 
 #|
@@ -1012,10 +1016,10 @@
 (define-type ONT::TIme-interval
  :wordnet-sense-keys ("interval%1:28:00" "time_interval%1:28:00" "time%1:28:03" "clock_time%1:28:00" "time%1:28:00" "time%1:28:05" "time_period%1:28:00")
  :parent ONT::TIME-OBJECT
- :sem (F::time (F::time-scale (? sc F::interval)))
- :arguments ((:OPTIONAL ONT::FIGURE (F::time (f::time-function f::time-frame) (f::time-scale f::interval) (f::scale ont::duration-scale)))
+ :sem (F::time (F::time-scale (? sc F::interval)) (F::Scale Ont::duration-scale))
+ :arguments ((:OPTIONAL ONT::GROUND (F::time (f::time-function f::time-frame) (f::time-scale f::interval) (f::scale ont::duration-scale)))
              ;;; a time of two hours
-             (:OPTIONAL ONT::GROUND (F::Abstr-obj))
+             (:OPTIONAL ONT::FIGURE ((? t f::situation f::abstr-obj)))
 	     (:OPTIONAL ONT::EXTENT (F::Abstr-obj (f::time-scale f::interval) (f::scale ont::duration-scale)))
              )
  )

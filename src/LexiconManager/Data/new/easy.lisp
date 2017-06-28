@@ -27,7 +27,7 @@
   (W::easy
    (SENSES
     ((meta-data :origin asma :entry-date 20110815 :change-date nil :comments nil)
-     (LF-PARENT ONT::complexity-val)
+     (LF-PARENT ONT::easy)
      (example "breathing easy")
      (TEMPL PRED-S-VP-TEMPL)
      )

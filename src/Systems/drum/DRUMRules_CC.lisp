@@ -286,7 +286,7 @@
 
           ((ONT::EVENT ?ev ?type :AGENT ?!ag :METHOD ?!bmo :PASSIVE -)
 	   (ONT::F ?!bmo ONT::BY-MEANS-OF :GROUND ?!bmoVal)
-	   (ONT::EVENT ?!bmoVal ?!bmoValType :AGENT -)
+	   (ONT::EVENT ?!bmoVal ?!bmoValType :AGENT -) ; AGENT is not instantiated
            -bmo1-gd>
            100
            (ONT::CC *1 ONT::BY-MEANS-OF
@@ -299,6 +299,25 @@
 	    :rule -bmo1-event-gd
 	    :AGENT ?!ag
 	    )
+	   )
+
+          ((ONT::EVENT ?ev ?type :AGENT ?!ag :METHOD ?!bmo :PASSIVE -)
+	   (ONT::F ?!bmo ONT::BY-MEANS-OF :GROUND ?!bmoVal)
+	   (ONT::EVENT ?!bmoVal ?!bmoValType :AGENT ?!ag) ; AGENT is instantiated
+           -bmo1-gd-ag>
+           100
+           (ONT::CC *1 ONT::BY-MEANS-OF
+            :rule -bmo1-gd-ag
+	    :FACTOR ?!bmoVal
+            :OUTCOME ?ev
+	    :TYPE ONT::BY-MEANS-OF
+            )
+	   #|
+	   (ONT::EVENT ?!bmoVal ?!bmoValType
+	    :rule -bmo1-event-gd
+	    :AGENT ?!ag
+	    )
+	   |#
 	   )
 	  
 	  ; Our results show that Ras activates Erk by binding to Raf.

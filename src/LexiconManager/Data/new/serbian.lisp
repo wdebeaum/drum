@@ -2,17 +2,15 @@
 ;;;; w::serbian
 ;;;;
 
-#|
 (define-words :pos w::N 
  :words (
   (w::serbian
-  (senses((LF-parent ONT::nationality-val) 
+  (senses((LF-parent ONT::nationality) 
 	    (templ count-pred-templ)
 	    (meta-data :origin calo-ontology :entry-date 20060128 :change-date nil :comments caloy3)
 	    ))
 )
 ))
-|#
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (

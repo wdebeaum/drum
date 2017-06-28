@@ -2,6 +2,16 @@
 ;;;; w::african
 ;;;;
 
+(define-words :pos w::n
+ :words (
+  (w::african
+  (senses((LF-parent ONT::regional-identity)
+            (templ count-pred-templ)
+            (meta-data :origin adjective-reorganization :entry-date 20170427 :change-date nil)
+            ))
+)
+))
+
 (define-words :pos w::adj 
  :words (
   (w::african

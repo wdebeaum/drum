@@ -8,7 +8,7 @@
     (wordfeats (W::MORPH (:FORMS (-er -LY))))
    (senses
     ((meta-data :origin chf :entry-date 20080328 :change-date nil :comments chf-dialogues)
-     (lf-parent ont::physical-symptom-val)
+     (lf-parent ont::injury-property-val)
      )))
 ))
 

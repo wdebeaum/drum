@@ -428,7 +428,7 @@
 	(sem ?nsem) (subcat ?subcat) (SET-RESTR ?sr)
 	(comparative ?com)
 	(complex -) ;(complex ?cmpl)
-	(post-subcat -) (gap ?gap)
+	(post-subcat -) (gap ?gap) (allow-deleted-comp ?adc)
 	    (dobj ?dobj)
 	    (subj ?subj)
       	    (comp3 ?comp3)
@@ -447,7 +447,7 @@
     (head (N (RESTR ?r) (VAR ?v) (SEM ?nsem) (CLASS ?c) (SET-RESTR ?sr) (gap ?gap)
 	      (SORT ?sort) (relc -) ;;(relc ?relc) "-" to avoid the ambiguity "the [[red book] which I saw]" "the [red [book which I saw]]"  
 	      (subcat ?subcat) (complex -) (lf ?lf)
-	      (post-subcat -)
+	      (post-subcat -) (allow-deleted-comp ?adc)
 	      (PRO -) (postadvbl -) ;; to avoid the ambiguity "the [[red truck] at Avon]" "the [red [truck at Avon]]"
 	    (dobj ?dobj)   ; for nominalizations
 	    (subj ?subj)
@@ -469,7 +469,7 @@
 	(sem ?nsem) (subcat ?subcat) (SET-RESTR ?sr)
 	(comparative ?com)
 	(complex -) ;(complex ?cmpl)
-	(post-subcat -) (gap ?gap)
+	(post-subcat -) (gap ?gap) (allow-deleted-comp ?adc)
 	    (dobj ?dobj)
 	    (subj ?subj)
       	    (comp3 ?comp3)
@@ -487,7 +487,7 @@
     (head (N (RESTR ?r) (VAR ?v) (SEM ?nsem) (CLASS ?c) (SET-RESTR ?sr) (gap ?gap)
 	      (SORT ?sort) (relc -) ;;(relc ?relc) "-" to avoid the ambiguity "the [[red book] which I saw]" "the [red [book which I saw]]"  
 	      (subcat ?subcat) (complex -) (lf ?lf)
-	      (post-subcat -)
+	      (post-subcat -) (allow-deleted-comp ?adc)
 	      (PRO -) (postadvbl -) ;; to avoid the ambiguity "the [[red truck] at Avon]" "the [red [truck at Avon]]"
 	    (dobj ?dobj)   ; for nominalizations
 	    (subj ?subj)
@@ -603,32 +603,37 @@
    
    ((N1 (sort pred) (class ?lf) (var ?v)
      ;; (restr (& (?smap (% *PRO* (var *) (sem ?argsem) (constraint (& (ROLE-VALUE-OF ?v) (fills-ROLE ?lf)))))))  ;; to be done in IM now
-      (RESTR (& (scale ?sc)))
+      (RESTR ?con) ;(RESTR (& (scale ?sc)))
      (qual -) (postadvbl -) (subcat -)
      )
     -N1-reln1> .995
-    (head (n  (sort reln) (lf ?lf) (allow-deleted-comp +)
+    (head (n  (sort reln) (lf ?lf) (allow-deleted-comp +) (RESTR ?r)
 	   (sem ?ssem)  (SEM ($ ?type (f::scale ?sc)))
 	   (subcat (% ?argcat (sem ?argsem)))
 	   (subcat-map ?smap)
 	   (subcat-map (? !smap ont::GROUND)) ;; disallow ont::val here
 	   ))
+    (add-to-conjunct (val (:scale ?sc)) (old ?r) (new ?con))
+
     )
 
     ;; relational nouns with filled PP-of complements  e.g., distance of the route
     ;; but this is not for e.g., distance of 5 miles -- filled pp-of unit measures should go through n1-reln4
     ;; NOTE: it is crucial to have (SUBCAT -) there, or the N1 will never undergo n-n modification!
     ((N1 (sort pred) (var ?v) (class ?lf) (qual -) (COMPLEX +)
-      (restr (& (?smap ?v1) (scale ?sc))) (gap ?gap)
+	 (RESTR ?con) ;(restr (& (?smap ?v1) (scale ?sc)))
+	 (gap ?gap)
       (subcat -)
       )
      -N1-reln3>
-     (head (n (sort reln) (lf ?lf)
+     (head (n (sort reln) (lf ?lf) (RESTR ?r)
 	      (subcat ?!subcat)
 	      (subcat (% ?scat (var ?v1) (sem ?ssem) (lf ?lf2) (gap ?gap) )) ;;(sort (? srt pred individual set comparative reln))))
 	      (SEM ($ ?type (f::scale ?sc)))
 	      (subcat-map ?smap)))
      ?!subcat
+     (add-to-conjunct (val (?smap ?v1)) (old ?r) (new ?con1))
+     (add-to-conjunct (val (scale ?sc)) (old ?con1) (new ?con))
      )
   
    ;; there are a few relational nouns with two complements  e.g., ratio of the length to the height
@@ -1748,7 +1753,8 @@
       (subcat -) (post-subcat -)
       )
      -N1-appos1> .98
-     (head (N1 (VAR ?v1) (RESTR ?r) (CLASS ?c) (SORT ?sort) (QUAL ?qual) (relc -) (sem ?sem)
+     (head (N1 (VAR ?v1) (RESTR ?r) (CLASS ?c) (sort (? !sort unit-measure)) ;(SORT ?sort) 
+	       (QUAL ?qual) (relc -) (sem ?sem)
 	    (subcat -) (post-subcat -) (complex -) (derived-from-name -) (time-converted -)
 	    )      
       )

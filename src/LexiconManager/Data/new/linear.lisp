@@ -20,7 +20,7 @@
  :words (
 	  (w::linear
 	   (senses
-     ((lf-parent ont::numerical-property-val)
+     ((lf-parent ont::math-related-property-val)
 	     (meta-data :origin lam :entry-date 20050421 :change-date nil :wn ("linear%3:00:02") :comments lam-initial)
 	     (example "linear equation")
 	     )

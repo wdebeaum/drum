@@ -26,7 +26,7 @@
 ;; higher-level type for evaluation
 (define-type ont::evaluation-attribute-val
  :parent ont::property-val 
- :comment "properties which need an observer to be recognized; subjective to the observer"
+ :comment "properties which need an observer to be recognized -- subjective to the observer"
 )
 
 ; good, bad, terrible, great
@@ -75,178 +75,6 @@
 (define-type ont::tolerable-val
  :parent ont::tolerability-val 
  :wordnet-sense-keys ("bearable%5:00:00:tolerable:00" "tolerable%3:00:00" )
-)
-
-(define-type ont::information-property-val
- :parent ont::evaluation-attribute-val 
- :comment "properties regarding the evaluation of information, knowledge, or understanding (e.g. credible, correct, consistent)"
-)
-
-(define-type ont::precision-val
- :parent ont::information-property-val 
-)
-
-(define-type ont::not-precise-val
- :parent ont::precision-val 
- :wordnet-sense-keys ("imprecise%3:00:00" "vague%3:00:04" )
-)
-
-(define-type ont::precise
- :parent ont::precision-val 
- :wordnet-sense-keys ("dead%5:00:00:precise:00" "precise%3:00:00" )
- ; Words: (W::DEAD W::PRECISE)
- ; Antonym: NIL (W::IMPRECISE)
-)
-
-(define-type ont::credibility-val
- :parent ont::information-property-val 
-)
-
-(define-type ont::credible-val
- :parent ont::credibility-val 
- :wordnet-sense-keys ("credible%3:00:00" "believable%3:00:04" )
-)
-
-(define-type ont::not-credible-val
- :parent ont::credibility-val 
- :wordnet-sense-keys ("unbelievable%3:00:04" "incredible%3:00:00" )
-)
-
-;; likely, unlikely, probably
-(define-type ont::likelihood-val
- :parent ont::information-property-val
- :comment "(un)certainty to hold true"
-)
-
-(define-type ont::likely-val
- :parent ont::likelihood-val
- :wordnet-sense-keys ("likely%3:00:04" "probable%3:00:00" )
-)
-
-(define-type ont::not-likely-val
- :parent ont::likelihood-val
- :wordnet-sense-keys ("unlikely%3:00:04" "improbable%3:00:00" )
-)
-
-(define-type ont::predictability-val
- :parent ont::information-property-val 
-)
-
-(define-type ont::predictable-val
- :parent ont::predictability-val 
- :wordnet-sense-keys ("predictable%3:00:00" "foreseeable%5:00:00:predictable:00" )
-)
-
-(define-type ont::not-predictable-val
- :parent ont::predictability-val 
- :wordnet-sense-keys ("unpredictable%3:00:00" "unforeseeable%5:00:00:unpredictable:00" )
-)
-
-; obvious, obscure 
-(define-type ont::clarity-val
- :parent ont::information-property-val 
- :comment "clear, obvious vs. unclear, obscure"
-)
-
-(define-type ont::clear
- :parent ont::clarity-val 
- :wordnet-sense-keys ("apparent%5:00:00:obvious:00" "obvious%3:00:00" )
- ; Words: (w::clear W::OBVIOUS W::EVIDENT)
- ; Antonym: ONT::unclear (W::UNOBVIOUS)
-)
-
-(define-type ont::unclear
- :parent ont::clarity-val 
- :wordnet-sense-keys ("unclear%3:00:00" "opaque%5:00:00:incomprehensible:00" "ill-defined%3:00:00" "obscure%5:00:00:unclear:00" )
- ; Words: (w::unobvious W::UNCLEAR W::OBSCURE W::OPAQUE)
- ; Antonym: ONT::clear (W::CLEAR w::obvious w::evident)
-)
-
-;; consistent in the logical sense
-;; consistent, inconsistent
-(define-type ont::consistent-val
- :parent ont::information-property-val 
- :arguments ((:REQUIRED ONT::FIGURE ((? lof f::abstr-obj f::situation )))(:REQUIRED ONT::GROUND ((? vl f::abstr-obj f::situation )))) 
- :comment "marked by a (il)logical or (dis)orderly consistent relation of parts"
-)
-
-(define-type ont::consistent
- :parent ont::consistent-val 
- :wordnet-sense-keys ("consistent%3:00:00" "consistent%3:00:01" )
-)
-
-(define-type ont::inconsistent
- :parent ont::consistent-val 
- :wordnet-sense-keys ("inconsistent%3:00:00" "inconsistent%5:00:00:irreconcilable:00" )
-)
-
-;;; Myrosia 09/23/03 - a very bad name, really. This is for adjectives like "confused", "mixed up", etc - changed LF_Mistaken to LF_Correctness
-(define-type ont::correctness-val
- :parent ont::information-property-val 
- :comment "describing the quality of being error-free or error-prone"
-)
-
-(define-type ont::correct
- :parent ont::correctness-val 
- :wordnet-sense-keys ("proper%3:00:00" "correct%5:00:00:proper:00" "correct%3:00:00" "accurate%5:00:00:correct:00" )
- ; Words: (W::PROPER W::CORRECT W::ACCURATE)
- ; Antonym: ONT::incorrect (W::MISTAKEN W::INACCURATE W::INCORRECT)
-)
-
-(define-type ont::incorrect
- :parent ont::correctness-val 
- :wordnet-sense-keys ("faulty%5:00:00:inaccurate:00" "false%5:00:00:incorrect:00" "incorrect%3:00:00" "inaccurate%3:00:00" )
- ; Words: (W::MISTAKEN W::INACCURATE W::INCORRECT)
- ; Antonym: ONT::correct (W::PROPER W::CORRECT W::ACCURATE)
-)
-
-(define-type ont::validity-val
- :parent ont::information-property-val 
-)
-
-(define-type ont::invalid-val
- :parent ont::validity-val 
- :wordnet-sense-keys ("invalid%3:00:00" )
-)
-
-(define-type ont::valid-val
- :parent ont::validity-val 
- :wordnet-sense-keys ("legitimate%5:00:00:valid:00" "valid%3:00:00" "logical%5:00:00:valid:00" )
-)
-
-(define-type ont::relevance-val
- :parent ont::information-property-val 
-)
-
-(define-type ont::relevant
- :parent ont::relevance-val 
- :wordnet-sense-keys ("pertinent%5:00:00:relevant:00" "applicable%5:00:00:relevant:00" "relevant%3:00:00" )
- ; Words: (W::RELEVANT W::APPLICABLE W::PERTINENT)
- ; Antonym: NIL (W::IRRELEVANT)
-)
-
-(define-type ont::not-relevant-val
- :parent ont::relevance-val 
- :wordnet-sense-keys ("irrelevant%3:00:00" )
-)
-
-;; dependable, reliable
-(define-type ont::reliability-val
- :parent ont::evaluation-attribute-val 
-)
-
-(define-type ont::reliable
- :parent ont::reliability-val 
- :wordnet-sense-keys ("trustworthy%3:00:00" "dependable%5:00:00:trustworthy:00" "reliable%3:00:00" )
- ; Words: (W::RELIABLE W::TRUSTWORTHY W::DEPENDABLE)
- ; Antonym: ONT::UNRELIABLE (W::UNCERTAIN W::UNRELIABLE)
-)
-
-(define-type ont::unreliable
- :parent ont::reliability-val 
- :wordnet-sense-keys ("uncertain%5:00:00:unreliable:00" "unreliable%3:00:00" )
- ; Words: (W::UNCERTAIN W::UNRELIABLE)
- ; Antonym: ONT::RELIABLE (W::RELIABLE W::TRUSTWORTHY W::DEPENDABLE)
 )
 
 ;; preferable
@@ -740,28 +568,6 @@
  :wordnet-sense-keys ("goofy%5:00:00:foolish:00" )
 )
 
-;; reasonable/sensible vs unreasonable
-(define-type ont::sensibility-val
- :parent ont::evaluation-attribute-val 
-)
-
-(define-type ont::sensible-val
- :parent ont::sensibility-val 
- :wordnet-sense-keys ("sensible%3:00:04" "sane%3:00:00" "in_his_right_mind%5:00:00:sane:00" )
-)
-
-(define-type ont::not-sensible-val
- :parent ont::sensibility-val 
- :wordnet-sense-keys ("unreasonable%3:00:00" )
-)
-
-(define-type ont::insane
- :parent ont::not-sensible-val 
- :wordnet-sense-keys ("brainsick%5:00:00:insane:00" "insane%3:00:00" )
- ; Words: (W::MAD W::CRAZY W::INSANE)
- ; Antonym: NIL (W::SANE)
-)
-
 ;; free vs. bound
 (define-type ont::freedom-val
  :parent ont::evaluation-attribute-val 
@@ -785,6 +591,298 @@
 (define-type ont::recommendable-val
  :parent ont::recommendability-val
  :wordnet-sense-keys ("advisable%3:00:00::")
+)
+
+
+;; real vs. fake
+(define-type ont::real-vs-fake-val
+ :parent ont::evaluation-attribute-val
+)
+
+(define-type ont::artificiality-val
+ :parent ont::real-vs-fake-val 
+ :comment "artificial vs. natural"
+)
+
+(define-type ont::artificial
+ :parent ont::artificiality-val 
+ :wordnet-sense-keys ("synthetic%5:00:00:artificial:00" "false%5:00:00:artificial:00" "artificial%3:00:00" "unreal%3:00:04" "faux%5:00:00:artificial:00" "imitation%5:00:02:artificial:00" "fake%5:00:00:artificial:00" )
+)
+
+;; natural, unnatural
+(define-type ont::natural
+ :parent ont::artificiality-val 
+ :wordnet-sense-keys ("natural%3:00:02" )
+ :arguments ((:REQUIRED ONT::FIGURE ((? lof f::phys-obj f::abstr-obj f::situation )))) 
+)
+
+(define-type ont::actuality-val
+ :parent ont::real-vs-fake-val 
+ :arguments ((:REQUIRED ONT::FIGURE (F::proposition (F::information F::mental-construct )))) 
+ :comment "existing or occuring in fact vs. imagined or supposed"
+)
+
+;; real, actual
+(define-type ont::actual
+ :parent ont::actuality-val 
+ :wordnet-sense-keys ("real%3:00:00" "real%5:00:00:concrete:00" "actual%5:00:00:real:00" )
+)
+
+;; fake, imaginary, hypothetical
+;; see also ont::evaluation-val?
+(define-type ont::nonactual
+ :parent ont::actuality-val 
+ :wordnet-sense-keys ("virtual%5:00:00:essential:00" "imaginary%5:00:00:unreal:00" "theoretical%3:00:00" "hypothetical%5:00:00:theoretical:00" "unreal%3:00:00" )
+)
+
+(define-type ont::authenticity-val
+ :parent ont::real-vs-fake-val 
+ :comment "truly what it is said to be vs. made as imitation"
+)
+
+(define-type ont::fake-val
+ :parent ont::authenticity-val 
+ :wordnet-sense-keys ("phoney%5:00:00:counterfeit:00" "fake%5:00:00:counterfeit:00" "counterfeit%3:00:00")
+)
+
+(define-type ont::authentic-val
+ :parent ont::authenticity-val 
+ :wordnet-sense-keys ("genuine%3:00:00" "genuine%5:00:00:true:00" "authentic%5:00:00:genuine:00" "actual%5:00:00:true:00" "real%5:00:00:true:00" "true%5:00:00:real:02")
+)
+
+;; dependable, reliable
+(define-type ont::reliability-val
+ :parent ont::evaluation-attribute-val 
+)
+
+(define-type ont::reliable
+ :parent ont::reliability-val 
+ :wordnet-sense-keys ("trustworthy%3:00:00" "dependable%5:00:00:trustworthy:00" "reliable%3:00:00" )
+ ; Words: (W::RELIABLE W::TRUSTWORTHY W::DEPENDABLE)
+ ; Antonym: ONT::UNRELIABLE (W::UNCERTAIN W::UNRELIABLE)
+)
+
+(define-type ont::unreliable
+ :parent ont::reliability-val 
+ :wordnet-sense-keys ("uncertain%5:00:00:unreliable:00" "unreliable%3:00:00" )
+ ; Words: (W::UNCERTAIN W::UNRELIABLE)
+ ; Antonym: ONT::RELIABLE (W::RELIABLE W::TRUSTWORTHY W::DEPENDABLE)
+)
+
+;; INFORMATION PROPERTY
+(define-type ont::information-property-val
+ :parent ont::property-val
+ :comment "properties regarding the evaluation of information, knowledge, or understanding (e.g. credible, correct, consistent)"
+)
+
+(define-type ont::precision-val
+ :parent ont::information-property-val 
+)
+
+(define-type ont::not-precise-val
+ :parent ont::precision-val 
+ :wordnet-sense-keys ("imprecise%3:00:00" "vague%3:00:04" )
+)
+
+(define-type ont::precise
+ :parent ont::precision-val 
+ :wordnet-sense-keys ("dead%5:00:00:precise:00" "precise%3:00:00" )
+ ; Words: (W::DEAD W::PRECISE)
+ ; Antonym: NIL (W::IMPRECISE)
+)
+
+(define-type ont::credibility-val
+ :parent ont::information-property-val 
+)
+
+(define-type ont::credible-val
+ :parent ont::credibility-val 
+ :wordnet-sense-keys ("credible%3:00:00" "believable%3:00:04" )
+)
+
+(define-type ont::not-credible-val
+ :parent ont::credibility-val 
+ :wordnet-sense-keys ("unbelievable%3:00:04" "incredible%3:00:00" )
+)
+
+;; likely, unlikely, probably
+(define-type ont::likelihood-val
+ :parent ont::information-property-val
+ :comment "(un)certainty to hold true"
+)
+
+(define-type ont::likely-val
+ :parent ont::likelihood-val
+ :wordnet-sense-keys ("likely%3:00:04" "probable%3:00:00" )
+)
+
+(define-type ont::not-likely-val
+ :parent ont::likelihood-val
+ :wordnet-sense-keys ("unlikely%3:00:04" "improbable%3:00:00" )
+)
+
+(define-type ont::predictability-val
+ :parent ont::information-property-val 
+)
+
+(define-type ont::predictable-val
+ :parent ont::predictability-val 
+ :wordnet-sense-keys ("predictable%3:00:00" "foreseeable%5:00:00:predictable:00" )
+)
+
+(define-type ont::not-predictable-val
+ :parent ont::predictability-val 
+ :wordnet-sense-keys ("unpredictable%3:00:00" "unforeseeable%5:00:00:unpredictable:00" )
+)
+
+; obvious, obscure 
+(define-type ont::clarity-val
+ :parent ont::information-property-val 
+ :comment "clear, obvious vs. unclear, obscure"
+)
+
+(define-type ont::clear
+ :parent ont::clarity-val 
+ :wordnet-sense-keys ("apparent%5:00:00:obvious:00" "obvious%3:00:00" )
+ ; Words: (w::clear W::OBVIOUS W::EVIDENT)
+ ; Antonym: ONT::unclear (W::UNOBVIOUS)
+)
+
+(define-type ont::unclear
+ :parent ont::clarity-val 
+ :wordnet-sense-keys ("unclear%3:00:00" "opaque%5:00:00:incomprehensible:00" "ill-defined%3:00:00" "obscure%5:00:00:unclear:00" )
+ ; Words: (w::unobvious W::UNCLEAR W::OBSCURE W::OPAQUE)
+ ; Antonym: ONT::clear (W::CLEAR w::obvious w::evident)
+)
+
+;; consistent in the logical sense
+;; consistent, inconsistent
+(define-type ont::consistent-val
+ :parent ont::information-property-val 
+ :arguments ((:REQUIRED ONT::FIGURE ((? lof f::abstr-obj f::situation )))(:REQUIRED ONT::GROUND ((? vl f::abstr-obj f::situation )))) 
+ :comment "marked by a (il)logical or (dis)orderly consistent relation of parts"
+)
+
+(define-type ont::consistent
+ :parent ont::consistent-val 
+ :wordnet-sense-keys ("consistent%3:00:00" "consistent%3:00:01" )
+)
+
+(define-type ont::inconsistent
+ :parent ont::consistent-val 
+ :wordnet-sense-keys ("inconsistent%3:00:00" "inconsistent%5:00:00:irreconcilable:00" )
+)
+
+;;; Myrosia 09/23/03 - a very bad name, really. This is for adjectives like "confused", "mixed up", etc - changed LF_Mistaken to LF_Correctness
+(define-type ont::correctness-val
+ :parent ont::information-property-val 
+ :comment "describing the quality of being error-free or error-prone"
+)
+
+(define-type ont::correct
+ :parent ont::correctness-val 
+ :wordnet-sense-keys ("proper%3:00:00" "correct%5:00:00:proper:00" "correct%3:00:00" "accurate%5:00:00:correct:00" )
+ ; Words: (W::PROPER W::CORRECT W::ACCURATE)
+ ; Antonym: ONT::incorrect (W::MISTAKEN W::INACCURATE W::INCORRECT)
+)
+
+(define-type ont::incorrect
+ :parent ont::correctness-val 
+ :wordnet-sense-keys ("faulty%5:00:00:inaccurate:00" "false%5:00:00:incorrect:00" "incorrect%3:00:00" "inaccurate%3:00:00" )
+ ; Words: (W::MISTAKEN W::INACCURATE W::INCORRECT)
+ ; Antonym: ONT::correct (W::PROPER W::CORRECT W::ACCURATE)
+)
+
+(define-type ont::validity-val
+ :parent ont::information-property-val 
+)
+
+(define-type ont::invalid-val
+ :parent ont::validity-val 
+ :wordnet-sense-keys ("invalid%3:00:00" )
+)
+
+(define-type ont::valid-val
+ :parent ont::validity-val 
+ :wordnet-sense-keys ("legitimate%5:00:00:valid:00" "valid%3:00:00" "logical%5:00:00:valid:00" )
+)
+
+(define-type ont::relevance-val
+ :parent ont::information-property-val 
+)
+
+(define-type ont::relevant
+ :parent ont::relevance-val 
+ :wordnet-sense-keys ("pertinent%5:00:00:relevant:00" "applicable%5:00:00:relevant:00" "relevant%3:00:00" )
+ ; Words: (W::RELEVANT W::APPLICABLE W::PERTINENT)
+ ; Antonym: NIL (W::IRRELEVANT)
+)
+
+(define-type ont::not-relevant-val
+ :parent ont::relevance-val 
+ :wordnet-sense-keys ("irrelevant%3:00:00" )
+)
+
+;; empirical or theoretical?
+(define-type ont::basis-of-evidence-val
+ :parent ont::information-property-val
+)
+
+(define-type ont::theoretical-val
+ :parent ont::basis-of-evidence-val
+ :wordnet-sense-keys ("theoretical%3:00:01" )
+)
+
+(define-type ont::empirical-val
+ :parent ont::basis-of-evidence-val
+ :wordnet-sense-keys ("empirical%3:00:00" )
+)
+
+;; (im)possible
+(define-type ont::possibility-val
+ :parent ont::information-property-val
+)
+
+(define-type ont::not-possible-val
+ :parent ont::possibility-val 
+ :wordnet-sense-keys ("impossible%3:00:00" )
+)
+
+(define-type ont::possible
+ :parent ont::possibility-val 
+ :wordnet-sense-keys ("accomplishable%5:00:00:possible:00" "possible%3:00:00" )
+ ; Words: (W::POSSIBLE W::DOABLE)
+ ; Antonym: NIL (W::IMPOSSIBLE)
+)
+
+;; truth-value-val
+(define-type ont::truth-value-val
+ :parent ont::information-property-val 
+)
+
+(define-type ont::true-val
+ :parent ont::truth-value-val
+ :wordnet-sense-keys ("true%3:00:00")
+)
+
+(define-type ont::false-val
+ :parent ont::truth-value-val
+ :wordnet-sense-keys ("false%3:00:00")
+)
+
+;; verifiability-val
+(define-type ont::verifiability-val
+ :parent ont::information-property-val 
+)
+
+(define-type ont::verifiable-val
+ :parent ont::verifiability-val
+ :wordnet-sense-keys ("verifiable%5:00:00:objective:00" "provable%5:00:00:obvious:00")
+)
+
+(define-type ont::not-verifiable-val
+ :parent ont::verifiability-val
+ :wordnet-sense-keys ("unverifiable%5:00:00:subjective:00")
 )
 
 ;; PHYSICAL-PROPERTY
@@ -819,7 +917,7 @@
 ;; loose vs. tight
 (define-type ont::constricting-val
  :parent ont::configuration-property-val 
- :comment "describes how constricting something is with regards to another item; close-fitting vs. loose-fitting"
+ :comment "describes how constricting something is with regards to another item (close-fitting vs. loose-fitting)"
 )
 
 (define-type ont::loose-val
@@ -859,7 +957,7 @@
  :parent ont::configuration-property-val 
  :arguments ((:REQUIRED ONT::FIGURE (F::phys-obj (F::spatial-abstraction (? sab F::line F::strip ))))) 
  :sem (F::abstr-obj (:required )(:default (F::gradability - )))
- :comment "presence or absense of obstruction; e.g., for routes"
+ :comment "presence or absense of obstruction, e.g., for routes"
 )
 
 (define-type ont::obstructed
@@ -940,61 +1038,6 @@
  ; Antonym: nil
 )
 
-;; real vs. fake
-(define-type ont::real-vs-fake-val
- :parent ont::physical-property-val 
-)
-
-(define-type ont::artificiality-val
- :parent ont::real-vs-fake-val 
- :comment "artificial vs. natural"
-)
-
-(define-type ont::artificial
- :parent ont::artificiality-val 
- :wordnet-sense-keys ("synthetic%5:00:00:artificial:00" "false%5:00:00:artificial:00" "artificial%3:00:00" "unreal%3:00:04" "faux%5:00:00:artificial:00" "imitation%5:00:02:artificial:00" "fake%5:00:00:artificial:00" )
-)
-
-;; natural, unnatural
-(define-type ont::natural
- :parent ont::artificiality-val 
- :wordnet-sense-keys ("natural%3:00:02" )
- :arguments ((:REQUIRED ONT::FIGURE ((? lof f::phys-obj f::abstr-obj f::situation )))) 
-)
-
-(define-type ont::actuality-val
- :parent ont::real-vs-fake-val 
- :arguments ((:REQUIRED ONT::FIGURE (F::proposition (F::information F::mental-construct )))) 
- :comment "existing or occuring in fact vs. imagined or supposed"
-)
-
-;; real, actual
-(define-type ont::actual
- :parent ont::actuality-val 
- :wordnet-sense-keys ("real%3:00:00" "real%5:00:00:concrete:00" "actual%5:00:00:real:00" )
-)
-
-;; fake, imaginary, hypothetical
-;; see also ont::evaluation-val?
-(define-type ont::nonactual
- :parent ont::actuality-val 
- :wordnet-sense-keys ("virtual%5:00:00:essential:00" "imaginary%5:00:00:unreal:00" "theoretical%3:00:00" "hypothetical%5:00:00:theoretical:00" "unreal%3:00:00" )
-)
-
-(define-type ont::authenticity-val
- :parent ont::real-vs-fake-val 
- :comment "truly what it is said to be vs. made as imitation"
-)
-
-(define-type ont::fake-val
- :parent ont::authenticity-val 
- :wordnet-sense-keys ("phoney%5:00:00:counterfeit:00" "fake%5:00:00:counterfeit:00" "counterfeit%3:00:00" )
-)
-
-(define-type ont::authentic-val
- :parent ont::authenticity-val 
- :wordnet-sense-keys ("genuine%3:00:00" "genuine%5:00:00:true:00" "authentic%5:00:00:genuine:00" "actual%5:00:00:true:00" "real%5:00:00:true:00" )
-)
 
 ;; substantial properties
 (define-type ont::substantial-property-val
@@ -1621,29 +1664,6 @@
  :comment "properties having to do with human/animal body"
 )
 
-;; digestive, immune, 
-(define-type ONT::body-system-val
- :parent ONT::body-related-property-val ;; of arguments can be more than just human; cardiac care; intestinal disturbance
- :comment "adjective having to do with body systems" 
-)
-
-(define-type ONT::body-part-val
- :parent ONT::body-system-val ;; of arguments can be more than just human; cardiac care; intestinal disturbance
- :comment "adjectives having to do with body parts"
- )
-
-;; congenital disease
-(define-type ONT::congenital
- :parent ONT::body-related-property-val
- :wordnet-sense-keys ("congenital%5:00:00:noninheritable:00")
- )
-
-;; genetic, hereditary
-(define-type ONT::hereditary
- :parent ONT::body-related-property-val
- :wordnet-sense-keys ("hereditary%5:00:01:inheritable:00")
- )
-
 ;; hungry, sleepy
 (define-type ont::body-property-val
  :parent ont::body-related-property-val 
@@ -1729,13 +1749,6 @@
  :wordnet-sense-keys ("clammy%5:00:00:wet:01" )
 )
 
-;; mute, deaf, blind
-(define-type ont::has-medical-condition
-  :parent ont::body-related-property-val
-  :arguments ((:essential ONT::FIGURE (F::phys-obj (f::origin (? org f::human f::non-human-animal)) (F::intentional +))))
-  :wordnet-sense-keys ("deaf%3:00:00" "blind%3:00:00" "mute%5:00:01:inarticulate:00")
-  )
-
 ;; healthy or ailing
 (define-type ont::healthiness-val
   :parent ont::body-related-property-val
@@ -1747,47 +1760,66 @@
  :wordnet-sense-keys ("well%3:00:01" "healthy%3:00:00" )
 )
 
-(define-type ont::ailing
+(define-type ont::ailing-val
  :parent ont::healthiness-val
  :wordnet-sense-keys ("unwell%5:00:01:ill:01" "ailing%5:00:00:ill:01" "sick%3:00:01" "ill%3:00:01" "upset%5:00:00:ill:01" )
  ; Words: (W::SICK W::ILL W::UPSET W::GIDDY W::WOOZY W::LIGHTHEADED W::DIZZY W::UNWELL W::FEVERISH W::NAUSEOUS)
  ; Antonym: NIL (W::WELL)
 )
 
-(define-type ONT::physical-symptom-val
- :parent ONT::ailing
+;; parallel to ont::medical-condition 
+(define-type ont::medical-condition-property-val
+ :parent ont::body-related-property-val
+)
+
+;; mute, deaf, blind
+(define-type ont::has-medical-condition
+  :parent ont::medical-condition-property-val
+  :arguments ((:essential ONT::FIGURE (F::phys-obj (f::origin (? org f::human f::non-human-animal)) (F::intentional +))))
+  :wordnet-sense-keys ("deaf%3:00:00" "blind%3:00:00" "mute%5:00:01:inarticulate:00")
+  )
+
+;; properties relating to an injury
+(define-type ONT::injury-property-val
+ :parent ONT::medical-condition-property-val
  :wordnet-sense-keys ("puffy%5:00:00:unhealthy:00")
  )
 
+;; medical symptoms
+(define-type ont::medical-symptom-val
+ :parent ONT::medical-condition-property-val
+)
+
 (define-type ont::dazed
- :parent ont::ailing 
+ :parent ont::medical-symptom-val
  :wordnet-sense-keys ("lethargic%3:00:00" "dazed%5:00:00:lethargic:00" "groggy%5:00:00:lethargic:00" )
 )
 
 (define-type ont::dizzy-val
- :parent ont::ailing 
+ :parent ont::medical-symptom-val
  :wordnet-sense-keys ("giddy%5:00:00:ill:01" "lightheaded%5:00:00:ill:01" "woozy%5:00:00:ill:01" "nauseated%5:00:00:ill:01" "dizzy%5:00:00:ill:01" "faint%5:00:00:ill:01" )
 )
 
 (define-type ont::breathless-val
- :parent ont::ailing 
+ :parent ont::medical-symptom-val
  :wordnet-sense-keys ("breathless%3:00:00" )
 )
 
 (define-type ont::pained-val
- :parent ont::ailing 
+ :parent ont::medical-symptom-val
  :wordnet-sense-keys ("aching%5:00:00:painful:00" "achy%5:00:00:painful:00" "painful%3:00:00" )
 )
 
 (define-type ont::dehydrated-val
- :parent ont::ailing 
+ :parent ont::medical-symptom-val
  :wordnet-sense-keys ("dehydrated%5:00:00:unhealthy:00" )
 )
 
 (define-type ont::feverish-val
- :parent ont::ailing 
+ :parent ont::medical-symptom-val
  :wordnet-sense-keys ("feverish%5:00:00:ill:01" "feverish%3:01:00" )
 )
+
 
 ;;; process-related adjectives
 (define-type ont::process-val
@@ -1795,84 +1827,10 @@
  :comment "properties that describe processes"
 )
 
-;; ad hoc vs premeditated process
-(define-type ont::premeditation-val
- :parent ont::process-val 
- :comment "is the process pre-planned?"
-)
-
-(define-type ont::premeditated-val
- :parent ont::premeditation-val
- :wordnet-sense-keys ("planned%3:00:00" "premeditated%3:00:00")
-)
-
-(define-type ont::not-premeditated-val
- :parent ont::premeditation-val
- :wordnet-sense-keys ("haphazard%5:00:00:random:00" "ad_hoc%5:00:00:unplanned:00" "impulsive%5:00:00:unpremeditated:00" "spontaneous%5:00:00:unscripted:00")
-)
-
-(define-type ont::allows-doing-val
- :parent ont::process-val 
- :comment "adjectives meaning '[does not] allow[s] verb-ing' for some verb (see involves-doing-val)"
-)
-
-(define-type ONT::involves-doing-val
- :parent ONT::process-val
- :comment "adjectives meaning '[does not] involve[s] verb-ing' for some verb (see allows-doing-val)"
- )
-
-;; still, motionless, static, dynamic
-(define-type ont::motion-val
- :parent ont::process-val 
- :arguments ((:REQUIRED ONT::FIGURE (F::phys-obj ))) 
- :comment "describes dynamicity of motion"
-)
-
-(define-type ont::dynamic-val
- :parent ont::motion-val 
- :wordnet-sense-keys ("dynamic%3:00:04" )
-)
-
-(define-type ont::static-val
- :parent ont::motion-val 
- :wordnet-sense-keys ("static%5:00:00:nonmoving:00" "still%5:00:01:nonmoving:00" "motionless%5:00:00:nonmoving:00" )
-)
-
-;; empirical or theoretical?
-(define-type ont::basis-of-evidence-val
- :parent ont::process-val 
-)
-
-(define-type ont::theoretical-val
- :parent ont::basis-of-evidence-val
- :wordnet-sense-keys ("theoretical%3:00:01" )
-)
-
-(define-type ont::empirical-val
- :parent ont::basis-of-evidence-val
- :wordnet-sense-keys ("empirical%3:00:00" )
-)
-
-;; verified/tested or not verified?
-(define-type ont::can-be-verified-val
- :parent ont::process-val 
-)
-
-(define-type ont::verified-val
- :parent ont::can-be-verified-val 
- :wordnet-sense-keys ("verified%5:00:00:proved:00" "tested%5:00:00:proved:00" )
-)
-
-(define-type ont::not-verified-val
- :parent ont::can-be-verified-val 
- :wordnet-sense-keys ("unverified%5:00:00:unproved:00")
-)
-
 ;; adjectives meaning "can [not] be verb'd" for some verb
 (define-type ont::can-be-done-val
  :parent ont::process-val 
  :arguments ((:optional ONT::GROUND )) 
- :comment "adjectives meaning 'can [not] be verb-d' for some verb"
 )
 
 ;; (in)accessible
@@ -1987,48 +1945,14 @@
  :parent ont::rw-status-val 
 )
 
-;; tenatative vs. settled/finalized
-(define-type ont::is-finalized-val
+;; temporal occurrence
+(define-type ont::temporal-occurrence-val
  :parent ont::process-val 
-)
-
-(define-type ont::tenative-val
- :parent ont::is-finalized-val 
- :wordnet-sense-keys ("tentative%5:00:00:conditional:00" "provisional%5:00:00:conditional:00" )
-)
-
-(define-type ont::finalized-val
- :parent ont::is-finalized-val
- :wordnet-sense-keys ("settled%3:00:02") 
-)
-
-;; done, finished
-(define-type ont::completion-val
- :parent ont::process-val 
- :arguments ((:optional ONT::GROUND )) 
- :sem (F::Abstr-obj (F::gradability - ))
- :comment "done or finished"
-)
-
-(define-type ont::finished
- :parent ont::completion-val 
- :wordnet-sense-keys ("finished%3:00:01" "dead%5:00:00:complete:00" "done%5:00:00:finished:01" "complete%5:00:00:finished:01" "accomplished%5:00:00:complete:00" "complete%3:00:00" )
- ; Words: (W::COMPLETE W::FINISHED W::UTTER W::COMPLETED W::DONE)
- ; Antonym: ONT::INCOMPLETE (W::UNFINISHED W::INCOMPLETE)
-)
-
-;; "incomplete" is a misnomer. better label would be not-finished.
-(define-type ont::incomplete
- :parent ont::completion-val 
- :wordnet-sense-keys ("unfinished%3:00:01" "incomplete%5:00:00:unfinished:01" )
- ; Words: (W::UNFINISHED W::INCOMPLETE)
- ; Antonym: ONT::FINISHED (W::COMPLETE W::FINISHED W::UTTER W::COMPLETED W::DONE)
- :comment "unfinished"
 )
 
 ;; continuous, uninterrupted, can be either time or space dimensionality
 (define-type ont::continuous-val
- :parent ont::process-val 
+ :parent ont::temporal-occurrence-val 
 )
 
 (define-type ont::continuous
@@ -2043,7 +1967,7 @@
 
 ;; for frequency adjectives that modify event nouns: regular, frequent, daily, monthly, weekly
 (define-type ont::frequency-val
- :parent ont::process-val 
+ :parent ont::temporal-occurrence-val 
  :arguments ((:REQUIRED ONT::FIGURE )) ;;(F::situation)) ;; weekly meeting; daily vitamin; daily routine/practice
  :sem (F::abstr-obj )
  ;; f::situation restriction is too strong
@@ -2094,42 +2018,102 @@
 
 ;; incremental, step by step
 (define-type ont::incremental-val
- :parent ont::process-val 
+ :parent ont::temporal-occurrence-val 
  :wordnet-sense-keys ("incremental%5:00:00:additive:00" )
 )
 
-;; the word itself describes the purpose of the task
-(define-type ont::task-purpose-val
- :parent ont::process-val 
- :comment "the word itself describes the purpose of the task, e.g., exploratory - task for exploration; startup - task for starting something"
+;; persistence
+(define-type ont::persistence-val
+ :parent ont::temporal-occurrence-val 
+ :sem (F::Abstr-obj (F::scale ONT::TIME-MEASURE-SCALE )(F::TIME-SCALE F::INTERVAL ))
 )
 
-(define-type ont::startup-val
- :parent ont::task-purpose-val 
+(define-type ont::persistent
+ :parent ont::persistence-val 
+ :wordnet-sense-keys ("lasting%5:00:00:long:02" "permanent%3:00:00" "lasting%5:00:00:stable:00" "persistent%5:00:00:continual:00" )
 )
 
-(define-type ont::exploratory-val
- :parent ont::task-purpose-val 
- :wordnet-sense-keys ("preliminary%5:00:00:exploratory:00" "exploratory%3:00:00" )
+(define-type ont::temporary
+ :parent ont::persistence-val 
+ :wordnet-sense-keys ("impermanent%5:00:00:finite:00" "transient%5:00:00:impermanent:00" "temporary%3:00:00" )
+)
+
+;; status of a process
+(define-type ont::process-status-val
+ :parent ont::process-val
+ :comment "properties relating to status of processes"
+)
+
+;; done, finished
+(define-type ont::completion-val
+ :parent ont::process-status-val 
+ :arguments ((:optional ONT::GROUND )) 
+ :sem (F::Abstr-obj (F::gradability - ))
+ :comment "done or finished"
+)
+
+(define-type ont::finished
+ :parent ont::completion-val 
+ :wordnet-sense-keys ("finished%3:00:01" "dead%5:00:00:complete:00" "done%5:00:00:finished:01" "complete%5:00:00:finished:01" "accomplished%5:00:00:complete:00" "complete%3:00:00" )
+ ; Words: (W::COMPLETE W::FINISHED W::UTTER W::COMPLETED W::DONE)
+ ; Antonym: ONT::INCOMPLETE (W::UNFINISHED W::INCOMPLETE)
+)
+
+;; "incomplete" is a misnomer. better label would be not-finished.
+(define-type ont::incomplete
+ :parent ont::completion-val 
+ :wordnet-sense-keys ("unfinished%3:00:01" "incomplete%5:00:00:unfinished:01" )
+ ; Words: (W::UNFINISHED W::INCOMPLETE)
+ ; Antonym: ONT::FINISHED (W::COMPLETE W::FINISHED W::UTTER W::COMPLETED W::DONE)
+ :comment "unfinished"
 )
 
 ;; mid, middle, midway, halfway
 (define-type ont::stage-val
- :parent ont::process-val 
+ :parent ont::process-status-val 
 )
 
-(define-type ont::mid-stage-val
+(define-type ont::tentative-val
  :parent ont::stage-val 
- :wordnet-sense-keys ("halfway%5:00:00:intermediate:00" "middle%5:00:00:intermediate:00" "intermediate%3:00:00" )
+ :wordnet-sense-keys ("tentative%5:00:00:conditional:00" "provisional%5:00:00:conditional:00" "preliminary%5:00:00:exploratory:00")
+)
+
+(define-type ont::startup-val
+ :parent ont::stage-val 
 )
 
 ;; resulting
 (define-type ont::outcome-val
- :parent ont::process-val 
+ :parent ont::process-status-val 
  :wordnet-sense-keys ("ensuing%5:00:00:succeeding:00" )
  :comment "outcome of the process"
 )
 
+;;; This is for speed values - fast, slow, etc
+(define-type ont::speed-val
+ :parent ont::process-val 
+ :arguments ((:REQUIRED ONT::FIGURE ((? type F::phys-obj F::situation F::abstr-obj )))) ;; e.g., "rate" is an abstract object
+ :sem (F::abstr-obj (F::scale ont::speed-scale ))
+)
+
+(define-type ont::slow-val
+ :parent ont::speed-val 
+ :wordnet-sense-keys ("slow%3:00:01" )
+)
+
+(define-type ont::instantaneous-val
+ :parent ont::speed-val 
+ :wordnet-sense-keys ("instantaneous%5:00:00:fast:01" "instant%5:00:00:fast:01" "sudden%3:00:00" )
+)
+
+(define-type ont::speedy
+ :parent ont::speed-val 
+ :wordnet-sense-keys ("quick%5:00:02:fast:01" "fleet%5:00:00:fast:01" "rapid%5:00:00:fast:01" "rapid%5:00:02:fast:01" "fast%3:00:01" "quick%5:00:00:fast:01" )
+ ; Words: (W::QUICK W::FAST W::RAPID W::SWIFT W::SPEEDY)
+ ; Antonym: NIL (W::SLOW)
+)
+
+;; process evaluation
 (define-type ont::process-evaluation-val
  :parent ont::process-val
  :comment "evaluation properties of processes"
@@ -2180,45 +2164,9 @@
  :wordnet-sense-keys ("ineffective%3:00:00" "toothless%5:00:00:ineffective:00")
 )
 
-;; persistence
-(define-type ont::persistence-val
- :parent ont::process-val 
- :sem (F::Abstr-obj (F::scale ONT::TIME-MEASURE-SCALE )(F::TIME-SCALE F::INTERVAL ))
-)
-
-(define-type ont::persistent
- :parent ont::persistence-val 
- :wordnet-sense-keys ("lasting%5:00:00:long:02" "permanent%3:00:00" "lasting%5:00:00:stable:00" "persistent%5:00:00:continual:00" )
-)
-
-(define-type ont::temporary
- :parent ont::persistence-val 
- :wordnet-sense-keys ("impermanent%5:00:00:finite:00" "transient%5:00:00:impermanent:00" "temporary%3:00:00" )
-)
-
-;; (un)available
-(define-type ont::availability-val
- :parent ont::process-val 
- :arguments ((:optional ONT::GROUND ((? tp F::phys-obj F::situation )))) 
-	     ;; available in 4 MW capacity
-;	     (:optional ont::property (f::abstr-obj))
-)
-
-(define-type ont::not-available-val
- :parent ont::availability-val
- :wordnet-sense-keys ("missing%5:00:00:nonexistent:00" "unavailable%3:00:00" )
-)
-
-(define-type ont::available
- :parent ont::availability-val 
- :wordnet-sense-keys ("ready%5:00:01:available:00" "free%3:00:02" "available%3:00:00" "free%5:00:02:unoccupied:00" "handy%5:00:00:accessible:00" )
- ; Words: (W::AVAILABLE W::FREE)
- ; Antonym: NIL (W::UNAVAILABLE)
-)
-
 ;; (in)efficient
 (define-type ont::efficiency-val
- :parent ont::process-val 
+ :parent ont::process-evaluation-val 
 )
 
 (define-type ont::efficient-val
@@ -2231,33 +2179,9 @@
  :wordnet-sense-keys ("inefficient%3:00:00" )
 )
 
-;;; This is for speed values - fast, slow, etc
-(define-type ont::speed-val
- :parent ont::process-val 
- :arguments ((:REQUIRED ONT::FIGURE ((? type F::phys-obj F::situation F::abstr-obj )))) ;; e.g., "rate" is an abstract object
- :sem (F::abstr-obj (F::scale ont::speed-scale ))
-)
-
-(define-type ont::slow-val
- :parent ont::speed-val 
- :wordnet-sense-keys ("slow%3:00:01" )
-)
-
-(define-type ont::instantaneous-val
- :parent ont::speed-val 
- :wordnet-sense-keys ("instantaneous%5:00:00:fast:01" "instant%5:00:00:fast:01" "sudden%3:00:00" )
-)
-
-(define-type ont::speedy
- :parent ont::speed-val 
- :wordnet-sense-keys ("quick%5:00:02:fast:01" "fleet%5:00:00:fast:01" "rapid%5:00:00:fast:01" "rapid%5:00:02:fast:01" "fast%3:00:01" "quick%5:00:00:fast:01" )
- ; Words: (W::QUICK W::FAST W::RAPID W::SWIFT W::SPEEDY)
- ; Antonym: NIL (W::SLOW)
-)
-
 ;; (un)steady, off balance
 (define-type ont::steadiness-val
- :parent ont::process-val 
+ :parent ont::process-evaluation-val 
 )
 
 (define-type ont::steady
@@ -2274,7 +2198,7 @@
 
 ; (un)successful
 (define-type ont::success-val
- :parent ont::process-val 
+ :parent ont::process-evaluation-val 
 )
 
 (define-type ont::successful-val
@@ -2287,18 +2211,10 @@
  :wordnet-sense-keys ("unsuccessful%3:00:00" )
 )
 
-;; for the adverbial counterparts of 'tough' words, e.g. easily, straightforwardly, simply
-;; the adjective lf is task-complexity-val which defines roles of formal, cause and action. So
-;; far we have no adverbs that take a formal argument so I'm not using that lf
-(define-type ONT::complexity-val
- :parent ONT::process-val
- :comment "Like ont::task-complexity-val, but adverbial that does not define roles of formal, cause and action."
- )
-
 ;; "tough" adjectives, e.g. hard, easy, possible
 ;; the task is easy for him to do/understand
 (define-type ont::task-complexity-val
- :parent ont::process-val 
+ :parent ont::process-evaluation-val 
  :arguments ((:essential ONT::Affected )(:essential ont::FORMAL ((? ct f::phys-obj f::abstr-obj f::situation )))) 
 )
 
@@ -2328,23 +2244,6 @@
 (define-type ont::demanding-val
  :parent ont::difficulty-val 
  :wordnet-sense-keys ("tight%5:00:00:demanding:01" "rigorous%5:00:00:demanding:01" "demanding%3:00:01" )
-)
-
-;; (im)possible
-(define-type ont::possibility-val
- :parent ont::task-complexity-val 
-)
-
-(define-type ont::not-possible-val
- :parent ont::possibility-val 
- :wordnet-sense-keys ("impossible%3:00:00" )
-)
-
-(define-type ont::possible
- :parent ont::possibility-val 
- :wordnet-sense-keys ("accomplishable%5:00:00:possible:00" "possible%3:00:00" )
- ; Words: (W::POSSIBLE W::DOABLE)
- ; Antonym: NIL (W::IMPOSSIBLE)
 )
 
 ;; animal-propensity
@@ -2428,7 +2327,7 @@
 (define-type ont::social-interaction-val
  :parent ont::animal-propensity-val 
  :arguments ((:required ont::FIGURE ((? lof f::abstr-obj f::phys-obj f::situation )))) 
- :comment "properties of human behavior having to do with social interaction; e.g. friendly, kind, mean"
+ :comment "properties of human behavior having to do with social interaction, e.g. friendly, kind, mean"
 )
 
 ;; responsible, irresponsible
@@ -2612,14 +2511,14 @@
 (define-type ont::short-val
  :parent ont::linear-extent-val 
  :wordnet-sense-keys ("short%3:00:02" "short%3:00:01" )
- :comment "less in orientation on a linear scale; does not indicate horizontality or verticality of the object"
+ :comment "less in orientation on a linear scale -- does not indicate horizontality or verticality of the object"
 )
 
 ;; long on a linear scale; does not indicate horizontality or verticality of the object
 (define-type ont::long
  :parent ont::linear-extent-val 
  :wordnet-sense-keys ("long%3:00:01" "long%3:00:02" )
- :comment "more in orientation on a linear scale; does not indicate horizontality or verticality of the object"
+ :comment "more in orientation on a linear scale -- does not indicate horizontality or verticality of the object"
 )
 
 ;; size that deals with 2D area
@@ -2778,17 +2677,17 @@
  :comment "indicates relative proportion/ratio on a specified scale"
 )
 
-(define-type ont::fatiness-val
+(define-type ont::fattiness-val
  :parent ont::proportion-val 
- :comment "indicates relative proportion/ratio on a fatiness scale"
+ :comment "indicates relative proportion/ratio on a fattiness scale"
 )
 
 (define-type ont::lean-val
- :parent ont::fatiness-val 
+ :parent ont::fattiness-val 
 )
 
 (define-type ont::fatty-val
- :parent ont::fatiness-val 
+ :parent ont::fattiness-val 
  :wordnet-sense-keys ("fatty%3:00:00" "fat%3:00:02" )
 )
 
@@ -2828,7 +2727,7 @@
 ;; relational-attribute: describes an entity with respect to another related entity
 (define-type ont::relational-attribute-val
  :parent ont::property-val 
- :comment "properties that describe an entity with respect to another related entity; an implicit second entity always present when these properties are evoked"
+ :comment "properties that describe an entity with respect to another related entity, an implicit second entity always present when these properties are evoked"
 )
 
 ;; relative, absolute
@@ -2930,6 +2829,11 @@
 (define-type ont::sequence-val-next
  :parent ont::sequence-val 
  :wordnet-sense-keys ("following%5:00:02:succeeding:00" "subsequent%3:00:00" )
+)
+
+(define-type ont::middle-val
+ :parent ont::sequence-val 
+ :wordnet-sense-keys ("halfway%5:00:00:intermediate:00" "middle%5:00:00:intermediate:00" "intermediate%3:00:00" )
 )
 
 ;; Relating to time
@@ -3104,6 +3008,44 @@
  :comment "not operating as intended,  typically a physcal location with operating hours"
 )
 
+;; static, dynamic                                              
+(define-type ont::motion-val
+ :parent ont::object-affordances-val
+ :arguments ((:REQUIRED ONT::FIGURE (F::phys-obj )))
+ :comment "describes dynamicity of motion"
+)
+
+(define-type ont::dynamic-val
+ :parent ont::motion-val
+ :wordnet-sense-keys ("dynamic%3:00:04")
+)
+
+(define-type ont::static-val
+ :parent ont::motion-val
+ :wordnet-sense-keys ("static%5:00:00:nonmoving:00" "still%5:00:01:nonmoving:00" "motionless%5:00:00:nonmoving:00" )
+)
+
+;; (un)available
+(define-type ont::availability-val
+ :parent ont::object-affordances-val 
+ :arguments ((:optional ONT::GROUND ((? tp F::phys-obj F::situation )))) 
+	     ;; available in 4 MW capacity
+;	     (:optional ont::property (f::abstr-obj))
+)
+
+(define-type ont::not-available-val
+ :parent ont::availability-val
+ :wordnet-sense-keys ("missing%5:00:00:nonexistent:00" "unavailable%3:00:00" )
+)
+
+(define-type ont::available
+ :parent ont::availability-val 
+ :wordnet-sense-keys ("ready%5:00:01:available:00" "free%3:00:02" "available%3:00:00" "free%5:00:02:unoccupied:00" "handy%5:00:00:accessible:00" )
+ ; Words: (W::AVAILABLE W::FREE)
+ ; Antonym: NIL (W::UNAVAILABLE)
+)
+
+
 ;; status: properties that describe social, political or official status or position
 (define-type ont::status-val
  :parent ont::property-val 
@@ -3269,6 +3211,29 @@
 		;; the object that is involved in a situation, but which is not a stimulus directly
 		;; for example, I am afraid for her, for the project
 		;;(:optional ont::formal (f::situation f::phys-obj f::abstr-obj)))
+)
+
+;; reasonable/sensible vs unreasonable (mental states)
+(define-type ont::sensibility-val
+ :parent ont::psychological-property-val
+ :comment "describing mental ability or sensitivity to respond to emotional influences"
+)
+
+(define-type ont::sensible-val
+ :parent ont::sensibility-val 
+ :wordnet-sense-keys ("sensible%3:00:04" "sane%3:00:00" "in_his_right_mind%5:00:00:sane:00" )
+)
+
+(define-type ont::not-sensible-val
+ :parent ont::sensibility-val 
+ :wordnet-sense-keys ("unreasonable%3:00:00" )
+)
+
+(define-type ont::insane
+ :parent ont::not-sensible-val 
+ :wordnet-sense-keys ("brainsick%5:00:00:insane:00" "insane%3:00:00" )
+ ; Words: (W::MAD W::CRAZY W::INSANE)
+ ; Antonym: NIL (W::SANE)
 )
 
 ;; careful, aware, attentive
@@ -3609,9 +3574,9 @@
  :wordnet-sense-keys ("anxious%5:00:00:troubled:00" "uneasy%3:00:00")
  )
 
-(define-type ONT::unpleasant
+(define-type ONT::grumpy-val
  :parent ONT::neg-soft-emotional-val
- :wordnet-sense-keys ("grumpy%5:00:00:ill-natured:00" "disagreeable%5:00:00:ill-natured:00" "unpleasant%3:00:00")
+ :wordnet-sense-keys ("grumpy%5:00:00:ill-natured:00" "disagreeable%5:00:00:ill-natured:00" "sulky%5:00:00:ill-natured:00" "irritable%5:00:00:ill-natured:00")
  )
 
 (define-type ONT::UNHAPPY
@@ -3672,28 +3637,83 @@
  :wordnet-sense-keys("accidental%5:00:00:unintended:00" "unintentional%5:00:00:unintended:00")
  )
 
+;; ad hoc vs premeditated process
+(define-type ont::premeditation-val
+ :parent ont::psychological-property-val 
+ :comment "is the process pre-planned?"
+)
+
+(define-type ont::premeditated-val
+ :parent ont::premeditation-val
+ :wordnet-sense-keys ("planned%3:00:00" "premeditated%3:00:00")
+)
+
+(define-type ont::not-premeditated-val
+ :parent ont::premeditation-val
+ :wordnet-sense-keys ("haphazard%5:00:00:random:00" "ad_hoc%5:00:00:unplanned:00" "impulsive%5:00:00:unpremeditated:00" "spontaneous%5:00:00:unscripted:00")
+)
+
+
+
+;; resulting-state-val
+(define-type ont::resulting-state-val
+ :parent ont::property-val
+ :comment "adjectives that describe the resulting states of the verb that it pertains to" 
+)
+
+;; finalized, settled
+
+(define-type ont::finalized-val
+ :parent ont::resulting-state-val
+ :wordnet-sense-keys ("settled%3:00:02") 
+)
+
+;; verified/tested or not verified?                                                                                                        
+(define-type ont::verification-result-val
+ :parent ont::resulting-state-val
+)
+
+(define-type ont::verified-val
+ :parent ont::verification-result-val
+ :wordnet-sense-keys ("verified%5:00:00:proved:00" "tested%5:00:00:proved:00" )
+)
+
+(define-type ont::not-verified-val
+ :parent ont::verification-result-val
+ :wordnet-sense-keys ("unverified%5:00:00:unproved:00")
+)
+
+;; habituated
+(define-type ONT::habituated-val
+ :parent ONT::resulting-state-val
+ :arguments ((:ESSENTIAL ONT::affected (F::phys-obj))
+             (:ESSENTIAL ONT::Formal)
+             )
+ :wordnet-sense-keys("accustomed%3:00:00")
+ )
+
 ;; associated with - words that pertain to another word
 (define-type ont::associated-with-val
  :parent ont::property-val
  :comment "adjectives that classify the noun that it is pertaining to" 
 )
 
-;; commercial, retail, wholesale
+;; relating to commercial enterprise
+(define-type ont::commercial-enterprise-val
+ :parent ont::associated-with-val
+)
+
 (define-type ONT::COMMERCE-VAL
- :parent ONT::associated-with-val
+ :parent ONT::commercial-enterprise-val
  :wordnet-sense-keys ("commercial%3:00:00" "rental%3:01:01")
  )
 
-(define-type ont::linguistic-val
- :parent ont::associated-with-val 
- :wordnet-sense-keys ("linguistic%3:01:00" )
+(define-type ont::industrial-val
+ :parent ont::commercial-enterprise-val
+ :wordnet-sense-keys ("industrial%3:01:00")
 )
 
-(define-type ont::semantic-val
- :parent ont::linguistic-val 
- :wordnet-sense-keys ("semantic%3:01:00" )
-)
-
+;; relating to economy
 (define-type ont::economic-val
  :parent ont::associated-with-val 
  :wordnet-sense-keys ("economic%3:01:00" "economic%3:01:01" "financial%3:01:00" "fiscal%3:01:00" )
@@ -3711,14 +3731,53 @@
 )
 
 ;; specific type defined for obtw demo
-(define-type ont::medical
+(define-type ont::medical-val
  :parent ont::associated-with-val 
  :wordnet-sense-keys ("medical%3:01:00" )
 )
 
-(define-type ont::cardiac
- :parent ont::medical ;; of argument can be events (cardiac care, cardiac arrest) or phys-obj (cardiac muscle)
+;; associated with body
+(define-type ont::associated-with-body-val
+ :parent ont::associated-with-val 
+)
+
+;; body system associations digestive, immune, 
+(define-type ONT::body-system-val
+ :parent ONT::associated-with-body-val ;; of arguments can be more than just human; cardiac care; intestinal disturbance
+ :comment "adjective having to do with body systems" 
+)
+
+;; congenital disease
+(define-type ONT::congenital-val
+ :parent ONT::body-system-val
+ :wordnet-sense-keys ("congenital%5:00:00:noninheritable:00")
+ )
+
+;; genetic, hereditary
+(define-type ONT::hereditary-val
+ :parent ONT::body-system-val
+ :wordnet-sense-keys ("hereditary%5:00:01:inheritable:00")
+ )
+
+;; body part associations
+(define-type ONT::body-part-val
+ :parent ONT::associated-with-body-val ;; of arguments can be more than just human; cardiac care; intestinal disturbance
+ :comment "adjectives having to do with body parts"
+ )
+
+;; cardiac
+(define-type ont::cardiac-val
+ :parent ont::body-part-val ;; of argument can be events (cardiac care, cardiac arrest) or phys-obj (cardiac muscle)
  :wordnet-sense-keys ("cardiac%3:01:00" )
+)
+
+;; permission related
+(define-type ont::permission-related-val
+ :parent ont::associated-with-val 
+)
+
+(define-type ont::allows-doing-val
+ :parent ont::permission-related-val
 )
 
 ;; mental, cerebral
@@ -3735,36 +3794,46 @@
  :arguments ((:optional ONT::GROUND )) 
 )
 
+;; relating to machines
+(define-type ont::mechanical-val
+ :parent ont::physical-val
+ :wordnet-sense-keys ("mechanical%3:00:00")
+)
+
 ;; monroe
 (define-type ONT::POLITICAL
  :parent ont::associated-with-val
  :wordnet-sense-keys ("political%3:00:00")
  )
 
-(define-type ont::science-discipline-property-val
+;; relating to linguistics
+(define-type ont::linguistic-val
+ :parent ont::associated-with-val 
+ :wordnet-sense-keys ("linguistic%3:01:00" )
+)
+
+(define-type ont::semantic-val
+ :parent ont::linguistic-val 
+ :wordnet-sense-keys ("semantic%3:01:00" )
+)
+
+(define-type ont::associated-with-science-val
   :parent ont::associated-with-val   
 )
 
 ;; for boudreaux
 (define-type ONT::BIOLOGICAL
- :parent ONT::science-discipline-PROPERTY-VAL
+ :parent ONT::associated-with-science-val
  :wordnet-sense-keys ("biological%3:01:00")
  )
 
 (define-type ONT::chemical-val
- :parent ONT::science-discipline-PROPERTY-VAL
+ :parent ONT::associated-with-science-val
  :wordnet-sense-keys ("chemical%3:01:00")
  )
 
-(define-type ONT::Numerical-property-val
-    :parent ONT::associated-with-val
-    :sem (f::abstr-obj (f::gradability -))
-    :arguments ((:REQUIRED ONT::FIGURE (f::abstr-obj (F::measure-function f::term))))
-    :wordnet-sense-keys("algebraic%3:01:00" "trigonometric%3:01:00")
-)
-
 (define-type ONT::astronomy-val
- :parent ONT::associated-with-val
+ :parent ONT::associated-with-science-val
  :wordnet-sense-keys ("lunar%3:01:00")
 )
 
@@ -3806,7 +3875,7 @@
 (define-type ONT::VERTICAL
  :parent ONT::ORIENTATION-VAL
  ; Words: (W::STRAIGHT W::VERTICAL W::PERPENDICULAR)
-:wordnet-sense-keys ("erect%3:00:00" "vertical%3:00:00" "vertical%3:00:00" "perpendicular%3:00:00")
+ :wordnet-sense-keys ("erect%3:00:00" "vertical%3:00:00" "vertical%3:00:00" "perpendicular%3:00:04" "upright%5:00:00:vertical:00")
  ; Antonym: ONT::HORIZONTAL (W::PARALLEL W::HORIZONTAL)
  )
 
@@ -4044,6 +4113,20 @@
  :parent ONT::quantity-related-property-val
  )
 
+;; previously numerical-property-val
+(define-type ONT::math-related-property-val
+    :parent ONT::quantity-related-property-val
+    :sem (f::abstr-obj (f::gradability -))
+    :arguments ((:REQUIRED ONT::FIGURE (f::abstr-obj (F::measure-function f::term))))
+    :wordnet-sense-keys("algebraic%3:01:00" "trigonometric%3:01:00")
+)
+
+(define-type ONT::adequacy-VAL
+ :parent  ONT::quantity-related-property-val
+ :arguments ((:ESSENTIAL ONT::GROUND)
+             )
+ )
+
 (define-type ONT::number-related-property-val
  :parent ONT::quantity-related-property-val
  :wordnet-sense-keys("numerical%5:00:00:quantitative:00" "numerical%3:01:00")
@@ -4073,42 +4156,48 @@
  :parent ONT::cardinality-val
  )
 
-(define-type ONT::scarce-val
+(define-type ONT::numerical-grouping-VAL
  :parent ONT::number-related-property-val
- :wordnet-sense-keys("scarce%4:02:00")
  )
 
 ;; collective-val could easily belong to part-whole-val
 (define-type ONT::collective-val
- :parent ONT::number-related-property-val
+ :parent ONT::numerical-grouping-val
  :wordnet-sense-keys("aggregate%5:00:01:collective:00" "collective%3:00:00")
  )
 
 ;; alone, individual
 (define-type ONT::Singularity-VAL
- :parent ONT::number-related-property-val
+ :parent ONT::numerical-grouping-val
+ :wordnet-sense-keys("singularity%1:07:01" "singular%3:00:01" "alone%5:00:00:exclusive:00" "individual%3:00:00")
  )
 
-(define-type ONT::ENOUGH-VAL
- :parent  ONT::quantity-related-property-val
- :arguments ((:ESSENTIAL ONT::GROUND)
-             )
+;; duplicate
+(define-type ONT::duplicate-VAL
+ :parent ONT::numerical-grouping-val
+ :wordnet-sense-keys("duplicate%5:00:00:matched:00")
  )
 
 (define-type ONT::inadequate
- :parent ONT::ENOUGH-VAL
+ :parent ONT::adequacy-VAL
  :arguments ((:required ONT::GROUND (f::phys-obj (f::type ont::material)))
 	     (:required ONT::FIGURE ((? xx  F::phys-obj abstr-obj))))
  ; Words: (W::SHORT W::INADEQUATE W::INSUFFICIENT)
- :wordnet-sense-keys ("inadequate%5:00:00:insufficient:00" "insufficient%3:00:00")
+ :wordnet-sense-keys ("inadequate%5:00:00:insufficient:00" "insufficient%3:00:00" "scarce%3:00:00")
  ; Antonym: ONT::ADEQUATE (W::SUFFICIENT W::ADEQUATE W::ENOUGH)
  )
 
 (define-type ONT::ADEQUATE
- :parent ONT::ENOUGH-VAL
+ :parent ONT::adequacy-VAL
  ; Words: (W::SUFFICIENT W::ADEQUATE W::ENOUGH)
  :wordnet-sense-keys ("sufficient%3:00:00" "adequate%5:00:00:sufficient:00")
  ; Antonym: ONT::inadequate (W::SHORT W::INADEQUATE W::INSUFFICIENT)
  )
+
+(define-type ONT::scarce-val
+ :parent ONT::number-related-property-val
+ :wordnet-sense-keys("scarce%4:02:00")
+ )
+
 
 

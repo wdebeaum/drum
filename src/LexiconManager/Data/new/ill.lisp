@@ -7,7 +7,7 @@
   (W::ill
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("ill%3:00:01"))
-     (LF-PARENT ONT::AILING)
+     (LF-PARENT ONT::AILING-val)
      (templ central-adj-templ)
      )
     )

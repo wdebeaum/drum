@@ -45,7 +45,7 @@
   (W::middle
    (SENSES
     ((meta-data :origin step :entry-date 20080528 :change-date nil :comments nil)
-     (LF-PARENT ONT::mid-stage-val)
+     (LF-PARENT ONT::middle-val)
      (preference .98) ;; prefer relational noun sense
      )
     (

@@ -29,7 +29,8 @@
     ((LF-PARENT ONT::enroll)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "We enter into an agreement.")
-     (templ agent-goal-optional-templ (xp (% W::PP (W::ptype (? t W::into)))))
+     ;(templ agent-goal-optional-templ (xp (% W::PP (W::ptype (? t W::into)))))
+     (templ agent-templ)
      )
 
      ((LF-PARENT ONT::enroll)

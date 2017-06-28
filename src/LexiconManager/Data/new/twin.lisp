@@ -6,7 +6,7 @@
  :words (
    (W::twin
    (SENSES
-    ((LF-PARENT ONT::CARDINALITY-VAL)
+    ((LF-PARENT ONT::duplicate-VAL)
      (meta-data :origin caloy3 :entry-date 20070330 :change-date nil :wn ("dual%5:00:00:multiple:00") :comments caloy3-test-data)
      )
     )

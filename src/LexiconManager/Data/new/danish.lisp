@@ -9,6 +9,11 @@
 	   ((LF-PARENT ONT::CAKE-PIE)
 	    (TEMPL count-PRED-TEMPL)
 	    )
+
+	   ((LF-parent ONT::nationality)
+            (templ count-pred-templ)
+            (meta-data :origin adjective-reorganization :entry-date 20170427 :change-date nil)
+            )
 	   )
 )
 ))
