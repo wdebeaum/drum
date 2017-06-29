@@ -8,7 +8,7 @@
 (parser::augment-grammar
   '((headfeatures
 	 ;;lex headcat removed --me
-     (PP KIND MASS NAME agr SEM SORT PRO SPEC CLASS transform gap)
+     (PP KIND MASS NAME agr SEM SORT PRO SPEC CLASS transform gap gerund)
      ;;(ADVBLS FOCUS VAR SEM SORT ATYPE ARG SEM ARGUMENT NEG TO QTYPE lex transform)
      (ADVBL VAR SORT ARGSORT ATYPE SEM ARGUMENT lex headcat transform neg result-only)
      (ADV SORT ATYPE CONSTRAINT SA-ID PRED NEG TO LEX HEADCAT SEM ARGUMENT SUBCAT IGNORE transform)

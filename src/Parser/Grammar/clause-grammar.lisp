@@ -1769,7 +1769,7 @@
      ;;       (dobj (% -)) 
      (dobj ?comp3) (dobj-map ?comp3-map)     
      (iobj ?iobj) (iobj-map ?iobj-map)
-     (comp3 (% pp (ptype by) (sem ?!subj-sem))) (comp3-map ?subj-map)
+     (comp3 (% pp (ptype by) (gerund -) (sem ?!subj-sem))) (comp3-map ?subj-map)
      (part ?part)) 
     -v-passive-by> 1.0
     (head (v (vform pastpart) (lex (? !lx been)) (exclude-passive -);; exclude be
@@ -1856,7 +1856,7 @@
        (subj ?!dobj) (subj-map ?dobj-map) 
        (comp3 ?!comp3) (comp3-map ?comp-map)
        (iobj ?iobj) (iobj-map ?iobj-map)
-       (dobj (% pp (ptype by) (sem ?!subj-sem))) (dobj-map ?subj-map)
+       (dobj (% pp (ptype by) (gerund -) (sem ?!subj-sem))) (dobj-map ?subj-map)
        (part ?part)) 
     -v-passive-by-reversed>
     

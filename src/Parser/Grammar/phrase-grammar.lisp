@@ -596,10 +596,7 @@
    
    ;; relational nouns without filled PP-of    
    ;; e.g., the brother, the hand, the side
-   ;; Takes a RELN and puts in a dummy arg to make it a pred on
-   ;; a value: e.g., distance -> (Distance <of something> ?arg)) 
-   ;; uses special structure *PRO* for the implicit arg
-   ;; NOTE: it is crucial to have (SUBCAT -) there, or the N1 will never undergo n-n modification!
+     ;; NOTE: it is crucial to have (SUBCAT -) there, or the N1 will never undergo n-n modification!
    
    ((N1 (sort pred) (class ?lf) (var ?v)
      ;; (restr (& (?smap (% *PRO* (var *) (sem ?argsem) (constraint (& (ROLE-VALUE-OF ?v) (fills-ROLE ?lf)))))))  ;; to be done in IM now
@@ -611,7 +608,7 @@
 	   (sem ?ssem)  (SEM ($ ?type (f::scale ?sc)))
 	   (subcat (% ?argcat (sem ?argsem)))
 	   (subcat-map ?smap)
-	   (subcat-map (? !smap ont::GROUND)) ;; disallow ont::val here
+	   (subcat-map (? !smap ont::GROUND)) 
 	   ))
     (add-to-conjunct (val (:scale ?sc)) (old ?r) (new ?con))
 
@@ -3317,7 +3314,7 @@
 	    (generated -)
 	    (agent-nom -) ;; no agent in agentivenominalizations
 	    ))
-     (pp (ptype ?subjpreps) (sem ?subjsem) (gap -) (var ?dv))
+     (pp (ptype ?subjpreps) (sem ?subjsem) (gap -) (var ?dv) (gerund -))  ;; gerund PP is probably BY-MEANS-OF
      (add-to-conjunct (val (& (?!subjmap ?dv))) (old ?restr) (new ?newrestr)))
 
 
