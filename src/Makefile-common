@@ -108,7 +108,7 @@ clean distclean:
 	done
 
 clean-lisp:
-	@for d in $(LISP_MODULES) $(LISP_PROGRAMS); do \
+	@for d in $(LIBS) $(LISP_MODULES) $(LISP_PROGRAMS); do \
 	  if test -d $$d; then \
 	    (cd $$d; $(MAKE) clean); \
 	  fi; \

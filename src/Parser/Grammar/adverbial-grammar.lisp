@@ -831,7 +831,7 @@
     ((N1 (RESTR ?new) (POSTADVBL +) (COMPLEX +)) 
      -adv-np-event-post>   ;; event nominals allows result adverbials
      (head (N1 (VAR ?v1) ;; (POSTADVBL -) 
-	       (SEM ($ (f::situation (F::event-of-change))))
+	       (SEM ($ f::situation (F::type ont::event-of-change)))
 	       (RESTR ?restr) ;;(gerund -)   Have to allow gerunds e.g., the debating at the house.
 	       (post-subcat -) (SORT PRED)
 	       (no-postmodifiers -) ;; exclude "the same path as the battery" and advbl attaching to "path"

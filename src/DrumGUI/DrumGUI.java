@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.70 2017/03/31 23:00:00 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.71 2017/06/29 20:41:58 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -747,8 +747,6 @@ public class DrumGUI extends StandardTripsModule {
         KQMLObject exitWhenDoneObj = content.getKeywordArg(":exit-when-done");
         if (exitWhenDoneObj != null) {
             exitWhenDone = StringUtils.stringToBoolean(exitWhenDoneObj.toString());
-        } else {
-            exitWhenDone = false;
         }
         // task needs ekb at the end?
         replyWithEKB = false;
