@@ -320,7 +320,7 @@
 	    (resolve-personal-pronoun lf lf-type index speaker addressee sem (referent-role ref))
 	    )
 	   (ONT::IMPRO
-	    (resolve-impro lf sem index (referent-role ref))
+	    (resolve-impro lf lf-type sem index (referent-role ref))
 	    )
 	   ((ONT::THE ONT::THE-SET)
 	    (resolve-definite-reference lf lf-type sem index speaker addressee))
@@ -437,7 +437,7 @@
 				 :refers-to 'ONT::US)))
 	    ((ont::it ont::its
 		      W::it W::its)
-	     (when (non-expletive lf)
+	     (when (non-expletive lf-type) ;(non-expletive lf)
 	       (resolve-pro-fn lf lf-type sem '(concrete kind event wh-term state) '(individual) index (fn-no-human lf-type) 3 role)
 	       ;(or (resolve-pro-fn lf lf-type sem '(concrete) '(individual) index (fn-no-human lf-type) 3 role)
 		   ;(resolve-pro-fn lf lf-type sem '(event wh-term state) '(individual) index #'(lambda (x) T) 3 role))
@@ -449,7 +449,7 @@
 	    
 	    ((ont::this ont::that ont::these ont::those
 			W::this W::that W::these W::those)
-	     (when (non-expletive lf)
+	     (when (non-expletive lf-type) ;(non-expletive lf)
 	       (resolve-this-that lf lf-type sem index)))
 	    
 	    ((ont::they ont::them ont::their
@@ -470,8 +470,8 @@
 			     3
 			     role)
 		 ;;   backoff strategy for gendered pronouns - just look for people of unknown gender
-		 (if (member (cadr lf-type) '(ONT::MALE-PERSON ONT::FEMALE-PERSON))
-		     (let ((opposite-type (if (eq (cadr lf-type) 'ONT::MALE-PERSON)
+		 (if (member lf-type '(ONT::MALE-PERSON ONT::FEMALE-PERSON))
+		     (let ((opposite-type (if (eq lf-type 'ONT::MALE-PERSON)
 					      'ONT::FEMALE-PERSON 'ONT::MALE-PERSON)))
 		     (resolve-pro-fn (list* (car lf) (cadr lf) 'ont::person (cdddr lf)) 'ont::person sem
 				     '(concrete) '(individual) index 
@@ -498,8 +498,9 @@
 	    
     val))
 
-(defun non-expletive (lf)
-  (not (eq (third lf) 'w::expletive)))
+(defun non-expletive (lf-type)
+  ;(not (eq (third lf) 'w::expletive)))
+  (not (eq lf-type 'ont::expletive)))
 
 (defun find-temporal-ref (pro lf)
   (multiple-value-bind (sec min hour day month year)
@@ -683,9 +684,9 @@
 (defun sort-by-access (results access)
   results)
 
-(defun resolve-impro (lf sem index role)
+(defun resolve-impro (lf lf-type sem index role)
   (let* ((id (second lf))
-	 (lf-type (get-lf-type lf))
+	 ;(lf-type (get-lf-type lf))
 	 (cr (find-arg-in-act lf :proform))
 	 (sem (find-arg-in-act lf :sem))
 	(hyps (case cr
