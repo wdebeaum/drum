@@ -5,7 +5,7 @@
 (define-words :pos W::v 
  :words (
   (W::inhibit
-   (wordfeats (W::morph (:forms (-vb) :past w::inhibited :ing w::inhibiting :nom w::inhibition)))
+   (wordfeats (W::morph (:forms (-vb) :past w::inhibited :ing w::inhibiting :nom w::inhibition :agentnom w::inhibitor)))
    (SENSES
     (
      (LF-PARENT ONT::inhibit-effect)
@@ -20,4 +20,3 @@
     )
    )
 ))
-

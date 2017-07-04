@@ -3097,7 +3097,7 @@
      (word (lex how))
      (head (quan (sem ?def) (LF ?lf) (MASS MASS) (AGR ?a) (VAR ?v) (lex MUCH))))
         
-    ;; VPs as gerund-NPS
+ #||   ;; VPs as gerund-NPS
     ((NP (SORT PRED)
          (gap -) (var ?v) (agr 3s)
          (sem ?sem) (mass mass) (gerund +) (class ?class)
@@ -3113,7 +3113,7 @@
                (sem ?sem) 
 	       (class ?class)  (constraint ?con)  (transform ?transform)
 	       ))
-     )
+     )||#
 #||   THis is replace by new nominlaization handling
     ((NP (SORT PRED)
       (gap -) (var ?v) (agr 3s)
@@ -3933,7 +3933,7 @@
       (nomobjpreps ?nop)
       (nomsubjpreps ?nsp)
       )
-     -gerund2> 0.98
+     -gerund2> ;;0.98
      (head (v (vform ing) (var ?v) (gap -) (aux -) 
 	      (sem ?sem) 
 	      (LF ?class) (transform ?transform)
@@ -5147,7 +5147,9 @@
    ;; certains NAMES (esp in the biology domain) are really treat like mass nouns
 	;;   we need this for constructions wwith modifiers, like "phosphorylated HER3"
     ((n1 (SORT PRED)
-      (var ?v) (Class ?lf) (sem ?sem) (agr 3s) (case (? cas sub obj -))
+      (var ?v) (Class ?lf) (sem ?sem) (agr ?agr)
+      ;;(agr 3s) 
+      (case (? cas sub obj -))
       (derived-from-name +)  ;; we do this so that this N1 doesn't go through the bare-np rule, since we have the name-np already. But this N1 does allow relative clauses, as in "Ras that is bound to Raf"
       (status ont::name) (lex ?l) (restr ?con) ;(restr (& (w::name-of ?l)))
       (mass mass)
@@ -5155,7 +5157,8 @@
      -n1-from-name> 1
      (head (name (lex ?l) (sem ?sem) 
 		 (sem ($ (? type f::PHYS-OBJ f::situation) (f::type (? x ont::molecular-part ont::cell-part ont::chemical ont::physical-process ont::organization))))
-		 (var ?v) (agr 3s) (lf ?lf) (class ?class)
+		 (var ?v) (agr ?agr) ;;(agr 3s) 
+		 (lf ?lf) (class ?class)
 	    (full-name ?fname) (time-converted ?tc)
 	    ;; swift 11/28/2007 removing gname rule & passing up generated feature (instead of restriction (generated -))
 	    (generated -)  (transform ?transform) (title -)
