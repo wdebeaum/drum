@@ -1028,10 +1028,12 @@
             (argument ?argument)
             (filled -)
             )
-      -pred4>
+      -pred4> .97
       (head (np (sem ?sem) (var ?v) (sort pred) (case (? case obj -))
-          (lf (% description (status (? x ont::indefinite ont::bare ont::indefinite-plural)) (sem ($ f::phys-obj (f::type ont::role-reln)))
-	         (class ?c) (constraint ?constr)))))
+		(derived-from-name -) (gerund -)
+		(lf (% description (status (? x ont::indefinite ont::bare ont::indefinite-plural)) 
+		       (sem ($ f::phys-obj (f::type ont::role-reln)))
+		       (class ?c) (constraint ?constr)))))
       (add-to-conjunct (val (Figure ?arg)) (old ?constr) (new ?newcon))
       )
 

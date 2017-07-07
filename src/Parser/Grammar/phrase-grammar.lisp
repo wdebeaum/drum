@@ -1957,7 +1957,7 @@
 ;;(cl:setq *grammar-NP*
 (parser::augment-grammar 
       '((headfeatures
-         (NP CASE MASS NAME agr SEM PRO CLASS Changeagr GAP ARGUMENT argument-map SUBCAT role lex headcat transform postadvbl refl gerund abbrev
+         (NP CASE MASS NAME agr SEM PRO CLASS Changeagr GAP ARGUMENT argument-map SUBCAT role lex headcat transform postadvbl refl gerund abbrev derived-from-name
 	  subj dobj subcat-map comp3-map))
 
 ; new plural treatment proposed by James May 10 2010
@@ -5152,7 +5152,7 @@
       (case (? cas sub obj -))
       (derived-from-name +)  ;; we do this so that this N1 doesn't go through the bare-np rule, since we have the name-np already. But this N1 does allow relative clauses, as in "Ras that is bound to Raf"
       (status ont::name) (lex ?l) (restr ?con) ;(restr (& (w::name-of ?l)))
-      (mass mass)
+      (mass ?mass)
       )
      -n1-from-name> 1
      (head (name (lex ?l) (sem ?sem) 
