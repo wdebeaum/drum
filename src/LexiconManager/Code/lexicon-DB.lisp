@@ -665,6 +665,7 @@ intersection of an entry's tags and these tags is non-empty."
   (let* ((id (word-sense-definition-name entry)) ;; rule-id is never used
 	 ;; -- why is it here?
 ;;	 (rule-id (list nil id))  ;; a fake rule so read-fv-pair can be used
+	 (result-type (make-type-spec (cadr (assoc 'ont::result (word-sense-definition-roles entry)))))
          (prob (or (word-sense-definition-pref entry) *no-kr-probability*))
          (cat (word-sense-definition-pos entry))
 	 (coerce (or (mapcar (lambda (x)
@@ -676,7 +677,7 @@ intersection of an entry's tags and these tags is non-empty."
 				   ))
 			     (word-sense-definition-coercions entry))
 		     '-))
-         (feats `((w::LF ,(word-sense-definition-lf entry))
+         (feats1 `((w::LF ,(word-sense-definition-lf entry))
 		  (w::SEM ,(make-type-spec (word-sense-definition-sem entry) :semvar '?sem :feature-list-sign '$))
 		  (w::transform ,(word-sense-definition-transform entry))
 		  (w::kr-type ,(word-sense-definition-kr-type entry))
@@ -685,6 +686,11 @@ intersection of an entry's tags and these tags is non-empty."
 		  ;;,@(make-role-restrictions (word-sense-definition-roles entry))
 		  ,@(build-synt-arguments (word-sense-definition-mappings entry) (word-sense-definition-roles entry))
 		  ))
+	 ;; add RESULT if in the ontology as its not usually in thw synt arguments
+	 (feats (if result-type
+		    (cons `(W::result ,result-type)
+			  feats1)
+		    feats1))
          (remaining-words (word-sense-definition-remaining-words entry))  ;; non-null for multi-word lex entries
          (name1 (if (null remaining-words)
                   (if (eq name 'w::do) 'w::DO- name)   ;; we need to not use DO as the name  because of a printing bug in MCL for lists starting with DO

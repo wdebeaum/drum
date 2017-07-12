@@ -3,6 +3,11 @@ const util = require('util');
 const EventEmitter = require('events');
 const PEG = require('pegjs');
 
+// PEG.js 0.9.0->0.10.0 compatibility
+if (!('buildParser' in PEG)) {
+  PEG.buildParser = PEG.generate;
+}
+
 const kqmlParser = PEG.buildParser(fs.readFileSync(
   require.resolve('./kqml_parser.pegjs'),
   { encoding: 'UTF-8' }
