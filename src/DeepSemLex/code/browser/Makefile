@@ -25,6 +25,7 @@ $(DATA_BUILD_DIR)/COMPLETE: write-trips-ont-xmls.sh write-trips-ont-xmls.lisp $(
 
 install:: all ont-type.xsl exslt/str.tokenize.template.xsl
 	$(MKINSTALLDIRS) $(WWW_DIR)
+	rm -rf $(WWW_DIR)/*.xml
 	$(INSTALL_DATA) \
 		$(DATA_BUILD_DIR)/*.xml \
 		ont-type.xsl \
