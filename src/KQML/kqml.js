@@ -44,10 +44,11 @@ function kqmlStringAsJS(kqml) {
 
 function escapeForQuotes(string) {
   return string.
+    replace(/[\\]/g, "\\\\").
     replace(/[\n]/g, "\\n").
     replace(/[\r]/g, "\\r").
     replace(/[\t]/g, "\\t").
-    replace(/[\\]/g, "\\\\");
+    replace(/"/g, "\\\"");
 }
 
 /** Is o a string containing a KQML keyword symbol? */
