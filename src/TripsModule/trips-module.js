@@ -10,6 +10,7 @@ var MaxPortTries = 100;
 
 function TripsModule(argv) {
   this.argv = argv;
+  this.autoConnect = true;
 }
 TripsModule.prototype = {
   constructor: TripsModule,
