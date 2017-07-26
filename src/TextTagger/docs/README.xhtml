@@ -1263,7 +1263,7 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 <h4>Scoring</h4>
 <p>The result of the table lookup has both the unnormalized form of the term constructed from the lattice entries, and the unnormalized form of each matching term from one of our data sources. These two forms are not in general the same, but they do normalize to the same string. We count the ways in which they differ (which can only involve letter case and the presence or absence of dashes; we ignore the specific type of dash used, and the amount of whitespace), and that contributes to a match score, along with the status of the term in the data source it came from, and whether a depluralized lattice entry contributed to the match. Higher scores are better (i.e. they are not costs, but benefits).</p>
 
-<p>The status score is a simple hand-built ranking of the status annotations from all of the data sources, ranging from 0 to 5:</p>
+<p>The status score is a simple hand-built ranking of the status annotations from all of the data sources, ranging from 0 to 5 (except that we add 1 for terms from the BioEntities (BE) source, so it's really 0 to 6):</p>
 <table>
 <tr><th>score</th><th>meaning</th><th>status annotations</th></tr>
 <tr><td>5</td><td>the most official name or abbreviation</td>
@@ -1342,10 +1342,10 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 <p>Finally, the status score, depluralization score, and case/dash score are themselves combined in a similar way:</p>
 <pre>final_score =
   ((((0
-  ) * 6 + status_score
+  ) * 7 + status_score
   ) * 3 + depluralization_score
   ) * 2 + case_dash_score
-  ) / 35
+  ) / 41
 </pre>
 </div>
 

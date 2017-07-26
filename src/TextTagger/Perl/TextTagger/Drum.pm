@@ -1087,13 +1087,17 @@ sub score_match {
   } else {
     die "Unrecognized term status: $m->{status}";
   }
+  # we really like bioentities
+  if ($pkg eq 'BE') {
+    $status_score++;
+  }
 
   print STDERR Data::Dumper->Dump([$status_score, $depluralized, $variant_score],[qw(status_score depluralized variant_score)]) if ($debug);
   my $final_score = ((((0
-    ) * 6 + $status_score
+    ) * 7 + $status_score
     ) * 3 + $depluralized
     ) * 2 + $variant_score
-    ) / 35.0; # product of the coefficients -1
+    ) / 41.0; # product of the coefficients -1
   print STDERR "Drum::score_match returning $final_score\n" if ($debug);
   return $final_score;
 }
