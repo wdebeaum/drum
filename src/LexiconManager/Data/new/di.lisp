@@ -18,7 +18,7 @@
  :words (
   (w::di-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::di-val)
     (example "diubiquitinate")
     (templ V-PREFIX-templ)
     )
@@ -30,7 +30,7 @@
  :words (
   (w::di-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::di-val)
     (example "diubiquitination; dipeptide")
     (templ prefix-adj-templ)
     )
@@ -42,7 +42,7 @@
  :words (
   (w::di-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::di-val)
     (example "dichromatic")
     (templ adj-operator-prefix-TEMPL)
     )

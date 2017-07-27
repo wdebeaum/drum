@@ -167,7 +167,7 @@
  :comment "events of motion through some space (physical or abstract). Even though many motion verbs express simply undergoing motion, all these verbs allow to possibiliity of an AGENT"
  :arguments ((:REQUIRED ONT::affected ((? th1 f::phys-obj f::abstr-obj f::situation f::time) (F::mobility F::movable)))
              (:OPTIONAL ONT::Source)
-             (:OPTIONAL ont::result)
+             (:OPTIONAL ont::result (F::abstr-obj (F::type (? t ont::position-reln))))
 	     (:OPTIONAL ONT::agent ((? causetype F::phys-obj F::situation F::abstr-obj)))
 	     (:optional ont::extent (F::abstr-obj (F::type ont::quantity))
 	     )

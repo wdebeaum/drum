@@ -1012,7 +1012,7 @@
 (define-type ont::break-object
  :wordnet-sense-keys ("wreck%1:11:00" "crash%1:11:00" "smash%1:04:00" "crash%1:04:00" "ram%2:35:01" "crash%2:35:00" "crash%2:38:04" "break_apart%2:35:00" "break_up%2:35:02" "crash%2:35:01" "come_apart%2:30:00" "fall_apart%2:30:03" "split_up%2:30:00" "separate%2:30:03" "break%2:30:00" "damage%2:30:00" "break%2:30:10" "break%2:30:15" "check%2:30:03" "crack%2:30:01" "tear%2:35:00" "rupture%2:35:00" "snap%2:35:01" "bust%2:35:02" "fracture%2:29:01" "fracture%2:29:01" "break%2:35:13")
     :parent ont::object-change
-    :arguments ((:required ONT::affected (F::Phys-obj (f::form f::object)
+    :arguments ((:required ONT::affected (F::Phys-obj (f::form (? f f::object f::solid))  ; "pizza" is (default) f::solid
 						  ;; Myrosia 2008/16/07 added origin non-living to account for "break a path", "break a stone"
 						  (f::origin (? o  f::artifact f::non-living))
 						  ))

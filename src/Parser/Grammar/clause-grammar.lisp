@@ -33,7 +33,7 @@
  '((headfeatures
     (vp vform var agr neg sem iobj dobj comp3 part cont aux tense-pro gap subj subjvar modal auxname lex headcat transform subj-map template complex ellipsis)
     (vp- vform var agr neg sem iobj dobj comp3 part cont   tense-pro aux modal auxname lex headcat transform subj-map advbl-needed
-	 passive passive-map template) 
+	 passive passive-map template result) 
     (s vform var neg sem subjvar dobjvar cont  lex headcat transform ellipsis)
     (cp vform var neg sem subjvar dobjvar cont  transform subj-map subj lex)
     (v lex sem lf neg var agr cont aux modal auxname ellipsis tma transform headcat)
@@ -2102,7 +2102,7 @@
  ;;== new passive treatment ====
 (parser::augment-grammar
  '((headfeatures
-    (vp- vform var agr neg sem iobj dobj comp3 part cont   tense-pro aux modal auxname lex headcat transform subj-map advbl-needed passive subjvar template)
+    (vp- vform var agr neg sem iobj dobj comp3 part cont   tense-pro aux modal auxname lex headcat transform subj-map advbl-needed passive subjvar template result)
     (v lex sem lf neg var agr cont aux modal auxname ellipsis tma transform headcat)
     (cp vform neg sem subjvar dobjvar cont  transform)
     )
@@ -2659,7 +2659,7 @@
   '((headfeatures
      (s vform var neg sem dobjvar cont  lex headcat transform advbl-needed)
      (pred qtype focus arg var sem wh lf lex headcat transform)
-     (vp- vform var agr neg sem iobj dobj comp3 part cont  tense-pro aux modal lex headcat transform tma subj-map advbl-needed template)
+     (vp- vform var agr neg sem iobj dobj comp3 part cont  tense-pro aux modal lex headcat transform tma subj-map advbl-needed template result)
      )
     
 
@@ -3169,7 +3169,7 @@
 (parser::augment-grammar
  '((headfeatures
     (vp agr neg iobj dobj comp3 part cont  tense-pro gap subj subjvar aux modal auxname headcat advbl-needed template)
-    (vp- lex headcat template)
+    (vp- lex headcat template result)
     )
    
    ;; aux rule for auxilliaries that change the sem features of the phrase
@@ -3279,6 +3279,7 @@
     (vbarseq sem)
     (vpseq sem)
     ;;(vp- sem)
+    (vp- result)
     )
    
    ;; conjoined vps w/ same subject
@@ -3675,13 +3676,14 @@
      -vp-result-advbl-intransitive-to-transitive> 0.98  ; prefer the transitive sense if there is one
      (head (vp (VAR ?v) 
         (seq -)  ;;  post mods to conjoined VPs is very rare
-        (DOBJVAR -)  ; cannot use (dobj -) because dobj is (% - (W::VAR -)) 
+        ;(DOBJVAR -)  ; This doesn't work because it could unify with a dobjvar not yet instantiated
+	(dobj (% -)) ; cannot use (dobj -) because dobj is (% - (W::VAR -))
         ;(SUBJ (% NP (Var ?npvar) (sem ?sem) (lex ?lex)))  
         ;(subjvar ?npvar)
         (constraint ?con) (tma ?tma) (result-present -)
-    (subjvar ?ag)
-    (subj-map ONT::AGENT)
-    (COMP3 (% -))
+	(subjvar ?ag)
+	(subj-map ONT::AGENT)
+	(COMP3 (% -))
         ;;(aux -) 
         (gap ?gap)
         (ellipsis -)
@@ -3717,7 +3719,8 @@
      -vp-result-adj-intransitive-to-transitive> 0.98  ; prefer the transitive sense if there is one
      (head (vp (VAR ?v) 
         (seq -)  ;;  post mods to conjoined VPs is very rare
-        (DOBJVAR -)  ; cannot use (dobj -) because dobj is (% - (W::VAR -)) 
+        ;(DOBJVAR -)  ; This doesn't work because it could unify with a dobjvar not yet instantiated
+	(dobj (% -)) ; cannot use (dobj -) because dobj is (% - (W::VAR -))
         ;(SUBJ (% NP (Var ?npvar) (sem ?sem) (lex ?lex)))  
         ;(subjvar ?npvar)
         (constraint ?con) (tma ?tma) (result-present -)

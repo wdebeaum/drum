@@ -15,7 +15,8 @@
      (preference .96) ;;prefer canonical sense
      )
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("quantity%1:07:00"))
-     (LF-PARENT ONT::quantity)
+     ;(LF-PARENT ONT::quantity)
+     (LF-PARENT ONT::quantity-abstr)
      (TEMPL OTHER-RELN-TEMPL)
      (example "a quantity of water/people")
      )

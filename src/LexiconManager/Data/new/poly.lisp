@@ -6,7 +6,7 @@
  :words (
   (w::poly-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::poly-val)
     (example "polyubiquitinate")
     (templ V-PREFIX-templ)
     )
@@ -18,7 +18,7 @@
  :words (
   (w::poly-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::poly-val)
     (example "polyubiquitination; polypeptide")
     (templ prefix-adj-templ)
     )
@@ -30,7 +30,7 @@
  :words (
   (w::poly-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::poly-val)
     (example "polychromatic")
     (templ adj-operator-prefix-TEMPL)
     )

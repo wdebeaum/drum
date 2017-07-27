@@ -24,6 +24,11 @@
      (lf-parent ont::carve-cut) ;; 20120524 GUM change new parent
      (EXAMPLE "he cut the rope")
      )
+    (
+     (lf-parent ont::decrease) 
+     (EXAMPLE "The government cut the subsidy.")
+     (PREFERENCE 0.98)
+     )
     )
    )
 ))

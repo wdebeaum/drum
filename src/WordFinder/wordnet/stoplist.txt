@@ -2903,3 +2903,8 @@ switch_on%2:35:00::
 turn_off%2:35:00::
 switch_off%2:35:00::
 turn_out%2:35:01::
+sixth%1:24:00::
+sixth%1:23:00::
+one-sixth%1:23:00::
+sixth%1:10:00::
+

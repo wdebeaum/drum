@@ -6,7 +6,7 @@
  :words (
   (w::multi-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::poly-val)
     (example "multiubiquitinate")
     (templ V-PREFIX-templ)
     )
@@ -18,7 +18,7 @@
  :words (
   (w::multi-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::poly-val)
     (example "multiubiquitination; multipeptide")
     (templ prefix-adj-templ)
     )
@@ -30,7 +30,7 @@
  :words (
   (w::multi-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::poly-val)
     (example "multichromatic")
     (templ adj-operator-prefix-TEMPL)
     )

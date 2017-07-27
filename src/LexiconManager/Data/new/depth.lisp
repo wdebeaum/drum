@@ -7,11 +7,11 @@
   (W::DEPTH
    (SENSES
     ((meta-data :origin calo :entry-date 20031223 :change-date nil :wn ("depth%1:07:00") :comments html-purchasing-corpus)
-     (LF-PARENT ONT::depth)
+     (LF-PARENT ONT::depth-scale)
      (TEMPL OTHER-RELN-TEMPL)
      )
     ((meta-data :origin calo :entry-date 20031223 :change-date nil :wn ("depth%1:07:00") :comments html-purchasing-corpus)
-     (LF-PARENT ONT::depth)
+     (LF-PARENT ONT::depth-scale)
      (TEMPL reln-subcat-of-units-TEMPL)
      )
     )

@@ -6,7 +6,7 @@
  :words (
   (w::uni-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::mono-VAL)
     (example "uniprocessing")
     (templ V-PREFIX-templ)
     )
@@ -18,7 +18,7 @@
  :words (
   (w::uni-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::mono-VAL)
     (example "uniprocessor; unicolor")
     (templ prefix-adj-templ)
     )
@@ -30,7 +30,7 @@
  :words (
   (w::uni-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::mono-VAL)
     (example "unilingual")
     (templ adj-operator-prefix-TEMPL)
     )

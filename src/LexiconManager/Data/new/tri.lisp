@@ -30,7 +30,7 @@
  :words (
   (w::tri-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::tri-val)
     (example "")
     (templ V-PREFIX-templ)
     )
@@ -42,7 +42,7 @@
  :words (
   (w::tri-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::tri-val)
     (example "triphosphate")
     (templ prefix-adj-templ)
     )
@@ -54,7 +54,7 @@
  :words (
   (w::tri-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::tri-val)
     (example "")
     (templ adj-operator-prefix-TEMPL)
     )

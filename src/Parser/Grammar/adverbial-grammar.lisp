@@ -405,7 +405,7 @@
      (ADJP VAR ATYPE SORT ARG COMP-OP PRED ARGUMENT lex headcat transform post-subcat sem) 
      (NUMBER VAR AGR lex headcat transform)
      (VP vform var agr neg sem subj iobj dobj comp3 part cont gap class subjvar lex headcat transform subj-map tma aux template)
-     (VP- vform var agr neg sem subj iobj dobj dobjvar comp3 part cont gap class subjvar lex headcat transform subj-map tma aux passive passive-map template)
+     (VP- vform var agr neg sem subj iobj dobj dobjvar comp3 part cont gap class subjvar lex headcat transform subj-map tma aux passive passive-map template result)
      (S vform neg cont stype gap sem subjvar dobjvar var  lex headcat transform subj)
      (N1 case VAR AGR MASS SEM Changeagr class reln sort lex headcat transform set-restr)
      (NP case VAR AGR MASS SEM Changeagr class reln sort lex headcat transform status)
@@ -643,6 +643,7 @@
 		;;(aux -) 
 		(gap ?gap)
 		(ellipsis -)
+		(result ?asem)
 		))
 
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
@@ -650,6 +651,7 @@
       ;; (subjvar ?subjvar)
       (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln))))
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
+      (sem ?asem)
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
       (ARG ?npvar) (VAR ?mod)
       ;;(role ?advrole) 
@@ -1414,7 +1416,7 @@
 (parser::augment-grammar
  '((headfeatures
     (VP vform var agr neg sem subj iobj dobj comp3 part cont class subjvar lex headcat transform tma subj-map template)
-    (VP- vform var agr neg sem subj iobj dobj comp3 part cont class subjvar lex headcat transform subj-map tma aux passive passive-map template)
+    (VP- vform var agr neg sem subj iobj dobj comp3 part cont class subjvar lex headcat transform subj-map tma aux passive passive-map template result)
     (pp headcat lex)
     (advbl gap headcat lex neg)
     )

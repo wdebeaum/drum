@@ -50,8 +50,7 @@
      )
     (
      (LF-PARENT ONT::MIDDLE-LOCATION-VAL)
-     )
-    
+     )    
     )
    )
 ))

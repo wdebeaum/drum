@@ -6,7 +6,7 @@
  :words (
   (w::mono-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::mono-val)
     (example "monoubiquitinate")
     (templ V-PREFIX-templ)
     )
@@ -18,7 +18,7 @@
  :words (
   (w::mono-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::mono-val)
     (example "monoubiquitination; monopeptide")
     (templ prefix-adj-templ)
     )
@@ -30,7 +30,7 @@
  :words (
   (w::mono-
   (senses
-   ((lf-parent ont::CARDINALITY-VAL)
+   ((lf-parent ont::mono-val)
     (example "monochromatic")
     (templ adj-operator-prefix-TEMPL)
     )

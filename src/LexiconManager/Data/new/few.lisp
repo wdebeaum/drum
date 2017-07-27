@@ -15,14 +15,14 @@
    )
 ))
 
-(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
- :words (
-  (W::few
-   (SENSES
-    ((LF-PARENT ONT::scarce-val)
-     (meta-data :origin adjective-reorganization :entry-date 20170413 :change-date nil)
-     (EXAMPLE "honest men are few")
-     )
-    )
-   )
-))
+;(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+; :words (
+;  (W::few
+;   (SENSES
+;    ((LF-PARENT ONT::inadequate)
+;     (meta-data :origin adjective-reorganization :entry-date 20170413 :change-date nil)
+;     (EXAMPLE "honest men are few")
+;     )
+;    )
+;   )
+;))

@@ -8,7 +8,8 @@
   (W::scarce
     (wordfeats (W::MORPH (:FORMS (-er -LY))))
    (SENSES
-    ((LF-PARENT ONT::scarce-val)
+    ((LF-PARENT ONT::inadequate)
+     (EXAMPLE "Vegetables were scarce during the drought")
      (meta-data :origin cardiac :entry-date 20080508 :change-date 20090915 :comments LM-vocab)
      )
     )
