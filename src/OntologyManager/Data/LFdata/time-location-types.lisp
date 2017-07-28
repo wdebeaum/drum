@@ -448,7 +448,8 @@
 (define-type ONT::resulting-object
  :parent ONT::predicate
  :arguments ((:ESSENTIAL ONT::FIGURE
-			 (F::Situation (f::aspect f::dynamic) (f::type ont::event-of-creation)))
+			 ;(F::Situation (f::aspect f::dynamic) (f::type (? t ont::event-of-creation ont::change)))) ; e.g., make, cut
+	                 (F::Phys-obj ))
              (:REQUIRED ONT::GROUND (F::Phys-obj ))
              )
  )
@@ -463,8 +464,8 @@
 
 (define-type ONT::resulting-state
  :parent ONT::goal-reln
- :arguments ((:ESSENTIAL ONT::FIGURE 
-			 (F::Situation (f::aspect f::dynamic) (f::type ont::change)))
+ :arguments ((:ESSENTIAL ONT::FIGURE )
+			 ;(F::Situation (f::aspect f::dynamic) (f::type ont::change)))
              (:REQUIRED ONT::GROUND ((? t F::Abstr-obj F::situation)))
              )
  )

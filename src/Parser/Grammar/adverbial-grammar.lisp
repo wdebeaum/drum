@@ -616,7 +616,7 @@
 			 (sem ?sem))) (GAP -)
       ;; (subjvar ?subjvar)
 			 (SEM ($ f::abstr-obj
-				 (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ont::pos-as-containment-reln ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ))))
+				 (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ont::pos-as-containment-reln ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
 					;(F::type (? ttt ont::path ont::position-reln))))
 	      ;;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ont::on ont::at-loc )))) ; take the trajectory senses instead of the position-as-extent-reln senses of words such as "across"
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))

@@ -2454,7 +2454,7 @@
                 (sem ?sem)  (transform ?transform) 
                 ))
 	 (case ?case)
-         (SORT PRED) (AGR ?agr)
+         (SORT PRED) (agr 3p) ;(AGR ?agr)
 	 (MASS count)
 	 (VAR *) (WH ?w));; must move WH feature up by hand here as it is explicitly specified in a daughter.
      -np-spec-of-count-def-pp>
@@ -2480,7 +2480,7 @@
                 ))
      (case ?case)
      (SORT PRED)
-     (MASS mass)
+     (MASS mass) (agr 3s)
      (VAR *) (WH ?w));; must move WH feature up by hand here as it is explicitly specified in a daughter.
      -np-spec-of-def-sing-pp>
     (SPEC (LF ?spec) (ARG ?v) (VAR ?specvar) (name-spec -) (mass mass) (POSS -);;myrosia 12/27/01 added mass restriction to spec
@@ -2826,6 +2826,18 @@
                   (STATUS ?status) (Nobarespec ?nbs) 
                   (Nosimple ?ns) (NPmod ?nm) (LF ?s))))
 
+    
+    ; a fifth (of the pizza)
+    ((quan (ntype fraction) (val ?val) (agr ?a)
+	   (var ?var) (lex ?lex) (sem ?sem) (mass ?mass)
+	   (status sm)
+	   (QOF (% PP (PTYPE OF) (AGR (? a1 3s 3p)) (MASS ?mass))) (lf ?val)  ; note: ?a1 is 3s/3p regardless of what ?a is (e.g., two thirds of the pizza *was* eaten)
+	   )
+     -fraction-to-quan>
+     (head (number (ntype fraction) (val ?val) (agr (? a 3s 3p)) (var ?var) (lex ?lex) (sem ?sem)
+		   )))
+
+    
      ;;  Special rule for every third, every fifth, ...
     
     ((SPEC (ARG ?arg) (VAR ?v) (agr ?agr) (MASS ?m) (LF ONT::QUANTIFIER)
@@ -5042,7 +5054,7 @@
      (var ?v) (Class ONT::ANY-SEM) 
      (sem ($ (? ft f::abstr-obj))) ;;(sem ($ (? ft f::phys-obj f::abstr-obj))) 
      (case (? cas sub obj -))
-     (LF (% Description (status ont::number) (var ?v) (Sort Individual) (lex ?lf)
+     (LF (% Description (status ont::number) (var ?v) (Sort Individual) ;(lex ?lf)
 	    (CLASS ONT::NUMBER) ;;(Class ONT::REFERENTIAL-SEM) 
 	    (constraint ?restr) 
 	    (lex ?l) (val ?val) 
@@ -5059,7 +5071,9 @@
      )
     -np-number> 0.98
     (head (number (val ?lf) (lex ?l) (val ?val) (range -) (agr (? a 3s 3p));(number-only +)
-	   (mass ?mass) (sem ?sem1) (restr ?restr) (var ?v)))
+		  (mass ?mass) (sem ?sem1) (restr ?restr) (var ?v)
+		  (headcat (? !x ordinal))
+		  ))
     )
    
    ;; a seven 
@@ -5195,7 +5209,7 @@
 		    ))
 	  (postadvbl +) (headless +)
 	  )
-	 -NP-missing-head-plur2> .96 ;; Myrosia lowered the preference to be lower than wh-setting1-role, with which this competes on "be" questions
+	 -NP-missing-head-plur2> .98 ;.96 ;; Myrosia lowered the preference to be lower than wh-setting1-role, with which this competes on "be" questions
 	 (head (spec (poss -) (restr ?restr) (mass count)
 		     (LF ?spec) (arg ?v) (agr 3p) (var ?v) (nobarespec -)
 		     ))
@@ -5210,7 +5224,8 @@
 	  (headless +)
 	  )
 	 -NP-missing-head-mass> .96
-	 (head (spec (poss -) (restr ?restr) (LF ?spec) (arg ?v) (agr 3s) (var ?v) (mass mass) (NObareSpec -)
+	 (head (spec (poss -) (restr ?restr) (LF ?spec) (arg ?v) (agr 3s)
+		     (var ?v) (mass mass) (NObareSpec -)
 		     (subcat (% ?x (SEM (? subcatsem ($ (? ss F::PHYS-OBJ F::SITUATION F::ABSTR-OBJ))))))))
          )
         

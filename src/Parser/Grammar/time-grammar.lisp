@@ -712,6 +712,32 @@
      (word (lex a))
      (head (ordinal (lf (nth ?!ordnum)) (lex ?l2) (ntype w::fraction) (digits -) (sem ?sem)))
      (compute-val-and-ntype (expr (fraction 1 ?!ordnum)) (newval ?newval) (ntype ?ntype)))
+
+    ;; fractions: I cut the pizza into fifths.
+   #|| ((number (VAL ?newval) (agr 3p) (lex ?l2) ;;(lex (?l1 ?l2)) ;;me
+			 (ntype w::fraction) (unit +)
+      (var *) (LF ?lf) (coerce ?coerce) (nobarespec ?nbs) (sem ?sem)
+      )||#
+    ((NP (SORT PRED)
+	 (var ?v) (class ?c) ;(Class ?lf) ;(sem ?sem)
+	 (agr 3p) ;(agr ?agr)
+	 (case (? cas sub obj -)) (sem ?xx) ;(sem (? xx ($ F::phys-obj)))
+      (LF (% Description (Status Ont::indefinite-plural) (var ?v) ;(Sort Individual)
+	     (class (? c ont::PHYS-OBJECT)) (lex ?l2) (sem (? xx ($ F::phys-obj)))
+	     (transform ?transform)  (generated ?gen)
+	     (constraint (& (quan ?newval) (refset (% *PRO* (VAR *)
+						      ;(CLASS ONT::PHYS-OBJECT) (sem (? xx ($ F::phys-obj)))
+						      (CLASS ?c) (sem ?xx) 
+						      ))
+	     ))))
+      (mass count) ;(name +)
+      (simple +) (time-converted ?tc) (generated ?gen)
+      (postadvbl ?gen) ;; swift -- setting postadvl to gen as part of eliminating gname rule but still allowing e.g. truck 1
+      )
+     -ordinal-bare-plural>
+     (head (ordinal (lf (nth ?!ordnum)) (var ?v) (lex ?l2) (ntype w::fraction) (digits -) (sem ?sem) (agr 3p)))
+     (compute-val-and-ntype (expr (fraction 1 ?!ordnum)) (newval ?newval) (ntype ?ntype)))
+    
     
    ;; decimal digit less than one e.g., . seven, point seven five
     ((number (VAL ?newval) (agr 3p) (lex (?l1)) 
