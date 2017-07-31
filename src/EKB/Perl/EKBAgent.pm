@@ -1,6 +1,6 @@
 # EKBAgent.pm
 #
-# Time-stamp: <Fri Mar 31 17:27:55 CDT 2017 lgalescu>
+# Time-stamp: <Sun Jul 30 18:44:43 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 13 Feb 2017
 #
@@ -170,7 +170,15 @@ sub handle_parameters {
   eval {
     while (@argv) {
       my $opt = shift @argv;
-      if ($opt eq '-testFile') {
+      if ($opt eq '-debugLevel')
+      {
+        die "-debugLevel option requires an argument"
+            unless (@argv > 0);
+        my $debugLevel = shift(@argv);
+	$util::Log::DebugLevel = $debugLevel;
+        INFO ("debug level set to $debugLevel.");
+      }
+      elsif ($opt eq '-testFile') {
         die "-testFile option requires an argument"
             unless (@argv > 0);
         my $testFile = shift(@argv);
@@ -211,26 +219,36 @@ sub send_subscriptions {
 
 sub receive_tell {
   my ($self, $msg, $content) = @_;
+  my $sender = lc($msg->{':sender'});
   my $verb = lc($content->{verb});
-  my $text = $content->{':text'};
 
-  my $sender = lc ($msg->{':sender'});
+  DEBUG (2, "Received a TELL: $verb from '$sender'.");
 
-  DEBUG (2, "Received a TELL: $text from '$sender'.");
-
-  if ($sender eq 'texttagger' or $sender eq lc($self->{name}))
-  {
-    $text = KQML::KQMLStringAtomAsPerlString($text);
-    if (defined($text) and $text ne 'no')
-    {
-      $self->{textToParse} = $text;
-    }
+  if ($verb eq 'start-conversation') {
+    # ignore
+  }
+  elsif ($verb eq 'utterance') {
+    my $text = $content->{':text'};
+    
+    DEBUG (2, "Got utterance: $text");
+    
+    if ($sender eq 'texttagger' or $sender eq lc($self->{name}))
+      {
+	$text = KQML::KQMLStringAtomAsPerlString($text);
+	if (defined($text) and $text ne 'no')
+	  {
+	    $self->{textToParse} = $text;
+	  }
+      }
+  }
+  else {
+    $self->reply_to_msg($msg, "(error :comment \"Cannot handle $verb\")");
   }
 }
 
 sub receive_request {
   my ($self, $msg, $content) = @_;
-  my $sender = lc ($msg->{':sender'});
+  my $sender = lc($msg->{':sender'});
   my $verb = lc($content->{verb});
 
   DEBUG (3, Dumper ($content));
