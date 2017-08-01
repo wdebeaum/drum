@@ -1,6 +1,6 @@
 # Compare.pm
 #
-# Time-stamp: <Fri Jun 23 09:54:56 CDT 2017 lgalescu>
+# Time-stamp: <Sat Jun 24 21:53:25 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  4 May 2016
 #
@@ -68,6 +68,8 @@
 # - Fixed order of diffs in output so deletions tend to appear before insertions.
 # 2017/06/13 v2.4.1	lgalescu
 # - Added test for features in events.
+# 2017/06/24 v2.4.2	lgalescu
+# - Added precision/recall to summary
 
 # TODO (in order of importance and/or urgency):
 # - try to find node "substitutions"
@@ -80,7 +82,7 @@
 
 package EKB::Compare;
 
-$VERSION = '2.4.1';
+$VERSION = '2.4.2';
 
 use strict 'vars';
 use warnings;
@@ -165,6 +167,8 @@ sub new {
 			   del => 0, # count of assertions unique in ekb1
 			   ins => 0, # count of assertions unique in ekb2
 			   sub => 0, # count of assertions unique in ekb2
+			   p => 0.0, # precision = (eql/hyp)
+			   r => 0.0, # recall = (eql/ref)
 			 },
 	      # sentence mapping from ekb1 to ekb2
 	      s_map => {},
@@ -241,6 +245,7 @@ sub summary {
 
 ### comparison between two EKBs (main function of this package/class)
 
+# note: this returns 1 if EKBs match, 0 otherwise
 sub compare {
   my $self = shift;
 
@@ -266,7 +271,7 @@ sub compare {
      $self->cmp_ekb_assertions()
     );
   
-  return $self->result(min(@tests));
+  $self->result(0+min(@tests));
 }
 
 
@@ -366,7 +371,7 @@ sub cmp_ekb_input {
     }
   }
   DEBUG 2, "cmp_ekb_input => $result";
-  return $result;
+  $result;
 }
 
 
@@ -402,8 +407,8 @@ sub cmp_ekb_assertions_all {
   my $count1 = scalar(@items1);
   my $count2 = scalar(@items2);
 
-  $self->summary()->{'ref'} += $count1;
-  $self->summary()->{'hyp'} += $count2;
+  $self->summary->{ref} += $count1;
+  $self->summary->{hyp} += $count2;
   
   { 
     local $Data::Dumper::Terse = 1;
@@ -424,8 +429,8 @@ sub cmp_ekb_assertions_all {
     $result = 0;
   }
   my $deletions = scalar(@uniq1);
-  $self->summary()->{del} += $deletions;
-  $self->summary()->{eql} += ($count1 - $deletions);
+  $self->summary->{del} += $deletions;
+  $self->summary->{eql} += ($count1 - $deletions);
 
   # items unique to ekb2
   my @uniq2 =
@@ -436,14 +441,20 @@ sub cmp_ekb_assertions_all {
     $self->add_diff('assertions', { hyp => $i2->getAttribute('id') });
     $result = 0;
   }
-  $self->summary()->{ins} += scalar(@uniq2);
+  $self->summary->{ins} += scalar(@uniq2);
 
+  # precision and recall
+  $self->summary->{p} =
+    $self->summary->{hyp} ? ($self->summary->{eql} / $self->summary->{hyp}) : 0.0;
+  $self->summary->{r} =
+    $self->summary->{ref} ? ($self->summary->{eql} / $self->summary->{ref}) : 0.0;
+ 
   # done!
   {
     DEBUG 3, "x_map:\n %s", Dumper($self->{'x_map'});
   }
     
-  return $result;
+  $result;
 }
 
 ### match all EKB assertions for a sentence
@@ -464,8 +475,8 @@ sub cmp_ekb_assertions_for_utt {
   my $count1 = scalar(@items1);
   my $count2 = scalar(@items2);
 
-  $self->summary()->{'ref'} += $count1;
-  $self->summary()->{'hyp'} += $count2;
+  $self->summary->{'ref'} += $count1;
+  $self->summary->{'hyp'} += $count2;
   
   { 
     local $Data::Dumper::Terse = 1;
@@ -494,8 +505,8 @@ sub cmp_ekb_assertions_for_utt {
     $result = 0;
   }
   my $deletions = scalar(@uniq1);
-  $self->summary()->{del} += $deletions;
-  $self->summary()->{eql} += ($count1 - $deletions);
+  $self->summary->{del} += $deletions;
+  $self->summary->{eql} += ($count1 - $deletions);
 
   # items unique to ekb2
   my @uniq2 =
@@ -511,14 +522,20 @@ sub cmp_ekb_assertions_for_utt {
 				    end => $span2->[1] });
     $result = 0;
   }
-  $self->summary()->{ins} += scalar(@uniq2);
+  $self->summary->{ins} += scalar(@uniq2);
 
+  # precision and recall
+  $self->summary->{p} =
+    $self->summary->{hyp} ? ($self->summary->{eql} / $self->summary->{hyp}) : 0.0;
+  $self->summary->{r} =
+    $self->summary->{ref} ? ($self->summary->{eql} / $self->summary->{ref}) : 0.0;
+  
   # done!
   {
     DEBUG 3, "x_map:\n %s", Dumper($self->{'x_map'});
   }
     
-  return $result;
+  $result;
 }
 
 

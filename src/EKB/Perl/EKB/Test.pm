@@ -1,6 +1,6 @@
 # Test.pm
 #
-# Time-stamp: <Fri Jun  9 14:50:14 CDT 2017 lgalescu>
+# Time-stamp: <Sat Jun 24 22:59:27 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Jun 2016
 #
@@ -28,10 +28,12 @@
 # 2017/06/04 v1.2.4 lgalescu
 # - Changed test matching to use the EKB id and the name of the folder of
 #   the input file as test set and, respectively, test case names.
+# 2017/06/24 v1.3 lgalescu
+# - Now allowing multiple refrence EKBs!
 
 package EKB::Test;
 
-$VERSION = '1.2.4';
+$VERSION = '1.3.0';
 
 use strict 'vars';
 use warnings;
@@ -187,7 +189,7 @@ sub _read {
       if (grep {$key eq $_} ("Test", "Case")) {
 	# we set defaults here; they can be overriden
 	$test = { input => $value . ".txt",
-		  output => $value . ".ekb" };
+		  output => [ $value . ".ekb" ] };
 	$self->{tests}{$value} = $test;
 	$state = 3; $consuming = 1;
       } else {
@@ -213,12 +215,12 @@ sub _read {
 	$state = 9; $consuming = 0;
       }
     } elsif ($state == 4) {
-      # 4 -[Output]-> 5%<test_decl_result>%
+      # 4 -[Output]-> 4%<test_decl_result>%
       # 4 -[Options]-> 5%%
       # 4 -[Case]-> 3%%
       if ($key eq "Output") {
-	$test->{output} = $value;
-	$state = 5; $consuming = 1;
+	push @{ $test->{output} }, $value;
+	$state = 4; $consuming = 1; 
       } elsif ($key eq "Options") {
 	$state = 5; $consuming = 0;
       } elsif (grep {$key eq $_} ("Test", "Case")) {
@@ -226,7 +228,7 @@ sub _read {
       } else {
 	@allowed_keys = ("Case", "Output", "Options");
 	$state = 9; $consuming = 0;
-      }	    
+      }
     } elsif ($state == 5) {	# waiting for <test_opts>
       if ($key eq "Options") {
 	$test->{options} = { _options_parse($value) };
@@ -269,10 +271,12 @@ sub write {
       if ($test->{input}
 	  &&
 	  (basename($test->{input}, ".txt") ne $tn));
-    printf $fh "Output: %s\n", $test->{output}
-      if ($test->{output}
-	  &&
-	  (basename($test->{output}, ".ekb") ne $tn));
+    if ($test->{output}) {
+      foreach my $out (@{$test->{output}}) {
+	printf $fh "Output: %s\n", $out
+	  unless basename($out, ".ekb") eq $tn;
+      }
+    }
     printf $fh "Options: %s\n", _options_tostring($test->{options})
       if ($test->{options} && %{$test->{options}});
     printf $fh "\n";
@@ -553,6 +557,7 @@ sub test_get_input {
     : $tname . ".txt";
   return catfile($self->get_data_dir(), $in_file);
 }
+
 # get test ekb filename
 sub test_get_output {
   my $self = shift;
@@ -562,20 +567,20 @@ sub test_get_output {
     WARN "Test %s not found in suite %s", $tname, $self->name();
     return undef;
   }
-  my $out_file =
-    (exists  $test->{output})
-    ? $test->{output}
-    : $tname . ".ekb";
-  return catfile($self->get_data_dir(), $out_file);
+  unless (exists $test->{output}) {
+    ERROR "No reference EKB set for $tname!";
+    return undef;
+  }
+  return map { catfile($self->get_data_dir(), $_) } @{ $test->{output} };
 }
 
 # get reference EKB
-sub test_get_ref_ekb {
+sub test_get_ref_ekbs {
   my $self = shift;
   my $tname = shift;
-  my $ekb_file = $self->test_get_output($tname)
+  my @ekb_files = $self->test_get_output($tname)
     or return undef;
-  return EKB->new($ekb_file);
+  return map { EKB->new($_) } @ekb_files;
 }
 
 # set test hyps
@@ -623,7 +628,7 @@ sub test_run {
   my $self = shift;
   my ($test, $options) = @_;
 
-  my $ref = $self->test_get_ref_ekb($test);
+  my @refs = $self->test_get_ref_ekbs($test); 
   my $hyp = $self->test_get_hyp_ekb($test);
   unless ($hyp) {
     # nothing to do
@@ -632,13 +637,28 @@ sub test_run {
   my @options = $self->options();
   push @options, _options_parse($options);
   DEBUG 2, "Run options for %s::\n%s", $test, Dumper(\@options);
-  
-  my $comp = EKB::Compare->new( $ref,
-				$hyp,
-				@options
-			      );
-  $self->{tests}{$test}{comp} = $comp;
-  $self->{tests}{$test}{result} = $comp->compare() // 0;
+
+  # TODO: loop for all refs, choose the best!
+  foreach my $ref (@refs) {
+    my $comp = EKB::Compare->new( $ref,
+				  $hyp,
+				  @options
+				);
+    my $result = $comp->compare();
+    DEBUG 1, "ref: %s\n%s", $ref->get_file, Dumper($comp->summary);
+    if (! exists $self->{tests}{$test}{comp}) {
+      $self->{tests}{$test}{comp} = $comp;
+      $self->{tests}{$test}{result} = $result;
+    }
+    else {
+      my $prev_comp = $self->{tests}{$test}{comp};
+      if ($comp->summary->{r} > $prev_comp->summary->{r}) {
+	DEBUG 1, "found a better match";
+	$self->{tests}{$test}{comp} = $comp;
+	$self->{tests}{$test}{result} = $result;	
+      }
+    }
+  }
 }
 
 sub run {
@@ -656,6 +676,8 @@ sub run {
 # test's input
 # we verify this by looking at paragraph/@file; ekb id must match test name
 # and lastdir must match the test set name
+# TODO: we might want to match based on text itself -- eg, if testname has
+# changed 
 sub match_ekb_hyp {
   my $self = shift;
   my ($ekb_file) = @_;
@@ -671,7 +693,7 @@ sub match_ekb_hyp {
   return unless $self->name eq basename($input_dir);
   my $tname = first { $ekb->get_attr('id') eq $_ } $self->tests();
   if ($tname) {
-    INFO "Matched %s against %s:%s.",
+    INFO "Matched %s against %s:%s",
       $ekb_file, $self->name, $tname;
     $self->test_set_hyp($tname, $ekb_file, $ekb);
     return 1;

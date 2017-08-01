@@ -43,8 +43,10 @@ grammar KQMLSyntax
   end
 
   rule number
-    ([\d]* '.' [\d]+ /
-    [\d]+ '.'?) {
+    ([+-]? (
+      [\d]* '.' [\d]+ /
+      [\d]+ '.'?)
+    ) {
       def to_ruby
         eval(text_value)
       end

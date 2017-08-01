@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.99 2017/06/20 15:10:30 wdebeaum Exp $
+# $Id: Makefile,v 1.100 2017/07/31 14:41:25 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -23,6 +23,7 @@ export TEXTTAGGER_umls TEXTTAGGER_semgroups TEXTTAGGER_metamap TEXTTAGGER_cj_par
 download=mkdir -p downloads ; cd downloads ; curl -O -L $(1)
 download_compressed=mkdir -p downloads ; cd downloads ; curl --compressed -O -L $(1)
 download_sourceforge=mkdir -p downloads ; ( cd downloads ; curl --compressed -O -L $(1)"?format=raw" ) ; mv $@\?format=raw $@
+download_useragent=mkdir -p downloads ; cd downloads ; curl --user-agent 'TextTaggerMakefile/5.0' --compressed -O -L $(1)
 
 #
 # Generic rules for all TextTagger installations
@@ -251,7 +252,7 @@ downloads/bioentities.obo:
 # see http://www.obofoundry.org/ for up-to-date links
 
 downloads/BrendaTissueOBO:
-	$(call download_compressed,"http://www.brenda-enzymes.info/ontology/tissue/tree/update/update_files/BrendaTissueOBO")
+	$(call download_useragent,"http://www.brenda-enzymes.info/ontology/tissue/tree/update/update_files/BrendaTissueOBO")
 
 downloads/chebi.obo:
 	$(call download,"ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo")

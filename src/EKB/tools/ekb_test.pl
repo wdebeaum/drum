@@ -2,7 +2,7 @@
 #
 # ekb_test.pl
 #
-# Time-stamp: <Fri Jun 23 09:56:11 CDT 2017 lgalescu>
+# Time-stamp: <Sat Jun 24 23:06:15 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Jun 2016
 #
@@ -121,6 +121,9 @@ make multiple updates with a single command.
 \tUpdate reference EKB for test.
   -s ID, -sentence ID
 \tCrop EKB to the sentence with the specified ID (number).
+  -r, -ref-file EKB-FILE
+\tName under which EKB file is saved. If different from default, it will be
+\tadded as an additional reference EKB for the given test. Requires -e.
 
 6. 'run' command options:
 
@@ -191,6 +194,7 @@ our (
      $newName,
      $ekbFile,
      $sentId,
+     $refFile,
      $inDir,
      $outDir,
      $options,
@@ -238,6 +242,7 @@ GetOptions(
 	   'm|new-name=s' => \$newName,
 	   'e|ekb=s' => \$ekbFile,
 	   's|sentence=s' => \$sentId,
+	   'r|ref-name=s' => \$refFile,
 	   'i|in=s' => \$inDir,
 	   'o|out=s' => \$outDir,
 	   'co|options=s' => \$options,
@@ -421,9 +426,9 @@ sub t_run {
 	} else {
 	  $f++;
 	}
-	$del += $test->{comp}->summary()->{del};
-	$ins += $test->{comp}->summary()->{ins};
-	$eql += $test->{comp}->summary()->{eql};
+	$del += $test->{comp}->summary->{del};
+	$ins += $test->{comp}->summary->{ins};
+	$eql += $test->{comp}->summary->{eql};
       }
     }
   }
@@ -453,10 +458,15 @@ sub t_run {
   foreach my $testset (@testsets) {
     foreach my $tname ($testset->tests()) {
       my $test = $testset->get_test($tname);
-      printf "%s::%s %s\n",
+      printf "%s::%s %s",
 	$testset->name,
 	$tname,
 	(exists $test->{result}) ? ($test->{result} ? "passed" : "failed") : "skipped";
+      if ((exists $test->{result}) and ! $test->{result}) {
+	printf " (P=%.2f R=%.2f)",
+	  $test->{comp}->summary->{p}, $test->{comp}->summary->{r};
+      }
+      print "\n";
     }
   }
   

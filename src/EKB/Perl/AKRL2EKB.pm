@@ -1,6 +1,6 @@
 # ARKL2EKB.pm
 #
-# Time-stamp: <Mon May  8 18:12:15 CDT 2017 lgalescu>
+# Time-stamp: <Mon Jul 31 10:02:11 CDT 2017 lgalescu>
 #
 # Author: Roger Carff <rcarff@ihmc.us>, 9 Mar 2017
 #
@@ -1020,7 +1020,10 @@ sub addEKBAssertion
             $ekbTerm = createEKBTerm($ekb, $akrl, $akrlList);
         }
     }
-
+    else
+    {
+	WARN("AKRL term not mappable to an EKB assertion: $indicator");
+    }
     return $ekbTerm;
 }
 
