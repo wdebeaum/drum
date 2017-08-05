@@ -18,7 +18,7 @@
      (TEMPL BINARY-CONSTRAINT-np-TEMPL)
      )
     ((LF-PARENT ONT::goal-as-containment)
-     (example "build it into the triangle")
+     (example "put it into the box")
      (meta-data :origin fruitcarts :entry-date 20050427 :change-date nil :comments fruitcart-11-4)
      (TEMPL BINARY-CONSTRAINT-np-TEMPL)
      )

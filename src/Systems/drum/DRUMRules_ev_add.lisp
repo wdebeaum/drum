@@ -8,7 +8,7 @@
 
 	  ; RAS converts GTP into/to GDP. 
 	  ((ONT::EVENT ?ev ?type :RESULT ?!res)
-	   (ONT::F ?!res (? type1 ont::goal-reln) :GROUND ?!res1)
+	   (ONT::F ?!res (? type1 ont::goal-reln ont::resulting-object) :GROUND ?!res1)  ; resulting-state is in goal-reln
 	   (;(? reln1 ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET ONT::TERM)
 	    ?reln1
 	    ?!res1  (? t1 ONT::EVENT-OF-CHANGE ONT::CHEMICAL ONT::MOLECULAR-PART
@@ -42,7 +42,7 @@ ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ ))
 
 	  ; RAS phosphorylates GTP into/to GDP. 
 	  ((ONT::EVENT ?ev ?type :MODS (?!res))
-	   (ONT::F ?!res (? type1 ont::goal-reln) :GROUND ?!res1)
+	   (ONT::F ?!res (? type1 ont::goal-reln  ont::resulting-object) :GROUND ?!res1)
 	   (;(? reln1 ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET ONT::TERM)
 	    ?reln1
 	    ?!res1  (? t1 ONT::EVENT-OF-CHANGE ONT::CHEMICAL ONT::MOLECULAR-PART

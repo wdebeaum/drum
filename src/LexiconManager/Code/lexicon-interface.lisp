@@ -745,7 +745,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	  (cond ((and pos (compatible-pos-and-ont-type pos ont-type))
 		 ;; create a new entry with the given pos and sense as long as they are compatible
 		 (print-debug "~%point 2")
-		 (let ((new-entry (car (make-unknown-word-entry w pos (find-score-in-domain-info domain-info) nil (gen-id w) (list ont-type) nil penn-tags (list ont-type) domain-info))))
+		 (let ((new-entry (car (make-unknown-word-entry w pos (convert-raw-score (find-score-in-domain-info domain-info)) nil (gen-id w) (list ont-type) nil penn-tags (list ont-type) domain-info))))
 		   (when new-entry (push new-entry compatible-defs)))
 		 (print-debug "making new sense for ~S as ~S ~S~%" w pos ont-type)
 		 )
@@ -980,9 +980,11 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	     (dolist (this-sense-keylist tagged-senses)
 	       (let* ((domain-info (find-arg this-sense-keylist :domain-specific-info))
 		      (rawscore (find-arg this-sense-keylist :score))
-		      (score (if (and (numberp rawscore) (< rawscore .95))
-				 (max (+ rawscore (/ (- 1 rawscore) 1.5)) .95)
-				 rawscore))  ;; reduce the impact of the Texttagger scores
+		      (score (if (numberp rawscore)
+				 (convert-raw-score rawscore) .98))
+				     ;;(if (and (numberp rawscore) (< rawscore .95))
+			;;	 (max (+ rawscore (/ (- 1 rawscore) 1.5)) .95)
+			;;	 rawscore))  ;; reduce the impact of the Texttagger scores
 		      (penn-tags (util::convert-to-package (find-arg this-sense-keylist :penn-parts-of-speech) :w))
 		      (these-word-categories (merge-pos-info nil penn-tags))
 		      (these-ont-types (find-arg this-sense-keylist :ont-types)))

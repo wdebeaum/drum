@@ -26,13 +26,13 @@
 	    :rule -simple-ref-modA1
 	    ))
 |#
-	  ;; basic terms (not conjunctions) with selected mod (e.g., prefixes auto-, mono-, trans-)
+	  ;; basic terms (not conjunctions) with selected mod (e.g., prefixes auto-, mono-, trans-, homo-, hetero-)
 	  ((ONT::TERM ?!obj 
 	    ;(? t1 ONT::MUTATION ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::PHYS-OBJECT ONT::MENTAL-CONSTRUCTION ONT::AWARENESS ONT::INFORMATION-FUNCTION-OBJECT) 
 	    ?t1
 	    :MODS (?!modA) )
 	   ; leave out ONT::INCLUSIVE (for co-)  (by the way, co- is now :MANNER, but it does not need to be returned)
-            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))  
+            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::NUM-PREFIX-VAL ONT::TRAJECTORY))  ; num-prefix-val used to be cardinality-val
 	   -simple-ref-modA2>
 	   100
 	   (ONT::TERM ?!obj ?t1

@@ -72,6 +72,7 @@
      (head (adv (lf ?lf) ;;(SORT BINARY-CONSTRAINT) 
             ;; make sure pp-word is not a sort here
             (sort (? !sort pp-word double-subcat))
+	    (argument (% ?cat2 (var ?arg) (subjvar ?subjvar)))
             (subcat ?!sub) (SUBCAT (% ?cat (var ?subv) (sem ?subcatsem) (stype ?stype) (vform ?vform) (gap ?gap))) 
             (subcat-map ?submap) (ARGUMENT-MAP ?argmap)
 	    (subcat2 -) ; to prevent e.g., if... then... to be used here (BINARY-CONSTRAINT-S-DECL-MIDDLE-WORD-SUBCAT-TEMPL)
@@ -538,7 +539,8 @@
      -vp-result-with-intransitive> .98   ;;  want to prefer explicitly subcategorized attachments
      (head (vp- (VAR ?v) 
 		(seq -)  ;;  post mods to conjoined VPs is very rare
-		(DOBJVAR -)  ; cannot use (dobj -) because dobj is (% - (W::VAR -)) 
+		;(DOBJVAR -)  ; This doesn't work because it could unify with a dobjvar not yet instantiated
+		(dobj (% -)) ; cannot use (dobj -) because dobj is (% - (W::VAR -))
 		(SUBJ (% NP (Var ?npvar) (LEX ?LEX)  (agr ?agr)(sem ?sem)))
 		(constraint ?con) (tma ?tma) (result-present -)
 		;;(subjvar ?subjvar)
@@ -570,7 +572,8 @@
      -vp-result-advbl-intransitive>  
      (head (vp- (VAR ?v) 
 		(seq -)  ;;  post mods to conjoined VPs is very rare
-		(DOBJVAR -)  ; cannot use (dobj -) because dobj is (% - (W::VAR -)) 
+		;(DOBJVAR -)  ; This doesn't work because it could unify with a dobjvar not yet instantiated
+		(dobj (% -)) ; cannot use (dobj -) because dobj is (% - (W::VAR -))
 		(SUBJ (% NP (Var ?npvar) (agr ?agr) (sem ?sem) (lex ?lex)))  
 		(subjvar ?npvar)
 		(constraint ?con) (tma ?tma) (result-present -)
@@ -830,24 +833,26 @@
      (add-to-conjunct (val (MODS ?mod)) (old ?restr) (new ?new))
      )
 
+    ; the lifting of the ball into the box
     ((N1 (RESTR ?new) (POSTADVBL +) (COMPLEX +)) 
      -adv-np-event-post>   ;; event nominals allows result adverbials
-     (head (N1 (VAR ?v1) ;; (POSTADVBL -) 
+     (head (N1 (VAR ?v1) ;; (POSTADVBL -)
+	       (dobj (% NP (sem ?argsem) (var ?argv)))
 	       (SEM ($ f::situation (F::type ont::event-of-change)))
 	       (RESTR ?restr) ;;(gerund -)   Have to allow gerunds e.g., the debating at the house.
 	       (post-subcat -) (SORT PRED)
 	       (no-postmodifiers -) ;; exclude "the same path as the battery" and advbl attaching to "path"
-	    
 	    ))
      (advbl (ATYPE POST) 
       (result-only +)  ;; allows result adverbials (others already handled by -adv-np-post>
-      (ARGUMENT (% NP (sem ?argsem) (constraint ?c)  ))
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::predicate))))
-      (arg ?v1) (VAR ?mod) (WH -) (GAP -)
+      (ARGUMENT (% NP (sem ?argsem) (constraint ?c) ))
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::predicate ont::position-reln))))
+      (arg ?argv) (VAR ?mod) (WH -) (GAP -)
       (particle -)  ;; exclude particles as they should attach to the verb
       )
      (add-to-conjunct (val (MODS ?mod)) (old ?restr) (new ?new))
      )
+    
     
    #||
  ((N1 (RESTR ?new) (POSTADVBL +) (COMPLEX +)) 

@@ -1957,7 +1957,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	 ((ont::source-reln) :source)
 	 )
 	((ont::change :mod)
-	  ((ont::to-loc ont::goal-reln ont::direction-reln) :result)
+	  ((ont::to-loc ont::goal-reln ont::direction-reln ont::resulting-object) :result) ; resulting-state is in goal-reln
 	  ((ont::source-reln) :source))
 	((ont::phys-object :mod)
 	 ((ont::position-reln ) :location))

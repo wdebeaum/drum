@@ -2284,7 +2284,8 @@
 	     )
          -bare-singular> .98
          (head (N1 (SORT PRED) (MASS  count) (gerund -) ;;(complex -) 
-		   (name-or-bare ?nob)
+		   (name-or-bare ?nob) 
+		   (derived-from-name -)  ;; names already can become NPs by simpler derivations
 		(AGR 3s) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -)
 		(sem ?sem) (transform ?transform)
 		)))
@@ -3607,7 +3608,7 @@
       (comp3 -)
       (comp3-map -)
       )
-     -nom-compln>
+     -nom-compln> 1
      (head (n1  (var ?v) (gap -) (aux -)(case ?case) (agr ?agr)
 		(dobj ?dobj)
 		(pre-arg-already ?npay)  (gerund ?ger)
@@ -5072,7 +5073,7 @@
     -np-number> 0.98
     (head (number (val ?lf) (lex ?l) (val ?val) (range -) (agr (? a 3s 3p));(number-only +)
 		  (mass ?mass) (sem ?sem1) (restr ?restr) (var ?v)
-		  (headcat (? !x ordinal))
+		  ;(headcat (? !x ordinal))
 		  ))
     )
    
