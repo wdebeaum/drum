@@ -52,8 +52,8 @@
 (define-type ont::in-loc
   :parent ont::pos-as-containment-reln
   :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj f::abstr-obj) ; measure (music)
-					(f::type (? t ont::phys-object ont::information-function-object))
-				       (f::intentional -) (f::container +)
+					(f::type (? t ont::phys-object ont::information-function-object ont::mental-construction)) ; mental-construction: signaling-pathway
+				       (f::intentional -) (f::container +) ; containers include corner and pathway
 				   )))
   )
 

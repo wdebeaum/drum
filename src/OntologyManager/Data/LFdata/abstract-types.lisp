@@ -1280,6 +1280,7 @@
 (define-type ONT::procedure
  :parent ONT::ps-object
  ;; CERNL hack:: adding verb roles for verbs tagged as ont::procedure
+ :sem (F::Abstr-obj (F::intentional -) (F::container +))
  )
 
 (define-type ONT::method

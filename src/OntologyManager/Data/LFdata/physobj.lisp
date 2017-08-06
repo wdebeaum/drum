@@ -1341,7 +1341,7 @@
 (define-type ONT::Corner
     :parent ONT::LOCATION-by-description
     :wordnet-sense-keys ("corner%1:15:02" "corner%1:06:00")
-    :sem (F::Phys-obj (F::spatial-abstraction (? sa1 F::spatial-point)))
+    :sem (F::Phys-obj (F::spatial-abstraction (? sa1 F::spatial-point)) (f::container +))
     :arguments ((:OPTIONAL ONT::FIGURE (F::PHYS-OBJ (F::FORM F::OBJECT) (F::SPATIAL-ABSTRACTION (? SA F::STRIP F::SPATIAL-REGION))))
 		)
     )

@@ -72,7 +72,7 @@
      (head (adv (lf ?lf) ;;(SORT BINARY-CONSTRAINT) 
             ;; make sure pp-word is not a sort here
             (sort (? !sort pp-word double-subcat))
-	    (argument (% ?cat2 (var ?arg) (subjvar ?subjvar)))
+	    (argument (% ?cat2 (var ?arg) (lex ?arglex) (sem ?argsem)))
             (subcat ?!sub) (SUBCAT (% ?cat (var ?subv) (sem ?subcatsem) (stype ?stype) (vform ?vform) (gap ?gap))) 
             (subcat-map ?submap) (ARGUMENT-MAP ?argmap)
 	    (subcat2 -) ; to prevent e.g., if... then... to be used here (BINARY-CONSTRAINT-S-DECL-MIDDLE-WORD-SUBCAT-TEMPL)

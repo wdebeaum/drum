@@ -640,7 +640,8 @@
 ;	   (?reln1 ?!name (:* (? type1 ONT::REFERENTIAL-SEM) ?w) :NAME-OF ?!name1 :DRUM ?code)
 	   (?reln1 ?!name (:* (? type1 ONT::REFERENTIAL-SEM) ?!w)
 		   ;:NAME-OF ?!name1
-		   :DRUM -)   ;; make sure it is not a known term; no :DRUM info
+		   :DRUM -   ;; make sure it is not a known term; no :DRUM info
+		   :wnsense -)  ;; make sure it is not in WordNet
 	   -explicit-ref-robust>
 	   90 ; lower priority than -explicit-ref-pathway2
 	   (ONT::TERM ?!obj ?!type

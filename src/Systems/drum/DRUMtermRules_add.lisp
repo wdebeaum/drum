@@ -330,6 +330,8 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    :rule -simple-ref-modBP
 	    ))
 
+	  #|
+	  ;; commented out to avoid "immune system pathway" from using this rule
 	  ;; basic terms (not conjunctions) for BODY-PART (e.g., in the nucleus)  *maybe this parse doesn't come out any more
 	  ((ONT::TERM ?!obj 
 	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ ONT::MEDICAL-DISORDERS-AND-CONDITIONS) :ASSOC-WITHS (?!modBP) )
@@ -340,6 +342,7 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    :LOC ?!modBP
 	    :rule -simple-ref-modBP2
 	    ))
+	  |#
 
 	  ;; basic terms (not conjunctions) for BODY-PART (e.g., in the nucleus) 
 	  ;; *maybe this doesn't work any more either* :LOC has changed to :LOCATION (see -simple-ref-modBP4)  *** seem to have changed back to :LOC! ***
