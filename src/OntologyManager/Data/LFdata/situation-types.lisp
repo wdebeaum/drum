@@ -41,6 +41,7 @@
 				     )))
  )
 
+
 (define-type ONT::inhibit-effect
  :parent ONT::acting
  :sem (F::Situation (F::Cause (? cz F::Force f::agentive)) (F::Trajectory -))
@@ -51,6 +52,14 @@
              (:OPTIONAL ONT::agent ((? aoc F::phys-obj F::abstr-obj)) (:implements cause))
              )
  )
+
+(define-type ONT::have-influence
+ :wordnet-sense-keys ("interact%2:41:00")
+ :comment "an AGENT causes some interaction with another agent"
+ :parent ONT::CAUSE-EFFECT
+ :arguments (
+	     (:REQUIRED ONT::formal (F::Situation (F::type ONT::objective-influence)))
+ ))
 
 (define-type ONT::CAUSE-Interact
  :wordnet-sense-keys ("interact%2:41:00")
@@ -788,8 +797,8 @@
  :wordnet-sense-keys ("get%2:29:00" "take%2:29:08" "contract%2:29:00" "take%2:39:00"  "have%2:39:06" "have%2:42:12" "have%2:30:01" "have%2:40:05" "have%2:40:03" "have%2:29:05" "have%2:35:00")
  :parent ONT::event-of-experience
  :sem (F::Situation (F::Aspect F::static) (F::Time-span F::extended) (F::Trajectory -))
- :arguments ((:REQUIRED ONT::neutral ((? afh F::Phys-obj))) ;; F::Abstr-obj F::Situation)))
-	     (:required ONT::neutral1 (F::Situation))
+ :arguments (;;(:REQUIRED ONT::neutral ((? afh F::Phys-obj))) ;; F::Abstr-obj F::Situation)))
+	     (:required ONT::neutral (F::Situation))
              )
  )
 

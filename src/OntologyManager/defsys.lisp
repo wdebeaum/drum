@@ -96,6 +96,7 @@ apply first.")
 		 "situation-types"
 		 "abstract-types"
 		 "property-val"
+                 "domain-and-attribute-types"
 		 "specific-situation-types"
 		 "social-contract"
                  "music-terminology"

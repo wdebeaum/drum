@@ -31,11 +31,18 @@
      (example "have the trucks go there")
      (TEMPL agent-effect-affected-objcontrol-templ (xp (% W::VP (W::vform (? x W::base W::passive)))))
      )
+    ((EXAMPLE "A had an effect on C")
+     (meta-data :origin csli-ts :entry-date 20070320 :change-date nil :comments nil :wn nil)
+     (lf-parent ont::have-influence) 
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::NP)))
+     )
+    
     ((LF-PARENT ONT::have-experience)
      (TEMPL experiencer-neutral-templ)
      (example "he has a headache")
      (meta-data :origin cardiac :entry-date 20080217 :change-date nil :comments nil)
      )
+
     ;;;; auxiliary have in perfect construction
     ((LF-PARENT ONT::PERFECTIVE)
      (meta-data :origin trips :entry-date nil :change-date 20073003 :comments csli-revision)

@@ -6,7 +6,7 @@
 # http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/ReadMe.txt
 
 use lib "./Perl";
-use TextTagger::Util qw(lisp_intern);
+use TextTagger::Util qw(lisp_intern remove_duplicates);
 use TextTagger::Normalize qw(unspell_greek_letters normalize uncapitalize $dash_re $greek_re);
 use File::Path qw(make_path);
 
@@ -101,8 +101,7 @@ for my $code (keys %id_to_name) {
 }
 
 #
-# Add entries for "FOO" derived from "FOO gene" or "FOO protein" where "FOO"
-# looks like an abbreviation and doesn't already have an entry.
+# Add extra entries based on other entries.
 #
 
 # add entries first to this table, so we don't mistake entries we added earlier
@@ -110,6 +109,8 @@ for my $code (keys %id_to_name) {
 my %new_n2un2e = ();
 
 for my $normalized (keys %normalized_to_unnormalized_to_entries) {
+  # Add entries for "FOO" derived from "FOO gene" or "FOO protein" where "FOO"
+  # looks like an abbreviation and doesn't already have an entry.
   if ($normalized =~ / (gene|protein)$/) {
     my $unnormalized_to_entries =
       $normalized_to_unnormalized_to_entries{$normalized};
@@ -134,6 +135,74 @@ for my $normalized (keys %normalized_to_unnormalized_to_entries) {
 	}
       }
     }
+  # Add entries for "X signaling pathway" from "X pathway" and vice versa.
+  } elsif ($normalized =~ / signaling pathway$/) {
+    my $norm_wo_signaling = "$` pathway";
+    if (exists($normalized_to_unnormalized_to_entries{$norm_wo_signaling})) {
+      # find codes for entries with "signaling" suitable for adding to codes
+      # without entries with "signaling"
+      my @codes = ();
+      my $unnormalized_to_entries =
+	$normalized_to_unnormalized_to_entries{$normalized};
+      for my $unnormalized (keys %{$unnormalized_to_entries}) {
+	for my $entry (@{$unnormalized_to_entries->{$unnormalized}}) {
+	  my ($code, $name, $status) = @$entry;
+	  $code = "C$code";
+	  if ($status eq 'name' and
+	      # a child of "signaling pathway"
+	      grep { $_ eq 'C17132' } @{$id_to_parents{$code}}
+	     ) {
+	    push @codes, $code;
+	  }
+	}
+      }
+      next unless (@codes);
+      # do the same vice versa
+      my @codes_wo_signaling = ();
+      my $unnorm_to_ents_wo_signaling =
+	$normalized_to_unnormalized_to_entries{$norm_wo_signaling};
+      for my $unnorm_wo_signaling (keys %{$unnorm_to_ents_wo_signaling}) {
+	for my $entry_wo_signaling (@{$unnorm_to_ents_wo_signaling->{$unnorm_wo_signaling}}) {
+	  my ($code_wo_signaling, undef, $status_wo_signaling) =
+	    @$entry_wo_signaling;
+	  $code_wo_signaling = "C$code_wo_signaling";
+	  if ($status_wo_signaling eq 'name' and
+	      # a child of "signaling pathway"
+	      grep { $_ eq 'C17132' }
+		    @{$id_to_parents{$code_wo_signaling}}
+	     ) {
+	    push @codes_wo_signaling, $code_wo_signaling;
+	  }
+	}
+      }
+      next unless (@codes_wo_signaling);
+      # remove_duplicates is just paranoia... there really should only be one
+      # element per code in each of these lists, because we only take the entry
+      # for the name, not synonyms
+      @codes = map { s/^C//; $_ } @{remove_duplicates(\@codes)};
+      @codes_wo_signaling =
+        map { s/^C//; $_ } @{remove_duplicates(\@codes_wo_signaling)};
+      # add synonym entries in both directions for each pair of codes
+      # with/without "signaling"
+      for my $code (@codes) {
+	my $unnormalized = $id_to_name{"C$code"};
+	for my $code_wo_signaling (@codes_wo_signaling) {
+	  my $unnorm_wo_signaling = $id_to_name{"C$code_wo_signaling"};
+	  push @{$new_n2un2e{$normalized}{$unnormalized}},
+	       [$code_wo_signaling, $unnorm_wo_signaling, 'synonym']
+	    # doesn't already have version w/o signaling as a synonym
+	    unless (grep {
+		      normalize($_) eq $norm_wo_signaling
+		    } @{$id_to_synonyms{"C$code"}});
+	  push @{$new_n2un2e{$norm_wo_signaling}{$unnorm_wo_signaling}},
+	       [$code, $unnormalized, 'synonym']
+	    # doesn't already have version with signaling as a synonym
+	    unless (grep {
+		      normalize($_) eq $normalized
+		    } @{$id_to_synonyms{"C$code_wo_signaling"}});
+	}
+      }
+    }
   }
 }
 
@@ -142,7 +211,7 @@ for my $n (keys %new_n2un2e) {
   my $un2e = ($normalized_to_unnormalized_to_entries{$n} ||= {});
   my $new_un2e = $new_n2un2e{$n};
   for my $un (keys %{$new_un2e}) {
-    $un2e->{$un} = $new_un2e->{$un};
+    $un2e->{$un} = [@{$un2e->{$un}}, @{$new_un2e->{$un}}];
   }
 }
 

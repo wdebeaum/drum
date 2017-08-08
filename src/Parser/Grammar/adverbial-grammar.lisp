@@ -494,7 +494,8 @@
 		(ellipsis -)
 		))
 
-     (advbl (particle -) (ATYPE POST) (ARGUMENT (% S (sem ?sem) (subjvar ?subjvar))) (GAP -)
+     (advbl (particle -) (ATYPE POST) (ARGUMENT (% S (sem ?sem) (var ?v))) ;(subjvar ?subjvar)))
+						   (GAP -)
       ;;(subjvar ?subjvar)   ;Not sure why this was here - maybe for purpose clauses. Leaving it in causes many parses to fail as the SUBJVAR in the new VP is wrecked
      ;; the SUBJVAR is required in the argument to be able to pass in the subject for things like "the dog walked barking".
       (ARG ?v) (VAR ?mod)
