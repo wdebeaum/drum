@@ -4389,8 +4389,18 @@
              )
  )
 
+(define-type ont::status
+  :parent ont::situation-root
+  :wordnet-sense-keys ("condition%1:26:00" "status%1:26:01" "state%1:26:02" "state_of_matter%1:26:00" "state%1:03:00")
+  )
+
+(define-type ont::sleepiness
+  :parent ont::status
+  :wordnet-sense-keys ("sleepiness%1:26:00" "drowsiness%1:26:00")
+  )
+
 (define-type ONT::physical-condition
- :parent ONT::situation-root
+ :parent ONT::status
  :wordnet-sense-keys ("condition%1:26:02")
  :sem (f::situation (f::aspect f::indiv-level)) ;; prevent attachment of temporal adv
  :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj (F::origin F::natural)))

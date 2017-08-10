@@ -156,7 +156,7 @@
 (define-type ONT::GEO-OBJECT
     :wordnet-sense-keys ("location%1:03:00")
     :parent ONT::phys-OBJECT
-    :sem (F::Phys-obj (F::form F::geographical-object))
+    :sem (F::Phys-obj (F::form F::geographical-object) (F::container +))
 		      ;;(:default (F::object-function F::spatial-object)))
     )
 

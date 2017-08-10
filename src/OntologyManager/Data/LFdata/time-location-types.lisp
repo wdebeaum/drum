@@ -160,6 +160,8 @@
 ; direction is a verticality reln
 (define-type ont::directional-vert
   :parent ont::pos-directional-reln
+  :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj f::abstr-obj )
+				   ))) ; situation should use SITUATED-IN
   )
 
 ; figure is below ground (in some way)

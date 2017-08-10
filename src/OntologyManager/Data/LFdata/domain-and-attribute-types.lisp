@@ -31,16 +31,6 @@
  :parent  ONT::NON-MEASURE-ORDERED-DOMAIN
  )
 
-(define-type ont::status
-  :parent ont::non-measure-ordered-domain
-  :wordnet-sense-keys ("condition%1:26:00" "status%1:26:01" "state%1:26:02" "state_of_matter%1:26:00" "state%1:03:00")
-  )
-
-(define-type ont::sleepiness
-  :parent ont::status
-  :wordnet-sense-keys ("sleepiness%1:26:00" "drowsiness%1:26:00")
-  )
-
 ;; comfort, discomfort
 (define-type ONT::comfortableness
  :parent ONT::non-measure-ordered-domain

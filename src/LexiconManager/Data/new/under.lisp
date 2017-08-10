@@ -14,6 +14,12 @@
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      (SYNTAX (W::ALLOW-DELETED-COMP +))
      )
+
+    ((LF-PARENT ONT::situated-in)
+     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
+     
+     )
+    
     ((LF-PARENT ONT::less-than-rel)
      (example "buy it for under five dollars")
       (TEMPL NUMBER-OPERATOR-TEMPL)
