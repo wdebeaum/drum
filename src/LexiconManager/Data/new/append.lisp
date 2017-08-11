@@ -6,11 +6,11 @@
  :words (
   (W::append
    (SENSES
-    ((LF-PARENT ONT::combine-objects)
+    ((LF-PARENT ONT::attach)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
      (TEMPL AGENT-affected2-OPTIONAL-TEMPL (xp (% W::PP (W::ptype W::to))))
      (meta-data :origin task-learning :entry-date 20050823 :change-date nil :comments nil)
-     (example "append the messages to this message")
+     (example "append the messages to this message" "append the glossary to the novel")
      )
     )
    )

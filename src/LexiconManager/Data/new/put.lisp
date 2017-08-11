@@ -20,6 +20,7 @@
  )
 ))
 
+#|
 (define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
  :words (
   ((w::put (w::together))
@@ -33,6 +34,7 @@
     )
    )
 ))
+|#
 
 (define-words :pos W::v 
  :tags (:base500)

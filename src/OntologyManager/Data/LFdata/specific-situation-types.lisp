@@ -3391,7 +3391,7 @@
 (define-type ONT::combine-objects
     :comment "symmetric combination of objects, abstract or physical: e.g., X combines with y = y combines with x = x and y combine"
  :wordnet-sense-keys ("merge%2:30:01" "combine%2:30:00" "meld%2:30:00" "coalesce%2:30:00" "fuse%2:30:00" "immix%2:30:00" "commingle%2:30:00" "conflate%2:30:00" "mix%2:30:00" "flux%2:30:00" "blend%2:30:00" "mix_in%2:30:01" "mix%2:30:01" "mix%2:35:00" "mingle%2:35:00" "commix%2:35:00" "unify%2:35:00" "amalgamate%2:35:00")
- :parent ONT::coalesce
+ :parent ONT::event-of-causation
  :sem (F::SITUATION (F::Cause F::agentive) (f::trajectory +))
  )
 
@@ -3517,7 +3517,7 @@
 ;; this isn't a child of ont::combine-objects because of incompatibility of f::trajectory feature
 (define-type ONT::Joining
  :wordnet-sense-keys ("conjoin%2:35:00" "join%2:35:00")
- :comment "abstract, social, or physical connection of objects"
+ :comment "abstract, social, or physical connection of objects such that the objects retain their original make-up/identity (whereas COMBINE-OBJECTS are not un-combinable anymore)"
  :parent ONT::event-of-causation
  :sem (F::Situation (F::Trajectory -))
  :arguments ((:OPTIONAL ONT::AGENT (F::Phys-obj))
@@ -3925,6 +3925,17 @@
 	     (:essential ont::source (?ttype1 (f::object-function f::instrument)))
              )
  )
+
+;; he smeared the paint on the wall
+(define-type ONT::APPLY-ON-SURFACE
+ :wordnet-sense-keys ("drizzle%2:35:00" "plaster%2:35:00" "smear%2:35:03" "smudge%2:35:00" "spatter%2:35:00" "splash%2:35:00" "splash%2:35:04" "splatter%2:35:01" "spread%2:35:13" "swab%2:35:01")
+  :parent ONT::PUT
+  :SEM (F::SITUATION (f::Aspect F::Dynamic))
+  :arguments
+  ((:required ONT::AGENT (f::Phys-obj (f::intentional +)))
+   (:required ONT::affected (f::Phys-obj (f::Origin F::Artifact)))
+   )
+  )
 
 (define-type ONT::immerse
     :wordnet-sense-keys ("immerse%2:35:00" "plunge%2:35:01" "immerse%2:31:01")

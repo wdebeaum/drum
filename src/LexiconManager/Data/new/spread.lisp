@@ -20,8 +20,8 @@
   (W::spread
    (wordfeats (W::morph (:forms (-vb) :past W::spread :ing W::spreading)))
    (SENSES
-    ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("spray-9.7-1"))
-     (LF-PARENT ONT::cause-cover)
+    ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("spray-9.7-1") :wn ("spread%2:35:13"))
+     (LF-PARENT ONT::apply-on-surface)
  ; like spray
      (example "he spread the peanut butter on the bread")
      )

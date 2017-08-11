@@ -12,7 +12,7 @@ my $number_re = $Geo::StreetAddress::US::Addr_Match{number};
 my $fraction_re = $Geo::StreetAddress::US::Addr_Match{fraction};
 my $street_re = $Geo::StreetAddress::US::Addr_Match{street};
 my $unit_re = $Geo::StreetAddress::US::Addr_Match{unit};
-my $street_address_re = qr/$number_re\W*
+my $street_address_re = qr/(?<!\p{Sc})$number_re(?!\%)\W*
                            (?:$fraction_re\W*)?
 			   $street_re
 			   (?:\W+$unit_re)?
