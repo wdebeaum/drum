@@ -308,14 +308,25 @@
        (ONT::ASK-WHAT-IS :who *USER* :to *ME* :what ?!ff :suchthat ?!rr)
 	)
       
+   ;; conditional questions: "What happens to the price of wheat in South Sudan if we cut the amount of fertilizer?"
+
+     ((ONT::SPEECHACT ?!a ONT::SA_WH-QUESTION :FOCUS ?!ff :CONTENT ?!rr)
+      (ONT::WH-TERM ?!ff ?!type)
+      (ONT::F ?!rr ONT::SITUATION-ROOT :condition ?!cond-op)
+      (ONT::F ?!cond-op ONT::POS-CONDITION :GROUND ?!test)
+      ;(ONT::F ?!test ONT::EVENT-OF-CAUSATION)
+      (ONT::F ?!test ONT::EVENT-OF-CHANGE)  ; "activate" is not EVENT-OF-CAUSATION
+      -ask-wh-condition>
+      (ONT::ASK-CONDITIONAL-WHAT-IS :who *USER* :to *ME* :what ?!ff :suchthat ?!rr :condition ?!test)
+      )
       
    ;; conditional questions: is ERK activated if we add Serafinabib?
 
      ((ONT::SPEECHACT ?!a ONT::SA_YN-QUESTION :CONTENT ?!rr)
       (ONT::F ?!rr ONT::SITUATION-ROOT :condition ?!cond-op)
       (ONT::F ?!cond-op ONT::POS-CONDITION :GROUND ?!test)
-      (ONT::F ?!test ONT::EVENT-OF-CAUSATION)
-      -ynq-condition>
+      ;(ONT::F ?!test ONT::EVENT-OF-CAUSATION)
+      (ONT::F ?!test ONT::EVENT-OF-CHANGE)  ; "activate" is not EVENT-OF-CAUSATION      -ynq-condition>
       (ONT::ASK-CONDITIONAL-IF :who *USER* :to *ME* :what ?!rr :condition ?!test)
       )
 
