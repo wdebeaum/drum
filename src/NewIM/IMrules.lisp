@@ -327,6 +327,7 @@
       (ONT::F ?!cond-op ONT::POS-CONDITION :GROUND ?!test)
       ;(ONT::F ?!test ONT::EVENT-OF-CAUSATION)
       (ONT::F ?!test ONT::EVENT-OF-CHANGE)  ; "activate" is not EVENT-OF-CAUSATION      -ynq-condition>
+      -ynq-condition>
       (ONT::ASK-CONDITIONAL-IF :who *USER* :to *ME* :what ?!rr :condition ?!test)
       )
 
