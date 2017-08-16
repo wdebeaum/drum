@@ -8,6 +8,8 @@
   (inherit ONT::chemical))
 (concept CHEBI::24433 ; group
   (inherit ONT::molecule)) ; sort of...
+ (concept CHEBI::33708 ; amino-acid residue
+   (inherit ONT::residue))
 (concept CHEBI::23367 ; molecular entity
   (inherit ONT::molecule))
 (concept CHEBI::24870 ; ion
