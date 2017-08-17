@@ -1,7 +1,7 @@
 /*
  * DrumKB.java
  *
- * $Id: DrumKB.java,v 1.28 2017/02/14 23:11:33 lgalescu Exp $
+ * $Id: DrumKB.java,v 1.29 2017/08/17 04:09:16 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  9 May 2015
  */
@@ -699,7 +699,6 @@ public class DrumKB {
             } catch (Exception e) {
                 Debug.debug("Error generating XML for: " + ke);
                 e.printStackTrace();
-                throw new RuntimeException(e);
             }
             if (x == null) continue; // FIXME: eventually all extractions should be output!
             try {
@@ -715,7 +714,6 @@ public class DrumKB {
             } catch (Exception e) {
                 Debug.debug("Error generating XML for: " + x);
                 e.printStackTrace();
-                throw new RuntimeException(e);
             }
         }
     }

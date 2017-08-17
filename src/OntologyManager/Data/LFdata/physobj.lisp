@@ -1735,7 +1735,7 @@
 (define-type ONT::body-part
     :wordnet-sense-keys ("body_part%1:08:00" "organ%1:08:00" )
     :parent ONT::anatomy
-    :sem (F::Phys-obj (F::origin F::living) (f::intentional -) (f::form f::object) (f::object-function f::body-part))
+    :sem (F::Phys-obj (F::origin F::living) (f::intentional -) (f::form f::object) (f::object-function f::body-part) (f::container +))
  ;;; too strong, but better than unconstrained
     :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::origin F::living) (f::form f::object)))
 		)

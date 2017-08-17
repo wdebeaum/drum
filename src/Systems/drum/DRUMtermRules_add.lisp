@@ -424,6 +424,19 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    :LOC -   ; zero out :LOC so it wouldn't be emitted
 	    :rule -simple-ref-modCL-gd
 	    ))
+
+	  ((ONT::TERM ?!obj 
+	    (? t1 ONT::MUTATION ONT::BIOLOGICAL-PROCESS ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ ONT::MEDICAL-DISORDERS-AND-CONDITIONS) :LOCATION ?!modL )
+	   (ONT::F ?!modL (? tmp ONT::IN-LOC ONT::AT-LOC ONT::ON) :GROUND ?!modBP)	   
+            (ONT::TERM ?!modBP (? tmp2 ONT::CELL-LINE))
+	   -simple-ref-modCL2-gd>
+	   100
+	   (ONT::TERM ?!obj ?t1
+	    :CELL-LINE ?!modBP
+	    :LOC -   ; zero out :LOC so it wouldn't be emitted
+	    :rule -simple-ref-modCL2-gd
+	    ))
+	  
 	  
 	  ; Ras localizes to/in the nucleus
           ((;(? reln0  ONT::F ONT::QUANTIFIER ONT::KIND ONT::A ONT::INDEF-PLURAL ONT::THE ONT::THE-SET ONT::INDEF-SET ONT::BARE ONT::SM ONT::PRO ONT::PRO-SET)

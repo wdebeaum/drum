@@ -408,7 +408,7 @@
      (VP vform var agr neg sem subj iobj dobj comp3 part cont gap class subjvar lex headcat transform subj-map tma aux template)
      (VP- vform var agr neg sem subj iobj dobj dobjvar comp3 part cont gap class subjvar lex headcat transform subj-map tma aux passive passive-map template result)
      (S vform neg cont stype gap sem subjvar dobjvar var  lex headcat transform subj)
-     (N1 case VAR AGR MASS SEM Changeagr class reln sort lex headcat transform set-restr)
+     (N1 case VAR AGR MASS SEM Changeagr class reln sort lex headcat transform set-restr result) ;added features for nominalizations
      (NP case VAR AGR MASS SEM Changeagr class reln sort lex headcat transform status)
      (ADVBL SORT ATYPE CONSTRAINT SA-ID PRED NEG TO LEX HEADCAT SEM ARGUMENT SUBCAT IGNORE transform neg)
      (ADV VAR ATYPE SORT ARG PRED ARGUMENT lex headcat transform)
@@ -499,7 +499,8 @@
       ;;(subjvar ?subjvar)   ;Not sure why this was here - maybe for purpose clauses. Leaving it in causes many parses to fail as the SUBJVAR in the new VP is wrecked
      ;; the SUBJVAR is required in the argument to be able to pass in the subject for things like "the dog walked barking".
       (ARG ?v) (VAR ?mod)
-      (role ?advrole) 
+      (role ?advrole)
+      (SEM ($ f::abstr-obj (F::type (? !ttt ont::position-reln))))
       )
      (add-to-conjunct (val (MODS ?mod)) (old ?lf) (new ?new))
      )
@@ -614,11 +615,13 @@
 		;;(aux -) 
 		(gap ?gap)
 		(ellipsis -)
+		(result ?asem)
 		))
 
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
 			 (sem ?sem))) (GAP -)
       ;; (subjvar ?subjvar)
+			 (sem ?asem)
 			 (SEM ($ f::abstr-obj
 				 (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ont::pos-as-containment-reln ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
 					;(F::type (? ttt ont::path ont::position-reln))))
@@ -843,10 +846,12 @@
 	       (RESTR ?restr) ;;(gerund -)   Have to allow gerunds e.g., the debating at the house.
 	       (post-subcat -) (SORT PRED)
 	       (no-postmodifiers -) ;; exclude "the same path as the battery" and advbl attaching to "path"
-	    ))
-     (advbl (ATYPE POST) 
+	       (result ?asem)
+	       ))
+     (advbl (ATYPE POST)
       (result-only +)  ;; allows result adverbials (others already handled by -adv-np-post>
       (ARGUMENT (% NP (sem ?argsem) (constraint ?c) ))
+      (sem ?asem)
       (SEM ($ f::abstr-obj (F::type (? ttt ont::predicate ont::position-reln))))
       (arg ?argv) (VAR ?mod) (WH -) (GAP -)
       (particle -)  ;; exclude particles as they should attach to the verb

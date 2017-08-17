@@ -316,8 +316,8 @@
    ;; test: the dog barked.
    ;; test: the dog chased the cat.
    ((s (stype decl) (var ?v) (subjvar ?npvar) (gap ?g) (focus ?npvar)
-     (lf ?lf) (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) 
-		       (pp-word -) (changeagr -))
+     (lf ?lf) (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex)
+		       (pp-word -) (changeagr -) (gap -))
 	       )
 
      (advbl-needed ?avn)
@@ -1437,11 +1437,8 @@
 		      (case ?dcase) (ptype ?ptype)
 		      ))
      (var ?v) 
-     (class ?c) (constraint (& (lsubj ?subjvar) (lobj ?gapvar)
-			       (liobj ?iobjvar) (lcomp ?compvar)
-			       (?lsubj-map ?subjvar) (?!dobj-map ?gapvar)
-			       (?iobj-map ?iobjvar) (?comp3-map ?compvar)
-			       ))
+     (class ?c)
+     (constraint ?newc)
      (postadvbl -)
      )
     -vp-dobj-gap-role> ;;.97
@@ -1453,11 +1450,19 @@
 	     (dobj ?!dobj) (dobj (% ?!cat (case (? dcase obj -)) (var ?gapvar) (arg ?arg) (sem ?gapsem) (agr ?gapagr) (ptype ?ptype))) ;; must have a possibility of np dobj
 	     (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -))) 
 	     (subj-map ?lsubj-map) (dobj-map ?!dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
-	      
+	     (restr ?prefix)
 	     ))
     ?iobj     
     ?part
     ?comp
+    (append-conjuncts (conj1 ?prefix)
+		      (conj2 (& (lsubj ?subjvar) (lobj ?gapvar)
+			       (liobj ?iobjvar) (lcomp ?compvar)
+			       (?lsubj-map ?subjvar) (?!dobj-map ?gapvar)
+			       (?iobj-map ?iobjvar) (?comp3-map ?compvar)
+			       ))
+		       (new ?newc))
+
     )
    
    ;; vp rules where the object pp or pred has a gap
@@ -2009,7 +2014,8 @@
 	    )))   
 
    
-   ;; a transformation on be to take expletive + filled predicate    
+   ;; a transformation on be to take expletive + filled predicate
+   ;; It is...
     ((v (vform ?vform) (be-there +)
       (subj (% np (lex it) (agr 3s) (expletive +) (sem ($ -)))) (subj-map -)
       (dobj ?dobjnew) (dobj-map ?dobj-map)
