@@ -102,7 +102,7 @@
 
 (define-words :pos W::adj :templ ADJ-EXPERIENCER-TEMPL
  :words (
-   ((w::lightheaded)
+   (w::lightheaded
    (SENSES
     ((meta-data :origin chf :entry-date 20070904 :change-date 20090731 :comments nil :wn nil)
      (LF-PARENT ONT::DIZZY-VAL)
@@ -115,7 +115,7 @@
 
 (define-words :pos W::n
  :words (
-  ((w::lightheadedness)
+  (w::lightheadedness
   (senses
    ((meta-data :wn ("lightheadedness%1:26:00"))
     (LF-PARENT ONT::lightheadedness)

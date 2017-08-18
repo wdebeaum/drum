@@ -304,9 +304,15 @@
 
 
 (defun prepare-lf (lf)
-  "this looks for roles that have multiple occurances and gives them all unique names (e.g., MOD ... MOD..) 
+  "this converts AKRL to LF format (removes the :instance-of link and keeps the type)
+   and looks for roles that have multiple occurances and gives them all unique names (e.g., MOD ... MOD..) 
     becomes MOD ... MOD1..)"
-  (list (list* (car lf) (cadr lf) (caddr lf) (renumber-roles (cdddr lf) nil))))
+  (let ((fixed-lf (if (member :instance-of lf)
+		      (list* (car lf) (cadr lf) (find-arg lf :instance-of)
+			     (remove-arg (cddr lf) :instance-of))
+		      lf)))
+    (list (list* (car fixed-lf) (cadr fixed-lf) (caddr fixed-lf) 
+		 (renumber-roles (cdddr fixed-lf) nil)))))
 
 (defun renumber-roles (roles seen)
   (when roles
