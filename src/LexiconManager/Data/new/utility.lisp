@@ -7,7 +7,7 @@
   (W::UTILITY
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
-     (LF-PARENT ONT::utility)
+     (LF-PARENT ONT::utility-scale)
      (TEMPL MASS-PRED-TEMPL)
      )
     )

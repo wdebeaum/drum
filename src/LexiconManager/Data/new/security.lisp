@@ -6,7 +6,7 @@
  :words (
   (W::security
    (SENSES
-    ((LF-PARENT ONT::confidentiality)
+    ((LF-PARENT ONT::confidentiality-scale)
      (TEMPL MASS-PRED-TEMPL)
      (EXAMPLE "iCal includes security enhancements")
      (meta-data :origin task-learning :entry-date 20050812 :change-date nil :wn ("security%1:26:00") :comments nil)

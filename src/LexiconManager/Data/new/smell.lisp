@@ -6,7 +6,7 @@
  :words (
   (w::smell
   (senses
-   ((LF-PARENT ONT::physical-sense)
+   ((LF-PARENT ONT::olfactory-property-scale)
     (TEMPL MASS-PRED-TEMPL)
     )
    )

@@ -6,7 +6,7 @@
  :words (
   (W::uncertainty
    (SENSES
-    ((LF-PARENT ONT::likelihood)
+    ((LF-PARENT ONT::not-certain-scale)
      (meta-data :origin cardiac :entry-date 20090427)
      )
     )

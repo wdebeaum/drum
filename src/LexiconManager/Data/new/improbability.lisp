@@ -6,7 +6,7 @@
  :words (
    (W::improbability
    (SENSES
-    ((LF-PARENT ONT::likelihood)
+    ((LF-PARENT ONT::not-likely-scale)
      (meta-data :origin cardiac :entry-date 20090427)
      )
     )

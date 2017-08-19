@@ -7,7 +7,7 @@
   (W::quantity
    (SENSES
     ((meta-data :origin calo :entry-date 20031229 :change-date nil :wn ("quantity%1:03:00") :comments html-purchasing-corpus)
-     (LF-PARENT ONT::domain)
+     (LF-PARENT ONT::measure-scale)
      (example "a quantity of five pounds")
 ;     (SEM (F::scale F::scale))
      (SEM (F::scale ont::scale))

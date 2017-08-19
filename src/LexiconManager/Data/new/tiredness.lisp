@@ -7,7 +7,7 @@
   (w::tiredness
   (senses
    ((meta-data :wn ("tiredness%1:26:00"))
-    (LF-PARENT ONT::fatigue)
+    (LF-PARENT ONT::fatigue-scale)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

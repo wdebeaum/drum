@@ -8,7 +8,7 @@
   (W::NEED
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("need%1:26:00" "need%1:17:00"))
-     (LF-PARENT ONT::REQUIREMENTS)
+     (LF-PARENT ONT::REQUIREMENT-scale)
      (PREFERENCE 0.92) ;; prefer the verb sense
      )
     )

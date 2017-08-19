@@ -6,8 +6,8 @@
  :words (
   (W::choppiness
    (SENSES
-    ((LF-PARENT ONT::non-measure-ordered-domain)
-     (EXAMPLE "you may still see choppiness at high screen resolutions")
+    ((LF-PARENT ONT::roughness-scale)
+     (EXAMPLE "The choppiness of the terrain makes for interesting landing choices.")
      (meta-data :origin task-learning :entry-date 20050826 :CHANGE-date nil :comments nil)
      )
     )

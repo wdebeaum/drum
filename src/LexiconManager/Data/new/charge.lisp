@@ -35,7 +35,7 @@
  :words (
 	  (w::charge
 	   (senses
-	    ((lf-parent ont::phys-measure-domain)
+	    ((lf-parent ont::electric-measure-scale)
 	     (syntax (w::mass w::mass))
 	     (meta-data :origin bee :entry-date 20040407 :change-date nil :wn ("charge%1:19:00") :comments test-s)
 	     )

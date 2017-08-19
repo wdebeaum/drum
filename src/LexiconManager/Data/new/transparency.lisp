@@ -7,7 +7,7 @@
   (W::transparency
    (SENSES
     ((meta-data :origin task-learning :entry-date 20050823 :change-date nil :wn ("transparency%1:07:00") :comments nil)
-     (LF-PARENT ONT::NON-MEASURE-ORDERED-DOMAIN)
+     (LF-PARENT ONT::visual-clarity-scale)
      (TEMPL OTHER-RELN-TEMPL)
      (example "change the object's transparency")
      )

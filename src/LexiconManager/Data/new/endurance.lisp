@@ -6,7 +6,7 @@
  :words (
   (w::endurance
   (senses
-   ((LF-PARENT ONT::non-measure-ordered-domain)
+   ((LF-PARENT ONT::endurance-scale)
     (TEMPL mass-pred-TEMPL)
     (meta-data :origin cardiac :entry-date 20080509 :change-date nil :comments LM-vocab)
     (syntax (W::morph (:forms (-none))))

@@ -6,7 +6,7 @@
  :words (
   (W::gender
    (SENSES
-    ((LF-PARENT ONT::gender)
+    ((LF-PARENT ONT::gender-scale)
      (TEMPL OTHER-RELN-TEMPL)
      (EXAMPLE "the gender of the dog is male")
      (meta-data :origin calo-ontology :entry-date 20060426 :change-date nil :wn ("gender%1:07:00") :comments nil)

@@ -68,6 +68,7 @@
    )
 ))
 
+#|
 (define-words :pos W::n :templ PPWORD-N-TEMPL
  :words (
   ((W::HOW w::far)
@@ -79,6 +80,7 @@
      (PREFERENCE 0.9) ; really prefer adv
      )))
 ))
+|#
 
 (define-words :pos W::n :templ PPWORD-N-TEMPL
  :words (

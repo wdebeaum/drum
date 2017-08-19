@@ -20,7 +20,7 @@
  :words (
 	  (w::current
 	   (senses
-	    ((lf-parent ont::phys-measure-domain)
+	    ((lf-parent ont::electric-measure-scale)
 	     (syntax (w::mass w::mass))
 	     (meta-data :origin bee :entry-date 20040407 :change-date nil :wn ("current%1:19:01") :comments test-s)
 	     )

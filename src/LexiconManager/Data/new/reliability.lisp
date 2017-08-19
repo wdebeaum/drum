@@ -6,7 +6,7 @@
  :words (
   (W::reliability
    (SENSES
-    ((LF-PARENT ONT::non-measure-ordered-domain)
+    ((LF-PARENT ONT::reliability-scale)
      (EXAMPLE "IE 5.2 includes reliability enhancements")
      (meta-data :origin task-learning :entry-date 20050826 :CHANGE-date nil :wn ("reliability%1:07:00") :comments nil)
      )

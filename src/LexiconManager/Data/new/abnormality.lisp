@@ -7,7 +7,7 @@
    (w::abnormality
    (SENSES
     ((meta-data :origin chf :entry-date 20070810 :change-date nil :comments nil :wn ("abnormality%1:04:00"))
-     (LF-PARENT ONT::abnormality)
+     (LF-PARENT ONT::not-typical-scale)
      )
     )
    )

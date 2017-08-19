@@ -6,7 +6,7 @@
  :words (
   (W::sex
    (SENSES
-    ((LF-PARENT ONT::gender)
+    ((LF-PARENT ONT::gender-scale)
      (TEMPL OTHER-RELN-TEMPL)
      (EXAMPLE "the sex of the dog is male")
      (meta-data :origin task-learning :entry-date 20050826 :change-date nil :wn ("sex%1:07:00") :comments nil)

@@ -19,3 +19,14 @@
    )
 ))
 
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :words (
+  (W::EASE
+   (SENSES
+    ((meta-data :origin domain-reorganization :entry-date 20170810 :change-date nil :comments nil :wn ("ease%1:07:00"))
+     (LF-PARENT ONT::easy-scale)
+     (TEMPL other-reln-TEMPL)
+     )
+    )
+   )
+))

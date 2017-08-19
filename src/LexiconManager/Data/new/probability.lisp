@@ -6,7 +6,7 @@
  :words (
   (W::probability
    (SENSES
-    ((LF-PARENT ONT::likelihood)
+    ((LF-PARENT ONT::likely-scale)
      (meta-data :origin plow :entry-date 20060523 :change-date nil :wn ("probability%1:07:01") :comments pq0406)
      )
     )

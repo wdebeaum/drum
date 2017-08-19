@@ -6,8 +6,8 @@
  :words (
   (w::redness
   (senses
-   ((meta-data :wn ("redness%1:26:00"))
-    (LF-PARENT ONT::inflammation)
+   ((meta-data :wn ("redness%1:07:00"))
+    (LF-PARENT ONT::redness-scale)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

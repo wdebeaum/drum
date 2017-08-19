@@ -6,7 +6,7 @@
  :words (
   (W::RESOLUTION
    (SENSES
-    ((LF-PARENT ONT::RESOLUTION)
+    ((LF-PARENT ONT::RESOLUTION-SCALE)
      (TEMPL OTHER-RELN-TEMPL)
      (meta-data :origin boudreaux :entry-date 20031024)
      )

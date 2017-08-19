@@ -6,7 +6,7 @@
  :words (
    (W::happiness
    (SENSES
-    ((LF-PARENT ONT::discrete-property-val)
+    ((LF-PARENT ONT::happiness-scale)
      (meta-data :origin calo-ontology :entry-date 20060125 :change-date nil :comments caloy3)
      (TEMPL OTHER-RELN-TEMPL)
      )

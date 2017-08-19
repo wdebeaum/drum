@@ -6,7 +6,7 @@
  :words (
    (w::wellness
    (SENSES
-    ((LF-PARENT ONT::health)
+    ((LF-PARENT ONT::health-scale)
      (meta-data :origin cardiac :entry-date 20090408 :change-date nil :wn ("health%1:26:01") :comments nil)
      )
     )

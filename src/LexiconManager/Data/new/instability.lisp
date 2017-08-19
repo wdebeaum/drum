@@ -7,7 +7,7 @@
   (W::instability
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
-     (LF-PARENT ONT::non-measure-ordered-domain)
+     (LF-PARENT ONT::not-steady-scale)
      (TEMPL MASS-PRED-TEMPL)
      )
     )

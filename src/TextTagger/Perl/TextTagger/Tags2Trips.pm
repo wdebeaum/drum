@@ -88,18 +88,18 @@ our %penn2trips_word_re = (
   # here instead of in %penn2trips_punc. Note that the "high-reversed-9"
   # versions of left quotes are omitted because Stanford can't handle them
   # anyway. Ditto "low" quotes.
-  '``' => qr/``|"|\x{201c}/,
-  "''" => qr/''|"|\x{201d}/,
+  '``' => qr/``|"|\x{201c}|&quot;/,
+  "''" => qr/''|"|\x{201d}|&quot;/,
   '`' => qr/`|'|\x{2018}/,
-  "'" => qr/'|\x{2019}/,
+  "'" => qr/'|\x{2019}|&apos;/,
   # TODO use @TextTagger::Words::endings to avoid duplication?
-  "'s" => qr/(?:'|\x{2019})s/,
-  "'m" => qr/(?:'|\x{2019})m/,
-  "'d" => qr/(?:'|\x{2019})d/,
-  "'ll" => qr/(?:'|\x{2019})ll/,
-  "'re" => qr/(?:'|\x{2019})re/,
-  "'ve" => qr/(?:'|\x{2019})ve/,
-  "n't" => qr/n(?:'|\x{2019})t/
+  "'s" => qr/(?:'|\x{2019}|&apos;)s/,
+  "'m" => qr/(?:'|\x{2019}|&apos;)m/,
+  "'d" => qr/(?:'|\x{2019}|&apos;)d/,
+  "'ll" => qr/(?:'|\x{2019}|&apos;)ll/,
+  "'re" => qr/(?:'|\x{2019}|&apos;)re/,
+  "'ve" => qr/(?:'|\x{2019}|&apos;)ve/,
+  "n't" => qr/n(?:'|\x{2019}|&apos;)t/
   );
 # add plurals to the above
 for my $key (keys %penn2trips_word_re) {
@@ -124,7 +124,7 @@ sub stanford_word_re {
   } elsif ($word eq '...') {
     $re = qr/\.\s*\.\s*\./;
   } elsif ($word eq '--') {
-    $re = qr/--|\x{2013}|\x{2014}/; # en- and em-dashes
+    $re = qr/--|\x{2013}|\x{2014}|&mdash;/; # en- and em-dashes
   } elsif (exists($penn2trips_punc{$word})) {
     $re = qr/\Q$word\E|\Q$penn2trips_punc{$word}\E/;
   } elsif (exists($penn2trips_word_re{$word})) {

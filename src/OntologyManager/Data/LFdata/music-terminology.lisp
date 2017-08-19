@@ -1,7 +1,8 @@
 (in-package :om)
 
 (define-type ONT::PITCH-SCALE
- :parent ONT::PHYS-MEASURE-DOMAIN
+ :parent ont::measure-scale
+ ;:parent ONT::PHYS-MEASURE-DOMAIN                                                                                      
  :sem (F::Abstr-obj (F::Scale ONT::pitch-scale))
  :arguments ((:ESSENTIAL ONT::EXTENT (F::abstr-obj (F::scale ont::pitch-scale) (F::measure-function F::value)))
              )

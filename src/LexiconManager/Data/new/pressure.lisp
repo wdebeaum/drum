@@ -7,7 +7,7 @@
   (W::pressure
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
-     (lf-parent ont::phys-measure-domain) 
+     (lf-parent ont::pressure-scale) 
      (templ other-reln-templ)
      )
     ((lf-parent ont::physical-phenomenon)

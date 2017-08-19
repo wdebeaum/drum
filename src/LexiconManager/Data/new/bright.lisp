@@ -9,7 +9,7 @@
    (SENSES
     ((meta-data :origin caloy2 :entry-date 20050404 :change-date nil :wn ("bright%3:00:00") :comments projector-purchasing)
      (example "I need a very bright projector")
-     (LF-PARENT ONT::luminosity-val)
+     (LF-PARENT ONT::bright-val)
      (TEMPL central-ADJ-TEMPL)
      )
     )

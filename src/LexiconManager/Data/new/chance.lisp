@@ -7,7 +7,7 @@
   (W::chance
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("chance%1:07:00"))
-     (LF-PARENT ONT::likelihood)
+     (LF-PARENT ONT::likely-scale)
      )
     )
    )

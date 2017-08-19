@@ -6,7 +6,7 @@
  :words (
   (w::heartbreak
   (senses
-	   ((LF-PARENT ONT::discrete-property-val)
+	   ((LF-PARENT ONT::grief-scale)
 	    (TEMPL COUNT-PRED-TEMPL)
 	    (meta-data :origin cardiac :entry-date 20090129 :change-date nil :comments nil)
 	    )

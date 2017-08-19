@@ -7,7 +7,7 @@
   (W::focus
    (wordfeats (W::morph (:forms (-S-3P) :plur (W::foci))))
    (SENSES
-    ((LF-PARENT ont::attribute)
+    ((LF-PARENT ont::visual-sharpness-scale)
      (TEMPL OTHER-RELN-TEMPL)
      (meta-data :origin calo-ontology :entry-date 20060711 :change-date nil :wn ("focus%1:07:01") :comments caloy3)
      )

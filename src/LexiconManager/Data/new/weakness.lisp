@@ -7,7 +7,7 @@
   (w::weakness
   (senses
    ((meta-data :wn ("weakness%1:07:00"))
-    (LF-PARENT ONT::weakness)
+    (LF-PARENT ONT::weakness-scale)
     (TEMPL bare-pred-TEMPL)
     )
    )

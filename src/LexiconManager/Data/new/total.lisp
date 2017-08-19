@@ -7,10 +7,10 @@
   (W::TOTAL
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("total%1:06:00"))
-     (LF-PARENT ONT::NON-MEASURE-ORDERED-DOMAIN)
+     (LF-PARENT ONT::total-scale)
      (TEMPL OTHER-RELN-TEMPL)
      )
-    ((LF-PARENT ONT::NON-MEASURE-ORDERED-DOMAIN)
+    ((LF-PARENT ONT::total-scale)
      (meta-data :origin calo-ontology :entry-date 20060713 :change-date nil :wn ("total%1:06:00") :comments caloy3)
      (TEMPL reln-subcat-of-units-TEMPL)
      )

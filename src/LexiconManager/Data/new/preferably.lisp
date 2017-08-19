@@ -7,11 +7,11 @@
  :words (
   (W::preferably
    (SENSES
-    ((LF-PARENT ONT::preferred-val)
+    ((LF-PARENT ONT::qualification)
      (LF-FORM W::preferable)
      (TEMPL DISC-TEMPL)
      )
-    ((LF-PARENT ONT::preference-val)
+    ((LF-PARENT ONT::preferred-val)
      (TEMPL ADJ-ADV-OPERATOR-TEMPL)
      (example "preferably green")
      )

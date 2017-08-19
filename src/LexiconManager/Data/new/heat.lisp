@@ -7,7 +7,7 @@
  :words (
   (W::heat
    (SENSES
-    ((LF-PARENT ONT::TEMPERATURE)
+    ((LF-PARENT ONT::heat-scale)
      (example "oppressive heat is forecast for today")
      (meta-data :origin plow :entry-date 20060802 :change-date nil :comments weather :wn ("heat%1:07:01" "heat%1:09:00"))
      (templ mass-pred-templ)

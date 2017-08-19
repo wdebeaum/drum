@@ -6,7 +6,7 @@
  :words (
   (W::CAUTION
    (SENSES
-    ((LF-PARENT ONT::non-measure-ordered-domain) (TEMPL mass-PRED-TEMPL)
+    ((LF-PARENT ONT::cautiousness-scale) (TEMPL mass-PRED-TEMPL)
      (META-DATA :ORIGIN CALO :ENTRY-DATE 20040204 :CHANGE-DATE NIL
       :COMMENTS HTML-PURCHASING-CORPUS))))
 ))

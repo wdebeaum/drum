@@ -15,3 +15,14 @@
    )
 ))
 
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :words (
+  (W::count
+   (SENSES
+    ((meta-data :origin domain-reorganization :entry-date 20060803 :change-date nil :comments nil :wn ("count%1:23:00"))
+     (LF-PARENT ONT::total-scale)
+     )
+    )
+   )
+))
+

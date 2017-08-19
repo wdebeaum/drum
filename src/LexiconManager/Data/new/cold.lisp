@@ -7,7 +7,7 @@
  :words (
   (W::cold
    (SENSES
-    ((LF-PARENT ONT::TEMPERATURE)
+    ((LF-PARENT ONT::cold-scale)
      (example "severe cold is forecast for today")
      (meta-data :origin plow :entry-date 20060802 :change-date nil :comments weather :wn ("cold%1:07:00" "cold%1:09:00"))
      (TEMPL OTHER-RELN-TEMPL)

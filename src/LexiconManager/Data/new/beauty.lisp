@@ -8,7 +8,7 @@
 (W::beauty
    (SENSES
     ((meta-data :origin bolt :entry-date 20120516 :comments top500)
-     (LF-PARENT ONT::non-measure-ordered-domain)
+     (LF-PARENT ONT::beautiful-scale)
      )
     )
    )

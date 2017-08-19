@@ -102,21 +102,6 @@
  :wordnet-sense-keys ("inappropriate%3:00:00" "improper%5:00:00:inappropriate:00" )
 )
 
-;; meaningful, meaningless
-(define-type ont::meaningfulness-val
- :parent ont::evaluation-attribute-val 
-)
-
-(define-type ont::meaningful-val
- :parent ont::meaningfulness-val 
- :wordnet-sense-keys ("meaningful%3:00:00" )
-)
-
-(define-type ont::not-meaningful-val
- :parent ont::meaningfulness-val 
- :wordnet-sense-keys ("meaningless%3:00:00" )
-)
-
 ;; convenient, inconveninet
 (define-type ont::convenience-val
  :parent ont::evaluation-attribute-val 
@@ -544,26 +529,6 @@
  :wordnet-sense-keys ("messy%5:00:00:untidy:00" "untidy%3:00:00" )
 )
 
-;; wise vs. foolish
-(define-type ont::wiseness-val
- :parent ont::evaluation-attribute-val 
-)
-
-(define-type ont::wise-val
- :parent ont::wiseness-val 
- :wordnet-sense-keys ("wise%3:00:00" )
-)
-
-(define-type ont::foolish-val
- :parent ont::wiseness-val 
- :wordnet-sense-keys ("ridiculous%5:00:00:foolish:00" "absurd%5:00:00:foolish:00" "foolish%3:00:00" )
-)
-
-(define-type ont::silly-val
- :parent ont::foolish-val 
- :wordnet-sense-keys ("goofy%5:00:00:foolish:00" )
-)
-
 ;; free vs. bound
 (define-type ont::freedom-val
  :parent ont::evaluation-attribute-val 
@@ -646,25 +611,6 @@
  :wordnet-sense-keys ("genuine%3:00:00" "genuine%5:00:00:true:00" "authentic%5:00:00:genuine:00" "actual%5:00:00:true:00" "real%5:00:00:true:00" "true%5:00:00:real:02")
 )
 
-;; dependable, reliable
-(define-type ont::reliability-val
- :parent ont::evaluation-attribute-val 
-)
-
-(define-type ont::reliable
- :parent ont::reliability-val 
- :wordnet-sense-keys ("trustworthy%3:00:00" "dependable%5:00:00:trustworthy:00" "reliable%3:00:00" )
- ; Words: (W::RELIABLE W::TRUSTWORTHY W::DEPENDABLE)
- ; Antonym: ONT::UNRELIABLE (W::UNCERTAIN W::UNRELIABLE)
-)
-
-(define-type ont::unreliable
- :parent ont::reliability-val 
- :wordnet-sense-keys ("uncertain%5:00:00:unreliable:00" "unreliable%3:00:00" )
- ; Words: (W::UNCERTAIN W::UNRELIABLE)
- ; Antonym: ONT::RELIABLE (W::RELIABLE W::TRUSTWORTHY W::DEPENDABLE)
-)
-
 ;; INFORMATION PROPERTY
 (define-type ont::information-property-val
  :parent ont::property-val
@@ -687,6 +633,23 @@
  ; Antonym: NIL (W::IMPRECISE)
 )
 
+;; meaningful, meaningless
+(define-type ont::meaningfulness-val
+ :parent ont::information-property-val
+)
+
+(define-type ont::meaningful-val
+ :parent ont::meaningfulness-val 
+ :wordnet-sense-keys ("meaningful%3:00:00" )
+)
+
+(define-type ont::not-meaningful-val
+ :parent ont::meaningfulness-val 
+ :wordnet-sense-keys ("meaningless%3:00:00" )
+)
+
+
+;; credibility
 (define-type ont::credibility-val
  :parent ont::information-property-val 
 )
@@ -1440,11 +1403,11 @@
  :wordnet-sense-keys ("dark%3:00:02" )
 )
 
+;; light & dark
 (define-type ont::presense-of-light-val
  :parent ont::visibility-val 
 )
 
-;; dim, light, dark
 (define-type ont::light-val
  :parent ont::presense-of-light-val 
  :wordnet-sense-keys ("light%3:00:06" )
@@ -1453,9 +1416,25 @@
 
 (define-type ont::dark-val
  :parent ont::presense-of-light-val 
- :wordnet-sense-keys ("dark%3:00:01" )
+ :wordnet-sense-keys ("dark%3:00:01")
 )
 
+;; bright & dim
+(define-type ont::luminosity-val
+ :parent ont::visibility-val 
+)
+
+(define-type ont::bright-val
+ :parent ont::luminosity-val
+ :wordnet-sense-keys ("bright%3:00:00")
+)
+
+(define-type ont::dim-val
+ :parent ont::luminosity-val
+ :wordnet-sense-keys ("dim%5:00:00:dark:00" "dim%3:00:02")
+)
+
+;; opaque & transparent
 (define-type ont::opacity-val
  :parent ont::visibility-val 
 )
@@ -2346,6 +2325,25 @@
  :wordnet-sense-keys ("irresponsible%3:00:00" )
 )
 
+;; dependable, reliable
+(define-type ont::reliability-val
+ :parent ont::social-interaction-val 
+)
+
+(define-type ont::reliable
+ :parent ont::reliability-val 
+ :wordnet-sense-keys ("trustworthy%3:00:00" "dependable%5:00:00:trustworthy:00" "reliable%3:00:00" )
+ ; Words: (W::RELIABLE W::TRUSTWORTHY W::DEPENDABLE)
+ ; Antonym: ONT::UNRELIABLE (W::UNCERTAIN W::UNRELIABLE)
+)
+
+(define-type ont::unreliable
+ :parent ont::reliability-val 
+ :wordnet-sense-keys ("uncertain%5:00:00:unreliable:00" "unreliable%3:00:00" )
+ ; Words: (W::UNCERTAIN W::UNRELIABLE)
+ ; Antonym: ONT::RELIABLE (W::RELIABLE W::TRUSTWORTHY W::DEPENDABLE)
+)
+
 ;; willing, unwilling
 (define-type ont::willingness-val
  :parent ont::social-interaction-val 
@@ -2419,6 +2417,26 @@
 (define-type ont::graceful-val
  :parent ont::gracefulness-val 
  :wordnet-sense-keys ("graceful%3:00:00" )
+)
+
+;; wise vs. foolish
+(define-type ont::wiseness-val
+ :parent ont::animal-propensity-val
+)
+
+(define-type ont::wise-val
+ :parent ont::wiseness-val 
+ :wordnet-sense-keys ("wise%3:00:00" )
+)
+
+(define-type ont::foolish-val
+ :parent ont::wiseness-val 
+ :wordnet-sense-keys ("ridiculous%5:00:00:foolish:00" "absurd%5:00:00:foolish:00" "foolish%3:00:00" )
+)
+
+(define-type ont::silly-val
+ :parent ont::foolish-val 
+ :wordnet-sense-keys ("goofy%5:00:00:foolish:00" )
 )
 
 ;; dimensional-property

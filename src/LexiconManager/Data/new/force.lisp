@@ -6,7 +6,8 @@
  :tags (:base500)
  :words (
 	 (w::force
-	  (senses ((lf-parent ont::phys-measure-domain) 
+	  (senses ((lf-parent ont::strength-scale) 
+                   (EXAMPLE "he hit with all the force he could muster")
 		   (templ other-reln-templ)
 		   (meta-data :origin bee :entry-date 20040407 :change-date nil :comments test-s)		   
 		   )

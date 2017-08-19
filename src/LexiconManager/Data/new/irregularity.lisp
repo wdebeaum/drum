@@ -7,7 +7,7 @@
    (W::irregularity
    (SENSES
     ((meta-data :origin cardiac :entry-date 20090121 :change-date nil :comments nil)
-     (LF-PARENT ONT::non-measure-ordered-domain)
+     (LF-PARENT ONT::not-regular-scale)
      (TEMPL MASS-PRED-TEMPL)
      )
     )
@@ -19,7 +19,7 @@
    (w::irregularity
    (SENSES
     ((meta-data :origin chf :entry-date 20070810 :change-date nil :comments nil :wn ("irregularity%1:04:00"))
-     (LF-PARENT ONT::abnormality)
+     (LF-PARENT ONT::not-typical-scale)
      )
     )
    )

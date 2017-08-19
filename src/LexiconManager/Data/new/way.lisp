@@ -20,7 +20,7 @@
      (example "orient the camera this way")
      (meta-data :origin calo-ontology :entry-date 20051209 :change-date nil :wn ("way%1:15:00") :comments Orient)
      )
-     ((LF-PARENT ONT::distance)
+     ((LF-PARENT ONT::distance-scale)
      (example "it is a long way to the next oasis")
      (meta-data :origin navigation :entry-date 20080903 :change-date nil :comments nil)
      )

@@ -6,7 +6,7 @@
  :words (
    (W::definition
    (SENSES
-    ((LF-PARENT ONT::RESOLUTION)
+    ((LF-PARENT ONT::RESOLUTION-SCALE)
      (TEMPL OTHER-RELN-TEMPL)
      (meta-data :origin caloy2 :entry-date 20050404 :comments projector-purchasing)
      )

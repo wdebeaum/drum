@@ -9,12 +9,13 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("difference%1:07:00"))
      (EXAMPLE "It makes no difference")
-     (LF-PARENT ONT::COMPARISON)
+     (LF-PARENT ONT::different-scale)
      )
     )
    )
 ))
 
+#|
 (define-words :pos w::N 
   :templ other-reln-templ
  :words (
@@ -51,4 +52,4 @@
 	     )||#	    	    
 	    ))
 ))
-
+|#

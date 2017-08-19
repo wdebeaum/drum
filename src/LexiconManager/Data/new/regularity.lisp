@@ -7,7 +7,7 @@
    (W::regularity
    (SENSES
     ((meta-data :origin cardiac :entry-date 20090121 :change-date nil :comments nil)
-     (LF-PARENT ONT::non-measure-ordered-domain)
+     (LF-PARENT ONT::regular-scale)
      (TEMPL MASS-PRED-TEMPL)
      )
     )

@@ -6,7 +6,7 @@
  :words (
    (W::comfort
    (SENSES
-    ((LF-PARENT ONT::comfortableness)
+    ((LF-PARENT ONT::comfortable-scale)
      (EXAMPLE "comfort is also an important attribute in hotel selection")
      (meta-data :origin calo :entry-date 20060117 :change-date nil :wn ("comfort%1:26:00") :comments calo-ontology)
      )
