@@ -900,8 +900,7 @@
 
 ;; symptom                                                                                                          
 (define-type ONT::medical-symptom
- :wordnet-sense-keys ("symptom%1:26:00" "sign%1:26:00" "syndrome%1:26:00" "hoarseness%1:07:00" "sniffle%1:04:00" "t\
-ightness%1:09:00")
+ :wordnet-sense-keys ("symptom%1:26:00" "sign%1:26:00" "syndrome%1:26:00" "hoarseness%1:07:00" "sniffle%1:04:00" "tightness%1:09:00")
  :parent ONT::medical-disorders-and-conditions
  )
 
@@ -936,8 +935,7 @@ ightness%1:09:00")
  )
 
 (define-type ont::dyspnea
- :wordnet-sense-keys ("dyspnea%1:26:00" "dyspnea%1:26:00" "dyspnoea%1:26:00" "shortness_of_breath%1:26:00" "sob%1:2\
-6:00")
+ :wordnet-sense-keys ("dyspnea%1:26:00" "dyspnea%1:26:00" "dyspnoea%1:26:00" "shortness_of_breath%1:26:00" "sob%1:26:00")
  :parent ont::medical-symptom
  )
 
@@ -950,8 +948,7 @@ ightness%1:09:00")
 ; for fever                                                                                                         
 (define-type ONT::fever
  :parent ONT::medical-symptom
- :wordnet-sense-keys ("fever%1:26:00" "febrility%1:26:00" "febricity%1:26:00" "pyrexia%1:26:00" "feverishness%1:26:\
-00")
+ :wordnet-sense-keys ("fever%1:26:00" "febrility%1:26:00" "febricity%1:26:00" "pyrexia%1:26:00" "feverishness%1:26:00")
  )
 
 ; for heartburn                                                                                                     
@@ -1023,8 +1020,7 @@ ightness%1:09:00")
 ; for pain                                                                                                          
 (define-type ONT::pain
  :parent ONT::medical-symptom
- :wordnet-sense-keys ("pain%1:26:00" "hurting%1:26:00" "pain_sensation%1:09:00" "painful_sensation%1:09:00" "sorene\
-ss%1:26:00" "painfulness%1:07:00")
+ :wordnet-sense-keys ("pain%1:26:00" "hurting%1:26:00" "pain_sensation%1:09:00" "painful_sensation%1:09:00" "soreness%1:26:00" "painfulness%1:07:00")
  )
 
 ; for backache                                                                                                      
@@ -1114,8 +1110,7 @@ ss%1:26:00" "painfulness%1:07:00")
 
 ;; bruise, contusion, bump                                                                                          
 (define-type ont::injury
- :wordnet-sense-keys ("concussion%1:11:00" "injury%1:26:00" "hurt%1:26:00" "harm%1:26:00" "trauma%1:26:02" "bruise%\
-1:26:00" "contusion%1:26:00" "bump%1:26:00")
+ :wordnet-sense-keys ("concussion%1:11:00" "injury%1:26:00" "hurt%1:26:00" "harm%1:26:00" "trauma%1:26:02" "bruise%1:26:00" "contusion%1:26:00" "bump%1:26:00")
   :parent ont::medical-disorders-and-conditions
  )
 
@@ -1128,9 +1123,7 @@ ss%1:26:00" "painfulness%1:07:00")
 
 ;; sickness                                                                                                         
 (define-type ONT::disease
- :wordnet-sense-keys ("health_problem%1:26:00" "unhealthiness%1:26:00" "ill_health%1:26:00" "illness%1:26:00" "unwe\
-llness%1:26:00" "malady%1:26:00" "sickness%1:26:00" "ailment%1:26:00" "ill%1:26:00" "abnormality%1:26:00" "abnormal\
-cy%1:26:00")
+ :wordnet-sense-keys ("health_problem%1:26:00" "unhealthiness%1:26:00" "ill_health%1:26:00" "illness%1:26:00" "unwellness%1:26:00" "malady%1:26:00" "sickness%1:26:00" "ailment%1:26:00" "ill%1:26:00" "abnormality%1:26:00" "abnormalcy%1:26:00")
  :parent ONT::medical-disorders-and-conditions
  )
 
@@ -1195,9 +1188,7 @@ cy%1:26:00")
 
 (define-type ONT::cancer
  :parent ONT::disease
- :wordnet-sense-keys ("cancer%1:26:00" "malignancy%1:26:00" "malignance%1:26:00" "carcinoma%1:26:00" "melanoma%1:26\
-:00" "malignant_melanoma%1:26:00" "lymphoma%1:26:00" "leukemia%1:26:00" "leukaemia%1:26:00" "leucaemia%1:26:00" "ca\
-ncer_of_the_blood%1:26:00" "sarcoma%1:26:00" "angiosarcoma%1:26:00" "myeloma%1:26:00")
+ :wordnet-sense-keys ("cancer%1:26:00" "malignancy%1:26:00" "malignance%1:26:00" "carcinoma%1:26:00" "melanoma%1:26:00" "malignant_melanoma%1:26:00" "lymphoma%1:26:00" "leukemia%1:26:00" "leukaemia%1:26:00" "leucaemia%1:26:00" "cancer_of_the_blood%1:26:00" "sarcoma%1:26:00" "angiosarcoma%1:26:00" "myeloma%1:26:00")
  )
 
 ; for cardiovascular diseases etc                                                                                   
@@ -1292,17 +1283,15 @@ ncer_of_the_blood%1:26:00" "sarcoma%1:26:00" "angiosarcoma%1:26:00" "myeloma%1:2
 
 ;; stones, cholelithiasis (gall stones), kidney stones                                                              
 (define-type ont::stones-disease
- :wordnet-sense-keys ("cholelithiasis%1:26:00" "gallstone%1:17:                                                     
-00" "kidney_stone%1:17:00")
+ :wordnet-sense-keys ("cholelithiasis%1:26:00" "gallstone%1:17:00" "kidney_stone%1:17:00")
  :parent ont::disease
  )
 
 #|                                                                                                                  
 ;; cholelithiasis (gall stones)                                                                                     
-(define-type ont::cholelithiasis                                                                                    
- :wordnet-sense-keys ("cholelithiasis%1:26:00" "gallstone%1:17:                                                     
-00")                                                                                                                
- :parent ont::stones-disease                                                                                        
+(define-type ont::cholelithiasis
+ :wordnet-sense-keys ("cholelithiasis%1:26:00" "gallstone%1:17:00")
+ :parent ont::stones-disease
  )                                                                                                                  
 
 ;; kidney stones                                                                                                    
@@ -1640,8 +1629,7 @@ ncer_of_the_blood%1:26:00" "sarcoma%1:26:00" "angiosarcoma%1:26:00" "myeloma%1:2
             )
  :sem (F::abstr-obj (F::scale ont::color-scale ))
  ;; WORDS: color, colour
- :wordnet-sense-keys ("colouring%1:07:00" "coloring%1:07:00" "colour%1:07:00" "color%1:07:00" "color%1:09:01" "colo\
-ur%1:09:01")
+ :wordnet-sense-keys ("colouring%1:07:00" "coloring%1:07:00" "colour%1:07:00" "color%1:07:00" "color%1:09:01" "colour%1:09:01")
 )
 
 (define-type ont::gender-scale
@@ -1663,8 +1651,7 @@ ur%1:09:01")
 ;;;==== ONT::ATTRIBUTE ====                                                                                         
 
 (define-type ONT::attribute
- :wordnet-sense-keys ("dimension%1:09:00" "attribute%1:09:00" "property%1:09:00" "property%1:07:00" "holding%1:21:0\
-0" "belongings%1:21:00" "property%1:21:00")
+ :wordnet-sense-keys ("dimension%1:09:00" "attribute%1:09:00" "property%1:09:00" "property%1:07:00" "holding%1:21:00" "belongings%1:21:00" "property%1:21:00")
  :parent ont::abstract-object-nontemporal
  :arguments ((:OPTIONAL ONT::FIGURE ((? lo f::phys-obj f::abstr-obj)))
              )

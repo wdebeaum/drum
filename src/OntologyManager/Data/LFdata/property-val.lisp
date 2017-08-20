@@ -1431,7 +1431,7 @@
 
 (define-type ont::dim-val
  :parent ont::luminosity-val
- :wordnet-sense-keys ("dim%5:00:00:dark:00" "dim%3:00:02")
+ :wordnet-sense-keys ("dim%5:00:00:dark:01" "dim%3:00:02")
 )
 
 ;; opaque & transparent
