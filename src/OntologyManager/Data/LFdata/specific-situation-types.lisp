@@ -699,8 +699,8 @@
 ; :parent ONT::TRANSPORTATION
  :parent ONT::TRANSFER
  :sem (F::Situation (F::Cause F::Agentive))
- :arguments ((:OPTIONAL ONT::RESULT ((? rcp F::Phys-obj f::abstr-obj) (F::intentional +)))
-             (:OPTIONAL ONT::SOURCE ((? src F::Phys-obj f::abstr-obj) (F::intentional +)))
+ :arguments ((:OPTIONAL ONT::RESULT ((? rcp F::Phys-obj f::abstr-obj))) ;(F::intentional +)))
+             (:OPTIONAL ONT::SOURCE ((? src F::Phys-obj f::abstr-obj))) ;(F::intentional +)))
              (:ESSENTIAL ONT::Agent)
              )
  )
@@ -709,7 +709,7 @@
  :wordnet-sense-keys ("send%2:32:00" "post%2:32:02" "mail%2:32:00" "ship%2:38:00" "send%2:38:00" "transport%2:38:01" "transmit%2:35:00" "transfer%2:35:00" "transport%2:35:01" "channel%2:35:00" "channelize%2:35:00" "channelise%2:35:00" "air%2:32:02" "make_pass%2:38:00")
  :parent ONT::TRANSFER
  :sem (F::SITUATION (F::Aspect F::Dynamic) (F::trajectory +))
- :arguments ((:OPTIONAL ONT::RESULT ((? rcp F::Phys-obj f::abstr-obj) (F::intentional +)))
+ :arguments ((:OPTIONAL ONT::RESULT ((? rcp F::Phys-obj f::abstr-obj))) ;(F::intentional +)))
              (:ESSENTIAL ONT::Agent)
              )
  )

@@ -40,11 +40,6 @@
     :parent ONT::MOLECULAR-PART
     )
 
-(define-type ONT::residue
-;    :parent ONT::MOLECULE
-    :parent ONT::MOLECULAR-PART
-    )
-
 ;; DRUM
 (define-type ONT::BIOLOGICAL-ROLE
 ;    :parent ONT::MOLECULE
@@ -386,6 +381,12 @@
     :wordnet-sense-keys ("amino_acid%1:27:00")
     :Parent ont::chemical
     )
+
+(define-type ONT::residue
+;    :parent ONT::MOLECULE
+;    :parent ONT::MOLECULAR-PART
+    :parent ONT::CHEMICAL
+  )
 
 ;; UMLS
 (define-type ont::pharmacologic-substance

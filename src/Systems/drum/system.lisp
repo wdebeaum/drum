@@ -85,7 +85,7 @@
 	;;
 	((setf (parser::flexible-semantic-matching parser::*chart*) t))
 	;; boost content words that have domain specific info attached
-	(parser::*domain-boosting-factor* .2)  ;; 20% increase on difference forom 1
+	(parser::*domain-boosting-factor* .2)  ;; 20% increase on difference from 1
 	;; have the parser remove tagged constituents that are subparts of other terms with domain info
 	(parser::*filter-texttagger-input* t)
 	;; number of interpretations to obtain before stopping
@@ -171,6 +171,8 @@
 (setq lxm::*no-wf-senses-for-words-tagged-with-ont-types* t)
 ;; don't use wordnet if we have TRIPS entries  
 (setq  lxm::*use-trips-and-wf-senses* nil) 
+;; lower bound
+(setq lxm::*domain-score-lower-bound* 0.95)
 
 ;;;; LOGGING options
 (setq logging::*logging-enabled* nil)

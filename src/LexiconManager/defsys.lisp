@@ -1,7 +1,7 @@
 ;;;;
 ;;;; defsys.lisp for LexiconManager
 ;;;;
-;;;; $Id: defsys.lisp,v 1.26 2017/02/10 19:03:21 wdebeaum Exp $
+;;;; $Id: defsys.lisp,v 1.27 2017/08/21 17:09:51 cmteng Exp $
 ;;;;
 
 (unless (find-package :trips)
@@ -39,6 +39,7 @@
 (defvar *kr-sense-boost* 1.03) 
 (defvar *use-domain-senses* nil) ;; if t the lxm boosts senses if they are used in nate's new transforms
 (defvar *lexicon-data*)  ;; all words defined in TRIPS lexicon data files
+(defvar *domain-score-lower-bound* 0.95)
 
 (defvar *parser-package* (find-package :parser)
   "Cached value of the PARSER package, used by MAKE-LEXICON-ENTRY.")

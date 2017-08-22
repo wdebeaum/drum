@@ -5,7 +5,7 @@
 (define-words :pos W::v :templ COUNT-PRED-TEMPL
  :words (
    (W::ability-verb-doesnotexist
-     (wordfeats (W::morph (:forms (-vb) :nom W::ability)))
+     (wordfeats (W::morph (:forms (-vb) :nom W::ability :nomsubjpreps (w::of) :nomobjpreps (-))))
      (SENSES
       (;(LF-PARENT ONT::ABLE)  
        (LF-PARENT ONT::ABILITY-STATE)  

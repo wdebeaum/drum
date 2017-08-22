@@ -625,18 +625,29 @@
 
 (define-type ONT::from-loc
  :parent ONT::source-reln
- :arguments ((:ESSENTIAL ONT::FIGURE ( F::situation (F::type ont::motion)))
-	     (:ESSENTIAL ONT::GROUND (F::Phys-obj (f::spatial-abstraction (? sa f::spatial-point))))
+ :arguments (;(:ESSENTIAL ONT::FIGURE ( F::situation (F::type ont::motion)))
+	     ;(:ESSENTIAL ONT::GROUND (F::Phys-obj (f::spatial-abstraction (? sa f::spatial-point))))
+
+	     ; copied from to-loc
+	     (:ESSENTIAL ONT::FIGURE ((? f F::PHYS-OBJ F::abstr-obj))); (F::situation (f::type ont::event-of-change)))   ; "I walked to the store" FIGURE should point to "I", not "walked"
+	     (:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj) (f::spatial-abstraction ?!sa)
+					;(F::form F::geographical-object)
+				      ) )  ; spatial-abstraction is not enough: many things have spatial-abstraction, e.g., a frog.  Another possibility is (F::object-function F::spatial-object)
+
 	     )
  )
 
+; I moved from the chair to the sofa.  not geographic-object (gound)
+; transmit the signal: signal is abstr-obj (figure)
 (define-type ONT::to-loc
     :comment "the generic goal role: might be a physical object (as possessor) or a resulting state"
  :parent ONT::goal-reln
  :arguments (;(:ESSENTIAL ONT::OF (F::situation (f::type ont::event-of-change)))
 	     ;(:ESSENTIAL ONT::VAL ((? t F::Phys-obj F::abstr-obj)))
-	     (:ESSENTIAL ONT::FIGURE (F::PHYS-OBJ)); (F::situation (f::type ont::event-of-change)))   ; "I walked to the store" FIGURE should point to "I", not "walked"
-	     (:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj) (f::spatial-abstraction ?!sa) (F::form F::geographical-object)) )  ; spatial-abstraction is not enough: many things have spatial-abstraction, e.g., a frog.  Another possibility is (F::object-function F::spatial-object)
+	     (:ESSENTIAL ONT::FIGURE ((? f F::PHYS-OBJ F::abstr-obj))); (F::situation (f::type ont::event-of-change)))   ; "I walked to the store" FIGURE should point to "I", not "walked"
+	     (:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj) (f::spatial-abstraction ?!sa)
+					;(F::form F::geographical-object)
+				      ) )  ; spatial-abstraction is not enough: many things have spatial-abstraction, e.g., a frog.  Another possibility is (F::object-function F::spatial-object)
 	     )
  )
 
@@ -744,7 +755,8 @@
  :arguments (;(:ESSENTIAL ONT::FIGURE (F::Situation))
 	     (:ESSENTIAL ONT::FIGURE (F::Situation (f::type ont::change-magnitude)))
 ;	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::length)))
-	     (:ESSENTIAL ONT::GROUND (F::abstr-obj))  ; no scale (e.g., increase by three dogs)
+;	     (:ESSENTIAL ONT::GROUND (F::abstr-obj))  ; no scale (e.g., increase by three dogs)
+	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ?!sc)))  ; put scale back for now
              )
  )
 

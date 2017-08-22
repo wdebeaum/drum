@@ -1222,7 +1222,8 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
  )
 
 (defun convert-raw-score (score)
-  (+ .95 (* (* score score) .05)))
+  ;(+ .95 (* (* score score) .05)))
+  (+ *domain-score-lower-bound* (* (* score score) .05)))
 
 (defun add-word-def-if-necessary (w pos)
   "The parser calls this when it sees an entry for a composite word -- if one of the subsequent 
