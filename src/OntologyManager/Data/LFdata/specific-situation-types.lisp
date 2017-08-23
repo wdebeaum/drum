@@ -4345,7 +4345,8 @@
 
 ;; stretch  20120523 GUM change new type
 (define-type ONT::body-movement-place
- :parent ont::body-movement
+    :comment "Verbs of posture that are with respect to some place"
+  :parent ont::body-movement
  )
 
 ;; stretch  20120523 GUM change new type
@@ -4362,6 +4363,7 @@
 
 ;; stretch  20120523 GUM change new type
 (define-type ONT::body-movement-self
+    :comment "Verbs of posture that can be independent of any location: e.g., bow is not with respect to a location, but to sit it must be somewhere"
  :parent ont::body-movement
  )
 
