@@ -72,7 +72,7 @@
      (head (adv (lf ?lf) ;;(SORT BINARY-CONSTRAINT) 
             ;; make sure pp-word is not a sort here
             (sort (? !sort pp-word double-subcat))
-	    (argument (% ?cat2 (var ?arg) (lex ?arglex) (sem ?argsem)))
+	    (argument (% ?cat2 (var ?arg) (lex ?arglex) (sem ?argsem) (subjvar ?subjvar)))
             (subcat ?!sub) (SUBCAT (% ?cat (var ?subv) (sem ?subcatsem) (stype ?stype) (vform ?vform) (gap ?gap))) 
             (subcat-map ?submap) (ARGUMENT-MAP ?argmap)
 	    (subcat2 -) ; to prevent e.g., if... then... to be used here (BINARY-CONSTRAINT-S-DECL-MIDDLE-WORD-SUBCAT-TEMPL)
@@ -494,7 +494,7 @@
 		(ellipsis -)
 		))
 
-     (advbl (particle -) (ATYPE POST) (ARGUMENT (% S (sem ?sem) (var ?v))) ;(subjvar ?subjvar)))
+     (advbl (particle -) (ATYPE POST) (ARGUMENT (% S (sem ?sem) (var ?v))); (subjvar ?subjvar)))
 						   (GAP -)
       ;;(subjvar ?subjvar)   ;Not sure why this was here - maybe for purpose clauses. Leaving it in causes many parses to fail as the SUBJVAR in the new VP is wrecked
      ;; the SUBJVAR is required in the argument to be able to pass in the subject for things like "the dog walked barking".
@@ -505,6 +505,33 @@
      (add-to-conjunct (val (MODS ?mod)) (old ?lf) (new ?new))
      )
 
+    ; I dusted the room up.
+    ((vp- (constraint ?new) (tma ?tma) (class ?class) (sem ?sem) (var ?v)
+      (advbl-needed -) (complex +) (subjvar ?subjvar)(GAP ?gap)
+      )
+     -adv-vp-post-particle> ;.98   ;;  want to prefer explicitly subcategorized attachments
+     (head (vp- (VAR ?v) 
+		(seq -)  ;;  post mods to conjoined VPs is very rare
+		(SEM ?sem) 
+		(constraint ?lf) (tma ?tma)
+		(subjvar ?subjvar)
+		(aux -) (gap ?gap)
+		(ellipsis -)
+		))
+
+     (advbl (particle +) (particle-role-map manner)
+	    (ATYPE POST) (ARGUMENT (% S (sem ?sem) (var ?v) (subjvar ?subjvar)))
+						   (GAP -)
+      ;;(subjvar ?subjvar)   ;Not sure why this was here - maybe for purpose clauses. Leaving it in causes many parses to fail as the SUBJVAR in the new VP is wrecked
+     ;; the SUBJVAR is required in the argument to be able to pass in the subject for things like "the dog walked barking".
+      (ARG ?v) (VAR ?mod)
+      (role ?advrole)
+      (SEM ($ f::abstr-obj (F::type (? !ttt ont::position-reln))))
+      )
+     (add-to-conjunct (val (MANNER ?mod)) (old ?lf) (new ?new))
+     )
+
+    
     ;;  resultative construction using adjectives with transitives: e.g., wipe the table clean
     ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
@@ -522,7 +549,8 @@
 		(ellipsis -)
 		))
      (adjp (ARGUMENT (% NP (sem ?sem))) 
-      (SEM ($ f::abstr-obj (F::type (? ttt ONT::position-reln ont::domain-property))))
+      ;(SEM ($ f::abstr-obj (F::type (? ttt ONT::position-reln ont::domain-property)))) ; not sure why we have position-reln here
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::domain-property)))) 
       (GAP -)
       ;; (subjvar ?subjvar)
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
@@ -552,7 +580,8 @@
 		))
      (adjp (ARGUMENT (% NP (sem ?sem))) 
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ONT::path))))
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::domain-property))))
+      ;(SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::domain-property))))
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::domain-property))))
       (GAP -)
       ;; (subjvar ?subjvar)
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
@@ -582,12 +611,14 @@
 		;;(aux -) 
 		(gap ?gap)
 		(ellipsis -)
+		(result ?asem)
 		))
 
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
 			 (sem ?sem) (var ?npvar)))
       (GAP -)
       ;; (subjvar ?subjvar)
+      (sem ?asem)
       (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln)))) ;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ))))
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
@@ -619,7 +650,7 @@
 		))
 
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
-			 (sem ?sem))) (GAP -)
+			 (sem ?sem))) (GAP -) (particle -)
       ;; (subjvar ?subjvar)
 			 (sem ?asem)
 			 (SEM ($ f::abstr-obj

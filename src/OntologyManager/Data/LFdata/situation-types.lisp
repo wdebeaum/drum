@@ -544,6 +544,7 @@
  :parent ont::touch
  :sem (F::Situation (F::Cause F::Force) )
  :arguments ((:ESSENTIAL ONT::agent)
+             (:OPTIONAL ont::result (F::abstr-obj (F::type (? t ont::position-reln ont::path))))
              )
  )
 

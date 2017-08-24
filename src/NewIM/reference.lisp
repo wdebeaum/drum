@@ -10,7 +10,6 @@
     ;; because we are destructively eliminating candidates in the structures, we don't need to return anything
     (eliminate-unlikely-referents refs)
     (install-referents refs)
-    
     (set-processing-status index 'reference)))
 
 (defun eliminate-unlikely-referents (orig-refs)
@@ -304,9 +303,17 @@
 	 (addressee (if (eq speaker *me*) (channel-conversant *current-channel*) *me*)))
     (mapcar #'(lambda (r)
 		(let ((hyps (find-possible-hyps r n speaker addressee)))
+		  (sort-hyps hyps)
 		  (setf (referent-ref-hyps r) hyps)
 		  r))
 	    refs)))
+
+(defun sort-hyps (orig-hyps)
+  (let ((sorted-hyps (sort orig-hyps #'> :key #' (lambda (x) (getf (ref-hyp-score x) :sem-score )) )) ; sort by sem-score regardless of how far back it is
+	)
+    sorted-hyps
+    )
+  )
 
 (defun find-possible-hyps (ref index speaker addressee)
   "Returns a list REF-HYPs with referential information added"
@@ -882,6 +889,11 @@
   (multiple-value-bind
 	(newsem score)
       (score-sem id ante sem)
+    (if (not (numberp (cadr score)))
+	(setq score (list :sem-score 0))
+      (if (and (eq lf-type 'ont::referential-sem) (not (eq (referent-accessibility ante) 'concrete)))
+	  (setq score (list :sem-score (* (cadr score) 0.9))))
+      )
     (make-ref-hyp  :id id
 		   :lf-type (or (om::more-specific (referent-lf-type ante) (simplify-generic-type lf-type)) lf-type (referent-lf-type ante))
 		   :refers-to (referent-refers-to ante)

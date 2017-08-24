@@ -3,7 +3,7 @@
 ;;; All these are predicates with arguments
 (define-type ONT::predicate
   :parent ONT::abstract-object
-  :comment "predications that require a subcat to form a modifier, typically adverbials (e.g., on, as well as"
+  :comment "predications that require a subcat to form a modifier, typically adverbials (e.g., on, as well as)"
   :sem (F::ABSTR-OBJ (:default (F::GRADABILITY +) (F::scale -) (f::intensity -) (f::orientation -)  (F::CONTAINER -) (f::intentional -)))
   :arguments (;(:ESSENTIAL ONT::OF)
 	      ;(:ESSENTIAL ONT::VAL)
@@ -294,8 +294,10 @@
 (define-type ONT::dimension
  :parent ONT::PREDICATE
  :arguments ((:ESSENTIAL ONT::FIGURE ((? s F::Phys-obj F::situation)))
-             (:REQUIRED ONT::GROUND (F::abstr-obj (f::scale ?!sc)))
-	     (:OPTIONAL ONT::GROUND1 (F::abstr-obj (f::scale ?!sc2)))
+             ;(:REQUIRED ONT::GROUND (F::abstr-obj (f::scale ?!sc)))
+	     ;(:OPTIONAL ONT::GROUND1 (F::abstr-obj (f::scale ?!sc2)))
+             (:REQUIRED ONT::GROUND (F::abstr-obj (f::scale (? sc ont::linear-scale ont::number-scale ont::linear-extent-scale))))
+	     (:OPTIONAL ONT::GROUND1 (F::abstr-obj (f::scale (? sc2 ont::linear-scale ont::number-scale ont::linear-extent-scale))))
              )
  )
 
@@ -330,7 +332,7 @@
 (define-type ONT::by-means-of
  :parent ONT::SITUATION-MODIFIER
  :arguments ((:ESSENTIAL ONT::FIGURE (F::situation (F::type ont::event-of-change))) ;(f::aspect (? asp f::dynamic f::stage-level))))
-             (:REQUIRED ONT::GROUND (F::situation))
+             (:REQUIRED ONT::GROUND (F::situation)) ; how about: "by phone"?
              )
  )
 
@@ -368,7 +370,7 @@
  :arguments ((:ESSENTIAL ONT::FIGURE ((? xxx F::Situation 
 					 F::PHYS-OBJ)))
 	   	     ;; SITUATED-IN shouldn't be used for scales!
-	     (:REQUIRED ONT::GROUND (F::situation (F::type (? t ONT::SITUATION-ROOT))))
+	     (:REQUIRED ONT::GROUND ((? x F::situation) (F::type (? t ONT::SITUATION-ROOT))))
              )
  )
 

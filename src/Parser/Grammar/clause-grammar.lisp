@@ -1080,7 +1080,7 @@
     
      ;; vp rules 
      ;; test: he said the dog barked.
-    ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar)
+    ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar) 
       (var ?v) (class ?c) (gap ?gap) 
       (constraint ?newc)
       (tma ?tma)
@@ -1656,7 +1656,8 @@
     )
 
    
- ;;  test: move up the blocks
+   ;;  test: move up the blocks (i.e., move the blocks up)
+   ;;  push up the window
    ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar) (main +)
       (class ?c) (var ?v) 
      (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
@@ -1676,16 +1677,18 @@
 	   (dobj ?dobj)			(dobj (% ?s3 (var ?dobjvar) (sem ?dobjsem) (case (? dcase obj -)) ))
 	   (comp3 ?comp)		(comp3 (% ?s4 (var ?compvar) (sem ?compsem) (case (? ccase obj -))))
 	   (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
-	   
+	   (result ?asem)
 	   ))
     ;(advbl (particle +) (var ?adv-v)  (arg ?v) (argument (% s (sem ?sem))) (gap -))
     (advbl (particle +) (particle-role-map result) (var ?adv-v) (arg ?dobjvar) 
-     (argument (% np (sem ?dobjsem))) (gap -))
+	   (argument (% np (sem ?dobjsem))) (gap -)
+	   (sem ?asem))
     ?dobj
     ?comp
     )
 
    ;;  test: clean up your room
+   ;;  wash up the dishes
    ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar) (main +)
       (class ?c) (var ?v) 
      (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
@@ -1705,11 +1708,12 @@
 	   (dobj ?dobj)			(dobj (% ?s3 (var ?dobjvar) (sem ?dobjsem) (case (? dcase obj -)) ))
 	   (comp3 ?comp)		(comp3 (% ?s4 (var ?compvar) (sem ?compsem) (case (? ccase obj -))))
 	   (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
-	   
+	   (result ?asem)
 	   ))
     ;(advbl (particle +) (var ?adv-v)  (arg ?v) (argument (% s (sem ?sem))) (gap -))
     (advbl (particle +) (particle-role-map manner) (var ?adv-v) (arg ?v) 
-     (argument (% s (sem ?sem))) (gap -))
+	   (argument (% s (sem ?sem))) (gap -)
+	   (sem ?asem))
     ?dobj
     ?comp
     )
@@ -2590,11 +2594,11 @@
     ;; test: who did you see?
     ;; test: who did you see at the store?
     ;; test: whose dog did you see at the store?
-    ((s (stype whq) (subjvar ?subjvar) (dobjvar ?dobjvar) (subj ?subj)
+    ((s (stype whq) (subjvar ?subjvar) (dobjvar ?dobjvar) (subj ?subj) (sem ?sem)
       (qtype q) (lf ?lf) (var ?v))
      -wh-q2>
      (np (var ?npvar) (sem ?npsem) (wh q) (agr ?a) (case ?case))
-     (head (s (stype ynq) (lf ?lf) (var ?v) 
+     (head (s (stype ynq) (lf ?lf) (var ?v) (sem ?sem)
 	    (advbl-needed -)
 	    (subj ?subj)
 	    (subjvar ?subjvar) (dobjvar ?dobjvar)

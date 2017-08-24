@@ -691,6 +691,7 @@
 (define-type ONT::information
  :wordnet-sense-keys ("information%1:10:00" "info%1:10:00" "indication%1:10:00")
  :parent ONT::information-function-object
+ :arguments ((:optional ONT::formal (F::prop))) ; copied from ONT::MESSAGE
  )
 
 ;; create an ont::communication-object
