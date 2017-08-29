@@ -20,12 +20,18 @@ bbe	Branchiostoma belcheri
 bcy	Bruguiera cylindrica
 bdi	Brachypodium distachyon
 bfl	Branchiostoma floridae
+bfv	Bovine foamy virus
 bgy	Bruguiera gymnorhiza
+bhv1	Bovine herpesvirus 1
+bhv5	Bovine herpesvirus 5
 bkv	BK polyomavirus
+blv	Bovine leukemia virus
 bma	Brugia malayi
 bmo	Bombyx mori
 bna	Brassica napus
 bol	Brassica oleracea
+bpcv1	Bandicoot papillomatosis carcinomatosis virus type 1
+bpcv2	Bandicoot papillomatosis carcinomatosis virus type 2
 bra	Brassica rapa
 bta	Bos taurus
 cbn	Caenorhabditis brenneri
@@ -53,6 +59,7 @@ ctr	Citrus trifoliata
 dan	Drosophila ananassae
 ddi	Dictyostelium discoideum
 der	Drosophila erecta
+dev	Duck enteritis virus
 dgr	Drosophila grimshawi
 dme	Drosophila melanogaster
 dmo	Drosophila mojavensis
@@ -66,6 +73,7 @@ dsi	Drosophila simulans
 dvi	Drosophila virilis
 dwi	Drosophila willistoni
 dya	Drosophila yakuba
+ebv	Epstein Barr virus
 eca	Equus caballus
 efu	Eptesicus fuscus
 egr	Echinococcus granulosus
@@ -87,22 +95,31 @@ gso	Glycine soja
 han	Helianthus annuus
 har	Helianthus argophyllus
 hbr	Hevea brasiliensis
+hbv	Herpes B virus
 hci	Helianthus ciliaris
 hcmv	Human cytomegalovirus
 hco	Haemonchus contortus
 hex	Helianthus exilis
 hhi	Hippoglossus hippoglossus
+hhv6b	Human herpesvirus 6B
+hiv1	Human immunodeficiency virus 1
 hma	Hydra magnipapillata
 hme	Heliconius melpomene
 hpa	Helianthus paradoxus
 hpe	Helianthus petiolaris
 hru	Haliotis rufescens
 hsa	Homo sapiens
+hsv1	Herpes Simplex Virus 1
+hsv2	Herpes Simplex Virus 2
 htu	Helianthus tuberosus
+hvsa	Herpesvirus saimiri strain A11
+hvt	Herpesvirus of turkeys
 hvu	Hordeum vulgare
+iltv	Infectious laryngotracheitis virus
 ipu	Ictalurus punctatus
 isc	Ixodes scapularis
 jcv	JC polyomavirus
+kshv	Kaposi sarcoma-associated herpesvirus
 lca	Lemur catta
 lco	Leucosolenia complicata
 lgi	Lottia gigantea
@@ -112,10 +129,14 @@ lmi	Locusta migratoria
 lus	Linum usitatissimum
 lva	Lytechinus variegatus
 mcmv	Mouse cytomegalovirus
+mcv	Merkel cell polyomavirus
 mdm	Malus domestica
 mdo	Monodelphis domestica
+mdv1	Mareks disease virus
+mdv2	Mareks disease virus type 2
 mes	Manihot esculenta
 meu	Macropus eugenii
+mghv	Mouse gammaherpesvirus 68
 mja	Marsupenaeus japonicus
 mml	Macaca mulatta
 mmu	Mus musculus
@@ -163,6 +184,7 @@ rgl	Rehmannia glutinosa
 rlcv	Rhesus lymphocryptovirus
 rmi	Rhipicephalus microplus
 rno	Rattus norvegicus
+rrv	Rhesus monkey rhadinovirus
 sbi	Sorghum bicolor
 sci	Sycon ciliatum
 sha	Sarcophilus harrisii
@@ -179,9 +201,11 @@ spu	Strongylocentrotus purpuratus
 ssa	Salmo salar
 ssc	Sus scrofa
 ssl	Salvia sclarea
+ssp	Saccharum sp.
 ssy	Symphalangus syndactylus
 str	Strongyloides ratti
 stu	Solanum tuberosum
+sv40	Simian virus 40
 tae	Triticum aestivum
 tca	Tribolium castaneum
 tcc	Theobroma cacao
