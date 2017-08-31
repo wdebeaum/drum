@@ -47,9 +47,13 @@ install.sh:: $(PROGS)
 	$(MKINSTALLDIRS) $(bindir)
 	$(INSTALL_PROGRAM) $(PROGS) $(bindir)
 
-install:: $(PROGS)
+install:: $(PROGS) install-configs
 	$(MKINSTALLDIRS) $(bindir)
 	$(INSTALL_PROGRAM) $(PROGS) $(bindir)
+
+install-configs:: params*.lisp
+	$(MKINSTALLDIRS) $(etcdir)/$(NAME)/
+	$(INSTALL_DATA) $^ $(etcdir)/$(NAME)/
 
 clean::
 	rm -f $(PROGS)

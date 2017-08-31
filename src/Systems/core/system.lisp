@@ -79,6 +79,21 @@ DEF-TRIPS-SYSTEM."
 	 (dfc:load-component name)))
       )))
 
+(defun load-trips-parameters (&optional (name (caar trips::*trips-systems*)))
+  "Load parameters from $TRIPS_BASE/etc/trips-$name/params.lisp, or
+   $TRIPS_PARAMS_LISP if it's set (but only if the file exists)."
+  (let ((params 
+	  (or (trips:get-env "TRIPS_PARAMS_LISP")
+	      (trips::make-trips-pathname
+		  (format nil "etc;trips-~(~a~);params.lisp" name)))))
+    (cond
+      ((probe-file params)
+	(format *trace-output* "~&;; loading parameters from ~S~%" params)
+	(load params))
+      (t
+	(format *trace-output* "~&;; NOT loading parameters from ~S (file does not exist)~%" params))
+      )))
+
 (defun run-trips-system (&optional (name (caar trips::*trips-systems*)))
   "Run the TRIPS system whose definition is named NAME.
 The default is to run the first (usually the only) system defined by
@@ -86,6 +101,7 @@ DEF-TRIPS-SYSTEM."
   (let ((definition (cdr (assoc name *trips-systems*))))
     (when (null definition)
       (error "No TRIPS system with name ~S" name))
+    (load-trips-parameters name)
     (loop for def in definition
 	  do (run-trips-component def)
 	  ;; Short sleep apparently useful for something
