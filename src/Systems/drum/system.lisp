@@ -22,10 +22,6 @@
   (nconc (assoc :drum trips::*trips-systems*)
 	 (list '(:dfc-component :webparser #!TRIPS"src;WebParser;"))))
 
-;; This bogosity semi-approved by George
-(defpackage :wordfinder)
-(setq wordfinder::*use-wordfinder* t)
-
 ;; Now load the system
 (trips:load-trips-system)
 ;; ... and files that aren't part of a component
