@@ -111,7 +111,7 @@
 (setq im::*allow-optional-lfs* t) ;; set to t for optional term matching
 (setq im::*output-format* 'im::lf-term)
 
-(setq im::*symbol-map* nil)
+;(setq im::*symbol-map* nil)
 
 
 ;; this looks obsolete
