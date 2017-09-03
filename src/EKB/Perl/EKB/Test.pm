@@ -1,6 +1,6 @@
 # Test.pm
 #
-# Time-stamp: <Sat Jun 24 22:59:27 CDT 2017 lgalescu>
+# Time-stamp: <Wed Aug 16 18:42:21 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Jun 2016
 #
@@ -431,6 +431,9 @@ sub set_test_data {
   # get text
   my ($first_para) = $ekb->get_paragraphs();
   my $text = $first_para->textContent;
+  # add \n at the end if it's not there already
+  chomp $text;
+  $text .= "\n";
   # set new EKB id
   $ekb->set_attr('id', $tname);
   # normalize EKB
