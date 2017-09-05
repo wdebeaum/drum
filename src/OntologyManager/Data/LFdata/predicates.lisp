@@ -36,7 +36,7 @@
 
 (define-type ONT::situation-object-modifier
  :parent ONT::PREDICATE
- :sem (F::ABSTR-OBJ (:default (F::GRADABILITY +) (F::scale ont::other-scale) (f::intensity ont::hi)))
+ :sem (F::ABSTR-OBJ) ;(:default (F::GRADABILITY +) (F::scale ont::other-scale) (f::intensity ont::hi))) ; this was probably for phys-modifier (which has been moved out)
  :arguments ((:ESSENTIAL ONT::FIGURE ((? tt F::PHYS-OBJ F::situation)))
              )
  )

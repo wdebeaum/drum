@@ -8,7 +8,7 @@
    (SENSES
     ((EXAMPLE "disable all alerting")
      (LF-PARENT ont::disable)
-     (templ agent-effect-xp-templ)
+     (templ agent-theme-xp-templ)
      (SEM (F::Aspect F::bounded) (F::time-span F::atomic))
      )
      ((EXAMPLE "disable the alarm")

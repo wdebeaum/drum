@@ -3110,8 +3110,8 @@
      -how-much>
      (word (lex how))
      (head (quan (sem ?def) (LF ?lf) (MASS MASS) (AGR ?a) (VAR ?v) (lex MUCH))))
-        
- #||   ;; VPs as gerund-NPS
+
+    ;; VPs as gerund-NPS
     ((NP (SORT PRED)
          (gap -) (var ?v) (agr 3s)
          (sem ?sem) (mass mass) (gerund +) (class ?class)
@@ -3122,12 +3122,14 @@
                 (sem ?sem) (transform ?transform)
                 ))
 	 )
-     -gerund> ;;.97
+     -gerund> .97 ;;.97
      (head (vp (vform ing) (var ?v) (gap -) (aux -)
                (sem ?sem) 
 	       (class ?class)  (constraint ?con)  (transform ?transform)
 	       ))
-     )||#
+     )
+
+    
 #||   THis is replace by new nominlaization handling
     ((NP (SORT PRED)
       (gap -) (var ?v) (agr 3s)

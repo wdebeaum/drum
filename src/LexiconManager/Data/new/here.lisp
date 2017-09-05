@@ -6,11 +6,12 @@
  :tags (:base500)
  :words (
   (W::HERE
-   (wordfeats (W::ATYPE (? atype W::pre-vp W::post w::pre-vp)))
+   ;(wordfeats (W::ATYPE (? atype W::pre-vp W::post w::pre-vp)))
    (SENSES
     ((LF-PARENT ONT::pos-wrt-speaker-reln)
-     (SYNTAX (W::IMPRO-CLASS ONT::place)
-     ))
+     (SYNTAX (W::IMPRO-CLASS ONT::place))
+     (TEMPL pred-s-vp-templ)
+     )
      )
    )
 ))

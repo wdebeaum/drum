@@ -6,6 +6,10 @@
 	'(
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+	  ;;;;;;;;;;;;;;;;;;;
+	  ;;;; result rules
+	  ;;;;;;;;;;;;;;;;;;;
+	  
 	  ; RAS converts GTP into/to GDP. 
 	  ((ONT::EVENT ?ev ?type :RESULT ?!res)
 	   (ONT::F ?!res (? type1 ont::goal-reln ont::resulting-object) :GROUND ?!res1)  ; resulting-state is in goal-reln
@@ -53,6 +57,18 @@ ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ ))
 	   (ONT::EVENT ?ev ?type
 	    :rule -result3
 	    :RES ?!res1
+	    )
+          )
+
+	  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+	  ; Ras has no effect on Raf.
+	  ((ONT::EVENT ?ev ?type :QUAN ONT::NONE)
+	   -quan-none>
+           100
+	   (ONT::EVENT ?ev ?type
+	    :rule -quan-none>
+	    :negation + 
 	    )
           )
 	  
