@@ -878,10 +878,13 @@
   (let ((lf-type (simplify-generic-type (or lf-type1 (third lf))))
 	(id (second lf))
 	)
+    (score-and-build-hyp id lf-type ante nil)
+    #|
     (make-ref-hyp  :id id
 		   :lf-type (or (om::more-specific (referent-lf-type ante) lf-type) (referent-lf-type ante) lf-type)
 		   :refers-to (referent-refers-to ante)
 		   :coref (or (referent-coref ante) (referent-id ante)))
+    |#
     ))
 
 (defun score-and-build-hyp (id lf-type ante sem)
@@ -891,8 +894,9 @@
       (score-sem id ante sem)
     (if (not (numberp (cadr score)))
 	(setq score (list :sem-score 0))
-      (if (and (eq lf-type 'ont::referential-sem) (not (eq (referent-accessibility ante) 'concrete)))
-	  (setq score (list :sem-score (* (cadr score) 0.9))))
+        (if (and (eq lf-type 'ont::referential-sem) (not (eq (referent-accessibility ante) 'concrete)))
+	    (setq score (list :sem-score (* (cadr score) 0.9)))
+	  )
       )
     (make-ref-hyp  :id id
 		   :lf-type (or (om::more-specific (referent-lf-type ante) (simplify-generic-type lf-type)) lf-type (referent-lf-type ante))
