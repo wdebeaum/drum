@@ -31,9 +31,8 @@ for beam_width in 10 20 30 ; do
 	  parser::*skeleton-boost-factor* $skeleton_boost_factor
 	  (parser::barrier-penalty parser::*chart*) $barrier_penalty
 	  )
-	(test-whole-file "$TRIPS_BASE/etc/Data/dryrun1412/dr1_model1_p1.txt")
-	(test-whole-file "$TRIPS_BASE/etc/Data/dryrun1412/dr1_model1_p2.txt")
-	(test-whole-file "$TRIPS_BASE/etc/Data/dryrun1412/dr1_model2_p1.txt")
+	;; example for how to run a text file through	
+	;;(test-whole-file "$TRIPS_BASE/etc/Data/dryrun1412/dr1_model1_p1.txt")
 EOLISP
       
       # start the new job
