@@ -47,6 +47,7 @@ nouser=''
 nogui=''
 cache=''
 data_dir="${TRIPS_BASE}/etc/Data"
+stop_after=30
 
 while test ! -z "$1"; do
     case "$1" in
@@ -64,6 +65,7 @@ while test ! -z "$1"; do
 	-nolisp)	nolisp=t;;
 	-graphviz-display)	graphviz_display="$2";	shift;;
 	-batch)		batch="$2";	shift;;
+	-stop-after)	stop_after="$2";	shift;;
 	-help|-h|-\?)
 	    echo "usage: $usage"
 	    exit 0;;
@@ -199,15 +201,17 @@ if test -z "$nolisp"; then
       )" \
     ) 2>&1 |tee lisp.log &
     # kill whole session when facilitator.log hasn't been touched in the last
-    # 30s
+    # #stop_after secs
     ( touch $logdir/exit-test-timestamp ; \
-      sleep 30 ; \
+      delay=`expr 90 + 20 + $stop_after` ; \
+      sleep $delay ; \
       while test $logdir/facilitator.log -nt $logdir/exit-test-timestamp ; do \
 	echo "pid $self_pid still going" ; \
 	touch $logdir/exit-test-timestamp ; \
-	sleep 30 ; \
+	delay=$stop_after ; \
+	sleep $delay ; \
       done ; \
-      echo "pid $self_pid dying because facilitator.log wasn't touched for 30s" ; \
+      echo "pid $self_pid dying because facilitator.log wasn't touched for ${delay}s" ; \
       kill $self_pid \
     ) &
   fi
