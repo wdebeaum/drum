@@ -494,6 +494,9 @@ sub combine_tags_for_span {
       $tag_prototype{text} = $old_tag->{text};
     }
   }
+  # keep only the alternate spellings that are actually different from input
+  @$alternate_spellings =
+    grep { $_ ne $tag_prototype{lex} } @$alternate_spellings;
 
   # partition @old_tags into the following categories:
   my @old_pos_tags; # have only penn-pos

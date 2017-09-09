@@ -129,7 +129,8 @@ sub handle_parameters {
     " [-terms-file <filename>]" .
     " [-xml-tags keep|remove|replace-with-spaces]" .
     " [-xml-input-rules-file <filename>]" .
-    " [-parsers-must-agree <boolean>]";
+    " [-parsers-must-agree <boolean>]" .
+    " [-aspell-dict <filename>]";
   # defaults
   $self->{remote_meta_map} = get_remote_meta_map('t');
   $self->{meta_map_sources} = [@all_meta_map_sources];
@@ -295,6 +296,11 @@ sub handle_parameters {
       $self->{parsers_must_agree} = TripsModule::boolean_opt($opt, shift @argv);
     } elsif ($opt eq '-use-wordfinder') {
       $self->{use_wordfinder} = TripsModule::boolean_opt($opt, shift @argv);
+    } elsif ($opt eq '-aspell-dict') {
+      my $aspell_dict = shift @argv;
+      die "Argument required for -aspell-dict"
+        if (not defined($aspell_dict));
+      $self->{aspell_dict} = $aspell_dict;
     } elsif ($opt eq '') {
       # ignore (we get this from a bug in bash 3.2)
     } else {
@@ -1124,6 +1130,13 @@ sub receive_request
 	  $self->{parsers_must_agree} = TripsModule::boolean_opt($keyword, $value);
 	} elsif ($keyword eq ':use-wordfinder') {
 	  $self->{use_wordfinder} = TripsModule::boolean_opt($keyword, $value);
+	} elsif ($keyword eq ':aspell-dict') {
+	  if ($value =~ /^nil$/i) {
+	    $value = undef;
+	  } elsif (KQML::KQMLAtomIsString($value)) {
+	    $value = KQML::KQMLStringAtomAsPerlString($value);
+	  }
+	  $self->{aspell_dict} = $value;
 	} else {
 	  die "Unknown parameter: $keyword";
 	}
@@ -1168,7 +1181,11 @@ sub receive_request
 	':parsers-must-agree',
 	  ($self->{parsers_must_agree} ? 't' : 'nil'),
 	':use-wordfinder',
-	  ($self->{use_wordfinder} ? 't' : 'nil')
+	  ($self->{use_wordfinder} ? 't' : 'nil'),
+	':aspell-dict',
+	  ($self->{aspell_dict} ?
+	    '"' . escape_for_quotes($self->{aspell_dict}) . '"'
+	    : 'nil')
       ]]);
     } elsif ($content->{verb} eq 'init') {
       die "'init' request is missing a :taggers list"

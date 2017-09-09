@@ -171,6 +171,7 @@ the file, with dashes. No need to unpack it.</li>
 <li>A C compiler (e.g. <a href="http://gcc.gnu.org">GCC</a>) (used for the Terms tagger)</li>
 <li><a href="http://www.gnu.org/software/make/">GNU Make</a> (other versions of make might work too)</li>
 <li><a href="http://www.gnu.org/software/bash/">Bash</a></li>
+<li><a href="http://aspell.net/">GNU Aspell</a> (used for the Misspellings tagger)</li>
 <li>Other common UNIX tools like cut, sort, uniq, iconv, unzip, etc.</li>
 <li>Other parts of TRIPS, including KQML, TripsModule, and the Facilitator. TextTagger also makes symlinks to a couple of Perl libraries that live in TextPP.</li>
 </ul>
@@ -352,6 +353,12 @@ TextTagger.)</p>
 <p>Specify the minimum length of a sentence for which TextTagger will output phrase tags (<code>prefer</code> messages) within the sentence. Sentence length is measured in number of tokens (contiguous strings of non-space characters). If there are no sentence tags, the whole input is taken to be one sentence. Note that sentence tags themselves may still generate <code>prefer</code> messages.</p>
 </div>
 
+<div class="section">
+<h4>-aspell-dict</h4>
+<p><code>-aspell-dict <var>filename</var></code></p>
+<p>Specify the dictionary file that the Misspellings tagger will pass to <a href="http://aspell.net/">GNU Aspell</a> in its <code>--master</code> argument. By default the argument isn't passed, so aspell will use its default dictionary.</p>
+</div>
+
 </div>
 
 <div class="section">
@@ -370,7 +377,7 @@ TextTagger.)</p>
   :reply-with test123)
 (reply :sender TextTagger :receiver test :in-reply-to test123 :content (ok))
 </samp></blockquote>
-<p>TextTagger does not subscribe for this request, so you must specify <code>:receiver TextTagger</code> explicitly (other modules might have their own parameters to set). <code>:default-type</code>, <code>:process-input-utterances</code>, <code>:meta-map-sources</code>, <code>:drum-species</code>, <code>:no-sense-words</code>, <code>:senses-only-for-penn-poss</code>, <code>:xml-tags</code>, <code>:parsers-must-agree</code>, <code>:use-wordfinder</code>, and <code>:min-sentence-length-for-phrases</code> can be set at runtime. <code>-init-taggers</code> cannot be set using <code>set-parameters</code>; use <code>init</code> and <code>fini</code> messages for that (see <a href="#sec-3.3.">below</a>). <code>:remote-meta-map</code>, <code>:names-file</code>, <code>:terms-file</code>, and <code>:xml-input-rules-file</code> can be set, but don't take effect until the related taggers (meta-map, names-from-file, terms-from-file, and xml-input, respectively) are re-initialized (using <code>re-init</code> or <code>fini</code> and <code>init</code>).</p>
+<p>TextTagger does not subscribe for this request, so you must specify <code>:receiver TextTagger</code> explicitly (other modules might have their own parameters to set). <code>:default-type</code>, <code>:process-input-utterances</code>, <code>:meta-map-sources</code>, <code>:drum-species</code>, <code>:no-sense-words</code>, <code>:senses-only-for-penn-poss</code>, <code>:xml-tags</code>, <code>:parsers-must-agree</code>, <code>:use-wordfinder</code>, and <code>:min-sentence-length-for-phrases</code> can be set at runtime. <code>-init-taggers</code> cannot be set using <code>set-parameters</code>; use <code>init</code> and <code>fini</code> messages for that (see <a href="#sec-3.3.">below</a>). <code>:remote-meta-map</code>, <code>:names-file</code>, <code>:terms-file</code>, <code>:xml-input-rules-file</code>, and <code>:aspell-dict</code> can be set, but don't take effect until the related taggers (meta-map, names-from-file, terms-from-file, xml-input, and misspellings, respectively) are re-initialized (using <code>re-init</code> or <code>fini</code> and <code>init</code>).</p>
 <p>You can also get the current runtime values of all parameters (including the currently initialized taggers) using the <code>get-parameters</code> request, for example:</p>
 <blockquote><samp>
 (request :receiver TextTagger :content (get-parameters) :sender test :reply-with test456)
@@ -390,6 +397,7 @@ TextTagger.)</p>
     :xml-input-rules-file nil
     :parsers-must-agree nil
     :use-wordfinder t
+    :aspell-dict nil
     ))
 </samp></blockquote>
 </div>
@@ -1007,6 +1015,12 @@ finding a PTY to run Minipar on. Also note that you can't use this tagger with
 <a href="#sec-3.9."><code>text-to-lattice-test.pl</code></a>, since it requires
 a real KQML connection to talk to the Minipar TRIPS module.</td>
 </tr><tr>
+<td>Misspellings</td>
+<td>alternate-spelling, subword</td>
+<td>X</td>
+<td></td>
+<td>Uses <a href="http://aspell.net/">GNU Aspell</a> to correct misspellings. Sometimes aspell will split words; in that case this tagger also outputs subword tags. See <a href="#sec-3.1.18.">-aspell-dict</a>.</td>
+</tr><tr>
 <td>Music</td>
 <td>sense</td>
 <td></td>
@@ -1178,7 +1192,7 @@ foo BarBaz don't 123,456 12EA56
 <p>This is simply a reverse-lookup table for the above table, except that the input taggers (Input, TermsFromFile, TermsInput, and XMLInput) are omitted.</p>
 <table>
 <tr><th>Tag type</th><th>Tagger(s)</th></tr>
-<tr><td>alternate-spelling</td><td>AlternateSpellings, Asma, VariantLists</td></tr>
+<tr><td>alternate-spelling</td><td>AlternateSpellings, Asma, Misspellings, VariantLists</td></tr>
 <tr><td>clause</td><td>CJParser, Clauses, Enju, StanfordCoreNLP, StanfordParser</td></tr>
 <tr><td>ending</td><td>Words</td></tr>
 <tr><td>named-entity</td>
@@ -1195,7 +1209,7 @@ foo BarBaz don't 123,456 12EA56
 <tr><td>spaced-chunk</td><td>SpacedChunks</td></tr>
 <tr><td>street-address</td><td>StreetAddresses</td></tr>
 <tr><td>subnumber</td><td>Words</td></tr>
-<tr><td>subword</td><td>Affixes, Words</td></tr>
+<tr><td>subword</td><td>Affixes, Misspellings, Words</td></tr>
 <tr><td>word</td><td>Gold, StanfordCoreNLP, Words</td></tr>
 </table>
 </div>

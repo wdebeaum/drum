@@ -3934,7 +3934,7 @@
   :SEM (F::SITUATION (f::Aspect F::Dynamic))
   :arguments
   ((:required ONT::AGENT (f::Phys-obj (f::intentional +)))
-   (:required ONT::affected (f::Phys-obj (f::Origin F::Artifact)))
+   (:required ONT::affected (f::Phys-obj))
    )
   )
 
@@ -4035,7 +4035,6 @@
  :parent ONT::change-state-action
  :sem (F::Situation (F::Cause F::Agentive) (F::Trajectory -))
  )
-
 
 (define-type ont::shower
     :wordnet-sense-keys ("shower%1:04:00"  )

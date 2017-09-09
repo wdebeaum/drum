@@ -13,7 +13,8 @@
  ; like spray
      )
     ((meta-data :origin caet :entry-date 20110114 :change-date nil :comments nil :vn ("spray-9.7-1"))
-     (LF-PARENT ONT::cause-cover)
+     ;(LF-PARENT ONT::cause-cover)
+     (LF-PARENT ONT::apply-on-surface)
      (example "the paint smeared on the wall")
      (templ affected-templ)
      )

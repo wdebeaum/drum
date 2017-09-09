@@ -60,3 +60,5 @@ push @TextTagger::taggers, {
   input_types => [qw(word subword)]
 };
 
+1;
+

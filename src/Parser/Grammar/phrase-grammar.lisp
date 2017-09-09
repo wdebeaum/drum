@@ -5241,7 +5241,7 @@
 		    (constraint ?con)
 		    (sem ?s)
 		    ))
-	  (postadvbl +)
+	  (postadvbl +) (headless +)
 	  )
 	 -NP-missing-head-mod-plur> .96
 	 (head (spec  (poss -) (restr ?restr) ;;(SUBCAT (% ?x (SEM ?s)))
@@ -5249,7 +5249,7 @@
 		;;(postadvbl +)
 		)) ;; (NObareSpec -)))
 	 (CARDINALITY (var ?card) (AGR 3p))
-         (PRED (LF ?l1) (ARG *) ;;SORT SETTING) 
+         (PRED (LF ?l1) (ARG ?v) ;(ARG *) ;;SORT SETTING) 
 	       (var ?advvar) (ARGUMENT (% NP (sem ?s))))
 	 (append-conjuncts (conj1 (& (size ?card) (mods ?advvar))) (conj2 ?restr) (new ?con))
 	 )
@@ -5285,9 +5285,10 @@
 	 -NP-missing-head-number> .96
 	 (head (spec  (poss -) (restr ?restr)
                       (lf ?spec) (arg ?v) (agr |3P|) (var ?v)))
-	 (ADJP (LF ?l1) (ARG *) (set-modifier -)
+	 (ADJP (LF ?l1) (ARG ?v) ;(ARG *)
+	       (set-modifier -)
 	  (var ?advvar) (ARGUMENT (% NP (sem ?s))))
-	 (cardinality (var ?card))
+	 (cardinality (var ?card) (agr |3P|))
 	 (append-conjuncts (conj1 (& (size ?card) (mods ?advvar))) (conj2 ?restr) (new ?con))
 	 )
 
@@ -5302,7 +5303,7 @@
 	  (postadvbl +)
 	  )
 	 -NP-missing-head-number-more> .96
-	 (head (cardinality (var ?card) (VAR ?v)))
+	 (head (cardinality (var ?card))) ;(VAR ?v)))
 	 (quan (CARDINALITY -) (SEM ?sem) (VAR ?v) (agr ?agr) (comparative ?cmp) (QOF ?qof) (QCOMP ?Qcomp)
 		 (MASS count) (Nobarespec ?nbs) (NoSimple ?ns) (npmod ?npm) (negation ?neg)
 		 (LF ?s))
@@ -5312,7 +5313,7 @@
 
 
 	;;  The green two in the corner, the largest three of the houses, ...
-	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?s) (case (? case SUB OBJ))
+	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?s) (case (? case SUB OBJ)) (headless +)
 	     (lf (% description (status ?spec) (var ?v) (sort SET)
 		    (Class ont::Any-sem) 
 		    (constraint ?con)
@@ -5323,10 +5324,10 @@
 	 -NP-missing-head-number-mod> .96
 	 (head (spec  (poss -) (restr ?restr)
                       (lf ?spec) (arg ?v) (agr |3P|) (var ?v)))
-	 (ADJP (ARG *) 
+	 (ADJP (ARG ?v) ;(ARG *) 
 	  (var ?advvar1) (ARGUMENT (% NP (sem ?s))))
-	 (cardinality (var ?card))
-	 (PRED (ARG *) 
+	 (cardinality (var ?card) (agr |3P|))
+	 (PRED (ARG ?v) ;(ARG *) 
 	  (var ?advvar2) (ARGUMENT (% NP (sem ?s))))
 	 (append-conjuncts (conj1 (& (size ?card) (mods (?advvar1 ?advvar2)))) (conj2 ?restr) (new ?con))
 	 )

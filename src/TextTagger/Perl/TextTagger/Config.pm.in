@@ -34,6 +34,9 @@ $BIOMODEL_HOME = $ENV{TEXTTAGGER_biomodel};
 # for Enju.pm
 $ENJU = $ENV{TEXTTAGGER_enju};
 
+# for Misspellings.pm
+$ASPELL = $ENV{TEXTTAGGER_aspell};
+
 =nontaggers
 these are listed here so that make-config-dot-pm.pl will check them out if
 they're not already present
@@ -75,6 +78,7 @@ use TextTagger::Drum;
 use TextTagger::Enju;
 use TextTagger::MetaMap;
 use TextTagger::Minipar;
+use TextTagger::Misspellings;
 use TextTagger::Music;
 use TextTagger::NamedEntities;
 use TextTagger::NamesFromFile;

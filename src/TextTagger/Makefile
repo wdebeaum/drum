@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.100 2017/07/31 14:41:25 wdebeaum Exp $
+# $Id: Makefile,v 1.103 2017/09/08 20:29:30 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -17,7 +17,7 @@ SUBDIRS = Perl StanfordNER StanfordPOSTagger StanfordParser StanfordCoreNLP Extr
 CONFIGDIR=../config
 include $(CONFIGDIR)/perl/prog.mk
 include $(CONFIGDIR)/TextTagger/defs.mk
-export TEXTTAGGER_umls TEXTTAGGER_semgroups TEXTTAGGER_metamap TEXTTAGGER_cj_parser TEXTTAGGER_biomodel TEXTTAGGER_corenlp TEXTTAGGER_enju
+export TEXTTAGGER_umls TEXTTAGGER_semgroups TEXTTAGGER_metamap TEXTTAGGER_cj_parser TEXTTAGGER_biomodel TEXTTAGGER_corenlp TEXTTAGGER_enju TEXTTAGGER_aspell
 
 # functions for downloading data files automatically (mostly in DRUM system)
 download=mkdir -p downloads ; cd downloads ; curl -O -L $(1)
@@ -245,6 +245,28 @@ hlsm-terms.tsv: get-hlsm-terms.pl downloads/small_molecule.csv
 
 specialist.tsv: get-specialist-tsv.pl downloads/LEXICON downloads/inflection.table $(prefix)/src/LexiconManager/Data/new
 	TRIPS_BASE=$(prefix) ./get-specialist-tsv.pl downloads/LEXICON downloads/inflection.table >$@
+
+# for BOB system
+ifneq (,$(wildcard Perl/TextTagger/Misspellings.pm))
+
+ifeq (,$(TEXTTAGGER_aspell))
+$(error aspell not configured)
+endif
+
+all:: specialist.aspell
+
+install:: specialist.aspell
+	$(INSTALL_DATA) specialist.aspell $(etcdir)/$(MODULE)
+
+specialist.aspell: downloads/inflection.table
+	cut -d'|' -f1 <$< |perl -CSD -p -e 's/\W+/\n/g;' |sort |uniq \
+	|$(TEXTTAGGER_aspell) --encoding=utf-8 --lang=en create master ./$@ \
+	2>specialist.aspell.err
+
+clean::
+	rm -rf specialist.aspell specialist.aspell.err
+
+endif
 
 downloads/bioentities.obo:
 	$(call download_compressed,"https://raw.githubusercontent.com/sorgerlab/bioentities/master/export/bioentities.obo")
