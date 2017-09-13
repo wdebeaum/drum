@@ -3,7 +3,7 @@
 package TextTagger::WordNet;
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT_OK = qw(init_word_net_tagger tag_word_net_words);
+@EXPORT_OK = qw(init_word_net_tagger tag_word_net_words fini_word_net_tagger);
 
 use IPC::Open2;
 
@@ -19,6 +19,12 @@ sub init_word_net_tagger {
                      $ENV{TRIPS_BASE} . "/etc/TextTagger/wn-multiwords.tsv");
   binmode $terms_in, ':utf8';
   binmode $terms_out, ':utf8';
+}
+
+sub fini_word_net_tagger {
+  close($terms_in);
+  close($terms_out);
+  waitpid $terms_pid, 0;
 }
 
 sub tag_word_net_words {
@@ -58,6 +64,7 @@ push @TextTagger::taggers, {
   name => "word_net",
   init_function => \&init_word_net_tagger,
   tag_function => \&tag_word_net_words,
+  fini_function => \&fini_word_net_tagger,
   output_types => ['sense'],
   input_text => 1
 };

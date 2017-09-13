@@ -3,7 +3,7 @@
 package TextTagger::Terms;
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT_OK = qw(init_term_tagger ready_term_tagger tag_terms);
+@EXPORT_OK = qw(init_term_tagger ready_term_tagger tag_terms fini_term_tagger);
 
 use IPC::Open2;
 
@@ -20,6 +20,12 @@ sub init_term_tagger
                      $ENV{TRIPS_BASE} . "/etc/TextTagger/terms.txt");
   binmode $terms_in, ':utf8';
   binmode $terms_out, ':utf8';
+}
+
+sub fini_term_tagger {
+  close($terms_in);
+  close($terms_out);
+  waitpid $terms_pid, 0;
 }
 
 sub ready_term_tagger
@@ -61,6 +67,7 @@ push @TextTagger::taggers, {
   init_function => \&init_term_tagger,
   ready_function => \&ready_term_tagger,
   tag_function => \&tag_terms,
+  fini_function => \&fini_term_tagger,
   output_types => ['named-entity'],
   input_text => 1
 };

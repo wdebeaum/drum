@@ -1,7 +1,7 @@
 package TextTagger::StanfordCoreNLP;
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT_OK = qw(init_stanford_core_nlp ready_stanford_core_nlp run_stanford_core_nlp $debug);
+@EXPORT_OK = qw(init_stanford_core_nlp ready_stanford_core_nlp run_stanford_core_nlp fini_stanford_core_nlp $debug);
 
 use IPC::Open2;
 use Data::Dumper;
@@ -36,6 +36,12 @@ sub init_stanford_core_nlp {
   $stanford_pid = open2($stanford_in, $stanford_out, $ENV{TRIPS_BASE} . "/bin/CoreNLPFilter", '-annotators', 'tokenize,ssplit,pos,lemma,ner,parse'); # no dcoref
   binmode $stanford_in, ':utf8';
   binmode $stanford_out, ':utf8';
+}
+
+sub fini_stanford_core_nlp {
+  close($stanford_in);
+  close($stanford_out);
+  waitpid $stanford_pid, 0;
 }
 
 sub ready_stanford_core_nlp {
@@ -224,6 +230,7 @@ push @TextTagger::taggers, {
   init_function => \&init_stanford_core_nlp,
   ready_function => \&ready_stanford_core_nlp,
   tag_function => \&run_stanford_core_nlp,
+  fini_function => \&fini_stanford_core_nlp,
   output_types => [qw(word punctuation pos phrase named-entity clause sentence)],
   input_text => 1,
   optional_input_types => [qw(sentence)]

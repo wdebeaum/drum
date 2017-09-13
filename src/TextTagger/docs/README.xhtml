@@ -763,7 +763,7 @@ fake KQML message using <code>receive_request</code>. The taggers in the <a href
 <dt><code>:ont-types</code></dt>
 <dd><a href="http://www.cs.rochester.edu/research/cisd/projects/trips/lexicon/cgi/browseontology-ajax">TRIPS Ontology</a> types. Note that <a href="http://www.cs.rochester.edu/research/cisd/projects/trips/lexicon/cgi/browseontology-ajax?search=referential-sem#referential-sem"><code>ONT::referential-sem</code></a> is removed when there are other (more specific) sense options.</dd>
 <dt><code>:alternate-spellings</code></dt>
-<dd>Alternate spellings of the word (e.g. "color" vs. "colour").</dd>
+<dd>Alternate spellings of the word (e.g. "color" vs. "colour"). Also includes corrected spellings. The second member of the message will retain the original spelling.</dd>
 <dt><code>:score</code></dt>
 <dd>(only from the Drum tagger) A single number between 0 and 1 indicating how good this sense is compared to the others, 1 being the best score. This is the maximum of the scores of the matches in the <code>:domain-specific-info</code>.</dd>
 <dt><code>:domain-specific-info</code></dt>

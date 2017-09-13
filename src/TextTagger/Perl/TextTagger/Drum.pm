@@ -1,7 +1,7 @@
 package TextTagger::Drum;
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT_OK = qw(init_drum_tagger tag_drum_terms);
+@EXPORT_OK = qw(init_drum_tagger tag_drum_terms fini_drum_tagger);
 
 use IPC::Open2;
 use TextTagger::Util qw(structurally_equal remove_duplicates union lisp_intern match2tag word_is_in_trips_lexicon);
@@ -43,6 +43,18 @@ sub init_drum_tagger {
     $mirna_species{$abbr} = $species;
   }
   close MS;
+}
+
+sub fini_drum_tagger {
+  close($terms_in);
+  close($terms_out);
+  close($dbxrefs_in);
+  close($dbxrefs_out);
+  close($protmods_in);
+  close($protmods_out);
+  waitpid $terms_pid, 0;
+  waitpid $dbxrefs_pid, 0;
+  waitpid $protmods_pid, 0;
 }
 
 # given an ID, look up the other IDs linked to it by database cross-references
@@ -1148,6 +1160,7 @@ push @TextTagger::taggers, {
   name => "drum",
   init_function => \&init_drum_tagger,
   tag_function => \&tag_drum_terms,
+  fini_function => \&fini_drum_tagger,
   output_types => ['sense'],
   input_text => 1,
   input_types => ['word'],

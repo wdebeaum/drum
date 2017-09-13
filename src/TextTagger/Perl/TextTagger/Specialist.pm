@@ -3,7 +3,7 @@
 package TextTagger::Specialist;
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT_OK = qw(init_specialist tag_specialist_info);
+@EXPORT_OK = qw(init_specialist tag_specialist_info fini_specialist);
 
 use IPC::Open2;
 use TextTagger::Normalize qw($dash_re normalize characterize_match score_match is_bad_match);
@@ -20,6 +20,12 @@ sub init_specialist {
                      $ENV{TRIPS_BASE} . "/etc/TextTagger/specialist.tsv");
   binmode $terms_in, ':utf8';
   binmode $terms_out, ':utf8';
+}
+
+sub fini_specialist {
+  close($terms_in);
+  close($terms_out);
+  waitpid $terms_pid, 0;
 }
 
 sub tag_specialist_info {
@@ -170,6 +176,7 @@ push @TextTagger::taggers, {
   name => "specialist",
   init_function => \&init_specialist,
   tag_function => \&tag_specialist_info,
+  fini_function => \&fini_specialist,
   output_types => ['pos'],
   optional_input_types => [qw(sentence prefix ending number subword subnumber punctuation)],
   input_text => 1,

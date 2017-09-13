@@ -3,7 +3,7 @@
 package TextTagger::NamesFromFile;
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT_OK = qw(init_names_from_file tag_names_from_file);
+@EXPORT_OK = qw(init_names_from_file tag_names_from_file fini_names_from_file);
 
 use IPC::Open2;
 
@@ -20,6 +20,12 @@ sub init_names_from_file {
                      $self->{names_file});
   binmode $terms_in, ':utf8';
   binmode $terms_out, ':utf8';
+}
+
+sub fini_names_from_file {
+  close($terms_in);
+  close($terms_out);
+  waitpid $terms_pid, 0;
 }
 
 sub tag_names_from_file {
@@ -54,6 +60,7 @@ push @TextTagger::taggers, {
   name => "names_from_file",
   init_function => \&init_names_from_file,
   tag_function => \&tag_names_from_file,
+  fini_function => \&fini_names_from_file,
   output_types => ['named-entity'],
   input_text => 1
 };
