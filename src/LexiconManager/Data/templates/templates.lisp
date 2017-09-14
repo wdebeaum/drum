@@ -2632,7 +2632,8 @@
     ))
   
   (binary-constraint-S-OR-NP-templ
-   (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
+   ;(SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
+   (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST w::pre-vp)))
    (ARGUMENTS
     (ARGUMENT (% (? W::x W::S W::NP)) ONT::figure)
     (SUBCAT (:parameter xp (:default (% W::NP (W::case (? cas W::obj -))))) ONT::ground)
@@ -2810,7 +2811,8 @@
     ))
   
   (binary-constraint-NP-templ
-   (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? atype W::POST w::pre)))
+   ;(SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? atype W::POST w::pre)))
+   (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? atype W::POST w::pre w::pre-vp)))
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::figure)
     (SUBCAT (:parameter xp (:default (% W::NP (W::case (? cas W::obj -))))) ONT::ground)

@@ -1316,6 +1316,7 @@
     ;; for pre-adverbials between verb and argument
     ;; test: he said yesterday that the dog barked.
     ;; test: he saw on his left a dog barking.
+    ; I wrote on the paper my name.
     ((vp- (subj ?subj) (subjvar ?subjvar) (dobjvar ?dobjvar)
       (var ?v) (class ?c) (gap -)  (complex +)
       (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
@@ -1718,7 +1719,37 @@
     ?comp
     )
    
-  
+   ;; either this rule or we need a version of -vp1-pre-arg-adv> whose advbl takes an NP as argument
+   ;;  test: I moved to the table the box
+   ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar) (main +)
+      (class ?c) (var ?v) 
+     (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+		      (lcomp ?compvar)
+		      (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
+		      (?iobj-map ?iobjvar) (?comp3-map ?compvar)
+		      (result ?adv-v)
+		      ))
+     (postadvbl -)
+     )
+    -vp-compositional-result-role> 
+    (head (v (aux -) (var ?v)
+	   (lf ?c) (sem ?sem) (sem ($ f::situation (f::type ont::event-of-change)))  (vform ?tense-pro)
+	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (agr ?subjagr) (sem ?subjsem) (gap -) )) ;; note double matching required
+	   (iobj (% -))
+	   (part (% -)) ;;(part (% part))
+	   (dobj ?dobj)			(dobj (% ?s3 (var ?dobjvar) (sem ?dobjsem) (case (? dcase obj -)) ))
+	   (comp3 ?comp)		(comp3 (% ?s4 (var ?compvar) (sem ?compsem) (case (? ccase obj -))))
+	   (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
+	   (result ?asem)
+	   ))
+    ;(advbl (particle +) (var ?adv-v)  (arg ?v) (argument (% s (sem ?sem))) (gap -))
+    (advbl (result-only +) (var ?adv-v) (arg ?dobjvar) 
+	   (argument (% np (sem ?dobjsem))) (gap -)
+	   (sem ?asem))
+    ?dobj
+    ?comp
+    )
+ 
    
    ;; passive transformations
 
