@@ -1,6 +1,6 @@
 # ARKL2EKB.pm
 #
-# Time-stamp: <Mon Jul 31 10:02:11 CDT 2017 lgalescu>
+# Time-stamp: <Fri Sep 15 22:23:44 CDT 2017 lgalescu>
 #
 # Author: Roger Carff <rcarff@ihmc.us>, 9 Mar 2017
 #
@@ -72,17 +72,19 @@ be turned into EKB Event arg's.
 =cut
 
 my @eventRoleArguments = (":AGENT",
-                        ":AGENT1",
-                        ":AFFECTED",
-                        ":AFFECTED1",
-                        ":FACTOR",
-                        ":OUTCOME",
-                        ":AFFECTED-RESULT",
-                        ":NEUTRAL",
-                        ":NEUTRAL1",
-                        ":NEUTRAL2",
-                        ":FORMAL",
-                        ":EXPERIENCER");
+			  ":AGENT1",
+			  ":AFFECTED",
+			  ":AFFECTED1",
+			  ":FACTOR",
+			  ":OUTCOME",
+			  ":AFFECTED-RESULT",
+			  ":NEUTRAL",
+			  ":NEUTRAL1",
+			  ":NEUTRAL2",
+			  ":FORMAL",
+			  ":EXPERIENCER",
+			  ":RES"
+			 );
 
 =head2 Event Modifiers
 
