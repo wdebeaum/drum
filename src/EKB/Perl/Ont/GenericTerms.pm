@@ -2,7 +2,7 @@
 
 # GenericTerms.pm
 #
-# Time-stamp: <Fri Jun 23 13:16:12 CDT 2017 lgalescu>
+# Time-stamp: <Mon Jul 31 10:00:51 CDT 2017 lgalescu>
 #
 # Author: Roger Carff <rcarff@ihmc.us>, 27 May 2016
 #
@@ -17,6 +17,8 @@
 # - Created, to handle generic objects not contained in BioEntities.
 # 2017/06/23 v2.0	lgalescu
 # - Added a 'disease' branch.
+# 2017/07/31 v3.0	lgalescu
+# - Added a 'body-part' branch.
 
 #----------------------------------------------------------------
 # Usage:
@@ -24,7 +26,7 @@
 
 package Ont::GenericTerms;
 
-$VERSION = '2.0';
+$VERSION = '3.0';
 
 use strict 'vars';
 use warnings;
@@ -54,6 +56,9 @@ my @data = (
 	    'ONT::MEDICAL-DISORDERS-AND-CONDITIONS' => 1,
 	    'ONT::DISEASE' => 'ONT::MEDICAL-DISORDERS-AND-CONDITIONS',
 	    'ONT::CANCER' => 'ONT::DISEASE',
+
+	    # body parts
+	    'ONT::BODY-PART' => 1,
 	   );
 
 sub new {

@@ -456,7 +456,7 @@ sub tag_drum_terms {
   # while terms2 does its thing, do some of our own tagging here
   push @terms, @{tag_protein_sites_and_mutations($self, @input_tags)},
   	       @{tag_mirnas($self, $str, @input_tags)},
-	       @{tag_protmods(\%entries)};
+	       @{tag_protmods(\%entries, @input_tags)};
   # then read tags from terms2 and assign them lftypes
   # FIXME? should merge terms with identical IDs but different matches, but
   # that's almost certainly not going to come up except within calls to
@@ -480,16 +480,25 @@ sub tag_drum_terms {
   # remove tags on all-lowercase single words that are already in the TRIPS
   # lexicon (unless they're protmods)
   @terms = grep {
+    my $input_variant = $_->{lex};
+    # should check if matched variant is in TRIPS, not input variant, if they
+    # differ, because it could be an alternate-spelling
+    my $matched_variant = $input_variant;
+    if (exists($_->{'domain-specific-info'}) and
+        exists($_->{'domain-specific-info'}{matches})) {
+      # FIXME what if there's more than one match? should we check them all?
+      $matched_variant = $_->{'domain-specific-info'}{matches}[0]{matched};
+    }
     my $keep =
       (not ($_->{lex} =~ /^\p{Ll}+$/ and
       	    (not exists($_->{'penn-pos'})) and # not protmod
-	    (word_is_in_trips_lexicon($self, $_->{lex}) or
+	    (word_is_in_trips_lexicon($self, $matched_variant) or
 	      # check version with a dash if it could be a prefix (is followed
 	      # by something other than whitespace or sentence-final
 	      # punctuation)
 	      ($_->{end} < length($str) and
 	       substr($str, $_->{end}, 1) !~ /[\s\.\?\!]/ and
-	       word_is_in_trips_lexicon($self, $_->{lex} . '-')))));
+	       word_is_in_trips_lexicon($self, $matched_variant . '-')))));
     print STDERR "removing tag on all-lowercase single word already in TRIPS lexicon:\n" . Data::Dumper->Dump([$_], ['*tag'])
       if ($debug and not $keep);
     $keep;
@@ -601,25 +610,79 @@ sub tag_drum_terms {
 
 # tag protein modifications from go_protmods.obo
 sub tag_protmods {
-  my $entries = shift;
+  my ($entries, @input_tags) = @_;
   our $str;
+  # organize alternate spellings by start offset
+  my %alternate_spellings = ();
+  for my $tag (@input_tags) {
+    next unless ($tag->{type} eq 'alternate-spelling');
+    push @{$alternate_spellings{$tag->{start}}}, $tag;
+  }
   print $protmods_out "_BEGIN_WORD_LATTICE_\n";
   print STDERR "to protmod terms:\n_BEGIN_WORD_LATTICE_\n[see above]\n" if ($debug);
   # reuse entries from main drum tagger
   print $protmods_out keys %$entries;
   # add entries for (base/derived/inflected) forms of protein modifications
-  while ($str =~ /(\S+\s+)?(\S+?)at(?:es?|ed|ing|ion)\b/g) {
+  while ($str =~ /(\S+\s+)?(\S+?)(at(?:es?|ed|ing|ion))\b/g) {
     my %tag = match2tag();
-    my ($word1, $word2prefix) = ($1, $2);
+    my ($word1, $word2prefix, $word2suffix) = ($1, $2, $3);
     my $entry;
     if (defined($word1)) {
       my $word1length = length($word1);
+      my $word2start = $tag{start} + $word1length;
       $word1 =~ s/\s+$/ /;
+      my $word1end = $tag{start} + length($word1) - 1;
       $entry =
         "protein $word1$word2prefix" . "ation\t$tag{start}\t$tag{end}\n" .
-        "protein $word2prefix" . "ation\t" . ($tag{start} + $word1length) . "\t$tag{end}\n";
+        "protein $word2prefix" . "ation\t$word2start\t$tag{end}\n";
+      # add corresponding entries for alternate spellings of each of the two
+      # words independently, if they cover the same spans, and word2 ends with
+      # the same suffix
+      if (exists($alternate_spellings{$tag{start}})) {
+	if (exists($alternate_spellings{$word2start})) {
+	  for my $alt2 (@{$alternate_spellings{$word2start}}) {
+	    next unless ($alt2->{end} == $tag{end} and
+			 $alt2->{lex} =~ /$word2suffix$/);
+	    my $alt2prefix =
+	      substr($alt2->{lex}, 0,
+		  length($alt2->{lex}) - length($word2suffix));
+	    $entry .=
+	      "protein $word1$alt2prefix" . "ation\t$tag{start}\t$tag{end}\n" .
+	      "protein $alt2prefix" . "ation\t$word2start\t$tag{end}\n";
+	  }
+	}
+	for my $alt1 (@{$alternate_spellings{$tag{start}}}) {
+	  next unless ($alt1->{end} == $word1end);
+	  $entry .=
+	    "protein " . $alt1->{lex} .
+	    $word2prefix . "ation\t$tag{start}\t$tag{end}\n";
+	  if (exists($alternate_spellings{$word2start})) {
+	    for my $alt2 (@{$alternate_spellings{$word2start}}) {
+	      next unless ($alt2->{end} == $tag{end} and
+			   $alt2->{lex} =~ /$word2suffix$/);
+	      my $alt2prefix =
+	        substr($alt2->{lex}, 0,
+		    length($alt2->{lex}) - length($word2suffix));
+	      $entry .=
+	        "protein " . $alt1->{lex} .
+		$alt2prefix . "ation\t$tag{start}\t$tag{end}\n";
+	    }
+	  }
+	}
+      }
     } else { # only 1 word
       $entry = "protein $word2prefix" . "ation\t$tag{start}\t$tag{end}\n";
+      # add corresponding entries for alternate spellings of the word, if they
+      # cover the same span and end with the same suffix
+      if (exists($alternate_spellings{$tag{start}})) {
+	for my $alt (@{$alternate_spellings{$tag{start}}}) {
+	  next unless ($alt->{end} == $tag{end} and
+		       $alt->{lex} =~ /$word2suffix$/);
+	  my $altprefix =
+	    substr($alt->{lex}, 0, length($alt->{lex}) - length($word2suffix));
+	  $entry .= "protein $altprefix" . "ation\t$tag{start}\t$tag{end}\n";
+	}
+      }
     }
     print $protmods_out $entry;
     print STDERR $entry if ($debug);
