@@ -31,7 +31,7 @@
  :tags (:base500)
  :words (
    (W::pound
-   (wordfeats (W::morph (:forms (-vb) :nom W::pound)))
+   (wordfeats (W::morph (:forms (-vb))))
    (SENSES
     ((LF-PARENT ONT::pulse)
      (example "his heart pounds after exercise")

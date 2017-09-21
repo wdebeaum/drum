@@ -3771,7 +3771,7 @@
 (define-type ONT::CONTAINMENT
  :wordnet-sense-keys ("keep%2:40:13" "hold%2:42:14" "take%2:42:15" "contain%2:42:14" "accommodate%2:42:03" "hold%2:42:05" "admit%2:42:04")
  :parent ONT::event-of-state
- :arguments ((:REQUIRED ONT::neutral (F::Phys-obj (F::container +)))
+ :arguments ((:REQUIRED ONT::neutral ((? x F::Phys-obj F::abstr-obj) (F::container +)))
              (:ESSENTIAL ONT::neutral1 ((? th25 F::Phys-obj f::abstr-obj)))
              )
  )

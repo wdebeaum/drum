@@ -2,7 +2,7 @@
 ;;;; W::MOST
 ;;;;
 
-(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+(define-words :pos W::adv :templ CENTRAL-ADJ-TEMPL
  :tags (:base500)
  :words (
 ;   )

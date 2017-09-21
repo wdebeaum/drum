@@ -3088,7 +3088,7 @@
     ))
 
   (superl-templ
-   (SYNTAX (W::SORT W::PRED) (W::ATYPE W::CENTRAL) (W::ARG ?arg))
+   (SYNTAX (W::SORT W::PRED) (W::ATYPE W::CENTRAL) (W::COMPARATIVE W::SUPERL) (W::ARG ?arg))
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::FIGURE)
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::than)))) ONT::GROUND)
@@ -3757,7 +3757,7 @@
      ))
   
   (compar-than-templ 
-   (SYNTAX (w::compar-op +) (w::ground-oblig -))
+   (SYNTAX (w::comparative +) (w::ground-oblig -))
    (arguments
     (ARGUMENT (% W::NUMBER) ONT::FIGURE) 
     (subcat (% w::PP (w::ptype w::than)) ont::ground)))

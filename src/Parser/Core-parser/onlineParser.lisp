@@ -499,9 +499,14 @@
     ))
 
 (defun boost-by-percent (prob factor)
-  (if (> factor 1) (setq factor (- factor 1)))  ;; we do this to catch left over numbers from prior scoring method
-  (let ((diff (- 1 prob)))
-    (+ prob (* diff factor))))
+  (if (numberp factor)
+      (progn
+	(if (> factor 1) (setq factor (- factor 1)))  ;; we do this to catch left over numbers from prior scoring method
+	(let ((diff (- 1 prob)))
+	  (+ prob (* diff factor))))
+      (progn
+	(format t "~% ERROR: bad argument to BOOST-BY-PERCENT: ~S" factor)
+	prob)))
 
 
 (defun normalize (x)

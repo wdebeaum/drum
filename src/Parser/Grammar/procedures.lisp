@@ -201,6 +201,17 @@
       (second x) 
       x))
 
+(define-predicate 'w::compute-ont-type-from-sem
+     #'(lambda (args)
+      (compute-lf-from-sem args)))
+
+  
+(defun compute-lf-from-sem (args)
+  (let* ((sem (second (assoc 'w::sem args)))
+	 (lf (second (assoc 'w::lf args))))
+    (match-vals nil lf (or (;; finish when new SEM strctures are installed
+			    )))))
+
 (defun add-features-to-constraint (feats oldconstraint newconstraintvar)
   "A helper to add-new-constraint. Given a list of features and an old constraint, creates a new constraint with features added to the old constraint. "
   (cond

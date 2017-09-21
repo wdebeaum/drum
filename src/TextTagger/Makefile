@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.103 2017/09/08 20:29:30 wdebeaum Exp $
+# $Id: Makefile,v 1.105 2017/09/20 14:37:50 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -258,9 +258,14 @@ all:: specialist.aspell
 install:: specialist.aspell
 	$(INSTALL_DATA) specialist.aspell $(etcdir)/$(MODULE)
 
+# NOTE: We give aspell back its own default setting for local-data-dir because
+# it actually doesn't work on Debian without this; it fails to find the "en"
+# language data file in that directory. (Why, Debian, why?)
 specialist.aspell: downloads/inflection.table
 	cut -d'|' -f1 <$< |perl -CSD -p -e 's/\W+/\n/g;' |sort |uniq \
-	|$(TEXTTAGGER_aspell) --encoding=utf-8 --lang=en create master ./$@ \
+	|$(TEXTTAGGER_aspell) \
+	  --local-data-dir="`$(TEXTTAGGER_aspell) config local-data-dir`" \
+	  --encoding=utf-8 --lang=en create master ./$@ \
 	2>specialist.aspell.err
 
 clean::

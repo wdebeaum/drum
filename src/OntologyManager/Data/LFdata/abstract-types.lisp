@@ -32,6 +32,7 @@
 
 (define-type ONT::representation
  :parent ONT::mental-construction
+ :sem (F::Abstr-obj (f::container +))
  :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
 		)
  )
@@ -946,7 +947,7 @@
 ;; high-level for problem solving objects
 (define-type ONT::ps-object
  :parent ONT::mental-construction
- ;;:sem (F::Abstr-obj (F::information F::information-content))
+ :sem (F::Abstr-obj (F::container +))
  :arguments ((:optional ont::FIGURE)
 	     (:optional ont::formal)
 	     (:optional ont::GROUND)
@@ -1087,7 +1088,7 @@
   )
 
 (define-type ONT::computer-software
-  :parent ONT::ps-object
+  :parent ONT::representation
   :sem (F::Abstr-obj (F::information F::information-content))
   )
 

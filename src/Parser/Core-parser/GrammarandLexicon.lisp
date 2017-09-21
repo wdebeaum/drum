@@ -987,7 +987,10 @@
 get word definition by calling get-word-def in lexiconmanager package, 
 then convert the result  to the lex-entry format that the old parser code expects (i.e., what it used to get from retrieve-from-lex)"
   ;; get the word definition from the lexicon manager package and convert the symbols to the parser package
-  (let* ((wdef (remove-if #'null (lexiconmanager::get-word-def w (list* :var-prefix *symbol-prefix* feats)))))
+  (let* ((wdef 
+	  (expand-with-alternatives-if-necessary
+	   (remove-if #'null (lexiconmanager::get-word-def w (list* :var-prefix *symbol-prefix* feats)))
+	   feats)))
     (if wdef ;; if we have a definition, create a lex-entry structure for the parser
 	(cons 
 	 (make-lex-entry
@@ -1020,6 +1023,45 @@ then convert the result  to the lex-entry format that the old parser code expect
       )
     )
   )
+
+(defun is-a-placeholder (entry)
+  (let* ((constit (fourth entry))
+	(lf (cadr (assoc 'w::lf (cddr constit)))))
+    (if (consp lf) 
+	(member (second lf) '(ont::REFERENTIAL-SEM ont::situation-root))
+	(member lf '(ont::REFERENTIAL-SEM ont::situation-root)))))
+	
+(defun expand-with-alternatives-if-necessary (entries feats)
+  (if (every #'is-a-placeholder entries)
+      (let* ((sense-info (car (find-arg feats :sense-info)))
+	     (alternates (find-arg sense-info :alternate-spellings)))
+	(if alternates
+	    (let* ((neww (remove-if #'null (lexiconmanager::get-word-def (car (tokenize (car alternates)))
+									(list* :var-prefix *symbol-prefix* feats))))
+		   (good-ones (remove-if #'is-a-placeholder neww)))
+	      (if good-ones
+		  (append good-ones entries)
+		  ;; looks for more?
+		  (look-at-other-alternatives entries (cdr alternates) feats)
+		  ))
+	    ;; no alternates
+	    entries
+	    ))
+      ;; have some contentful entries so don't need more
+      entries))
+
+(defun look-at-other-alternatives (entries alts feats)
+  (if (null alts)
+      entries
+      (let* ((neww (remove-if #'null (lexiconmanager::get-word-def (car (tokenize (car alts)))
+								  (list* :var-prefix *symbol-prefix* feats))))
+	     (good-ones (remove-if #'is-a-placeholder neww)))
+	(if good-ones
+	    (append good-ones entries)
+	    ;; looks for more?
+	    (look-at-other-alternatives entries (cdr alts) feats)
+	    ))
+      ))
 
 (defun adjust-lex-probability (prob entry)
   ;; generally we just use the prob returned from the lexicon, except when
