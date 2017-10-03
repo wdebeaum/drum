@@ -21,14 +21,14 @@ sub lisp_intern
 { # turn the string $name into a lisp symbol in the given package
   my ($name, $package) = @_;
   $name =~ s/[\(\)\"]//g; # the TRIPS Facilitator doesn't like parens or quotes within pipequotes
-  if ($name =~ /^[^A-Z_-]$/) {
+  if ($name =~ /^[^A-Z\d_-]$/ or ($name =~ /^\d$/ and not $package)) {
     # use Unicode names for single-character symbols we'd pipequote otherwise,
     # since CCL might repeat them back with a backslash instead of pipequotes,
     # which KQML doesn't allow
     $name = charnames::viacode(ord($name));
     $name =~ s/ /_/g;
     $name = lisp_intern($name);
-  } elsif ($name =~ /[^A-Z\d_-]/ or $name =~ /^\d/) {
+  } elsif ($name =~ /[^A-Z\d_-]/ or ($name =~ /^\d/ and not $package)) {
     $name = "|" . escape_for_pipes($name) . "|";
   }
   if ($package) {

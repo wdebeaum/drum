@@ -20,6 +20,7 @@ my %ont_to_prefix_to_file = ();
 sub file_for_id {
   my $id = shift;
   my ($ont, $id_num) = split(/::/, $id);
+  $id_num =~ s/^\||\|$//g; # remove pipequotes if present
   $ont = uc($ont);
   my $f;
   my $prefix = sprintf("%06d", ($id_num / 10));
@@ -45,7 +46,9 @@ sub process_id {
   my $id = shift;
   $id = remove_trailing_modifier($id);
   $id =~ s/^CL:/CO:/; # can't use CL because that's Common Lisp
-  $id =~ s/:/::/;
+  # $id =~ s/:/::/;
+  my ($pkg, $name) = split(/:/, $id);
+  $id = lisp_intern($name, $pkg);
   return $id;
 }
 
