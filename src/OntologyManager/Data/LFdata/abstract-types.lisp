@@ -1089,7 +1089,8 @@
 
 (define-type ONT::computer-software
   :parent ONT::representation
-  :sem (F::Abstr-obj (F::information F::information-content))
+;  :sem (F::Abstr-obj (F::information F::information-content))
+  :sem (F::Abstr-obj (f::origin f::artifact) (F::information F::mental-construct))
   )
 
 ;; autofill, autocomplete, colorsync, etc.
@@ -1102,7 +1103,6 @@
 (define-type ONT::computer-program
  :wordnet-sense-keys ("applications_programme%1:10:00" "application_program%1:10:00" "application%1:10:01" "program%1:10:02" "programme%1:10:02" "computer_program%1:10:00" "computer_programme%1:10:00")
   :parent ONT::computer-software
-   :sem (F::Abstr-obj (F::information F::information-content) (f::origin f::artifact))
   )
 
 (define-type ONT::web-browser

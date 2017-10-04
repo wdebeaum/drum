@@ -400,7 +400,7 @@
     (N1 var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated rate-activity-nom)
     ;;(N1 var arg lex headcat transform agr mass case sem quantity argument argument-map indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)
     (N var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)  ; this is a copy of N1 so -N-prefix> would pass on the features
-    (NAME var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated)  ; this is a copy of N1 so -NAME-prefix> would pass on the features
+    (NAME var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund nomsubjpreps nomobjpreps dobj-map dobj subj-map generated name)  ; this is a copy of N1 so -NAME-prefix> would pass on the features (added name)
     (UNITMOD var arg lex headcat transform agr mass case sem quantity subcat argument indef-only)
     (QUAL var arg lex headcat transform ARGUMENT COMPLEX)
     ;; MD 18/04/2008 added SEM as a headfeature to handle "in full" where in subcategorizes for adjp

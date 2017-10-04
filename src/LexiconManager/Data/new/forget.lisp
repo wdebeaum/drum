@@ -46,6 +46,7 @@
    )
 ))
 
+#|
 (define-words :pos W::UttWord :boost-word t :templ NO-FEATURES-TEMPL
  :words (
   ((W::forget W::it)
@@ -78,4 +79,6 @@
     )
    )
 ))
+
+|#
 
