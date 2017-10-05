@@ -605,6 +605,26 @@ sub tag_drum_terms {
       }
     }
   }
+  # remove ChEBI role terms ending with " inhibitor" and other agent
+  # nominalizations
+  # TODO? treat "inhibitor" specifically like "activity" above
+  @terms = grep {
+    my $tag = $_;
+    (not (
+      $tag->{lex} =~ / (enhancer|inhibitor|promoter|regulator|inducer|activator|modulator)s?$/i and
+      exists($tag->{'domain-specific-info'}) and
+      exists($tag->{'domain-specific-info'}{id}) and
+      $tag->{'domain-specific-info'}{id} =~ /^CHEBI:/ and
+      exists($tag->{'domain-specific-info'}{mappings}) and
+      grep {
+	my $through = $_->{':through'}[1];
+	grep { "CHEBI::|$_|" eq $through }
+	     # mappings under "role"
+	     qw(50906 24432 33232 52217);
+      } @{$tag->{'domain-specific-info'}{mappings}}
+      # TODO? also check that the prefix is tagged
+    ))
+  } @terms;
   return [@terms];
 }
 

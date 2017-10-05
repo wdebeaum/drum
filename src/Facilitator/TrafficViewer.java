@@ -20,7 +20,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.List;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
@@ -136,7 +136,8 @@ public class TrafficViewer extends JFrame implements FacilitatorDisplay, ActionL
     //
     // Managing the client menu and enabled list
     //
-    List clientList = new LinkedList();
+    ConcurrentLinkedDeque<ClientRecord> clientList =
+      new ConcurrentLinkedDeque<ClientRecord>();
     void addClient(String name) {
 	//System.err.println("addClient: name=" + name);
 	JCheckBoxMenuItem menuItem = addCheckBoxMenuItem(name, viewMenu);

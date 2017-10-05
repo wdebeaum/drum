@@ -2,7 +2,7 @@
 # config/perl/prog.mk
 #
 # George Ferguson, ferguson@cs.rochester.edu, 27 Jul 2005
-# Time-stamp: <Wed Jul 11 11:10:42 EDT 2007 ferguson>
+# Time-stamp: <Wed Oct  4 15:32:26 CDT 2017 lgalescu>
 #
 # The following should be defined before this file is included:
 #  MODULE - The name of this TRIPS module
@@ -21,7 +21,7 @@ PROG ?= $(MODULE)
 
 all:: $(PROG)
 
-$(PROG):: $(WRAPPER)
+$(PROG):: $(WRAPPER) $(CONFIGDIR)/defs.mk
 	sed -e 's@TRIPS_BASE_DEFAULT=.*$$@TRIPS_BASE_DEFAULT=$(prefix)@' \
 	    -e 's@PERL=.*@PERL=$(PERL)@' \
 	    -e 's@PERL_FLAGS=.*@PERL_FLAGS=$(PERL_FLAGS)@' \

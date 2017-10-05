@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Tue Jun 13 09:59:25 CDT 2017 lgalescu>
+# Time-stamp: <Fri Jun 23 10:07:07 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.33 2017/06/13 14:59:58 lgalescu Exp $
+# $Id: EKB.pm,v 1.34 2017/10/04 20:51:56 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -1456,6 +1456,8 @@ Returns the id of the new assertion on success, and C<undef> on failure.
 NOTE: This function uses a different convention than others for identifying 
 attributes and properties; probably should be changed to avoid confusion.
 
+OBSOLETE: use infer_assertion instead!
+
 =cut
 
 sub add_assertion_r {
@@ -1523,7 +1525,7 @@ Creates and adds a TERM assertion to the EKB.
 
 This is just a wrapper around L<add_assertion_r()|/add_assertion_r(_$atype,_%args_)>.
 
-NOTE: PHASED-OUT
+OBSOLETE
 
 =cut
 
@@ -1540,7 +1542,7 @@ Returns the id of the inferred event.
 
 This is mostly a wrapper around L<add_assertion_r()|/add_assertion_r(_$atype,_%args_)>.
 
-NOTE: PHASED-OUT
+OBSOLETE
 
 =cut
 
@@ -1579,6 +1581,7 @@ sub add_event_r {
 #	= complex(X,Y) if X, Y are simple entities
 #	= complex(X,Y1,Y2,...) if X is simple entity and Y=complex(Y1,Y2,...)
 # TODO (maybe)
+# OBSOLETE
 sub add_complex_r {
   my $self = shift;
   my %args = @_;

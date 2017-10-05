@@ -1,6 +1,6 @@
 # EKBAgent.pm
 #
-# Time-stamp: <Sun Jul 30 18:44:43 CDT 2017 lgalescu>
+# Time-stamp: <Wed Oct  4 16:26:47 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 13 Feb 2017
 #
@@ -142,7 +142,7 @@ use AKRL2EKB;
 
 use util::Log;
 #local $util::Log::DebugLevel = 0;
-#local $util::Log::Caller_Info = 0;
+#local $util::Log::CallerInfo = 0;
 #local $util::Log::Quiet = 0;
 
 sub init {
@@ -176,6 +176,7 @@ sub handle_parameters {
             unless (@argv > 0);
         my $debugLevel = shift(@argv);
 	$util::Log::DebugLevel = $debugLevel;
+	$util::Log::CallerInfo = 1 if ($debugLevel > 1);
         INFO ("debug level set to $debugLevel.");
       }
       elsif ($opt eq '-testFile') {
@@ -211,7 +212,7 @@ sub send_subscriptions {
   $self->send_msg('(subscribe :content (request &key :content (get-ekb-representation . *)))');
 
   if ($self->{compareEnabled} or $self->{testing}) {
-    $self->send_msg('(subscribe :content (request &key :content (interpret-speech-act &key :content (assertion . *))))');
+    $self->send_msg('(subscribe :content (request &key :content (interpret-speech-act . *)))');
     $self->send_msg('(subscribe :content (tell &key :content (utterance . *)))');
     $self->send_msg('(subscribe :content (request &key :content (generate &key :content (ont::clarify-goal . *))))');
   }
