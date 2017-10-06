@@ -5,7 +5,7 @@
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
   (W::activate
-    (wordfeats (W::morph (:forms (-vb) :nom w::activation)))
+    (wordfeats (W::morph (:forms (-vb) :nom w::activation :agentnom w::activator)))
    (SENSES
     ((EXAMPLE "activate all alerting") 
      (LF-PARENT ont::start)

@@ -192,6 +192,7 @@ my @phosphorylatable_lftypes = qw(
   GENE
   PROTEIN
   GENE-PROTEIN
+  PROTEIN-FAMILY
   MOLECULE
   AMINO-ACID
   MOLECULAR-SITE

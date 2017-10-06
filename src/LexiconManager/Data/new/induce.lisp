@@ -5,7 +5,7 @@
 (define-words :pos W::v 
  :words (
   (W::induce
-   (wordfeats (W::morph (:forms (-vb) :nom w::induction)))
+   (wordfeats (W::morph (:forms (-vb) :nom w::induction :agentnom w::inducer)))
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("59-force"))
      ;(LF-PARENT ont::provoke)

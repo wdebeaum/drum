@@ -5,7 +5,7 @@
 (define-words :pos W::v :templ AGENT-affected-XP-TEMPL
  :words (
    (W::regulate
-    (wordfeats (W::morph (:forms (-vb) :nom W::regulation)))
+    (wordfeats (W::morph (:forms (-vb) :nom W::regulation :agentnom w::regulator)))
    (SENSES
       (;;(lf-parent ont::managing)
        (lf-parent  ont::manage) ;; 20120521 GUM change new parent 
