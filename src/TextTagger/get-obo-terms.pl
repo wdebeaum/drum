@@ -51,6 +51,18 @@ for my $obo_file_name (@ARGV) {
 	       (grep m!^http://www\.ebi\.ac\.uk/efo/(DOID|Me?SH)_definition_citation (DOID|Me?SH):!, @{$stanza{property_value}})
 	      ));
     }
+    if ($obo_file_name =~ /pr\.obo$/) {
+      # PR also has extra stuff in other namespaces
+      next unless ($info->{id} =~ /^PR:/);
+      # also check that this isn't just copied from UniProt with the namespace
+      # changed
+      my $up_id = "UniProtKB:$'";
+      next if (exists($stanza{xref}) and
+	       grep { $_ eq $up_id } @{$stanza{xref}});
+      # also only get human stuff for now
+      next unless ($info->{name} =~ /\(human\)$/i);
+      $info->{name} =~ s/\s*\([^\(\)]*\)$//i; # remove species from name
+    }
     $id_to_obo_info{$info->{id}} = $info;
     if (exists($stanza{is_a})) {
       for my $parent_mod (@{$stanza{is_a}}) {
@@ -78,6 +90,7 @@ for my $obo_file_name (@ARGV) {
 	$lemma =~ s/<new synonym>//; # argh
 	$lemma =~ s/^\s+|\s+$//g; # trim space off lemma (argh)
 	$lemma =~ s/`/'/g if ($obo_file_name =~ /BrendaTissueOBO$/); # ARGH
+	$lemma =~ s/\s*\([^\(\)]*\)$// if ($obo_file_name =~ /pr\.obo$/); # >_<
 	if ($obo_file_name =~ /cl(-basic)\.obo$/) { # *cries*
 	  $lemma =~ s/[[:space:]\xa0]/ /g;
 	  $lemma =~ s/[\x2013\x2014]/-/g;

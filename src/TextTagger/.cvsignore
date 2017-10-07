@@ -12,3 +12,5 @@ downloads
 drum-dsl
 specialist.tsv
 drum-dbxrefs.tsv
+specialist.aspell
+*.old*

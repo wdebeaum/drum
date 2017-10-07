@@ -37,6 +37,10 @@
 (concept CO::0000000 ; cell
   (inherit ONT::cell))
 
+;;; Protein Ontology
+(concept PR::000000001 ; protein
+  (inherit ONT::protein))
+
 ;;; Gene Ontology
 (concept GO::0097659 ; nucleic acid-templated transcription
   (inherit ONT::gene-transcription))

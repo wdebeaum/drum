@@ -55,6 +55,7 @@
 (def-obo-resource (MOD PSI-MOD protein-modification))
 (def-obo-resource (SO sequence-ontology))
 (def-obo-resource (EFO experimental-factor-ontology))
+(def-obo-resource (PR PRO protein-ontology))
 (def-obo-resource (UO units-of-measurement-ontology))
 (def-obo-resource (Orphanet))
 (def-obo-resource (HP human-phenotype))

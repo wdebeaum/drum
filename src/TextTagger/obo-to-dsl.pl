@@ -60,6 +60,7 @@ until (STDIN->eof) {
   my $pkg = $id;
   $pkg =~ s/:.*//;
   next unless (@packages == 0 or grep { $_ eq $pkg } @packages);
+  next if ($pkg eq 'PR' and not $id =~ /^PR::00\d{7}/); # no UP IDs plz
   my $concept = "(concept $id";
   my @name = map { lisp_intern(uc($_)) } 
   	     split(/\s+/,
@@ -92,6 +93,7 @@ until (STDIN->eof) {
       @is_a = grep {
 	my $pkg = $_;
 	$pkg =~ s/:.*//;
+        ($pkg ne 'PR' or /^PR::00\d{7}/) and # no UP IDs plz
 	grep { $_ eq $pkg } @packages
       } @is_a;
     }

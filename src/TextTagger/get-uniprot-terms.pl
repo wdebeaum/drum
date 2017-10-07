@@ -44,6 +44,7 @@ while (<>) {
 	( \s (\w+) = (.+) ; )?
       $/x)
       or die "malformed DE line: $_";
+    $value =~ s/\s*{[\w:\|]+}$//; # strip curly-braced xrefs from name
     $prev_field = $field unless ($field =~ /^\s{8}$/);
     if ($suffix and (not $indent) and $field =~ /^\s{8}$|Name:$/ and
         grep { $_ eq $subfield } @name_subfields) {

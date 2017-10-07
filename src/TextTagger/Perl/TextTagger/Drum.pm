@@ -219,7 +219,7 @@ sub read_from_terms2 {
 		 $match->{'surely-depluralized'}
 		) {
 	  # skip morphed CVCL terms
-	} elsif ($id =~ /^(BE|BTO|CHEBI|CO|EFO|GO|MI|NCIT|UO|SO|ORPHANET):/) { # ontologies with hierarchies
+	} elsif ($id =~ /^(BE|BTO|CHEBI|CO|EFO|GO|MI|NCIT|PR|UO|SO|ORPHANET):/) { # ontologies with hierarchies
 	  push @mapped_ids, $id
 	    unless (exists($mapped_id_to_matches_with_status{$id}));
 	  push @{$mapped_id_to_matches_with_status{$id}}, $match_with_status
@@ -321,6 +321,7 @@ sub read_from_terms2 {
 	for (@{$reply_content->{':mappings'}}) {
 	  my $m = KQML::KQMLKeywordify($_);
 	  my $id = $m->{':from'}[1];
+	  $id =~ s/::\|(\d+)\|$/::$1/; # un-pipequote numeric IDs from Lisp
 	  push @{$id2mappings{$id}}, $m;
 	}
 	for my $id (@mapped_ids) {
@@ -605,25 +606,36 @@ sub tag_drum_terms {
       }
     }
   }
-  # remove ChEBI role terms ending with " inhibitor" and other agent
-  # nominalizations
+  # remove ChEBI role and NCIT pharmacologic substance terms, ending with "
+  # inhibitor" and other agent nominalizations
   # TODO? treat "inhibitor" specifically like "activity" above
   @terms = grep {
     my $tag = $_;
-    (not (
-      $tag->{lex} =~ / (enhancer|inhibitor|promoter|regulator|inducer|activator|modulator)s?$/i and
-      exists($tag->{'domain-specific-info'}) and
-      exists($tag->{'domain-specific-info'}{id}) and
-      $tag->{'domain-specific-info'}{id} =~ /^CHEBI:/ and
-      exists($tag->{'domain-specific-info'}{mappings}) and
-      grep {
-	my $through = $_->{':through'}[1];
-	grep { "CHEBI::|$_|" eq $through }
-	     # mappings under "role"
-	     qw(50906 24432 33232 52217);
-      } @{$tag->{'domain-specific-info'}{mappings}}
-      # TODO? also check that the prefix is tagged
-    ))
+    my $keep =
+      (not (
+	$tag->{lex} =~ / (enhancer|inhibitor|promoter|regulator|inducer|activator|modulator)s?$/i and
+	exists($tag->{'domain-specific-info'}) and
+	exists($tag->{'domain-specific-info'}{id}) and
+	exists($tag->{'domain-specific-info'}{mappings}) and (
+	  ( # under ChEBI role
+	    $tag->{'domain-specific-info'}{id} =~ /^CHEBI:/ and
+	    grep {
+	      my $through = $_->{':through'}[1];
+	      grep { "CHEBI::|$_|" eq $through }
+		   # mappings under "role"
+		   qw(50906 24432 33232 52217);
+	    } @{$tag->{'domain-specific-info'}{mappings}}
+	  ) or ( # under NCIT pharmacologic substance
+	    $tag->{'domain-specific-info'}{id} =~ /^NCIT:/ and
+	    grep { $_->{':through'}[1] eq 'NCIT::C1909' }
+		 @{$tag->{'domain-specific-info'}{mappings}}
+	  )
+	)
+	# TODO? also check that the prefix is tagged
+      ));
+    print STDERR "removing tag ending with agent nominalization:\n" . Data::Dumper->Dump([$tag], ['*tag'])
+      if ($debug and not $keep);
+    $keep
   } @terms;
   return [@terms];
 }
