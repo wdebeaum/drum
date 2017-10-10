@@ -2,6 +2,7 @@
 ;;;; W::ABILITY
 ;;;;
 
+#|
 (define-words :pos W::v :templ COUNT-PRED-TEMPL
  :words (
    (W::ability-verb-doesnotexist
@@ -11,7 +12,7 @@
        (LF-PARENT ONT::ABILITY-STATE)  
        (TEMPL neutral-theme-subjcontrol-templ )
        )))))
-
+|#
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (

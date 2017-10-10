@@ -6,7 +6,7 @@
  :words (
   (W::confidence
    (SENSES
-    ((LF-PARENT ONT::assurance-scale)
+    ((LF-PARENT ONT::confidence-scale)
      (EXAMPLE "you can send personal information to them with confidence")
      (meta-data :origin task-learning :entry-date 20050830 :change-date 20080206 :wn ("confidence%1:12:00") :comments nil)
      )

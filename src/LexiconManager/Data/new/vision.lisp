@@ -6,7 +6,7 @@
  :words (
   (w::vision
   (senses
-   ((LF-PARENT ONT::physical-sense)
+   ((LF-PARENT ONT::ability-to-see)
     (TEMPL MASS-PRED-TEMPL)
     )
    )

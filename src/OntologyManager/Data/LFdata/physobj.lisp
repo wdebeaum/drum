@@ -2662,7 +2662,7 @@
 ;;;;;;;;;;;;;;;
 
 (define-type ont::group-object
- :wordnet-sense-keys ("mathematical_group%1:09:00" "group%1:09:00" "chemical_group%1:27:00" "radical%1:27:00" "group%1:27:00" "group%1:03:00" "grouping%1:03:00")
+ :wordnet-sense-keys ("mathematical_group%1:09:00" "group%1:09:00" "chemical_group%1:27:00" "radical%1:27:00" "group%1:27:00" "group%1:03:00" "grouping%1:03:00" "union%1:14:01")
  ;:parent ont::abstract-object-nontemporal
  :parent ont::phys-object
 ;  :sem (F::Abstr-obj (f::group +)) ; group feature not defined for abstract objects
@@ -2816,8 +2816,14 @@
  )
 
 (define-type ONT::collection
- :wordnet-sense-keys ("collection%1:14:00" "aggregation%1:14:00" "accumulation%1:14:00" "assemblage%1:14:01")
+ :wordnet-sense-keys ("collection%1:14:00" "aggregation%1:14:00" "accumulation%1:14:00" "assemblage%1:14:01" "array%1:14:00" "array%1:10:00")
  :parent ONT::group-object
+ )
+
+;; surplus, excess
+(define-type ONT::surplus
+ :parent ONT::group-object
+ :wordnet-sense-keys ("surplus%1:07:00")
  )
 
 (define-type ONT::sequence

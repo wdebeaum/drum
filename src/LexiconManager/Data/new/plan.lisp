@@ -11,6 +11,10 @@
      (EXAMPLE "let's make a plan")
      (LF-PARENT ONT::procedure)
      )
+    ((meta-data :origin domain-reorganization :entry-date 20170904 :change-date nil :comments nil :wn ("plan%1:09:01"))
+     (EXAMPLE "plans to take over the world")
+     (LF-PARENT ONT::mental-plan)
+     )
     ; nom
 ;    ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("plan%1:09:00"))
 ;     (EXAMPLE "Cancel this plan -- meaning cancel the actions connected with the plan")

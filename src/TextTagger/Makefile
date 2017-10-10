@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.106 2017/10/06 20:14:54 wdebeaum Exp $
+# $Id: Makefile,v 1.107 2017/10/09 18:02:51 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -253,10 +253,10 @@ ifeq (,$(TEXTTAGGER_aspell))
 $(error aspell not configured)
 endif
 
-all:: specialist.aspell
+all:: drum.aspell
 
-install:: specialist.aspell
-	$(INSTALL_DATA) specialist.aspell $(etcdir)/$(MODULE)
+install:: drum.aspell
+	$(INSTALL_DATA) $< $(etcdir)/$(MODULE)
 
 # NOTE: We give aspell back its own default setting for local-data-dir because
 # it actually doesn't work on Debian without this; it fails to find the "en"
@@ -268,8 +268,19 @@ specialist.aspell: downloads/inflection.table
 	  --encoding=utf-8 --lang=en create master ./$@ \
 	2>specialist.aspell.err
 
+drum.aspell: downloads/inflection.table drum-terms.tsv
+	( cut -d'|' -f1 <downloads/inflection.table && \
+	  cut -f1 <drum-terms.tsv \
+	) | perl -CSD -p -e 's/\W+/\n/g;' |sort |uniq \
+	| perl -n -e 'print unless (length($$_) > 100);' \
+	| $(TEXTTAGGER_aspell) \
+	  --local-data-dir="`$(TEXTTAGGER_aspell) config local-data-dir`" \
+	  --encoding=utf-8 --lang=en create master ./$@ \
+	2>drum.aspell.err
+
 clean::
 	rm -rf specialist.aspell specialist.aspell.err
+	rm -rf drum.aspell drum.aspell.err
 
 endif
 

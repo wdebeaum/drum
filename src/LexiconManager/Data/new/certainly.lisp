@@ -6,7 +6,7 @@
  :words (
   (W::CERTAINLY
    (SENSES
-    ((LF-PARENT ONT::likelihood)
+    ((LF-PARENT ONT::certain)
      (LF-FORM W::CERTAIN)
      (TEMPL PRED-S-VP-TEMPL)
      )

@@ -51,11 +51,19 @@
   (senses
    ((meta-data :wn ("pain%1:26:00" "pain%1:09:00"))
     (LF-PARENT ONT::pain)
+    (EXAMPLE "the patient developed severe pain and distension")
     (TEMPL bare-pred-TEMPL)
+    )
+   ((meta-data :origin domain-reorganization :entry-date 20170831 :CHANGE-date nil :comments nil :wn ("pain%1:12:00"))
+    (LF-PARENT ONT::pain-scale)
+    (EXAMPLE "the pain/painfulness of loneliness")
+    (TEMPL COUNT-PRED-TEMPL)
     )
    )
 )
 ))
+
+
 
 #|
 (define-words :pos W::n

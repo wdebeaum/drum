@@ -6,7 +6,7 @@
  :words (
   (w::odour
   (senses
-   ((LF-PARENT ONT::sensory-property)
+   ((LF-PARENT ONT::perceivable-smell-property)
     (TEMPL other-reln-TEMPL)
     )
    )

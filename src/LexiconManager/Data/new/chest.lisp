@@ -2,13 +2,15 @@
 ;;;; w::chest
 ;;;;
 
-(define-words :pos W::n
- :words (
 ;; physical systems, digestive, reproductive,. ...
 ;; those are adjectives
 ;; external
+
+(define-words :pos W::n
+ :words (
   (W::CHEST
-  (senses((LF-PARENT ONT::external-body-part)
+  (senses 
+   ((LF-PARENT ONT::external-body-part)
     (TEMPL body-part-reln-templ)
     )
    )

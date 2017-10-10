@@ -6,7 +6,7 @@
  :words (
   (w::audition
   (senses
-   ((LF-PARENT ONT::physical-sense)
+   ((LF-PARENT ONT::auditory-scale)
     (TEMPL MASS-PRED-TEMPL)
     )
    )

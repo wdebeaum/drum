@@ -13,7 +13,7 @@
      (EXAMPLE "that makes sense")
      )
     ((meta-data :origin calo-ontology :entry-date 20060320 :change-date nil :wn ("sense%1:09:02") :comment verbnet-expansion)
-     (LF-PARENT ONT::physical-sense)
+     (LF-PARENT ONT::ability-to-perceive)
      (example "good food tantalizes the senses")
      )
     )

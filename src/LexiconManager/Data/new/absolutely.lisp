@@ -11,7 +11,7 @@
      (example "he is absolutely ecstatic")
      (preference .98)
      )
-    ((LF-PARENT ONT::likelihood)
+    ((LF-PARENT ONT::not-relative-val)
      (TEMPL PRED-S-VP-TEMPL)
      )
     )

@@ -7,8 +7,12 @@
   (W::VALUE
    (SENSES
     ((LF-PARENT ONT::value-cost) (TEMPL other-reln-templ)
-     (META-DATA :ORIGIN CALO :ENTRY-DATE 20040204 :CHANGE-DATE NIL :wn ("value%1:07:00")
-      :COMMENTS HTML-PURCHASING-CORPUS))))
+     (META-DATA :ORIGIN CALO :ENTRY-DATE 20040204 :CHANGE-DATE NIL :wn ("value%1:21:00")
+      :COMMENTS HTML-PURCHASING-CORPUS))
+    ((LF-PARENT ONT::value) (TEMPL other-reln-templ)
+     (META-DATA :ORIGIN domain-reorganization :ENTRY-DATE 20170904 :CHANGE-DATE NIL :wn ("value%1:07:00")
+     ))
+))
 ))
 
 (define-words :pos W::V :templ agent-theme-xp-templ

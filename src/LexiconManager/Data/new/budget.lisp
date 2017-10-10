@@ -13,6 +13,8 @@
      (example "the budget of the project")
      (TEMPL OTHER-RELN-TEMPL )
      )
+
+    ;; this probably should go elsewhere.
     ((meta-data :origin calo :entry-date 20030605 :change-date nil :wn ("budget%1:21:02") :comments calo-y1script)
      (LF-PARENT ONT::BUDGET)
      (example "our budget of 500 dollars")

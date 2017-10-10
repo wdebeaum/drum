@@ -32,7 +32,7 @@
   (w::distress
   (senses
    ((meta-data :wn ("distress%1:26:00"))
-    (LF-PARENT ONT::distress)
+    (LF-PARENT ONT::distress-scale)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

@@ -10,7 +10,7 @@
 ;     (LF-PARENT ONT::IMAGE)
 ;     (TEMPL OTHER-RELN-TEMPL)
 ;     )
-    ((lf-parent ont::mental-object)
+    ((lf-parent ont::opinion)
      (example "he has strong views about that")
      (meta-data :origin calo-ontology :entry-date 20060215 :change-date nil :wn ("view%1:09:04") :comments caloy3)
      (TEMPL OTHER-RELN-TEMPL)
@@ -26,7 +26,7 @@
    (SENSES
     ((meta-data :origin calo :entry-date 20031230 :change-date nil :comments html-purchasing-corpus)
      (LF-PARENT ONT::ACTIVE-PERCEPTION)
-     (SEM (F::Time-span F::atomic))
+;;     (SEM (F::Time-span F::atomic))
      (TEMPL agent-NEUTRAL-TEMPL)
      )
     )

@@ -17,7 +17,6 @@
     :parent ont::mental-construction
 )
 
-
 ;;; ont::social-imperative represents concepts which
 ;;; apply to general contract types and/or divisions.
 ;;; Roughly, this contains the concepts which are necessary
@@ -93,3 +92,12 @@
   :parent ont::social-contract
   :wordnet-sense-keys ("duty%1:04:00" "duty%1:04:02" "obligation%1:04:00" "responsibility%1:04:00" "role%1:04:01" "role%1:09:00")
 )
+
+
+;; insurance
+
+(define-type ont::protection
+  :parent ont::social-contract
+  :wordnet-sense-keys ("insurance%1:21:02")
+)
+

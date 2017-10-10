@@ -43,7 +43,7 @@
      (meta-data :origin monroe :entry-date 20050404 :change-date 20090731 :wn ("free%5:00:02:unoccupied:00") :comments s12)
      )
     ((meta-data :origin calo :entry-date 20060615 :change-date nil :wn ("free%5:00:00:unpaid:00") :comments pq)
-     (LF-PARENT ONT::COST-val)
+     (LF-PARENT ONT::no-COST-val)
      (example "a free breakfast")
      (SEM (F::GRADABILITY F::+))
      )

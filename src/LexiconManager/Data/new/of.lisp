@@ -6,7 +6,7 @@
  :words (
   ((W::of w::course)
    (SENSES
-    ((LF-PARENT ONT::likelihood)
+    ((LF-PARENT ONT::qualification)
      (TEMPL PRED-S-VP-TEMPL)
      (meta-data :origin cardiac :entry-date 20090427 :change-date nil :comments nil)
      )

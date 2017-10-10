@@ -24,7 +24,7 @@
  :words (
    (W::likely
    (SENSES
-    ((LF-PARENT ONT::likelihood)
+    ((LF-PARENT ONT::likely-val)
      (example "he (most) likely left")
      (meta-data :origin cardiac :entry-date 20090427)
      (TEMPL PRED-S-VP-TEMPL)

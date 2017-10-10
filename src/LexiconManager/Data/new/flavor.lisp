@@ -6,8 +6,9 @@
  :words (
   (w::flavor
   (senses
-   ((LF-PARENT ONT::sensory-property)
+   ((LF-PARENT ONT::perceivable-taste-property)
     (TEMPL other-reln-TEMPL)
+    (example "this food has an odd flavor")
     )
    )
 )

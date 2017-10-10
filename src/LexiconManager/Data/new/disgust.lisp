@@ -16,6 +16,15 @@
    )
 ))
 
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :words (
+  (W::disgust
+   (SENSES
+    ((LF-PARENT ONT::not-attractive-scale) (TEMPL mass-PRED-TEMPL)
+     (META-DATA :ORIGIN domain-reorganization :ENTRY-DATE 20170821 :CHANGE-DATE NIL)
+     )))
+))
+
 #||
 (define-words :pos W::V :templ agent-theme-xp-templ
  :words (

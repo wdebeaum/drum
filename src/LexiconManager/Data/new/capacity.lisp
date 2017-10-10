@@ -7,7 +7,7 @@
   (W::CAPACITY
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
-     (LF-PARENT ONT::ability-scale)
+     (LF-PARENT ONT::able-scale)
      (TEMPL OTHER-RELN-templ)
      )
     )

@@ -786,13 +786,6 @@
              )
  )
 
-;;; phase (of the moon, of the project)
-(define-type ONT::time-span
- :parent ONT::TEMPORAL-PREDICATE
- :arguments ((:REQUIRED ONT::FIGURE)
-	     )
- )
-
 ;;; A class for temporal modifiers introduced by adjectives or adverbials
 (define-type ONT::temporal-modifier
     :parent ONT::TEMPORAL-PREDICATE
@@ -1038,6 +1031,23 @@
 	     (:OPTIONAL ONT::EXTENT (F::Abstr-obj (f::time-scale f::interval) (f::scale ont::duration-scale)))
              )
  )
+
+;;; future, past
+(define-type ONT::time-span
+; :parent ONT::TEMPORAL-PREDICATE
+ :parent ont::time-interval
+ :arguments ((:REQUIRED ONT::FIGURE))
+ )
+
+;;; phase, stage (e.g. phases of the moon) 
+;;; not strictly bound to time, but there currently is no better place to place this type. once abstract sequence is defined
+;;; this type can be moved under it. 
+(define-type ONT::phase
+ :parent ont::time-interval
+ :arguments ((:REQUIRED ONT::FIGURE)
+	     )
+ :comment "e.g., phases of the moon, stage of the project. This type represents stages of a sequence that is more abstract than time."
+)
 
 ;;  this type is constructed by the grammar for dates, times of day, etc.
 (define-type ONT::TIME-LOC

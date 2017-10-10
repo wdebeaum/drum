@@ -7,7 +7,7 @@
    (W::bracket
    (SENSES
     ((meta-data :origin allison :entry-date 20041021 :change-date nil :wn ("bracket%1:14:00") :comments caloy2)
-     (LF-PARENT ONT::NON-MEASURE-ORDERED-DOMAIN)
+     (LF-PARENT ONT::range)
      (TEMPL OTHER-RELN-TEMPL)
      )
     )

@@ -7,7 +7,7 @@
   (w::stress
   (senses
    ((meta-data :wn ("stress%1:26:01"))
-    (LF-PARENT ONT::stress)
+    (LF-PARENT ONT::stress-scale)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

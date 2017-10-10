@@ -16,7 +16,7 @@
      (TEMPL mass-PRED-assoc-with-TEMPL  (XP (% W::vp (W::vform W::ing))))
      )
     ((meta-data :origin domain-reorganization :entry-date 20170810 :change-date nil :comments nil :wn ("difficulty%1:07:00"))
-     (LF-PARENT ONT::difficulty-scale)
+     (LF-PARENT ONT::difficult-scale)
      (EXAMPLE "They agreed about the difficulty of the climb")
      )
     )

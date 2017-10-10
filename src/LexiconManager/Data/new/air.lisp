@@ -6,7 +6,7 @@
  :words (
   ((W::air w::conditioning)
    (SENSES
-    ((LF-PARENT ONT::NON-MEASURE-ORDERED-DOMAIN) (TEMPL COUNT-PRED-TEMPL)
+    ((LF-PARENT ONT::DEVICE) (TEMPL COUNT-PRED-TEMPL)
      (META-DATA :ORIGIN CALO-ontology :ENTRY-DATE 20060609 :CHANGE-DATE NIL :wn ("air_conditioning%1:06:00")
       :COMMENTS plow-req))))
 ))

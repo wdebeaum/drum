@@ -37,6 +37,64 @@
 		)
  )
 
+; social practice
+(define-type ONT::social-practice
+ :parent ONT::mental-construction
+ :wordnet-sense-keys ("custom%1:09:00" "practice%1:09:00" "habit%1:09:00" "routine%1:04:00")
+)
+
+; perceptual-construction
+(define-type ont::perceptual-construction
+ :parent ont::mental-construction
+ :arguments ((:OPTIONAL ONT::FIGURE))
+)
+
+; ability to perceive
+(define-type ont::ability-to-perceive
+ :parent ont::perceptual-construction
+ :wordnet-sense-keys ("perception%1:09:01" "sense%1:09:02")
+)
+
+(define-type ont::ability-to-see
+ :parent ont::ability-to-perceive
+ :wordnet-sense-keys ("vision%1:09:01")
+)
+
+(define-type ont::ability-to-hear
+ :parent ont::ability-to-perceive
+ :wordnet-sense-keys ("hearing%1:09:00")
+)
+
+(define-type ont::ability-to-taste
+ :parent ont::ability-to-perceive
+ :wordnet-sense-keys ("taste%1:09:02")
+)
+
+(define-type ont::ability-to-touch
+ :parent ont::ability-to-perceive
+ :wordnet-sense-keys ("touch%1:09:01")
+)
+
+(define-type ont::ability-to-smell
+ :parent ont::ability-to-perceive
+ :wordnet-sense-keys ("smell%1:09:01")
+)
+
+; perceivable property
+(define-type ont::perceivable-property
+ :parent ont::perceptual-construction
+)
+
+(define-type ont::perceivable-smell-property
+ :parent ont::perceivable-property
+ :wordnet-sense-keys ("smell%1:09:02" "aroma%1:09:01")
+)
+
+(define-type ont::perceivable-taste-property
+ :parent ont::perceivable-property
+ :wordnet-sense-keys ("flavor%1:09:00")
+)
+
 (define-type ONT::grouping
     :comment "a  classification, category, variety of things. Not a set of objects!"
     :parent ONT::version
@@ -366,6 +424,11 @@
     :arguments ((:ESSENTIAL ONT::FIGURE (f::abstr-obj (F::measure-function f::term)))
 		(:ESSENTIAL ONT::GROUND (F::abstr-obj (:default (F::measure-function F::value))))))
 
+(define-type ont::data-structure
+  :parent ont::mathematical-term
+  :wordnet-sense-keys ("matrix%1:14:00")
+)
+
 (define-type ont::number
 ;  :parent ont::ordered-domain
   :parent ONT::MATHEMATICAL-TERM
@@ -373,6 +436,12 @@
        (F::CONTAINER -) (F::INFORMATION f::information-content) (F::INTENTIONAL -)
        )
   )
+
+
+(define-type ont::number-result
+ :parent ont::number
+ :wordnet-sense-keys("sum%1:09:01" "quotient%1:23:00" "product%1:09:00")
+)
 
 ;; layer (of ozone, chocolate), sheet (of ice, paper), slice
 (define-type ont::sheet-abstr
@@ -585,6 +654,11 @@
              )
  )
 
+(define-type ONT::range
+ :wordnet-sense-keys ("range%1:07:00" "bracket%1:14:00")
+ :parent ont::level
+)
+
 (define-type ONT::dynamics
  :wordnet-sense-keys ("dynamics%1:09:00")
  :parent ONT::ABSTRACT-OBJECT
@@ -623,7 +697,7 @@
  )
 
 (define-type ONT::ASSETS
- :wordnet-sense-keys ("assets%1:21:00")
+ :wordnet-sense-keys ("assets%1:21:00" "resource%1:21:00")
 ; :parent ONT::MEASURE-DOMAIN
  :parent ONT::FUNCTION-OBJECT
  :sem (F::Abstr-obj (F::Scale Ont::money-scale))
@@ -762,11 +836,6 @@
 (define-type ont::zipcode
   :parent ont::location-id
   )
-
-;; baseline, guideline
-(define-type ont::standard
- :parent ont::information-function-object
- )
 
 (define-type  ONT::event-defined-by-activity
  :wordnet-sense-keys ("event%1:03:00" "time_period%1:28:00" "period_of_time%1:28:00" "period%1:28:00")
@@ -920,17 +989,49 @@
              )
  )
 
+(define-type ont::mental-atttitude
+ :wordnet-sense-keys("mentality%1:09:01")
+ :parent ONT::mental-construction
+)
+
 (define-type ONT::knowledge-belief
     :wordnet-sense-keys ("knowledge%1:03:00")
     :parent ONT::mental-construction
     :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
 		))
 
+(define-type ONT::understanding
+ :wordnet-sense-keys("understanding%1:09:01" "comprehension%1:09:00")
+ :parent ONT::knowledge-belief
+)
+
+(define-type ont::opinion
+ :parent ONT::knowledge-belief
+ :wordnet-sense-keys ("opinion%1:10:01" "viewpoint%1:09:00" "belief%1:09:00" "opinion%1:09:00")
+)
+
+(define-type ont::concept-notion
+    :wordnet-sense-keys ("thought%1:09:01" "notion%1:09:00" "concept%1:09:00" "conceptualization%1:09:00")
+    :parent ONT::mental-construction
+    :arguments ((:OPTIONAL ONT::FIGURE)
+                )
+)
+
+(define-type ONT::gist
+ ; :wordnet-sense-keys ("kernel%1:09:00" "substance%1:09:01" "core%1:09:00" "center%1:09:00" "centre%1:09:00" 
+ ;		       "essence%1:09:00" "gist%1:09:00" "heart%1:09:01" "heart_and_soul%1:09:00" "inwardness%1:09:02" 
+ ;		       "marrow%1:09:00" "meat%1:09:00" "nub%1:09:00" "pith%1:09:00" "sum%1:09:00" "nitty-gritty%1:09:00")
+ :wordnet-sense-keys ("gist%1:09:00")
+ :parent ONT::concept-notion
+)
+
 (define-type ONT::FEELING
     :wordnet-sense-keys ("feeling%1:03:00" "bother%1:09:00" "worry%1:09:00" "sorrow%1:09:00" "distress%1:12:02" "restlessness%1:12:00")
     :parent ONT::mental-construction
     :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
-		))
+		)
+)
+
 
 ;; reason, motivation
 (define-type ONT::motive
@@ -952,6 +1053,32 @@
 	     (:optional ont::formal)
 	     (:optional ont::GROUND)
 	     )
+)
+
+(define-type ONT::requirements
+ :parent ont::ps-object
+ :wordnet-sense-keys ("term%1:10:02" "provision%1:10:00" "condition%1:10:01" "requirement%1:09:00" "standard%1:09:00" "criterion%1:09:00")
+ :comment "reference or rules that must be met to satisfy evaluation"
+)
+
+(define-type ont::mental-plan
+ :parent ont::ps-object
+ :wordnet-sense-keys("plan%1:09:01")
+)
+
+(define-type ont::budget
+ :parent ont::mental-plan
+ :wordnet-sense-keys("budget%1:21:03")
+)
+
+;; baseline, guideline
+;(define-type ont::standard
+; :parent ont::information-function-object
+; )
+(define-type ONT::standard
+ :parent ont::ps-object
+ :wordnet-sense-keys ("criterion%1:10:00" "standard%1:10:00")
+ :comment "the ideal in terms of which something can be judged"
 )
 
 ;; ways of doing things, accomplishing tasks
@@ -1182,11 +1309,21 @@
              )
  )
 
+
+(define-type ont::value
+ :wordnet-sense-keys ("value%1:07:00")
+ :parent ONT::abstract-object-nontemporal
+  :arguments ((:REQUIRED ONT::FIGURE (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
+              (:REQUIRED ONT::GROUND (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
+              )
+)
+
+
 ;;
 (define-type ONT::VALUE-COST
  :wordnet-sense-keys ("change%1:21:02" "return%1:21:00" "issue%1:21:00" "take%1:21:00" "takings%1:21:00" "proceeds%1:21:00" "yield%1:21:00" "payoff%1:21:02")
  :wordnet-sense-keys ("change%1:21:02" "return%1:21:00" "issue%1:21:00" "take%1:21:00" "takings%1:21:00" "proceeds%1:21:00" "yield%1:21:00" "payoff%1:21:02")
- :parent ONT::abstract-object-nontemporal
+ :parent ONT::value
   :arguments ((:REQUIRED ONT::FIGURE (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
 	      (:REQUIRED ONT::GROUND (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
 	      )
@@ -1208,7 +1345,8 @@
 ;; for account, grant, credit card
 ;; can we find a way to distinguish between bill (put it on my bill) and grant (put it on my grant)?
 (define-type ONT::ACCOUNT
- :parent ONT::ABSTRACT-OBJECT-nontemporal
+ :parent ont::value-cost
+; :parent ONT::ABSTRACT-OBJECT-nontemporal
  :sem (F::Abstr-obj (F::Measure-function F::term)  (f::object-function f::currency) (f::scale ont::money-scale))
   :arguments (
  ;; accounts can belong to individuals, organizations or projects
@@ -1348,6 +1486,8 @@
  )
 
 ;; abnormality, irregularity, anomaly
+;; moved under domain. jena Aug 2017 see not-typical-scale
+#|
 (define-type ONT::abnormality
  :wordnet-sense-keys ("abnormality%1:04:00" "irregularity%1:04:00")
  :parent ONT::event-type
@@ -1355,6 +1495,7 @@
  :arguments ((:OPTIONAL ONT::FIGURE)
              )
  )
+|#
 
 ;; We need f::situation counterparts for medical words classified as ont::treatment or ont::diagnostic for i2b2 because we don't have multiple inheritance
 ;; surgery

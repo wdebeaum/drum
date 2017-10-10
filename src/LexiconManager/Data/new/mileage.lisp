@@ -12,7 +12,7 @@
      (EXAMPLE "determine the mileage between the two cities")
      )
     ((meta-data :origin domain-reorganization :entry-date 20170810 :change-date nil :wn ("mileage%1:24:00") :comments html-purchasing-corpus)
-     (LF-PARENT ONT::distance-per-gasoline)
+     (LF-PARENT ONT::distance-per-gasoline-scale)
      (EXAMPLE "this car gets good mileage")
      )
     )

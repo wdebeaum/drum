@@ -6,7 +6,7 @@
  :words (
    (W::CAPABILITY
    (SENSES
-    ((LF-PARENT ONT::ability-scale)
+    ((LF-PARENT ONT::able-scale)
      (TEMPL COUNT-PRED-TEMPL)
      (META-DATA :ORIGIN CALO :ENTRY-DATE 20040908 :CHANGE-DATE NIL
       :COMMENTS caloy2))))

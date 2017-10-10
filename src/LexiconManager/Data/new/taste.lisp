@@ -20,3 +20,13 @@
    )
 ))
 
+(define-words :pos W::n
+ :words (
+  (w::taste
+  (senses
+   ((LF-PARENT ONT::ability-to-taste)
+    (TEMPL MASS-PRED-TEMPL)
+    )
+   )
+)
+))

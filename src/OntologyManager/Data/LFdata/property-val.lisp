@@ -29,6 +29,27 @@
  :comment "properties which need an observer to be recognized -- subjective to the observer"
 )
 
+; adjectives to do with cost
+(define-type ont::cost-val
+ :parent ont::evaluation-attribute-val 
+ :comment "properties having to do with evaluation of cost"
+)
+
+(define-type ont::expensive-val
+ :parent ont::cost-val
+ :wordnet-sense-keys ("expensive%3:00:00" "pricy%5:00:00:expensive:00")
+)
+
+(define-type ont::not-expensive-val
+ :parent ont::cost-val
+ :wordnet-sense-keys ("cheap%3:00:00")
+)
+
+(define-type ont::no-cost-val
+ :parent ont::cost-val
+ :wordnet-sense-keys ("free%5:00:00:unpaid:00")
+)
+
 ; good, bad, terrible, great
 (define-type ont::acceptability-val
  :parent ont::evaluation-attribute-val 
@@ -667,7 +688,7 @@
 ;; likely, unlikely, probably
 (define-type ont::likelihood-val
  :parent ont::information-property-val
- :comment "(un)certainty to hold true"
+ :comment "likelihood to hold true"
 )
 
 (define-type ont::likely-val
@@ -2559,7 +2580,7 @@
 
 (define-type ont::skinny-val
  :parent ont::relative-to-height-val 
- :wordnet-sense-keys ("slim%5:00:00:thin:03" "skinny%5:00:00:thin:03" "slender%5:00:00:thin:03" )
+ :wordnet-sense-keys ("slim%5:00:00:thin:03" "skinny%5:00:00:thin:03" "slender%5:00:00:thin:03" "thin%3:00:03")
  :comment "less in horizontal orientation with respect to the height"
 )
 
@@ -2676,7 +2697,7 @@
 
 (define-type ont::severe-val
  :parent ont::severity-val 
- :wordnet-sense-keys ("severe%5:00:01:bad:00" "severe%5:00:00:intense:00" )
+ :wordnet-sense-keys ("severe%5:00:01:bad:00" "severe%5:00:00:intense:00" "extreme%5:00:00:intense:00")
 )
 
 (define-type ont::mild-val
@@ -3718,6 +3739,27 @@
  :comment "adjectives that classify the noun that it is pertaining to" 
 )
 
+;; standard measurement 
+(define-type ont::std-measurement-val
+ :parent ont::associated-with-val
+ :wordnet-sense-keys ("metric%3:01:00" "imperial%3:01:02")
+)
+
+;; associated with food
+(define-type ont::associated-with-food-val
+ :parent ont::associated-with-val
+)
+
+(define-type ont::dietary-val
+ :parent ont::associated-with-food-val
+ :wordnet-sense-keys ("dietary%3:01:00")
+)
+
+(define-type ont::nutritional-val
+ :parent ont::associated-with-food-val
+ :wordnet-sense-keys ("nutritional%3:01:00")
+)
+
 ;; relating to commercial enterprise
 (define-type ont::commercial-enterprise-val
  :parent ont::associated-with-val
@@ -3754,6 +3796,12 @@
 (define-type ont::medical-val
  :parent ont::associated-with-val 
  :wordnet-sense-keys ("medical%3:01:00" )
+)
+
+;; medicinal
+(define-type ont::medicinal-val
+ :parent ont::medical-val
+ :wordnet-sense-keys ("medicinal%5:00:00:healthful:00")
 )
 
 ;; associated with body
@@ -3891,6 +3939,25 @@
   :arguments ((:OPTIONAL ONT::GROUND (F::phys-obj))
              )
  )
+
+(define-type ont::spatial-arrangement-val
+ :parent ont::orientation-val
+)
+
+(define-type ont::central-val
+ :parent ont::spatial-arrangement-val
+ :wordnet-sense-keys ("central%3:00:01")
+)
+
+(define-type ont::concentric-val
+ :parent ont::spatial-arrangement-val
+ :wordnet-sense-keys ("concentric%3:00:00")
+)
+
+(define-type ont::peripheral-val
+ :parent ont::spatial-arrangement-val
+ :wordnet-sense-keys ("peripheral%3:00:00")
+)
 
 (define-type ONT::VERTICAL
  :parent ONT::ORIENTATION-VAL

@@ -6,7 +6,7 @@
  :words (
   (w::hearing
   (senses
-   ((LF-PARENT ONT::physical-sense)
+   ((LF-PARENT ONT::ability-to-hear)
     (TEMPL MASS-PRED-TEMPL)
     )
    )

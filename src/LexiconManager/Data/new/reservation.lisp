@@ -8,7 +8,7 @@
    (W::reservation
    (SENSES
     ((meta-data :origin calo-ontology :entry-date 20060125 :change-date nil :wn ("reservation%1:09:00") :comments meeting-understanding)
-     (LF-PARENT ONT::mental-object)
+     (LF-PARENT ONT::opinion)
      (example "i recommend him with no reservations")
      )
     ((LF-PARENT ONT::reserve)

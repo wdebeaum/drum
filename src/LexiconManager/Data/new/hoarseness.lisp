@@ -7,7 +7,7 @@
   (w::hoarseness
   (senses
    ((meta-data :wn ("hoarseness%1:07:00"))
-    (LF-PARENT ONT::medical-symptom)
+    (LF-PARENT ONT::hoarseness-scale)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

@@ -27,3 +27,13 @@
    )
 ))
 
+(define-words :pos W::n
+ :words (
+  (w::touch
+  (senses
+   ((LF-PARENT ONT::ability-to-touch)
+    (TEMPL MASS-PRED-TEMPL)
+    )
+   )
+)
+))

@@ -7,7 +7,7 @@
   (W::THRESHOLD
    (SENSES
     ((meta-data :origin boudreaux :entry-date 20031024)
-     (LF-PARENT ONT::BOUND)
+     (LF-PARENT ONT::value)
      (TEMPL OTHER-RELN-TEMPL)
      )
     )

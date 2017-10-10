@@ -7,7 +7,7 @@
  :words (
 	  (w::stage
 	   (senses
-	    ((lf-parent ont::non-measure-ordered-domain)
+	    ((lf-parent ont::phase)
 	     (example "This stage of the plan")
 	     (meta-data :origin bee :entry-date 20040615 :change-date nil :wn ("stage%1:26:00" "stage%1:28:00") :comments portability-experiment)
 	     )	   	   	   	   

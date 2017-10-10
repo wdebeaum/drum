@@ -7,7 +7,7 @@
  :words (
    (W::PRODUCT
     (SENSES
-     ((LF-PARENT ONT::NON-MEASURE-ORDERED-DOMAIN)
+     ((LF-PARENT ONT::number-result)
       (meta-data :origin leam :entry-date 20070504 :change-date nil :comments nil)
       (example "the product of A and B")
       (TEMPL OTHER-RELN-TEMPL)

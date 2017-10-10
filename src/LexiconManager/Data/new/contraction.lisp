@@ -7,7 +7,7 @@
   (w::contraction
   (senses
    ((meta-data :wn ("contraction%1:04:01"))
-    (LF-PARENT ONT::medical-symptom)
+    (LF-PARENT ONT::muscle-contraction)
     (TEMPL count-pred-TEMPL)
     )
    )
