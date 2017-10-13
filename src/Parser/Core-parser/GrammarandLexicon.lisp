@@ -1038,9 +1038,19 @@ then convert the result  to the lex-entry format that the old parser code expect
 	(if alternates
 	    (let* ((neww (remove-if #'null (lexiconmanager::get-word-def (car (tokenize (car alternates)))
 									(list* :var-prefix *symbol-prefix* feats))))
-		   (good-ones (remove-if #'is-a-placeholder neww)))
+		   (good-ones 
+				      (remove-if #'is-a-placeholder neww)))
 	      (if good-ones
-		  (append good-ones entries)
+		  ;; found a good one -- get one more for robustness
+		  
+		  (let* ((next-alt (if (cadr alternates)
+				      (remove-if #'null 
+						 (lexiconmanager::get-word-def (car (tokenize (cadr alternates)))
+									       (list* :var-prefix *symbol-prefix* feats)))))
+			(more-good-ones 
+			 (remove-if #'is-a-placeholder next-alt)))
+		    
+			(append (mapcar #'tweak-score (append good-ones more-good-ones))  entries))
 		  ;; looks for more?
 		  (look-at-other-alternatives entries (cdr alternates) feats)
 		  ))
@@ -1049,6 +1059,11 @@ then convert the result  to the lex-entry format that the old parser code expect
 	    ))
       ;; have some contentful entries so don't need more
       entries))
+
+(defun tweak-score (c)
+  "lowers score a hair as its coming from the spelling correction"
+  (list* (car c) (cadr c) (* (third c) .99)
+	 (cdddr c)))
 
 (defun look-at-other-alternatives (entries alts feats)
   (if (null alts)
