@@ -11,10 +11,17 @@ rm $lexicon_data_dir/{ONT,W}\:\:*.xml
 rm -f $lexicon_data_dir/TRIPS-ontology.xml
 
 echo "  generating new data files ..."
-cat - <<EOP | lisp -quiet -batch
-:cd "$trips_src_dir/Parser"
+# CMUCL
+#cat - <<EOP | lisp -quiet -batch
+#:cd "$trips_src_dir/Parser"
+#(load "parser")
+#:cd "$trips_src_dir/LexiconManager/Code/WebLex/"
+# SBCL
+cat - <<EOP | lisp --noinform --noprint
+(setf *default-pathname-defaults* #P"$trips_src_dir/Parser/")
 (load "parser")
-:cd "$trips_src_dir/LexiconManager/Code/WebLex/"
+(setf *default-pathname-defaults* #P"$trips_src_dir/LexiconManager/Code/WebLex/")
+
 (load "lisp2xml")
 (load "onttypes2xml")
 (load "words2xml")
