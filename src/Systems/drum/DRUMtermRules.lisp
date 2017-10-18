@@ -751,7 +751,8 @@
 
 	  ;; robust rule for pronouns, e.g., it, itself, we
 	  ; note: the type might be replaced by coref type
-	  (((? reln ONT::PRO ONT::PRO-SET) ?!obj
+	  ; impro is for "you" but there are others
+	  (((? reln ONT::PRO ONT::PRO-SET ONT::IMPRO) ?!obj
 	    ;(:* ?!type ?!w) :PROFORM ?!pro
 	    ?!type :PROFORM ?!pro ; took out the ?!w because coref substitution would remove the ?!w
 	    )

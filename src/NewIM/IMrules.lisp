@@ -777,4 +777,19 @@
 	   ;;(CALL (ACTIVE-PROPOSAL-ON-STACK ?prop ?context))
 	   -confirm5>
 	   (ONT::REJECT :who *USER* :to *ME* :what ?!x))
+
+          ; cancel/revert/scratch it/this/that/the building of the staircase
+          ((ONT::SPEECHACT ?a ONT::SA_REQUEST :content ?!cc)
+	   (ONT::F ?!cc (? t ONT::CANCEL) :AFFECTED ?f)
+	   ;(ONT::PRO ?f ONT::REFERENTIAL-SEM)
+	   -cancel>
+	   (ONT::CANCEL :who *USER* :to *ME* :what ?f))
+	  
+          ; forget it; forget about it
+          ((ONT::SPEECHACT ?a ONT::SA_REQUEST :content ?!cc)
+	   (ONT::F ?!cc (? t ONT::FORGET) :NEUTRAL ?n)
+	   ;(ONT::PRO ?n ONT::REFERENTIAL-SEM)
+	   -forget>
+	   (ONT::CANCEL :who *USER* :to *ME* :what ?n))
+
 	  )) 

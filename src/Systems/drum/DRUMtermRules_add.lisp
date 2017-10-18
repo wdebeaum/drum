@@ -726,6 +726,25 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    )
 	   )
 
+	  ; pTyr176-AKT
+	  ((ONT::TERM ?!loc (? locType ONT::MOLECULAR-SITE ONT::MOLECULAR-DOMAIN ONT::AMINO-ACID ONT::RESIDUE ONT::TERMINUS ONT::MUTATION) :MODS (?!m)) 
+	   (ONT::F ?!m ONT::PHOSPHORILATED)
+	   (ONT::TERM ?!name (? t ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ) :SITE ?!loc)
+	   -phospho2c>
+	   100
+	   (ONT::event ?!m ONT::PHOSPHORYLATION
+	    :rule -phospho2c
+	    :AFFECTED ?!name
+	    :SITE ?!loc
+	    :type ONT::PHOSPHORILATED
+;	    :drum ?code    
+	    )
+	   (ONT::TERM ?!name ?t
+	    :rule -phospho2c-term
+	    :INEVENT ?!m
+	    )
+	   )
+	  
 	  ; pAck1(Tyr); pAck1(Tyr176)
 	  ((ONT::TERM ?!name (? t ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ) :MODS (?!m) :PARENTHETICAL ?!loc) 
 	   (ONT::F ?!m ONT::PHOSPHORILATED)
@@ -771,21 +790,18 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	    )
 	   )
 
-	  #|
-	  ; the amount of Ras
-	  ((?spec ?!amt ONT::GROUP-OBJECT :FIGURE ?!obj)
-	   (ONT::TERM ?!obj ?!t) 
+	  ; the amount/quantity/number (of Ras)
+	  ((?spec ?!amt ONT::QUANTITY-ABSTR :FIGURE ?obj) ; :FIGURE is optional
+	   (ONT::TERM ?obj ?t) 
 	   -amt>
 	   100
-	   (ONT::TERM ?!amt ?!t
+	   (ONT::TERM ?!amt ONT::QTY
 	    :rule -amt
-	    :NAME ...
-	    :SITE ?!loc
-	    :type ONT::PHOSPHORILATED
+	    :entity ?obj
+	    :figure -
 ;	    :drum ?code    
 	    )
 	   )
-	  |#
 	  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	  

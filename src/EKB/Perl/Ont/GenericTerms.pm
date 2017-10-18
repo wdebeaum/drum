@@ -2,7 +2,7 @@
 
 # GenericTerms.pm
 #
-# Time-stamp: <Mon Jul 31 10:00:51 CDT 2017 lgalescu>
+# Time-stamp: <Tue Oct 17 18:17:10 CDT 2017 lgalescu>
 #
 # Author: Roger Carff <rcarff@ihmc.us>, 27 May 2016
 #
@@ -59,6 +59,9 @@ my @data = (
 
 	    # body parts
 	    'ONT::BODY-PART' => 1,
+
+	    # other
+	    'ONT::QTY' => 1,
 	   );
 
 sub new {
