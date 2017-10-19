@@ -939,6 +939,9 @@ sub createEKBTerm
     # Add the name
     add_slot_node("name", normalizeOnt($akrl->getValueForKey(":NAME")), $ekb, $term);
 
+    # Add the Quantity
+    add_child_with_id_attribute ('of', $akrl->getValueForKey(":ENTITY"), $ekb, $term, $akrlList);
+
     # Add Mods
     add_poly_modifiers($term, $ekb, $akrl);
 
