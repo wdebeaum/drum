@@ -24,6 +24,32 @@
    )
 ))
 
+;;;;;;;;;;;;;;;;;;;;;;;;
+; TFTA
+;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-words :pos W::name
+:words (
+ (w::Reactome
+   (SENSES
+    ((LF-PARENT ONT::DATABASE)
+     (TEMPL name-templ)
+     )
+    )
+   )
+))
+
+(define-words :pos W::name
+:words (
+ (w::KEGG
+   (SENSES
+    ((LF-PARENT ONT::DATABASE)
+     (TEMPL name-templ)
+     )
+    )
+   )
+))
+
 ;;;;;
 ; barley paper
 
