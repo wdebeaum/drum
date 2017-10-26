@@ -49,7 +49,13 @@
    (SENSES
     ((LF-PARENT ONT::direction)
      (TEMPL PARTICLE-TEMPL)
-     )  
+     ) 
+
+    ((LF-PARENT ONT::COMPLETELY)
+     (TEMPL PARTICLE-MANNER-TEMPL)
+     (example "I'm zonked out." "He sorted out every scrap of manuscript, every map, and the native letters.")
+     ) 
+
     )
    )
 ))

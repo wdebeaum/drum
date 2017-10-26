@@ -34,14 +34,21 @@
     ((LF-PARENT ONT::FORGET)
      (example "he forgot about the recipe")
      ((meta-data :origin "trips" :entry-date 20060315 :change-date nil :comments nil :wn ("forget%2:31:00" "forget%2:31:01"  "forget%2:31:02")))
-     (TEMPL agent-theme-xp-templ  (xp (% W::pp (W::ptype W::about))))
+     (TEMPL agent-neutral-xp-templ  (xp (% W::pp (W::ptype W::about))))
      )
     ;; this sense only works with "actions"
     ((LF-PARENT ONT::CANCEL)
      (example "forget the problem")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-neutral-XP-TEMPL)
+     (TEMPL AGENT-affected-XP-TEMPL)
      )
+
+    ((LF-PARENT ONT::CANCEL)
+     (example "forget about the problem")
+     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
+     (TEMPL agent-affected-xp-templ  (xp (% W::pp (W::ptype W::about))))
+     )
+
     )
    )
 ))

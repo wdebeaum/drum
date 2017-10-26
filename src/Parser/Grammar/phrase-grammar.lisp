@@ -5056,13 +5056,14 @@
    ;; numbers (only -- number sequences use np-sequenc1e>
    ((NP (SORT PRED)
      (var ?v) (Class ONT::ANY-SEM) 
-     (sem ($ (? ft f::abstr-obj))) ;;(sem ($ (? ft f::phys-obj f::abstr-obj))) 
+     (sem ($ (? ft f::abstr-obj) (f::container -))) ;;(sem ($ (? ft f::phys-obj f::abstr-obj))) 
      (case (? cas sub obj -))
      (LF (% Description (status ont::number) (var ?v) (Sort Individual) ;(lex ?lf)
 	    (CLASS ONT::NUMBER) ;;(Class ONT::REFERENTIAL-SEM) 
 	    (constraint ?restr) 
 	    (lex ?l) (val ?val) 
-	    (sem ($ (? ft f::abstr-obj)));; (sem ($ (? ft f::phys-obj f::abstr-obj))) 
+	    (sem ($ (? ft f::abstr-obj) (f::container -))) ; "container -" to discourage it from being used by IN-LOC for "in 2019"
+	    ;; (sem ($ (? ft f::phys-obj f::abstr-obj))) 
 	    (transform ?transform)
 	    ))
      (postadvbl +) 

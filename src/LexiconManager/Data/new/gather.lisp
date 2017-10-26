@@ -21,6 +21,7 @@
    )
 ))
 
+#|
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
   ((w::gather (w::up))
@@ -34,4 +35,5 @@
     )
    )
 ))
+|#
 

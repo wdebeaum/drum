@@ -71,6 +71,11 @@
      (SYNTAX (W::ALLOW-DELETED-COMP +) (w::degree-adv +))
      (meta-data :origin cardiac :entry-date 20080428 :change-date nil :comments nil)
      )
+
+    ((LF-PARENT ONT::COMPLETELY)
+     (TEMPL PARTICLE-MANNER-TEMPL)
+     (example "The house burnt down." "London nightclub closed down over fights with knives and bottles.")
+     ) 
     
     )
    )
