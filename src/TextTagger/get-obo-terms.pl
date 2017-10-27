@@ -62,6 +62,9 @@ for my $obo_file_name (@ARGV) {
       # also only get human stuff for now
       next unless ($info->{name} =~ /\(human\)$/i);
       $info->{name} =~ s/\s*\([^\(\)]*\)$//i; # remove species from name
+      # also remove modified things (has_part MOD:*)
+      next if (exists($stanza{relationship}) and
+	       grep /^has_part MOD:/, @{$stanza{relationship}});
     }
     $id_to_obo_info{$info->{id}} = $info;
     if (exists($stanza{is_a})) {

@@ -48,3 +48,12 @@
    )
 ))
 
+(define-words :POS w::name :templ name-templ
+  :WORDS (
+    ((w::the w::us)
+   (SENSES
+    ((lf-parent ont::geographic-region)
+     ;(preference .96) ;; don't compete with the article
+     (lf-form w::us)
+     )))
+))

@@ -18,7 +18,7 @@
  :words (
   ((W::WHOLE W::GROAT W::BUCKWHEAT W::FLOUR)
   (senses
-	   ((LF-PARENT ONT::GRAINS)
+	   ((LF-PARENT ONT::FOOD-GRAINS)
 	    (TEMPL MASS-PRED-TEMPL)
 	    (syntax (W::morph (:forms (-none))))
 	    )

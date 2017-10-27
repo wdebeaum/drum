@@ -14,6 +14,7 @@
 )
 ))
 
+#|
 (define-words :pos W::n
  :words (
   (W::CORN
@@ -25,4 +26,5 @@
 	   )
 )
 ))
+|#
 

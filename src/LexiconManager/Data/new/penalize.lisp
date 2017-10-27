@@ -10,12 +10,7 @@
      (LF-PARENT ont::punish)
      (TEMPL agent-affected-xp-templ)
      )
-     ((meta-data :origin cardiac :entry-date 20090121 :change-date 20090508 :comments nil :vn ("judgement-33"))
-     (LF-PARENT ont::punish)
-     (example "he penalized it")
-     (TEMPL agent-theme-xp-templ) 
-     )
-    )
+    
    )
-))
+)))
 
