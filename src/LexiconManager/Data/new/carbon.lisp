@@ -11,3 +11,15 @@
       :COMMENTS HTML-PURCHASING-CORPUS))))
 ))
 
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :words (
+  ((W::carbon w::dioxide)
+   (SENSES
+    (
+     (LF-PARENT ONT::natural-gas-substance)
+     (SEM (F::form F::gas))
+     (TEMPL MASS-PRED-TEMPL)
+     )
+    )
+   )
+))

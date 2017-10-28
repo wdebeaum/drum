@@ -278,9 +278,6 @@
              user::*use-texttagger* ; ... and this system is using it otherwise
 	     ;; ... but it wasn't TextTagger who called us (via LXM)
 	     (not (eq lxm::*request-is-from* 'lxm::texttagger))
-	     ; (FIXME paranoia)
-	     (let ((pp (find-package :parser)))
-	       (and pp (eq (eval (intern "*IN-SYSTEM*" pp)) :drum)))
   	     ;; only adjectives have pertainym links
              (member (get-ss-type synset) '("a" "s") :test #'string=))
     (let* (;; word might've been morphed to match synset, so get all the words

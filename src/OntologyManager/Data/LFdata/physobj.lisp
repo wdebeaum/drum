@@ -112,6 +112,11 @@
     :sem (F::Phys-obj (F::origin F::plant))
     )
 
+(define-type ONT::GRAINS
+    :wordnet-sense-keys ("grain%1:20:00" "cereal%1:20:00")
+    :parent ONT::plant
+    )
+
 ;; stem, leaf
 (define-type ONT::plant-part
     :wordnet-sense-keys ("plant_part%1:20:00")
@@ -2389,10 +2394,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; > Types added for FOOD KB
 
-(define-type ONT::GRAINS
+(define-type ONT::FOOD-GRAINS
     :parent ONT::FOOD
-    :wordnet-sense-keys ("grain%1:13:00" "food_grain%1:13:00" "cereal%1:13:00" "grain%1:20:00" "caryopsis%1:20:00")
+    :wordnet-sense-keys ("grain%1:13:00")
     :sem (f::phys-obj (f::origin f::natural))
+    :comment "grains and grain products for food"
     )
 
 (define-type ONT::DAIRY

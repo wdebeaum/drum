@@ -422,6 +422,10 @@
     (ONT::ANSWER :who *USER* :to *ME* :what ?!vv)
     )
 
+   ((?spec ?!v ONT::NUMBER)
+    -frag-number> 
+    (ONT::ANSWER :who *USER* :to *ME* :what ?!v))
+
    ;; fragment predicates, e.g., severe, very sad, ...
    (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :CONTENT ?!vv)
     (ONT::F ?!vv ONT::PROPERTY-VAL)
