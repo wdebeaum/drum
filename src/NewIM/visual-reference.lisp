@@ -1,5 +1,116 @@
+;;  THIS FILE has code to interface with the external situation
+;;    which could include a representation of a GUI or a model of the actual perceived world
+;;   Also, it provides connects with tagging and classification of phrases
+;;   by external resources that are not handled by texttagger, which does word-level tagging
 
 (in-package :IM)
+
+(defvar *external-phrase-tagger* nil)
+
+(defun Do-visual-reference (index)
+  "This supports any external tagger as determiend by *external-phrase-tagger* variable. Each
+    requires some specialized code that also should be in this file"
+  (let* ((im-record (get-im-record index))
+	 (referring-expressions (utt-record-referring-expressions im-record))
+	 ;; collect all LFs from all referring expressions to get the whole context for this IM record
+	 (ref-context (mapcar (lambda (x) (referent-lf x)) referring-expressions))
+	 )
+   
+    (case *external-phrase-tagger*
+      (variable-finder
+       (mapcar #'(lambda (x)
+		   (identify-parameters x ref-context))
+	       referring-expressions)))
+      ))
+
+(defun identify-parameters (ref context)
+  (let ((lf (referent-lf ref))
+	(input (referent-input ref)))
+    (when (not (or (member (car lf) '(ont::speechact ont::wh-term ont::pro ont::pro-set))))
+      (let* ((type (get-lf-type lf))
+	    (newlf 
+	     (cond 
+	       ((om::subtype type 'ONT::DOMAIN-PROPERTY)
+		(tag-and-install-info 'find-code lf input context))
+	       ((om::subtype type 'ONT::DOMAIN)
+		(tag-and-install-info 'find-var lf input context))
+	       ((om::subtype type 'ONT::PHYS-OBJECT)
+		(tag-and-install-info 'find-code lf input context))
+	       )))
+	
+	(when newlf
+	  (setf (referent-lf ref) newlf))))))
+
+
+(defun tag-and-install-info (fn lf input context)
+  (let ((reply (send-and-wait `(REQUEST :content (,fn
+						  :phrase ,(strip-prep input) :term ,lf :content :context
+						  :top-n 3)))))
+	(case (car reply)
+	  (ANSWER
+	   (format t "~% Found answer: ~S" reply)
+	   (let* ((matches  (remove-if #'(lambda (x)
+					   (let ((score (find-arg-in-act x :score)))
+					     (or (null score)
+						 (not (numberp score))
+						 (< score .6))))
+				       (cdr reply))))
+	     (if matches 
+		 (append lf (list :param-code matches))
+		 )
+	   ))
+      )))
+
+(defun strip-prep (input)
+  "strips off a proposition at the start if it has no semantic content"
+  (if (member (car input)
+	      '(w::of w::to w::in W::by))
+      (mapcar #'put-in-im-package (cdr input))
+      (mapcar #'put-in-im-package input)))
+
+(defun put-in-im-package (w)
+  (convert-to-package w *im-package*))
+
+  #|| ;; process the referring expressions, and put the results in the REFERENT-REFERS-TO field.
+    ;; for the time being, do this KB reference only for OBTW
+    (if (equal trips::*scenario* 'user::|obtw|)
+	(mapcar (lambda (x)
+		  ;; for reach referent, set the kb-assoc-with field with a matching KB reference
+		  (let* ((matching-kb-candidates nil)
+			 (id (referent-id x))
+			 (type (get-referent-type x))
+			 (verb-info (third (find-if (lambda (x) (equal id (get-keyword-arg x :theme))) ref-context))) ;; a verb that has the current referent as its theme
+			 (verb (if (listp verb-info) (second verb-info) verb-info)))
+		    (trace-msg 2 "Visual referent info: ~S ~S ~S " id type verb)
+
+		    (cond
+		      ;; let's work on X
+		      ((or (om::subtype verb 'ont::working)
+			   )
+		       (cond ((member type `(ont::referential-sem ont::problem))
+			      ;; check if there's any problem-related stuff to work on that was visually reported to the user
+			      (let* ((problems-to-focus (fiter-reported-problems-to-focus x ref-context (get-reported-problems-to-focus *problem-lookback-distance*)))
+				     ;; at the moment, pick the first (i.e., the most recent) problem if there are multiple items
+				     (target-kb (get-KB-item (get-keyword-arg (first problems-to-focus) :id))))
+				(if target-kb (push target-kb matching-kb-candidates))))
+			     
+			     ;; otherwise
+			     (t
+			      ;; do nothing
+			      )))
+
+		      (t
+		       ;; do nothing
+		       ))
+
+		    ;; sort the matching candidates and select the best
+		    (trace-msg 2 "Visual reference candidates ~S   " matching-kb-candidates)
+		    (find-matching-KB-candidates-and-make-association-with-a-referent matching-kb-candidates x)))
+		referring-expressions))))
+
+||#
+
+;;  INTERFACING WITH A GUI  (obsolete code to be updated when needed)
 
 ;;
 ;; data structures and functions to access them
@@ -56,47 +167,6 @@
     ;; save the problem ID
     (save-reported-problem id)))
 
-(defun Do-visual-reference (index)
-  (let* ((im-record (get-im-record index))
-	 (referring-expressions (utt-record-referring-expressions im-record))
-	 ;; collect all LFs from all referring expressions to get the whole context for this IM record
-	 (ref-context (mapcar (lambda (x) (referent-lf x)) referring-expressions)))
-    ;; process the referring expressions, and put the results in the REFERENT-REFERS-TO field.
-    ;; for the time being, do this KB reference only for OBTW
-    (if (equal trips::*scenario* 'user::|obtw|)
-	(mapcar (lambda (x)
-		  ;; for reach referent, set the kb-assoc-with field with a matching KB reference
-		  (let* ((matching-kb-candidates nil)
-			 (id (referent-id x))
-			 (type (get-referent-type x))
-			 (verb-info (third (find-if (lambda (x) (equal id (get-keyword-arg x :theme))) ref-context))) ;; a verb that has the current referent as its theme
-			 (verb (if (listp verb-info) (second verb-info) verb-info)))
-		    (trace-msg 2 "Visual referent info: ~S ~S ~S " id type verb)
-
-		    (cond
-		      ;; let's work on X
-		      ((or (om::subtype verb 'ont::working)
-			   )
-		       (cond ((member type `(ont::referential-sem ont::problem))
-			      ;; check if there's any problem-related stuff to work on that was visually reported to the user
-			      (let* ((problems-to-focus (fiter-reported-problems-to-focus x ref-context (get-reported-problems-to-focus *problem-lookback-distance*)))
-				     ;; at the moment, pick the first (i.e., the most recent) problem if there are multiple items
-				     (target-kb (get-KB-item (get-keyword-arg (first problems-to-focus) :id))))
-				(if target-kb (push target-kb matching-kb-candidates))))
-			     
-			     ;; otherwise
-			     (t
-			      ;; do nothing
-			      )))
-
-		      (t
-		       ;; do nothing
-		       ))
-
-		    ;; sort the matching candidates and select the best
-		    (trace-msg 2 "Visual reference candidates ~S   " matching-kb-candidates)
-		    (find-matching-KB-candidates-and-make-association-with-a-referent matching-kb-candidates x)))
-		referring-expressions))))
 
 ;;
 ;; save a reported problem
@@ -133,3 +203,7 @@
 (defun get-KB-items-based-on-gui-actions ()
 
   )
+
+
+;;   Phrase based Tagging
+

@@ -160,6 +160,7 @@
 	 (id (second lf))
 	 (name (find-arg-in-act lf :name-of))
 	 (sem (find-arg-in-act term :sem))
+	 (input (find-arg-in-act term :input))
 	 (start (find-arg-in-act term :start))
 	 (end (find-arg-in-act term :end)))
 	   
@@ -180,6 +181,7 @@
       :end end
       :sem sem
       :index index
+      :input input
       )
      )))
 

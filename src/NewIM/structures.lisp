@@ -149,6 +149,7 @@
   accessibility  ;; info on whether referent is available for different forms of reference
   implicit  ;; a flag set to T for objects introduced into the discourse context but not mentioned (typically via the GUI)
   lf        ;; the LF just for ease of processing since its identical to whats in the LFstore
+  input     ;; the words that generated this LF
   start
   end
   sem
