@@ -500,7 +500,9 @@
      ;; the SUBJVAR is required in the argument to be able to pass in the subject for things like "the dog walked barking".
       (ARG ?v) (VAR ?mod)
       (role ?advrole)
-      (SEM ($ f::abstr-obj (F::type (? !ttt ont::position-reln))))
+      ;(SEM ($ f::abstr-obj (F::type (? !ttt ont::position-reln))))
+      (SEM ($ f::abstr-obj (F::type (? !ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln
+				       ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
       )
      (add-to-conjunct (val (MODS ?mod)) (old ?lf) (new ?new))
      )
@@ -509,7 +511,7 @@
     ((vp- (constraint ?new) (tma ?tma) (class ?class) (sem ?sem) (var ?v)
       (advbl-needed -) (complex +) (subjvar ?subjvar)(GAP ?gap)
       )
-     -adv-vp-post-particle> ;.98   ;;  want to prefer explicitly subcategorized attachments
+     -adv-vp-post-particle> 0.98 ;.98   ;;  want to prefer explicitly subcategorized attachments
      (head (vp- (VAR ?v) 
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		(SEM ?sem) 
@@ -517,6 +519,8 @@
 		(subjvar ?subjvar)
 		(aux -) (gap ?gap)
 		(ellipsis -)
+		; this works too, but I lowered the weight of the rule instead
+		;(result ($ f::abstr-obj (F::type (? !ttt1 ont::position-reln ont::path)))) ; to exclude the verbs which can take DIRECTION
 		))
 
      (advbl (particle +) (particle-role-map manner)
@@ -537,7 +541,7 @@
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
       (advbl-needed -) (complex +) (result-present +) (subjvar ?subjvar)(GAP ?gap)
       )
-     -vp-result-withtransitive> .98   ;;  want to prefer explicitly subcategorized attachments
+     -vp-result-withtransitive> 0.97 ; lower than -adv-vp-post-particle> ;.98   ;;  want to prefer explicitly subcategorized attachments
      (head (vp- (VAR ?v) 
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		(DOBJ (% NP (Var ?npvar) (sem ?sem)))
@@ -596,7 +600,7 @@
     ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
 ;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
-      (SUBJ (% NP (Var ?npvar) (sem ?sem) (agr ?agr) (lex ?lex)))
+      (SUBJ (% NP (Var ?npvar) (sem ?sem) (agr ?agr) (lex ?lex) (case ?case)))
       (subjvar ?npvar) (result-present +)
       (advbl-needed -) (complex +) (GAP ?gap)
       )
@@ -605,7 +609,7 @@
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		;(DOBJVAR -)  ; This doesn't work because it could unify with a dobjvar not yet instantiated
 		(dobj (% -)) ; cannot use (dobj -) because dobj is (% - (W::VAR -))
-		(SUBJ (% NP (Var ?npvar) (agr ?agr) (sem ?sem) (lex ?lex)))  
+		(SUBJ (% NP (Var ?npvar) (agr ?agr) (sem ?sem) (lex ?lex) (case ?case)))  
 		(subjvar ?npvar)
 		(constraint ?con) (tma ?tma) (result-present -)
 		;;(aux -) 
@@ -856,7 +860,7 @@
 	    (RESTR ?restr) ;;(gerund -)   Have to allow gerunds e.g., the debating at the house.
 	    (post-subcat -) (SORT PRED)
 	    (no-postmodifiers -) ;; exclude "the same path as the battery" and advbl attaching to "path"
-	    
+	    (rate-activity-nom -)
 	    ))
      (advbl (ATYPE POST) 
       (result-only -)  ;; only allow adverbials that may be interpreted as something other than a result

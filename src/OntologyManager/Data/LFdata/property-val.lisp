@@ -4204,7 +4204,8 @@
 (define-type ONT::math-related-property-val
     :parent ONT::quantity-related-property-val
     :sem (f::abstr-obj (f::gradability -))
-    :arguments ((:REQUIRED ONT::FIGURE (f::abstr-obj (F::measure-function f::term))))
+    ;:arguments ((:REQUIRED ONT::FIGURE (f::abstr-obj (F::measure-function f::term))))
+    :arguments ((:REQUIRED ONT::FIGURE ((? x f::abstr-obj f::situation) (F::measure-function f::term))))  ; f::situation: exponential increase
     :wordnet-sense-keys("algebraic%3:01:00" "trigonometric%3:01:00")
 )
 

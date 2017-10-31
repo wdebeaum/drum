@@ -16,6 +16,12 @@
      (LF-PARENT ONT::body-movement-self)
      (TEMPL agent-templ) ; like (lie
      )
+
+    (
+     (LF-PARENT ONT::increase)
+     (TEMPL affected-templ) 
+     )
+    
     )
    )
 ))

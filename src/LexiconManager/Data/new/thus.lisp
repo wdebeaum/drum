@@ -7,9 +7,11 @@
  :words (
   (W::THUS
    (SENSES
+    #|
     ((LF-PARENT ONT::MODIFIER)
      (TEMPL ADJ-ADV-OPERATOR-TEMPL)
-     )    
+     )
+    |#
     ((LF-PARENT ONT::therefore)
      (TEMPL pred-s-vp-templ)
      )
@@ -20,4 +22,3 @@
     )
    )
 ))
-

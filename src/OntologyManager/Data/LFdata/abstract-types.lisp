@@ -645,7 +645,7 @@
 
 (define-type ONT::LEVEL
   :comment "words that act as predicates that return the value on a scale/domain: What is the X on this scale?  Note: We exclude words that are identical to the names of the scales they pertain to (e.g., What is the height on the height scale?)"
- :wordnet-sense-keys ("level%1:26:00")
+ :wordnet-sense-keys ("level%1:26:00" "level%1:07:00")
  :sem (F::Abstr-obj (F::Scale Ont::LINEAR-SCALE))
 ; :parent ONT::ordered-DOMAIN
  :parent ONT::ABSTRACT-OBJECT

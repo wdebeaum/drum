@@ -874,10 +874,11 @@
   :arguments ((:essential ONT::affected-result (F::Phys-obj (f::type ont::mammal)))))
 
 (define-type ONT::live
- :wordnet-sense-keys ("exist%2:42:01" "live%2:42:06" "live%2:42:07")
+ :wordnet-sense-keys ("exist%2:42:01" "live%2:42:06" "live%2:42:07" "survive%2:42:01" "survive%2:42:02" "survive%2:42:00")
  :parent ONT::life-process
   :sem (f::situation (:default (f::aspect f::dynamic)))
- 		)
+  :arguments ((:essential ONT::neutral))
+  )
 
 (define-type ONT::die
  :wordnet-sense-keys ("demise%1:28:00" "dying%1:28:00" "death%1:28:00" "death%1:26:01" "destruction%1:26:00" "last%1:28:01" "death%1:28:01" "death%1:26:00" "death%1:19:00" "die%2:30:00" "die%2:30:02"  "death%1:11:00" "decease%1:11:00" "expiry%1:11:00")
@@ -885,13 +886,15 @@
   :sem (f::situation (:default (f::aspect f::dynamic)))
  		)
 
+; merged with ont::live
+#|
 (define-type ONT::survive
  :wordnet-sense-keys ("outlive%2:42:00" "outlast%2:42:00" "survive%2:42:03" "endure%2:42:00")
  :parent ONT::live
   :sem (f::situation (:default (f::aspect f::dynamic)))
   :arguments ((:essential ONT::affected ((? oc F::Phys-obj F::Abstr-obj f::situation))))
   )
-
+|#
 
 ;; breath, heartbeat, inhalation
 (define-type ONT::body-process-event
@@ -1014,7 +1017,7 @@
     :parent ont::object-change
     :arguments ((:required ONT::affected (F::Phys-obj (f::form (? f f::object f::solid))  ; "pizza" is (default) f::solid
 						  ;; Myrosia 2008/16/07 added origin non-living to account for "break a path", "break a stone"
-						  (f::origin (? o  f::artifact f::non-living))
+						  ;(f::origin (? o  f::artifact f::non-living)) ; living: break a leg
 						  ))
 		(:optional ONT::Result (F::Phys-obj (f::form f::object) (f::origin f::artifact)))
 		(:optional ONT::agent)
@@ -4412,6 +4415,8 @@
 (define-type ont::status
   :parent ont::situation-root
   :wordnet-sense-keys ("condition%1:26:00" "status%1:26:01" "state%1:26:02" "state_of_matter%1:26:00" "state%1:03:00")
+ :arguments ((:OPTIONAL ONT::FIGURE)
+             )
   )
 
 ;;; nauseous/sick/sore, chills, nausea, sickness

@@ -113,3 +113,16 @@
    )
 ))
 
+(define-words :pos W::conj :boost-word t
+ :words (
+  ((W::AND W::THUS)
+   (wordfeats (W::conj +) (W::seq +))
+   (SENSES
+    ((LF ONT::AND-THUS)
+     (non-hierarchy-lf t)(TEMPL SUBCAT-ANY-TEMPL)
+     (syntax (w::status (? s ont::definite-plural ont::indefinite-plural)))
+     )
+    )
+   )
+))
+

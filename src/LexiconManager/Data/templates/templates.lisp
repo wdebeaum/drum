@@ -3057,8 +3057,9 @@
     ))
 |#
 
-  (less-adj-templ
-   (SYNTAX (W::COMP-OP W::LESS) (W::SORT W::PRED) (W::ATYPE W::CENTRAL) (W::SUBCAT -) (W::ARG ?arg)
+  (less-adj-templ  ; now all are MORE
+   (SYNTAX (W::COMP-OP W::MORE) ;(W::COMP-OP W::LESS)
+	   (W::SORT W::PRED) (W::ATYPE W::CENTRAL) (W::SUBCAT -) (W::ARG ?arg)
 	   )
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::FIGURE)

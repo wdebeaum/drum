@@ -15,3 +15,15 @@
    )
 ))
 
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :tags (:base500)
+ :words (
+  (W::extreme
+   (SENSES
+    ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("end%1:15:00"))
+     ;(LF-PARENT ont::pos-end-of-trajectory);ONT::LINE-DEPENDENT-LOCATION)
+     (LF-PARENT ONT::ENDPOINT)
+     (TEMPL GEN-PART-OF-RELN-TEMPL)
+     )
+    )
+)))

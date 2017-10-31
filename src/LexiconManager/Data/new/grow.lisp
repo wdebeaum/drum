@@ -6,7 +6,8 @@
  :tags (:base500)
  :words (
   (w::grow
-   (wordfeats (W::morph (:forms (-vb) :ing W::growing :past W::grew :pastpart w::grown :nom growth)))
+   (wordfeats (W::morph (:forms (-vb) :ing W::growing :past W::grew :pastpart w::grown
+				:nom w::growth :nomsubjpreps (w::of) :nomobjpreps -)))
    (senses
     ((meta-data :origin calo-ontology :entry-date 20060214 :change-date nil :comments nil)
      (lf-parent ont::become)
@@ -18,6 +19,18 @@
      (example "the grass grew")
      (templ affected-templ)
      )
+    )
+   )
+))
+
+
+(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+ :tags (:base500)
+ :words (
+  (w::grow
+   (wordfeats (W::morph (:forms (-vb) :ing W::growing :past W::grew :pastpart w::grown
+				:nom w::growth )))
+   (senses
     ((meta-data :origin calo-ontology :entry-date 20060214 :change-date nil :comments nil)
      (lf-parent ont::grow)
      (example "he grew vegetables in his garden")

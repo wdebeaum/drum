@@ -57,7 +57,7 @@
    (senses
    ((meta-data :origin chf :entry-date 20070910 :change-date nil :comments chf-dialogues)
    (lf-parent ont::breathless-val)
-   (templ less-adj-templ)
+   ;(templ less-adj-templ)
    (example "he is short of breath")
    )))
 ))
