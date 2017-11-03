@@ -22,10 +22,11 @@
       (mapcar #'listify x))
     ;; exception for quote operator
     ((member x '(dsl::quote common-lisp::quote)) x)
-    ;; Convert symbols in DSL or CL packages to LD package.
+    ;; Convert symbols in DSL, CL, or LD packages to the current package
+    ;; (usually LD or DSL).
     ((and (symbolp x)
           (member (symbol-package x)
-	          (mapcar #'find-package '(dsl common-lisp))))
+	          (mapcar #'find-package '(dsl ld common-lisp))))
       (intern (symbol-name x)))
     ;; By default, non-lists (atoms) listify to themselves. This covers things
     ;; like explicitly packaged symbols, strings and numbers.
