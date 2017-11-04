@@ -18,7 +18,7 @@
  :tags (:base500)
  :words (
   (W::HALF
-   (wordfeats (W::status W::indefinite-plural) (W::negatable +) (W::NOsimple +) (W::NPmod +))
+   (wordfeats (W::status ont::indefinite-plural) (W::negatable +) (W::NOsimple +) (W::NPmod +))
    (SENSES
     ((LF ONT::HALF)
      (non-hierarchy-lf t)(TEMPL quan-count-mass-TEMPL)

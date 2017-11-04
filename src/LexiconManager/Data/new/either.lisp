@@ -12,7 +12,7 @@
      (meta-data :origin csli-ts :entry-date 20070320 :change-date nil :comments nil)
      (non-hierarchy-lf t) (TEMPL SUBCAT-DOUBLE-CONJ-TEMPL)
      (SYNTAX (w::subcat2 w::or) (w::operator ONT::one-of) 
-	     (w::status w::indefinite) (w::agr ?agr)
+	     (w::status ont::indefinite) (w::agr ?agr)
 	     (W::disj +) (w::conj -) (W::seq +)      
 	     )
      )
@@ -23,7 +23,7 @@
  :tags (:base500)
  :words (
   (W::EITHER
-   (wordfeats (W::status W::quantifier) (W::MASS ?m) (W::AGR W::3s))
+   (wordfeats (W::status ont::quantifier) (W::MASS ?m) (W::AGR W::3s))
    (SENSES
     ((LF ONT::EITHER)
      (non-hierarchy-lf t)

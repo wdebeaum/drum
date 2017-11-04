@@ -136,16 +136,23 @@
 
 (define-predicate 'w::recompute-spec
     #'(lambda (args)
-	(let ((spec (get-fvalue args 'w::spec))
-	      (agr  (get-fvalue args 'w::agr))
-	      (result (get-fvalue args 'w::result)))
-	  
-	(if (eq spec 'ONT::DEFINITE)
+	(recompute-spec args)))
+
+(defun recompute-spec (args)
+  (let ((spec (get-fvalue args 'w::spec))
+	(agr  (get-fvalue args 'w::agr))
+	(result (get-fvalue args 'w::result)))
+    
+    (if (member spec '(ONT::DEFINITE W::DEFINITE))
+	(if (equal agr 'w::|3P|)
+	    (match-vals nil result 'ONT::DEFINITE-PLURAL)
+	    (match-vals nil result 'ONT::DEFINITE))
+	(if (member  spec '(ONT::INDEFINITE W::INDEFINITE))
 	    (if (equal agr 'w::|3P|)
-		
-		(match-vals nil result 'W::DEFINITE-PLURAL)
-		(match-vals nil result spec))
-	    (match-vals nil result spec)))))
+		(match-vals nil result 'ONT::INDEFINITE-PLURAL)
+		(match-vals nil result 'ONT::INDEFINITE))
+	    (match-vals nil result spec))
+   )))
 
 (defun check-if-bound (var)
   "succeeds only if arg is bound to something not equal to -"

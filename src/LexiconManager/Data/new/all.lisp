@@ -134,7 +134,7 @@
  :tags (:base500)
  :words (
   (W::ALL
-   (wordfeats (W::status W::quantifier) (W::npmod +) (W::negatable +))
+   (wordfeats (W::status ont::quantifier) (W::npmod +) (W::negatable +))
    (SENSES
     ((LF ONT::UNIVERSAL)
      (non-hierarchy-lf t)(TEMPL quan-count-mass-TEMPL)

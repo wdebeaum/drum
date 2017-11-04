@@ -30,6 +30,7 @@
     ((LF ONT::AND)
      (non-hierarchy-lf t) (TEMPL SUBCAT-ANY-TEMPL)
 ;     (syntax (w::status w::definite-plural))
+     (syntax (w::status (? s ont::definite-plural ont::indefinite-plural)))
      )
     )
    )

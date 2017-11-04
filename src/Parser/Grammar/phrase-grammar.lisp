@@ -2212,7 +2212,7 @@
          -bare-plural-count> 
          ;; Myrosia 10/13/03 added a possibility of (mass bare) -- e.g. for "lunches" undergoing this rule
          (head (N1 (SORT PRED) (mass (? mass count bare)) (mass ?m)
-		   (AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -)
+		   (AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -) (agent-nom -)
 		   (sem ?sem) (transform ?transform)
 		   (post-subcat -)
 		   ))
@@ -2270,7 +2270,7 @@
              )
          -bare-plural-mass>
          (head (N1 (SORT PRED) (mass mass) (MASS ?m) 
-		(AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -)
+		(AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -) (agent-nom -)
 		(sem ?sem) (transform ?transform)
 		(post-subcat -)
 		)))
@@ -3913,7 +3913,7 @@
     ;; this rule handles agentive nominalizations, wraps an "agent" around the event nominalization
     ((N1 (SORT PRED)
       (gap -) (var *) (agr ?agr)
-      (sem ?sem) (mass ?mass)
+      (sem ?sem) (mass count)
       (case (? case sub obj -)) ;; noms aren't case marked, allow any value except posessive
       (class ont::referential-sem)
       (agent-nom -)
@@ -4404,14 +4404,14 @@
 ;            (mass ?m) (sing-lf-only -)
 ;            (poss -) ;; Added by myrosia 2003/11/02 to avoid "our" as NP
 ;            )))
-    
+
     ;; Added by Myrosia to cover the cases where there's a pronoun
     ;; with either singular or plural agreement (e.g. "what" in what
     ;; is this/what are these), but where it does not matter in most
     ;; cases and we need to avoid needless ambiguity
     ((NP (SORT PRED) (case ?case)
       (VAR ?v) (SEM ?sem) (lex ?lex) (Class ?c) (AGR ?agr)
-      (LF (% Description (status ?status) (var ?v) (Class ?c) (SORT (?agr -))
+      (LF (% Description (status ?status) (var ?v) (Class ?c) (SORT PRED) ;(SORT (?agr -))
 	     (Lex ?lex)
 	     (constraint (& (proform ?lex)))
 	     (sem ?sem)))
@@ -4420,10 +4420,10 @@
      -np-pro-noagr>
      (head (pro (SEM ?sem) (AGR ?agr) (VAR ?v) (case ?case)
 	    (LEX ?lex) (VAR ?v) (WH -) (lf ?c)
-	    (mass ?m) (sing-lf-only +) (status ?status)
+	    (mass ?m) (sing-lf-only +)
+	    (status ?status) 
 	    (poss -) ;; Added by myrosia 2003/11/02 to avoid "our" as NP
 	    )))
-
     
     ;; THIS HERE needs a special rule as the AT-LOC modifer from here
     ;;    would normally only modifer AN N1 constituent
@@ -4618,7 +4618,7 @@
      (logical-and (in1 ?gen1) (in2 ?gen2) (out ?gen))
      )
 
-    ;;  simple conjuncts/disjunct of NPS, e.g., the dog and the cat, the horse or the cow
+     ;;  simple conjuncts/disjunct of NPS, e.g., the dog and the cat, the horse or the cow
      ((NP (ATTACH ?a) (var ?v) (agr 3p) (SEM ?sem) (gerund ?ger) 
       (LF (% Description (Status ?status-out) (var ?v) 
 	     (class ?class)
@@ -4647,7 +4647,7 @@
      (logical-and (in1 ?gen1) (in2 ?gen2) (out ?generated))
      (combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
      )
-
+     
     ;;  But not construction, e,g,. apples but not pears, apples not pears, 
      ((NP (ATTACH ?a) (var ?v) (agr ?agr) (SEM ?sem) (gerund ?ger) 
       (LF (% Description (Status ?status) (var ?v) 

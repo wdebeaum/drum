@@ -22,7 +22,7 @@
  :tags (:base500)
  :words (
   (W::LITTLE
-   (wordfeats (W::status W::indefinite)(W::AGR W::3s))
+   (wordfeats (W::status ont::indefinite)(W::AGR W::3s))
    (SENSES
     ((LF ONT::LITTLE)
      (non-hierarchy-lf t)(TEMPL quan-mass-TEMPL)

@@ -6,7 +6,7 @@
  :tags (:base500)
  :words (
    (W::LESS
-   (wordfeats (W::status W::quantifier) (W::negatable +) (W::comparative +) (W::Mass ?m))
+   (wordfeats (W::status ont::quantifier) (W::negatable +) (W::comparative +) (W::Mass ?m))
    (SENSES
     ((LF (:* ONT::QMODIFIER W::LESS)) ;; for some reason, LF-PARENT doesn't work here
      (example "less than seven" "less trucks than that" "less people" "less of the people" "less than seven of the people")

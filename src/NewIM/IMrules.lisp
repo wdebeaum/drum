@@ -181,6 +181,14 @@
 
 
 
+     ;; e.g., Name the drug that...
+     ((ONT::SPEECHACT ?x ONT::SA_REQUEST :CONTENT ?!theme)
+      (ONT::F ?!theme ONT::NAMING :NEUTRAL ?!n :force ?f)
+      (?!spec ?!n ?!t :mods (?!m))
+      (ONT::F ?!m ?!t2)
+      -request-to-identify>
+      (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n :suchthat ?!m)
+      )
    
      ;; e.g., buy me a computer
      ((ONT::SPEECHACT ?x ONT::SA_REQUEST :CONTENT ?!theme)

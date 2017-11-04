@@ -5,7 +5,7 @@
 (define-words :pos W::quan :boost-word t
  :words (
   (W::VARIOUS
-   (wordfeats (W::status W::indefinite-plural))
+   (wordfeats (W::status ont::indefinite-plural))
    (SENSES
     (
      (meta-data :origin monroe :entry-date 20031223 :change-date nil :comments s7)

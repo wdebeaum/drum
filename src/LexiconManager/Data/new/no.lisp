@@ -65,7 +65,7 @@
  :tags (:base500)
  :words (
   (W::NO
-   (wordfeats (W::NEG +) (W::AGR ?agr) (W::MASS ?m) (W::status W::quantifier))
+   (wordfeats (W::NEG +) (W::AGR ?agr) (W::MASS ?m) (W::status ont::quantifier))
    (SENSES
     ((LF ONT::NONE)
      (non-hierarchy-lf t)(TEMPL quan-no-bare-TEMPL)

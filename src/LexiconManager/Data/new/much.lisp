@@ -30,7 +30,7 @@
  :tags (:base500)
  :words (
   (W::MUCH
-   (wordfeats (W::status w::SM) (W::negatable +) (W::AGR W::3s))
+   (wordfeats (W::status ont::SM) (W::negatable +) (W::AGR W::3s))
    (SENSES
     ((LF ONT::MUCH)
      (non-hierarchy-lf t)

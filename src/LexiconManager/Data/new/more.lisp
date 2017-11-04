@@ -6,7 +6,7 @@
  :tags (:base500)
  :words (
   (W::MORE
-   (wordfeats (W::status W::indefinite-plural) (W::negatable +) (W::comparative +) (W::Mass ?m))
+   (wordfeats (W::status ont::indefinite-plural) (W::negatable +) (W::comparative +) (W::Mass ?m))
    (SENSES
     ((LF (:* ONT::QMODIFIER W::MORE)) ;; for some reason, LF-PARENT doesn't work here
      (example "more than seven" "more trucks than that" "more people" "more of the people" "more than seven of the people")
