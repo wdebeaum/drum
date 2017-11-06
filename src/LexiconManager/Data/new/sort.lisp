@@ -46,10 +46,12 @@
      (meta-data :origin plow :entry-date 20060626 :change-date 20090505 :comments pq0380)
      )
 
+    #| ; moved to domain-words
     ((lf-parent ont::TRANSPORT)
      (example "protein sorting")
      (TEMPL agent-affected-xp-templ)
      )
+    |#
 
     )
    )

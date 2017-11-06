@@ -21,10 +21,12 @@
   (W::target
    (wordfeats (W::morph (:forms (-vb) :past w::targeted :ing w::targeting)))
    (SENSES
+    #| ; moved to domain-words
     ((lf-parent ont::TRANSPORT)
      (EXAMPLE "protein targeting")
      (TEMPL agent-affected-GOAL-templ)
      )
+    |#
     ((lf-parent ont::DIRECT-AT)
      (EXAMPLE "This book targets teenagers.  The pickpocket targeted the tourist.")
      (TEMPL neutral-neutral-xp-templ)
