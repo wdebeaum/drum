@@ -31,7 +31,7 @@
    (SENSES
     ((lf-parent ont::TRANSPORT)
      (EXAMPLE "protein targeting")
-     (TEMPL agent-affected-GOAL-templ)
+     (TEMPL agent-affected-GOAL-templ (xp (% W::ADVBL (w::lf (% w::prop (w::class (? x ont::goal-reln ont::source-reln)))))))
      )
     )
    )
@@ -44,7 +44,7 @@
     ((lf-parent ont::TRANSPORT)
      (example "protein sorting")
      ;(TEMPL agent-affected-xp-templ)
-     (TEMPL agent-affected-GOAL-templ)
+     (TEMPL agent-affected-GOAL-templ (xp (% W::ADVBL (w::lf (% w::prop (w::class (? x ont::goal-reln ont::source-reln)))))))
      )
 
     )
@@ -77,60 +77,43 @@
    )
 ))
 
-;;;;;
-; barley paper
+;;;;;;;;;;;;;;;;;;;;;;;;
+; for paper 1
+;;;;;;;;;;;;;;;;;;;;;;;;
 
 #|
 (define-words :pos W::n 
 :words (
- ((w::Cly)
+ (w::RTK
    (SENSES
-    ((LF-PARENT ONT::GENE)
+    ((LF-PARENT ONT::PROTEIN)
      (TEMPL count-pred-templ)
      )
     )
    )
 ))
 
-(define-words :pos W::n 
+; put here because there should be a more principled way to handle adjectives
+(define-words :pos W::adj 
 :words (
- (w::lodicule
+ ((w::short w::lived)
    (SENSES
-    ((LF-PARENT ONT::PLANT-PART)
-     (TEMPL count-pred-templ)
+    ((LF-PARENT ONT::SHORT)
+     (TEMPL CENTRAL-ADJ-TEMPL)
      )
     )
    )
 ))
 
-(define-words :pos W::n 
-:words (
- (w::cleistogamy
+; copied from "resulting"
+(define-words :pos W::adj 
+ :words (
+   (W::ensuing
    (SENSES
-    ((LF-PARENT ONT::PROCESS)
-     (TEMPL count-pred-templ)
-     )
-    )
-   )
-))
-
-(define-words :pos W::n 
-:words (
- ((w::HvAP)
-   (SENSES
-    ((LF-PARENT ONT::MOLECULE)
-     (TEMPL count-pred-templ)
-     )
-    )
-   )
-))
-
-(define-words :pos W::n 
-:words (
- ((w::HvAG)  ; Hv: Hordeum vulgare (barley); AG: AGAMOUS gene 
-   (SENSES
-    ((LF-PARENT ONT::GENE)
-     (TEMPL count-pred-templ)
+    (
+     (LF-PARENT ONT::outcome-val)
+     (TEMPL CENTRAL-ADJ-TEMPL)
+     (example "the ensuing chaos")  
      )
     )
    )

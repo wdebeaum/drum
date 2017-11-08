@@ -806,4 +806,10 @@
 	   -forget>
 	   (ONT::CANCEL :who *USER* :to *ME* :what ?n))
 
+          ; never mind
+          ((ONT::SPEECHACT ?a ONT::SA_REJECT :content w::never-mind)
+	   -cancel2> 1.0  ; higher priority
+	   (ONT::CANCEL :who *USER* :to *ME*))
+	  
+	  
 	  )) 

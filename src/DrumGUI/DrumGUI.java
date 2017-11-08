@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.71 2017/06/29 20:41:58 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.72 2017/11/07 22:13:58 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -511,6 +511,8 @@ public class DrumGUI extends StandardTripsModule {
             handleUtteranceDone(content);
         } else if (verb.equalsIgnoreCase("paragraph-done")) {
             handleParagraphDone(content);
+        } else if (verb.equalsIgnoreCase("reject")) { // temporary (FIXME)
+            handleReplyReject(content);
         } else {
             // ignore
             error("Can't handle tell: " + verb);
@@ -615,6 +617,8 @@ public class DrumGUI extends StandardTripsModule {
             handleReplyOK(content);
         } else if (verb.equalsIgnoreCase("parameters")) {
             // ignore: we only want to log these
+        } else if (verb.equalsIgnoreCase("reject")) {
+            handleReplyReject(content);
         } else {
             // ignore but complain softly
             error("Can't handle reply: " + verb);
@@ -1191,6 +1195,27 @@ public class DrumGUI extends StandardTripsModule {
         }
     }
 
+    /** 
+     * Handler for {@code reply} messages signaling the tag request was rejected. 
+     */
+    private void handleReplyReject(KQMLList content) {
+        KQMLString reason = (KQMLString) content.getKeywordArg(":reason");
+        // current task cannot be accomplished, so...
+        // we send back an error, if reply was requested
+        if ((taskRequest != null) && replyWhenDone) {
+            KQMLPerformative rmsg = new KQMLPerformative("reply");
+            KQMLList rcontent = new KQMLList();
+            rcontent.add("error");
+            rcontent.add(":comment");
+            rcontent.add(reason);
+            rmsg.setParameter(":content", rcontent);
+            reply(taskRequest, rmsg);
+            kb.clear();
+        }
+        // and we move on
+        finishCurrentDocument();
+    }
+
     /**
      * Handler for {@code paragraph-completed} messages signaling data item was fully processed.
      * <p>
@@ -1506,34 +1531,36 @@ public class DrumGUI extends StandardTripsModule {
                 // if we have a callback on this document
                 if (taskRequest != null) {
                     if (replyWhenDone) {
-                        if (replyWithEKB) {
-                            if (doInference) {
-                                // we ask EKBAgent to do inference and let the handler reply
-                                KQMLPerformative perf = new KQMLPerformative("request");
-                                KQMLList content = new KQMLList();
-                                content.add("do-ekb-inference");
-                                content.add(":ekb");
-                                content.add(new KQMLString(kb.getEKBFile()));
-                                content.add(":return-string");
-                                content.add("t");
-                                perf.setParameter(":content", content);
-                                sendWithContinuation(perf, new DoInferenceReplyHandler(taskRequest, documentID));
+                        if (gotOK) { // else we must have rejected it already
+                            if (replyWithEKB) {
+                                if (doInference) {
+                                    // we ask EKBAgent to do inference and let the handler reply
+                                    KQMLPerformative perf = new KQMLPerformative("request");
+                                    KQMLList content = new KQMLList();
+                                    content.add("do-ekb-inference");
+                                    content.add(":ekb");
+                                    content.add(new KQMLString(kb.getEKBFile()));
+                                    content.add(":return-string");
+                                    content.add("t");
+                                    perf.setParameter(":content", content);
+                                    sendWithContinuation(perf, new DoInferenceReplyHandler(taskRequest, documentID));
+                                } else {
+                                    // we take care if it here
+                                    reply(taskRequest, makeExtractionsResultMessage(documentID));
+                                }
                             } else {
-                                // we take care if it here
-                                reply(taskRequest, makeExtractionsResultMessage(documentID));
-                            }
-                        } else {
-                            try {
-                                KQMLPerformative rmsg = new KQMLPerformative("reply");
-                                KQMLList rcontent = new KQMLList();
-                                rcontent.add("done");
-                                rcontent.add(":result");
-                                rcontent.add(new KQMLString(kb.getEKBFile()));
-                                rmsg.setParameter(":content", rcontent);
-                                reply(taskRequest, rmsg); // TODO: must ensure taskRequest != null
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Debug.fatal("Something's wrong!");
+                                try {
+                                    KQMLPerformative rmsg = new KQMLPerformative("reply");
+                                    KQMLList rcontent = new KQMLList();
+                                    rcontent.add("done");
+                                    rcontent.add(":result");
+                                    rcontent.add(new KQMLString(kb.getEKBFile()));
+                                    rmsg.setParameter(":content", rcontent);
+                                    reply(taskRequest, rmsg); // TODO: must ensure taskRequest != null
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Debug.fatal("Something's wrong!");
+                                }
                             }
                         }
                     }

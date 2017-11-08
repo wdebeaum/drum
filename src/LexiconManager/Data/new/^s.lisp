@@ -80,6 +80,7 @@
    )
 ))
 
+#|
 (define-words :pos W::pro :boost-word t :templ PRONOUN-TEMPL
  :tags (:base500)
  :words (
@@ -94,6 +95,7 @@
     )
    )
 ))
+|#
 
 (define-words :pos W::^s :boost-word t :templ NO-FEATURES-TEMPL
  :tags (:base500)

@@ -408,7 +408,7 @@
      (VP vform var agr neg sem subj iobj dobj comp3 part cont gap class subjvar lex headcat transform subj-map tma aux template)
      (VP- vform var agr neg sem subj iobj dobj dobjvar comp3 part cont gap class subjvar lex headcat transform subj-map tma aux passive passive-map template result)
      (S vform neg cont stype gap sem subjvar dobjvar var  lex headcat transform subj)
-     (N1 case VAR AGR MASS SEM Changeagr class reln sort lex headcat transform set-restr result) ;added features for nominalizations
+     (N1 case VAR AGR MASS SEM Changeagr class reln sort lex headcat transform set-restr result rate-activity-nom agent-nom) ;added features for nominalizations
      (NP case VAR AGR MASS SEM Changeagr class reln sort lex headcat transform status)
      (ADVBL SORT ATYPE CONSTRAINT SA-ID PRED NEG TO LEX HEADCAT SEM ARGUMENT SUBCAT IGNORE transform neg)
      (ADV VAR ATYPE SORT ARG PRED ARGUMENT lex headcat transform)
@@ -817,7 +817,9 @@
      (punc (lex w::punc-Comma))
      (head (S (VAR ?v) (LF ?lf) (LF (% prop (constraint ?con))) (aux -)
 	      (wh -) ;; while possible, its very unlikely
-	      (tma ?tma) (stype (? stp decl imp how-about))
+	      (tma ?tma)
+	      ;(stype (? stp decl imp how-about))
+	      (stype (? stp decl how-about))
 	      (subjvar ?subjvar) 
 	      )
            )
@@ -861,6 +863,7 @@
 	    (post-subcat -) (SORT PRED)
 	    (no-postmodifiers -) ;; exclude "the same path as the battery" and advbl attaching to "path"
 	    (rate-activity-nom -)
+	    (agent-nom -)
 	    ))
      (advbl (ATYPE POST) 
       (result-only -)  ;; only allow adverbials that may be interpreted as something other than a result

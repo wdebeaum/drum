@@ -1873,7 +1873,8 @@
 		    (?dobj-map  ?dobjvar)
 		    (?iobj-map ?iobjvar)))
 		    
-     (part ?part)) 
+     ;(part (% -))
+     ) 
     -v-passive+prenom-subj> 
     (np (sort ?sort) (LF (% description (status (? x ont::bare ont::name)))) ;;(RESTR ?nr) (status ?status) 
      (complex -) (gerund -) (var ?v-n) 
@@ -1890,6 +1891,7 @@
 	     (part ?part)
 	     (restr ?con)
 	     ))
+    ?part
     )
     
    
@@ -2781,7 +2783,8 @@
  ;; test: maybe
  ;; test: no
    ((utt (var *) (sem ($ f::proposition)) (uttword +)
-         (lf (% speechact (var *) (class ?sa) (constraint (& (content (?lf :content ?lex))))))
+         ;(lf (% speechact (var *) (class ?sa) (constraint (& (content (?lf :content ?lex))))))
+         (lf (% speechact (var *) (class ?sa) (constraint (& (content ?lf)))))
          (punctype (? x decl imp)))
     -utt4a>
     (head (uttword (lf (?lf)) (lex ?lex) (var ?v) (sa ?sa))))
@@ -2871,14 +2874,23 @@
 	)
      -lets-imp> 1.0 ;; get let's to go through this rule instead of command-imp2
      (word (lex let))
-     (np (lex us) (var ?npvar))
+     ;(np (lex us) (var ?npvar))
+     (word (lex ^s))
      (head (vp (gap  -) (sem ?sem)
 	       (sem ($ f::situation (f::aspect (? aspc f::dynamic f::stage-level))))
 	       (var ?v) (aux -) (tma ?tma)
 	       (constraint ?con)
-	       (subj (% np (var ?npvar)
+	       ;(subj (% np (var ?npvar)
+			;(sem ?subjsem)))
+	       ;(subjvar ?npvar)
+	       (subj (% np (var (% *pro* (status ont::pro-set) (class ont::person) (var *) (sem ?subjsem) (constraint (& (proform w::us)))
+				))
+			(sem ($ f::phys-obj (f::form f::solid-object) (f::spatial-abstraction f::spatial-point)
+				(f::information -) (f::trajectory -) (f::container -) (f::group -)
+				(f::mobility f::self-moving) (f::origin f::human) (f::intentional +)))
 			(sem ?subjsem)))
-	       (subjvar ?npvar)
+	       (subjvar (% *pro* (status ont::pro-set) (class ont::person) (var *) (constraint (& (proform w::us)))
+			   (sem ?subjsem)))
 	       (class ?c)
 	       (vform base) (postadvbl ?pa) (main ?ma)
 	    (transform ?transform)
@@ -2954,7 +2966,8 @@
    ;; test: ok,
    ;;   again, need to generate two variables to do this right
    ((utt (lf (% speechact (var **) (class ont::sa_evaluate) (constraint (& (content ?v))))) (var **)
-     (punctype (? x imp decl)))
+	 (uttword +)
+	 (punctype (? x imp decl)))
     -evaluate1b>
     (head (adjp (wh -) (var ?v) (arg (% *pro* (var *) (class ont::any-sem))) ;; changing this from ont::situation, which is too restrictive for cardiac domain
 	   (lf (% prop (class ont::acceptability-val))) (gap -)))

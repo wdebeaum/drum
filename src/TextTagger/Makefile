@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.107 2017/10/09 18:02:51 wdebeaum Exp $
+# $Id: Makefile,v 1.108 2017/11/07 17:25:14 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -250,7 +250,7 @@ specialist.tsv: get-specialist-tsv.pl downloads/LEXICON downloads/inflection.tab
 ifneq (,$(wildcard Perl/TextTagger/Misspellings.pm))
 
 ifeq (,$(TEXTTAGGER_aspell))
-$(error aspell not configured)
+$(error aspell not configured. Please install aspell and re-run the configure script.)
 endif
 
 all:: drum.aspell
