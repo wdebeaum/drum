@@ -262,13 +262,16 @@ for my $id (@sorted_ids) {
     print $fh "(pos N\n\n";
   }
   $prev_prefix = $prefix;
-  print $fh "(concept NCIT::$id\t(sense (word ";
-  my @name = map { lisp_intern(uc($_)) }
-             split(/\s+/, $id_to_name{$id});
-  print $fh "(" if (@name > 1);
-  print $fh join(' ', @name);
-  print $fh ")" if (@name > 1);
-  print $fh "))";
+  print $fh "(concept NCIT::$id";
+  if ($id_to_name{$id} !~ /^<?https?:\/\//) { # don't bother turning bogus URL "names" into DSL senses
+    print $fh "\t(sense (word ";
+    my @name = map { lisp_intern(uc($_)) }
+	       split(/\s+/, $id_to_name{$id});
+    print $fh "(" if (@name > 1);
+    print $fh join(' ', @name);
+    print $fh ")" if (@name > 1);
+    print $fh "))";
+  }
   if (exists($id_to_parents{$id})) {
     print $fh "\n  (inherit " .
               join(' ',

@@ -725,6 +725,15 @@ sub KQMLUnkeywordify {
     [$verb, %hash, @$rest];
 }
 
+my $symbol_component_re = qr/
+  (?:
+    # not pipequoted
+    [^\s'`"#\(\):\|\\]+ |
+    # pipequoted
+    \| (?: \\ [^\s'`"#\(\)] | [^\s'`"#\(\)\|\\] )+ \| 
+  )
+/x;
+
 sub KQMLAsString {
     my($listref) = @_;
     # Sanity checks
@@ -740,8 +749,20 @@ sub KQMLAsString {
     foreach $item (@$listref) {
 	if (ref($item)) {
 	    $str .= KQMLAsString($item);
-	} else {
+	} elsif ($item =~ /
+		  # string
+		  ^ " (?: \\ . | [^\\] )* " $ |
+		  # symbol or number
+		  ^
+		    # package
+		    (?: (?: $symbol_component_re : )? : )?
+		    # symbol name
+		    $symbol_component_re
+		  $
+		/x) {
 	    $str .= $item;
+	} else {
+	    die "non-ref item won't be parsed as a single token: $item";
 	}
 	$str .= ' ';
     }

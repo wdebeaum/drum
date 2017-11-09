@@ -660,7 +660,8 @@
 (mapcar #'(lambda (x) (add-im-rule x 'SA-rules))
 	;; rules for accepting or rejecting proposals
 	'(
-	 
+
+	  #|
 	  ((ONT::SPEECHACT ?!vv ONT::SA_RESPONSE :content ((? x ont::POS ont::UNSURE-POS) :content ?!cc))
 	   -gen-proposal-rule1>
 	   (ONT::ACCEPT :who *USER* :to *ME*))
@@ -668,9 +669,11 @@
 	   ((ONT::SPEECHACT ?!vv ONT::SA_RESPONSE :content ((? x ont::NEG ont::UNSURE-NEG) :content ?!cc))
 	    -gen-proposal-rule2>
 	    (ONT::REJECT :who *USER* :to *ME*))
-	 
+	  |#
+
 	  ;;  yes, no, I don't think so
-	  ((ONT::SPEECHACT ?!vv ONT::SA_RESPONSE :content (?!x :content ?!cc))
+	  (;(ONT::SPEECHACT ?!vv ONT::SA_RESPONSE :content (?!x :content ?!cc))
+	   (ONT::SPEECHACT ?!vv ONT::SA_RESPONSE :content ?!x)
 	   -YNQ-response-rule1>
 	   (ONT::ANSWER :who *USER* :to *ME* :what ?!x))
 

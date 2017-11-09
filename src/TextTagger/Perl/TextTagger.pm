@@ -831,6 +831,9 @@ sub getTripsTags
 sub send_tell
 {
   my ($self, $content) = @_;
+  if (!ref($content)) {
+    $content = KQML::KQMLReadFromString($content);
+  }
   if (exists($self->{messages_to_send})) {
     push @{$self->{messages_to_send}}, $content;
   } else {
@@ -1274,7 +1277,8 @@ sub receive_request
       die "Unknown request verb " . $content->{verb};
     }
     return 1
-  } || $self->reply_to_msg($msg, "(tell :content (reject :reason \"" . escape_for_quotes($@) . "\"))\n");
+  } || ($msg->{':sender'} eq 'TextTagger' ? die : # we did this to ourself
+        $self->reply_to_msg($msg, "(reply :content (reject :reason \"" . escape_for_quotes($@) . "\"))\n"));
 }
 
 sub receive_tell
