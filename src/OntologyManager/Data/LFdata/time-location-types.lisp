@@ -52,7 +52,7 @@
 (define-type ont::in-loc
   :parent ont::pos-as-containment-reln
   :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj f::abstr-obj) ; measure (music)
-					(f::type (? t ont::phys-object ont::information-function-object ont::mental-construction)) ; mental-construction: signaling-pathway
+					;(f::type (? t ont::phys-object ont::information-function-object ont::mental-construction)) ; mental-construction: signaling-pathway
 				       (f::intentional -) (f::container +) ; containers include corner and pathway
 				   )))
   )
@@ -805,7 +805,7 @@
 ;; temporal locations of events, things
 (define-type ONT::temporal-location
  :parent ONT::TEMPORAL-MODIFIER
- :arguments ((:ESSENTIAL ONT::FIGURE ((? of F::abstr-obj f::situation f::time)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? of F::abstr-obj f::situation f::time))) ; abstr-obj: price
              )
  )
 

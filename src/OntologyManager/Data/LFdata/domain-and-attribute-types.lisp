@@ -718,6 +718,7 @@
 (define-type ont::temperature-alt-scale
  :wordnet-sense-keys ("temperature%1:07:00" "temperature%1:09:00")
  :parent ont::measure-scale 
+ :sem (F::abstr-obj (F::Scale Ont::temperature-scale))
  ;; WORDS: temperature
 )
 
@@ -1294,6 +1295,7 @@
 (define-type ONT::medical-disorders-and-conditions
  :wordnet-sense-keys ("disorder%1:26:03")
  :parent ONT::attribute
+ :sem (F::Abstr-obj (F::container +))
  :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj (F::origin (? og2 f::human f::non-human-animal))))
              )
  )
