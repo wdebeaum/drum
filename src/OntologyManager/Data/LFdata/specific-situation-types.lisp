@@ -4523,8 +4523,10 @@
   :parent ONT::event-defined-by-activity
   )
 
+#| ;moved to ont::recurring-event
 ;; 20121019 changing type jr
 (define-type ONT::holiday
     ;;:parent ONT::day-name
     :parent ont::vacation
   )
+|#

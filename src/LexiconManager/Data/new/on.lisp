@@ -120,11 +120,11 @@
  :words (
   (W::ON
    (SENSES
-    ((LF-PARENT ONT::TIME-weekday-rel)
+    ((LF-PARENT ONT::TIME-on-rel)
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      (example "he departed on Monday")
      )
-    ((LF-PARENT ONT::time-weekday-rel)
+    ((LF-PARENT ONT::time-on-rel)
      (TEMPL BINARY-CONSTRAINT-adj-postpos-TEMPL)
      (meta-data :origin cernl :entry-date 20110114 :change-date nil :comments hpi-acn-3)
      (example "the device placed on that day")

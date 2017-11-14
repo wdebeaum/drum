@@ -96,13 +96,13 @@
 ;;; sem-feat subtypes
 
 (deftype phys-obj-feat ()
-  '(member object-function origin form mobility group spatial-abstraction intentional information container kr-type trajectory))
+  '(member object-function origin form mobility group spatial-abstraction intentional information container kr-type trajectory tangible))
 
 (deftype situation-feat ()
   '(member aspect time-span cause trajectory locative intentional information container kr-type type origin iobj))
 
 (deftype abstr-obj-feat ()
-  '(member measure-function scale intentional information container gradability kr-type object-function origin intensity orientation))
+  '(member measure-function scale intentional information container gradability kr-type object-function origin intensity orientation tangible))
 
 (deftype proposition-feat ()
   '(member intentional information container gradability kr-type origin))

@@ -6,7 +6,7 @@
     )
 
 (define-feature-list-type F::Phys-obj
-    :features (F::object-function F::origin F::form F::mobility F::group F::spatial-abstraction F::intentional F::information F::container F::kr-type f::type F::trajectory)
+    :features (F::object-function F::origin F::form F::mobility F::group F::spatial-abstraction F::intentional F::information F::container F::kr-type f::type F::trajectory F::tangible)
     :defaults (
 	       (F::type ont::phys-object)
 	       ;;(F::object-function F::ANY-object-function)
@@ -15,6 +15,7 @@
 	       (F::Spatial-abstraction (? sab F::spatial-point F::spatial-region))
 	       (F::intentional -) (F::trajectory -)
 	       (F::information -) (F::container -)
+	       (F::tangible +)
 	       ))
   
 (define-feature-list-type F::Situation
@@ -33,7 +34,7 @@
 ;; swier added gradability feature
 ;; swift added orientation and intensity
 (define-feature-list-type F::Abstr-obj
-    :features (F::measure-function F::scale F::intentional F::information F::container F::gradability F::kr-type f::type f::object-function f::origin f::intensity f::orientation)
+    :features (F::measure-function F::scale F::intentional F::information F::container F::gradability F::kr-type f::type f::object-function f::origin f::intensity f::orientation F::tangible)
     :defaults (
 	       (F::type ont::abstract-object)
 	       (F::gradability -)
@@ -44,6 +45,7 @@
 	       (F::Measure-function -) (F::scale -)
 	       ;;(F::object-function -)
 	       (f::origin f::any-origin)
+	       (F::tangible -)
 	       ))
 
 (define-feature-list-type F::Proposition
@@ -63,6 +65,7 @@
 	       (F::type ont::any-time-object)
 	       (F::time-function F::Any-time-function)
 	       (F::time-scale F::point)
-	       (f::scale ont::time-measure-scale) ;; a default -- we need f::scale to allow role restriction sharing between durations such as abstract quantities w/ times, like five minutes, which are (f::scale f::duration), and ont::time-intervals
+	       (f::scale -)
+	       ;;ont::time-measure-scale) ;; a default -- we need f::scale to allow role restriction sharing between durations such as abstract quantities w/ times, like five minutes, which are (f::scale f::duration), and ont::time-intervals
 	       )
     )

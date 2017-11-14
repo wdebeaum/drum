@@ -31,7 +31,7 @@
  :wordnet-sense-keys ("object%1:03:00" "physical_object%1:03:00")
  :parent ONT::referential-sem
  :comment "All physical objects: things that have substance"
- :sem (F::Phys-obj (:default (F::intentional -)))
+ :sem (F::Phys-obj (F::tangible +))
  )
 
 (define-type ONT::situation-root
@@ -51,10 +51,11 @@
      :parent ONT::SITUATION-ROOT
      :comment "Events that involve change or force: should ahve an AGENT or AFFECTED role"
      :arguments ((:optional  ONT::agent ((? cau4 F::situation F::Abstr-obj f::phys-obj)))
-		 (:optional  ONT::affected ((? cau3a F::situation F::Abstr-obj f::phys-obj)))
+		 (:optional  ONT::affected ((? cau3a F::situation F::abstr-obj f::phys-obj) (F::tangible +)))
 		 (:optional  ONT::result ((? cau2 F::situation F::Abstr-obj f::phys-obj) (:default (F::type (? !t ont::position-reln)))))
 		 (:optional ONT::beneficiary ((? cau1 f::phys-obj))))
-     :sem (F::Situation (F::aspect F::dynamic)))
+     :sem (F::Situation (F::aspect F::dynamic))
+     )
 
 
 (define-type ont::occurring
@@ -62,7 +63,7 @@
      :parent ONT::SITUATION-ROOT
      :comment "event occurrence - e.g., an explosion happened"
      :arguments ((:essential ONT::neutral (f::situation (F::aspect F::dynamic)))
-		 (:optional ONT::affected ((? t F::situation F::Abstr-obj f::phys-obj))))
+		 (:optional ONT::affected ((? t F::situation F::Abstr-obj f::phys-obj) (F::tangible +))))
      :sem (F::Situation (F::aspect F::dynamic)))
 
 (define-type ont::event-of-action 
@@ -89,13 +90,13 @@
      :parent ONT::event-of-change
      :comment "A small class of events that take an affected but do not allow an AGENT"
      :sem (F::Situation)
-     :arguments ((:essential ONT::affected  ((? aff F::Abstr-obj f::phys-obj f::situation)))))
+     :arguments ((:essential ONT::affected  ((? aff F::abstr-obj f::phys-obj f::situation) (F::tangible +)))))
 
 (define-type ont::event-of-causation 
      :parent ONT::event-of-action
      :comment "events involving an AGENT acting on an AFFECTED"
      :sem (F::Situation)
-     :arguments ((:essential ONT::affected ((? cau5 F::Abstr-obj f::phys-obj f::situation))))
+     :arguments ((:essential ONT::affected ((? cau5 F::abstr-obj f::phys-obj f::situation) (F::tangible +))))
      )
 
 (define-type ont::event-of-creation
@@ -103,7 +104,8 @@
      :comment "Events that involve creating some new object (typically the AFFECTED-RESULT)"
      :sem (F::Situation)
      :arguments ((:optional ONT::result ((? neu F::situation F::Abstr-obj f::phys-obj)))
-		 (:optional ONT::affected-result ((? neu2 F::situation F::Abstr-obj f::phys-obj))))
+		 (:optional ONT::affected-result ((? neu2 F::situation F::abstr-obj f::phys-obj)
+						  (F::tangible +))))
      )
 
 (define-type ont::event-of-state 
@@ -122,9 +124,11 @@
    )
 
 (define-type ONT::EVENT-TYPE
- :parent ONT::SITUATION-ROOT
- :sem (F::Situation (F::intentional -))
- )
+    :comment "classification of situated events based on social or other criteria, and typically realized by nominals, i.e.,
+        they are not nominalization of verbal events"
+    :parent ONT::SITUATION-ROOT
+    :sem (F::Situation (F::intentional -))
+    )
 
 (define-type ONT::ABSTRACT-OBJECT
  :wordnet-sense-keys ("psychological_feature%1:03:00" "abstraction%1:03:00" "abstract_entity%1:03:00")
@@ -139,6 +143,13 @@
     :sem (F::abstr-obj)
    )
 
+(define-type ont::tangible-abstract-object
+    :parent ont::abstract-object
+    :sem (F::abstr-obj (F::tangible +))
+    :comment "abstract notions that act like things. They can be created, transfered, e.g., mental objects"
+    :sem (F::abstr-obj)
+   )
+
 
 (define-type ont::unit
     :parent ont::abstract-object
@@ -147,7 +158,7 @@
    )
 
 (define-type ont::mental-construction
-    :parent ont::abstract-object-nontemporal
+    :parent ont::tangible-abstract-object
     :comment "constructions of the mind: plans, goals, beliefs, ..."
     :sem (F::abstr-obj (f::information f::mental-construct))
    )

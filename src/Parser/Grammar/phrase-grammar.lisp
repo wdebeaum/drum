@@ -2400,6 +2400,7 @@
 				  (scale ?sc))) (old ?restr) (new ?constr))
 	 )
 
+  
    ;;  special case: "a mile"
 
 	((NP (LF (% description (STATUS ONT::INDEFINITE)
@@ -2559,7 +2560,7 @@
 	       ))
      (case ?case)
      (SORT PRED)
-     (MASS mass)
+     (MASS mass) (AGR ?agr)
      (VAR *) (WH ?w));; must move WH feature up by hand here as it is explicitly specified in a daughter.
     -np-spec-of-mass-indef-pp>
     (SPEC (LF ?spec) (ARG ?v) (VAR ?specvar) (name-spec -) (mass mass) 

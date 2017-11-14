@@ -1516,7 +1516,7 @@
      (argument (% W::S (subjvar ?anysubj)
                           ;; W::NP
 			  ;; W::VP)
-		  (SEM ($ F::situation (f::type (? xx ont::event-of-action)))))) ;;SITUATION (F::trajectory +)))))))
+		  (SEM ($ F::situation (f::type (? xx ont::event-of-action ont::event-of-state)))))) ;;SITUATION (F::trajectory +)))))))
      )
     -distance-np-advbl> 1.0 ;.97
     (head (np (var ?v) (sort unit-measure) (sem ?sem)  

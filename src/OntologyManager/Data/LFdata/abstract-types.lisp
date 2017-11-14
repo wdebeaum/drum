@@ -102,7 +102,7 @@
 
 (define-type ONT::FUNCTION-OBJECT
 ; :parent ONT::domain-property
- :parent ONT::abstract-object-nontemporal
+ :parent ONT::tangible-abstract-object
  :sem (F::Abstr-obj)
  )
 
@@ -1312,7 +1312,7 @@
 
 (define-type ont::value
  :wordnet-sense-keys ("value%1:07:00")
- :parent ONT::abstract-object-nontemporal
+ :parent ONT::tangible-abstract-object
   :arguments (;(:REQUIRED ONT::FIGURE (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
 	      (:REQUIRED ont::FIGURE ((? lo f::phys-obj f::abstr-obj)))
               (:REQUIRED ONT::GROUND (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))

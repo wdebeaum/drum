@@ -509,7 +509,8 @@
 
 (define-type ONT::life-process
  :parent ONT::EVENT-OF-undergoing-action
- :arguments ((:OPTIONAL ONT::affected ((? F::phys-obj F::abstr-obj) (F::origin F::living))) ; abstr-obj: disease
+ :arguments ((:OPTIONAL ONT::affected ((? F::phys-obj F::abstr-obj) (F::origin F::living)
+				       (F::tangible +))) ; abstr-obj: disease
              )
  )
 
@@ -834,8 +835,8 @@
 (define-type ONT::HAVING
  :parent ONT::event-of-state
  :sem (F::SITUATION (F::Aspect F::static) (F::Time-span F::Extended) (F::Trajectory -))
- :arguments ((:REQUIRED ONT::NEUTRAL ((? oc1 F::Phys-obj F::Abstr-obj F::Situation)))
-	     (:ESSENTIAL ONT::NEUTRAL1 ((? oc2 F::Phys-obj F::Abstr-obj))) ;; this used to be the formal1
+ :arguments ((:REQUIRED ONT::NEUTRAL ((? oc1 F::Phys-obj F::abstr-obj F::Situation) (F::tangible +)))
+	     (:ESSENTIAL ONT::NEUTRAL1 ((? oc2 F::Phys-obj F::abstr-obj) (F::tangible +))) 
              )
  )
 
@@ -854,7 +855,7 @@
 (define-type ont::possess
  :wordnet-sense-keys ("own%2:40:00" "have%2:40:04" "possess%2:40:00" "belong%2:40:00" "possession%1:03:00")
   :parent ont::have
-  :sem (F::SITUATION (F::Aspect F::indiv-level) (F::Time-span F::Extended))
+  :sem (F::SITUATION (F::Aspect F::stage-level) (F::Time-span F::Extended))
   :arguments ((:required ont::neutral (F::phys-obj (f::intentional +))) ;; owner is typically a person or organization
 	      )
   )
@@ -863,7 +864,7 @@
 (define-type ont::membership
  :wordnet-sense-keys ("belong%2:42:01" "belong%2:42:07")
   :parent ont::have
-  :sem (F::SITUATION (F::Aspect F::indiv-level) (F::Time-span F::Extended))
+  :sem (F::SITUATION (F::Aspect F::stage-level) (F::Time-span F::Extended))
   :arguments ((:required ont::neutral (F::phys-obj (f::intentional +)))
 	      (:required ont::neutral1 (F::abstr-obj (f::type ont::group-object))) ;; e.g. clubs, companies, ...
 	      )

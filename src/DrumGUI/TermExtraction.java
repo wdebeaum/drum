@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.44 2017/05/25 23:43:09 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.45 2017/11/14 04:41:36 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -43,6 +43,8 @@ public class TermExtraction extends Extraction {
         // :LOGICALOP-SEQUENCE context-term-id --> sequence of term IDs
         SEQ(":LOGICALOP-SEQUENCE"),
         // :OP ontType --> operator joining SEQ
+        SEQ_EXC(":EXCEPT"),
+        // :EXCEPT --> works in conjunction w/ SEQ ; ** FIXME: currently not provided! **
         OP(":OPERATOR"),
         // :CELL-LINE context-term-id --> cell line
         CELL_LINE(":CELL-LINE"),
@@ -270,6 +272,15 @@ public class TermExtraction extends Extraction {
             if ((aValue != null) && !aValue.toString().equals("-")) {
                 attributes.put(attr, aValue);
             }
+            // fix for :LOGICALOP-SEQUENCE with :EXCEPT -- currently not included in the extraction
+            if (attr.equals(Attribute.SEQ)) {
+                KQMLList term = findTermByVar(id, context);
+                KQMLObject exceptVar = term.getKeywordArg(":EXCEPT");
+                if (exceptVar != null) {
+                    attributes.put(Attribute.SEQ_EXC, exceptVar);
+                    Debug.debug("Added exception: " + exceptVar);
+                }
+            }
         }
     }
 
@@ -399,10 +410,17 @@ public class TermExtraction extends Extraction {
         String ruleID = value.getKeywordArg(":RULE").toString();
 
         KQMLObject sequence = attributes.get(Attribute.SEQ);
+        // fix for :LOGICALOP-SEQUENCE -- sometimes we don't get a list
+        if (sequence instanceof KQMLToken) {
+            KQMLList new_seq = new KQMLList();
+            new_seq.add(sequence);
+            sequence = new_seq;
+        }
+        KQMLObject exception = attributes.get(Attribute.SEQ_EXC);
         KQMLObject operator = attributes.get(Attribute.OP);
-        String aggregate = createAggregateXML((KQMLList) sequence, operator.toString());
+        String aggregate = createAggregateXML(operator.toString(), (KQMLList) sequence, (KQMLToken) exception);
         
-        // FIXME: do sequences have :DRUM info???
+        // FIXME: should aggregates have :DRUM info???
         String dbID = getDBTermIds();
 
         return "<" + exType + " " +
@@ -426,12 +444,17 @@ public class TermExtraction extends Extraction {
     /**
      * Returns an {@code <aggregate>} XML element representing an aggregation, via a logical operation, of terms.
      */
-    private String createAggregateXML(KQMLList varSeq, String operator) {
+    private String createAggregateXML(String operator, KQMLList varSeq, KQMLToken varExc) {
         String result = "";
+        String op = removePackage(operator, false);
         for (KQMLObject var: varSeq) {
             result += "<member id=\"" + removePackage(var.toString(), false) + "\" />";
         }
-        return "<aggregate operator=\"" + removePackage(operator, false) + "\">" + result + "</aggregate>";
+        if (varExc != null) {
+            result += "<except id=\"" + removePackage(varExc.toString(), false) + "\" />";
+            op = "BUT-NOT";
+        }
+        return "<aggregate operator=\"" + op + "\">" + result + "</aggregate>";
     }
 
     /**

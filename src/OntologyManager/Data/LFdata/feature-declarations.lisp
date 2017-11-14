@@ -377,6 +377,13 @@
           )
  )
 
+(define-feature F::tangible
+ :values ((+)
+          (-)
+          )
+ )
+ 
+
 (define-feature F::scale
  ; (F::any-scale
    :values ((-)

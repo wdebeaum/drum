@@ -776,7 +776,7 @@
 
 (define-type ONT::temporal-predicate
  :parent ONT::PREDICATE   ;; if we change this to extent-predicate, we need to generalize the restrition
- :sem  (F::abstr-obj (F::Scale Ont::time-measure-scale))
+ :sem  (F::abstr-obj) ;; (F::Scale Ont::time-measure-scale))
  )
 
 ;;; A class for core temporal properties of events - aspect, tense, ...
@@ -811,13 +811,14 @@
 
 ;; durations
 (define-type ONT::event-duration-modifier
- :parent ONT::TEMPORAL-MODIFIER
- :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::situation f::time)))
-;             (:essential ont::GROUND (f::abstr-obj (F::Scale Ont::duration-scale) (F::type ont::time-unit)))
-;             (:essential ont::GROUND ((? gd F::abstr-obj F::time) (F::time-scale f::interval)))
-	    
-             ;(:essential ont::GROUND (F::abstr-obj (F::Scale Ont::duration-scale) (F::type ont::time-unit)))
-             (:essential ont::GROUND ((? gd F::abstr-obj F::time) (F::Scale Ont::duration-scale) (F::type ont::time-unit ont::time-interval)))
+    :sem (F::ABSTR-OBJ  (F::Scale Ont::duration-scale))
+  :parent ONT::TEMPORAL-MODIFIER
+  :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::situation f::time)))
+					;             (:essential ont::GROUND (f::abstr-obj (F::Scale Ont::duration-scale) (F::type ont::time-unit)))
+					;             (:essential ont::GROUND ((? gd F::abstr-obj F::time) (F::time-scale f::interval)))
+	      
+					;(:essential ont::GROUND (F::abstr-obj (F::Scale Ont::duration-scale) (F::type ont::time-unit)))
+	      (:essential ont::GROUND ((? gd F::abstr-obj F::time) (F::Scale Ont::duration-scale) ))
   ))
 
 #|
@@ -953,11 +954,11 @@
 
 ;;; some things apply only to day names
 ;; on Monday, on the next day
-(define-type ONT::time-weekday-rel
+(define-type ONT::time-on-rel
  :parent ONT::temporal-location
- :arguments ((:ESSENTIAL ONT::GROUND (F::time (F::time-function F::day-of-week)))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::time (f::type ont::date-object-on))
              )
- )
+ ))
 
 ;;; some things apply only to time specifications like 5am/noon
 (define-type ONT::time-clock-rel
@@ -1024,7 +1025,7 @@
 (define-type ONT::TIme-interval
  :wordnet-sense-keys ("interval%1:28:00" "time_interval%1:28:00" "time%1:28:03" "clock_time%1:28:00" "time%1:28:00" "time%1:28:05" "time_period%1:28:00")
  :parent ONT::TIME-OBJECT
- :sem (F::time (F::time-scale (? sc F::interval)) (F::Scale Ont::duration-scale))
+ :sem (F::time (F::time-scale (? sc F::interval)) (F::Scale -)) ;;Ont::duration-scale))
  :arguments ((:OPTIONAL ONT::GROUND (F::time (f::time-function f::time-frame) (f::time-scale f::interval) (f::scale ont::duration-scale)))
              ;;; a time of two hours
              (:OPTIONAL ONT::FIGURE ((? t f::situation f::abstr-obj)))
@@ -1101,27 +1102,49 @@
 
 (define-type ONT::date-object
  :wordnet-sense-keys ("date%1:28:03" "time%1:03:00")
+ :comment "classification of time intervals with respect to some conceptual organization (e.g., calendar)"
  :parent ONT::TIME-Object
- :sem (F::time (F::time-function F::time-of-year))
+ :sem (F::time (F::time-function F::time-of-year) (f::time-scale f::interval))
  )
+
+(define-type ont::date-object-on
+    :comment "date objects that use ON - e.g., on Monday, on my birthday"
+    :parent ONT::TIME-Object
+    )
+
+(define-type ont::date-object-in
+    :comment "date objects that use IN - e.g., in June"
+    :parent ONT::TIME-Object
+    )
 
 (define-type ONT::day-name
  :wordnet-sense-keys ("day_of_the_week%1:28:00")
- :parent ONT::DATE-OBJECT
+ :parent ONT::DATE-OBJECT-on
  :sem (F::time (F::time-function F::day-of-week))
    :arguments ((:OPTIONAL ONT::FIGURE ((? t f::situation f::abstr-obj)))
 	       (:optional ont::GROUND)
              )
  )
 
+(define-type ont::recurring-event
+    :comment "events that recur every year (or some time interval)"
+    :parent ONT::date-object-on)
+
+
+(define-type ONT::holiday
+    :comment "recurring events based on religious or social activities"
+    :parent ont::recurring-event
+  )
+
+
 (define-type ONT::month-name
  :wordnet-sense-keys ("calendar_month%1:28:00" "month%1:28:01")
- :parent ONT::DATE-OBJECT
+ :parent ONT::DATE-OBJECT-IN
  :sem (F::time (F::time-function F::month-name))
  )
 
 (define-type ONT::era
- :parent ONT::DATE-OBJECT
+ :parent ONT::DATE-OBJECT-IN
  :sem (F::time (f::time-function f::era))
  )
 
