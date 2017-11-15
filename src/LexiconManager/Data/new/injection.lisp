@@ -7,7 +7,7 @@
   (W::injection
    (SENSES
     ((meta-data :origin cardiac :entry-date 20090402 :change-date nil :comments nil)
-     (LF-PARENT ont::treatment)
+     (LF-PARENT ont::medical-event)
      (example "he gave him a shot")
        )
     )

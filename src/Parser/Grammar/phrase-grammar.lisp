@@ -227,8 +227,8 @@
 	((possessor (LF ONT::DEFINITE) (AGR ?agr) (ARG ?arg) (MASS ?m)
 	  (RESTR (& (assoc-poss
 		     (% *PRO* (VAR ?v) (SEM ?sem)
-			(STATUS ont::PRO) (class ?lf) (constraint (& (proform ?lex)))))))
-	  (NObareSpec +) (WH (? wh Q -)) (wh-var ?v))	 
+			(STATUS *WH-TERM*) (class ?lf) (constraint (& (proform ?lex)))))))
+	  (NObareSpec +) (WH Q) (wh-var ?v))	 
 	 -possessive3-Q> 1
 	 (head (PRO (CASE POSS) (WH Q)
 		    (STATUS ont::PRO-DET) (SEM ?sem) (VAR ?v) (LF ?lf) (lex ?lex) (input ?i))))
@@ -3563,6 +3563,7 @@
 		(restr ?restr)
 		(subj (% NP (var ?v1)))
 		(subj-map ?!subjmap)
+		(dobj-map -)
 		(comp3 ?comp3)
 		(comp3-map ?comp-map)
 		(agent-nom -)

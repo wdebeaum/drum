@@ -330,14 +330,15 @@
 	 (akrl 
    	  (cond ((member (car lf) '(ONT::THE-SET ONT::INDEF-SET ONT::PRO-SET))
 			 (add-lex (list* (map-to-krspec lf) var :instance-of 'ONT::SET :element-type type 
-					 (remove-args (cdddr lf) '(:proform :start :end))
+					 (remove-args (cdddr lf) '(:start :end)) ;'(:proform :start :end))
 					 ) w))
 		 ((member :operator lf)
 		  (add-lex (list* (map-to-krspec lf) var :instance-of 'ONT::SEQUENCE :element-type type 
-				  (remove-args (cdddr lf) '(:proform :start :end))
+				  (remove-args (cdddr lf) '(:start :end)) ;'(:proform :start :end))
 				  ) w))
 		 (t (add-lex (list* (map-to-krspec lf)  var :instance-of type 
-				    (remove-args (cdddr lf) '(:proform :start :end))) w))))
+				    (remove-args (cdddr lf) '(:start :end)) ;'(:proform :start :end))
+				    ) w))))
 	   )
     ;; now we set the equals value, either to the REFERS-TO, or the COREF links
     (let ((newakrl (replace-role-name akrl :refers-to :equals)))

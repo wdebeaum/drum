@@ -2,6 +2,18 @@
 ;;;; W::turn
 ;;;;
 
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :words (
+  (W::turn
+   (SENSES
+    (
+     (LF-PARENT ont::action-defined-by-game)
+     (example "It's my turn.")
+     )
+    )
+   )
+))
+
 ;; ;; 20121212 GUM change delete type and associated words
 ;(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
 ; :words (

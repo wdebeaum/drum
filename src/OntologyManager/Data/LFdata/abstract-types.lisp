@@ -1148,6 +1148,11 @@
  :parent ONT::ps-object
  )
 
+(define-type ONT::action-defined-by-game
+ :wordnet-sense-keys ("turn%1:04:06" "move%1:04:02")
+ :parent ONT::event-defined-by-activity
+ )
+
 ;; lottery, contest
 (define-type ont::competition
   :wordnet-sense-keys ("competition%1:11:00")
@@ -1502,8 +1507,8 @@
 
 ;; We need f::situation counterparts for medical words classified as ont::treatment or ont::diagnostic for i2b2 because we don't have multiple inheritance
 ;; surgery
-(define-type ONT::medical-action
- :parent ONT::action
+(define-type ONT::medical-event
+ :parent ONT::event-defined-by-activity
  :sem (F::Situation (F::aspect F::dynamic))
  :arguments ((:OPTIONAL ONT::FIGURE)
              )
