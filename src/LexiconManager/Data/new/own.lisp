@@ -11,7 +11,7 @@
     ((EXAMPLE "he owns a truck")
      (LF-PARENT ONT::possess)
      (TEMPL neutral-neutral-templ)
-     (SEM (F::Aspect F::indiv-level) (F::Time-span F::extended))
+     (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
      )
     )
    )
