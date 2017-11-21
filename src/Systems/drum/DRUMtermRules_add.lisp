@@ -283,7 +283,8 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	  ((ONT::TERM ?!obj 
 ;	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :MODS (?!m) )
 	    (? t1 ONT::GENE-PROTEIN) :MODS (?!m) )
-            (ONT::F ?!m (:* (? tmp ONT::MUTANT) ?!m2))
+            ;(ONT::F ?!m (:* (? tmp ONT::MUTANT) ?!m2))
+            (ONT::F ?!m (:* (? tmp ONT::STRANGE) w::mutant))
 	   -simple-ref-mutation5>
 	   100
 	   (ONT::TERM ?!obj ?t1
@@ -296,7 +297,8 @@ ONT::INHIBIT-EFFECT ONT::CAUSE-COME-FROM ONT::REMOVE-FROM ONT::RENDER-INEFFECTIV
 	  ((ONT::TERM ?!obj 
 ;	    (? t1 ONT::CHEMICAL ONT::MOLECULAR-PART ONT::CELL-PART ONT::BODY-PART ONT::SIGNALING-PATHWAY) :SEQUENCE - :PARENTHETICAL ?!m )
 	    (? t1 ONT::GENE-PROTEIN) :PARENTHETICAL ?!m )
-            ((? spec ONT::F ONT::BARE ONT::TERM) ?!m (:* (? tmp ONT::MUTANT ONT::MUTANT-OBJ) ?!m2))  ; "mutant" sometimes come out as a noun, which then needs ONT::BARE
+            ;((? spec ONT::F ONT::BARE ONT::TERM) ?!m (:* (? tmp ONT::MUTANT ONT::MUTANT-OBJ) ?!m2))  ; "mutant" sometimes come out as a noun, which then needs ONT::BARE
+            ((? spec ONT::F ONT::BARE ONT::TERM) ?!m (:* (? tmp ONT::STRANGE ONT::MUTANT-OBJ) w::mutant))  ; "mutant" sometimes come out as a noun, which then needs ONT::BARE
 	   -simple-ref-mutation6>
 	   100
 	   (ONT::TERM ?!obj ?t1

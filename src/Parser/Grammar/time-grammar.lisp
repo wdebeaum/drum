@@ -895,7 +895,8 @@
      (number (val ?!v2) (lex ?l2)))
 
     ;; between 20 and 35
-    ((number (RESTR (& (min ?!v1) (max ?!v2))) (agr 3p) (lex (?l1 ?l2)) (ntype ?ntype) (range +)
+    ((number (RESTR (& (min ?!v1) (max ?!v2))) (agr 3p) (lex (?l1 ?l2)) (ntype w::range) ;(ntype ?ntype)
+	     (range +)
       (var *) (LF ?lf) (coerce ?coerce) (sem ?sem)
       (nobarespec ?nbs)
 	     )

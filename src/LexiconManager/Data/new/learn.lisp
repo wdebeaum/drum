@@ -30,6 +30,10 @@
 	     (TEMPL agent-theme-xp-templ (xp (% W::NP (W::sort W::wh-desc))))
 	     (meta-data :origin calo :entry-date 20040622 :change-date nil :comments y2  :wn ("learn%2:31:00"))
 	     )
+	    ((lf-parent ont::learn)
+	     (Example "I learned to sing.")
+	     (templ agent-theme-SUBJCONTROL-templ)
+	     )	    
 	    ))
 ))
 

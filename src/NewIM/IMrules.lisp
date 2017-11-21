@@ -28,7 +28,18 @@
 		    :as ONT::GOAL)
        )
      
-    ;; e.g., let's work on buying me a computer
+     ; We/I/you will/are going to buy a computer.
+     ((ONT::SPEECHACT ?x ONT::SA_TELL :CONTENT ?!c)  
+      (ONT::F ?!c ?t :AGENT ?!ag :formal ?!theme 
+	:modality (? m ONT::GOING-TO ONT::FUTURE))
+      ((? p ONT::PRO ONT::PRO-SET) ?!v1 ?type :PROFORM (? xx W::I W::WE w::you))
+      -going-to>
+       (ONT::PROPOSE :who *USER* :to *ME*
+		    :what ?!c
+		    :as ONT::GOAL)
+       )
+
+     ;; e.g., let's work on buying me a computer
      ((ONT::SPEECHACT ?x ONT::SA_REQUEST :CONTENT ?!c)
        (ONT::F ?!c (:* ?xx W::WORK-ON) :agent ?!agent :formal ?!action)
       (ONT::PRO ?!agent (ONT::SET-OF ONT::PERSON))

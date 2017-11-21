@@ -42,7 +42,7 @@ This information provided without explanation for CVS experts who just
 want to get on with it.  The TRIPS repository is now hosted on a separate
 machine: <tt>trips.cs.rochester.edu</tt>  Anyone who wants access to the
 repository will need to get an account for the machine, (even people
-who already have a URCS account).  Talk to George Ferguson to get it.
+who already have a URCS account).  Talk to Dave Costello to get it.
 <ul>
   <li>Supported access methods: only <tt>ssh</tt></li>
   <li>Repository location:
@@ -58,7 +58,9 @@ If this doesn't make sense to you, please read on!
 <p>
 The following is a <em>very brief</em> overview of CVS. For much more
 detail, please see the CVS manual (a.k.a. <q>Cederqvist</q>) at
-<a href="http://www.cvshome.org/docs/manual/">http://www.cvshome.org/docs/manual/</a>.
+<a
+href="https://web.archive.org/web/20140209043007/http://ximbiot.com:80/cvs/manual/cvs-1.12.13/cvs.html">Web
+Archive</a>.
 </p><p>
 <ul>
 <li>CVS relies on a <em>repository</em> to store all the files making
@@ -168,6 +170,18 @@ where <tt><em>user</em></tt> is your login username and
 <li>There is no longer any pserver access to the TRIPS repository.</li>
 </ul>
 </p>
+<p>
+To obtain password-free access to the CVS reporitory, generate SSH keys using
+<blockquote>
+<tt>ssh-keygen -t rsa -b 2048<tt/>
+</blockquote>
+This will create a private key (in <tt>id_rsa</tt>) and a public key (in
+<tt>id_rsa.pub</tt>). Send your public key to Dave Costello to add it to the
+authorized keys on the CVS server. After that, run a CVS command and, when you
+get asked for the password, type it in and tell your SSH agent to remember the
+password. 
+</p>
+
 <hr/>
 <h2><a name="Modules">Modules</a></h2>
 CVS supports the notion of <q>modules</q>--a set of files and
@@ -195,21 +209,14 @@ This will checkout into a directory named
 <tt>src/<em>component</em></tt> below the current directory.
 </li>
 <li>To checkout the sources for all the components of a given
-configuration of TRIPS, for example the CALO system:
+configuration of the TRIPS system:
 <blockquote>
  <tt>cvs -d <em>repository</em> <em>module</em></tt>
 </blockquote>
 This will checkout into a directory named <tt>src</tt> in the current
 directory but will only include those components that are part of
 <tt><em>module</em></tt>.
-<p>As of this writing, the list of defined modules includes:
-<tt>parser+</tt>
-<tt>speech-demo</tt>
-<tt>calo</tt>
-<tt>boudreau</tt>
-<tt>lou</tt>
-<tt>ralf</tt>
-<tt>plow</tt>.
+<p>As of this writing, the there i a long list of defined modules.
 Other CVS modules may be defined. The only way to know for sure which
 modules are defined is to checkout the modules list, which is left as
 an exercise.
@@ -575,18 +582,14 @@ This way they can always recreate a released version using the tag.
 <h2><a name="MoreInfo">For more information</a></h2>
 <p>
 <ul>
-<li>CVS Home:
+<li>About CVS:
 <blockquote>
- <a href="http://www.cvshome.org">http://www.cvshome.html</a>
-</blockquote>
-<li>The <q>Cederqvist</q> manual:
-<blockquote>
- <a href="http://www.cvshome.org/docs/manual">http://www.cvshome.html/docs/manual</a>
+ <a href="http://cvs.nongnu.org">CVS Project</a>
 </blockquote>
 <li>From your shell:
 <blockquote>info cvs</blockquote></li>
 <li>In emacs:
-<blockquote>M-x info RET m cvs RET</blockquote></li>
+<blockquote>M-x info RET m cvs RET</blockquote>
 and
 <blockquote>M-x info RET m emacs RET m version RET</blockquote></li>
 </ul>
@@ -594,7 +597,7 @@ and
 <hr/>
 <p>
 George Ferguson<br>
-Last change: 23 Aug 2007
+Last change: 20 Nov 2017 (lgalescu)
 </p>
 </body>
 </html>
