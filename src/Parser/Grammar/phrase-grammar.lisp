@@ -886,11 +886,11 @@
       )
      -N1-subcat1>
      (Head (N (VAR ?v) (lf ?LF)
-	    (SORT ?sort) (ARGUMENT-MAP ?am)
+	    ;(SORT ?sort) (ARGUMENT-MAP ?am)
+	    (SORT (? !sort reln)) (ARGUMENT-MAP ?am) ; reln should go through n1-reln3
 	    (SUBCAT ?!subcat) 
 	    (subcat-map ?!subcatmap)
 	    (SUBCAT (% ?xx (var ?v1) (gap ?gap) (sem ?subcatsem) (postadvbl -)))
-	    	    
 	    ))
      ?!subcat
      (compute-complex (arg0 ?v1) (arg1 ?complex))

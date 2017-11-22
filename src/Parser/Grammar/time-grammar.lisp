@@ -1041,7 +1041,7 @@
     ;; This covers "1" since number-sequence has to have at least 2 numbers
     ((RNUMBER (LF ?lf) (val (?!lf)) (agr ?a) (coerce ?coerce) (sem ?sem) (lex ?lex) (number-only +) (bare-number +))
      -rn2>
-     (head (NUMBER (val ?!lf) (ntype (? !nt w::decpoint w::negative w::positive w::fraction)) 
+     (head (NUMBER (val ?!lf) (ntype (? !nt w::negative w::positive w::fraction)) ;(ntype (? !nt w::decpoint w::negative w::positive w::fraction))  ; allow decpoint for "beat 3.5"
 	    (agr ?a) (sem ?sem) (coerce ?coerce) (lex ?lex)
 	    (premod -)
 	    ))
@@ -1064,7 +1064,8 @@
 
     ;;  e.g., ENGINE E 1
    
-    ((name (lex ?seq) (lf ?cl) (SEM ?sem) (agr 3s) (name +) (generated +)
+     ((name (lex ?seq) (lf ?cl) (SEM ?sem) (agr 3s) (name +) (generated +)
+	    (sort ?sort) (subcat ?subcat) (subcat-map ?smap)
       )
      -noun-nname2> 0.98 ;0.96  ; increased to 0.98 so "block 1 and block 3" would parse
      ;; Myrosia 10/26/03 added (name -) to prevent cases like "aspirin 7" or "pittsford 8"
@@ -1073,7 +1074,8 @@
      (head (n (name -) (one -) (SEM ?sem) (SEM ($ (? xx f::PHYS-OBJ f::abstr-obj) (f::scale -)))   ;; don't want scales like "S" for seconds, etc
 	      (WH -) (lf ?cl) 
 	    (LF (:* ?lfparent ?lfform))
-	    (lex ?lex))) 
+	    (lex ?lex)
+	    (sort ?sort) (subcat ?subcat) (subcat-map ?smap))) ; pass up sort and subcat so we can use n1-reln3 (e.g., the beat 1 of meausure 1)
      (BOUND (arg1 ?cl))
      ;;     (nname (lex ?name))
      (rnumber (val ?name))
@@ -1150,11 +1152,13 @@
     ;; Myrosia 2008/04/30
     ;; A rule that allows "an open switch Z" as well as "open switch Z" without an article
     ;; It's similar to the nname-bare, but requires a generated name with headcat N to disallow "the open A"
-    ((n (sort pred) (class ?lf) (mass (? mm bare count )) (agr 3s) (CASE (? case SUB OBJ))  (generated +)
+    ((n (sort ?sort) (subcat ?subcat) (subcat-map ?smap) ;(sort pred)
+	(class ?lf) (mass (? mm bare count )) (agr 3s) (CASE (? case SUB OBJ))  (generated +)
         (sem ?sem) (lex ?lex)(RESTR (& (name-of ?lex))))
      -nname-bare-generated> 0.96
-     (head (name (SEM ?sem) (generated +) (headcat N)
-	    (SEM ($ f::PHYS-OBJ)) (WH -) (lf ?cl) (lex ?lex))) 
+     (head (name (SEM ?sem) (generated +) (headcat N) (sort ?sort) (subcat ?subcat) (subcat-map ?smap) ; pass up sort and subcat so we can use n1-reln3 (e.g., the beat 1 of meausure 1)
+	    ;(SEM ($ f::PHYS-OBJ)) (WH -) (lf ?cl) (lex ?lex))) 
+	    (SEM ($ (? t f::PHYS-OBJ f::abstr-obj))) (WH -) (lf ?cl) (lex ?lex))) ; abstr-obj: beat (music)
      )
     
 

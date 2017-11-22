@@ -685,7 +685,7 @@
 ;;; from locations involved
 ;;; Source/goal are typi
 (define-type ONT::Transfer
- :wordnet-sense-keys ("change%2:38:00" "transfer%2:38:02" "transfer%2:40:00" "displace%2:38:02")
+ :wordnet-sense-keys ("change%2:38:00" "transfer%2:38:02" "transfer%2:40:00")
  :parent ont::giving
  :sem (F::Situation (F::Cause F::Agentive))
  )
@@ -3446,7 +3446,7 @@
 
 (define-type ONT::exchange
  :parent ONT::arranging
- :wordnet-sense-keys ("exchange%2:40:00" "exchange%2:30:00" "exchange%2:40:02" "transpose%2:30:00" "transpose%2:30:02" "transpose%2:36:00" "transpose%2:30:01")
+ :wordnet-sense-keys ("exchange%2:40:00" "exchange%2:30:00" "exchange%2:40:02" "transpose%2:30:00" "transpose%2:30:02" "transpose%2:36:00" "transpose%2:30:01" "transpose%2:30:03")
  )
 
 (define-type ONT::set-up-device

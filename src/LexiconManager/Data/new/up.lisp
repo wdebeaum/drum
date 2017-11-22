@@ -93,6 +93,7 @@
   (senses
    ((LF-PARENT ONT::in-working-order-val)
     (TEMPL central-adj-templ)
+    (preference 0.98)
     )
    ((LF-PARENT ONT::DIRECTION-UP)
      (TEMPL PREDICATIVE-ONLY-ADJ-TEMPL)

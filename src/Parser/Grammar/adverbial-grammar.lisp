@@ -858,7 +858,7 @@
     ((N1 (RESTR ?new) (POSTADVBL +) (COMPLEX +)) 
      -adv-np-post> 
      (head (N1 (VAR ?v1) ;; (POSTADVBL -) 
-	    (SEM ?argsem) 
+	    (SEM ?argsem) (agr ?agr)
 	    (RESTR ?restr) ;;(gerund -)   Have to allow gerunds e.g., the debating at the house.
 	    (post-subcat -) (SORT PRED)
 	    (no-postmodifiers -) ;; exclude "the same path as the battery" and advbl attaching to "path"
@@ -867,7 +867,7 @@
 	    ))
      (advbl (ATYPE POST) 
       (result-only -)  ;; only allow adverbials that may be interpreted as something other than a result
-      (ARGUMENT (% NP (sem ?argsem) (constraint ?c)  ))
+      (ARGUMENT (% NP (sem ?argsem) (constraint ?c) (var ?v1) (agr ?agr)))
       (SEM ($ f::abstr-obj (F::type (? ttt ont::predicate ont::position-reln))))
       (arg ?v1) (VAR ?mod) (WH -) (GAP -)
       (particle -)  ;; exclude particles as they should attach to the verb
@@ -1509,9 +1509,11 @@
    ;; TEST: The market fell three percent
    ((advbl (arg ?arg) ;;(role (:* ONT::distance W::quantity)) 
      (var *) (subj ?anysubj)
-	   (sort binary-constraint)
+	   (sort binary-constraint) (sem ?sem)
 	   (LF (% PROP (VAR *) (CLASS ONT::extent-predicate) (sem ?sem)
-		  (CONSTRAINT (& (FIGURE ?arg) (scale ?scale) (GROUND ?v)))))
+		  ;(CONSTRAINT (& (FIGURE ?arg) (scale ?scale) (GROUND ?v)))
+		  (CONSTRAINT ?newcon)
+		  ))
 	   (atype (? x W::PRE W::POST))
      (argument (% W::S (subjvar ?anysubj)
                           ;; W::NP
@@ -1522,12 +1524,14 @@
     (head (np (var ?v) (sort unit-measure) (sem ?sem)  
 	      (bare -) ;; we suppress this rule for distances without a specific amount (e.g., "miles")
 	      ;; the semantic restriction is not sufficient to prevent measure-unit phrases such as "a bit" or "a set" as distances so using the lfs to restrict
-	      (lf (% description (constraint (& (scale ?scale)))))
-	      (sem ($ f::abstr-obj (f::scale (? sc ont::scale ont::measure-domain))))
+	      ;(lf (% description (constraint (& (scale ?scale)))))
+	      (lf (% description (constraint ?con)))
+	      (sem ($ f::abstr-obj (f::scale (? sc ont::scale ont::measure-scale)))) ;ont::measure-domain))))
 	      (class  ont::quantity);;(? lft ont::angle-unit ont::length-unit ont::percent ont::distance))
 	      ;; well, 'he walked miles before he reached water'; 'he crawled inches to the next exit' ...; and this restriction prevents the non-unit NPs so if it's reinstated we need two rules
 ;	      (lf (% description (sort set))) ;; this restriction is needed to prevent bare measure units as adverbials
 	      ))
+    (add-to-conjunct (val (& (FIGURE ?arg) (GROUND ?v))) (old ?con) (new ?newcon))
     )
 
       ;; ing VPs as adverbials

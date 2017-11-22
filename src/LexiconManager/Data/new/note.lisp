@@ -9,7 +9,7 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("note%1:10:02" "note%1:10:03" "note%1:10:00"))
      (LF-PARENT ONT::annotation)
-     (templ other-reln-theme-templ)
+     ;(templ other-reln-theme-templ)
      )
     ((meta-data :wn ("note%1:10:04" "pitch%1:07:00"))
      ; the property of sound that varies with variation in the frequency of vibration
