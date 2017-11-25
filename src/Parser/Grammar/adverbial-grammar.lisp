@@ -501,7 +501,7 @@
       (ARG ?v) (VAR ?mod)
       (role ?advrole)
       ;(SEM ($ f::abstr-obj (F::type (? !ttt ont::position-reln))))
-      (SEM ($ f::abstr-obj (F::type (? !ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln
+      (SEM ($ f::abstr-obj (F::type (? !ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; e.g. "decrease in Mexico"
 				       ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
       )
      (add-to-conjunct (val (MODS ?mod)) (old ?lf) (new ?new))
@@ -658,7 +658,8 @@
       ;; (subjvar ?subjvar)
 			 (sem ?asem)
 			 (SEM ($ f::abstr-obj
-				 (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ont::pos-as-containment-reln ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
+				 (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; we allowed "in" for some reason, but I don't remember the example!
+					     ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
 					;(F::type (? ttt ont::path ont::position-reln))))
 	      ;;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ont::on ont::at-loc )))) ; take the trajectory senses instead of the position-as-extent-reln senses of words such as "across"
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
@@ -691,7 +692,10 @@
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
 			 (sem ?sem))) (GAP -) (particle +)
       ;; (subjvar ?subjvar)
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln))))
+			 (SEM ($ f::abstr-obj
+				 (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; we allowed "in" for some reason, but I don't remember the example!
+					     ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
+				 ;(F::type (? ttt ont::path ont::position-reln))))
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
       (sem ?asem)
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
@@ -858,7 +862,7 @@
     ((N1 (RESTR ?new) (POSTADVBL +) (COMPLEX +)) 
      -adv-np-post> 
      (head (N1 (VAR ?v1) ;; (POSTADVBL -) 
-	    (SEM ?argsem) (agr ?agr)
+	    (SEM ?argsem) 
 	    (RESTR ?restr) ;;(gerund -)   Have to allow gerunds e.g., the debating at the house.
 	    (post-subcat -) (SORT PRED)
 	    (no-postmodifiers -) ;; exclude "the same path as the battery" and advbl attaching to "path"
@@ -867,7 +871,7 @@
 	    ))
      (advbl (ATYPE POST) 
       (result-only -)  ;; only allow adverbials that may be interpreted as something other than a result
-      (ARGUMENT (% NP (sem ?argsem) (constraint ?c) (var ?v1) (agr ?agr)))
+      (ARGUMENT (% NP (sem ?argsem) (constraint ?c) (var ?v1) ))
       (SEM ($ f::abstr-obj (F::type (? ttt ont::predicate ont::position-reln))))
       (arg ?v1) (VAR ?mod) (WH -) (GAP -)
       (particle -)  ;; exclude particles as they should attach to the verb

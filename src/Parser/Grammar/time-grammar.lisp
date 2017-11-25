@@ -1155,7 +1155,7 @@
     ((n (sort ?sort) (subcat ?subcat) (subcat-map ?smap) ;(sort pred)
 	(class ?lf) (mass (? mm bare count )) (agr 3s) (CASE (? case SUB OBJ))  (generated +)
         (sem ?sem) (lex ?lex)(RESTR (& (name-of ?lex))))
-     -nname-bare-generated> 0.96
+     -nname-bare-generated> ; 0.96
      (head (name (SEM ?sem) (generated +) (headcat N) (sort ?sort) (subcat ?subcat) (subcat-map ?smap) ; pass up sort and subcat so we can use n1-reln3 (e.g., the beat 1 of meausure 1)
 	    ;(SEM ($ f::PHYS-OBJ)) (WH -) (lf ?cl) (lex ?lex))) 
 	    (SEM ($ (? t f::PHYS-OBJ f::abstr-obj))) (WH -) (lf ?cl) (lex ?lex))) ; abstr-obj: beat (music)

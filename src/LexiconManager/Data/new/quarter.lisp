@@ -13,6 +13,17 @@
 )
 ))
 
+(define-words :pos W::n
+ :words (
+  ((w::quarter w::note)
+  (senses
+	   ((LF-PARENT ONT::PITCH)
+	    (TEMPL COUNT-PRED-TEMPL)
+	    )
+	   )
+)
+))
+
 (define-words :pos W::ORDINAL :boost-word t :templ ORDINAL-TEMPL
  :words (
   (W::quarter

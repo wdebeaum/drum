@@ -1861,7 +1861,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
       ((:mod :result)
 	(let* 
 	    ((arg (cadr roles))
-	     (argtype (get-type (cadr (assoc arg type-maps)))))
+	     (argtype (get-type-0 (cadr (assoc arg type-maps)))))
 	  (list* (refine-role lf-type argtype (car roles) existing-roles)
 		 arg
 		 (refine-abstract-roles (cddr roles) type-maps lf-type existing-roles))))
@@ -1870,6 +1870,13 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
       (otherwise
        (list* (car roles) (second roles) 
 	      (refine-abstract-roles (cddr roles) type-maps lf-type existing-roles))))))
+
+(defun get-type-0 (xx)
+  (if (consp xx)
+      (if (member (second xx) '(ont::max-val ont::min-val ont::more-val ont::less-val))
+	  (third xx)
+	(second xx))
+      xx))
 
 (defun expand-mods (mods)
   " given a list of mods vars, explodes them into a list with :mod feature"
@@ -1890,14 +1897,15 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
   (if (and (om::subtype lf-type (caar map-info))
 	   (eq (cadar map-info) old-role-name)
 	   )
-      (let ((new-role-names (find-if #'(lambda (x) 
+      (let ((new-role-names (find-if #'(lambda (x)
 				     (if (consp (car x))
 					 (find-if #'(lambda (xx)
-							  (om::subtype arg-type xx)) (car x))
+						      (om::subtype arg-type xx)
+						      ) (car x))
 					 (om::subtype arg-type (car x))))
 				     (cdr map-info))))
 	(or (cadr new-role-names) old-role-name))
-      old-role-name))
+    old-role-name))
 
 (defun return-first-refinement (new-names old-role-name existing-roles)
   (let ((really-new-names (remove-if #'(lambda (x)

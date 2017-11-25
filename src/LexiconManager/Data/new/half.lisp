@@ -14,6 +14,28 @@
 )
 ))
 
+(define-words :pos W::n
+ :words (
+  ((w::half w::note)
+  (senses
+	   ((LF-PARENT ONT::PITCH)
+	    (TEMPL COUNT-PRED-TEMPL)
+	    )
+	   )
+)
+))
+
+(define-words :pos W::n
+ :words (
+  ((w::half w::step)
+  (senses
+	   ((LF-PARENT ONT::half-step)
+	    (TEMPL ATTRIBUTE-UNIT-TEMPL)
+	    )
+	   )
+)
+))
+
 (define-words :pos W::quan :boost-word t
  :tags (:base500)
  :words (

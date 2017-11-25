@@ -2,6 +2,7 @@
 ;;;; W::frequently
 ;;;;
 
+#|
 (define-words :pos W::ADV
  :words (
   (W::frequently
@@ -18,3 +19,4 @@
    )
 ))
 
+|#
