@@ -28,15 +28,24 @@
 	(input (referent-input ref)))
     (when (not (or (member (car lf) '(ont::speechact ont::wh-term ont::pro ont::pro-set))))
       (let* ((type (get-lf-type lf))
-	    (newlf 
-	     (cond 
-	       ((om::subtype type 'ONT::DOMAIN-PROPERTY)
-		(tag-and-install-info 'find-code lf input context))
-	       ((om::subtype type 'ONT::DOMAIN)
-		(tag-and-install-info 'find-var lf input context))
-	       ((om::subtype type 'ONT::PHYS-OBJECT)
-		(tag-and-install-info 'find-code lf input context))
-	       )))
+	     (newlf 
+	      (cond 
+		((or (om::subtype type 'ONT::quantity)
+		     (om::subtype type 'ONT::geo-object))
+		 nil)
+		((om::subtype type 'ont::YEAR)
+		 (tag-and-install-info 'find-var lf '(YEAR) context))
+		((om::subtype type 'ont::number)
+		 nil)
+		((or (om::subtype type 'ONT::DOMAIN)
+		     (om::subtype type 'ont::value)
+		     (om::subtype type 'ont::quantity-abstr))
+		 (tag-and-install-info 'find-var lf input context))
+		((or (om::subtype type 'ONT::PHYS-OBJECT)
+		     (om::subtype type 'ONT::DOMAIN-PROPERTY) 
+		     )
+		 (tag-and-install-info 'find-code lf input context))
+		)))
 	
 	(when newlf
 	  (setf (referent-lf ref) newlf))))))
@@ -48,15 +57,20 @@
 						  :top-n 3)))))
 	(case (car reply)
 	  (ANSWER
-	   (format t "~% Found answer: ~S" reply)
+	   ;;(format t "~% Found answer: ~S" reply)
 	   (let* ((matches  (remove-if #'(lambda (x)
 					   (let ((score (find-arg-in-act x :score)))
 					     (or (null score)
 						 (not (numberp score))
 						 (< score .6))))
 				       (cdr reply))))
+		 #|| ;; also remove matches with no TRIPS ID
+		  (matches (remove-if-not #'(lambda (x)
+					      (or (assoc 'TRIPS (find-arg-in-act x :variable))
+						  (assoc 'TRIPS (find-arg-in-act x :code))))
+					  matches1)))||#
 	     (if matches 
-		 (append lf (list :param-code matches))
+		 (append lf (list :param-code (car matches)))
 		 )
 	   ))
       )))
