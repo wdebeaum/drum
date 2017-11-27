@@ -8,7 +8,7 @@
 ;;; ===========ONT::DOMAIN
 ;;; A domain is a single-valued function                                                                            
 (define-type ONT::DOMAIN
- :parent ONT::ABSTRACT-object
+ :parent ONT::TANGIBLE-ABSTRACT-object
  :wordnet-sense-keys ("attribute%1:03:00")
  :comment "Nouns that name domain/scales, and can serve as relational nouns (e.g., the COLOR of the box)"
  :arguments ((:REQUIRED ONT::FIGURE)

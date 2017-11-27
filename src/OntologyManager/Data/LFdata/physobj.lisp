@@ -2856,8 +2856,8 @@
 ;; a number/amount/quantity of X
 (define-type ONT::QUANTITY
  :wordnet-sense-keys ("measure%1:03:00" "quantity%1:03:00" "amount%1:03:00")
-; :parent ONT::DOMAIN-PROPERTY
- :parent ONT::GROUP-OBJECT
+ :parent ONT::ORDERED-DOMAIN
+ ;;:parent ONT::GROUP-OBJECT
  :arguments ((:ESSENTIAL ONT::FIGURE)
              )
  )
