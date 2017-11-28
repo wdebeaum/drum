@@ -25,7 +25,7 @@ sub file_for_id {
   my $f;
   my $prefix = sprintf("%06d", ($id_num / 10));
   if ($ont eq 'BE') { # special case for bioentites (IDs are non-numeric)
-    $id_num =~ /\w/ or die "bioentities id doesn't match /\w/: $id_num";
+    $id_num =~ /^\w/ or die "bioentities id doesn't match /^\\w/: $id_num";
     $prefix = uc($&);
   }
   unless (exists($ont_to_prefix_to_file{$ont})) {

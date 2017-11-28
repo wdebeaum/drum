@@ -1,6 +1,10 @@
 ;;;; ontology mappings from DRUM-specific ontologies to TRIPS ontology
 ;;;; in DeepSemLex lisp format
 
+;;; BioEntities
+(concept BE::|root| ; protein family or complex
+  (inherit ONT::protein-family))
+
 ;;; ChEBI (Chemical Entities of Biological Interest)
 (concept CHEBI::33250 ; atom
   (inherit ONT::molecule)) ; sort of...

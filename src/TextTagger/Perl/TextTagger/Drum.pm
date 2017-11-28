@@ -219,7 +219,7 @@ sub read_from_terms2 {
 		 $match->{'surely-depluralized'}
 		) {
 	  # skip morphed CVCL terms
-	} elsif ($id =~ /^(BE|BTO|CHEBI|CO|EFO|GO|MI|NCIT|PR|UO|SO|ORPHANET):/) { # ontologies with hierarchies
+	} elsif ($id =~ /^(BTO|CHEBI|CO|EFO|GO|MI|NCIT|PR|UO|SO|ORPHANET):/) { # ontologies with hierarchies
 	  push @mapped_ids, $id
 	    unless (exists($mapped_id_to_matches_with_status{$id}));
 	  push @{$mapped_id_to_matches_with_status{$id}}, $match_with_status
@@ -269,7 +269,7 @@ sub read_from_terms2 {
 	  $lftypes = ['PHARMACOLOGIC-SUBSTANCE'];
 	} elsif ($id =~ /^CVCL:/) { # everything's a cell line
 	  $lftypes = ['CELL-LINE'];
-	} elsif ($id =~ /^(FA|NEXTPROT-FAMILY):/) { # everything's a protein family
+	} elsif ($id =~ /^(BE|FA|NEXTPROT-FAMILY):/) { # everything's a protein family
 	  $lftypes = ['PROTEIN-FAMILY'];
 	} elsif ($id =~ /^HP:/) { # everything (that we get) is a disease
 	  # NOTE: technically we could use EFO's hierarchy for this, but that

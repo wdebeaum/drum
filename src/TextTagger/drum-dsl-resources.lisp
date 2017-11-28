@@ -37,7 +37,7 @@
 (defun get-bioentities-files-for-symbol (rv sym)
   (with-slots (base-dir) rv
     (let* ((symname (symbol-name sym))
-	   (filename (subseq symname 0 1)))
+	   (filename (string-upcase (subseq symname 0 1))))
       (list (make-pathname :defaults base-dir :name filename :type "lisp")))))
 
 (defresource (BE BioEntities) (
