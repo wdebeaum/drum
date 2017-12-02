@@ -631,7 +631,6 @@
       )
      (add-to-conjunct (val (result ?mod)) (old ?con) (new ?new))  ; The RESULT will be remapped to TRANSIENT-RESULT
      )
-
     
     ;;  resultative construction using adverbs: e.g., sweep the dust into the corner
     ;; only allow one of these
@@ -655,6 +654,42 @@
 
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
 			 (sem ?sem))) (GAP -) (particle -)
+      ;; (subjvar ?subjvar)
+			 (sem ?asem)
+			 (SEM ($ f::abstr-obj
+				 (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; we allowed "in" for some reason, but I don't remember the example!
+					     ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
+					;(F::type (? ttt ont::path ont::position-reln))))
+	      ;;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ont::on ont::at-loc )))) ; take the trajectory senses instead of the position-as-extent-reln senses of words such as "across"
+;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
+      (SET-MODIFIER -)  ;; mainly eliminate numbers 
+      (ARG ?npvar) (VAR ?mod)
+      ;;(role ?advrole) 
+      )
+     (add-to-conjunct (val (result ?mod)) (old ?con) (new ?new))  ; The RESULT will be remapped to TRANSIENT-RESULT
+     )
+
+    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
+         ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
+;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
+      (advbl-needed -) (complex +) (GAP ?!gap) (result-present +)
+      )
+     -vp-result-gap-advbl-no-particle>  
+     (head (vp- (VAR ?v) 
+		(seq -)  ;;  post mods to conjoined VPs is very rare
+		(DOBJ (% NP (Var ?npvar) (sem ?sem)))
+		(COMP3 (% -))
+		(constraint ?con) (tma ?tma) (result-present -)
+		;;(subjvar ?subjvar)
+		;;(aux -) 
+		(gap -)
+		(ellipsis -)
+		(result ?asem)
+		))
+
+     (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
+			 (sem ?sem)))
+      (GAP ?!gap) (particle -)
       ;; (subjvar ?subjvar)
 			 (sem ?asem)
 			 (SEM ($ f::abstr-obj
