@@ -728,7 +728,7 @@ sub KQMLUnkeywordify {
 my $symbol_component_re = qr/
   (?:
     # not pipequoted
-    [^\s'`"#\(\):\|\\]+ |
+    [^,\s'`"#\(\):\|\\]+ |
     # pipequoted
     \| (?: \\ [^\s'`"#\(\)] | [^\s'`"#\(\)\|\\] )+ \| 
   )
