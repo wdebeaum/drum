@@ -176,7 +176,7 @@ sub write_plan_graph {
   my $operators_str = '';
   for (@{$plan->{operators}}) {
     $operators_str .=
-      '    ' . escape_for_dot($_->{id}) .
+      '  ' . escape_for_dot($_->{id}) .
       ' [label=' . escape_for_dot($_->{label}) .
         (exists($_->{color}) ? ",color=$_->{color}" : "") .
       "]\n";
@@ -213,24 +213,24 @@ sub write_plan_graph {
   open my $fh, ">$filename" or die "can't open $filename for writing: $!";
   print $fh <<EOG;
 digraph $graph_name {
-  graph [rankdir=LR,nodesep=0.1,splines=line]
+  graph [rankdir=LR,nodesep=0.1]
   node [shape=box,fontcolor=white,color=gray40,fillcolor=gray40,style="rounded,filled",fontname="sans-serif"]
   subgraph knowns {
     graph [rank=source]
     node [shape=none,fontcolor=black,fontsize=12,style=""]
     edge [color=white]
     known_heading [label="Known\\nParameters",fontsize=16]
-    $knowns_str
+$knowns_str
   }
   subgraph goals {
     graph [rank=sink]
     node [shape=none,fontcolor=black,fontsize=12,style=""]
     edge [color=white]
     unknown_heading [label="Goal (unknown)\\nParameters",fontsize=16]
-    $goals_str
+$goals_str
   }
-  $edges_str
-  $operators_str
+$edges_str
+$operators_str
 }
 EOG
   close $fh;
