@@ -1,7 +1,7 @@
 (defpackage :ont)
 (defpackage :w)
 (defpackage :f)
-(defpackage :lexiconmanager) ; ugh.
+(defpackage :lxm) ; ugh.
 (defpackage :wn)
 
 ;; ick.

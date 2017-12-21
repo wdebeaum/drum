@@ -21,6 +21,8 @@
 ;; ==> NIL
 (in-package "LEXICONMANAGER")
 
+(defvar *nomlex-verb-nominalizations* nil)
+
 (defun nomlex-lookup-nom (noun &key type)
   (loop
      for entry in *nomlex-verb-nominalizations*

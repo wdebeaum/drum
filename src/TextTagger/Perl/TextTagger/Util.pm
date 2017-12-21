@@ -241,7 +241,7 @@ sub word_is_in_trips_lexicon {
     # TRIPS + WordNet (from WordFinder)
     unless (exists($wiitl_wf{$word})) {
       my $reply_content = $self->send_and_wait(
-        ['request', ':receiver', 'lexiconmanager', ':content', ['is-defined-word', lisp_intern($word, 'W')]] # use current *use-wordfinder* setting
+        ['request', ':receiver', 'lxm', ':content', ['is-defined-word', lisp_intern($word, 'W')]] # use current *use-wordfinder* setting
       );
       $wiitl_wf{$word} = (($reply_content =~ /(^|:)nil$/i) ? 0 : 1);
       # also cache for subset
@@ -252,7 +252,7 @@ sub word_is_in_trips_lexicon {
     # TRIPS lexicon only
     unless (exists($wiitl{$word})) {
       my $reply_content = $self->send_and_wait(
-        ['request', ':receiver', 'lexiconmanager', ':content', ['is-defined-word', lisp_intern($word, 'W'), ':use-wordfinder', 'nil']]
+        ['request', ':receiver', 'lxm', ':content', ['is-defined-word', lisp_intern($word, 'W'), ':use-wordfinder', 'nil']]
       );
       $wiitl{$word} = (($reply_content =~ /(^|:)nil$/i) ? 0 : 1);
       # also cache for superset

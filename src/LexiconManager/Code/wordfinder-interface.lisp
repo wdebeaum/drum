@@ -53,6 +53,7 @@
 			    (make-into-string (cdr obj)))
 	       (make-into-string (car obj)))))))
   
+(defvar *no-wf-senses-for-words-tagged-with-ont-types* nil)
 
 (defun get-unknown-word-def (w &key (senselimit *wf-sense-limit*) pos-list penntag ont-sense-tags trips-sense-list wn-sense-keys score)
  ;; (when (and (not *no-wf-senses-for-words-tagged-with-ont-types*) (null ont-sense-tags))

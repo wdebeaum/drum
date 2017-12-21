@@ -1,5 +1,5 @@
 (mapcar (lambda (p) (unless (find-package p) (make-package p :use nil)))
-        '(ont f w lexiconmanager))
+        '(ont f w lxm))
 
 (defun getk (l k)
   (second (member k l)))

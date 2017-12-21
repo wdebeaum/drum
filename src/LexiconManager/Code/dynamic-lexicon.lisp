@@ -110,6 +110,8 @@
 	)
   )
 
+(defvar *write-dynamic-lexicon-file* nil)
+
 (defun dynamic-add-lexeme (words pos lf template)
  ; dynamic-add-lexeme (words pos lf template)
 ;;

@@ -64,9 +64,9 @@
 	 (defpackage ,defined-package-name ,@options))
        )))
 
-(def-or-update-package :lexiconmanager
+(def-or-update-package :lxm
   (:use :dsl)
-  (:nicknames :lxm)
+  (:nicknames :lexiconmanager)
   )
 
 (def-or-update-package :ontologymanager

@@ -8,79 +8,7 @@
 ;; Based on the above file by George Ferguson (mostly shamelessly copied)
 
 (in-package :lexiconmanager)
-
-(defvar *module-name* 'lexiconmanager
-  "Name under which to register this module when we startup. This is also
-used to find the package we should be in runtime when reading messages,
-and the name of the logfile used to log messages to an from this module.")
-
-(declaim (special LOGGING::*log-filename* LOGGING::*log-stream*))
-
-;; This is the main control loop for the lexiconmanager when it is 
-;; running as its own process.
-
-(defun run ()
-  "Main loop for the lexiconmanager"
-  ;; Open communications for this module
-  (COMM:connect *module-name*)
-  ;; Make sure we're in the right package during i/o
-  (let ((*package* (find-package *module-name*))
-	(LOGGING::*log-filename* (format nil "~A.log" *module-name*))
-	(LOGGING::*log-stream* nil))
-    (LOGGING:chdir ".")
-    ;; register with the facilitator
-    (output `(register :name ,*module-name* :group system))
-    ;; subscriptions
-    (output '(subscribe :content (request &key :content (get-lf . *))))
-    (output '(subscribe :content (request &key :content (add-names . *))))
-    (output '(subscribe :content (request &key :content (add-lex-entry . *))))
-    (output '(subscribe :content (request &key :content (get-aliases . *))))
-    ;; ready
-    (output '(tell :content (module-status ready)))
-    (catch :exit
-      (with-simple-restart (abort (format nil "Terminate ~A main loop" *module-name*))
-	(loop
-	  (catch :main-loop
-	    (with-simple-restart (abort (format nil "Restart ~A main loop" *module-name*))
-	      ;; (trips:gc t)
-		  ;; set up the variable msg to hold the next message for this module
-		  ;; calls the input() function to get the actual message.
-	      (let ((msg (input)))
-			;; If there is no message, freak out, because input() should have
-			;; waited until there was a message.  Otherwise, handle the message
-			;; with the receive-message function
-		(if (null msg)
-		    (throw :exit 0)	; EOF => exit
-		  (handler-bind
-		      ((error #'(lambda (err)
-				       (indicate-error (symbol-name *module-name*) err msg))))
-		    (receive-message msg)))))))))
-))
-
-(defun indicate-error (module err msg)
-  "Indicates that Lisp error ERR has occurred in module MODULE.
-If USER::*BREAK-ON-ERRORS* is bound and is non-NIL, this signals a
-continuable error resulting in a toplevel break.
-Otherwise simply prints the error to *ERROR-OUTPUT* and generates an ERROR
-message in reply to MSG."
-  (declare (special USER::*break-on-errors*))
-  (unless (and (boundp 'USER::*break-on-errors*) USER::*break-on-errors*)
-    (format *error-output* "~A error: ~A~%" module err)
-    (reply msg 'sorry :comment (princ-to-string err))
-    ;; Throw to avoid signalling the error
-    (throw :main-loop nil)))
-
-;; This function waits for, and then logs and grabs the next message for this 
-;; module.  Would have to look in the COMM package, I'd guess to figure out if 
-;; this is a busy-wait or something nicer.  At this point, doesn't matter much,
-;; but probably will for efficiency.  It is probably a thread suspend-interrupt
-;; happening, but it is worth checking at some point.  ScS
-
-(defun input ()
-  "Input, log, and return the next message for this module."
-  (let ((msg (COMM:recv *module-name*)))
-    (LOGGING:log-message-received msg)
-    msg))
+(in-component :lxm)
 
 ;; should this be in utils?
 (defun get-keyword-arg (l key)
@@ -111,28 +39,7 @@ message in reply to MSG."
 	))
     ))
 
-;; This handles the various message types
-;; at this point, only REQUEST, TELL, ERROR, SORRY are handled,
-;; and ERROR and SORRY do nothing.
-(defun receive-message (msg)
-  "Dispatches message MSG for processing."
-  ;; Replies are not necessarily sent using REPLY verb anymore.
-  ;; Instead, if we have an in-reply-to tag ...
-  (if (get-keyword-arg msg :in-reply-to)
-      (receive-reply msg)
-    (case (car msg)
-      (request				; REQUEST  call receive-request function
-       (receive-request msg))
-      (tell				; TELL  call receive-tell function
-       (receive-tell msg))
-      ((error sorry)			; ERROR or SORRY (ignored)
-       t)
-      (otherwise			; Unknown performative!
-       (reply msg 'error
-	      :comment (format nil "unknown verb in message: ~S" msg)))))
-  )
-
-;; This function handles request messages of all sorts.  Currently supported:
+;; Currently supported request messages [from before dfc conversion --wdebeaum]:
 ;; EXIT    exits
 ;; EVAL    evaluates arbitrary code (should this be turfed? ScS)
 ;; CHDIR   changes directory (or maybe just logs the message; see below ScS)
@@ -140,89 +47,124 @@ message in reply to MSG."
 ;; API-CALL handles requests to the lexicon manager through the published
 ;;          interface.
 ;; Otherwise, the handler replies with an error message.
-(defun receive-request (msg)
-  "Handles REQUEST messages received by the lexicon manager."
-  (let ((content (get-keyword-arg msg :content))
-	(*request-is-from* (get-keyword-arg msg :sender)))
-    ;;(sender (get-keyword-arg msg :sender)) ;; sender not used
-    (case (first content)
-      (add-names  ;; add web link names dynamically to the lexicon
-       (let ((wordlist (get-keyword-arg content :content))
-	     (wordtype (get-keyword-arg content :type)))	              
-	     (if (and wordlist wordtype)
-		 (reply msg 'TELL :content (add-names :type wordtype						      
-						      :content wordlist
-						      ))
-	       (reply msg 'error
-		      :comment (format nil "wrong number of arguments"))))
-	 )
 
-      (add-lex-entry  ;; add new entry dynamically to the lexicon
-       (let ((word (get-keyword-arg content :word))
-	     (cat (get-keyword-arg content :cat))
-	     (type (get-keyword-arg content :type)))	              
-	     (if (and word cat type)
-		 (reply msg 'TELL :content (add-lex-entry :word word
-						      :cat cat
-						      :type type
-						      ))
-	       (reply msg 'error
-		      :comment (format nil "wrong number of arguments"))))
-	 )
+;; add web link names dynamically to the lexicon
+(defcomponent-handler
+  '(request &key :content (add-names . *))
+  (lambda (msg content)
+    (let ((wordlist (get-keyword-arg content :content))
+	  (wordtype (get-keyword-arg content :type)))	              
+	  (if (and wordlist wordtype)
+	      (reply-to-msg msg 'TELL :content (add-names :type wordtype
+						   :content wordlist
+						   ))
+	    (reply-to-msg msg 'error
+		   :comment (format nil "wrong number of arguments")))))
+  :subscribe t)
 
-       (get-aliases  ;; retrieve all words in a sense that index to the same lfform
-       (let ((word (get-keyword-arg content :content)))
-	 (if word
-	     (reply msg 'TELL :content (get-aliases :content word))
-	   (reply msg 'error
-		  :comment (format nil "wrong number of arguments"))))
-       )
-       
-      ;; the lexicon-interface functions, not via API interface (so the arguments aren't quoted)
-      ((get-lf
-	get-word-form
-	get-words-from-lf
-	get-word-def
-	is-defined-word)
-       (let ((result (apply (first content) (rest content))))
-	 (reply msg 'TELL  :content (sanitize-for-kqml result))))
+;; add new entry dynamically to the lexicon
+(defcomponent-handler
+  '(request &key :content (add-lex-entry . *))
+  (lambda (msg content)
+    (let ((word (get-keyword-arg content :word))
+	  (cat (get-keyword-arg content :cat))
+	  (type (get-keyword-arg content :type)))	              
+	  (if (and word cat type)
+	      (reply-to-msg msg 'TELL :content (add-lex-entry :word word
+						   :cat cat
+						   :type type
+						   ))
+	    (reply-to-msg msg 'error
+		   :comment (format nil "wrong number of arguments")))))
+  :subscribe t)
 
-      ;; Handle external API calls
-      ;; we're keeping this around for now for people who still use it (e.g. Nate C.)
-      ;; but it requires function arguments to be quoted & this was causing problems
-      ;; for people using Java to build queries
-      (API-CALL
-       ;; Evaluate the command and get the result.
-       (let ((result (evaluate-api-call (second content))))
-	 ;; If the result is 'NOT-PUBLIC-ERROR send a reply message that 
-	 ;; lets the caller know that the function they called wasn't public.
-         (cond
-          ((equal result 'NOT-PUBLIC-ERROR)
-           (reply msg 'error
-                  :comment (format nil "bad function: ~A" (second content))))
-	  ;; Otherwise, reply to the message, encapsulating it in a 
-	  ;; (TELL :content (API-RESULT)) message type.
-          (t
-           (reply msg 'TELL  :content `(API-RESULT ,result))
-           )
-	  )
-         )
-       )
-            
-      (exit				; exit
-       (throw :exit (or (second content) 0)))
-      ;;  (eval				; eval
-      ;;(eval (second content)))
-      (chdir				; CHDIR
-       (LOGGING:chdir (second content)))
-      (restart				; RESTART
-       nil)
-      (otherwise
-       (reply msg 'error
-	      :comment (format nil "bad request: ~A" (first content)))))))
+;; retrieve all words in a sense that index to the same lfform
+(defcomponent-handler
+  '(request &key :content (get-aliases . *))
+  (lambda (msg content)
+    (let ((word (get-keyword-arg content :content)))
+      (if word
+	  (reply-to-msg msg 'TELL :content (get-aliases :content word))
+	(reply-to-msg msg 'error
+	       :comment (format nil "wrong number of arguments")))))
+  :subscribe t)
 
-;; Receive-tell handles TELL messages.  AT this point, the following 
-;; messages are handled:
+;; the lexicon-interface functions, not via API interface (so the arguments aren't quoted)
+(defun handle-using-lexicon-interface-function (msg args)
+    (declare (ignore args))
+  (let* ((*request-is-from* (get-keyword-arg msg :sender))
+	 (content (get-keyword-arg msg :content))
+         (result (apply (first content) (rest content))))
+    (reply-to-msg msg 'TELL :content (sanitize-for-kqml result))))
+
+(defcomponent-handler
+  '(request &key :content (get-lf . *))
+  #'handle-using-lexicon-interface-function
+  :subscribe t)
+
+(defcomponent-handler
+  '(request &key :content (get-word-form . *))
+  #'handle-using-lexicon-interface-function)
+(defcomponent-handler
+  '(request &key :content (get-words-from-lf . *))
+  #'handle-using-lexicon-interface-function)
+(defcomponent-handler
+  '(request &key :content (get-word-def . *))
+  #'handle-using-lexicon-interface-function)
+(defcomponent-handler
+  '(request &key :content (is-defined-word . *))
+  #'handle-using-lexicon-interface-function)
+
+; not bothering to convert this to dfc; presumably Nate isn't using it anymore.
+; --wdebeaum
+;      ;; Handle external API calls
+;      ;; we're keeping this around for now for people who still use it (e.g. Nate C.)
+;      ;; but it requires function arguments to be quoted & this was causing problems
+;      ;; for people using Java to build queries
+;      (API-CALL
+;       ;; Evaluate the command and get the result.
+;       (let ((result (evaluate-api-call (second content))))
+;	 ;; If the result is 'NOT-PUBLIC-ERROR send a reply message that 
+;	 ;; lets the caller know that the function they called wasn't public.
+;         (cond
+;          ((equal result 'NOT-PUBLIC-ERROR)
+;           (reply msg 'error
+;                  :comment (format nil "bad function: ~A" (second content))))
+;	  ;; Otherwise, reply to the message, encapsulating it in a 
+;	  ;; (TELL :content (API-RESULT)) message type.
+;          (t
+;           (reply msg 'TELL  :content `(API-RESULT ,result))
+;           )
+;	  )
+;         )
+;       )
+
+; exit
+(defcomponent-handler
+  '(request &key :content (exit . *))
+  (lambda (msg content)
+      (declare (ignore msg))
+    (throw :exit (or (first content) 0))))
+
+; ; eval
+; (defcomponent-handler
+;   '(request &key :content (eval . *))
+;   (lambda (msg content)
+;     (eval (second content))))
+
+; CHDIR
+(defcomponent-handler
+  '(request &key :content (chdir . *))
+  (lambda (msg content)
+      (declare (ignore msg))
+    (logging2:chdir (first content))))
+
+; RESTART
+(defcomponent-handler
+  '(request &key :content (restart . *))
+  #'list) ; do (practically) nothing
+
+;; AT this point, the following tell messages are handled [again, from before dfc --wdebeaum]:
 
 ;; START-CONVERSATION    06/14/06 no longer ignored -- now LxM resets dynamic lexicon hash table
 ;; END-CONVERSATION      (ignored)
@@ -232,29 +174,35 @@ message in reply to MSG."
 
 ;; Otherwise, a message of type ERROR is sent in reply.
 
-(defun receive-tell (msg)
-  "Handles TELL messages received by the lexiconmanager."
-  (let ((content (get-keyword-arg msg :content)))
-    (case (first content)
-      (start-conversation 
-       (clear-dynamic-lexicon))
+(defcomponent-handler
+  '(tell &key :content (start-conversation . *))
+  (lambda (msg args)
+      (declare (ignore msg args))
+    (clear-dynamic-lexicon)))
       
-      (end-conversation ; ignore
-       nil)
+(defcomponent-handler
+  '(tell &key :content (end-conversation . *))
+  #'list) ; ignore
 
-	  ;; Added by ScS for handling API-RESULTs.  
-	  ;; Basically just calls a handler function which does nothing but
-	  ;; print the request and the result.  
-	  
-	  
-      (API-RESULT (receive-api-result msg))
-      (new-scenario
-       nil)
-      (modify-scenario
-       nil)
-      (otherwise
-       (reply msg 'error
-	      :comment (format nil "bad tell: ~A" (car content)))))))
+;; Added by ScS for handling API-RESULTs.  
+;; Basically just calls a handler function which does nothing but
+;; print the request and the result.  
+(defcomponent-handler
+  '(tell &key :content (API-RESULT . *))
+  (lambda (msg args)
+      (declare (ignore args))
+    (receive-api-result msg)))
+
+(defcomponent-handler
+  '(tell &key :content (new-scenario . *))
+  #'list)
+
+(defcomponent-handler
+  '(tell &key :content (modify-scenario . *))
+  #'list)
+
+#||
+As far as I know, none of the rest of this file is used anymore, and pretty much all of it has better ways to do it now with dfc. --wdebeaum
 
 (defun reply (msg verb &rest parameters)
   "Generate a reply to MSG of type VERB with given PARAMETERS.
@@ -446,4 +394,4 @@ returns : function return value"
 	   :sender 'lexiconmanager
 	   :reply-with msg
 	   :content (list msg))))
-
+||#

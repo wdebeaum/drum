@@ -8,7 +8,7 @@
 (unless (find-package :om)
   (load #!TRIPS"src;OntologyManager;om-pkg"))
 
-(defpackage :lexiconmanager
+(defpackage :lxm
   (:use :common-lisp :util :om)
-  (:nicknames :lxm))
+  (:nicknames :lexiconmanager))
 

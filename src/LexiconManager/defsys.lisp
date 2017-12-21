@@ -1,7 +1,7 @@
 ;;;;
 ;;;; defsys.lisp for LexiconManager
 ;;;;
-;;;; $Id: defsys.lisp,v 1.27 2017/08/21 17:09:51 cmteng Exp $
+;;;; $Id: defsys.lisp,v 1.28 2017/12/20 20:23:31 wdebeaum Exp $
 ;;;;
 
 (unless (find-package :trips)
@@ -52,11 +52,11 @@
 ;on configured setting in WordFinder package."
 (defvar *use-wordfinder* wf::*use-wordfinder*)
 (defvar *request-is-from* nil
-  "When LXM processes a request, it binds this to the :sender of the request,
-   who is likely waiting for a reply and won't respond to any requests made to
-   it until LXM replies, resulting in a deadlock. Specifically, WordFinder
-   (which is called for get-word-def requests) will avoid making requests to
-   TextTagger when this is set to lxm::textagger.")
+  "When LXM processes some requests, it binds this to the :sender of the
+  request, who is likely waiting for a reply and won't respond to any requests
+  made to it until LXM replies, resulting in a deadlock. Specifically,
+  WordFinder (which is called for get-word-def requests) will avoid making
+  requests to TextTagger when this is set to lxm::textagger.")
 
 (mk:defsystem :scenario-code
     :source-pathname #!TRIPS"src;LexiconManager;"
@@ -80,10 +80,17 @@
 		 "nomlex-verbnoms"
 		 ))
 
-(mk:defsystem :lxm
-    :package lxm
-    :depends-on (:comm :logging :util :om :scenario-code
-		 :lexicon-code))
+;(mk:defsystem :lxm
+;    :package lxm
+;    :depends-on (:comm :logging :util :om :scenario-code
+;		 :lexicon-code))
+(dfc:defcomponent :lxm
+     :use (:util :common-lisp :om)
+     :nicknames (:lexiconmanager)
+     :system (
+       :depends-on (:comm :logging :util :om :scenario-code
+		    :lexicon-code)
+       ))
 
 ;; Only want to load wordfinder if we're going to use it
 ;; Can't conditionally include a dependency in a defsystem declaration,
@@ -141,8 +148,11 @@ via nate's transforms."
      (let ((*package* (find-package :lxm)))
        (load #!TRIPS"src;LexiconManager;Data/new/all-lex.lisp")))))
 
-(defmethod mk:operate-on-system :after ((name (eql :lxm)) (operation (eql :load)) &rest args)
-    (declare (ignore args))
+;(defmethod mk:operate-on-system :after ((name (eql :lxm)) (operation (eql :load)) &rest args)
+;    (declare (ignore args))
+;...)
+(defvar *lxm-component* *component*)
+(defmethod dfc:load-component :after ((m (eql *component*)))
   (format *trace-output* "~&~%;;; lxm: initializing lexicon~%~%")
   (initialize-lexicon)
 )
