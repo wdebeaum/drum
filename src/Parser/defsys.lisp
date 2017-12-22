@@ -1,5 +1,5 @@
 
-;;;; $Id: defsys.lisp,v 1.30 2015/05/22 14:22:56 wdebeaum Exp $
+;;;; $Id: defsys.lisp,v 1.31 2017/12/21 14:44:53 wdebeaum Exp $
 
 ;;;;
 ;;;; defsys.lisp : Defsystem for the TRAINS/TRIPS parser
@@ -26,7 +26,7 @@
   (load #!TRIPS"src;OntologyManager;defsys"))
 
 (unless (mk::get-system :lxm)
-  (load #!TRIPS"src;LexiconManager;defsys"))
+  (load #!TRIPS"src;LexiconManager;lxm"))
 
 (unless (find-package :parser)
   (load #!TRIPS"src;Parser;parser-pkg"))
