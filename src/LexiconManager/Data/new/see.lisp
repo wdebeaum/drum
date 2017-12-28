@@ -42,7 +42,7 @@
      (LF-PARENT ONT::active-perception)
      ;;(SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
      (example "he saw him drink / drinking ")
-     (TEMPL experiencer-action-objcontrol-templ (xp (% W::VP (W::vform (? vf W::base w::ing)))))
+     (TEMPL experiencer-action-objcontrol-templ (xp (% W::VP (W::vform (? vf2 W::base w::ing)))))
      )
     ((meta-data :origin trips :entry-date 20090330 :change-date nil :comments missing-sense)
      (LF-PARENT ONT::active-perception)

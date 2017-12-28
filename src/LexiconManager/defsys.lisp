@@ -1,7 +1,7 @@
 ;;;;
 ;;;; defsys.lisp for LexiconManager
 ;;;;
-;;;; $Id: defsys.lisp,v 1.28 2017/12/20 20:23:31 wdebeaum Exp $
+;;;; $Id: defsys.lisp,v 1.29 2017/12/27 07:14:16 cmteng Exp $
 ;;;;
 
 (unless (find-package :trips)
@@ -169,3 +169,6 @@ via nate's transforms."
   "See also commented out lexicon-entries in Code/lexicon-functions.lisp."
   (loop for word being each hash-key of (lexicon-DB-word-table lexicon-data)
        collecting word))
+
+(defvar *domain-sense-preferences* nil)  ; moved from the ontologymanager
+(defvar *domain-sense-preferences-tmp* nil) 

@@ -201,6 +201,55 @@
   '(tell &key :content (modify-scenario . *))
   #'list)
 
+
+(defcomponent-handler
+  '(request &key :content (lex-pref-sense . *))
+  #'(lambda (msg args)
+      (let* ((content (get-keyword-arg msg :content))
+	     (senses (get-keyword-arg content :content))
+	     (status (get-keyword-arg content :status))
+	     )
+	(if (eq status 'permanent)
+	    (setf lxm::*domain-sense-preferences* (append senses lxm::*domain-sense-preferences*)) ; senses go before original domain-sense-preferences
+	  (setf lxm::*domain-sense-preferences-tmp* senses)
+	  )
+	)
+      )
+  :subscribe t)
+
+
+(defcomponent-handler
+  '(tell &key :content (NEW-SPEECH-ACT . *)) 
+  #'(lambda (msg args)
+      (handle-message msg))
+  :subscribe t)
+
+(defcomponent-handler
+  '(tell &key :content (NEW-SPEECH-ACT-HYPS . *)) 
+  #'(lambda (msg args)
+      (handle-message msg))
+  :subscribe t)
+
+#|
+(defcomponent-handler
+  '(tell &key :content (paragraph-completed . *)) ; could listen for failed-to-parse too, but maybe wait till we have a successful parse
+  #'(lambda (msg args)
+      (setf lxm::*domain-sense-preferences-tmp* nil)
+      )
+  :subscribe t)
+|#
+
+(defun handle-message (msg)
+  (let ((content (get-keyword-arg msg :content))
+	(sender (get-keyword-arg msg :sender))
+	)
+    (case (first content)
+      ((NEW-SPEECH-ACT NEW-SPEECH-ACT-HYPS)
+       (setf lxm::*domain-sense-preferences-tmp* nil)
+       ))))
+
+
+
 #||
 As far as I know, none of the rest of this file is used anymore, and pretty much all of it has better ways to do it now with dfc. --wdebeaum
 

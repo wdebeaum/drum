@@ -3719,6 +3719,16 @@
     (subcat (% ?sc) ONT::GROUND)
     ))
 
+; where can I put the block?
+  (ppword-question-adv-NP-templ
+   (SYNTAX (W::sing-lf-only +) (w::else-word +) (W::wh W::q) (W::sort W::pp-word) (W::atype (? atype W::pre W::post)))
+   (ARGUMENTS
+    (argument (% W::NP) ONT::FIGURE)
+        ;;; Subcat of PP words is implicit, and we need it to provide a selectional restriction, but it won't be matched with anything syntactically,
+    ;;; hence is a very general category
+    (subcat (% ?sc) ONT::GROUND)
+    ))
+
   (ppword-question-adv-pred-templ
    (SYNTAX (W::sing-lf-only +) (w::else-word +) (W::wh W::q) (W::sort W::pp-word) (W::atype (? atype W::pre W::post)))
    (ARGUMENTS

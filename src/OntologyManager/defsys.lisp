@@ -60,7 +60,9 @@ apply first.")
 ;; Any debug statement of level below *debug-level* will be output
 ;; i.e. *debug-level*=0 stops all debugging output
 (defvar *debug-level* 0)
-(defvar *domain-sense-preferences* nil) ; set with domain-specific word senses if available in domain directory (default is nil): Data/Domains/. This var is only used by LXM so ideally should be there. Currently here to use the old domain-specific loading mechanisms in OM until a new improved method is implemented.
+
+; moved to the LexiconManager
+;(defvar *domain-sense-preferences* nil) ; set with domain-specific word senses if available in domain directory (default is nil): Data/Domains/. This var is only used by LXM so ideally should be there. Currently here to use the old domain-specific loading mechanisms in OM until a new improved method is implemented.
 
 
 ;; LFMapper

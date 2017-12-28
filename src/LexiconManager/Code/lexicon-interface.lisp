@@ -670,26 +670,33 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 			   nokr))
 	wdef)))
 
+; currently only takes the first match on the list (one preferred-domain-sense and one preferred type)
 (defun prefer-domain-senses (w wdef)
   "prefer sense-word pairs specified in om::*domain-sense-preferences*"
     (declare (ignore w))
-  (let ((wdef (remove-if #'null wdef)))
+    (let* ((wdef (remove-if #'null wdef))
+	  (combined-domain-sense-preferences (append lxm::*domain-sense-preferences-tmp* lxm::*domain-sense-preferences*)) ; tmp before permanent so that the tmp preferences can override the permanent preferences
+	  (all-onttypes (mapcar #'(lambda (x) (car x)) (get-lf w)))
+	  (preferred-type (find-if #'(lambda (y) (is-subtype-of (mapcar #'(lambda (x) (car x)) combined-domain-sense-preferences) y)) all-onttypes))
+	  )
     (dolist (def wdef)
       (with-slots ((this-pref pref)) def
 	(let* ((feats (lex-entry-feats def))
 	       (lf-pair (get-feature-values feats 'w::lf))
 	       (this-lf (strip-out-lf lf-pair))
 	       (lex (if (consp lf-pair) (third lf-pair) lf-pair))
-	       (preferred-domain-sense (cadr (assoc lex om::*domain-sense-preferences*)))
+	       (onttype (if (consp lf-pair) (second lf-pair) lf-pair))
+	       (preferred-domain-sense (cadr (assoc lex combined-domain-sense-preferences)))
 	       )
-	  (when preferred-domain-sense
-	    (if (eq this-lf preferred-domain-sense)
+	  (when (or preferred-domain-sense preferred-type)
+	    (if (and this-lf onttype ;this-lf and onttype are nil when non-hierarchy
+		     (or (eq this-lf preferred-domain-sense) 
+			 (eq onttype preferred-type)))
 		(setf this-pref .99)
-		;; demote competing word senses
-		(if (> this-pref .97)
-		    (decf this-pref .01)))
-		
-		(pushnew def wdef))))
+	      ;; demote competing word senses
+	      (if (> this-pref .97)
+		  (decf this-pref .01)))	  
+	    (pushnew def wdef))))
 	)
     wdef)
   )
@@ -1003,7 +1010,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 			  (make-default-unknown-word-entry w nil part-of-speech-tags nil))))
 	    ))
     ;; TRIPS domain-specific sense preference adjustment
-    (if om::*domain-sense-preferences*
+    (if (or lxm::*domain-sense-preferences* lxm::*domain-sense-preferences-tmp*)
 	(setq res (prefer-domain-senses w res)))
     (setq res (eliminate-redundancies (remove-if #'null res)))
     (if res

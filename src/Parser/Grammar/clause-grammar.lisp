@@ -588,9 +588,11 @@
      (agr ?agr)
      )
     -rel1> 
-    (pro (wh (? wh r)) (sem ?argsem) (lex ?plex)
+    (pro (wh (? wh r)) ;(sem ?argsem)
+	 (lex ?plex)
      (agr ?agr) (case sub) (headcat ?vcomp))
-    (head (vp (subj (% np (var ?arg) (sem ?argsem) (sem ($ ?!type)) )) (agr ?agr) 
+    (head (vp (subj (% np (var ?arg) (sem ?argsem) ;(sem ($ ?!type))
+		       )) (agr ?agr) 
 	      (gap -)  ;; my guess is there are some eliiptical glosses that motivated allowing a gap here, but i'm deleting it for now(gap ?g) 
 	      (wh -)
 	      (class ?c) (constraint ?con) (vform fin) (tma ?tma)
@@ -1538,7 +1540,7 @@
    ;; vp rule with comp3 gap  (typically a path from a "where" question or a prepositional phrase)
    ;; where did he come from
    ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar)
-     (main +) (gap (% ?s4 (var ?!gapvar) (case ?ccase) (agr ?gapagr) (sem ?compsem) (ptype ?ptype)
+     (main +) (gap (% ?s4 (var ?!gapvar) (case ?ccase) (agr ?gapagr) (sem ?compsem) (ptype ?ptype) (arg ?arg)
 		      ))
      (var ?v) 
      (class ?c) (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
@@ -1557,7 +1559,7 @@
 	   (part ?part) 
 	   (dobj ?dobj)			
 	   (dobj (% ?s3 (var ?dobjvar) (sem ?dobjsem) (gap -) (case (? dcase obj -))))
-	   (comp3 ?!comp) (comp3 (% ?s4 (var ?!gapvar) (sem ?compsem) (agr ?gapagr) (case (? ccase obj -)) (ptype ?ptype) ))
+	   (comp3 ?!comp) (comp3 (% ?s4 (var ?!gapvar) (sem ?compsem) (agr ?gapagr) (case (? ccase obj -)) (ptype ?ptype) (arg ?arg)))
 	   (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	   
 	   (be-there -)
@@ -1572,7 +1574,7 @@
    ;; and then the direct object can come after the particle
    ;; the double matching is necessary to differentiate from the cases where there is a non-empty particle
    ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar)
-     (main +) (gap (% ?s4 (var ?!gapvar) (case ?ccase) (agr ?gapagr) (sem ?compsem) (ptype ?ptype)
+     (main +) (gap (% ?s4 (var ?!gapvar) (case ?ccase) (agr ?gapagr) (sem ?compsem) (ptype ?ptype) (arg ?arg)
 		      ))
      (var ?v) 
      (class ?c) (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
@@ -1589,7 +1591,7 @@
 	   (iobj ?iobj)  (iobj (% ?s2 (var ?iobjvar) (sem ?iobjsem) (gap -) (case (? icase obj -))))
 	   (part ?!part) ;;(part (% part))
 	   (dobj ?dobj)	(dobj (% ?s3 (var ?dobjvar) (sem ?dobjsem) (gap -) (case (? dcase obj -))))
-	   (comp3 ?!comp) (comp3 (% ?s4 (var ?!gapvar) (sem ?compsem) (agr ?gapagr) (case (? ccase obj -)) (ptype ?ptype)))
+	   (comp3 ?!comp) (comp3 (% ?s4 (var ?!gapvar) (sem ?compsem) (agr ?gapagr) (case (? ccase obj -)) (ptype ?ptype) (arg ?arg)))
 	   (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	   
 	   (be-there -)
@@ -2670,6 +2672,7 @@
      )
   
     ;; gap questions with gapped pps
+    ; Of what do you think?
      ((s (stype whq) (subjvar ?subjvar) (dobjvar ?dobjvar)
       (qtype q) (lf ?lf) (var ?v))
      -wh-q-ppgap>
@@ -2687,7 +2690,11 @@
     ((s (stype whq) (subjvar ?subjvar) (dobjvar ?dobjvar) (subj ?subj)
       (qtype q) (lf ?lf) (var ?v))
      -wh-q-predgap>
-     (pred (var ?predvar) (sem ?predsem) (wh q) (arg ?subjvar))
+     (pred (var ?predvar) (sem ?predsem) (wh q) (arg ?subjvar)
+	    (SEM ($ f::abstr-obj
+				 (F::type (? !ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; we allowed "in" for some reason, but I don't remember the example!
+					     ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
+	   )
      (head (s (stype ynq) (lf ?lf) (var ?v) 
 	    (advbl-needed -)
 	    (subjvar ?subjvar) (dobjvar ?dobjvar)
@@ -2696,6 +2703,22 @@
        )
       )
     
+     ; Where can I put the block?
+    ((s (stype whq) (subjvar ?subjvar) (dobjvar ?dobjvar) (subj ?subj)
+      (qtype q) (lf ?lf) (var ?v))
+     -wh-q-predgap2>
+     (advbl (var ?predvar) (sem ?predsem) (wh q) (arg ?dobjvar)
+	    (SEM ($ f::abstr-obj
+				 (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; we allowed "in" for some reason, but I don't remember the example!
+					     ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
+	    )
+     (head (s (stype ynq) (lf ?lf) (var ?v) 
+	    (advbl-needed -)
+	    (subjvar ?subjvar) (dobjvar ?dobjvar)
+	    (subj ?subj)
+	    (gap (% advbl (sem ?predsem) (var ?predvar) (arg ?dobjvar))))
+       )
+      )
     
     ))
 
@@ -2819,7 +2842,7 @@
     ;; test: chase the cat.
     ((utt (lf (% speechact (var *) (class ont::sa_request) (constraint (& (content ?v))))) (var *)
           )
-     -command-imp1>
+     -command-imp1> 1.0
      (head (s (stype imp) (wh -) (var ?v) (sem ($ F::SITUATION (F::type ONT::EVENT-OF-change)))
 	      (gap -) (advbl-needed -))))
       
@@ -3082,7 +3105,7 @@
 		      (constraint ?con) (subjvar ?subjvar) (tma ?tma1)
 		      (var ?compvar) (sem ?compsem) (gap ?gap) (subj (% ?s1 (lex ?subjlex) (case sub) (var ?subjvar)
 									(sem ?subjsem) (agr ?a) (gap -)))
-		      (dobj ?dobj)
+		      (dobj ?dobj) (dobjvar ?dobjvar)
 		      (advbl-needed -)
 		      ))
             (comp3-map ?comp3-map)

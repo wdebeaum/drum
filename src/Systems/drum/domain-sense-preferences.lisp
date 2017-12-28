@@ -1,7 +1,7 @@
 ;;  the domain specific sense preferences
 
 
-(setf om::*domain-sense-preferences* '((w::expression ont::gene-expression)
+(setf lxm::*domain-sense-preferences* '((w::expression ont::gene-expression)
 				       (W::TRANSCRIPT ONT::RNA)
 				       (W::SITE ONT::MOLECULAR-SITE)
 				       (W::POSITION ONT::MOLECULAR-SITE)

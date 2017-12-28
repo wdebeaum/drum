@@ -38,6 +38,7 @@
      )
     ((LF-PARENT ONT::TO-LOC)
      (SYNTAX (W::IMPRO-CLASS ONT::LOCATION))
+     (TEMPL ppword-question-adv-NP-templ)
      (SEM (F::information F::information-content))
      )
     )

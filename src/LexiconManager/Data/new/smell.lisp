@@ -41,7 +41,7 @@
      (LF-PARENT ONT::active-perception)
      ;;(SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
      (example "he smelled the cake bake")
-     (TEMPL experiencer-action-objcontrol-templ (xp (% W::VP (W::vform (? vf W::base w::ing)))))
+     (TEMPL experiencer-action-objcontrol-templ (xp (% W::VP (W::vform (? vf2 W::base w::ing)))))
      )
     )
    )

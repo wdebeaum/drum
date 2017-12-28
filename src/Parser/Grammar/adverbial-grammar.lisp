@@ -494,7 +494,7 @@
 		(ellipsis -)
 		))
 
-     (advbl (particle -) (ATYPE POST) (ARGUMENT (% S (sem ?sem) (var ?v))); (subjvar ?subjvar)))
+     (advbl (particle -) (ATYPE POST) (ARGUMENT (% S (sem ?sem) (var ?v) (subjvar ?subjvar)))
 						   (GAP -)
       ;;(subjvar ?subjvar)   ;Not sure why this was here - maybe for purpose clauses. Leaving it in causes many parses to fail as the SUBJVAR in the new VP is wrecked
      ;; the SUBJVAR is required in the argument to be able to pass in the subject for things like "the dog walked barking".
@@ -575,6 +575,7 @@
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		;(DOBJVAR -)  ; This doesn't work because it could unify with a dobjvar not yet instantiated
 		(dobj (% -)) ; cannot use (dobj -) because dobj is (% - (W::VAR -))
+		(comp3 (% -)) ; for arguments as complements
 		(SUBJ (% NP (Var ?npvar) (LEX ?LEX)  (agr ?agr)(sem ?sem)))
 		(constraint ?con) (tma ?tma) (result-present -)
 		;;(subjvar ?subjvar)
@@ -609,6 +610,7 @@
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		;(DOBJVAR -)  ; This doesn't work because it could unify with a dobjvar not yet instantiated
 		(dobj (% -)) ; cannot use (dobj -) because dobj is (% - (W::VAR -))
+		(comp3 (% -)) ; for arguments as complements
 		(SUBJ (% NP (Var ?npvar) (agr ?agr) (sem ?sem) (lex ?lex) (case ?case)))  
 		(subjvar ?npvar)
 		(constraint ?con) (tma ?tma) (result-present -)
@@ -654,42 +656,6 @@
 
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
 			 (sem ?sem))) (GAP -) (particle -)
-      ;; (subjvar ?subjvar)
-			 (sem ?asem)
-			 (SEM ($ f::abstr-obj
-				 (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; we allowed "in" for some reason, but I don't remember the example!
-					     ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
-					;(F::type (? ttt ont::path ont::position-reln))))
-	      ;;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ont::on ont::at-loc )))) ; take the trajectory senses instead of the position-as-extent-reln senses of words such as "across"
-;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
-      (SET-MODIFIER -)  ;; mainly eliminate numbers 
-      (ARG ?npvar) (VAR ?mod)
-      ;;(role ?advrole) 
-      )
-     (add-to-conjunct (val (result ?mod)) (old ?con) (new ?new))  ; The RESULT will be remapped to TRANSIENT-RESULT
-     )
-
-    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
-         ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
-;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
-      (advbl-needed -) (complex +) (GAP ?!gap) (result-present +)
-      )
-     -vp-result-gap-advbl-no-particle>  
-     (head (vp- (VAR ?v) 
-		(seq -)  ;;  post mods to conjoined VPs is very rare
-		(DOBJ (% NP (Var ?npvar) (sem ?sem)))
-		(COMP3 (% -))
-		(constraint ?con) (tma ?tma) (result-present -)
-		;;(subjvar ?subjvar)
-		;;(aux -) 
-		(gap -)
-		(ellipsis -)
-		(result ?asem)
-		))
-
-     (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
-			 (sem ?sem)))
-      (GAP ?!gap) (particle -)
       ;; (subjvar ?subjvar)
 			 (sem ?asem)
 			 (SEM ($ f::abstr-obj
@@ -1478,6 +1444,8 @@
      
     ))
 
+
+
 (parser::augment-grammar
   
  '((headfeatures
@@ -1504,10 +1472,47 @@
 (parser::augment-grammar
  '((headfeatures
     (VP vform var agr neg sem subj iobj dobj comp3 part cont class subjvar lex headcat transform tma subj-map template)
-    (VP- vform var agr neg sem subj iobj dobj comp3 part cont class subjvar lex headcat transform subj-map tma aux passive passive-map template result)
+    (VP- vform var agr neg sem subj iobj dobj comp3 part cont class subjvar lex headcat transform subj-map tma aux passive passive-map template result) ; does not pass up gap
     (pp headcat lex)
     (advbl gap headcat lex neg)
     )
+
+   ; whom can I take the box to?
+    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
+         ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
+;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
+      (advbl-needed -) (complex +) (GAP ?!gap) (result-present +)
+      )
+     -vp-result-gap-advbl-no-particle>  
+     (head (vp- (VAR ?v) 
+		(seq -)  ;;  post mods to conjoined VPs is very rare
+		(DOBJ (% NP (Var ?npvar) (sem ?sem)))
+		(COMP3 (% -))
+		(constraint ?con) (tma ?tma) (result-present -)
+		;;(subjvar ?subjvar)
+		;;(aux -) 
+		(gap -)
+		(ellipsis -)
+		(result ?asem)
+		))
+
+     (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
+			 (sem ?sem)))
+      (GAP ?!gap) (particle -)
+      ;; (subjvar ?subjvar)
+			 (sem ?asem)
+			 (SEM ($ f::abstr-obj
+				 (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; we allowed "in" for some reason, but I don't remember the example!
+					     ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
+					;(F::type (? ttt ont::path ont::position-reln))))
+	      ;;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ont::on ont::at-loc )))) ; take the trajectory senses instead of the position-as-extent-reln senses of words such as "across"
+;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
+      (SET-MODIFIER -)  ;; mainly eliminate numbers 
+      (ARG ?npvar) (VAR ?mod)
+      ;;(role ?advrole) 
+      )
+     (add-to-conjunct (val (result ?mod)) (old ?con) (new ?new))  ; The RESULT will be remapped to TRANSIENT-RESULT
+     )
 
 ((vp- (constraint ?new)
      (tma ?tma)
@@ -1531,6 +1536,7 @@
            )
     (add-to-conjunct (val (MODS ?mod)) (old ?lf) (new ?new))
     )
+
 
    ((PP (PTYPE ?pt) (lf ?lf) (case ?c)
 		(lex ?pt) (headcat ?hc)
