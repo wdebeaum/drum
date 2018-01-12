@@ -3,13 +3,19 @@
 package Graphviz;
 use TripsModule::TripsModule;
 use Graphviz::Configuration;
+use Graphviz::Escape qw(escape_for_quotes escape_for_dot);
+use Graphviz::Errors qw(nested_error unknown_action missing_argument invalid_argument unknown_object);
+use Graphviz::WindowManager;
+use File::Spec;
 @ISA = qw(TripsModule);
+
 use strict vars;
 
 sub init {
   my $self = shift;
   $self->{name} = "Graphviz";
   $self->{graphnum} = 0;
+  $self->{wm} = Graphviz::WindowManager->new($self);
   $self->SUPER::init();
   $self->handle_parameters();
 }
@@ -42,16 +48,12 @@ sub handle_parameters {
       die "Unknown option: '$opt'\n" . $self->{usage} . "\n";
     }
   }
-  $SIG{CHLD} = 'IGNORE';
+  #$SIG{CHLD} = 'IGNORE';
   $self->send_msg("(subscribe :content (tell &key :content (lf-graph . *)))");
   $self->send_msg("(subscribe :content (request &key :content (update-plan-gui . *)))");
-}
-
-sub escape_for_quotes { 
-  my $str = shift;
-  $str =~ s/\\/\\\\/g;
-  $str =~ s/"/\\"/g;
-  return $str;
+  # talk to ourselves in order to get a report that the user closed a window
+  # into the main process
+  $self->send_msg("(subscribe :content (tell &key :sender $self->{name} :content (report &key :content (closed :what * :who usr))))");
 }
 
 sub display_graph_file {
@@ -79,70 +81,18 @@ sub receive_tell {
       if ($self->{display_enabled}) {
 	$self->display_graph_file($graphfile);
       }
+    } elsif ($content->{verb} eq 'report' and lc($msg->{':sender'}) eq lc($self->{name})) {
+      my $report = KQML::KQMLKeywordify($content->{':content'});
+      if ($report->{verb} eq 'closed' and lc($report->{':who'}) eq 'usr' and
+	  exists($report->{':what'})) {
+	# we're telling ourself that the user closed a window
+	$self->{wm}->closed_window($report->{':what'});
+      }
     } else {
       die "Unknown tell verb " . $content->{verb};
     }
     return 1
   } || $self->reply_to_msg($msg, "(tell :content (reject :reason \"" . escape_for_quotes($@) . "\"))\n");
-}
-
-# CWMS-style failure reports
-sub program_error {
-  my $msg = shift;
-  return ['failure', ':type', 'cannot-perform', ':reason',
-    ['program-error', ':message', '"' . escape_for_quotes($msg) . '"']];
-}
-
-sub missing_argument {
-  my ($op, $arg) = @_;
-  return ['failure', ':type', 'failed-to-interpret', ':reason',
-    ['missing-argument',
-      ':operator', $op,
-      ':argument', $arg
-    ]
-  ];
-}
-
-sub invalid_argument {
-  my ($operation, $argument, $expected) = @_;
-  my $op = $operation->{verb};
-  my $got = $operation->{$argument};
-  return ['failure', ':type', 'failed-to-interpret', ':reason',
-    ['invalid-argument',
-      ':operator', $op,
-      ':argument', $argument,
-      ':expected', '"' . escape_for_quotes($expected) . '"',
-      ':got', $got
-    ]
-  ];
-}
-
-sub unknown_action {
-  my $what = shift;
-  return ['failure', ':type', 'failed-to-interpret', ':reason',
-    ['unknown-action', ':what', $what]
-  ];
-}
-
-sub unknown_object {
-  my $what = shift;
-  return ['failure', ':type', 'cannot-perform', ':reason',
-    ['unknown-object', ':what', $what]
-  ];
-}
-
-my %justify2nl = ("center" => "\\n", "left" => "\\l", "right" => "\\r");
-
-sub escape_for_dot {
-  my ($str, $justify) = @_;
-  return $str unless ($str =~ /\W|^\d/); # return if valid ID, no quotes needed
-  return $str if ($str =~ /^-?(?:\.\d+|\d+(?:\.\d*)?)$/); # numbers are IDs too
-  $justify ||= "left";
-  my $nl = $justify2nl{$justify};
-  $str =~ s/\\/\\\\/g;
-  $str =~ s/"/\\"/g;
-  $str =~ s/\r\n|\n\r|\r|\n/$nl/g;
-  return "\"$str\"";
 }
 
 # remove the package from a symbol string (including keywords)
@@ -157,6 +107,7 @@ sub write_plan_graph {
   my $filename = $plan->{id};
   $filename =~ s/[^\w-]/_/g; # sanitize filename
   $filename .= '.dot';
+  $filename = File::Spec->rel2abs($filename);
   # NOTE: filename doesn't include version, because we want to have the new
   # version show up in the same window as the old
   my $graph_name = escape_for_dot("$plan->{id}v$plan->{version}");
@@ -229,6 +180,7 @@ $knowns_str
     unknown_heading [label="Goal (unknown)\\nParameters",fontsize=16]
 $goals_str
   }
+  known_heading -> unknown_heading // temp workaround for segfault bug: https://gitlab.com/graphviz/graphviz/issues/1303
 $edges_str
 $operators_str
 }
@@ -359,13 +311,22 @@ sub receive_request {
 	ref($content->{':content'}) eq 'ARRAY' or die invalid_argument($content, ':content', 'list');
 	my $plan = $self->update_plan($content->{':content'});
 	my $file = $self->write_plan_graph($plan);
-	$self->display_graph_file($file);
+	#$self->display_graph_file($file);
+	my $opened = $self->{wm}->display_graph($file, {}); # TODO config
+	my $reply =
+	  [ 'tell', ':content', ['report', ':content', $opened],
+	    (exists($msg->{':reply-with'}) ?
+	      (':in-reply-to', $msg->{':reply-with'}) : ())
+	  ];
+	$self->send_msg($reply);
         return 1
       # CWMS-style failure report
       } || $self->reply_to_msg($msg,
-	     ['tell', ':content', ['report', ':content',
-	       (ref($@) ? $@ : program_error($@))
+	     [ 'tell', ':content', ['report', ':content',
+	       nested_error('', $@)
 	     ]]);
+    } elsif (grep { $_ eq $content->{verb} } @{$self->{wm}{verbs}}) {
+      $self->{wm}->handle_window_management_request($msg, $content);
     } else {
       die "Unknown request verb " . $content->{verb};
     }

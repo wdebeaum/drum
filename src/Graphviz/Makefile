@@ -2,12 +2,12 @@
 # Makefile for Graphviz
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.5 2016/03/22 15:34:59 wdebeaum Exp $
+# $Id: Makefile,v 1.6 2018/01/11 20:55:58 wdebeaum Exp $
 #
 
 MODULE = Graphviz
 MAIN   = Graphviz.pl
-SRCS   = Graphviz.pl Configuration.pm
+SRCS   = $(MAIN) Configuration.pm Errors.pm Escape.pm WindowManager.pm
 # make all filehandles UTF-8 by default
 PERL_FLAGS = -CSD
 
