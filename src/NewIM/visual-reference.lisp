@@ -30,9 +30,10 @@
       (let* ((type (get-lf-type lf))
 	     (newlf 
 	      (cond 
-		((or (om::subtype type 'ONT::quantity)
-		     (om::subtype type 'ONT::geo-object))
+		((om::subtype type 'ONT::quantity)
 		 nil)
+		((om::subtype type 'ONT::geo-object)
+		 (tag-geo-object lf input context))
 		((om::subtype type 'ont::YEAR)
 		 (tag-and-install-info 'find-var lf '(YEAR) context))
 		((om::subtype type 'ont::number)
@@ -42,7 +43,8 @@
 		     (om::subtype type 'ont::quantity-abstr))
 		 (tag-and-install-info 'find-var lf input context))
 		((or (om::subtype type 'ONT::PHYS-OBJECT)
-		     (om::subtype type 'ONT::DOMAIN-PROPERTY) 
+		     (om::subtype type 'ONT::DOMAIN-PROPERTY)
+		     
 		     )
 		 (tag-and-install-info 'find-code lf input context))
 		)))
@@ -50,7 +52,35 @@
 	(when newlf
 	  (setf (referent-lf ref) newlf))))))
 
+(defun tag-geo-object (lf input context)
+  (let* ((reply (send-and-wait `(request :content (get-geographic-region
+						  :description ,(stringify input)
+						  :format (code "ISO")
+						  ))
+			       ))
+	 (reply-content (find-arg-in-act reply :content)))
+    (case (car reply-content)
+      (answer
+       (let ((code (find-arg-in-act reply-content :location)))
+	 (if code
+	     (append lf `(:param-code (match :variable ((TRIPS LOC))
+					     :code ((TRIPS ,code)) :score 1)))
+	     lf)))
+      (otherwise lf))))
 
+(defun stringify (x)
+  "this takes a symbol or list of symbols and makes a strong out of the symbol names"
+  (if (symbolp x)
+      (symbol-name x)
+      (if (consp x)
+	  (if (consp (cdr x))
+	      (concatenate 'string (stringify (car x)) " " (stringify (cdr x)))
+	      (stringify (car x))
+	  ))))
+      
+    
+
+						 
 (defun tag-and-install-info (fn lf input context)
   (let ((reply (send-and-wait `(REQUEST :content (,fn
 						  :phrase ,(strip-prep input) :term ,lf :content :context
@@ -64,16 +94,21 @@
 						 (not (numberp score))
 						 (< score .6))))
 				       (cdr reply))))
-		 #|| ;; also remove matches with no TRIPS ID
-		  (matches (remove-if-not #'(lambda (x)
-					      (or (assoc 'TRIPS (find-arg-in-act x :variable))
-						  (assoc 'TRIPS (find-arg-in-act x :code))))
-					  matches1)))||#
 	     (if matches 
-		 (append lf (list :param-code (car matches)))
+		 (append lf (list :param-code
+				  (or (find-best-trips-match (if (eq fn 'find-code) :code :variable) matches)
+						  (car matches))))
 		 )
 	   ))
-      )))
+	  )))
+
+(defun find-best-trips-match (slot matches)
+  "finds the first match that identifies a TRIPS variable"
+  (when matches
+    (let ((codes (find-arg-in-act (car matches) slot)))
+      (if (assoc 'trips codes)
+	  (car matches)
+	  (find-best-trips-match slot (cdr matches))))))
 
 (defun strip-prep (input)
   "strips off a proposition at the start if it has no semantic content"

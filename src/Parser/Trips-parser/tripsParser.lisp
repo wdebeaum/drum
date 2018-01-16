@@ -88,7 +88,23 @@
   (let ((prefer-msgs (restart-parse-with-constits initconstits)))
     (continueparse (append prefer-msgs wordmsgs))
     (find-spanning-constit-names-in-chart cats start end)))
-    
+
+;;  cost-table management
+
+(defvar *original-cost-table* nil)
+(defvar *original-cost-table-was-modified* nil)
+
+(defun adjust-cost-table (mods duration)
+  "cost table is either modified for the next utterance only, or permanently. Default is next utterance only"
+  (if (and (consp mods) (every #'consp mods))
+      (if (eq duration 'permanent)
+      	  (setq *cost-table* (append (convert-to-package mods *ont-package*) *cost-table*))
+	  (progn
+	    (setq *original-cost-table* *cost-table*)
+	    (setq *original-cost-table-was-modified* t)
+	    (setq *cost-table* (append (convert-to-package mods *ont-package*) *cost-table*))))
+      (format t "~% BAD format of MODS in ADJUST-COST-TABLE: ~S" mods)))
+      
 
 ;; =====
 ;; Parse
@@ -154,6 +170,14 @@
      (setf (end-seen *chart*) t)
      ;; adjust the average length of words (dramatically difference between text and speech!)
      (adjust-word-length-parameter content)
+     ;;  manage the temporary cost-table changes
+     (if *original-cost-table-was-modified*
+	 (setq *original-cost-table-was-modified* nil)
+	 (when *original-cost-table*
+	     ;; we reset the cost table
+	   (setq *cost-table* *original-cost-table*)
+	   (setq *original-cost-table* nil)))
+	 
      (continue-BU-parse)
      (let ((utts (get-parse :lf :numb (number-parses-to-find *chart*))))
        (if *include-parse-tree-in-messages*

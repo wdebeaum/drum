@@ -111,188 +111,135 @@ sub write_plan_graph {
   # NOTE: filename doesn't include version, because we want to have the new
   # version show up in the same window as the old
   my $graph_name = escape_for_dot("$plan->{id}v$plan->{version}");
-  my $knowns_str = '';
-  my $prev = 'known_heading';
-  for (@{$plan->{knowns}}) {
-    my $ps = escape_for_dot($_->{id});
-    my $label = nopkg($_->{id}) . ": [" . nopkg($_->{name}) . " $_->{value}]";
-    $knowns_str .=
-      "    $prev -> $ps\n" .
-      "    $ps " .
-      "[label=" . escape_for_dot($label) .
-        (exists($_->{color}) ? ",fontcolor=$_->{color}" : "") .
-      "]\n";
-    $prev = $ps;
-  }
-  my $operators_str = '';
-  for (@{$plan->{operators}}) {
-    $operators_str .=
-      '  ' . escape_for_dot($_->{id}) .
-      ' [label=' . escape_for_dot($_->{label}) .
-        (exists($_->{color}) ? ",color=$_->{color}" : "") .
-      "]\n";
-  }
-  my $goals_str = '';
-  $prev = 'unknown_heading';
-  for (@{$plan->{goals}}) {
-    my $ps = escape_for_dot($_->{id});
-    my $label =
-      nopkg($_->{id}) . ": [" . nopkg($_->{name}) .
-	join('', map {
-	  my $arg_id = $_;
-	  my ($arg) = grep { $_->{id} eq $arg_id } @{$plan->{knowns}};
-	  "\n\t$arg->{name} " . (($arg->{value} =~ /^nil$/i) ? '?' : $arg->{value})
-	} @{$_->{arguments}}) .
-      "]";
-    $goals_str .=
-      "    $prev -> $ps\n" .
-      "    $ps " .
-      "[label=" . escape_for_dot($label) .
-        (exists($_->{color}) ? ",fontcolor=$_->{color}" : "") .
-      "]\n";
-    $prev = $ps;
-  }
-  my $edges_str = '';
-  for (@{$plan->{links}}) {
-    $edges_str .=
-      "  " . escape_for_dot($_->{source}, "center") .
-      " -> " . escape_for_dot($_->{target}, "center") .
-      " [label=" . escape_for_dot(nopkg($_->{label})) .
-        (exists($_->{color}) ? ",color=$_->{color}" : "") .
-      "]\n";
-  }
   open my $fh, ">$filename" or die "can't open $filename for writing: $!";
-  print $fh <<EOG;
+  print $fh <<EOH;
 digraph $graph_name {
-  graph [rankdir=LR,nodesep=0.1]
-  node [shape=box,fontcolor=white,color=gray40,fillcolor=gray40,style="rounded,filled",fontname="sans-serif"]
-  subgraph knowns {
-    graph [rank=source]
-    node [shape=none,fontcolor=black,fontsize=12,style=""]
-    edge [color=white]
-    known_heading [label="Known\\nParameters",fontsize=16]
-$knowns_str
+  graph [rankdir=LR]
+  node [shape=none]
+EOH
+  for my $id (keys %{$plan->{parts}}) {
+    my $part = $plan->{parts}{$id};
+    my $verb = lc($part->{verb});
+    if ($verb eq 'state') {
+      my $caption = ($part->{state_index} == 0 ? "Begin state" : ($part->{state_index} == $plan->{num_states}-1 ? "End state" : "Intermediate state " . $part->{state_index}));
+      print $fh qq(  "$id" [label=<\n     <table border="0" cellspacing="0" cellborder="1" align="left">\n     <tr><td border="0">$caption</td></tr>\n);
+      for my $status (qw(achieved unknowns knowns)) {
+	if (exists($part->{$status})) {
+	  print $fh qq(     <tr><td height="100">\n      <table border="0" cellborder="0" align="center">\n       <tr><td align="left" valign="top"><font point-size="10">$status</font></td></tr>\n);
+	  for my $param (@{$part->{$status}}) {
+	    my $param_id = $param->{':id'};
+	    my $id_nopkg = nopkg($param_id);
+	    my $id_code = KQML::KQMLAsString($param->{':id-code'});
+	    print $fh qq(     <tr><td port="$id_nopkg">$id_nopkg);
+	    if (exists($param->{':arguments'}) and
+	        ref($param->{':arguments'})) {
+	      print $fh ": $id_code";
+	      for my $arg_id (@{$param->{':arguments'}}) {
+		exists($plan->{params}{$arg_id}) or die unknown_object($arg_id);
+		my $arg = $plan->{params}{$arg_id};
+		print $fh qq(<br/>$arg->{':id-code'} $arg_id:);
+		if (exists($arg->{':value'}) and
+		    lc($arg->{':value'}) ne 'nil') {
+		  print $fh qq( $arg->{':value'});
+		} else {
+		  print $fh qq( ?);
+		}
+	      }
+	      if (exists($param->{':value'}) and
+		  lc($param->{':value'}) ne 'nil') {
+		# value after arguments, treat it as the :value argument
+		my $value = KQML::KQMLAsString($param->{':value'});
+		print $fh qq(<br/>:value $value);
+	      }
+	    } elsif (exists($param->{':value'}) and
+	        lc($param->{':value'}) ne 'nil') {
+	      # value after no arguments, just put it inline
+	      print $fh ': ' . KQML::KQMLAsString($param->{':value'});
+	    } else {
+	      # no value after no arguments
+	      print $fh ": ?";
+	    }
+	    print $fh qq(</td></tr>\n);
+	  }
+	  print $fh qq(      </table>\n     </td></tr>\n);
+	}
+      }
+      print $fh qq(    </table>\n  >]\n);
+    } elsif ($verb eq 'operator') {
+      die missing_argument($verb, ':from') unless (exists($part->{':from'}));
+      die missing_argument($verb, ':to') unless (exists($part->{':to'}));
+
+      if (exists($part->{':from-map'}) and exists($part->{':to-map'}) and
+	  exists($part->{':service'})) { # service node
+	print $fh qq(  "$id" [label="$part->{':service'}"]\n);
+	for my $in_edge (@{$part->{':from-map'}}) {
+	  print STDERR Data::Dumper->Dump([$in_edge],['*in_edge']);
+	  my ($label, $tail_id) = @$in_edge;
+	  exists($plan->{params}{$tail_id}) or die unknown_object($tail_id);
+	  my $param = $plan->{params}{$tail_id};
+	  my $id_nopkg = nopkg($tail_id);
+	  print $fh qq(  "$param->{state}" -> "$id" [tailport="$id_nopkg",label="$label");
+	  print $fh qq(,weight=0) if ($param->{state} ne $part->{':from'});
+	  print $fh qq(]\n);
+	}
+	for my $out_edge (@{$part->{':to-map'}}) {
+	  print STDERR Data::Dumper->Dump([$out_edge],['*out_edge']);
+	  my ($label, $head_id) = @$out_edge;
+	  exists($plan->{params}{$head_id}) or die unknown_object($head_id);
+	  my $param = $plan->{params}{$head_id};
+	  my $id_nopkg = nopkg($head_id);
+	  print $fh qq(  "$id" -> "$param->{state}" [headport="$id_nopkg",label="$label");
+	  print $fh qq(,weight=0) if ($param->{state} ne $part->{':to'});
+	  print $fh qq(]\n);
+	}
+      } else { # gap edge
+	print $fh qq(  "$part->{':from'}" -> "$part->{':to'}" [label="???",color=gray,penwidth=3,minlen=3]\n); # FIXME minlen?
+      }
+    } else {
+      die unknown_action($verb); # FIXME maybe?
+    }
   }
-  subgraph goals {
-    graph [rank=sink]
-    node [shape=none,fontcolor=black,fontsize=12,style=""]
-    edge [color=white]
-    unknown_heading [label="Goal (unknown)\\nParameters",fontsize=16]
-$goals_str
-  }
-  known_heading -> unknown_heading // temp workaround for segfault bug: https://gitlab.com/graphviz/graphviz/issues/1303
-$edges_str
-$operators_str
-}
-EOG
+  print $fh "}\n";
   close $fh;
   return $filename;
 }
 
 sub update_plan {
   my ($self, $content) = ($_[0], KQML::KQMLKeywordify($_[1]));
-  my $verb = lc($content->{verb});
-  exists($content->{':id'}) or die missing_argument($verb, ':id');
-  my $plan_id = $content->{':id'};
-  my $plan = undef;
-  if ($verb eq 'new-plan') {
-    $plan = $self->{plans}{$plan_id} = +{
-      id => $plan_id,
-      knowns => [],
-      operators => [],
-      goals => [],
-      links => []
-    };
-  } elsif (exists($self->{plans}{$plan_id})) {
-    $plan = $self->{plans}{$plan_id};
-    # remove red color of formerly-new graph elements
-    for my $elem (@{$plan->{knowns}}, @{$plan->{operators}}, @{$plan->{goals}},
-		  @{$plan->{links}}) {
-      delete $elem->{color};
-    }
-  } else {
-    die unknown_object($plan_id);
-  }
-  $plan->{version} = $content->{':version'};
-  if (exists($content->{':knowns'})) {
-    # TODO be consistent between map and foreach
-    # TODO factor out common parts of these loops
-    my $i = 0;
-    push @{$plan->{knowns}}, map {
-      my $p = KQML::KQMLKeywordify($_);
-      defined($p) or die invalid_argument($content->{':knowns'}, $i, 'list');
-      exists($p->{':id'}) or die missing_argument('parameter', ':id');
-      exists($p->{':id-code'}) or die missing_argument('parameter', ':id-code');
-      $i++;
-      +{
-	id => $p->{':id'},
-	name => KQML::KQMLAsString($p->{':id-code'}),
-	value =>
-	  (exists($p->{':value'}) ? KQML::KQMLAsString($p->{':value'}) : '?'),
-	color => 'red' # new
-      }
-    } @{$content->{':knowns'}};
-  }
-  if (exists($content->{':goals'})) {
-    my $i = 0;
-    push @{$plan->{goals}}, map {
-      my $p = KQML::KQMLKeywordify($_);
-      defined($p) or die invalid_argument($content->{':goals'}, $i, 'list');
-      exists($p->{':id'}) or die missing_argument('parameter', ':id');
-      exists($p->{':id-code'}) or die missing_argument('parameter', ':id-code');
-      $i++;
-      +{
-	id => $p->{':id'},
-	name => KQML::KQMLAsString($p->{':id-code'}),
-	arguments =>
-	  ((ref($p->{':arguments'}) eq 'ARRAY') ? $p->{':arguments'} : []),
-	value =>
-	  (exists($p->{':value'}) ? KQML::KQMLAsString($p->{':value'}) : '?'),
-	color => 'red' # new
-      }
-    } @{$content->{':goals'}};
-  }
-  if ($verb eq 'new-operator') {
-    exists($content->{':operator'}) or die missing_argument('new-operator', ':operator');
-    my $op = KQML::KQMLKeywordify($content->{':operator'});
-    defined($op) or die invalid_argument($content, ':operator', 'list');
-    exists($op->{':id'}) or die missing_argument('operator', ':id');
-    exists($op->{':service'}) or die missing_argument('operator', ':service');
-    push @{$plan->{operators}}, +{
-      id => $op->{':id'},
-      label => $op->{':service'},
-      color => 'red' # new
-    };
-    if (exists($op->{':from'}) and $op->{':from'} !~ /^nil$/i) {
-      ref($op->{':from'}) eq 'ARRAY' or die invalid_argument($op, ':from', 'list');
-      my $i = 0;
-      for my $link (@{$op->{':from'}}) {
-	(ref($link) eq 'ARRAY' and @$link == 2) or die invalid_argument($op->{':from'}, $i, 'pair');
-	push @{$plan->{links}}, +{
-	  source => $link->[1],
-	  target => $op->{':id'},
-	  label => $link->[0],
-	  color => 'red' # new
-	};
-	$i++;
+  my $plan = {
+    id => $content->{':id'},
+    version => $content->{':version'},
+    parts => {}, # states and operators (that become nodes and edges)
+    params => {} # parameters (that become ports on state nodes)
+  };
+  # TODO more input format checking and output string escaping
+  my $i = 0;
+  for ($content->{':initial-state'},
+       @{$content->{':intermediate-states'}},
+       $content->{':goal-state'}) {
+    my $part = KQML::KQMLKeywordify($_);
+    $part->{state_index} = $i++;
+    $plan->{parts}{$part->{':id'}} = $part;
+    for my $status (qw(achieved unknowns knowns)) {
+      if (exists($part->{":$status"}) and ref($part->{":$status"})) {
+	$part->{$status} = []; # NOTE: no colon
+	for my $param_kqml (@{$part->{":$status"}}) {
+	  my $param = KQML::KQMLKeywordify($param_kqml);
+	  # save the state this param is part of, so that we can make edges
+	  # properly (NOTE: :from-map edges don't always come from the :from
+	  # state)
+	  $param->{state} = $part->{':id'};
+	  push @{$part->{$status}}, $param;
+	  $plan->{params}{$param->{':id'}} = $param;
+	}
       }
     }
-    if (exists($op->{':to'}) and $op->{':to'} !~ /^nil$/i) {
-      ref($op->{':to'}) eq 'ARRAY' or die invalid_argument($op, ':to', 'list');
-      my $i = 0;
-      for my $link (@{$op->{':to'}}) {
-	(ref($link) eq 'ARRAY' and @$link == 2) or die invalid_argument($op->{':to'}, $i, 'pair');
-	push @{$plan->{links}}, +{
-	  source => $op->{':id'},
-	  target => $link->[1],
-	  label => $link->[0],
-	  color => 'red' # new
-	};
-	$i++;
-      }
-    }
-  } elsif ($verb ne 'new-plan') {
-    die unknown_action($verb);
+  }
+  $plan->{num_states} = $i;
+  for (@{$content->{':causal-gaps'}},
+       @{$content->{':graph'}}) {
+    my $part = KQML::KQMLKeywordify($_);
+    $plan->{parts}{$part->{':id'}} = $part;
   }
   return $plan;
 }

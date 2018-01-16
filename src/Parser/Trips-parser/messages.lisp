@@ -155,6 +155,13 @@ OFFLINE requests.")
       (handle-message msg))
   :subscribe t)
 
+(defcomponent-handler
+  '(request &key :content (adjust-cost-table . *))
+    #'(lambda (msg args)
+	(let ((content (get-keyword-arg msg :content)))
+	  (adjust-cost-table (get-keyword-arg content :mods) (get-keyword-arg content :duration))))
+  :subscribe t)
+
 (defun handle-message (msg)
   (let ((content (get-keyword-arg msg :content))
 	(sender (get-keyword-arg msg :sender))

@@ -1019,7 +1019,7 @@
 						  ;; Myrosia 2008/16/07 added origin non-living to account for "break a path", "break a stone"
 						  ;(f::origin (? o  f::artifact f::non-living)) ; living: break a leg
 						  ))
-		(:optional ONT::Result (F::Phys-obj (f::form f::object) (f::origin f::artifact)))
+		(:optional ONT::Result (F::abstr-obj (f::type ont::resulting-object)));;(F::Phys-obj (f::form f::object) (f::origin f::artifact)))
 		(:optional ONT::agent)
 ;		(:optional ont::instrument (f::phys-obj))
 		)

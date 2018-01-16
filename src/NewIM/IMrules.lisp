@@ -312,16 +312,7 @@
       
       ;; e.g., What budget are we using?
 
-      #|
-      ((ONT::SPEECHACT ?!a ONT::SA_WH-QUESTION :FOCUS ?!ff :CONTENT ?!rr)
-       (ONT::WH-TERM ?!ff ?!type :ASSOC-WITH ?a)
-       -standardQ>
-       (ONT::ASK-WHAT-IS :who *USER* :to *ME* :what ?!ff)
-       (ONT::THE ?!ff ?!type :suchthat ?!rr :ASSOC-WITH ?a)
-	)
-      |#
-
-      ((ONT::SPEECHACT ?!a ONT::SA_WH-QUESTION :FOCUS ?!ff :CONTENT ?!rr)
+   ((ONT::SPEECHACT ?!a ONT::SA_WH-QUESTION :FOCUS ?!ff :CONTENT ?!rr)
        (ONT::WH-TERM ?!ff ?!type)
        -standardQ>
        (ONT::ASK-WHAT-IS :who *USER* :to *ME* :what ?!ff :suchthat ?!rr)
@@ -826,4 +817,4 @@
 	   (ONT::CANCEL :who *USER* :to *ME*))
 	  
 	  
-	  )) 
+	  ))
