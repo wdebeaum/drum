@@ -4,7 +4,7 @@ package Graphviz;
 use TripsModule::TripsModule;
 use Graphviz::Configuration;
 use Graphviz::Escape qw(escape_for_quotes escape_for_dot);
-use Graphviz::Errors qw(nested_error unknown_action missing_argument invalid_argument unknown_object);
+use Graphviz::Errors qw(nested_error unknown_action missing_argument invalid_argument unknown_object get_typed_value get_typed_argument);
 use Graphviz::WindowManager;
 use File::Spec;
 @ISA = qw(TripsModule);
@@ -129,20 +129,24 @@ EOH
 	  for my $param (@{$part->{$status}}) {
 	    my $param_id = $param->{':id'};
 	    my $id_nopkg = nopkg($param_id);
+	    exists($param->{':id-code'}) or
+	      die missing_argument($param->{verb}, ':id-code');
 	    my $id_code = KQML::KQMLAsString($param->{':id-code'});
 	    print $fh qq(     <tr><td port="$id_nopkg">$id_nopkg);
-	    if (exists($param->{':arguments'}) and
-	        ref($param->{':arguments'})) {
+	    my $arguments =
+	      get_typed_argument($param, ':arguments', 'list', []);
+	    if (@$arguments) {
 	      print $fh ": $id_code";
-	      for my $arg_id (@{$param->{':arguments'}}) {
+	      for my $arg_id (@$arguments) {
 		exists($plan->{params}{$arg_id}) or die unknown_object($arg_id);
 		my $arg = $plan->{params}{$arg_id};
-		print $fh qq(<br/>$arg->{':id-code'} $arg_id:);
+		my $arg_id_code = get_typed_argument($arg,':id-code', 'symbol');
+		print $fh qq(<br/>$arg_id_code $arg_id: );
 		if (exists($arg->{':value'}) and
 		    lc($arg->{':value'}) ne 'nil') {
-		  print $fh qq( $arg->{':value'});
+		  print $fh KQML::KQMLAsString($arg->{':value'});
 		} else {
-		  print $fh qq( ?);
+		  print $fh '?';
 		}
 	      }
 	      if (exists($param->{':value'}) and
@@ -152,7 +156,7 @@ EOH
 		print $fh qq(<br/>:value $value);
 	      }
 	    } elsif (exists($param->{':value'}) and
-	        lc($param->{':value'}) ne 'nil') {
+		     lc($param->{':value'}) ne 'nil') {
 	      # value after no arguments, just put it inline
 	      print $fh ': ' . KQML::KQMLAsString($param->{':value'});
 	    } else {
@@ -166,34 +170,46 @@ EOH
       }
       print $fh qq(    </table>\n  >]\n);
     } elsif ($verb eq 'operator') {
-      die missing_argument($verb, ':from') unless (exists($part->{':from'}));
-      die missing_argument($verb, ':to') unless (exists($part->{':to'}));
-
+      my $from = get_typed_argument($part, ':from', 'symbol');
+      my $to = get_typed_argument($part, ':to', 'symbol');
       if (exists($part->{':from-map'}) and exists($part->{':to-map'}) and
 	  exists($part->{':service'})) { # service node
-	print $fh qq(  "$id" [label="$part->{':service'}"]\n);
-	for my $in_edge (@{$part->{':from-map'}}) {
-	  print STDERR Data::Dumper->Dump([$in_edge],['*in_edge']);
-	  my ($label, $tail_id) = @$in_edge;
+	my $service = get_typed_argument($part, ':service', 'symbol');
+	print $fh qq(  "$id" [label="$service"]\n);
+	my $from_map = get_typed_argument($part, ':from-map', 'list');
+	for my $in_edge (@$from_map) {
+	  my ($label, $tail_id);
+	  eval {
+	    @$in_edge == 2 or die;
+	    ($label, $tail_id) =
+	      map { get_typed_value('symbol', $_) } @$in_edge;
+	    1
+	  } || die invalid_argument($part, ':from-map', 'list of pairs of symbols');
 	  exists($plan->{params}{$tail_id}) or die unknown_object($tail_id);
 	  my $param = $plan->{params}{$tail_id};
 	  my $id_nopkg = nopkg($tail_id);
 	  print $fh qq(  "$param->{state}" -> "$id" [tailport="$id_nopkg",label="$label");
-	  print $fh qq(,weight=0) if ($param->{state} ne $part->{':from'});
+	  print $fh qq(,weight=0) if ($param->{state} ne $from);
 	  print $fh qq(]\n);
 	}
-	for my $out_edge (@{$part->{':to-map'}}) {
-	  print STDERR Data::Dumper->Dump([$out_edge],['*out_edge']);
-	  my ($label, $head_id) = @$out_edge;
+	my $to_map = get_typed_argument($part, ':to-map', 'list');
+	for my $out_edge (@$to_map) {
+	  my ($label, $head_id);
+	  eval {
+	    @$out_edge == 2 or die;
+	    ($label, $head_id) =
+	      map { get_typed_value('symbol', $_) } @$out_edge;
+	    1
+	  } || die invalid_argument($part, ':to-map', 'list of pairs of symbols');
 	  exists($plan->{params}{$head_id}) or die unknown_object($head_id);
 	  my $param = $plan->{params}{$head_id};
 	  my $id_nopkg = nopkg($head_id);
 	  print $fh qq(  "$id" -> "$param->{state}" [headport="$id_nopkg",label="$label");
-	  print $fh qq(,weight=0) if ($param->{state} ne $part->{':to'});
+	  print $fh qq(,weight=0) if ($param->{state} ne $to);
 	  print $fh qq(]\n);
 	}
       } else { # gap edge
-	print $fh qq(  "$part->{':from'}" -> "$part->{':to'}" [label="???",color=gray,penwidth=3,minlen=3]\n); # FIXME minlen?
+	print $fh qq(  "$from" -> "$to" [label="???",color=gray,penwidth=3,minlen=3]\n); # FIXME minlen?
       }
     } else {
       die unknown_action($verb); # FIXME maybe?
@@ -207,39 +223,65 @@ EOH
 sub update_plan {
   my ($self, $content) = ($_[0], KQML::KQMLKeywordify($_[1]));
   my $plan = {
-    id => $content->{':id'},
-    version => $content->{':version'},
+    id => get_typed_argument($content, ':id', 'symbol'),
+    version => get_typed_argument($content, ':version', 'integer', 0),
     parts => {}, # states and operators (that become nodes and edges)
     params => {} # parameters (that become ports on state nodes)
   };
   # TODO more input format checking and output string escaping
   my $i = 0;
-  for ($content->{':initial-state'},
-       @{$content->{':intermediate-states'}},
-       $content->{':goal-state'}) {
-    my $part = KQML::KQMLKeywordify($_);
+  for my $kpart (get_typed_argument($content, ':initial-state', 'list'),
+		 @{get_typed_argument($content, ':intermediate-states','list')},
+		 get_typed_argument($content, ':goal-state', 'list')) {
+    my $part = undef;
+    eval {
+      $part = get_typed_value('performative', $kpart);
+      1
+    } || die ['failure', ':type', 'failed-to-interpret', ':reason',
+    	       ['invalid-argument',
+	         ':operator', $content->{verb},
+	         ':argument', [qw(or :initial-state :intermediate-states :goal-state)],
+		 ':expected', '"performative"',
+		 ':got', $kpart]];
     $part->{state_index} = $i++;
-    $plan->{parts}{$part->{':id'}} = $part;
+    my $part_id = get_typed_argument($part, ':id', 'symbol');
+    $plan->{parts}{$part_id} = $part;
     for my $status (qw(achieved unknowns knowns)) {
-      if (exists($part->{":$status"}) and ref($part->{":$status"})) {
+      my $params = get_typed_argument($part, ":$status", 'list', []);
+      if (@$params) {
 	$part->{$status} = []; # NOTE: no colon
-	for my $param_kqml (@{$part->{":$status"}}) {
-	  my $param = KQML::KQMLKeywordify($param_kqml);
+	for my $param_kqml (@$params) {
+	  my $param = undef;
+	  eval {
+	    $param = get_typed_value('performative', $param_kqml);
+	    1
+	  } || die invalid_argument($part, ":$status", 'performative');
 	  # save the state this param is part of, so that we can make edges
 	  # properly (NOTE: :from-map edges don't always come from the :from
 	  # state)
-	  $param->{state} = $part->{':id'};
+	  $param->{state} = $part_id;
 	  push @{$part->{$status}}, $param;
-	  $plan->{params}{$param->{':id'}} = $param;
+	  my $param_id = get_typed_argument($param, ':id', 'symbol');
+	  $plan->{params}{$param_id} = $param;
 	}
       }
     }
   }
   $plan->{num_states} = $i;
-  for (@{$content->{':causal-gaps'}},
-       @{$content->{':graph'}}) {
-    my $part = KQML::KQMLKeywordify($_);
-    $plan->{parts}{$part->{':id'}} = $part;
+  for my $kpart (@{get_typed_argument($content, ':causal-gaps', 'list', [])},
+		 @{get_typed_argument($content, ':graph', 'list', [])}) {
+    my $part = undef;
+    eval {
+      $part = get_typed_value('performative', $kpart);
+      1
+    } || die ['failure', ':type', 'failed-to-interpret', ':reason',
+    	       ['invalid-argument',
+	         ':operator', $content->{verb},
+	         ':argument', [qw(or :causal-gaps :graph)],
+		 ':expected', '"performative"',
+		 ':got', $kpart]];
+    my $part_id = get_typed_argument($part, ':id', 'symbol');
+    $plan->{parts}{$part_id} = $part;
   }
   return $plan;
 }
