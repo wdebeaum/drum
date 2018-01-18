@@ -5,6 +5,7 @@ require Exporter;
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(unknown_action missing_argument invalid_argument unknown_object nested_error get_typed_value get_typed_argument);
 
+use Data::Dumper;
 use Graphviz::Escape qw(escape_for_quotes);
 
 use strict vars;
@@ -87,39 +88,24 @@ sub unknown_object {
 # performative	checks for ARRAY ref, and keywordifies
 sub get_typed_value {
   my ($type, $value) = @_;
-  print STDERR "1\n";
   if ($type eq 'number') {
-    print STDERR "2\n";
     return $value
       if ((not ref($value)) and $value =~ /^[+-]?(?:\d*\.\d+|\d+\.?)$/);
-    print STDERR "3\n";
   } elsif ($type eq 'integer') {
-    print STDERR "4\n";
     return $value if ((not ref($value)) and $value =~ /^[+-]?\d$/);
-    print STDERR "5\n";
   } elsif ($type eq 'symbol') {
-    print STDERR "6\n";
     return $value
       unless (ref($value) or $value =~ /^[+-]?\.?\d/ or
 	      KQML::KQMLAtomIsString($value));
-    print STDERR "7\n";
   } elsif ($type eq 'string') {
-    print STDERR "8\n";
     return KQML::KQMLStringAtomAsPerlString($value)
       if ((not ref($value)) and KQML::KQMLAtomIsString($value));
-    print STDERR "9\n";
   } elsif ($type eq 'list') {
-    print STDERR "10\n";
     return $value if (ref($value) eq 'ARRAY');
-    print STDERR "11\n";
     return [] if ((not ref($value)) and lc($value) eq 'nil');
-    print STDERR "12\n";
   } elsif ($type eq 'performative') {
-    print STDERR "13\n";
     return KQML::KQMLKeywordify($value) if (ref($value) eq 'ARRAY');
-    print STDERR "14\n";
   }
-  print STDERR "15\n";
   die;
 }
 
@@ -140,7 +126,7 @@ sub get_typed_argument {
     } elsif (defined($default)) {
       return $default;
     } else {
-      missing_argument($perf->{verb}, $key);
+      die missing_argument($perf->{verb}, $key);
     }
   } elsif (ref($perf) eq 'ARRAY') {
     if (exists($perf->[$key])) {
@@ -153,7 +139,7 @@ sub get_typed_argument {
     } elsif (defined($default)) {
       return $default;
     } else {
-      missing_argument($perf->{verb}, $key);
+      die missing_argument($perf->{verb}, $key);
     }
   } else {
     die "tried to look up $key in something that's not a HASH or ARRAY ref: " . Data::Dumper->Dump([$perf],['*perf']);

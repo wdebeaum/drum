@@ -231,7 +231,7 @@ sub update_plan {
   # TODO more input format checking and output string escaping
   my $i = 0;
   for my $kpart (get_typed_argument($content, ':initial-state', 'list'),
-		 @{get_typed_argument($content, ':intermediate-states','list')},
+		 @{get_typed_argument($content, ':intermediate-states','list', [])},
 		 get_typed_argument($content, ':goal-state', 'list')) {
     my $part = undef;
     eval {
