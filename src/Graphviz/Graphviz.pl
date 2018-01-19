@@ -172,11 +172,14 @@ EOH
     } elsif ($verb eq 'operator') {
       my $from = get_typed_argument($part, ':from', 'symbol');
       my $to = get_typed_argument($part, ':to', 'symbol');
-      if (exists($part->{':from-map'}) and exists($part->{':to-map'}) and
-	  exists($part->{':service'})) { # service node
-	my $service = get_typed_argument($part, ':service', 'symbol');
+      my $from_map = get_typed_argument($part, ':from-map', 'list', 0);
+      my $to_map = get_typed_argument($part, ':to-map', 'list', 0);
+      my $service = get_typed_argument($part, ':service', 'symbol', 0);
+      if ($from_map and $to_map and
+	  $service and lc($service) ne 'nil') { # service node
 	print $fh qq(  "$id" [label="$service"]\n);
-	my $from_map = get_typed_argument($part, ':from-map', 'list');
+	my @weighty_edges = ();
+	my @weightless_edges = ();
 	for my $in_edge (@$from_map) {
 	  my ($label, $tail_id);
 	  eval {
@@ -188,11 +191,17 @@ EOH
 	  exists($plan->{params}{$tail_id}) or die unknown_object($tail_id);
 	  my $param = $plan->{params}{$tail_id};
 	  my $id_nopkg = nopkg($tail_id);
-	  print $fh qq(  "$param->{state}" -> "$id" [tailport="$id_nopkg",label="$label");
-	  print $fh qq(,weight=0) if ($param->{state} ne $from);
-	  print $fh qq(]\n);
+	  my $weightless = ($param->{state} ne $from);
+	  my $str =
+	    qq(  "$param->{state}" -> "$id" [tailport="$id_nopkg",label="$label") .
+	    ($weightless ? qq(,weight=0) : '') .
+	    qq(]\n);
+	  if ($weightless) {
+	    push @weightless_edges, $str;
+	  } else {
+	    push @weighty_edges, $str;
+	  }
 	}
-	my $to_map = get_typed_argument($part, ':to-map', 'list');
 	for my $out_edge (@$to_map) {
 	  my ($label, $head_id);
 	  eval {
@@ -203,11 +212,21 @@ EOH
 	  } || die invalid_argument($part, ':to-map', 'list of pairs of symbols');
 	  exists($plan->{params}{$head_id}) or die unknown_object($head_id);
 	  my $param = $plan->{params}{$head_id};
+	  my $weightless = ($param->{state} ne $to);
 	  my $id_nopkg = nopkg($head_id);
-	  print $fh qq(  "$id" -> "$param->{state}" [headport="$id_nopkg",label="$label");
-	  print $fh qq(,weight=0) if ($param->{state} ne $to);
-	  print $fh qq(]\n);
+	  my $str =
+	    qq(  "$id" -> "$param->{state}" [headport="$id_nopkg",label="$label") .
+	    ($weightless ? qq(,weight=0) : '') .
+	    qq(]\n);
+	  if ($weightless) {
+	    push @weightless_edges, $str;
+	  } else {
+	    push @weighty_edges, $str;
+	  }
 	}
+	# print weighty edges before weightless ones to help dot arrange nodes
+	# using the weighty ones
+	print $fh @weighty_edges, @weightless_edges;
       } else { # gap edge
 	print $fh qq(  "$from" -> "$to" [label="???",color=gray,penwidth=3,minlen=3]\n); # FIXME minlen?
       }
