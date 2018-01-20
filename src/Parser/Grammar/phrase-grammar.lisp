@@ -2479,12 +2479,13 @@
 		   (post-subcat -)
 		))
 	 (pp (ptype in) (gap -)
-	  (sem ($ f::abstr-obj (F::type (? xx ont::domain)))))
+	  (sem ($ f::abstr-obj (F::type (? xx ont::domain)) (f::scale ?unit-sc))))
 	 ;;(class-greatest-lower-bound (in1 ?unit-sc) (in2 ?explicit-sc) (out ?sc))
          (add-to-conjunct (val (& (value ?num))) (old ?r) (new ?newr))
 	 (add-to-conjunct (val (& (amount (% *PRO* (status ont::indefinite) (class ont::NUMBER) (VAR ?nv) (constraint ?newr)))
 				  (unit ?c)
-				  (scale (? xx ont::domain)))) (old ?restr) (new ?constr))
+				  (scale ?unit-sc)))
+	  (old ?restr) (new ?constr))
 	 )
 
    ;;  NP with SPECS that subcategorize for "of" PP's that are count and definite

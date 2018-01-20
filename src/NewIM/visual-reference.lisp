@@ -24,9 +24,10 @@
       ))
 
 (defun identify-parameters (ref context)
-  (let ((lf (referent-lf ref))
-	(input (referent-input ref)))
-    (when (not (or (member (car lf) '(ont::speechact ont::wh-term ont::pro ont::pro-set))))
+  (let* ((lf (referent-lf ref))
+	(input (or (referent-input ref) (if (consp (third lf))
+					    (cddr lf)))))
+    (when (not (or (member (car lf) '(ont::speechact ont::pro ont::pro-set))))
       (let* ((type (get-lf-type lf))
 	     (newlf 
 	      (cond 
@@ -40,11 +41,11 @@
 		 nil)
 		((or (om::subtype type 'ONT::DOMAIN)
 		     (om::subtype type 'ont::value)
-		     (om::subtype type 'ont::quantity-abstr))
+		     (om::subtype type 'ont::quantity-abstr)
+		     (om::subtype type 'ONT::STATUS))
 		 (tag-and-install-info 'find-var lf input context))
 		((or (om::subtype type 'ONT::PHYS-OBJECT)
 		     (om::subtype type 'ONT::DOMAIN-PROPERTY)
-		     
 		     )
 		 (tag-and-install-info 'find-code lf input context))
 		)))
@@ -82,25 +83,26 @@
 
 						 
 (defun tag-and-install-info (fn lf input context)
-  (let ((reply (send-and-wait `(REQUEST :content (,fn
-						  :phrase ,(strip-prep input) :term ,lf :content :context
-						  :top-n 3)))))
-	(case (car reply)
-	  (ANSWER
-	   ;;(format t "~% Found answer: ~S" reply)
-	   (let* ((matches  (remove-if #'(lambda (x)
-					   (let ((score (find-arg-in-act x :score)))
-					     (or (null score)
-						 (not (numberp score))
-						 (< score .6))))
-				       (cdr reply))))
-	     (if matches 
-		 (append lf (list :param-code
-				  (or (find-best-trips-match (if (eq fn 'find-code) :code :variable) matches)
-						  (car matches))))
-		 )
+  (when input
+    (let ((reply (send-and-wait `(REQUEST :content (,fn
+						    :phrase ,(strip-prep input) :term ,lf :content :context
+						    :top-n 3)))))
+      (case (car reply)
+	(ANSWER
+	 ;;(format t "~% Found answer: ~S" reply)
+	 (let* ((matches  (remove-if #'(lambda (x)
+					 (let ((score (find-arg-in-act x :score)))
+					   (or (null score)
+					       (not (numberp score))
+					       (< score .6))))
+				     (cdr reply))))
+	   (if matches 
+	       (append lf (list :param-code
+				(or (find-best-trips-match (if (eq fn 'find-code) :code :variable) matches)
+				    (car matches))))
+	       )
 	   ))
-	  )))
+	))))
 
 (defun find-best-trips-match (slot matches)
   "finds the first match that identifies a TRIPS variable"

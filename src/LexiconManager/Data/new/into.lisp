@@ -13,6 +13,7 @@
      (example "fold it into a heart") 
      (TEMPL BINARY-CONSTRAINT-np-TEMPL)
      )
+    
     ((LF-PARENT ONT::RESULTING-STATE)
      (example "change to a waking state")
      (TEMPL BINARY-CONSTRAINT-np-TEMPL)
