@@ -48,7 +48,7 @@
  :words (
 	  (w::right
 	   (senses
-     ((lf-parent ont::correct)
+	    ((lf-parent ont::right)
 	     (templ attributive-only-adj-templ)
 	     (meta-data :origin bee :entry-date 20040408 :change-date 20090731 :wn ("right%3:00:00") :comments test-s)
 	     )

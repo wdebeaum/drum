@@ -41,6 +41,19 @@
  :tags (:base500)
  :words (
   (W::TO
+   ;(wordfeats (w::result-only +))
+   (SENSES
+    ((LF-PARENT ONT::orients-to)
+     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
+     (example "I see the building to my right")
+     (PREFERENCE 0.9) ;; prefer vp attachment
+     )
+    ))))
+
+(define-words :pos W::ADV
+ :tags (:base500)
+ :words (
+  (W::TO
    (wordfeats (w::result-only +))
    (SENSES
     ((LF-PARENT ONT::PURPOSE)
@@ -74,11 +87,7 @@
      (example "I see the building to my right")
      (preference .98) ;; prefer to-loc if applicable
      )||#
-    ((LF-PARENT ONT::orients-to)
-     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
-     (example "I see the building to my right")
-     (PREFERENCE 0.9) ;; prefer vp attachment
-     )
+
     ;; 04 2010 no longer needed?rate
 ;    ((LF-PARENT ONT::TO-LOC-DEGREES)
 ;     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
