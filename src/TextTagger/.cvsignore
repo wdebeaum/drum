@@ -13,4 +13,5 @@ drum-dsl
 specialist.tsv
 drum-dbxrefs.tsv
 specialist.aspell
+countries.tsv
 *.old*

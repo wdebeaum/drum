@@ -74,6 +74,7 @@ use TextTagger::XMLInput;
 use TextTagger::AlternateSpellings;
 use TextTagger::Asma;
 use TextTagger::CJParser;
+use TextTagger::Countries;
 use TextTagger::Drum;
 use TextTagger::Enju;
 use TextTagger::MetaMap;

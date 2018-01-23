@@ -522,6 +522,15 @@ sub domainSpecificInfo2trips {
     } elsif (grep { $_ eq $info->{type} } qw(pitch-sequence progression)) {
       push @$trips, ':members', domainSpecificInfo2trips($info->{members})
         if (exists($info->{members}));
+    } elsif (grep { $_ eq $info->{type} } qw(capital country demonym region subregion)) {
+      push @$trips, ':name', '"' . escape_for_quotes($info->{name}) . '"'
+        if (exists($info->{name}));
+      for my $key (qw(code country countries)) {
+	push @$trips, ":$key", $info->{$key} if (exists($info->{$key}));
+      }
+      push @$trips, ':matches',
+	   domainSpecificInfo2trips($info->{matches})
+	if (exists($info->{matches}));
     } else {
       die "Unknown type of domain-specific-info: $info->{type}\n" . Data::Dumper->Dump([$info],['*info']);
     }

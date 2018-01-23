@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.109 2017/11/27 20:12:40 wdebeaum Exp $
+# $Id: Makefile,v 1.111 2018/01/22 21:02:14 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -81,6 +81,26 @@ clean::
 
 terms.txt: make-terms-dot-txt.sh
 	./make-terms-dot-txt.sh $(TEXTTAGGER_geonames)
+endif
+
+ifneq (,$(wildcard get-countries-tsv.pl))
+all:: countries.tsv
+
+install:: countries.tsv
+	$(INSTALL_DATA) $< $(etcdir)/$(MODULE)
+
+clean::
+	rm -rf countries.tsv
+
+countries.tsv: get-countries-tsv.pl downloads/countries.json
+	./$^ >$@
+
+downloads/MADE:
+	mkdir -p downloads
+	touch $@
+
+downloads/countries.json: downloads/MADE
+	curl -L -o $@ "https://raw.githubusercontent.com/mledoze/countries/master/countries.json"
 endif
 
 # blech, some installed files are needed by get-wn-multiwords.pl

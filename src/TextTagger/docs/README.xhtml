@@ -966,6 +966,12 @@ named-entity with LF type <code>REFERENTIAL-SEM</code>.</td>
 <td>Splits sentences into clauses at certain punctuation (e.g. commas), as long
 as the clauses end up long enough, and they agree with other sources of clause tags if enabled.</td>
 </tr><tr>
+<td>Countries</td>
+<td>named-entity</td>
+<td>X</td>
+<td></td>
+<td>Looks up country names and related terms from <a href="https://github.com/mledoze/countries">mledoze/countries</a>' <code>countries.json</code> file.</td>
+</tr><tr>
 <td>Disambiguator</td>
 <td>sense</td>
 <td></td>
@@ -1196,7 +1202,7 @@ foo BarBaz don't 123,456 12EA56
 <tr><td>clause</td><td>CJParser, Clauses, Enju, StanfordCoreNLP, StanfordParser</td></tr>
 <tr><td>ending</td><td>Words</td></tr>
 <tr><td>named-entity</td>
-    <td>Alphanumerics, CapitalizedNames, NamedEntities, NamesFromFile, PersonalNames, StanfordCoreNLP, Terms</td></tr>
+    <td>Alphanumerics, CapitalizedNames, Countries, NamedEntities, NamesFromFile, PersonalNames, StanfordCoreNLP, Terms</td></tr>
 <tr><td>number</td><td>RomanNumerals, Words</td></tr>
 <tr><td>phrase</td>
     <td>CJParser, Enju, Minipar, StanfordCoreNLP, StanfordParser, Gold</td></tr>
@@ -1226,11 +1232,15 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 <tr><td>ALLERGY-MEDICATION</td><td>Asma</td></tr>
 <tr><td>CHEMICAL</td><td>ChemicalFormulae</td></tr>
 <tr><td>CHORD</td><td>Music</td></tr>
+<tr><td>CITY</td><td>Countries</td></tr>
+<tr><td>COUNTRY</td><td>Countries</td></tr>
 <tr><td>FEMALE-PERSON</td><td>PersonalNames</td></tr>
-<tr><td>GEOGRAPHIC-REGION</td><td>NamedEntities, StanfordCoreNLP, Terms</td></tr>
+<tr><td>GEOGRAPHIC-REGION</td><td>Countries, NamedEntities, StanfordCoreNLP, Terms</td></tr>
 <tr><td>LOCATION-ID</td><td>StreetAddresses</td></tr>
 <tr><td>LONG-TERM-CONTROL-DRUG</td><td>Asma</td></tr>
 <tr><td>MALE-PERSON</td><td>PersonalNames</td></tr>
+<tr><td>NATIONALITY</td><td>Countries</td></tr>
+<tr><td>NATIONALITY-VAL</td><td>Countries</td></tr>
 <tr><td>ORGANIZATION</td><td>NamedEntities, StanfordCoreNLP</td></tr>
 <tr><td>PERSON</td><td>NamedEntities, PersonalNames, StanfordCoreNLP</td></tr>
 <tr><td>PITCH</td><td>Music</td></tr>
