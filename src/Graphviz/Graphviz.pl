@@ -178,8 +178,8 @@ EOH
       if ($from_map and $to_map and
 	  $service and lc($service) ne 'nil') { # service node
 	print $fh qq(  "$id" [label="$service"]\n);
-	my @weighty_edges = ();
-	my @weightless_edges = ();
+	my @constraining_edges = ();
+	my @unconstraining_edges = ();
 	for my $in_edge (@$from_map) {
 	  my ($label, $tail_id);
 	  eval {
@@ -191,15 +191,15 @@ EOH
 	  exists($plan->{params}{$tail_id}) or die unknown_object($tail_id);
 	  my $param = $plan->{params}{$tail_id};
 	  my $id_nopkg = nopkg($tail_id);
-	  my $weightless = ($param->{state} ne $from);
+	  my $unconstraining = ($param->{state} ne $from);
 	  my $str =
 	    qq(  "$param->{state}" -> "$id" [tailport="$id_nopkg",label="$label") .
-	    ($weightless ? qq(,weight=0) : '') .
+	    ($unconstraining ? qq(,constraint=false) : '') .
 	    qq(]\n);
-	  if ($weightless) {
-	    push @weightless_edges, $str;
+	  if ($unconstraining) {
+	    push @unconstraining_edges, $str;
 	  } else {
-	    push @weighty_edges, $str;
+	    push @constraining_edges, $str;
 	  }
 	}
 	for my $out_edge (@$to_map) {
@@ -212,21 +212,21 @@ EOH
 	  } || die invalid_argument($part, ':to-map', 'list of pairs of symbols');
 	  exists($plan->{params}{$head_id}) or die unknown_object($head_id);
 	  my $param = $plan->{params}{$head_id};
-	  my $weightless = ($param->{state} ne $to);
+	  my $unconstraining = ($param->{state} ne $to);
 	  my $id_nopkg = nopkg($head_id);
 	  my $str =
 	    qq(  "$id" -> "$param->{state}" [headport="$id_nopkg",label="$label") .
-	    ($weightless ? qq(,weight=0) : '') .
+	    ($unconstraining ? qq(,constraint=false) : '') .
 	    qq(]\n);
-	  if ($weightless) {
-	    push @weightless_edges, $str;
+	  if ($unconstraining) {
+	    push @unconstraining_edges, $str;
 	  } else {
-	    push @weighty_edges, $str;
+	    push @constraining_edges, $str;
 	  }
 	}
-	# print weighty edges before weightless ones to help dot arrange nodes
-	# using the weighty ones
-	print $fh @weighty_edges, @weightless_edges;
+	# print constraining edges before unconstraining ones to help dot
+	# arrange nodes using the constraining ones
+	print $fh @constraining_edges, @unconstraining_edges;
       } else { # gap edge
 	print $fh qq(  "$from" -> "$to" [label="???",color=gray,penwidth=3,minlen=3]\n); # FIXME minlen?
       }

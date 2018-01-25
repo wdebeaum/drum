@@ -643,7 +643,7 @@
       ;; used only for "there is ..." constructions. 
       (THERE-theme-TEMPL  
        (ARGUMENTS
-	(LSUBJ (% W::NP (W::sem ($ -)) (W::lex w::there)) NOROLE)
+	(LSUBJ (% W::NP (W::sem ($ -)) (W::lex w::there) (w::expletive +)) NOROLE)
 	(LOBJ (:parameter xp (:default (% W::NP (w::agr (? a w::1s w::1p w::2s w::2p w::3s w::3p -)))))
 	      ONT::NEUTRAL)
 	))
@@ -788,8 +788,6 @@
 	(LSUBJ (% W::NP) ONT::agent)
 	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::affected)
 	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln ont::position-reln ont::source-reln)))) (w::arg ?dobjvar))))
-					   
-			  
 	       ONT::RESULT)
 	))
 
@@ -924,13 +922,15 @@
 
       (neutral-PRED-xp-TEMPL
        (ARGUMENTS
-	(LSUBJ (% W::NP (W::var ?subjvar) (W::sem ?lsubjsem) (W::lex ?lsubjlex)) ONT::neutral)
+	(LSUBJ (% W::NP (W::var ?subjvar) (W::sem ?lsubjsem) (W::lex ?lsubjlex) ;(w::expletive -)
+		  ) ONT::neutral)
     ;;;;;(argument ?lsubj)
     ;;;;; the arg of the pred will be the subject of the verb
 	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar))) (:required (W::filled -)
 					;(W::argument ?lsubj)
-					 (W::argument (% W::np (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var ?lsubjvar)))
-										(w::arg ?subjvar) (W::gap ?gap))) ONT::FORMAL)
+					 (W::argument (% W::np (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var ?lsubjvar) ;(w::expletive -) ; do I need to specify a -?
+							 ))
+							 (w::arg ?subjvar) (W::gap ?gap))) ONT::FORMAL)
 	))
 
        (experiencer-PRED-xp-TEMPL
@@ -1421,9 +1421,9 @@
   (AUX-MODAL-TEMPL
    (SYNTAX(W::AUX +) (W::MODAL +) (W::CHANGESEM +) (W::morph (:forms NIL)) (W::AGR ?agr))
    (ARGUMENTS
-    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar) (W::case ?lsubjcase) (W::agr ?lsubjagr)) NOROLE)
+    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar) (W::case ?lsubjcase) (W::agr ?lsubjagr) (w::expletive ?exp)) NOROLE)
     (LCOMP (% W::VP- (W::vform W::base) (W::subj (% W::NP (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var 
-            ?lsubjvar) (W::case ?lsubjcase) (W::agr ?lsubjagr))) (W::roles ?croles) (W::subj-map ?subj-map 
+            ?lsubjvar) (W::case ?lsubjcase) (W::agr ?lsubjagr) (w::expletive ?exp))) (W::roles ?croles) (W::subj-map ?subj-map 
        ) (W::tranform ?transform) (W::class ?cclass) (W::constraint ?constraint) (W::tma ?tma) (W::subjvar 
          ?subjvar) (W::dobjvar ?dobjvar)) NOROLE)
     ))
@@ -1449,9 +1449,9 @@
    (SYNTAX(W::AUX +) (W::MODAL +) (W::CHANGESEM -) (W::VFORM W::FUT) (W::morph (:forms NIL)) (W::AGR 
       ?agr))
    (ARGUMENTS
-    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar) (W::case ?lsubjcase) (W::agr ?lsubjagr)) NOROLE)
+    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar) (W::case ?lsubjcase) (W::agr ?lsubjagr) (W::expletive ?exp)) NOROLE)
     (LCOMP (% W::VP- (W::vform W::base) (W::subj (% W::NP (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var 
-            ?lsubjvar) (W::case ?lsubjcase) (W::agr ?lsubjagr))) (W::roles ?croles) (W::subj-map ?subj-map 
+            ?lsubjvar) (W::case ?lsubjcase) (W::agr ?lsubjagr) (w::expletive ?exp))) (W::roles ?croles) (W::subj-map ?subj-map 
        ) (W::tranform ?transform) (W::class ?cclass) (W::constraint ?constraint) (W::tma ?tma) (W::subjvar 
          ?subjvar) (W::dobjvar ?dobjvar)) NOROLE)
     ))
@@ -1519,9 +1519,9 @@
    (SYNTAX(W::morph (:forms NIL)) (W::AUX +) (W::MODAL -) (W::CHANGESEM +) (W::AGR ?agr) (W::AUXNAME 
       W::PROGR))
    (ARGUMENTS
-    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar) (W::case ?lsubjcase) (W::agr ?lsubjagr)) NOROLE)
+    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::var ?lsubjvar) (W::case ?lsubjcase) (W::agr ?lsubjagr) (w::expletive ?exp)) NOROLE)
     (LCOMP (% W::VP- (W::vform W::ing) (W::subj (% W::NP (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var 
-            ?lsubjvar) (W::case ?lsubjcase) (W::agr ?lsubjagr))) (W::roles ?croles) (W::subj-map ?subj-map)
+            ?lsubjvar) (W::case ?lsubjcase) (W::agr ?lsubjagr) (w::expletive ?exp))) (W::roles ?croles) (W::subj-map ?subj-map)
 	    (W::tranform ?transform) (W::class ?cclass) (W::constraint ?constraint) (W::tma ?tma) (W::subjvar 
          ?subjvar) (W::dobjvar ?dobjvar)) NOROLE)
     ))

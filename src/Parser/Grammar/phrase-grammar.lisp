@@ -4462,13 +4462,13 @@
 	     (Lex ?lex)
 	     (constraint (& (proform ?lex)))
 	     (sem ?sem)))
-      (mass ?m)
+      (mass ?m) (expletive ?exp)
       )
      -np-pro-noagr>
      (head (pro (SEM ?sem) (AGR ?agr) (VAR ?v) (case ?case)
 	    (LEX ?lex) (VAR ?v) (WH -) (lf ?c)
-	    (mass ?m) (sing-lf-only +)
-	    (status ?status)
+	    (mass ?m) ;(sing-lf-only +) 
+	    (status ?status) (expletive ?exp)
 	    (poss -) ;; Added by myrosia 2003/11/02 to avoid "our" as NP
 	    )))
     
