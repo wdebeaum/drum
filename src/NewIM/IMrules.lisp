@@ -241,23 +241,21 @@
     (ONT::TELL :who *USER* :to *ME* :what ?!c)
     )
 
-  
+   ;; EXPLICIT ELLIPSIS RULESact interpretation depends on discourse context
 
-     ;; EXPLICIT ELLIPSIS RULESact interpretation depends on discourse context
-
-     ;; see rule as an answers to a question in generic-Q-model rules
-     ;; ellipsis - followup after questions or proposals
+   ;; see rule as an answers to a question in generic-Q-model rules
+   ;; ellipsis - followup after questions or proposals
 
    ;; e.g., How about from Atlanta?
    #|
-      ((ONT::SPEECHACT ?!xx ONT::SA_REQUEST-COMMENT :CONTENT ?!v)
-       --ellipsis1>
-       (ONT::ELLIPSIS :who *USER* :to *ME* :what ?!v));; :context ?context :prior-index ?index))
+   ((ONT::SPEECHACT ?!xx ONT::SA_REQUEST-COMMENT :CONTENT ?!v)
+   --ellipsis1>
+   (ONT::ELLIPSIS :who *USER* :to *ME* :what ?!v));; :context ?context :prior-index ?index))
    |#
 
-      ((ONT::SPEECHACT ?!xx ONT::SA_REQUEST-COMMENT :CONTENT ?!v)
-       -request-comment>
-       (ONT::REQUEST-COMMENT :who *USER* :to *ME* :what ?!v))
+   ((ONT::SPEECHACT ?!xx ONT::SA_REQUEST-COMMENT :CONTENT ?!v)
+    -request-comment>
+    (ONT::REQUEST-COMMENT :who *USER* :to *ME* :what ?!v))
 
    ;; how about you do it  -- if the argument is a sentence we make it a propose
    ((ONT::SPEECHACT ?!xx ONT::SA_REQUEST-COMMENT :CONTENT ?!v)
@@ -265,11 +263,11 @@
     -request-comment-as-propose>
     (ONT::PROPOSE :who *USER* :to *ME* :what ?!v))
    
-      ;; e.g., Fill in the author field.   And the title field.
-      ((ONT::SPEECHACT ?!xx ONT::SA_IDENTIFY :CONTENT ?!v :mods (?!m))
-       (ONT::F ?!m ONT::CONJUNCT)
-       -ellipsis2>
-       (ONT::ELLIPSIS :who *USER* :to *ME* :what ?!v));; :context ?context :prior-index ?index))
+   ;; e.g., Fill in the author field.   And the title field.
+   ((ONT::SPEECHACT ?!xx ONT::SA_IDENTIFY :CONTENT ?!v :mods (?!m))
+    (ONT::F ?!m ONT::CONJUNCT)
+    -ellipsis2>
+    (ONT::ELLIPSIS :who *USER* :to *ME* :what ?!v));; :context ?context :prior-index ?index))
       
    ;;==============================================================
       ;; Corrections
@@ -444,10 +442,10 @@
     )
 
    ;; fragments specifying a condition: e.g., in the morning 
-   ;;((ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :CONTENT ?!vv)
-    ((ONT::F ?!vv (? typ ONT::TIME-SPAN-REL))
-    -frag-time-condition->
-    (ONT::ANSWER :who *USER* :to *ME* :condition ?!vv)
+   ((ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :CONTENT ?!vv)
+    (ONT::F ?!vv (? typ ONT::TIME-SPAN-REL))
+     -frag-time-condition->
+     (ONT::ANSWER :who *USER* :to *ME* :condition ?!vv)
      )
 
    ;;  fragment adverbials (e.g., locations, in my ankles, above the stove)
