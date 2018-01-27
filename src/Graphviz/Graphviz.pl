@@ -305,6 +305,87 @@ sub update_plan {
   return $plan;
 }
 
+sub write_influence_graph {
+  my ($self, $content) = @_;
+  #
+  # get the arguments
+  #
+  exists($content->{':data'})
+    or die missing_argument($content->{verb}, ':data');
+  my $kqml_influences = $content->{':data'};
+  ref($kqml_influences) eq 'ARRAY'
+    or die invalid_argument($content, ':data', 'list');
+  my $root = undef;
+  if (exists($content->{':root'})) {
+    $root = $content->{':root'};
+    die invalid_argument($content, ':root', 'string or symbol') if (ref($root));
+    $root = KQML::KQMLStringAtomAsPerlString($root)
+      if (KQML::KQMLAtomIsString($root));
+  }
+  my $label_influences = (lc($content->{':label-influences'}) eq 't');
+  #
+  # make the parts of the graph
+  #
+  my @dot_influences = ();
+  if (defined($root)) {
+    # emphasize the root
+    push @dot_influences, '  ' . escape_for_dot($root) . " [fontcolor=red]\n";
+  }
+  my $i = 0;
+  for my $kqml_influence (@$kqml_influences) {
+    ( ref($kqml_influence) eq 'ARRAY' and
+      lc($kqml_influence->[0]) eq 'influence'
+    ) or die invalid_argument($kqml_influences, $i, 'influence structure');
+    my $ki = KQML::KQMLKeywordify($kqml_influence);
+    exists($ki->{':name'}) or die missing_argument('influence', ':name');
+    my $name = $ki->{':name'};
+    die invalid_argument($ki, ':name', 'string or symbol') if (ref($name));
+    $name = KQML::KQMLStringAtomAsPerlString($name)
+      if (KQML::KQMLAtomIsString($name));
+    my $esc_name = escape_for_dot($name);
+    # write the influence node itself
+    push @dot_influences,
+      "  $esc_name [shape=box" .
+      ($label_influences ? '' : ',label=""') .
+      "]\n";
+    # get the input and output edges (and their vars)
+    my %links = (input => [], output => []);
+    for my $dir (keys %links) {
+      exists($ki->{":$dir"}) or die missing_argument('influence', ":$dir");
+      my $vars = $ki->{":$dir"};
+      ref($vars) eq 'ARRAY' or invalid_argument($ki, ":$dir", 'list');
+      for my $var (@$vars) {
+	die invalid_argument($ki, ":$dir", 'list of strings or symbols')
+	  if (ref($var));
+	push @{$links{$dir}},
+	  (KQML::KQMLAtomIsString($var) ?
+	    KQML::KQMLStringAtomAsPerlString($var) : $var);
+      }
+    }
+    # write the edges
+    for my $var (@{$links{input}}) {
+      push @dot_influences, '  ' . escape_for_dot($var) . " -> $esc_name\n";
+    }
+    for my $var (@{$links{output}}) {
+      push @dot_influences, "  $esc_name -> " . escape_for_dot($var) . "\n";
+    }
+    $i++;
+  }
+  #
+  # write the graph
+  #
+  my $graphnum = ($self->{graphnum}++);
+  my $file = sprintf("influences-%03d.dot", $graphnum);
+  open GRAPHVIZ, ">$file" or die "Can't write graph file $file: $!";
+  printf GRAPHVIZ "digraph Influences%03d {\n", $graphnum;
+  print GRAPHVIZ "  graph [rankdir=LR]\n";
+  print GRAPHVIZ "  node [shape=none]\n";
+  print GRAPHVIZ @dot_influences;
+  print GRAPHVIZ "}\n";
+  close GRAPHVIZ;
+  return $file;
+}
+
 sub receive_request {
   my ($self, $msg, $content) = @_;
   $content->{verb} = lc($content->{verb});
@@ -313,12 +394,18 @@ sub receive_request {
       $self->{display_enabled} = 0;
     } elsif ($content->{verb} eq 'enable-display') {
       $self->{display_enabled} = 1;
-    } elsif ($content->{verb} eq 'update-plan-gui') {
+    } elsif ($content->{verb} eq 'update-plan-gui' ||
+             $content->{verb} eq 'display-causal-influences') {
       eval {
-	exists($content->{':content'}) or die missing_argument('update-plan-gui', ':content');
-	ref($content->{':content'}) eq 'ARRAY' or die invalid_argument($content, ':content', 'list');
-	my $plan = $self->update_plan($content->{':content'});
-	my $file = $self->write_plan_graph($plan);
+	my $file;
+	if ($content->{verb} eq 'update-plan-gui') {
+	  exists($content->{':content'}) or die missing_argument('update-plan-gui', ':content');
+	  ref($content->{':content'}) eq 'ARRAY' or die invalid_argument($content, ':content', 'list');
+	  my $plan = $self->update_plan($content->{':content'});
+	  $file = $self->write_plan_graph($plan);
+	} else { # display-causal-influences
+	  $file = $self->write_influence_graph($content);
+	}
 	#$self->display_graph_file($file);
 	my $opened = $self->{wm}->display_graph($file, {}); # TODO config
 	my $reply =
