@@ -51,6 +51,7 @@ sub handle_parameters {
   #$SIG{CHLD} = 'IGNORE';
   $self->send_msg("(subscribe :content (tell &key :content (lf-graph . *)))");
   $self->send_msg("(subscribe :content (request &key :content (update-plan-gui . *)))");
+  $self->send_msg("(subscribe :content (request &key :content (display-causal-influences . *)))");
   # talk to ourselves in order to get a report that the user closed a window
   # into the main process
   $self->send_msg("(subscribe :content (tell &key :sender $self->{name} :content (report &key :content (closed :what * :who usr))))");
@@ -177,7 +178,7 @@ EOH
       my $service = get_typed_argument($part, ':service', 'symbol', 0);
       if ($from_map and $to_map and
 	  $service and lc($service) ne 'nil') { # service node
-	print $fh qq(  "$id" [label="$service"]\n);
+	print $fh qq(  "$id" [label="$service",fontsize=20]\n);
 	my @constraining_edges = ();
 	my @unconstraining_edges = ();
 	for my $in_edge (@$from_map) {
@@ -228,7 +229,7 @@ EOH
 	# arrange nodes using the constraining ones
 	print $fh @constraining_edges, @unconstraining_edges;
       } else { # gap edge
-	print $fh qq(  "$from" -> "$to" [label="???",color=gray,penwidth=3,minlen=3]\n); # FIXME minlen?
+	print $fh qq(  "$from" -> "$to" [label="???",color=gray,penwidth=3,minlen=3,fontsize=20]\n); # FIXME minlen?
       }
     } else {
       die unknown_action($verb); # FIXME maybe?

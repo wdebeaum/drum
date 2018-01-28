@@ -2560,7 +2560,8 @@
  :wordnet-sense-keys ("have%2:30:00" "have%2:36:00" "have%2:32:00" "have%2:40:02" "have%2:29:00")
  :parent ONT::CAUSE-EFFECT
  :sem (F::situation (F::Aspect F::Dynamic))
- :arguments ((:REQUIRED ONT::AFFECTED ((? AFF F::PHYS-OBJ F::ABSTR-OBJ)))
+ :arguments ((:REQUIRED ONT::AGENT ((? ag F::PHYS-OBJ F::ABSTR-OBJ) (f::intentional +) )) ; exclude "the structure has blocks painted red"
+	     (:REQUIRED ONT::AFFECTED ((? AFF F::PHYS-OBJ F::ABSTR-OBJ)))
 	     (:REQUIRED ONT::formal (f::situation (f::type ont::event-of-action)))
              ;(:ESSENTIAL ONT::Stative ((? stts F::situation)))
              )
@@ -3189,7 +3190,7 @@
  )
 
 (define-type ONT::decrease
- :wordnet-sense-keys ("decrease%2:30:00" "decrease%2:30:01" "diminish%2:30:00" "lessen%2:30:00" "fall%2:30:06" "weaken%2:30:01")
+ :wordnet-sense-keys ("decrease%2:30:00" "decrease%2:30:01" "diminish%2:30:00" "lessen%2:30:00" "fall%2:30:06" "weaken%2:30:01" "mitigate%2:32:00")
  :parent ONT::change-magnitude
  )
 
