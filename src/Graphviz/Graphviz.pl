@@ -377,6 +377,7 @@ sub write_influence_graph {
   #
   my $graphnum = ($self->{graphnum}++);
   my $file = sprintf("influences-%03d.dot", $graphnum);
+  $file = File::Spec->rel2abs($file);
   open GRAPHVIZ, ">$file" or die "Can't write graph file $file: $!";
   printf GRAPHVIZ "digraph Influences%03d {\n", $graphnum;
   print GRAPHVIZ "  graph [rankdir=LR]\n";
