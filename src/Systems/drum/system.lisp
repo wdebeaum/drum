@@ -33,7 +33,6 @@
 (load "robust-grammar.lisp")
 
 ;;;; extractor rules
-#|
 (load "preprocessRules.lisp")
 (load "DRUMtermRules.lisp")
 (load "DRUMtermRules_add.lisp")
@@ -44,17 +43,6 @@
 (load "DRUMRules_misc.lisp")
 
 (load "symbolmapping.lisp")
-|#
-
-(load "preprocessRules.lisp")
-(load "cwmsRules.lisp")
-(load "DRUMRules_ev.lisp")
-(load "DRUMRules_mod.lisp")
-(load "cwmsRules_CC.lisp")
-(load "symbolmapping.lisp")
-(setq im::*symbol-map* (append im::*symbol-map* '((ONT::QUANTITY-ABSTR ONT::QTY)
-						  (ONT::OBJECTIVE-INFLUENCE ONT::INFLUENCE im::-rule5_3_AGENT_AFFECTED)
-						  )))
 
 ;; domain preferences
 (load "domain-sense-preferences")
