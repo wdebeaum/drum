@@ -1,122 +1,86 @@
 (in-package :lxm)
 
-(define-words :pos W::adj  
-:words (
- (w::WT
-   (SENSES
-    ((LF-PARENT ONT::NATURAL)
-     (LF-FORM W::WILDTYPE)
-     (TEMPL central-adj-templ)
-     )
-    )
-   )
-))
+#|
+An example of defining a new sense (ONT::PERSON) for a word ("character").  The word does not have to exsit currently in the TRIPS lexicon, or anywhere else. 
 
-(define-words :pos W::n 
-:words (
- (w::WT
-   (SENSES
-    ((LF-PARENT ONT::WILDTYPE-OBJ)
-     (LF-FORM W::WILDTYPE)
-     (TEMPL count-pred-templ)
-     )
-    )
-   )
-))
+:pos indicates the part-of-speech of the word sense.  Some common categories are
+   W::n (noun)
+   W::v (verb)
+   W::adj (adjective)
+   W::adv (adverb)
 
-(define-words :pos W::v 
- :words (
-  (W::target
-   (wordfeats (W::morph (:forms (-vb) :past w::targeted :ing w::targeting)))
-   (SENSES
-    ((lf-parent ont::TRANSPORT)
-     (EXAMPLE "protein targeting")
-     (TEMPL agent-affected-GOAL-templ (xp (% W::ADVBL (w::lf (% w::prop (w::class (? x ont::goal-reln ont::source-reln)))))))
-     )
-    )
-   )
-))
+LF-PARENT indicates the ontology type.  This type must exist in the TRIPS ontology.  
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
- :words (
-  (W::sort
-   (SENSES
-    ((lf-parent ont::TRANSPORT)
-     (example "protein sorting")
-     ;(TEMPL agent-affected-xp-templ)
-     (TEMPL agent-affected-GOAL-templ (xp (% W::ADVBL (w::lf (% w::prop (w::class (? x ont::goal-reln ont::source-reln)))))))
-     )
+TEMPL indicates the syntactic template of the word sense.  It denotes how this word sense can be used in a sentence.  The most common ones are
+   countable nouns: COUNT-PRED-TEMPL (e.g., three chairs)
+   transitive verbs: AGENT-AFFECTED-XP-TEMPL (e.g., I ate the cookie)
+   intransitive verbs: AGENT-TEMPL (e.g., I walked)
 
-    )
-   )
-))
+The templates are in templates.lisp and noun-templates.lisp in .../src/LexiconManager/Data/templates/
 
-;;;;;;;;;;;;;;;;;;;;;;;;
-; TFTA
-;;;;;;;;;;;;;;;;;;;;;;;;
+An easy (or easier) way to identify an appropriate template is to look up the existing lexical entry for a word that behaves similarly to the target word.  The templates are shown in the left panel of the online ontology browser.
 
-(define-words :pos W::name
-:words (
- (w::Reactome
-   (SENSES
-    ((LF-PARENT ONT::DATABASE)
-     (TEMPL name-templ)
-     )
-    )
-   )
-))
+Note that there can be multiple entries for a word sense, each with a different template, indicating different usages.
 
-(define-words :pos W::name
-:words (
- (w::KEGG
-   (SENSES
-    ((LF-PARENT ONT::DATABASE)
-     (TEMPL name-templ)
-     )
-    )
-   )
-))
-
-;;;;;;;;;;;;;;;;;;;;;;;;
-; for paper 1
-;;;;;;;;;;;;;;;;;;;;;;;;
+|#
 
 #|
-(define-words :pos W::n 
+(define-words :pos W::n  
 :words (
- (w::RTK
+ (w::character
    (SENSES
-    ((LF-PARENT ONT::PROTEIN)
-     (TEMPL count-pred-templ)
-     )
-    )
-   )
-))
-
-; put here because there should be a more principled way to handle adjectives
-(define-words :pos W::adj 
-:words (
- ((w::short w::lived)
-   (SENSES
-    ((LF-PARENT ONT::SHORT)
-     (TEMPL CENTRAL-ADJ-TEMPL)
-     )
-    )
-   )
-))
-
-; copied from "resulting"
-(define-words :pos W::adj 
- :words (
-   (W::ensuing
-   (SENSES
-    (
-     (LF-PARENT ONT::outcome-val)
-     (TEMPL CENTRAL-ADJ-TEMPL)
-     (example "the ensuing chaos")  
+    ((LF-PARENT ONT::PERSON)
+     (TEMPL COUNT-PRED-TEMPL)
      )
     )
    )
 ))
 
 |#
+
+(define-words :pos W::n  
+:words (
+ ((w::El w::Nino)
+   (SENSES
+    ((LF-PARENT ONT::natural-phenomenon)
+     (TEMPL name-templ)
+     )
+    )
+   )
+))
+
+(define-words :pos W::n  
+:words (
+ ((w::El w::Niño)
+   (SENSES
+    ((LF-PARENT ONT::natural-phenomenon)
+     (TEMPL name-templ)
+     )
+    )
+   )
+))
+
+(define-words :pos W::n  
+:words (
+ ((w::La w::Nina)
+   (SENSES
+    ((LF-PARENT ONT::natural-phenomenon)
+     (TEMPL name-templ)
+     )
+    )
+   )
+))
+
+(define-words :pos W::n  
+:words (
+ ((w::La w::Niña)
+   (SENSES
+    ((LF-PARENT ONT::natural-phenomenon)
+     (TEMPL name-templ)
+     )
+    )
+   )
+))
+
+
+

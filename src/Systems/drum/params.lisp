@@ -146,3 +146,7 @@
 
 ; lg
 ;(parser::traceon 2)
+
+(setq im::*extraction-sequence* '((im::preprocessRules) (im::cwmsRules) (im::drum) (im::drumMod) (im::cwms_CC)))
+(setq im::*substitute-terms-in-extraction* t)
+(setq im::*roles-to-emit* nil)
