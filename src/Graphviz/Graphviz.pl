@@ -103,6 +103,18 @@ sub nopkg {
   return $str;
 }
 
+sub find_param {
+  my ($plan, $part_id, $ambiguous_param_id) = @_;
+  my $param_id = "$part_id $ambiguous_param_id";
+  if (exists($plan->{params}{$param_id})) {
+    return $plan->{params}{$param_id};
+  } elsif (exists($plan->{params}{$ambiguous_param_id})) {
+    return $plan->{params}{$ambiguous_param_id};
+  } else {
+    die unknown_object($ambiguous_param_id);
+  }
+}
+
 sub write_plan_graph {
   my ($self, $plan) = @_;
   my $filename = $plan->{id};
@@ -133,23 +145,23 @@ EOH
 	    exists($param->{':id-code'}) or
 	      die missing_argument($param->{verb}, ':id-code');
 	    my $id_code = KQML::KQMLAsString($param->{':id-code'});
-	    print $fh qq(     <tr><td port="$id_nopkg">$id_nopkg);
+	    print $fh qq(     <tr><td port="$id_nopkg">$id_code );
 	    my $arguments =
 	      get_typed_argument($param, ':arguments', 'list', []);
 	    if (@$arguments) {
-	      print $fh ": $id_code";
-	      for my $arg_id (@$arguments) {
-		exists($plan->{params}{$arg_id}) or die unknown_object($arg_id);
-		my $arg = $plan->{params}{$arg_id};
+	      my @arg_vals = ();
+	      for my $ambiguous_arg_id (@$arguments) {
+		my $arg = find_param($plan, $id, $ambiguous_arg_id);
 		my $arg_id_code = get_typed_argument($arg,':id-code', 'symbol');
-		print $fh qq(<br/>$arg_id_code $arg_id: );
+		#print $fh qq(<br/>$arg_id_code $arg_id: );
 		if (exists($arg->{':value'}) and
 		    lc($arg->{':value'}) ne 'nil') {
-		  print $fh KQML::KQMLAsString($arg->{':value'});
+		  push @arg_vals, KQML::KQMLAsString($arg->{':value'});
 		} else {
-		  print $fh '?';
+		  push @arg_vals, '?';
 		}
 	      }
+	      print $fh "{" . join(' ', @arg_vals) . "}";
 	      if (exists($param->{':value'}) and
 		  lc($param->{':value'}) ne 'nil') {
 		# value after arguments, treat it as the :value argument
@@ -159,10 +171,10 @@ EOH
 	    } elsif (exists($param->{':value'}) and
 		     lc($param->{':value'}) ne 'nil') {
 	      # value after no arguments, just put it inline
-	      print $fh ': ' . KQML::KQMLAsString($param->{':value'});
+	      print $fh KQML::KQMLAsString($param->{':value'});
 	    } else {
 	      # no value after no arguments
-	      print $fh ": ?";
+	      print $fh '?';
 	    }
 	    print $fh qq(</td></tr>\n);
 	  }
@@ -182,16 +194,15 @@ EOH
 	my @constraining_edges = ();
 	my @unconstraining_edges = ();
 	for my $in_edge (@$from_map) {
-	  my ($label, $tail_id);
+	  my ($label, $ambiguous_tail_id);
 	  eval {
 	    @$in_edge == 2 or die;
-	    ($label, $tail_id) =
+	    ($label, $ambiguous_tail_id) =
 	      map { get_typed_value('symbol', $_) } @$in_edge;
 	    1
 	  } || die invalid_argument($part, ':from-map', 'list of pairs of symbols');
-	  exists($plan->{params}{$tail_id}) or die unknown_object($tail_id);
-	  my $param = $plan->{params}{$tail_id};
-	  my $id_nopkg = nopkg($tail_id);
+	  my $param = find_param($plan, $from, $ambiguous_tail_id);
+	  my $id_nopkg = nopkg($ambiguous_tail_id);
 	  my $unconstraining = ($param->{state} ne $from);
 	  my $str =
 	    qq(  "$param->{state}" -> "$id" [tailport="$id_nopkg",label="$label") .
@@ -204,17 +215,16 @@ EOH
 	  }
 	}
 	for my $out_edge (@$to_map) {
-	  my ($label, $head_id);
+	  my ($label, $ambiguous_head_id);
 	  eval {
 	    @$out_edge == 2 or die;
-	    ($label, $head_id) =
+	    ($label, $ambiguous_head_id) =
 	      map { get_typed_value('symbol', $_) } @$out_edge;
 	    1
 	  } || die invalid_argument($part, ':to-map', 'list of pairs of symbols');
-	  exists($plan->{params}{$head_id}) or die unknown_object($head_id);
-	  my $param = $plan->{params}{$head_id};
+	  my $param = find_param($plan, $to, $ambiguous_head_id);
 	  my $unconstraining = ($param->{state} ne $to);
-	  my $id_nopkg = nopkg($head_id);
+	  my $id_nopkg = nopkg($ambiguous_head_id);
 	  my $str =
 	    qq(  "$id" -> "$param->{state}" [headport="$id_nopkg",label="$label") .
 	    ($unconstraining ? qq(,constraint=false) : '') .
@@ -281,8 +291,13 @@ sub update_plan {
 	  # state)
 	  $param->{state} = $part_id;
 	  push @{$part->{$status}}, $param;
-	  my $param_id = get_typed_argument($param, ':id', 'symbol');
+	  # save the param to two versions of its ID, so we can fall back on
+	  # using just the $param_id when we're looking for it in the wrong
+	  # $part_id
+	  my $ambiguous_param_id = get_typed_argument($param, ':id', 'symbol');
+	  my $param_id = "$part_id $ambiguous_param_id";
 	  $plan->{params}{$param_id} = $param;
+	  $plan->{params}{$ambiguous_param_id} = $param;
 	}
       }
     }
