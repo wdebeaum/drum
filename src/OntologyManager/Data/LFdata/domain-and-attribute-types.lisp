@@ -1195,7 +1195,17 @@
 
 (define-type ont::cleanliness-scale
  :parent ont::state-of-affairs-scale 
+)
+
+(define-type ont::clean-scale
+ :parent ont::cleanliness-scale 
  :wordnet-sense-keys ("cleanliness%1:26:00" "cleanliness%1:07:00")
+ ;; WORDS: cleanliness
+)
+
+(define-type ont::unclean-scale
+ :parent ont::cleanliness-scale 
+ :wordnet-sense-keys ("dirtiness%1:26:00")
  ;; WORDS: cleanliness
 )
 

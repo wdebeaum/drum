@@ -2524,7 +2524,7 @@
 
 (define-type ont::enable
   :parent ont::cause-effect
-  :arguments ((:optional ont::affected ((? tp f::phys-obj f::abstr-obj)))
+  :arguments ((:optional ont::affected ((? tp f::phys-obj f::abstr-obj f::situation))) ; f::situation: e.g. condition
 	      )
   )
 

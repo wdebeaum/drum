@@ -94,7 +94,7 @@
 					 (let ((score (find-arg-in-act x :score)))
 					   (or (null score)
 					       (not (numberp score))
-					       (< score .6))))
+					       (< score .5))))
 				     (cdr reply))))
 	   (if matches 
 	       (append lf (list :param-code
