@@ -51,9 +51,9 @@ install:: $(PROGS) install-configs
 	$(MKINSTALLDIRS) $(bindir)
 	$(INSTALL_PROGRAM) $(PROGS) $(bindir)
 
-install-configs:: params*.lisp
+install-configs:: $(wildcard params*.lisp)
 	$(MKINSTALLDIRS) $(etcdir)/$(NAME)/
-	$(INSTALL_DATA) $^ $(etcdir)/$(NAME)/
+	if test -n "$^" ; then $(INSTALL_DATA) $^ $(etcdir)/$(NAME)/ ; fi
 
 clean::
 	rm -f $(PROGS)
