@@ -37,7 +37,8 @@ while (<>) {
   # split on the fields themselves instead of commas, since some quoted fields
   # contain commas
   my @cols = split(/((?:^|(?<=,))(?:[^,"]*|"[^"]+")(?:(?=,)|$))/);
-  @cols == 28 or die "Expected 14 columns but got " . (scalar(@cols)/2);
+  (@cols >= 28 and @cols <= 30) # they added a comments field after I wrote this
+    or die "Expected 14-15 columns but got " . (scalar(@cols)/2);
   @cols = map { unquote($_) } @cols;
   # NOTE: we're using the PubChem CID instead of the HMS LINCS ID because
   # that's what Ben Gyori wanted, and we already had the PC Lisp package

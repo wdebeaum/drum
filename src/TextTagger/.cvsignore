@@ -7,11 +7,15 @@ personal-names.tsv
 get-ssh-tunnel
 wn-multiwords.tsv
 *-terms.tsv
+go_protmods.obo
+go_protmods.tsv
 downloads
 .*.swp
 drum-dsl
 specialist.tsv
 drum-dbxrefs.tsv
+drum.aspell
+drum.aspell.err
 specialist.aspell
 countries.tsv
 *.old*
