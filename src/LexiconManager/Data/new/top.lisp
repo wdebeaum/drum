@@ -56,9 +56,11 @@
  :tags (:base500)
  :words (
   (W::TOP
+   (wordfeats (W::ALLOW-POST-N1-SUBCAT +))
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("top%3:00:00") :comlex (ADJECTIVE))
      (LF-PARENT ONT::TOP-LOCATION-VAL)
+     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE (? p W::in W::of)))))
      )
 ;;;    ((example "I can pay top dollar for a computer")
 ;;;     (meta-data :origin calo :entry-date 20040505 :change-date nil :comments calo-y1variants)

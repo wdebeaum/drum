@@ -38,22 +38,26 @@
      (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE W::For))))
      (SYNTAX (W::allow-deleted-comp -))
      )
+    ((lf-parent ont::right)
+     (templ attributive-only-adj-templ)
+     (meta-data :origin bee :entry-date 20040408 :change-date 20090731 :wn ("right%3:00:00") :comments test-s)
+     )
+    
     )
    )
 ))
 
 (define-words :pos W::adj 
-  :templ CENTRAL-ADJ-TEMPL
  :tags (:base500)
  :words (
-	  (w::right
-	   (senses
-	    ((lf-parent ont::right)
-	     (templ attributive-only-adj-templ)
-	     (meta-data :origin bee :entry-date 20040408 :change-date 20090731 :wn ("right%3:00:00") :comments test-s)
-	     )
-	    ))	  
-))
+  (W::right
+   (wordfeats (W::ALLOW-POST-N1-SUBCAT +))
+   (SENSES
+    ((meta-data :origin bee :entry-date 20040408 :change-date 20090731 :wn ("right%3:00:00") :comments test-s)
+     (LF-PARENT ONT::right)
+     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE (? p W::in W::of)))))
+     )
+    ))))
 
 (define-words :pos W::ADV
  :tags (:base500)

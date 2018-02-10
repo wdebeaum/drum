@@ -18,7 +18,7 @@
    )
 ))
 
-(define-words :pos W::adj :templ postpositive-ADJ-TEMPL
+(define-words :pos W::adj 
  :tags (:base500)
  :words (
   (W::LEFT
@@ -26,6 +26,37 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("left%5:00:00:unexhausted:00"))
      (LF-PARENT ONT::remaining-VAL)
      (LF-FORM W::REMAINING)
+     (templ postpositive-ADJ-TEMPL)
+     )
+    ((lf-parent ONT::LEFT)
+     (templ attributive-only-adj-templ)
+     (meta-data :origin bee :entry-date 20040408 :change-date 20090731 :wn ("left%3:00:00") :comments test-s)
+     )    
+    )
+   )
+))
+
+
+(define-words :pos W::adj 
+ :tags (:base500)
+ :words (
+  (W::left
+   (wordfeats (W::ALLOW-POST-N1-SUBCAT +))
+   (SENSES
+    ((meta-data :origin bee :entry-date 20040408 :change-date 20090731 :wn ("left%3:00:00") :comments test-s)
+     (LF-PARENT ONT::LEFT)
+     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE (? p W::in W::of)))))
+     )
+    ))))
+
+
+(define-words :pos W::ADV
+ :tags (:base500)
+ :words (
+  (W::LEFT
+   (SENSES
+    ((LF-PARENT ONT::DIRECTION)
+     (TEMPL PRED-S-POST-TEMPL)
      )
     )
    )
@@ -47,29 +78,3 @@
     )
    )
 ))
-
-(define-words :pos W::adj 
-  :templ CENTRAL-ADJ-TEMPL
- :tags (:base500)
- :words (
-	  (w::left
-	   (senses
-	    ((lf-parent ONT::LEFT)
-	     (templ attributive-only-adj-templ)
-	     (meta-data :origin bee :entry-date 20040408 :change-date 20090731 :wn ("left%3:00:00") :comments test-s)
-	     )
-	    ))	  
-))
-
-(define-words :pos W::ADV
- :tags (:base500)
- :words (
-  (W::LEFT
-   (SENSES
-    ((LF-PARENT ONT::DIRECTION)
-     (TEMPL PRED-S-POST-TEMPL)
-     )
-    )
-   )
-))
-

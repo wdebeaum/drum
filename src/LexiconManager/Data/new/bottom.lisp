@@ -12,7 +12,35 @@
      )
     )
    )
+  ))
+
+#|
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+;   )
+  (W::BOTTOM
+   (SENSES
+    ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("bottom%3:00:00"))
+     (LF-PARENT ONT::BOTTOM-LOCATION-VAL)
+     )
+    )
+   )
 ))
+|#
+
+(define-words :pos W::adj 
+ :tags (:base500)
+ :words (
+  (W::bottom
+   (wordfeats (W::ALLOW-POST-N1-SUBCAT +))
+   (SENSES
+    ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("bottom%3:00:00"))
+     (LF-PARENT ONT::BOTTOM-LOCATION-VAL)
+     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE (? p W::in W::of)))))
+     )
+    ))))
+
+
 
 (define-words :pos W::n
  :words (
@@ -48,17 +76,5 @@
 	    )
 	   )
 )
-))
-
-(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
- :words (
-;   )
-  (W::BOTTOM
-   (SENSES
-    ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("bottom%3:00:00"))
-     (LF-PARENT ONT::BOTTOM-LOCATION-VAL)
-     )
-    )
-   )
 ))
 

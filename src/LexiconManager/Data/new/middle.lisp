@@ -55,3 +55,14 @@
    )
 ))
 
+(define-words :pos W::adj 
+ :tags (:base500)
+ :words (
+  (W::middle
+   (wordfeats (W::ALLOW-POST-N1-SUBCAT +))
+   (SENSES
+    ((meta-data :origin step :entry-date 20080528 :change-date nil :comments nil)
+     (LF-PARENT ONT::MIDDLE-LOCATION-VAL)
+     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE (? p W::in W::of)))))
+     )
+    ))))
