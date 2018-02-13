@@ -19,6 +19,6 @@ install:: install-configs run-pmcid
 	# trips-drum.sh fails without it, so we make it here too
 	$(MKINSTALLDIRS) $(prefix)/etc/Data/
 
-install-configs:: TextTagger-*.conf xml-input-rules.txt DrumGUI.conf
+install-configs:: TextTagger*.conf xml-input-rules.txt DrumGUI*.conf
 	$(INSTALL_DATA) $^ $(etcdir)
 
