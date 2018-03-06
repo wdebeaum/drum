@@ -2,7 +2,7 @@
 
 # ekr_drum.pl
 #
-# Time-stamp: <Fri Apr 21 13:16:22 CDT 2017 lgalescu>
+# Time-stamp: <Mon Mar  5 14:50:43 CST 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  6 Jun 2016
 #
@@ -14,12 +14,14 @@
 #----------------------------------------------------------------
 # History:
 # 2016/06/06 v1.0	lgalescu
-# - Created, from older reasoner script.
+# - Created, from older DRUM reasoner script.
 # 2017/02/06 v1.0.1	lgalescu
 # - adapted to work as part of EKB TRIPS component
 # 2017/03/04 v1.0.2	lgalescu
 # 2017/04/21 v1.0.3	lgalescu
 # - changed short name of -ekr-options
+# 2018/03/05 v1.1	lgalescu
+# - updated to work with 
 
 #----------------------------------------------------------------
 # Usage:
@@ -50,9 +52,11 @@ use Test::More;
 use util::Log;
 
 use EKB::Reasoner::Drum;
+use EKB::Reasoner::CWMS;
 use EKB::Reasoner::Rule;
 
 our (
+     $opt_domain,
      $opt_pub,
      $opt_ekr_options,
      $debugLevel,
@@ -60,6 +64,7 @@ our (
     );
 
 GetOptions(
+	   'domain=s'		=> \$opt_domain,
 	   'pub' 		=> \$opt_pub,
 	   'ro|ekr-options=s' 	=> \$opt_ekr_options,
 	   'd|debug=i' 		=> \$debugLevel,
@@ -93,13 +98,17 @@ if ($opt_ekr_options) {
 
 DEBUG 3, "options in: %s", Dumper(\%ekr_options);
 
-my $reasoner = EKB::Reasoner::Drum->new($ekb, %ekr_options);
-
+my $domain = uc($opt_domain); # FIXME in case domain reasoners' names get more complicated
+my $reasoner = 
+  ($domain eq "DRUM") ? EKB::Reasoner::Drum->new($ekb, %ekr_options) :
+  ($domain eq "CWMS") ? EKB::Reasoner::CWMS->new($ekb, %ekr_options) :
+  EKB::Reasoner->new($ekb, %ekr_options);
+ 
 DEBUG 3, "options out: %s", Dumper(\%{$reasoner->options()});
 
 $reasoner->run();
 
-INFO "Done: Drum inference";
+INFO "Done: $opt_domain inference";
 $ekb->info();
 
 $ekb->print();
