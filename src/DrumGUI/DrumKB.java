@@ -1,7 +1,7 @@
 /*
  * DrumKB.java
  *
- * $Id: DrumKB.java,v 1.29 2017/08/17 04:09:16 lgalescu Exp $
+ * $Id: DrumKB.java,v 1.30 2018/03/06 15:53:28 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  9 May 2015
  */
@@ -553,9 +553,9 @@ public class DrumKB {
      * 
      * @param content
      */
-    protected List<Extraction> add(KQMLList content) {
+    protected List<Extraction> add(KQMLList content, boolean useMap) {
         try {
-            List<Extraction> newExtractions = ExtractionFactory.buildExtraction(this, content);
+            List<Extraction> newExtractions = ExtractionFactory.buildExtraction(this, content, useMap);
             for (Extraction x : newExtractions) {
                 add(x);
             }

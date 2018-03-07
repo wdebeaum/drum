@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.51 2017/05/26 16:08:58 rcarff Exp $
+ * $Id: Extraction.java,v 1.52 2018/03/06 15:53:28 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -54,6 +54,7 @@ import TRIPS.KQML.KQMLToken;
  *
  */
 public class Extraction {
+    
     /** The extraction value */
     protected KQMLList value;
     /** A simplified form of the extraction value (for the KB) */

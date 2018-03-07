@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.45 2017/11/14 04:41:36 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.46 2018/03/06 15:53:28 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -41,7 +41,7 @@ public class TermExtraction extends Extraction {
         // :M-SEQUENCE context-term-id --> sequence of term IDs
         MSEQ(":M-SEQUENCE"),
         // :LOGICALOP-SEQUENCE context-term-id --> sequence of term IDs
-        SEQ(":LOGICALOP-SEQUENCE"),
+        LSEQ(":LOGICALOP-SEQUENCE"),
         // :OP ontType --> operator joining SEQ
         SEQ_EXC(":EXCEPT"),
         // :EXCEPT --> works in conjunction w/ SEQ ; ** FIXME: currently not provided! **
@@ -273,7 +273,7 @@ public class TermExtraction extends Extraction {
                 attributes.put(attr, aValue);
             }
             // fix for :LOGICALOP-SEQUENCE with :EXCEPT -- currently not included in the extraction
-            if (attr.equals(Attribute.SEQ)) {
+            if (attr.equals(Attribute.LSEQ)) {
                 KQMLList term = findTermByVar(id, context);
                 KQMLObject exceptVar = term.getKeywordArg(":EXCEPT");
                 if (exceptVar != null) {
@@ -335,7 +335,7 @@ public class TermExtraction extends Extraction {
      * Returns an XML representation of the term. Typically, this will be an {@code <term>} XML element.
      */
     public String toXML() {
-        if (attributes.get(Attribute.SEQ) != null) { // logical sequence
+        if (attributes.get(Attribute.LSEQ) != null) { // logical sequence
             return createSequenceTermXML();
         }
         if (attributes.get(Attribute.MSEQ) != null) { // complex sequence
@@ -409,7 +409,7 @@ public class TermExtraction extends Extraction {
 
         String ruleID = value.getKeywordArg(":RULE").toString();
 
-        KQMLObject sequence = attributes.get(Attribute.SEQ);
+        KQMLObject sequence = attributes.get(Attribute.LSEQ);
         // fix for :LOGICALOP-SEQUENCE -- sometimes we don't get a list
         if (sequence instanceof KQMLToken) {
             KQMLList new_seq = new KQMLList();

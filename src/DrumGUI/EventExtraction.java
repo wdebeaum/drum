@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.53 2017/05/25 23:43:09 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.54 2018/03/06 17:48:34 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -544,7 +544,7 @@ public class EventExtraction extends Extraction {
                 if (!(termEx instanceof TermExtraction)) {
                     continue;
                 }
-                KQMLObject seqAttr = ((TermExtraction) termEx).getAttribute(TermExtraction.Attribute.SEQ);
+                KQMLObject seqAttr = ((TermExtraction) termEx).getAttribute(TermExtraction.Attribute.LSEQ);
                 if (seqAttr == null) {
                     continue;
                 }

@@ -1,6 +1,6 @@
 # EKBAgent.pm
 #
-# Time-stamp: <Mon Mar  5 14:19:29 CST 2018 lgalescu>
+# Time-stamp: <Tue Mar  6 00:10:20 CST 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 13 Feb 2017
 #
@@ -136,6 +136,7 @@ use KQML::KQML;
 use EKB;
 use EKB::Compare;
 use EKB::Reasoner::Drum;
+use EKB::Reasoner::CWMS;
 
 use AKRL::AKRLList;
 use AKRL2EKB;

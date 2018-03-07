@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.72 2017/11/07 22:13:58 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.73 2018/03/06 15:53:27 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -20,6 +20,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -144,9 +146,11 @@ public class DrumGUI extends StandardTripsModule {
     /** Send EKB in reply? (can be {@code true} only if {@link #replyWhenDone} is {@code true}) */
     private boolean replyWithEKB = false;
     /** If {@code true}, call EKBAgent to do inference on the raw EKB for current task */
-    private boolean doInference = false;
-    /** Inferred EKB as received from EKBAgent */
+    private boolean ekbInferenceRequested = false;
+    /** Inferred EKB as KQML string, received from EKBAgent */
     private KQMLString inferredEKBAsKQMLString = null;
+    /** Inferred EKB file, received from EKBAgent */
+    private String inferredEKBFileName = null;
 
     /**
      * A timer that checks every now and then whether we're idle and have tasks to do. If so, it will pick the first
@@ -163,6 +167,7 @@ public class DrumGUI extends StandardTripsModule {
      * The KB.
      */
     private static DrumKB kb = new DrumKB();
+    private String extractionMode = "DRUM";
 
     // logging
     protected Log log = null;
@@ -245,6 +250,12 @@ public class DrumGUI extends StandardTripsModule {
         // breakLines?
         breakLines = getBoolean("input.split-on-newlines");
 
+        // extraction mode
+        String extMode = getProperty("extractions.mode");
+        if (extMode != null) {
+            extractionMode = extMode.toUpperCase();
+        }
+        
         // ready
         sendSubscriptions();
         initLog();
@@ -345,6 +356,8 @@ public class DrumGUI extends StandardTripsModule {
         properties.put("Display.SelectorPanel.mode", "2");
         properties.put("tag.options.default", "(:split-clauses true :split-sentences true)");
         properties.put("input.split-on-newlines", "false");
+        properties.put("extractions.mode", "DRUM");
+        properties.put("ekb.reasoner", "DRUM");
     }
 
     /**
@@ -769,8 +782,13 @@ public class DrumGUI extends StandardTripsModule {
             replyWhenDone = reply_when_done || replyWithEKB;
         }
         
-        // TODO
-        doInference = false;
+        // Ask EKBAgent to do inference on the resulting EKB?
+        KQMLObject doInferenceObj = content.getKeywordArg(":do-inference");
+        if (doInferenceObj != null) {
+            ekbInferenceRequested = StringUtils.stringToBoolean(doInferenceObj.toString());
+        } else {
+            ekbInferenceRequested = false;
+        }
     }
 
     /**
@@ -794,14 +812,6 @@ public class DrumGUI extends StandardTripsModule {
 
         // specific task parameters
         String text = ((KQMLString) content.getKeywordArg(":text")).stringValue();
-
-        // TODO: we'll want to do this for all tasks, but i'm starting here
-        KQMLObject doInferenceObj = content.getKeywordArg(":do-inference");
-        if (doInferenceObj != null) {
-            doInference = StringUtils.stringToBoolean(doInferenceObj.toString());
-        } else {
-            doInference = false;
-        }
 
         // write text to new file
         String folder = dataset.getFolder();
@@ -846,7 +856,7 @@ public class DrumGUI extends StandardTripsModule {
      * Handler for {@code run-file} requests.
      * <p>
      * Request format:
-     * {@code (run-file :folder "folder" :file "filename" [:exit-when-done false] [:reply-when-done true] [:reply-with-ekb false])}.
+     * {@code (run-file :folder "folder" :file "filename" [:exit-when-done false] [:reply-when-done true] [:reply-with-ekb false] [:do-inference false])}.
      * <p>
      * Throws an exception if there is a problem.
      * 
@@ -900,7 +910,7 @@ public class DrumGUI extends StandardTripsModule {
      * Handler for {@code run-all-files} requests.
      * <p>
      * Request format:
-     * {@code (run-all-files :folder "folder" :select "*.xml" [:single-ekb false] [:exit-when-done false] [:reply-when-done false] [:reply-with-ekb false])}.
+     * {@code (run-all-files :folder "folder" :select "*.xml" [:single-ekb false] [:exit-when-done false] [:reply-when-done false] [:reply-with-ekb false] [:do-inference false])}.
      * <p>
      * Extractions will be placed in a single EKB if {@code :single-ekb} resolves to {@code true}; if this parameter is
      * missing, it defaults to {@code false}.
@@ -980,7 +990,7 @@ public class DrumGUI extends StandardTripsModule {
      * Handler for {@code run-pmcid} requests.
      * <p>
      * Request format:
-     * {@code (run-pmcid :folder "folder" :pmcid "pmcid" [:save-to "ekb-path"] [:exit-when-done false] [:reply-when-done false] [:reply-with-ekb false])}
+     * {@code (run-pmcid :folder "folder" :pmcid "pmcid" [:save-to "ekb-path"] [:exit-when-done false] [:reply-when-done false] [:reply-with-ekb false] [:do-inference false])}
      * <p>
      * If the folder is given, the data files are assumed to be in the given folder (value of the {@code :folder}
      * parameter). All XML files (extension {@literal .xml}) are selected for processing. It is assumed that these XML
@@ -1088,8 +1098,9 @@ public class DrumGUI extends StandardTripsModule {
      * Handler for {@code extraction-result} messages (from Extractor).
      */
     private void handleExtraction(KQMLList content) {
+        boolean useMap = (extractionMode.equalsIgnoreCase("EXTENDED") ? true : false);
         try {
-            List<Extraction> newExtractions = kb.add(content);
+            List<Extraction> newExtractions = kb.add(content, useMap);
             if ((display != null) && (newExtractions != null)) {
                 for (Extraction x : newExtractions)
                     display.addExtraction(x);
@@ -1189,7 +1200,7 @@ public class DrumGUI extends StandardTripsModule {
                 Debug.error("STATE: No uttnums");
             } else {
                 pLastUttnum = Integer.parseInt(uttnums.get(uttnums.size() - 1).toString());
-                Debug.debug("STATE: uttnums: " + uttnums);
+                Debug.debug("STATE: OK - uttnums: " + uttnums);
                 gotOK = true;
             }
         }
@@ -1527,72 +1538,111 @@ public class DrumGUI extends StandardTripsModule {
             processSelectedDataset();
         } else {
             // ... otherwise, finish task according to mode
-            if (mode != Mode.STANDALONE) {
-                // if we have a callback on this document
-                if (taskRequest != null) {
-                    if (replyWhenDone) {
-                        if (gotOK) { // else we must have rejected it already
-                            if (replyWithEKB) {
-                                if (doInference) {
-                                    // we ask EKBAgent to do inference and let the handler reply
-                                    KQMLPerformative perf = new KQMLPerformative("request");
-                                    KQMLList content = new KQMLList();
-                                    content.add("do-ekb-inference");
-                                    content.add(":ekb");
-                                    content.add(new KQMLString(kb.getEKBFile()));
-                                    content.add(":return-string");
-                                    content.add("t");
-                                    perf.setParameter(":content", content);
-                                    sendWithContinuation(perf, new DoInferenceReplyHandler(taskRequest, documentID));
-                                } else {
-                                    // we take care if it here
-                                    reply(taskRequest, makeExtractionsResultMessage(documentID));
-                                }
-                            } else {
-                                try {
-                                    KQMLPerformative rmsg = new KQMLPerformative("reply");
-                                    KQMLList rcontent = new KQMLList();
-                                    rcontent.add("done");
-                                    rcontent.add(":result");
-                                    rcontent.add(new KQMLString(kb.getEKBFile()));
-                                    rmsg.setParameter(":content", rcontent);
-                                    reply(taskRequest, rmsg); // TODO: must ensure taskRequest != null
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    Debug.fatal("Something's wrong!");
-                                }
-                            }
-                        }
-                    }
-                    Debug.warn("Task finished (" + taskRequest.getParameter(":reply-with") + ")");
-                } else {
-                    Debug.warn("Task finished (no callback).");
-                }
-            }
-            // quit?
-            if (exitWhenDone && taskQueue.isEmpty()) {
-                // sendExitRequest();
-                try {
-                    send(KQMLPerformative.fromString("(request :receiver facilitator :content (exit))"));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Debug.fatal("Something's wrong!");
-                }
-            }
-            // reset display
-            if (display != null) {
-                display.unsetState(Display.State.RUNNING);
-                display.clearSelections();
-                display.enableSelector();
-                display.activateExtractorPanel();
-            }
-            if (mode == Mode.BATCH) {
-                // sendExitRequest();
-                System.exit(0);
+            if (ekbInferenceRequested) {
+                // we ask EKBAgent to do inference
+                doEKBInference(taskRequest, replyWithEKB);
+            } else {
+                finishAndCleanup(taskRequest);
             }
         }
     }
+    
+    /**
+     * Finish task according to mode and clean up or exit
+     * 
+     * @param taskRequest 
+     */
+    private void finishAndCleanup(KQMLPerformative taskRequest) {
+        if (mode != Mode.STANDALONE) {
+            // if we have a callback on this document
+            if (taskRequest != null) {
+                if (replyWhenDone) {
+                    boolean haveInferredEKB = !((inferredEKBFileName == null) && (inferredEKBAsKQMLString == null));
+                    callback(taskRequest, haveInferredEKB);
+                }
+                Debug.warn("Task finished (" + taskRequest.getParameter(":reply-with") + ")");
+            } else {
+                Debug.warn("Task finished (no callback).");
+            }
+        }
+        
+        // quit?
+        if (exitWhenDone && taskQueue.isEmpty()) {
+            sendExitRequest();
+        }
+        if (mode == Mode.BATCH) {
+            System.exit(0);
+        }
 
+        // reset display 
+        if (display != null) {
+            display.unsetState(Display.State.RUNNING);
+            display.clearSelections();
+            display.enableSelector();
+            display.activateExtractorPanel();
+        }
+    }
+
+    /**
+     * Send back reply if task wanted it.
+     * 
+     * @param taskRequest
+     * @param haveInferredEKB 
+     */
+    private void callback(KQMLPerformative taskRequest, boolean haveInferredEKB) {
+        if (! gotOK) { // we must have rejected it already
+            return;
+        }
+        if (replyWithEKB) {
+            // we take care if it here
+            reply(taskRequest, makeExtractionsResultMessage(documentID));
+        } else {
+            try {
+                KQMLPerformative rmsg = new KQMLPerformative("reply");
+                KQMLList rcontent = new KQMLList();
+                rcontent.add("done");
+                rcontent.add(":result");
+                rcontent.add(new KQMLString(kb.getEKBFile()));
+                if (ekbInferenceRequested) {
+                    rcontent.add(":inferred-ekb-file");
+                    rcontent.add(new KQMLString(inferredEKBFileName));                
+                }
+
+                rmsg.setParameter(":content", rcontent);
+                reply(taskRequest, rmsg);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Debug.fatal("Something's wrong!");
+            }
+        }
+    }
+    
+    /**
+     * Calls EKBAgent to do inference on the current EKB
+     * 
+     * @param taskRequest
+     */
+    private void doEKBInference(KQMLPerformative taskRequest, boolean requestEKB) {
+        KQMLPerformative perf = new KQMLPerformative("request");
+        KQMLList content = new KQMLList();
+        content.add("do-ekb-inference");
+        // set domain
+        content.add(":domain");
+        content.add(getProperty("ekb.reasoner"));
+        // set raw ekb file
+        content.add(":ekb");
+        content.add(new KQMLString(kb.getEKBFile()));
+        // set response type
+        if (requestEKB) {
+            content.add(":return-string");
+            content.add("t");
+        }
+        perf.setParameter(":content", content);
+        inferredEKBAsKQMLString = null;
+        inferredEKBFileName = null;
+        sendWithContinuation(perf, new DoInferenceReplyHandler(taskRequest, documentID, requestEKB));
+    }
+    
     /**
      * Sets the current dataset to a given file in a given folder. As a side effect, if a display is available, it will
      * show the selection in the display.
@@ -1996,8 +2046,8 @@ public class DrumGUI extends StandardTripsModule {
         if (paragraphsDone < paragraphs.length) {
             try {
                 // Debug.debug("Processing fragment["+fragmentsProcessed+"]: /"+(fragmentOffsets[fragmentsProcessed])+"/");
-                sendWithContinuation(makeTagMessage(paragraphs[paragraphsDone]), new TagReplyHandler(
-                        paragraphsDone));
+                sendWithContinuation(makeTagMessage(paragraphs[paragraphsDone]), 
+                        new TagReplyHandler(paragraphsDone));
                 Debug.debug("STATE: tag");
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -2121,10 +2171,14 @@ public class DrumGUI extends StandardTripsModule {
         content.add(":extractions");
         content.add(new KQMLString(kb.toXML()));
         perf.setParameter(":content", content);
-        if (doInference) {
-            // TODO: Add inferred ekb
-            content.add(":inferred-ekb");
-            content.add(inferredEKBAsKQMLString);
+        if (ekbInferenceRequested) {
+            if (replyWithEKB) {
+                content.add(":inferred-ekb");
+                content.add(inferredEKBAsKQMLString);
+            } else {
+                content.add(":inferred-ekb-file");
+                content.add(new KQMLString(inferredEKBFileName));                
+            }
         }
         return perf;
     }
@@ -2198,7 +2252,9 @@ public class DrumGUI extends StandardTripsModule {
     private void sendExitRequest() {
         KQMLPerformative perf = null;
         try {
-            perf = KQMLPerformative.fromString("(request :content (exit 0))");
+            // currently only the Parser subscribes to the exit request, and doesn't seem to act on it
+            // perf = KQMLPerformative.fromString("(request :content (exit 0))");
+            perf = KQMLPerformative.fromString("(request :receiver facilitator :content (exit))");
             send(perf);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -2233,7 +2289,7 @@ public class DrumGUI extends StandardTripsModule {
             if (reply.equalsIgnoreCase("ok")) {
                 log("<received>\n" + replyMsg + "\n</received>");
                 KQMLObject uttnums = ((KQMLList) content).getKeywordArg(":uttnums");
-                Debug.debug("STATE: uttnums: " + uttnums);
+                Debug.debug("STATE: OK/TR - uttnums: " + uttnums);
                 if (uttnums != null) {
                     setUtteranceOffsetsForParagraph(paragraphNumber, (KQMLList) uttnums);
                     Debug.debug("paragraph " + paragraphNumber + " => uttnums " + uttnums);
@@ -2304,11 +2360,13 @@ public class DrumGUI extends StandardTripsModule {
     protected class DoInferenceReplyHandler implements KQMLContinuation {
         private KQMLPerformative task;
         private String documentID;
+        private boolean requestEKB;
 
-        public DoInferenceReplyHandler(KQMLPerformative task, String documentID) {
+        public DoInferenceReplyHandler(KQMLPerformative task, String documentID, boolean requestEKB) {
             // TODO Auto-generated constructor stub
             this.task = task;
             this.documentID = documentID;
+            this.requestEKB = requestEKB;
         }
 
         public void receive(KQMLPerformative replyMsg) {
@@ -2318,11 +2376,17 @@ public class DrumGUI extends StandardTripsModule {
                 error("Bad message format");
                 return;
             }
-            String reply = ((KQMLList) content).get(0).toString();
-            if (reply.equalsIgnoreCase("done")) {
-                inferredEKBAsKQMLString = (KQMLString) ((KQMLList) content).getKeywordArg(":result");
+            String replyVerb = ((KQMLList) content).get(0).toString();
+            if (replyVerb.equalsIgnoreCase("done")) {
+                KQMLObject result = ((KQMLList) content).getKeywordArg(":result");
+                Debug.debug("EKBAgent returned:" + result);
+                if (requestEKB) {
+                    inferredEKBAsKQMLString = (KQMLString) result;
+                } else {
+                    inferredEKBFileName = result.stringValue();
+                }
             }
-            else if (reply.equalsIgnoreCase("failure")) {
+            else if (replyVerb.equalsIgnoreCase("failure")) {
                 // we log the error, but otherwise don't do anything
                 KQMLObject errorMsg = ((KQMLList) content).getKeywordArg(":msg");
                 if (errorMsg != null) {
@@ -2333,8 +2397,8 @@ public class DrumGUI extends StandardTripsModule {
             } else { // TODO: handle reject
                 error("Cannot handle reply");
             }
-            // finally, reply to the original message
-            reply(taskRequest, makeExtractionsResultMessage(documentID));
+            // finally, try callback
+            finishAndCleanup(task);
         }
     }
 

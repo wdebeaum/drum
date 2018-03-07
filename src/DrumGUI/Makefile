@@ -1,7 +1,7 @@
 #
 # Makefile
 #
-# Time-stamp: <Fri Mar 31 16:19:46 CDT 2017 lgalescu>
+# Time-stamp: <Tue Mar  6 11:48:14 CST 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  9 Feb 2010
 #
@@ -32,38 +32,38 @@ SRCS =  DrumGUI.java \
 	CausalityExtraction.java
 
 CLASSES = $(SRCS:.java=.class) \
-	DrumGUI$$Mode.class \
+	CausalityExtraction$$Modifier.class \
+	CausalityExtraction$$PolyModifier.class \
+	CausalityExtraction$$Role.class \
+	Debug$$Level.class \
+	Display$$1.class \
+	Display$$State.class \
 	DrumGUI$$DoInferenceReplyHandler.class \
+	DrumGUI$$Mode.class \
 	DrumGUI$$PubPullReplyHandler.class \
 	DrumGUI$$RunTask.class \
 	DrumGUI$$TagReplyHandler.class \
 	DrumGUI$$TaskScheduler.class \
-	Log$$TimeStamp.class \
-	Debug$$Level.class \
-	Display$$1.class \
-	Display$$State.class \
-	SelectorPanel$$1.class \
-	SelectorPanel$$2.class \
-	TextPanel$$1.class \
-	ExtractorPanel$$Mode.class \
-	ExtractionTree$$1.class \
 	DrumKB$$Paragraph.class \
 	DrumKB$$Sentence.class \
-	TermExtraction$$Attribute.class \
-	TermExtraction$$PolyAttribute.class \
+	EpistemicModalityExtraction$$Modifier.class \
+	EpistemicModalityExtraction$$PolyModifier.class \
+	EpistemicModalityExtraction$$Role.class \
 	EventExtraction$$Feature.class \
 	EventExtraction$$Modifier.class \
 	EventExtraction$$PolyModifier.class \
 	EventExtraction$$Role.class \
+	ExtractionTree$$1.class \
+	ExtractorPanel$$Mode.class \
+	Log$$TimeStamp.class \
 	ModalityExtraction$$Modifier.class \
 	ModalityExtraction$$PolyModifier.class \
 	ModalityExtraction$$Role.class \
-	EpistemicModalityExtraction$$Modifier.class \
-	EpistemicModalityExtraction$$PolyModifier.class \
-	EpistemicModalityExtraction$$Role.class \
-	CausalityExtraction$$Modifier.class \
-	CausalityExtraction$$PolyModifier.class \
-	CausalityExtraction$$Role.class
+	SelectorPanel$$1.class \
+	SelectorPanel$$2.class \
+	TermExtraction$$Attribute.class \
+	TermExtraction$$PolyAttribute.class \
+	TextPanel$$1.class
 
 XTRA =  images/ihmcLogo.png \
 	images/folder.png \

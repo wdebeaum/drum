@@ -2,7 +2,7 @@
 
 # trips-drum-pmc.sh
 #
-# Time-stamp: <Mon Feb 12 15:39:18 CST 2018 lgalescu>
+# Time-stamp: <Tue Feb 13 11:49:24 CST 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 12 Feb 2018
 #
@@ -67,7 +67,7 @@ export TRIPS_SOCKET
 ${TRIPS_BASE}/bin/trips-drum -nouser -port $port 1>&2 &
 
 # send message to process article
-run_message="request :receiver DRUM :content (run-pmcid :pmcid \"$pmcid\" :exit-when-done true)"
+run_message="request :receiver DRUM :content (run-pmcid :pmcid \"$pmcid\" :exit-when-done true :do-inference true)"
 
 sleep 20
 ${TRIPS_BASE}/bin/trips_msg -socket ${TRIPS_SOCKET} $run_message 1>&2 &
