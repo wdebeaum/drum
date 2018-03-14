@@ -23,6 +23,7 @@
     ((example "why isn't there a Mac listed")
      (meta-data :origin calo :entry-date 20031206 :change-date nil :comments calo-y1script)
      (LF-PARENT ONT::listing)
+     (TEMPL agent-neutral-xp-templ)
      )
     )
    )

@@ -192,9 +192,9 @@
 
 
 
-     ;; e.g., Name the drug that...
+     ;; e.g., Name/List/ Tell me the drugs that...
      ((ONT::SPEECHACT ?x ONT::SA_REQUEST :CONTENT ?!theme)
-      (ONT::F ?!theme ONT::NAMING :NEUTRAL ?!n :force ?f)
+      (ONT::F ?!theme (? t3 ONT::NAMING ONT::LISTING ONT::TELL) :NEUTRAL ?!n :force ?f) 
       (?!spec ?!n ?!t :mods (?!m))
       (ONT::F ?!m ?!t2)
       -request-to-identify>

@@ -3301,7 +3301,8 @@
  )
 
 (define-type ONT::listing
- :parent ONT::visual-display
+; :parent ONT::visual-display
+ :parent ONT::representative
  :sem (F::Situation (F::Cause F::Agentive))
  :arguments ((:OPTIONAL ONT::Agent)
              )

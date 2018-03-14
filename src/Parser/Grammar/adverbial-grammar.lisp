@@ -129,6 +129,7 @@
      (np (var ?v3) (sem ?sem2))
      )||#
 
+    #|
     ;; to the left/right
     ;; handled by rule to produce adverbial, same lf as "right/left"
     ;; ont::direction is compatible with verbs that are f::trajectory +, like move
@@ -148,7 +149,7 @@
                 )
            )
      )
-
+    |#
     
     ;;; THREE PART ADVERBIALS: if ... then, as ... as, for X to Y
     
@@ -447,7 +448,7 @@
      (advbl-needed ?avn)
       )
      -adv-vp-pre-s> 
-     (advbl (SORT PRED) (ATYPE (? x PRE-VP)) (ARGUMENT (% S (SEM ($ f::situation))))  
+     (advbl (SORT PRED) (ATYPE (? x PRE-VP)) (ARGUMENT (% S (SEM ($ f::situation))))
       (GAP -) 
       (ARG ?v) (VAR ?mod)
       )
@@ -1590,7 +1591,7 @@
 	    (CONSTRAINT (& (FIGURE ?arg) (GROUND ?v)))
 	    (sem ($ f::abstr-obj (f::information -) (f::intentional -)))))
      )
-    -vp-ing-advbl> .98
+    -vp-ing-advbl> .97
     (head (vp (vform ing) (var ?v) (gap -) (aux -) (advbl-necessary -)
 	   (constraint ?con)  (transform ?transform) (class ?class)
 	   (subj (% np (var ?subjvar) (agr ?subjagr) (sem ?subjsem) (gap -)))

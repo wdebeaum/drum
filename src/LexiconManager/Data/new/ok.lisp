@@ -2,6 +2,21 @@
 ;;;; W::OK
 ;;;;
 
+#|
+(define-words :pos W::UttWord :boost-word t :templ NO-FEATURES-TEMPL
+ :tags (:base500)
+ :words (
+  (W::ok
+   (SENSES
+    ((LF (ONT::GOOD))
+     (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_EVALUATE))
+     (preference 1.01)
+     )
+    )
+   )
+))
+|#
+
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :tags (:ack)
  :words (
