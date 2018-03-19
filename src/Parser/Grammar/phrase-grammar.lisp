@@ -1710,7 +1710,9 @@
     ;; the LF built in the same way as in n1-qual1
     ;; postpositive adjps alowed to parse "something like a dog"
     ((NP (SORT PRED)
-         (VAR ?v) (SEM ?sem) (lex ?hl) (headcat ?hc) (Class ?c) (AGR ?agr) (WH ?wh) (PRO INDEF)(case ?case)
+      (VAR ?v) (SEM ?sem) (lex ?hl) (headcat ?hc) (Class ?c) (AGR ?agr)
+      ;;(WH ?wh)
+      (PRO INDEF)(case ?case)
          (LF (% Description (status ?status) (var ?v) (Class ?c) (SORT individual)
                 (Lex ?lex)
                 (sem ?sem) 
@@ -1721,7 +1723,9 @@
      -np-anything-adj> .96 ; only use when needed
      (head (pro (SEM ?sem) (AGR ?agr) (VAR ?v) (headcat ?hc) (lex ?hl)
 	        (PRO INDEF) (status ?status) (case ?case)
-	        (VAR ?v) (WH ?wh) (LF ?c)
+	        (VAR ?v)
+		(WH -) ;;  (WH ?wh)   I can't think of a WH pro in this context
+		(LF ?c)
 	        (transform ?transform)
 	    ))
      (ADJP (atype (? at attributive-only central postpositive)) (LF ?qual) (ARG ?v) (VAR ?adjv)
@@ -1763,7 +1767,7 @@
 	    )))
     -np-pro-cp> .96
     (head (np (var ?npvar) (sem ?npsem) 
-	   (PRO (? prp INDEF +))
+	   (PRO INDEF) ;; (? prp INDEF +))  can't allow definite pros here!
 	   (WH -)
 	   (agr ?a) (case ?case)
 	   ;; Myrosia 2009/04/10 Cases like "anything you saw" are handled by indef-pro-desc
@@ -4168,9 +4172,9 @@
              (constraint ?constraint) (sort ?sort) (WH -)
              (sem ?npsem) (transform ?transform)
              )))
-     -wh-desc2> .7
+     -wh-desc2>
      (head (np (var ?npvar) (sem ?npsem) (wh Q) (agr ?a) ;;(PRO INDEF)
-            (lf (% definite  (class ?npclass) (status ?status)
+            (lf (% description  (class ?npclass) (status ?status)
                    (constraint ?cons) (sort ?sort) (transform ?transform)
                    ))))
      (vp (var ?vpvar) (lf ?lf-s) (subjvar ?npvar) 
