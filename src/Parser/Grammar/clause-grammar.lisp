@@ -323,7 +323,7 @@
      (advbl-needed ?avn)
      )
     -s1>
-    (np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex) ;; lex needed for expletives? 
+    (np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex) (sort pred) ;; lex needed for expletives? 
       (pp-word -) (changeagr -) (gap -) (expletive ?exp))
     (head (vp (lf ?lf) (gap ?g)
               (template (? !x  lxm::propositional-equal-templ))
