@@ -56,6 +56,12 @@
      (TEMPL experiencer-templ)
      (preference .96)
      )
+
+    ((LF-PARENT ONT::know)
+     (example "I know about the party.") 
+     (TEMPL experiencer-neutral-xp-TEMPL (xp (% W::PP (W::ptype (? p W::of W::about)))))
+     )
+    
     )
    )
 ))

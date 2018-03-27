@@ -4166,7 +4166,7 @@
     ;;  e.g., (show me) who/what arrived, I know who else arrived
    
     ((np (sort wh-desc)  (gap -)  (mass bare) (agr ?a)
-      (sem ?s-sem) ;;(sem ?npsem)
+      (sem ?npsem) ;(sem ?s-sem) ;;(sem ?npsem)  ; should be npsem: e.g., I know *which dog* ate the pizza
       (var ?npvar) (case (? case SUB OBJ))  ;; I think SUB is also OK? isn't it? JFA 3/03
       (lf (% description (status ?status) (VAR ?npvar) (class ?npclass) 
              (constraint ?constraint) (sort ?sort) (WH -)
@@ -4183,7 +4183,8 @@
       (subj (% np (sem ?npsem) (var ?npvar)))
       (sem ?s-sem)
       )
-     (add-to-conjunct (val (suchthat ?vpvar)) (old ?cons) (new ?constraint))
+     (add-to-conjunct (val (mod ?vpvar)) ;(suchthat ?vpvar))
+		      (old ?cons) (new ?constraint))
      )
     
     ;; wh-term as gap

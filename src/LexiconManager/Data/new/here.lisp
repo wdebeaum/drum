@@ -9,8 +9,8 @@
    ;(wordfeats (W::ATYPE (? atype W::pre-vp W::post w::pre-vp)))
    (SENSES
     ((LF-PARENT ONT::pos-wrt-speaker-reln)
-     (SYNTAX (W::IMPRO-CLASS ONT::place))
-     (TEMPL pred-s-vp-templ)
+     (SYNTAX (W::IMPRO-CLASS ONT::location))
+     ;(TEMPL pred-s-vp-templ)
      )
      )
    )
@@ -22,7 +22,7 @@
  :words (
   (W::HERE
    (SENSES
-    ((LF-PARENT ONT::PLACE)
+    ((LF-PARENT ONT::location)
      (PREFERENCE 0.98)
      )
     )

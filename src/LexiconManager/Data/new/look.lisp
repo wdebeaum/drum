@@ -2,6 +2,7 @@
 ;;;; w::look
 ;;;;
 
+#|
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
 ((w::look w::for)
@@ -14,6 +15,7 @@
   )
  )
 ))
+|#
 
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
@@ -29,6 +31,7 @@
  )
 ))
 
+
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
 ((w::look (w::up))
@@ -36,12 +39,19 @@
   ((EXAMPLE "look up the number in the book")
    (LF-PARENT ONT::look-up)
    (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-   (TEMPL agent-theme-xp-templ)
+   (TEMPL agent-neutral-xp-templ)
+   (meta-data :origin calo :entry-date 20050323 :change-date nil :comments caloy2)
+   )
+  ((EXAMPLE "look up whether this is true")
+   (LF-PARENT ONT::look-up)
+   (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
+   (TEMPL agent-formal-xp-templ)
    (meta-data :origin calo :entry-date 20050323 :change-date nil :comments caloy2)
    )
   )
  )
 ))
+
 
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :tags (:base500)

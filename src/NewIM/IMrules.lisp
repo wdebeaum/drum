@@ -192,15 +192,49 @@
 
 
 
-     ;; e.g., Name/List/ Tell me the drugs that...
+     ;; e.g., Name/List/Tell me/Look up the drugs that...
      ((ONT::SPEECHACT ?x ONT::SA_REQUEST :CONTENT ?!theme)
-      (ONT::F ?!theme (? t3 ONT::NAMING ONT::LISTING ONT::TELL) :NEUTRAL ?!n :force ?f) 
+      (ONT::F ?!theme (? t3 ONT::NAMING ONT::LISTING ONT::TELL ONT::LOOK-UP) :NEUTRAL ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
       (?!spec ?!n ?!t :mods (?!m))
-      (ONT::F ?!m ?!t2)
+      (ONT::F ?!m (? !t2 ONT::DOMAIN-PROPERTY ONT::MODIFIER)) ; e.g., beautiful, or unknown adjectives 
       -request-to-identify>
       (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n :suchthat ?!m)
       )
-   
+
+     ;; e.g., Tell me/Let me know if there is/are...
+     ;; e.g., I want to know if (SA_TELL)
+     ((ONT::SPEECHACT ?x (? sa ONT::SA_REQUEST ONT::SA_TELL) :CONTENT ?!theme)
+      (ONT::F ?!theme (? t3 ONT::TELL ONT::ALLOW ONT::WANT ONT::LOOK-UP) :FORMAL ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
+      (ONT::F ?!n3 ONT::CLAUSE-CONDITION :CONTENT ?!c) ; note n3, not n
+      (ONT::F ?!c ONT::EXISTS :NEUTRAL ?!n2)
+      ;(ONT::PRO ?!p ONT::EXPLETIVE :PROFORM w::there) ; this is not put through the match
+      (?!spec2 ?!n2 ?!t2 :MODS (?!m))
+      (ONT::F ?!m (? !t4 ONT::DOMAIN-PROPERTY ONT::MODIFIER))
+      -request-to-identify3>
+      (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n2 :suchthat ?!m)
+      )
+     
+     ;; I want to know (about)...
+     ((ONT::SPEECHACT ?x ONT::SA_TELL :CONTENT ?!theme )
+      (ONT::F ?!theme (? t3 ONT::WANT) :FORMAL ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
+      (ONT::F ?!n ONT::KNOW :NEUTRAL ?!n2) ; note n3, not n
+      (?!spec2 ?!n2 ?!t2 :MODS (?!m))
+      (ONT::F ?!m (? !t4 ONT::DOMAIN-PROPERTY ONT::MODIFIER))
+      -request-to-identify4>
+      (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n2 :suchthat ?!m)
+      )
+
+     ;; can you name... (indirect requests)
+     ((ONT::SPEECHACT ?V7187 ONT::SA_YN-QUESTION :CONTENT ?!c)
+      (ONT::F ?!theme (? t3 ONT::NAMING ONT::LISTING ONT::TELL ONT::LOOK-UP) :NEUTRAL ?!n 
+	      :AGENT ?!V6 :force (? f ONT::ALLOWED ONT::PROHIBITED ONT::FUTURE ONT::FUTURENOT ONT::POSSIBLE ONT::FUTURE)) 
+     (?!spec ?!n ?!t :mods (?!m))
+     (ONT::F ?!m (? !t2 ONT::DOMAIN-PROPERTY ONT::MODIFIER))
+     ((? z ONT::PRO) ?!V6 ONT::PERSON :proform (? xx w::you))    
+     -can-indirect-request>
+     (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n :suchthat ?!m)
+      )
+     
      ;; e.g., buy me a computer
      ((ONT::SPEECHACT ?x ONT::SA_REQUEST :CONTENT ?!theme)
       (ONT::F ?!theme ?type :force ?f)
