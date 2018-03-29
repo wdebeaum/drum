@@ -1295,9 +1295,9 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
     (w::speechact 'ONT::Speechact)
     (w::sa-seq 'ONT::sa-seq)
     ;;; repeat the above but replace W:: by ONT::
-    ((ONT::definite ONT::name ONT::gname) 'ont::the) 
+    ((ONT::definite ONT::name ONT::gname ONT::number) 'ont::the) 
     (ONT::indefinite 'ont::A)
-    ((ONT::indefinite-plural ONT::number) 'ont::indef-set)
+    ((ONT::indefinite-plural) 'ont::indef-set)
     (ONT::SM 'ont::SM)
     (ONT::definite-plural 'ont::the-set)
     ((ONT::wh ONT::what ONT::which ONT::whose ONT::*wh-term*) 'ont::wh-term) 

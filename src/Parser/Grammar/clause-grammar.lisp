@@ -851,7 +851,7 @@
       (lf (% prop (var ?v) (constraint ?con) (class ?lf) (tma ?newtma))) ;;(lf ?lf)
 	(lex ?hlex) (headcat ?hcat)) ;; aug-trips
     -s-that-missing> .98
-    (head (s (stype decl) (main -) (wh -) (gap -) 
+    (head (s (stype decl) (main -) (wh -) (gap -)
 	      (adj-s-prepost -)
 	      (lf (% prop (var ?v) (constraint ?con) (class ?lf) (tma ?tma))) ;;(lf ?lf) 
 	      (vform fin)
@@ -2401,6 +2401,7 @@
    ;;  these ynq forms occus only with the verb to be.
    ;; they are hard to capture using the general mechanisms for the be serves as the aux and the main verb
    ;; e.g., is the train late?
+   ; Is the pizza quickly cold?
    ((s (stype ynq) (main +) (aux -) (gap -)
      (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar) (agr ?subjagr)))
      (sort pred) 
@@ -2452,12 +2453,72 @@
      )
     (add-to-conjunct (val (tense (? vf past pres fut))) (old ?tma) (new ?newtma))
     ?subj
-    (advbl (atype pre-vp) (gap -)
+    (advbl (atype pre-vp) (gap -)  ; pre-vp: Is the block eventually melted?
      (argument (% s (sem ?argsem)))
      (arg ?v) (var ?mod) (role ?advrole) (subcat -))           
     ?dobj
     ?comp) 
-    
+
+   ; Is the pizza cold quickly?
+   ((s (stype ynq) (main +) (aux -) (gap -)
+     (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar) (agr ?subjagr)))
+     (sort pred) 
+     
+     (var ?v) ;; propagate up explicitly because not a head feature	   
+     (agr ?subjagr) ;; propagate up explicitly because not a head feature
+     (sem ?sem) ;; propagate up explicitly because not a head feature
+     (transform ?transform) ;; propagate up explicitly because not a head feature
+      ;; propagate up explicitly because not a head feature	
+     (subjvar ?subjvar) (dobjvar ?dobjvar)
+     
+     (lf (% prop (var ?v) (class ?belf)
+	    (constraint (& (lsubj ?subjvar)
+			   (lobj ?dobjvar) 
+			   (comp3 ?compvar)
+			   (?subj-map ?subjvar) (?dobj-map ?dobjvar)
+			   (?comp3-map ?compvar) 
+			   (mods ?mod)
+			   ))
+	    (sem ?sem) (tma ?tma)
+	    (transform ?transform)
+	    ))
+     (advbl-needed ?avn)
+     )
+    -s-ynq-be-adv2>
+    (head (v (sem ?sem) (aux -)
+	   (lf ?belf)
+	   (subj-map ?subj-map) (dobj-map ?dobj-map) (comp3-map ?comp3-map)
+	   
+	   (tma ?tma) (vform ?vf) 
+	   
+	   (var ?v) ;; propagate up explicitly because not a head feature	   
+	   (agr ?subjagr) ;; propagate up explicitly because not a head feature
+	   (sem ?sem) ;; propagate up explicitly because not a head feature
+	   (transform ?transform) ;; propagate up explicitly because not a head feature
+	    ;; propagate up explicitly because not a head feature	   
+   
+	   ;; no uniform & unique lf's for main verb be uses, so have to match the lex
+	   ;; unless we can match the lf-form be
+	   (lex (? lx are is was were ^s))
+	   (subj ?subj) (subj (% ?s1 (case sub) (var ?subjvar) (sem ?subjsem) (agr ?subjagr) (lex ?subjlex) (gap -))) ;; note double matching required
+	   (iobj (% -))
+	   (part (% -))
+	   (dobj ?dobj)	(dobj (% ?s3 (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap -)))
+	   (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -)))
+	   (advbl-needed ?avn)
+	   )
+     
+     )
+    (add-to-conjunct (val (tense (? vf past pres fut))) (old ?tma) (new ?newtma))
+    ?subj
+    ?dobj
+    ?comp
+    (advbl (atype post) (gap -)  ; post: Is the block melted eventually?
+     (argument (% s (sem ?argsem)))
+     (arg ?v) (var ?mod) (role ?advrole) (subcat -))           
+    ) 
+   
+   
     ;; conditionals
     ;;; md commented out 2008/16/06 because conditionals are now handled as regular adverbials.
 ;;;    ;; test: if the train arrives, then we can load oranges.
@@ -3263,7 +3324,7 @@
      (sem ?newsem)
      (vform ?vform) (transform ?transform)
      (aux +) (auxname ?auxname) 
-     (subj-map ?lsubj-map)
+     (subj-map ?lsubj-map) 
      )
     -vp-changesem-aux> 1.0
     ;; propagate class, semantics, constraint up from main verb
@@ -3285,6 +3346,7 @@
 		     (gap ?gap)		     
 		     (sem ?compsem) ;; (sem ($ f::situation (aspect (? !asp f::indiv-level))))  ;; constraints are in lf
 		     (subjvar ?subjvar) (dobjvar ?dobjvar) (transform ?transform)
+		     (subj ?subj)
 		     (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
 		     (advbl-needed -) (subj-map ?lsubj-map)
 		     (auxname ?compauxname)

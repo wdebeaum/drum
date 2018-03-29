@@ -4061,9 +4061,10 @@
 
 	;;   Headless adjective phrases
 	;;  The green, the largest
-	((NP (SORT PRED) (CLASS ?c) (VAR *) (sem ?s) (case (? case SUB OBJ))  (headless +)
-	     (lf (% description (status ?spec) (var *) (sort SET) 
-		    (Class ont::Any-sem) 
+	((NP (SORT PRED) (CLASS ?c) (VAR *) (sem ?s) (case (? case SUB OBJ))  (headless +) (agr (? agr 3s 3p))
+	     (lf (% description (status (? st definite definite-plural)) ;(status ?spec)
+		    (var *) ;(sort SET) 
+		    (Class ont::Any-sem) (agr (? agr 3s 3p))
 		    (constraint ?con)
 		    (sem ?s)
 		    ))
@@ -4071,7 +4072,8 @@
 	  )
 	 -NP-adj-missing-head> .97 ; .96
 	 (head (spec  (poss -) (restr ?restr)
-                      (lf ?spec) (arg *) (agr |3P|) (var ?v)))
+                      (lf ?spec) (arg *) (agr (? agr 3s 3p)) ;(agr |3P|)
+		      (var ?v)))
 	 (ADJP (LF ?l1) (ARG *) (set-modifier -)
 	  (var ?advvar) (ARGUMENT (% NP (sem ?s))))
 	 ;;(cardinality (var ?card))
@@ -4178,9 +4180,9 @@
                    (constraint ?cons) (sort ?sort) (transform ?transform)
                    ))))
      (vp (var ?vpvar) (lf ?lf-s) (subjvar ?npvar) 
-      (gap -) (CLASS (? !class ont::IN-RELATION ont::HAVE-PROPERTY) )     ;;  "what is aspirin" is not a good NP
-      (advbl-needed -) 
-      (subj (% np (sem ?npsem) (var ?npvar)))
+      (gap -) (CLASS (? !class ont::IN-RELATION)) ; ont::HAVE-PROPERTY) )     ;;  "what is aspirin" is not a good NP
+      (advbl-needed -) (agr ?a)
+      (subj (% np (sem ?npsem) (var ?npvar) (agr ?a)))
       (sem ?s-sem)
       )
      (add-to-conjunct (val (mod ?vpvar)) ;(suchthat ?vpvar))
@@ -5108,14 +5110,14 @@
    
    ;; numbers (only -- number sequences use np-sequenc1e>
    ((NP (SORT PRED)
-     (var ?v) (Class ONT::ANY-SEM) 
-     (sem ($ (? ft f::abstr-obj) (f::container -))) ;;(sem ($ (? ft f::phys-obj f::abstr-obj))) 
+     (var ?v) (class ONT::NUMBER) ;(Class ONT::ANY-SEM) 
+     (sem ($ (? ft f::abstr-obj) (f::container -) (F::scale ont::number) (F::tangible -))) ;;(sem ($ (? ft f::phys-obj f::abstr-obj))) 
      (case (? cas sub obj -))
      (LF (% Description (status ont::number) (var ?v) (Sort Individual) ;(lex ?lf)
 	    (CLASS ONT::NUMBER) ;;(Class ONT::REFERENTIAL-SEM) 
 	    (constraint ?restr) 
-	    (lex ?l) (val ?val) 
-	    (sem ($ (? ft f::abstr-obj) (f::container -))) ; "container -" to discourage it from being used by IN-LOC for "in 2019"
+	    (lex ?l) (val ?val)
+	    (sem ($ (? ft f::abstr-obj) (f::container -) (F::scale ont::number) (F::tangible -))) ; "container -" to discourage it from being used by IN-LOC for "in 2019"
 	    ;; (sem ($ (? ft f::phys-obj f::abstr-obj))) 
 	    (transform ?transform)
 	    ))
@@ -5125,7 +5127,7 @@
      (mass ?mass)
      (constraint ?restr) 
      (nobarespec +) ;; bare numbers can't be specifiers     
-     (agr (? a 3s 3p))
+     (agr 3s)  ; The answer *is* 5.
      )
     -np-number> 0.98
     (head (number (val ?lf) (lex ?l) (val ?val) (range -) (agr (? a 3s 3p));(number-only +)
