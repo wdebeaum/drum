@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.73 2018/03/06 15:53:27 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.74 2018/03/29 18:19:25 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -1590,30 +1590,8 @@ public class DrumGUI extends StandardTripsModule {
      * @param haveInferredEKB 
      */
     private void callback(KQMLPerformative taskRequest, boolean haveInferredEKB) {
-        if (! gotOK) { // we must have rejected it already
-            return;
-        }
-        if (replyWithEKB) {
-            // we take care if it here
+        if (gotOK) { // otherwise we must have rejected it already
             reply(taskRequest, makeExtractionsResultMessage(documentID));
-        } else {
-            try {
-                KQMLPerformative rmsg = new KQMLPerformative("reply");
-                KQMLList rcontent = new KQMLList();
-                rcontent.add("done");
-                rcontent.add(":result");
-                rcontent.add(new KQMLString(kb.getEKBFile()));
-                if (ekbInferenceRequested) {
-                    rcontent.add(":inferred-ekb-file");
-                    rcontent.add(new KQMLString(inferredEKBFileName));                
-                }
-
-                rmsg.setParameter(":content", rcontent);
-                reply(taskRequest, rmsg);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Debug.fatal("Something's wrong!");
-            }
         }
     }
     
@@ -2168,8 +2146,13 @@ public class DrumGUI extends StandardTripsModule {
         content.add("result");
         content.add(":uttnums");
         content.add(kb.getUttnums());
-        content.add(":extractions");
-        content.add(new KQMLString(kb.toXML()));
+        if (replyWithEKB) {
+            content.add(":ekb");
+            content.add(new KQMLString(kb.toXML()));
+        } else {
+            content.add(":ekb-file");
+            content.add(new KQMLString(kb.getEKBFile()));
+        }
         perf.setParameter(":content", content);
         if (ekbInferenceRequested) {
             if (replyWithEKB) {
@@ -2177,7 +2160,7 @@ public class DrumGUI extends StandardTripsModule {
                 content.add(inferredEKBAsKQMLString);
             } else {
                 content.add(":inferred-ekb-file");
-                content.add(new KQMLString(inferredEKBFileName));                
+                content.add(new KQMLString(inferredEKBFileName)); 
             }
         }
         return perf;
