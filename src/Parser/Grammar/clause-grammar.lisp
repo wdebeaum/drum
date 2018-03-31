@@ -2453,7 +2453,7 @@
      )
     (add-to-conjunct (val (tense (? vf past pres fut))) (old ?tma) (new ?newtma))
     ?subj
-    (advbl (atype pre-vp) (gap -)  ; pre-vp: Is the block eventually melted?
+    (advbl (atype pre-vp) (gap -)  ; pre-vp: Is the block eventually red?
      (argument (% s (sem ?argsem)))
      (arg ?v) (var ?mod) (role ?advrole) (subcat -))           
     ?dobj
@@ -2500,7 +2500,7 @@
 	   ;; no uniform & unique lf's for main verb be uses, so have to match the lex
 	   ;; unless we can match the lf-form be
 	   (lex (? lx are is was were ^s))
-	   (subj ?subj) (subj (% ?s1 (case sub) (var ?subjvar) (sem ?subjsem) (agr ?subjagr) (lex ?subjlex) (gap -))) ;; note double matching required
+	   (subj ?subj) (subj (% ?s1 (case sub) (var ?subjvar) (sem ?subjsem) (agr ?subjagr) (lex ?subjlex) (gap -) (expletive -))) ;; note double matching required
 	   (iobj (% -))
 	   (part (% -))
 	   (dobj ?dobj)	(dobj (% ?s3 (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap -)))
@@ -2513,7 +2513,7 @@
     ?subj
     ?dobj
     ?comp
-    (advbl (atype post) (gap -)  ; post: Is the block melted eventually?
+    (advbl (atype post) (gap -)  ; post: Is the block red eventually?
      (argument (% s (sem ?argsem)))
      (arg ?v) (var ?mod) (role ?advrole) (subcat -))           
     ) 
