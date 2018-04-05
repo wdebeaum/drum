@@ -8,10 +8,12 @@
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
 	      :words (
 		      (W::OTHERS
-		       (wordfeats (W::agr W::3P))
+		       ;(wordfeats (W::agr W::3P))
+		       (wordfeats (W::morph (:forms (-none))))
 		       (SENSES
 			((meta-data :origin monroe :entry-date 20031219 :change-date nil :comments s14)
 			 (LF-PARENT ONT::other)
+			 (TEMPL COUNT-PRED-3p-TEMPL)
 			 )
 			)
 		       )

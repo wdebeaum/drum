@@ -52,7 +52,7 @@
 
    ;; GUM change 20121027 new word sense as per LF_GUM spreadsheet
     ((LF-PARENT ONT::TRANSFORMATION)
-     (TEMPL agent-affected-result-optional-templ (xp (% w::pp (w::ptype (? w::into)))))
+     (TEMPL agent-affected-result-templ (xp (% w::pp (w::ptype (? w::into)))))
      (example "turn x into y")
      )
      )

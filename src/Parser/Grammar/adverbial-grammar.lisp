@@ -1429,6 +1429,22 @@
      (head (Utt (ended -) (var ?v) (LF (% SPEECHACT (class ?sa) (constraint ?adv1))) (punc -) (punctype ?pn)))
      (add-to-conjunct (val (MODS ?advv)) (old ?adv1) (new ?adv)))
 
+    ; Sadly, no.
+    ; Happily I skipped along the path.
+    ((Utt (LF (% SPEECHACT (class ?sa) (var ?v) (constraint ?adv))) (var ?v) (punctype ?pn))
+     -disc-comma-attitude> 
+     (advbl (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -) (sem ($ f::abstr-obj (f::type (? t ont::valuation-attribute-val ont::emotional-val ont::evoking-emotional-val)))))
+     (punc (lex w::punc-comma))
+     (head (Utt (ended -) (var ?v) (LF (% SPEECHACT (class ?sa) (constraint ?adv1))) (punc -) (punctype ?pn)))
+     (add-to-conjunct (val (MODS ?advv)) (old ?adv1) (new ?adv)))
+
+    ((Utt (LF (% SPEECHACT (class ?sa) (var ?v) (constraint ?adv))) (var ?v) (punctype ?pn))
+     -disc-attitude> 
+     (advbl (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -) (sem ($ f::abstr-obj (f::type (? t ont::valuation-attribute-val ont::emotional-val ont::evoking-emotional-val)))))
+     (head (Utt (ended -) (var ?v) (LF (% SPEECHACT (class ?sa) (constraint ?adv1))) (punc -) (punctype ?pn)))
+     (add-to-conjunct (val (MODS ?advv)) (old ?adv1) (new ?adv)))
+
+    
     ; TEST: The dog barked then
     ((Utt (LF (% SPEECHACT (var ?v) (class ?sa) (constraint ?adv))) (var ?v)
 	  (punctype ?pn)

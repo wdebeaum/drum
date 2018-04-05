@@ -6,7 +6,8 @@
  :tags (:base500)
  :words (
   (W::THERE
-   (wordfeats (W::CASE W::SUB) (W::agr (? ag W::3s W::3p)) (W::sing-lf-only +) (W::expletive +))
+   (wordfeats ;(W::CASE W::SUB)  ; OBJ in "Let there be light"
+	      (W::agr (? ag W::3s W::3p)) (W::sing-lf-only +) (W::expletive +))
    (SENSES
     ((LF ONT::EXPLETIVE)
      (non-hierarchy-lf t))

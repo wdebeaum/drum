@@ -14,7 +14,7 @@
     ((LF ONT::EXPLETIVE)
      (preference .98)
      (non-hierarchy-lf t)
-     (SYNTAX (W::CASE W::SUB) 
+     (SYNTAX ;(W::CASE W::SUB) ; OBJ in "Let it snow"
 	     (W::expletive +))
      )
     )

@@ -1014,7 +1014,7 @@
 	     (transform ?transform) (sem ?sem) (premod -)
 	     )))
      -adj-nonscalar-pred> 1
-     (head (ADJ1 (LF ?lf) (SUBCAT -) (VAR ?v) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap) (pertainym -)
+     (head (ADJ1 (LF ?lf) (SUBCAT -) (VAR ?v) (sem ?sem) (SORT PRED) (arg ?arg) (ARGUMENT-MAP ?argmap) (pertainym -)
 	    (transform ?transform) (constraint ?con) (comp-op ?dir)
 	    (atype ?atype) (comparative ?cmp) (lex ?lx) ; (lf (:* ?lftype ?lx))
 	    (sem ($ F::ABSTR-OBJ
@@ -1248,7 +1248,7 @@
      -adj-pred-subcat>
      (head (ADJ1 (LF ?lf) (SUBCAT2 -) (post-subcat -)(VAR ?v) ;;(comparative -)
 		(SUBCAT ?subcat) (SUBCAT-MAP ?reln) (SUBCAT (% ?xx (var ?argv) (gap ?gap)))
-		(ARGUMENT-MAP ?argmap) (prefix -)
+		(arg ?arg) (ARGUMENT-MAP ?argmap) (prefix -)
 		(SORT PRED)
 		(sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale) (F::intensity ?ints) (F::orientation ?orient)))
 		(transform ?transform)
@@ -1266,7 +1266,7 @@
 	     )
      -advbl-pre-adj1>
      (advbl (ATYPE PRE) (VAR ?advbv) (ARG ?v) ;;(SORT OPERATOR) 
-            (argument (% ADJP (sem ?sem)))
+            (argument (% ADJP (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale) (F::intensity ?ints) (F::orientation ?orient)))))
             (gap -)
       )
      (head (ADJ1 (LF ?lf) (SUBCAT2 -) (post-subcat -)(VAR ?v)  (atype ?atype);;(comparative -)
@@ -1482,6 +1482,7 @@
          (VAR ?v1) (gap -))
      (head (N1 (VAR ?v2) (relc -) (sem ?sem) (sem ($ (? x F::ABSTR-OBJ F::PHYS-OBJ))) ;;  F::SITUATION)))
 	    (RESTR ?r) (CLASS ?c) (SORT PRED) (name-mod -)
+	    (derived-from-name -)  ; the second n shouldn't be a name
 	    ;;(subj-map -)  ;; nominalized verbs have their own rules
 	    (subcat ?subcat)
 	    (post-subcat -)
@@ -2368,7 +2369,7 @@
 	((parenthetical (var ?cc) (arg ?arg) (role :parenthetical))
 	 -paren1> 1
 	 (punc (lex (? x W::START-SQUARE-PAREN W::START-PAREN w::punc-comma)))
-	 (head (Utt (LF (% W::SPEECHACT (constraint (& (content ?cc)))))))
+	 (head (Utt (LF (% W::SPEECHACT (constraint (& (content ?cc))))) (headcat (? !hc w::name))))  ; for names use appositive rules
 	 (punc (lex  (? y W::END-SQUARE-PAREN W::END-PAREN w::punc-comma))))
 
 	((parenthetical (var ?cc) (arg ?arg) (role :parenthetical))
