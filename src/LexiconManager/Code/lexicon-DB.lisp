@@ -677,7 +677,7 @@ intersection of an entry's tags and these tags is non-empty."
 				   ))
 			     (word-sense-definition-coercions entry))
 		     '-))
-         (feats1 `((w::LF ,(word-sense-definition-lf entry))
+	 (feats1 `((w::LF ,(word-sense-definition-lf entry))
 		  (w::SEM ,(make-type-spec (word-sense-definition-sem entry) :semvar '?sem :feature-list-sign '$))
 		  (w::transform ,(word-sense-definition-transform entry))
 		  (w::kr-type ,(word-sense-definition-kr-type entry))
@@ -693,8 +693,11 @@ intersection of an entry's tags and these tags is non-empty."
 		    feats1))
          (remaining-words (word-sense-definition-remaining-words entry))  ;; non-null for multi-word lex entries
          (name1 (if (null remaining-words)
-                  (if (eq name 'w::do) 'w::DO- name)   ;; we need to not use DO as the name  because of a printing bug in MCL for lists starting with DO
-                  (cons name remaining-words)))
+		    (if (eq name 'w::do) 'w::DO- name)   ;; we need to not use DO as the name  because of a printing bug in MCL for lists starting with DO
+		    (let ((x (word-sense-definition-lf entry)))
+		      (if (consp x)
+			  (third x)
+			  x))));;(cons name remaining-words)))
          )
     ;;  add default feature values if needed: 
     ;;     INPUT - the actual word
