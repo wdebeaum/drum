@@ -8,11 +8,11 @@
 #  MODULE - The name of this TRIPS module
 #  MAIN - The main file to run
 #  SRCS - The Ruby source files to install (including MAIN)
+# Optionally also:
+#  REQUIRES - The Ruby gems required by this TRIPS module
 #
 
-include $(CONFIGDIR)/version.mk
-include $(CONFIGDIR)/defs.mk
-include $(CONFIGDIR)/ruby/defs.mk
+include $(CONFIGDIR)/ruby/lib.mk
 
 WRAPPER = $(CONFIGDIR)/ruby/run-ruby-app.sh
 
@@ -33,8 +33,6 @@ $(PROG):: $(WRAPPER)
 install:: $(PROG)
 	$(MKINSTALLDIRS) $(bindir)
 	$(INSTALL_PROGRAM) $(PROG) $(bindir)
-	$(MKINSTALLDIRS) $(etcdir)/$(MODULE)
-	$(INSTALL_DATA) $(SRCS) $(etcdir)/$(MODULE)
 
 clean::
 	rm -f $(PROG)

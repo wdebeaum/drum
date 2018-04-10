@@ -2567,7 +2567,59 @@
     
     (append-conjuncts (conj1 (& (REFOBJECT ?v) (size ?card))) (conj2 ?restr) (new ?newr))
     )
-   
+
+   ;;  NP with SPECS that subcategorize for "of" PP's that are plural
+   ;; which of the cats is/are red?
+   ((NP (LF (% description (status WH) ;(status ont::indefinite-plural)
+	       (VAR *) (CLASS ?c) (CONSTRAINT ?newr)
+	       (sem ?sem)  (transform ?transform) 
+                ))
+     (case ?case) (agr (? agr2 3s 3p))
+     (SORT PRED)
+     (MASS count)
+     (VAR *) (WH Q) (wh-var *)) ; wh-var set to the new var ;; must move WH feature up by hand here as it is explicitly specified in a daughter.
+     -np-spec-of-def-plur-pp-which>
+    (SPEC (LF ?spec) (ARG ?v) (VAR ?specvar) (name-spec -) (POSS -);;myrosia 12/27/01 added mass restriction to spec
+     (WH Q) (wh-var ?whvar)
+     (RESTR ?restr)
+     ;(SUBCAT (% PP (Ptype ?ptp) (agr |3S|) (SEM ?sem)))
+     )
+    (head 
+     (PP  (VAR ?v) (mass count) (ptype w::of)
+	  (KIND -) (GAP -) (agr 3p)
+	  (LF (% DESCRIPTION (CLASS ?c) (sem ?sem) 
+		 (transform ?transform) (status (? xx ont::definite-plural ont::pro-set)))
+		  )))
+    
+    (append-conjuncts (conj1 (& (REFOBJECT ?v) (size ?card))) (conj2 ?restr) (new ?newr))
+    )
+
+   ;;  NP with SPECS that subcategorize for "of" PP's that are plural
+   ;; Of the cats that is/are red, which ate the mouse?
+   ((NP (LF (% description (status WH) ;(status ont::indefinite-plural)
+	       (VAR *) (CLASS ?c) (CONSTRAINT ?newr)
+	       (sem ?sem)  (transform ?transform) 
+                ))
+     (case ?case) (agr (? agr2 3s 3p))
+     (SORT PRED)
+     (MASS count)
+     (VAR *) (WH Q) (wh-var *)) ; wh-var set to the new var ;; must move WH feature up by hand here as it is explicitly specified in a daughter.
+     -np-spec-of-def-plur-pp-which-rev>
+    (head 
+     (PP  (VAR ?v) (mass count) (ptype w::of)
+	  (KIND -) (GAP -) (agr 3p)
+	  (LF (% DESCRIPTION (CLASS ?c) (sem ?sem) 
+		 (transform ?transform) (status (? xx ont::definite-plural ont::pro-set)))
+		  )))
+    (SPEC (LF ?spec) (ARG ?v) (VAR ?specvar) (name-spec -) (POSS -);;myrosia 12/27/01 added mass restriction to spec
+     (WH Q) (wh-var ?whvar)
+     (RESTR ?restr)
+     ;(SUBCAT (% PP (Ptype ?ptp) (agr |3S|) (SEM ?sem)))
+     )
+    
+    (append-conjuncts (conj1 (& (REFOBJECT ?v) (size ?card))) (conj2 ?restr) (new ?newr))
+    )
+
 
    ;;  CLASSIFIER Constructions
    ;;   a bunch of people, a set of numbers, a bunch of sand
