@@ -51,6 +51,8 @@ my %enju_to_penn_cats = (
 
 my ($enju_in, $enju_out, $enju_pid, $enju_offset);
 sub init_enju {
+  die "Enju not configured. Please install Enju and re-run the configure script. See the TextTagger README for details on how to install Enju."
+    if ($TextTagger::Config::ENJU eq '');
   $enju_pid = open2($enju_in, $enju_out, $TextTagger::Config::ENJU, qw(-genia -so));
   binmode $enju_in, ':utf8';
   binmode $enju_out, ':utf8';

@@ -1019,6 +1019,7 @@
 	   temp-symbol-table))
     (let* ((constit (car constit-tree))
 	   (lf (get-value constit 'w::lf))
+	   (lex (get-value constit 'W::lex))
 	   (sem (get-value constit 'w::sem))
 	   (input (get-value constit 'w::input))
 	   (notes (get-value constit 'w::notes))
@@ -1027,7 +1028,11 @@
 	(multiple-value-bind (new-lf pros)
 	    (remove-*pro*-from-lf lf)
 	  (add-to-temp-symbol-table var (if (constit-p new-lf) 
-					    (replace-sem-in-lf (add-feature-value new-lf 'w::input input)
+					    (replace-sem-in-lf
+					     (add-feature-value
+					      (add-feature-value new-lf 'w::input input)
+					      'w::lex
+					      lex)
 							 sem)
 					    new-lf))
 	  ;; if there were *PRO* objects found, add them too
