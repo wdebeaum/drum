@@ -741,6 +741,15 @@
              )
  )
 
+;;  wait, watch
+(define-type ONT::wait-watch
+    :wordnet-sense-keys ("wait%2:42:00" "wait%2:42:01" "watch%2:39:01")
+    :comment "action of being attentive so as to notice something"
+    :parent ont::intentionally-act
+    :sem (F::SITUATION (F::Cause F::Agentive))
+    :arguments ((:optional ont::neutral ((? o F::Phys-obj f::abstr-obj f::situation)))
+		(:optional ont::formal (f::situation))
+	     ))
 
 ;; avoid, escape, evade, get around
 (define-type ONT::avoiding
@@ -1067,7 +1076,7 @@
  )
 
 (define-type ONT::pause
-  :wordnet-sense-keys ("pause%2:42:00" "pause%2:32:01" "wait%2:42:00" "wait%2:42:01")
+  :wordnet-sense-keys ("pause%2:42:00" "pause%2:32:01")
   :parent ONT::inhibit-effect
  :arguments ((:OPTIONAL ONT::EXTENT (F::abstr-obj (F::scale ont::duration-scale)))
              ;;; wait for john

@@ -8,12 +8,20 @@
 ;   )
   (W::wait
    (SENSES
-    ((LF-PARENT ONT::PAUSE)
+    ((LF-PARENT ONT::WAIT-WATCH)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL AGENT-TIME-DURATION-TEMPL)
+     (TEMPL AGENT-TEMPL)
      (example "wait five minutes")
      )
-    )
+    ((lf-parent ont::wait-watch)
+     (example "He is waiting for the boat to arrive")
+     (TEMPL agent-action-templ)
+     )
+
+    ((lf-parent ont::wait-watch)
+     (example "He is waiting for the boat")
+     (TEMPL agent-neutral-xp-templ (xp (% W::PP (W::ptype w::for)))
+     )
    )
-))
+))))
 

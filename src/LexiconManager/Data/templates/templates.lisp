@@ -2018,10 +2018,16 @@
   (AGENT-ACTION-SUBJCONTROL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar) (w::expletive ?exp)) ONT::AGENT)
-    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) 
+    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to)))
 		       (:required (W::subj (% W::np (W::sem ?lsubjsem) 
 					      (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive ?exp))))) ONT::FORMAL)
     ))
+
+ (AGENT-ACTION-TEMPL
+   (ARGUMENTS
+    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar) (w::expletive ?exp)) ONT::AGENT)
+    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to) (W::for-to +))))
+		      ONT::FORMAL )))
   
       ;;;;; e.g., He/The computer needs to go
   (neutral-theme-SUBJCONTROL-TEMPL
@@ -2035,8 +2041,8 @@
    (ARGUMENTS
     (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar) (w::expletive ?exp)) ONT::experiencer)
     (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) 
-		       (:required(W::subj (% W::np (W::sem ?lsubjsem) 
-                    (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive ?exp))))) ont::formal)
+		       (:required (W::subj (% W::np (W::sem ?lsubjsem) 
+					      (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive ?exp))))) ont::formal)
     ))
 
 (affected-theme-SUBJCONTROL-TEMPL
@@ -2389,7 +2395,8 @@
     ))
     
   (wh-qtype-templ
-   (SYNTAX(W::WH W::q) (W::QTYPE W::wh) (W::mass ?m) (W::agr ?agr) (W::npagr ?a))
+   (SYNTAX (W::WH W::q) (W::QTYPE W::wh) (W::mass ?m) (W::agr ?agr) (W::npagr ?a)
+	   (W::QOF (% W::PP (W::PTYPE W::OF) (W::AGR ?agr1) (W::MASS ?m))))
    (ARGUMENTS
     ))
   
