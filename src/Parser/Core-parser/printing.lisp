@@ -3,7 +3,7 @@
 ;;;
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
-;;; Time-stamp: <Tue Apr 10 13:42:44 EDT 2018 james>
+;;; Time-stamp: <Thu Apr 12 11:01:41 EDT 2018 james>
 
 (in-package "PARSER")
 
@@ -1118,6 +1118,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
                                 (build-lf-term (cdr x) form))
                             objects))
          *additional-modifiers*))
+       
        (root-term (find-if #'(lambda (x) (eq (find-arg-in-act x :var) root)) terms))
        (result (list 'UTT
                      :type (car analysis)
@@ -1129,13 +1130,15 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 		     :end  (or (find-arg-in-act root-term :end) (get-max-position))
 		     :words words
                      ))
+       
        (noise (find-arg-in-act analysis :noise))
        (focus (find-arg-in-act analysis :focus)))
       ;; add additional information on noise, adverbials and focus
       (if noise 
         (setq result (append result (list :noise noise))))
       (if focus
-        (setq result (append result (list :wh-focus focus))))
+	  (setq result (append result (list :wh-focus focus))))
+      
       result
       )))
 
@@ -1864,7 +1867,8 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
   (let* ((lfs (mapcar #'(lambda (x) (find-arg-in-act x :LF)) terms))
 	 (type-map (mapcar  #'(lambda (x) (list (second x) (third x))) lfs)))
     (mapcar #'(lambda (term)
-		(replace-arg-in-act term :lf (refine-abstract-roles-in-lf (find-arg-in-act term :lf) type-map))) terms)))
+		(replace-arg-in-act term :lf (refine-abstract-roles-in-lf (find-arg-in-act term :lf) type-map)))
+	    terms)))
 
 (defun refine-abstract-roles-in-lf (lf type-maps)
   (let ((roles (cdddr lf)))
@@ -1932,6 +1936,8 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 				  (eq x old-role-name)) new-names)))
     (cond 
       ;; first case checks for relational roles that we can have multiple versions of
+      ((null new-names)
+       old-role-name)
       ((member (car really-new-names)
 		   '(:result :source :transient-result))
 	   (car really-new-names))
@@ -1941,7 +1947,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
       ;; otherwise, the first one is the answer
       (really-new-names 
        (car really-new-names))
-      ;; none left, retrn original name
+      ;; none left, return original name
       (t old-role-name))))
 
       					    
