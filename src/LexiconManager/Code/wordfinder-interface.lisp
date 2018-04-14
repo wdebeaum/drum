@@ -55,6 +55,16 @@
   
 (defvar *no-wf-senses-for-words-tagged-with-ont-types* nil)
 
+(defun filter-abstract-entries (entries)
+  "takes a list of ENTRYs built from WordNet and eliminates ONT::SITUAITOn, ONT::MODIFIER, ONT::PHYS-OBJECT and ONT::ABSTRACT-OBJECT
+     if there are other more specific types"
+  (let ((reduced-entries (remove-if #'entry-is-solely-abstract entries)))
+    (or reduced-entries entries)))
+
+(defun entry-is-solely-abstract (entry)
+  (let ((lfs (find-arg-in-act entry :LFS)))
+    (NOT (set-difference lfs '(ONT::MODIFIER ONT::SITUATION-ROOT ONT::PHYS-OBJECT ONT::ABSTRACT-OBJECT ONT::REFERENTIAL-SEM ONT::SPEECH-ACT ONT::ANY-TIME-OBJECT ONT::ANY-SEM ONT::PREDICATE)))))
+
 (defun get-unknown-word-def (w &key (senselimit *wf-sense-limit*) pos-list penntag ont-sense-tags trips-sense-list wn-sense-keys score)
  ;; (when (and (not *no-wf-senses-for-words-tagged-with-ont-types*) (null ont-sense-tags))
   (let* ((wf-string 
@@ -69,7 +79,7 @@
     ;; filter these if we are filtering by ont::type
     (when (and (found-wordp wf-entry) (not (null wf-entry)))
       ;; make a new TRIPS lex-entry for each lftype matched
-      (dolist (this-wf-entry (remove-if #'null (third wf-entry)))
+      (dolist (this-wf-entry (filter-abstract-entries (remove-if #'null (third wf-entry))))
 	(let ((lflist (get-wf-lfs this-wf-entry))
 	      (pos (get-wf-constit this-wf-entry))
 	      )
@@ -178,8 +188,8 @@
   (let (senses-to-replicate model-words)
     (case pos
       ((w::v w::n w::name) (setq senses-to-replicate 
-			 (if trips-sense-list (verb-senses-to-replicate w lftype pos trips-sense-list)
-			     (get-senses-for-words w (get-words-from-lf lftype) lftype pos))))
+				 (if trips-sense-list (verb-senses-to-replicate w lftype pos trips-sense-list)
+				     (get-senses-for-words w (get-words-from-lf lftype) lftype pos))))
       (otherwise  
        (setq model-words (get-words-from-lf lftype))
        (setq senses-to-replicate (get-senses-for-words w model-words lftype pos))))
@@ -450,7 +460,7 @@
 					(w::mass ,wmass)
 					(w::CASE (? cas w::SUB w::OBJ))
 					(w::agr ,wagr)
-					(w::sort w::pred)
+					;;(w::sort w::pred)
 					(w::subcat ?subcat)
 					))))
        
@@ -462,7 +472,8 @@
        ;; make untyped sem so it will match any features on the role restrictions
 ;       (setq sem `,(make-untyped-sem nil) )
        (setq res (create-entry-based-on-entries-of-the-same-type word wid lf lfform sem syntax pos trips-sense-list domain-info score))
-        )
+       (if (null res) (setq syntax (append syntax '(list w::sort w::pred))))
+       )
       (w::name
        (setq res (make-unknown-name-entry word score penn-tag lflist domain-info))
        )
@@ -532,6 +543,7 @@
 				  '((w::subcat-map ?submap)))))
        (when syntax-from-penn-tag (setq syntax (append syntax syntax-from-penn-tag)))
        (setq score (adjust-score-if-participle-adj lfform score trips-sense-list))
+       (setq res (create-entry-based-on-entries-of-the-same-type word wid lf lfform sem syntax pos trips-sense-list domain-info score))
        ))
       (w::adv
        (setq replica-entry (make-replica-entry word lf pos '(ont::modifier)))
@@ -543,7 +555,8 @@
 				    (w::sort w::pred)
 				    )))
        (when syntax-from-penn-tag (setq syntax (append syntax syntax-from-penn-tag)))
-       (setq res (make-lex-entry-from-replica-entry replica-entry word pos lf syntax nil))
+       (setq res (or (create-entry-based-on-entries-of-the-same-type word wid lf lfform sem syntax pos trips-sense-list domain-info score)
+		     (make-lex-entry-from-replica-entry replica-entry word pos lf syntax nil)))
        )
       (w::v
        (setq sem (get-lf-sem lf :no-defaults nil))
@@ -639,7 +652,16 @@
 	     (feats2val (cadr (assoc feat feats2))))
 	(if (or (member feat '(W::morph))  ;; some features are exempted
 		(null feats2val)
-		(equal feats2val val))
+		(equal feats2val val)
+		;; the remaining conditions allo for quick variable matching
+		(is-variable-name val)
+		(is-variable-name feats2val)
+		(and (consp val)
+		     (if (consp feats2val)
+			 (intersection (cddr val) (cddr feats2val))
+			 (member feats2val val)))
+		(and (consp feats2val)
+		     (member val feats2val)))
 	    (consistent-features (cdr feats1) feats2)
 	    ))
       T))

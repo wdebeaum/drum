@@ -930,7 +930,7 @@
      )
    
    ;; e.g., for the train to arrive
-   ((cp (ctype s-to) (var ?v) (subj ?subj) (gap ?g)
+   ((cp (ctype s-to) (for-to +) (var ?v) (subj ?subj) (gap ?g)
      (lf ?lf)
  ;;    (lex to) (headcat ?vinf) ;; non-aug-trips settings
      (lex ?hlex) (headcat ?hcat) ;; aug-trips

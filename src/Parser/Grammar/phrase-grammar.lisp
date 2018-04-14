@@ -2856,7 +2856,7 @@
     
     ;; e.g., basic quantification with no-cardinality quantifiers: all trucks, no luck, every person ...
     ((SPEC (ARG ?arg) (VAR *) (agr ?agr) (MASS ?m) (LF ?status) (Nobarespec ?nbs)  (comparative ?cmp)
-      (RESTR (& (QUAN ?s) (negation ?neg) )) (NoSimple ?ns) (npmod ?npm)
+      (RESTR (& (QUAN ?s) (negation ?neg) )) (NoSimple ?ns) (npmod ?npm) (STATUS ?status)
       (SUBCAT ?qof) (QCOMP ?Qcomp) (PRED ?s))
      -quan-simple-spec>
      (head (quan (CARDINALITY -) (SEM ?sem) (VAR ?v) (agr ?agr) (comparative ?cmp) (QOF ?qof) (QCOMP ?Qcomp)
@@ -2903,12 +2903,13 @@
 
     ;; cardinality quantifiers goes to SIZE rather than OP
     ;; TEST: some dogs
-    ((SPEC (ARG ?arg) (VAR *) (agr ?agr) (MASS  (? m count bare)) (LF ?status) (Nobarespec ?nbs) 
-          ;; (SUBCAT (% N1 (SEM ?subsem) (agr ?agr))) ;; The subcat isn't being used for the simple form yet - if we need it, we'll have to 
-                                                    ;;  modifier the ordinal/cardinal rules
-	   (subcat ?qof) (qcomp ?qcomp) (cardinality +)
-           (restr (& (size ?s)))
-	   (NoSimple ?ns) (npmod ?npm))
+    ((SPEC (ARG ?arg) (VAR *) (agr ?agr) (MASS  (? m count bare)) (LF ?status) (Nobarespec ?nbs)
+      (STATUS ?status)
+      ;; (SUBCAT (% N1 (SEM ?subsem) (agr ?agr))) ;; The subcat isn't being used for the simple form yet - if we need it, we'll have to 
+      ;;  modifier the ordinal/cardinal rules
+      (subcat ?qof) (qcomp ?qcomp) (cardinality +)
+      (restr (& (size ?s)))
+      (NoSimple ?ns) (npmod ?npm))
      -quan-card-def-simple-spec>
      (head (quan (CARDINALITY +) (SEM ?sem) (VAR ?v) (agr ?agr) (MASS (? m COUNT BARE)) (STATUS ?status)
 		 (Nobarespec ?nbs) (NoSimple ?ns) (npmod ?npm)
@@ -5298,7 +5299,7 @@
 
 	;; e.g., the first three, the three,
 	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?subcatsem) (case (? case SUB OBJ)) (N-N-MOD +) (AGR 3p) (Headless +)
-	    (lf (% description (status ont::definite-plural) (var ?v) (sort SET)
+	    (lf (% description (status ?status) (var ?v) (sort SET)
 		    (Class ont::ANY-SEM)
 		    (constraint ?con)
 		    (sem ?subcatsem) 
@@ -5306,7 +5307,7 @@
 	  (postadvbl +)
 	  )
 	 -NP-missing-head-plur> .98 
-	 (head (spec (poss -)  (restr ?restr) (mass count)
+	 (head (spec (poss -)  (restr ?restr) (mass count)(status ?status)
 		     (LF ?spec) (arg ?v) (agr 3p) (var ?v) ;;(NObareSpec -)       removed to handle "the three (arrived)"  jfa 5/10
 		     ))
 	 (CARDINALITY (var ?card) (AGR 3p))
@@ -5315,7 +5316,7 @@
 
 	;; e.g.,  many, a few, ...
 	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?subcatsem) (case (? case SUB OBJ)) (N-N-MOD +) (AGR 3p) 
-	    (lf (% description (status ont::indefinite-plural) (var ?v) (sort SET)
+	    (lf (% description (status ?status) (var ?v) (sort SET)
 		    (Class ont::ANY-SEM)
 		    (constraint ?restr)
 		    (sem ?subcatsem) 
@@ -5323,7 +5324,7 @@
 	  (postadvbl +) (headless +)
 	  )
 	 -NP-missing-head-plur2> .98 ;.96 ;; Myrosia lowered the preference to be lower than wh-setting1-role, with which this competes on "be" questions
-	 (head (spec (poss -) (restr ?restr) (mass count)
+	 (head (spec (poss -) (restr ?restr) (mass count) (status ?status)
 		     (LF ?spec) (arg ?v) (agr 3p) (var ?v) (nobarespec -)
 		     ))
 	 )
