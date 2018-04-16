@@ -2495,70 +2495,81 @@
 
 ;; size on a linear scale
 (define-type ont::linear-extent-val
- :parent ont::size-val 
- :comment "size on a linear scale"
+     :sem (F::abstr-obj (F::scale ont::linear-extent-scale ))
+     :parent ont::size-val 
+     :comment "size on a linear scale"
 )
 
 ;; size specific to non-vertical linear scale
 (define-type ont::non-vertical-val
  :parent ont::linear-extent-val 
  :comment "size specific to non-vertical linear scale"
-)
+ )
 
 (define-type ont::narrow-val
- :parent ont::non-vertical-val 
- :wordnet-sense-keys ("narrow%3:00:00" )
+    :sem (F::abstr-obj (F::scale ONT::width-scale))
+    :parent ont::non-vertical-val 
+    :wordnet-sense-keys ("narrow%3:00:00" )
 )
 
 (define-type ont::broad
- :parent ont::non-vertical-val 
- :wordnet-sense-keys ("broad%3:00:04" "wide%3:00:00" )
-)
+    :sem (F::abstr-obj (F::scale ONT::width-scale))
+    :parent ont::non-vertical-val 
+    :wordnet-sense-keys ("broad%3:00:04" "wide%3:00:00" )
+    )
 
 (define-type ont::thick-val
- :parent ont::non-vertical-val 
- :wordnet-sense-keys ("thick%3:00:01" )
-)
+    :sem (F::abstr-obj (F::scale ont::thickness-scale ))
+    :parent ont::non-vertical-val 
+    :wordnet-sense-keys ("thick%3:00:01" )
+    )
 
 (define-type ont::thin-val
- :parent ont::non-vertical-val 
- :wordnet-sense-keys ("thin%3:00:01" "flat%5:00:00:thin:01" )
-)
+    :sem (F::abstr-obj (F::scale ont::thinness-scale ))
+    :parent ont::non-vertical-val 
+    :wordnet-sense-keys ("thin%3:00:01" "flat%5:00:00:thin:01" )
+    )
 
 ;; size specific to vertical linear scale
 (define-type ont::vertical-val
- :parent ont::linear-extent-val 
- :comment "size specific to vertical linear scale"
+    :sem (F::abstr-obj (F::scale ont::vertical-scale ))
+    :parent ont::linear-extent-val 
+    :comment "size specific to vertical linear scale"
 )
 
 (define-type ont::tall-val
- :parent ont::vertical-val 
- :wordnet-sense-keys ("tall%3:00:00" )
+    :sem (F::abstr-obj (F::scale ont::height-scale ))
+    :parent ont::vertical-val 
+    :wordnet-sense-keys ("tall%3:00:00" )
 )
 
 (define-type ont::deep-val
- :parent ont::vertical-val 
- :wordnet-sense-keys ("deep%3:00:01" )
+    :sem (F::abstr-obj (F::scale ont::depth-scale ))
+    :parent ont::vertical-val 
+    :wordnet-sense-keys ("deep%3:00:01" )
 )
 
 (define-type ont::shallow-val
- :parent ont::vertical-val 
- :wordnet-sense-keys ("shallow%3:00:01" )
-)
+    :sem (F::abstr-obj (F::scale ont::depth-scale ))
+    :parent ont::vertical-val 
+    :wordnet-sense-keys ("shallow%3:00:01" )
+    )
 
 ;; short on a linear scale; does not indicate horizontality or verticality of the object
 (define-type ont::short-val
- :parent ont::linear-extent-val 
- :wordnet-sense-keys ("short%3:00:02" "short%3:00:01" )
- :comment "less in orientation on a linear scale -- does not indicate horizontality or verticality of the object"
-)
+    :sem (F::abstr-obj (F::scale ont::height-scale ))
+    :parent ont::linear-extent-val 
+    :wordnet-sense-keys ("short%3:00:02" "short%3:00:01" )
+    :comment "less in orientation on a linear scale -- does not indicate horizontality or verticality of the object"
+    )
 
 ;; long on a linear scale; does not indicate horizontality or verticality of the object
 (define-type ont::long
- :parent ont::linear-extent-val 
- :wordnet-sense-keys ("long%3:00:01" "long%3:00:02" )
- :comment "more in orientation on a linear scale -- does not indicate horizontality or verticality of the object"
-)
+    :sem (F::abstr-obj (F::scale ont::length-scale ))
+    :parent ont::linear-extent-val 
+    :wordnet-sense-keys ("long%3:00:01" "long%3:00:02" )
+    :comment "more in orientation on a linear scale -- does not indicate horizontality or verticality of the object"
+    )
 
 ;; size that deals with 2D area
 (define-type ont::two-dimensional-val
@@ -2573,16 +2584,18 @@
 )
 
 (define-type ont::fat-val
- :parent ont::relative-to-height-val 
- :wordnet-sense-keys ("plump%5:00:00:fat:01" "fat%3:00:01" )
- :comment "more in  horizontal orientation with respect to the height"
+    :sem (F::abstr-obj (F::scale ont::fat-scale ))
+    :parent ont::relative-to-height-val 
+    :wordnet-sense-keys ("plump%5:00:00:fat:01" "fat%3:00:01" )
+    :comment "more in  horizontal orientation with respect to the height"
 )
 
 (define-type ont::skinny-val
- :parent ont::relative-to-height-val 
- :wordnet-sense-keys ("slim%5:00:00:thin:03" "skinny%5:00:00:thin:03" "slender%5:00:00:thin:03" "thin%3:00:03")
- :comment "less in horizontal orientation with respect to the height"
-)
+    :sem (F::abstr-obj (F::scale ont::skinny-scale ))
+    :parent ont::relative-to-height-val 
+    :wordnet-sense-keys ("slim%5:00:00:thin:03" "skinny%5:00:00:thin:03" "slender%5:00:00:thin:03" "thin%3:00:03")
+    :comment "less in horizontal orientation with respect to the height"
+    )
 
 ;; large
 (define-type ont::large
