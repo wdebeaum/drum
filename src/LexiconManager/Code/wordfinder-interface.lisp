@@ -472,7 +472,7 @@
        ;; make untyped sem so it will match any features on the role restrictions
 ;       (setq sem `,(make-untyped-sem nil) )
        (setq res (create-entry-based-on-entries-of-the-same-type word wid lf lfform sem syntax pos trips-sense-list domain-info score))
-       (if (null res) (setq syntax (append syntax '(list w::sort w::pred))))
+       (if (null res) (setq syntax (append syntax (list '(w::sort w::pred)))))
        )
       (w::name
        (setq res (make-unknown-name-entry word score penn-tag lflist domain-info))
