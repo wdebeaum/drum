@@ -30,9 +30,9 @@
 
       (agent-formal-to-ing-templ
        (ARGUMENTS
-	(LSUBJ (% W::NP (var ?lsubjvar) (sem ?lsubjsem) (lex ?lsubjlex)) ONT::AGENT)
+	(LSUBJ (% W::NP (w::var ?lsubjvar) (w::sem ?lsubjsem) (w::lex ?lsubjlex) (w::expletive ?exp)) ONT::AGENT)
 	(LCOMP (:parameter xp (:default (% W::CP (W::ctype W::s-from-ing) (w::ptype w::to) (w::vform w::ing)))
-			   (:required (W::subj (% W::np (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var ?lsubjvar)))))
+			   (:required (W::subj (% W::np (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive ?exp)))))
 			   ONT::FORMAL)
 	))
 
@@ -71,10 +71,10 @@
 
       (AGENT-goal-optional-TEMPL
        (ARGUMENTS
-	(LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar)) ONT::AGENT)
+	(LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar) (w::expletive ?exp)) ONT::AGENT)
 	(LCOMP (:parameter xp (:default (% W::ADVBL))
 			  (:required (W::argument (% W::np (W::sem ?lsubjsem) 
-					     (W::lex ?lsubjlex) (W::var ?lsubjvar)))))
+					     (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive ?exp)))))
 	      ONT::RESULT optional)
 	))
 
@@ -912,37 +912,37 @@
       ;; e.g., the fact is he left.
       (propositional-equal-templ
        (ARGUMENTS
-      	(LSUBJ (% W::NP (W::agr ?agr) (sem ?sem) (w::gerund -) (w::subcat-map ont::formal)) ONT::neutral)
+      	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) (w::subcat-map ont::formal)) ONT::neutral)
 	(LOBJ (% W::CP (w::ctype w::s-that)) ONT::neutral1)
 	))
 
       (neutral-neutral-equal-templ
        (ARGUMENTS
-      	(LSUBJ (% W::NP (W::agr ?agr) (sem ?sem) (w::gerund -)) ONT::neutral)
-	(LOBJ (% W::NP (W::agr ?agr) (sem ?sem) (w::gerund -)) ONT::neutral1)
+      	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -)) ONT::neutral)
+	(LOBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -)) ONT::neutral1)
 	))
 
       (neutral-PRED-xp-TEMPL
        (ARGUMENTS
-	(LSUBJ (% W::NP (W::var ?subjvar) (W::sem ?lsubjsem) (W::lex ?lsubjlex) ;(w::expletive -)
+	(LSUBJ (% W::NP (W::var ?lsubjvar) (W::sem ?lsubjsem) (W::lex ?lsubjlex) (w::expletive -)
 		  ) ONT::neutral)
     ;;;;;(argument ?lsubj)
     ;;;;; the arg of the pred will be the subject of the verb
 	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar))) (:required (W::filled -)
 					;(W::argument ?lsubj)
-					 (W::argument (% W::np (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var ?lsubjvar) ;(w::expletive -) ; do I need to specify a -?
+					 (W::argument (% W::np (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive -)
 							 ))
-							 (w::arg ?subjvar) (W::gap ?gap))) ONT::FORMAL)
+					 (w::arg ?subjvar) (W::gap ?gap))) ONT::FORMAL)
 	))
 
        (experiencer-PRED-xp-TEMPL
        (ARGUMENTS
-	(LSUBJ (% W::NP (W::var ?subjvar) (W::sem ?lsubjsem) (W::lex ?lsubjlex)) ONT::experiencer)
+	(LSUBJ (% W::NP (W::var ?lsubjvar) (W::sem ?lsubjsem) (W::lex ?lsubjlex) (w::expletive -)) ONT::experiencer)
     ;;;;;(argument ?lsubj)
     ;;;;; the arg of the pred will be the subject of the verb
-	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar))) (:required (W::filled -)
+	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?lsubjvar))) (:required (W::filled -)
 					;(W::argument ?lsubj)
-					 (W::argument (% W::np (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var ?lsubjvar)))
+					 (W::argument (% W::np (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive -)))
 										(W::gap ?gap))) ONT::FORMAL)
 	))
 
@@ -957,12 +957,12 @@
 
       (agent-PRED-TEMPL
        (ARGUMENTS
-	(LSUBJ (% W::NP (W::var ?subjvar) (W::lex ?lsubjlex)) ONT::agent)
+	(LSUBJ (% W::NP (W::var ?lsubjvar) (W::lex ?lsubjlex) (W::sem ?lsubjsem) (w::expletive -)) ONT::agent)
     ;;;;; the arg of the pred will be the subject of the verb
-	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar))) 
+	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?lsubjvar))) 
 			  (:required (W::filled -) ;;(w::argument ?lsubj)
 				     (W::argument (% W::np (W::sem ?lsubjsem) (W::lex ?lsubjlex)
-						     (W::var ?subjvar))) 
+						     (W::var ?lsubjvar) (w::expletive -))) 
 				     (W::gap ?gap))) ONT::RESULT)
 	))
       
@@ -1167,7 +1167,7 @@
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
 	(LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar) (w::expletive ?exp)) ONT::NOROLE)
-	(LCOMP (:parameter xp (:default (% W::cp)) ;;(W::ctype W::s-to)))
+	(LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to)))
 			   (:required (W::subj (% W::np (W::sem ?dobjsem)
 						  (W::lex ?dobjlex)
 						  (W::var ?dobjvar) (w::expletive ?exp)))))
@@ -1234,19 +1234,19 @@
    (AGENT-neutral-complex-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::AGENT)
-	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::norole)
+	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar) (W::sem ?dobjsem) (w::expletive ?exp)) ONT::norole)
     ;;;;; the arg of the pred will be the object of the verb
 	(LCOMP (:parameter xp (:default (% W::PRED (W::filled -) (W::gap ?gap) (W::argument (% W::np (W::sem ?dobjsem) (W::lex ?dobjlex) 
-											      (W::var ?dobjvar)))))) ont::formal)
+											      (W::var ?dobjvar) (w::expletive ?exp)))))) ont::formal)
 	))
 
     (experiencer-neutral-complex-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::experiencer)
-	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::norole)
+	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar) (W::sem ?dobjsem) (w::expletive ?exp)) ONT::norole)
     ;;;;; the arg of the pred will be the object of the verb
 	(LCOMP (:parameter xp (:default (% W::PRED (W::filled -) (W::gap ?gap) (W::argument (% W::np (W::sem ?dobjsem) (W::lex ?dobjlex) 
-											      (W::var ?dobjvar)))))) ont::formal)
+											      (W::var ?dobjvar) (w::expletive ?exp)))))) ont::formal)
 	))
 
       (AGENT-affected-OBJCONTROL-PRED-TEMPL
@@ -2271,7 +2271,7 @@
     (LCOMP (:parameter xp2 (:default(% W::NP))) ont::formal)
     ))
 
-
+#|
    (agent-neutral-adj-predicate-optional-templ		
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::agent)
@@ -2285,6 +2285,7 @@
     (LOBJ (:parameter xp (:default (% W::NP))) ONT::neutral)
     (LCOMP (:parameter xp2 (:default(% W::ADJP (w::set-modifier -)))) ont::formal)
     ))
+|#
 
 (neutral-neutral-adj-predicate-templ		
    (ARGUMENTS
@@ -2442,7 +2443,7 @@
     ))
 
   (quan-than-comp  ;; e.g., more than five, more than that
-   (SYNTAX (W::QCOMP (% W::PP (W::PTYPE W::THAN) (W::GAP -)))
+   (SYNTAX (W::QCOMP (% W::PP (W::PTYPE W::THAN) (W::GAP )))
 			;;(W::SEM ($ F::ABSTR-OBJ (F::INFORMATION F::DATA)))))
   	   (W::QOF (% W::PP (W::PTYPE W::OF) (W::AGR ?agr1) (W::MASS ?m))) 
    ))
@@ -2602,7 +2603,7 @@
     (SYNTAX (W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
     (ARGUMENTS
      (ARGUMENT (% W::S (w::subjvar ?subjvar)) ONT::FIGURE)
-     (SUBCAT (:parameter xp (:default (% W::VP  (W::vform W::ing) (gap ?gap) (w::subjvar ?subjvar)))) ont::GROUND
+     (SUBCAT (:parameter xp (:default (% W::VP  (W::vform W::ing) (w::gap ?gap) (w::subjvar ?subjvar)))) ont::GROUND
 	     )))
 
    (Binary-constraint-S-pp-of-templ
@@ -2743,7 +2744,7 @@
 	   )
    (ARGUMENTS
     (ARGUMENT (% (? W::x W::S W::NP)) ONT::FIGURE)
-    (SUBCAT (% W::S (W::stype W::decl) (GAP ?GAP)) ONT::GROUND)
+    (SUBCAT (% W::S (W::stype W::decl) (w::GAP ?GAP)) ONT::GROUND)
     ))
 
 (binary-constraint-S-decl-templ-post-only
@@ -3304,10 +3305,10 @@
    (adj-to-inf-templ
    (SYNTAX (W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) (W::ALLOW-DELETED-COMP -))
    (ARGUMENTS    
-    (ARGUMENT (% W::NP  (W::sem ?dobjsem) (W::lex ?dobjlex) (W::var ?dobjvar)) NOROLE)
+    (ARGUMENT (% W::NP  (W::sem ?dobjsem) (W::lex ?dobjlex) (W::var ?dobjvar) (w::expletive ?exp)) NOROLE)
 ;    (subcat (:parameter xp (:default (% W::CP (W::ctype W::s-that)))) ONT::Content)
     (subcat (:parameter xp (:default (% W::CP (W::ctype W::s-to)))
-			(:required (W::dobj (% W::np (W::sem ?dobjsem) (W::lex ?dobjlex) (W::var ?dobjvar)))))
+			(:required (W::dobj (% W::np (W::sem ?dobjsem) (W::lex ?dobjlex) (W::var ?dobjvar) (w::expletive ?exp)))))
 	    ONT::FIGURE))
     )
 

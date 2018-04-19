@@ -537,9 +537,12 @@ intersection of an entry's tags and these tags is non-empty."
 	 (nom-def (if word (cons word (list 
 				       (cons 'senses (if objpreps
 							 (mapcar #'(lambda (x) (cons (list 'syntax '(w::sort w::pred)
-											   (list 'w::nomobjpreps (list '? 'objp objpreps))
-											   (list 'W::nomsubjpreps (list '? 'subjp subjpreps)
-												 ))
+											   (list 'w::nomobjpreps (when (not (member objpreps '(- w::-)))
+														   (list '? 'objp objpreps)))
+											   (list 'W::nomsubjpreps (when (not (member subjpreps '(- w::-)))
+														    (list '? 'subjp subjpreps)))
+																     
+											   )
 										     x))
 								 nom-senses)
 							 nom-senses))))))

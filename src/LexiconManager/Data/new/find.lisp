@@ -10,21 +10,40 @@
     ;;;; swier -- any of these s-that verbs can take a s[wh] complement in English...is that being captured here?
     ((meta-data :origin trips :entry-date 20060414 :change-date 20090513 :comments nil :vn ("discover-82-1-1"))
      (EXAMPLE "I found out that he can do it")
-     (LF-PARENT ONT::come-to-understand)
-     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-that)))))
+     ;(LF-PARENT ONT::come-to-understand)
+     (LF-PARENT ONT::determine)
+     ;(TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-that)))))
+     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-finite)))))
      )
+
+    ((EXAMPLE "I found out how to do it")
+     ;(LF-PARENT ONT::come-to-understand)
+     (LF-PARENT ONT::determine)
+     ;(TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-that)))))
+     (TEMPL agent-theme-xp-templ (xp (% W::NP (W::sort W::wh-desc))))
+     )    
+    
     ((meta-data :origin trips :entry-date 20060414 :change-date 20090513 :comments nil :vn ("discover-82-1-1"))
      (EXAMPLE "I'll find out if he can do it")
      (syntax (w::exclude-passive +))
-     (LF-PARENT ONT::come-to-understand)
+     ;(LF-PARENT ONT::come-to-understand)
+     (LF-PARENT ONT::determine)
      (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-if)))))
      )
+
+    (
+;     (LF-PARENT ONT::come-to-understand)
+     (LF-PARENT ONT::determine)
+     (TEMPL agent-neutral-xp-templ (xp (% W::NP (W::sort (? !s W::wh-desc))))) ; too general: this also allows "I found out the key"
+     )
     
+    #|
     ((EXAMPLE "She found out")
      (LF-PARENT ONT::come-to-understand)
      (TEMPL agent-templ)
      (preference .97) 
      )
+    |#
     )
    )
 ))
@@ -39,7 +58,8 @@
 ;     (LF-PARENT ONT::believe)
      (LF-PARENT ONT::come-to-understand)
      (example "I find him difficult")
-     (TEMPL agent-neutral-adj-predicate-templ) 
+     ;(TEMPL agent-neutral-adj-predicate-templ) 
+     (TEMPL AGENT-neutral-complex-TEMPL)
      (PREFERENCE 0.96)
      )
     ((meta-data :origin trips :entry-date 20060414 :change-date 20090513 :comments nil :vn ("discover-82-1-1"))
@@ -48,14 +68,31 @@
      (TEMPL agent-theme-objcontrol-templ)
      )
     ((EXAMPLE "I found that he can do it")
-     (LF-PARENT ONT::come-to-understand)
-     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-that)))))
+     ;(LF-PARENT ONT::come-to-understand)
+     (LF-PARENT ONT::determine)
+     ;(TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-that)))))
+     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-finite)))))
      )
-   
+
+    ((EXAMPLE "I found how to do it")
+     ;(LF-PARENT ONT::come-to-understand)
+     (LF-PARENT ONT::determine)
+     ;(TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-that)))))
+     (TEMPL agent-theme-xp-templ (xp (% W::NP (W::sort W::wh-desc))))
+     )    
+
+    ((meta-data :origin trips :entry-date 20060414 :change-date 20090513 :comments nil :vn ("discover-82-1-1"))
+     (EXAMPLE "I'll find if he can do it")
+     (syntax (w::exclude-passive +))
+     ;(LF-PARENT ONT::come-to-understand)
+     (LF-PARENT ONT::determine)
+     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-if)))))
+     )
+    
     (
 ;     (LF-PARENT ONT::come-to-understand)
      (LF-PARENT ONT::determine)
-     (TEMPL agent-neutral-xp-templ)
+     (TEMPL agent-neutral-xp-templ (xp (% W::NP (W::sort (? !s W::wh-desc)))))
      )
 #|    
     ((EXAMPLE "Find a clear lane")

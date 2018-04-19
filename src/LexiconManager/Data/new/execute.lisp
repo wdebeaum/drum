@@ -9,7 +9,8 @@
    (SENSES
     ((LF-PARENT ONT::EXECUTE)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-affected-xp-templ)
+     ;(TEMPL agent-affected-xp-templ)
+     (TEMPL agent-neutral-xp-templ)
      (example "execute the action/plan")
      )
     )

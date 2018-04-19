@@ -350,7 +350,7 @@
        ;;(DO-KB-reference arg)
        ;; Now we do the series of extractions based on the defined extraction sequence 
        
-	 (setf (utt-record-status rec) 'success)
+	 ;(setf (utt-record-status rec) 'success)
 	 ;;(build-and-send-extractions rec) ;; all the extractions are in the utt record 
 	 (when *show-lf-graphs*  ;; we are showing the graph for demonstration/debugging
 	   (send-lf-graph (make-lf-list rec)  (utt-record-uttnum rec) (utt-record-input rec))))

@@ -43,11 +43,13 @@
      (TEMPL agent-affected-nogerund-TEMPL)
      (EXAMPLE "He/The storm stopped the fair/the truck")
      )
+    #|
     ((LF-PARENT ONT::STOP)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL affected-TEMPL)
      (EXAMPLE "The rioting stopped")
      )
+    |#
      ((meta-data :origin wordnet-3.0 :entry-date 20090528 :change-date nil :comments nil)
      (LF-PARENT ONT::stop)
      (TEMPL AGENT-EFFECT-AFFECTED-OBJCONTROL-TEMPL (xp (% w::cp (w::ctype w::s-from-ing) (w::ptype w::from))))

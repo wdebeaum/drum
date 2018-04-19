@@ -55,8 +55,8 @@
     (if nomobjpreps (setq senses (mapcar #'(lambda (sensespec)
 					     ;; FIXME? this gets the old syntax entry from the sense, but does nothing with it --wdebeaum
 					     (let ((synt (get-arg-value-list 'syntax sensespec)))
-					       (append sensespec (list (list 'syntax (list 'w::nomobjpreps (list* '? 'objp nomobjpreps))
-									     (list 'w::nomsubjpreps (list* '? 'subjp nomsubjpreps)))))))
+					       (append sensespec (list (list 'syntax (list 'w::nomobjpreps (when (not (eq nomobjpreps '-)) (list* '? 'objp nomobjpreps)))
+									     (list 'w::nomsubjpreps (when (not (eq nomsubjpreps '-)) (list* '? 'subjp nomsubjpreps))))))))
 					 senses)))
     ;;(format t "~%UPDATED senses = ~S" SENSES)
     (multiple-value-bind
