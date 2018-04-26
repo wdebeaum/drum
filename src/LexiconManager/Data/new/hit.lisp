@@ -52,6 +52,7 @@
      (TEMPL agent-affected-XP-TEMPL)
      (meta-data :origin monroe :entry-date 20031216)
      )
+    #|
     (
 ;     (LF-PARENT ONT::type)
      (lf-parent ont::author-write-burn-print_reprint_type_retype_mistype)
@@ -60,6 +61,7 @@
      (meta-data :origin plot :entry-date 20080411 :change-date nil :comments nil)
      (TEMPL agent-affected-XP-TEMPL)
      )
+    |#
     ((LF-PARENT ONT::hitting)
      (example "2 trucks hit")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))

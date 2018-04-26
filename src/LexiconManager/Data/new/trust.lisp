@@ -6,7 +6,7 @@
  :words (
    (W::trust
    (SENSES
-    ((LF-PARENT ONT::assurance-scale)
+    ((LF-PARENT ONT::confidence-scale)
       (meta-data :origin task-learning :entry-date 20080206 :change-date nil :wn ("confidence%1:12:00") :comments nil)
      )
     )

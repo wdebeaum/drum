@@ -1292,7 +1292,8 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 
 (defun build-spec (status)
   "Build the right SPEC structure based on the status feature"
-  (case status 
+  (case status
+    ;;; the W:: cases are obsolete.  Use ONT:: further below.
     ((w::definite w::name w::gname) 'ont::the) 
     (w::indefinite 'ont::A)
     ((w::indefinite-plural w::number) 'ont::indef-set)
@@ -1321,6 +1322,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
     (ONT::SM 'ont::SM)
     (ONT::definite-plural 'ont::the-set)
     ((ONT::wh ONT::what ONT::which ONT::whose ONT::*wh-term*) 'ont::wh-term) 
+    (ONT::WH-PLURAL 'ONT::WH-term-SET)
     (ONT::wh-quantity 'ont::wh-quantity)
     (ONT::universal 'ont::all-the)
     (ONT::value 'ont::value)

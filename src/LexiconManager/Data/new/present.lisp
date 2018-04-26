@@ -19,7 +19,7 @@
  :words (
   (W::present
    (SENSES
-    ((LF-PARENT ONT::visual-display)
+    ((LF-PARENT ONT::show)
      (example "who is going to present the poster (to them)")
      (TEMPL agent-affected-xp-templ)
      (meta-data :origin calo-ontology :entry-date 20060712 :change-date 20090506 :comments caloy3)

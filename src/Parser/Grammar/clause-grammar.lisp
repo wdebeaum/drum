@@ -1767,7 +1767,7 @@
    ;; test: the dog was given (me)
    ((v (vform passive) (passive +)
      (subj ?!dobj) (subj-map ?dobj-map) 
-     (dobj (% -)) (agent-map ?subj-map) (agent-sem ?subjsem)
+     (dobj (% -)) (dobj-map -) (agent-map ?subj-map) (agent-sem ?subjsem)
      (iobj ?iobj) (iobj-map ?iobj-map)
      (comp3 ?comp3) (part ?part) (comp3-map ?comp-map)
 ;     (prefix ?prefix)
@@ -2228,7 +2228,7 @@
    ;; test: ; is the train late?
    ;;       is there a train?
    ((s (stype ynq) (main +) (aux -) (gap ?gap)
-     (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar) (agr ?subjagr)))
+     (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar) (agr ?subjagr) (mass ?m)))
      (sort pred) 
      
      (var ?v) ;; propagate up explicitly because not a head feature	   
@@ -2269,17 +2269,17 @@
 	   ;; no uniform & unique lf's for main verb be uses, so have to match the lex
 	   ;; unless we can match the lf-form be
 	   (lex (? lx am are is was were ^s))
-	   (subj ?subj) (subj (% ?s1 (var ?subjvar) (sem ?subjsem) (agr ?subjagr) (lex ?subjlex) (gap -))) ;; note double matching required
+	   (subj ?subj) (subj (% ?s1 (var ?subjvar) (sem ?subjsem) (agr ?subjagr) (lex ?subjlex) (gap -) (mass ?m))) ;; note double matching required
 	   (iobj (% -))
 	   (part (% -));; (part ?part) 
-	   (dobj ?dobj)	(dobj (% ?s3 (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap)))
+	   (dobj ?dobj)	(dobj (% ?s3 (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (mass ?m2)))
 	   (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem)))
 	    
 	   )
      
      )
     ;;?subj
-    (np (var ?subjvar) (agr ?subjagr) (case (? npcase sub -)) (sem ?subjsem) (wh -) (sort (? !sort wh-desc)) (gap -) (lex ?subjlex) )  ;; lots of restrictions on this np to eliminate sentences like "is where the people"
+    (np (var ?subjvar) (agr ?subjagr) (case (? npcase sub -)) (sem ?subjsem) (wh -) (sort (? !sort wh-desc)) (gap -) (lex ?subjlex) (mass ?m))  ;; lots of restrictions on this np to eliminate sentences like "is where the people"
     ?dobj
     ?comp
     (add-to-conjunct (val (tense (? vf past pres))) (old ?tma) (new ?newtma))

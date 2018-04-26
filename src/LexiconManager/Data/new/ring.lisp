@@ -10,6 +10,16 @@
      (LF-PARENT ONT::surround)
      (TEMPL neutral-neutral-xp-templ) ; like cover,surround
      )
+    ((meta-data :origin cause-result-relations :entry-date 20091216 :change-date nil :comments wf-missing-mappings)
+     (LF-PARENT ONT::make-sound)
+     (example "the bell rang")
+     (TEMPL agent-templ) ;; agent (bell) emits a sound        
+     )
+    ((meta-data :origin cause-result-relations :entry-date 20091216 :change-date nil :comments wf-missing-mappings)
+     (LF-PARENT ONT::play)
+     (example "Joe rang the bell")
+     (TEMPL agent-affected-xp-templ)
+     )     
     )
    )
 ))

@@ -4,7 +4,7 @@
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
-  (W::spiciness
+  (W::feebleness
    (SENSES
     ((LF-PARENT ONT::feebleness-scale)
      (EXAMPLE "feebleness of his age")

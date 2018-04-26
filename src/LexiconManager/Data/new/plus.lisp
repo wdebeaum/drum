@@ -19,3 +19,11 @@
    )
 ))
 
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :words (
+  (W::PLUS
+   (SENSES
+    ((LF-PARENT ONT::favorable-condition) 
+     (TEMPL COUNT-PRED-TEMPL)
+     )))
+))

@@ -17,7 +17,7 @@
 (define-words :pos W::v 
  :words (
    (W::signal
-    (wordfeats (W::morph (:forms (-vb) :past w::signaled :ing w::signaling :nomsubjpreps (w::by w::of) :nomobjpreps (w::nil))))
+    (wordfeats (W::morph (:forms (-vb) :past w::signaled :ing w::signaling :nomsubjpreps (w::by w::of) :nomobjpreps -)))
 ;    (wordfeats (W::morph (:forms (-vb) :nom w::signaling :nomsubjpreps (w::by w::of) )))
     (SENSES
      ((LF-PARENT ONT::nonverbal-say)

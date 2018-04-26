@@ -23,7 +23,7 @@
  :words (
  (W::host
    (SENSES
-    ((LF-PARENT ONT::host)
+    ((LF-PARENT ONT::managing-resources)
      (example "host an event")
      (meta-data :origin plow :entry-date 20060712 :change-date nil :comments nil)
      )

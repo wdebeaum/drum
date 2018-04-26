@@ -6,7 +6,7 @@
  :words (
   (w::breather
   (senses
-	   ((LF-PARENT ONT::event)
+	   ((LF-PARENT ONT::time-interval)
 	    (TEMPL COUNT-PRED-TEMPL)
 	    (meta-data :origin cardiac :entry-date 20090129 :change-date nil :comments nil)
 	    )

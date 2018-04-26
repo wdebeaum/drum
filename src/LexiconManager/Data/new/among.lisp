@@ -16,3 +16,13 @@
    )
 ))
 
+(define-words :pos W::PREP :boost-word t :templ NO-FEATURES-TEMPL
+ :tags (:base500)
+ :words (
+  (W::among
+   (SENSES
+    ((LF (W::among))
+     (non-hierarchy-lf t))
+    )
+   )
+))

@@ -13,7 +13,8 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL agent-NEUTRAL-optional-TEMPL)
      )
-    ((lf-parent  ont::manage) ;; 20120521 GUM change new parent 
+    ((lf-parent  ont::taking-care-of)
+     ;(lf-parent  ont::manage) ;; 20120521 GUM change new parent 
      (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
      (example "he is watching his weight")
      (TEMPL agent-affected-xp-templ)

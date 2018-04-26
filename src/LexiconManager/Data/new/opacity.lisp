@@ -7,7 +7,7 @@
   (W::opacity
    (SENSES
     ((meta-data :origin task-learning :entry-date 20050817 :change-date nil :wn ("opacity%1:07:00") :comments nil)
-     (LF-PARENT ONT::NON-MEASURE-ORDERED-DOMAIN)
+     (LF-PARENT ONT::opacity-scale)
      (TEMPL OTHER-RELN-TEMPL)
      (example "change the object's opacity")
      )

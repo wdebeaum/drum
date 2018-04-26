@@ -14,6 +14,9 @@
    )
 ))
 
+#|
+;;; COMMENTED OUT. SHOULD BE TREATED COMPOSITIONALLY!
+
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
   ((W::STRETCHER W::BOUND)
@@ -23,4 +26,5 @@
     )
    )
 ))
+|#
 

@@ -7,7 +7,7 @@
  :words (
  (W::govern
    (SENSES
-    ((lf-parent ont::managing)
+    ((lf-parent ont::governing);ont::managing
      (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
      (example "the device governs the flow of oxygen")
      (TEMPL agent-affected-xp-templ)

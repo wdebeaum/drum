@@ -13,14 +13,14 @@
      (preference .98) ;; prefer ont::subduing 
      )
     (;(LF-PARENT ont::wait)
-     (LF-PARENT ONT::subduing)
+     (LF-PARENT ONT::evoke-calm)
      (example "relax")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL affected-TEMPL)
      ;(preference .96) ;; prefer transitive
      (meta-data :origin plow :entry-date 20050922 :change-date nil :comments nil)
      )
-    ((LF-PARENT ont::subduing)
+    ((LF-PARENT ont::evoke-calm)
      (example "a massage will relax him")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL agent-affected-xp-TEMPL)

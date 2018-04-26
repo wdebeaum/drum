@@ -31,7 +31,8 @@
      )
     
     (;;(LF-PARENT ONT::managing)
-     (lf-parent  ont::manage) ;; 20120521 GUM change new parent 
+     ; (lf-parent  ont::manage) ;; 20120521 GUM change new parent 
+     (lf-parent  ont::governing)
      (example "the piston runs the drive shaft")
      (templ agent-affected-xp-templ)
      (meta-data :origin LbR :entry-date 20080922 :change-date nil :comments nil)

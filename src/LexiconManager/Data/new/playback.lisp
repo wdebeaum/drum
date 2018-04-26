@@ -6,7 +6,7 @@
  :words (
   (W::playback
    (SENSES
-    ((LF-PARENT ONT::event)
+    ((LF-PARENT ONT::info-medium)
      (EXAMPLE "Choose a playback quality")
      (meta-data :origin task-learning :entry-date 20050819 :change-date nil :wn ("playback%1:04:00") :comments nil)
      )

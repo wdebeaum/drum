@@ -127,7 +127,8 @@
    (wordfeats (W::morph (:forms (-vb) :past W::took :pastpart W::taken)))
    (SENSES
     (;;(LF-PARENT ONT::managing)
-     (lf-parent  ont::manage) ;; 20120521 GUM change new parent 
+     ; (lf-parent  ont::manage) ;; 20120521 GUM change new parent 
+     (lf-parent ont::taking-care-of)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (example "he took care of the problem")
      (TEMPL agent-AFFECTED-XP-TEMPL (xp (% W::PP (W::ptype W::of))))

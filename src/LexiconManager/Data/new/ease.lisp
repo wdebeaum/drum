@@ -8,11 +8,13 @@
   (W::ease
    (SENSES
     ((meta-data :origin "wordnet-3.0" :entry-date 20090512 :change-date nil :comments nil)
-     (LF-PARENT ONT::subduing)
+     (LF-PARENT ONT::evoke-calm)
+     (example "The news eased my conscience")
      (TEMPL agent-affected-xp-templ)
      )
     ((meta-data :origin "wordnet-3.0" :entry-date 20090515 :change-date nil :comments nil)
      (LF-PARENT ONT::evoke-comfort)
+     (example "Ease the pain in your legs")
      (TEMPL agent-affected-xp-templ)
      )
     )

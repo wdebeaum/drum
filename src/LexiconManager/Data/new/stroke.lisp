@@ -8,8 +8,9 @@
  (W::stroke
    (SENSES
     ((meta-data :origin LbR :entry-date 20080922 :change-date nil :comments nil)
-     (LF-PARENT ONT::EVENT)
-     (example "heat stroke" "piston stroke")
+     (LF-PARENT ONT::located-EVENT)
+     (example "key stroke")
+     ;(example "heat stroke" "piston stroke")
      )
     )
    )

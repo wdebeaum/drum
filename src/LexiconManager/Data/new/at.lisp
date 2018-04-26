@@ -4,10 +4,11 @@
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
-  ;; negative polarity
+  ;; primarily negative polarity
+  ;; positive polarity: "you can go anywhere at all", "yes anyone at all can come"
   ((W::at w::all)
    (SENSES
-   ((LF-PARENT ONT::discrete-property-val)
+   ((LF-PARENT ONT::least-extent)
     (templ postpositive-adj-templ)
      (meta-data :origin cardiac :entry-date 20090120 :change-date nil :comments LM-vocab)
      (example "none at all" "no plan at all")

@@ -90,7 +90,7 @@
      )
     
     (
-;     (LF-PARENT ONT::come-to-understand)
+
      (LF-PARENT ONT::determine)
      (TEMPL agent-neutral-xp-templ (xp (% W::NP (W::sort (? !s W::wh-desc)))))
      )
@@ -104,4 +104,3 @@
     )
    )
 ))
-

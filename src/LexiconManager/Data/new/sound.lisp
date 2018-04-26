@@ -11,10 +11,15 @@
     ((meta-data :origin text-processing :entry-date 20091216 :change-date nil :comments wf-missing-mappings)
      (LF-PARENT ONT::make-sound)
      (example "the alarm sounded")
-     (TEMPL affected-templ)
+     (TEMPL agent-templ) ;; agent emits a sound
      )
+;    ((meta-data :origin cause-result-relations :entry-date 20180411 :change-date nil)
+;     (LF-PARENT ONT::make-sound)
+;     (example "the gun sounds/goes 'bang'")
+;     (TEMPL agent-neutral-templ) ;; agent emits a sound 
+;     )
     ((meta-data :origin text-processing :entry-date 20091216 :change-date nil :comments wf-missing-mappings)
-     (LF-PARENT ONT::make-sound)
+     (LF-PARENT ONT::play)
      (example "he sounded the alarm")
      (TEMPL agent-affected-xp-templ)
      )

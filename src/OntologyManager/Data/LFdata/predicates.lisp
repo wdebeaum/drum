@@ -104,6 +104,12 @@
  :parent ONT::DEGREE-MODIFIER
  )
 
+;; at all, whatsoever
+(define-type ont::least-extent
+ :parent ont::modifier
+ :comment "to the least extent, to any extent"
+)
+
 ;; so (very good)
 (define-type ONT::intensifier
  :parent ONT::modifier

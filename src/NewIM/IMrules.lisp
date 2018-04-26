@@ -345,7 +345,7 @@
       ;; e.g., What budget are we using?
 
    ((ONT::SPEECHACT ?!a ONT::SA_WH-QUESTION :FOCUS ?!ff :CONTENT ?!rr)
-       (ONT::WH-TERM ?!ff ?!type)
+       ((? spec ONT::WH-TERM ONT::WH-TERM-SET) ?!ff ?!type)
        -standardQ>
        (ONT::ASK-WHAT-IS :who *USER* :to *ME* :what ?!ff :suchthat ?!rr)
 	)
@@ -682,7 +682,7 @@
   ;;  This handles Q's like "what is the budget", "what is its weight"
   '(
    ((ONT::F ?!xx ONT::IN-RELATION :neutral1 ?!q-term :neutral ?!wh-term)
-    (ONT::WH-TERM ?!wh-term ?any)
+    ((? spec ONT::WH-TERM ONT::WH-TERM-SET) ?!wh-term ?any)
     (ONT::THE ?!q-TERM ONT::ABSTRACT-FUNCTION)
     -Q-FUNCTION-VALUE>
     (Q-FUNCTION-VALUE ?q-term))

@@ -8,7 +8,8 @@
     (wordfeats (W::morph (:forms (-vb) :nom W::regulation :agentnom w::regulator)))
    (SENSES
       (;;(lf-parent ont::managing)
-       (lf-parent  ont::manage) ;; 20120521 GUM change new parent 
+       ; (lf-parent  ont::manage) ;; 20120521 GUM change new parent 
+       (lf-parent  ont::governing)
      (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
      (example "the device regulates the flow of oxygen")
      (TEMPL agent-affected-xp-templ)

@@ -1,5 +1,10 @@
 (in-package :om)
 
+(define-type ONT::defined-by-sequence-relationship
+    :parent ONT::PHYS-OBJECT
+    :wordnet-sense-keys ("successor%1:18:01" "successor%1:09:00" "successor%1:18:00" "predecessor%1:18:00")
+)
+
 (define-type ONT::natural-object
     :wordnet-sense-keys ("natural_object%1:03:00")
     :parent ONT::PHYS-OBJECT

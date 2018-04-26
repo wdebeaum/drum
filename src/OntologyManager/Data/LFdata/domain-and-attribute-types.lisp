@@ -468,6 +468,13 @@
  ;; WORDS: accuracy
 )
 
+;; trueness scale
+;(define-type ont::trueness-scale
+;[ :parent ont::information-property-scale
+; :wordnet-sense-keys ("truth%1:26:00")
+; :comment "trueness scale as opposed to categorical true/false distinction (see ont::truth-scale)"
+;)
+
 
 ;; MEASURE SCALE
 (define-type ont::measure-scale
@@ -830,7 +837,7 @@
 
 (define-type ont::similar-scale
  :parent ont::similarity-scale
- :wordnet-sense-keys ("similarity%1:07:00")
+ :wordnet-sense-keys ("similarity%1:07:00" "likeness%1:07:00" "comparability%1:07:00")
 )
 
 (define-type ont::different-scale
@@ -841,6 +848,11 @@
 (define-type ont::equal-scale
  :parent ont::similarity-scale
  :wordnet-sense-keys ("equivalence%1:26:00")
+)
+
+(define-type ont::same-scale
+ :parent ont::similarity-scale
+ :wordnet-sense-keys ("identity%1:07:02" "sameness%1:07:00")
 )
 
 (define-type ont::polarity-scale
@@ -1294,11 +1306,11 @@
  ;; WORDS: gender, sex
 )
 
-;(define-type ont::truth-scale
-; :parent ont::unordered-discrete-domain 
-; :wordnet-sense-keys ("")
-; ;; WORDS: truth
-;)
+(define-type ont::truth-scale
+ :parent ont::unordered-discrete-domain 
+ :wordnet-sense-keys ("truth%1:09:00")
+ ;; WORDS: truth
+)
 
 
 
@@ -1310,6 +1322,22 @@
  :arguments ((:OPTIONAL ONT::FIGURE ((? lo f::phys-obj f::abstr-obj)))
              )
  )
+
+(define-type ont::condition-favorability
+ :parent ont::attribute
+)
+
+(define-type ont::favorable-condition
+ :parent ont::condition-favorability
+ :wordnet-sense-keys ("advantage%1:07:00" "advantage%1:07:01" "asset%1:07:00" "strength%1:07:01")
+ ;asset, plus, strength advantage
+)
+
+(define-type ont::not-favorable-condition
+ :parent ont::condition-favorability
+ :wordnet-sense-keys ("weak_point%1:07:00" "liability%1:07:00" "disadvantage%1:07:00" "detriment%1:11:00" "weakness%1:26:00")
+ ; detriment, liability, weakness, minus, disadvantage
+)
 
 (define-type ONT::body-property
  :parent ont::attribute

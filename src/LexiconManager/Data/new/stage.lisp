@@ -20,6 +20,11 @@
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("create-26.4-1"))
      (LF-PARENT ONT::arranging)
+     (example "stage the furniture in the room")
+     )
+    ((meta-data :origin "cause-result-relations" :entry-date 20180424 :change-date nil :comments nil)
+     (LF-PARENT ONT::organizing)
+     (example "He hopes to stage a Broadway production")
      )
     )
    )

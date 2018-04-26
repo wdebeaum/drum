@@ -18,7 +18,7 @@
  :words (
 ((W::chill w::out)
    (SENSES
-    ((LF-PARENT ont::subduing)
+    ((LF-PARENT ont::evoke-calm)
      (example "chill out")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL affected-TEMPL)

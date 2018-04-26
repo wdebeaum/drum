@@ -23,6 +23,7 @@
              )
  )
 
+
 ;; higher-level type for evaluation
 (define-type ont::evaluation-attribute-val
  :parent ont::property-val 
@@ -77,7 +78,7 @@
 
 (define-type ont::awful-val
  :parent ont::bad 
- :wordnet-sense-keys ("nasty%3:00:00" "awful%5:00:00:bad:00" )
+ :wordnet-sense-keys ("nasty%3:00:00" "awful%5:00:00:bad:00")
 )
 
 (define-type ont::neutral-acceptability-val
@@ -1069,6 +1070,10 @@
  :comment "means of production and dissemination (c.f. ont::mode)"
 )
 
+(define-type ont::multimedia-val
+ :parent ont::medium
+)
+
 ;; e.g., graphical, tactile, vocal
 (define-type ont::mode
  :parent ont::substantial-property-val 
@@ -1078,7 +1083,7 @@
 )
 
 (define-type ont::mode-of-control-val
- :parent ont::mode 
+ :parent ont::mode
 )
 
 (define-type ont::manual-val
@@ -1092,7 +1097,7 @@
 )
 
 (define-type ont::signal-representation-val
- :parent ont::mode 
+ :parent ont::mode
 )
 
 (define-type ont::digital-val
@@ -1107,7 +1112,8 @@
 )
 
 (define-type ont::sensory-mode-val
- :parent ont::mode 
+ :parent ont::mode
+ ; auditory, visual, tactile communication/information
 )
 
 ;; phospho, phospho-, p-
@@ -3917,13 +3923,6 @@
  :parent ONT::associated-with-science-val
  :wordnet-sense-keys ("lunar%3:01:00")
 )
-
-;; bogus, temporary node. will be deleted as soon as words in this class are handled.
-(define-type ONT::Discrete-property-val
- :parent ONT::PROPERTY-VAL
- :sem (F::Abstr-obj (F::gradability -))
- :comment "temporary node. Will be deleted as soon as the words in this type are placed in their correct places in the ontology"
- )
 
 ;; words relating to space
 (define-type ont::spatial

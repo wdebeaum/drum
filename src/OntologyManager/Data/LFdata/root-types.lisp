@@ -182,3 +182,6 @@
 
 (define-type ont::remaining-part
     :parent ont::part)
+
+(define-type ont::important-part
+  :parent ont::part)

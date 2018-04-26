@@ -143,16 +143,23 @@
 	(agr  (get-fvalue args 'w::agr))
 	(result (get-fvalue args 'w::result)))
     
-    (if (member spec '(ONT::DEFINITE W::DEFINITE))
-	(if (equal agr 'w::|3P|)
-	    (match-vals nil result 'ONT::DEFINITE-PLURAL)
-	    (match-vals nil result 'ONT::DEFINITE))
-	(if (member  spec '(ONT::INDEFINITE W::INDEFINITE))
-	    (if (equal agr 'w::|3P|)
-		(match-vals nil result 'ONT::INDEFINITE-PLURAL)
-		(match-vals nil result 'ONT::INDEFINITE))
-	    (match-vals nil result spec))
-   )))
+    (case spec
+      ((ONT::DEFINITE W::DEFINITE)
+       (if (equal agr 'w::|3P|)
+	   (match-vals nil result 'ONT::DEFINITE-PLURAL)
+	 (match-vals nil result 'ONT::DEFINITE)))
+      ((ONT::INDEFINITE W::INDEFINITE)
+       (if (equal agr 'w::|3P|)
+	   (match-vals nil result 'ONT::INDEFINITE-PLURAL)
+	 (match-vals nil result 'ONT::INDEFINITE)))
+      ((ONT::wh ONT::what ONT::which ONT::whose ONT::*wh-term*)
+       (if (equal agr 'w::|3P|)
+	   (match-vals nil result 'ONT::WH-PLURAL)
+	 (match-vals nil result 'ONT::WH)))
+      (otherwise (match-vals nil result spec))
+      )
+   ))
+
 
 (defun check-if-bound (var)
   "succeeds only if arg is bound to something not equal to -"

@@ -886,6 +886,11 @@
   :parent ont::event-defined-by-activity
   )
 
+;; recession
+(define-type ont::economic-event
+:parent ONT::event-defined-by-activity
+)
+
 ;; travel
 (define-type ONT::travel
  :parent ONT::event-defined-by-activity
@@ -990,7 +995,7 @@
              )
  )
 
-(define-type ont::mental-atttitude
+(define-type ont::mental-attitude
  :wordnet-sense-keys("mentality%1:09:01")
  :parent ONT::mental-construction
 )

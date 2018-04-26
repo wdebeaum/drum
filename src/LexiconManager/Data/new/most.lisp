@@ -32,7 +32,7 @@
      )
     ((LF ONT::MOST) ;; mass sense of most, e.g., most WATER
      (non-hierarchy-lf t)(TEMPL quan-mass-TEMPL)
-     (SYNTAX (W::agr (? agr W::3s)) (w::status ont::indefinite))
+     (SYNTAX (W::agr (? agr W::3s)) (w::status ont::SM))
      )
     )
    )

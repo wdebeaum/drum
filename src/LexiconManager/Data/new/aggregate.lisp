@@ -6,7 +6,7 @@
  :words (
    (W::aggregate
    (SENSES
-    ((LF-PARENT ONT::NON-MEASURE-ORDERED-DOMAIN)
+    ((LF-PARENT ONT::collective-val)
      (meta-data :origin calo-ontology :entry-date 20060713 :change-date nil :wn ("aggregate%1:06:00") :comments caloy3)
      (TEMPL OTHER-RELN-TEMPL)
      )

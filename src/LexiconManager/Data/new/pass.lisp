@@ -12,6 +12,9 @@
      (example "pass me the salt")
      (TEMPL agent-affected-recipient-alternation-templ)
      ) 
+    ((LF-PARENT ont::passing)
+     (example "The teacher passed the student although he was weak")
+     )
     
     ;;;; when the truck passes
     ((LF-PARENT ONT::PASS-BY)

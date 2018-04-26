@@ -8,7 +8,7 @@
    (SENSES
     ((meta-data :origin cardiac :entry-date 20080509 :change-date nil :comments LM-vocab)
      (example "the darn book")
-     (LF-PARENT ONT::expletive-VAL)
+     (LF-PARENT ONT::awful-VAL)
      (TEMPL central-adj-templ)
      )
     )

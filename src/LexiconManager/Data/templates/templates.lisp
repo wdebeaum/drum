@@ -2400,6 +2400,13 @@
 	   (W::QOF (% W::PP (W::PTYPE W::OF) (W::AGR ?agr1) (W::MASS ?m))))
    (ARGUMENTS
     ))
+
+   (wh-qtype-plural-templ
+    (SYNTAX (W::WH W::q) (W::QTYPE W::wh) (W::mass ?m) (W::agr ?agr) (W::npagr ?a)
+	    (W::QOF (% W::PP (W::PTYPE (? ptype W::OF W::AMONG)) (W::AGR w::3p) (W::MASS ?m))))
+    (ARGUMENTS
+     ))
+
   
   ;;;;; new ones here
   ;;;;; basically an empty template, for rare combinations of features

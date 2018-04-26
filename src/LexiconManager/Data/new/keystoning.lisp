@@ -8,7 +8,7 @@
    (SENSES
     ((EXAMPLE "keystoning is a type of image distortion")
      (meta-data :origin caloy2 :entry-date 20050425 :change-date nil :comments projector-purchasing)
-     (LF-PARENT ONT::event)
+     (LF-PARENT ONT::algorithm)
      )
     )
    )

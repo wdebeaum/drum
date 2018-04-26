@@ -13,3 +13,14 @@
    )
 ))
 
+(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+ :words (
+  (W::project
+   (wordfeats (W::morph (:forms (-vb) :nom W::projection)))
+   (SENSES
+    ((meta-data :origin cause-result-relations :entry-date 20180310 :change-date nil :wn ("project%2:39:01"))
+     (LF-PARENT ONT::visual-display)
+     (example "project an image on screen")
+     )
+   )
+)))

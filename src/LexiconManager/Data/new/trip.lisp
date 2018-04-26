@@ -26,3 +26,16 @@
    )
 ))
 
+(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+ :words (
+  ((W::trip w::out)
+   (SENSES
+      ((meta-data :origin cause-result-relations :entry-date 20180411 :change-date nil :comments nil)
+     (LF-PARENT ont::trip-out)
+     (TEMPL agent-templ) 
+     (EXAMPLE "He tripped out every weekend")
+     )
+    )
+   )
+))
+

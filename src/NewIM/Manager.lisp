@@ -328,7 +328,7 @@
 	;; (force (find-arg (cdddr lf) :force))
 	;; (frequency (find-arg (cdddr lf) :frequency))
 	 (akrl 
-   	  (cond ((member (car lf) '(ONT::THE-SET ONT::INDEF-SET ONT::PRO-SET))
+   	  (cond ((member (car lf) '(ONT::THE-SET ONT::INDEF-SET ONT::PRO-SET ONT::WH-TERM-SET))
 			 (add-lex (list* (map-to-krspec lf) var :instance-of 'ONT::SET :element-type type 
 					 (remove-args (cdddr lf) '(:start :end)) ;'(:proform :start :end))
 					 ) w))
@@ -378,7 +378,7 @@
     ((ONT::TERM ONT::EVENT ONT::EPI ONT::CC ONT::MODALITY) (car spec))
     ((ONT::F) 'ONT::RELN)
     (ONT::KIND 'ONT::KIND)
-    (otherwise 'ONT::a)))  ; this includes ONT::TERM (2017/04/17: now ONT::TERM is passed through as itself)
+    (otherwise 'ONT::a)))  ; this includes ONT::WH-TERM/WH-TERM-SET (for "which") and ONT::TERM (2017/04/17: now ONT::TERM is passed through as itself)
 
 (defun map-referent-to-KR (ref)
   "Selects the best referent from the REF-HYPs and sets the values

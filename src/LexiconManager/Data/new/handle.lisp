@@ -13,7 +13,8 @@
      )
     ((meta-data :origin monroe :entry-date 20031217 :change-date nil :comments s7)
      ;;(LF-PARENT ONT::managing)
-     (lf-parent  ont::manage) ;; 20120521 GUM change new parent 
+     ; (lf-parent  ont::manage) ;; 20120521 GUM change new parent 
+     (lf-parent  ont::taking-care-of)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL AGENT-affected-XP-TEMPL)
      (example "handle the situation")

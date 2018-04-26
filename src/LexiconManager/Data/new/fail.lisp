@@ -13,7 +13,7 @@
      (TEMPL AGENT-effect-SUBJCONTROL-TEMPL (xp (% w::cp (w::ctype w::s-to))))
      (meta-data :origin calo :entry-date 20041123 :change-date nil :comments caloy2)
      )
-    ((LF-PARENT ONT::fail)
+    ((LF-PARENT ONT::failing)
      (example "he failed the student")
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL AGENT-affected-XP-TEMPL)

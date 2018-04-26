@@ -6,7 +6,7 @@
  :words (
 	 (W::asset
 	  (SENSES
-	   ((LF-PARENT ONT::ATTRIBUTE)
+	   ((LF-PARENT ONT::favorable-condition)
 	    (TEMPL COUNT-PRED-TEMPL)
 	    (meta-data :origin sense :entry-date 20070724 :change-date nil :comments nil :wn nil)
 	    )

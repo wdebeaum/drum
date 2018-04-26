@@ -44,7 +44,7 @@
   (W::hyper  ;; short for "hyperactive"
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
-    ((LF-PARENT ONT::behavioral-property)
+    ((LF-PARENT ONT::hyperactive-val)
      (SEM (F::GRADABILITY F::+))
      )
     )

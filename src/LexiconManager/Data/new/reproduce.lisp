@@ -17,3 +17,14 @@
 	    	    ))
 ))
 
+(define-words :pos W::v 
+ :words (
+  (W::reproduce
+   (SENSES
+    ((LF-PARENT ONT::procreate)
+     (TEMPL agent-templ)
+     (EXAMPLE "This species reproduce prolifically")
+     )
+    )
+   )
+))

@@ -935,6 +935,7 @@
                             (w::status ,(or status 'w::*PRO*))
                             (w::constraint ,(get-value c 'w::constraint))
 			    (w::start ,(get-value c 'w::start))
+			    (w::lex ,(get-value c 'w::lex))
 			    (w::end ,(get-value c 'w::end))))
             )))))
   
