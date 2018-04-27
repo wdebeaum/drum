@@ -2895,13 +2895,13 @@
     ((SPEC (ARG ?arg) (VAR *) (agr ?agr) (MASS ?m) (LF ?status) (Nobarespec ?nbs)  (comparative ?cmp)
       (RESTR (& (QUAN ?s) (negation ?neg) )) (NoSimple ?ns) (npmod ?npm) (STATUS ?status)
       (SUBCAT ?qof) (QCOMP ?Qcomp) (PRED ?s)
-      (wh ?wh) (wh-var ?arg)
+      (wh ?wh) (wh-var ?wh-var)
       )
      -quan-simple-spec>
      (head (quan (CARDINALITY -) (SEM ?sem) (VAR ?v) (agr ?agr) (comparative ?cmp) (QOF ?qof) (QCOMP ?Qcomp)
 		 (MASS ?m) (STATUS ?status) (Nobarespec ?nbs) (NoSimple ?ns) (npmod ?npm) (negation ?neg)
 		 (LF ?s)
-		 (wh ?wh) (wh-var ?arg)
+		 (wh ?wh) (wh-var ?wh-var)
 		 )))
 
  #|| ;;  this is not right -- "more than 20 trucks" parses as a SPEC in a headless NP!

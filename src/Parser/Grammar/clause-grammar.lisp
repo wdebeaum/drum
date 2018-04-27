@@ -512,7 +512,7 @@
      )
      -wh-advbl-q1> .98 ;; really don't want this to apply before gaps
     (advbl
-     ;;(argument (% s (sem ?sem) (sem ($ f::situation (f::type f::eventuality)))))
+     (argument (% s (sem ?sem) (sem ($ f::situation))))
      (var ?advv)
      (arg ?v) (wh q) (wh-var ?wvar) (qtype ?qtype) (lf ?lf1)
      )
@@ -1014,7 +1014,7 @@
        (filled -) (adjectival -) (gap ?gap)
        (wh ?wh)
        )
-      -pred-advbl> 0.98 ;; don't use it if a regular advbl interpretation is possible
+      -pred-advbl>
       ;; md: argument should be % np, if an adverbial does not apply to nps, don't use it
       (head (advbl (lf ?lf) (var ?v) (arg ?arg) (argument ?argument) 
 		   (argument (% np (var ?arg))) (sem ?sem)
@@ -2228,7 +2228,7 @@
    ;; test: ; is the train late?
    ;;       is there a train?
    ((s (stype ynq) (main +) (aux -) (gap ?gap)
-     (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar) (agr ?subjagr) (mass ?m)))
+     (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar) (agr ?subjagr)))
      (sort pred) 
      
      (var ?v) ;; propagate up explicitly because not a head feature	   
@@ -2269,17 +2269,17 @@
 	   ;; no uniform & unique lf's for main verb be uses, so have to match the lex
 	   ;; unless we can match the lf-form be
 	   (lex (? lx am are is was were ^s))
-	   (subj ?subj) (subj (% ?s1 (var ?subjvar) (sem ?subjsem) (agr ?subjagr) (lex ?subjlex) (gap -) (mass ?m))) ;; note double matching required
+	   (subj ?subj) (subj (% ?s1 (var ?subjvar) (sem ?subjsem) (agr ?subjagr) (lex ?subjlex) (gap -))) ;; note double matching required
 	   (iobj (% -))
 	   (part (% -));; (part ?part) 
-	   (dobj ?dobj)	(dobj (% ?s3 (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (mass ?m2)))
+	   (dobj ?dobj)	(dobj (% ?s3 (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap)))
 	   (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem)))
 	    
 	   )
      
      )
     ;;?subj
-    (np (var ?subjvar) (agr ?subjagr) (case (? npcase sub -)) (sem ?subjsem) (wh -) (sort (? !sort wh-desc)) (gap -) (lex ?subjlex) (mass ?m))  ;; lots of restrictions on this np to eliminate sentences like "is where the people"
+    (np (var ?subjvar) (agr ?subjagr) (case (? npcase sub -)) (sem ?subjsem) (wh -) (sort (? !sort wh-desc)) (gap -) (lex ?subjlex))  ;; lots of restrictions on this np to eliminate sentences like "is where the people"
     ?dobj
     ?comp
     (add-to-conjunct (val (tense (? vf past pres))) (old ?tma) (new ?newtma))
@@ -2736,12 +2736,12 @@
     ; Of what do you think?
      ((s (stype whq) (subjvar ?subjvar) (dobjvar ?dobjvar)
       (qtype q) (lf ?lf) (var ?v))
-     -wh-q-ppgap>
-     (pp (var ?npvar) (sem ?npsem) (wh q) (agr ?a) (case ?case) (ptype ?ptp))
+      -wh-q-ppgap>
+      (pp (var ?npvar) (sem ?npsem) (wh q) (agr ?a) (case ?case) (ptype ?ptp))
       (head (s (stype ynq) (lf ?lf) (var ?v) 
-	     (advbl-needed -)
-	     (subjvar ?subjvar) (dobjvar ?dobjvar)
-	     (gap (% pp (sem ?npsem) (case ?case) (var ?npvar) (agr ?a) (ptype ?ptp))))
+	       (advbl-needed -)
+	       (subjvar ?subjvar) (dobjvar ?dobjvar)
+	       (gap (% pp (sem ?npsem) (case ?case) (var ?npvar) (agr ?a) (ptype ?ptp))))
        )
       )
 

@@ -1418,13 +1418,15 @@
     ((Utt (LF (% SPEECHACT (var ?v) (class ?sa) (constraint ?adv))) (var ?v) (punctype ?pn))
      -disc1>
      ;; swift -- adding check for subjvar since for topic advbls this must be filled
-     (advbl (sort DISC) (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -) (argument (% UTT (subjvar ?sv))))
+     (advbl (sort DISC) (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -)
+      (WH -) (argument (% UTT (subjvar ?sv))))
      (head (Utt (ended -) (LF (% SPEECHACT (class ?sa) (constraint ?adv1))) (var ?v) (punc -) (subjvar ?sv)))
      (add-to-conjunct (val (MODS ?advv)) (old ?adv1) (new ?adv)))
 
     ((Utt (LF (% SPEECHACT (class ?sa) (var ?v) (constraint ?adv))) (var ?v) (punctype ?pn))
      -disc-comma> 
-     (advbl (sort DISC) (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -) (argument (% UTT)))
+     (advbl (sort DISC) (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -) (WH -)
+      (argument (% UTT)))
      (punc (lex w::punc-comma))
      (head (Utt (ended -) (var ?v) (LF (% SPEECHACT (class ?sa) (constraint ?adv1))) (punc -) (punctype ?pn)))
      (add-to-conjunct (val (MODS ?advv)) (old ?adv1) (new ?adv)))
@@ -1433,14 +1435,16 @@
     ; Happily I skipped along the path.
     ((Utt (LF (% SPEECHACT (class ?sa) (var ?v) (constraint ?adv))) (var ?v) (punctype ?pn))
      -disc-comma-attitude> 
-     (advbl (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -) (sem ($ f::abstr-obj (f::type (? t ont::valuation-attribute-val ont::emotional-val ont::evoking-emotional-val)))))
+     (advbl (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -) (WH -)
+      (sem ($ f::abstr-obj (f::type (? t ont::valuation-attribute-val ont::emotional-val ont::evoking-emotional-val)))))
      (punc (lex w::punc-comma))
      (head (Utt (ended -) (var ?v) (LF (% SPEECHACT (class ?sa) (constraint ?adv1))) (punc -) (punctype ?pn)))
      (add-to-conjunct (val (MODS ?advv)) (old ?adv1) (new ?adv)))
 
     ((Utt (LF (% SPEECHACT (class ?sa) (var ?v) (constraint ?adv))) (var ?v) (punctype ?pn))
      -disc-attitude> 
-     (advbl (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -) (sem ($ f::abstr-obj (f::type (? t ont::valuation-attribute-val ont::emotional-val ont::evoking-emotional-val)))))
+     (advbl (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -) (WH -)
+      (sem ($ f::abstr-obj (f::type (? t ont::valuation-attribute-val ont::emotional-val ont::evoking-emotional-val)))))
      (head (Utt (ended -) (var ?v) (LF (% SPEECHACT (class ?sa) (constraint ?adv1))) (punc -) (punctype ?pn)))
      (add-to-conjunct (val (MODS ?advv)) (old ?adv1) (new ?adv)))
 
