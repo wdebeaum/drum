@@ -62,6 +62,24 @@ sub add_extra_args {
       if (exists($tag_type2args{$tag->{type}}));
   }
 
+  # if a sense tag for a proper noun begins a sentence, add a corresponding pos
+  # tag so that common-noun-only pos tags from other sources don't rule it out
+  for my $tag (@tags) {
+    if ($tag->{type} eq 'sense' and exists($tag->{'penn-pos'}) and
+        grep { $_->{start} == $tag->{start} } @sentences) {
+      my @proper_penn_pos = grep /^NNP/, @{$tag->{'penn-pos'}};
+      if (@proper_penn_pos) {
+	push @tags, +{
+	  type => 'pos',
+	  source => 'extra_args',
+	  start => $tag->{start},
+	  end => $tag->{end},
+	  'penn-pos' => [@proper_penn_pos]
+	};
+      }
+    }
+  }
+
   # get all sense tag spans that don't have penn-pos
   my @posless_sense_spans =
     grep {
