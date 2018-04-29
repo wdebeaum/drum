@@ -39,7 +39,7 @@
    )
 ))
 
-(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+(define-words :pos W::adj :templ adj-CENTRAL-figure-ground-optional-TEMPL
  :words (
   (W::EMPTY
     (wordfeats (W::morph (:FORMS (-ER))))

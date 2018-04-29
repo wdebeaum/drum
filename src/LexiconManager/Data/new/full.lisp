@@ -14,7 +14,7 @@
 )
 ))
 
-(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+(define-words :pos W::adj :templ adj-CENTRAL-figure-ground-optional-TEMPL
  :tags (:base500)
  :words (
   (W::FULL
