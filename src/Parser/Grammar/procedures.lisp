@@ -142,7 +142,6 @@
   (let ((spec (get-fvalue args 'w::spec))
 	(agr  (get-fvalue args 'w::agr))
 	(result (get-fvalue args 'w::result)))
-    
     (case spec
       ((ONT::DEFINITE W::DEFINITE)
        (if (equal agr 'w::|3P|)

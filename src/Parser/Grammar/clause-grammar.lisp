@@ -2340,7 +2340,8 @@
       (append-conjuncts (conj1 (& (tense (? vf past pres)) (negation +))) (conj2 ?tma) (new ?newtma))
       ;;    (add-to-conjunct (val (tense (? vf past pres fut))) (old ?tma) (new ?newtma))
     )
-      
+
+     ; Where is the red block?
    ((s 
      (stype ynq) (main +) (aux -) 
      
@@ -2366,7 +2367,7 @@
      (gap (% ?!s3 (case ?dcase) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap -)))
      (advbl-needed ?avn)
      )
-    -s-ynq-be-gap> 0.96  ;; downgrade this until we find an example that needs this rule!!  Why do we not require the V to be ONT::BE or ONT::EQUAL????
+    -s-ynq-be-gap> 0.98
     (head (v (aux -)
 	   
 	   (var ?v) ;; propagate up explicitly because not a head feature	   

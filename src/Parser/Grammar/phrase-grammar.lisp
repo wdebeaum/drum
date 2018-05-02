@@ -127,7 +127,7 @@
         ;; e.g., two more, one less, some more, ...
 	;; check interpretation?? shouldn't there be an impro -- two more than what?
 	;;    this allows MORE or LESS to be attached to cardinality specifiers
-	((SPEC (AGR ?agr) (ARG ?arg) (LF ?status) (MASS ?mass)
+	((SPEC (AGR ?agr) (ARG ?arg) (LF ?status) (MASS ?mass) (status ?status)
 	       (PRED ?s)
 	       (RESTR ?restr1)
 	       (SUBCAT (% PP (PTYPE of) (SEM ?subsem)))
@@ -2108,7 +2108,8 @@
 		   ))
 	 ;;(add-to-conjunct (val (SIZE ?card)) (old ?setr) (new ?setr1))
 	 (add-to-conjunct 
-	  (val (MOD (% *PRO* (status ont::f) (class ont::OTHER) (VAR *) (constraint (& (figure ?v))))))
+	  (val (MOD (% *PRO* (status ont::f) (class ont::OTHER) (VAR *)
+		       (constraint (& (figure ?v) (ground (% *PRO* (var **) (class ?c))) )))))
 	  (old ?r) (new ?con1)))
 	 
 	
@@ -2390,14 +2391,18 @@
              (VAR ?v) 
 	     (sem ?sem)
 	     (lex ?lex) (WH Q) (WH-VAR ?v)
-             (LF (% Description (status WH) (var ?v) (Class ?s) (SORT (?agr -))
+             (LF (% Description (status ?newspec) (var ?v) (Class ?s) (SORT (?agr -))
 	            (Lex ?lex) (sem ?sem) (transform ?transform)
 		    (constraint (& (proform ?lex)))
 		    )))
          -wh-pro1> .995
          (head (pro (PP-WORD -) (AGR ?agr) (LEX ?lex) (LF ?s)
 		    (sem ?sem) (transform ?transform)
-	            (VAR ?v) (WH Q))))    ;; removed R as NP 
+	            (VAR ?v) (WH Q)))    ;; removed R as NP
+	 (recompute-spec (spec ONT::WH) (agr ?agr) (result ?newspec))
+	 )
+	
+	
         ))
 
 ;;  special rule for another as a bare NP  
@@ -2406,10 +2411,11 @@
  '((headfeatures (noop noop))
    	((NP (LF (% description (status ont::indefinite) (VAR *)   ;;(SORT individual)
 		    (CLASS ONT::REFERENTIAL-SEM) 
-		    (CONSTRAINT (& (MOD (% *PRO* (status ont::f) (class ont::OTHER) (VAR **) (constraint (& (figure *)))))))
-		    (sem ?sem)  (transform ?transform)
+		    (CONSTRAINT (& (MOD (% *PRO* (status ont::f) (class ont::OTHER) (VAR **) (constraint (& (figure *) (ground (% *PRO* (var ***) (class ONT::REFERENTIAL-SEM))) ))))))
+		    (sem ($ ?s (f::type ONT::REFERENTIAL-SEM))) ;(sem ?sem)
+		    (transform ?transform)
 		    ))
-	  (sem ?sem)
+	  (sem ($ ?s (f::type ONT::REFERENTIAL-SEM))) ;(sem ?sem)
 	  (SORT PRED) (VAR *) (CASE (? case SUB OBJ))
 	  (wh -) (wh-var -)
 	  )
@@ -2895,7 +2901,7 @@
     ((SPEC (ARG ?arg) (VAR *) (agr ?agr) (MASS ?m) (LF ?status) (Nobarespec ?nbs)  (comparative ?cmp)
       (RESTR (& (QUAN ?s) (negation ?neg) )) (NoSimple ?ns) (npmod ?npm) (STATUS ?status)
       (SUBCAT ?qof) (QCOMP ?Qcomp) (PRED ?s)
-      (wh ?wh) (wh-var ?wh-var)
+      (wh ?wh) (wh-var ?arg)
       )
      -quan-simple-spec>
      (head (quan (CARDINALITY -) (SEM ?sem) (VAR ?v) (agr ?agr) (comparative ?cmp) (QOF ?qof) (QCOMP ?Qcomp)
@@ -3055,7 +3061,7 @@
      |#
 
     ;; TEST: the computer-generated dog
-    ((ADJP (VAR ?v)  (arg ?dobj) (class ?lf) (atype w::central) (argument (% NP (var ?dobj)))
+     ((ADJP (VAR ?v)  (arg ?dobj) (class ?lf) (atype w::central) (argument (% NP (var ?dobj)))
       (vform passive) (constraint ?constraint) (sem ?sem2) ;(sem ?sem)
       (LF (% prop (class ?lf) (var ?v)
 	     (constraint 
@@ -3063,7 +3069,7 @@
 		 (?dobj-map ?dobj))))))
      -adj-passive+subj-hyphen> 1
      (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
-      (sem ?sem) (relc -) (abbrev -) (gap -)
+      (sem ?sem) (relc -) (abbrev -) (gap -) (agr 3s)
 	 )
      (punc (lex w::punc-minus))
      (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj))) (sem ?sem2)
@@ -3074,7 +3080,7 @@
      )
 
     ;; TEST: the computer generated dog
-    ((ADJP (VAR ?v)  (arg ?dobj) (class ?lf) (atype w::central) (argument (% NP (var ?dobj)))
+     ((ADJP (VAR ?v)  (arg ?dobj) (class ?lf) (atype w::central) (argument (% NP (var ?dobj)))
       (vform passive) (constraint ?constraint) (sem ?sem2) ;(sem ?sem)
       (LF (% prop (class ?lf) (var ?v)
 	     (constraint 
@@ -3082,7 +3088,7 @@
 		 (?dobj-map ?dobj))))))
      -adj-passive+subj> 
      (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
-      (sem ?sem) (relc -) (abbrev -) (gap -)
+      (sem ?sem) (relc -) (abbrev -) (gap -) (agr 3s)
 	 )
      (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj))) (sem ?sem2)
       (GAP -) (LF ?lf) (Part (% -))
@@ -5349,7 +5355,8 @@
 ;;(cl:setq *grammar6*
 (parser::augment-grammar
       '((headfeatures
-	 (NP SPEC QUANT VAR agr PRO Changeagr lex headcat transform wh)
+	 (NP SPEC QUANT ;VAR
+	     agr PRO Changeagr lex headcat transform wh)
 	 (N1 sem lf lex headcat transform set-restr refl abbrev nomobjpreps kr-type))
     
    ;; certains NAMES (esp in the biology domain) are really treat like mass nouns
@@ -5486,11 +5493,12 @@
 
 	;; one more, two less, ....
 
-	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?ssem) (case (? case SUB OBJ))  (headless +)
-	     (lf (% description (status ont::inDEF-SET) (var ?v) (sort SET) 
+	((NP (SORT PRED) (CLASS ?c) (VAR *) (sem ?ssem) (case (? case SUB OBJ))  (headless +) ; var not headfeature
+	     (lf (% description (status ont::*pro*) ; (status ont::indefinite-plural)
+		    (var *) (sort SET) 
 		    (Class ont::Any-sem) 
 		    (constraint (& (size ?card) (quan ?s)))
-		    (sem ?s)
+		    (sem ?ssem) ;(sem ?s)
 		    ))
 	  (postadvbl +)
 	  )
