@@ -828,13 +828,14 @@ intersection of an entry's tags and these tags is non-empty."
 		      (let* ((lf-parent (sense-definition-lf-parent x))
 			     (orig-templ (sense-definition-templ x))
 			     (fscale (car (get-sem-feature-value lf-parent 'f::scale)))
+			     (wfeats (vocabulary-entry-wfeats entry))
 			     ;;(this-sem (sense-definition-sem x))			    
 			     ;;(orientation (cadr (assoc 'f::orientation this-sem)))
 			     (templ (retrieve-template (sense-definition-templ x)))
 			     (templ-feats (remove-if #'(lambda (x) (eq (car x) 'w::SUBCAT))
 						     (if (syntax-template-p templ)
 							 (syntax-template-syntax templ))))
-			     (comp-op (cadr (assoc 'w::comp-op templ-feats)))
+			     (comp-op (cadr (assoc 'w::comp-op wfeats)))
 			     )
 			(case comp-op 
 			  ((ont::less w::less)
@@ -970,10 +971,11 @@ intersection of an entry's tags and these tags is non-empty."
 ;;	(op (get-fvalue oldfeats 'w::comp-op))
 ;;	(scale (get-fvalue oldfeats 'w::pred))
 	)
-    (if (null lf) (setq lf (get-fvalue oldfeats 'w::lex)))
-    ;;(append
+    (if (null lf)
+	(setq lf (get-fvalue oldfeats 'w::lex)))
+    (append
      `((w::COMPARATIVE ,(case er-or-est (:er '+) (:est 'w::SUPERL)))
-       )))
+      ) oldfeats)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

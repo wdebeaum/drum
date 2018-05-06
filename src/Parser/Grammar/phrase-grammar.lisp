@@ -123,26 +123,33 @@
 	 (head (NUMBER (val 1) (var ?v) (sem ?def) (AGR ?agr) (WH -) (lex ?lex) (RESTR ?R) (LF ?l)))
 	 (add-to-conjunct (val (value 1)) (old ?r) (new ?cc))
 	 )
-	
+
+	#| ; go through -n1-card-more> instead
         ;; e.g., two more, one less, some more, ...
 	;; check interpretation?? shouldn't there be an impro -- two more than what?
 	;;    this allows MORE or LESS to be attached to cardinality specifiers
-	((SPEC (AGR ?agr) (ARG ?arg) (LF ?status) (MASS ?mass) (status ?status)
+	((SPEC (AGR ?agr) (arg ?v) ;(ARG ?arg)
+	       (LF ?status) (MASS ?mass) (status ?status)
 	       (PRED ?s)
 	       (RESTR ?restr1)
-	       (SUBCAT (% PP (PTYPE of) (SEM ?subsem)))
+	       ;(SUBCAT (% PP (PTYPE of) (SEM ?subsem)))
+	       (subcat ?sc)
 	       (QCOMP ?qcomp)
-	       (nobarescpec ?nb)
+	       (nobarescpec ?nb) 
 	       )
-	 -Spec-comp>  .95 ;; prefer to attach to NP
+	 -Spec-comp> .97 ;.95 ;; prefer to attach to NP
 	 (head (SPEC (AGR ?agr) (ARG ?arg) (LF ?status) (MASS ?mass)
 		     (PRED ?s)
 		     (RESTR ?restr)
-		     (SUBCAT (% PP (PTYPE of) (SEM ?subsem)))
+		     ;(SUBCAT (% PP (PTYPE of) (SEM ?subsem)))
+		     (subcat ?sc)
 		     (QCOMP -) (nobarescpec ?nb)))
 	 (QUAN (COMPARATIVE +) (VAR ?av) (LF ?cmp) (QCOMP ?qcomp))
-	 (add-to-conjunct (val (quan ?cmp))
-			  (old ?restr) (new ?restr1)))
+	 (add-to-conjunct (val (MOD (% *PRO* (status ont::f) (class ?cmp) (VAR *)
+		       (constraint (& (figure ?v) (ground (% *PRO* (var **) (class ?c))) ))))) ;(val (quan ?cmp))
+			  (old ?restr) (new ?restr1))
+	 )
+	|#
 
 	;;  DETERMINERS:  articles, possessives, quantifiers
 
@@ -345,8 +352,10 @@
 	;;  we need numbers as cardinality to handle headless constructions such as "the three in the corner"
 	((CARDINALITY (LF (% DESCRIPTION (VAR ?v) (status ont::indefinite) (CLASS ?unit) 
 			     (CONSTRAINT ?new)))
-		      (VAR ?v) (NOQUAN +)
-                      (AGR ?a) (STATUS ?status) (mass (? mass count bare))		   
+		      (VAR ?v) (NOQUAN +) ; what does NOQUAN do?
+		      (cardinality +)
+                      (AGR ?a) (STATUS ?status) (mass (? mass count bare))
+		      (restr ?new)
 	              )
          -cardinality-number> .97
           (head (NUMBER (lf ?unit) (AGR ?a) (val ?c) (var ?v) (restr ?restr)))
@@ -368,9 +377,9 @@
         
         ;;  e.g., many thousands (of dogs)
         ((QUANP (NOSIMPLE ?ns) (status  ont::indefinite-plural) (qof ?qof) (ARG ?arg)
-	  (var ?v) (agr ?a) (mass ?m))
-	 -quan-cardinality
-	 (head (Cardinality (nosimple ?ns) (var ?v) (agr ?a) (mass ?m))))
+	  (var ?v) (agr ?a) (mass ?m) (cardinality +) (restr ?restr))
+	 -quan-cardinality>
+	 (head (Cardinality (nosimple ?ns) (var ?v) (agr ?a) (mass ?m) (restr ?restr))))
 
 	;; many thousands
 	((CARDINALITY (NOSIMPLE +)
@@ -2029,7 +2038,7 @@
 	  )
          -np-indv> 1.0    ;; because determiners are such a closed class, they provide strong evidence for an NP - hence the 1.0 to help with large search spaces
          (SPEC (LF ?spec) (ARG ?v) (mass ?m) ;;(POSS -)
-	       (wh ?w) (WH-VAR ?whv)
+	       (wh ?w) (WH-VAR ?whv) 
 	       (agr ?agr) (RESTR ?spec-restr) (NOSIMPLE -))   ;; NOSIMPLE prevents this rule for a few cases
          (head (N1 (VAR ?v) (SORT PRED) (CLASS ?c) (MASS ?m)
 		(KIND -) (agr ?agr) (RESTR ?r) (rate-activity-nom -)
@@ -2040,10 +2049,31 @@
 	 ;;(add-to-conjunct (val (SIZE ?card)) (old ?setr) (new ?setr1))
 	 (append-conjuncts (conj1 ?spec-restr) (conj2 ?r) (new ?con1))
 	 )
+	
+        ;; e.g., (two/some) more/less eggs
+	;; copied from -spec-comp>
+	((N1 (VAR ?v) (SORT PRED) (CLASS ?c) (MASS ?m)
+	     (KIND -) (agr ?agr) (RESTR ?restr1) (rate-activity-nom -)
+	     (agent-nom -)
+	     (sem ?sem) (transform ?transform)
+             (CASE (? case SUB OBJ))
+	  )
+	 -n1-card-more> ;.97 ;.95 ;; prefer to attach to NP
+	 (QUAN (COMPARATIVE +) (VAR ?av) (LF ?cmp) (QCOMP ?qcomp))
+	 (head (N1 (VAR ?v) (SORT PRED) (CLASS ?c) (MASS ?m)
+		(KIND -) (agr ?agr) (RESTR ?r) (rate-activity-nom -)
+		(agent-nom -)   ;;  this rule can't apply to agent nominalizations directly (they must modified first using rule -agentnom1>
+		(sem ?sem) (transform ?transform)
+		))
+	 (add-to-conjunct (val (MOD (% *PRO* (status ont::f) (class ?cmp) (VAR *)
+		       (constraint (& (figure ?v) (ground (% *PRO* (var **) (class ?c))) ))))) ;(val (quan ?cmp))
+			  (old ?r) (new ?restr1))
+	 )
 
+	
 	;; quantifier with post N1 complement , e.g. more trains than that,
 	
-        ((NP (LF (% description (STATUS ?spec) (VAR *) (SORT set)   ;; use the N var as the new var
+        ((NP (LF (% description (STATUS ?spec) (VAR *) ;(SORT set)   ;; use the N var as the new var
 		    (CLASS ?c) (CONSTRAINT ?newr)
 		    (sem ?sem)  (transform ?transform)
 		    ))
@@ -2337,6 +2367,24 @@
 		(sem ?sem) (transform ?transform)
 		)))
 
+	;;  special rule for proteins that are tagged as common nouns but used as names
+	((NP (LF (% Description (STATUS ONT::definite) (VAR ?v) (SORT INDIVIDUAL)
+	            (CLASS ?c) (CONSTRAINT ?constraint) (sem ?sem) (transform ?transform)))
+             (SORT PRED) (VAR ?v)
+             (BARE-NP +) (name-or-bare ?nob)
+	     (simple +)
+	     )
+         -protein-name-constructor>
+         (head (N1 (SORT PRED) (MASS  count) (gerund -) (complex -) 
+		   (name-or-bare ?nob) (lex ?lex)
+		   (derived-from-name -)  ;; names already can become NPs by simpler derivations
+		(AGR 3s) (VAR ?v) (CLASS (? c ONT::GENE-PROTEIN)) (RESTR ?r) (rate-activity-nom -) (agent-nom -)
+		(sem ?sem) (transform ?transform)
+		(sem ($ (? x F::PHYS-OBJ) (F::KR-TYPE ?kr)))
+		))
+	 (unify (pattern ?!xx) (value ?kr))  ;; we do this because checking this in the SEM, even though it fails, would be ignored!
+	 (add-to-conjunct (val (:name-of ?lex)) (old ?r) (new ?constraint)))
+
 	#|
         ;;  COMMAS
         ;;  e.g., the train ,
@@ -2495,6 +2543,7 @@
 		))
 	 (pp (ptype in) (gap -)
 	  (sem ($ f::abstr-obj (F::type (? xx ont::domain)) (f::scale ?unit-sc))))
+
 	 ;;(class-greatest-lower-bound (in1 ?unit-sc) (in2 ?explicit-sc) (out ?sc))
          (add-to-conjunct (val (& (value ?num))) (old ?r) (new ?newr))
 	 (add-to-conjunct (val (& (amount (% *PRO* (status ont::indefinite) (class ont::NUMBER) (VAR ?nv) (constraint ?newr)))
@@ -2881,7 +2930,7 @@
 	    (var ?unit-v) (lex ?unit-lex)))
      (add-to-conjunct (val (quantity ?unit-v)) (old ?restr) (new ?new)))
 
- #||   ;; e.g., a bunch of trucks
+    ;; e.g., a bunch of trucks
     
     ((SPEC (SEM ?def) (AGR ?agr)
       (VAR *) (card ?unit-v)     
@@ -2891,7 +2940,7 @@
      -spec-unit-count>
      (head (NP (sort classifier)
 	    (SPEC ?spec) (ARGUMENT ?subcat) (ARGUMENT (% ?xx (MASS COUNT) (AGR ?agr)))
-	    (var ?unit-v) (lex ?unit-lex))))||#
+	    (var ?unit-v) (lex ?unit-lex))))
 
 
      ;;  QUANTIFIERS
@@ -2907,7 +2956,7 @@
      (head (quan (CARDINALITY -) (SEM ?sem) (VAR ?v) (agr ?agr) (comparative ?cmp) (QOF ?qof) (QCOMP ?Qcomp)
 		 (MASS ?m) (STATUS ?status) (Nobarespec ?nbs) (NoSimple ?ns) (npmod ?npm) (negation ?neg)
 		 (LF ?s)
-		 (wh ?wh) (wh-var ?wh-var)
+		 (wh ?wh) (wh-var ?wh-var) (comparative -) ; exclude "more"
 		 )))
 
  #|| ;;  this is not right -- "more than 20 trucks" parses as a SPEC in a headless NP!
@@ -2962,7 +3011,22 @@
 		 (Nobarespec ?nbs) (NoSimple ?ns) (npmod ?npm)
 		 (qof ?qof) (qcomp ?qcomp)
 		 (LF ?s))))
-     
+
+    ; two more dogs (two is quanp)
+    ((SPEC (ARG ?arg) (VAR *) (agr ?agr) (MASS  (? m count bare)) (LF ?status) (Nobarespec ?nbs)
+      (STATUS ?status)
+      ;; (SUBCAT (% N1 (SEM ?subsem) (agr ?agr))) ;; The subcat isn't being used for the simple form yet - if we need it, we'll have to 
+      ;;  modifier the ordinal/cardinal rules
+      (subcat ?qof) (qcomp ?qcomp) (cardinality +)
+      ;(restr (& (size ?s)))
+      (restr (& (size ?v)))
+      (NoSimple ?ns) (npmod ?npm))
+     -quanp-card-def-simple-spec>
+     (head (quanp (CARDINALITY +) (SEM ?sem) (VAR ?v) (agr ?agr) (MASS (? m COUNT BARE)) (STATUS ?status)
+		 (Nobarespec ?nbs) (NoSimple ?ns) (npmod ?npm) (restr ?restr)
+		 (qof ?qof) (qcomp ?qcomp)
+		 (LF ?s))))
+    
     ;;  building quans with "not", e.g., not all trucks
     ;; not too/so much??
     ((quan (SEM ?sem) (VAR ?v) (MASS ?m) (AGR ?agr) (STATUS ?status) (Nobarespec ?nbs) (LF ?s) (negation +)
@@ -4125,21 +4189,22 @@
     ;; "generated" names get status "GNAME" in the next rule
     ((NP (SORT PRED)
          (var ?v) (Class ?lf) (sem ?sem) (agr ?agr) (case (? cas sub obj -))
-         (LF (% Description (Status Ont::Name) (var ?v) (Sort Individual)
+         (LF (% Description (Status Ont::definite) (var ?v) (Sort Individual)
                 (class ?lf) (lex ?l) (sem ?sem) 
                 (transform ?transform)  (generated ?gen)
-		(constraint ?restr) (name-of ?l)
+		(constraint ?con)
                 ))
          (mass count) (name +) (simple +) (time-converted ?tc) (generated ?gen)
 	 (postadvbl ?gen) ;; swift -- setting postadvl to gen as part of eliminating gname rule but still allowing e.g. truck 1
          )
-     -np-name>
+     -np-name> 0.995
      (head (name (lex ?l) (sem ?sem) (var ?v) (agr ?agr) (lf ?lf) (class ?class)
 	    (full-name ?fname) (time-converted ?tc)
 	    ;; swift 11/28/2007 removing gname rule & passing up generated feature (instead of restriction (generated -))
 	    (generated ?gen)  (transform ?transform) (title -)
 	    (restr ?restr)
-	    )))
+	    ))
+     (add-to-conjunct (val (:name-of ?l)) (old ?restr) (new ?con)))
 
     
     ;; number or number-and-letter sequences
@@ -4165,7 +4230,8 @@
 	((NP (SORT PRED) (CLASS ?c) (VAR *) (sem ?s) (case (? case SUB OBJ))  (headless +) (agr (? agr 3s 3p))
 	     (lf (% description (status (? st definite definite-plural)) ;(status ?spec)
 		    (var *) ;(sort SET) 
-		    (Class ont::Any-sem) (agr (? agr 3s 3p))
+		    (class ont::referential-sem) ;(Class ont::Any-sem)
+		    (agr (? agr 3s 3p))
 		    (constraint ?con)
 		    (sem ?s)
 		    ))
@@ -5355,19 +5421,18 @@
 ;;(cl:setq *grammar6*
 (parser::augment-grammar
       '((headfeatures
-	 (NP SPEC QUANT ;VAR
-	     agr PRO Changeagr lex headcat transform wh)
-	 (N1 sem lf lex headcat transform set-restr refl abbrev nomobjpreps kr-type))
+	 (NP SPEC QUANT VAR agr PRO Changeagr lex headcat transform wh)
+	 (N1 lf lex headcat transform set-restr refl abbrev nomobjpreps kr-type)) ;sem and var not headfeatures
     
    ;; certains NAMES (esp in the biology domain) are really treat like mass nouns
-	;;   we need this for constructions wwith modifiers, like "phosphorylated HER3"
+	;;   we need this for constructions with modifiers, like "phosphorylated HER3"
     ((n1 (SORT PRED)
       (var ?v) (Class ?lf) (sem ?sem) (agr ?agr)
       ;;(agr 3s) 
       (case (? cas sub obj -))
       (derived-from-name +)  ;; we do this so that this N1 doesn't go through the bare-np rule, since we have the name-np already. But this N1 does allow relative clauses, as in "Ras that is bound to Raf"
       (status ont::name) (lex ?l) (restr ?con) ;(restr (& (w::name-of ?l)))
-      (mass ?mass)
+      (mass MASS)
       )
      -n1-from-name> 1
      (head (name (lex ?l) (sem ?sem) 
@@ -5387,7 +5452,7 @@
 	;; e.g., the first three, the three,
 	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?subcatsem) (case (? case SUB OBJ)) (N-N-MOD +) (AGR 3p) (Headless +)
 	    (lf (% description (status ?status) (var ?v) (sort SET)
-		    (Class ont::ANY-SEM)
+		    (class ont::referential-sem) ;(Class ont::ANY-SEM)
 		    (constraint ?con)
 		    (sem ?subcatsem) 
 		    ))
@@ -5405,7 +5470,7 @@
 	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?subcatsem) (case (? case SUB OBJ)) (N-N-MOD +) (AGR 3p) 
 	     (lf (% description (status ?newspec) ;(status ?status)
 		    (var ?v) (sort SET)
-		    (Class ont::ANY-SEM)
+		    (class ont::referential-sem) ;(Class ont::ANY-SEM)
 		    (constraint ?restr)
 		    (sem ?subcatsem) 
 		    ))
@@ -5421,7 +5486,8 @@
 	;;  e.g., some (as in some pain)  -- we treat these as pre-referential
 	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?subcatsem) (case (? case SUB OBJ))
 	     (lf (% description (status ?spec) (var ?v) (sort INDIVIDUAL)
-		    (Class ont::Any-sem) (constraint ?restr)
+		    (class ont::referential-sem) ;(Class ont::Any-sem)
+		    (constraint ?restr)
 		    (sem ?subcatsem) 
 		    ))
 	  (headless +)
@@ -5436,7 +5502,7 @@
 	;;  only allowed with determiners that involve a SIZE
 	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?s) (case (? case SUB OBJ))
 	     (lf (% description (status ?spec) (var ?v) (sort SET)
-		    (Class ont::Any-sem)
+		    (class ont::referential-sem) ;(Class ont::Any-sem)
 		    (constraint ?con)
 		    (sem ?s)
 		    ))
@@ -5475,7 +5541,7 @@
 	;;  The green two, the largest three, ...
 	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?s) (case (? case SUB OBJ))  (headless +)
 	     (lf (% description (status ?spec) (var ?v) (sort SET) 
-		    (Class ont::Any-sem) 
+		    (class ont::referential-sem) ;(Class ont::Any-sem) 
 		    (constraint ?con)
 		    (sem ?s)
 		    ))
@@ -5491,31 +5557,25 @@
 	 (append-conjuncts (conj1 (& (size ?card) (mods ?advvar))) (conj2 ?restr) (new ?con))
 	 )
 
-	;; one more, two less, ....
-
-	((NP (SORT PRED) (CLASS ?c) (VAR *) (sem ?ssem) (case (? case SUB OBJ))  (headless +) ; var not headfeature
-	     (lf (% description (status ont::*pro*) ; (status ont::indefinite-plural)
-		    (var *) (sort SET) 
-		    (Class ont::Any-sem) 
-		    (constraint (& (size ?card) (quan ?s)))
-		    (sem ?ssem) ;(sem ?s)
-		    ))
-	  (postadvbl +)
+	;; Eat (some/two) more.
+	((N1 (SORT PRED) (class ont::referential-sem) ;(CLASS ONT::ANY-SEM)
+	     (VAR *) (sem ?sem2)
+	     (case (? case SUB OBJ))  (headless +) ; sem and var not headfeature
+	     (restr (& (MOD (% *PRO* (status ont::f) (class ?s) (VAR **) (constraint (& (figure *) (ground (% *PRO* (var ***) (class ont::referential-sem) ;(class ONT::ANY-SEM)
+													      )) ))))))
+	  (postadvbl +) (agr ?agr) (mass ?mass) 
 	  )
-	 -NP-missing-head-number-more> .96
-	 (head (cardinality (var ?card))) ;(VAR ?v)))
-	 (quan (CARDINALITY -) (SEM ?sem) (VAR ?v) (agr ?agr) (comparative ?cmp) (QOF ?qof) (QCOMP ?Qcomp)
-		 (MASS count) (Nobarespec ?nbs) (NoSimple ?ns) (npmod ?npm) (negation ?neg)
-		 (LF ?s))
+	 -N1-missing-head-more> .96
+	 (head (quan (CARDINALITY -) (VAR ?v) (agr ?agr) (comparative +) (QOF ?qof) (QCOMP ?Qcomp)
+		 (MASS ?mass) (Nobarespec ?nbs) (NoSimple ?ns) (npmod ?npm) (negation ?neg)
+		 (LF ?s)))
 	 )
-
 	
-
 
 	;;  The green two in the corner, the largest three of the houses, ...
 	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?s) (case (? case SUB OBJ)) (headless +)
 	     (lf (% description (status ?spec) (var ?v) (sort SET)
-		    (Class ont::Any-sem) 
+		    (class ont::referential-sem) ;(Class ont::Any-sem) 
 		    (constraint ?con)
 		    (sem ?s)
 		    ))

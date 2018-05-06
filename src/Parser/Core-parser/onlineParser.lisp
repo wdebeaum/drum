@@ -916,6 +916,7 @@
     r))
 
 
+
 (defun filter-cached-messages (messages)     ;; this is disabled and just returns messages
   (let* ((noms-with-senses (remove-if-not #'(lambda (x) (and (message-domain-specific-info x)
 							     (intersection (message-pos x) '(W::NAME w::N))))
@@ -1010,10 +1011,12 @@
   "we are looking for sequences using punctuation that are not domain known entities already"
   (let ((sequences (remove-if-not #'(lambda (x)
 				      (and (not (message-domain-specific-info x))
+					   (member (message-pos x) '(w::NAME W::N))
 					   (let ((w  (coerce (message-word x) 'list)))
 					     (and (> (list-length w) 1)
 						  (intersection *sequence-separators* w  :test #'string-equal)))))
-				      msgs)))
+				  msgs)))
+    (format t "~%~%SEQUENCES FOUND ARE ~S" sequences)
     (if (null sequences)
 	msgs
 	(preprocess-sequences (filter-out-messages #'(lambda (x y) 

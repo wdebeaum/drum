@@ -782,7 +782,8 @@
   
   (defun new-*-needed ()
     (setq new-*-gensym-needed t)
-    (setq new-**-gensym-needed t))
+    (setq new-**-gensym-needed t)
+    (setq new-***-gensym-needed t))
   
   (defun get-var-for-* nil
     (when new-*-gensym-needed

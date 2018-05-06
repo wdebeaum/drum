@@ -4078,7 +4078,8 @@
 ;; close to, near
 (define-type ONT::distance-val
  :parent ONT::spatial
- :sem (F::abstr-obj (:required (f::scale ont::linear-scale))(:default (F::gradability +)))
+ :sem (F::abstr-obj (:required (f::scale ont::distance-scale))
+		    (:default (F::gradability +)))
  :arguments ((:REQUIRED ONT::neutral ((? th f::situation f::phys-obj f::abstr-obj)))
              (:ESSENTIAL ONT::neutral1 ((? cth f::situation f::phys-obj f::abstr-obj)))
 ;	     (:OPTIONAL ONT::PROPERTY)
@@ -4222,9 +4223,10 @@
 )
 
 (define-type ONT::adequacy-VAL
- :parent  ONT::quantity-related-property-val
- :arguments ((:ESSENTIAL ONT::GROUND)
-             )
+   :sem (F::Abstr-obj (F::scale ONT::adequacy-val))
+   :parent  ONT::quantity-related-property-val
+   :arguments ((:ESSENTIAL ONT::GROUND)
+	       )
  )
 
 (define-type ONT::number-related-property-val
@@ -4279,17 +4281,17 @@
  )
 
 (define-type ONT::inadequate
- :parent ONT::adequacy-VAL
- :arguments ((:required ONT::GROUND (f::phys-obj (f::type ont::material)))
-	     (:required ONT::FIGURE ((? xx  F::phys-obj abstr-obj))))
- ; Words: (W::SHORT W::INADEQUATE W::INSUFFICIENT)
- :wordnet-sense-keys ("inadequate%5:00:00:insufficient:00" "insufficient%3:00:00" "scarce%3:00:00")
- ; Antonym: ONT::ADEQUATE (W::SUFFICIENT W::ADEQUATE W::ENOUGH)
- )
+  :parent ONT::adequacy-VAL
+  :arguments ((:required ONT::GROUND (f::phys-obj (f::type ont::material)))
+	      (:required ONT::FIGURE ((? xx  F::phys-obj abstr-obj))))
+					; Words: (W::SHORT W::INADEQUATE W::INSUFFICIENT)
+  :wordnet-sense-keys ("inadequate%5:00:00:insufficient:00" "insufficient%3:00:00" "scarce%3:00:00")
+					; Antonym: ONT::ADEQUATE (W::SUFFICIENT W::ADEQUATE W::ENOUGH)
+  )
 
 (define-type ONT::ADEQUATE
- :parent ONT::adequacy-VAL
- ; Words: (W::SUFFICIENT W::ADEQUATE W::ENOUGH)
+  :parent ONT::adequacy-VAL
+					; Words: (W::SUFFICIENT W::ADEQUATE W::ENOUGH)
  :wordnet-sense-keys ("sufficient%3:00:00" "adequate%5:00:00:sufficient:00")
  ; Antonym: ONT::inadequate (W::SHORT W::INADEQUATE W::INSUFFICIENT)
  )
