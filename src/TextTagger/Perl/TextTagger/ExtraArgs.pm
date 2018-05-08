@@ -67,7 +67,7 @@ sub add_extra_args {
   for my $tag (@tags) {
     if ($tag->{type} eq 'sense' and exists($tag->{'penn-pos'}) and
         grep { $_->{start} == $tag->{start} } @sentences) {
-      my @proper_penn_pos = grep /^NNP/, @{$tag->{'penn-pos'}};
+      my @proper_penn_pos = grep /^NNP$/, @{$tag->{'penn-pos'}};
       if (@proper_penn_pos) {
 	push @tags, +{
 	  type => 'pos',
