@@ -22,7 +22,7 @@ while (<>) {
 
 while (<>) {
   chomp;
-  /^(..)(?:   |$)/ or die "malformed line: $_";
+  /^(..)(?: [\. ] |$)/ or die "malformed line: $_";
   my ($code, $line) = ($1, $');
   if ($code eq 'ID') {
     $current_name = uncapitalize($line);

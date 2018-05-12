@@ -32,12 +32,14 @@
      (LF-PARENT ONT::near)
     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::Ptype W::to))))
     )
+    #|
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("close%3:00:05"))
      (example "it was a close call")
      (LF-PARENT ONT::near)
      (templ adj-theme-templ)
      (SEM (f::orientation ont::less) (f::intensity ont::hi))
      )
+    |#
     )
    )
 ))

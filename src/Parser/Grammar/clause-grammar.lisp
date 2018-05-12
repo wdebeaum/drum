@@ -2607,7 +2607,7 @@
    ; The dog?
    ((utt (lf (% speechact (var *) (class ont::SA_YN-QUESTION) (constraint (& (content ?v) (punctype ?p))) )) (var *)
 	 (punc +) (punctype ?p)) 
-    -np-utt-simple-q> .98
+    -np-utt-simple-q> .97
     (head (np (wh -) (sort (? x pred unit-measure)) (complex -) (var ?v) (sem ($ ?!type))))
     (punc (punctype ?p) (lex w::punc-question-mark))
     )
@@ -2615,7 +2615,7 @@
    ; What next?  What color?
    ((utt (lf (% speechact (var *) (class ont::SA_WH-QUESTION) (constraint (& (content ?v) (focus ?v) (punctype ?p))) )) (var *)
 	 (punc +) (punctype ?p))
-    -np-utt-simple-whq> .98
+    -np-utt-simple-whq> .97
     (head (np (wh Q) (sort (? x pred unit-measure)) (complex -) (var ?v) (sem ($ ?!type))))
     (punc (punctype ?p) (lex w::punc-question-mark))
     )
@@ -2623,7 +2623,7 @@
    ; How big?
    ((utt (lf (% speechact (var *) (class ont::SA_WH-QUESTION) (constraint (& (content ?v) (focus ?v) (punctype ?p))) )) (var *)
 	 (punc +) (punctype ?p)) 
-    -how-adj-utt-simple-q> .98
+    -how-adj-utt-simple-q> .97
     (head (adjp (wh Q) (sort (? x pp-word)) (complex -) (var ?v) (sem ($ ?!type))))
     (punc (punctype ?p) (lex w::punc-question-mark))
     )
@@ -2640,7 +2640,7 @@
 					   (tma (& (negation +)))
 					   ))
      )
-     -not-np-s> .98
+     -not-np-s> .97
      (neg)
      (head (np (wh -) (sort (? x pred unit-measure)) (gerund -) (var ?v) (sem ?sem) (sem ($ ?!type))))
      )

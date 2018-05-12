@@ -5,9 +5,11 @@
 (define-words :pos W::n
  :words (
   (W::GOOSE
-  (senses
+   (wordfeats (W::morph (:forms (-s-3p) :plur W::geese)))
+   (senses
 	   ((LF-PARENT ONT::GOOSE)
-	    (TEMPL MASS-PRED-TEMPL)
+	    ;(TEMPL MASS-PRED-TEMPL)
+	    (templ COUNT-PRED-TEMPL)
 	    )
 	   )
 )

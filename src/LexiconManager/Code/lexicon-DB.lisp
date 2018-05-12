@@ -832,11 +832,12 @@ intersection of an entry's tags and these tags is non-empty."
 			     ;;(this-sem (sense-definition-sem x))			    
 			     ;;(orientation (cadr (assoc 'f::orientation this-sem)))
 			     (templ (retrieve-template (sense-definition-templ x)))
-			     (templ-feats (remove-if #'(lambda (x) (eq (car x) 'w::SUBCAT))
+			     (templ-feats (remove-if #'(lambda (x) (eq (car x) 'w::SUBCAT)) ; e.g., to remove (subcat -) from adj-theme-templ
 						     (if (syntax-template-p templ)
 							 (syntax-template-syntax templ))))
 			     (comp-op (cadr (assoc 'w::comp-op wfeats)))
 			     )
+				
 			(case comp-op 
 			  ((ont::less w::less)
 			   (setf (sense-definition-lf-parent x)
@@ -849,7 +850,12 @@ intersection of an entry's tags and these tags is non-empty."
 				   (:er 'ONT::more-VAL)
 				   (:est 'ONT::max-VAL)))))
 			(setf (sense-definition-templ x)
-			      (case feat (:er 'COMPAR-TEMPL) (:est 'SUPERL-TEMPL)))
+			      (case feat
+				(:er (if (assoc 'subcat (syntax-template-mappings templ))
+					 'COMPAR-TWOSUBCATS-TEMPL 'COMPAR-TEMPL))
+				(:est (if (assoc 'subcat (syntax-template-mappings templ))
+					 'SUPERL-TWOSUBCATS-TEMPL 'SUPERL-TEMPL))
+				))
 			(setf (sense-definition-syntax x)
 			      (list* (list 'W::FUNCTN `,fscale)
 				     (list 'W::FIGURE-SEM (get-figure-sem-from-type lf-parent

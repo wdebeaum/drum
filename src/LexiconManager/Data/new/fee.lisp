@@ -2,6 +2,7 @@
 ;;;; W::FEE
 ;;;;
 
+#|
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
   (W::FEE
@@ -10,6 +11,7 @@
      (META-DATA :ORIGIN CALO :ENTRY-DATE 20040204 :CHANGE-DATE NIL :wn ("fee%1:21:00")
       :COMMENTS HTML-PURCHASING-CORPUS))))
 ))
+|#
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
