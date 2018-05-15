@@ -3959,7 +3959,8 @@
 
 ; sunrise, sunset, dawn, dusk, twilight
 (define-type ont::nychthemeron-event
-  :parent ont::event-defined-by-activity
+;  :parent ont::event-defined-by-activity
+  :parent ont::natural-event
   )
 
 (define-type ONT::nonverbal-expression
@@ -4314,7 +4315,7 @@
 		))
 
 (define-type ont::weigh
- :wordnet-sense-keys ("weigh%2:42:01" "weigh%2:42:00" "librate%2:42:00")
+ :wordnet-sense-keys ("weigh%2:42:00" "librate%2:42:00")
     :parent ont::register
     :sem (f::situation (f::cause f::agentive) (f::trajectory -))
     )
@@ -4656,3 +4657,10 @@
     :parent ont::vacation
   )
 |#
+
+(define-type ont::MEASURE
+  :wordnet-sense-keys ("weigh%2:42:01")
+  :parent ONT::event-of-state
+  :arguments ((:essential ont::extent (f::abstr-obj (f::scale ?!sc)))
+             )
+  )

@@ -134,6 +134,48 @@
   #'(lambda (args)
       (check-if-bound (get-fvalue args 'w::arg1))))
 
+(defun check-if-bound (var)
+  "succeeds only if arg is bound to something not equal to -"
+  (if (var-p var) 
+    (and (var-values var) (not (eq (var-values var) '-)) *success*)
+    *success*))
+
+(define-predicate 'w::recompute-atype
+  #'(lambda (args)
+      (recompute-atype args)))
+  
+(defun recompute-atype (args)
+  (let ((atype (get-fvalue args 'w::atype))
+	(subcat (get-fvalue args 'w::subcat))
+	(subcat2  (get-fvalue args 'w::subcat2))
+	(result (get-fvalue args 'w::result))
+	)
+    (if (or (and (not (eq subcat '-)) (check-if-bound subcat) (constit-p (var-values subcat)) (not (var-p (second (assoc 'w::var (constit-feats (var-values subcat)))))))
+	    (and (not (eq subcat2 '-)) (check-if-bound subcat2) (constit-p (var-values subcat2)) (not (var-p (second (assoc 'w::var (constit-feats (var-values subcat2)))))))
+	    )
+	(match-vals nil result (read-expression '(? atp w::postpositive w::predicative-only)))
+      (match-vals nil result atype)
+      )
+   ))
+
+
+#|
+(define-predicate 'w::get-c-var
+  #'(lambda (args)
+      (get-c-var args)))
+  
+(defun get-c-var (args)
+  (let ((c (get-fvalue args 'w::c))
+	(result (get-fvalue args 'w::result))
+	)
+    (if (and (not (eq c '-)) (check-if-bound c) (constit-p (var-values c)))
+	(match-vals nil result (second (assoc 'w::var (constit-feats (var-values c)))))
+      (match-vals nil result nil)
+      )
+   ))
+|#
+
+
 (define-predicate 'w::recompute-spec
     #'(lambda (args)
 	(recompute-spec args)))
@@ -159,12 +201,6 @@
       )
    ))
 
-
-(defun check-if-bound (var)
-  "succeeds only if arg is bound to something not equal to -"
-  (if (var-p var) 
-    (and (var-values var) (not (eq (var-values var) '-)) *success*)
-    *success*))
 
 (define-predicate 'w::NOT-UNIFY
   #'(lambda (args)

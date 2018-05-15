@@ -3102,7 +3102,7 @@
 (parser::augment-grammar
   '((headfeatures
      (vp vform agr cont comp3 postadvbl aux modal auxname lex headcat transform subj-map template)     
-     (s vform neg comp3 cont  lex headcat transform )
+     (s vform neg comp3 cont headcat transform )
      )
     
      ;; rules for auxiliaries with elided vp complement: will i?, can i?, do i? 
@@ -3119,7 +3119,7 @@
      (head (aux 
 	    (tma-contrib ?tma-contrib)
 	    (sem-contrib ?sem-contrib)
-	    (ellipsis +) 
+	    (ellipsis +) (lex ?lx)
 	    (contraction -)
 	    (sem ?sem) (vform ?vf) (vform (? vf pres past fut))
 	    (var ?v) (tma ?tma1) (agr ?a)
@@ -3162,7 +3162,7 @@
 	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
             (comp3 ?comp)
 	    (comp3 (% ?s4 (class ?class)
-		      (var ?v)
+		      (var ?v)  (lex ?lx)
 		      (case (? ccase obj -)) (subj-map ?rsubjmap) 
 		      (constraint ?con) (subjvar ?subjvar) (tma ?tma1)
 		      (var ?compvar) (sem ?compsem) (gap ?gap) (subj (% ?s1 (lex ?subjlex) (case sub) (var ?subjvar)
@@ -3183,6 +3183,8 @@
      (change-feature-values (old ?compsem) (new ?newsem) (newvalues ?sem-contrib))
      )
 
+
+    ;; e.g., can I not open the door?
     ((s (stype ynq) (gap ?gap) (lex ?lx)
       (subjvar ?subjvar) (dobjvar ?dobjvar) (var ?v)
       (lf (% prop  (var ?v) (class ?class) (sem ?newsem)
@@ -3204,7 +3206,7 @@
 	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
             (comp3 ?comp)
 	    (comp3 (% ?s4 (class ?class)
-		      (var ?v)
+		      (var ?v)  (lex ?lx)
 		      (case (? ccase obj -)) (subj-map ?rsubjmap) 
 		      (constraint ?con) (subjvar ?subjvar) (tma ?tma1)
 		      (var ?compvar) (sem ?compsem) (gap ?gap) (subj (% ?s1 (lex ?subjlex) (case sub) (var ?subjvar)
@@ -3288,7 +3290,7 @@
      -ynq-aux-modal-nocomp-neg> .96 ;; only execute if we have to so we don't explode the search space
      (head (aux 
 	    (tma-contrib ?tma-contrib)
-	    (sem-contrib ?sem-contrib)
+	    (sem-contrib ?sem-contrib)  (lex ?lx)
 	    (ellipsis +) (contraction -)
 	    (sem ?sem) (vform ?vf) (vform (? vf pres past fut))
 	    (var ?v) (tma ?tma1) (agr ?a)
@@ -3310,19 +3312,19 @@
 (parser::augment-grammar
  '((headfeatures
     (vp agr neg iobj dobj comp3 part cont  tense-pro gap subj subjvar aux modal auxname headcat advbl-needed template)
-    (vp- lex headcat template result)
+    (vp- headcat template result)
     )
    
    ;; aux rule for auxilliaries that change the sem features of the phrase
    ;; e.g. he has left; she is leaving; she can work
    ;; test: the dog can bark.
    ;; test: the dog has chased the cat.
-   ((vp- (subj ?subj) (main -) (subjvar ?subjvar) (dobjvar ?dobjvar) (lex ?l)
+   ((vp- (subj ?subj) (main -) (subjvar ?subjvar) (dobjvar ?dobjvar)
      (var ?var) (class ?class) (gap ?gap) 
      (constraint ?con1)
      (tma ?newtma)
      (postadvbl +) (agr ?a)
-     (sem ?newsem)
+     (sem ?newsem) (lex ?lex)
      (vform ?vform) (transform ?transform)
      (aux +) (auxname ?auxname) 
      (subj-map ?lsubj-map) 
@@ -3334,7 +3336,7 @@
 	   (tma-contrib ?tma-contrib)
 	   (sem-contrib ?sem-contrib)
 	   (ellipsis -) ;; (contraction -)
-	   (lex ?l)
+	  
 	   (lf ?lf)
 	   (vform ?vform)
 	   (agr ?a)
@@ -3344,7 +3346,7 @@
 	   (comp3 ?comp) 
 	   (comp3 (% vp- (class ?class)  (constraint ?con1) (tma ?tma1) (var ?var)
 		     (case (? ccase obj -)) (var ?compvar)  
-		     (gap ?gap)		     
+		     (gap ?gap)	(lex ?lex)	     
 		     (sem ?compsem) ;; (sem ($ f::situation (aspect (? !asp f::indiv-level))))  ;; constraints are in lf
 		     (subjvar ?subjvar) (dobjvar ?dobjvar) (transform ?transform)
 		     (subj ?subj)
@@ -3369,10 +3371,10 @@
    ;; add (modality ont::xx) & (negation +) to tma
    ;; test: the dog won't bark.
    ;; test: the dog won't chase the cat.
-    ((vp- (subj ?subj) (subjvar ?subjvar) (dobjvar ?dobjvar) (lex ?l)
+    ((vp- (subj ?subj) (subjvar ?subjvar) (dobjvar ?dobjvar)
       (var ?v) (class ?cl) (gap -) 
       (constraint ?con1)
-      (tma ?newtma)
+      (tma ?newtma) (lex ?lex)
       (postadvbl +) (agr ?a) (sem ?compsem)
       (vform ?vform) (transform ?trans)
       (aux +)  (modal +)
@@ -3384,7 +3386,6 @@
 	    (tma-contrib ?tma-contrib)
 	    (sem-contrib ?sem-contrib)
 	    (ellipsis -) (neg -)
-	    (lex ?l)
 	    (vform ?vform) (vform (? vf past pres fut)) ;; double matching for 'do', since tense not marked in lexicon
 	    (agr ?a) 
 	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
@@ -3394,7 +3395,7 @@
 		      (case (? ccase obj -)) (var ?compvar)  ;;(sem ?compsem) -- needed for bug in unifier
 		      (gap -) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
 		      (subjvar ?subjvar) (dobjvar ?dobjvar) (transform ?trans)
-		      (advbl-needed -)
+		      (advbl-needed -) (lex ?lex)
 		      ))
 	    (subj-map ?lsubj-map) (comp3-map ?comp3-map)
 	    ))

@@ -19,7 +19,6 @@
              (:optional ONT::REASON ((? pi f::phys-obj f::abstr-obj f::situation)))
              (:OPTIONAL ONT::GROUND)
              (:optional ont::standard)
-             (:optional ont::norole)
              )
  )
 

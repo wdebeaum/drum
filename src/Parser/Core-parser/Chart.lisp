@@ -988,7 +988,7 @@ separate instances of the chart/parser.")
 				       (combine-score oldscore score)))
 		  (t
 		   (values cl bndgs oldscore))))
-	  (remove-null-prefix (cdr cl) bndgs))
+	  (remove-null-prefix (cdr cl) bndgs oldscore))
       (values nil bndgs oldscore)))
 
 (defun combine-score (old new)

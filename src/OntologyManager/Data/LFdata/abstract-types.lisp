@@ -358,7 +358,8 @@
  :arguments ((:REQUIRED ONT::FIGURE)
 	     (:REQUIRED ONT::GROUND)
 	     (:optional ont::neutral)
-	     (:optional ont::neutral1))  ;; some relations based on verbs use this
+	     (:optional ont::neutral1)  ;; some relations based on verbs use this
+	     (:optional ont::norole))
  :sem (F::abstr-obj (:required)
 		    (:default (f::intensity ont::hi)))
  )

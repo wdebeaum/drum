@@ -6,7 +6,8 @@
  :words (
   (W::weigh
    (SENSES
-    ((LF-PARENT ONT::weigh)
+    (;(LF-PARENT ONT::weigh)
+     (LF-PARENT ONT::MEASURE)
      (SEM (F::Aspect F::indiv-level) (F::Time-span F::extended))
      (TEMPL neutral-extent-xp-templ)
      (example "the truck weighs five lbs")

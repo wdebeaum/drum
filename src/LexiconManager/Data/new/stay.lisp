@@ -8,11 +8,13 @@
   (W::stay
    (SENSES
     ;;;; I've simplified this - the one new sense covers all the examples we had
+    #|
     ((LF-PARENT ONT::STAY)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL agent-theme-complex-subjcontrol-templ)
      (example "the truck stayed at the depot")
      )
+    |#
     ((LF-PARENT ONT::STAY)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL agent-TEMPL)
