@@ -63,8 +63,10 @@
  :words (
   ((W::IN W::NEED)
    (SENSES
-    ((LF-PARENT ONT::physical-reaction)
+    (;(LF-PARENT ONT::physical-reaction)
+     (LF-PARENT ONT::desirous)
      (TEMPL postpositive-ADJ-experiencer-theme-TEMPL (XP (% W::PP (W::Ptype W::of))))
+     (example "I am in need of entertainment")
      )
     )
    )

@@ -429,7 +429,8 @@
 			     (error "No WN lex file for POS=~a synset-offset=~s" pos-char synset-offset)
 			   ))
 		   )
-	      (list (make-pathname :defaults bd :name filename :type "lisp"))
+	      (list (truename (make-pathname
+				:defaults bd :name filename :type "lisp")))
 	      ))
 	  ;; sense key: lemma%ss_type:lex_filenum:lex_id:head_word:head_id
 	  ((and pct-pos (= 4 (length colon-poss)))
@@ -445,8 +446,8 @@
 	        (declare (ignore _))
 	      (unless row
 	        (error "No WN lex file for lex-filenum=~s (from sense-key=~a)" lex-filenum name))
-	      (list (make-pathname
-			:defaults bd :name (second row) :type "lisp"))
+	      (list (truename (make-pathname
+				:defaults bd :name (second row) :type "lisp")))
 	      ))
 	  ;; abbreviated sense key: lemma%ss_type:lex_filenum:lex_id
 	  ((and pct-pos (= 2 (length colon-poss)))
@@ -465,8 +466,8 @@
 		  for (lex-filenum filename row-pos-char first-sso last-sso)
 		   in *wn-lex-file-table*
 		  when (char= pos-char row-pos-char)
-		    collect (make-pathname
-				:defaults bd :name filename :type "lisp")
+		    collect (truename (make-pathname
+				:defaults bd :name filename :type "lisp"))
 		  ))
 	  (t
 	    (error "Unknown WordNet symbol format: ~s" sym))
