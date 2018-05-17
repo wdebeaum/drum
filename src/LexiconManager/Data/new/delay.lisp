@@ -8,7 +8,7 @@
      (wordfeats (W::morph (:forms (-vb) :nom w::delay)))
    (SENSES
     ((meta-data :origin calo :entry-date 20070514 :change-date 20090504 :comments nil)
-     (LF-PARENT ONT::decrease)
+     (LF-PARENT ONT::delay)
      (TEMPL agent-affected-xp-templ)
      (example "delay the process")
      )

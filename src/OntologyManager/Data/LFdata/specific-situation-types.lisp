@@ -873,14 +873,15 @@
 ;;; I kept them from the original hierarchy
 ;;; They didn't fit under FRAMENET frames
 (define-type ONT::LOCATED-MOVE-STATE
- :parent ONT::event-of-action
- :sem (F::SITUATION (F::trajectory -))
- :arguments ((:essential ont::agent)
-	     (:ESSENTIAL ONT::location (F::Phys-obj (F::Object-Function F::Place)))
-	     (:essential ont::formal)   ;; stay in motion, stay happy, ...
-             )
- )
-
+    :parent ONT::event-of-action
+    :comment "a state of (passively) maintaining some object's state (e.g., position, possession)"
+    :sem (F::SITUATION (F::trajectory -))
+    :arguments ((:essential ont::agent)
+		(:ESSENTIAL ONT::location (F::Phys-obj (F::Object-Function F::Place)))
+		(:essential ont::formal)   ;; stay in motion, stay happy, ...
+		)
+    )
+#||
 (define-type ONT::STOP-MOVE
  :wordnet-sense-keys ("park%2:35:00")
  :parent ONT::LOCATED-MOVE-STATE
@@ -889,7 +890,7 @@
              (:OPTIONAL ONT::agent)
              ;;(:OPTIONAL ONT::agent (F::phys-obj (F::intentional +)) (:implements cause))
              )
- )
+ )||#
 
 ;; marriage, birthday
 (define-type ONT::social-event
@@ -1288,12 +1289,13 @@
 ;; this will be keep, continue, go on, proceed and so forth
 (define-type ont::activity-ongoing
   :wordnet-sense-keys ("maintain%2:40:10" "keep%2:40:10" "save%2:40:03" "keep%2:40:09" "hold_open%2:40:00" "keep_open%2:40:00" "maintain%2:34:00" "keep%2:34:00" "sustain%2:34:00" "keep_on%2:41:00" "keep%2:41:02" "continue%2:41:00" "retain%2:41:01" "maintain%2:31:00" "keep%2:31:00" "observe%2:31:00" "hold%2:42:00" "maintain%2:42:00" "keep%2:42:00" "continue%2:42:01" "go_on%2:42:00" "proceed%2:42:00" "go_along%2:42:00" "keep%2:42:07" "persist%2:42:01" "welter%2:31:00" "sustain%2:42:01" "keep_up%2:33:00")
-    :parent ont::event-of-action
-    :sem (f::situation (:default (f::aspect f::dynamic) (f::cause f::phenomenal)) (:required (f::trajectory -)))
-    :arguments ((:essential ont::formal (f::situation)) ;; this would be the interview which went well
-		(:essential ont::neutral) 
-		(:optional ont::agent ((? agt f::phys-obj f::abstr-obj))) 
-		))
+  :parent ont::event-of-action
+  :comment "actively doing something to maintain a state (i.e., involves an agent)"
+  :sem (f::situation (:default (f::aspect f::dynamic) (f::cause f::phenomenal)) (:required (f::trajectory -)))
+  :arguments ((:essential ont::formal (f::situation)) ;; this would be the interview which went well
+	      (:essential ont::neutral) 
+	      (:optional ont::agent ((? agt f::phys-obj f::abstr-obj))) 
+	      ))
 
 ; merged into RESTART
 #|
@@ -1315,7 +1317,7 @@
 ;;; When something appears, there are no agents
 (define-type ONT::appear
  :wordnet-sense-keys ("appear%2:30:00" "appear%2:30:02")
- :parent ONT::LOCATED-MOVE-STATE
+ :parent ONT::event-of-undergoing-action
  :sem (F::Situation (F::Cause F::Phenomenal))
  :arguments ((:optional ont::affected ((? tp f::phys-obj f::abstr-obj)))
 	     )
@@ -1324,7 +1326,7 @@
 ;;; When something appears, there are no agents
 (define-type ONT::disappear
  :wordnet-sense-keys ("disappear%2:30:00" "go_down%2:34:00")
- :parent ONT::LOCATED-MOVE-STATE
+ :parent ONT::event-of-undergoing-action
  :sem (F::Situation (F::Cause F::Phenomenal))
  :arguments ((:optional ont::affected ((? tp f::phys-obj f::abstr-obj)))
 	     )
@@ -2342,7 +2344,7 @@
 
 (define-type ONT::place-in-position
  :comment "placing an object in a certain position: e.g., lean, sit, stand,  ..."
- :wordnet-sense-keys ("lean%2:35:00" "set_down%2:35:00" "seat%2:35:00" "stand%2:35:01" "perch%2:35:10")
+ :wordnet-sense-keys ("lean%2:35:00" "set_down%2:35:00" "seat%2:35:00" "stand%2:35:01" "perch%2:35:10" "park%2:35:00")
  :parent ONT::PUT
  )
 
@@ -4026,18 +4028,19 @@
  )
 
 (define-type ONT::wait
- :wordnet-sense-keys ("wait%2:42:00" "await%2:31:00")
- :parent ONT::LOCATED-MOVE-STATE
- :sem (F::SITUATION (F::Aspect F::Unbounded) (F::Cause F::Force) (F::Time-span F::Extended))
- :arguments ((:OPTIONAL ONT::Agent (F::Phys-obj (F::Mobility F::Movable)))
-;             (:OPTIONAL ONT::time-duration-rel (F::time (F::time-function f::time-unit)))
-;	     (:OPTIONAL ONT::time-duration-rel (F::abstr-obj (F::scale f::duration-scale)))
-	     (:OPTIONAL ONT::EXTENT (F::abstr-obj (F::scale ont::duration-scale)))
+    :wordnet-sense-keys ("wait%2:42:00" "await%2:31:00")
+    :comment "events involving waiting about, loitering, etc"
+    :parent ONT::LOCATED-MOVE-STATE
+    :sem (F::SITUATION (F::Aspect F::Unbounded) (F::Cause F::Force) (F::Time-span F::Extended))
+    :arguments ((:OPTIONAL ONT::Agent (F::Phys-obj (F::Mobility F::Movable)))
+					;             (:OPTIONAL ONT::time-duration-rel (F::time (F::time-function f::time-unit)))
+					;	     (:OPTIONAL ONT::time-duration-rel (F::abstr-obj (F::scale f::duration-scale)))
+		(:OPTIONAL ONT::EXTENT (F::abstr-obj (F::scale ont::duration-scale)))
              ;;; wait for john
-             (:OPTIONAL ONT::Formal (F::phys-obj))
-             (:OPTIONAL ONT::effect (F::situation))
-             )
- )
+		(:OPTIONAL ONT::Formal (F::phys-obj))
+		(:OPTIONAL ONT::effect (F::situation))
+		)
+    )
 
 (define-type ONT::Record
  :wordnet-sense-keys ("maintain%2:32:04" "keep%2:32:00" "take%1:04:00")
@@ -4371,6 +4374,11 @@
  :parent ONT::hindering
  )
 
+(define-type ONT::delay
+ :wordnet-sense-keys ("hold_off%23:42:00")
+ :parent ONT::hindering
+ )
+
 (define-type ONT::Prohibit
     :wordnet-sense-keys ("abolish%2:41:00")
     :parent ONT::inhibit-effect
@@ -4640,7 +4648,8 @@
  :wordnet-sense-keys ("come%2:38:04" "get%2:38:00" "arrive%2:38:00" "arrive_at%2:38:00")
  :parent ont::event-of-action ;; 20120529 GUM change new parent
  :sem (F::SITUATION (:required (F::Aspect F::Bounded)))
- :arguments ((:ESSENTIAL ONT::location (F::Phys-obj (F::Object-Function (? obf2 F::Place f::representation))))
+ :arguments ((:required ONT::agent (F::Phys-obj (F::type (? obf2 ont::information-function-object ont::phys-object))))
+	     (:ESSENTIAL ONT::location (F::Phys-obj (F::Object-Function (? obf2 F::Place f::representation))))
              )
  )
 

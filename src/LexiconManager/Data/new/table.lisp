@@ -13,6 +13,7 @@
      )
     ((meta-data :origin plow :entry-date 20060303 :change-date nil :wn ("table%1:14:00") :comments pq)
      (LF-PARENT ONT::chart)
+     (preference .98)
 ;;     (templ other-reln-templ) let it be a mods
      (example "here is the table of results")
      )

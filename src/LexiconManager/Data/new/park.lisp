@@ -18,7 +18,7 @@
   (W::PARK
    (SENSES
     ((EXAMPLE "He parked the truck")
-     (LF-PARENT ONT::STOP-MOVE)
+     (LF-PARENT ONT::place-in-position)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      )
     

@@ -470,7 +470,7 @@
 
    ;; fragment predicates, e.g., severe, very sad, ...
    (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :CONTENT ?!vv)
-    (ONT::F ?!vv ONT::PROPERTY-VAL)
+    (ONT::F ?!vv ONT::PROPERTY-VAL :figure -)
     -frag->
     (ONT::ANSWER :who *USER* :to *ME* :what ?!vv)
     )
@@ -484,8 +484,9 @@
 
    ;;  fragment adverbials (e.g., locations, in my ankles, above the stove)
    (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :CONTENT ?!vv)
-    (ONT::F ?!vv (? typ ONT::SPATIAL-LOC ONT::position-reln))
-    -frag-location->
+    (ONT::F ?!vv (? typ ONT::SPATIAL-LOC ONT::position-reln ont::path) :ground ?gd)
+    (?spec ?gd ?gd-type)
+    -frag-location-path->
     (ONT::ANSWER :who *USER* :to *ME* :what ?!vv)
     )
 
@@ -760,8 +761,8 @@
 	   ;; that's right/that could be right
 	  ((ONT::SPEECHACT ?!a ONT::SA_TELL :content ?!cc)
 	   (ONT::F ?!cc ONT::HAVE-PROPERTY :formal ?!dd :neutral ?!x :force (? force ONT::TRUE ONT::ALLOWED ONT::REQUIRED))
-	   (ONT::PRO ?!x (ONT::REFERENTIAL-SEM W::THAT))
-	   (ONT::F ?!dd (:* ONT::EVALUATION-VAL (?x W::RIGHT)))
+	   (ONT::PRO ?!x (:* ONT::REFERENTIAL-SEM W::THAT))
+	   (ONT::F ?!dd (:* ONT::correctness-val (? x2 W::RIGHT)))
 	   ;;(CALL (ACTIVE-PROPOSAL-ON-STACK ?prop ?context))
 	   -confirm2>
 	   (ONT::ACCEPT :who *USER* :to *ME* :what ?!x))
@@ -769,8 +770,8 @@
 	  ;; that's not right
 	  ((ONT::SPEECHACT ?!a ONT::SA_TELL :content ?!cc)
 	   (ONT::F ?!cc ONT::HAVE-PROPERTY :FORMAL ?!dd :neutral ?!x :force (? force ONT::FALSE ONT::PROHIBITED))
-	   (ONT::PRO ?!x (ONT::REFERENTIAL-SEM W::THAT))
-	   (ONT::F ?!dd (:* ONT::EVALUATION-VAL W::RIGHT))
+	   (ONT::PRO ?!x (:* ONT::REFERENTIAL-SEM W::THAT))
+	   (ONT::F ?!dd (:* ONT::correctness-val W::RIGHT))
 	   ;;(CALL (ACTIVE-PROPOSAL-ON-STACK ?prop ?context))
 	   -confirm2a>
 	   (ONT::REJECT :who *USER* :to *ME* :what ?x))
@@ -778,7 +779,7 @@
 	  ;; that's good/okay
 	  ((ONT::SPEECHACT ?a ONT::SA_TELL :content ?!cc)
 	   (ONT::F ?!cc ONT::HAVE-PROPERTY :FORMAL ?!dd :neutral ?!x :force (? force ONT::TRUE ONT::ALLOWED ONT::REQUIRED))
-	   (ONT::PRO ?!x (ONT::REFERENTIAL-SEM W::THAT))
+	   (ONT::PRO ?!x (:* ONT::REFERENTIAL-SEM W::THAT))
 	   (ONT::F ?!dd (:* ONT::GOOD (? xx W::GOOD W::OKAY)))
 	   ;;(CALL (ACTIVE-PROPOSAL-ON-STACK ?prop ?context))   deleted for demo - readd
 	   -confirm3>
@@ -794,7 +795,7 @@
 	  ;; that's not good/okay
 	  ((ONT::SPEECHACT ?a ONT::SA_TELL :content ?!cc)
 	   (ONT::F ?!cc ONT::HAVE-PROPERTY :FORMAL ?!dd  :NEUTRAL ?!x :force (? force ONT::FALSE ONT::PROHIBITED))
-	   (ONT::PRO ?!x (ONT::REFERENTIAL-SEM W::THAT))
+	   (ONT::PRO ?!x (:* ONT::REFERENTIAL-SEM W::THAT))
 	   (ONT::F ?!dd (:* ONT::GOOD (? xx W::GOOD W::OKAY)))
 	   ;;(CALL (ACTIVE-PRO
 	   -confirm3a>
@@ -803,7 +804,7 @@
 	  ;; that's bad
 	  ((ONT::SPEECHACT ?a ONT::SA_TELL :content ?!cc)
 	   (ONT::F ?!cc ONT::HAVE-PROPERTY :FORMAL ?!dd  :neutral ?!x :force (? force ONT::TRUE ONT::ALLOWED ONT::REQUIRED))
-	   (ONT::PRO ?!x (ONT::REFERENTIAL-SEM W::THAT))
+	   (ONT::PRO ?!x (:* ONT::REFERENTIAL-SEM W::THAT))
 	   (ONT::F ?!dd (:* ONT::BAD W::BAD))
 	   ;;(CALL (ACTIVE-PROPOSAL-ON-STACK ?prop ?context))
 	   -confirm4>
@@ -812,7 +813,7 @@
 	  ;; that's not bad
 	  ((ONT::SPEECHACT ?a ONT::SA_TELL :content ?!cc)
 	   (ONT::F ?!cc ONT::HAVE-PROPERTY :FORMAL ?!dd  :neutral ?!x :force ONT::FALSE)
-	   (ONT::PRO ?!x (ONT::REFERENTIAL-SEM W::THAT))
+	   (ONT::PRO ?!x (:* ONT::REFERENTIAL-SEM W::THAT))
 	   (ONT::F ?!dd (:* ONT::BAD W::BAD))
 	   ;;(CALL (ACTIVE-PROPOSAL-ON-STACK ?prop ?context))
 	   -confirm4a>
@@ -822,7 +823,7 @@
 	  ((ONT::SPEECHACT ?a ONT::SA_TELL :content ?!cc)
 	   (ONT::F ?!cc ONT::HAVE-PROPERTY :FORMAL ?!dd  :neutral ?!x :force (? force ONT::TRUE ONT::ALLOWED ONT::REQUIRED))
 	   (ONT::PRO ?!x ONT::REFERENTIAL-SEM)
-	   (ONT::F ?!dd (:* ONT::EVALUATION-VAL W::WRONG))
+	   (ONT::F ?!dd (:* ONT::correctness-val W::WRONG))
 	   ;;(CALL (ACTIVE-PROPOSAL-ON-STACK ?prop ?context))
 	   -confirm5>
 	   (ONT::REJECT :who *USER* :to *ME* :what ?!x))

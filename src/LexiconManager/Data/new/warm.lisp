@@ -24,7 +24,7 @@
    (SENSES
     ((meta-data :origin plow :entry-date 20060713 :change-date 20090731 :wn ("warm%3:00:01") :comments plow-req)
       (LF-PARENT ONT::WARM)
-      (TEMPL LESS-ADJ-TEMPL)
+      ;(TEMPL LESS-ADJ-TEMPL)
       )
     ((meta-data :origin step :entry-date  20081027  :change-date nil :comments nil)
      (example "the atmosphere is warm / a warm atmosphere")

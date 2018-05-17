@@ -22,7 +22,7 @@
      (TEMPL agent-goal-affected-templ (xp (% w::pp (w::ptype (? t w::with))))) ; like load
      )
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("keep-15.2") :wn ("stock%2:40:00"))
-     (LF-PARENT ONT::retain)
+     (LF-PARENT ONT::put-away)
      (example "do you stock organic building supplies")
  ; like keep
      )

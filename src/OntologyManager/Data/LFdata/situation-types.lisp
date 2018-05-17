@@ -4,6 +4,7 @@
     :parent ont::event-of-action
     :comment "abstract event of doing something: behave, activity, ..."
     :arguments ((:required ont::agent  ((? cz F::Phys-obj f::abstr-obj f::situation)))
+		(:optional ont::result (F::abstr-obj (F::type ont::property-val)))   ;; this is the generic restriction on what RESULTs can be
 		(:optional ONT::NOROLE)
 		))
 
@@ -36,7 +37,6 @@
  :sem (F::Situation (F::Cause (? cz F::Force f::agentive)) (F::Trajectory -))
  :arguments ((:ESSENTIAL ONT::agent ((? oc F::Phys-obj F::Abstr-obj F::Situation)))
 	     (:optional ont::affected ((? aff F::SITUATION F::ABSTR-OBJ F::Phys-obj)))
-	     (:optional ont::result ((? res1 F::SITUATION F::ABSTR-OBJ)))
 	     (:optional ont::formal ((? res2 F::SITUATION F::ABSTR-OBJ)
 				     (F::type (? ftype ONT::SITUATION-ROOT ONT::PROPERTY-VAL));; ONT::POSITION-RELN)) ;; here for now while we decide the FORMAL/RESULT issue
 				     )))
@@ -48,7 +48,7 @@
  :sem (F::Situation (F::Cause (? cz F::Force f::agentive)) (F::Trajectory -))
  :comment "an AGENT prevents some activity from occuring or proposition from becoming true"
  :arguments ((:ESSENTIAL ONT::affected ((? oc F::Phys-obj F::Abstr-obj F::Situation)))  
-             (:ESSENTIAL ONT::result ((? eoc2 F::situation)))
+             
              (:OPTIONAL ONT::formal ((? eoc3 F::situation)))
              (:OPTIONAL ONT::agent ((? aoc F::phys-obj F::abstr-obj)) (:implements cause))
              )
@@ -619,9 +619,8 @@
  :wordnet-sense-keys ("enter%2:38:00" "come_in%2:38:02" "get_into%2:38:00" "get_in%2:38:01" "go_into%2:38:00" "go_in%2:38:00" "move_into%2:38:00" "enter%2:36:00")
  :parent ont::event-of-action ;ont::motion
  :arguments ((:REQUIRED ONT::affected ((? ttype f::phys-obj)))
-	     (:ESSENTIAL ont::result (F::phys-obj (F::spatial-abstraction (? sa F::spatial-region))
+	     (:ESSENTIAL ont::neutral (F::phys-obj (F::spatial-abstraction (? sa F::spatial-region))
 					       (F::object-function (? of f::spatial-object f::building))))
-	     (:optional ont::neutral)
 	     )
  )
 

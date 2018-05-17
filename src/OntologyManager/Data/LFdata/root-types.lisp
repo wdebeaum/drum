@@ -169,9 +169,10 @@
     :sem (F::abstr-obj )
     :arguments ((:REQUIRED ONT::FIGURE)
 		(:ESSENTIAL ONT::GROUND)
-		(:ESSENTIAL ONT::GROUND1)
 		(:ESSENTIAL ONT::SCALE)
 		(:OPTIONAL ONT::NOROLE)
+		(:OPTIONAL ONT::COMPAR)
+		(:OPTIONAL ONT::REFSET)
 		)
    )
 

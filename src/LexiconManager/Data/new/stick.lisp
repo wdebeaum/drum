@@ -25,7 +25,7 @@
    (wordfeats (W::morph (:forms (-vb) :past W::stuck)))
    (SENSES
     ((example "let's stick with the mac")
-     (LF-PARENT ONT::stay)
+     (LF-PARENT ONT::retain)
      ;;(SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL agent-theme-complex-subjcontrol-templ)
      (meta-data :origin calo :entry-date 20041122 :change-date nil :comments caloy2)

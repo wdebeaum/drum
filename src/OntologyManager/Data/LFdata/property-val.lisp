@@ -2467,9 +2467,10 @@
 
 ;; dimensional-property
 (define-type ont::dimensional-property-val
- :parent ont::property-val 
- :comment "properties pertaining to dimensions and measurable extents"
-)
+    :parent ont::property-val
+    :sem (F::abstr-obj (F::scale ont::dimensional-scale))
+    :comment "properties pertaining to dimensions and measurable extents"
+    )
 
 (define-type ont::position-on-dimension-scale-val
  :parent ont::dimensional-property-val 
@@ -2477,14 +2478,14 @@
 )
 
 (define-type ont::high-val
- :parent ont::position-on-dimension-scale-val 
- :wordnet-sense-keys ("high%3:00:02" "high%3:00:01" )
-)
+    :parent ont::position-on-dimension-scale-val
+    :wordnet-sense-keys ("high%3:00:02" "high%3:00:01" )
+    )
 
 (define-type ont::low-val
- :parent ont::position-on-dimension-scale-val 
- :wordnet-sense-keys ("low%3:00:01" "low%3:00:02" )
-)
+    :parent ont::position-on-dimension-scale-val
+    :wordnet-sense-keys ("low%3:00:01" "low%3:00:02" )
+    )
 
 (define-type ont::medium-val
  :parent ont::position-on-dimension-scale-val 

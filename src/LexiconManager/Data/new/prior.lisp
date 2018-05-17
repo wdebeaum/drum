@@ -31,12 +31,14 @@
       (example "show me departures prior to 5 pm / the meeting")
      (TEMPL binary-constraint-np-TEMPL)
      )
+    #|
     ((LF-PARENT ONT::event-time-rel)
      (TEMPL BINARY-CONSTRAINT-adj-postpos-TEMPL)
      (meta-data :origin cernl :entry-date 20110223 :change-date nil :comments bionlp)
      (example "the device placed prior to that")
      (preference .98)
      )
+    |#
     )
    )
 ))

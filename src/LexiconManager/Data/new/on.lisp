@@ -124,12 +124,14 @@
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      (example "he departed on Monday")
      )
+    #|
     ((LF-PARENT ONT::time-on-rel)
      (TEMPL BINARY-CONSTRAINT-adj-postpos-TEMPL)
      (meta-data :origin cernl :entry-date 20110114 :change-date nil :comments hpi-acn-3)
      (example "the device placed on that day")
      (preference .98)
      )
+    |#
     ((LF-PARENT ONT::ON)
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      (example "it is on the corner")

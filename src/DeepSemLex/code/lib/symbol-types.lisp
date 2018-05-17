@@ -150,6 +150,7 @@
     affected-create affected-create1 affected-result1 co-agent co-result co-theme effect-implicit from-loc material obj-val place predicate property purpose-implicit result-val spatial-loc stative theme time-duration-rel to-loc via
     ;; some extras output by src/Systems/gloss/test.lisp
     co-theme patient partner means method
+    compar refset
     ))
 
 (common-lisp::in-package :dsl)

@@ -500,6 +500,33 @@
     (SUBCAT (:parameter xp (:default (% W::cp (W::ctype W::s-finite) (W::subj ?lsubj)))) ONT::formal optional)
     ))
 
+  (count-subcat-that-subjunctive-optional-templ
+   (SYNTAX(W::AGR (? a W::3s W::3p)) (W::MORPH (:FORMS (-S-3P))) (W::CASE (? cas W::sub W::obj)) (W::SORT 
+      W::PRED) (w::allow-deleted-comp +) (W::MASS W::COUNT))
+   (ARGUMENTS
+    (SUBCAT (:parameter xp (:default (% W::cp (W::ctype W::s-that-subjunctive) (W::subj ?lsubj)))) ONT::formal optional)
+    ))
+
+  (count-subcat-that-subjunctive-templ
+   (SYNTAX(W::AGR (? a W::3s W::3p)) (W::MORPH (:FORMS (-S-3P))) (W::CASE (? cas W::sub W::obj)) (W::SORT 
+      W::PRED) (w::allow-deleted-comp +) (W::MASS W::COUNT))
+   (ARGUMENTS
+    (SUBCAT (:parameter xp (:default (% W::cp (W::ctype W::s-that-subjunctive) (W::subj ?lsubj)))) ONT::formal)
+    ))
+
+   (count-subcat-to-optional-templ
+      (SYNTAX(W::AGR (? a W::3s W::3p)) (W::MORPH (:FORMS (-S-3P))) (W::CASE (? cas W::sub W::obj)) (W::SORT 
+      W::PRED) (w::allow-deleted-comp +) (W::MASS W::COUNT))
+     (ARGUMENTS
+    (SUBCAT (:parameter xp (:default (% W::cp (W::ctype W::s-to) (W::subj ?lsubj)))) ONT::formal optional)
+    ))
+
+  (count-subcat-to-templ
+      (SYNTAX(W::AGR (? a W::3s W::3p)) (W::MORPH (:FORMS (-S-3P))) (W::CASE (? cas W::sub W::obj)) (W::SORT 
+      W::PRED) (w::allow-deleted-comp +) (W::MASS W::COUNT))
+     (ARGUMENTS
+    (SUBCAT (:parameter xp (:default (% W::cp (W::ctype W::s-to) (W::subj ?lsubj)))) ONT::formal)
+    ))
 ; nobody uses this
 #|
   ;; reason for the appointment

@@ -17,11 +17,6 @@
  :words (
   (W::store
    (SENSES
-    ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("keep-15.2") :wn ("store%2:40:00" "store%2:40:02"))
-     (LF-PARENT ONT::retain)
-     (TEMPL agent-affected-xp-templ) ; like keep
-     (PREFERENCE 0.96)
-     )
     ((meta-data :origin calo :entry-date 20031219 :change-date nil :comments s11)
      (EXAMPLE "The truck stored the cargo")
      (LF-PARENT ONT::CONTAINMENT)

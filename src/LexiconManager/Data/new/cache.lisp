@@ -18,7 +18,7 @@
    (SENSES
     ((EXAMPLE "cache the webpage")
      (meta-data :origin task-learning :entry-date 20050825 :change-date nil :comments nil)
-     (LF-PARENT ONT::retain)
+     (LF-PARENT ONT::put-away)
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      )
     )

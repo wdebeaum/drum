@@ -27,12 +27,14 @@
      (example "show me departures after 5 pm")
      (TEMPL binary-constraint-np-TEMPL)
      )
+    #|
     ((LF-PARENT ONT::event-time-rel)
      (TEMPL BINARY-CONSTRAINT-adj-postpos-TEMPL)
      (meta-data :origin cernl :entry-date 20110114 :change-date nil :comments hpi-acn-3)
      (example "the device placed after that day")
      (preference .98)
      )
+    |#
     ((LF-PARENT ONT::pos-after-in-trajectory)
      (meta-data :origin beetle :entry-date 20090406 :change-date nil :comments nil)
      (example "after the bridge, turn left" "the bulbs that come after the switch affect it" "people before us in the queue")

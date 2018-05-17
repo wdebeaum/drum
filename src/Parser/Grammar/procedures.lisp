@@ -140,6 +140,15 @@
     (and (var-values var) (not (eq (var-values var) '-)) *success*)
     *success*))
 
+(define-predicate 'w::NOT-BOUND
+  #'(lambda (args)
+      (check-if-not-bound (get-fvalue args 'w::arg1))))
+
+(defun check-if-not-bound (var)
+  "succeeds only if arg is not bound to something not equal to -"
+  (if (not (check-if-bound var)) *success*)
+  )
+
 (define-predicate 'w::recompute-atype
   #'(lambda (args)
       (recompute-atype args)))
@@ -150,8 +159,10 @@
 	(subcat2  (get-fvalue args 'w::subcat2))
 	(result (get-fvalue args 'w::result))
 	)
-    (if (or (and (not (eq subcat '-)) (check-if-bound subcat) (constit-p (var-values subcat)) (not (var-p (second (assoc 'w::var (constit-feats (var-values subcat)))))))
-	    (and (not (eq subcat2 '-)) (check-if-bound subcat2) (constit-p (var-values subcat2)) (not (var-p (second (assoc 'w::var (constit-feats (var-values subcat2)))))))
+    (if (or (and (not (eq subcat '-)) (var-p subcat) ;(check-if-bound subcat)
+		 (constit-p (var-values subcat)) (not (var-p (second (assoc 'w::var (constit-feats (var-values subcat)))))))
+	    (and (not (eq subcat2 '-)) (var-p subcat2) ;(check-if-bound subcat2)
+		 (constit-p (var-values subcat2)) (not (var-p (second (assoc 'w::var (constit-feats (var-values subcat2)))))))
 	    )
 	(match-vals nil result (read-expression '(? atp w::postpositive w::predicative-only)))
       (match-vals nil result atype)
@@ -174,6 +185,35 @@
       )
    ))
 |#
+
+(define-predicate 'w::recompute-more-less
+  #'(lambda (args)
+      (recompute-more-less args)))
+  
+(defun recompute-more-less (args)
+  (let ((adv-op (get-fvalue args 'w::adv-op))
+	(adj-op (get-fvalue args 'w::adj-op))
+	(result (get-fvalue args 'w::result))
+	)
+    (cond
+     ((eq adv-op 'ONT::MORE-VAL)
+      (if (eq adj-op 'w::less) 
+	  (match-vals nil result 'ONT::LESS-VAL)
+	(match-vals nil result 'ONT::MORE-VAL)))
+     ((eq adv-op 'ONT::LESS-VAL)
+      (if (eq adj-op 'w::less) 
+	  (match-vals nil result 'ONT::MORE-VAL)
+	(match-vals nil result 'ONT::LESS-VAL)))
+     ((eq adv-op 'ONT::MAX-VAL)
+      (if (eq adj-op 'w::less) 
+	  (match-vals nil result 'ONT::MIN-VAL)
+	(match-vals nil result 'ONT::MAX-VAL)))
+     ((eq adv-op 'ONT::MIN-VAL)
+      (if (eq adj-op 'w::less) 
+	  (match-vals nil result 'ONT::MAX-VAL)
+	(match-vals nil result 'ONT::MIN-VAL)))
+      )
+   ))
 
 
 (define-predicate 'w::recompute-spec

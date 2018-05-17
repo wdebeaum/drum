@@ -1435,7 +1435,7 @@
     ; Happily I skipped along the path.
     ((Utt (LF (% SPEECHACT (class ?sa) (var ?v) (constraint ?adv))) (var ?v) (punctype ?pn))
      -disc-comma-attitude> 
-     (advbl (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -) (WH -)
+     (advbl (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -) (WH -) (sort PRED)
       (sem ($ f::abstr-obj (f::type (? t ont::valuation-attribute-val ont::emotional-val ont::evoking-emotional-val)))))
      (punc (lex w::punc-comma))
      (head (Utt (ended -) (var ?v) (LF (% SPEECHACT (class ?sa) (constraint ?adv1))) (punc -) (punctype ?pn)))
@@ -1443,7 +1443,7 @@
 
     ((Utt (LF (% SPEECHACT (class ?sa) (var ?v) (constraint ?adv))) (var ?v) (punctype ?pn))
      -disc-attitude> 
-     (advbl (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -) (WH -)
+     (advbl (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -) (WH -) (sort PRED)
       (sem ($ f::abstr-obj (f::type (? t ont::valuation-attribute-val ont::emotional-val ont::evoking-emotional-val)))))
      (head (Utt (ended -) (var ?v) (LF (% SPEECHACT (class ?sa) (constraint ?adv1))) (punc -) (punctype ?pn)))
      (add-to-conjunct (val (MODS ?advv)) (old ?adv1) (new ?adv)))

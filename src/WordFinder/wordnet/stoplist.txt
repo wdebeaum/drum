@@ -3071,6 +3071,7 @@ lie_down%2:38:00::
 light_up%2:30:00::
 limber_up%2:35:00::
 lock_up%2:35:00::
+look_for%2:35:00::
 lost%1:14:00::
 low-level%5:00:00:low:02
 low-level%3:00:04::
@@ -3167,6 +3168,7 @@ sixth%1:24:00::
 sixth%1:23:00::
 one-sixth%1:23:00::
 sixth%1:10:00::
+
 a%1:10:00::
 b%1:10:00::
 c%1:10:00::
@@ -3192,3 +3194,7 @@ v%1:10:00::
 x%1:10:00::
 y%1:10:00::
 z%1:10:00::
+
+closer%1:18:00::
+closer%1:18:01::  ; this is possible but really interferes with the adj sense
+least%1:09:00::

@@ -917,8 +917,18 @@
       ;; e.g., the fact is he left.
       (propositional-equal-templ
        (ARGUMENTS
-      	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) (w::subcat-map ont::formal)) ONT::neutral)
+      	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) (w::subcat-map ont::formal)
+		  (w::subcat (% w::CP (w::ctype w::s-that))))
+	       ONT::neutral)
 	(LOBJ (% W::CP (w::ctype w::s-that)) ONT::neutral1)
+	))
+
+      (goal-equal-templ
+       (ARGUMENTS
+      	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) (w::subcat-map ont::formal)
+		  (w::subcat (% W::CP (w::ctype w::s-to))))
+	       ONT::neutral)
+	(LOBJ (% W::CP (w::ctype w::s-to)) ONT::neutral1)
 	))
 
       (neutral-neutral-equal-templ
@@ -3102,24 +3112,25 @@
     ))
 
    (compar-templ
-   (SYNTAX (W::SORT W::PRED) (W::ATYPE W::CENTRAL) (W::ARG ?arg) (W::ALLOW-post-n1-subcat +) ) ;(W::allow-deleted-comp +) )
+   (SYNTAX (W::SORT W::PRED) (W::ATYPE W::CENTRAL) (W::ARG ?arg) (W::COMPARATIVE W::+) (W::ALLOW-post-n1-subcat +) ) ;(W::allow-deleted-comp +) )
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::FIGURE)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::than)))) ONT::GROUND optional)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::than)))) ONT::COMPAR optional)
     (subcat2 (% -) ONT::NOROLE)
     ))
 
    (compar-twosubcats-templ
-    (SYNTAX (W::SORT W::PRED) (W::ATYPE W::CENTRAL) (W::ARG ?arg) (W::ALLOW-post-n1-subcat +)
+    (SYNTAX (W::SORT W::PRED) (W::ATYPE W::CENTRAL) (W::ARG ?arg) (W::COMPARATIVE W::+) (W::ALLOW-post-n1-subcat +)
 	    ;(W::allow-deleted-comp +)
 	    )
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::FIGURE)
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::than)))) ONT::GROUND optional) ; dummy: will be replaced in make-comparative
-    (subcat2 (:parameter xp2 (:default (% W::pp (W::ptype W::than)))) ONT::GROUND1 optional)
+    (subcat2 (:parameter xp2 (:default (% W::pp (W::ptype W::than)))) ONT::COMPAR optional)
     ))
   
 
+#| ; nobody uses this
   (compar-subcat-required-templ
    (SYNTAX (W::SORT W::PRED) (W::ATYPE W::CENTRAL) (W::ARG ?arg) (W::ALLOW-post-n1-subcat +)(W::allow-deleted-comp -))
    (ARGUMENTS
@@ -3127,13 +3138,14 @@
     (subcat  (% w::pp) ONT::GROUND)
     (subcat2 (% -) ONT::NOROLE)
     ))
+|#
 
   (superl-templ
    (SYNTAX (W::SORT W::PRED) (W::ATYPE W::CENTRAL) (W::COMPARATIVE W::SUPERL) (W::ARG ?arg) ;(W::allow-deleted-comp +)
 	   (W::ALLOW-post-n1-subcat +))
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::FIGURE)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::GROUND optional)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::REFSET optional)
     (subcat2 (% -) ONT::NOROLE)
     ))
 
@@ -3144,7 +3156,7 @@
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::FIGURE)
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::GROUND optional) ; dummy: will be replaced in make-comparative
-    (subcat2 (:parameter xp2 (:default (% W::pp (W::ptype W::of)))) ONT::GROUND1 optional)
+    (subcat2 (:parameter xp2 (:default (% W::pp (W::ptype W::of)))) ONT::REFSET optional)
     ))
 
   (adj-experiencer-theme-templ

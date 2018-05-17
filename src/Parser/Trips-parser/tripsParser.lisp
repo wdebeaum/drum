@@ -98,11 +98,13 @@
   "cost table is either modified for the next utterance only, or permanently. Default is next utterance only"
   (if (and (consp mods) (every #'consp mods))
       (if (eq duration 'permanent)
-      	  (setq *cost-table* (append (convert-to-package mods *ont-package*) *cost-table*))
+      	  (setq *cost-table* (append mods ;(convert-to-package mods *ont-package*)
+				     *cost-table*))
 	  (progn
 	    (setq *original-cost-table* *cost-table*)
 	    (setq *original-cost-table-was-modified* t)
-	    (setq *cost-table* (append (convert-to-package mods *ont-package*) *cost-table*))))
+	    (setq *cost-table* (append mods ;(convert-to-package mods *ont-package*)
+				       *cost-table*))))
       (format t "~% BAD format of MODS in ADJUST-COST-TABLE: ~S" mods)))
       
 

@@ -33,12 +33,14 @@
      (meta-data :origin step :entry-date 20080530 :change-date nil :comments nil)
      (example "the riot over the last week")
      )
+    #|
     (
      (LF-PARENT ONT::EVENT-DURATION-MODIFIER)
      (TEMPL binary-constraint-adj-postpos-templ)
      (meta-data :origin step :entry-date 20080530 :change-date nil :comments nil)
      (example "green over the last week")
      )
+    |#
     ((LF-PARENT ONT::more-than-rel)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      (example "purchases over five dollars")

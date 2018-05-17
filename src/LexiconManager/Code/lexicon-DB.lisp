@@ -835,7 +835,8 @@ intersection of an entry's tags and these tags is non-empty."
 			     (templ-feats (remove-if #'(lambda (x) (eq (car x) 'w::SUBCAT)) ; e.g., to remove (subcat -) from adj-theme-templ
 						     (if (syntax-template-p templ)
 							 (syntax-template-syntax templ))))
-			     (comp-op (cadr (assoc 'w::comp-op wfeats)))
+			     (comp-op (or (cadr (assoc 'w::comp-op wfeats))  ; in lexical entry
+					  (cadr (assoc 'w::comp-op templ-feats)))) ; in template
 			     )
 				
 			(case comp-op 
