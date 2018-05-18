@@ -1077,7 +1077,7 @@
 	      (WH -) (lf ?cl) 
 	    (LF (:* ?lfparent ?lfform))
 	    (lex ?lex)
-	    (sort ?sort) (subcat ?subcat) (subcat-map ?smap))) ; pass up sort and subcat so we can use n1-reln3 (e.g., the beat 1 of meausure 1)
+	    (sort (? !sort unit-measure)) (subcat ?subcat) (subcat-map ?smap))) ; pass up sort and subcat so we can use n1-reln3 (e.g., the beat 1 of meausure 1)
      (BOUND (arg1 ?cl))
      ;;     (nname (lex ?name))
      (rnumber (val ?name))
