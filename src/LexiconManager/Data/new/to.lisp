@@ -46,7 +46,8 @@
     ((LF-PARENT ONT::orients-to)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      (example "I see the building to my right")
-     (PREFERENCE 0.9) ;; prefer vp attachment
+     ;(PREFERENCE 0.9) ;; prefer vp attachment
+     (preference 0.97)
      )
     ))))
 

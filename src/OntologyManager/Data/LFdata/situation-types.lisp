@@ -4,7 +4,10 @@
     :parent ont::event-of-action
     :comment "abstract event of doing something: behave, activity, ..."
     :arguments ((:required ont::agent  ((? cz F::Phys-obj f::abstr-obj f::situation)))
-		(:optional ont::result (F::abstr-obj (F::type ont::property-val)))   ;; this is the generic restriction on what RESULTs can be
+
+		; need to figure out why James thinks this
+		;(:optional ont::result (F::abstr-obj (F::type ont::property-val)))   ;; this is the generic restriction on what RESULTs can be
+
 		(:optional ONT::NOROLE)
 		))
 

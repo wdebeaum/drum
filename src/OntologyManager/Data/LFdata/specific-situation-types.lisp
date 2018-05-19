@@ -4375,7 +4375,7 @@
  )
 
 (define-type ONT::delay
- :wordnet-sense-keys ("hold_off%23:42:00")
+ :wordnet-sense-keys ("hold_off%2:42:00")
  :parent ONT::hindering
  )
 

@@ -302,8 +302,8 @@
  :arguments ((:ESSENTIAL ONT::FIGURE ((? s F::Phys-obj F::situation)))
              ;(:REQUIRED ONT::GROUND (F::abstr-obj (f::scale ?!sc)))
 	     ;(:OPTIONAL ONT::GROUND1 (F::abstr-obj (f::scale ?!sc2)))
-             (:REQUIRED ONT::GROUND (F::abstr-obj (f::scale (? sc ont::linear-scale ont::number-scale ont::linear-extent-scale))))
-	     (:OPTIONAL ONT::GROUND1 (F::abstr-obj (f::scale (? sc2 ont::linear-scale ont::number-scale ont::linear-extent-scale))))
+             (:REQUIRED ONT::GROUND (F::abstr-obj (f::type (? t ont::length-unit ont::number)) (f::scale (? sc ont::linear-scale ont::number-scale ont::linear-extent-scale))))
+	     (:REQUIRED ONT::GROUND1 (F::abstr-obj (f::type (? t2 ont::length-unit ont::number)) (f::scale (? sc2 ont::linear-scale ont::number-scale ont::linear-extent-scale))))
              )
  )
 

@@ -452,7 +452,7 @@
  :arguments ((:ESSENTIAL ONT::FIGURE
 			 ;(F::Situation (f::aspect f::dynamic) (f::type (? t ont::event-of-creation ont::change)))) ; e.g., make, cut
 	                 (F::Phys-obj ))
-             (:REQUIRED ONT::GROUND (F::Phys-obj ))
+             (:REQUIRED ONT::GROUND (F::Phys-obj (f::type (? !t ont::cardinal-point ont::loc-wrt-orientation))))
              )
  )
 

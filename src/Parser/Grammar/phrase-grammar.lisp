@@ -1748,7 +1748,7 @@
 	;;  removed this to handle things like "computing services"
 	;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
       (sem ?n-sem) (derived-from-name -) ; names go through -name-n1>
-      (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -)   ;;  can't require COMPLEX - any more -- e.g., "p53 expression levels"  -- now we can!!
+      (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -)   ;;  can't require COMPLEX - any more -- e.g., "p53 expression levels"  -- now we can!! This goes through nom-rate instead.
       (SUBCAT ?ignore) (GAP -) (kr-type ?kr-type)
       (postadvbl -) (post-subcat -) 
       )
@@ -2645,8 +2645,7 @@
          (NP CASE MASS NAME agr SEM PRO Changeagr GAP ARGUMENT argument-map SUBCAT role lex headcat transform postadvbl refl gerund abbrev derived-from-name
 	  subj dobj subcat-map comp3-map)) ; CLASS not headfeatures
 
-	;; CLASSIFIER NPS - acts as UNIT-MEASURE specifiers 
-	;; e.g., a bunch (of grapes), a cup of water
+	;; Some units can appear before the number, 
 	; $10
 	((NP (LF (% description (STATUS ONT::INDEFINITE)
 		    (VAR ?v) (SORT unit-measure)
@@ -2657,7 +2656,7 @@
 	     (class ont::quantity) 
 	      (SPEC ont::INDEFINITE) (unit-spec +) (VAR ?v) (SORT unit-measure))
          -pre-unit-np-number-indef>
-	  (head (N (VAR ?v) (SORT attribute-unit) (Allow-before +) (LF (:* ?x ?unit))
+	  (head (N (VAR ?v) (SORT attribute-unit) (Allow-before +) (LF ?unit)
 		   (KIND -) (agr ?agr) (sem ?sem) (sem ($ f::abstr-obj (f::scale ?sc)))
 		   (argument ?argument) (RESTR ?restr)
 		   (post-subcat -)
@@ -4342,13 +4341,13 @@
       (sem ?sem) (mass count)
       (case (? case sub obj -)) ;; noms aren't case marked, allow any value except posessive
       (class ont::referential-sem)
-      (agent-nom -)
+      (agent-nom -) (complex ?complex)
       (restr (& (mod
 		 (% *pro* (status F) (class ?class) (constraint ?restr) (var ?v))))
       
 	     ))
      -agentnom1> 1
-     (head (n1  (agent-nom +)
+     (head (n1  (agent-nom +) (complex ?complex)
 		(var ?v) (gap -) (aux -) (agr ?agr) (sort pred)
 		(sem ?sem)  (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(class ?class) (transform ?transform)
@@ -5586,13 +5585,13 @@
    ;; numbers (only -- number sequences use np-sequenc1e>
    ((NP (SORT PRED)
      (var ?v) (class ONT::NUMBER) ;(Class ONT::ANY-SEM) 
-     (sem ($ (? ft f::abstr-obj) (f::container -) (F::scale ont::number) (F::tangible -))) ;;(sem ($ (? ft f::phys-obj f::abstr-obj))) 
+     (sem ($ (? ft f::abstr-obj) (f::container -) (F::scale ont::number-scale) (F::tangible -) (f::type ont::number))) ;;(sem ($ (? ft f::phys-obj f::abstr-obj))) 
      (case (? cas sub obj -))
      (LF (% Description (status ont::number) (var ?v) (Sort Individual) ;(lex ?lf)
 	    (CLASS ONT::NUMBER) ;;(Class ONT::REFERENTIAL-SEM) 
 	    (constraint ?restr) 
 	    (lex ?l) (val ?val)
-	    (sem ($ (? ft f::abstr-obj) (f::container -) (F::scale ont::number) (F::tangible -))) ; "container -" to discourage it from being used by IN-LOC for "in 2019"
+	    (sem ($ (? ft f::abstr-obj) (f::container -) (F::scale ont::number-scale) (F::tangible -) (f::type ont::number))) ; "container -" to discourage it from being used by IN-LOC for "in 2019"
 	    ;; (sem ($ (? ft f::phys-obj f::abstr-obj))) 
 	    (transform ?transform)
 	    ))

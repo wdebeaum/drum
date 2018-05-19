@@ -680,10 +680,10 @@
 	     (:optional ont::formal)
 	     ))
 
-;; percent
+;; three fold
 (define-type ONT::multiple
  :parent ONT::MATHEMATICAL-TERM
- :sem (F::Abstr-obj )
+ :sem (F::Abstr-obj (F::Scale ?sc))  ; "by three fold" needs scale
  )
 
 ;; percent

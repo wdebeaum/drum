@@ -121,11 +121,15 @@
 	      (remove nil
 		  (mapcar
 		      (lambda (sk)
-			(let ((ss (wf::get-synset-from-sense-key wf::wm sk)))
-			  (unless ss
+		        (handler-case
+			  (let ((ss (wf::get-synset-from-sense-key wf::wm sk)))
+			    (unless ss
+			      (format *error-output*
+				      "No synset for sense key ~S~%" sk))
+			    ss)
+			  (error (e)
 			    (format *error-output*
-			            "No synset for sense key ~S~%" sk))
-			  ss))
+			        "failed to get synset for sense key ~S~%" sk))))
 		      om::wordnet-sense-keys))
 	      :test #'wf::synsets-equal-p))
       (let ((children
