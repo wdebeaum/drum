@@ -451,7 +451,7 @@
    ;;  fragments that only work as answers:  e.g., somewhat, really
    (;;(ONT::SPEECHACT ?a ONT::SA_FRAGMENT :CONTENT ?!vv)
     (ONT::F ?!vv (? tt ONT::DEGREE-MODIFIER ONT::GRADE-MODIFIER ONT::QMODIFIER ONT::DEGREE-OF-BELIEF ONT::LIKELIHOOD))
-    -frag-degree>
+    -frag-degree> 0.98
     (ONT::ANSWER :who *USER* :to *ME* :what ?!vv :force ONT::TRUE)
     )
 
@@ -459,7 +459,7 @@
    (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :CONTENT ?!vv)
     (ONT::F ?!vv (? tt ONT::DEGREE-MODIFIER ONT::GRADE-MODIFIER  ONT::DEGREE-OF-BELIEF ONT::LIKELIHOOD ONT::QMODIFIER) :MODS (?!mm))
     (ONT::F ?!mm ONT::NEG)
-    -frag-degree-not>
+    -frag-degree-not> 0.98
     (ONT::ANSWER :who *USER* :to *ME* :what ?!vv :force ONT::FALSE)
     )
 
@@ -486,13 +486,13 @@
     )
 
    ((?spec ?!v ONT::NUMBER)
-    -frag-number> 
+    -frag-number> 0.98
     (ONT::ANSWER :who *USER* :to *ME* :what ?!v))
 
    ;; fragment predicates, e.g., severe, very sad, ...
    (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :CONTENT ?!vv)
     (ONT::F ?!vv ONT::PROPERTY-VAL :figure -)
-    -frag->
+    -frag-> 0.98
     (ONT::ANSWER :who *USER* :to *ME* :what ?!vv)
     )
 
@@ -507,7 +507,7 @@
    (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :CONTENT ?!vv)
     (ONT::F ?!vv (? typ ONT::SPATIAL-LOC ONT::position-reln ont::path) :ground ?gd)
     (?spec ?gd ?gd-type)
-    -frag-location-path->
+    -frag-location-path-> 0.98
     (ONT::ANSWER :who *USER* :to *ME* :what ?!vv)
     )
 
@@ -515,7 +515,7 @@
     (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :content ?!cc)
      (ONT::F ?!cc (:* ONT::EVENT-TIME-REL W::WHEN) :FIGURE ?!x)
      ;(ONT::IMPRO ?!x ?y)
-     -explicit-condition->
+     -explicit-condition-> 0.98
      (ONT::ANSWER :who *USER* :to *ME* :condition (when ?!x))
      )
 
@@ -523,14 +523,14 @@
    (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :content ?!vv)
     (ONT::F ?!vv (:* ONT::POS-CONDITION W::IF) :FIGURE ?!x :GROUND ?!val)
     (ONT::IMPRO ?!x ?y)
-    -explicit-condition1->
+    -explicit-condition1-> 0.98
     (ONT::ANSWER :who *USER* :to *ME* :condition (if ?!val))
     )
 
    ;; e.g., sometimes, occasionally, never
    (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :CONTENT ?!vv)
     (ONT::F ?!vv (? t ONT::FREQUENCY ONT::FREQUENCY-VAL))
-    -frag-frequency>
+    -frag-frequency> 0.98
     (ONT::ANSWER :who *USER* :to *ME* :content ?!vv)
     )
 
@@ -538,7 +538,7 @@
    (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :CONTENT ?!vv)
     (ONT::F ?!vv ONT::FREQUENCY :mod ?!n)
     (ONT::F ?!n ONT::NEG)
-    -frag-not-frequency>
+    -frag-not-frequency> 0.98
     (ONT::ANSWER :who *USER* :to *ME* :frequency ?!vv :force ONT::FALSE)
     )
 
@@ -546,7 +546,7 @@
    (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :CONTENT ?!vv)
     (ONT::F ?!vv ONT::EVENT-TIME-REL :mod ?!n)
     (ONT::F ?!n ONT::NEG)
-    -frag-not-time-loc>
+    -frag-not-time-loc> 0.98
     (ONT::ANSWER :who *USER* :to *ME* :time-loc ?!vv :force ONT::FALSE)
     )
    
@@ -561,7 +561,7 @@
    (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT :MODS (?!v1 ?!v2))
     (ONT::F ?!v1  (? xx ONT::FREQUENCY ONT::RESTRICTION))
     (ONT::F ?!v2 ONT::TIME-SPAN-REL)
-    -frag-frequency-implicit-condition>
+    -frag-frequency-implicit-condition> 0.98
     (ONT::ANSWER :who *USER* :to *ME* :frequency ?!v1 :condition ?!v2)
     )
    
@@ -585,14 +585,14 @@
    (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT  :CONTENT ?!c)
     (ONT::F ?!c ONT::MANNER  :MOD ?!mod)
     (ONT::F ?!mod ONT::DEGREE-MODIFIER)
-    -degree-manner-mod>
+    -degree-manner-mod> 0.98
      (ONT::ANSWER :who *USER* :to *ME* :what ?!c)
     )
 
    ;; well
    (;;(ONT::SPEECHACT ?a ONT::SA_PRED-FRAGMENT  :CONTENT ?!c)
     (ONT::F ?!c ONT::MANNER)
-    -degree-manner>
+    -degree-manner> 0.98
      (ONT::ANSWER :who *USER* :to *ME* :what ?!c)
     )
 

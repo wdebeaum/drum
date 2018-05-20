@@ -87,11 +87,38 @@ OFFLINE requests.")
         (LOGGING:chdir (second (get-keyword-arg msg :content))))
   :subscribe t)
 
+; made start-conversation the same as restart (except tell vs. request)
+(defcomponent-handler
+  '(tell &key :content (start-conversation . *))
+  #'(lambda (msg args)
+      (setq *parser-is-online* t)
+      (finish-output *error-output*)
+      (StartNewUtterance)
+      (initialize-settings) ; there are other settings not set here
+      (setq *original-cost-table* nil)
+      (setq *original-cost-table-was-modified* nil)
+      )
+  :subscribe t)
+
+(defcomponent-handler
+  '(request &key :content (restart . *))
+  #'(lambda (msg args)
+      (setq *parser-is-online* t)
+      (finish-output *error-output*)
+      (StartNewUtterance)
+      (initialize-settings)
+      (setq *original-cost-table* nil)
+      (setq *original-cost-table-was-modified* nil)	
+      )
+  :subscribe t)
+
+#|
 (defcomponent-handler
   '(request &key :content (restart . *))
   #'(lambda (msg args)
         (StartNewUtterance))
   :subscribe t)
+|#
 
 (defcomponent-handler
   '(request &key :content (offline . *))
@@ -100,12 +127,14 @@ OFFLINE requests.")
 	(finish-output *error-output*))
   :subscribe t)
 
+#|
 (defcomponent-handler
   '(request &key :content (restart . *))
   #'(lambda (msg args)
         (setq *parser-is-online* t)
 	(finish-output *error-output*))
   :subscribe t)
+|#
 
 (defcomponent-handler
   '(tell &key :content (end-paragraph . *))
