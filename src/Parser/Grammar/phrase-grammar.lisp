@@ -800,7 +800,7 @@
 	   (post-subcat -)
 	   )
      (add-to-conjunct (val (:MODS ?m)) (old ?r) (new ?con)))
-
+    
  #||   ;; Split phrases like "a larger apple that that
     ((N1 (RESTR ?con) (CLASS ?c) (SORT ?sort) (QUAL -) (COMPLEX +)
       (relc ?relc) (subcat ?subcat)
@@ -2243,9 +2243,9 @@
 
         ((NP (LF (% description (STATUS ?newspec) (VAR ?v)   ;;(SORT individual)
 		    (CLASS ?c) (CONSTRAINT ?con1)
-		    (sem ?sem)  (transform ?transform)
+		    (sem ?sem)  (transform ?transform) 
 		    ))
-             (SORT PRED) (VAR ?v) (CASE (? case SUB OBJ))
+             (SORT PRED) (VAR ?v) (CASE (? case SUB OBJ)) (complex ?complex)
 	    (wh ?w) (wh-var ?whv)
 	  )
          -np-indv> 1.0    ;; because determiners are such a closed class, they provide strong evidence for an NP - hence the 1.0 to help with large search spaces
@@ -2255,7 +2255,7 @@
          (head (N1 (VAR ?v) (SORT PRED) (CLASS ?c) (MASS ?m)
 		(KIND -) (agr ?agr) (RESTR ?r) (rate-activity-nom -)
 		(agent-nom -)   ;;  this rule can't apply to agent nominalizations directly (they must modified first using rule -agentnom1>
-		(sem ?sem) (transform ?transform)
+		(sem ?sem) (transform ?transform) (complex ?complex) ; need complex for two-np-conjunct
 		))
 	 (recompute-spec (spec ?spec) (agr ?agr) (result ?newspec))
 	 ;;(add-to-conjunct (val (SIZE ?card)) (old ?setr) (new ?setr1))
@@ -2561,7 +2561,7 @@
              (BARE-NP +) (name-or-bare ?nob)
 	     (simple +)
 	     )
-         -protein-name-constructor>
+         -protein-name-constructor> 0.995
          (head (N1 (SORT PRED) (MASS  count) (gerund -) (complex -) 
 		   (name-or-bare ?nob) (lex ?lex)
 		   (derived-from-name -)  ;; names already can become NPs by simpler derivations

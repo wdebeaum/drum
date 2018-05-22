@@ -190,12 +190,15 @@
  )
 
 (define-type ONT::PURPOSE
- :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (F::type (? t1 ont::event-of-action ont::event-of-awareness)))); maybe takes statives: This suffices for...
+ ;:parent ONT::SITUATION-MODIFIER
+ :parent ONT::SITUATION-OBJECT-MODIFIER ; take out of SITUATION-MODIFIER so we can have PHYS-OBJ
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? x F::phys-obj F::Situation)
+				      (F::type (? t1 ont::phys-object ont::event-of-action ont::event-of-awareness)))); maybe takes statives: This suffices for... ; takes phys-object: The pizza is for eating
 ;;             (:REQUIRED ONT::VAL (F::Situation (F::aspect F::dynamic)))
 	     ;; purposes don't have to be dynamic -- e.g. to store something, to remember, etc.
 ;	     (:REQUIRED ONT::GROUND ((? xx F::Situation f::abstr-obj f::phys-obj) (F::scale (? !sc ont::duration-scale))))
-	     (:REQUIRED ONT::GROUND ((? xx F::Situation f::abstr-obj f::phys-obj) (f::type (? !t ONT::ORGANISM)) (F::scale -)))
+	     (:REQUIRED ONT::GROUND ((? xx F::Situation f::abstr-obj f::phys-obj)
+				     (f::type (? !t ONT::ORGANISM)) (F::scale -)))
 	     ;; a separate role because it will be lower priority
 ;	     (:required ont::obj-val (f::abstr-obj)) ;; needed for non-situation ont::vals -- e.g., hit return for more results
 	    ;; (:required ont::REASON (f::abstr-obj)) ;; needed for non-situation ont::vals -- e.g., hit return for more results

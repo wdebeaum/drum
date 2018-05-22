@@ -417,7 +417,16 @@
       -ynq1> 
       (ONT::ASK-IF :who *USER* :to *ME* :what ?!rr)
       )
-        
+
+     ; Did you eat anything?
+     ((ONT::SPEECHACT ?!a ONT::SA_YN-QUESTION :CONTENT ?!rr)
+      (ONT::F ?!rr ?type)
+      (?spec ?!t ONT::REFERENTIAL-SEM :PROFORM w::anything)
+      -ynq2> 
+      (ONT::ASK-WHAT-IS :who *USER* :to *ME* :what ?!t :suchthat ?!rr)
+      )
+
+     
    #||   ;; I think this is unmotivated given we have -inform>
 
       ;;==========================================
