@@ -211,7 +211,7 @@
       )
 
      ;; e.g., Tell me/Let me know if there is/are...
-     ;; e.g., I want to know if (SA_TELL)
+     ;; e.g., I want to know if there is an orange block (SA_TELL)
      ((ONT::SPEECHACT ?x (? sa ONT::SA_REQUEST ONT::SA_TELL) :CONTENT ?!theme)
       (ONT::F ?!theme (? t3 ONT::TELL ONT::ALLOW ONT::WANT ONT::LOOK-UP) :FORMAL ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
       (ONT::F ?!n3 ONT::CLAUSE-CONDITION :CONTENT ?!c) ; note n3, not n
@@ -222,6 +222,18 @@
       -request-to-identify3>
       (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n2 :suchthat ?!m)
       )
+
+   ;; e.g., Tell me/Let me know whether the block is red.
+   ((ONT::SPEECHACT ?x (? sa ONT::SA_REQUEST ONT::SA_TELL) :CONTENT ?!theme)
+    (ONT::F ?!theme (? t3 ONT::TELL ONT::ALLOW ONT::WANT ONT::LOOK-UP) :FORMAL ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
+    (ONT::F ?!n3 ONT::CLAUSE-CONDITION :CONTENT ?!c)
+    ;;(ONT::F ?!c ONT::EXISTS :NEUTRAL ?!n2)
+					;(ONT::PRO ?!p ONT::EXPLETIVE :PROFORM w::there) ; this is not put through the match
+    ;;(?!spec2 ?!n2 ?!t2 :MODS (?!m))
+    ;;(ONT::F ?!m (? !t4 ONT::DOMAIN-PROPERTY ONT::MODIFIER))
+    -request-to-identify3>
+    (ONT::ASK-IF :who *user* :to *ME* :what ?!c)
+    )
      
      ;; I want to know (about)...
      ((ONT::SPEECHACT ?x ONT::SA_TELL :CONTENT ?!theme )
@@ -240,8 +252,18 @@
      (?!spec ?!n ?!t :mods (?!m))
      (ONT::F ?!m (? !t2 ONT::DOMAIN-PROPERTY ONT::MODIFIER))
      ((? z ONT::PRO) ?!V6 ONT::PERSON :proform (? xx w::you))    
-     -can-indirect-request>
+     -can-indirect-yes-no>
      (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n :suchthat ?!m)
+      )
+
+   ;; can you tell me whether ... (indirect requests)
+     ((ONT::SPEECHACT ?V7187 ONT::SA_YN-QUESTION :CONTENT ?!c)
+      (ONT::F ?!theme (? t3 ONT::TELL ONT::LOOK-UP) :FORMAL ?!n 
+	      :AGENT ?!V6 :force (? f ONT::ALLOWED ONT::PROHIBITED ONT::FUTURE ONT::FUTURENOT ONT::POSSIBLE ONT::FUTURE)) 
+     (?!spec ?!n ONT::CLAUSE-CONDITION :content ?!m)
+     ((? z ONT::PRO) ?!V6 ONT::PERSON :proform (? xx w::you))    
+     -can-indirect-request>
+     (ONT::ASK-IF :who *user* :to *ME* :what ?!m)
       )
 
      ;; can you name... (indirect requests)

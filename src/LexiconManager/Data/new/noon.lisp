@@ -9,7 +9,7 @@
 ;; why are these pronouns? 
   (W::noon
    (SENSES
-    ((LF-PARENT ONT::time-object)
+    ((LF-PARENT ONT::recurring-time-of-day)
      (SEM (F::time-function F::day-point))
      )
     )

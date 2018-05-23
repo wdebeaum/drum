@@ -6,7 +6,7 @@
  :tags (:base500)
  :words (
   (W::EVENING
-  (senses((LF-PARENT ONT::time-interval)
+  (senses((LF-PARENT ONT::dat-stagen)
     (SEM (F::time-function F::day-period))
     (templ time-reln-templ)
     )

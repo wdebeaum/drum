@@ -531,7 +531,7 @@
      (advbl-needed -)
        )
     -wh-advbl-q2> .98 ;; don't want this to apply before gaps
-    (np (wh q) (var ?tv) (sem ($ f::time (f::time-scale f::point))))  ;; should only be time points, not intervals
+    (np (wh q) (var ?tv) (sem ($ f::time (F::TYPE ont::time-object) (f::time-function (? ttt F::time-of-day f::time-of-year)))))
     (head (s (stype ynq) (var ?v) (gap -) (subj ?subj) (tag -)
 	   (lf (% prop (sem ?sem) (class ?c) (constraint ?con) (tma ?tma) (transform ?transform)))
 	   (advbl-needed -)

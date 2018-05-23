@@ -7,7 +7,7 @@
    (W::STOPOVER
    (SENSES
     ((meta-data :origin caloy4 :entry-date 20070403 :comments atis)
-     (LF-PARENT ONT::time-interval)
+     (LF-PARENT ONT::time-defined-by-event)
      (example "This flight has a stopover in Chicago")
      )
     )

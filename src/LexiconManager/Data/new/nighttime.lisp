@@ -7,8 +7,8 @@
  :words (
   (w::nighttime
   (senses;;;;; night is separate because we can have it with or without articles
-   ((LF-PARENT ONT::time-interval)
-    (SEM (F::time-function (? tf F::day-period f::day-point)))
+   ((LF-PARENT ONT::day-stage)
+    (SEM (F::time-function F::day-period ))
     (templ time-reln-templ)
      )
    )

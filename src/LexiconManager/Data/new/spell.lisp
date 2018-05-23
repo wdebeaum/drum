@@ -8,7 +8,7 @@
   (W::SPELL
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("spell%1:28:01"))
-     (LF-PARENT ONT::time-interval)
+     (LF-PARENT ONT::time-defined-by-duration)
      (TEMPL other-reln-templ)
      )
     )

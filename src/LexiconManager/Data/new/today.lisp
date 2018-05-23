@@ -20,7 +20,7 @@
  :words (
   (W::TODAY
    (SENSES
-    ((LF-PARENT ONT::DATE-OBJECT)
+    ((LF-PARENT ONT::time-lOC)
      (PREFERENCE 0.97)
      )
     )

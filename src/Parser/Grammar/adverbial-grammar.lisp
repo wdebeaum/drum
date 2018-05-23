@@ -31,7 +31,8 @@
      (head (adv (WH -) (sem ?sem) (ARGUMENT-MAP ?!argmap) ;;(Sort PRED) 
                 (VAR ?v) (SUBCAT -) (LF ?lf) (implicit-arg -) (constraint ?con)
 		(sem ($ F::ABSTR-OBJ (F::intensity ?ints) (F::orientation ?orient) (F::Scale ?scale)))
-		(comparative -) (prefix -)
+		;; (comparative -)   I think this rule now works for comparatives in the new treatment  JFA 2018
+		(prefix -)
 		(particle ?p) (particle-role-map ?prm)
 		)
       )

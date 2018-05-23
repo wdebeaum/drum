@@ -22,7 +22,7 @@
  :words (
   ((w::meal w::time)
   (senses;;;;; night is separate because we can have it with or without articles
-   ((LF-PARENT ONT::time-interval)
+   ((LF-PARENT ONT::recurring-time-of-day)
     (SEM (F::time-function (? tf F::day-period f::day-point)))
     (templ time-reln-templ)
      )

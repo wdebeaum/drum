@@ -35,9 +35,11 @@
      (SYNTAX (W::VFORM W::PRES) (W::changesem +))
      )
     ((LF-PARENT ONT::FIRE-DISMISS)
+     (preference .96)
      (TEMPL agent-affected-xp-templ)
      )
     ((LF-PARENT ONT::TRANSFORM-TO-PRESERVE)
+     (preference .96)
      (TEMPL agent-affected-xp-templ)
      )
     

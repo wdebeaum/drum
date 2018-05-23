@@ -12,7 +12,7 @@
      (templ unit-templ)
      )
     ((meta-data :origin plow :entry-date 20080117 :change-date nil :comments nil :wn ("month%1:28:00"))
-     (LF-PARENT ONT::time-interval)
+     (LF-PARENT ONT::time-point)
      (templ time-reln-templ)
      )
     )

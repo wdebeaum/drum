@@ -5,7 +5,7 @@
 (define-words :pos W::n
  :words (
   (w::eve
-  (senses((LF-PARENT ONT::time-interval)
+  (senses((LF-PARENT ONT::dat-stage)
     (SEM (F::time-function F::day-period))
     (templ time-reln-templ)
     )

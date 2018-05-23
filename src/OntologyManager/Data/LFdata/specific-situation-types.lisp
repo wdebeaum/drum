@@ -3413,7 +3413,8 @@
  :sem (F::SITUATION (F::Cause F::agentive) (F::Trajectory -))
  :arguments ((:REQUIRED ONT::Agent (F::Phys-obj (F::origin F::human)))
              ;;(:REQUIRED ONT::Formal (f::phys-obj (f::origin (? fo F::Natural-non-human f::non-living))))
-	     (:essential ont::affected);; (f::phys-obj))  ;; one of these gives an error - need to check when I have time
+	     (:essential ont::affected (f::phys-obj (f::type ont::food)
+						    (F::Object-Function F::comestible)))
 	     (:OPTIONAL ONT::affected-result  (f::phys-obj))
 	     ;;(:OPTIONAL ONT::result (f::phys-obj)
              )
