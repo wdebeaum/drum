@@ -1741,7 +1741,7 @@
 
 ;; 20120524 GUM change new type
 (define-type ONT::be
- :wordnet-sense-keys ("be%2:42:06" "be%2:42:07" "be%2:41:00" "be%2:42:02" "be_full%2:34:00" "be_quiet%2:32:00" "mean%2:42:03" "rest%2:41:00")
+ :wordnet-sense-keys ("be%2:42:06" "be%2:42:07" "be%2:41:00" "be%2:42:02" "be_full%2:34:00" "be_quiet%2:32:00" "mean%2:42:03" "rest%2:41:00" "equal%2:42:01")
  :parent ONT::in-relation
  )
 

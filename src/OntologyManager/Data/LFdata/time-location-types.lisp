@@ -992,7 +992,7 @@
 	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::duration-scale)))
 ;	     (:optional ont::result-val (f::abstr-obj)) ; until recently / ready
 ;	     (:optional ont::time-val  (f::abstr-obj (f::scale ont::time-measure-scale)))
-             )
+            ) 
  )
 
 ;;; in five minutes as a deadline rather than a measure of how long something takes to achieve
@@ -1011,18 +1011,19 @@
 
 ;;; this is used only for "that/it". Most normal time object denote intervals or units
 (define-type ONT::Any-Time-object
- :parent ONT::ANY-SEM
- :sem (F::time (F::time-function F::Any-time-function) (F::time-scale (? sc F::interval F::point)))
- )
+    :parent ONT::ANY-SEM
+    :sem (F::time (F::time-function F::Any-time-function) (F::time-scale (? sc F::interval F::point)))
+    )
 
 (define-type ONT::Time-object
- :parent ONT::ANY-TIME-OBJECT
- :sem (F::time (F::time-scale (? sc F::point F::interval)))
- )
+    :comment "objects that refer to temporal locations in some way"
+    :parent ONT::ANY-TIME-OBJECT
+    :sem (F::time (F::time-scale (? sc F::point F::interval)))
+    )
 
 ;; these are intervals such as "duration", which cannot generally be counted
 ;; or serve as time units
-(define-type ONT::TIme-interval
+(define-type ONT::Time-interval
  :wordnet-sense-keys ("interval%1:28:00" "time_interval%1:28:00" "time%1:28:03" "clock_time%1:28:00" "time%1:28:00" "time%1:28:05" "time_period%1:28:00")
  :parent ONT::TIME-OBJECT
  :sem (F::time (F::time-scale (? sc F::interval)) (F::Scale -)) ;;Ont::duration-scale))
@@ -1033,12 +1034,7 @@
              )
  )
 
-;;; future, past
-(define-type ONT::time-span
-; :parent ONT::TEMPORAL-PREDICATE
- :parent ont::time-interval
- :arguments ((:REQUIRED ONT::FIGURE))
- )
+
 
 ;;; phase, stage (e.g. phases of the moon) 
 ;;; not strictly bound to time, but there currently is no better place to place this type. once abstract sequence is defined
@@ -1050,30 +1046,27 @@
  :comment "e.g., phases of the moon, stage of the project. This type represents stages of a sequence that is more abstract than time."
 )
 
-;;  this type is constructed by the grammar for dates, times of day, etc.
+;;  direct reference to times (e.g. now, then, ...)
+;;  this type is also constructed by the grammar for dates, times of day, etc.
 (define-type ONT::TIME-LOC
- :parent ONT::TIME-interval)
+ :parent ONT::time-object)
 
-(define-type ONT::season
- :parent ONT::time-interval
- )
+(define-type ONT::recurring-time-of-day
+    :comment "recurring moments of the day, defined by some event"
+    :sem (F::time (F::time-function F::day-point))
+    :parent ont::time-interval
+    )
 
-(define-type ONT::winter
- :parent ONT::season
- )
+(define-type ONT::time-defined-by-event
+    :comment "times defined by events"
+    :sem (F::time (F::time-function F::day-point))
+    :parent ont::time-interval
+    )
 
-(define-type ONT::spring
- :parent ONT::season
- )
-
-(define-type ONT::summer
- :parent ONT::season
- )
-
-(define-type ONT::autumn
- :parent ONT::season
- )
-
+(define-type ONT::time-defined-by-duration
+    :comment "times defined by events"
+    :parent ont::time-interval
+    )
 
 ;; ont::time-unit has been moved under ont::measure-unit (with other units pounds, ghz, etc.)
 ;;; Covers all explicit things with date and time counting
@@ -1113,40 +1106,107 @@
     )
 
 (define-type ont::date-object-in
-    :comment "date objects that use IN - e.g., in June"
+    :comment "temporal objects that use IN - e.g., in June"
     :parent ONT::TIME-Object
     )
 
+;;; future, past
+(define-type ONT::time-span
+; :parent ONT::TEMPORAL-PREDICATE
+ :parent ont::date-object-in
+ :arguments ((:REQUIRED ONT::FIGURE))
+ )
+
 (define-type ONT::day-name
- :wordnet-sense-keys ("day_of_the_week%1:28:00")
+ :wordnet-sense-keys ("calendar_day%1:28:00")
  :parent ONT::DATE-OBJECT-on
  :sem (F::time (F::time-function F::day-of-week))
    :arguments ((:OPTIONAL ONT::FIGURE ((? t f::situation f::abstr-obj)))
 	       (:optional ont::GROUND)
              )
- )
+   )
 
 (define-type ont::recurring-event
     :comment "events that recur every year (or some time interval)"
+    :wordnet-sense-keys ("day%1:28:01")
     :parent ONT::date-object-on)
 
 
+
 (define-type ONT::holiday
+    :wordnet-sense-keys ("leisure%1:28:00")
     :comment "recurring events based on religious or social activities"
     :parent ont::recurring-event
   )
 
 
+(define-type ONT::era
+    :wordnet-sense-keys ("era%1:28:00" "era%1:28:01")
+    :parent ONT::DATE-OBJECT-IN
+    :sem (F::time (f::time-function f::era))
+    )
+
+(define-type ONT::year
+    :parent ONT::DATE-OBJECT-IN
+    :wordnet-sense-keys ("year%1:28:00" "year%1:28:01" "year%1:28:02")
+ :sem (F::time (f::time-function f::year-name))
+ )
+
+(define-type ONT::century
+    :parent ONT::DATE-OBJECT-IN
+    :wordnet-sense-keys ("century%1:28:00")
+    :sem (F::time (f::time-function f::time-of-year))
+    )
+
+(define-type ONT::day-stage
+    :parent ONT::DATE-OBJECT-IN
+    :comment "a regular part of the day"
+     :wordnet-sense-keys ("morning%1:28:00" "evening%1:28:00" "night%1:28:00" "twilight%1:28:00" "afternoon%1:28:00"  )
+    :sem (F::time (f::time-function f::day-period))
+ )
+
+(define-type ONT::year-stage
+    :parent ONT::DATE-OBJECT-IN
+    :sem (F::time (f::time-function f::time-of-year))
+ )
+
 (define-type ONT::month-name
  :wordnet-sense-keys ("calendar_month%1:28:00" "month%1:28:01")
- :parent ONT::DATE-OBJECT-IN
+ :parent ONT::year-stage
  :sem (F::time (F::time-function F::month-name))
  )
 
-(define-type ONT::era
- :parent ONT::DATE-OBJECT-IN
- :sem (F::time (f::time-function f::era))
+(define-type ONT::week
+    :parent ONT::year-stage
+    :wordnet-sense-keys ("week%1:28:00" )
+    :sem (F::time (F::time-function F::time-of-year))
+    )
+
+(define-type ONT::season
+    :parent ONT::year-stage
+    :wordnet-sense-keys ("season%1:28:00")
+    )
+
+(define-type ONT::winter
+    :wordnet-sense-keys ("winter%1:28:00")
+    :parent ONT::season
  )
+
+(define-type ONT::spring
+    :wordnet-sense-keys ("spring%1:28:00")
+    :parent ONT::season
+ )
+
+(define-type ONT::summer
+    :wordnet-sense-keys ("summer%1:28:00")
+ :parent ONT::season
+ )
+
+(define-type ONT::autumn
+    :wordnet-sense-keys ("autumn%1:28:00")
+ :parent ONT::season
+ )
+
 
 ;; move forward at seven meters per second; find a hotel at gsa rates
 (define-type ont::rate-rel
