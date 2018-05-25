@@ -149,6 +149,30 @@
   (if (not (check-if-bound var)) *success*)
   )
 
+(define-predicate 'w::both-BOUND
+  #'(lambda (args)
+      (both-bound args)))
+
+(defun both-bound (args)
+  "succeeds only if the two constits are both non null"
+  (let ((subcat (get-fvalue args 'w::subcat))
+	(subcat2  (get-fvalue args 'w::subcat2)))
+    (if (and (non-null-constit subcat) (non-null-constit subcat2))
+	*success*
+	)))
+
+(defun non-null-constit (x)
+  (cond ((var-p x)
+	 (if (constit-p (var-values x))
+	     (let ((var (get-value (var-values x) 'w::var)))
+	       (not (or (var-p var)
+			(eq var '-))))
+	     nil))
+	(t (format t "~% SUBCAT is not a var: ~S" x))))
+		  
+		   
+
+
 (define-predicate 'w::recompute-atype
   #'(lambda (args)
       (recompute-atype args)))

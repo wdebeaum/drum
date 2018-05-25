@@ -210,7 +210,7 @@
       (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n :suchthat ?!m)
       )
 
-     ;; e.g., Tell me/Let me know if there is/are...
+     ;; e.g., Tell me/Let me know if there is/are proteins that activate...
      ;; e.g., I want to know if there is an orange block (SA_TELL)
      ((ONT::SPEECHACT ?x (? sa ONT::SA_REQUEST ONT::SA_TELL) :CONTENT ?!theme)
       (ONT::F ?!theme (? t3 ONT::TELL ONT::ALLOW ONT::WANT ONT::LOOK-UP) :FORMAL ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
@@ -223,6 +223,14 @@
       (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n2 :suchthat ?!m)
       )
 
+     ;; e.g., Are any of those...
+     ((ONT::SPEECHACT ?x (? sa ONT::SA_YN-QUESTION) :CONTENT ?!theme)
+      (?reln ?!theme ?type) ; beats -ynq1>
+      (?reln1 ?!t ONT::REFERENTIAL-SEM :QUAN ONT::ANY)
+      -request-to-identify3c>
+      (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!t :suchthat ?!theme)
+      )
+     
    ;; e.g., Tell me/Let me know whether the block is red.
    ((ONT::SPEECHACT ?x (? sa ONT::SA_REQUEST ONT::SA_TELL) :CONTENT ?!theme)
     (ONT::F ?!theme (? t3 ONT::TELL ONT::ALLOW ONT::WANT ONT::LOOK-UP) :FORMAL ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
@@ -231,7 +239,7 @@
 					;(ONT::PRO ?!p ONT::EXPLETIVE :PROFORM w::there) ; this is not put through the match
     ;;(?!spec2 ?!n2 ?!t2 :MODS (?!m))
     ;;(ONT::F ?!m (? !t4 ONT::DOMAIN-PROPERTY ONT::MODIFIER))
-    -request-to-identify3>
+    -request-to-identify3b>
     (ONT::ASK-IF :who *user* :to *ME* :what ?!c)
     )
      

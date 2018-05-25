@@ -104,6 +104,7 @@
            )
      ?!sub
      ?!sub2
+     (both-bound (subcat ?!sub) (subcat2 ?!sub2))
      (unify (pattern (% ?xx (WH ?wh))) (value ?!sub))    ;; fixes problem that WH don't seem to move up through variable constituents
      ;; ((? cat) (stype ?stype) (var ?subv) (sem ?subcatsem) (case (? case obj -)) (gap -) (vform ?vform))
      )
@@ -172,6 +173,7 @@
            )
      ?!sub
      ?!sub2
+     (both-bound (subcat ?!sub) (subcat2 ?!sub2))
      (unify (pattern (% ?xx (WH ?wh))) (value ?!sub2))    ;; fixes problem that WH don't seem to move up through variable constituents     
      ;; ((? cat) (stype ?stype) (var ?subv) (sem ?subcatsem) (case (? case obj -)) (gap -) (vform ?vform))
      )
@@ -278,7 +280,7 @@
      (head (np (lf ?lf) (sem ?sem)  (var ?v)
 	       ;; 02/07/08 allow bare numbers here! 
 	      ;; (LF (% ?cat (STATUS (? !st number)))) ; disallowing bare numbers here to prevent 'more than 5' w/ bare (referential-sem) interp
-	       (lf (% ?cat (status (? !st ONT::PRO)))) ;; disallowing proforms here -- use pp1-pro>
+	       (lf (% ?cat (status (? !st ONT::PRO ONT::PRO-SET)))) ;; disallowing proforms here -- use pp1-pro>
 	       (sort (? sort pred descr wh-desc unit-measure)) (case (? case obj -)))
       ))
 
@@ -350,7 +352,7 @@
      -pp1-pro>
      (prep (LEX ?pt) (headcat ?hc))
      (head (np (lex (? !nlx w::one)) (lf ?lf) (sem ?sem) (var ?v)
-	       (lf (% ?cat (status ONT::PRO)))
+	       (lf (% ?cat (status (? s ONT::PRO ONT::PRO-SET))))
 	       (sort (? sort pred descr wh-desc unit-measure)) (case (? case obj -)))
       ))
 
@@ -862,7 +864,7 @@
     ;; e.g., the train at avon, the route from Avon to Bath, the goal to get to Bath
     ;; TEST: The dog at the store.
     ;; TEST: The route from the house to the store.
-    ((N1 (RESTR ?new) (POSTADVBL +) (COMPLEX +)) 
+    ((N1 (RESTR ?new) (POSTADVBL +) (COMPLEX +) (gap ?gap)) 
      -adv-np-post> 
      (head (N1 (VAR ?v1) ;; (POSTADVBL -) 
 	    (SEM ?argsem) 
@@ -876,7 +878,7 @@
       (result-only -)  ;; only allow adverbials that may be interpreted as something other than a result
       (ARGUMENT (% NP (sem ?argsem) (constraint ?c) (var ?v1) ))
       (SEM ($ f::abstr-obj (F::type (? ttt ont::predicate ont::position-reln))))
-      (arg ?v1) (VAR ?mod) (WH -) (GAP -)
+      (arg ?v1) (VAR ?mod) (WH -) (gap ?gap) ;(GAP -)
       (particle -)  ;; exclude particles as they should attach to the verb
       )
      (add-to-conjunct (val (MODS ?mod)) (old ?restr) (new ?new))

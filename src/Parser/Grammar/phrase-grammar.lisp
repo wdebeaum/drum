@@ -1691,8 +1691,9 @@
 	    (ARGUMENT-MAP ?argmap) (arg ?arg) (prefix -)
 	    (CONSTRAINT ?con) (atype ?atype)
 	    (SORT PRED)))
-     ?subcat2
-     ?subcat
+    ?subcat2
+    ?subcat
+    (both-bound (subcat ?subcat) (subcat2 ?subcat2)) ;;  both of these must be bound, otherwise this is a duplicate to a constit produced by the twosubcats rule above
      (recompute-atype (atype ?atype) (subcat ?subcat) (subcat2 ?subcat2) (result ?newatype))
      (append-conjuncts (conj1 ?con) (conj2 (& (?argmap ?arg)
 					      (?reln ?argv) (?reln2 ?argv2)
@@ -2840,7 +2841,7 @@
      (VAR *) (WH ?w));; must move WH feature up by hand here as it is explicitly specified in a daughter.
      -np-spec-of-def-plur-pp>
     (SPEC (LF ?spec) (ARG ?v) (VAR ?specvar) (name-spec -) (POSS -);;myrosia 12/27/01 added mass restriction to spec
-     (WH ?w)
+     (WH ?w) (mass count)
      (RESTR ?restr)
      (SUBCAT (% PP (Ptype ?ptp) (agr |3S|) (SEM ?sem))))
     (head 
@@ -2850,7 +2851,7 @@
 		 (transform ?transform) (status (? xx ont::definite-plural ont::pro-set)))
 		  )))
     
-    (append-conjuncts (conj1 (& (REFOBJECT ?v) (size ?card))) (conj2 ?restr) (new ?newr))
+    (append-conjuncts (conj1 (& (REFSET ?v) (size ?card))) (conj2 ?restr) (new ?newr))
     )
 #||
    ;;  NP with SPECS that subcategorize for "of" PP's that are plural
