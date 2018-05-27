@@ -86,7 +86,7 @@
      ;; ((? cat) (stype ?stype) (var ?subv) (sem ?subcatsem) (case (? case obj -)) (gap -) (vform ?vform))
      )
 
-    
+    #||
     ((ADVBL (ARG ?arg) (gap -) (WH ?wh) (FOCUS ?subv)
             (LF (% PROP (VAR ?v) (CLASS ?lf) (CONSTRAINT (& (?submap ?subv) (?argmap ?arg) (?sub2map ?sub2)))
                    (sem ?sem) (transform ?trans)))
@@ -108,7 +108,7 @@
      (unify (pattern (% ?xx (WH ?wh))) (value ?!sub))    ;; fixes problem that WH don't seem to move up through variable constituents
      ;; ((? cat) (stype ?stype) (var ?subv) (sem ?subcatsem) (case (? case obj -)) (gap -) (vform ?vform))
      )
-    
+    ||#
    #||   This now can be handled compositionally
     ;; the meeting from 5 to 10 pm; the flight from here to there
     ((ADVBL (ARG ?arg) (gap -) (WH ?wh) (FOCUS ?subv)
@@ -152,21 +152,21 @@
            )
      )
     |#
+   
+    ;;; THREE PART ADVERBIALS:  for X to Y   - note if...then.. and as...as.. used to use this rule, but now are handled differently
     
-    ;;; THREE PART ADVERBIALS: if ... then, as ... as, for X to Y
-    
-    ((ADVBL (ARG ?arg) (gap -) (WH ?wh) (FOCUS ?subv)
+    ((ADVBL (ARG ?arg) (gap -) (WH ?wh) (wh-var ?wh-var) ;;(FOCUS ?subv)
             (LF (% PROP (VAR ?v) (CLASS ?lf) (CONSTRAINT (& (?submap ?subv) (?argmap ?arg) (?submap2 ?subv2)))
                    (sem ?sem) (transform ?trans)))
       (sem ?sem) (VAR ?v) (role ?lf) (subcatsem ?subcatsem)
             )
-     -advbl-binary-3part> ;;.98 ;; rank slightly lower than a subcategorized complements
+     -advbl-binary-3part> 1 ;; if something matches this rule, prefer it over two adverbials
      (head (adv (lf ?lf) ;;(SORT BINARY-CONSTRAINT) 
             ;; make sure pp-word is not a sort here
             (sort (? !sort pp-word))
-	    (subcat ?!sub) (SUBCAT (% ?cat (var ?subv) (sem ?subcatsem) (stype ?stype) (vform ?vform) (gap -) (lex ?slex))) 
+	    (subcat ?!sub) (SUBCAT (% ?cat (var ?subv) (sem ?subcatsem) (stype ?stype) (vform ?vform) (gap -) (wh ?wh1) (wh-var ?wh-var1) (lex ?slex))) 
             (subcat-map ?submap) (ARGUMENT-MAP ?argmap)
-            (subcat2 ?!sub2) (SUBCAT2 (% ?cat2 (var ?subv2) (sem ?subcatsem2) (stype ?stype2) (vform ?vform2) (gap -) (lex ?slex2))) 
+            (subcat2 ?!sub2) (SUBCAT2 (% ?cat2 (var ?subv2) (sem ?subcatsem2) (stype ?stype2) (vform ?vform2) (wh ?wh2) (wh-var ?wh-var2) (gap -) (lex ?slex2))) 
             (subcat2-map ?submap2) (ARGUMENT-MAP ?argmap2)
             (IGNORE -)
             (sem ?sem))
@@ -174,12 +174,10 @@
      ?!sub
      ?!sub2
      (both-bound (subcat ?!sub) (subcat2 ?!sub2))
-     (unify (pattern (% ?xx (WH ?wh))) (value ?!sub2))    ;; fixes problem that WH don't seem to move up through variable constituents     
-     ;; ((? cat) (stype ?stype) (var ?subv) (sem ?subcatsem) (case (? case obj -)) (gap -) (vform ?vform))
-     )
+     (combine-foot-features (feat wh) (val1 ?wh1) (val2 ?wh2) (result ?wh))
+     (combine-foot-features (feat wh-var) (val1 ?wh-var1) (val2 ?wh-var2) (result ?wh-var)))
+     
 
-    
-    
     ((ADVBL (ARG ?arg) (gap ?!gap)
       (LF (% PROP (VAR ?v) (CLASS ?lf) (CONSTRAINT (& (?submap ?subv) (?argmap ?arg)))
                    (sem ?sem) (transform ?trans)))

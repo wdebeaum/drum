@@ -171,6 +171,23 @@
 	(t (format t "~% SUBCAT is not a var: ~S" x))))
 		  
 		   
+(define-predicate 'w::combine-foot-features
+  #'(lambda (args)
+      (combine-foot-features args)))
+
+(defun combine-foot-features (args)
+  "succeeds only if the two constits are both non null"
+  (let ((feat (get-fvalue args 'w::feat))
+	(val1 (get-fvalue args 'w::val1))
+	(val2 (get-fvalue args 'w::val2))
+	(result (get-fvalue args 'w::result)))
+    (if (and val1 (not (eq val1 '-)))
+	(if (and val2 (not (eq val2 '-)))
+	    (if (eq val1 val2)
+		(match-vals 'w::sem val1 result))
+	    (match-vals 'w::sem val1 result))
+	(match-vals 'w::sem val2 result)))
+  )
 
 
 (define-predicate 'w::recompute-atype
