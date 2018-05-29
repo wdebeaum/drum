@@ -1337,33 +1337,39 @@
      (head (number (VAR ?v) (lf ?lf) (lex ?l) (agr ?agr) (MASS ?mn) (sem ?sem) (val ?val) (premod -)
 		      ))
      )
-
+#||
     ;; TEST: more than five (trucks)
     ((number (agr ?agr) (VAR ?v) (MASS ?mn) (lf ?lf) (sem ?sem) (premod +) ;;(val ?val)
 	     (nobarespec +) ; this can't be a specifier -- that goes through the cardinality rules
 	     (restr (& (mods (% *PRO* (status ont::F) (class ?lfa) (var ?v1) 
-				(constraint (& (FIGURE ?v) 
-					       (GROUND (% *PRO* (status ont::indefinite) (var *) (class ont::number) (constraint (& (value ?val)))))))))))
+				(constraint (& (FIGURE ?v) 					       (GROUND (% *PRO* (status ont::indefinite) (var *) (class ont::number) (constraint (& (value ?val)))))))))))
 	     )
      -advbl-bare-number-pre-than>
-     (adv (VAR ?v1) (argument (% number)) (Mass ?m) (lf ?lfa))
+     (quan (VAR ?v1) ;;(argument (% number))
+      (Mass ?m) (lf ?lfa) (agr ?agr)
+      (Qcomp (% pp (VAR ?v) (ptype w::than)))
+		);;(lf ?lf) (lex ?l) (agr ?agr) (MASS ?mn) (sem ?sem) (val ?val) (premod -)))
      (word (lex w::than))
      (head (number (VAR ?v) (lf ?lf) (lex ?l) (agr ?agr) (MASS ?mn) (sem ?sem) (val ?val) (premod -)
-		      ))
-     )
+		   ))
+     )||#
+     
     
     ;; TEST: eight or so
     ((number (agr ?agr) (VAR ?v) (MASS ?mn) (lf ?lf) (sem ?sem) (premod +) ;;(val ?val)
 	     (nobarespec +) ; this can't be a specifier -- that goes through the cardinality rules
-	     (restr (& (mods (% *PRO* (status ont::F) (class (:* ont::precision-val w::approximate)) (var *) 
+      (restr (& (mods (% *PRO* (status ont::F) (class ?lfa)
+					;;	(:* ont::precision-val w::approximate))
+			 (var *) 
 				(constraint (& (FIGURE ?v) 
 					       (GROUND (% *PRO* (status ont::indefinite) (var **) (class ont::number) (constraint (& (value ?val)))))))))))
 	     )
      -number-or-so>
      (head (number (VAR ?v) (lf ?lf) (lex ?l) (agr ?agr) (MASS ?mn) (sem ?sem) (val ?val) (premod -)
 		   ))
-     (word (lex w::or))
-     (word (lex w::so))
+    ;; (word (lex w::or))
+     (adv (VAR ?v1) (argument (% number)) (Mass ?m) (lf ?lfa))
+     ;;(word (lex w::so))
      )
     
     ;; and the special case for "a" -- e.g., only a week, just a candy, ..

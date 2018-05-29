@@ -147,13 +147,14 @@
 ;; Do a shortest-path algorithm for best constit-sequence to cover input, where constituents have a fixed cost.
 ;;  Costs  
 ;;
-(defvar *cost-table* '((w::PUNC 4)  ;; Puncs should be attached to their utts
+(defvar *default-cost-table* '((w::PUNC 4)  ;; Puncs should be attached to their utts
                        (w::UTT 1)  ;; making UTT one prefers sequences with minimal number of UTTs
                        (w::NP 3) (w::PATH 3) ;; These are rare now, as most major consists become UTTs
                        (w::ADVBL 3) (w::ADJP 3)  ;; other high level constits
 		       ;;  the speech acts get individual scores
 		       (w::SA_PRED-FRAGMENT 2)
 		       ))
+(defvar *cost-table* *default-cost-table*)
 
 (defun customize-cost-table (values)
   (setq *cost-table* (append values *cost-table*)))

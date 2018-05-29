@@ -43,6 +43,16 @@ OFFLINE requests.")
     (lg)  ;; reload the grammar so that the dependency info is recomputed
     (format t "~%Running with customized parser settings:~% ~S~%" *parser-init-settings*)))
 
+(defun initialize-settings-no-lg nil
+  (when *parser-init-settings*
+    (mapcar #'(lambda (x)
+		(if (consp (car x)) (eval (car x))
+		    (eval (list 'setq (car x) (cadr x)))))
+	    *parser-init-settings*)
+    ;(lg)  ;; reload the grammar so that the dependency info is recomputed
+    ;(format t "~%Running with customized parser settings:~% ~S~%" *parser-init-settings*)
+    ))
+
 (defun send-new-speech-act (acts)
   (let ((augmented-acts (insert-preparses acts)))
     (send-msg `(tell :content ,(if (= (number-parses-desired *chart*) 1)
@@ -94,7 +104,9 @@ OFFLINE requests.")
       (setq *parser-is-online* t)
       (finish-output *error-output*)
       (StartNewUtterance)
-      (initialize-settings) ; there are other settings not set here
+      ;(initialize-settings) ; there are other settings not set here
+      (setq *cost-table* *default-cost-table*)
+      (initialize-settings-no-lg)      
       (setq *original-cost-table* nil)
       (setq *original-cost-table-was-modified* nil)
       )
@@ -106,7 +118,9 @@ OFFLINE requests.")
       (setq *parser-is-online* t)
       (finish-output *error-output*)
       (StartNewUtterance)
-      (initialize-settings)
+      ;(initialize-settings) ; there are other settings not set here
+      (setq *cost-table* *default-cost-table*)
+      (initialize-settings-no-lg)      
       (setq *original-cost-table* nil)
       (setq *original-cost-table-was-modified* nil)	
       )

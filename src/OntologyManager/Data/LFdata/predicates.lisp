@@ -89,12 +89,18 @@
  )
 
 (define-type ONT::DEGREE-MODIFIER-HIGH
- :parent ONT::DEGREE-MODIFIER
- )
+    :parent ONT::DEGREE-MODIFIER
+    :arguments ((:REQUIRED ONT::FIGURE (F::abstr-obj (F::type ont::property-val))))
+    )
+
+(define-type ONT::DEGREE-MODIFIER-HIGH-EVENT
+    :parent ONT::DEGREE-MODIFIER
+    :arguments ((:REQUIRED ONT::FIGURE (F::situation (F::type ont::event-of-experience)
+						     ))))
 
 (define-type ONT::DEGREE-MODIFIER-MED
- :parent ONT::DEGREE-MODIFIER
- )
+    :parent ONT::DEGREE-MODIFIER
+    )
 
 (define-type ONT::DEGREE-MODIFIER-LOW
  :parent ONT::DEGREE-MODIFIER

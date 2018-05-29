@@ -162,7 +162,11 @@
 ; RESTART
 (defcomponent-handler
   '(request &key :content (restart . *))
-  #'list) ; do (practically) nothing
+  (lambda (msg args)
+    (declare (ignore msg args))
+    (clear-dynamic-lexicon)
+    (setq *domain-sense-preferences-tmp* nil)))
+   ;#'list) ; do (practically) nothing
 
 ;; AT this point, the following tell messages are handled [again, from before dfc --wdebeaum]:
 
@@ -178,7 +182,8 @@
   '(tell &key :content (start-conversation . *))
   (lambda (msg args)
       (declare (ignore msg args))
-    (clear-dynamic-lexicon)))
+      (clear-dynamic-lexicon)
+      (setq *domain-sense-preferences-tmp* nil)))
       
 (defcomponent-handler
   '(tell &key :content (end-conversation . *))

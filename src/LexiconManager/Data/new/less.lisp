@@ -32,3 +32,15 @@
     )
    )
   ))
+
+(define-words :pos W::adv :templ DISC-PRE-TEMPL
+ :words (
+  ((W::at W::least)
+   (SENSES
+    ((LF-PARENT ONT::QMODIFIER)
+     (LF-FORM W::LESS-THAN)
+     (TEMPL NUMBER-OPERATOR-TEMPL)
+     )
+    )
+   )
+))

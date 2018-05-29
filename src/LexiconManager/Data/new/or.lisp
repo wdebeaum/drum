@@ -17,7 +17,33 @@
      )
     )
    )
-))
+  ))
+
+(define-words 
+    :pos W::adv :templ DISC-PRE-TEMPL
+ :words (
+  ((W::or W::more)
+   (SENSES
+    ((LF-PARENT ONT::qmodifier)
+     (LF-FORM W::min)
+     (TEMPL number-operator-post-templ)
+     )
+    )
+   )
+  ))
+
+(define-words 
+    :pos W::adv :templ DISC-PRE-TEMPL
+ :words (
+  ((W::or W::less)
+   (SENSES
+    ((LF-PARENT ONT::qmodifier)
+     (LF-FORM W::max)
+     (TEMPL number-operator-post-templ)
+     )
+    )
+   )
+  ))
 
 (define-words 
     :pos W::adv :templ DISC-PRE-TEMPL

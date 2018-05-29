@@ -5512,7 +5512,7 @@
      -nom-rate> 1.0
 	 (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger) (agr ?agr)
 		    (pre-arg-already ?npay) 
-		    
+		    (headless -)
 		    (sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		    (class ?class) (transform ?transform)
 		    ;; these are dummy vars for trips-lcflex conversion, please don't delete
