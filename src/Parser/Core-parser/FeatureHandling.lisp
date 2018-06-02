@@ -130,7 +130,7 @@
 			 (constit-head constit))
 		 bndgs))
 	  (progn
-	    (trace-msg 1 "~% Failure in merging foot features ~S" fvlist)
+	    (trace-msg 1 "~% Failure in merging foot features ~S. Constit is ~S" fvlist constit)
 	    nil)))))
 
 (defun same-value (x y)

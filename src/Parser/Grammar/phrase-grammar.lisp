@@ -1857,18 +1857,18 @@
 
     ;;  Great construction!:   All he saw (was mountains)
 
-   ((NP (LF (% description (status ont::definite) (VAR *)
+  #|| ((NP (LF (% description (status ont::definite) (VAR *)
 		    (CLASS ?c) (CONSTRAINT (& (mod ?relv)))
 		    (sem ?sem)  (transform ?transform)
 		    ))
      (sem ?sem)
      (SORT PRED) (VAR *) (AGR (? agr 3s 3p)) (CASE (? case SUB OBJ)))
-     -all-he-saw>
+     -all-he-saw> .98
     (head (word (lex (? x w::all w::what))))
     (cp (ctype relc) (VAR ?relv) (ARG *) (ARGSEM ?argsem) 
      (LF ?lf))
     )
-   
+   ||#
    
    ;; somewhat rare construction allows qualifications: the man though who saw the party, lied about it.
    ((N1 (RESTR ?con)
@@ -4617,7 +4617,7 @@
              (constraint ?constraint) (sort ?sort) (WH -)
              (sem ?npsem) (transform ?transform)
              )))
-     -wh-desc2>
+     -wh-desc2> .98  ;; it sometimes interferes with better readings
      (head (np (var ?npvar) (sem ?npsem) (wh Q) (agr ?a) ;;(PRO INDEF)
             (lf (% description  (class ?npclass) (status ?status)
                    (constraint ?cons) (sort ?sort) (transform ?transform)
@@ -4625,6 +4625,7 @@
      (vp (var ?vpvar) (lf ?lf-s) (subjvar ?npvar) 
       (gap -)  ;;(CLASS (? !class ont::IN-RELATION)) ; ont::HAVE-PROPERTY) )     ;;  "what is aspirin" is not a good NP   ;; "can you tell be what is aspirin" is fine!
       (CLASS (? !class ont::EXISTS))
+      (vform fin)
       (advbl-needed -) (agr ?a)
       (subj (% np (sem ?npsem) (var ?npvar) (agr ?a)))
       (sem ?s-sem)

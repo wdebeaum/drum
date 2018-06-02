@@ -249,8 +249,30 @@
     (utt (lf ?lf1) (var ?v1) (sa-seq -))
     (head (utt (lf ?lf2) (var ?v2) (uttword +) (sa-seq -))))
    
+   ;;  FRAGMENTS AS UTTERANCES
 
- 
+    ((UTT (no-post-adv +) (lf (% SPEECHACT (VAR **) (CLASS ONT::SA_PRED-FRAGMENT) (no-post-adv +) (constraint (& (content ?v))))) (var **))
+    -advbl-utt> 
+    (head (advbl (WH -) (SORT (? !sort DISC)) (VAR ?v) (ARGUMENT (% ?x (SEM ?sem))) 
+		 (ARG (% *PRO* (VAR *) (gap -) (sem ?sem)))
+	   (gap -))))
+
+   ;; e.g., In what corner?
+   ((UTT (no-post-adv +) (lf (% SPEECHACT (VAR **) (CLASS ONT::SA_QUERY) (constraint (& (content ?v) (focus ?foc))))) (var **))
+    -advbl-utt-wh> 
+    (head (advbl (WH Q) (SORT (? !sort DISC)) (VAR ?v) (wh-var ?foc) (ARGUMENT (% ?x (SEM ?sem))) 
+	   (ARG (% *PRO* (VAR *) (gap -) (sem ?sem)))
+	   (gap -))))
+
+
+    ;; adjective utts
+   ;; TEST: Horizontal.
+   ((UTT (no-post-adv +) (lf (% SPEECHACT (VAR **) (CLASS ONT::SA_PRED-FRAGMENT) (constraint (& (content ?v))))) (var **))
+    -adjp-utt> .96
+    (head (adjp  (VAR ?v) (ARGUMENT (% ?x (SEM ?sem))) ;; (WH -)  I eliminated this to allow the question  "how red?"
+		 (set-modifier -)  ;; disallows numbers as ADJP fragments - they already have a number interpretation 
+		(ARG (% *PRO* (VAR *) (gap -) (sem ?sem) (constraint (& (CONTEXT-REL UTT-FRAG))))))
+     ))
    ;; what do you think the red x means? that the battery is damaged
    ;;
    ((utt (var *) (punctype decl) (no-post-adv +) (lf (% speechact (var *) (class ont::sa_pred-fragment) (constraint (& (content ?v)))))) 

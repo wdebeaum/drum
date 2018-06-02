@@ -58,7 +58,7 @@
    ;; adjective utts
    ;; TEST: Horizontal.
    ((UTT (no-post-adv +) (lf (% SPEECHACT (VAR **) (CLASS ONT::SA_PRED-FRAGMENT) (constraint (& (content ?v))))) (var **))
-    -adjp-utt> .96
+    -adjp-utt> 
     (head (adjp  (VAR ?v) (ARGUMENT (% ?x (SEM ?sem))) ;; (WH -)  I eliminated this to allow the question  "how red?"
 		 (set-modifier -)  ;; disallows numbers as ADJP fragments - they already have a number interpretation 
 		(ARG (% *PRO* (VAR *) (gap -) (sem ?sem) (constraint (& (CONTEXT-REL UTT-FRAG))))))
