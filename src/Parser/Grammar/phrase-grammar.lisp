@@ -106,10 +106,10 @@
 	 (add-to-conjunct (old ?r) (val (PROFORM ?lex)) (new ?newr)))
       
 	;; e.g., the first
-	((SPEC (SEM ?def) (AGR ?agr) (MASS ?m) (ARG ?arg) (LF ?l) (RESTR ?newr)
+	((SPEC (SEM ?def) (AGR ?agr) (MASS ?m) (ARG ?arg) (LF ?l) (RESTR ?newr) (WH-VAR ?wh-var)
 	  (SUBCAT (% PP (PTYPE of) (SEM ?anysem))))
 	 -spec2>
-	 (head (DET (sem ?def) (MASS ?m) (agr ?agr)
+	 (head (DET (sem ?def) (MASS ?m) (agr ?agr) 
 		(LF ?l) (RESTR ?R)))
 	 (ordinal (LF (NTH ?q)) (lex (? !lex w::half w::quarter)))
          (add-to-conjunct (val (ORDINAL ?q)) (old ?r) (new ?newr)))
@@ -414,7 +414,7 @@
     (QUAL var arg lex headcat transform ARGUMENT COMPLEX)
     ;; MD 18/04/2008 added SEM as a headfeature to handle "in full" where in subcategorizes for adjp
     ;; Other option might be to subcategorize for adj - need to consider in the future
-    (ADJP arg lex headcat transform argument sem) ;; post-subcat)     
+    (ADJP arg lex headcat transform argument sem complex) ;; post-subcat)     
     (ADJ1 arg lex headcat transform argument sem sort lf allow-deleted-comp allow-post-n1-subcat gap)
     (ADJ arg lex headcat transform argument sem sort) ;; post-subcat)     
     )
@@ -2371,22 +2371,23 @@
 		      (CLASS ont::quantity) (CONSTRAINT ?constr) (argument ?argument)
 		      (sem ?sem)  (transform ?transform) (unit-spec +)
 		      ))
-	       (spec ont::definite) (class ?c) (VAR ?v) (SORT unit-measure) (WH ?w))
+	       (spec ont::definite) (class ?c) (VAR ?v) (SORT unit-measure) (WH ?w)  (WH-VAR ?whv))
 	   -unit-np>  .98    ;; should the NP produced only be used as a SPEC? (possible headless?)
 	   (SPEC (LF (? speclf ont::indefinite ont::indefinite-plural ont::definite ont::definite-plural)) ;; only articles in this rule -- no quans
-	       (VAR ?specv)
-	       (ARG ?v)  
-	       (WH-VAR ?whv)
-	       (name-spec -) (mass ?m)
-	       (POSS -)
+	    (VAR ?specv)
+	    (ARG ?v)  
+	    (WH-VAR ?whv) (RESTR ?restr)
+	    (name-spec -) (mass ?m)
+	    (POSS -)
 	    (WH ?w) (agr ?agr) ;;(restr (& (quan -)))   - doesn't match THE or A!!!
 	    (NOSIMPLE -)
 	       )
 	   (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
 		     (KIND -) (agr ?agr) (sem ?sem) (sem ($ f::abstr-obj (f::scale ?sc)))
-		     (argument ?argument) (RESTR ?restr) (transform ?transform) (post-subcat -) (rate-activity-nom -) (agent-nom -)
+		     (argument ?argument) (RESTR ?restr1) (transform ?transform) (post-subcat -) (rate-activity-nom -) (agent-nom -)
 		     ))
-	   (add-to-conjunct (val (& (unit ?c) (scale ?sc))) (old ?restr) (new ?constr))
+	   (append-conjuncts (conj1 ?rest1) (conj2 ?restr) (new ?restr2))
+	   (add-to-conjunct (val (& (unit ?c) (scale ?sc))) (old ?restr2) (new ?constr))
 	   )
 	  
 	;; several/many pounds
@@ -4457,13 +4458,13 @@
 
 
 	;;   Headless adjective phrases
-	;;  The green, the largest
+	;;  The green, the largest, thew largest of the lions
     ((NP (SORT PRED) (class ont::referential-sem) ;(CLASS ?c)
       (VAR *) (sem ?s) (case (? case SUB OBJ))  (headless +) (agr (? agr 3s 3p))
       (wh-var ?whv)
       (lf (% description (status (? st definite definite-plural)) ;(status ?spec)
 	     (var *) ;(sort SET) 
-	     (class ont::referential-sem) ;(Class ont::Any-sem)
+	     (class ?class) ;;ont::referential-sem) ;(Class ont::Any-sem)
 	     (agr (? agr 3s 3p))
 	     (constraint ?con)
 	     (sem ?s)
@@ -4472,10 +4473,13 @@
       )
      -NP-adj-missing-head> .97 ; .96
      (head (spec  (poss -) (restr ?restr) (wh-var ?whv)
+		  (WH -)   ;;tentatively eliminating WH terms  -- is there an example like "show me which large?"
 		  (lf ?spec) (arg *) (agr (? agr 3s 3p)) ;(agr |3P|)
 		  (var ?v)))
      (ADJP (LF ?l1) (ARG *) (set-modifier -)
-      (var ?advvar) (ARGUMENT (% NP (sem ?s))))
+      (var ?advvar)
+      (class ?class)
+      (ARGUMENT (% NP (sem ?s))))
      ;;(cardinality (var ?card))
      (append-conjuncts (conj1 (& (mods ?advvar))) (conj2 ?restr) (new ?con))
      )

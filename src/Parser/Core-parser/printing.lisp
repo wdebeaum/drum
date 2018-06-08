@@ -3,7 +3,7 @@
 ;;;
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
-;;; Time-stamp: <Thu Apr 12 11:01:41 EDT 2018 james>
+;;; Time-stamp: <Wed Jun  6 21:37:53 EDT 2018 james>
 
 (in-package "PARSER")
 
@@ -1322,8 +1322,8 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
     ((ONT::indefinite-plural) 'ont::indef-set)
     (ONT::SM 'ont::SM)
     (ONT::definite-plural 'ont::the-set)
-    ((ONT::wh ONT::what ONT::which ONT::whose ONT::*wh-term*) 'ont::wh-term) 
-    (ONT::WH-PLURAL 'ONT::WH-term-SET)
+    ((ONT::wh ONT::what ONT::which ONT::whose ONT::*wh-term* ont::wh-term) 'ont::wh-term) 
+    ((ONT::WH-PLURAL ont::wh-term-set) 'ONT::WH-term-SET)
     (ONT::wh-quantity 'ont::wh-quantity)
     (ONT::universal 'ont::all-the)
     (ONT::value 'ont::value)

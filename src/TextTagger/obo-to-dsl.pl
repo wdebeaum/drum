@@ -8,9 +8,19 @@ use FileCache; # so we can open more files than the OS technically lets us
 
 use strict vars;
 
-# a list of symbol packages to limit processing to may be specified on the
+# lists of symbol packages to limit processing to may be specified on the
 # command line (this is used for EFO since it has a lot of extra ones)
-my @packages = @ARGV;
+# @term_packages may be used for whole terms, while @reln_packages may be used
+# for targets of relationships only; the two are specified in order, separated
+# by a comma as its own word. If there is no comma, they're all @term_packages.
+# Note that we include @term_packages in @reln_packages, because packages used
+# for whole terms may also be used for relationship targets.
+my @term_packages = ();
+for (@ARGV) {
+  last if ($_ eq ',');
+  push @term_packages, $_;
+}
+my @reln_packages = grep { $_ ne ',' } @ARGV;
 @ARGV = ();
 
 read_header(STDIN); # discard (TODO use for provenance)
@@ -59,7 +69,7 @@ until (STDIN->eof) {
   my $id = process_id($stanza{id}[0]);
   my $pkg = $id;
   $pkg =~ s/:.*//;
-  next unless (@packages == 0 or grep { $_ eq $pkg } @packages);
+  next unless (@term_packages == 0 or grep { $_ eq $pkg } @term_packages);
   next if ($pkg eq 'PR' and not $id =~ /^PR::00\d{7}/); # no UP IDs plz
   my $concept = "(concept $id";
   my @name = map { lisp_intern(uc($_)) } 
@@ -89,12 +99,12 @@ until (STDIN->eof) {
   }
   if (exists($stanza{is_a})) {
     my @is_a = map { process_id($_) } @{$stanza{is_a}};
-    if (@packages) {
+    if (@reln_packages) {
       @is_a = grep {
 	my $pkg = $_;
 	$pkg =~ s/:.*//;
         ($pkg ne 'PR' or /^PR::00\d{7}/) and # no UP IDs plz
-	grep { $_ eq $pkg } @packages
+	grep { $_ eq $pkg } @reln_packages
       } @is_a;
     }
     if (@is_a) {
@@ -107,7 +117,7 @@ until (STDIN->eof) {
     my @has_role =
       map { process_id($_->[1]) }
       grep { $_->[0] eq 'has_role' } @relns;
-    # TODO check @packages? not really necessary for what we use it for
+    # TODO check @*_packages? not really necessary for what we use it for
     if (@has_role) {
       $concept .= "\n  (> CHEBI::has_role " . join(' ', @has_role) . ")";
       $need_newline = 1;

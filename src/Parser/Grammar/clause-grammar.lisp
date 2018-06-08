@@ -258,19 +258,19 @@
 	   (gap -))))
 
    ;; e.g., In what corner?
-   ((UTT (no-post-adv +) (lf (% SPEECHACT (VAR **) (CLASS ONT::SA_QUERY) (constraint (& (content ?v) (focus ?foc))))) (var **))
+   ((UTT (no-post-adv +) (lf (% SPEECHACT (VAR **) (CLASS ONT::SA_wh-question)
+				(constraint (& (content ?v) (focus ?foc))))) (var **))
     -advbl-utt-wh> 
     (head (advbl (WH Q) (SORT (? !sort DISC)) (VAR ?v) (wh-var ?foc) (ARGUMENT (% ?x (SEM ?sem))) 
 	   (ARG (% *PRO* (VAR *) (gap -) (sem ?sem)))
 	   (gap -))))
 
-
-    ;; adjective utts
+       ;; adjective utts
    ;; TEST: Horizontal.
    ((UTT (no-post-adv +) (lf (% SPEECHACT (VAR **) (CLASS ONT::SA_PRED-FRAGMENT) (constraint (& (content ?v))))) (var **))
     -adjp-utt> .96
     (head (adjp  (VAR ?v) (ARGUMENT (% ?x (SEM ?sem))) ;; (WH -)  I eliminated this to allow the question  "how red?"
-		 (set-modifier -)  ;; disallows numbers as ADJP fragments - they already have a number interpretation 
+		 (set-modifier -) (WH -) ;; disallows numbers as ADJP fragments - they already have a number interpretation 
 		(ARG (% *PRO* (VAR *) (gap -) (sem ?sem) (constraint (& (CONTEXT-REL UTT-FRAG))))))
      ))
    ;; what do you think the red x means? that the battery is damaged
@@ -278,6 +278,21 @@
    ((utt (var *) (punctype decl) (no-post-adv +) (lf (% speechact (var *) (class ont::sa_pred-fragment) (constraint (& (content ?v)))))) 
     -utt-s-that> 0.9
     (head (cp (ctype s-that-overt) (gap -) (var ?v) (wh -) (lf ?lf) (advbl-needed -))))
+
+   ;; climbed the mountain, running to the store
+   ((utt (var **) (punctype decl) (no-post-adv +)
+     (lf (% speechact (var **) (class ont::sa_tell)
+	    (constraint (& (content ?v)))))) 
+    -base-vp> .98
+    (head (vp (gap -)
+	      (subjvar *)
+	      (subj (% np (var (% *pro* (class ont::person) (var *) (sem ?subjsem) (constraint (& (proform *you*)))
+				))
+		       (sem ($ f::phys-obj (f::form f::solid-object)
+			       (f::information -) (f::trajectory -) (f::container -) (f::group -)
+			       (f::mobility f::self-moving) (f::origin f::human) (f::intentional +)))
+		       (sem ?subjsem)))
+	      (var ?v) (wh -) (lf ?lf) (advbl-needed -))))
 
    ;;  request and suggestions
    
@@ -2629,9 +2644,16 @@
    ; The dog?
    ((utt (lf (% speechact (var *) (class ont::SA_YN-QUESTION) (constraint (& (content ?v) (punctype ?p))) )) (var *)
 	 (punc +) (punctype ?p)) 
-    -np-utt-simple-q> .97
+    -np-utt-simple-q> 
     (head (np (wh -) (sort (? x pred unit-measure)) (complex -) (var ?v) (sem ($ ?!type))))
     (punc (punctype ?p) (lex w::punc-question-mark))
+    )
+
+    ; which dog?
+   ((utt (lf (% speechact (var *) (class ont::SA_WH-QUESTION) (constraint (& (content ?v) (focus ?whv) (punctype ?p))) )) (var *)
+	 (punc +) (punctype ?p)) 
+    -np-utt-simple-q-no-punc> .98
+    (head (np (wh Q) (sort (? x pred unit-measure)) (complex -) (var ?v) (wh-var ?whv) (sem ($ ?!type))))
     )
    
    ; What next?  What color?
@@ -2645,11 +2667,18 @@
    ; How big?
    ((utt (lf (% speechact (var *) (class ont::SA_WH-QUESTION) (constraint (& (content ?v) (focus ?whv) (punctype ?p))) )) (var *)
 	 (punc +) (punctype ?p)) 
-    -how-adj-utt-simple-q> .97
+    -how-adj-utt-simple-q> .98
     (head (adjp (wh Q) (sort (? x pp-word)) (complex -) (var ?v) (wh-var ?whv) (sem ($ ?!type))))
-    (punc (punctype ?p) (lex w::punc-question-mark))
+    ;;(punc (punctype ?p) (lex w::punc-question-mark))
     )
 
+    ((utt (lf (% speechact (var *) (class ont::SA_WH-QUESTION) (constraint (& (content ?v) (focus ?whv) (punctype ?p))) )) (var *)
+      (punc +) (punctype ?p)) 
+     -how-adj-utt-simple-q-with-punc> 
+     (head (adjp (wh Q) (sort (? x pp-word)) (complex -) (var ?v) (wh-var ?whv) (sem ($ ?!type))))
+     (punc (punctype ?p) (lex w::punc-question-mark))
+     
+)
    ;; complex nps (e.g., disjunctions, conjunctions) are dispreferred over parses with disjunction more deeply attached
     ((utt (lf (% speechact (var *) (class ont::sa_identify) (constraint (& (content ?v))))) (var *))
      -np-utt> .97

@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.111 2018/01/22 21:02:14 wdebeaum Exp $
+# $Id: Makefile,v 1.112 2018/06/07 16:56:44 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -401,7 +401,7 @@ drum-dsl/CO/COMPLETE: downloads/cl-basic.obo obo-to-dsl.pl
 	touch $@
 
 drum-dsl/EFO/COMPLETE: downloads/efo.obo obo-to-dsl.pl
-	./obo-to-dsl.pl EFO Orphanet <$<
+	./obo-to-dsl.pl EFO Orphanet , UO <$<
 	touch $@
 
 drum-dsl/GO/COMPLETE: downloads/go.obo obo-to-dsl.pl
