@@ -471,7 +471,7 @@ int main(int argc, char** argv) {
 	  break;
 	try {
 	  lattice.add(line);
-	} catch (wchar_t* msg) {
+	} catch (wchar_t const* msg) {
 	  std::wcerr << msg << std::endl;
 	}
       }

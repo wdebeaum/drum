@@ -33,6 +33,7 @@
    )
   ))
 
+#|
 (define-words :pos W::adv :templ DISC-PRE-TEMPL
  :words (
   ((W::at W::least)
@@ -44,3 +45,5 @@
     )
    )
 ))
+|#
+
