@@ -2889,7 +2889,7 @@
 	    ;; no uniform & unique lf's for main verb be uses, so have to match the lex
 	    ;; unless we can match the lf-form be
 	    (lex (? lx am are is was were ^s))
-	    (subj (% ?s1 (var ?subjvar) (sem ($ -)) (lex it) (gap -))) 
+	    (subj (% ?s1 (var ?subjvar) (sem ($ -)) (lex it) (gap -) (expletive +))) 
 	    (iobj (% -))
 	    (part ?part) 
 	    (dobj ?dobj) (dobj (% ?s3 (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) 

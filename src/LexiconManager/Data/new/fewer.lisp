@@ -23,8 +23,21 @@
   (W::FEWER
    (SENSES
     ((LF-PARENT ONT::LESS-VAL)
-     (TEMPL COMPAR-THAN-templ)
+     ;(TEMPL COMPAR-THAN-templ)
+     (TEMPL COMPAR-templ)
      )
     )
    )
   ))
+
+(define-words :pos W::adv 
+ :words (
+  ((W::fewer W::than)
+   (SENSES
+    ((LF-PARENT ONT::QMODIFIER)
+     (LF-FORM W::LESS-THAN)
+     (TEMPL NUMBER-OPERATOR-TEMPL)
+     )
+    )
+   )
+))
