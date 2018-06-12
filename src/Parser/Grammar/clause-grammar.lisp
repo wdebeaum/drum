@@ -2989,6 +2989,7 @@
 	    ;;			(f::information -) (f::trajectory -) (f::container -) (f::group -)
 	    ;;			(f::mobility f::self-moving) (f::origin f::human) (f::intentional +)))))
 		
+	    (dobj (% ?d (lex (? !lex you))))
 	    (class ?c) (lf ?lf)
 	    (vform base) (postadvbl ?pa) (main ?ma)
 	    (transform ?transform)

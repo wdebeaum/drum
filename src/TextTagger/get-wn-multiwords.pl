@@ -84,9 +84,16 @@ sub add_suffixes {
 }
 
 sub sense_key {
-  my ($lemma, $ss_type, $lex_filenum, $lex_id) = @_;
+  my ($lemma, $ss_type, $lex_filenum, $lex_id, $head_word, $head_id) = @_;
   $ss_type =~ tr/nvars/12345/;
-  return sprintf("$lemma%%%1d:%02d:%02d", $ss_type, $lex_filenum, $lex_id);
+  my $sk = sprintf("$lemma%%%1d:%02d:%02d", $ss_type, $lex_filenum, $lex_id);
+  if ($ss_type == 5) {
+    (defined($head_word) and defined($head_id)) or
+      die "missing head word and id for satellite sense key $sk";
+    $sk .= sprintf(":$head_word:%02d", $head_id);
+  }
+  # NOTE: to save space in the table, we don't include :: for other sense keys
+  return $sk;
 }
 
 my %member_meronym_to_holonyms = ();
@@ -99,6 +106,7 @@ for my $pos (keys %wn_pos_to_trips_pos) {
       or die "File not found: $wordnet_basepath/data.$pos\n";
   open DATA, "<$wordnet_basepath/data.$pos" 
       or die "Can't open data.$pos: $!";
+  my %head_adjs = (); # map head adj synset_offsets to first lemma:lex_id
   while (<DATA>) {
     next unless (/^\S/);
     s/\s+\|.*$//g; # discard glosses
@@ -110,8 +118,13 @@ for my $pos (keys %wn_pos_to_trips_pos) {
       my $word = shift @rest;
       my $lex_id = hex(shift @rest);
       $word =~ s/\(.*//; # remove parens from end of adj lemmas
-      push @sense_words, [$word, sense_key($word, $ss_type, $lex_filenum, $lex_id)];
+      #push @sense_words, [$word, sense_key($word, $ss_type, $lex_filenum, $lex_id)];
+      push @sense_words, [$word, $lex_id];
     }
+    if ($ss_type eq 'a') { # head adj
+      $head_adjs{$synset_offset} = $sense_words[0];
+    }
+    my $head_lemma_id = [];
     my $proper_name = 0;
     my $p_cnt = shift @rest;
     $p_cnt =~ s/^00?//; # remove leading 0s so perl doesn't think it's octal
@@ -126,12 +139,17 @@ for my $pos (keys %wn_pos_to_trips_pos) {
         push @{$member_meronym_to_holonyms{$synset_offset}}, $target_synset_offset;
       } elsif ($pointer_symbol eq '@' and $pos eq 'noun') { # hypernym
         push @{$noun_hyponym_to_hypernyms{$synset_offset}}, $target_synset_offset;
+      } elsif ($pointer_symbol eq '&' and $ss_type eq 's') { # sat. similar to
+        exists($head_adjs{$target_synset_offset}) or
+	  die "can't find head word for satellite synset $synset_offset";
+	$head_lemma_id = $head_adjs{$target_synset_offset};
       }
     }
     my $trips_pos = $wn_pos_to_trips_pos{$pos};
     $trips_pos = 'NAME' if ($proper_name);
     for my $word (@sense_words) {
-      my ($lemma, $sense_key) = @$word;
+      my ($lemma, $lex_id) = @$word;
+      my $sense_key = sense_key($lemma, $ss_type, $lex_filenum, $lex_id, @$head_lemma_id);
       $lemma =~ s/_/ /g;
       $lemma =~ s/\(.*\)$//;
       push @{$lemma_to_entries{$lemma}},
@@ -241,7 +259,7 @@ sub read_stoplist {
   my @sl = map {
     chomp;
     s/;.*$//;
-    s/^\s*|\s*$//;
+    s/^\s+|\s+$//g;
     s/::$//;
     $_
   } <SL>;
@@ -260,10 +278,12 @@ for (read_stoplist('golist.txt')) {
 # output, removing duplicate/stoplisted entries
 print STDERR "printing output\n";
 for my $morphed (sort keys %morphed_to_entries) {
+  # skip words all of whose entries are stoplisted
+  next unless (grep { not $stophash{$_->{sense_key}} } @{$morphed_to_entries{$morphed}});
   print $morphed;
   my %entries = ();
   for my $entry (@{$morphed_to_entries{$morphed}}) {
-    next if ($stophash{$entry->{sense_key}});
+    next if ($stophash{$entry->{sense_key}}); # skip stoplisted entries
     my $entry_text = join("\t", @{$entry}{qw(penn_pos sense_key)});
     print "\t$entry_text" unless (exists($entries{$entry_text}));
     $entries{$entry_text} = 1;
