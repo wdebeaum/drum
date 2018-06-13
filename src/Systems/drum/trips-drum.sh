@@ -136,7 +136,7 @@ cleanup () {
 }
 
 rkill() {
-    for cpid in $(ps -o pid,ppid | awk -v ppid=$1 '$2==ppid {print $1}')
+    for cpid in $(ps -x -o pid,ppid | awk -v ppid=$1 '$2==ppid {print $1}')
     do
 	rkill $cpid
     done
