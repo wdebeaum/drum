@@ -7,7 +7,7 @@
   (W::STORM
    (SENSES
     ((meta-data :origin plow :entry-date 20060803 :change-date nil :comments nil :wn ("storm%1:19:00"))
-     (LF-PARENT ont::ATMOSPHERIC-PHENOMENON)
+     (LF-PARENT ont::storm)
      )
     )
    )

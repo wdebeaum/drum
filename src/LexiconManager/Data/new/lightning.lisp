@@ -17,7 +17,8 @@
  :words (
   ((W::lightning w::bolt)
    (SENSES
-    ((LF-PARENT ONT::natural-object)
+    (;(LF-PARENT ONT::natural-object)
+     (LF-PARENT ONT::ATMOSPHERIC-PHENOMENON)
      (EXAMPLE "click the lightning bolt icon")
      (meta-data :origin task-learning :entry-date 20050830 :change-date nil :comments nil)
      )
@@ -25,6 +26,7 @@
    )
 ))
 
+#|
 (define-words :pos W::v :templ agent-theme-xp-templ
  :words (
   (W::lightning
@@ -36,4 +38,5 @@
     )
    )
 ))
+|#
 

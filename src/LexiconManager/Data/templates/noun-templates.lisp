@@ -625,7 +625,15 @@
     (ARGUMENT  (:parameter xp1 (:default (% W::PP (W::ptype w::of)))) ONT::agent)
     (SUBCAT (:parameter xp2 (:default (% W::PP (W::ptype w::on)))) ONT::affected)
     ))
-  
+
+  (reln-agent-affected-optional-templ
+   (SYNTAX(W::sort W::other-reln)  (W::CASE (? cas W::sub W::obj)) ;(w::allow-deleted-comp +)
+	  (W::MASS W::COUNT))
+   (ARGUMENTS
+    (SUBCAT  (:parameter xp1 (:default (% W::PP (W::ptype w::of)))) ONT::agent optional)
+    (SUBCAT2 (:parameter xp2 (:default (% W::PP (W::ptype w::on)))) ONT::affected optional)
+    ))
+
   ;; relationship, relation
   (reln-between-neutral-templ
    (SYNTAX(W::sort W::other-reln)  (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +) (W::MASS W::COUNT))

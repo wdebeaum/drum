@@ -871,6 +871,12 @@
  :sem (F::situation (F::cause (? cause F::agentive F::force)))
  )
 
+(define-type ONT::agriculture
+ :wordnet-sense-keys ("agriculture%1:04:01")
+ :parent ONT::activity
+ :sem (F::situation (F::cause (? cause F::agentive F::force)))
+ )
+
 (define-type ONT::Situation
  :wordnet-sense-keys ("phenomenon%1:03:00")
  :parent ONT::EVENT-TYPE
@@ -1375,14 +1381,14 @@
 ;; bill, tab
 (define-type ONT::ACCOUNT-PAYABLE
  :wordnet-sense-keys ("bill%1:10:01" "account%1:10:02" "invoice%1:10:00")
- :wordnet-sense-keys ("bill%1:10:01" "account%1:10:02" "invoice%1:10:00")
  :parent ONT::ACCOUNT
  :sem (F::Abstr-obj (f::scale ont::money-scale))
  )
 
 ;; lack, shortage
 (define-type ONT::LACK
-  :parent ont::situation
+ :wordnet-sense-keys ("deficiency%1:07:00" "shortage%1:07:00")
+ :parent ont::situation
  :arguments ((:REQUIRED ONT::FIGURE)
              )
  )

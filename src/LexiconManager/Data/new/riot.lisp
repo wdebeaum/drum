@@ -2,6 +2,7 @@
 ;;;; W::RIOT
 ;;;;
 
+#|
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
   (W::RIOT
@@ -12,13 +13,15 @@
     )
    )
 ))
+|#
 
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
   (W::RIOT
-   (wordfeats (W::morph (:forms (-vb) :ing W::rioting)))
+   (wordfeats (W::morph (:forms (-vb) :ing W::rioting :nom w::riot)))
    (SENSES
-    ((LF-PARENT ONT::RIOT)
+    (;(LF-PARENT ONT::RIOT)
+     (LF-PARENT ONT::GROUP-CONFLICT)
      (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL AGENT-TEMPL)
      )

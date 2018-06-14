@@ -512,7 +512,7 @@
 
 (define-type ONT::life-process
  :parent ONT::EVENT-OF-undergoing-action
- :arguments ((:OPTIONAL ONT::affected ((? F::phys-obj F::abstr-obj) (F::origin F::living)
+ :arguments ((:OPTIONAL ONT::affected ((? aff F::phys-obj F::abstr-obj) (F::origin F::living)
 				       (F::tangible +))) ; abstr-obj: disease
              )
  )

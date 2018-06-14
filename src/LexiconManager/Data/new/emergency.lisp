@@ -20,7 +20,8 @@
   (W::EMERGENCY
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("emergency%1:11:00"))
-     (LF-PARENT ONT::LOCATED-EVENT)
+     ;(LF-PARENT ONT::LOCATED-EVENT)
+     (LF-PARENT ONT::emergency)
      )
     )
    )

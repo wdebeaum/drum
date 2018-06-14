@@ -292,6 +292,12 @@
  ;; WORDS: tenderness, kindness
 )
 
+(define-type ont::aggressiveness-scale
+ :parent ont::behavioral-scale
+ :wordnet-sense-keys ("aggressiveness%1:12:00")
+ ; aggressiveness, violence
+ )
+
 (define-type ont::responsibility-scale
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("responsibility%1:07:00") 
@@ -530,7 +536,7 @@
  :parent ont::dimensional-scale 
  :wordnet-sense-keys("size%1:07:00" "size%1:07:02" "size%1:07:01" "magnitude%1:07:00")
  :sem (F::abstr-obj (F::scale ont::size-scale))
- :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
+ :arguments ((:REQUIRED ONT::FIGURE ((? fig f::phys-obj f::time))) ; f::time: length of the season
              (:OPTIONAL ONT::EXTENT)
              )
  ;; WORDS: size
@@ -707,7 +713,7 @@
 ;; rate
 (define-type ont::rate-scale
  :parent ont::ratio-scale 
- :wordnet-sense-keys ("rate%1:21:00" "rate%1:28:00")
+ :wordnet-sense-keys ("rate%1:21:00" "rate%1:28:00" "incidence%1:24:00")
  :sem (F::Abstr-obj (F::Scale Ont::Rate-scale))
  ;; WORDS: rate
 )

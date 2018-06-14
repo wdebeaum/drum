@@ -849,7 +849,7 @@
  )
 
 (define-type ONT::PUSH-LIQUID
- :wordnet-sense-keys ("squirt%2:35:00" "squirt%2:35:10" "sprinkle%2:35:01" "spray%2:35:03")
+ :wordnet-sense-keys ("wet%2:30:00" "squirt%2:35:00" "squirt%2:35:10" "sprinkle%2:35:01" "spray%2:35:03")
   :parent ONT::apply-force
  )
 
@@ -976,10 +976,19 @@
  )
 
 (define-type ONT::FLOODING
+ :wordnet-sense-keys ("flood%1:19:00" "flood%1:23:00" "flood%2:35:00" "flood%2:30:00" "flood%2:30:01")
  :parent ONT::natural-event
  :sem (F::SITUATION (F::Aspect F::Bounded) (F::Cause F::Force))
  :arguments ((:REQUIRED ONT::affected (F::Phys-obj (F::Mobility F::Movable)))
              (:OPTIONAL ONT::agent)
+             )
+ )
+
+(define-type ONT::DROUGHT
+ :wordnet-sense-keys ("drought%1:26:00")
+ :parent ONT::natural-event
+ :sem (F::SITUATION (F::Aspect F::Bounded) (F::Cause F::Force))
+ :arguments (
              )
  )
 
@@ -1141,7 +1150,7 @@
 
 ;; 20120523 GUM change new type
 (define-type ont::startoff-begin-commence-start
-    :wordnet-sense-keys ("get_going%2:38:00" "start%2:38:01" "start%2:41:00" "take_to%2:41:01")
+    :wordnet-sense-keys ("get_going%2:38:00" "start%2:38:01" "start%2:41:00" "take_to%2:41:01" "start%1:11:00" "start%1:28:00")
     :parent ont::start
     )
 
@@ -1460,7 +1469,7 @@
 
 ;; fight, struggle, contend, defend
 (define-type ONT::fighting
- :wordnet-sense-keys ("struggle%2:33:00" "fight%2:33:00" "contend%2:33:01" "compete%2:33:00" "vie%2:33:00" "contend%2:33:00")
+ :wordnet-sense-keys ("fight%2:33:00")
  :parent ONT::agent-interaction
  :arguments ((:optional ONT::neutral)  ;; fight with the proposal
 	     (:optional ont::formal)  ;; struggle to breath
@@ -2183,6 +2192,20 @@
              )
  )
 
+(define-type ONT::compete
+ :parent ONT::agent-interaction
+  :wordnet-sense-keys ("compete%2:33:00")
+ )
+
+(define-type ONT::win-compete
+ :parent ONT::compete
+  :wordnet-sense-keys ("win%2:33:00")
+ )
+
+(define-type ONT::lose-compete
+ :parent ONT::compete
+  :wordnet-sense-keys ("lose%2:33:00")
+ )
 
 (define-type ONT::BELIEVE
   :wordnet-sense-keys ("think%2:31:01" "believe%2:31:04" "consider%2:31:08" "conceive%2:31:00" "think%2:31:03" "opine%2:31:02" "suppose%2:31:00" "imagine%2:31:01" "reckon%2:31:02" "guess%2:31:00" "strike%2:37:00")
@@ -3500,11 +3523,25 @@
              )
  )
 
-(define-type ONT::ATTACK
- :wordnet-sense-keys ("attack%2:33:00" "attack%2:32:00" "attack%2:33:02" "attack%2:29:00")
+(define-type ONT::transgress
+ :wordnet-sense-keys ("transgress%2:41:00" "transgress%2:41:02" "transgress%2:38:00" "infringe%2:41:00" "infringe%2:38:00" "intrude%2:41:00" "violate%2:42:00" "violate%2:41:00" "violate%2:41:02" "violate%2:35:00")
  :parent ONT::event-of-causation
  )
 
+(define-type ONT::ATTACK
+ :wordnet-sense-keys ("attack%2:33:00" "attack%2:32:00" "attack%2:33:02" "attack%2:29:00")
+; :parent ONT::event-of-causation
+ :parent ONT::transgress
+ )
+
+; revolt, rebel, war, riot
+(define-type ONT::GROUP-CONFLICT
+ :wordnet-sense-keys ("riot%2:41:00" "military_action%1:04:00" "revolution%1:04:00" "conflict%1:04:00" "rebel%2:41:00")
+ :parent ONT::transgress
+ :sem (F::SITUATION (F::Cause F::Agentive) (F::Trajectory -) (F::Aspect F::Dynamic))
+ :arguments ((:REQUIRED ONT::AGENT  ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
+             )
+ )
 
 
 ;; manage
@@ -3927,8 +3964,19 @@
              )
  )
 
+#|
 (define-type ONT::RIOT
  :wordnet-sense-keys ("riot%2:41:00")
+ :parent ONT::located-event
+ :sem (F::SITUATION (F::Cause F::Agentive) (F::Trajectory -) (F::Aspect F::Dynamic))
+ :arguments ((:REQUIRED ONT::AGENT  ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
+             )
+ )
+|#
+
+; accident, emergency, crisis, disaster
+(define-type ONT::EMERGENCY
+ :wordnet-sense-keys ("disaster%1:26:00" "disaster%1:11:00" "disaster%1:04:00" "crisis%1:26:00" "crisis%1:11:00" "accident%1:11:01")
  :parent ONT::located-event
  :sem (F::SITUATION (F::Cause F::Agentive) (F::Trajectory -) (F::Aspect F::Dynamic))
  :arguments ((:REQUIRED ONT::AGENT  ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
@@ -4178,6 +4226,7 @@
  :wordnet-sense-keys ("clean%2:35:00" "make_clean%2:35:00" "wash%1:04:01" "dental_care%1:04:00")
  :parent ONT::change-state-action
  :sem (F::Situation (F::Cause F::Agentive) (F::Trajectory -))
+ :arguments ((:optional ONT::result ((? res F::situation F::Abstr-obj f::phys-obj) (F::type (? !t ont::position-reln ont::path))))) 
  )
 
 (define-type ont::shower
@@ -4429,7 +4478,7 @@
 ;; Should be used for other words like "adhere" etc.
 ;; FN compliance,
 (define-type ONT::Compliance
- :wordnet-sense-keys ("keep%2:41:05" "celebrate%2:41:01" "observe%2:41:02" "keep%2:41:03" "observe%2:41:04" "obey%2:41:00" "break%2:42:00")
+ :wordnet-sense-keys ("keep%2:41:05" "celebrate%2:41:01" "observe%2:41:02" "keep%2:41:03" "observe%2:41:04" "obey%2:41:00")
     :parent ONT::event-of-action
     :sem (f::situation (f::cause f::agentive) (f::aspect f::dynamic))
     :arguments ((:optional ONT::Agent  ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))

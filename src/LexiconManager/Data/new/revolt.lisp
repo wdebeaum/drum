@@ -14,3 +14,17 @@
    )
 ))
 
+(define-words :pos W::V
+ :words (
+  (W::revolt
+   (wordfeats (W::morph (:forms (-vb) :nom w::revolt)))
+   (SENSES
+    (
+     (LF-PARENT ONT::GROUP-CONFLICT)
+     (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
+     (TEMPL AGENT-TEMPL)
+     )
+    )
+   )
+))
+

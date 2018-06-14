@@ -800,7 +800,7 @@
 	   (post-subcat -)
 	   )
      (add-to-conjunct (val (:MODS ?m)) (old ?r) (new ?con)))
-    
+
  #||   ;; Split phrases like "a larger apple that that
     ((N1 (RESTR ?con) (CLASS ?c) (SORT ?sort) (QUAL -) (COMPLEX +)
       (relc ?relc) (subcat ?subcat)
@@ -2804,7 +2804,7 @@
 	      ))))
      (recompute-spec (spec ?spec) (agr 3p) (result ?newspec))
      (append-conjuncts (conj1 (& (REFSET ?v))) ;;(quan ?card)
-      (conj2 ?restr) (new ?newr)))
+		       (conj2 ?restr) (new ?newr)))
      
 
    ;;  NP with SPECS that subcategorize for "of" PP's that are definite singular/mass
@@ -3313,7 +3313,7 @@
 
     ; TEST: the quickly loaded truck ; the quickly computer generated truck
      ;; Myrosia 11/26/01 we only allow those phrases before the verbs. After the verbs, they should be treated as reduced relative clauses
-     ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem)
+     ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem) (class ?lf)
 	    (SUBCATMAP (? x ont::affected ont::affected-result)) (ARGUMENT ?subj)
 	    (atype attributive-only) ;(atype central) 
 	    (LF (% PROP (class ?lf) (VAR ?v) (constraint ?newc)))
@@ -4464,7 +4464,7 @@
       (wh-var ?whv)
       (lf (% description (status (? st definite definite-plural)) ;(status ?spec)
 	     (var *) ;(sort SET) 
-	     (class ?class) ;;ont::referential-sem) ;(Class ont::Any-sem)
+	     (class ont::referential-sem) ;(Class ont::Any-sem)
 	     (agr (? agr 3s 3p))
 	     (constraint ?con)
 	     (sem ?s)
@@ -5599,13 +5599,15 @@
    ;; numbers (only -- number sequences use np-sequenc1e>
    ((NP (SORT PRED)
      (var ?v) (class ONT::NUMBER) ;(Class ONT::ANY-SEM) 
-     (sem ($ (? ft f::abstr-obj) (f::container -) (F::scale ont::number-scale) (F::tangible -) (f::type ont::number))) ;;(sem ($ (? ft f::phys-obj f::abstr-obj))) 
+     (sem ($ (? ft f::abstr-obj) (f::container -) ;(F::scale ont::number-scale)
+	     (F::tangible -) (f::type ont::number))) ;;(sem ($ (? ft f::phys-obj f::abstr-obj))) 
      (case (? cas sub obj -))
      (LF (% Description (status ont::number) (var ?v) (Sort Individual) ;(lex ?lf)
 	    (CLASS ONT::NUMBER) ;;(Class ONT::REFERENTIAL-SEM) 
 	    (constraint ?restr) 
 	    (lex ?l) (val ?val)
-	    (sem ($ (? ft f::abstr-obj) (f::container -) (F::scale ont::number-scale) (F::tangible -) (f::type ont::number))) ; "container -" to discourage it from being used by IN-LOC for "in 2019"
+	    (sem ($ (? ft f::abstr-obj) (f::container -) ;(F::scale ont::number-scale)
+		    (F::tangible -) (f::type ont::number))) ; "container -" to discourage it from being used by IN-LOC for "in 2019"
 	    ;; (sem ($ (? ft f::phys-obj f::abstr-obj))) 
 	    (transform ?transform)
 	    ))

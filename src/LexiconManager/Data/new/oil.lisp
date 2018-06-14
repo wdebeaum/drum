@@ -15,6 +15,7 @@
      (TEMPL BARE-PRED-TEMPL)
      (meta-data :origin foodkb :entry-date 20060425 :change-date nil :comments nil)
      (example "sesame is a popular cooking oil")
+     (PREFERENCE 0.98) ; only when we need comestible
      )
     )
    )

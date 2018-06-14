@@ -1,10 +1,10 @@
 ;;;;
-;;;; W::THICKNESS
+;;;; W::THINNESS
 ;;;;
 
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
-  (W::THICKNESS
+  (W::THINNESS
    (SENSES
     ((meta-data :origin domain-reorganization :entry-date 20171002 :change-date nil :wn ("thinness%1:07:01"))
      (LF-PARENT ONT::thinness-scale)

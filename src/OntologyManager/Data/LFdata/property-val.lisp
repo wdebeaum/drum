@@ -395,7 +395,7 @@
 
 (define-type ont::atypical-val
  :parent ont::typicality-val 
- :wordnet-sense-keys ("uncommon%3:00:00" "unconventional%3:00:01" "unorthodox%5:00:00:unconventional:00" "unusual%3:00:00" "unusual%5:00:00:uncommon:00" "unconventional%3:00:00" "unnatural%3:00:00")
+ :wordnet-sense-keys ("uncommon%3:00:00" "unconventional%3:00:01" "unorthodox%5:00:00:unconventional:00" "unusual%3:00:00" "unusual%5:00:00:uncommon:00" "unconventional%3:00:00")
 )
 
 (define-type ont::strange
@@ -588,7 +588,7 @@
 
 (define-type ont::artificial
  :parent ont::artificiality-val 
- :wordnet-sense-keys ("synthetic%5:00:00:artificial:00" "false%5:00:00:artificial:00" "artificial%3:00:00" "artificial%5:00:00:affected:01" "unreal%3:00:04" "faux%5:00:00:artificial:00" "imitation%5:00:02:artificial:00" "fake%5:00:00:artificial:00" "affected%3:00:01")
+ :wordnet-sense-keys ("synthetic%5:00:00:artificial:00" "false%5:00:00:artificial:00" "artificial%3:00:00" "artificial%5:00:00:affected:01" "unreal%3:00:04" "faux%5:00:00:artificial:00" "imitation%5:00:02:artificial:00" "fake%5:00:00:artificial:00" "affected%3:00:01" "unnatural%3:00:00")
 )
 
 ;; natural, unnatural
@@ -1985,7 +1985,7 @@
 
 (define-type ont::specified-period-val
  :parent ont::periodic-val 
- :wordnet-sense-keys ("daily%5:00:00:periodic:00" "annual%5:00:00:periodic:00" "weekly%5:00:00:periodic:00" "monthly%5:00:00:periodic:00" )
+ :wordnet-sense-keys ("daily%5:00:00:periodic:00" "annual%5:00:00:periodic:00" "weekly%5:00:00:periodic:00" "monthly%5:00:00:periodic:00" "seasonal%3:00:00" )
 )
 
 (define-type ont::repetitive-val
@@ -2284,7 +2284,7 @@
 
 (define-type ont::aggressive-val
  :parent ont::bold-val 
- :wordnet-sense-keys ("aggressive%3:00:00" )
+ :wordnet-sense-keys ("aggressive%3:00:00" "violent%3:00:00")
 )
 
 (define-type ont::not-bold-val
@@ -2330,6 +2330,7 @@
 ;; friendly, affectionate, kind, mean, considerate
 ;; no experiencer role; currently no distinction between human and non-human ont::of
 (define-type ont::social-interaction-val
+ :wordnet-sense-keys ("social%3:01:00" "social%3:00:00" )
  :parent ont::animal-propensity-val 
  :arguments ((:required ont::FIGURE ((? lof f::abstr-obj f::phys-obj f::situation )))) 
  :comment "properties of human behavior having to do with social interaction, e.g. friendly, kind, mean"
@@ -3208,20 +3209,18 @@
  :parent ont::national-identity-val 
 )
 
-(define-type ont::city-related-val
+(define-type ont::land-use-val ; ont::city-related-val
  :parent ont::status-val 
- :wordnet-sense-keys ("civic%3:01:00" )
- :comment "having to do with a city (or its government)"
 )
 
 ;; urban, rural
 (define-type ont::urban-val
- :parent ont::city-related-val 
- :wordnet-sense-keys ("urban%3:00:00" "urban%3:01:00" )
+ :parent ont::land-use-val 
+ :wordnet-sense-keys ("urban%3:00:00" "urban%3:01:00" "civic%3:01:00")
 )
 
 (define-type ont::rural-val
- :parent ont::city-related-val 
+ :parent ont::land-use-val 
  :wordnet-sense-keys ("rural%3:00:00" "rural%3:01:01" )
 )
 

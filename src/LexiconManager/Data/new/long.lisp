@@ -23,12 +23,14 @@
      (LF-PARENT ONT::event-duration-modifier)
      (example "how long did the meeting last" "a long meeting/conversation" "long term parking")
      )
+    #|
     ;; this overgenerates
     ((meta-data :origin cardiac :entry-date 20090416 :change-date nil :comments nil :wn ("long%3:00:02"))
      (LF-PARENT ONT::event-duration-modifier)
      (example "all night long" "the whole week long")   
      (TEMPL postpositive-adj-optional-xp-templ)
      )
+    |#
     )
    )
 ))

@@ -6,7 +6,7 @@
  :words (
    ((W::funnel w::cloud)
    (SENSES
-    ((LF-PARENT ONT::ATMOSPHERIC-PHENOMENON)
+    ((LF-PARENT ONT::cloud-object)
      (meta-data :origin calo-ontology :entry-date 20060712 :change-date nil :comments caloy3)
      )
     )

@@ -38,7 +38,7 @@
  :tags (:base500)
  :words (
   (W::DRIVE
-   (wordfeats (W::morph (:forms (-vb) :past W::drove :pastpart W::driven :nom w::drive)))
+   (wordfeats (W::morph (:forms (-vb) :past W::drove :pastpart W::driven :nom w::drive :agentnom w::driver)))
    (SENSES
     ;;;; Drive the cargo to Avon
     (

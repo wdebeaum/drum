@@ -270,6 +270,12 @@
     :sem (F::Phys-obj (F::origin F::non-living))
     )
 
+(define-type ont::climate
+    :wordnet-sense-keys ("climate%1:26:00")
+    :parent ont::atmospheric-phenomenon
+    :sem (F::Phys-obj (F::origin F::non-living))
+    )
+
 ;; wind
 (define-type ont::air-current
     :wordnet-sense-keys ("wind%1:19:00" "air_current%1:19:01" "current_of_air%1:19:00")
@@ -280,6 +286,12 @@
 ;; rain, snow, sleet, hail
 (define-type ONT::PRECIPITATION
     :wordnet-sense-keys ("precipitation%1:19:00" "downfall%1:19:00")
+    :parent ONT::atmospheric-phenomenon
+    :sem (F::Phys-obj (F::origin F::non-living) (f::form f::substance))
+    )
+
+(define-type ONT::STORM
+    :wordnet-sense-keys ("storm%1:19:00" "cyclone%1:26:00")
     :parent ONT::atmospheric-phenomenon
     :sem (F::Phys-obj (F::origin F::non-living) (f::form f::substance))
     )
@@ -1215,10 +1227,22 @@
     :parent ONT::loc-as-area
     )
 
-
+; oil field, wheat field
 (define-type ONT::area-def-by-use
+    :wordnet-sense-keys ("field%1:15:00" "field%1:15:05" "plot%1:15:00")
     :comment "places defined by their function: e.g.,  lot, plot, region, scene, section, site, territory, zone"
     :parent ONT::loc-as-area
+    )
+
+; coal mine
+(define-type ONT::mine
+    :wordnet-sense-keys ("mine%1:06:01")
+    :parent ONT::area-def-by-use
+    )
+
+(define-type ONT::farm
+    :wordnet-sense-keys ("farm%1:06:00")
+    :parent ONT::area-def-by-use
     )
 
 (define-type ONT::loc-defined-by-contrast
