@@ -17,15 +17,15 @@
 (define-words 
     :pos W::adv :templ DISC-PRE-TEMPL
  :words (
-  ((W::due w::to)
+  (W::due
    (SENSES    
     ((LF-PARENT ONT::due-to)
-     (TEMPL binary-constraint-s-or-NP-templ)
+     (TEMPL binary-constraint-s-or-NP-templ (xp (% w::pp (w::ptype w::to))))
      (Example "changes due to a damaged bulb")
      (meta-data :origin beetle :entry-date 20081111 :change-date nil :comments nil)
      )
     ((LF-PARENT ONT::due-to)
-     (TEMPL BINARY-CONSTRAINT-PRED-TEMPL)
+     (TEMPL BINARY-CONSTRAINT-PRED-TEMPL (xp (% w::pp (w::ptype w::to))))
      (Example "The car is brown due to rust")
      (meta-data :origin beetle :entry-date 20081111 :change-date nil :comments nil)
      )

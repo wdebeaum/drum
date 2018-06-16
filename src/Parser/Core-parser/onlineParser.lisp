@@ -483,12 +483,16 @@
      except for cases where REFERENTIAL-SEM is truly the right interpretation (e.g., pronouns and a few cases like ONE as a noun)"
   (let* ((c (lex-entry-constit le))
 	 (lf (get-value c 'w::lf))
+	 (lex (get-value c 'w::lex))
 	 (score
 	  (* (if (and (not (eq (constit-cat c) 'w::pro))
 		      (not (member (get-value c 'w::lex) '(w::one)))
 		      (or (if (symbolp lf) (member lf '(ont::referential-sem ont::modifier)))
 			  (if (consp lf) (intersection lf '(ont::referential-sem ont::modifier)))))
-		      *referential-sem-penalty* 
+		 ;; addition penalty if it contains a hyphen!
+		 (if (position #\- (coerce (symbol-name lex) 'list))
+		     (* *referential-sem-penalty*  *referential-sem-penalty*)
+		      *referential-sem-penalty*)
 		      1)
 		  prob (lex-entry-prob le))))
     ;; now boost entries with domain specific info

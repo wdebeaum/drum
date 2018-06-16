@@ -805,7 +805,8 @@
 
 ;; temporal occurrence
 (define-type ont::temporal-occurrence-scale
- :parent ont::process-property-scale 
+    :parent ont::process-property-scale
+    ;; :wordnet-sense-keys ("incidence%1:24:00")
 )
 
 (define-type ont::regularity-scale

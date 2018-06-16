@@ -64,7 +64,7 @@
  :words (
   (W::RIGHT
    (SENSES
-    ((LF-PARENT ONT::DIRECTION)
+    ((LF-PARENT ONT::DIRECTION-rightward)
      (example "turn right")
      (TEMPL PRED-S-POST-TEMPL)
      )

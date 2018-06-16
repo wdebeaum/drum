@@ -329,15 +329,20 @@
 	     )
 	    )
 	   )
-   ((w::in W::part)
-   (SENSES
-    ((LF-PARENT ONT::partial-incomplete)
-     (TEMPL pred-s-vp-templ)
-     (EXAMPLE "in part, he is happy. he is, in part, Happy")
-     )
-    )
-   )
-))
+	  ((w::in W::part)
+	   (SENSES
+	    ((LF-PARENT ONT::partial-incomplete)
+	     (TEMPL pred-s-vp-templ)
+	     (EXAMPLE "in part, he is happy. he is, in part, Happy")
+	     )
+	    ((LF-PARENT ONT::partial-incomplete)
+	     (templ post-adv-optional-xp-templ)
+	     (meta-data :origin calo :entry-date 20050216 :change-date nil :comments caloy2)
+	     (example "is it due in part to drought")
+	     )
+	    )
+	   )
+	  ))
 
 (define-words :pos W::ADV
  :words (
@@ -427,16 +432,8 @@
      (meta-data :origin cernl :entry-date 20110114 :change-date nil :comments hpi-acn-3)
      (example "the device placed in five minutes")
      (preference .98)
-     )
-    ;; like within
-    ((LF-PARENT ONT::scale-relation)
-     (meta-data :origin calo :entry-date 20040423 :change-date nil :comments calo-y1v5)
-     (example "is there a computer in that price range")
-     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
-     (lf-form w::within)
-     (preference .92) ;; prefer direction
      )||#
-    ;;;;;need specific constraints that we're lacking now
+     ;;;;;need specific constraints that we're lacking now
     ((LF-PARENT ONT::TIME-span-rel)
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      (example "he ran the race in June" "in the middle of the night")
@@ -461,13 +458,13 @@
      (example "terminals are in the same state")
      (preference 0.95) ;; don't choose if other options are available
      )||#	      
-    ((LF-PARENT ONT::direction)
+    ((LF-PARENT ONT::direction-in)
      (TEMPL PRED-S-POST-TEMPL)
      (preference 0.98)
      )
     ;; in the air (excluded by ont::spatial-loc)
+     )
     )
-   )
 ))
 
 (define-words :pos W::PREP :boost-word t :templ NO-FEATURES-TEMPL

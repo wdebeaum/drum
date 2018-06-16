@@ -234,7 +234,7 @@
 	((possessor (LF ONT::DEFINITE) (AGR ?agr) (ARG ?arg) (MASS ?m)
 	  (RESTR (& (assoc-poss
 		     (% *PRO* (VAR ?v) (SEM ?sem)
-			(STATUS *WH-TERM*) (class ?lf) (constraint (& (proform ?lex)))))))
+			(STATUS *WH-TERM*) (class ?lf) (constraint (& (LEX ?lex) (proform ?lex)))))))
 	  (NObareSpec +) (WH Q) (wh-var ?v))	 
 	 -possessive3-Q> 1
 	 (head (PRO (CASE POSS) (WH Q)
@@ -243,7 +243,7 @@
 	((possessor (LF ONT::DEFINITE) (AGR ?agr) (ARG ?arg) (MASS ?m)
 	  (RESTR (& (assoc-poss
 		     (% *PRO* (VAR ?v) (SEM ?sem)
-			(STATUS ont::PRO) (class ?lf) (constraint (& (proform ?lex)))))))
+			(STATUS ont::PRO) (class ?lf) (constraint (& (LEX ?lex) (proform ?lex)))))))
 	  (NObareSpec +) (WH -))
 	 -possessive3> 1
 	 (head (PRO (CASE POSS) (WH -)
@@ -327,14 +327,14 @@
 	
         ((QUANP (LF (% DESCRIPTION (VAR ?v) (status ont::indefinite) (CLASS ?unit)
 		       (CONSTRAINT (& (QUAN (% *PRO* (VAR *) (CLASS ONT::NUMBER)
-					       (status ont::indefinite) (CONSTRAINT (& (AMOUNT 1)))))))))
+					       (status ont::indefinite) (CONSTRAINT (& (lex ?lex) (AMOUNT 1)))))))))
 		(AGR 3p) (STATUS ?l)
 		(mass (? mass count bare))
 		(VAR ?v)
 		)
          -cardinality-quan-number-units2>
 	 (det (sem ?def) (AGR 3s) (LF ?l)) 
-         (head (NUMBER-UNIT (lf ?unit) (AGR 3s) (var ?v)))
+         (head (NUMBER-UNIT (lf ?unit) (lex ?lex) (AGR 3s) (var ?v)))
          )
  
         ;; Number units may also form cardinality experssions in their bare form, but this
@@ -1402,7 +1402,7 @@
 		(constraint ?con)
 		))
      (advbl (ATYPE POST) (VAR ?advbv) ;(ARG ?v) ;;(SORT OPERATOR) 
-        (SEM ($ F::ABSTR-OBJ (f::type (? ont::position-reln ont::adequate)) ))  ; e.g. on the outside, enough
+        (SEM ($ F::ABSTR-OBJ (f::type (? ont::position-reln ont::adequate ont::part-whole-val)) ))  ; e.g. on the outside, enough, in part
             ;;(argument (% ?any (var ?vv) (sem ?argsem)))
             (gap -)
       )
@@ -2074,7 +2074,8 @@
 	       (transform ?transform)
 	       (FUNCTN -)
 	       ))
-    (pp (ptype w::in) (var ?sc-var) (sem  ($ F::ABSTR-OBJ (f::scale ?!scale2))) (gap ?gap))
+    (pp (ptype w::in) (var ?sc-var) (sem  ($ F::ABSTR-OBJ (f::type ont::domain)
+					     (f::scale ?!scale2))) (gap ?gap))
     (class-greatest-lower-bound (in1 ?scale1) (in2 ?!scale2) (out ?newscale))
     (add-to-conjunct (val (scale ?sc-var)) (old ?con) (new ?newcon))
     )
@@ -5455,8 +5456,8 @@
       (Status ?status-out)
       (class ?class)
       (restr (& (operator ?op)
-		(sequence ((% *PRO* (status ?status-out) (var ?v1) (class ?c1) (restr ?con) (sem ?s1) (lex ?lex1))
-			   (% *PRO* (status ?status-out) (var ?v2) (class ?c2) (restr ?con2) (sem ?s2) (lex ?lex2))))))
+		(sequence ((% *PRO* (status ?status-out) (var ?v1) (class ?c1) (constraint ?con) (sem ?s1) (lex ?lex1))
+			   (% *PRO* (status ?status-out) (var ?v2) (class ?c2) (constraint ?con2) (sem ?s2) (lex ?lex2))))))
       (CASE ?c)
       (mass ?m1) 
       (COMPLEX +) (SORT PRED)
@@ -5481,6 +5482,8 @@
      (logical-and (in1 ?gen1) (in2 ?gen2) (out ?generated))
      (combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
      )
+
+    
      
     ))
 ;; the rate/activity construction

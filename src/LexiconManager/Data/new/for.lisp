@@ -96,7 +96,7 @@
      (example "she is happy for him to come; switch X has to be open for bulb A to light")
      (TEMPL adv-double-subcat-control-templ)
      )
-    ;;;;; Reason convers just about everything, therefore, slightly lovered priority
+        ;;;;; Reason convers just about everything, therefore, slightly lovered priority
     ;;;;; taking aspirin for foot, for headaches
     ;; 2006/05/24 these cases covered by purpose
 ;    ((LF-PARENT ONT::REASON)

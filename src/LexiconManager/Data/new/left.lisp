@@ -55,7 +55,7 @@
  :words (
   (W::LEFT
    (SENSES
-    ((LF-PARENT ONT::DIRECTION)
+    ((LF-PARENT ONT::DIRECTION-leftward)
      (TEMPL PRED-S-POST-TEMPL)
      )
     )

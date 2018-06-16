@@ -53,7 +53,7 @@
  :words (
   (W::BACK
    (SENSES
-    ((LF-PARENT ONT::DIRECTION)
+    ((LF-PARENT ONT::DIRECTION-backward)
      (TEMPL PRED-S-POST-TEMPL)
      (example "move back")
      )
@@ -65,7 +65,7 @@
  :words (
   ((W::BACK W::AND W::FORTH)
    (SENSES
-    ((LF-PARENT ONT::DIRECTION)
+    ((LF-PARENT ONT::DIRECTION-wrt-entity)
      (TEMPL PRED-S-POST-TEMPL)
      )
     )

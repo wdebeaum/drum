@@ -6,12 +6,12 @@
  :words (
   (W::ALONG
    (SENSES
-    ((LF-PARENT ONT::ALONG)
+    #||((LF-PARENT ONT::ALONG)
      (example "he traveled along the river")
      ;(TEMPL BINARY-CONSTRAINT-TEMPL)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
-     )
-    ((LF-PARENT ONT::linear-extent)
+     )||#
+    ((LF-PARENT ont::pos-extended-along-linear-area)
      ;(TEMPL BINARY-CONSTRAINT-TEMPL)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      (example "he found it along the road")

@@ -6,7 +6,7 @@
  :words (
   (W::BACKWARDS
    (SENSES
-    ((LF-PARENT ONT::DIRECTION)
+    ((LF-PARENT ONT::DIRECTION-backward)
      (TEMPL PRED-S-POST-TEMPL)
      )
     )

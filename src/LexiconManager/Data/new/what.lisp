@@ -35,9 +35,14 @@
  :words (
   (W::WHAT
    (SENSES
-    ((LF ONT::WHAT)
+    ((LF ONT::WH-TERM)
      (non-hierarchy-lf t)(TEMPL wh-qtype-TEMPL)
-     (SYNTAX (W::agr (? agr W::3s W::3p)))
+     (SYNTAX (W::agr W::3s))
+     )
+    ((LF ONT::WH-plural)
+     (non-hierarchy-lf t)
+     (TEMPL wh-qtype-TEMPL)
+     (SYNTAX (W::agr W::3p))
      )
     )
    )

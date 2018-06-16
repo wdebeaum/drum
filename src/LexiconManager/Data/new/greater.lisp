@@ -7,7 +7,7 @@
   ((W::greater W::than)
    (SENSES
     ((LF-PARENT ONT::QMODIFIER)
-     (LF-FORM W::MORE)
+     (LF-FORM W::MORE-THAN)
      (TEMPL NUMBER-OPERATOR-TEMPL)
      )
     )

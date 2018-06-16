@@ -443,12 +443,12 @@
  )
 
 (define-type ONT::sequence-position
- :parent ONT::PREDICATE
- :arguments ((:REQUIRED ONT::FIGURE)
-	     (:optional ont::GROUND) ;; list members before/after the specified item
-             )
- )
-
+    :comment "Position related to discourse. e.g., First, we laugh"
+    :parent ONT::PREDICATE
+    :arguments ((:REQUIRED ONT::FIGURE (F::Situation))
+		)
+    )
+ 
 ;;; Added by myrosia to handle about
 (define-type ONT::association-predicate
  :parent ONT::PREDICATE

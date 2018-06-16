@@ -20,7 +20,7 @@
  :words (
   (W::FORWARD
    (SENSES
-    ((LF-PARENT ONT::DIRECTION)
+    ((LF-PARENT ONT::DIRECTION-forward)
      (TEMPL PRED-S-POST-TEMPL)
      )
     )

@@ -193,9 +193,6 @@
     :sem (F::Phys-obj (F::origin F::non-living) (F::Form F::Geographical-Object))
     )
 
-
-
-
 (define-type ONT::GEOGRAPHIC-REGION
     :parent ONT::specific-loc
     :sem (F::Phys-obj (F::form F::geographical-object)

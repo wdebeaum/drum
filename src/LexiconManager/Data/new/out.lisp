@@ -47,7 +47,7 @@
  :words (
   (W::OUT
    (SENSES
-    ((LF-PARENT ONT::direction)
+    ((LF-PARENT ONT::direction-out)
      (TEMPL PARTICLE-TEMPL)
      ) 
 

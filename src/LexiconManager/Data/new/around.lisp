@@ -28,14 +28,14 @@
     (;(LF-PARENT ont::near-reln );ONT::proximity
      (LF-PARENT ont::around)
      ;(TEMPL BINARY-CONSTRAINT-S-TEMPL)
-     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
+     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      (example "he ran around the house")
      (SYNTAX (W::ALLOW-DELETED-COMP +))
      )
-    ((LF-PARENT ont::pos-as-around );ONT::proximity)
+   #|| ((LF-PARENT ont::pos-defined-by-around );ONT::proximity)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      (example "the house around the corner")
-     )
+     )||#
     ((LF-PARENT ont::pivot )
      (TEMPL BINARY-CONSTRAINT-S-TEMPL)
      (example "rotate around the origin")

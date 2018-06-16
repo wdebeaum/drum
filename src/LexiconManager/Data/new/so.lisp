@@ -43,7 +43,7 @@
      (example "he ran so very fast")
      (PREFERENCE 0.98)  ;;;;; prefer discourse interps if possible
      )
-    ((LF-PARENT ONT::degree-modifier-high)
+    ((LF-PARENT ONT::degree-modifier-high-event)
      (LF-FORM W::so)
      (example "he so wanted to go")
      (TEMPL PRED-VP-PRE-TEMPL)

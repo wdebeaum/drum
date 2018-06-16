@@ -14,10 +14,11 @@
      (TEMPL PRED-S-POST-TEMPL)
      )
 
-    ((LF-PARENT ONT::pos-as-over)
+    ((LF-PARENT ONT::above)
      (TEMPL BINARY-CONSTRAINT-NP-implicit-TEMPL)
      )
-    ((LF-PARENT ONT::pos-as-over)
+    
+    ((LF-PARENT ONT::distributed-pos)
      (TEMPL BINARY-CONSTRAINT-S-implicit-TEMPL)
      )
     
@@ -53,10 +54,10 @@
      (EXAMPLE "I looked over the files")
      )
 
-    ((LF-PARENT ONT::OVER)
+    #||((LF-PARENT ONT::OVER)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      (EXAMPLE "I ran over the hill")
-     )
+     )||#
 
     )
    )
