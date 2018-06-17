@@ -1402,11 +1402,11 @@
 		(constraint ?con)
 		))
      (advbl (ATYPE POST) (VAR ?advbv) ;(ARG ?v) ;;(SORT OPERATOR) 
-        (SEM ($ F::ABSTR-OBJ (f::type (? ont::position-reln ont::adequate ont::part-whole-val)) ))  ; e.g. on the outside, enough, in part
-            ;;(argument (% ?any (var ?vv) (sem ?argsem)))
-            (gap -)
+      (SEM ($ F::ABSTR-OBJ (f::type (? ont::position-reln ont::adequate ont::part-whole-val)) ))  ; e.g. on the outside, enough, in part
+      ;;(argument (% w::ADJP (sem ?sem)))
+      (gap -)
       )
-     
+     ?subcat
     (add-to-conjunct (val (MODS ?advbv)) (old ?con) (new ?newc))
     )
 

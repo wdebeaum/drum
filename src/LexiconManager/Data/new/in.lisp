@@ -311,7 +311,7 @@
 	       (example "in general" "in particular" "in short" "in series" "in parallel" "in full" "in earnest" "the room is done in green")
 	       ;; a restriction of ADJP with no argument
 	       (templ binary-constraint-S-templ (xp (% w::ADJP (w::var ?var) (w::sem ?sem) (w::set-modifier -))))
-	       (preference 0.93)
+	       (preference 0.9)
 	       )
 	      ))
 ))
@@ -336,13 +336,19 @@
 	     (EXAMPLE "in part, he is happy. he is, in part, Happy")
 	     )
 	    ((LF-PARENT ONT::partial-incomplete)
-	     (templ post-adv-optional-xp-templ)
+	     (templ post-adv-templ)
+	     (meta-data :origin calo :entry-date 20050216 :change-date nil :comments caloy2)
+	     (example "is it due in part to drought")
+	     )
+	    )
+	   ((LF-PARENT ONT::partial-incomplete)
+	     (templ pre-adj-templ)
 	     (meta-data :origin calo :entry-date 20050216 :change-date nil :comments caloy2)
 	     (example "is it due in part to drought")
 	     )
 	    )
 	   )
-	  ))
+	  )
 
 (define-words :pos W::ADV
  :words (

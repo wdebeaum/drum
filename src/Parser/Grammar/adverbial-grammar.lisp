@@ -63,7 +63,7 @@
     ;; Many adverbials place restrictions on their argument (vform base), (stype decl) etc.
     ;; These weren't picked up and the whole system prone to failure
     ;; Instead, I re-wrote it so that now pp adverbials place restriction on case (which is the only reason I can see it here)
-    ;; TEST: instead of the house, from the store
+    ;; TEST: instead of the house, from the store, due to drought
     ((ADVBL (ARG ?arg) (FOCUS ?subv)
             (LF (% PROP (VAR ?v) (CLASS ?lf) (CONSTRAINT (& (?submap ?subv) (?argmap ?arg)))
                    (sem ?sem) (transform ?trans)))
@@ -82,6 +82,35 @@
 	    (comparative -) (prefix -)
             (sem ?sem))
            )
+     ?!sub
+     ;;(unify (pattern (% ?xx (WH ?wh))) (value ?!sub))    ;; fixes problem that WH don't seem to move up through variable constituents
+     ;; ((? cat) (stype ?stype) (var ?subv) (sem ?subcatsem) (case (? case obj -)) (gap -) (vform ?vform))
+     )
+
+    ;; e.g., due in part to drought, only allow for certain ADV and ADV modifiers!
+    ((ADVBL (ARG ?arg) (FOCUS ?subv)
+            (LF (% PROP (VAR ?v) (CLASS ?lf) (CONSTRAINT (& (?submap ?subv) (?argmap ?arg) (mod ?advbv)))
+                   (sem ?sem) (transform ?trans)))
+      (sem ?sem) (VAR ?v) (role ?lf) (subcatsem ?subcatsem) (gap ?gap)
+            )
+     -advbl-binary+qualifier> ;;.98 ;; rank slightly lower than a subcategorized complements
+     (head (adv (lf ?lf) ;;(SORT BINARY-CONSTRAINT) 
+            ;; make sure pp-word is not a sort here
+            (sort (? !sort pp-word double-subcat))
+	    (argument (% ?cat2 (var ?arg) (lex ?arglex) (sem ?argsem) (subjvar ?subjvar)))
+            (subcat ?!sub) (SUBCAT (% ?cat (var ?subv) (sem ?subcatsem) (stype ?stype) (vform ?vform) (gap ?gap)))
+	    
+            (subcat-map ?submap) (ARGUMENT-MAP ?argmap)
+	    (subcat2 -) ; to prevent e.g., if... then... to be used here (BINARY-CONSTRAINT-S-DECL-MIDDLE-WORD-SUBCAT-TEMPL)
+            (IGNORE -)
+	    (comparative -) (prefix -)
+            (sem ?sem) (sem ($ f::abstr-obj (f::type (? type ONT::RESPONSIBILITY-VAL ont::SITUATION-MODIFIER ))))
+      ))
+     (advbl (ATYPE POST) (VAR ?advbv) (ARG ?v) 
+      (sem ($ F::ABSTR-OBJ (F::type (? freq ont::part-whole-val ont::FREQUENCY))))
+      (sort PRED) (comparative -) (gap -)
+      (argument (% ADVBL (sem ?sem)
+		   (gap -))))
      ?!sub
      ;;(unify (pattern (% ?xx (WH ?wh))) (value ?!sub))    ;; fixes problem that WH don't seem to move up through variable constituents
      ;; ((? cat) (stype ?stype) (var ?subv) (sem ?subcatsem) (case (? case obj -)) (gap -) (vform ?vform))

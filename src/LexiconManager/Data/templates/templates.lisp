@@ -3681,6 +3681,13 @@
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::STANDARD optional)
     ))
 
+(post-adv-templ
+ (SYNTAX (W::SORT W::PRED) ;(W::ALLOW-DELETED-COMP +)
+	 (W::ATYPE W::post) (W::ARG ?arg))
+ (ARGUMENTS
+  (ARGUMENT (% (? W::argcat W::ADVBL W::ADJP)  (w::set-modifier -) (W::sort ?sort)) ONT::FIGURE)
+  ))
+
  ;; quiet enough to sing a song
   (post-adv-xp-templ
    (SYNTAX (W::SORT W::PRED) (W::ALLOW-DELETED-COMP +) (W::ATYPE W::post) (W::ARG ?arg))

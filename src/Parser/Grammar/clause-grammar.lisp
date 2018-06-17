@@ -1369,7 +1369,7 @@
       (postadvbl -) (vform ?vf)
       )
      -vp1-pre-arg-adv> .96 ;; only use if needed; prefer predicate adverbial modification 
-     ;; require non-null dobj to avoid using with intransitive verbs (maybe also need a non-null comp rule??)
+     ;; require non-null dobj to avoid using with intransitive verbs (maybe also need a non-null comp rule??) UPDATE:: 6/18  I removed this to allow passives - e.g., "This was supported in part by the company"
      (head (v (aux -)
 	    (lf ?c)
 	    (lex ?lx)
@@ -1379,7 +1379,7 @@
 				  (sem ?subjsem) (gap -))) ;; note double matching required
 	    (iobj (% -))
 	    (part ?part) 
-	    (dobj ?!dobj)	(dobj (% ?s3 (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap -)))
+	    (dobj ?dobj)	(dobj (% ?s3 (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap -)))
 	    (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -)))
 	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	     
@@ -1387,7 +1387,7 @@
      (advbl (atype pre-vp) (gap -)
       (argument (% s (sem ?argsem)))
       (arg ?v) (var ?mod) (role ?advrole) (subcat -))      
-     ?!dobj  
+     ?dobj  
      ?part
      ?comp
      )
