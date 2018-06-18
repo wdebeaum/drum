@@ -22,7 +22,9 @@
      (SYNTAX (W::ALLOW-DELETED-COMP +) (w::degree-adv +))
      (meta-data :origin calo :entry-date 20040429 :change-date nil :comments calo-y1v1)
      )
-    )
-   )
-))
+    ((LF-PARENT ONT::less-than-rel)
+     (TEMPL ADJ-ADV-OPERATOR-TEMPL)
+     (example "below average temperature")
+     )
+    ))))
 

@@ -765,6 +765,18 @@
      (less-than (val1 ?!v1) (val2 ?!v2))    ;; eliminate two thousand hundred, allows two hundred thousand
      (compute-val-and-ntype (expr (W::TIMES* ?!v1 ?!v2)) (newval ?newval) (ntype ?ntype)))
 
+    ;;   half a million/billion/trillion
+    ((number (VAL ?newval) (agr 3p) (lex ?l2) ;;(lex (?l1 ?l2)) ;;me
+			 (ntype ?ntype) (unit +)
+      (var *) (LF ?lf) (coerce ?coerce) (nobarespec ?nbs) (sem ?sem)
+      )
+     -half-a-million>
+     (word (lex half))
+     (word (lex a))
+     (head (number-unit (val ?!v2) (lex ?l2) (digits -)))
+     (less-than (val1 999999) (val2 ?!v2))    ;; eliminate two thousand hundred, allows two hundred thousand
+     (compute-val-and-ntype (expr (/ ?!v2 2)) (newval ?newval) (ntype ?ntype)))
+
     ;; explicit unit number followed by a lower values: e.g., two thousand three hundred, three hundred thirty four
     ;;   Note that two hundred three thousand should NOT work here, it has an interpretation via -number-unit> producing 203000
     ;;  NB: This does overgenerate in that it parses "three thousand two thousand" as 5000! If we want to eliminate this,

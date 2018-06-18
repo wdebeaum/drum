@@ -2474,9 +2474,10 @@
     )
 
 (define-type ont::position-on-dimension-scale-val
- :parent ont::dimensional-property-val 
- :comment "indicates a position given a dimensional scale. These adjectives do not specify the shape, direction, or alignment of the scale."
-)
+    :parent ont::dimensional-property-val
+    :wordnet-sense-keys ("scale_value%1:09:00")
+    :comment "indicates a position given a dimensional scale. These adjectives do not specify the shape, direction, or alignment of the scale."
+			 )
 
 (define-type ont::high-val
     :parent ont::position-on-dimension-scale-val
@@ -2490,7 +2491,7 @@
 
 (define-type ont::medium-val
  :parent ont::position-on-dimension-scale-val 
- :wordnet-sense-keys ("average%5:00:00:moderate:00" "medium%5:00:00:moderate:00" )
+ :wordnet-sense-keys ("average%1:09:01" "average%5:00:00:moderate:00" "medium%5:00:00:moderate:00" )
 )
 
 ;;; big/large/small
@@ -3955,11 +3956,6 @@
  :parent ont::orientation-val
 )
 
-(define-type ont::central-val
- :parent ont::spatial-arrangement-val
- :wordnet-sense-keys ("central%3:00:01")
-)
-
 (define-type ont::concentric-val
  :parent ont::spatial-arrangement-val
  :wordnet-sense-keys ("concentric%3:00:00")
@@ -4064,7 +4060,7 @@
  )
 
 ;; these are cardinal directions: northern, northeastern
-(define-type ONT::MAP-LOCATION-VAL
+(define-type ONT::subarea-LOCATION-VAL
  :parent ONT::spatial
  )
 
@@ -4131,32 +4127,38 @@
 
 
 (define-type ONT::NORTH
- :parent ONT::MAP-LOCATION-VAL
+    :parent ONT::subarea-LOCATION-VAL
+    :comment "modifiers that select a subarea of a larger area: e.g., northern Canada"
  ; Words: (W::NORTHERN W::NORTH)
  :wordnet-sense-keys ("north%3:00:00" "northerly%5:00:02:north:00" "northeastern%5:00:00:north:00" "northwestern%5:00:00:north:00")
  ; Antonym: ONT::SOUTH (W::SOUTHERN W::SOUTH)
  )
 
 (define-type ONT::SOUTH
- :parent ONT::MAP-LOCATION-VAL
+ :parent ONT::subarea-LOCATION-VAL
  ; Words: (W::SOUTHERN W::SOUTH)
  :wordnet-sense-keys ("southeasterly%5:00:02:south:00" "southerly%5:00:02:south:00" "southwesterly%5:00:02:south:00" "south%3:00:00")
  ; Antonym: ONT::NORTH (W::NORTHERN W::NORTH)
  )
 
 (define-type ONT::EAST
- :parent ONT::MAP-LOCATION-VAL
+ :parent ONT::subarea-LOCATION-VAL
  ; Words: (W::EASTERN W::EAST)
  :wordnet-sense-keys ("east%3:00:00" "eastern%5:00:00:east:00")
  ; Antonym: ONT::WEST (W::WESTERN W::WEST)
  )
 
 (define-type ONT::WEST
- :parent ONT::MAP-LOCATION-VAL
+ :parent ONT::subarea-LOCATION-VAL
  ; Words: (W::WESTERN W::WEST)
  :wordnet-sense-keys ("west%3:00:00" "western%5:00:00:west:00")
  ; Antonym: ONT::EAST (W::EASTERN W::EAST)
  )
+
+(define-type ont::central-val
+ :parent ont::subarea-location-val
+ :wordnet-sense-keys ("central%3:00:01")
+)
 
 (define-type ONT::INCOMING
  :parent ONT::DIRECTION-VAL

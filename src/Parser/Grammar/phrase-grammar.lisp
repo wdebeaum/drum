@@ -430,7 +430,7 @@
      ))
 
 
-   ;; special rule for NOUN prefixes that act as adjectives
+   ;; special rule for NOUN prefixes that act as adjectives, with hyphen
    ((N (RESTR  ?con)
        (LF ?lf) ;(CLASS ?lf)
        (SORT ?sort) (QUAL +)
@@ -468,10 +468,12 @@
 	      
 	      )
      )
-    (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
+    ;;(unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features  06/18  removed as I c an't 
     (add-to-conjunct (val (:MOD (% *PRO* (status ont::f) (class ?qual)
 				   (var *) (constraint (& (FIGURE ?v)))))) (old ?r) (new ?con)))
 
+    ;; special rule for NOUN prefixes that act as adjectives, without hyphen
+  
    ((N (RESTR  ?con)
        (LF ?lf) ;(CLASS ?lf)
        (SORT ?sort) (QUAL +)
@@ -508,10 +510,12 @@
 	      
 	      )
      )
-    (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
+    ;;(unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
     (add-to-conjunct (val (:MOD (% *PRO* (status ont::F) (class ?qual)
 				   (var *) (constraint (& (FIGURE ?v)))))) (old ?r) (new ?con)))
-   
+
+
+     ;;  example??  
    ((NAME (RESTR  ?con)
        (LF ?lf) ;(CLASS ?lf)
        (SORT ?sort) (QUAL +)
@@ -549,7 +553,7 @@
 	      
 	      )
      )
-    (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
+    ;;(unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
     (add-to-conjunct (val (:MOD (% *PRO* (status ont::f) (class ?qual)
 				   (var *) (constraint (& (FIGURE ?v)))))) (old ?r) (new ?con)))
 
@@ -589,9 +593,11 @@
 	      
 	      )
      )
-    (unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
+    ;;(unify (value ?nsem) (pattern ?argsem))  ;; we're doing it this way so we pass up all the sem features
     (add-to-conjunct (val (:MOD (% *PRO* (status ont::f) (class ?qual)
-				   (var *) (constraint (& (FIGURE ?v)))))) (old ?r) (new ?con)))
+				   (var *) (constraint (& (FIGURE ?v))))))
+		     (old ?r) (new ?con))
+    )
 
    ;; special construction, a noun with a name
    ((N1 (CLASS ?lf) (sort PRED)
@@ -5383,6 +5389,69 @@
       )
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+     ;;(simple-cons (in1 ?v2) (in2 ?lf1) (out ?members))
+     )
+
+    ((ADJP (ARG ?arg) (argument ?a) (sem ?sem) (atype ?atype1) ;(atype central)
+	   (VAR *) ;(COMPLEX +) -- removed to allow complex adj prenominal modification, e.g. "a natural and periodic state of rest"
+	   (SORT PRED)
+      (LF (% PROP (CLASS ?class) (VAR *) (sem ?sem) (CONSTRAINT (& (sequence (?v1 ?v2 ?v3)) (operator ?conj))) ;;?members)))
+	     (transform ?transform) (sem ?sem)
+	     )))
+          
+     -adj-triple-conj1> 1
+     (ADJP (arg ?arg) (argument ?a) (VAR ?v1) 
+      ;(lf (% PROP (class ?c1))) (sem ?s1) (atype central) (post-subcat -)
+      (lf (% PROP (class ?c1))) (sem ?s1) (atype ?atype1) (post-subcat -)
+      (set-modifier -)
+      )
+     (ADJP (arg ?arg) (argument ?a) (VAR ?v2) 
+      ;(lf (% PROP (class ?c1))) (sem ?s1) (atype central) (post-subcat -)
+      (lf (% PROP (class ?c2))) (sem ?s2) (atype ?atype2) (post-subcat -)
+      (set-modifier -)
+      )
+     (CONJ (LF ?conj) (but-not -) (but -))
+     (ADJP (arg ?arg)  (argument ?a) (VAR ?v3) 
+      ;(LF (% PROP (class ?c2))) (sem ?s2) (atype central) (post-subcat -)
+      (LF (% PROP (class ?c3))) (sem ?s3) (atype ?atype3) (post-subcat -)
+      (set-modifier -)
+      )
+     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?s4))
+     (sem-least-upper-bound (in1 ?s3) (in2 ?s4) (out ?sem))
+     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?c4))
+     (class-least-upper-bound (in1 ?c3) (in2 ?c4) (out ?class))
+     ;;(simple-cons (in1 ?v2) (in2 ?lf1) (out ?members))
+     )
+
+    ((ADJP (ARG ?arg) (argument ?a) (sem ?sem) (atype ?atype1) ;(atype central)
+	   (VAR *) ;(COMPLEX +) -- removed to allow complex adj prenominal modification, e.g. "a natural and periodic state of rest"
+	   (SORT PRED)
+      (LF (% PROP (CLASS ?class) (VAR *) (sem ?sem) (CONSTRAINT (& (sequence (?v1 ?v2 ?v3)) (operator ?conj))) ;;?members)))
+	     (transform ?transform) (sem ?sem)
+	     )))
+          
+     -adj-triple-conj-w-comma> 1
+     (ADJP (arg ?arg) (argument ?a) (VAR ?v1) 
+      ;(lf (% PROP (class ?c1))) (sem ?s1) (atype central) (post-subcat -)
+      (lf (% PROP (class ?c1))) (sem ?s1) (atype ?atype1) (post-subcat -)
+      (set-modifier -)
+      )
+     (punc (lex w::punc-minus))
+     (ADJP (arg ?arg) (argument ?a) (VAR ?v2) 
+      ;(lf (% PROP (class ?c1))) (sem ?s1) (atype central) (post-subcat -)
+      (lf (% PROP (class ?c2))) (sem ?s2) (atype ?atype2) (post-subcat -)
+      (set-modifier -)
+      )
+     (CONJ (LF ?conj) (but-not -) (but -))
+     (ADJP (arg ?arg)  (argument ?a) (VAR ?v3) 
+      ;(LF (% PROP (class ?c2))) (sem ?s2) (atype central) (post-subcat -)
+      (LF (% PROP (class ?c3))) (sem ?s3) (atype ?atype3) (post-subcat -)
+      (set-modifier -)
+      )
+     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?s4))
+     (sem-least-upper-bound (in1 ?s3) (in2 ?s4) (out ?sem))
+     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?c4))
+     (class-least-upper-bound (in1 ?c3) (in2 ?c4) (out ?class))
      ;;(simple-cons (in1 ?v2) (in2 ?lf1) (out ?members))
      )
 

@@ -18,18 +18,6 @@
    )
   ))||#
 
-(define-words :pos W::adv :templ DISC-PRE-TEMPL
- :words (
-  ((W::fewer W::than)
-   (SENSES
-    ((LF-PARENT ONT::QMODIFIER)
-     (LF-FORM W::LESS-THAN)
-     (TEMPL NUMBER-OPERATOR-TEMPL)
-     )
-    )
-   )
-))
-
 (define-words :pos W::ADV
  :words (
   (W::FEWER
