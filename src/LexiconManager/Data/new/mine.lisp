@@ -7,9 +7,15 @@
  :words (
    (W::mine
    (SENSES
-    ((LF-PARENT ONT::manufactured-object)
+    (;(LF-PARENT ONT::manufactured-object)
+     (LF-PARENT ONT::BOMB)
      (meta-data :origin lou :entry-date 20040311 :change-date nil :wn ("mine%1:06:00") :comments lou-sent-entry)
      )
+    (
+     (LF-PARENT ONT::MINE)
+     (example "A gold mine")
+     )
+
     )
    )
 ))

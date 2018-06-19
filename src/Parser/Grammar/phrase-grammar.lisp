@@ -92,7 +92,7 @@
 	;; e.g., which, what    -- just like spec-det1> except for adding the wh-var feature
 	((SPEC (SEM ?def) (AGR ?agr) (MASS ?m) (ARG ?arg) (NObareSpec +)  (lex ?lex) (LF ?l)
 	       (RESTR ?newr) (WH ?!wh) (wh-var ?arg))
-	 -spec-whdet1>
+	 -spec-whdet1> 1
 	 (head (DET (sem ?def) (AGR ?agr) (WH ?!wh) 
 		    (MASS ?m) (lex ?lex) (poss -) (RESTR ?R) (LF ?l)))
 	 (add-to-conjunct (old ?r) (val (PROFORM ?lex)) (new ?newr)))
@@ -100,7 +100,7 @@
 	;; e.g., which, what    -- just like spec-det1> except for adding the wh-var feature
 	((SPEC (SEM ?def) (AGR ?agr) (MASS ?m) (ARG ?arg) (NObareSpec +)  (lex ?lex) (LF ?l)
 	       (RESTR ?newr) (WH ?!wh) (wh-var ?wh-var))
-	 -spec-whdet1-poss>
+	 -spec-whdet1-poss> 1
 	 (head (DET (sem ?def) (AGR ?agr) (WH ?!wh) (wh-var ?wh-var)
 		    (MASS ?m) (lex ?lex) (poss +) (RESTR ?R) (LF ?l)))
 	 (add-to-conjunct (old ?r) (val (PROFORM ?lex)) (new ?newr)))
@@ -1762,7 +1762,8 @@
 	;;  removed this to handle things like "computing services"
 	;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
       (sem ?n-sem) (derived-from-name -) ; names go through -name-n1>
-      (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -)   ;;  can't require COMPLEX - any more -- e.g., "p53 expression levels"  -- now we can!! This goes through nom-rate instead.
+      (CLASS ?modc) (PRO -) (N-N-MOD -) ;(COMPLEX -)   ;;  can't require COMPLEX - any more -- e.g., "p53 expression levels"  -- now we can!! This goes through nom-rate instead.
+      ; now we can't!  e.g., <trade and migration> route
       (SUBCAT ?ignore) (GAP -) (kr-type ?kr-type)
       (postadvbl -) (post-subcat -) 
       )
@@ -4465,7 +4466,7 @@
 
 
 	;;   Headless adjective phrases
-	;;  The green, the largest, thew largest of the lions
+	;;  The green, the largest, the largest of the lions
     ((NP (SORT PRED) (class ont::referential-sem) ;(CLASS ?c)
       (VAR *) (sem ?s) (case (? case SUB OBJ))  (headless +) (agr (? agr 3s 3p))
       (wh-var ?whv)
@@ -4481,6 +4482,7 @@
      -NP-adj-missing-head> .97 ; .96
      (head (spec  (poss -) (restr ?restr) (wh-var ?whv)
 		  (WH -)   ;;tentatively eliminating WH terms  -- is there an example like "show me which large?"
+		  (restr (& (proform -)))  ;; prevent this and that, which should be pronouns
 		  (lf ?spec) (arg *) (agr (? agr 3s 3p)) ;(agr |3P|)
 		  (var ?v)))
      (ADJP (LF ?l1) (ARG *) (set-modifier -)
@@ -5131,7 +5133,8 @@
      )
 
      ;;  simple conjuncts/disjunct of NPS, e.g., the dog and the cat, the horse or the cow
-     ((NP (ATTACH ?a) (var ?v) (agr 3p) (SEM ?sem) (gerund ?ger) (mass ?m1) ; should really be some combination of m1 and m2
+     ((NP (ATTACH ?a) (var ?v) (agr ?agr-out) ;(agr 3p) ; the ice and the fire could be 3s or 3p
+	  (SEM ?sem) (gerund ?ger) (mass ?m1) ; should really be some combination of m1 and m2
       (LF (% Description (Status ?status-out) (var ?v) 
 	     (class ?class)
 	     (constraint (& (operator ?op) (sequence (?v1 ?v2))))
@@ -5158,7 +5161,8 @@
      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
      (logical-and (in1 ?gen1) (in2 ?gen2) (out ?generated))
      (combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
-      )
+     (recompute-agr (in1 ?agr) (in2 ?agr1) (out ?agr-out))
+     )
 
     
     ;;  But not construction, e,g,. apples but not pears, apples not pears, 
@@ -5405,6 +5409,7 @@
       (lf (% PROP (class ?c1))) (sem ?s1) (atype ?atype1) (post-subcat -)
       (set-modifier -)
       )
+     (punc (lex w::punc-comma))
      (ADJP (arg ?arg) (argument ?a) (VAR ?v2) 
       ;(lf (% PROP (class ?c1))) (sem ?s1) (atype central) (post-subcat -)
       (lf (% PROP (class ?c2))) (sem ?s2) (atype ?atype2) (post-subcat -)
@@ -5436,12 +5441,13 @@
       (lf (% PROP (class ?c1))) (sem ?s1) (atype ?atype1) (post-subcat -)
       (set-modifier -)
       )
-     (punc (lex w::punc-minus))
+     (punc (lex w::punc-comma))
      (ADJP (arg ?arg) (argument ?a) (VAR ?v2) 
       ;(lf (% PROP (class ?c1))) (sem ?s1) (atype central) (post-subcat -)
       (lf (% PROP (class ?c2))) (sem ?s2) (atype ?atype2) (post-subcat -)
       (set-modifier -)
       )
+     (punc (lex w::punc-comma))
      (CONJ (LF ?conj) (but-not -) (but -))
      (ADJP (arg ?arg)  (argument ?a) (VAR ?v3) 
       ;(LF (% PROP (class ?c2))) (sem ?s2) (atype central) (post-subcat -)
@@ -5521,7 +5527,8 @@
      (N1 lf headcat transform set-restr refl abbrev)
      )
 ;;  simple conjuncts/disjunct of N1, e.g., the (dog and cat)
-    ((N1 (ATTACH ?a) (var ?v) (agr 3p) (SEM ?sem) (gerund ?ger) 
+    ((N1 (ATTACH ?a) (var ?v) (agr ?agr-out) ;(agr 3p) ; ice and fire could be 3s or 3p
+	 (SEM ?sem) (gerund ?ger) 
       (Status ?status-out)
       (class ?class)
       (restr (& (operator ?op)
@@ -5550,6 +5557,7 @@
      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
      (logical-and (in1 ?gen1) (in2 ?gen2) (out ?generated))
      (combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
+     (recompute-agr (in1 ?agr) (in2 ?agr1) (out ?agr-out))
      )
 
     

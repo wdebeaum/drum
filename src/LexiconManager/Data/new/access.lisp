@@ -14,7 +14,7 @@
 (define-words :pos W::v :templ AGENT-affected-XP-TEMPL
  :words (
   (W::access
-   (wordfeats (W::morph (:forms (-vb) :nom w::access)))
+   (wordfeats (W::morph (:forms (-vb) :nom w::access :nomobjpreps (w::of w::to))))
    (SENSES
     ((EXAMPLE "He couldn't access the data")
      (meta-data :origin calo :entry-date 20040915 :change-date nil :comments caloy2)

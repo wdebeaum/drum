@@ -116,7 +116,7 @@
      ;; ((? cat) (stype ?stype) (var ?subv) (sem ?subcatsem) (case (? case obj -)) (gap -) (vform ?vform))
      )
 
-    #||
+    #|| ; merged with -advbl-binary-3part>
     ((ADVBL (ARG ?arg) (gap -) (WH ?wh) (FOCUS ?subv)
             (LF (% PROP (VAR ?v) (CLASS ?lf) (CONSTRAINT (& (?submap ?subv) (?argmap ?arg) (?sub2map ?sub2)))
                    (sem ?sem) (transform ?trans)))
@@ -197,7 +197,7 @@
 	    (subcat ?!sub) (SUBCAT (% ?cat (var ?subv) (sem ?subcatsem) (stype ?stype) (vform ?vform) (gap -) (wh ?wh1) (wh-var ?wh-var1) (lex ?slex))) 
             (subcat-map ?submap) (ARGUMENT-MAP ?argmap)
             (subcat2 ?!sub2) (SUBCAT2 (% ?cat2 (var ?subv2) (sem ?subcatsem2) (stype ?stype2) (vform ?vform2) (wh ?wh2) (wh-var ?wh-var2) (gap -) (lex ?slex2))) 
-            (subcat2-map ?submap2) (ARGUMENT-MAP ?argmap2)
+            (subcat2-map ?submap2) 
             (IGNORE -)
             (sem ?sem))
            )
@@ -479,7 +479,7 @@
      (advbl-needed ?avn)
       )
      -adv-vp-pre-s> 
-     (advbl (SORT PRED) (ATYPE (? x PRE-VP)) (ARGUMENT (% S (SEM ($ f::situation))))
+     (advbl (SORT PRED) (ATYPE (? x PRE-VP)) (ARGUMENT (% S (SEM ?sem))) ;;($ f::situation))))
       (GAP -) 
       (ARG ?v) (VAR ?mod)
       )
@@ -683,19 +683,15 @@
 		;;(aux -) 
 		(gap ?gap)
 		(ellipsis -)
-		(result ?asem)
+		(result (? advsem ($ f::abstr-obj
+				       (F::type (? ttt ont::position-reln ont::resulting-object ont::path)))))
 		))
 
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
-			 (sem ?sem))) (GAP -) (particle -)
+			 (sem ?sem)))
+      (GAP -) (particle -)
+      (sem ?advsem)
       ;; (subjvar ?subjvar)
-			 (sem ?asem)
-			 (SEM ($ f::abstr-obj
-				 (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; we allowed "in" for some reason, but I don't remember the example!
-					     ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
-					;(F::type (? ttt ont::path ont::position-reln))))
-	      ;;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ont::on ont::at-loc )))) ; take the trajectory senses instead of the position-as-extent-reln senses of words such as "across"
-;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
       (ARG ?npvar) (VAR ?mod)
       ;;(role ?advrole) 

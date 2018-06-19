@@ -28,7 +28,9 @@
      (preference .97) ;; prefer the highlight sense
      )
     ((EXAMPLE "Mark the search criteria")
-     (LF-PARENT ONT::select) ;; like select
+     ;(LF-PARENT ONT::select) ;; like select
+     (LF-PARENT ONT::classify) ;; like select
+     (TEMPL agent-neutral-xp-templ)
      (meta-data :origin plot :entry-date 20081024 :change-date nil :comments nil)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      )

@@ -2718,7 +2718,7 @@
 
 (define-type ont::severe-val
  :parent ont::severity-val 
- :wordnet-sense-keys ("severe%5:00:01:bad:00" "severe%5:00:00:intense:00" "extreme%5:00:00:intense:00")
+ :wordnet-sense-keys ("severe%5:00:01:bad:00" "severe%5:00:00:intense:00" "extreme%5:00:00:intense:00" "drastic%5:00:00:forceful:00")
 )
 
 (define-type ont::mild-val
@@ -3210,18 +3210,20 @@
  :parent ont::national-identity-val 
 )
 
-(define-type ont::land-use-val ; ont::city-related-val
+(define-type ont::city-related-val
  :parent ont::status-val 
+ :wordnet-sense-keys ("civic%3:01:00" )
+ :comment "having to do with a city (or its government)"
 )
 
 ;; urban, rural
 (define-type ont::urban-val
- :parent ont::land-use-val 
- :wordnet-sense-keys ("urban%3:00:00" "urban%3:01:00" "civic%3:01:00")
+ :parent ont::city-related-val
+ :wordnet-sense-keys ("urban%3:00:00" "urban%3:01:00" )
 )
 
 (define-type ont::rural-val
- :parent ont::land-use-val 
+ :parent ont::city-related-val 
  :wordnet-sense-keys ("rural%3:00:00" "rural%3:01:01" )
 )
 
@@ -3792,6 +3794,17 @@
 (define-type ont::industrial-val
  :parent ont::commercial-enterprise-val
  :wordnet-sense-keys ("industrial%3:01:00")
+)
+
+
+(define-type ont::agricultural-val
+ :parent ont::commercial-enterprise-val 
+ :wordnet-sense-keys ("agricultural%3:01:00" "agricultural%5:00:00:rural:00" )
+)
+
+(define-type ont::livestock-val
+ :parent ont::commercial-enterprise-val
+ :wordnet-sense-keys ("pastoral%3:01:02" )
 )
 
 ;; relating to economy

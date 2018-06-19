@@ -708,7 +708,7 @@
    (ARGUMENTS
     
     ;;;;;; !!!! Fix this - as we handle nominalizations, this will have to be split into multiple templates with appropriate roles
-    (SUBCAT (% W::PP (W::ptype W::of)) NOROLE)
+    (SUBCAT (% W::PP (W::ptype W::of)) ONT::NOROLE)
     ))
   
   ;;;;; letters are count nouns but have irregular plurals e.g., a's

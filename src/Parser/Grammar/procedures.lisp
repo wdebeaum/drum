@@ -211,6 +211,22 @@
    ))
 
 
+(define-predicate 'w::recompute-agr
+  #'(lambda (args)
+      (recompute-agr args)))
+  
+(defun recompute-agr (args)
+  (let ((in1 (get-fvalue args 'w::in1))
+	(in2 (get-fvalue args 'w::in2))
+	(out (get-fvalue args 'w::out))
+	)
+    (if (and (eq in1 'w::3s) (eq in2 'w::3s))
+	(match-vals nil out (read-expression '(? agr-out w::3s w::3p)))
+      (match-vals nil out 'w::3p)
+      )
+   ))
+
+
 #|
 (define-predicate 'w::get-c-var
   #'(lambda (args)

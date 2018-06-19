@@ -1,4 +1,4 @@
-; If adding/removing a multiword entry, do "make install" in TextTagger.
+; If adding/removing a multiword entry (maybe only adjectives and adverbs), do "make install" in TextTagger.
 ; Also do "make install" in src/Systems/*/ if running from the lisp image.
 ;
 ;; words that ought to be composed from prefix + word from TRIPS lexicon
@@ -3202,4 +3202,9 @@ on_the_table%5:00:00:flexible:02 ; reluctantly put this here until we find a bet
 growing_season%1:28:00::
 rainy_season%1:28:00::
 dry_season%1:28:00::
+migration_route%1:15:00::
+half_a_dozen%1:23:00::
+pepperoni_pizza%1:13:00::
+economic_crisis%1:26:00::
+
 

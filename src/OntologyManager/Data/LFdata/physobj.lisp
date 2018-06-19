@@ -311,7 +311,7 @@
     :sem (F::Phys-obj (F::spatial-abstraction (? sa F::spatial-point F::spatial-region))
 		      (F::origin F::Artifact)
 ;		   (f::object-function f::place)
-		      (F::mobility f::fixed) (f::intentional +)) ; political regions can be intentional agents
+		      (F::mobility f::fixed)) ;(f::intentional +)) ; political regions can be intentional agents <-- removed intentional + because IN-LOC wants intentional -; see also -n1-region-to-actor-coerce>
     )
 
 (define-type ONT::religious-REGION
@@ -1703,12 +1703,6 @@
     :sem (F::PHYS-OBJ (F::SPATIAL-ABSTRACTION (? SA F::SPATIAL-POINT F::LINE)) (F::MOBILITY F::FIXED))
     :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::form F::Geographical-object) (F::spatial-abstraction (? sao F::STrip F::Spatial-region))))
 		)
-    )
-
-(define-type ONT::Mine
-    :parent ONT::MANUFACTURED-OBJECT
-    :wordnet-sense-keys ("mine%1:06:01")
-    :sem (F::Phys-obj (F::form F::solid-object) (F::mobility F::non-self-moving))
     )
 
 (define-type ONT::Wheel
