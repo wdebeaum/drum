@@ -1051,7 +1051,10 @@
 (define-type ONT::Time-object
     :comment "objects that refer to temporal locations in some way"
     :parent ONT::ANY-TIME-OBJECT
+    :arguments ((:OPTIONAL ONT::FIGURE))
     :sem (F::time (F::time-scale (? sc F::point F::interval)))
+    :arguments ((:ESSENTIAL ONT::FIGURE)
+		)
     )
 
 ;; these are intervals such as "duration", which cannot generally be counted

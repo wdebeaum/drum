@@ -254,9 +254,10 @@
     ((UTT (no-post-adv +) (lf (% SPEECHACT (VAR **) (CLASS ONT::SA_PRED-FRAGMENT) (no-post-adv +) (constraint (& (content ?v))))) (var **))
     -advbl-utt> 
     (head (advbl (WH -) (SORT (? !sort DISC)) (VAR ?v) (ARGUMENT (% ?x (SEM ?sem))) 
-		 (ARG (% *PRO* (VAR *) (gap -) (sem ?sem)))
-	   (gap -))))
-
+		 (ARG (% *PRO* (VAR *) (gap -) (class ?lf) (sem ?sem)))
+		 (gap -))))
+     ;;(compute-ont-type-from-sem (sem ?sem) (lf ?lf)))
+   
    ;; e.g., In what corner?
    ((UTT (no-post-adv +) (lf (% SPEECHACT (VAR **) (CLASS ONT::SA_wh-question)
 				(constraint (& (content ?v) (focus ?foc))))) (var **))
@@ -279,6 +280,7 @@
     -utt-s-that> 0.9
     (head (cp (ctype s-that-overt) (gap -) (var ?v) (wh -) (lf ?lf) (advbl-needed -))))
 
+   #| ; This is broken: need to pass up subj, but it can go through -VP-UTT-INFORM> instead?
    ;; climbed the mountain, running to the store
    ((utt (var **) (punctype decl) (no-post-adv +)
      (lf (% speechact (var **) (class ont::sa_tell)
@@ -293,6 +295,7 @@
 			       (f::mobility f::self-moving) (f::origin f::human) (f::intentional +)))
 		       (sem ?subjsem)))
 	      (var ?v) (wh -) (lf ?lf) (advbl-needed -))))
+   |#
 
    ;;  request and suggestions
    

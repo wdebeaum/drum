@@ -8,8 +8,11 @@
    (SENSES
     ((meta-data :origin calo-ontology :entry-date 20060426 :change-date nil :comments nil)
      (LF-PARENT ONT::acquire)
-     
      )
+    ((meta-data :origin calo-ontology :entry-date 20060426 :change-date nil :comments nil)
+     (LF-PARENT ONT::acquire)
+     (TEMPL agent-templ)
+     )    
     )
    )
 ))

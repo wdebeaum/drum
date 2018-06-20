@@ -30,3 +30,13 @@
    )
 ))
 
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :words (
+  (W::stock
+   (SENSES
+    (
+     (LF-PARENT ONT::COMMODITY) ; could also put under ONT::ASSETS
+     )
+    )
+   )
+))

@@ -471,7 +471,18 @@
     ;; in the air (excluded by ont::spatial-loc)
      )
     )
-))
+  ))
+
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+		  :words (
+			  ((w::in w::danger)
+			   (SENSES
+			    ((meta-data :origin calo :entry-date 20031223 :change-date nil :wn ("likely%5:00:00:prospective:00") :comments html-purchasing-corpus)
+			     (EXAMPLE "He is a likely candidate")
+			     (lf-parent ont::at-risk-val)
+			     (SEM (F::GRADABILITY F::+))
+			     (TEMPL central-adj-xp-TEMPL (XP (% W::pp (W::ptype W::of))))
+			     )))))
 
 (define-words :pos W::PREP :boost-word t :templ NO-FEATURES-TEMPL
  :tags (:base500)

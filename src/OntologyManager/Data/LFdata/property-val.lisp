@@ -694,7 +694,11 @@
 (define-type ont::likely-val
  :parent ont::likelihood-val
  :wordnet-sense-keys ("likely%3:00:04" "probable%3:00:00" )
-)
+ )
+
+(define-type ont::at-risk-val
+ :parent ont::likely-val
+ )
 
 (define-type ont::not-likely-val
  :parent ont::likelihood-val

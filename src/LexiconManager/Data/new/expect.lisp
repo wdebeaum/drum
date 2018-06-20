@@ -30,3 +30,16 @@
    )
 ))
 
+(define-words :pos W::v
+  :tags (:base500)
+  :words (
+	  (W::expected
+	   (wordfeats (W::VFORM W::PASSIVE) (W::MORPH (:forms NIL)))
+	   (SENSES
+	    ((EXAMPLE "It is expected (that)...")
+	     (LF-PARENT ONT::expectation)
+	     (TEMPL EXPLETIVE-FORMAL-TEMPL (xp1 (% W::NP (W::lex W::it))) )
+	     )
+	    )
+	   ))
+  )

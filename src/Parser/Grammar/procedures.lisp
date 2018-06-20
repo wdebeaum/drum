@@ -354,7 +354,9 @@
   
 (defun compute-lf-from-sem (args)
   (let* ((sem (second (assoc 'w::sem args)))
+	 (newlf (om::find-most-specific-lfs-for-sem sem om::*lf-ontology*))
 	 (lf (second (assoc 'w::lf args))))
+    (format t "~% BEST LEF for sem ~S is ~S" sem newlf)
     (match-vals nil lf (or (;; finish when new SEM strctures are installed
 			    )))))
 

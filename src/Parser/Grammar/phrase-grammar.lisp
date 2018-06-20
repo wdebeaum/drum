@@ -2582,7 +2582,9 @@
          (head (N1 (SORT PRED) (MASS  count) (gerund -) (complex -) 
 		   (name-or-bare ?nob) (lex ?lex)
 		   (derived-from-name -)  ;; names already can become NPs by simpler derivations
-		(AGR 3s) (VAR ?v) (CLASS (? c ONT::GENE-PROTEIN)) (RESTR ?r) (rate-activity-nom -) (agent-nom -)
+		   (AGR 3s) (VAR ?v)
+		   (CLASS (? c ONT::GENE-PROTEIN)) (CLASS (? !c ONT::REFERENTIAL-SEM))
+		   (RESTR ?r) (rate-activity-nom -) (agent-nom -)
 		(sem ?sem) (transform ?transform) (headless -) ; exclude missing-heads
 		(sem ($ (? x F::PHYS-OBJ) (F::KR-TYPE ?kr)))
 		))
@@ -2674,7 +2676,8 @@
 	      (SPEC ont::INDEFINITE) (unit-spec +) (VAR ?v) (SORT unit-measure))
          -pre-unit-np-number-indef>
 	  (head (N (VAR ?v) (SORT attribute-unit) (Allow-before +) (LF ?unit)
-		   (KIND -) (agr ?agr) (sem ?sem) (sem ($ f::abstr-obj (f::scale ?sc)))
+		   (KIND -) (agr ?agr) (sem ?sem) (sem ($ f::abstr-obj (f::type ont::unit)
+							  (f::scale ?sc)))
 		   (argument ?argument) (RESTR ?restr)
 		   (post-subcat -)
 		   ))
@@ -2721,7 +2724,7 @@
          -unit-np-number-indef>
 	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r))
  	 (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
-		   (KIND -) (sem ?sem) (sem ($ f::abstr-obj  (f::scale ?sc)))
+		   (KIND -) (sem ?sem) (sem ($ f::abstr-obj  (f::type ont::unit) (f::scale ?sc)))
 		   (argument ?argument) (RESTR ?restr)
 		   (post-subcat -)
 		))
@@ -4482,7 +4485,7 @@
      -NP-adj-missing-head> .97 ; .96
      (head (spec  (poss -) (restr ?restr) (wh-var ?whv)
 		  (WH -)   ;;tentatively eliminating WH terms  -- is there an example like "show me which large?"
-		  (restr (& (proform -)))  ;; prevent this and that, which should be pronouns
+		  ;(restr (& (proform -)))  ;; prevent this and that, which should be pronouns
 		  (lf ?spec) (arg *) (agr (? agr 3s 3p)) ;(agr |3P|)
 		  (var ?v)))
      (ADJP (LF ?l1) (ARG *) (set-modifier -)

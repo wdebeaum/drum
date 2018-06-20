@@ -9,9 +9,9 @@
     (SENSES
     ((LF-PARENT ONT::die)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL affected-TEMPL)
+     (TEMPL affected-cause-optional-xp-TEMPL (xp (% w::pp (w::ptype (? xx w::from w::by)))))
      )
     )
    )
-))
+  ))
 

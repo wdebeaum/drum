@@ -3599,9 +3599,10 @@
 )
 
 (define-type ont::governing
- :parent ont::control-manage
- :comment "control, influence, or regulate a process"
-)
+    :parent ont::control-manage
+    :arguments ((:REQUIRED ONT::Agent ((? aff F::situation F::phys-obj))))
+    :comment "control, influence, or regulate a process"
+    )
 
 ;; for configure, arrange X (into Y) e.g. he arranged them into groups of three
 (define-type ONT::arranging

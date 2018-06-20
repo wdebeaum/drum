@@ -14,6 +14,18 @@
 ;  )
 ;))
 
+(define-words :pos w::adv
+ :words (
+  (w::inter-
+  (senses
+   ((lf-parent ont::BETWEEN)
+    (example "inter-communicate")
+    (templ V-PREFIX-templ)
+    )
+   )
+  )
+))
+
 (define-words :pos W::adj 
  :words (
   (W::inter-

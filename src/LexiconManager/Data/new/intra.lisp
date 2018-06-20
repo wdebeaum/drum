@@ -14,6 +14,20 @@
 ;  )
 ;))
 
+#|
+(define-words :pos w::adv
+ :words (
+  (w::hyper-
+  (senses
+   ((lf-parent ont::DEGREE-MODIFIER-HIGH)
+    (example "hyperactivate")
+    (templ V-PREFIX-templ)
+    )
+   )
+  )
+))
+|#
+
 (define-words :pos W::adj 
  :words (
   (W::intra-

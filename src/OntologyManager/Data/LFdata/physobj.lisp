@@ -310,8 +310,7 @@
     :parent ONT::geographic-region
     :sem (F::Phys-obj (F::spatial-abstraction (? sa F::spatial-point F::spatial-region))
 		      (F::origin F::Artifact)
-;		   (f::object-function f::place)
-		      (F::mobility f::fixed)) ;(f::intentional +)) ; political regions can be intentional agents <-- removed intentional + because IN-LOC wants intentional -; see also -n1-region-to-actor-coerce>
+		      (F::mobility f::fixed)) ;; (f::intentional +)) ; political regions can be intentional agents   -- have a rule in grammar that handles this
     )
 
 (define-type ONT::religious-REGION

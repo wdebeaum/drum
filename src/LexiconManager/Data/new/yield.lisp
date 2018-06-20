@@ -5,7 +5,7 @@
 (define-words :pos W::V :templ agent-affected-xp-templ
  :words (
   (W::yield
-   (wordfeats (W::morph (:forms (-vb) :nom w::yield)))
+   (wordfeats (W::morph (:forms (-vb) :nom w::yield)))  ; result nominalization, not event nominalization
    (SENSES
     (
      (LF-PARENT ONT::cause-produce-reproduce)
@@ -38,7 +38,7 @@
   (W::yield
    (SENSES
     (
-     (LF-PARENT ONT::cause-produce-reproduce)
+     (LF-PARENT ONT::outcome)
      (TEMPL COUNT-PRED-TEMPL)
      )
 
@@ -46,4 +46,5 @@
    )
 ))
 |#
+
 

@@ -1300,6 +1300,12 @@
 	(LSUBJ (% W::NP) ONT::affected)
 	(LCOMP (:parameter xp (:default (% W::pp (W::ptype W::from)))) ONT::SOURCE)
 	))
+
+    (affected-cause-optional-XP-TEMPL
+       (ARGUMENTS
+	(LSUBJ (% W::NP) ONT::affected)
+	(LCOMP (:parameter xp (:default (% W::pp (W::ptype W::from)))) ONT::AGENT optional)
+	))
       
       (affected-SOURCE-OPTIONAL-TEMPL
        (ARGUMENTS

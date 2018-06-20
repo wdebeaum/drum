@@ -88,9 +88,10 @@
 
 (define-type ont::event-of-undergoing-action
      :parent ONT::event-of-change
-     :comment "A small class of events that take an affected but do not allow an AGENT"
+     :comment "A small class of events that take an affected but do not allow an AGENT construction (though might be caused as in he died from the plague"
      :sem (F::Situation)
-     :arguments ((:essential ONT::affected  ((? aff F::abstr-obj f::phys-obj f::situation) (F::tangible +)))))
+     :arguments ((:essential ONT::affected  ((? aff F::abstr-obj f::phys-obj f::situation) (F::tangible +)))
+		 (:optional ont::agent )))
 
 (define-type ont::event-of-causation 
      :parent ONT::event-of-action

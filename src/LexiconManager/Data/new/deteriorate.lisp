@@ -5,6 +5,7 @@
 (define-words :pos W::V :templ agent-affected-xp-templ
  :words (
   (W::deteriorate
+   (wordfeats (W::morph (:forms (-vb) :nom w::deterioration)))
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090504 :comments nil :vn ("entity_specific_cos-45.5") :wn ("deteriorate%2:29:00" "deteriorate%2:30:00"))
      (templ agent-affected-xp-templ)

@@ -491,11 +491,13 @@
       (lf (% PROP (class ONT::repetition) (var *) (constraint (& (FIGURE ?argvar) (GROUND ?!val)))))
       (atype post)
       (arg ?argvar)
+      (sem ?sem)
       )
      -repetition-number-advbll>
      ;;(head (number (val ?val)))
      (head (cardinality (var ?val) (agr 3p)))
      (word (lex (? t W::time W::times)))
+     (compute-sem-features (lf ont::repetition) (sem ?sem))
      )
 
     ;; do it many times
@@ -510,29 +512,33 @@
       (lf (% PROP (class ONT::repetition) (var *) (constraint (& (FIGURE ?argvar) (GROUND ?!card)))))
       (atype post)
       (arg ?argvar)
+      (sem ?sem)
       )
      -repetition-quan-advbll>
      (head (spec (mass count) (lf ont::indefinite-plural)))
      (word (lex (? t W::time W::times)))
+     (compute-sem-features (lf ont::repetition) (sem ?sem))
      )
 
     ;; every/each/some/many/ day/morning/year
 
     ((advbl (sort constraint)
-	    (argument (% S (var ?argvar) (sem ($ f::situation)) ))
-	    (subcatsem ?valsem) (bare-advbl +)
-	    (role ont::frequency)
-	    (var *) (case ?case)
-	    ;;(var ?var)
-	    (lf (% PROP (class ONT::iteration-period) (var *) (constraint (& (FIGURE ?argvar) (GROUND ?valvar)))))
-	    (atype post)
-	    (arg ?argvar)
-	    )
+      (argument (% S (var ?argvar) (sem ($ f::situation)) ))
+      (subcatsem ?valsem) (bare-advbl +)
+      (role ont::frequency)
+      (var *) (case ?case)
+      ;;(var ?var)
+      (lf (% PROP (class ONT::iteration-period) (var *) (constraint (& (FIGURE ?argvar) (GROUND ?valvar)))))
+      (atype post)
+      (sem ?sem)
+      (arg ?argvar)
+      )
      -period-value-advbl1> .98
      (head (np (sem ?valsem) (var ?valvar)
 	       (sem ($ f::time (f::time-scale F::INTERVAL))) (headless -)
 	       (LF (% DESCRIPTION (status (? xx ont::quantifier)))) ;; indefinite))))   
 	       ))
+     (compute-sem-features (lf ont::iteration-period) (sem ?sem))
      )
 
      ;; 30 miles per hour
@@ -549,20 +555,22 @@
      )
 
      ;; this morning, this year, that week, next week, ...
-      ((advbl (sort constraint)
-	    (argument (% S (var ?argvar) (sem ($ f::situation)) ))
-	    (subcatsem ?valsem)  (bare-advbl +)
-	    (var *)
-	    (lf (% PROP (class ONT::event-time-rel) (var *) (constraint (& (FIGURE ?argvar) (GROUND ?valvar)))))
-	    (atype (? atp pre post))
-	    (arg ?argvar)
-	    )
+    ((advbl (sort constraint)
+      (argument (% S (var ?argvar) (sem ($ f::situation)) ))
+      (subcatsem ?valsem)  (bare-advbl +)
+      (sem ?sem)
+      (var *)
+      (lf (% PROP (class ONT::event-time-rel) (var *) (constraint (& (FIGURE ?argvar) (GROUND ?valvar)))))
+      (atype (? atp pre post))
+      (arg ?argvar)
+      )
      -deictic-time-advbl> 1
      (head (np (sem ?valsem) (var ?valvar) (headless -) (coerced -)
 	       (sem ($ f::time (f::time-scale F::INTERVAL)))
 	       (LF (% DESCRIPTION (status ont::definite) (class ont::time-object);;(CONSTRAINT (& (proform (? cr W::THIS W::THAT W::THOSE W::THESE)))))) ;;(? cr this that those these))))))
+		      ))
 	       ))
-     )))
+     (compute-sem-features (lf ont::event-time-rel) (sem ?sem)))
 
     ;;  Special construction for last year/next week/ etc which doesn't seem to generalize to non-temporal
     ((np (var ?v) (sort pred) (agr 3s) 
