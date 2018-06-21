@@ -643,7 +643,7 @@
       ; it was/has been demonstrated that...
       (EXPLETIVE-FORMAL-TEMPL
        (ARGUMENTS
-	(LSUBJ (:parameter xp1 (:default (% W::NP)) (:required(W::sem ($ -)))) ONT::NOROLE)
+	(LSUBJ (:parameter xp1 (:default (% W::NP (w::expletive +) (W::lex W::it))) (:required(W::sem ($ -)) )) ONT::NOROLE)
 	(LOBJ (:parameter xp2 (:default (% W::CP (w::ctype w::s-finite)))) ONT::FORMAL)
 	))
 

@@ -38,7 +38,8 @@
 	   (SENSES
 	    ((EXAMPLE "It is expected (that)...")
 	     (LF-PARENT ONT::expectation)
-	     (TEMPL EXPLETIVE-FORMAL-TEMPL (xp1 (% W::NP (W::lex W::it))) )
+	     ;(TEMPL EXPLETIVE-FORMAL-TEMPL (xp1 (% W::NP (W::lex W::it))) )
+	     (TEMPL EXPLETIVE-FORMAL-TEMPL )
 	     )
 	    )
 	   ))

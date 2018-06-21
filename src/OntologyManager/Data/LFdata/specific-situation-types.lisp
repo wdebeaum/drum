@@ -271,8 +271,8 @@
   :wordnet-sense-keys ("make%2:38:05" "take%2:38:05" "travel%2:38:00" "go%2:38:00" "move%2:38:03"  "move%2:38:01" "locomote%2:38:00" "ascend%2:38:10" "be_active%2:29:00" "draw%2:35:13" "go%2:42:06" "jaunt%2:38:00" "move%2:38:00" "move%2:38:02" "move_out%2:41:00" "wreathe%2:38:00" "mobilize%2:30:00" "go%2:33:00" "transport%1:04:01" "relocation%1:04:00")
  :parent ont::motion
  :sem (F::SITUATION (F::CONTAINER -) (F::Locative -) (F::trajectory +))
- :arguments ((:OPTIONAL ONT::agent (F::Phys-obj (:required (f::origin (? org f::human f::non-human-animal)))
-					       (:default (F::Mobility F::Self-Moving))))
+ :arguments (;(:OPTIONAL ONT::agent (F::Phys-obj (:required (f::origin (? org f::human f::non-human-animal)))
+					       ;(:default (F::Mobility F::Self-Moving))))
 ;             (:OPTIONAL ONT::purpose (F::Situation (F::Cause F::Agentive) (F::Aspect F::Dynamic)))
 	     (:OPTIONAL ONT::REASON (F::Situation (F::Cause F::Agentive) (F::Aspect F::Dynamic)))
              )
@@ -445,7 +445,9 @@
 (define-type ONT::SELF-LOCOMOTE
  :parent ONT::MOVE
  :sem (F::SITUATION (:required (F::Cause F::Agentive))(:default (F::Aspect F::unbounded) (F::Time-span F::extended)))
- :arguments ((:ESSENTIAL ONT::AGENT (F::Phys-obj (F::origin (? o f::non-human-animal F::human))) (:implements FORMAL))
+ :arguments (;(:ESSENTIAL ONT::AGENT (F::Phys-obj (F::origin (? o f::non-human-animal F::human))) (:implements FORMAL))
+	     (:ESSENTIAL ONT::AGENT (F::Phys-obj (:required (f::origin (? org f::human f::non-human-animal)))
+					       (:default (F::Mobility F::Self-Moving))))
 	     (:optional ont::neutral (F::phys-obj (f::type ont::geo-object))  ;; the path, road, as in "walk the path, walk the hills"
              )))
 

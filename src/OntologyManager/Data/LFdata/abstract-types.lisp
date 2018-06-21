@@ -1017,6 +1017,11 @@
 		(:optional ont::FORMAL (f::situation)))
     )
 
+(define-type ONT::doctrine
+ :wordnet-sense-keys("doctrine%1:09:00" "ideology%1:09:01")
+ :parent ONT::knowledge-belief
+)
+
 (define-type ONT::understanding
  :wordnet-sense-keys("understanding%1:09:01" "comprehension%1:09:00")
  :parent ONT::knowledge-belief

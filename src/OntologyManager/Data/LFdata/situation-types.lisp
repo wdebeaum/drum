@@ -202,8 +202,8 @@
  :sem (F::Situation (F::Cause F::Mental) (F::Trajectory -))
  :comment "a state in which an EXPERIENCER holds some attitude towards a proposition"
  :arguments ((:ESSENTIAL ONT::Formal)
-	     (:OPTIONAL ont::neutral  ((? cg f::abstr-obj F::Phys-obj)))
-	     (:OPTIONAL ont::neutral1  ((? cg1 f::abstr-obj F::Phys-obj)))  ;; backwards compatability
+	     (:OPTIONAL ont::neutral)  ;((? cg f::abstr-obj F::Phys-obj)))
+	     (:OPTIONAL ont::neutral1) ;((? cg1 f::abstr-obj F::Phys-obj)))  ;; backwards compatability
              )
  )
 
@@ -317,7 +317,7 @@
  :parent ONT::attitude-of-belief
  :comment "EXPERIENCER expects some proposition to hold"
  :sem (F::SITUATION (F::Aspect F::static) (F::Time-span F::extended) (F::Trajectory -))
-  :arguments ((:ESSENTIAL ONT::neutral (F::phys-obj (F::intentional +)))
+  :arguments (;(:ESSENTIAL ONT::neutral (F::phys-obj (F::intentional +)))
 	     (:OPTIONAL ONT::Formal)
 	      )
   )

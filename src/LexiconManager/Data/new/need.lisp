@@ -26,6 +26,11 @@
      (TEMPL experiencer-neutral-templ)
      (example "I need this book")
      )
+    ((LF-PARENT ONT::want)
+     (SEM (F::Aspect F::stage-level));; allow temporal modifiers here, as implicit /=action/
+     (TEMPL experiencer-THEME-XP-TEMPL)
+     (example "Assembly is needed")
+     )
     ((LF-PARENT ONT::WANT)
      (SEM (F::Aspect F::indiv-level))
      (TEMPL experiencer-action-objcontrol-templ)

@@ -2960,7 +2960,7 @@
 
 (define-type ont::current-val
  :parent ont::historical-era-val 
- :wordnet-sense-keys ("contemporary%5:00:00:current:00" )
+ :wordnet-sense-keys ("contemporary%5:00:00:current:00" "current%3:00:00")
 )
 
 (define-type ont::not-current-val
