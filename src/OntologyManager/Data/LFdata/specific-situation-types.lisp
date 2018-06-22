@@ -1641,7 +1641,7 @@
  )
 
 (define-type ont::evoke-calm
- :wordnet-sense-keys ("pacify%2:37:00" "comfort%2:37:01" "mellow%2:30:01" "unwind%2:29:01" "ease%2:37:00" "soothe%2:37:00" "mellow%2:30:03" "mellow%2:30:00" "unwind%2:29:00" "unwind%2:29:01")
+ :wordnet-sense-keys ("pacify%2:37:00" "comfort%2:37:01" "mellow%2:30:01" "unwind%2:29:01" "ease%2:37:00" "soothe%2:37:00" "mellow%2:30:03" "mellow%2:30:00" "unwind%2:29:00" "unwind%2:29:01" "rest%2:32:01")
  :parent ont::subduing
 )
 
@@ -2555,7 +2555,7 @@
 
 ;;; I dared to go, I dared John to go.
 (define-type ONT::provoke
- :wordnet-sense-keys ("persuade%2:32:00" "force%2:36:00" "impel%2:36:00" "coerce%2:41:00" "hale%2:41:00" "squeeze%2:41:01" "pressure%2:41:00" "force%2:41:00")
+ :wordnet-sense-keys ("persuade%2:32:00" "force%2:36:00" "coerce%2:41:00" "subject%2:39:03" "oblige%2:41:00")
  :parent ONT::cause-effect
  :arguments ((:ESSENTIAL ONT::affected ((? exp F::phys-obj f::abstr-obj) (f::intentional +))))
  )
@@ -2567,7 +2567,7 @@
 ; )
 
 (define-type ONT::cause-stimulate
- :wordnet-sense-keys ("persuade%2:32:00" "force%2:36:00" "impel%2:36:00" "coerce%2:41:00" "hale%2:41:00" "squeeze%2:41:01" "pressure%2:41:00" "force%2:41:00")
+ :wordnet-sense-keys ("persuade%2:32:00" "force%2:36:00" "coerce%2:41:00")
  :parent ONT::cause-effect
  :arguments ((:ESSENTIAL ONT::affected ((? exp F::phys-obj f::abstr-obj f::situation) (f::intentional -)))
 	     ))
@@ -3988,7 +3988,7 @@
 
 ;;; swift 11/26/01 -- added this for inchoative verbs, e.g. get as in 'get nauseous'
 (define-type ONT::BECOME
- :wordnet-sense-keys ("take%2:30:09" "come%2:30:03" "become%2:42:00" "become%2:30:00" "go%2:30:04" "get%2:30:00")
+ :wordnet-sense-keys ("take%2:30:09" "come%2:30:03" "become%2:42:00" "become%2:30:00" "go%2:30:04" "get%2:30:00" "open_up%2:30:01")
  :parent ONT::event-of-undergoing-action
  :sem (F::Situation (F::Aspect F::Dynamic) (F::Trajectory -))
  :arguments ((:ESSENTIAL ONT::affected)
@@ -4313,7 +4313,7 @@
 
 
 (define-type ONT::START-OBJECT
- :wordnet-sense-keys ("boot%2:29:00" "reboot%2:29:00" "bring_up%2:29:00")
+ :wordnet-sense-keys ("boot%2:29:00" "reboot%2:29:00" "bring_up%2:29:00" "trip%2:36:00" "start_up%2:38:00")
  :parent ONT::Change-device-state
  :sem (F::SITUATION (F::Aspect F::Dynamic))
  :arguments (;;(:REQUIRED ONT::Formal)
@@ -4412,7 +4412,7 @@
 		))
 
 (define-type ONT::prevent
-  :wordnet-sense-keys ("prevent%2:41:00" "prevent%2:41:01" "prevention%1:04:00")
+  :wordnet-sense-keys ("prevent%2:41:00" "prevent%2:41:01" "prevention%1:04:00" "keep%2:40:01")
  :parent ONT::inhibit-effect
  )
 

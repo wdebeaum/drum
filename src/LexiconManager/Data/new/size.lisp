@@ -8,11 +8,11 @@
   (W::SIZE
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("size%1:07:00"))
-     (LF-PARENT ONT::size-alt-scale)
+     (LF-PARENT ONT::size-scale)
      (TEMPL OTHER-RELN-TEMPL)
      )
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("size%1:07:00"))
-     (LF-PARENT ONT::size-alt-scale)
+     (LF-PARENT ONT::size-scale)
      (TEMPL reln-subcat-of-units-TEMPL)
      )
     )

@@ -6,7 +6,7 @@
  :words (
   (W::magnitude
    (SENSES
-    ((LF-PARENT ONT::size-alt-scale)
+    ((LF-PARENT ONT::size-scale)
      (meta-data :origin calo-ontology :entry-date 20060426 :change-date nil :comments nil)
      (TEMPL OTHER-RELN-TEMPL)
      )

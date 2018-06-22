@@ -636,7 +636,7 @@
 (define-type ONT::angle-UNIT
  :wordnet-sense-keys ("angular_unit%1:23:00")
  :parent ONT::formal-UNIT
- :sem (F::Abstr-obj (F::Scale Ont::Linear-scale))
+ :sem (F::Abstr-obj (F::Scale Ont::Linear-extent-scale))
  :arguments ((:ESSENTIAL ONT::FIGURE (F::situation (f::trajectory +)))
              )
  )
@@ -651,7 +651,7 @@
 (define-type ONT::LEVEL
   :comment "words that act as predicates that return the value on a scale/domain: What is the X on this scale?  Note: We exclude words that are identical to the names of the scales they pertain to (e.g., What is the height on the height scale?)"
  :wordnet-sense-keys ("level%1:26:00" "level%1:07:00")
- :sem (F::Abstr-obj (F::Scale Ont::LINEAR-SCALE))
+ :sem (F::Abstr-obj (F::Scale Ont::LINEAR-extent-SCALE))
 ; :parent ONT::ordered-DOMAIN
  :parent ONT::ABSTRACT-OBJECT
  :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::phys-obj F::Abstr-obj))) ;; noise, water
@@ -1582,79 +1582,79 @@
  :wordnet-sense-keys ("other%3:00:00" "another%3:00:00")
  )
 
-(define-type ont::scale
-  :sem (F::Abstr-obj (F::Scale ?!sc))
-  :parent ont::abstract-object
-  :arguments ((:ESSENTIAL ONT::figure)
-		)
-  )
+;(define-type ont::scale
+;  :sem (F::Abstr-obj (F::Scale ?!sc))
+;  :parent ont::abstract-object
+;  :arguments ((:ESSENTIAL ONT::figure)
+;		)
+;  )
 
-(define-type ont::any-scale
-  :parent ont::scale
-  )
-
-(define-type ont::number-scale
-  :parent ont::scale
-  )
-
-(define-type ont::size-scale
-  :parent ont::scale
-  )
-
-(define-type ont::sound-scale
-  :parent ont::scale
-  )
-
-(define-type ont::weight-scale
-;  :parent ont::size-scale
-  :parent ont::scale
-  )
-
-(define-type ont::linear-scale
-;  :parent ont::size-scale
-  :parent ont::scale
-  )
-
-(define-type ont::area-scale
-;  :parent ont::size-scale
-  :parent ont::scale
-  )
-
-(define-type ont::volume-scale
-;  :parent ont::size-scale
-  :parent ont::scale
-  )
-
-(define-type ont::temperature-scale
-  :parent ont::scale
-  )
-
-(define-type ont::money-scale
-;  :parent ont::size-scale
-  :parent ont::scale
-  )
-
-(define-type ont::luminosity-scale
-  :parent ont::scale
-  )
-
-(define-type ont::time-measure-scale
-  :sem (F::Abstr-obj (F::Scale Ont::time-measure-scale))
+;(define-type ont::any-scale
 ;  :parent ont::scale
-  :parent ont::linear-scale
-  )
+;  )
 
-(define-type ont::duration-scale
-  :parent ont::time-measure-scale
-  )
-
-(define-type ont::age-scale
+;(define-type ont::number-scale
 ;  :parent ont::scale
+;  )
+
+;(define-type ont::size-scale
+;  :parent ont::scale
+;  )
+
+;(define-type ont::sound-scale
+;  :parent ont::scale
+;  )
+
+;(define-type ont::weight-scale
+;;  :parent ont::size-scale
+;  :parent ont::scale
+;  )
+
+;(define-type ont::linear-scale
+;;  :parent ont::size-scale
+;  :parent ont::scale
+;  )
+
+;(define-type ont::area-scale
+;;  :parent ont::size-scale
+;  :parent ont::scale
+;  )
+
+;(define-type ont::volume-scale
+;;  :parent ont::size-scale
+;  :parent ont::scale
+;  )
+
+;(define-type ont::temperature-scale
+;  :parent ont::scale
+;  )
+
+;(define-type ont::money-scale
+;;  :parent ont::size-scale
+;  :parent ont::scale
+;  )
+
+;(define-type ont::luminosity-scale
+;  :parent ont::scale
+;  )
+
+;(define-type ont::time-measure-scale
+;  :sem (F::Abstr-obj (F::Scale Ont::time-measure-scale))
+;;  :parent ont::scale
 ;  :parent ont::linear-scale
-  :parent ont::duration-scale
-  )
+;  )
 
-(define-type ont::other-scale
-  :parent ont::scale
-  )
+;(define-type ont::duration-scale
+;  :parent ont::time-measure-scale
+;  )
+
+;(define-type ont::age-scale
+;;  :parent ont::scale
+;;  :parent ont::linear-scale
+;  :parent ont::duration-scale
+;  )
+
+;(define-type ont::other-scale
+;  :parent ont::scale
+;  )
 

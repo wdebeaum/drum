@@ -25,14 +25,9 @@
 ; :sem (F::Abstr-obj (F::Scale ?!sc))
 )
 
-;; ORDERED CONTINUOUS
-(define-type ont::ordered-continuous
- :parent ont::ordered-domain 
-)
-
 ;; ATTRIBUTIVE SCALE
 (define-type ont::attributive-scale
- :parent ont::ordered-continuous 
+ :parent ont::ordered-domain 
  :wordnet-sense-keys ("quality%1:07:00")
  :comment "scales dealing with quality or property of something or someone(e.g. smoothness or kindness) and are (relatively) permanent in nature. These are distinguished from ont::stage-scale types that describes scales dealing with temporary stages or states in which an entity is found (a state of being; e.g. healthiness or sleepiness)."
  ;; WORDS: quality
@@ -46,33 +41,33 @@
              )
 )
 
-(define-type ont::olfactory-property-scale
+(define-type ont::olfactory-scale
  :parent ont::appearance-scale 
  :wordnet-sense-keys ("smell%1:07:00")
  ;; WORDS: smell
 )
 
 (define-type ont::negative-smell-scale
- :parent ont::olfactory-property-scale 
+ :parent ont::olfactory-scale 
  :wordnet-sense-keys ("stinkiness%1:07:00" "rancidness%1:07:00")
  ;; WORDS: malodorousness, rancidness, muskiness
  
 )
 
 (define-type ont::positive-smell-scale
- :parent ont::olfactory-property-scale 
+ :parent ont::olfactory-scale 
  :wordnet-sense-keys ("sweetness%1:07:01")
  ;; WORDS: sweetness, fragrance
  ;; specifically referring to the pleasing olfactory property as perceived by the senses 
  ;; and NOT the gragrance/perfume possessed by the item that is being smelled (i.e., fragrance%1:09:00).
 )
 
-(define-type ont::sound-property-scale
+(define-type ont::sound-scale
  :parent ont::appearance-scale 
 )
 
 (define-type ont::sound-volume-scale
- :parent ont::sound-property-scale 
+ :parent ont::sound-scale 
 )
 
 (define-type ont::loudness-scale
@@ -96,7 +91,7 @@
 )
 
 (define-type ont::sound-texture-scale
- :parent ont::sound-property-scale
+ :parent ont::sound-scale
 )
 
 (define-type ont::hoarseness-scale
@@ -104,30 +99,30 @@
  :wordnet-sense-keys ("hoarseness%1:07:00")
 )
 
-(define-type ont::tactile-property-scale
+(define-type ont::tactile-scale
  :parent ont::appearance-scale 
 )
 
 (define-type ont::flexibility-scale
- :parent ont::tactile-property-scale 
+ :parent ont::tactile-scale 
  :wordnet-sense-keys ("flexibility%1:07:02")
  ;; WORDS: flexibility
 )
 
 (define-type ont::tactile-hardness-scale
- :parent ont::tactile-property-scale 
+ :parent ont::tactile-scale 
  :wordnet-sense-keys ("hardness%1:07:01")
  ;; WORDS: hardness
 )
 
 (define-type ont::tactile-softness-scale
- :parent ont::tactile-property-scale 
+ :parent ont::tactile-scale 
  :wordnet-sense-keys ("softness%1:07:00")
  ;; WORDS: softness
 )
 
 (define-type ont::texture-scale
- :parent ont::tactile-property-scale 
+ :parent ont::tactile-scale 
  :wordnet-sense-keys ("texture%1:07:00")
  ;; WORDS: texture
 )
@@ -150,61 +145,61 @@
  ;; WORDS: smoothness
 )
 
-(define-type ont::taste-property-scale
+(define-type ont::taste-scale
  :parent ont::appearance-scale 
 )
 
 (define-type ont::spiciness-scale
- :parent ont::taste-property-scale 
+ :parent ont::taste-scale 
  :wordnet-sense-keys ("spiciness%1:07:00")
  ;; WORDS: spiciness
 )
 
 (define-type ont::sourness-scale
- :parent ont::taste-property-scale 
+ :parent ont::taste-scale 
  :wordnet-sense-keys ("sourness%1:07:00")
  ;; WORDS: sourness
 )
 
 (define-type ont::sweetness-scale
- :parent ont::taste-property-scale 
+ :parent ont::taste-scale 
  :wordnet-sense-keys ("sweetness%1:07:00" "sweetness%1:09:00")
  ;; WORDS: sweetness
 )
 
 (define-type ont::bitterness-scale
- :parent ont::taste-property-scale 
+ :parent ont::taste-scale 
  :wordnet-sense-keys ("bitterness%1:07:00")
  ;; WORDS: bitterness
 )
 
-(define-type ont::visual-property-scale
+(define-type ont::visual-scale
  :parent ont::appearance-scale 
 )
 
-; currently ont::luminosity-scale is taken. Once that is removed, we can fix this name
-;(define-type ont::luminosity-alt-scale
-; :parent ont::visual-property-scale 
-; :wordnet-sense-keys ("brightness%1:07:00" "brightness%1:07:02")
+
+(define-type ont::luminosity-scale
+ :parent ont::visual-scale 
+ :wordnet-sense-keys ("brightness%1:07:00" "brightness%1:07:02")
 ; :arguments ((:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Scale Ont::luminosity-scale)))
 ;             )
-; ;; WORDS: brightness
-;)
+ ;; WORDS: brightness
+)
 
 (define-type ont::brightness-scale
- :parent ont::visual-property-scale 
+ :parent ont::visual-scale 
  :wordnet-sense-keys ("brightness%1:07:00" "brightness%1:07:02")
  ;; WORDS: brightness
 )
 
 (define-type ont::visual-dullness-scale
- :parent ont::visual-property-scale 
+ :parent ont::visual-scale 
  :wordnet-sense-keys ("dimness%1:07:01" "softness%1:07:06")
  ;; WORDS: brightness
 )
 
 (define-type ont::color-quality-scale
- :parent ont::visual-property-scale 
+ :parent ont::visual-scale 
 )
 
 (define-type ont::redness-scale
@@ -214,7 +209,7 @@
 )
 
 (define-type ont::presence-of-light-scale
- :parent ont::visual-property-scale 
+ :parent ont::visual-scale 
 )
 
 (define-type ont::lightness-scale
@@ -230,7 +225,7 @@
 )
 
 (define-type ont::visual-distinctivenss-scale
- :parent ont::visual-property-scale 
+ :parent ont::visual-scale 
 )
 
 (define-type ont::visual-sharpness-scale
@@ -246,7 +241,7 @@
 )
 
 (define-type ont::light-passage-scale
- :parent ont::visual-property-scale 
+ :parent ont::visual-scale 
 )
 
 (define-type ont::opacity-scale
@@ -319,6 +314,20 @@
  ;; WORDS: quality
 )
 
+
+(define-type ont::cost-scale
+ :parent ont::evaluation-scale
+)
+
+(define-type ont::expensive-scale
+ :parent ont::cost-scale
+ :wordnet-sense-keys ("costliness%1:07:00" "expensiveness%1:07:00")
+)
+
+(define-type ont::not-expensive-scale
+ :parent ont::cost-scale
+ :wordnet-sense-keys ("cheapness%1:07:00")
+)
 
 (define-type ont::ability-scale
  :parent ont::evaluation-scale 
@@ -489,6 +498,44 @@
  ;; WORDS: quantity, measurement
 )
 
+;; time measure scale
+(define-type ont::time-measure-scale
+  :sem (F::Abstr-obj (F::Scale Ont::time-measure-scale))
+  :parent ont::measure-scale
+ )
+
+(define-type ont::age-scale
+ :parent ont::time-measure-scale
+ :wordnet-sense-keys ("age%1:28:00" "age%1:07:00")
+)
+
+(define-type ont::duration-scale
+  :parent ont::time-measure-scale
+)
+
+(define-type ont::total-scale
+ :parent ont::measure-scale
+ :wordnet-sense-keys ("total%1:06:00" "count%1:23:00")
+ ;; WORDS: aggregate, total, count
+)
+
+(define-type ont::population-scale
+ :parent ont::measure-scale
+ :sem (F::Abstr-obj (F::Measure-function F::term))
+ :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj (F::form F::geographical-object)))
+             )
+ :wordnet-sense-keys ("population%1:23:00") 
+ ;; WORDS: population
+)
+
+(define-type ont::money-scale
+ :parent ont::measure-scale
+)
+
+(define-type ont::predefined-measure-scale
+ :parent ont::measure-scale
+)
+
 ;; resolution scale
 (define-type ont::resolution-scale
  :parent ont::measure-scale 
@@ -532,7 +579,7 @@
 )
 
 ;; size
-(define-type ont::size-alt-scale
+(define-type ont::size-scale
  :parent ont::dimensional-scale 
  :wordnet-sense-keys("size%1:07:00" "size%1:07:02" "size%1:07:01" "magnitude%1:07:00")
  :sem (F::abstr-obj (F::scale ont::size-scale))
@@ -540,11 +587,12 @@
              (:OPTIONAL ONT::EXTENT)
              )
  ;; WORDS: size
+ :comment "the property of relative size or extent"
 )
 
 ;; size > relative-to-height-scale
 (define-type ont::relative-to-height-scale
- :parent ont::size-alt-scale
+ :parent ont::size-scale
 )
 
 (define-type ont::fat-scale
@@ -559,11 +607,11 @@
 
 ;; size > linear-extent
 (define-type ont::linear-extent-scale
- :parent ont::size-alt-scale 
- :sem (F::Abstr-obj (F::Scale Ont::Linear-scale))
+ :parent ont::size-scale 
+ :sem (F::Abstr-obj (F::Scale Ont::Linear-extent-scale))
  :wordnet-sense-keys ("dimension%1:07:00")
  :arguments (;;(:ESSENTIAL ONT::val (F::Abstr-obj (F::Scale Ont::Linear-scale) (F::measure-function F::value)))     
-             (:ESSENTIAL ONT::EXTENT (F::abstr-obj (F::scale ont::linear-scale) (F::measure-function F::value))))
+             (:ESSENTIAL ONT::EXTENT (F::abstr-obj (F::scale ont::linear-extent-scale) (F::measure-function F::value))))
 )
 
 (define-type ont::length-scale
@@ -606,7 +654,7 @@
  :wordnet-sense-keys ("thinness%1:07:01")
 )
 
-(define-type ont::area-alt-scale
+(define-type ont::area-scale
  :parent ont::non-vertical-scale
  :wordnet-sense-keys ("area%1:07:00" "footprint%1:07:00") 
  :sem (F::Abstr-obj (F::Scale Ont::area-scale))
@@ -622,16 +670,10 @@
  ;; WORDS: width
 )
 
-;; size > percent scale
-(define-type ont::percent-scale
- :parent ont::size-alt-scale 
- :wordnet-sense-keys ("percentage%1:24:00" )
- ;; WORDS: percentage
-)
 
 ;; size > volume scale
-(define-type ont::volume-alt-scale
- :parent ont::size-alt-scale 
+(define-type ont::volume-scale
+ :parent ont::size-scale 
  :wordnet-sense-keys ("volume%1:23:00")
  :sem (F::Abstr-obj (F::Scale Ont::Volume-scale))
  :arguments ((:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Scale Ont::Volume-scale)))
@@ -647,7 +689,7 @@
 )
 
 ;; weight
-(define-type ont::weight-alt-scale
+(define-type ont::weight-scale
  :parent ont::dimensional-scale 
  :wordnet-sense-keys ("weight%1:07:00" "heaviness%1:07:00" "weightiness%1:07:00")
  :sem (F::Abstr-obj (F::Scale Ont::Weight-scale))
@@ -688,6 +730,13 @@
 ;            (:essential ont::FORMAL (F::SITUATION (f::type ont::event-of-change)))                                 
 ;             )
  ;; WORDS: quotient, scale
+)
+
+;; ratio-scale > percent scale
+(define-type ont::percent-scale
+ :parent ont::ratio-scale 
+ :wordnet-sense-keys ("percentage%1:24:00" )
+ ;; WORDS: percentage
 )
 
 (define-type ont::density-scale
@@ -743,7 +792,7 @@
  ;; WORDS: voltage
 )
 
-(define-type ont::temperature-alt-scale
+(define-type ont::temperature-scale
  :wordnet-sense-keys ("temperature%1:07:00" "temperature%1:09:00")
  :parent ont::measure-scale 
  :sem (F::abstr-obj (F::Scale Ont::temperature-scale))
@@ -752,13 +801,13 @@
 
 (define-type ont::heat-scale
  :wordnet-sense-keys ("heat%1:07:01" "heat%1:09:00")
- :parent ont::temperature-alt-scale
+ :parent ont::temperature-scale
  ;; WORDS: heat
 )
 
 (define-type ont::cold-scale
  :wordnet-sense-keys ("cold%1:07:00" "cold%1:09:00")
- :parent ont::temperature-alt-scale
+ :parent ont::temperature-scale
  ;; Words: cold
 )
 
@@ -930,7 +979,7 @@
 
 ;;; STAGE SCALE
 (define-type ont::stage-scale
- :parent ont::ordered-continuous 
+ :parent ont::ordered-domain 
 )
 
 
@@ -1263,41 +1312,13 @@
 
 
 
-;;;;; ORDERED-DISCRETE
-(define-type ont::ordered-discrete
- :parent ont::ordered-domain 
-)
-
-(define-type ont::total-scale
- :parent ont::ordered-discrete 
- :wordnet-sense-keys ("total%1:06:00" "count%1:23:00")
- ;; WORDS: aggregate, total, count
-)
-
-(define-type ont::population-scale
- :parent ont::ordered-discrete
- :sem (F::Abstr-obj (F::Measure-function F::term))
- :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj (F::form F::geographical-object)))
-             )
- :wordnet-sense-keys ("population%1:23:00") 
- ;; WORDS: population
-)
-
-(define-type ont::age-alt-scale
- :parent ont::ordered-discrete 
- :sem (F::Abstr-obj (F::measure-function F::term))
- :wordnet-sense-keys ("age%1:07:00")
- ;; WORDS: age
-)
-
-
 ;;;;;; UNORDERED DISCRETE DOMAIN
-(define-type ont::unordered-discrete-domain
+(define-type ont::unordered-domain
  :parent ont::domain 
 )
 
 (define-type ont::color-scale
- :parent ont::unordered-discrete-domain 
+ :parent ont::unordered-domain 
  :arguments ((:REQUIRED ONT::GROUND (F::abstr-obj (F::scale ont::color-scale )));?? what 's this? the car' s color of red? ) 
             )
  :sem (F::abstr-obj (F::scale ont::color-scale ))
@@ -1306,7 +1327,7 @@
 )
 
 (define-type ont::gender-scale
- :parent ont::unordered-discrete-domain 
+ :parent ont::unordered-domain 
  :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
              )
  :wordnet-sense-keys ("gender%1:07:00")
@@ -1314,7 +1335,7 @@
 )
 
 (define-type ont::truth-scale
- :parent ont::unordered-discrete-domain 
+ :parent ont::unordered-domain 
  :wordnet-sense-keys ("truth%1:09:00")
  ;; WORDS: truth
 )

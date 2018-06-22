@@ -34,7 +34,7 @@
 
 (define-type ONT::cause-effect
     :wordnet-sense-keys ( "cause%2:32:00" "do%2:36:02" "make%2:36:08"
-					  "drive%2:35:00" "get%2:30:02" "get%2:30:00")
+					  "drive%2:35:00" "get%2:30:02" "get%2:30:00" "open_up%2:30:00")
  :parent ONT::acting
  :comment "an AGENT causes some event to occur or proposition to become true. Usually the verbs that fall under this category are very general causal verbs that take other events as their arguments and are positive causes- i.e., events are caused to happen as opposed to negative causes as in an event is prevented."
  :sem (F::Situation (F::Cause (? cz F::Force f::agentive)) (F::Trajectory -))

@@ -394,7 +394,7 @@
           ;;;(F_Time-duration)
           ;;; (F_Time-date)
 	    ;; Note: I move age-scale and time-measure-scale under linear-scale so that we can parse things like "a 30 year old woman"	    
-	    (F::linear-scale   ;; height, width, length
+	    (F::linear-extent-scale   ;; height, width, length
 	     (f::age-scale)
 	     (f::time-measure-scale 
 		(f::duration-scale))  ;; e.g., five minutes/hours/years...) 

@@ -10,7 +10,7 @@
      (LF-PARENT ONT::measure-scale)
      (example "a quantity of five pounds")
 ;     (SEM (F::scale F::scale))
-     (SEM (F::scale (? sc ont::scale ont::domain)))
+     (SEM (F::scale (? sc ont::measure-scale ont::domain)))
      (TEMPL reln-subcat-of-units-TEMPL)
      (preference .96) ;;prefer canonical sense
      )

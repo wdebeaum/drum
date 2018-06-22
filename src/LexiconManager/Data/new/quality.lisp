@@ -9,7 +9,7 @@
     ((meta-data :origin calo :entry-date 20031229 :change-date nil :wn ("quality%1:07:02") :comments html-purchasing-corpus)
      (LF-PARENT ONT::evaluation-scale)
 ;     (SEM (F::scale F::scale))
-     (SEM (F::scale (? sc ont::scale ont::domain)))
+     (SEM (F::scale (? sc ont::evaluation-scale ont::domain)))
      (TEMPL OTHER-RELN-TEMPL)
      (EXAMPLE "The quality (calibre) of the students has risen")
      )
