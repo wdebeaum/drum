@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.54 2018/03/06 17:48:34 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.55 2018/06/22 16:41:53 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -11,6 +11,7 @@ package TRIPS.DrumGUI;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.ListIterator;
 
 import TRIPS.KQML.KQMLList;
@@ -75,7 +76,10 @@ public class EventExtraction extends Extraction {
         SITE(":SITE"),
         // [:FROM context-term-id] :TO context-term-id: cell components/locations
         FROM(":FROM"),
-        TO(":TO");
+        TO(":TO"),
+        // CWMS
+        LOCATION(":LOCATION")
+        ;
         private String featureName;
         private Feature(String name) { featureName = name; }
         public String toString() { return featureName; }
@@ -142,7 +146,10 @@ public class EventExtraction extends Extraction {
         // MODN: de-/un-/non-/dis-
         MODN(":MODN"),
         // :INEVENT id: ID for event in which this event participates in some role
-        INEVENT(":INEVENT");
+        INEVENT(":INEVENT"),
+        // CWMS
+        QUAL(":QUAL")
+        ;
         private String modName;
 
         private PolyModifier(String name) {
@@ -183,6 +190,8 @@ public class EventExtraction extends Extraction {
         pullModifiers();
         pullPolyModifiers();
         
+        packRules();
+
         // sub-events -- 20160316 LG took out; TODO: remove completely
         // subEvents = makeSubEventsMaybe();
 
@@ -397,7 +406,6 @@ public class EventExtraction extends Extraction {
 
     /**
      * Combines with another extraction.
-     * Should be overridden by subclasses.
      */
     protected void combineWith(Extraction other) {
         if (!this.equals(other)) {
@@ -505,10 +513,13 @@ public class EventExtraction extends Extraction {
         }
 	
         // update rule
-        KQMLObject rule = value.removeKeywordArg(":RULE");
         KQMLObject eRule = e.value.getKeywordArg(":RULE");
-        value.add(":RULE");
-        value.add(rule.toString() + "," + eRule.toString());
+        if (eRule != null) {
+            value.add(":RULE");
+            value.add(eRule.toString());
+            packRules();
+        }
+
         Debug.debug("New value: " + value);
 
         // re-generate sub-events -- 20160316 LG took out; TODO: remove completely
@@ -800,6 +811,7 @@ public class EventExtraction extends Extraction {
                 + createEpiModalityXML()
                 // + createMethodXML()
                 + createModsXML()
+                + createQualsXML() // CWMS
                 + createFeaturesXML()
                 + createPredicateXML()
                 + createArgsXML()
@@ -997,7 +1009,10 @@ public class EventExtraction extends Extraction {
      */
     private String createLocationXML() {
         KQMLObject locvalObj = features.get(Feature.CELL_LOC);
-        KQMLObject locmodObj = features.get(Feature.LOCMOD);
+        if (locvalObj == null) {
+            locvalObj = features.get(Feature.LOCATION);
+        }
+       KQMLObject locmodObj = features.get(Feature.LOCMOD);
 
         if (locvalObj == null) {
             return "";
@@ -1012,12 +1027,12 @@ public class EventExtraction extends Extraction {
         }
         String locmodAttr = "";
         if (locmod != null) {
-            locmodAttr = "mod=\"" + removePackage(locmod, false) + "\" ";
+            locmodAttr = makeXMLAttribute("mod", removePackage(locmod, false));
         }
         String id = removePackage(locval);
         KQMLList locTerm = findTermByVar(locval, context);
         KQMLList ontInfo = pullCompleteOntInfo(locTerm);
-        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
+        String ontText = (ontInfo.size() > 0) ? normalizeOnt(ontInfo.get(1).toString()) : "";
         int start = getKeywordArgInt(":START", locTerm);
         int end = getKeywordArgInt(":END", locTerm);
         String text = removeTags(getTextSpan(start, end));
@@ -1217,13 +1232,12 @@ public class EventExtraction extends Extraction {
      * the empty string if no such information exists.
      */
     private String createModsXML() {
-        String mods = "";
-        mods += createModsXML(PolyModifier.DEGREE, "degree");
-        mods += createModsXML(PolyModifier.FREQUENCY, "frequency");
-        mods += createModsXML(PolyModifier.MODA, "mod");
-        mods += createModsXML(PolyModifier.MODN, "mod");
-
-        return mods.equals("") ? "" : "<mods>" + mods + "</mods>";
+        List<String> mods = new ArrayList<String>();
+        mods.add(createModsXML(PolyModifier.DEGREE, "degree"));
+        mods.add(createModsXML(PolyModifier.FREQUENCY, "frequency"));
+        mods.add(createModsXML(PolyModifier.MODA, "mod"));
+        mods.add(createModsXML(PolyModifier.MODN, "mod"));
+        return makeXMLElement("mods", null, mods);
     }
 
     /**
@@ -1244,32 +1258,64 @@ public class EventExtraction extends Extraction {
         for (KQMLObject modValue : mods) {
             if (modValue instanceof KQMLList) {
                 KQMLList modPair = (KQMLList) modValue;
-                result += "<" + modType + ">"
-                        + "<type>" + modPair.get(0) + "</type>"
-                        + "<value>" + removePackage(modPair.get(1).toString(), false) + "</value>" +
-                        "</" + modType + ">";
+                result += makeXMLElement(modType, null, 
+                        makeXMLElement("type", null, modPair.get(0).toString()) +
+                        makeXMLElement("value", null, removePackage(modPair.get(1).toString(), false)));
             } else if (isOntVar(modValue.toString())) { // TODO remove (obsolete)
-                KQMLList modTerm = findTermByVar(modValue.toString(), context);
-                KQMLList ontVal = pullCompleteOntInfo(modTerm);
-                int start = getKeywordArgInt(":START", modTerm);
-                int end = getKeywordArgInt(":END", modTerm);
-                String text = removeTags(getTextSpan(start, end));
-                result += "<" + modType + " " +
-                        "start=\"" + getOffset(start) + "\" " +
-                        "end=\"" + getOffset(end) + "\"" + ">"
-                        + "<type>" + ontVal.get(0) + "</type>"
-                        + "<text>" + escapeXML(text) + "</text>" +
-                        "</" + modType + ">";
+                 result += makeXMLfromTerm(modType, modValue.toString());
             } else { // should not happen!
                 Debug.error("unexpected " + mod + " value: " + modValue);
-                result += "<" + modType + ">"
-                        + removePackage(modValue.toString(), false) +
-                        "</" + modType + ">";
+                result += makeXMLElement(modType, null, removePackage(modValue.toString(), false));
             }
         }
 
         return result;
     }
+    
+    /**
+     * Qualifiers
+     */
+    private String createQualsXML() {
+        List<String> quals = new ArrayList<String>();
+        quals.add(createQualsXML(PolyModifier.QUAL, "qual"));
+        return makeXMLElement("qualifiers",null,quals);
+    }
+    
+    /**
+     * Qualifier
+     * 
+     * @param qual
+     * @param tag
+     * @return
+     */
+    private String createQualsXML(PolyModifier qual, String tag) {
+        ArrayList<KQMLObject> quals = polyMods.get(qual);
+        if ((quals == null) || quals.isEmpty()) {
+            return "";
+        }
+        String result = "";
+        for (KQMLObject valObj : quals) {
+            if (valObj instanceof KQMLList) {
+                KQMLList valList = (KQMLList) valObj;
+                result += makeXMLElement(tag, makeXMLAttribute("type", valList.get(0).toString()), null);
+            } else if (isOntVar(valObj.toString())) {
+                String var = valObj.toString();
+                String id = removePackage(var);
+                Extraction ekbTerm = ekbFindExtraction(var);
+                if (ekbTerm != null) { // value points to another extraction
+                    String attr = makeXMLAttribute("id", id);
+                    result += makeXMLElement(tag, attr, null);
+                } else { // we need to define the item here
+                    result += makeXMLfromTerm(tag, var);
+                }
+            } else { // should not happen!
+                Debug.error("unexpected " + qual + " value: " + valObj);
+                result += makeXMLElement(tag, null, removePackage(valObj.toString(), false));
+            }
+        }
+        return result;
+    }
+
 
     /**
      * Returns a {@code <features>} XML element representing the term features,

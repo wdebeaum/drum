@@ -1,7 +1,7 @@
 /*
  * DrumKB.java
  *
- * $Id: DrumKB.java,v 1.30 2018/03/06 15:53:28 lgalescu Exp $
+ * $Id: DrumKB.java,v 1.31 2018/06/22 16:41:53 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  9 May 2015
  */
@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -215,7 +216,7 @@ public class DrumKB {
     private boolean completionStatus;
 
     /**
-     * Where the EKB is saved.
+     * Folder where the EKB is saved.
      */
     private String ekbFolder;
 
@@ -223,6 +224,11 @@ public class DrumKB {
      * File where the EKB is saved.
      */
     private File ekbFile;
+    
+    /**
+     * Properties
+     */
+    private Properties properties;
 
     /**
      * Constructor.
@@ -239,6 +245,7 @@ public class DrumKB {
         paragraphs = new ArrayList<Paragraph>();
         sentences = new ArrayList<Sentence>();
         extractions = new ArrayList<Extraction>();
+        properties = new Properties();
     }
 
     /**
@@ -268,6 +275,24 @@ public class DrumKB {
         clear();
         setTimestamp();
         Debug.debug("The EKB was initialized (ts=" + timestamp + ")");
+    }
+
+    /**
+     * Initializes the KB and sets its properties. 
+     * <p>
+     * Note: only properties with a prefix of "extractions" or "ekb" are set!
+     * 
+     * @param id
+     * 
+     * @see #init()
+     */
+    protected void init(Properties props) {
+        for (String key : props.stringPropertyNames()) {
+            if (key.startsWith("extractions") || key.startsWith("ekb")) {
+                properties.put(key, props.getProperty(key));
+            }
+        }
+        init();
     }
 
     /**
@@ -553,9 +578,9 @@ public class DrumKB {
      * 
      * @param content
      */
-    protected List<Extraction> add(KQMLList content, boolean useMap) {
+    protected List<Extraction> add(KQMLList content) {
         try {
-            List<Extraction> newExtractions = ExtractionFactory.buildExtraction(this, content, useMap);
+            List<Extraction> newExtractions = ExtractionFactory.buildExtraction(this, content, properties);
             for (Extraction x : newExtractions) {
                 add(x);
             }
@@ -590,10 +615,10 @@ public class DrumKB {
         }
         if (result.isEmpty()) {
             Debug.warn("EKB: no extraction with id=" + id);
-        } else if (result.size() > 1) {
-            Debug.warn("EKB: multiple extractions with id=" + id + ": " + result);
+        } else if (result.size() > 1) { // should not happen!
+            Debug.warn("EKB: multiple (raw) extractions with id=" + id + ": " + result);
         } else {
-            Debug.debug("EKB: found extraction with id=" + id + ": " + result.get(0));
+            Debug.debug("EKB: found (raw) extraction with id=" + id + ": " + result.get(0));
         }
         return result;
     }

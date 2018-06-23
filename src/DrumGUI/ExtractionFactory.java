@@ -1,7 +1,7 @@
 /*
  * ExtractionFactory.java
  *
- * $Id: ExtractionFactory.java,v 1.10 2018/03/06 15:53:28 lgalescu Exp $
+ * $Id: ExtractionFactory.java,v 1.11 2018/06/22 16:41:53 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -13,6 +13,8 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Properties;
+import java.util.regex.Pattern;
 
 import TRIPS.KQML.KQMLList;
 import TRIPS.KQML.KQMLObject;
@@ -26,25 +28,32 @@ import TRIPS.KQML.KQMLToken;
  */
 public class ExtractionFactory {
     
-    private static Hashtable<String, String> typeMap;
+    private static Hashtable<String, String> specMap;
     
-    private static void setMap (boolean useMap) {
-        typeMap = new Hashtable<String, String>();
-        if (useMap) {
-            typeMap.put("ONT::BARE", "ONT::TERM");
-            typeMap.put("ONT::A", "ONT::TERM");
-            typeMap.put("ONT::THE", "ONT::TERM");
-            typeMap.put("ONT::INDEF-SET", "ONT::TERM");
-            typeMap.put("ONT::KIND", "ONT::TERM");
-        }   
+    private static void setSpecifierMap (Properties props) {
+        specMap = new Hashtable<String, String>();
+        final Pattern listPattern = Pattern.compile(", *");
+        final Pattern mapPattern = Pattern.compile(" *=> *");
+        if (props == null) {
+            return;
+        }
+        String specMapString = props.getProperty("extractions.specifiers.map");
+        if (specMapString == null) {
+            return;
+        }
+        String[] mappings = listPattern.split(specMapString);
+        for (String mapping : mappings) {
+            String[] pair = mapPattern.split(mapping);
+            specMap.put(pair[0], pair[1]);
+        }
     }
 
     public static List<Extraction> buildExtraction(DrumKB ekb, KQMLList extractionResult) {
-        return buildExtraction(ekb, extractionResult, false);
+        return buildExtraction(ekb, extractionResult, null);
     }
     
-    public static List<Extraction> buildExtraction(DrumKB ekb, KQMLList extractionResult, boolean useMap) {
-        setMap(useMap);
+    public static List<Extraction> buildExtraction(DrumKB ekb, KQMLList extractionResult, Properties props) {
+        setSpecifierMap(props);
 
         KQMLList kqmlValueList = (KQMLList) extractionResult.getKeywordArg(":VALUE");
         KQMLList context = (KQMLList) extractionResult.getKeywordArg(":CONTEXT");
@@ -68,8 +77,8 @@ public class ExtractionFactory {
             // FIXME: temporarily, we handle both bare and ONT-prefixed types; eventually we'll use ONT
             extractionType = value.get(0).toString();
             Debug.warn("Got extraction type: " + extractionType);
-            if (!typeMap.isEmpty() && typeMap.containsKey(extractionType)) {
-                String newType = typeMap.get(extractionType);
+            if (!specMap.isEmpty() && specMap.containsKey(extractionType)) {
+                String newType = specMap.get(extractionType);
                 value.remove(0);
                 value.add(0, new KQMLToken(newType));
                 extractionType = newType;

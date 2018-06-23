@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.74 2018/03/29 18:19:25 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.75 2018/06/22 16:41:53 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -167,7 +167,6 @@ public class DrumGUI extends StandardTripsModule {
      * The KB.
      */
     private static DrumKB kb = new DrumKB();
-    private String extractionMode = "DRUM";
 
     // logging
     protected Log log = null;
@@ -249,12 +248,6 @@ public class DrumGUI extends StandardTripsModule {
 
         // breakLines?
         breakLines = getBoolean("input.split-on-newlines");
-
-        // extraction mode
-        String extMode = getProperty("extractions.mode");
-        if (extMode != null) {
-            extractionMode = extMode.toUpperCase();
-        }
         
         // ready
         sendSubscriptions();
@@ -834,7 +827,7 @@ public class DrumGUI extends StandardTripsModule {
         setDatasetToFile(folder, filename);
 
         // init the EKB
-        kb.init();
+        kb.init(properties);
         kb.setID(filename);
 
         // send accepted?
@@ -884,7 +877,7 @@ public class DrumGUI extends StandardTripsModule {
         }
 
         // init the EKB
-        kb.init();
+        kb.init(properties);
 
         // set id for this run to the basename of the file
         int pos = filename.lastIndexOf(".");
@@ -947,7 +940,7 @@ public class DrumGUI extends StandardTripsModule {
         if (singleEKB) {
             // init the ekb; use folder name as id
             String ekb_id = (new File(folder)).getName();
-            kb.init();
+            kb.init(properties);
             kb.setID(ekb_id);
 
             // send accepted?
@@ -1053,7 +1046,7 @@ public class DrumGUI extends StandardTripsModule {
         setCommonTaskParameters(msg, content, false, false);
 
         // init the EKB
-        kb.init();
+        kb.init(properties);
         kb.setID(pmcid);
         kb.setDocType("article");
         if (saveto != null) {
@@ -1098,9 +1091,8 @@ public class DrumGUI extends StandardTripsModule {
      * Handler for {@code extraction-result} messages (from Extractor).
      */
     private void handleExtraction(KQMLList content) {
-        boolean useMap = (extractionMode.equalsIgnoreCase("EXTENDED") ? true : false);
         try {
-            List<Extraction> newExtractions = kb.add(content, useMap);
+            List<Extraction> newExtractions = kb.add(content);
             if ((display != null) && (newExtractions != null)) {
                 for (Extraction x : newExtractions)
                     display.addExtraction(x);
@@ -1606,7 +1598,7 @@ public class DrumGUI extends StandardTripsModule {
         content.add("do-ekb-inference");
         // set domain
         content.add(":domain");
-        content.add(getProperty("ekb.reasoner"));
+        content.add(getProperty("ekb.reasoner")); // TODO: should throw an exception if no reasoner is set!
         // set raw ekb file
         content.add(":ekb");
         content.add(new KQMLString(kb.getEKBFile()));
@@ -1687,7 +1679,7 @@ public class DrumGUI extends StandardTripsModule {
 
         // init the EKB
         if (initKB) {
-            kb.init();
+            kb.init(properties);
         }
 
         Debug.info("Initialization complete. Ready to go");
@@ -2171,9 +2163,9 @@ public class DrumGUI extends StandardTripsModule {
      */
     private void initLog() {
         if (!logging)
-            return;
+            return; 
         try {
-            log = new Log();
+            log = new Log(name + ".log");
         } catch (IOException ex) {
             error("error opening log file: " + ex);
         }

@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.52 2018/03/06 15:53:28 lgalescu Exp $
+ * $Id: Extraction.java,v 1.53 2018/06/22 16:41:53 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -35,7 +35,9 @@ package TRIPS.DrumGUI;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.ListIterator;
+import java.util.Properties;
 
 import TRIPS.KQML.KQMLList;
 import TRIPS.KQML.KQMLObject;
@@ -682,17 +684,20 @@ public class Extraction {
      * @return an extraction with the given id
      */
     Extraction ekbFindExtraction(String id) {
-        ArrayList<Extraction> ekbAssertions = ekb.lookupByID(id);
-        Extraction termEx = null;
+        ArrayList<Extraction> ekbAssertions = ekb.lookupByID(id); // raw extractions
+        Extraction result = null;
         for (Extraction ex : ekbAssertions) {
-            if ((ex instanceof TermExtraction) && (termEx == null)) {
-                termEx = ex;
-            } else if ((ex instanceof EventExtraction)) {
-                termEx = ex;
+            if (ex instanceof TermExtraction) {
+                result = ex;
+            } else if (ex instanceof EventExtraction) {
+                result = ex;
             }
             // other types are ignored
+            if (result != null) {
+                break;
+            }
         }
-        return termEx;
+        return result;
     }
 
     // // OTHER
@@ -742,26 +747,26 @@ public class Extraction {
     /**
      * Performs generic XML formatting for LF terms.
      * 
-     * @param xmlobj
+     * @param tag
      *            XML element type
-     * @param variable
+     * @param var
      *            LF term variable
-     * @param context
-     *            Context where the LF term should be found
      * @return String representing the XML formatted term
      * 
-     * @deprecated We haven't used this in a long time; probably should be removed.
      */
-    @Deprecated
-    protected String lfTerm_toXML(String xmlobj, String variable,
-            KQMLList context) {
-        KQMLList lfTerm = findTermByVar(variable, context);
-        String ontType = pullTermOntType(lfTerm);
-        String word = pullTermOntWord(lfTerm);
-        String start = lfTerm.getKeywordArg(":START").toString();
-        String end = lfTerm.getKeywordArg(":END").toString();
-        return "<" + xmlobj + " start=" + start + " end=" + end + " ont="
-                + ontType + ">" + word + "</" + xmlobj + ">";
+    protected String makeXMLfromTerm(String tag, String var) {
+        KQMLList lfTerm = findTermByVar(var, context);
+        KQMLList ontVal = pullCompleteOntInfo(lfTerm);
+        int start = getKeywordArgInt(":START", lfTerm);
+        int end = getKeywordArgInt(":END", lfTerm);
+        List<String> attrs = new ArrayList<String>();
+        attrs.add(makeXMLAttribute("start", Integer.toString(getOffset(start))));
+        attrs.add(makeXMLAttribute("end", Integer.toString(getOffset(end))));
+        List<String> conts = new ArrayList<String>();
+        conts.add(makeXMLElement("type", null, ontVal.get(0).toString()));
+        String text = removeTags(getTextSpan(start, end));
+        conts.add(makeXMLElement("text", null, escapeXML(text)));
+        return makeXMLElement(tag, attrs, conts);
     }
 
     /**
@@ -887,6 +892,39 @@ public class Extraction {
         }
         return "<xrefs>" + result + "</xrefs>";
     }
+    
+    /**
+     * Utility function for making an XML attribute
+     */
+    protected String makeXMLAttribute(String attribute, String value) {
+        return attribute + "=\"" + value + "\"";
+    }
+
+    /**
+     * Utility function for making an XML element with optional attributes and optional sub-elements
+     */
+    protected String makeXMLElement(String tag, List<String> attributes, List<String> content) {
+        return makeXMLElement(tag, join(attributes, " "), join(content,""));
+    }
+
+    /**
+     * Utility function for making an XML element with optional attributes and optional sub-elements
+     */
+    protected String makeXMLElement(String tag, String attributes, String content) {
+        if (attributes == null) {
+            attributes = "";
+        }
+        if (content == null) {
+            content = "";
+        }
+        if ((attributes.length() == 0) && (content.length() == 0)) {
+            return "";
+        }
+        return "<" + tag
+                + ((attributes.length() > 0) ? (" " + attributes) : "")
+                + ((content.length() > 0) ? (">" + content + "</" + tag) : "/")
+                + ">";
+    }
 
 
     /**
@@ -904,5 +942,23 @@ public class Extraction {
         result = result.replaceAll(">", "&gt;");
         return result;
     }
-
+    
+    /**
+     * Utility function for joining strings with a delimiter
+     */
+    protected final String join(List<String> list, String delim) {
+        StringBuilder sb = new StringBuilder();
+        String loopDelim = "";
+        if (list != null) {
+            for(String s : list) {
+                if (s.length() == 0) {
+                    continue;
+                }
+                sb.append(loopDelim);
+                sb.append(s);            
+                loopDelim = delim;
+            }
+        }
+        return sb.toString();
+    }
 }
