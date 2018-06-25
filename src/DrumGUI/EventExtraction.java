@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.55 2018/06/22 16:41:53 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.56 2018/06/24 22:41:55 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -1146,10 +1146,9 @@ public class EventExtraction extends Extraction {
      */
     private String createNegationXML() {
         KQMLObject value = getNegation();
-        if (value != null) {
-            return "<negation>" + value.toString() + "</negation>";
-        }
-        return "";
+        if (value == null) 
+            return "";
+        return makeXMLElement("negation", null, value.toString());
     }
     
     /**
@@ -1160,10 +1159,9 @@ public class EventExtraction extends Extraction {
      */
     private String createPolarityXML() {
         KQMLObject value = getPolarity();
-        if (value != null) {
-            return "<polarity>" + value.toString() + "</polarity>";
-        }
-        return "";
+        if (value == null) 
+            return "";
+        return makeXMLElement("polarity", null, value.toString());
     }
 
     /**
@@ -1174,10 +1172,9 @@ public class EventExtraction extends Extraction {
      */
     private String createForceXML() {
         KQMLObject value = getForce();
-        if (value != null) {
-            return "<force>" + value.toString() + "</force>";
-        }
-        return "";
+        if (value == null) 
+            return "";
+        return makeXMLElement("force", null, value.toString());
     }
 
     /**
@@ -1188,15 +1185,14 @@ public class EventExtraction extends Extraction {
      */
     private String createModalityXML() {
         KQMLObject value = getModality();
-        if (value != null) {
-            // typically this is a list; output is an ONT type (should not remove package!)
-            if (value instanceof KQMLList) {
-                value = ((KQMLList) value).get(1);
-            }
-            // other times it is just the ONT type
-            return "<modality>" + value.toString() + "</modality>";
+        if (value == null) 
+            return "";
+        // typically this is a list; output is an ONT type (should not remove package!)
+        if (value instanceof KQMLList) {
+            value = ((KQMLList) value).get(1);
         }
-        return "";
+        // other times it is just the ONT type
+        return makeXMLElement("modality", null, value.toString());
     }
 
     /**
@@ -1207,25 +1203,12 @@ public class EventExtraction extends Extraction {
      */
     private String createEpiModalityXML() {
         KQMLObject value = getEpiModality();
-        if (value != null) { // must be a variable
-            return "<epistemic-modality id=\"" + removePackage(value.toString()) + "\" />";
-        }
-        return "";
+        if (value == null) 
+            return "";
+        // it must be a variable
+        return makeXMLElement("epistemic-modality", makeXMLAttribute("id", removePackage(value.toString())), null);
     }
     
-    /**
-     * Returns a {@code <method>} XML element representing the method by which this event is realized. If that value is
-     * {@code null}, returns the empty string.
-     * 
-     * @see Modifier#METHOD
-     */
-    // private String createMethodXML() {
-    // KQMLObject method = getMethod();
-    // if (method != null) {
-    // return "<method>" + method.toString() + "</method>";
-    // }
-    // return "";
-    // }
 
     /**
      * Returns a {@code <mods>} XML element representing the term modifiers, or
@@ -1276,9 +1259,7 @@ public class EventExtraction extends Extraction {
      * Qualifiers
      */
     private String createQualsXML() {
-        List<String> quals = new ArrayList<String>();
-        quals.add(createQualsXML(PolyModifier.QUAL, "qual"));
-        return makeXMLElement("qualifiers",null,quals);
+        return makeXMLElement("qualifiers",null,createQualsXML(PolyModifier.QUAL, "qual"));
     }
     
     /**

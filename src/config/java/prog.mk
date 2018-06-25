@@ -2,7 +2,7 @@
 # javaprog.mk : Build a Java program for the TRIPS System
 #
 # George Ferguson, ferguson@cs.rochester.edu, 16 Feb 1999
-# $Id: prog.mk,v 1.12 2012/08/08 14:53:21 ferguson Exp $
+# $Id: prog.mk,v 1.13 2018/06/24 17:03:06 lgalescu Exp $
 #
 # This should be included in your Makefile if you are building
 # a program (i.e., something that runs).  If you are making a library
@@ -63,7 +63,7 @@ $(PACKAGE).jar:: TRIPS-stamp $(SRCS:.java=.class) $(MANIFEST)
 	$(JAR) cvfm ${PACKAGE_DIR}/$(PACKAGE).jar ${PACKAGE_DIR}/$(MANIFEST) $(PACKAGE_FILES) $(XTRA2)
 
 clean::
-	rm -f $(PROG) $(PACKAGE).jar $(MANIFEST) $(CLASS_FILES)
+	rm -f $(PROG) $(PACKAGE).jar $(MANIFEST) $(CLASS_FILES) *.class
 
 run::
 	$(JAVA) $(EXTRA_JAVA_FLAGS) $(PACKAGE).$(MAIN) $(ARGV)

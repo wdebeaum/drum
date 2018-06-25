@@ -2,7 +2,7 @@
 # javalib.mk : Build a Java library for the TRIPS System
 #
 # George Ferguson, ferguson@cs.rochester.edu, 16 Feb 1996
-# $Id: lib.mk,v 1.5 2008/04/03 04:53:19 lgalescu Exp $
+# $Id: lib.mk,v 1.6 2018/06/24 16:56:55 lgalescu Exp $
 #
 # This should be included in your Makefile if you are building
 # a library (i.e., a JAR file).  If you are making a program
@@ -28,7 +28,7 @@ $(PACKAGE).jar:: TRIPS-stamp $(SRCS:.java=.class)
 	$(JAR) cvf ${PACKAGE_DIR}/$(PACKAGE).jar $(PACKAGE_FILES)
 
 clean::
-	rm -f $(PACKAGE).jar $(MANIFEST) $(PACKAGE_FILES)
+	rm -f $(PACKAGE).jar $(MANIFEST) $(PACKAGE_FILES) *.class
 
 install:: $(PACKAGE).jar
 	$(MKINSTALLDIRS) $(etcdir)/java

@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.53 2018/06/22 16:41:53 lgalescu Exp $
+ * $Id: Extraction.java,v 1.54 2018/06/24 22:41:55 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -796,20 +796,15 @@ public class Extraction {
     /**
      * Returns a {@code drum-terms} XML element containing grounding information.
      * 
-     * @return
      */
     protected String createDrumTermsXML() {
-        String result = "";
-        if (drumTerms.isEmpty())
-            return result;
+        List<String> conts = new ArrayList<String>();
         for (KQMLList term : drumTerms) {
             if (pullTermHead(term).equalsIgnoreCase("TERM")) {
-                result += makeDrumTermXML(term);
+                conts.add(makeDrumTermXML(term));
             }
         }
-        if (result.isEmpty())
-            return result;
-        return "<drum-terms>" + result + "</drum-terms>";
+        return makeXMLElement("drum-terms", null, conts);
     }
 
     /**
@@ -820,7 +815,6 @@ public class Extraction {
      * <p>
      * Limitations: we only get the first matched name.
      * 
-     * @return
      */
     protected String makeDrumTermXML(KQMLList drumTerm) {
         if (drumTerm == null) {
@@ -860,55 +854,79 @@ public class Extraction {
     }
 
     /**
-     * Returns an {@code xrefs} element containing a set of {@code xref} sub-elements, each of them denoting a
-     * cross-reference into a resource.
+     * Returns an {@code types} element containing a set of {@code type} sub-elements, each of them denoting a
+     * an ONT type for the DRUM term.
      * 
-     * @param xRefs
-     * @return
+     * @param ontTypes
      */
     protected String makeDrumTermOntXML(KQMLList ontTypes) {
-        String result = "";
         if (ontTypes == null)
-            return result;
+            return "";
+        List<String> conts = new ArrayList<String>();
         for (KQMLObject type : (KQMLList) ontTypes) {
-            result += "<type>" + type.toString() + "</type>";
+            conts.add(makeXMLElement("type", null, type.toString()));
         }
-        return "<types>" + result + "</types>";
+        return makeXMLElement("types", null, conts);
     }
 
     /**
      * Returns an {@code xrefs} element containing a set of {@code xref} sub-elements, each of them denoting a
-     * cross-reference into a resource.
+     * cross-reference to a resource.
      * 
      * @param xRefs
-     * @return
      */
     protected String makeDrumTermXrefsXML(KQMLList xRefs) {
-        String result = "";
         if (xRefs == null)
-            return result;
+            return "";
+        List<String> conts = new ArrayList<String>();
         for (KQMLObject xRef : (KQMLList) xRefs) {
-            result += "<xref dbid=\"" + normalizeDBID(xRef.toString()) + "\"/>";
+            conts.add(makeXMLElement("xref", makeXMLAttribute("dbid", normalizeDBID(xRef.toString())), null));
         }
-        return "<xrefs>" + result + "</xrefs>";
+        return makeXMLElement("xrefs", null, conts);
     }
     
     /**
-     * Utility function for making an XML attribute
+     * Utility function for making an XML attribute.  
+     * 
+     * Note: If {@code value} is {@code null}, the function will return an empty string.
+     * 
+     * @see #makeXMLAttribute(String, String, boolean)
      */
     protected String makeXMLAttribute(String attribute, String value) {
-        return attribute + "=\"" + value + "\"";
+        return makeXMLAttribute(attribute, value, false);
     }
 
     /**
-     * Utility function for making an XML element with optional attributes and optional sub-elements
+     * Utility function for making an XML attribute. 
+     * 
+     * Note: If {@code allowNulls} is {@code false} and {@code value} is {@code null}, the function will return an empty string.
+     * 
+     * @param attribute -- name of the attribute
+     * @param value -- value of attribute
+     * @param allowNulls -- whether a null value is allowed (as "null") or not
+     * @return
+     */
+    protected String makeXMLAttribute(String attribute, String value, boolean allowNulls) {
+        if (attribute == null) {
+            Debug.error("Null tag!");
+            return "";
+        }
+        return (!allowNulls && (value == null)) ? ""
+                : attribute + "=\"" + value + "\"";
+    }
+
+    /**
+     * Utility function for making an XML element with optional attributes and optional content.
+     * 
+     * @see #makeXMLElement(String, String, String)
      */
     protected String makeXMLElement(String tag, List<String> attributes, List<String> content) {
         return makeXMLElement(tag, join(attributes, " "), join(content,""));
     }
 
     /**
-     * Utility function for making an XML element with optional attributes and optional sub-elements
+     * Utility function for making an XML element with optional attributes and optional sub-elements.
+     * If the element is empty (no attributes and no content), it will return an empty string.
      */
     protected String makeXMLElement(String tag, String attributes, String content) {
         if (attributes == null) {

@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.47 2018/06/22 16:41:53 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.48 2018/06/24 22:41:55 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -33,7 +33,7 @@ public class TermExtraction extends Extraction {
     protected enum Attribute {
         // :NAME lexeme --> name of term
         NAME(":NAME"),
-        // :SPEC --> quantifier (aka "term constructor")
+        // :SPEC --> quantifier 
         SPEC(":SPEC"),
         // :PRO context-term-id --> ID for event describing modifier
         PRO(":PRO"),
@@ -44,9 +44,9 @@ public class TermExtraction extends Extraction {
         // :LOGICALOP-SEQUENCE context-term-id --> sequence of term IDs
         LSEQ(":LOGICALOP-SEQUENCE"),
         // :OP ontType --> operator joining SEQ
-        SEQ_EXC(":EXCEPT"),
-        // :EXCEPT --> works in conjunction w/ SEQ ; ** FIXME: currently not provided! **
         OP(":OPERATOR"),
+        // :EXCEPT --> works in conjunction w/ SEQ ; ** FIXME: currently not provided! **
+        SEQ_EXC(":EXCEPT"),
         // :CELL-LINE context-term-id --> cell line
         CELL_LINE(":CELL-LINE"),
         // :ACTIVE bool --> activation
@@ -56,6 +56,7 @@ public class TermExtraction extends Extraction {
         // CWMS: the following are LF attributes, or substitutes thereof
         SIZE(":SIZE"),
         SCALE(":SCALE"),
+        ASSOC_POSS(":ASSOC-POSS"),
         MONTH(":MONTH"), // time
         YEAR(":YEAR") // time
         ;
@@ -374,47 +375,37 @@ public class TermExtraction extends Extraction {
      */
     private String createTermXML() {
         Debug.debug("pTERM(" + value + ")");
-        String var = pullTermVar(value);
-        String id = removePackage(var, false);
-        Debug.debug("id: " + id);
-        String parID = getParagraphID();
-        Debug.debug("parID: " + parID);
+        
+        List<String> attrs = new ArrayList<String>();
+        attrs.add(makeXMLAttribute("id", removePackage(pullTermVar(value), false)));
+        attrs.add(makeXMLAttribute("dbid", getDBTermIds()));
+        attrs.add(makeXMLAttribute("start", String.valueOf(getOffset(start))));
+        attrs.add(makeXMLAttribute("end", String.valueOf(getOffset(end))));
+        attrs.add(makeXMLAttribute("paragraph", getParagraphID()));
+        attrs.add(makeXMLAttribute("uttnum", String.valueOf(uttnum)));
+        attrs.add(makeXMLAttribute("lisp", getLispForm()));
+        attrs.add(makeXMLAttribute("rule", value.getKeywordArg(":RULE").toString()));
 
-        String text = removeTags(getTextSpan(start, end));
-        Debug.debug("text[" + start + "," + end + "]: " + text);
-
-        String ruleID = value.getKeywordArg(":RULE").toString();
-        Debug.debug("ruleID: " + ruleID);
-
-        // dbids
-        String dbID = getDBTermIds();
-
-        Debug.debug("pTERM_toXML(): ready");
-
-        return "<" + exType + " " +
-                "id=\"" + id + "\" " +
-                (dbID == null ? "" : ("dbid=\"" + dbID + "\" ")) +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\" " +
-                "paragraph=\"" + parID + "\" " +
-                "uttnum=\"" + uttnum + "\" " +
-                "lisp=\"" + getLispForm() + "\" " +
-                "rule=\"" + ruleID + "\">"
-                + "<type>" + ontType + "</type>"
-                + createNameXML()
-                + createModsXML()
-                + createFeaturesXML()
-                + createCorefXML()
-                + createBaseXML()
-                + createDrumTermsXML()
-                // CWMS
-                + createAssocsXML()
-                + createQualsXML()
-                + createSizeXML()
-                + createScaleXML()
-                + createTimeXML()
-                + "<text>" + escapeXML(text) + "</text>" +
-                "</" + exType + ">";
+        List<String> conts = new ArrayList<String>();
+        conts.add(makeXMLElement("spec", "", attributes.get(Attribute.SPEC).toString()));
+        conts.add(makeXMLElement("type", "", ontType));
+        conts.add(createNameXML());
+        conts.add(createNameXML());
+        conts.add(createModsXML());
+        conts.add(createFeaturesXML());
+        conts.add(createCorefXML());
+        conts.add(createBaseXML());
+        conts.add(createDrumTermsXML());
+        // CWMS
+        conts.add(createAssocsXML());
+        conts.add(createAssocPossXML());
+        conts.add(createQualsXML());
+        conts.add(createSizeXML());
+        conts.add(createScaleXML());
+        conts.add(createTimeXML());
+        //
+        conts.add(makeXMLElement("text", "", escapeXML(removeTags(getTextSpan(start, end)))));
+        return makeXMLElement(exType, attrs, conts);
     }
 
     /**
@@ -422,6 +413,7 @@ public class TermExtraction extends Extraction {
      * @return
      */
     private String createTimeXML() {
+        List<String> attrs = new ArrayList<String>();
         List<String> conts = new ArrayList<String>();
         //KQMLObject day = attributes.get(Attribute.DAY);
         KQMLObject month = attributes.get(Attribute.MONTH);
@@ -436,7 +428,11 @@ public class TermExtraction extends Extraction {
         if (year != null) {
             conts.add(makeXMLElement("year", null, year.toString()));
         }
-        return makeXMLElement("time", null, conts);
+        if (conts.isEmpty()) {
+            return "";
+        }
+        attrs.add(makeXMLAttribute("type","DATE"));
+        return makeXMLElement("time", attrs, conts);
     }
 
     /**
@@ -733,10 +729,8 @@ public class TermExtraction extends Extraction {
             Debug.warn("ILL-FORMED INPUT: " + nameObj);
         }
 
-        if (name == null) {
-            return "";
-        }
-        return "<name>" + escapeXML(name) + "</name>";
+       return (name == null) ? "" 
+                : makeXMLElement("name", "", escapeXML(name));
     }
     
     /**
@@ -744,11 +738,8 @@ public class TermExtraction extends Extraction {
      * the empty string if no such information exists.
      */
     private String createCorefXML() {
-        String result = "";
-        if (refVar != null) {
-            result = "<coref id=\"" + removePackage(refVar, false) + "\" />";
-        }
-        return result;
+        return (refVar == null) ? "" 
+                : makeXMLElement("coref", makeXMLAttribute("id", removePackage(refVar, false)), null);
     }
 
     /**
@@ -757,10 +748,8 @@ public class TermExtraction extends Extraction {
      */
     private String createBaseXML() {
         KQMLObject baseObj = attributes.get(Attribute.BASE);
-        if (baseObj == null) {
-            return "";
-        }
-        return "<assoc-with id=\"" + removePackage(baseObj.stringValue(), false) + "\" " + "/>";
+        return (baseObj == null) ? "" 
+                : makeXMLElement("coref", makeXMLAttribute("id", removePackage(baseObj.stringValue(), false)), null);
     }
 
     /**
@@ -812,9 +801,7 @@ public class TermExtraction extends Extraction {
      * Qualifiers
      */
     private String createQualsXML() {
-        List<String> quals = new ArrayList<String>();
-        quals.add(createQualsXML(PolyAttribute.QUAL, "qual"));
-        return makeXMLElement("qualifiers",null,quals);
+        return makeXMLElement("qualifiers", null, createQualsXML(PolyAttribute.QUAL, "qual"));
     }
     
     /**
@@ -885,6 +872,35 @@ public class TermExtraction extends Extraction {
         return result;
     }
 
+    /**
+     * Assoc-poss -- this is an abstract relation of possession between two entities. Reasoners may resolve it as a
+     * possessed-by relation (e.g., "John's car"), or as an attribute-of relation (e.g., "the color of the car").
+     * 
+     * @return
+     */
+    private String createAssocPossXML() {
+        KQMLObject assoc = attributes.get(Attribute.ASSOC_POSS);
+        if (assoc == null) {
+            return "";
+        }
+        String result = "";
+        if (isOntVar(assoc.toString())) {
+            String var = assoc.toString();
+            String id = removePackage(var);
+            Extraction ekbTerm = ekbFindExtraction(var);
+            if (ekbTerm != null) { // value points to another extraction
+                String attr = makeXMLAttribute("id", id);
+                result += makeXMLElement("poss-by", attr, null);
+            } else { // we need to define the item here
+                result += makeXMLfromTerm("poss-by", var);
+            }
+        } else { // should not happen!
+            Debug.error("unexpected :ASSOC-POSS value: " + assoc);
+            result += makeXMLElement("poss-by", null, removePackage(assoc.toString(), false));
+        }
+        return result;
+    }
+
 
 
     /**
@@ -900,17 +916,14 @@ public class TermExtraction extends Extraction {
         features += createDomSiteFeatureXML(); // domain
         features += createResSiteFeatureXML(); // residue
         features += createCelllineXML(); // cell-line
-
-        return features.equals("")
-            ? ""
-            : "<features>" + features + "</features>";
+        return makeXMLElement("features", null, features);
     }
     
     private String createActivityFeatureXML() {
         KQMLObject isActive = attributes.get(Attribute.ACTIVE);
         if (isActive == null)
             return "";
-        return "<active>" + removePackage(isActive.toString(), false) + "</active>";
+        return makeXMLElement("active", null, removePackage(isActive.toString(), false));
     }
 
     private String createLocationFeatureXML() {
@@ -921,11 +934,9 @@ public class TermExtraction extends Extraction {
         }
         ArrayList<KQMLObject> locs = polyAttributes.get(PolyAttribute.LOCATION);
         if (locs != null) {
-            locations.addAll(locs); // DRUM
+            locations.addAll(locs); // CWMS
         }
-        if ((locations == null) || locations.isEmpty()) {
-            return "";
-        }
+
         // TODO: figure out what situations w/ multiple locations look like
         String result = "";
         for (KQMLObject location : locations) {
@@ -1035,33 +1046,25 @@ public class TermExtraction extends Extraction {
         String result = "";
 
         // obligatory
-        KQMLObject sitePos = term.getKeywordArg(":AA-INDEX");
-        result += "<pos>" + sitePos.toString() + "</pos>";
+        result += makeXMLElement("pos", "", term.getKeywordArg(":AA-INDEX").toString());
         // optional
         KQMLObject from = term.getKeywordArg(":OLD");
         if (from != null) {
-            String aaFrom = parseAAToXML((KQMLList) from);
-            result += "<aa-from>" + aaFrom + "</aa-from>";
+            result += makeXMLElement("aa-from", "", parseAAToXML((KQMLList) from));
         }
         // obligatory
-        KQMLObject to = term.getKeywordArg(":NEW");
-        String aaTo = parseAAToXML((KQMLList) to);
-        result += "<aa-to>" + aaTo + "</aa-to>";
+        result += makeXMLElement("aa-to", "", parseAAToXML((KQMLList) term.getKeywordArg(":NEW")));
 
         return result;
     }
 
     private String parseMutationInsToXML(KQMLList term) {
         Debug.debug("insertion: " + term);
-        KQMLObject from = term.getKeywordArg(":LOWER");
-        KQMLObject to = term.getKeywordArg(":UPPER");
-        KQMLObject insert = term.getKeywordArg(":NEW");
-        String aaFrom = parseAASiteToXML((KQMLList) from);
-        String aaTo = parseAASiteToXML((KQMLList) to);
-        String insertXML = parseAAListXML((KQMLList) insert);
-        return "<pos-from>" + aaFrom + "</pos-from>"
-                + "<pos-to>" + aaTo + "</pos-to>"
-                + "<insert>" + insertXML + "</insert>";
+        String result = "";
+        result += makeXMLElement("pos-from", "", parseAASiteToXML((KQMLList) term.getKeywordArg(":LOWER")));
+        result += makeXMLElement("pos-to", "", parseAASiteToXML((KQMLList) term.getKeywordArg(":UPPER")));
+        result += makeXMLElement("insert", "", parseAAListXML((KQMLList) term.getKeywordArg(":NEW")));
+        return result;
     }
 
     private String parseAAListXML(KQMLList term) {
@@ -1075,29 +1078,20 @@ public class TermExtraction extends Extraction {
 
     private String parseAAToXML(KQMLList term) {
         Debug.debug("aa: " + term);
-        KQMLObject name = term.getKeywordArg(":NAME");
-        KQMLObject code = term.getKeywordArg(":LETTER");
-
-        // FIXME: name and code are KQMLStrings, so we don't use toString() to avoid quotes
-        return "<aa>"
-                + ((name == null) ? "" : ("<name>" + name.stringValue() + "</name>"))
-                + ((code == null) ? "" : ("<code>" + code.stringValue() + "</code>")) +
-                "</aa>";
+        List<String> conts = new ArrayList<String>();
+        conts.add(makeXMLElement("name", "", term.getKeywordArg(":NAME").stringValue()));
+        conts.add(makeXMLElement("code", "", term.getKeywordArg(":LETTER").stringValue()));
+        return makeXMLElement("aa", null, conts);
 
     }
 
     private String parseAASiteToXML(KQMLList term) {
         Debug.debug("aa-site: " + term);
-        KQMLObject name = term.getKeywordArg(":NAME");
-        KQMLObject code = term.getKeywordArg(":LETTER");
-        KQMLObject pos = term.getKeywordArg(":INDEX");
-
-        // FIXME: name and code are KQMLStrings, so we don't use toString() to avoid quotes
-        return "<site>"
-                + ((name == null) ? "" : ("<name>" + name.stringValue() + "</name>"))
-                + ((code == null) ? "" : ("<code>" + code.stringValue() + "</code>"))
-                + ((pos == null) ? "" : ("<pos>" + pos.toString() + "</pos>")) +
-                "</site>";
+        List<String> conts = new ArrayList<String>();
+        conts.add(makeXMLElement("name", "", term.getKeywordArg(":NAME").stringValue()));
+        conts.add(makeXMLElement("code", "", term.getKeywordArg(":LETTER").stringValue()));
+        conts.add(makeXMLElement("pos", "", term.getKeywordArg(":INDEX").toString()));
+        return makeXMLElement("site", null, conts);
     }
 
     /**
