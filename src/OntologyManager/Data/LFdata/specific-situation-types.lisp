@@ -2210,7 +2210,7 @@
  )
 
 (define-type ONT::BELIEVE
-  :wordnet-sense-keys ("think%2:31:01" "believe%2:31:04" "consider%2:31:08" "conceive%2:31:00" "think%2:31:03" "opine%2:31:02" "suppose%2:31:00" "imagine%2:31:01" "reckon%2:31:02" "guess%2:31:00" "strike%2:37:00")
+  :wordnet-sense-keys ("think%2:31:01" "believe%2:31:04" "consider%2:31:08" "conceive%2:31:00" "think%2:31:03" "opine%2:31:02" "suppose%2:31:00" "imagine%2:31:01" "reckon%2:31:02" "guess%2:31:00" "strike%2:37:00" )
  :parent ONT::attitude-of-belief
  :sem (F::SITUATION (F::Aspect F::static) (F::Time-span F::Extended))
  :arguments ((:optional ont::neutral1)
@@ -4027,14 +4027,23 @@
  )
 
 (define-type ONT::ordering
- :wordnet-sense-keys ("rate%2:31:00" "rank%2:31:00" "range%2:31:00" "order%2:31:00" "grade%2:31:03" "place%2:31:01")
-  :parent ONT::categorization
-  )
+    :comment "Identify an ordering or ranking of objects along some dimention" 
+    :wordnet-sense-keys ("rate%2:31:00" "rank%2:31:00" "range%2:31:00" "order%2:31:00" "grade%2:31:03" "place%2:31:01")
+    :parent ONT::categorization
+    )
+
+(define-type ONT::attribute-impute
+    :comment "identify a cause of an event"
+    :wordnet-sense-keys ("impute%2:31:00" "attribute%2:31:01")
+    :arguments ((:essential ONT::NEUTRAL (F::situation))
+		(:essential ONT::NEUTRAL1 (F::situation)))
+    :parent ONT::categorization
+    )
 
 (define-type ONT::classify
- :wordnet-sense-keys ("classify%2:31:01" "relegate%2:31:02" "classify%2:41:00" "separate%2:31:00" "sort_out%2:31:00" "assort%2:31:00" "sort%2:31:00" "class%2:31:00" "classify%2:31:00" "categorise%2:31:00" "categorize%2:31:00" "take%2:31:07" "read%2:31:09" "describe%2:31:00" "discern%2:39:00" "discover%2:39:00")
-  :parent ONT::categorization
-  )
+    :wordnet-sense-keys ("classify%2:31:01" "relegate%2:31:02" "classify%2:41:00" "separate%2:31:00" "sort_out%2:31:00" "assort%2:31:00" "sort%2:31:00" "class%2:31:00" "classify%2:31:00" "categorise%2:31:00" "categorize%2:31:00" "take%2:31:07" "read%2:31:09" "describe%2:31:00" "discern%2:39:00" "discover%2:39:00")
+    :parent ONT::categorization
+    )
 
 (define-type ONT::rely
  :wordnet-sense-keys ("rely%2:31:11" "depend_on%2:42:00" "depend_on%2:42:01" "depend_on%2:42:02" "fall%2:40:03" "count%2:31:02" "bet%2:31:00" "depend%2:31:00" "look%2:31:02" "calculate%2:31:05" "reckon%2:31:05")

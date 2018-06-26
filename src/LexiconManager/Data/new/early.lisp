@@ -21,7 +21,7 @@
  :words (
   (W::EARLY
    (SENSES
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::before)
      (example "he arrived early")
      (templ pred-s-post-templ)
      )

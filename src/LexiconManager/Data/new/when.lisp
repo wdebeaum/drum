@@ -47,11 +47,11 @@
  :words (
    (W::when
    (SENSES
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::when-while)
      (TEMPL binary-constraint-S-decl-TEMPL)
      (example "I saw him when he left")
      )
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::when-while)
      (meta-data :origin calo :entry-date 20040809 :change-date nil :comments caloy2)
      (example "buy me a monitor when buying a computer")
      (TEMPL binary-constraint-S-ing-TEMPL)

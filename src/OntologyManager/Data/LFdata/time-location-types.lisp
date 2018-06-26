@@ -942,16 +942,43 @@
              )
  )
 
+(define-type ont::before
+    :parent ont::event-time-rel
+    :wordnet-sense-keys ("after%4:02:00" "after%4:02:01")
+    )
+
+(define-type ont::after
+    :parent ont::event-time-rel
+    :wordnet-sense-keys ("before%4:02:03")
+    )
+
+(define-type ont::immediate
+    :parent ont::event-time-rel
+    :wordnet-sense-keys ("immediately%4:02:00" "immediately%4:02:05")
+    )
+
+(define-type ont::when-while
+    :parent ont::event-time-rel
+   
+    )
+
+(define-type ont::until
+    :parent ont::event-time-rel
+   
+    )
+
 ;; still, yet, so far, ....
 (define-type ONT::time-rel-so-far
 ; :parent ONT::event-time-rel
-  :parent ONT::EVENT-DURATION-MODIFIER
-  :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
+    :parent ONT::EVENT-DURATION-MODIFIER
+    :wordnet-sense-keys ("so_far%4:02:00")
+    :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
              )
  )
 
 (define-type ONT::event-time-rel-now
- :parent ONT::event-time-rel
+     :wordnet-sense-keys ("now%4:02:05" "now%4:02:01")
+     :parent ONT::event-time-rel
  )
 
 (define-type ONT::implicit-overlap
@@ -960,11 +987,12 @@
  )
 
 (define-type ONT::event-time-rel-culmination
- :parent ONT::event-time-rel
+    :parent ONT::event-time-rel≈cwmsreader
+    
  )
 
 ;; event times not including situations
-(define-type ONT::event-time
+(define-type ONT::event-time≈
  :parent ONT::event-time-rel
  :arguments (;(:ESSENTIAL ONT::VAL ((? vl F::time)))
 	     (:ESSENTIAL ONT::GROUND ((? grd F::time)))

@@ -34,10 +34,10 @@
  :words (
   (W::WHILE
    (SENSES
-    ((LF-PARENT ONT::EVENT-TIME-REL)
+    ((LF-PARENT ONT::whne-while)
      (TEMPL binary-constraint-s-decl-templ)
      )
-    ((LF-PARENT ONT::EVENT-TIME-REL)
+    ((LF-PARENT ONT::when-while)
      (TEMPL binary-constraint-S-while-loc-templ)
      )
     )

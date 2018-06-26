@@ -6,7 +6,7 @@
  :words (
   (W::PRESENTLY
    (SENSES
-    (;(LF-PARENT ONT::event-time-rel)
+    
      (LF-PARENT ONT::EVENT-TIME-REL-NOW)
      (LF-FORM W::NOW)
      (TEMPL PRED-S-TEMPL)
@@ -14,5 +14,5 @@
      )
     )
    )
-))
+)
 

@@ -6,7 +6,7 @@
  :words (
   (w::pre-
   (senses
-   ((lf-parent ont::event-time-rel)
+   ((lf-parent ont::before)
     (example "precook")
     (templ V-PREFIX-templ)
     )
@@ -19,7 +19,7 @@
   (W::pre-
    (SENSES
     (
-     (LF-PARENT ONT::event-time-rel)
+     (LF-PARENT ONT::before)
      (example "preshow, predinner")
      (TEMPL prefix-adj-templ)
      )
@@ -31,7 +31,7 @@
  :words (
   (w::pre-
   (senses
-   ((lf-parent ont::event-time-rel)
+   ((lf-parent ont::before)
     (example "preadolescent")
     (templ adj-operator-prefix-TEMPL)
     )

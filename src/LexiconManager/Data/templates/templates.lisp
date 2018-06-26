@@ -1314,7 +1314,7 @@
 	))
 
       
- (affected-AFFECTED-SOURCE-OPTIONAL-TEMPL
+     (affected-AFFECTED-SOURCE-OPTIONAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::affected)
 	(LOBJ (% W::NP) ONT::AFFECTED1)
@@ -2250,6 +2250,13 @@
     (LCOMP (:parameter xp2 (:default(% W::PP (w::ptype w::as) (w::arg ?dobjvar)))) ont::formal)
     ))
 
+(agent-neutral-to-neutral-templ		
+   (ARGUMENTS
+    (LSUBJ (% W::NP) ONT::agent)
+    (LOBJ (:parameter xp (:default (% W::NP (w::var ?dobjvar)))) ONT::neutral)
+    (LCOMP (:parameter xp2 (:default(% W::PP (w::ptype w::to)))) ont::neutral1)
+    ))
+
 (experiencer-neutral-as-theme-optional-templ		
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::experiencer)
@@ -3121,7 +3128,7 @@
    (SYNTAX (W::SORT W::PRED) (W::ATYPE W::CENTRAL) (W::ARG ?arg) (W::COMPARATIVE W::+) (W::ALLOW-post-n1-subcat +) ) ;(W::allow-deleted-comp +) )
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::FIGURE)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::than)))) ONT::COMPAR optional)
+    (subcat (:parameter xp (:default (% W::compar))) ONT::COMPAR optional)
     (subcat2 (% -) ONT::NOROLE)
     ))
 

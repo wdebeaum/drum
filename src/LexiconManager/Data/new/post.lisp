@@ -30,7 +30,7 @@
  :words (
   (w::post-
   (senses
-   ((lf-parent ont::event-time-rel)
+   ((lf-parent ont::after)
     (example "postprocess")
     (templ V-PREFIX-templ)
     )
@@ -43,7 +43,7 @@
   (W::post-
    (SENSES
     (
-     (LF-PARENT ONT::event-time-rel)
+     (LF-PARENT ONT::after)
      (example "postshow, postdinner")
      (TEMPL prefix-adj-templ)
      )
@@ -55,7 +55,7 @@
  :words (
   (w::post-
   (senses
-   ((lf-parent ont::event-time-rel)
+   ((lf-parent ont::after)
     (example "postadolescent")
     (templ adj-operator-prefix-TEMPL)
     )

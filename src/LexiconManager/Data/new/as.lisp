@@ -100,7 +100,7 @@
     ((LF-PARENT ONT::REASON)
      (TEMPL binary-constraint-s-decl-templ)
      )
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::while-when)
      (TEMPL binary-constraint-S-decl-TEMPL)
      (meta-data :origin mobius :entry-date 20080702 :change-date nil :comments nil)
      (example "as this happens the valve closes")
@@ -214,7 +214,8 @@
     ((EXAMPLE "he wants the truck as opposed to the car")
      (LF-PARENT ONT::CHOICE-OPTION)
      (TEMPL binary-constraint-S-templ)
-     (meta-data :origin caloy2 :entry-date 20050509 :change-date nil :comments projector-purchasing)
+     (meta-data :origin caloy2 :entry-date 20050509 :change-date nil :comments projec≈cwmsreader
+		tor-purchasing)
      )
     ((EXAMPLE "running as opposed to walking")
      (LF-PARENT ONT::CHOICE-OPTION)
@@ -228,16 +229,9 @@
  :words (
   ((W::AS W::SOON W::AS)
    (SENSES
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::immediate)
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      )
-; 3/2011 conflating sit-val and val roles for event-time-rel
-;    ((LF-PARENT ONT::event-time-rel)
-;     (TEMPL binary-constraint-SIT-VAL-S-decl-TEMPL)
-;     )
-;    ((LF-PARENT ONT::event-time-rel)
-;     (TEMPL binary-constraint-SIT-VAL-NP-TEMPL)
-;     )
     )
    )
 ))
@@ -246,7 +240,7 @@
  :words (
   ((W::AS W::SOON W::AS W::POSSIBLE)
    (SENSES
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::immediate)
      (TEMPL PRED-S-POST-templ)
      )
     )
@@ -257,7 +251,7 @@
  :words (
   ((W::AS W::QUICK W::AS W::POSSIBLE)
    (SENSES
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::immediate)
      (TEMPL PRED-S-POST-templ)
      )
     )

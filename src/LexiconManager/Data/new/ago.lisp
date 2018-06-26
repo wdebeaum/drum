@@ -7,7 +7,7 @@
  :words (
   (W::AGO
    (SENSES
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::before)
      (TEMPL PRED-NP-templ)
      (example "five years ago")
      )

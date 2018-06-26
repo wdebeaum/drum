@@ -38,3 +38,16 @@
    )
 ))
 
+(define-words :pos W::v
+  :tags (:base500)
+  :words (
+	  (W::believed
+	   (wordfeats (W::VFORM W::PASSIVE) (W::MORPH (:forms NIL)))
+	   (SENSES
+	    ((EXAMPLE "It is believed (that)...")
+	     (LF-PARENT ONT::expectation)
+	     (TEMPL EXPLETIVE-FORMAL-TEMPL )
+	     )
+	    )
+	   ))
+  )

@@ -421,8 +421,13 @@
 	      (TEMPL PRED-S-or-np-TEMPL)
 	      (SYNTAX (W::ALLOW-DELETED-COMP +)))
 	     ))
-	     
-    ))
+
+     ((w::in w::turn)
+     (senses ((LF-PARENT ONT::SEQUENCE-POSition)
+	      (TEMPL PRED-vp-pre-TEMPL)
+	      ))
+      ))
+ )
 
 (define-words :pos W::ADV
  :tags (:base500)

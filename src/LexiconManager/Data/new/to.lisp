@@ -95,7 +95,7 @@
 ;     (example "pan camera to 45 degrees")
 ;     (meta-data :origin coordops :entry-date 20070516 :change-date nil :comments nil)
 ;     )
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::until)
      (example "the meeting should go to five pm")
      (TEMPL BINARY-CONSTRAINT-S-or-NP-TEMPL)
      (PREFERENCE 0.97)

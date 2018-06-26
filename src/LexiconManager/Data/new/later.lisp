@@ -6,7 +6,7 @@
  :words (
   (W::LATER
    (SENSES
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::after)
      (TEMPL pred-s-vp-TEMPL)
      )
     )
