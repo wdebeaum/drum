@@ -1235,8 +1235,8 @@
       (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
 		       (liobj ?iobjvar) ;;(beneficiary ?iobjvar)
 		       (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
-		       (beneficiary (% *pro* (status ont::f)
-				(class (:* ont::beneficiary iobj)) (var *) (sem ?subjsem) (constraint (& (ground ?iobjvar) (figure ?v)))))
+		       (beneficiary ?iobjvar);;(% *pro* (status ont::f)
+				;;(class (:* ont::beneficiary iobj)) (var *) (sem ?subjsem) (constraint (& (ground ?iobjvar) (figure ?v)))))
 		       (?comp3-map ?compvar)
 		       
                        ))
@@ -3396,10 +3396,10 @@
 	   (vform ?vform)
 	   (agr ?a)
 	   (sem ($ f::situation (f::aspect ?aspect) (f::time-span ?time)))
-	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
+	   ;;(subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
 	   (iobj (% -)) (part (% -)) (dobj (% -))
 	   (comp3 ?comp) 
-	   (comp3 (% vp- (class ?class)  (constraint ?con1) (tma ?tma1) (var ?var)
+	  #|| (comp3 (% vp- (class ?class)  (constraint ?con1) (tma ?tma1) (var ?var)
 		     (case (? ccase obj -)) (var ?compvar)  
 		     (gap ?gap)	(lex ?lex)	     
 		     (sem ?compsem) ;; (sem ($ f::situation (aspect (? !asp f::indiv-level))))  ;; constraints are in lf
@@ -3408,10 +3408,19 @@
 		     (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
 		     (advbl-needed -) (subj-map ?lsubj-map)
 		     (auxname ?compauxname)
-		     ))
+		     ))||#
 	    (comp3-map ?comp3-map)
 	   ))
-    ?comp
+    (vp- (class ?class)  (constraint ?con1) (tma ?tma1) (var ?var)
+		     (case (? ccase obj -)) (var ?compvar)  
+		     (gap ?gap)	(lex ?lex)	     
+		     (sem ?compsem) ;; (sem ($ f::situation (aspect (? !asp f::indiv-level))))  ;; constraints are in lf
+		     (subjvar ?subjvar) (dobjvar ?dobjvar) (transform ?transform)
+		     (subj ?subj)
+		     (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -) (expletive ?exp)))
+		     (advbl-needed -) (subj-map ?lsubj-map)
+		     (auxname ?compauxname)
+     )
     (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?newtma)) ;; add aux feature to tma
     ;; change the temporal values in sem to be consistent with the aux
     (change-feature-values (old ?compsem) (new ?newsem) (newvalues ?sem-contrib))

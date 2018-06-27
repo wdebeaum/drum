@@ -1103,47 +1103,6 @@
       (add-to-conjunct (val (MODS ?advbv)) (old ?con) (new ?newc))
      
       )
-#||
-    ;;   more/as/so ADJP than/as/that 
-    ;;   e.g., more sensitive than that
-    ((ADJP (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
-      (val ?val) (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap) 
-      (argument ?argmt) (premod +) 
-      )
-     -comp-with-ground>
-     (head (ADJ (comparative +) (lf ?lf) (ground-subcat ?!gsub)
-		(ground-subcat (% ?cat (var ?vg)))
-		(val ?val) (agr ?agr) (mass ?mass) (argument ?argmt) (arg ?arg)
-		(gap ?gap) (premod -) 
-		))
-     ?!gsub
-     ;;(word (lex ?pt))
-     ;;(np (var ?vnp))
-     (add-to-conjunct (val (& (figure ?arg) (ground ?vg))) (old ?con) (new ?newc))
-     )
-
-    ;; e.g.,  more sensitive to heat than that
-    ((ADJP (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
-      (val ?val) (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap) 
-      (argument ?argmt) (premod +) 
-      )
-     -comp-with-subcat+ground>
-     (head (ADJ (comparative +) (lf ?lf) (subcat ?!subcat)
-		(subcat (% ?subcatcat (var ?vsc)))
-		(subcat-map ?sc-map)
-		(ground-subcat ?!gsub)
-		(ground-subcat (% ?cat (var ?vg)))
-		(val ?val) (agr ?agr) (mass ?mass) (argument ?argmt) (arg ?arg)
-		(gap ?gap) (premod -) 
-		))
-     ?!subcat
-     ?!gsub
-     ;;(word (lex ?pt))
-     ;;(np (var ?vnp))
-     (add-to-conjunct (val (& (figure ?arg) (ground ?vg) (?sc-map ?vsc))) (old ?con) (new ?newc))
-     )
-||#
-    
 
     ;;  as ADJ as-PP
     ((ADJP (LF (% PROP (CLASS (:* ONT::AS-MUCH-AS ?w)) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
@@ -1571,7 +1530,7 @@
      (add-to-conjunct (val (result ?mod)) (old ?con) (new ?new))  ; The RESULT will be remapped to TRANSIENT-RESULT
      )
 
-((vp- (constraint ?new)
+   ((vp- (constraint ?new)
      (tma ?tma)
      (gap ?!gap) (var ?v)
      (class ?class) (sem ?argsem) (vform ?vf)      
@@ -1635,6 +1594,31 @@
 	      ))
     (add-to-conjunct (val (& (FIGURE ?arg) (GROUND ?v))) (old ?con) (new ?newcon))
     )
+
+
+;; adjectival extent adverbials. He jumped three feet high, He jumped three feet higher than than
+   ((advbl (arg ?arg) ;;(role (:* ONT::distance W::quantity)) 
+     (var *) (subj ?anysubj)
+	   (sort binary-constraint) (sem ?sem)
+	   (LF (% PROP (VAR *) (CLASS ONT::extent-predicate) (sem ?sem)
+		  (CONSTRAINT (& (figure ?arg)
+				 (ground (% *PRO* (status definite)
+					    (var **) (class ANYSEM)
+					    (constraint (& (MOD ?v)))))
+				 ))
+		  ))
+     (atype W::POST)
+     (argument (% W::S (subjvar ?anysubj)
+		  (SEM ($ F::situation (f::type (? xx ont::event-of-action ont::event-of-state))))))
+     )
+    -extent-adj-advbl> 1.0 ;.97
+    (head (Adjp (var ?v) (sem ?sem)  (arg **)
+	      (bare -) 
+	      (lf (% prop (class (? cc ont::more-val ont::less-val ont::at-scale-val))))
+	      (sem ($ f::abstr-obj (f::scale (? sc ont::scale ont::measure-scale)))) 
+	      
+	      ))
+     )
 
       ;; ing VPs as adverbials
       ;; TEST: Barking, the dog chased the cat.

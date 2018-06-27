@@ -87,6 +87,7 @@ public class StandardCWCModule extends StandardTripsModule {
     } catch (IOException e) {
       System.err.println("error attempting to send are-you-there: " + e.toString());
     }
+    if (windowManager != null) windowManager.restart();
   }
 
   /** Send all define-service messages. */
@@ -138,13 +139,12 @@ public class StandardCWCModule extends StandardTripsModule {
    * <pre>
    * if (verb.equals("my-request-verb")) {
    *   ...
-   *   return true;
    * } else if (verb.equals("my-other-request-verb")) {
    *   ...
-   *   return true;
    * } else {
    *   return super.receiveRequest(msg, verb, content);
    * }
+   * return true;
    * </pre>
    */
   public boolean receiveRequest(KQMLPerformative msg, String verb, KQMLPerformative content) throws CWCException, IOException {
@@ -175,7 +175,7 @@ public class StandardCWCModule extends StandardTripsModule {
   public boolean receiveTell(KQMLPerformative msg, String verb, KQMLPerformative content) throws CWCException, IOException {
     if (verb.equals("i-am-here")) {
       KQMLToken who = Args.getTypedArgument(content, ":who", KQMLToken.class);
-      if (who.toString().toLowerCase() == "cwmsagent") {
+      if (who.toString().toLowerCase().equals( "cwmsagent")) {
 	declareCapabilitiesOnce();
       } // don't care who else is here
       return true;

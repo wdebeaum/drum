@@ -3,7 +3,7 @@
 ;;;
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
-;;; Time-stamp: <Wed Jun  6 21:37:53 EDT 2018 james>
+;;; Time-stamp: <Tue Jun 26 16:08:54 EDT 2018 james>
 
 (in-package "PARSER")
 
@@ -1219,7 +1219,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
            (term (list 'TERM :LF newlf)))
       (if (or (null form) (member 'w::var form))(setq term (append term (list :VAR var))))
       (if (or (null form) (member 'w::sem form)) (setq term (append term (list :SEM sem))))
-      (if *add-lex-to-lf*
+      (if (and *add-lex-to-lf* lex)
 	  (setq term (replace-arg-in-act term :lf (append newlf (list :LEX lex)))))
       (if (and input (or (null form) (member 'w::input form)))
 	  (setq term (append term (list :INPUT input)))
@@ -1579,7 +1579,8 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
    
     (if (or (null form) (member 'w::var form)) (setq term (append term (list :VAR var))))
     (if (or (null form) (member 'w::sem form)) (setq term (append term (list :SEM (get-fvalue args 'w::sem) ))))
-    (if *add-lex-to-lf* (setq term (replace-arg-in-act term :lf (append new-lf (list :LEX lex)))))
+    (if (and *add-lex-to-lf* lex)
+	(setq term (replace-arg-in-act term :lf (append new-lf (list :LEX lex)))))
     (if (or (null form) (and (member 'w::input form) input))
       (setq term (append term (list :INPUT input)))
         )

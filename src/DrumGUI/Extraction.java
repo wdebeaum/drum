@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.54 2018/06/24 22:41:55 lgalescu Exp $
+ * $Id: Extraction.java,v 1.55 2018/06/27 01:17:05 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -56,7 +56,7 @@ import TRIPS.KQML.KQMLToken;
  *
  */
 public class Extraction {
-    
+
     /** The extraction value */
     protected KQMLList value;
     /** A simplified form of the extraction value (for the KB) */
@@ -745,31 +745,6 @@ public class Extraction {
     }
 
     /**
-     * Performs generic XML formatting for LF terms.
-     * 
-     * @param tag
-     *            XML element type
-     * @param var
-     *            LF term variable
-     * @return String representing the XML formatted term
-     * 
-     */
-    protected String makeXMLfromTerm(String tag, String var) {
-        KQMLList lfTerm = findTermByVar(var, context);
-        KQMLList ontVal = pullCompleteOntInfo(lfTerm);
-        int start = getKeywordArgInt(":START", lfTerm);
-        int end = getKeywordArgInt(":END", lfTerm);
-        List<String> attrs = new ArrayList<String>();
-        attrs.add(makeXMLAttribute("start", Integer.toString(getOffset(start))));
-        attrs.add(makeXMLAttribute("end", Integer.toString(getOffset(end))));
-        List<String> conts = new ArrayList<String>();
-        conts.add(makeXMLElement("type", null, ontVal.get(0).toString()));
-        String text = removeTags(getTextSpan(start, end));
-        conts.add(makeXMLElement("text", null, escapeXML(text)));
-        return makeXMLElement(tag, attrs, conts);
-    }
-
-    /**
      * Returns the string value of {@link #expandedValue}. Used for visualization.
      */
     public String toString() {
@@ -780,7 +755,7 @@ public class Extraction {
      * Creates a lisp form from {@link #shortValue} and returns it as a string.
      */
     protected String getLispForm() {
-        return escapeXML(shortValue.toString());
+        return xml_escape(shortValue.toString());
     }
 
     // XML
@@ -794,17 +769,96 @@ public class Extraction {
     }
 
     /**
+     * XML attributes common to all extractions.
+     * 
+     * @return list of attributes
+     */
+    protected List<String> xml_commonAttributes() {
+        List<String> attrs = new ArrayList<String>();
+        attrs.add(xml_attribute("id", removePackage(id, false)));
+        attrs.add(xml_attribute("start", String.valueOf(getOffset(start))));
+        attrs.add(xml_attribute("end", String.valueOf(getOffset(end))));
+        attrs.add(xml_attribute("paragraph", getParagraphID()));
+        attrs.add(xml_attribute("uttnum", String.valueOf(uttnum)));
+        attrs.add(xml_attribute("lisp", getLispForm()));
+        attrs.add(xml_attribute("rule", value.getKeywordArg(":RULE").toString()));
+        return attrs;
+    }
+
+    /**
+     * XML contents (sub-elements) common to all extractions.
+     * 
+     * @return list of XML elements
+     */
+    protected List<String> xml_commonContents() {
+        List<String> conts = new ArrayList<String>();
+        conts.add(xml_element("type", "", ontType));
+        conts.add(xml_element("text",
+                xml_attribute("normalization", xml_escape(normalizeOnt(pullTermOntWord(value)))),
+                xml_escape(removeTags(getTextSpan(start, end)))));
+        return conts;
+    }
+
+    /**
+     * Performs generic XML formatting for LF terms.
+     * 
+     * @param tag
+     *            XML element type
+     * @param var
+     *            LF term variable
+     * @return String representing the XML formatted term
+     * 
+     * @see #xml_lfTerm(String, String, List)
+     */
+    protected String xml_lfTerm(String tag, String var) {
+        return xml_lfTerm(tag, var, null);
+    }
+
+    /**
+     * Performs generic XML formatting for LF terms. Additional attributes can be specified.
+     * 
+     * @param tag
+     *            XML element type
+     * @param var
+     *            LF term variable
+     * @param attributes
+     *            extra attributes
+     * @return String representing the XML formatted term
+     */
+    protected String xml_lfTerm(String tag, String var, List<String> attributes) {
+        KQMLList lfTerm = findTermByVar(var, context);
+        KQMLList ontVal = pullCompleteOntInfo(lfTerm);
+        String ontText = (ontVal.size() > 1) ? normalizeOnt(ontVal.get(1).toString()) : "";
+        int start = getKeywordArgInt(":START", lfTerm);
+        int end = getKeywordArgInt(":END", lfTerm);
+
+        List<String> attrs = new ArrayList<String>();
+        if (attributes != null)
+            attrs.addAll(attributes);
+        attrs.add(xml_attribute("start", Integer.toString(getOffset(start))));
+        attrs.add(xml_attribute("end", Integer.toString(getOffset(end))));
+
+        List<String> conts = new ArrayList<String>();
+        conts.add(xml_element("type", "", ontVal.get(0).toString()));
+        conts.add(xml_element("text",
+                xml_attribute("normalization", xml_escape(ontText)),
+                xml_escape(removeTags(getTextSpan(start, end)))));
+
+        return xml_element(tag, attrs, conts);
+    }
+
+    /**
      * Returns a {@code drum-terms} XML element containing grounding information.
      * 
      */
-    protected String createDrumTermsXML() {
+    protected String xml_drumTerms() {
         List<String> conts = new ArrayList<String>();
         for (KQMLList term : drumTerms) {
             if (pullTermHead(term).equalsIgnoreCase("TERM")) {
-                conts.add(makeDrumTermXML(term));
+                conts.add(xml_drumTerm(term));
             }
         }
-        return makeXMLElement("drum-terms", null, conts);
+        return xml_element("drum-terms", null, conts);
     }
 
     /**
@@ -816,57 +870,59 @@ public class Extraction {
      * Limitations: we only get the first matched name.
      * 
      */
-    protected String makeDrumTermXML(KQMLList drumTerm) {
-        if (drumTerm == null) {
+    protected String xml_drumTerm(KQMLList drumTerm) {
+        if (drumTerm == null)
             return "";
-        }
+
+        List<String> attrs = new ArrayList<String>();
         // TODO: find out if other information might be useful
         KQMLObject dbID = drumTerm.getKeywordArg(":ID");
+        if (dbID != null)
+            attrs.add(xml_attribute("dbid", normalizeDBID(dbID.toString())));
         // score may be missing
         KQMLObject matchScore = drumTerm.getKeywordArg(":SCORE");
+        if (matchScore != null)
+            attrs.add(xml_attribute("match-score", matchScore.toString()));
         // name may be missing
         KQMLObject nameObj = drumTerm.getKeywordArg(":NAME");
-        String name = (nameObj == null) ? null : nameObj.stringValue();
-        // dbxrefs may be missing
-        KQMLObject xRefs = drumTerm.getKeywordArg(":DBXREFS");
-        // species may be missing
-        KQMLObject species = drumTerm.getKeywordArg(":SPECIES");
-        // ont-types must be present!
-        KQMLObject ontTypes = drumTerm.getKeywordArg(":ONT-TYPES");
+        if (nameObj != null)
+            attrs.add(xml_attribute("name", xml_escape(nameObj.stringValue())));
         // matches may be missing
         KQMLObject matches = drumTerm.getKeywordArg(":MATCHES");
         String matchedName = null;
         if (matches != null) {
             KQMLObject firstMatch = ((KQMLList) matches).get(0);
             matchedName = ((KQMLList) firstMatch).getKeywordArg(":MATCHED").stringValue();
+            attrs.add(xml_attribute("matched-name", xml_escape(matchedName)));
         }
-        return "<drum-term " +
-                // attributes
-                (dbID == null ? "" : ("dbid=\"" + normalizeDBID(dbID.toString()) + "\" ")) +
-                (matchScore == null ? "" : ("match-score=\"" + matchScore + "\" ")) +
-                (name == null ? "" : ("name=\"" + escapeXML(name) + "\" ")) +
-                (matchedName == null ? "" : ("matched-name=\"" + escapeXML(matchedName) + "\" ")) + ">"
-                // sub-elements
-                + makeDrumTermOntXML((KQMLList) ontTypes)
-                + makeDrumTermXrefsXML((KQMLList) xRefs)
-                + (species == null ? "" : ("<species>" + escapeXML(species.stringValue()) + "</species>")) +
-                "</drum-term>";
+
+        List<String> conts = new ArrayList<String>();
+        // ont-types must be present!
+        conts.add(xml_drumTermOntTypes((KQMLList) drumTerm.getKeywordArg(":ONT-TYPES")));
+        // dbxrefs may be missing
+        conts.add(xml_drumTermXrefs((KQMLList) drumTerm.getKeywordArg(":DBXREFS")));
+        // species may be missing
+        KQMLObject species = drumTerm.getKeywordArg(":SPECIES");
+        if (species != null)
+            conts.add(xml_element("species", "", xml_escape(species.stringValue())));
+
+        return xml_element("drum-term", attrs, conts);
     }
 
     /**
-     * Returns an {@code types} element containing a set of {@code type} sub-elements, each of them denoting a
+     * Returns a {@code types} element containing a set of {@code type} sub-elements, each of them denoting a
      * an ONT type for the DRUM term.
      * 
      * @param ontTypes
      */
-    protected String makeDrumTermOntXML(KQMLList ontTypes) {
+    protected String xml_drumTermOntTypes(KQMLList ontTypes) {
         if (ontTypes == null)
             return "";
         List<String> conts = new ArrayList<String>();
         for (KQMLObject type : (KQMLList) ontTypes) {
-            conts.add(makeXMLElement("type", null, type.toString()));
+            conts.add(xml_element("type", null, type.toString()));
         }
-        return makeXMLElement("types", null, conts);
+        return xml_element("types", null, conts);
     }
 
     /**
@@ -875,38 +931,48 @@ public class Extraction {
      * 
      * @param xRefs
      */
-    protected String makeDrumTermXrefsXML(KQMLList xRefs) {
+    protected String xml_drumTermXrefs(KQMLList xRefs) {
         if (xRefs == null)
             return "";
         List<String> conts = new ArrayList<String>();
         for (KQMLObject xRef : (KQMLList) xRefs) {
-            conts.add(makeXMLElement("xref", makeXMLAttribute("dbid", normalizeDBID(xRef.toString())), null));
+            conts.add(xml_element("xref", xml_attribute("dbid", normalizeDBID(xRef.toString())), null));
         }
-        return makeXMLElement("xrefs", null, conts);
-    }
-    
-    /**
-     * Utility function for making an XML attribute.  
-     * 
-     * Note: If {@code value} is {@code null}, the function will return an empty string.
-     * 
-     * @see #makeXMLAttribute(String, String, boolean)
-     */
-    protected String makeXMLAttribute(String attribute, String value) {
-        return makeXMLAttribute(attribute, value, false);
+        return xml_element("xrefs", null, conts);
     }
 
     /**
-     * Utility function for making an XML attribute. 
+     * Utility function for making an XML attribute.
      * 
-     * Note: If {@code allowNulls} is {@code false} and {@code value} is {@code null}, the function will return an empty string.
+     * Note: If {@code value} is {@code null}, the function will return an empty string.
      * 
-     * @param attribute -- name of the attribute
-     * @param value -- value of attribute
-     * @param allowNulls -- whether a null value is allowed (as "null") or not
+     * @see #xml_attribute(String, String, boolean)
+     */
+    protected String xml_attribute(String attribute, String value) {
+        return xml_attribute(attribute, value, false);
+    }
+
+    /**
+     * Utility function for making an XML attribute.
+     * <p>
+     * Notes:
+     * <p>
+     * <li>
+     * If {@code value} is an empty string, the function will return an empty string.
+     * <li>
+     * If {@code value} is {@code null}, the function will return an empty string if {@code allowNulls} is
+     * {@code false} and an attribute with the value {@code "null"} if {@code allowNulls} is
+     * {@code true}.
+     * 
+     * @param attribute
+     *            -- name of the attribute
+     * @param value
+     *            -- value of attribute
+     * @param allowNulls
+     *            -- whether a null value is allowed (as "null") or not
      * @return
      */
-    protected String makeXMLAttribute(String attribute, String value, boolean allowNulls) {
+    protected String xml_attribute(String attribute, String value, boolean allowNulls) {
         if (attribute == null) {
             Debug.error("Null tag!");
             return "";
@@ -918,17 +984,17 @@ public class Extraction {
     /**
      * Utility function for making an XML element with optional attributes and optional content.
      * 
-     * @see #makeXMLElement(String, String, String)
+     * @see #xml_element(String, String, String)
      */
-    protected String makeXMLElement(String tag, List<String> attributes, List<String> content) {
-        return makeXMLElement(tag, join(attributes, " "), join(content,""));
+    protected String xml_element(String tag, List<String> attributes, List<String> content) {
+        return xml_element(tag, join(attributes, " "), join(content, ""));
     }
 
     /**
      * Utility function for making an XML element with optional attributes and optional sub-elements.
      * If the element is empty (no attributes and no content), it will return an empty string.
      */
-    protected String makeXMLElement(String tag, String attributes, String content) {
+    protected String xml_element(String tag, String attributes, String content) {
         if (attributes == null) {
             attributes = "";
         }
@@ -944,6 +1010,36 @@ public class Extraction {
                 + ">";
     }
 
+    /**
+     * Utility function for creating a simple XML element with no content and just an "id" attribute
+     * whose value is the id of another XLM element.
+     * 
+     * @param tag
+     * @param var
+     * @return
+     * 
+     * @see #xml_elementWithID(String, String, List)
+     */
+    protected String xml_elementWithID(String tag, String var) {
+        return xml_elementWithID(tag, var, null);
+    }
+
+    /**
+     * Utility function for creating a simple XML element with no content, an "id" attribute
+     * whose value is the id of another XLM element, and, optionally, other attributes.
+     * 
+     * @param tag
+     * @param var
+     * @param attributes
+     * @return
+     */
+    protected String xml_elementWithID(String tag, String var, List<String> attributes) {
+        List<String> attrs = new ArrayList<String>();
+        attrs.add(xml_attribute("id", removePackage(var)));
+        if (attributes != null)
+            attrs.addAll(attributes);
+        return xml_element(tag, attrs, null);
+    }
 
     /**
      * Utility function for replacing special characters in a string so it can
@@ -952,7 +1048,7 @@ public class Extraction {
      * @param s
      * @return
      */
-    protected String escapeXML(String s) {
+    protected String xml_escape(String s) {
         String result = s.replaceAll("&", "&amp;");
         result = result.replaceAll("\"", "&quot;");
         result = result.replaceAll("\'", "&apos;");
@@ -960,7 +1056,7 @@ public class Extraction {
         result = result.replaceAll(">", "&gt;");
         return result;
     }
-    
+
     /**
      * Utility function for joining strings with a delimiter
      */
@@ -968,12 +1064,12 @@ public class Extraction {
         StringBuilder sb = new StringBuilder();
         String loopDelim = "";
         if (list != null) {
-            for(String s : list) {
+            for (String s : list) {
                 if (s.length() == 0) {
                     continue;
                 }
                 sb.append(loopDelim);
-                sb.append(s);            
+                sb.append(s);
                 loopDelim = delim;
             }
         }

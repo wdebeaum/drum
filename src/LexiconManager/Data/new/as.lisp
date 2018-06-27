@@ -214,8 +214,7 @@
     ((EXAMPLE "he wants the truck as opposed to the car")
      (LF-PARENT ONT::CHOICE-OPTION)
      (TEMPL binary-constraint-S-templ)
-     (meta-data :origin caloy2 :entry-date 20050509 :change-date nil :comments projec≈cwmsreader
-		tor-purchasing)
+     (meta-data :origin caloy2 :entry-date 20050509 :change-date nil :comments projector-purchasing)
      )
     ((EXAMPLE "running as opposed to walking")
      (LF-PARENT ONT::CHOICE-OPTION)

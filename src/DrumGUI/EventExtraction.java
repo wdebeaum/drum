@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.56 2018/06/24 22:41:55 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.57 2018/06/27 01:17:05 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -765,131 +765,105 @@ public class EventExtraction extends Extraction {
             return result;
         }
 
-        // special cases
+        // special cases (not sure that these still happen!)
         if (ontType.equals("ONT::S-CONJOINED") || ontType.equals("ONT::VP-CONJOINED")) {
-            return createConjoinedEventXML();
+            return xml_sequence();
         }
-
+        
         // otherwise, we create a new EVENT element for this
-        String var = pullTermVar(value);
-        String id = removePackage(var);
-        String parID = getParagraphID();
-        String text = removeTags(getTextSpan(start, end));
-        Debug.debug("toXML: ready");
+        List<String> attrs = xml_commonAttributes();
+        List<String> conts = xml_commonContents();
 
         // for PTMs we want a name
-        String nameElement = "";
         if (ontType.equalsIgnoreCase("ONT::PTM")) {
             if (!drumTerms.isEmpty()) {
                 // just get the first one
                 KQMLList firstTerm = drumTerms.get(0);
                 KQMLObject nameObj = firstTerm.getKeywordArg(":name");
                 if (nameObj != null) {
-                    nameElement = "<name>" + nameObj.stringValue() + "</name>";
+                    conts.add(xml_element("name", "", nameObj.stringValue()));
                 }
             }
         }
-
-        String ruleID = getKeywordArgString(":RULE", value);    
-        if (ruleID == null) {
-            Debug.warn("No :RULE? value=" + value);
-        }
         
-        return "<" + exType + " " + "id=\"" + id + "\" " +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\" " +
-                "paragraph=\"" + parID + "\" " +
-                "uttnum=\"" + uttnum + "\" " +
-                "lisp=\"" + getLispForm() + "\" " +
-                "rule=\"" + ruleID + "\">"
-                + "<type>" + ontType + "</type>"
-                + nameElement
-                + createNegationXML()
-                + createPolarityXML()
-                + createForceXML()
-                + createModalityXML()
-                + createEpiModalityXML()
-                // + createMethodXML()
-                + createModsXML()
-                + createQualsXML() // CWMS
-                + createFeaturesXML()
-                + createPredicateXML()
-                + createArgsXML()
-                + createSiteXML()
-                + createLocationXML()
-                + createTransportFromXML()
-                + createTransportToXML()
-                + createCelllineXML()
-                + createDrumTermsXML()
-                + "<text>" + escapeXML(text) + "</text>" +
-                "</" + exType + ">";
+        conts.add(xml_mods());
+        conts.add(xml_qualifiers()); // CWMS
+        conts.add(xml_features());
+        conts.add(xml_predicate());
+        conts.add(xml_args());
+        conts.add(xml_site());
+        conts.add(xml_location());
+        conts.add(xml_fromLocation());
+        conts.add(xml_toLocation());
+        conts.add(xml_cellline());
+        conts.add(xml_drumTerms());
+
+        return xml_element(exType, attrs, conts);
     }
 
-    private String createConjoinedEventXML() {
+    /**
+     * XML contents (sub-elements) common to all EVENT extractions.
+     * 
+     * @return list of XML elements
+     */
+    protected List<String> xml_commonContents() {
+        List<String> conts = super.xml_commonContents();
+        conts.add(xml_negation());
+        conts.add(xml_polarity());
+        conts.add(xml_modality());
+        conts.add(xml_epiModality());
+        conts.add(xml_force());
+        return conts;
+    }
+    
+
+    private String xml_sequence() {
         KQMLObject sequence = value.getKeywordArg(":SEQUENCE");
-        if (sequence == null) {
+        if (sequence == null) 
             return "";
-        }
+        
+        List<String> attrs = xml_commonAttributes();
+        List<String> conts = xml_commonContents();
+
         KQMLObject opObj = value.getKeywordArg(":OPERATOR");
         String operator = (opObj == null) ? "NOOP" : opObj.stringValue();
-        String aggregate = createAggregateXML((KQMLList) sequence, operator);
-
-        String var = pullTermVar(value);
-        String id = removePackage(var);
-        String parID = getParagraphID();
-        String text = removeTags(getTextSpan(start, end));
-        Debug.debug("toXML: ready");
-
-        String ruleID = getKeywordArgString(":RULE", value);
-        if (ruleID == null) {
-            Debug.warn("No :RULE? value=" + value);
-        }
-
-        return "<" + exType + " " + "id=\"" + id + "\" " +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\" " +
-                "paragraph=\"" + parID + "\" " +
-                "uttnum=\"" + uttnum + "\" " +
-                "lisp=\"" + getLispForm() + "\" " +
-                "rule=\"" + ruleID + "\">"
-                + "<type>" + ontType + "</type>"
-                + createNegationXML()
-                + createPolarityXML()
-                + createModalityXML()
-                + createEpiModalityXML()
-                + aggregate
-                + "<text>" + escapeXML(text) + "</text>" +
-                "</" + exType + ">";
+        conts.add(xml_aggregate(operator, (KQMLList) sequence));
+        
+        return xml_element(exType, attrs, conts);
     }
 
     /**
      * Returns an {@code <aggregate>} XML element representing an aggregation, via a logical operation, of terms.
+     * 
+     * TODO: do we need :EXCEPT here?
      */
-    private String createAggregateXML(KQMLList varSeq, String operator) {
-        String result = "";
-        for (KQMLObject var : varSeq) {
-            result += "<member id=\"" + removePackage(var.toString(), false) + "\" />";
-        }
-        return "<aggregate operator=\"" + removePackage(operator, false) + "\">" + result + "</aggregate>";
+    private String xml_aggregate(String operator, KQMLList varSeq) {
+        List<String> attrs = new ArrayList<String>();
+        List<String> conts = new ArrayList<String>();
+        String op = removePackage(operator, false);
+        for (KQMLObject var : varSeq) 
+            conts.add(xml_elementWithID("member", var.toString()));
+        attrs.add(xml_attribute("operator", op));
+        return xml_element("aggregate", attrs, conts);
     }
 
     /**
      * Returns a {@code <predicate>} XML element representing information about
      * the event's predicate.
      */
-    private String createPredicateXML() {
+    private String xml_predicate() {
         String var = pullTermVar(value);
         String id = removePackage(var);
         KQMLList contextTerm = findTermByVar(getBaseVar(var), context);
-        String textNorm = "";
         String predType;
+        String textAttr = "";
         if (contextTerm != null) {
             KQMLList ontInfo = pullCompleteOntInfo(contextTerm);
             if (ontInfo.size() > 1) {
                 // complete context term
                 String ontText = removePackage(ontInfo.get(1).toString());
                 predType = ontInfo.get(0).toString();
-                textNorm = " normalization=\"" + escapeXML(ontText) + "\"";
+                textAttr = xml_attribute("normalization", xml_escape(ontText));
             } else {
                 // incomplete context term
                 predType = ontType;
@@ -900,27 +874,27 @@ public class EventExtraction extends Extraction {
         }
         int start = getKeywordArgInt(":START", contextTerm);
         int end = getKeywordArgInt(":END", contextTerm);
-        String text = removeTags(getTextSpan(start, end));
-        Debug.debug("createPredicateXML: ready");
+        
+        List<String> attrs = new ArrayList<String>();
+        attrs.add(xml_attribute("start", String.valueOf(getOffset(start))));
+        attrs.add(xml_attribute("end", String.valueOf(getOffset(end))));
 
-        return "<predicate " +
-                "id=\"" + id + "\" " +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\"" + ">"
-                + "<type>" + predType + "</type>"
-                + "<text" + textNorm + ">" + escapeXML(text) + "</text>" +
-                "</predicate>";
+        List<String> conts = new ArrayList<String>();
+        conts.add(xml_element("type", "", predType));
+        conts.add(xml_element("text", textAttr, xml_escape(removeTags(getTextSpan(start, end)))));
+
+        return xml_element("predicate", attrs, conts);
     }
 
     /**
      *  Returns a list of XML elements representing information about all event arguments.
      *  
-     *  @see #createArgXML(int, Role, String)
+     *  @see #xml_arg(int, Role, String)
      */
-    private String createArgsXML() {
-        if (roles.isEmpty()) {
+    private String xml_args() {
+        if (roles.isEmpty())
             return "";
-        }
+        
         int index = 1;
         // if there is a single role and it's not AGENT, we put it in the 2nd arg slot
         if ((roles.size() == 1) && (roles.get(Role.AGENT) == null) && (roles.get(Role.AGENT1) == null)) {
@@ -928,7 +902,7 @@ public class EventExtraction extends Extraction {
         }
         String result = "";
         for (Role role: roles.keySet()) {
-            result += createArgXML(index++, role, roles.get(role).toString());
+            result += xml_arg(index++, role, roles.get(role).toString());
         }
         return result;
     }
@@ -937,16 +911,16 @@ public class EventExtraction extends Extraction {
      * Returns an XML element representing information about an event argument. The XML tag is either 
      * {@code arg1} or {@code arg2}, depending on the argument type.
      * 
-     * @see #createArgsXML()
+     * @see #xml_args()
      */
-    private String createArgXML(int roleIndex, Role role, String var) {
+    private String xml_arg(int roleIndex, Role role, String var) {
         Debug.debug("arg(" + role + "," + var + ")");
         if (var == null) {
             // shouldn't happen!
             Debug.warn("unexpected role: " + role);
             return "";
         }
-        String id = removePackage(var);
+        
         // we obtain the arg from the EKB, if we can; otherwise, we look for the term in the context
         Extraction ekbTerm = ekbFindExtraction(var);
         KQMLList term = (ekbTerm != null) ? ekbTerm.getValue() : findTermByVar(var, context);
@@ -954,98 +928,80 @@ public class EventExtraction extends Extraction {
         String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
         int start = getKeywordArgInt(":START", term);
         int end = getKeywordArgInt(":END", term);
-        String text = removeTags(getTextSpan(start, end));
-        String tag = "arg" + roleIndex;
+        
+        List<String> attrs = new ArrayList<String>();
+        attrs.add(xml_attribute("id", removePackage(var)));
+        attrs.add(xml_attribute("role", role.toString()));
+        attrs.add(xml_attribute("start", String.valueOf(getOffset(start))));
+        attrs.add(xml_attribute("end", String.valueOf(getOffset(end))));
 
-        Debug.debug("createArgXML: ready");
+        List<String> conts = new ArrayList<String>();
+        conts.add(xml_element("type", "", ontInfo.get(0).toString()));
+        conts.add(xml_element("text",
+                xml_attribute("normalization", xml_escape(ontText)),
+                xml_escape(removeTags(getTextSpan(start, end)))));
 
-        return "<" + tag + " " +
-                "id=\"" + id + "\" " +
-                "role=\"" + role + "\" " +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\"" + ">"
-                + "<type>" + ontInfo.get(0) + "</type>"
-                + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
-                "</" + tag + ">";
+        return xml_element("arg" + roleIndex, attrs, conts);
     }
     
     /**
      * Returns a {@code <site>} XML element representing molecular site information attached to the event, 
      * or the empty string if no such information exists. 
      */
-    private String createSiteXML() {
-        KQMLObject sitevalObj = features.get(Feature.SITE);
-        KQMLObject sitemodObj = features.get(Feature.SITEMOD);
-        // FIXME: this is currently ignored; it may be null!
+    private String xml_site() {
+        KQMLObject varObj = features.get(Feature.SITE);
+        if (varObj == null) 
+            return "";
 
-        if (sitevalObj == null) {
+        String var = varObj.toString();
+        if (isOntVar(var)) {
+            if (ekbFindExtraction(var) != null) {
+                return xml_elementWithID("site", var);
+            } else { // we need to define the item here
+                return xml_lfTerm("site", var);
+            }
+        } else {
+            Debug.error("unexpected " + Feature.SITE + " value: " + var);
             return "";
         }
-
-        String siteval = sitevalObj.toString();
-        //String sitemod = sitemodObj.toString();
-        String id = removePackage(siteval);
-        KQMLList varTerm = findTermByVar(siteval, context);
-        KQMLList ontInfo = pullCompleteOntInfo(varTerm);
-        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
-        int start = getKeywordArgInt(":START", varTerm);
-        int end = getKeywordArgInt(":END", varTerm);
-        String text = removeTags(getTextSpan(start, end));
-        Debug.debug("createSiteXML: ready");
-
-        return "<site " +
-                "id=\"" + id + "\" " +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\"" + ">"
-                + "<type>" + ontInfo.get(0) + "</type>"
-                // + "<mod>" + sitemod + "</mod>" // TODO
-                + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
-                "</site>";
     }
 
     /**
      * Returns a {@code <location>} XML element representing location information attached to the event, 
      * or the empty string if no such information exists. 
      */
-    private String createLocationXML() {
-        KQMLObject locvalObj = features.get(Feature.CELL_LOC);
-        if (locvalObj == null) {
-            locvalObj = features.get(Feature.LOCATION);
+    private String xml_location() {
+        KQMLObject locObj = features.get(Feature.CELL_LOC);
+        if (locObj == null) {
+            locObj = features.get(Feature.LOCATION);
         }
        KQMLObject locmodObj = features.get(Feature.LOCMOD);
 
-        if (locvalObj == null) {
+        if (locObj == null) 
             return "";
-        }
-
-        String locval = locvalObj.toString();
+        
+        String var = locObj.toString();
         String locmod = null;
         if (locmodObj instanceof KQMLList) {
             locmod = ((KQMLList) locmodObj).get(0).toString();
         } else if (locmodObj instanceof KQMLToken) { // TODO: remove (obsolete)
             locmod = locmodObj.toString();
         }
-        String locmodAttr = "";
+        List<String> attrs = new ArrayList<String>();
         if (locmod != null) {
-            locmodAttr = makeXMLAttribute("mod", removePackage(locmod, false));
+            attrs.add(xml_attribute("mod", removePackage(locmod, false)));
         }
-        String id = removePackage(locval);
-        KQMLList locTerm = findTermByVar(locval, context);
-        KQMLList ontInfo = pullCompleteOntInfo(locTerm);
-        String ontText = (ontInfo.size() > 0) ? normalizeOnt(ontInfo.get(1).toString()) : "";
-        int start = getKeywordArgInt(":START", locTerm);
-        int end = getKeywordArgInt(":END", locTerm);
-        String text = removeTags(getTextSpan(start, end));
-        Debug.debug("createLocationXML: ready");
-
-        return "<location " +
-                "id=\"" + id + "\" " +
-                locmodAttr +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\"" + ">"
-                + "<type>" + ontInfo.get(0) + "</type>"
-                + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
-                "</location>";
+        
+        if (isOntVar(var)) {
+            if (ekbFindExtraction(var) != null) {
+                return xml_elementWithID("location", var, attrs);
+            } else { // we need to define the item here
+                return xml_lfTerm("location", var, attrs);
+            }
+        } else {
+            Debug.warn("unexpected location value: " + locObj);
+            return "";
+        }
     }
 
     /**
@@ -1053,29 +1009,22 @@ public class EventExtraction extends Extraction {
      * information attached to the event, or the empty string if no such
      * information exists.
      */
-    private String createCelllineXML() {
-        KQMLObject clVarObj = features.get(Feature.CELL_LINE);
-        if (clVarObj == null) {
-            // we must not have :cell-line info!
+    private String xml_cellline() {
+        KQMLObject varObj = features.get(Feature.CELL_LINE);
+        if (varObj == null) 
+            return "";
+        
+        String var = varObj.toString();
+        if (isOntVar(var)) {
+            if (ekbFindExtraction(var) != null) {
+                return xml_elementWithID("cell-line", var);
+            } else { // we need to define the item here
+                return xml_lfTerm("cell-line", var);
+            }
+        } else {
+            Debug.error("unexpected " + Feature.CELL_LINE + " value: " + var);
             return "";
         }
-        String clVar = clVarObj.toString();
-        String id = removePackage(clVar);
-        KQMLList clTerm = findTermByVar(clVar, context);
-        KQMLList ontInfo = pullCompleteOntInfo(clTerm);
-        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
-        int start = getKeywordArgInt(":START", clTerm);
-        int end = getKeywordArgInt(":END", clTerm);
-        String text = removeTags(getTextSpan(start, end));
-        Debug.debug("createCelllineXML: ready");
-
-        return "<cell-line " +
-                "id=\"" + id + "\" " +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\"" + ">"
-                + "<type>" + ontInfo.get(0) + "</type>"
-                + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
-                "</cell-line>";
     }
 
     /**
@@ -1083,29 +1032,22 @@ public class EventExtraction extends Extraction {
      * information attached to the event, or the empty string if no such
      * information exists. Only events of movement will have this feature.
      */
-    private String createTransportFromXML() {
-        KQMLObject locVarObj = features.get(Feature.FROM);
-        if (locVarObj == null) {
-            // we must not have :from info!
+    private String xml_fromLocation() {
+        KQMLObject varObj = features.get(Feature.FROM);
+        if (varObj == null) 
+            return "";
+
+        String var = varObj.toString();
+        if (isOntVar(var)) {
+            if (ekbFindExtraction(var) != null) {
+                return xml_elementWithID("from-location", var);
+            } else { // we need to define the item here
+                return xml_lfTerm("from-location", var);
+            }
+        } else {
+            Debug.error("unexpected " + Feature.FROM + " value: " + var);
             return "";
         }
-        String locVar = locVarObj.toString();
-        String id = removePackage(locVar);
-        KQMLList locTerm = findTermByVar(locVar, context);
-        KQMLList ontInfo = pullCompleteOntInfo(locTerm);
-        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
-        int start = getKeywordArgInt(":START", locTerm);
-        int end = getKeywordArgInt(":END", locTerm);
-        String text = removeTags(getTextSpan(start, end));
-        Debug.debug("createTransportFromXML: ready");
-
-        return "<from-location " +
-                "id=\"" + id + "\" " +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\"" + ">"
-                + "<type>" + ontInfo.get(0) + "</type>"
-                + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
-                "</from-location>";
     }
 
     /**
@@ -1113,29 +1055,22 @@ public class EventExtraction extends Extraction {
      * information attached to the event, or the empty string if no such
      * information exists. Only events of movement will have this feature.
      */
-    private String createTransportToXML() {
-        KQMLObject locVarObj = features.get(Feature.TO);
-        if (locVarObj == null) {
-            // we must not have :from info!
+    private String xml_toLocation() {
+        KQMLObject varObj = features.get(Feature.TO);
+        if (varObj == null) 
+            return "";
+        
+        String var = varObj.toString();
+        if (isOntVar(var)) {
+            if (ekbFindExtraction(var) != null) {
+                return xml_elementWithID("to-location", var);
+            } else { // we need to define the item here
+                return xml_lfTerm("to-location", var);
+            }
+        } else {
+            Debug.error("unexpected " + Feature.TO + " value: " + var);
             return "";
         }
-        String locVar = locVarObj.toString();
-        String id = removePackage(locVar);
-        KQMLList locTerm = findTermByVar(locVar, context);
-        KQMLList ontInfo = pullCompleteOntInfo(locTerm);
-        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
-        int start = getKeywordArgInt(":START", locTerm);
-        int end = getKeywordArgInt(":END", locTerm);
-        String text = removeTags(getTextSpan(start, end));
-        Debug.debug("createTransportToXML: ready");
-
-        return "<to-location " +
-                "id=\"" + id + "\" " +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\"" + ">"
-                + "<type>" + ontInfo.get(0) + "</type>"
-                + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
-                "</to-location>";
     }
 
     /**
@@ -1144,11 +1079,11 @@ public class EventExtraction extends Extraction {
      * 
      * @see Modifier#NEGATION
      */
-    private String createNegationXML() {
+    private String xml_negation() {
         KQMLObject value = getNegation();
         if (value == null) 
             return "";
-        return makeXMLElement("negation", null, value.toString());
+        return xml_element("negation", "", value.toString());
     }
     
     /**
@@ -1157,11 +1092,11 @@ public class EventExtraction extends Extraction {
      * 
      * @see Modifier#POLARITY
      */
-    private String createPolarityXML() {
+    private String xml_polarity() {
         KQMLObject value = getPolarity();
         if (value == null) 
             return "";
-        return makeXMLElement("polarity", null, value.toString());
+        return xml_element("polarity", "", value.toString());
     }
 
     /**
@@ -1170,11 +1105,11 @@ public class EventExtraction extends Extraction {
      * 
      * @see Modifier#FORCE
      */
-    private String createForceXML() {
+    private String xml_force() {
         KQMLObject value = getForce();
         if (value == null) 
             return "";
-        return makeXMLElement("force", null, value.toString());
+        return xml_element("force", "", value.toString());
     }
 
     /**
@@ -1183,7 +1118,7 @@ public class EventExtraction extends Extraction {
      * 
      * @see Modifier#MODALITY
      */
-    private String createModalityXML() {
+    private String xml_modality() {
         KQMLObject value = getModality();
         if (value == null) 
             return "";
@@ -1192,7 +1127,7 @@ public class EventExtraction extends Extraction {
             value = ((KQMLList) value).get(1);
         }
         // other times it is just the ONT type
-        return makeXMLElement("modality", null, value.toString());
+        return xml_element("modality", "", value.toString());
     }
 
     /**
@@ -1201,12 +1136,12 @@ public class EventExtraction extends Extraction {
      * 
      * @see Modifier#EPI
      */
-    private String createEpiModalityXML() {
+    private String xml_epiModality() {
         KQMLObject value = getEpiModality();
         if (value == null) 
             return "";
         // it must be a variable
-        return makeXMLElement("epistemic-modality", makeXMLAttribute("id", removePackage(value.toString())), null);
+        return xml_elementWithID("epistemic-modality", value.toString());
     }
     
 
@@ -1214,13 +1149,13 @@ public class EventExtraction extends Extraction {
      * Returns a {@code <mods>} XML element representing the term modifiers, or
      * the empty string if no such information exists.
      */
-    private String createModsXML() {
-        List<String> mods = new ArrayList<String>();
-        mods.add(createModsXML(PolyModifier.DEGREE, "degree"));
-        mods.add(createModsXML(PolyModifier.FREQUENCY, "frequency"));
-        mods.add(createModsXML(PolyModifier.MODA, "mod"));
-        mods.add(createModsXML(PolyModifier.MODN, "mod"));
-        return makeXMLElement("mods", null, mods);
+    private String xml_mods() {
+        List<String> conts = new ArrayList<String>();
+        conts.add(xml_mods(PolyModifier.DEGREE, "degree"));
+        conts.add(xml_mods(PolyModifier.FREQUENCY, "frequency"));
+        conts.add(xml_mods(PolyModifier.MODA, "mod"));
+        conts.add(xml_mods(PolyModifier.MODN, "mod"));
+        return xml_element("mods", null, conts);
     }
 
     /**
@@ -1232,7 +1167,7 @@ public class EventExtraction extends Extraction {
      * @param modType
      * @return
      */
-    private String createModsXML(PolyModifier mod, String modType) {
+    private String xml_mods(PolyModifier mod, String modType) {
         ArrayList<KQMLObject> mods = polyMods.get(mod);
         if ((mods == null) || mods.isEmpty()) {
             return "";
@@ -1241,14 +1176,19 @@ public class EventExtraction extends Extraction {
         for (KQMLObject modValue : mods) {
             if (modValue instanceof KQMLList) {
                 KQMLList modPair = (KQMLList) modValue;
-                result += makeXMLElement(modType, null, 
-                        makeXMLElement("type", null, modPair.get(0).toString()) +
-                        makeXMLElement("value", null, removePackage(modPair.get(1).toString(), false)));
+                result += xml_element(modType, "", 
+                        xml_element("type", "", modPair.get(0).toString()) +
+                        xml_element("value", "", removePackage(modPair.get(1).toString(), false)));
             } else if (isOntVar(modValue.toString())) { // TODO remove (obsolete)
-                 result += makeXMLfromTerm(modType, modValue.toString());
+                String var = modValue.toString();
+                if (ekbFindExtraction(var) != null) { 
+                    result += xml_elementWithID(modType, var);
+                } else { // we need to define the item here
+                    result += xml_lfTerm(modType, var);
+                }
             } else { // should not happen!
                 Debug.error("unexpected " + mod + " value: " + modValue);
-                result += makeXMLElement(modType, null, removePackage(modValue.toString(), false));
+                result += xml_element(modType, "", removePackage(modValue.toString(), false));
             }
         }
 
@@ -1258,8 +1198,8 @@ public class EventExtraction extends Extraction {
     /**
      * Qualifiers
      */
-    private String createQualsXML() {
-        return makeXMLElement("qualifiers",null,createQualsXML(PolyModifier.QUAL, "qual"));
+    private String xml_qualifiers() {
+        return xml_element("qualifiers", "", xml_qualifiers(PolyModifier.QUAL, "qual"));
     }
     
     /**
@@ -1269,7 +1209,7 @@ public class EventExtraction extends Extraction {
      * @param tag
      * @return
      */
-    private String createQualsXML(PolyModifier qual, String tag) {
+    private String xml_qualifiers(PolyModifier qual, String tag) {
         ArrayList<KQMLObject> quals = polyMods.get(qual);
         if ((quals == null) || quals.isEmpty()) {
             return "";
@@ -1278,20 +1218,17 @@ public class EventExtraction extends Extraction {
         for (KQMLObject valObj : quals) {
             if (valObj instanceof KQMLList) {
                 KQMLList valList = (KQMLList) valObj;
-                result += makeXMLElement(tag, makeXMLAttribute("type", valList.get(0).toString()), null);
+                result += xml_element(tag, xml_attribute("type", valList.get(0).toString()), null);
             } else if (isOntVar(valObj.toString())) {
                 String var = valObj.toString();
-                String id = removePackage(var);
-                Extraction ekbTerm = ekbFindExtraction(var);
-                if (ekbTerm != null) { // value points to another extraction
-                    String attr = makeXMLAttribute("id", id);
-                    result += makeXMLElement(tag, attr, null);
+                if (ekbFindExtraction(var) != null) {
+                    result += xml_elementWithID(tag, var);
                 } else { // we need to define the item here
-                    result += makeXMLfromTerm(tag, var);
+                    result += xml_lfTerm(tag, var);
                 }
             } else { // should not happen!
                 Debug.error("unexpected " + qual + " value: " + valObj);
-                result += makeXMLElement(tag, null, removePackage(valObj.toString(), false));
+                result += xml_element(tag, "", removePackage(valObj.toString(), false));
             }
         }
         return result;
@@ -1299,36 +1236,32 @@ public class EventExtraction extends Extraction {
 
 
     /**
-     * Returns a {@code <features>} XML element representing the term features,
+     * Returns a {@code <features>} XML element representing the event features,
      * or the empty string if no such information exists.
      * TODO: re-think whether this is really a "feature" or something else!
      */
-    private String createFeaturesXML() {
-        String features = "";
-        features += createIneventFeaturesXML();
-
-        return features.equals("")
-                ? ""
-                : "<features>" + features + "</features>";
+    private String xml_features() {
+        List<String> conts = new ArrayList<String>();
+        conts.add(xml_inevent());
+        return xml_element("features", null, conts);
     }
 
     /**
      * Returns a list of {@code inevent} features.
      */
-    private String createIneventFeaturesXML() {
+    private String xml_inevent() {
         ArrayList<KQMLObject> inEvents = polyMods.get(PolyModifier.INEVENT);
         Debug.warn("poly :INEVENT of " + id + " =  " + inEvents);
-        if ((inEvents == null) || inEvents.isEmpty()) {
+        if ((inEvents == null) || inEvents.isEmpty()) 
             return "";
-        }
+        
         String result = "";
-        for (KQMLObject inEvVar : inEvents) {
-            if (!isOntVar(inEvVar.toString())) {
-                Debug.warn(":INEVENT value: expected var, got " + inEvVar);
+        for (KQMLObject varObj : inEvents) {
+            if (isOntVar(varObj.toString())) {
+                // TODO: validate? get more info?
+                result += xml_elementWithID("inevent", varObj.toString());
             } else {
-                KQMLList inEvTerm = findTermByVar(inEvVar.toString(), context);
-                // TODO: get more info?
-                result += "<inevent id=\"" + removePackage(inEvVar.toString(), false) + "\" />";
+                Debug.warn(":INEVENT value: expected var, got " + varObj);
             }
         }
 

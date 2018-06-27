@@ -26,7 +26,7 @@ public class JavaFXWindowManager extends WindowManager<Stage> implements EventHa
     return new AbstractMap.SimpleImmutableEntry<KQMLToken,Stage>(id, window);
   }
 
-  @Override void configureWindow(Stage window, WindowConfig config) {
+  @Override public void configureWindow(Stage window, WindowConfig config) {
     Platform.runLater(()->{
       try {
         config.configure(window);

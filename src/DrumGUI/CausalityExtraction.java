@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: CausalityExtraction.java,v 1.11 2017/03/25 20:55:50 lgalescu Exp $
+ * $Id: CausalityExtraction.java,v 1.12 2018/06/27 01:17:05 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -439,7 +439,7 @@ public class CausalityExtraction extends Extraction {
                 + createModalityXML()
                 + createEpiModalityXML()
                 + createArgsXML()
-                + "<text>" + escapeXML(text) + "</text>" +
+                + "<text>" + xml_escape(text) + "</text>" +
                 "</" + exType + ">";
     }
 
@@ -502,7 +502,7 @@ public class CausalityExtraction extends Extraction {
                     "start=\"" + getOffset(start) + "\" " +
                     "end=\"" + getOffset(end) + "\"" + ">"
                     + "<type>" + ontInfo.get(0) + "</type>"
-                    + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
+                    + "<text normalization=\"" + xml_escape(ontText) + "\">" + xml_escape(text) + "</text>" +
                     "</arg>";
         }
     }
@@ -554,7 +554,7 @@ public class CausalityExtraction extends Extraction {
                         "start=\"" + getOffset(start) + "\" " +
                         "end=\"" + getOffset(end) + "\"" + ">"
                         + "<type>" + ontInfo.get(0) + "</type>"
-                        + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
+                        + "<text normalization=\"" + xml_escape(ontText) + "\">" + xml_escape(text) + "</text>" +
                         "</arg>";
             }
         }
@@ -683,7 +683,7 @@ public class CausalityExtraction extends Extraction {
                         "start=\"" + getOffset(start) + "\" " +
                         "end=\"" + getOffset(end) + "\"" + ">"
                         + "<type>" + ontVal.get(0) + "</type>"
-                        + "<text>" + escapeXML(text) + "</text>" +
+                        + "<text>" + xml_escape(text) + "</text>" +
                         "</" + modType + ">";
             } else { // should not happen!
                 Debug.error("unexpected " + mod + " value: " + modValue);

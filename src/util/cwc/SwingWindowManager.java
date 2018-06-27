@@ -28,7 +28,7 @@ public class SwingWindowManager extends WindowManager<JFrame> implements WindowL
   }
 
   @Override
-  void configureWindow(JFrame window, WindowConfig config) {
+  public void configureWindow(JFrame window, WindowConfig config) {
     SwingUtilities.invokeLater(()->{
       try {
         config.configure(window);

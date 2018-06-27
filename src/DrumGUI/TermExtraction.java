@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.48 2018/06/24 22:41:55 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.49 2018/06/27 01:17:05 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -56,6 +56,7 @@ public class TermExtraction extends Extraction {
         // CWMS: the following are LF attributes, or substitutes thereof
         SIZE(":SIZE"),
         SCALE(":SCALE"),
+        QUAN(":QUAN"), // quantifier
         ASSOC_POSS(":ASSOC-POSS"),
         MONTH(":MONTH"), // time
         YEAR(":YEAR") // time
@@ -353,66 +354,62 @@ public class TermExtraction extends Extraction {
      */
     public String toXML() {
         if (attributes.get(Attribute.LSEQ) != null) { // logical sequence
-            return createSequenceTermXML();
+            return xml_sequenceTerm();
         }
         if (attributes.get(Attribute.MSEQ) != null) { // complex sequence
-            return createComplexTermXML();
+            return xml_complexTerm();
         }
         if (ontType.equalsIgnoreCase("ONT::MUTATION")) { // info from drumTerms
-            return createMutationTermXML();
+            return xml_mutationTerm();
         }
-        /*
-         * TODO: remove; we are now handling these terms with the generic createTermXML()
-         * if (ontType.equalsIgnoreCase("ONT::PROTEIN-FAMILY")) { // info from :DRUM
-         * return createProtfamTermXML();
-         * }
-         */
-        return createTermXML();
+        return xml_term();
     }
 
     /**
+     * XML contents (sub-elements) common to all TERM extractions.
+     * 
+     * @return list of XML elements
+     */
+    protected List<String> xml_commonContents() {
+        List<String> conts = super.xml_commonContents();
+        if (attributes.get(Attribute.SPEC) != null)
+            conts.add(xml_element("spec", "", attributes.get(Attribute.SPEC).toString()));
+        conts.add(xml_name());
+        conts.add(xml_mods());
+        conts.add(xml_features());
+        conts.add(xml_coref());
+        return conts;
+    }
+    
+    /**
      * Returns a {@code <term>} XML element representing a primitive term.
      */
-    private String createTermXML() {
+    private String xml_term() {
         Debug.debug("pTERM(" + value + ")");
         
-        List<String> attrs = new ArrayList<String>();
-        attrs.add(makeXMLAttribute("id", removePackage(pullTermVar(value), false)));
-        attrs.add(makeXMLAttribute("dbid", getDBTermIds()));
-        attrs.add(makeXMLAttribute("start", String.valueOf(getOffset(start))));
-        attrs.add(makeXMLAttribute("end", String.valueOf(getOffset(end))));
-        attrs.add(makeXMLAttribute("paragraph", getParagraphID()));
-        attrs.add(makeXMLAttribute("uttnum", String.valueOf(uttnum)));
-        attrs.add(makeXMLAttribute("lisp", getLispForm()));
-        attrs.add(makeXMLAttribute("rule", value.getKeywordArg(":RULE").toString()));
-
-        List<String> conts = new ArrayList<String>();
-        conts.add(makeXMLElement("spec", "", attributes.get(Attribute.SPEC).toString()));
-        conts.add(makeXMLElement("type", "", ontType));
-        conts.add(createNameXML());
-        conts.add(createNameXML());
-        conts.add(createModsXML());
-        conts.add(createFeaturesXML());
-        conts.add(createCorefXML());
-        conts.add(createBaseXML());
-        conts.add(createDrumTermsXML());
+        List<String> attrs = xml_commonAttributes();
+        attrs.add(xml_attribute("dbid", getDBTermIds()));
+ 
+        List<String> conts = xml_commonContents();
+        conts.add(xml_base());
+        conts.add(xml_drumTerms());
         // CWMS
-        conts.add(createAssocsXML());
-        conts.add(createAssocPossXML());
-        conts.add(createQualsXML());
-        conts.add(createSizeXML());
-        conts.add(createScaleXML());
-        conts.add(createTimeXML());
-        //
-        conts.add(makeXMLElement("text", "", escapeXML(removeTags(getTextSpan(start, end)))));
-        return makeXMLElement(exType, attrs, conts);
+        conts.add(xml_assocs());
+        conts.add(xml_assocPoss());
+        conts.add(xml_qualifiers());
+        conts.add(xml_size());
+        conts.add(xml_quantifier());
+        conts.add(xml_scale());
+        conts.add(xml_time());
+        
+        return xml_element(exType, attrs, conts);
     }
 
     /**
      * Time expressions
      * @return
      */
-    private String createTimeXML() {
+    private String xml_time() {
         List<String> attrs = new ArrayList<String>();
         List<String> conts = new ArrayList<String>();
         //KQMLObject day = attributes.get(Attribute.DAY);
@@ -422,33 +419,29 @@ public class TermExtraction extends Extraction {
             if (month instanceof KQMLList) {
                 mtext = normalizeOnt(((KQMLList) month).get(2).toString());
             }
-            conts.add(makeXMLElement("month", null, mtext));
+            conts.add(xml_element("month", null, mtext));
         }
         KQMLObject year = attributes.get(Attribute.YEAR);
         if (year != null) {
-            conts.add(makeXMLElement("year", null, year.toString()));
+            conts.add(xml_element("year", null, year.toString()));
         }
         if (conts.isEmpty()) {
             return "";
         }
-        attrs.add(makeXMLAttribute("type","DATE"));
-        return makeXMLElement("time", attrs, conts);
+        attrs.add(xml_attribute("type","DATE"));
+        return xml_element("time", attrs, conts);
     }
 
     /**
      * Returns a {@code <term>} XML element representing a sequence term.
      */
-    private String createSequenceTermXML() {
+    private String xml_sequenceTerm() {
         Debug.debug("sTERM(" + value + ")");
-        String var = pullTermVar(value);
-        String id = removePackage(var, false);
-        String ontText = normalizeOnt(pullTermOntWord(value));
-        String parID = getParagraphID();
+        
+        List<String> attrs = xml_commonAttributes();
+        attrs.add(xml_attribute("dbid", getDBTermIds()));
 
-        String text = removeTags(getTextSpan(start, end));
-
-        String ruleID = value.getKeywordArg(":RULE").toString();
-
+        List<String> conts = xml_commonContents();
         KQMLObject sequence = attributes.get(Attribute.LSEQ);
         // fix for :LOGICALOP-SEQUENCE -- sometimes we don't get a list
         if (sequence instanceof KQMLToken) {
@@ -456,84 +449,45 @@ public class TermExtraction extends Extraction {
             new_seq.add(sequence);
             sequence = new_seq;
         }
-        KQMLObject exception = attributes.get(Attribute.SEQ_EXC);
-        KQMLObject operator = attributes.get(Attribute.OP);
-        String aggregate = createAggregateXML(operator.toString(), (KQMLList) sequence, (KQMLToken) exception);
-        
-        // FIXME: should aggregates have :DRUM info???
-        String dbID = getDBTermIds();
+        conts.add(xml_aggregate(attributes.get(Attribute.OP).toString(), 
+                (KQMLList) sequence, 
+                (KQMLToken) attributes.get(Attribute.SEQ_EXC)));
 
-        return "<" + exType + " " +
-                "id=\"" + id + "\" " +
-                (dbID == null ? "" : ("dbid=\"" + dbID + "\" ")) +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\" " +
-                "paragraph=\"" + parID + "\" " +
-                "uttnum=\"" + uttnum + "\" " +
-                "rule=\"" + ruleID + "\">"
-                + "<type>" + ontType + "</type>"
-                + aggregate
-                + createModsXML()
-                + createFeaturesXML()
-                + createNameXML()
-                + createCorefXML()
-                + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
-                "</" + exType + ">";
+        return xml_element(exType, attrs, conts);
     }
 
     /**
      * Returns an {@code <aggregate>} XML element representing an aggregation, via a logical operation, of terms.
      */
-    private String createAggregateXML(String operator, KQMLList varSeq, KQMLToken varExc) {
-        String result = "";
+    private String xml_aggregate(String operator, KQMLList varSeq, KQMLToken varExc) {
+        List<String> attrs = new ArrayList<String>();
+        List<String> conts = new ArrayList<String>();
         String op = removePackage(operator, false);
-        for (KQMLObject var: varSeq) {
-            result += "<member id=\"" + removePackage(var.toString(), false) + "\" />";
-        }
+        for (KQMLObject var: varSeq) 
+            conts.add(xml_elementWithID("member", var.toString()));
         if (varExc != null) {
-            result += "<except id=\"" + removePackage(varExc.toString(), false) + "\" />";
+            conts.add(xml_elementWithID("except", varExc.toString()));
             op = "BUT-NOT";
         }
-        return "<aggregate operator=\"" + op + "\">" + result + "</aggregate>";
+        attrs.add(xml_attribute("operator", op));
+        return xml_element("aggregate", attrs, conts);
     }
 
     /**
      * Returns a {@code <term>} XML element representing a sequence term.
      */
-    private String createComplexTermXML() {
+    private String xml_complexTerm() {
         Debug.debug("cTERM(" + value + ")");
-        String var = pullTermVar(value);
-        String id = removePackage(var, false);
-        String ontText = normalizeOnt(pullTermOntWord(value));
-        String parID = getParagraphID();
-
-        String text = removeTags(getTextSpan(start, end));
-
-        String ruleID = value.getKeywordArg(":RULE").toString();
-
-        KQMLObject sequence = attributes.get(Attribute.MSEQ);
-        String subterms = createComponentsXML((KQMLList) sequence);
-
-        String dbID = getDBTermIds();
-
-        return "<" + exType + " " +
-                "id=\"" + id + "\" " +
-                (dbID == null ? "" : ("dbid=\"" + dbID + "\" ")) +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\" " +
-                "paragraph=\"" + parID + "\" " +
-                "uttnum=\"" + uttnum + "\" " +
-                "rule=\"" + ruleID + "\">"
-                + "<type>" + ontType + "</type>"
-                + subterms
-                + createModsXML()
-                + createFeaturesXML()
-                + createNameXML()
-                + createCorefXML()
-                + createDrumTermsXML()
-                + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
-                "</" + exType + ">";
-    }
+        
+        List<String> attrs = xml_commonAttributes();
+        attrs.add(xml_attribute("dbid", getDBTermIds()));
+ 
+        List<String> conts = xml_commonContents();
+        conts.add(xml_components((KQMLList) attributes.get(Attribute.MSEQ)));
+        conts.add(xml_drumTerms());
+ 
+        return xml_element(exType, attrs, conts);
+   }
 
     /**
      * Returns a {@code members} element containing members of a protein family.
@@ -541,71 +495,51 @@ public class TermExtraction extends Extraction {
      * @param term
      * @return
      */
-    private String makeDrumTermProtFamXML(KQMLList term) {
-        String members = "";
-        String memberType = getKeywordArgString(":MEMBER-TYPE", term);
-
-        // member DBIDs
+    private String xml_famMembers(KQMLList term) {
+        List<String> attrs = new ArrayList<String>();
+        List<String> conts = new ArrayList<String>();
         KQMLObject memberIDs = term.getKeywordArg(":MEMBERS");
         if (memberIDs != null) {
-            members += "<members type=\"" + memberType + "\" >";
+            attrs.add(xml_attribute("type", getKeywordArgString(":MEMBER-TYPE", term)));
             for (KQMLObject memberID : (KQMLList) memberIDs) {
-                members += "<member dbid=\"" + normalizeDBID(memberID.stringValue()) + "\"/>";
+                conts.add(xml_element("member", xml_attribute("dbid", normalizeDBID(memberID.stringValue())), null));
             }
-            members += "</members>";
         }
-        return members;
+        return xml_element("members", attrs, conts);
     }
 
     /**
      * Returns a {@code <components>} XML element containing references (term
      * IDs) to components of a complex term.
      */
-    private String createComponentsXML(KQMLList varSeq) {
-        String result = "";
+    private String xml_components(KQMLList varSeq) {
+        List<String> conts = new ArrayList<String>();
         for (KQMLObject var : varSeq) {
-            result += "<component id=\"" + removePackage(var.toString(), false) + "\" />";
+            conts.add(xml_elementWithID("component", var.toString()));
         }
-        return "<components>" + result + "</components>";
+        return xml_element("components", null, conts);
     }
 
     /**
-     * Returns a {@code <term>} XML element representing a sequence term.
+     * Returns a {@code <term>} XML element representing a mutation term.
      */
-    private String createMutationTermXML() {
+    private String xml_mutationTerm() {
         Debug.debug("mTERM(" + value + ")");
-        String var = pullTermVar(value);
-        String id = removePackage(var, false);
-        String ontText = normalizeOnt(pullTermOntWord(value));
-        String parID = getParagraphID();
+        
+        List<String> attrs = xml_commonAttributes();
 
-        String text = removeTags(getTextSpan(start, end));
-
-        String ruleID = value.getKeywordArg(":RULE").toString();
-
-        String mutation = "";
+        List<String> conts = xml_commonContents();
         if (drumTerms.isEmpty()) {
-            mutation = "<mutation>" + "ONT::TRUE" + "</mutation>";
+            conts.add(xml_element("mutation", "", "ONT::TRUE"));
         } else {
             for (KQMLList drumTerm : drumTerms) {
                 if (!pullTermHead(drumTerm).equalsIgnoreCase("MUTATION")) {
                     continue;
                 }
-                mutation += "<mutation>" + parseMutationToXML(drumTerm) + "</mutation>";
+                conts.add(xml_element("mutation", "", xml_mutation(drumTerm)));
             }
         }
-
-        return "<"+ exType+ " "+ 
-                "id=\"" + id + "\" " +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\" " +
-                "paragraph=\"" + parID + "\" " +
-                "uttnum=\"" + uttnum + "\" " +
-                "rule=\"" + ruleID + "\">"
-                + "<type>" + ontType + "</type>"
-                + mutation
-                + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
-                "</" + exType + ">";
+        return xml_element(exType, attrs, conts);
     }
 
     /**
@@ -618,98 +552,51 @@ public class TermExtraction extends Extraction {
      * 
      * @return
      */
-    protected String makeDrumTermXML(KQMLList drumTerm) {
+    protected String xml_drumTerm(KQMLList drumTerm) {
         if (drumTerm == null)
             return "";
+        
+        List<String> attrs = new ArrayList<String>();
         // TODO: find out if other information might be useful
         KQMLObject dbID = drumTerm.getKeywordArg(":ID");
+        if (dbID != null) 
+            attrs.add(xml_attribute("dbid", normalizeDBID(dbID.toString())));
         // score may be missing
         KQMLObject matchScore = drumTerm.getKeywordArg(":SCORE");
+        if (matchScore != null)
+            attrs.add(xml_attribute("match-score", matchScore.toString()));
         // name may be missing
         KQMLObject nameObj = drumTerm.getKeywordArg(":NAME");
-        String name = (nameObj == null) ? null : nameObj.stringValue();
-        // dbxrefs may be missing
-        KQMLObject xRefs = drumTerm.getKeywordArg(":DBXREFS");
-        // species may be missing
-        KQMLObject species = drumTerm.getKeywordArg(":SPECIES");
-        // ont-types must be present!
-        KQMLObject ontTypes = drumTerm.getKeywordArg(":ONT-TYPES");
+        if (nameObj != null)
+            attrs.add(xml_attribute("name", xml_escape(nameObj.stringValue())));
         // matches may be missing
         KQMLObject matches = drumTerm.getKeywordArg(":MATCHES");
         String matchedName = null;
         if (matches != null) {
             KQMLObject firstMatch = ((KQMLList) matches).get(0);
             matchedName = ((KQMLList) firstMatch).getKeywordArg(":MATCHED").stringValue();
+            attrs.add(xml_attribute("matched-name", xml_escape(matchedName)));
         }
-        return "<drum-term " +
-                // attributes
-                ((dbID == null) ? "" : ("dbid=\"" + normalizeDBID(dbID.toString()) + "\" ")) +
-                ((matchScore == null) ? "" : ("match-score=\"" + matchScore.toString() + "\" ")) +
-                ((name == null) ? "" : ("name=\"" + escapeXML(name) + "\" ")) +
-                ((matchedName == null) ? "" : ("matched-name=\"" + escapeXML(matchedName) + "\" ")) + ">"
-                // sub-elements
-                + makeDrumTermOntXML((KQMLList) ontTypes)
-                + makeDrumTermProtFamXML(drumTerm)
-                + makeDrumTermXrefsXML((KQMLList) xRefs)
-                + (species == null ? "" : ("<species>" + escapeXML(species.stringValue()) + "</species>")) +
-                "</drum-term>";
-    }
-
-    /**
-     * Returns a {@code <term>} XML element representing a protein family term.
-     * 
-     * @deprecated Use {@link #createTermXML()}.
-     */
-    @Deprecated
-    private String createProtfamTermXML() {
-        Debug.debug("pfTERM(" + value + ")");
-        String var = pullTermVar(value);
-        String id = removePackage(var, false);
-        String ontText = normalizeOnt(pullTermOntWord(value));
-        String parID = getParagraphID();
-
-        String text = removeTags(getTextSpan(start, end));
-
-        String ruleID = value.getKeywordArg(":RULE").toString();
-
-        // dbids
-        String dbID = getDBTermIds();
-
-        // get members from :DRUM
-        String members = "";
-        for (KQMLList drumTerm : drumTerms) {
-            // we only look for the first PROTEIN-FAMILY term; there shouldn't be more than one!
-            // N.B.: i made up PROTEIN-FAMILY; currently they use TERM as the head
-            if (pullTermHead(drumTerm).equalsIgnoreCase("PROTEIN-FAMILY")) {
-                members = makeDrumTermProtFamXML(drumTerm);
-                break;
-            }
-        }
-
-        return "<" + exType + " " +
-                "id=\"" + id + "\" " +
-                (dbID == null ? "" : ("dbid=\"" + dbID + "\" ")) +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\" " +
-                "paragraph=\"" + parID + "\" " +
-                "uttnum=\"" + uttnum + "\" " +
-                "rule=\"" + ruleID + "\">"
-                + "<type>" + ontType + "</type>"
-                + members
-                + createModsXML()
-                + createFeaturesXML()
-                + createDrumTermsXML()
-                + createNameXML()
-                + createCorefXML()
-                + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
-                "</" + exType + ">";
+        
+        List<String> conts = new ArrayList<String>();
+        // ont-types must be present!
+        conts.add(xml_drumTermOntTypes((KQMLList) drumTerm.getKeywordArg(":ONT-TYPES")));
+        // dbxrefs may be missing
+        conts.add(xml_drumTermXrefs((KQMLList) drumTerm.getKeywordArg(":DBXREFS")));
+        // species may be missing
+        KQMLObject species = drumTerm.getKeywordArg(":SPECIES");
+        if (species != null)
+            conts.add(xml_element("species", "", xml_escape(species.stringValue())));
+        conts.add(xml_famMembers(drumTerm));
+        
+        return xml_element("drum-term", attrs, conts);                
     }
 
     /**
      * Returns a {@code <name>} XML element representing the name of the term,
      * or the empty string if no such information exists.
      */
-    private String createNameXML() {
+    private String xml_name() {
         KQMLObject nameObj = value.getKeywordArg(":NAME");
         String name = null;
         if (nameObj == null) {
@@ -730,39 +617,39 @@ public class TermExtraction extends Extraction {
         }
 
        return (name == null) ? "" 
-                : makeXMLElement("name", "", escapeXML(name));
+                : xml_element("name", "", xml_escape(name));
     }
     
     /**
      * Returns a {@code <coref>} XML element representing the term referred to by this term, or
      * the empty string if no such information exists.
      */
-    private String createCorefXML() {
+    private String xml_coref() {
         return (refVar == null) ? "" 
-                : makeXMLElement("coref", makeXMLAttribute("id", removePackage(refVar, false)), null);
+                : xml_element("coref", xml_attribute("id", removePackage(refVar, false)), null);
     }
 
     /**
      * Returns a {@code <base>} XML element representing the term referred to by this term, or
      * the empty string if no such information exists.
      */
-    private String createBaseXML() {
+    private String xml_base() {
         KQMLObject baseObj = attributes.get(Attribute.BASE);
         return (baseObj == null) ? "" 
-                : makeXMLElement("coref", makeXMLAttribute("id", removePackage(baseObj.stringValue(), false)), null);
+                : xml_element("coref", xml_attribute("id", removePackage(baseObj.stringValue(), false)), null);
     }
 
     /**
      * Returns a {@code <mods>} XML element representing the term modifiers, or
      * the empty string if no such information exists.
      */
-    private String createModsXML() {
-        List<String> mods = new ArrayList<String>();
-        mods.add(createModsXML(PolyAttribute.DEGREE, "degree"));
-        mods.add(createModsXML(PolyAttribute.FREQUENCY, "frequency"));
-        mods.add(createModsXML(PolyAttribute.MODA, "mod"));
-        mods.add(createModsXML(PolyAttribute.MODN, "mod"));
-        return makeXMLElement("mods", null, mods);
+    private String xml_mods() {
+        List<String> conts = new ArrayList<String>();
+        conts.add(xml_mods(PolyAttribute.DEGREE, "degree"));
+        conts.add(xml_mods(PolyAttribute.FREQUENCY, "frequency"));
+        conts.add(xml_mods(PolyAttribute.MODA, "mod"));
+        conts.add(xml_mods(PolyAttribute.MODN, "mod"));
+        return xml_element("mods", null, conts);
     }
     
     /**
@@ -774,23 +661,28 @@ public class TermExtraction extends Extraction {
      * @param modType
      * @return
      */
-    private String createModsXML(PolyAttribute mod, String modType) {
+    private String xml_mods(PolyAttribute mod, String modType) {
         ArrayList<KQMLObject> mods = polyAttributes.get(mod);
-        if ((mods == null) || mods.isEmpty()) {
+        if ((mods == null) || mods.isEmpty()) 
             return "";
-        }
+        
         String result = "";
         for (KQMLObject modValue : mods) {
             if (modValue instanceof KQMLList) {
                 KQMLList modPair = (KQMLList) modValue;
-                result += makeXMLElement(modType, null, 
-                        makeXMLElement("type", null, modPair.get(0).toString()) +
-                        makeXMLElement("value", null, removePackage(modPair.get(1).toString(), false)));
+                result += xml_element(modType, null, 
+                        xml_element("type", "", modPair.get(0).toString()) +
+                        xml_element("value", "", removePackage(modPair.get(1).toString(), false)));
             } else if (isOntVar(modValue.toString())) {
-                result += makeXMLfromTerm(modType, modValue.toString());
+                String var = modValue.toString();
+                if (ekbFindExtraction(var) != null) { 
+                    result += xml_elementWithID(modType, var);
+                } else { // we need to define the item here
+                    result += xml_lfTerm(modType, var);
+                }
             } else { // should not happen!
                 Debug.error("unexpected " + mod + " value: " + modValue);
-                result += makeXMLElement(modType, null, removePackage(modValue.toString(), false));
+                result += xml_element(modType, "", removePackage(modValue.toString(), false));
             }
         }
 
@@ -800,8 +692,8 @@ public class TermExtraction extends Extraction {
     /**
      * Qualifiers
      */
-    private String createQualsXML() {
-        return makeXMLElement("qualifiers", null, createQualsXML(PolyAttribute.QUAL, "qual"));
+    private String xml_qualifiers() {
+        return xml_element("qualifiers", "", xml_qualifiers(PolyAttribute.QUAL, "qual"));
     }
     
     /**
@@ -811,29 +703,26 @@ public class TermExtraction extends Extraction {
      * @param tag
      * @return
      */
-    private String createQualsXML(PolyAttribute qual, String tag) {
+    private String xml_qualifiers(PolyAttribute qual, String tag) {
         ArrayList<KQMLObject> quals = polyAttributes.get(qual);
-        if ((quals == null) || quals.isEmpty()) {
+        if ((quals == null) || quals.isEmpty()) 
             return "";
-        }
+        
         String result = "";
         for (KQMLObject valObj : quals) {
             if (valObj instanceof KQMLList) {
                 KQMLList valList = (KQMLList) valObj;
-                result += makeXMLElement(tag, makeXMLAttribute("type", valList.get(0).toString()), null);
+                result += xml_element(tag, xml_attribute("type", valList.get(0).toString()), null);
             } else if (isOntVar(valObj.toString())) {
                 String var = valObj.toString();
-                String id = removePackage(var);
-                Extraction ekbTerm = ekbFindExtraction(var);
-                if (ekbTerm != null) { // value points to another extraction
-                    String attr = makeXMLAttribute("id", id);
-                    result += makeXMLElement(tag, attr, null);
+                if (ekbFindExtraction(var) != null) { 
+                    result += xml_elementWithID(tag, var);
                 } else { // we need to define the item here
-                    result += makeXMLfromTerm(tag, var);
+                    result += xml_lfTerm(tag, var);
                 }
             } else { // should not happen!
                 Debug.error("unexpected " + qual + " value: " + valObj);
-                result += makeXMLElement(tag, null, removePackage(valObj.toString(), false));
+                result += xml_element(tag, "", removePackage(valObj.toString(), false));
             }
         }
         return result;
@@ -844,29 +733,26 @@ public class TermExtraction extends Extraction {
      * 
      * @return
      */
-    private String createAssocsXML() {
+    private String xml_assocs() {
         ArrayList<KQMLObject> assocs = polyAttributes.get(PolyAttribute.ASSOC);
-        if ((assocs == null) || assocs.isEmpty()) {
+        if ((assocs == null) || assocs.isEmpty()) 
             return "";
-        }
+        
         String result = "";
         for (KQMLObject valObj : assocs) {
             if (valObj instanceof KQMLList) {
                 KQMLList valList = (KQMLList) valObj;
-                result += makeXMLElement("assoc-with", makeXMLAttribute("type", valList.get(0).toString()), null);
+                result += xml_element("assoc-with", xml_attribute("type", valList.get(0).toString()), null);
             } else if (isOntVar(valObj.toString())) {
                 String var = valObj.toString();
-                String id = removePackage(var);
-                Extraction ekbTerm = ekbFindExtraction(var);
-                if (ekbTerm != null) { // value points to another extraction
-                    String attr = makeXMLAttribute("id", id);
-                    result += makeXMLElement("assoc-with", attr, null);
+                if (ekbFindExtraction(var) != null) { 
+                    result += xml_elementWithID("assoc-with", var);
                 } else { // we need to define the item here
-                    result += makeXMLfromTerm("assoc-with", var);
+                    result += xml_lfTerm("assoc-with", var);
                 }
             } else { // should not happen!
-                Debug.error("unexpected :ASSOC value: " + valObj);
-                result += makeXMLElement("assoc-with", null, removePackage(valObj.toString(), false));
+                Debug.warn("unexpected " + PolyAttribute.ASSOC + " value: " + valObj);
+                result += xml_element("assoc-with", null, removePackage(valObj.toString(), false));
             }
         }
         return result;
@@ -878,55 +764,76 @@ public class TermExtraction extends Extraction {
      * 
      * @return
      */
-    private String createAssocPossXML() {
+    private String xml_assocPoss() {
         KQMLObject assoc = attributes.get(Attribute.ASSOC_POSS);
-        if (assoc == null) {
+        if (assoc == null) 
             return "";
-        }
-        String result = "";
-        if (isOntVar(assoc.toString())) {
-            String var = assoc.toString();
-            String id = removePackage(var);
-            Extraction ekbTerm = ekbFindExtraction(var);
-            if (ekbTerm != null) { // value points to another extraction
-                String attr = makeXMLAttribute("id", id);
-                result += makeXMLElement("poss-by", attr, null);
+        
+        String var = assoc.toString();
+        if (isOntVar(var)) {
+            if (ekbFindExtraction(var) != null) { 
+                return xml_elementWithID("poss-by", var);
             } else { // we need to define the item here
-                result += makeXMLfromTerm("poss-by", var);
+                return xml_lfTerm("poss-by", var);
             }
         } else { // should not happen!
-            Debug.error("unexpected :ASSOC-POSS value: " + assoc);
-            result += makeXMLElement("poss-by", null, removePackage(assoc.toString(), false));
+            Debug.warn("unexpected " + Attribute.ASSOC_POSS + " value: " + var);
+            return xml_element("poss-by", null, removePackage(var, false));
         }
-        return result;
     }
 
+    /**
+     * Assoc-poss -- this is an abstract relation of possession between two entities. Reasoners may resolve it as a
+     * possessed-by relation (e.g., "John's car"), or as an attribute-of relation (e.g., "the color of the car").
+     * 
+     * @return
+     */
+    private String xml_quantifier() {
+        KQMLObject quan = attributes.get(Attribute.QUAN);
+        if (quan == null) 
+            return "";
+        
+        String var = quan.toString();
+        if (isOntVar(var)) {
+            if (ekbFindExtraction(var) != null) { 
+                return xml_elementWithID("quantifier", var);
+            } else { // we need to define the item here
+                return xml_lfTerm("quantifier", var);
+            }
+        } else if (quan instanceof KQMLToken) { // likely an ont type
+            return xml_element("quantifier", xml_attribute("type", var), null);
+        } else { // should not happen!
+            Debug.warn("unexpected " + Attribute.QUAN + " value: " + var);
+            return "";
+        }
+    }
 
 
     /**
      * Returns a {@code <features>} XML element representing the term features,
      * or the empty string if no such information exists.
      */
-    private String createFeaturesXML() {
-        String features = "";
-        features += createIneventFeaturesXML();
-        features += createActivityFeatureXML();
-        features += createLocationFeatureXML(); // cellular location
-        features += createMutationFeatureXML(); // mutations (for proteins, etc.)
-        features += createDomSiteFeatureXML(); // domain
-        features += createResSiteFeatureXML(); // residue
-        features += createCelllineXML(); // cell-line
-        return makeXMLElement("features", null, features);
+    private String xml_features() {
+        List<String> conts = new ArrayList<String>();
+        conts.add(xml_inevent());
+        conts.add(xml_active());
+        conts.add(xml_location()); // cellular location
+        conts.add(xml_mutation()); // mutations (for proteins, etc.)
+        conts.add(xml_site()); // domain
+        conts.add(xml_residue()); // residue
+        conts.add(xml_cellline()); // cell-line
+        return xml_element("features", null, conts);
     }
     
-    private String createActivityFeatureXML() {
+    private String xml_active() {
         KQMLObject isActive = attributes.get(Attribute.ACTIVE);
         if (isActive == null)
             return "";
-        return makeXMLElement("active", null, removePackage(isActive.toString(), false));
+        return xml_element("active", null, removePackage(isActive.toString(), false));
     }
 
-    private String createLocationFeatureXML() {
+    // TODO: add locmods
+    private String xml_location() {
         List<KQMLObject> locations = new ArrayList<KQMLObject>();
         ArrayList<KQMLObject> cellLocs = polyAttributes.get(PolyAttribute.CELL_LOC);
         if (cellLocs != null) {
@@ -940,19 +847,15 @@ public class TermExtraction extends Extraction {
         // TODO: figure out what situations w/ multiple locations look like
         String result = "";
         for (KQMLObject location : locations) {
-            if (!isOntVar(location.toString())) {
-                Debug.warn(":LOCATION value: expected var, got " + location);
-            } else {
-                String var = location.toString();
-                Extraction ekbTerm = ekbFindExtraction(var);
-                if (ekbTerm != null) {
-                    result += "<location id=\"" + removePackage(var, false) + "\" />";
-                } else {
-                    Debug.warn(":LOCATION value: no extraction found for " + var);
-                    // TODO get info from term
-                    result += makeXMLfromTerm("assoc-with", var);
-
+            String var = location.toString();
+            if (isOntVar(var)) {
+                if (ekbFindExtraction(var) != null) {
+                    result += xml_elementWithID("location", var);
+                } else { // we need to define the item here
+                    result += xml_lfTerm("location", var);
                 }
+            } else {
+                Debug.warn("unexpected " + PolyAttribute.LOCATION + " value: " + location);
             }
         }
         return result;
@@ -961,137 +864,141 @@ public class TermExtraction extends Extraction {
     /**
      * Creates explicit site (eg, domain) property for the term.
      * 
-     * @return
      */
-    private String createDomSiteFeatureXML() {
-        KQMLObject site = attributes.get(Attribute.SITE);
-        if (site == null) {
+    private String xml_site() {
+        KQMLObject varObj = attributes.get(Attribute.SITE);
+        if (varObj == null) 
+            return "";
+        String var = varObj.toString();
+        if (isOntVar(var)) {
+            if (ekbFindExtraction(var) != null) {
+                return xml_elementWithID("site", var);
+            } else { // we need to define the item here
+                return xml_lfTerm("site", var);
+            }
+        } else {
+            Debug.warn("unexpected " + Attribute.SITE + " value: " + var);
             return "";
         }
-        if (!isOntVar(site.toString())) {
-            Debug.warn(":SITE value: expected var, got " + site);
-            return "";
-        }
-
-        return "<site id=\"" + removePackage(site.toString(), false) + "\" />";
     }
 
-    private String createMutationFeatureXML() {
+    private String xml_mutation() {
         ArrayList<KQMLObject> mutations = polyAttributes.get(PolyAttribute.MUTATION);
-        if ((mutations == null) || mutations.isEmpty()) {
+        if ((mutations == null) || mutations.isEmpty()) 
             return "";
-        }
-        String result = "";
+        
         Debug.debug("mutations: " + mutations);
-        for (KQMLObject mutTermVar : mutations) {
+        String result = "";
+        for (KQMLObject varObj : mutations) {
             // can be either ONT::TRUE or a term var
-            String mutTermVal = mutTermVar.toString();
-            if (isOntBool(mutTermVal)) {
-                Debug.warn(":MUTATION value is bool only: " + mutTermVal);
-                result +=  "<mutation>" + removePackage(mutTermVal, false)+ "</mutation>";
-            } else if (!isOntVar(mutTermVal)) {
-                Debug.warn(":MUTATION value: expected var, got " + mutTermVal);
-                result += "<mutation>" + removePackage(mutTermVal, false)+ "</mutation>";
+            String var = varObj.toString();
+            if (isOntBool(var)) {
+                Debug.warn(":MUTATION value is bool only: " + var);
+                result +=  xml_element("mutation", "", removePackage(var));
+            } else if (isOntVar(var)) {
+                if (ekbFindExtraction(var) != null) {
+                    return xml_elementWithID("mutation", var);
+                } else { // we need to define the item here
+                    return xml_lfTerm("mutation", var);
+                }
             } else {
-                result += "<mutation id=\"" + removePackage(mutTermVal, false) + "\" />";
+                Debug.warn("unexpected " + PolyAttribute.MUTATION + " value: " + var);
+                result +=  xml_element("mutation", "", removePackage(var, false));
             }
         }
 
         return result;
     }
 
-    private String parseMutationToXML(KQMLList term) {
+    private String xml_mutation(KQMLList term) {
         Debug.debug("mutation: " + term);
-        KQMLObject mutType = term.getKeywordArg(":TYPE");
-        String result = "<type>" + mutType.toString() + "</type>";
-        if (mutType.toString().equalsIgnoreCase("DELETION")) {
-            result += parseMutationDelToXML(term);
+        KQMLObject mType = term.getKeywordArg(":TYPE");
+        String result = xml_element("type", "", mType.toString());
+        if (mType.toString().equalsIgnoreCase("DELETION")) {
+            result += xml_deletionMutation(term);
         }
-        if (mutType.toString().equalsIgnoreCase("SUBSTITUTION")) {
-            result += parseMutationSubToXML(term);
+        if (mType.toString().equalsIgnoreCase("SUBSTITUTION")) {
+            result += xml_substitutionMutation(term);
         }
-        if (mutType.toString().equalsIgnoreCase("INSERTION")) {
-            result += parseMutationInsToXML(term);
+        if (mType.toString().equalsIgnoreCase("INSERTION")) {
+            result += xml_insertionMutation(term);
         }
         return result;
     }
 
-    private String parseMutationDelToXML(KQMLList term) {
+    private String xml_deletionMutation(KQMLList term) {
         Debug.debug("deletion: " + term);
         String result = "";
         KQMLObject posFrom = term.getKeywordArg(":LOWER");
         if (posFrom != null) {
-            String aaFrom = parseAASiteToXML((KQMLList) posFrom);
-            result += "<pos-from>" + aaFrom + "</pos-from>";
+            result += xml_element("pos-from", "", xml_AASite((KQMLList) posFrom));
         }
         KQMLObject posTo = term.getKeywordArg(":UPPER");
         if (posTo != null) {
-            String aaTo = parseAASiteToXML((KQMLList) posTo);
-            result += "<pos-to>" + aaTo + "</pos-to>";
+            result += xml_element("pos-to", "", xml_AASite((KQMLList) posTo));
         }
         KQMLObject pos = term.getKeywordArg(":AA-INDEX");
         if (pos != null) {
-            result += "<pos>" + pos.toString() + "</pos>";
+            result += xml_element("pos", "", pos.toString());
         }
         KQMLObject posAA = term.getKeywordArg(":OLD");
         if (posAA != null) {
-            String aa = parseAAToXML((KQMLList) posAA);
-            result += "<aa-from>" + aa + "</aa-from>";
+            result += xml_element("aa-from", "", xml_AA((KQMLList) posAA));
         }
         return result;
     }
 
-    private String parseMutationSubToXML(KQMLList term) {
+    private String xml_substitutionMutation(KQMLList term) {
         Debug.debug("substitution: " + term);
         String result = "";
 
         // obligatory
-        result += makeXMLElement("pos", "", term.getKeywordArg(":AA-INDEX").toString());
+        result += xml_element("pos", "", term.getKeywordArg(":AA-INDEX").toString());
         // optional
         KQMLObject from = term.getKeywordArg(":OLD");
         if (from != null) {
-            result += makeXMLElement("aa-from", "", parseAAToXML((KQMLList) from));
+            result += xml_element("aa-from", "", xml_AA((KQMLList) from));
         }
         // obligatory
-        result += makeXMLElement("aa-to", "", parseAAToXML((KQMLList) term.getKeywordArg(":NEW")));
+        result += xml_element("aa-to", "", xml_AA((KQMLList) term.getKeywordArg(":NEW")));
 
         return result;
     }
 
-    private String parseMutationInsToXML(KQMLList term) {
+    private String xml_insertionMutation(KQMLList term) {
         Debug.debug("insertion: " + term);
         String result = "";
-        result += makeXMLElement("pos-from", "", parseAASiteToXML((KQMLList) term.getKeywordArg(":LOWER")));
-        result += makeXMLElement("pos-to", "", parseAASiteToXML((KQMLList) term.getKeywordArg(":UPPER")));
-        result += makeXMLElement("insert", "", parseAAListXML((KQMLList) term.getKeywordArg(":NEW")));
+        result += xml_element("pos-from", "", xml_AASite((KQMLList) term.getKeywordArg(":LOWER")));
+        result += xml_element("pos-to", "", xml_AASite((KQMLList) term.getKeywordArg(":UPPER")));
+        result += xml_element("insert", "", xml_AAList((KQMLList) term.getKeywordArg(":NEW")));
         return result;
     }
 
-    private String parseAAListXML(KQMLList term) {
+    private String xml_AAList(KQMLList term) {
         Debug.debug("aa-list: " + term);
         String result = "";
         for (KQMLObject aaTerm : term) {
-            result += parseAAToXML((KQMLList) aaTerm);
+            result += xml_AA((KQMLList) aaTerm);
         }
         return result;
     }
 
-    private String parseAAToXML(KQMLList term) {
+    private String xml_AA(KQMLList term) {
         Debug.debug("aa: " + term);
         List<String> conts = new ArrayList<String>();
-        conts.add(makeXMLElement("name", "", term.getKeywordArg(":NAME").stringValue()));
-        conts.add(makeXMLElement("code", "", term.getKeywordArg(":LETTER").stringValue()));
-        return makeXMLElement("aa", null, conts);
+        conts.add(xml_element("name", "", term.getKeywordArg(":NAME").stringValue()));
+        conts.add(xml_element("code", "", term.getKeywordArg(":LETTER").stringValue()));
+        return xml_element("aa", null, conts);
 
     }
 
-    private String parseAASiteToXML(KQMLList term) {
+    private String xml_AASite(KQMLList term) {
         Debug.debug("aa-site: " + term);
         List<String> conts = new ArrayList<String>();
-        conts.add(makeXMLElement("name", "", term.getKeywordArg(":NAME").stringValue()));
-        conts.add(makeXMLElement("code", "", term.getKeywordArg(":LETTER").stringValue()));
-        conts.add(makeXMLElement("pos", "", term.getKeywordArg(":INDEX").toString()));
-        return makeXMLElement("site", null, conts);
+        conts.add(xml_element("name", "", term.getKeywordArg(":NAME").stringValue()));
+        conts.add(xml_element("code", "", term.getKeywordArg(":LETTER").stringValue()));
+        conts.add(xml_element("pos", "", term.getKeywordArg(":INDEX").toString()));
+        return xml_element("site", null, conts);
     }
 
     /**
@@ -1099,14 +1006,14 @@ public class TermExtraction extends Extraction {
      * 
      * @return
      */
-    private String createResSiteFeatureXML() {
+    private String xml_residue() {
         if (drumTerms.isEmpty()) {
             return "";
         }
         for (KQMLList drumTerm : drumTerms) {
             // we only look for the first AA-SITE term; there shouldn't be more than one!
             if (pullTermHead(drumTerm).equalsIgnoreCase("AA-SITE")) {
-                return parseAASiteToXML(drumTerm);
+                return xml_AASite(drumTerm);
             }
         }
         return "";
@@ -1114,22 +1021,26 @@ public class TermExtraction extends Extraction {
 
     /**
      * Returns a list of {@code inevent} "features".
-     * TODO: re-think whether these are really "features" or something else!
+     * TODO: re-think whether these are really features or something else!
      */
-    private String createIneventFeaturesXML() {
+    private String xml_inevent() {
         ArrayList<KQMLObject> inEvents = polyAttributes.get(PolyAttribute.INEVENT);
         Debug.warn("poly :INEVENT of " + id + " =  " + inEvents);
-        if ((inEvents == null) || inEvents.isEmpty()) {
+        if ((inEvents == null) || inEvents.isEmpty()) 
             return "";
-        }
+        
         String result = "";
-        for (KQMLObject inEvVar : inEvents) {
-            if (!isOntVar(inEvVar.toString())) {
-                Debug.warn(":INEVENT value: expected var, got " + inEvVar);
-            } else {
-                KQMLList inEvTerm = findTermByVar(inEvVar.toString(), context);
+        for (KQMLObject varObj : inEvents) {
+            String var = varObj.toString();
+            if (isOntVar(var)) {
                 // TODO: get more info?
-                result += "<inevent id=\"" + removePackage(inEvVar.toString(), false) + "\" />";
+                if (ekbFindExtraction(var) != null) {
+                    return xml_elementWithID("inevent", var);
+                } else { // we need to define the item here
+                    return xml_lfTerm("inevent", var);
+                }
+            } else {
+                Debug.error("unexpected " + PolyAttribute.INEVENT + " value: " + var);
             }
         }
 
@@ -1141,66 +1052,53 @@ public class TermExtraction extends Extraction {
      * information attached to the term, or the empty string if no such
      * information exists.
      */
-    private String createCelllineXML() {
-        KQMLObject clVarObj = attributes.get(Attribute.CELL_LINE);
-        if (clVarObj == null) {
-            // we must not have :cell-line info!
+    private String xml_cellline() {
+        KQMLObject varObj = attributes.get(Attribute.CELL_LINE);
+        if (varObj == null) 
+            return "";
+        
+        String var = varObj.toString();
+        if (isOntVar(var)) {
+            if (ekbFindExtraction(var) != null) {
+                return xml_elementWithID("cell-line", var);
+            } else { // we need to define the item here
+                return xml_lfTerm("cell-line", var);
+            }
+        } else {
+            Debug.error("unexpected " + Attribute.CELL_LINE + " value: " + var);
             return "";
         }
-        String clVar = clVarObj.toString();
-        String id = removePackage(clVar);
-        KQMLList clTerm = findTermByVar(clVar, context);
-        KQMLList ontInfo = pullCompleteOntInfo(clTerm);
-        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
-        int start = getKeywordArgInt(":START", clTerm);
-        int end = getKeywordArgInt(":END", clTerm);
-        String text = removeTags(getTextSpan(start, end));
-        Debug.debug("createCelllineXML: ready");
-
-        return "<cell-line " +
-                "id=\"" + id + "\" " +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\"" + ">"
-                + "<type>" + ontInfo.get(0) + "</type>"
-                + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
-                "</cell-line>";
     }
     
     /**
      * Size feature
      */
-    private String createSizeXML() {
-        List<String> attrs = new ArrayList<String>();
-        List<String> content = new ArrayList<String>();
-        KQMLObject valObj = attributes.get(Attribute.SIZE);
-        if (valObj == null) {
+    private String xml_size() {
+        KQMLObject varObj = attributes.get(Attribute.SIZE);
+        if (varObj == null) 
             return "";
-        }
         // value could be an ont type or a var
-        String valStr = valObj.toString();
-        KQMLList term = findTermByVar(valStr, context);
-        if (term != null) { // got a var
-            String attr = makeXMLAttribute("id", removePackage(valStr));
-            attrs.add(attr);
+        String var = varObj.toString();
+        if (isOntVar(var)) {
+            if (ekbFindExtraction(var) != null) {
+                return xml_elementWithID("size", var);
+            } else { // we need to define the item here
+                return xml_lfTerm("size", var);
+            }
         } else { // must be an ont type
-            content.add(valStr);
+            return xml_element("size", xml_attribute("type", var), null);
         }
-        return makeXMLElement("size", attrs, content);
     }
     
     /**
      * Scale feature
      */
-    private String createScaleXML() {
-        List<String> attrs = new ArrayList<String>();
+    private String xml_scale() {
         KQMLObject valObj = attributes.get(Attribute.SCALE);
-        if (valObj == null) {
+        if (valObj == null)
             return "";
-        }
         // value must be an ont type
-        String attr = makeXMLAttribute("type", valObj.toString());
-        attrs.add(attr);
-        return makeXMLElement("scale", attrs, null);
+        return xml_element("scale", xml_attribute("type", valObj.toString()), null);
     }
 
     //// OTHER

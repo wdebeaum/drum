@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EpistemicModalityExtraction.java,v 1.10 2017/03/25 20:55:50 lgalescu Exp $
+ * $Id: EpistemicModalityExtraction.java,v 1.11 2018/06/27 01:17:05 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -311,7 +311,7 @@ public class EpistemicModalityExtraction extends Extraction {
                 + createForceXML()
                 + createModalityXML()
                 + createArgsXML()
-                + "<text>" + escapeXML(text) + "</text>" +
+                + "<text>" + xml_escape(text) + "</text>" +
                 "</" + exType + ">";
     }
 
@@ -368,7 +368,7 @@ public class EpistemicModalityExtraction extends Extraction {
                 "start=\"" + getOffset(start) + "\" " +
                 "end=\"" + getOffset(end) + "\"" + ">"
                 + "<type>" + ontInfo.get(0) + "</type>"
-                + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
+                + "<text normalization=\"" + xml_escape(ontText) + "\">" + xml_escape(text) + "</text>" +
                 "</" + tag + ">";
     }
 
@@ -479,7 +479,7 @@ public class EpistemicModalityExtraction extends Extraction {
                         "start=\"" + getOffset(start) + "\" " +
                         "end=\"" + getOffset(end) + "\"" + ">"
                         + "<type>" + ontVal.get(0) + "</type>"
-                        + "<text>" + escapeXML(text) + "</text>" +
+                        + "<text>" + xml_escape(text) + "</text>" +
                         "</" + modType + ">";
             } else { // should not happen!
                 Debug.error("unexpected " + mod + " value: " + modValue);

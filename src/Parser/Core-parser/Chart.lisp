@@ -761,7 +761,7 @@ separate instances of the chart/parser.")
       (if (eq (constit-cat c) 'W::pause) ;; skip filled pauses
 	  .99
 	  ;; otherwise we have punctuation
-	  .9 ))) ;;; as we have incorporated better handling of punctuation, we are penalizing skipping more
+	  .95 ))) ;;; as we have incorporated better handling of punctuation, we are penalizing skipping more
 #||	     (case (get-value c 'w::lex)
 	       (W::PUNC-COMMA
 		(case (constit-cat prevc) 

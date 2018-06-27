@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: ModalityExtraction.java,v 1.24 2017/03/25 20:55:51 lgalescu Exp $
+ * $Id: ModalityExtraction.java,v 1.25 2018/06/27 01:17:05 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -283,7 +283,7 @@ public class ModalityExtraction extends Extraction {
                 + createNegationXML()
                 + createPolarityXML()
                 + createArgsXML()
-                + "<text>" + escapeXML(text) + "</text>" +
+                + "<text>" + xml_escape(text) + "</text>" +
                 "</" + exType + ">";
     }
 
@@ -340,7 +340,7 @@ public class ModalityExtraction extends Extraction {
                 "start=\"" + getOffset(start) + "\" " +
                 "end=\"" + getOffset(end) + "\"" + ">"
                 + "<type>" + ontInfo.get(0) + "</type>"
-                + "<text normalization=\"" + escapeXML(ontText) + "\">" + escapeXML(text) + "</text>" +
+                + "<text normalization=\"" + xml_escape(ontText) + "\">" + xml_escape(text) + "</text>" +
                 "</" + tag + ">";
     }
     
@@ -418,7 +418,7 @@ public class ModalityExtraction extends Extraction {
                         "start=\"" + getOffset(start) + "\" " +
                         "end=\"" + getOffset(end) + "\"" + ">"
                         + "<type>" + ontVal.get(0) + "</type>"
-                        + "<text>" + escapeXML(text) + "</text>" +
+                        + "<text>" + xml_escape(text) + "</text>" +
                         "</" + modType + ">";
             } else { // should not happen!
                 Debug.error("unexpected " + mod + " value: " + modValue);

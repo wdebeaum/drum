@@ -1,6 +1,7 @@
 package TRIPS.util.cwc;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public abstract class WindowManager<W> {
     return id;
   }
 
-  W getWindow(KQMLToken id) throws UnknownObject {
+  public W getWindow(KQMLToken id) throws UnknownObject {
     String idStr = id.stringValue().toLowerCase();
     W window = id2win.get(idStr);
     if (window == null) {
@@ -42,7 +43,7 @@ public abstract class WindowManager<W> {
     return window;
   }
 
-  KQMLToken getID(W window) {
+  public KQMLToken getID(W window) {
     // TODO? check for null
     return win2id.get(window);
   }
@@ -108,7 +109,7 @@ public abstract class WindowManager<W> {
     configureWindow(window, windowConfig);
   }
 
-  abstract void configureWindow(W window, WindowConfig config);
+  public abstract void configureWindow(W window, WindowConfig config);
 
   /** Close the window with the given ID. */
   void closeWindow(KQMLToken id) throws UnknownObject {
@@ -118,9 +119,21 @@ public abstract class WindowManager<W> {
 
   abstract void closeWindow(W window, KQMLToken id);
 
+  /** Close and forget all windows, without reporting their closure. */
+  void restart() {
+    ArrayList<W> windows = new ArrayList<W>(win2id.keySet());
+    win2id.clear();
+    id2win.clear();
+    for (W w : windows) {
+      closeWindow(w, null);
+    }
+  }
+
   /** Report that a window was opened or closed. Also update id2win and win2id.
+   * Do nothing if id is null (which happens on restart()).
    */
   void openedOrClosedWindow(KQMLToken id, boolean opened, boolean bySystem) {
+    if (id == null) return;
     KQMLPerformative tell = new KQMLPerformative("tell");
     KQMLPerformative report = new KQMLPerformative("report");
     tell.setParameter(":content", report);
