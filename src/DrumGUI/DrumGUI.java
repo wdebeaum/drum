@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.75 2018/06/22 16:41:53 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.77 2018/06/27 22:14:43 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -224,7 +224,7 @@ public class DrumGUI extends StandardTripsModule {
      * Performs initializations.
      */
     public void init() {
-        name = "DRUM";
+        name = "READER"; // we are a reading manager
         super.init();
         handleParameters();
 
@@ -2148,11 +2148,15 @@ public class DrumGUI extends StandardTripsModule {
         perf.setParameter(":content", content);
         if (ekbInferenceRequested) {
             if (replyWithEKB) {
-                content.add(":inferred-ekb");
-                content.add(inferredEKBAsKQMLString);
+                if (inferredEKBAsKQMLString != null) {
+                    content.add(":inferred-ekb");
+                    content.add(inferredEKBAsKQMLString);
+                }
             } else {
-                content.add(":inferred-ekb-file");
-                content.add(new KQMLString(inferredEKBFileName)); 
+                if (inferredEKBFileName != null) {
+                    content.add(":inferred-ekb-file");
+                    content.add(new KQMLString(inferredEKBFileName)); 
+                }
             }
         }
         return perf;

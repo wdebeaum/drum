@@ -671,6 +671,7 @@
 					 F::situation) ; meeting is SITUATION (move the meeting up the stairs)
 				      (F::mobility f::movable)))
 	     (:ESSENTIAL ONT::GROUND (F::Phys-obj))
+	     (:OPTIONAL ONT::NOROLE)
             )
  )
 
@@ -987,12 +988,11 @@
  )
 
 (define-type ONT::event-time-rel-culmination
-    :parent ONT::event-time-rel≈cwmsreader
-    
+  :parent ONT::event-time-rel
  )
 
 ;; event times not including situations
-(define-type ONT::event-time≈
+(define-type ONT::event-time
  :parent ONT::event-time-rel
  :arguments (;(:ESSENTIAL ONT::VAL ((? vl F::time)))
 	     (:ESSENTIAL ONT::GROUND ((? grd F::time)))

@@ -154,7 +154,7 @@ cat - <<_EOF_ >>/tmp/trips$$
 (request
  :receiver facilitator
  :content (start-module
-	   :name DRUM
+	   :name READER
 	   :class TRIPS.DrumGUI.DrumGUI
 	   :urlclasspath ("$TRIPS_BASE/etc/java/TRIPS.DrumGUI.jar"
 			  "$TRIPS_BASE/etc/java/TRIPS.TripsModule.jar"

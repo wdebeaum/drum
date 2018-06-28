@@ -399,7 +399,8 @@
 
    
 (defun basic-expr (x)
-  (or (symbolp x) (and (consp x) (eq (car x) :*))))
+  (or (symbolp x) (and (consp x) (eq (car x) :*)
+		       (every #'(lambda (y) (not (var-p y))) x))))
 
 (defun match-vals1 (feat patternval constitval undos)
   (declare (optimize (speed 3) (debug 0)))
