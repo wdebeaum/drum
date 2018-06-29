@@ -6,7 +6,7 @@
  :words (
   (W::trash
    (SENSES
-    ((LF-PARENT ONT::function-object)
+    ((LF-PARENT ONT::disposable)
      (EXAMPLE "drag it out of the trash")
      (meta-data :origin task-learning :entry-date 20050923 :change-date nil :wn ("trash%1:27:00") :comments nil)
      )

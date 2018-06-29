@@ -2,7 +2,17 @@
 
 (define-type ONT::defined-by-sequence-relationship
     :parent ONT::PHYS-OBJECT
-    :wordnet-sense-keys ("successor%1:18:01" "successor%1:09:00" "successor%1:18:00" "predecessor%1:18:00")
+    :arguments ((:required ONT::FIGURE (F::Phys-obj)))
+)
+
+(define-type ONT::predecessor
+    :parent ONT::defined-by-sequence-relationship
+    :wordnet-sense-keys ("predecessor%1:18:00")
+)
+
+(define-type ONT::successor
+    :parent ONT::defined-by-sequence-relationship
+    :wordnet-sense-keys ("successor%1:18:01" "successor%1:09:00" "successor%1:18:00")
 )
 
 (define-type ONT::natural-object

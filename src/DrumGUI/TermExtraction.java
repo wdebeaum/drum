@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.49 2018/06/27 01:17:05 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.50 2018/06/28 17:24:07 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -58,8 +58,18 @@ public class TermExtraction extends Extraction {
         SCALE(":SCALE"),
         QUAN(":QUAN"), // quantifier
         ASSOC_POSS(":ASSOC-POSS"),
+        VALUE(":VALUE"), // numbers
+        MIN(":MIN"), // numbers
+        MAX(":MAX"), // numbers
+        VALSEQ(":VAL"), // sequence of numbers
         MONTH(":MONTH"), // time
-        YEAR(":YEAR") // time
+        YEAR(":YEAR"), // time
+        TIME(":TIME"), // time
+        AMOUNT(":AMOUNT"), // quantities
+        UNIT(":UNIT"), // quantities
+        RATE_QUAN(":REPEATS"), // rates
+        RATE_OVER(":OVER-PERIOD"), // rates
+        SEQ(":SEQUENCE") // sequence
         ;
         private String attrName;
 
@@ -359,6 +369,9 @@ public class TermExtraction extends Extraction {
         if (attributes.get(Attribute.MSEQ) != null) { // complex sequence
             return xml_complexTerm();
         }
+        if (attributes.get(Attribute.SEQ) != null) { // logical sequence, CWMS
+            return xml_sequenceTerm();
+        }
         if (ontType.equalsIgnoreCase("ONT::MUTATION")) { // info from drumTerms
             return xml_mutationTerm();
         }
@@ -400,16 +413,95 @@ public class TermExtraction extends Extraction {
         conts.add(xml_size());
         conts.add(xml_quantifier());
         conts.add(xml_scale());
-        conts.add(xml_time());
-        
+        conts.add(xml_timex());
+        if (ontType.equalsIgnoreCase("ONT::NUMBER") || ontType.equalsIgnoreCase("ONT::NUMBER-UNIT"))
+            conts.add(xml_value());
+        conts.add(xml_unit());
+        conts.add(xml_amount());
+        if (ontType.equalsIgnoreCase("ONT::RATE"))
+            conts.add(xml_rate());
+        // sequences of numbers
+        conts.add(xml_valseq());
+
         return xml_element(exType, attrs, conts);
+    }
+
+    /**
+     * Units for quantities
+     */
+    private String xml_unit() {
+        KQMLObject unit = attributes.get(Attribute.UNIT);
+        if ((unit != null) && (unit instanceof KQMLList)) {
+            KQMLList unitList = (KQMLList) unit;
+             return xml_element("unit", 
+                     xml_attribute("type", unitList.get(1).toString()), 
+                     removePackage(unitList.get(2).toString()));
+        }
+        return "";
+    }
+
+    /**
+     * Amounts for quantities
+     */
+    private String xml_amount() {
+        KQMLObject value = attributes.get(Attribute.AMOUNT);
+        if (value != null) {
+             return xml_element("amount", null, value.toString());
+        }
+        return "";
+    }
+
+    /**
+     * Rates
+     */
+    private String xml_rate() {
+        KQMLObject quan = attributes.get(Attribute.RATE_QUAN);
+        KQMLObject over = attributes.get(Attribute.RATE_OVER);
+        if (quan != null && over != null)
+            return xml_elementWithID("quantity", quan.toString()) 
+                    + xml_elementWithID("over-quantity", over.toString());
+        return "";
+    }
+
+    /**
+     * Value expressions for numbers
+     */
+    private String xml_value() {
+        // number with value
+        KQMLObject value = attributes.get(Attribute.VALUE);
+        if (value != null) 
+             return xml_element("value", "", value.toString());
+        // number greater than, less than, or between values
+        List<String> conts = new ArrayList<String>();
+        KQMLObject min = attributes.get(Attribute.MIN);
+        if (min != null)
+            conts.add(xml_element("min", "", min.toString()));
+        KQMLObject max = attributes.get(Attribute.MAX);
+        if (max != null)
+            conts.add(xml_element("max", "", max.toString()));
+        
+        return xml_element("value", null, conts);
+    }
+
+    /**
+     * Value expressions for sequences of numbers
+     */
+    private String xml_valseq() {
+        List<String> conts = new ArrayList<String>();
+        KQMLObject valseq = attributes.get(Attribute.VALSEQ);
+        Debug.debug("valseq(" + valseq + ")");
+        if ((valseq != null) && (valseq instanceof KQMLList)) {
+            for (KQMLObject val : (KQMLList) valseq)
+                conts.add(xml_element("item", null, val.toString()));
+        }
+        return xml_element("values", null, conts);
     }
 
     /**
      * Time expressions
      * @return
      */
-    private String xml_time() {
+    private String xml_timex() {
         List<String> attrs = new ArrayList<String>();
         List<String> conts = new ArrayList<String>();
         //KQMLObject day = attributes.get(Attribute.DAY);
@@ -429,7 +521,7 @@ public class TermExtraction extends Extraction {
             return "";
         }
         attrs.add(xml_attribute("type","DATE"));
-        return xml_element("time", attrs, conts);
+        return xml_element("timex", attrs, conts);
     }
 
     /**
@@ -443,13 +535,20 @@ public class TermExtraction extends Extraction {
 
         List<String> conts = xml_commonContents();
         KQMLObject sequence = attributes.get(Attribute.LSEQ);
+        if (sequence == null) { // CWMS
+            sequence = attributes.get(Attribute.SEQ);
+        }
         // fix for :LOGICALOP-SEQUENCE -- sometimes we don't get a list
         if (sequence instanceof KQMLToken) {
             KQMLList new_seq = new KQMLList();
             new_seq.add(sequence);
             sequence = new_seq;
         }
-        conts.add(xml_aggregate(attributes.get(Attribute.OP).toString(), 
+        String operator = null;
+        KQMLObject op = attributes.get(Attribute.OP);
+        if (op != null)
+            operator = op.toString();
+        conts.add(xml_aggregate(operator, 
                 (KQMLList) sequence, 
                 (KQMLToken) attributes.get(Attribute.SEQ_EXC)));
 
@@ -817,7 +916,8 @@ public class TermExtraction extends Extraction {
         List<String> conts = new ArrayList<String>();
         conts.add(xml_inevent());
         conts.add(xml_active());
-        conts.add(xml_location()); // cellular location
+        conts.add(xml_time()); // time
+        conts.add(xml_location()); // location (DRUM: cellular ~)
         conts.add(xml_mutation()); // mutations (for proteins, etc.)
         conts.add(xml_site()); // domain
         conts.add(xml_residue()); // residue
@@ -830,6 +930,27 @@ public class TermExtraction extends Extraction {
         if (isActive == null)
             return "";
         return xml_element("active", null, removePackage(isActive.toString(), false));
+    }
+    
+    /**
+     * Time feature
+     * @return
+     */
+    private String xml_time() {
+        KQMLObject time = attributes.get(Attribute.TIME);
+        if (time == null)
+            return "";
+        if (isOntVar(time.toString())) {
+            String var = time.toString();
+            if (ekbFindExtraction(var) != null) { 
+                return xml_elementWithID("time", var);
+            } else { // we need to define the item here
+                return xml_lfTerm("time", var);
+            }
+        } else { // should not happen!
+            Debug.error("unexpected " + Attribute.TIME + " value: " + time);
+            return xml_element("time", "", removePackage(time.toString(), false));
+        }
     }
 
     // TODO: add locmods

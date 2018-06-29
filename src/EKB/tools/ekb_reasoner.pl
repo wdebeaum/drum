@@ -2,7 +2,7 @@
 
 # ekr_drum.pl
 #
-# Time-stamp: <Mon Mar  5 14:50:43 CST 2018 lgalescu>
+# Time-stamp: <Wed Jun 27 14:57:41 CDT 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  6 Jun 2016
 #
@@ -84,6 +84,9 @@ if ($opt_pub) {
 }
 
 my $ekb = EKB->new($ekb_file, \%ekb_options);
+unless ($ekb) {
+  FATAL "Malformed EKB";
+}
 INFO "Done: Read EKB";
 $ekb->info();
 
