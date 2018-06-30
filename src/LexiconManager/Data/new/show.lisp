@@ -21,25 +21,7 @@
   (W::SHOW
    (wordfeats (W::morph (:forms (-vb) :pastpart W::shown)))
    (SENSES
-   ; handled by ont::show
- ;   ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("indicate-76-1-1"))
- ;    (LF-PARENT ONT::confirm)
- ;    (example "show that it works")
- ;    (TEMPL agent-theme-xp-templ (xp (% w::cp (w::ctype w::s-finite)))) ; like confirm
- ;    (PREFERENCE 0.97)
- ;    )
-; changed this to ont::show to allow physical-object themes in addition to all those allowed by this sense.
-;    ((LF-PARENT ONT::transfer-information)
-;     (example "show me how to find a book")
-;     (TEMPL agent-affected-iobj-theme-templ)
-;     )
-
-    #|
-    ((LF-PARENT ONT::show)
-     (example "show the house")
-     )
-    |#
-    ((LF-PARENT ONT::show)
+     ((LF-PARENT ONT::show)
      (example "show him how to buy a book")
      ;(TEMPL agent-affected-iobj-theme-templ)
      (TEMPL AGENT-ADDRESSEE-THEME-TEMPL (xp (% NP)))

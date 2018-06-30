@@ -7,10 +7,13 @@
   (W::refund
    (SENSES
     ((LF-PARENT ONT::value-COST)
-     (TEMPL OTHER-RELN-TEMPL)
-     (meta-data :origin calo :entry-date 20050324 :change-date nil :wn ("refund%1:21:00") :comments caloy2)
+     (example "There is a rebate of $10")
+     (TEMPL reln-subcat-of-units-TEMPL)
+     
      )
-    )
-   )
-))
+    ((LF-PARENT ONT::value-COST)
+     (TEMPL other-reln-templ (xp (% W::pp (W::ptype w::on))))
+     (example "there is an extra rebate on gift wrapping")
+     )
+    ))))
 

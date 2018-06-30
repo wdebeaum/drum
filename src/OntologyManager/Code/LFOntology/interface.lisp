@@ -81,6 +81,7 @@
   (mmapcan #'(lambda (x) (find-most-specific-lf-recursive x sem lfontology)) (ling-ontology-lf-table-roots lfontology))
   )
 
+
 (defun find-most-specific-lf-recursive (lfname sem lfontology)
   "Given a lf name, if it is consistent with the sem, return the most specific children still consistent with the sem, or NIL otherwise"
   (let* ((lfdef (get-lf-definition lfname lfontology))

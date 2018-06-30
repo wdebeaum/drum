@@ -1355,15 +1355,15 @@
  :arguments (
 	     ;(:REQUIRED ONT::FIGURE (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
 	     (:REQUIRED ont::FIGURE ((? lo f::phys-obj f::abstr-obj)))
-	     (:REQUIRED ONT::GROUND (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
-	      )
-  )
+	     (:REQUIRED ONT::EXTENT (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
+	     )
+ )
 
 ;; unique lf for price
 (define-type ONT::PRICE
  :parent ONT::VALUE-COST
   :arguments ((:REQUIRED ont::FIGURE ((? lo f::phys-obj f::abstr-obj)))
-	      (:REQUIRED ONT::GROUND (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
+	      (:REQUIRED ONT::EXTENT (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
              )
  )
 

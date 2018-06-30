@@ -3602,7 +3602,9 @@
 
 (define-type ont::governing
     :parent ont::control-manage
-    :arguments ((:REQUIRED ONT::Agent ((? aff F::situation F::phys-obj))))
+    :arguments ((:REQUIRED ONT::Agent ((? aff F::situation F::phys-obj)))
+		(:required ont::affected ((? aff F::situation F::phys-obj)
+					  (F::type (? typ ont::device ont::located-event)))))
     :comment "control, influence, or regulate a process"
     )
 
@@ -4379,7 +4381,7 @@
 		(:essential ont::extent (f::abstr-obj (f::scale ?!sc))) ;; the value of the measure, e.g. 5 lbs
 		))
 
-(define-type ont::weigh
+(Define-type ont::weigh
  :wordnet-sense-keys ("weigh%2:42:00" "librate%2:42:00")
     :parent ont::register
     :sem (f::situation (f::cause f::agentive) (f::trajectory -))

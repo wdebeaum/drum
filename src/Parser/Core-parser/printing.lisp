@@ -3,7 +3,7 @@
 ;;;
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
-;;; Time-stamp: <Tue Jun 26 16:08:54 EDT 2018 james>
+;;; Time-stamp: <Thu Jun 28 17:19:29 EDT 2018 james>
 
 (in-package "PARSER")
 
@@ -2012,7 +2012,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	 ((ont::goal-reln) :result)
 	 ((ont::reason ont::purpose) :reason)
 	 ((ont::extent-predicate) :extent)
-	 ((ont::frequency ont::frequency-val) :frequency)
+	 ((ont::frequency ont::frequency-val ont::iteration-period) :frequency)
 	 ((ont::degree-modifier) :degree)
 	 ;;((ont::assoc-with) :assoc-with)
 	 ((ont::temporal-location) :time)

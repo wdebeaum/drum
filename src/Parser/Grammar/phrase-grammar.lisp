@@ -117,7 +117,7 @@
 	;; one
 	((SPEC (SEM ?def) (var ?v) (AGR ?agr) (MASS count) (ARG ?arg) (lex ?lex) (LF ONT::INDEFINITE) 
 	  (subcat ?xx)
-	  (RESTR (& (:size (% *PRO* (status ont::indefinite) (class ONT::NUMBER)
+	  (RESTR (& (size (% *PRO* (status ont::indefinite) (class ONT::NUMBER)
 					 (constraint ?cc) (var *))))))
 	 -spec-one>
 	 (head (NUMBER (val 1) (var ?v) (sem ?def) (AGR ?agr) (WH -) (lex ?lex) (RESTR ?R) (LF ?l)))
@@ -383,14 +383,24 @@
 
 	;; many thousands
 	((CARDINALITY (NOSIMPLE +)
-                      (VAR (% *PRO* (VAR ?v) (status ont::indefinite-plural) (CLASS ?unit)
-			     (CONSTRAINT (& (QUAN ?c)))))
+                      (VAR (% *PRO* (VAR ?v) (status ont::indefinite) (class NUMBER) 
+			     (CONSTRAINT (& (UNIT ?unit) (QUAN ?c)))))
 		      (AGR ?a) (STATUS ?status)
 	              (mass (? mss count bare))
 		      )
          -cardinality-quan-number-units-plur>
          (QUAN (CARDINALITY +) (LF ?c) (STATUS ?status) (VAR ?qv) (AGR ?a))
          (head (NUMBER-UNIT (lf ?unit) (var ?v) (qof ?qof)))
+         )
+
+	((CARDINALITY (NOSIMPLE +)
+                      (VAR (% *PRO* (VAR ?v) (status ont::indefinite) (class NUMBER) 
+			     (CONSTRAINT (& (UNIT ?unit) (QUAN ONT::SOME)))))
+		      (AGR ?a) (STATUS ?status)
+	              (mass (? mss count bare))
+		      )
+         -cardinality-quan-number-units-plur-bare>
+	 (head (NUMBER-UNIT (lf ?unit) (var ?v) (agr 3p) (qof ?qof)))
          )
     
 	))
@@ -786,7 +796,7 @@
 	    (PRO -) (postadvbl -) ;; to avoid the ambiguity "the [[red truck] at Avon]" "the [red [truck at Avon]]"
 	    )
       )
-     (add-to-conjunct (val (:size ?adjv)) (old ?r) (new ?newr))
+     (add-to-conjunct (val (size ?adjv)) (old ?r) (new ?newr))
     )
 
     ;; nouns with modifiers that come after 
@@ -1641,7 +1651,7 @@
       (transform ?transform) (sem ?sem) (comparative +)
       (subcat ?subcat) 
 	    )           
-     -adj-pred-extent>
+     -adj-pred-extent> 1
      (NP (SORT unit-measure) (class ont::quantity) (var ?var2)
 	 (sem ($ ?s2 (f::scale ?sc)))
 	 )
@@ -1661,7 +1671,7 @@
       (transform ?transform) (sem ?sem) (comparative ?cmp)
       (subcat ?subcat) ; pass up subcat so it can be used in -NP-ADJ-MISSING-HEAD-COMPAR> ; if we pass up both subcats we go into an infinite loop because this rule can be rematched!
 	    )           
-     -adj-pred-twosubcats>
+     -adj-pred-twosubcats> 1
      (head (ADJ1 (LF ?lf)  (VAR ?v)
 	    (transform ?transform) (comparative ?cmp)
 	    (SUBCAT ?subcat) (SUBCAT-MAP ?reln) (SUBCAT (% ?xx (var ?argv) (gap ?gap))) 
@@ -1707,6 +1717,25 @@
 					     )
 		       (new ?newc)))
 
+   ;;  To handle the variety of ways that COMPARs are expressed, we use an intermediate constituent COMPAR
+   ;; some of these are very unrestrictive so have to be ranked low to allow other alternatives to dominate
+
+   ;; the standard "than PP" is the typical case
+   ((COMPAR (var ?v))
+    -compar-than-pp> 1
+    (PP (var ?v) (ptype THAN)))
+
+   ;; e.g.,  It is larger than expected
+   ((compar (Var ?v))
+     -compar-vp>
+     (word (lex than))
+     (vp (var ?v))
+    )
+
+   ((compar (var ?v))
+    -compar-s-gap> .98  ;; very productive and unconstrained!!
+    (word (lex than))
+    (s (var ?v)))
        
     ;;=============================================================================
     ;; NOUN-NOUN type  modification
@@ -2559,12 +2588,12 @@
 	;;  Also used for N1 conjunction "the truck and train"
         ((NP (LF (% Description (STATUS ONT::BARE) (VAR ?v) (SORT INDIVIDUAL)
 	            (CLASS ?c) (CONSTRAINT ?r) (sem ?sem) (transform ?transform)))
-             (SORT PRED) (VAR ?v)
+             (SORT PRED) (VAR ?v) (SORT ?sort)
              (BARE-NP +) (name-or-bare ?nob)
 	     (simple +)
 	     )
          -bare-singular> .98
-         (head (N1 (SORT PRED) (MASS  count) (gerund -) ;;(complex -) 
+         (head (N1 (SORT ?sort) (MASS  count) (gerund -) ;;(complex -) 
 		   (name-or-bare ?nob) 
 		   (derived-from-name -)  ;; names already can become NPs by simpler derivations
 		(AGR 3s) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -) (agent-nom -)
@@ -2724,7 +2753,7 @@
          -unit-np-number-indef>
 	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r))
  	 (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
-		   (KIND -) (sem ?sem) (sem ($ f::abstr-obj  (f::type ont::unit) (f::scale ?sc)))
+		   (KIND -) (sem ?sem) (sem ($ f::abstr-obj  (f::type (? xx ont::unit)) (f::scale ?sc)))
 		   (argument ?argument) (RESTR ?restr)
 		   (post-subcat -)
 		))
@@ -2745,6 +2774,7 @@
 		    (sem ?sem) 
 		    ))
 	  (class ont::quantity)
+	  (Mass count)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure))
          -unit-np-number-indef-special-case>
 	 (ART (VAR ?nv) (LEX w::a) )
@@ -4921,7 +4951,7 @@
 ;            (poss -) ;; Added by myrosia 2003/11/02 to avoid "our" as NP
 ;            )))
 
-    ;; Added by Myrosia to cover the cases where there's a pronoun
+ #||   ;; Added by Myrosia to cover the cases where there's a pronoun
     ;; with either singular or plural agreement (e.g. "what" in what
     ;; is this/what are these), but where it does not matter in most
     ;; cases and we need to avoid needless ambiguity
@@ -4939,7 +4969,7 @@
 	    (mass ?m) ;(sing-lf-only +) 
 	    (status ?status) (expletive ?exp)
 	    (poss -) ;; Added by myrosia 2003/11/02 to avoid "our" as NP
-	    )))
+	    )))||#
     
     ;; THIS HERE needs a special rule as the AT-LOC modifer from here
     ;;    would normally only modifer AN N1 constituent
@@ -5989,122 +6019,4 @@
 
 	))
 
-#||
-(parser::augment-grammar
- '((headfeatures
-    (N1 var arg lex headcat transform agr mass case sem quantity argument indef-only subcat-map refl abbrev gerund generated))
 
-   ;; special construction for rate , e.g., the binding rate, allows a gerund 
-   ;;  this rule doesn't build the LF we'd really like, any arguments end up attached to RATE rather than the event.
-   ;;   but at least it great something close
-    ((N1 (RESTR ?new) (SORT ?sort) (sem ?sem) (class ONT::RATE)
-      (N-N-MOD +) (QUAL -) (relc -) (subcat ?subcat) (gap ?gap)
-     )
-      
-     -gerund-rate> 1
-     (n1 (AGR 3s) (abbrev -) (generated -)
-        (var ?v1) (restr ?modr)  (gerund +)  
-	;;  removed this to handle things like "computing services"
-	;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
-      (sem ?n-sem)
-      (CLASS ?modc) (PRO -) (N-N-MOD -) ;;(COMPLEX -)   can't require COMPLEX - any more -- e.g., "p53 expression levels"
-      (SUBCAT ?ignore) (GAP -) (kr-type ?kr-type)
-      (postadvbl -) (post-subcat -) 
-      (subj ?subj)
-	    (subj-map ?subjmap)
-	    ;;(dobj-map ?dobjmap) 
-	    (dobj-map ?dobjmap)
-	    (dobj ?dobj)
-	     (comp3 ?comp)
-	     (comp3-map ?compmap)
-      (nomobjpreps ?numobjpreps)
-      (nomsubjpreps ?numsubjpreps)
-      )
-     (head (N1 (VAR ?v2) (QUAL -) (subcat ?subcat) (sort ?sort)
-	       (sem ?sem)  (class ONT::RATE)
-	       (generated -)
-	       (RESTR ?r) 
-	       (SORT PRED) (gap ?gap) 
-	    (relc -)  (postadvbl -) (post-subcat -) 
-	    (abbrev -)
-	       ))
-     (add-to-conjunct 
-      (val (figure (% *PRO* (status ont::kind) (var ?v1) (class ?modc) (constraint ?modr) (sem ?n-sem) (kr-type ?kr-type)))) 
-      (old ?r) (new ?new))
-     )
-
-   ;;   the binding rate by X
-   ((N1 (RESTR ?new) (SORT ?sort) (sem ?sem) (class ONT::RATE)
-     (N-N-MOD +) (QUAL -) (relc -) (subcat ?subcat) (gap ?gap)
-     )
-    
-    -gerund-rate+subj-arg> 1
-    (n1 (AGR 3s) (abbrev -) (generated -)
-     (var ?v1) (restr ?modr)  (gerund +)  
-     ;;  removed this to handle things like "computing services"
-     ;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
-     (sem ?n-sem)
-     (CLASS ?modc) (PRO -) (N-N-MOD -) ;;(COMPLEX -)   can't require COMPLEX - any more -- e.g., "p53 expression levels"
-     (SUBCAT ?ignore) (GAP -) (kr-type ?kr-type)
-     (postadvbl -) (post-subcat -) 
-     (subj (% np (sem ?subjsem)))
-     (subj-map ?subjmap)
-     (nomsubjpreps ?nomsubjpreps)
-     )
-    (head (N1 (VAR ?v2) (QUAL -) (subcat ?subcat) (sort ?sort)
-	      (sem ?sem)  (class ONT::RATE)
-	      (generated -)
-	      (restr ?r)
-	      (SORT PRED) (gap ?gap) 
-	      (relc -)  (postadvbl -) (post-subcat -) 
-	      (abbrev -)
-	      ))
-     (pp (ptype ?nomsubjpreps) (sem ?subjsem) (var ?vpp) (gap -))
-     (add-to-conjunct 
-      (val (?subjmap ?vpp))
-      (old ?modr) (new ?new-ev-constraint))
-     (add-to-conjunct 
-      (val (figure (% *PRO* (status ont::kind) (var ?v1) (class ?modc) (constraint ?new-ev-constraint)
-			   (sem ?n-sem) (kr-type ?kr-type))))
-      (old ?r) (new ?new))
-     )
-
-   ;;   the binding rate of X
-   ((N1 (RESTR ?new) (SORT ?sort) (sem ?sem) (class ONT::RATE)
-     (N-N-MOD +) (QUAL -) (relc -) (subcat ?subcat) (gap ?gap)
-     )
-    
-    -gerund-rate+arg-obj> 1
-    (n1 (AGR 3s) (abbrev -) (generated -)
-     (var ?v1) (restr ?modr)  (gerund +)  
-     ;;  removed this to handle things like "computing services"
-     ;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
-     (sem ?n-sem)
-     (CLASS ?modc) (PRO -) (N-N-MOD -) ;;(COMPLEX -)   can't require COMPLEX - any more -- e.g., "p53 expression levels"
-     (SUBCAT ?ignore) (GAP -) (kr-type ?kr-type)
-     (postadvbl -) (post-subcat -) 
-     (dobj (% np (sem ?subjsem)))
-     (dobj-map ?subjmap)
-     (nomobjpreps ?nomobjpreps)
-     )
-    (head (N1 (VAR ?v2) (QUAL -) (subcat ?subcat) (sort ?sort)
-	      (sem ?sem)  (class ONT::RATE)
-	      (generated -)
-	      (restr ?r)
-	      (SORT PRED) (gap ?gap) 
-	      (relc -)  (postadvbl -) (post-subcat -) 
-	      (abbrev -)
-	      ))
-     (pp (ptype ?nomobjpreps) (sem ?subjsem) (var ?vpp) (gap -))
-     (add-to-conjunct 
-      (val (?subjmap ?vpp))
-      (old ?modr) (new ?new-ev-constraint))
-     (add-to-conjunct 
-      (val (figure (% *PRO* (status ont::kind) (var ?v1) (class ?modc) (constraint ?new-ev-constraint)
-			   (sem ?n-sem) (kr-type ?kr-type))))
-      (old ?r) (new ?new))
-     )
-
-))
-
-||#

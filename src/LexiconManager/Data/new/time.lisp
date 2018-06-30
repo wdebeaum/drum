@@ -59,3 +59,13 @@
    )
 ))
 
+(define-words :pos W::n 
+	      :words (
+		      (W::times
+		       (SENSES
+			((LF-PARENT ONT::repetition)
+			 (SYNTAX (W::agr (? agr W::3p)) (W::morph (:forms (-none))
+								  ))
+			 (templ  SUBSTANCE-UNIT-TEMPL)
+			 (example "I ran three times")))))
+	      )

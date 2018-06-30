@@ -7,11 +7,14 @@
   (W::tax
    (SENSES
     ((LF-PARENT ONT::value-COST)
-     (TEMPL OTHER-RELN-TEMPL)
-     (example "hotel tax")
-     (meta-data :origin plow :entry-date 20050928 :change-date nil :wn ("tax%1:21:00") :comments naive-subjects)
+     (example "There is a tax of $10")
+     (TEMPL reln-subcat-of-units-TEMPL)
+     
+     )
+    ((LF-PARENT ONT::value-COST)
+     (TEMPL other-reln-templ (xp (% W::pp (W::ptype w::on))))
+     (example "there is an extra tax on wine")
      )
     )
    )
-))
-
+  ))

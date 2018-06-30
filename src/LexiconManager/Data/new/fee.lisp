@@ -13,18 +13,23 @@
 ))
 |#
 
-(define-words :pos W::n :templ COUNT-PRED-TEMPL
+(define-words :pos W::n 
  :words (
 ;   )
   (W::FEE
    (SENSES
-    ((LF-PARENT ONT::value-COST)
+    #||((LF-PARENT ONT::value-COST)
      (TEMPL OTHER-RELN-TEMPL)
      (meta-data :origin calo :entry-date 20031206 :change-date nil :wn ("fee%1:21:00") :comments calo-y1script )
+     )||#
+    ((LF-PARENT ONT::value-COST)
+     (example "There is a fee of $10")
+     (TEMPL reln-subcat-of-units-TEMPL)
+     
      )
     ((LF-PARENT ONT::value-COST)
-     (TEMPL reln-subcat-of-units-TEMPL)
-     (meta-data :origin calo :entry-date 20031206 :change-date nil :wn ("fee%1:21:00") :comments calo-y1script )
+     (TEMPL other-reln-templ (xp (% W::pp (W::ptype w::for))))
+     (example "there is an extra fee for gift wrapping")
      )
     )
    )

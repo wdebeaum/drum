@@ -7,18 +7,20 @@
  :words (
   (W::INTEREST
    (SENSES
-;    ((meta-data :origin calo :entry-date 20031229 :change-date nil :wn ("interest%1:09:00") :comments html-purchasing-corpus)
-;     (LF-PARENT ONT::mental-object)
-;     (TEMPL OTHER-RELN-TEMPL (xp (% W::pp (W::ptype (? pt W::in)))))
-;     )
+
      ((LF-PARENT ONT::value-COST)
-     (TEMPL OTHER-RELN-TEMPL)
-     (example "mortgage interest")
+     (TEMPL  reln-subcat-of-units-TEMPL)
+     (example "mortgage interest of $1000 ")
      (meta-data :origin windenergy :entry-date 20080521 :change-date nil :wn ("tax%1:21:00") :comments nil)
+      )
+     ((LF-PARENT ONT::value-COST)
+     (TEMPL other-reln-templ (xp (% W::pp (W::ptype w::on))))
+     (example "what is the interest on the loan")
+      )
      )
-    )
    )
-))
+  )
+ )
 
 (define-words :pos W::v 
  :tags (:base500)

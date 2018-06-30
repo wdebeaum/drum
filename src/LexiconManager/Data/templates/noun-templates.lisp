@@ -567,7 +567,7 @@
    (SYNTAX(W::sort W::other-reln) (W::AGR (? a W::3s W::3p)) (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp -) (W::MASS W::COUNT))
    (ARGUMENTS
     (ARGUMENT (% W::NP (W::sort (? !sort W::unit-measure))) ONT::FIGURE)
-    (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::sort (? s w::unit-measure))))) ONT::EXTENT)
+    (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::sort (? s w::unit-measure))))) ONT::EXTENT optional)
     ))
 
   ;; level of five; bare number subcat

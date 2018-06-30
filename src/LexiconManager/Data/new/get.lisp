@@ -23,6 +23,12 @@
      (preference 1)
      )
 
+    ((LF-PARENT ONT::have-experience)
+     (TEMPL experiencer-neutral-xp-TEMPL)
+     (example "he's got a headache")
+     (meta-data :origin cardiac :entry-date 20080217 :change-date nil :comments nil)
+     )
+
 ;    ;;;; Let's get the truck going.  Have the can opened.
     ((LF-PARENT ONT::MAKE-IT-SO)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))

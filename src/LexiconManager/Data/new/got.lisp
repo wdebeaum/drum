@@ -12,11 +12,7 @@
      (TEMPL neutral-neutral-xp-templ)
      )
 
-    ((LF-PARENT ONT::have-experience)
-     (TEMPL neutral-neutral-xp-TEMPL)
-     (example "he's got a headache")
-     (meta-data :origin cardiac :entry-date 20080217 :change-date nil :comments nil)
-     )
+    
     ;;;; The necessitiy sense is only typical of the perfective
     ;;;; "He gets to go" means he's allowed -- how can we do this?
     ((LF-PARENT ONT::NECESSITY)

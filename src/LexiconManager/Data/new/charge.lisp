@@ -2,7 +2,7 @@
 ;;;; W::CHARGE
 ;;;;
 
-(define-words :pos W::n :templ COUNT-PRED-TEMPL
+(define-words :pos W::n 
  :words (
     ((W::CHARGE w::CARD)
      (SENSES
@@ -19,10 +19,10 @@
   (W::charge
    (SENSES
     ((LF-PARENT ONT::value-COST)
-     (TEMPL OTHER-RELN-TEMPL)
+     (TEMPL other-reln-templ (xp (% W::pp (W::ptype w::for))))
      (example "there is an extra charge for gift wrapping")
-     (meta-data :origin plow :entry-date 20050928 :change-date nil :wn ("charge%1:21:02") :comments naive-subjects)
      )
+    
     ((lf-parent ont::physical-phenomenon)
      (example "the charge in the cylinder ignites")
      (meta-data :origin LbR :entry-date 20080922 :change-date nil :comments nil))

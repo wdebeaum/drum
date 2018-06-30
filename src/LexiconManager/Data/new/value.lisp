@@ -6,14 +6,21 @@
  :words (
   (W::VALUE
    (SENSES
-    ((LF-PARENT ONT::value-cost) (TEMPL other-reln-templ)
-     (META-DATA :ORIGIN CALO :ENTRY-DATE 20040204 :CHANGE-DATE NIL :wn ("value%1:21:00")
-      :COMMENTS HTML-PURCHASING-CORPUS))
-    ((LF-PARENT ONT::value) (TEMPL other-reln-templ)
-     (META-DATA :ORIGIN domain-reorganization :ENTRY-DATE 20170904 :CHANGE-DATE NIL :wn ("value%1:07:00")
+    ((LF-PARENT ONT::value-cost) 
+     (example "He gave it a value of $10")
+     (TEMPL reln-subcat-of-units-TEMPL)
+     )
+    ((LF-PARENT ONT::value-COST)
+     (TEMPL other-reln-templ (xp (% W::pp (W::ptype w::of))))
+     (example "What is the value of my car?")
+     )
+    
+    ((LF-PARENT ONT::value)
+     (TEMPL other-reln-templ)
+     (example "what is the value of the tempertaure variable?.  Take the value of x")
      ))
-))
-))
+   ))
+ )
 
 (define-words :pos W::V :templ agent-theme-xp-templ
  :words (
