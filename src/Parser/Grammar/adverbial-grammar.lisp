@@ -537,7 +537,9 @@
       (role ?advrole)
       ;(SEM ($ f::abstr-obj (F::type (? !ttt ont::position-reln))))
       (SEM ($ f::abstr-obj (F::type (? !ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; e.g. "decrease in Mexico"
-				       ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
+				       ont::pos-directional-reln ont::pos-distance
+				       ; ont::pos-wrt-speaker-reln ; "I ate there"
+				       ont::resulting-object))))
       )
      (add-to-conjunct (val (MODS ?mod)) (old ?lf) (new ?new))
      )
@@ -687,7 +689,16 @@
 		(gap ?gap)
 		(ellipsis -)
 		(result (? advsem ($ f::abstr-obj
-				       (F::type (? ttt ont::position-reln ont::resulting-object ont::path)))))
+				     (F::type (? ttt ont::position-reln ont::resulting-object ont::path)))))
+#|
+;; do not remove this!  We can't have both (? ttt ...) and (? !ttt1 ...) but these are the types we want and don't want here.
+		
+			 (SEM ($ f::abstr-obj
+				 (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; we allowed "in" for some reason, but I don't remember the example!
+					     ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
+			 
+	      ;;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ont::on ont::at-loc )))) ; take the trajectory senses instead of the position-as-extent-reln senses of words such as "across"
+|#
 		))
 
      (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
@@ -1573,7 +1584,8 @@
 	   (sort binary-constraint) (sem ?sem)
 	   (LF (% PROP (VAR *) (CLASS ONT::extent-predicate) (sem ?sem)
 		  ;(CONSTRAINT (& (FIGURE ?arg) (scale ?scale) (GROUND ?v)))
-		  (CONSTRAINT ?newcon)
+		  ;(CONSTRAINT ?newcon)
+		  (CONSTRAINT (& (FIGURE ?arg) (GROUND ?v)))
 		  ))
 	   (atype (? x W::PRE W::POST))
      (argument (% W::S (subjvar ?anysubj)
@@ -1592,7 +1604,7 @@
 	      ;; well, 'he walked miles before he reached water'; 'he crawled inches to the next exit' ...; and this restriction prevents the non-unit NPs so if it's reinstated we need two rules
 ;	      (lf (% description (sort set))) ;; this restriction is needed to prevent bare measure units as adverbials
 	      ))
-    (add-to-conjunct (val (& (FIGURE ?arg) (GROUND ?v))) (old ?con) (new ?newcon))
+    ;(add-to-conjunct (val (& (FIGURE ?arg) (GROUND ?v))) (old ?con) (new ?newcon)) ; commented out because ?con contains the :AMOUNT and :UNIT and we don't want these duplicated in the ADVBL
     )
 
 

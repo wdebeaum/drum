@@ -852,7 +852,7 @@
       (var *) (LF ?lf) (coerce ?coerce) (nobarespec ?nbs)
       )
      -number-unit-bare> .9
-     (head (number-unit (val ?!v2) (lex ?l2) (digits -) (agr 3s) (sem ?sem)))
+     (head (number-unit (val ?!v2) (lex ?l2) (digits -) (agr 3s) (sem ?sem) (lf ?lf)))
      (compute-val-and-ntype (expr (W::TIMES* 1 ?!v2)) (newval ?newval) (ntype ?ntype)))
 		
     ;; Myrosia 05/14/00

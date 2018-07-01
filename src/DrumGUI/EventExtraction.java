@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.57 2018/06/27 01:17:05 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.58 2018/06/30 15:11:00 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -78,7 +78,9 @@ public class EventExtraction extends Extraction {
         FROM(":FROM"),
         TO(":TO"),
         // CWMS
-        LOCATION(":LOCATION")
+        LOCATION(":LOCATION"),
+        TIMEMOD(":TIMEMOD"),
+        TIME(":TIME") // time
         ;
         private String featureName;
         private Feature(String name) { featureName = name; }
@@ -792,6 +794,7 @@ public class EventExtraction extends Extraction {
         conts.add(xml_predicate());
         conts.add(xml_args());
         conts.add(xml_site());
+        conts.add(xml_time());
         conts.add(xml_location());
         conts.add(xml_fromLocation());
         conts.add(xml_toLocation());
@@ -967,39 +970,72 @@ public class EventExtraction extends Extraction {
     }
 
     /**
+     * Time feature
+     * @return
+     */
+    private String xml_time() {
+        KQMLObject time = features.get(Feature.TIME);
+        if (time == null)
+            return "";
+        
+        List<String> attrs = new ArrayList<String>();
+        String mod = null;
+        KQMLObject modObj = features.get(Feature.TIMEMOD);
+        if (modObj instanceof KQMLList) {
+            mod = ((KQMLList) modObj).get(0).toString();
+        } else if (modObj instanceof KQMLToken) { // TODO: remove (obsolete)
+            mod = modObj.toString();
+        }
+        if (mod != null) {
+            attrs.add(xml_attribute("mod", removePackage(mod, false)));
+        }
+        
+        if (isOntVar(time.toString())) {
+            String var = time.toString();
+            if (ekbFindExtraction(var) != null) { 
+                return xml_elementWithID("time", var);
+            } else { // we need to define the item here
+                return xml_lfTerm("time", var);
+            }
+        } else { // should not happen!
+            Debug.error("unexpected " + Feature.TIME + " value: " + time);
+            return xml_element("time", "", removePackage(time.toString(), false));
+        }
+    }
+
+    /**
      * Returns a {@code <location>} XML element representing location information attached to the event, 
      * or the empty string if no such information exists. 
      */
     private String xml_location() {
-        KQMLObject locObj = features.get(Feature.CELL_LOC);
-        if (locObj == null) {
-            locObj = features.get(Feature.LOCATION);
+        KQMLObject loc = features.get(Feature.CELL_LOC);
+        if (loc == null) {
+            loc = features.get(Feature.LOCATION);
         }
-       KQMLObject locmodObj = features.get(Feature.LOCMOD);
-
-        if (locObj == null) 
+        if (loc == null) 
             return "";
         
-        String var = locObj.toString();
-        String locmod = null;
-        if (locmodObj instanceof KQMLList) {
-            locmod = ((KQMLList) locmodObj).get(0).toString();
-        } else if (locmodObj instanceof KQMLToken) { // TODO: remove (obsolete)
-            locmod = locmodObj.toString();
-        }
         List<String> attrs = new ArrayList<String>();
-        if (locmod != null) {
-            attrs.add(xml_attribute("mod", removePackage(locmod, false)));
+        String mod = null;
+        KQMLObject modObj = features.get(Feature.LOCMOD);
+        if (modObj instanceof KQMLList) {
+            mod = ((KQMLList) modObj).get(0).toString();
+        } else if (modObj instanceof KQMLToken) { // TODO: remove (obsolete)
+            mod = modObj.toString();
+        }
+        if (mod != null) {
+            attrs.add(xml_attribute("mod", removePackage(mod, false)));
         }
         
-        if (isOntVar(var)) {
+        if (isOntVar(loc.toString())) {
+            String var = loc.toString();
             if (ekbFindExtraction(var) != null) {
                 return xml_elementWithID("location", var, attrs);
             } else { // we need to define the item here
                 return xml_lfTerm("location", var, attrs);
             }
         } else {
-            Debug.warn("unexpected location value: " + locObj);
+            Debug.warn("unexpected location value: " + loc);
             return "";
         }
     }
@@ -1238,7 +1274,9 @@ public class EventExtraction extends Extraction {
     /**
      * Returns a {@code <features>} XML element representing the event features,
      * or the empty string if no such information exists.
-     * TODO: re-think whether this is really a "feature" or something else!
+     * <p>
+     * Note: features are characteristics of the event that can be negated (in which case
+     * they will appear in a {@code <not-features>} XML element).
      */
     private String xml_features() {
         List<String> conts = new ArrayList<String>();

@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.50 2018/06/28 17:24:07 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.51 2018/06/30 15:11:00 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -62,6 +62,7 @@ public class TermExtraction extends Extraction {
         MIN(":MIN"), // numbers
         MAX(":MAX"), // numbers
         VALSEQ(":VAL"), // sequence of numbers
+        DAY(":DAY"), // time
         MONTH(":MONTH"), // time
         YEAR(":YEAR"), // time
         TIME(":TIME"), // time
@@ -445,11 +446,20 @@ public class TermExtraction extends Extraction {
      */
     private String xml_amount() {
         KQMLObject value = attributes.get(Attribute.AMOUNT);
-        if (value != null) {
-             return xml_element("amount", null, value.toString());
+        if (value == null) 
+            return "";
+        
+        if (isOntVar(value.toString())) {
+            String var = value.toString();
+            if (ekbFindExtraction(var) != null) { 
+                return xml_elementWithID("amount", var);
+            } else { // we need to define the item here
+                return xml_lfTerm("amount", var);
+            }
+        } else { // an actual value
+            return xml_element("amount", null, value.toString());
         }
-        return "";
-    }
+     }
 
     /**
      * Rates
@@ -504,7 +514,10 @@ public class TermExtraction extends Extraction {
     private String xml_timex() {
         List<String> attrs = new ArrayList<String>();
         List<String> conts = new ArrayList<String>();
-        //KQMLObject day = attributes.get(Attribute.DAY);
+        KQMLObject day = attributes.get(Attribute.DAY);
+        if (day != null) {
+            conts.add(xml_element("day", null, day.toString()));
+        }
         KQMLObject month = attributes.get(Attribute.MONTH);
         if (month != null) {
             String mtext = "";
@@ -517,9 +530,9 @@ public class TermExtraction extends Extraction {
         if (year != null) {
             conts.add(xml_element("year", null, year.toString()));
         }
-        if (conts.isEmpty()) {
+        if (conts.isEmpty()) 
             return "";
-        }
+        
         attrs.add(xml_attribute("type","DATE"));
         return xml_element("timex", attrs, conts);
     }

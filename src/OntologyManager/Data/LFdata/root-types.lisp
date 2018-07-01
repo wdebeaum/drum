@@ -97,7 +97,9 @@
      :parent ONT::event-of-action
      :comment "events involving an AGENT acting on an AFFECTED"
      :sem (F::Situation)
-     :arguments ((:essential ONT::affected ((? cau5 F::abstr-obj f::phys-obj f::situation) (F::tangible +))))
+     :arguments ((:essential ONT::affected ((? cau5 F::abstr-obj f::phys-obj f::situation) (F::tangible +)))
+		 (:essential ONT::agent ((? cau6 F::abstr-obj f::phys-obj f::situation) (F::tangible +)))
+		 )
      )
 
 (define-type ont::event-of-creation

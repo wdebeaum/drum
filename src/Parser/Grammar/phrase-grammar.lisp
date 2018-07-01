@@ -1791,8 +1791,9 @@
 	;;  removed this to handle things like "computing services"
 	;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
       (sem ?n-sem) (derived-from-name -) ; names go through -name-n1>
-      (CLASS ?modc) (PRO -) (N-N-MOD -) ;(COMPLEX -)   ;;  can't require COMPLEX - any more -- e.g., "p53 expression levels"  -- now we can!! This goes through nom-rate instead.
-      ; now we can't!  e.g., <trade and migration> route
+      (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -)   ;;  can't require COMPLEX - any more -- e.g., "p53 expression levels"  -- now we can!! This goes through nom-rate instead.
+      ; set two-n1-conjunct to complex - so that e.g., <trade and migration> route, can go through this rule
+
       (SUBCAT ?ignore) (GAP -) (kr-type ?kr-type)
       (postadvbl -) (post-subcat -) 
       )
@@ -2283,7 +2284,7 @@
 ;although I think that's already done.
 
 	;; count and mass NPs, singular and plural:
-	;; TEST: a dog, the dog, the dogs, some water, the five dogs
+	;; TEST: a dog, the dog, the dogs, some water, the five dogs, what dog
 
 
         ((NP (LF (% description (STATUS ?newspec) (VAR ?v)   ;;(SORT individual)
@@ -2588,7 +2589,8 @@
 	;;  Also used for N1 conjunction "the truck and train"
         ((NP (LF (% Description (STATUS ONT::BARE) (VAR ?v) (SORT INDIVIDUAL)
 	            (CLASS ?c) (CONSTRAINT ?r) (sem ?sem) (transform ?transform)))
-             (SORT PRED) (VAR ?v) (SORT ?sort)
+             ;(SORT PRED)
+	     (VAR ?v) (SORT ?sort)
              (BARE-NP +) (name-or-bare ?nob)
 	     (simple +)
 	     )
@@ -2753,7 +2755,7 @@
          -unit-np-number-indef>
 	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r))
  	 (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
-		   (KIND -) (sem ?sem) (sem ($ f::abstr-obj  (f::type (? xx ont::unit)) (f::scale ?sc)))
+		   (KIND -) (sem ?sem) (sem ($ f::abstr-obj  (f::type (? xx ont::unit ont::multiple)) (f::scale ?sc))) ; ont::multiple: increase 100 fold
 		   (argument ?argument) (RESTR ?restr)
 		   (post-subcat -)
 		))
@@ -2841,6 +2843,7 @@
       (PP  (VAR ?v) (MASS count) (ptype ?ptp)
        (KIND -) (AGR |3P|) (GAP -)
        (LF (% DESCRIPTION (CLASS ?c)
+	      (status (? st ONT::definite-plural)) ; allows "dozens of *the* rotten eggs but excludes "dozens of rotten eggs" (the latter uses -NP-SPEC-QUANTITY-OF-DEF-PP> )
 	      (sem ?sem) (transform ?transform) (constraint ?con)
 	      ))))
      (recompute-spec (spec ?spec) (agr 3p) (result ?newspec))
@@ -3051,7 +3054,7 @@
 	  (ptype ?ptp)
 	  (KIND -) (GAP -)
 	  (LF (% DESCRIPTION (CLASS ?c) (sem ?sem) (constraint ?constr)
-		 (transform ?transform) (status (? x ont::indefinite-plural))
+		 (transform ?transform) (status (? x ont::indefinite-plural)) ; definite-plural uses -np-spec-of-count-def-pp>
 		 ))))
                  
     (append-conjuncts (conj1 ?constr) (conj2 ?restr) (new ?newr))
@@ -4841,7 +4844,8 @@
      -np-pro>
      (head (pro (SEM ?sem) (VAR ?v) (case ?case) (AGR ?agr)
                 (LEX ?lex) (VAR ?v) (WH -) (lf ?c)
-	    (mass ?m) (sing-lf-only -) (expletive ?exp)
+		(mass ?m) ;(sing-lf-only -) ; "this" is sing-lf-only + (used to use np-pro-noagr)
+		(expletive ?exp)
 	    (status (? st ont::PRO ont::pro-set))   ;; this excludes this rule applying to pro's like "everything"
 	    (poss -) ;; Added by myrosia 2003/11/02 to avoid "our" as NP
                 )))
@@ -4951,7 +4955,8 @@
 ;            (poss -) ;; Added by myrosia 2003/11/02 to avoid "our" as NP
 ;            )))
 
- #||   ;; Added by Myrosia to cover the cases where there's a pronoun
+   #| now uses -np-pro>
+    ;; Added by Myrosia to cover the cases where there's a pronoun
     ;; with either singular or plural agreement (e.g. "what" in what
     ;; is this/what are these), but where it does not matter in most
     ;; cases and we need to avoid needless ambiguity
@@ -4969,7 +4974,8 @@
 	    (mass ?m) ;(sing-lf-only +) 
 	    (status ?status) (expletive ?exp)
 	    (poss -) ;; Added by myrosia 2003/11/02 to avoid "our" as NP
-	    )))||#
+	    )))
+   |#
     
     ;; THIS HERE needs a special rule as the AT-LOC modifer from here
     ;;    would normally only modifer AN N1 constituent
@@ -5174,7 +5180,8 @@
 	     (sem ?sem) (CASE ?c)
 	     (mass ?m1) 
 	     ))
-      (COMPLEX +) (SORT PRED) (wh ?wh)
+      ;(COMPLEX +) ; see comment in -two-n1-conjunct>
+      (SORT PRED) (wh ?wh)
       (generated ?generated)
        )
      -two-np-conjunct> 
@@ -5569,7 +5576,8 @@
 			   (% *PRO* (status ?status-out) (var ?v2) (class ?c2) (constraint ?con2) (sem ?s2) (lex ?lex2))))))
       (CASE ?c)
       (mass ?m1) 
-      (COMPLEX +) (SORT PRED)
+      ;(COMPLEX +) ; commented out so that it would go through n-sing-n1 (e.g., trade and migration routes)
+      (SORT PRED)
       (generated ?generated)
       (lex ?op)
       )
@@ -5578,7 +5586,7 @@
 	    (generated ?gen1)  (time-converted ?tc1) (gerund ?ger)
 	    (lex ?lex1)
 	    (class ?c1) (status ?status) (CASE ?c) (restr ?con) (mass ?m2) ;; allowing mismatch on mass
-	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram] 	    
+	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram]
 	    ))
      (conj (SEQ +) (LF ?op) (var ?v) ) ;;(status ?status))
      (N1 (SEM ?s2) (VAR ?v2) (agr ?agr1)  (complex -) (expletive -) ;;(bare-np ?bnp)
