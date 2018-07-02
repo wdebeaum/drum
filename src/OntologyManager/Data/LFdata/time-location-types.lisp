@@ -19,8 +19,8 @@
  :arguments (;(:ESSENTIAL ONT::OF ((? of F::Phys-obj F::Situation f::abstr-obj)))
 	     ;(:ESSENTIAL ONT::val ((? val F::Phys-obj F::Situation f::abstr-obj)))
 	     (:ESSENTIAL ONT::FIGURE ((? fig F::Phys-obj F::Situation f::abstr-obj)))
-	     (:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj F::Situation f::abstr-obj)) (f::type (? !t ONT::TIME-MEASURE-SCALE)))
-             )
+	     (:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj F::Situation f::abstr-obj)) (f::type (? !t ONT::TIME-MEASURE-SCALE))
+             ))
  )
 
 (define-type ont::at-scale-value
@@ -871,14 +871,14 @@
  ))
 |#
 
-;; how long did it take / did he run
+#||;; how long did it take / did he run         Already have ONT::DURARION-SCALE
 (define-type ont::duration
-  :parent ont::temporal-predicate
+  :parent ont::measure-scale
   :sem (F::abstr-obj (F::Scale Ont::duration-scale))
   :arguments ((:ESSENTIAL ONT::FIGURE ((? t f::situation F::abstr-obj)))
              )
   )
-
+||#
 ;; frequencies
 (define-type ONT::frequency
  :parent ONT::temporal-modifier

@@ -8,23 +8,22 @@
   (W::TIME
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("time%1:28:06"))
-;     (LF-PARENT ONT::TIME-point)
-     (LF-PARENT ONT::TIME-MEASURE-SCALE)
+     (LF-PARENT ONT::TIME-INTERVAL)
      (example "what time did it arrive")
      (templ other-reln-templ)
      )
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("time%1:28:05" "time%1:28:00" "time%1:28:03" "time%1:28:01"))
-     (LF-PARENT ONT::TIME-INTERVAL)
+     (LF-PARENT ONT::DURATION-SCALE)
      (example "how much time does it take")
-     (SEM (F::time-scale F::interval))
+     ;;(SEM (F::time-scale F::interval))
      (TEMPL MASS-PRED-TEMPL)
      )
-    ;; what's the example for this one?
-;    ((LF-PARENT ONT::TIME-INTERVAL)
-;     (SEM (F::time-scale F::interval))
-    ; (example "a time of five minutes")
-;     (TEMPL reln-subcat-of-units-TEMPL)
-;     )
+    
+    ((LF-PARENT ONT::DURATION-SCALE)
+     ;;(SEM (F::time-scale F::interval))
+     (example "a time of five minutes")
+     (TEMPL reln-subcat-of-units-mass-TEMPL)
+     )
 
     ((LF-PARENT ONT::multiple)
      (example "increase by two times")
@@ -58,7 +57,7 @@
     )
    )
 ))
-
+#||
 (define-words :pos W::n 
 	      :words (
 		      (W::times
@@ -69,3 +68,4 @@
 			 (templ  SUBSTANCE-UNIT-TEMPL)
 			 (example "I ran three times")))))
 	      )
+||#

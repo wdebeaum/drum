@@ -14,6 +14,7 @@
      )
     ((meta-data :origin plow :entry-date 20080117 :change-date nil :comments nil :wn ("month%1:28:00"))
      (LF-PARENT ONT::time-defined-by-duration)
+     (preference .98)
      (example "hour of the day")
      (templ time-reln-templ)
      )

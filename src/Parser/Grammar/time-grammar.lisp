@@ -342,8 +342,26 @@
       (ratenumsem ?sem1)
       (ratedenomsem ?sem2)
        )
-     -units-per-period2> .98
+     -units-per-period2> 
      (head (np (lf ?lf) (sort unit-measure) (wh -) (var ?v1) (lex ?x) (sem ?sem1) (class ?cl)
+	       ))
+     (np (agr 3s) (var ?per) (lf (% description (status ont::indefinite)))
+      (sem ?sem2) (mass count)
+      ))
+
+    ;; Twice a week
+    ((np (LF (% description (var *) (class ont::rate) (status ont::indefinite)
+		(constraint (& (repeats ?v1) (over-period ?per)))))
+      (var *) (case (? case sub obj)) (SORT unit-measure) (AGR 3s)
+      (time-converted +) (lex ?x) (class ONT::REPETITION)
+      (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::mobility -) 
+	      (f::type ont::rate) (f::scale ont::rate-scale)))
+      (ratenumsem ?sem1)
+      (ratedenomsem ?sem2)
+       )
+     -number-of-time-per-period2> 
+     (head (advbl (lf ?lf) (wh -) (var ?v1) (lex ?x) (sem ?sem1)
+		  (lf (% PROP (class ONT::REPETITION)))
 	       ))
      (np (agr 3s) (var ?per) (lf (% description (status ont::indefinite)))
       (sem ?sem2) (mass count)

@@ -2590,12 +2590,12 @@
         ((NP (LF (% Description (STATUS ONT::BARE) (VAR ?v) (SORT INDIVIDUAL)
 	            (CLASS ?c) (CONSTRAINT ?r) (sem ?sem) (transform ?transform)))
              ;(SORT PRED)
-	     (VAR ?v) (SORT ?sort)
+	     (VAR ?v) (SORT ?!sort)
              (BARE-NP +) (name-or-bare ?nob)
 	     (simple +)
 	     )
          -bare-singular> .98
-         (head (N1 (SORT ?sort) (MASS  count) (gerund -) ;;(complex -) 
+         (head (N1 (SORT (? !sort substance-unit)) (MASS  count) (gerund -) ;;(complex -) 
 		   (name-or-bare ?nob) 
 		   (derived-from-name -)  ;; names already can become NPs by simpler derivations
 		(AGR 3s) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -) (agent-nom -)

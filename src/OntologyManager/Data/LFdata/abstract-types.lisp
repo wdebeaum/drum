@@ -713,7 +713,7 @@
 
 ;; dollars -- need a unit definition for '5 dollars'
 (define-type ONT::MONEY-UNIT
- :wordnet-sense-keys ("monetary_unit%1:23:00")
+ :wordnet-sense-keys ("monetary_unit%1:23:00" "currency%1:21:00")
  :parent ONT::formal-UNIT
  :sem (F::Abstr-obj (F::Scale Ont::Money-scale))
  )
@@ -1581,80 +1581,4 @@
  :parent ONT::IDENTITY-VAL
  :wordnet-sense-keys ("other%3:00:00" "another%3:00:00")
  )
-
-;(define-type ont::scale
-;  :sem (F::Abstr-obj (F::Scale ?!sc))
-;  :parent ont::abstract-object
-;  :arguments ((:ESSENTIAL ONT::figure)
-;		)
-;  )
-
-;(define-type ont::any-scale
-;  :parent ont::scale
-;  )
-
-;(define-type ont::number-scale
-;  :parent ont::scale
-;  )
-
-;(define-type ont::size-scale
-;  :parent ont::scale
-;  )
-
-;(define-type ont::sound-scale
-;  :parent ont::scale
-;  )
-
-;(define-type ont::weight-scale
-;;  :parent ont::size-scale
-;  :parent ont::scale
-;  )
-
-;(define-type ont::linear-scale
-;;  :parent ont::size-scale
-;  :parent ont::scale
-;  )
-
-;(define-type ont::area-scale
-;;  :parent ont::size-scale
-;  :parent ont::scale
-;  )
-
-;(define-type ont::volume-scale
-;;  :parent ont::size-scale
-;  :parent ont::scale
-;  )
-
-;(define-type ont::temperature-scale
-;  :parent ont::scale
-;  )
-
-;(define-type ont::money-scale
-;;  :parent ont::size-scale
-;  :parent ont::scale
-;  )
-
-;(define-type ont::luminosity-scale
-;  :parent ont::scale
-;  )
-
-;(define-type ont::time-measure-scale
-;  :sem (F::Abstr-obj (F::Scale Ont::time-measure-scale))
-;;  :parent ont::scale
-;  :parent ont::linear-scale
-;  )
-
-;(define-type ont::duration-scale
-;  :parent ont::time-measure-scale
-;  )
-
-;(define-type ont::age-scale
-;;  :parent ont::scale
-;;  :parent ont::linear-scale
-;  :parent ont::duration-scale
-;  )
-
-;(define-type ont::other-scale
-;  :parent ont::scale
-;  )
 

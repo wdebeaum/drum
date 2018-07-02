@@ -21,6 +21,12 @@
              )
  )
 
+;;; Modifiers expressing expectation, e.g. I ONLY made $10.
+(define-type ONT::Eval-wrt-expectation
+ :parent ONT::MODIFIER
+ )
+
+
 ;;; Modifiers of quantifiers
 (define-type ONT::Qmodifier
  :parent ONT::MODIFIER

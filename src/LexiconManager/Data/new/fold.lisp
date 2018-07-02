@@ -2,7 +2,7 @@
 ;;;; W::fold
 ;;;;
 
-(define-words :pos W::n :templ COUNT-PRED-TEMPL
+(define-words :pos W::n 
  :words (
   (W::fold
    (wordfeats (W::morph (:forms (-S-3P) :plur W::fold)))

@@ -37,16 +37,16 @@
    (SENSES
     ((LF ONT::WH-TERM)
      (non-hierarchy-lf t)(TEMPL wh-qtype-TEMPL)
-     (SYNTAX (W::agr W::3s))
+     (SYNTAX (W::agr W::3s) (W::mass W::count))
      )
     ((LF ONT::WH-plural)
      (non-hierarchy-lf t)
      (TEMPL wh-qtype-TEMPL)
-     (SYNTAX (W::agr W::3p))
+     (SYNTAX (W::agr W::3p) (W::mass W::count))
      )
     )
    )
-))
+  ))
 
 (define-words :pos W::UttWord :boost-word t :templ NO-FEATURES-TEMPL
  :words (

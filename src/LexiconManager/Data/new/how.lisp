@@ -35,21 +35,7 @@
    )
 ))
 
-(define-words :pos W::adv :templ PPWORD-QUESTION-ADV-TEMPL
- :words (
-   ((W::HOW w::long)
-    (wordfeats (W::morph (:forms (-none))))
-   (SENSES
-    ((LF-PARENT ONT::time-duration-rel)
-     (example "how long did it take")
-     (meta-data :origin step :entry-date 20080722 :change-date nil :comments step1) 
-     (SYNTAX (W::IMPRO-CLASS ONT::degree))
-     (templ ppword-question-adv-templ)
-     (preference .96) ;; prefer bare word
-     )
-    )
-   )
-))
+
 
 (define-words :pos W::adv :templ PPWORD-QUESTION-ADV-TEMPL
  :words (
@@ -81,7 +67,7 @@
      )))
 ))
 |#
-
+#||
 (define-words :pos W::n :templ PPWORD-N-TEMPL
  :words (
   ((W::HOW w::long)
@@ -93,4 +79,20 @@
      (PREFERENCE 0.96) ; prefer adv
      )))
 ))
+||#
 
+(define-words :pos W::adv :templ PPWORD-QUESTION-ADV-TEMPL
+ :words (
+   ((W::HOW w::long)
+    (wordfeats (W::morph (:forms (-none))))
+   (SENSES
+    ((LF-PARENT ONT::time-duration-rel)
+     (example "how long did it take")
+     (meta-data :origin step :entry-date 20080722 :change-date nil :comments step1) 
+     (SYNTAX (W::IMPRO-CLASS ONT::degree))
+     (templ ppword-question-adv-templ)
+     (preference .96) ;; prefer bare word
+     )
+    )
+   )
+))

@@ -563,11 +563,19 @@
     ))
 
   ;;;;; for nouns that subcategorize for unit phrases, e.g. distance of 5 miles, weight of 5 lbs
+  ;; this is not optional as it usually occurs in conjunction the OTHER-RELN-TEMPL 
   (reln-subcat-of-units-templ
    (SYNTAX(W::sort W::other-reln) (W::AGR (? a W::3s W::3p)) (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp -) (W::MASS W::COUNT))
    (ARGUMENTS
     (ARGUMENT (% W::NP (W::sort (? !sort W::unit-measure))) ONT::FIGURE)
-    (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::sort (? s w::unit-measure))))) ONT::EXTENT optional)
+    (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::sort (? s w::unit-measure))))) ONT::EXTENT)
+    ))
+
+(reln-subcat-of-units-mass-templ
+   (SYNTAX(W::sort W::other-reln) (W::AGR (? a W::3s W::3p)) (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp -) (W::MASS W::MASS))
+   (ARGUMENTS
+    (ARGUMENT (% W::NP (W::sort (? !sort W::unit-measure))) ONT::FIGURE)
+    (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of) (W::sort (? s w::unit-measure))))) ONT::EXTENT)
     ))
 
   ;; level of five; bare number subcat
