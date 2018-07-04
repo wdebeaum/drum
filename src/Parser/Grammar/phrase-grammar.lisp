@@ -4385,28 +4385,30 @@
 
 (parser::augment-grammar	 
   '((headfeatures
-     (N1 sem lf lex headcat transform set-restr refl abbrev rate-activity-nom); agent-nom)
+     (N1 lf lex headcat transform set-restr refl abbrev rate-activity-nom); agent-nom)
      )
 
     ;; this rule handles agentive nominalizations, wraps an "agent" around the event nominalization
     ((N1 (SORT PRED)
       (gap -) (var *) (agr ?agr)
-      (sem ?sem) (mass count)
+      (sem ?subjsem) (mass count)
       (case (? case sub obj -)) ;; noms aren't case marked, allow any value except posessive
-      (class ont::referential-sem)
+      (class ont::referential-sem) ;;?lf)
       (agent-nom -) (complex ?complex)
-      (restr (& (mod
+      (restr (& (suchthat
 		 (% *pro* (status F) (class ?class) (constraint ?restr) (var ?v))))
       
 	     ))
      -agentnom1> 1
      (head (n1  (agent-nom +) (complex ?complex)
-		(var ?v) (gap -) (aux -) (agr ?agr) (sort pred)
+		(var ?v) (gap -) (aux -)
+	     (agr ?agr) (sort pred)
 		(sem ?sem)  (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(class ?class) (transform ?transform)
 		(restr ?restr) 
 		(subj (% NP (var *) (sem ?subjsem)))
 		))
+     ;;(compute-ont-type-from-sem (sem ?subjsem) (lf ?lf))     need to fix bug in SEMS that are variables
      )
 ))
     
