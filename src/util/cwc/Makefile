@@ -1,20 +1,17 @@
-PACKAGE = TRIPS.util.cwc
+CONFIGDIR=../../config
+include $(CONFIGDIR)/defs.mk
 
-SRCS =	Args.java \
-	CWCException.java \
-	InvalidArgument.java \
-	JavaFXApp.java \
-	JavaFXWindowManager.java \
-	MissingArgument.java \
-	StandardCWCModule.java \
-	SwingWindowManager.java \
-	UnknownAction.java \
-	UnknownObject.java \
-	WindowConfig.java \
-	WindowManager.java
+LANGUAGES = java javascript
 
-CLASSES = $(SRCS:.java=.class) \
-	JavaFXApp$$1.class
+test_for_language = test -f Makefile-$(1) -a -d $(CONFIGDIR)/$(1:objc=c)
 
-CONFIGDIR = ../../config
-include $(CONFIGDIR)/java/lib.mk
+all: $(LANGUAGES)
+
+$(LANGUAGES):
+	@if $(call test_for_language,$@); then $(MAKE) -f Makefile-$@; fi
+
+clean install install.man:
+	@for l in $(LANGUAGES); do \
+	  if $(call test_for_language,$$l); then $(MAKE) -f Makefile-$$l $@; fi; \
+	done
+

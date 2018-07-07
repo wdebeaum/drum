@@ -1,0 +1,7 @@
+MODULE = util/cwc
+SRCS = \
+	cwc-module.js \
+	errors.js
+
+CONFIGDIR=../../config
+include $(CONFIGDIR)/javascript/lib.mk
