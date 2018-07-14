@@ -2000,6 +2000,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	((ont::phys-object :mod)
 	 ((ont::position-reln ) :location)
 	 ((ont::temporal-location) :time)
+	 ((ont::source-reln) :source)
 	 )
 	 ;;((ont::assoc-with) :assoc-with))
 	((ont::abstract-object :mod)
@@ -2007,6 +2008,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	 ((ont::temporal-location) :time) ; prices in 2016
 	 ;; ((ont::assoc-with) :assoc-with)
 	 ((ont::degree-modifier) :degree)
+	 ((ont::source-reln) :source)
 	 )
 	((ont::situation-root :mod)
 	 ((ont::goal-reln) :result)
@@ -2030,6 +2032,11 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	 ((ont::manner ont::abstract-object-property ont::pivot) :manner)
 	 ((ont::likelihood ont::qualification) :qualification)
 	 )
+	((ont::referential-sem :mod)  ; agentnom and missing head
+	 ((ont::position-reln ) :location)
+	 ((ont::temporal-location) :time)
+	 ((ont::source-reln) :source)
+	 )	 
 	)
  )
 

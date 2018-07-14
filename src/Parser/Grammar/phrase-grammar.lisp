@@ -2859,7 +2859,7 @@
      (case ?case)
      (SORT PRED)
      (MASS mass) (agr 3s)
-     (VAR *) (WH ?w));; must move WH feature up by hand here as it is explicitly specified in a daughter.
+     (VAR *) (WH ?w) (wh-var *));; must move WH feature up by hand here as it is explicitly specified in a daughter.
      -np-spec-of-def-sing-pp>
     (SPEC (LF ?spec) (ARG ?v) (VAR ?specvar) (name-spec -) (mass mass) (POSS -);;myrosia 12/27/01 added mass restriction to spec
      (WH ?w)
@@ -2877,18 +2877,19 @@
 
    ;;  NP with SPECS that subcategorize for "of" PP's that are plural
    ;; 25% of the trucks, most of the people
-   ((NP (LF (% description (status ont::indefinite-plural) (VAR *) (CLASS ?c) (CONSTRAINT ?newr)
+   ((NP (LF (% description (status ?newspec) ;(status ont::indefinite-plural)
+	       (VAR *) (CLASS ?c) (CONSTRAINT ?newr)
 	       (sem ?sem)  (transform ?transform) 
                 ))
-     (case ?case) (agr 3p)
+     (case ?case) (agr (? agr 3s 3p)) ; none/which of the trucks *is* red
      (SORT PRED)
      (MASS count)
-     (VAR *) (WH ?w));; must move WH feature up by hand here as it is explicitly specified in a daughter.
+     (VAR *) (WH ?w) (wh-var *));; must move WH feature up by hand here as it is explicitly specified in a daughter. ; ?wh-var is set to the arg, which is "the trucks" for "which of the trucks".  We want * here ("which")
      -np-spec-of-def-plur-pp>
     (SPEC (LF ?spec) (ARG ?v) (VAR ?specvar) (name-spec -) (POSS -);;myrosia 12/27/01 added mass restriction to spec
      (WH ?w) (mass count)
      (RESTR ?restr)
-     (SUBCAT (% PP (Ptype ?ptp) (agr |3S|) (SEM ?sem))))
+     (SUBCAT (% PP (Ptype ?ptp) (agr |3P|) (SEM ?sem))))
     (head 
      (PP  (VAR ?v) (mass count) (ptype ?ptp)
 	  (KIND -) (GAP -) (agr 3p)
@@ -2897,6 +2898,8 @@
 		  )))
     
     (append-conjuncts (conj1 (& (REFSET ?v) (size ?card))) (conj2 ?restr) (new ?newr))
+    (recompute-spec (spec ?spec) (agr 3p) (result ?newspec))
+
     )
 #||
    ;;  NP with SPECS that subcategorize for "of" PP's that are plural
