@@ -134,12 +134,26 @@
  :tags (:base500)
  :words (
   (W::ALL
-   (wordfeats (W::status ont::quantifier) (W::npmod +) (W::negatable +))
+   (wordfeats ;(W::status ont::quantifier)
+    (W::npmod +) (W::negatable +))
    (SENSES
+    #|
     ((LF ONT::UNIVERSAL)
      (non-hierarchy-lf t)(TEMPL quan-count-mass-TEMPL)
      (SYNTAX (W::agr (? agr W::3s W::3p)))
      )
+    |#
+    ((LF ONT::UNIVERSAL)
+     (example "all of the trucks")
+     (non-hierarchy-lf t)(TEMPL quan-cardinality-pl-templ)
+     (SYNTAX (W::agr (? agr W::3p)) (w::status ont::indefinite-plural))
+     )
+    ((LF ONT::UNIVERSAL)
+     (example "all of the water")
+     (non-hierarchy-lf t)(TEMPL quan-mass-TEMPL)
+     (SYNTAX (W::agr (? agr W::3s)) (w::status ont::indefinite)) ; -- never plural if mass
+     )
+    
     )
    )
 ))
