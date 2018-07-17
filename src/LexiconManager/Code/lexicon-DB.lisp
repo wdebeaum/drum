@@ -9,39 +9,24 @@
 
 (defvar *pos-defaults*     
     '((w::V ((w::morph (:forms (-vb)))                           ;;  default values
-	  ;; grammatical categories for verb subcategorizations
-	  (w::subj (% w::np (w::sem ($ ?sem))))
-	  (w::iobj (% -)) ;; indirect object -- only for ditransitive verbs, otherwise use comp3
-	  (w::dobj (% -)) ;; direct object
-	  (w::comp3 (% -)) ;; verb complement phrases -- why is this comp3 and not comp?
-	  (w::part (% -)) ;; for verb particles, as in "pick up"
-	  (w::sem ($ f::Situation)) ;; all verbs have this semantic type
-	  (w::VC +) ;; verb crossing foot feature is positive for all verbs; used for compatibility with Collins parses
-;;	  (w::dys nil) ;; vector for dysfluency detection -- every word has this
-	 ))
+	     ;; grammatical categories for verb subcategorizations
+	     (w::subj (% w::np (w::sem ($ ?sem))))
+	     (w::iobj (% -)) ;; indirect object -- only for ditransitive verbs, otherwise use comp3
+	     (w::dobj (% -)) ;; direct object
+	     (w::comp3 (% -)) ;; verb complement phrases -- why is this comp3 and not comp?
+	     (w::part (% -)) ;; for verb particles, as in "pick up"
+	     (w::sem ($ f::Situation)) ;; all verbs have this semantic type
+	     (w::VC +) ;; verb crossing foot feature is positive for all verbs; used for compatibility with Collins parses
+	     ))
       (w::N ((w::morph (:forms (-S-3P)))                           ;;  default values
-	 (w::SEM ?sem)
-	 (w::LF ?LF) ;; why is this needed for nouns but not for other words?
-	 (w::AGR W::3S) ;; why is this not a var?
-	 (w::case ?cas)
-	 (w::sort ?srt)
-	 (w::mass ?mss)
-;;	 (w::dys nil)
-	 ))
-      ;; swift 06/30/06 -- the dys feature is not currently used
-;;      (w::adj ((w::dys nil)))
-;;      (w::adv ((w::dys nil)))
-;;      (w::quan ((w::dys nil)))
-;;      (w::art ((w::dys nil)))
-;;      (w::conj ((w::dys nil)))
-;;      (w::fp ((w::dys nil)))
-;;      (w::name ((w::dys nil)))
-;;      (w::number-unit ((w::dys nil)))
-;;      (w::ordinal ((w::dys nil)))
-;;      (w::prep ((w::dys nil)))
-;;      (w::pro ((w::dys nil)))
-;;      (w::uttword ((w::dys nil)))
-;;      (w::value ((w::dys nil)))
+	     (w::SEM ?sem)
+	     (w::LF ?LF) ;; why is this needed for nouns but not for other words?
+	     (w::AGR W::3S) ;; why is this not a var?
+	     (w::case ?cas)
+	     (w::sort ?srt)
+	     (w::mass ?mss)
+	     (w::subcat (% -))
+	     ))
       ))
 
 (defvar *var-prefix* "V")

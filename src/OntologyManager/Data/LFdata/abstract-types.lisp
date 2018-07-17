@@ -1029,11 +1029,11 @@
 
 (define-type ont::opinion
  :parent ONT::knowledge-belief
- :wordnet-sense-keys ("opinion%1:10:01" "viewpoint%1:09:00" "belief%1:09:00" "opinion%1:09:00")
+ :wordnet-sense-keys ("opinion%1:10:01" "viewpoint%1:09:00" "belief%1:09:00" "opinion%1:09:00" )
 )
 
 (define-type ont::concept-notion
-    :wordnet-sense-keys ("thought%1:09:01" "notion%1:09:00" "concept%1:09:00" "conceptualization%1:09:00")
+    :wordnet-sense-keys ("thought%1:09:01" "notion%1:09:00" "concept%1:09:00" "conceptualization%1:09:00" "proposition%1:10:00")
     :parent ONT::mental-construction
     :arguments ((:OPTIONAL ONT::FIGURE)
                 )
