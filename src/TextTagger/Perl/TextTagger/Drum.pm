@@ -269,7 +269,7 @@ sub read_from_terms2 {
 	  $lftypes = ['PHARMACOLOGIC-SUBSTANCE'];
 	} elsif ($id =~ /^CVCL:/) { # everything's a cell line
 	  $lftypes = ['CELL-LINE'];
-	} elsif ($id =~ /^(BE|FA|NEXTPROT-FAMILY):/) { # everything's a protein family
+	} elsif ($id =~ /^(FA|FPLX|NEXTPROT-FAMILY):/) { # everything's a protein family
 	  $lftypes = ['PROTEIN-FAMILY'];
 	} elsif ($id =~ /^HP:/) { # everything (that we get) is a disease
 	  # NOTE: technically we could use EFO's hierarchy for this, but that
@@ -1236,8 +1236,8 @@ sub score_match {
   } else {
     die "Unrecognized term status: $m->{status}";
   }
-  # we really like bioentities
-  if ($pkg eq 'BE') {
+  # we really like famplex
+  if ($pkg eq 'FPLX') {
     $status_score++;
   }
 

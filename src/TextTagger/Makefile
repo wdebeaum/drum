@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.112 2018/06/07 16:56:44 wdebeaum Exp $
+# $Id: Makefile,v 1.113 2018/07/26 17:45:11 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -210,7 +210,7 @@ drum-dbxrefs.tsv: get-uniprot-dbxrefs.pl downloads/uniprot_sprot.dat.gz uniprot-
 	gunzip -c downloads/uniprot_sprot.dat.gz \
 	| ./$< >$@
 
-OBO_FILES:=$(addprefix downloads/,bioentities.obo BrendaTissueOBO cellosaurus.obo chebi.obo cl-basic.obo efo.obo go.obo pr.obo unit.obo)
+OBO_FILES:=$(addprefix downloads/,famplex.obo BrendaTissueOBO cellosaurus.obo chebi.obo cl-basic.obo efo.obo go.obo pr.obo unit.obo)
 # psi-mi25.obo so-xp.obo
 
 obo-terms.tsv: get-obo-terms.pl $(OBO_FILES) Makefile
@@ -304,8 +304,8 @@ clean::
 
 endif
 
-downloads/bioentities.obo:
-	$(call download_compressed,"https://raw.githubusercontent.com/sorgerlab/bioentities/master/export/bioentities.obo")
+downloads/famplex.obo:
+	$(call download_compressed,"https://raw.githubusercontent.com/sorgerlab/famplex/master/export/famplex.obo")
 
 # see http://www.obofoundry.org/ for up-to-date links
 
@@ -384,7 +384,7 @@ downloads/LEXICON:
 downloads/inflection.table:
 	$(call download_compressed,"http://lexsrv3.nlm.nih.gov/LexSysGroup/Projects/lexicon/2015/release/LEX/MISC/inflection.table")
 
-drum-dsl/BE/COMPLETE: downloads/bioentities.obo obo-to-dsl.pl
+drum-dsl/FPLX/COMPLETE: downloads/famplex.obo obo-to-dsl.pl
 	./obo-to-dsl.pl <$<
 	touch $@
 
@@ -429,7 +429,6 @@ drum-dsl/COMPLETE: drum-dsl/BTO/COMPLETE drum-dsl/CHEBI/COMPLETE drum-dsl/CO/COM
 
 # drum-dsl/MI/COMPLETE
 # drum-dsl/SO/COMPLETE
-# drum-dsl/BE/COMPLETE
 
 clean::
 	rm -rf specialist.tsv drum-terms.tsv drum-dbxrefs.tsv obo-terms.tsv hgnc-terms.tsv uniprot-terms.tsv uniprot-subcell-terms.tsv nextprot-family-terms.tsv ncit-terms.tsv pfam-terms.tsv mesh-scr-terms.tsv drum-dsl

@@ -1,8 +1,8 @@
 ;;;; ontology mappings from DRUM-specific ontologies to TRIPS ontology
 ;;;; in DeepSemLex lisp format
 
-;;; BioEntities
-(concept BE::|root| ; protein family or complex
+;;; FamPlex (formerly known as BioEntities)
+(concept FPLX::|root| ; protein family or complex
   (inherit ONT::protein-family))
 
 ;;; ChEBI (Chemical Entities of Biological Interest)

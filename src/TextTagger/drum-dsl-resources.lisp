@@ -32,20 +32,21 @@
 	  ))
       (if (null versions) '(nil) versions))))
 
-;; bioentities is an OBO file, but it uses non-numeric IDs, so instead we go by
+;; famplex, formerly known as bioentities
+;; famplex is an OBO file, but it uses non-numeric IDs, so instead we go by
 ;; the first character (which happens to always match /\w/)
-(defun get-bioentities-files-for-symbol (rv sym)
+(defun get-famplex-files-for-symbol (rv sym)
   (with-slots (base-dir) rv
     (let* ((symname (symbol-name sym))
 	   (filename (string-upcase (subseq symname 0 1))))
       (list (make-pathname :defaults base-dir :name filename :type "lisp")))))
 
-(defresource (BE BioEntities) (
-  :base-dir (pathname-directory #!TRIPS"src;TextTagger;drum-dsl;BE;")
-  :get-files-for-symbol #'get-bioentities-files-for-symbol
+(defresource (FPLX FamPlex) (
+  :base-dir (pathname-directory #!TRIPS"src;TextTagger;drum-dsl;FPLX;")
+  :get-files-for-symbol #'get-famplex-files-for-symbol
   ))
 
-(defresource (BEL Biological-Expression-Language)) ; also used in bioentities
+(defresource (BEL Biological-Expression-Language)) ; also used in famplex
 
 (def-obo-resource (BTO brenda-tissue-ontology) (:version "119"))
 (def-obo-resource (CHEBI chemical-entities-of-biological-interest))
