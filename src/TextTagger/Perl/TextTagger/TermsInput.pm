@@ -38,7 +38,12 @@ sub tag_input_terms {
 #    while ($text =~ /\b\Q$search\E\b/g) {
 # HACK for DRUM to allow (various kinds of) dash insertion and case variants
     $search = join("[\x{2010}-\x{2015}\x{2212}-]?", map { quotemeta($_) } split(//, $search));
-    while ($text =~ /\b$search\b/gi) {
+    my $re = qr/$search/i;
+    # enforce word boundaries only on the ends of the search term that are word
+    # characters (so we can have input terms like "<sil>")
+    $re = qr/\b$re/ if ($search =~ /^\w/);
+    $re = qr/$re\b/ if ($search =~ /\w$/);
+    while ($text =~ /$re/g) {
       push @tags, +{ %$term, match2tag() };
     }
   }
