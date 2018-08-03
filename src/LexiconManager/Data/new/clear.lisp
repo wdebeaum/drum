@@ -18,6 +18,7 @@
      (TEMPL AGENT-source-affected-optional-TEMPL (xp (% W::pp (W::ptype W::of))))
      (example "clear the airfield of debris")
      )
+    #|
     ((meta-data :origin trips :entry-date 20060414 :change-date 20090529 :comments nil :vn ("clear-10.3-1"))
      (LF-PARENT ONT::cause-come-from)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
@@ -25,6 +26,7 @@
      ;;;; swier --
      (example "clear the dust from the monitor")
      )
+    |#
     )
    )
 ))

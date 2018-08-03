@@ -1825,6 +1825,7 @@
 (define-type ONT::approve-authorize
  :wordnet-sense-keys ("authorize%2:32:00" "approve%2:31:00" "authorize%2:41:00" "condone%2:32:00")
  :parent ONT::judgement
+ :arguments ((:required ONT::AFFECTED ((? t f::abstr-obj f::situation))))
  )
 
 (define-type ONT::abuse
@@ -2896,7 +2897,7 @@
  :wordnet-sense-keys ("empty%2:30:01")
  :parent ONT::cause-come-from
  :arguments ((:OPTIONAL ONT::Agent)
-             (:OPTIONAL ONT::affected-result (F::phys-obj (F::Container +)))
+             (:OPTIONAL ONT::affected-result (F::phys-obj)) ;(F::Container +)))
 	     (:OPTIONAL ONT::affected)
 	     )
  )
