@@ -646,7 +646,7 @@
     ((N1 (sort pred) (var ?v) (class ?lf) (qual -) (COMPLEX +)
 	 (RESTR ?con) ;(restr (& (?smap ?v1) (scale ?sc)))
 	 (gap ?gap)
-      (subcat -)
+      (subcat ?!subcat)
       )
      -N1-reln3>
      (head (n (sort reln) (lf ?lf) (RESTR ?r)
@@ -665,7 +665,7 @@
     ;; NOTE: it is crucial to have (SUBCAT -) there, or the N1 will never undergo n-n modification!
     ((N1 (sort pred) (var ?v) (class ?lf) (qual -) (COMPLEX +)
       (restr (& (?smap ?v1) (?smap2 ?v2) (scale ?sc)))
-      (subcat -)
+      (subcat ?!subcat)
       )
      -N1-reln-two-subcat>
      (head (n (sort reln) (lf ?lf)
@@ -683,7 +683,7 @@
    ;;  alternate construction, e.g., the GTP GTD ratio, the acorn booth intersection
    ((N1 (sort pred) (var ?v) (class ?lf) (qual -) (COMPLEX +)
       (restr (& (?smap ?v1) (?smap2 ?v2) (scale ?sc)))
-      (subcat -)
+      (subcat ?!subcat)
       )
      -N1-reln-two-subcat-alt> 
     (np (var ?v1) (sem ?ssem) (lf ?lf2))
@@ -2143,7 +2143,7 @@
    
     ((N1 (sort pred) (var ?v) (class ?lf) (qual -) (COMPLEX +)
       (restr (& (?smap ?v1) (?amap ?v2)))
-      (subcat -) (argument -)
+      (subcat ?!subcat) (argument -)
       )
      -N1-reln-arg-subcat1>
      (head (n (sort reln) (lf ?lf)
@@ -2299,13 +2299,15 @@
 	       (wh ?w) (WH-VAR ?whv) 
 	       (agr ?agr) (RESTR ?spec-restr) (NOSIMPLE -))   ;; NOSIMPLE prevents this rule for a few cases
          (head (N1 (VAR ?v) (SORT PRED) (CLASS ?c) (MASS ?m)
+		   ;;(status ?spec)
 		(KIND -) (agr ?agr) (RESTR ?r) (rate-activity-nom -)
 		(agent-nom -)   ;;  this rule can't apply to agent nominalizations directly (they must modified first using rule -agentnom1>
 		(sem ?sem) (transform ?transform) (complex ?complex) ; need complex for two-np-conjunct
+		(subcat-map ?subcat-map) (subcat (% ?xx (var ?sc-var)))
 		))
 	 (recompute-spec (spec ?spec) (agr ?agr) (result ?newspec))
-	 ;;(add-to-conjunct (val (SIZE ?card)) (old ?setr) (new ?setr1))
-	 (append-conjuncts (conj1 ?spec-restr) (conj2 ?r) (new ?con1))
+	 (add-to-conjunct (val (?subcat-map ?sc-var)) (old ?r) (new ?newr))
+	 (append-conjuncts (conj1 ?spec-restr) (conj2 ?newr) (new ?con1))
 	 )
 	
         ;; e.g., (two/some) more/less eggs
@@ -2366,7 +2368,7 @@
         ;;  e.g., sand, sand in the corner
         ((NP (MASS (? xx MASS bare))
              (LF (% Description (STATUS ONT::BARE) (VAR ?v) (SORT STUFF) (sem ?sem)
-	            (CLASS ?c) (CONSTRAINT ?r)
+	            (CLASS ?c) (CONSTRAINT ?newr)
 		    (sem ?sem) (transform ?transform)
 		    ))	      
              (SORT PRED) (VAR ?v) (simple ?x)
@@ -2376,7 +2378,8 @@
          (head (N1 (MASS (? xx MASS bare)) (AGR 3s) (VAR ?v) (CLASS ?c) (RESTR ?r) (sem ?sem)
 		(transform ?transform) (post-subcat -) (simple ?x) (agent-nom -) (rate-activity-nom -)
 		(derived-from-name -) ;; this feature is + only if we have a base N1 derived from a NAME (so no need to build a competing NP!)
-		)))
+		(subcat-map ?subcat-map) (subcat (% ?sc1 (var ?sc-var)))))
+	  (add-to-conjunct (val (?subcat-map ?sc-var)) (old ?r) (new ?newr)))
         
 	;; ANOTHER seems distinct in its behavior so we do it in some grammar rules
 
@@ -2514,7 +2517,7 @@
 	;; TEST: dogs, five dogs
         ((NP (var ?v) (LF (% Description (STATUS ONT::INDEFINITE-PLURAL)
 ;			     (constraint (& ?setr))
-			     (CONSTRAINT ?r) (sem ?sem)
+			     (CONSTRAINT ?newr) (sem ?sem)
 			     (VAR ?v) (CLASS ?c)))
 	     (simple +)
 	     (sem ?sem) (transform ?transform)
@@ -2524,24 +2527,15 @@
          (head (N1 (SORT PRED) (mass (? mass count bare)) (mass ?m)
 		   (AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -) (agent-nom -)
 		   (sem ?sem) (transform ?transform)
+		   (subcat-map ?subcat-map)
+		   (subcat (% ?xx (var ?sc-var)))
 		   (post-subcat -)
 		   ))
+	  
+	 (add-to-conjunct (old ?r) (val (?subcat-map ?sc-var)) (new ?newr))   ;; we add the subcat to the LF in cases its added later
 	 )
 		
-        ;;  bare plural count nouns are sets
-;        ((NP (LF (% Description (STATUS ONT::INDEFINITE) (VAR *) (SORT SET) (CONSTRAINT ?setr)
-;                    (CLASS (SET-OF (% *PRO* (STATUS KIND) (VAR ?v) (CLASS ?c) (CONSTRAINT ?r))))
-;                    (sem ?sem) (transform ?transform)))
-;             (SORT PRED) (VAR *))
-;         -bare-plural-count> 
-;         ;; Myrosia 10/13/03 added a possibility of (mass bare) -- e.g. for "lunches" undergoing this rule
-;         (head (N1 (SORT PRED) (mass (? mass count bare)) (mass ?m)
-;                (AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (SET-RESTR ?setr)
-;                (sem ?sem) (transform ?transform)
-;                (post-subcat -)
-;                )))
-
-        ;;  bare plural substance unit nouns are indefinite measures
+	;;  bare plural substance unit nouns are indefinite measures
 	;;  gallons, bunches, ...
 
         ((NP (LF (% Description (status ont::indefinite) (VAR ?v)
@@ -2589,18 +2583,20 @@
 	;;  Also used for N1 conjunction "the truck and train"
         ((NP (LF (% Description (STATUS ONT::BARE) (VAR ?v) (SORT INDIVIDUAL)
 	            (CLASS ?c) (CONSTRAINT ?r) (sem ?sem) (transform ?transform)))
-             ;(SORT PRED)
-	     (VAR ?v) (SORT ?!sort)
-             (BARE-NP +) (name-or-bare ?nob)
-	     (simple +)
-	     )
+					;(SORT PRED)
+	  (VAR ?v) (SORT ?!sort)
+	  (BARE-NP +) (name-or-bare ?nob)
+	  (simple +)
+	  )
          -bare-singular> .98
          (head (N1 (SORT (? !sort substance-unit)) (MASS  count) (gerund -) ;;(complex -) 
 		   (name-or-bare ?nob) 
 		   (derived-from-name -)  ;; names already can become NPs by simpler derivations
-		(AGR 3s) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -) (agent-nom -)
-		(sem ?sem) (transform ?transform)
+		   (AGR 3s) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -) (agent-nom -)
+		   (sem ?sem) (transform ?transform)
+		(subcat-map ?subcat-map) (subcat (% ?xx (var ?sc-var))
 		)))
+	 (add-to-conjunct (old ?r) (val (?subcat-map ?sc-var)) (new ?newr)))
 
 	;;  special rule for proteins that are tagged as common nouns but used as names
 	((NP (LF (% Description (STATUS ONT::definite) (VAR ?v) (SORT INDIVIDUAL)
@@ -5196,18 +5192,19 @@
 	    (LF (% ?sort (class ?c1) (status ?status))) (CASE ?c) (constraint ?con) (mass ?m2) ;; allowing mismatch on mass
 	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram] 	    
 	    ))
-     (conj (SEQ +) (LF ?op) (var ?v) ) ;;(status ?status))
-     (NP (SEM ?s2) (VAR ?v2) (agr ?agr1)  (complex -) (expletive -) ;;(bare-np ?bnp)
-	    (generated ?gen2)  (time-converted ?tc1)  (gerund ?ger) (wh ?wh)
-	    ;; (bare-sequence -)
-	    (LF (% ?sort (class ?c2) (status ?status2))) (CASE ?c) (constraint ?con2) (mass ?m1) ;; allowing mismatch on mass -- e.g. "fatigue and weakness"
-	    (sort (? !sort unit-measure)))
-     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
-     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
-     (logical-and (in1 ?gen1) (in2 ?gen2) (out ?generated))
-     (combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
-     (recompute-agr (in1 ?agr) (in2 ?agr1) (out ?agr-out))
-     )
+      (conj (SEQ +) (LF ?op) (var ?v) ) ;;(status ?status))
+      (NP (SEM ?s2) (VAR ?v2) (agr ?agr1)  (complex -) (expletive -)
+       (bare-np -)  ;; bare-NP should go through N!-conjunct, not NP-conjunct
+       (generated ?gen2)  (time-converted ?tc1)  (gerund ?ger) (wh ?wh)
+       ;; (bare-sequence -)
+       (LF (% ?sort (class ?c2) (status ?status2))) (CASE ?c) (constraint ?con2) (mass ?m1) ;; allowing mismatch on mass -- e.g. "fatigue and weakness"
+       (sort (? !sort unit-measure)))
+      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+      (logical-and (in1 ?gen1) (in2 ?gen2) (out ?generated))
+      (combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
+      (recompute-agr (in1 ?agr) (in2 ?agr1) (out ?agr-out))
+      )
 
     
     ;;  But not construction, e,g,. apples but not pears, apples not pears, 
@@ -5569,7 +5566,7 @@
 
 (parser::augment-grammar	 
   '((headfeatures
-     (N1 lf headcat transform set-restr refl abbrev)
+     (N1 lf headcat transform set-restr refl abbrev subcat subcat-map)
      )
 ;;  simple conjuncts/disjunct of N1, e.g., the (dog and cat)
     ((N1 (ATTACH ?a) (var ?v) (agr ?agr-out) ;(agr 3p) ; ice and fire could be 3s or 3p
@@ -5602,7 +5599,7 @@
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
      (logical-and (in1 ?gen1) (in2 ?gen2) (out ?generated))
-     (combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
+     ;;(combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
      (recompute-agr (in1 ?agr) (in2 ?agr1) (out ?agr-out))
      )
 

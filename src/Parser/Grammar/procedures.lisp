@@ -770,14 +770,22 @@
   )
 
 (defun combine-status (args)
+  "Here we have two or more NP specs in a conjunction, and need to compute the SPEC for the conjunct"
   (let ((in1 (second (assoc 'w::in1 args)))
         (in2 (second (assoc 'w::in2 args)))
 	(out (second (assoc 'w::out args)))
 	)
-    (if (and (member in1 '(ONT::DEFINITE ONT::DEFINITE-PLURAL))
+    (cond
+      ;; if both definite, we get a definite-plural
+      ((and (member in1 '(ONT::DEFINITE ONT::DEFINITE-PLURAL))
 	     (member in2 '(ONT::DEFINITE ONT::DEFINITE-PLURAL)))
-	(match-vals nil out 'ONT::DEFINITE-PLURAL)
-        (match-vals nil out 'ONT::INDEFINITE-PLURAL)
+       (match-vals nil out 'ONT::DEFINITE-PLURAL))
+      ;; if both WH terms, we get a WH term
+      ((and (member in1 '(ont::wh ont::wh-plural))
+	    (member in2 '(ont::WH ont::wh-plural)))
+       (match-vals nil out 'ONT::WH-PLURAL))
+      (t ;; otherwise an indefinite plural
+       (match-vals nil out 'ONT::INDEFINITE-PLURAL)
       )
-))
+)))
 
