@@ -6,7 +6,7 @@
  :tags (:base500)
  :words (
   (W::see
-   (wordfeats (W::morph (:forms (-vb) :ing W::seeing :past W::saw :pastpart W::seen)))
+   (wordfeats (W::morph (:forms (-vb) :ing W::seeing :past W::saw :pastpart W::seen :nom w::sight)))
    (SENSES
     ((LF-PARENT ONT::ACTIVE-PERCEPTION)
      (example "he saw the man with the telescope")

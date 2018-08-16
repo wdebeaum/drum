@@ -627,7 +627,7 @@
    ((N1 (sort pred) (class ?lf) (var ?v)
      ;; (restr (& (?smap (% *PRO* (var *) (sem ?argsem) (constraint (& (ROLE-VALUE-OF ?v) (fills-ROLE ?lf)))))))  ;; to be done in IM now
       (RESTR ?con) ;(RESTR (& (scale ?sc)))
-     (qual -) (postadvbl -) (subcat -)
+     (qual -) (postadvbl -) (subcat (% -))
      )
     -N1-reln1> .995
     (head (n  (sort reln) (lf ?lf) (allow-deleted-comp +) (RESTR ?r)
@@ -700,7 +700,7 @@
     
   ((N1 (sort pred) (var ?v) (class ?lf) (qual -) (COMPLEX +)
       (restr (& (?smap ?v1) (?smap2 ?v2) (scale ?sc)))
-      (subcat -)
+      (subcat (% -))
       )
      -N1-reln-two-subcat-colon-dash> 1
     (np (var ?v1) (sem ?ssem) (lf ?lf2))
@@ -986,7 +986,7 @@
     ;; e.g.  trucks of oranges
     ((N1 (RESTR (& (?!subcatmap ?v1))) (SORT ?sort) (COMPLEX ?complex)
       (CLASS ?LF) (GAP ?gap) (POSTADVBL -) (QUAL -) (ARGUMENT-MAP ?am)
-      (subcat -)
+      (subcat (% -))
       )
      -N1-subcat1>
      (Head (N (VAR ?v) (lf ?LF)
@@ -1005,7 +1005,7 @@
     ;; don't produce a var
     ((N1 (RESTR (& (?smap2 ?l1) (?smap ?l2))) (SORT ?sort) (COMPLEX +)
       (CLASS ?LF) (GAP ?gap) (POSTADVBL -) (QUAL -) (ARGUMENT-MAP ?am)
-      (subcat -)
+      (subcat (% -))
       )
      -N1-coordinates>
      (Head (N (VAR ?v) (lf ?LF)
@@ -1818,7 +1818,7 @@
      -n-sing-hyphen-n1-> .98
      (n1 (AGR 3s) 
         (var ?v1) (sem ?sem) (restr ?modr) (derived-from-name -) ; names go through -name-n1>
-      (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -) (SUBCAT -) (GAP -)
+      (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -) (SUBCAT (% -)) (GAP -)
       (postadvbl -) (post-subcat -) (n-sing-already -)
       )
      (word (lex w::punc-minus))
@@ -1837,7 +1837,7 @@
      -n-sing-reln1-> 
      (n1 (AGR 3s) 
         (var ?v1) (sem ?sem) (restr ?modr) 
-      (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -) (SUBCAT -) (GAP -)
+      (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -) (SUBCAT (% -)) (GAP -)
       (postadvbl -) (post-subcat -)
       )
      (head (N1 (VAR ?v2) (QUAL -) (subcat (% ?cat (sem ?sem)))
@@ -1857,7 +1857,7 @@
      -n-plur-n1-> 0.95 ;; prevent this from happening too often
      (n1 (AGR 3p) (abbrev -)
 	 (var ?v1) (sem ?sem) (restr ?modr) 
-	 (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -) (SUBCAT -) (GAP -)
+	 (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -) (SUBCAT (% -)) (GAP -)
 	 (postadvbl -) (post-subcat -)
       )
      (head (N1 (VAR ?v2) (QUAL -) 
@@ -1877,7 +1877,7 @@
     
     ((N1 (RESTR ?con)
       (CLASS ?c) (SORT ?sort) (QUAL ?qual) (COMPLEX +) (var ?v)
-      (relc +)  (subcat -) (post-subcat -)
+      (relc +)  (subcat (% -)) (post-subcat -)
       )
      -n1-rel>
      (head (N1 (VAR ?v) (RESTR ?r)
@@ -1910,7 +1910,7 @@
    ;; somewhat rare construction allows qualifications: the man though who saw the party, lied about it.
    ((N1 (RESTR ?con)
       (CLASS ?c) (SORT ?sort) (QUAL ?qual) (COMPLEX +) (var ?v)
-      (relc +)  (subcat -) (post-subcat -)
+      (relc +)  (subcat (% -)) (post-subcat -)
       )
     -n1-qual-rel>
     (head (N1 (VAR ?v) (RESTR ?r)
@@ -1929,7 +1929,7 @@
     ((N1 (RESTR ?con)
       (CLASS ?c) (SORT ?sort)
       (QUAL ?qual) (COMPLEX +) (wh -) ;;(wh-var ?whv)
-      (relc +)  (subcat -) (post-subcat -)
+      (relc +)  (subcat (% -)) (post-subcat -)
       )
      -n1-rel-whose>
      (head (N1 (VAR ?v) (RESTR ?r) (SEM ?sem) (CLASS ?c) (SORT ?sort) (QUAL ?qual)
@@ -3501,7 +3501,7 @@
                   (transform ?transform)
 		  ))
            )
-     -adj-ing> ;;0.98
+     -adj-ing>
      (head (V (VFORM (? vf ING)) (COMP3 (% - )) ;;(DOBJ (% -)) 
 	      (GAP -) (LF ?lf) (sem ?sem)
               (SUBJ-MAP ?!reln) (SUBJ ?subj)
@@ -4095,6 +4095,7 @@
       (dobj ?dobj)
       (comp3 -)
       (comp3-map -)
+      (subcat (% -))
       )
      -nom-compln> 1
      (head (n1  (var ?v) (gap -) (aux -)(case ?case) (agr ?agr)
@@ -4439,6 +4440,7 @@
       (comp3-map ?comp-map)
       (nomobjpreps ?nop)
       (nomsubjpreps ?nsp)
+      (subcat (% -))
       )
      -gerund2> ;;0.98
      (head (v (vform ing) (var ?v) (gap -) (aux -) 

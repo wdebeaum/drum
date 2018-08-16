@@ -30,13 +30,13 @@
   (W::THE
    (SENSES
     ((LF ONT::DEFINITE)
-     (non-hierarchy-lf t)(TEMPL mass-agr-3s-TEMPL)
+     (non-hierarchy-lf t)(TEMPL mass-agr-TEMPL)  ;; THIS covers insgular and plural
      )
     )
    )
 ))
 
-(define-words :pos W::art :boost-word t
+#||(define-words :pos W::art :boost-word t
  :tags (:base500)
  :words (
   (W::THE
@@ -46,7 +46,7 @@
      )
     )
    )
-))
+))|#
 
 (define-words :POS w::name :templ name-templ
   :WORDS (

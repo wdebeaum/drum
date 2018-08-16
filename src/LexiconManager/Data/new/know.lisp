@@ -6,7 +6,7 @@
  :tags (:base500)
  :words (
   (W::know
-   (wordfeats (W::morph (:forms (-vb) :past W::knew :pastpart W::known)))
+   (wordfeats (W::morph (:forms (-vb) :past W::knew :pastpart W::known :nom w::knowledge)))
    (SENSES
     ;;;; I know (that) he...
     ((LF-PARENT ONT::KNOW)

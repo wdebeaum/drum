@@ -4001,7 +4001,7 @@
 
 (parser::augment-grammar
  '((headfeatures
-    (vp vform agr comp3 cont postadvbl  aux modal lex headcat tma transform subj-map advbl-needed template subj subjvar))
+    (s vform agr comp3 cont postadvbl  aux modal lex headcat tma transform subj-map advbl-needed template subj subjvar))
 
    ;; the news/message arrived that X  ==>   The news that X arrived
    ;;   also variants such as the news came that ...,

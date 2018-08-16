@@ -11,9 +11,9 @@
      (meta-data :origin calo-ontology :entry-date 20060215 :change-date nil :wn ("belief%1:09:01") :comments caloy3)
      (TEMPL OTHER-RELN-TEMPL (xp (% W::pp (W::ptype (? pt w::in W::about)))))
      )
-    ((LF-PARENT ONT::knowledge-belief)
+    #||((LF-PARENT ONT::knowledge-belief)
      (templ count-subcat-that-optional-templ)
-     )
+     )||#
     ))
   ))
 
