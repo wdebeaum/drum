@@ -555,7 +555,7 @@
 (define-type ont::obj-in-path
     :arguments (;(:ESSENTIAL ONT::FIGURE ((? type F::Situation F::phys-obj) (F::type (? path-type ont::motion ont::apply-force ont::route)) (F::trajectory +)))
 		;(:ESSENTIAL ONT::FIGURE ((? type F::phys-obj) ))
-		(:ESSENTIAL ONT::FIGURE ((? type F::Situation F::phys-obj) (F::type (? t F::route F::event-of-change)) )) ; I go to the post office via ...; The route to Avon via...
+		(:ESSENTIAL ONT::FIGURE ((? type F::Situation F::phys-obj) (F::type (? t ont::route ont::event-of-change)) )) ; I go to the post office via ...; The route to Avon via...
 		(:essential ONT::GROUND  (F::Phys-obj (F::form F::object)))) 
     :parent ont::path
     )
