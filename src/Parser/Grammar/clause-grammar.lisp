@@ -2468,7 +2468,7 @@
      (advbl-needed ?avn)
      )
     -s-ynq-be-adv>
-    (head (v (sem ?sem) (aux -)
+    (head (v (aux -)
 	   (lf ?belf)
 	   (subj-map ?subj-map) (dobj-map ?dobj-map) (comp3-map ?comp3-map)
 	   
@@ -2495,7 +2495,7 @@
     (add-to-conjunct (val (tense (? vf past pres fut))) (old ?tma) (new ?newtma))
     ?subj
     (advbl (atype pre-vp) (gap -)  ; pre-vp: Is the block eventually red?
-     (argument (% s (sem ?argsem)))
+     (argument (% s (sem ?sem)))
      (arg ?v) (var ?mod) (role ?advrole) (subcat -))           
     ?dobj
     ?comp)
@@ -2539,7 +2539,7 @@
 	     (advbl-needed ?avn)
 	     ))
     (advbl (atype post) (gap -)  ; post: Is the block red eventually?
-     (argument (% s (sem ?argsem)))
+     (argument (% s (sem ?sem)))
      (arg ?v) (var ?mod) (role ?advrole) (subcat -))
     (add-to-conjunct (val (mod ?mod)) (old ?con) (new ?newcon))
     )
