@@ -2712,6 +2712,12 @@
  :parent ONT::group-object
  )
 
+(define-type ONT::ecosystem
+  :wordnet-sense-keys ("biotic_community%1:14:00" "ecosystem%1:14:00" "biosphere%1:15:00")
+  :comment "An interconnected group of entities fo5ming an ecosystem"
+ :parent ONT::system
+ )
+
 (define-type ONT::formation
  :parent ONT::group-object
  )
