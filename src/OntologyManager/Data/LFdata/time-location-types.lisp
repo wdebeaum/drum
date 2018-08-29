@@ -1130,6 +1130,17 @@
     :parent ont::time-interval
     )
 
+(define-type ONT::month
+    :comment "time interval of a named month"
+    :parent ont::time-interval
+    )
+
+(define-type ONT::day
+    :comment "time interval of a day"
+    :parent ont::time-interval
+    )
+
+
 ;; ont::time-unit has been moved under ont::measure-unit (with other units pounds, ghz, etc.)
 ;;; Covers all explicit things with date and time counting
 ;; Hours, minutes etc.
@@ -1190,7 +1201,7 @@
 
 (define-type ont::recurring-event
     :comment "events that recur every year (or some time interval)"
-    :wordnet-sense-keys ("day%1:28:01")
+    :wordnet-sense-keys ("day%1:28:01" "season%1:28:01" "season%1:28:02")
     :parent ONT::date-object-on)
 
 

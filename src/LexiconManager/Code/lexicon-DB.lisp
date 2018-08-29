@@ -27,6 +27,16 @@
 	     (w::mass ?mss)
 	     (w::subcat (% -))
 	     ))
+      ; NAME is the same as N
+      (w::NAME ((w::morph (:forms (-S-3P)))                           ;;  default values
+	     (w::SEM ?sem)
+	     (w::LF ?LF) ;; why is this needed for nouns but not for other words?
+	     (w::AGR W::3S) ;; why is this not a var?
+	     (w::case ?cas)
+	     (w::sort ?srt)
+	     (w::mass ?mss)
+	     (w::subcat (% -))
+	     ))
       ))
 
 (defvar *var-prefix* "V")

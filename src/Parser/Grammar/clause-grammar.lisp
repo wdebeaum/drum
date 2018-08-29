@@ -2045,7 +2045,10 @@
               (subj-map ?subjvar) (dobj-map ?dobjvar)
 	    (comp3-map ?compvar))))
 
-   
+;   
+; Now we use the expletive template constructions?   
+;   
+#|   
    ;; there transformation - be and exist forms can take there as a subject
    ;; for objects
    ;; test: there exists a dog
@@ -2071,7 +2074,6 @@
 	    (part (% -))
 	    )))   
 
-
     ;; for properties  e.g., there is a man in the corner
    ((v (vform ?vform) (be-there +)
       (subj (% np (lex there) (agr ?agr) (sem ($ -)))) (subj-map -)
@@ -2084,7 +2086,8 @@
      -be-there-sense1> .97
      (head (v (vform ?vform) (be-there -)
 	    (agr ?agr)
-	    (lf ont::have-property) (transform ?transform)
+	    (lf ont::exists) ;(lf ont::have-property)
+	    (transform ?transform)
 	    (lex (? lex be was were been is ^s are))
 	    (sem ?sem)
 	    (subj ?!subj) (subj-map ?subj-map)
@@ -2094,7 +2097,7 @@
 	    (comp3 (% -)) (comp3-map -)
 	    (part (% -))
 	    )))   
-
+|#
    
    ;; a transformation on be to take expletive + filled predicate
    ;; It is...

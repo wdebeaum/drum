@@ -10,7 +10,7 @@
      ((LF-PARENT ONT::establish)
       (EXAMPLE "he founded the program on accepted principles")
       (META-DATA :ORIGIN calo-ontology :ENTRY-DATE 20060426 :CHANGE-DATE NIL :COMMENTS nil)
-      (TEMPL agent-affected-create-manner-optional-templ (xp (% w::pp (w::ptype (? pt w::on)))))
+      (TEMPL agent-affected-create-manner-optional-templ (xp2 (% w::pp (w::ptype (? pt w::on)))))
       )
      )
     )

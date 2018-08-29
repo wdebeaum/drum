@@ -10,6 +10,7 @@
      ((LF-PARENT ONT::number-result)
       (meta-data :origin leam :entry-date 20070504 :change-date nil :comments nil)
       (example "the product of A and B")
+      (preference .98)
       (TEMPL OTHER-RELN-TEMPL)
       )
      )

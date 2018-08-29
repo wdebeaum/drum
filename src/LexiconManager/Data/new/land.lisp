@@ -8,7 +8,7 @@
    (W::LAND
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("land%1:17:00"))
-     (LF-PARENT ONT::geo-formation)
+     (LF-PARENT ONT::land)
      )
     )
    )

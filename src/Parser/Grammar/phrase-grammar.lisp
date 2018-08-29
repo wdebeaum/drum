@@ -3545,6 +3545,8 @@
  
  ))
 
+
+
 ;; PP-WORDS
 
 (parser::augment-grammar 
@@ -3554,7 +3556,7 @@
      (ADVBL VAR SEM LEX ATYPE lex headcat transform neg)
      (ADVBL-R VAR SEM LEX ATYPE argument wh lex headcat transform)
      (QUANP CARDINALITY AGR)
-     (N1 lex headcat set-restr refl abbrev nomobjpreps nomsubjpreps agent-nom rate-activity-nom result) ; result for nominalizations
+     (N1 lex headcat set-restr refl abbrev nomobjpreps nomsubjpreps agent-nom rate-activity-nom result subcat subcat-map) ; result for nominalizations
      (ADJP lex headcat argument transform)
      )
 
@@ -3593,6 +3595,277 @@
      (word (lex how))
      (head (quan (sem ?def) (LF ?lf) (MASS MASS) (AGR ?a) (VAR ?v) (lex MUCH))))
 
+
+    ;; This constructs an NP to stand for the implicit object introduced
+    ;;  by the pp-word, e.g., for "why" it is a REASON, for "HOW" it is a METHOD, etc
+    ((NP (PP-WORD +) (SORT PRED) (VAR ?v) (SEM ?s) (lex ?lex) 
+         (WH Q) (WH-VAR ?v) (CASE ?case) (pred ?lf) 
+         (LF (% Description (status WH) (var ?v) (Class ?lf) (SORT (?agr -))
+                (Lex ?lex) (sem ?sem) (transform ?transform) (constraint (% & (proform ?lex)))
+                )))
+     -np-pp-word1>
+     (head (n (SORT PP-WORD) (SEM ?s) (AGR ?agr) (SORT ?sort)
+              (LF ?lf) (sem ?sem)
+              (LEX ?lex) (VAR ?v) (WH Q)
+              (transform ?transform)
+              )))
+    
+    ;; why not e.g., I don't know why not
+    ((NP (PP-WORD +) (SORT PRED) (VAR ?v) (SEM ?s) (lex why) 
+         (WH Q) (CASE ?case) (pred ?lf)
+         (LF (% Description (status WH) (var ?v) (Class ?lf) (SORT (?agr -))
+                (lex why) (sem ?sem) (transform ?transform)
+                )))
+     -np-pp-word-why-not>
+     (head (n (SORT PP-WORD) (lex why) (SEM ?s) (AGR ?agr) (SORT ?sort)
+              (LF ?lf) (sem ?sem)
+              (VAR ?v) (WH Q)`
+              (transform ?transform)
+              ))
+     (word (lex not))
+     )
+    
+    ;;  e.g., what else
+    ((NP (PP-WORD +) (SORT pred) (VAR ?v) (SEM ?s) (lex ?lex) 
+         (WH Q) (WH-VAR ?v) (CASE ?case) (pred ?lf)
+         (LF (% Description (status WH) (var ?v) (Class ?lf) (SORT (?agr -))
+                (Lex ?lex) (sem ?sem) 
+		(constraint (& (MODS ?else-v)))
+			     ;;(?ELSE-LF (% *PRO* (var *) (class ?lf) (sem ?sem) (constraint (& (proform ?else-lex)))))))
+                (transform ?transform) 
+                ))
+         )
+     -np-pp-word-else1>
+     (head (n (SEM ?s) (AGR ?agr) (SORT PP-WORD)
+              (LF ?lf)
+              (sem ?sem) 
+	    (LEX ?lex) (VAR ?v) (WH Q) (transform ?transform)))
+      (Advbl (sort else) (var ?else-v) (arg ?v))
+      ;; (cv (lex ?else-lex) (lex else) (lf ?else-lf))
+     )
+    
+    ;;  Words like there, here, tomorrow (no WH terms) are treated as PRO forms
+
+    ((NP (PP-WORD +) (PRO +) (SORT (? srt pred set)) (VAR ?v) (SEM ?s) (lex ?lex)
+         (role ?lf) (agr (? agr 3s 3p -)) (case ?case)
+         (LF (% Description (status ont::pRO) (var ?v) (Class ?lf) (SORT (?agr -))
+                (Lex ?lex) (sem ?sem) (transform ?transform) (constraint (% & (proform ?lex)))
+                )))
+     -np-pp-word2>
+     (head (N (SEM ?s) (AGR ?agr) (SORT PP-WORD)
+              (LEX ?lex) (VAR ?v) (WH -)
+              (lf ?lf)
+              (sem ?sem) (transform ?transform)
+              )
+           ))
+    
+    ;; adverbials with pp-words have a default pro subcat, expressed as an argument in the LF
+    
+    ;; wh-terms   
+    ((ADVBL  (ARG ?argvar) (SUBCATSEM ?subcatsem)
+      ;; MD 06/11/06
+      ;; note that the explicit propagation up is required, even though argument is head feature
+      ;; otherwise all the relevant features do not propagate up correctly
+      (argument ?argument)
+      (sort pp-word)
+      (wh-var *)  (WH Q)
+      (var ?v) 
+      (IMPRO-CLASS ?pro-class)
+      (GROUNDVAR *)
+      (LF (% PROP (VAR ?v) (CLASS ?reln) 
+	     (CONSTRAINT (& (?!submap (% *PRO* (status *wh-term*) (VAR *) (CLASS ?pro-class)
+					 (SEM ?subcatsem) (CONSTRAINT (& (proform ?lex)
+									 (suchthat ?v)))))
+			    (?!argmap ?argvar)))
+	     (sem ?sem) (transform ?trans)))
+      (gap -) (pp-word +)
+      (role ?reln)
+      )
+     -advbl-wh-word> 
+     (head (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ?pro-class)
+	    (argument ?argument)
+	    (ARGUMENT (% ?argcat (var ?argvar)))
+	    (SUBCAT (% ?x (SEM ?subcatsem))) 
+	    (subcat-map ?!submap)
+	    (argument-map ?!argmap)
+	    (LF ?reln) (lex ?lex)
+	    (sem ?sem) (transform ?trans)
+	    ))
+     )
+
+#||  Doesn't seem to be a useful rule - there's not even an ADJ on the RHS
+    
+ ;; how adj is it
+    ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem) (atype ?atype) (comparative ?cmp)
+      (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT ?newc)
+	     (transform ?transform) (sem ?sem) 
+	     )))
+     -degree-pred>
+     (head (ADVBL (LF ?lf) (SUBCAT -) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap)
+	   (constraint ?con) (functn ?fn) (comp-op ?dir)
+	    ))
+     (append-conjuncts (conj1 ?con) (conj2 (& (?argmap ?arg) (functn ?fn)))
+		       (new ?newc))
+     )
+      ||#
+
+    ;; how adj   e.g., how red
+    ((ADJP (ARG ?argvar) (SUBCATSEM ?subcatsem)
+      (wh-var *) (WH Q) (SORT PP-WORD) (how +)
+      (var ?adjv) (atype ?atype)
+      (LF (% PROP (VAR ?adjv) (CLASS ?reln) 
+	     (CONSTRAINT ?newc)
+	     (sem ?sem) (transform ?trans)))
+     ;; (argument (% S (var ?argvar) (sem ?sem1)))
+      (gap -) (pp-word +)
+      (role ?reln)
+      (sem ?sem)
+      )
+     -how-adj>     
+     (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ONT::DEGREE) (lex how))
+     (head (adjp (var ?adjv) (atype ?atype) (arg ?argvar) (sem ?sem) (LF (% PROP (class ?reln) (constraint ?con)))))
+     (append-conjuncts (conj1 ?con) 
+      (conj2 (& (degree (% *PRO* (status *wh-term*) (VAR *) (CLASS ont::degree)
+		   (SEM ?subcatsem) (CONSTRAINT (& (proform ?lex) (suchthat ?adjv)))))))
+      (new ?newc))
+     )
+
+     ;; how adv  e.g., how quickly
+    ((ADVBL  (ARG ?argvar) (SUBCATSEM ?subcatsem)
+      (wh-var *) (WH Q) (SORT PP-WORD) (how-advbl +)
+      (var ?adjv) (atype ?atype) (IMPRO-CLASS ont::degree)
+      (LF (% PROP (VAR ?adjv) (CLASS ?reln) 
+	     (CONSTRAINT ?newc)
+	     (sem ?sem) (transform ?trans)))
+      (gap -) (pp-word +) (argument ?argu)
+      (role ?reln)
+      )
+     -how-advbl>     
+     (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ont::degree) (lex how))
+     (head (advbl (var ?adjv) (atype ?atype) (arg ?argvar)  (argument ?argu) (sort pred) ; to rule out "how about..."
+		  (LF (% PROP (class ?reln) (constraint ?con)))))
+     (append-conjuncts (conj1 ?con) 
+      (conj2 (& (degree (% *PRO* (status *wh-term*) (VAR *) (CLASS ont::degree)
+		   (SEM ?subcatsem) (CONSTRAINT (& (proform ?lex) (suchthat ?adjv)))))))
+      (new ?newc))
+     )
+    
+    ;; pp adverbials, here, there, home 
+    ((ADVBL  (ARG ?argvar) (SUBCATSEM ?subcatsem)
+      (argument ?argument)
+      (sort pp-word)
+      (var ?v) 
+      (LF (% PROP (VAR ?v) (CLASS ?reln) 
+	     (CONSTRAINT (& (?!submap (% *PRO*
+					 (VAR *) (CLASS ?pro-class)
+					 (SEM ?subcatsem) (CONSTRAINT (& (proform ?lex)))))
+			    ;;(suchthat ?v)))))
+			    (?!argmap ?argvar)))
+	     (sem ?sem) (transform ?trans)))
+      (gap -) (pp-word +)
+      (role ?reln)
+             )
+     -advbl-pp-word>     
+     (head (adv (SORT PP-WORD) (wh -) (IMPRO-CLASS ?pro-class)
+		(argument ?argument)
+	        (ARGUMENT (% ?argcat (var ?argvar)))
+	        (SUBCAT (% ?x (SEM ?subcatsem))) 
+	        (subcat-map ?!submap)
+	        (argument-map ?!argmap)
+	        (LF ?reln) (lex ?lex)
+	        (sem ?sem) (transform ?trans)
+	        ))
+     )
+     
+    
+    ;;  ELSE modifier on pp advbls
+    ((ADVBL (ARG ?argvar) (SUBCATSEM ?subcatsem)
+      (FOCUS ?var) (var ?v) (wh-var *) 	(argument ?argument)
+      (LF (% PROP (VAR ?v) (CLASS ?reln) 
+	     (CONSTRAINT (& (?!submap (% *PRO* (VAR *) (SEM ?subcatsem) 
+					 (CONSTRAINT (& (proform ?lex)
+							(mods ?else-v)
+							(suchthat ?v)))))
+			    (?!argmap ?argvar)))
+	     (sem ?sem) (transform ?trans)))
+      (gap -) (pp-word +)
+      (role ?reln)
+      )
+     -advbl-pp-word-else>     
+     (Head (adv (SORT PP-WORD) (wh -)
+	        (ARGUMENT (% ?argcat (var ?argvar)))
+	    (SUBCAT (% ?x (SEM ?subcatsem))) 
+	    (subcat-map ?!submap)
+	    (argument-map ?!argmap)
+	    (argument ?argument)
+	    (LF ?reln) (lex ?lex)
+	    (sem ?sem) (transform ?trans)
+	    (else-word +)
+	    ))
+     ;;     (cv (lex ?else-lex) (lex else) (lf ?else-lf))
+     (Advbl (sort else) (var ?else-v) (arg ?v))
+     )
+
+    ;;   ELSE modifier of WH adverbials..  where else ...
+
+     ((ADVBL (ARG ?argvar) (SUBCATSEM ?subcatsem)
+      (FOCUS ?var) (var ?v) (wh-var *) (WH Q)
+      (LF (% PROP (VAR ?v) (CLASS ?reln) 
+	     (CONSTRAINT (& (?!submap (% *PRO* (class ?proclass) (status *wh-term*)
+					 (VAR *) (SEM ?subcatsem) 
+					 (CONSTRAINT (& (proform ?lex)
+							(mods ?else-v)
+							(suchthat ?v)))))
+			    (?!argmap ?argvar)))
+	     (sem ?sem) (transform ?trans)))
+      (gap -) (pp-word +)
+      (role ?reln)
+      )
+     -advbl-wh-pp-word-else>     
+     (Head (adv (SORT PP-WORD) (wh Q) (impro-class ?proclass)
+	        (ARGUMENT (% ?argcat (var ?argvar)))
+	    (SUBCAT (% ?x (SEM ?subcatsem))) 
+	    (subcat-map ?!submap)
+	    (argument-map ?!argmap)
+	    (LF ?reln) (lex ?lex)
+	    (sem ?sem) (transform ?trans)
+	    (else-word +)
+	    ))
+     ;;     (cv (lex ?else-lex) (lex else) (lf ?else-lf))
+     (Advbl (sort else) (var ?else-v) (arg ?v)))
+     
+    ;; Special construction only for relative clause advbls - we need this only to build the right semantic form
+    ((ADVBL-R  (ARG ?argvar) (SUBCATSEM ?subcatsem) (ARG2 ?arg2var)
+             (FOCUS *) 
+             (var ?v) 
+             (LF (% PROP (VAR ?v) (CLASS ?reln) 
+	            (CONSTRAINT (& (?!submap ?arg2var)
+			           (?!argmap ?argvar)))
+	            (sem ?sem) (transform ?trans)))
+             (gap -) (pp-word +)
+             (role ?reln)
+             )
+     -advbl-r-word>     
+     (head (adv (SORT PP-WORD) (wh Q)
+	        (ARGUMENT (% ?argcat (var ?argvar)))
+	        (SUBCAT (% ?x (SEM ?subcatsem))) 
+	        (subcat-map ?!submap)
+	        (argument-map ?!argmap)
+	        (LF ?reln) (lex ?lex)
+	        (sem ?sem) (transform ?trans)
+	        ))
+     )
+
+))    
+    
+; nominalizations
+; pass up subcat
+(parser::augment-grammar 
+  '((headfeatures
+     (NP VAR SEM LEX wh lex headcat transform postadvbl subcat subcat-map)
+     (N1 lex headcat set-restr refl abbrev nomobjpreps nomsubjpreps agent-nom rate-activity-nom result subcat subcat-map) ; result for nominalizations
+     )    
+    
     ;; VPs as gerund-NPS
     ((NP (SORT PRED)
          (gap -) (var ?v) (agr 3s)
@@ -4119,273 +4392,13 @@
      )
     
 
-    ;; This constructs an NP to stand for the implicit object introduced
-    ;;  by the pp-word, e.g., for "why" it is a REASON, for "HOW" it is a METHOD, etc
-    ((NP (PP-WORD +) (SORT PRED) (VAR ?v) (SEM ?s) (lex ?lex) 
-         (WH Q) (WH-VAR ?v) (CASE ?case) (pred ?lf) 
-         (LF (% Description (status WH) (var ?v) (Class ?lf) (SORT (?agr -))
-                (Lex ?lex) (sem ?sem) (transform ?transform) (constraint (% & (proform ?lex)))
-                )))
-     -np-pp-word1>
-     (head (n (SORT PP-WORD) (SEM ?s) (AGR ?agr) (SORT ?sort)
-              (LF ?lf) (sem ?sem)
-              (LEX ?lex) (VAR ?v) (WH Q)
-              (transform ?transform)
-              )))
-    
-    ;; why not e.g., I don't know why not
-    ((NP (PP-WORD +) (SORT PRED) (VAR ?v) (SEM ?s) (lex why) 
-         (WH Q) (CASE ?case) (pred ?lf)
-         (LF (% Description (status WH) (var ?v) (Class ?lf) (SORT (?agr -))
-                (lex why) (sem ?sem) (transform ?transform)
-                )))
-     -np-pp-word-why-not>
-     (head (n (SORT PP-WORD) (lex why) (SEM ?s) (AGR ?agr) (SORT ?sort)
-              (LF ?lf) (sem ?sem)
-              (VAR ?v) (WH Q)`
-              (transform ?transform)
-              ))
-     (word (lex not))
-     )
-    
-    ;;  e.g., what else
-    ((NP (PP-WORD +) (SORT pred) (VAR ?v) (SEM ?s) (lex ?lex) 
-         (WH Q) (WH-VAR ?v) (CASE ?case) (pred ?lf)
-         (LF (% Description (status WH) (var ?v) (Class ?lf) (SORT (?agr -))
-                (Lex ?lex) (sem ?sem) 
-		(constraint (& (MODS ?else-v)))
-			     ;;(?ELSE-LF (% *PRO* (var *) (class ?lf) (sem ?sem) (constraint (& (proform ?else-lex)))))))
-                (transform ?transform) 
-                ))
-         )
-     -np-pp-word-else1>
-     (head (n (SEM ?s) (AGR ?agr) (SORT PP-WORD)
-              (LF ?lf)
-              (sem ?sem) 
-	    (LEX ?lex) (VAR ?v) (WH Q) (transform ?transform)))
-      (Advbl (sort else) (var ?else-v) (arg ?v))
-      ;; (cv (lex ?else-lex) (lex else) (lf ?else-lf))
-     )
-    
-    ;;  Words like there, here, tomorrow (no WH terms) are treated as PRO forms
-
-    ((NP (PP-WORD +) (PRO +) (SORT (? srt pred set)) (VAR ?v) (SEM ?s) (lex ?lex)
-         (role ?lf) (agr (? agr 3s 3p -)) (case ?case)
-         (LF (% Description (status ont::pRO) (var ?v) (Class ?lf) (SORT (?agr -))
-                (Lex ?lex) (sem ?sem) (transform ?transform) (constraint (% & (proform ?lex)))
-                )))
-     -np-pp-word2>
-     (head (N (SEM ?s) (AGR ?agr) (SORT PP-WORD)
-              (LEX ?lex) (VAR ?v) (WH -)
-              (lf ?lf)
-              (sem ?sem) (transform ?transform)
-              )
-           ))
-    
-    ;; adverbials with pp-words have a default pro subcat, expressed as an argument in the LF
-    
-    ;; wh-terms   
-    ((ADVBL  (ARG ?argvar) (SUBCATSEM ?subcatsem)
-      ;; MD 06/11/06
-      ;; note that the explicit propagation up is required, even though argument is head feature
-      ;; otherwise all the relevant features do not propagate up correctly
-      (argument ?argument)
-      (sort pp-word)
-      (wh-var *)  (WH Q)
-      (var ?v) 
-      (IMPRO-CLASS ?pro-class)
-      (GROUNDVAR *)
-      (LF (% PROP (VAR ?v) (CLASS ?reln) 
-	     (CONSTRAINT (& (?!submap (% *PRO* (status *wh-term*) (VAR *) (CLASS ?pro-class)
-					 (SEM ?subcatsem) (CONSTRAINT (& (proform ?lex)
-									 (suchthat ?v)))))
-			    (?!argmap ?argvar)))
-	     (sem ?sem) (transform ?trans)))
-      (gap -) (pp-word +)
-      (role ?reln)
-      )
-     -advbl-wh-word> 
-     (head (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ?pro-class)
-	    (argument ?argument)
-	    (ARGUMENT (% ?argcat (var ?argvar)))
-	    (SUBCAT (% ?x (SEM ?subcatsem))) 
-	    (subcat-map ?!submap)
-	    (argument-map ?!argmap)
-	    (LF ?reln) (lex ?lex)
-	    (sem ?sem) (transform ?trans)
-	    ))
-     )
-
-#||  Doesn't seem to be a useful rule - there's not even an ADJ on the RHS
-    
- ;; how adj is it
-    ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem) (atype ?atype) (comparative ?cmp)
-      (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT ?newc)
-	     (transform ?transform) (sem ?sem) 
-	     )))
-     -degree-pred>
-     (head (ADVBL (LF ?lf) (SUBCAT -) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap)
-	   (constraint ?con) (functn ?fn) (comp-op ?dir)
-	    ))
-     (append-conjuncts (conj1 ?con) (conj2 (& (?argmap ?arg) (functn ?fn)))
-		       (new ?newc))
-     )
-      ||#
-
-    ;; how adj   e.g., how red
-    ((ADJP (ARG ?argvar) (SUBCATSEM ?subcatsem)
-      (wh-var *) (WH Q) (SORT PP-WORD) (how +)
-      (var ?adjv) (atype ?atype)
-      (LF (% PROP (VAR ?adjv) (CLASS ?reln) 
-	     (CONSTRAINT ?newc)
-	     (sem ?sem) (transform ?trans)))
-     ;; (argument (% S (var ?argvar) (sem ?sem1)))
-      (gap -) (pp-word +)
-      (role ?reln)
-      (sem ?sem)
-      )
-     -how-adj>     
-     (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ONT::DEGREE) (lex how))
-     (head (adjp (var ?adjv) (atype ?atype) (arg ?argvar) (sem ?sem) (LF (% PROP (class ?reln) (constraint ?con)))))
-     (append-conjuncts (conj1 ?con) 
-      (conj2 (& (degree (% *PRO* (status *wh-term*) (VAR *) (CLASS ont::degree)
-		   (SEM ?subcatsem) (CONSTRAINT (& (proform ?lex) (suchthat ?adjv)))))))
-      (new ?newc))
-     )
-
-     ;; how adv  e.g., how quickly
-    ((ADVBL  (ARG ?argvar) (SUBCATSEM ?subcatsem)
-      (wh-var *) (WH Q) (SORT PP-WORD) (how-advbl +)
-      (var ?adjv) (atype ?atype) (IMPRO-CLASS ont::degree)
-      (LF (% PROP (VAR ?adjv) (CLASS ?reln) 
-	     (CONSTRAINT ?newc)
-	     (sem ?sem) (transform ?trans)))
-      (gap -) (pp-word +) (argument ?argu)
-      (role ?reln)
-      )
-     -how-advbl>     
-     (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ont::degree) (lex how))
-     (head (advbl (var ?adjv) (atype ?atype) (arg ?argvar)  (argument ?argu) (sort pred) ; to rule out "how about..."
-		  (LF (% PROP (class ?reln) (constraint ?con)))))
-     (append-conjuncts (conj1 ?con) 
-      (conj2 (& (degree (% *PRO* (status *wh-term*) (VAR *) (CLASS ont::degree)
-		   (SEM ?subcatsem) (CONSTRAINT (& (proform ?lex) (suchthat ?adjv)))))))
-      (new ?newc))
-     )
-    
-    ;; pp adverbials, here, there, home 
-    ((ADVBL  (ARG ?argvar) (SUBCATSEM ?subcatsem)
-      (argument ?argument)
-      (sort pp-word)
-      (var ?v) 
-      (LF (% PROP (VAR ?v) (CLASS ?reln) 
-	     (CONSTRAINT (& (?!submap (% *PRO*
-					 (VAR *) (CLASS ?pro-class)
-					 (SEM ?subcatsem) (CONSTRAINT (& (proform ?lex)))))
-			    ;;(suchthat ?v)))))
-			    (?!argmap ?argvar)))
-	     (sem ?sem) (transform ?trans)))
-      (gap -) (pp-word +)
-      (role ?reln)
-             )
-     -advbl-pp-word>     
-     (head (adv (SORT PP-WORD) (wh -) (IMPRO-CLASS ?pro-class)
-		(argument ?argument)
-	        (ARGUMENT (% ?argcat (var ?argvar)))
-	        (SUBCAT (% ?x (SEM ?subcatsem))) 
-	        (subcat-map ?!submap)
-	        (argument-map ?!argmap)
-	        (LF ?reln) (lex ?lex)
-	        (sem ?sem) (transform ?trans)
-	        ))
-     )
-     
-    
-    ;;  ELSE modifier on pp advbls
-    ((ADVBL (ARG ?argvar) (SUBCATSEM ?subcatsem)
-      (FOCUS ?var) (var ?v) (wh-var *) 	(argument ?argument)
-      (LF (% PROP (VAR ?v) (CLASS ?reln) 
-	     (CONSTRAINT (& (?!submap (% *PRO* (VAR *) (SEM ?subcatsem) 
-					 (CONSTRAINT (& (proform ?lex)
-							(mods ?else-v)
-							(suchthat ?v)))))
-			    (?!argmap ?argvar)))
-	     (sem ?sem) (transform ?trans)))
-      (gap -) (pp-word +)
-      (role ?reln)
-      )
-     -advbl-pp-word-else>     
-     (Head (adv (SORT PP-WORD) (wh -)
-	        (ARGUMENT (% ?argcat (var ?argvar)))
-	    (SUBCAT (% ?x (SEM ?subcatsem))) 
-	    (subcat-map ?!submap)
-	    (argument-map ?!argmap)
-	    (argument ?argument)
-	    (LF ?reln) (lex ?lex)
-	    (sem ?sem) (transform ?trans)
-	    (else-word +)
-	    ))
-     ;;     (cv (lex ?else-lex) (lex else) (lf ?else-lf))
-     (Advbl (sort else) (var ?else-v) (arg ?v))
-     )
-
-    ;;   ELSE modifier of WH adverbials..  where else ...
-
-     ((ADVBL (ARG ?argvar) (SUBCATSEM ?subcatsem)
-      (FOCUS ?var) (var ?v) (wh-var *) (WH Q)
-      (LF (% PROP (VAR ?v) (CLASS ?reln) 
-	     (CONSTRAINT (& (?!submap (% *PRO* (class ?proclass) (status *wh-term*)
-					 (VAR *) (SEM ?subcatsem) 
-					 (CONSTRAINT (& (proform ?lex)
-							(mods ?else-v)
-							(suchthat ?v)))))
-			    (?!argmap ?argvar)))
-	     (sem ?sem) (transform ?trans)))
-      (gap -) (pp-word +)
-      (role ?reln)
-      )
-     -advbl-wh-pp-word-else>     
-     (Head (adv (SORT PP-WORD) (wh Q) (impro-class ?proclass)
-	        (ARGUMENT (% ?argcat (var ?argvar)))
-	    (SUBCAT (% ?x (SEM ?subcatsem))) 
-	    (subcat-map ?!submap)
-	    (argument-map ?!argmap)
-	    (LF ?reln) (lex ?lex)
-	    (sem ?sem) (transform ?trans)
-	    (else-word +)
-	    ))
-     ;;     (cv (lex ?else-lex) (lex else) (lf ?else-lf))
-     (Advbl (sort else) (var ?else-v) (arg ?v)))
-     
-    ;; Special construction only for relative clause advbls - we need this only to build the right semantic form
-    ((ADVBL-R  (ARG ?argvar) (SUBCATSEM ?subcatsem) (ARG2 ?arg2var)
-             (FOCUS *) 
-             (var ?v) 
-             (LF (% PROP (VAR ?v) (CLASS ?reln) 
-	            (CONSTRAINT (& (?!submap ?arg2var)
-			           (?!argmap ?argvar)))
-	            (sem ?sem) (transform ?trans)))
-             (gap -) (pp-word +)
-             (role ?reln)
-             )
-     -advbl-r-word>     
-     (head (adv (SORT PP-WORD) (wh Q)
-	        (ARGUMENT (% ?argcat (var ?argvar)))
-	        (SUBCAT (% ?x (SEM ?subcatsem))) 
-	        (subcat-map ?!submap)
-	        (argument-map ?!argmap)
-	        (LF ?reln) (lex ?lex)
-	        (sem ?sem) (transform ?trans)
-	        ))
-     )
-
 
     ))
 
 
 (parser::augment-grammar	 
   '((headfeatures
-     (N1 lf lex headcat transform set-restr refl abbrev rate-activity-nom); agent-nom)
+     (N1 lf lex headcat transform set-restr refl abbrev rate-activity-nom subcat subcat-map); agent-nom)
      )
 
     ;; this rule handles agentive nominalizations, wraps an "agent" around the event nominalization
@@ -5617,7 +5630,7 @@
 
 (parser::augment-grammar	 
   '((headfeatures
-     (N1 lf lex headcat transform set-restr refl abbrev)
+     (N1 lf lex headcat transform set-restr refl abbrev subcat subcat-map)
      )
 
     ;; this rule handles rate/activity constructions - e.g., the binding rate of ras on raf
@@ -5841,7 +5854,7 @@
       (case (? cas sub obj -))
       (derived-from-name +)  ;; we do this so that this N1 doesn't go through the bare-np rule, since we have the name-np already. But this N1 does allow relative clauses, as in "Ras that is bound to Raf"
       (status ont::name) (lex ?l) (restr ?con) ;(restr (& (w::name-of ?l)))
-      (mass MASS)
+      (mass MASS) (subcat ?subcat)
       )
      -n1-from-name> 1
      (head (name (lex ?l) (sem ?sem) 
@@ -5851,7 +5864,7 @@
 	    (full-name ?fname) (time-converted ?tc)
 	    ;; swift 11/28/2007 removing gname rule & passing up generated feature (instead of restriction (generated -))
 	    (generated -)  (transform ?transform) (title -)
-	    (restr ?restr)
+	    (restr ?restr) (subcat ?subcat)
 	    ))
      (add-to-conjunct (val (w::name-of ?l)) (old ?restr) (new ?con))
      )

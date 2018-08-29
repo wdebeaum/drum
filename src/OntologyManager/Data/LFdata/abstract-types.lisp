@@ -1011,7 +1011,7 @@
 )
 
 (define-type ONT::knowledge-belief
-    :wordnet-sense-keys ("knowledge%1:03:00")
+    :wordnet-sense-keys ("knowledge%1:03:00" "wisdom%1:07:00")
     :parent ONT::mental-construction
     :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
 		(:optional ont::FORMAL (f::situation)))
@@ -1504,9 +1504,10 @@
 ;; changed parent to ont::discipline (from abstract-object)
 ;; 2005.04/20 Added by Myrosia to handle words like algebra, mathematics etc.
 (define-type ONT::science-discipline
- :parent ONT::discipline
- :sem (F::Abstr-obj (F::container +)) ;; why is this container +?
- )
+    :wordnet-sense-keys ("science%1:09:00")
+    :parent ONT::discipline
+    :sem (F::Abstr-obj (F::container +)) ;; why is this container +?
+    )
 
 ;; acid wash
 (define-type ONT::food-prep-process

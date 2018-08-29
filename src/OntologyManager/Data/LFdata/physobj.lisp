@@ -37,7 +37,7 @@
 
 ;; UMLS
 (define-type ONT::organism
-    :wordnet-sense-keys ("organism%1:03:00" "being%1:03:00")
+    :wordnet-sense-keys ("organism%1:03:00" "being%1:03:00" "life%1:19:00" "life%1:26:00")
     :parent ONT::natural-object
     :sem (F::Phys-obj (F::origin F::living))
     )
@@ -216,10 +216,44 @@
 
 
 (define-type ONT::geo-formation
-    :wordnet-sense-keys ("land%1:17:00" "grassland%1:15:00" "formation%1:17:00")
+    :wordnet-sense-keys ("formation%1:17:00")
     :parent ONT::GEO-OBJECT
     :sem (F::Phys-obj (F::origin F::natural) (F::trajectory -))
     )
+
+(define-type ONT::land
+    :wordnet-sense-keys ("land%1:17:00" "grassland%1:15:00")
+    :parent ONT::GEO-formation
+    :sem (F::Phys-obj (F::origin F::natural) (F::trajectory -))
+    )
+
+(define-type ONT::mountain
+    :wordnet-sense-keys ("elevation%1:17:00")
+    :parent ONT::GEO-formation
+    :sem (F::Phys-obj (F::origin F::natural) (F::trajectory -))
+    )
+
+(define-type ONT::valley
+    :wordnet-sense-keys ("valley%1:17:00")
+    :parent ONT::GEO-formation
+    :sem (F::Phys-obj (F::origin F::natural) (F::trajectory -))
+    )
+
+(define-type ONT::body-of-water
+    :wordnet-sense-keys ("body_of_water%1:17:00")
+    :parent ONT::GEO-formation
+    :sem (F::Phys-obj (F::origin F::natural) (F::trajectory -))
+    )
+
+(define-type ONT::SHORE
+    :parent ONT::geo-formation
+    :wordnet-sense-keys ("shore%1:17:00")
+    :sem (F::PHYS-OBJ (F::SPATIAL-ABSTRACTION (? SA F::SPATIAL-POINT F::LINE)) (F::MOBILITY F::FIXED))
+    :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::form F::Geographical-object) (F::spatial-abstraction (? sao F::STrip F::Spatial-region))))
+		)
+    )
+
+
 
 (define-type ONT::sunken-natural-formation
     :parent ONT::geo-object
@@ -311,6 +345,7 @@
 
 ;; pollution
 (define-type ONT::pollution
+    :wordnet-sense-keys ("pollution%1:26:00" "pollution%1:26:02")
     :parent ONT::atmospheric-phenomenon
     :sem (F::Phys-obj (F::origin F::non-living) (F::trajectory -))
     )
@@ -419,6 +454,26 @@
 ;; UMLS
 (define-type ont::pharmacologic-substance
     :wordnet-sense-keys ("drug%1:06:00")
+    :Parent ont::chemical
+    )
+
+(define-type ont::nutrient
+    :wordnet-sense-keys ("nutient%1:03:01")
+    :Parent ont::chemical
+    )
+
+(define-type ont::fertilizer
+    :wordnet-sense-keys ("fertilizer%1:27:00")
+    :Parent ont::chemical
+    )
+
+(define-type ont::pesticide
+    :wordnet-sense-keys ("pesticide%1:27:00")
+    :Parent ont::chemical
+    )
+
+(define-type ont::herbicide
+    :wordnet-sense-keys ("herbicide%1:27:00")
     :Parent ont::chemical
     )
 
@@ -537,6 +592,13 @@
     :sem (F::Phys-obj (F::form F::gas) (f::origin f::natural))
     )
 
+;;air
+(define-type ONT::air
+    :wordnet-sense-keys ("air%1:27:00" "air%1:19:00" "air%1:27:01")
+    :parent ONT::natural-gas-SUBSTANCE
+    :sem (F::Phys-obj (F::form F::gas) (f::origin f::natural))
+    )
+
 ;; saliva, urine
 (define-type ONT::bodily-fluid
     :wordnet-sense-keys ("liquid_body_substance%1:08:00" "bodily_fluid%1:08:00" "body_fluid%1:08:00" "humor%1:08:00" "humour%1:08:00" "secretion%1:08:00" "sweat%1:08:00" "mucus%1:08:00" "phlegm%1:08:00" )
@@ -596,7 +658,7 @@
 
 ;; these are marked intentional + because intentional + is a required setting for e.g. motion verbs like walk and run so either that requirement must be removed or animals must be intentional +
 (define-type ONT::ANIMAL
-    :wordnet-sense-keys ("animal%1:03:00" "animate_being%1:03:00" "beast%1:03:00" "brute%1:03:00" "creature%1:03:00" "fauna%1:03:00")
+    :wordnet-sense-keys ("animal%1:03:00" "animate_being%1:03:00" "beast%1:03:00" "brute%1:03:00" "creature%1:03:00" "fauna%1:14:00")
     :parent ONT::organism ;; umls
     :sem (F::Phys-obj (F::intentional +) (f::form f::solid-object) (F::origin (? o f::human f::non-human-animal)) (F::trajectory -))
     )
@@ -1706,13 +1768,6 @@
 
 ; <
 
-(define-type ONT::SHORE
-    :parent ONT::geo-formation
-    :wordnet-sense-keys ("shore%1:17:00")
-    :sem (F::PHYS-OBJ (F::SPATIAL-ABSTRACTION (? SA F::SPATIAL-POINT F::LINE)) (F::MOBILITY F::FIXED))
-    :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::form F::Geographical-object) (F::spatial-abstraction (? sao F::STrip F::Spatial-region))))
-		)
-    )
 
 (define-type ONT::Wheel
     :parent ONT::MANUFACTURED-OBJECT
@@ -2714,7 +2769,13 @@
 
 (define-type ONT::ecosystem
   :wordnet-sense-keys ("biotic_community%1:14:00" "ecosystem%1:14:00" "biosphere%1:15:00")
-  :comment "An interconnected group of entities fo5ming an ecosystem"
+  :comment "An interconnected group of] entities fo5ming an ecosystem"
+ :parent ONT::system
+ )
+
+(define-type ONT::economic-system
+  :wordnet-sense-keys ("economy%1:14:00" )
+  :comment "An interconnected group of entities forming an economy"
  :parent ONT::system
  )
 

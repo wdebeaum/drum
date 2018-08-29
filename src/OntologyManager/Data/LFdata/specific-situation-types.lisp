@@ -853,6 +853,11 @@
 (define-type ONT::PUSH-LIQUID
  :wordnet-sense-keys ("wet%2:30:00" "squirt%2:35:00" "squirt%2:35:10" "sprinkle%2:35:01" "spray%2:35:03")
   :parent ONT::apply-force
+  )
+
+(define-type ONT::water-irrigate
+ :wordnet-sense-keys ("water%2:30:00" "irrigation%1:04:00")
+  :parent ONT::apply-force
  )
 
 (define-type ONT::RUB-scrape-wipe
@@ -2103,7 +2108,7 @@
     )
 
 (define-type ont::assert
-    :wordnet-sense-keys ("assert%2:32:01")
+    :wordnet-sense-keys ("assert%2:32:01" "statement%1:10:00")
     :comment "tell categorically"
     :parent ont::representative
     )
@@ -3301,7 +3306,7 @@
  )
 
 (define-type ONT::decrease-completely
- :wordnet-sense-keys ("deplete%2:34:00" "exhaust%2:30:00")
+ :wordnet-sense-keys ("deplete%2:34:00" "exhaust%2:30:00" "reduction%1:04:00")
  :parent ONT::decrease
  )
 
@@ -4628,6 +4633,20 @@
 (define-type ont::status
   :parent ont::situation-root
   :wordnet-sense-keys ("condition%1:26:00" "status%1:26:01" "state%1:26:02" "state_of_matter%1:26:00" "state%1:03:00")
+ :arguments ((:OPTIONAL ONT::FIGURE)
+             )
+ )
+
+(define-type ont::financial-condition
+  :parent ont::status
+  :wordnet-sense-keys ("financial_condition%1:26:00")
+ :arguments ((:OPTIONAL ONT::FIGURE)
+             )
+ )
+
+(define-type ont::poverty
+  :parent ont::finacial-condition
+  :wordnet-sense-keys ("poverty%1:26:00")
  :arguments ((:OPTIONAL ONT::FIGURE)
              )
   )
