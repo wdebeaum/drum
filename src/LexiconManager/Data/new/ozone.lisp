@@ -6,7 +6,8 @@
  :words (
    (W::ozone
    (SENSES
-    ((LF-PARENT ONT::natural-substance)
+    (;(LF-PARENT ONT::natural-substance)
+     (LF-PARENT ONT::natural-gas-substance)
      (SEM (F::form F::gas))
      (TEMPL MASS-PRED-TEMPL)
      (example "the ozone layer")

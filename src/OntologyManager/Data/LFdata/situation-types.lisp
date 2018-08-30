@@ -12,7 +12,7 @@
 		))
 
 (define-type ont::ACTIVITY-EVENT
- :wordnet-sense-keys ("activity%1:04:00" "action%1:04:02" "act%1:03:00" "act%2:41:00" "act%2:41:07")
+ :wordnet-sense-keys ("action%1:04:02" "act%1:03:00" "act%2:41:00" "act%2:41:07") ; "activity%1:04:00" is in ONT::ACTIVITY
     :parent ont::event-of-action
     :arguments ((:required ont::FORMAL)
 		))
@@ -384,7 +384,7 @@
 
 ;; cognizer evaluates something
 (define-type ONT::Scrutiny
-    :wordnet-sense-keys ("take%2:31:02" "read%2:31:05" "study%2:31:00" "learn%2:31:02" "inspect%2:31:00" "scrutinise%2:31:00" "scrutinize%2:31:00" "audit%2:31:01" "inspect%2:39:00" "try%2:41:06" "adjudicate%2:41:03" "judge%2:41:09" "measure%2:31:01" "evaluate%2:31:00" "valuate%2:31:00" "assess%2:31:00" "appraise%2:31:01" "value%2:31:00" "analyse%2:31:00" "analyse%2:31:01" "analyse%2:31:04" "check%2:42:09" "check_out%2:40:00" "follow%2:30:01" "follow%2:39:13" "experiment%2:41:02" "experiment%2:41:01")
+    :wordnet-sense-keys ("take%2:31:02" "read%2:31:05" "study%2:31:00" "learn%2:31:02" "inspect%2:31:00" "scrutinise%2:31:00" "scrutinize%2:31:00" "audit%2:31:01" "inspect%2:39:00" "try%2:41:06" "adjudicate%2:41:03" "judge%2:41:09" "measure%2:31:01" "evaluate%2:31:00" "valuate%2:31:00" "assess%2:31:00" "appraise%2:31:01" "value%2:31:00" "analyse%2:31:00" "analyse%2:31:01" "analyse%2:31:04" "check%2:42:09" "check_out%2:40:00" "follow%2:30:01" "follow%2:39:13" "experiment%2:41:02" "experiment%2:41:01" "surveillance%1:04:01")
     :parent ONT::cogitation
     :arguments ((:REQUIRED ONT::neutral ((? th6 f::phys-obj f::abstr-obj f::situation))) ;;Ground
 		(:OPTIONAL ONT::formal1 ((? cth f::phys-obj f::abstr-obj f::situation)))  ;;Phenomenon

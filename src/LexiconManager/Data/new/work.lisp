@@ -85,11 +85,6 @@
      (SEM (F::Cause F::agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
      (templ agent-templ)
      )    
-    ;;;; swift 04/09/02 need a sense that doesn't require a human subject, e.g. 'it/the plan works'
-    ((LF-PARENT ONT::FUNCTION)
-     (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL neutral-TEMPL)
-     )
     (
      (lf-parent ont::work) ;;  20120524 GUM change new parent 
      (example "he works for that company")
@@ -100,3 +95,15 @@
    )
 ))
 
+(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+ :tags (:base500)
+ :words (
+  (W::WORK
+   ;(wordfeats (W::morph (:forms (-vb) :nom w::work))) ; no nom
+   (SENSES
+    ;;;; swift 04/09/02 need a sense that doesn't require a human subject, e.g. 'it/the plan works'
+    ((LF-PARENT ONT::FUNCTION)
+     (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
+     (TEMPL neutral-TEMPL)
+     )
+))))

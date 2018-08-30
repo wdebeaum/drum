@@ -8,7 +8,7 @@
    (W::SEA
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("sea%1:17:00"))
-     (LF-PARENT ONT::geo-formation)
+     (LF-PARENT ONT::body-of-water)
      )
     )
    )
@@ -46,15 +46,4 @@
 )
 ))
 
-(define-words :pos W::n :templ count-pred-templ
- :tags (:base500)
- :words (
- (W::sea
-   (SENSES
-    ((meta-data :origin bolt :entry-date 20120516 :comments top500)
-     (LF-PARENT ONT::geo-formation)
-     )
-    )
-   )
-))
 

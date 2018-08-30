@@ -7,7 +7,8 @@
   (W::soil
    (SENSES
     ((meta-data :origin step :entry-date 20080623 :change-date nil :comments nil :wn ("soil%1:27:01"))
-     (LF-PARENT ONT::substance) ;like dirt
+     ;(LF-PARENT ONT::substance) ;like dirt
+     (LF-PARENT ONT::earth-substance)
      )
     )
    )

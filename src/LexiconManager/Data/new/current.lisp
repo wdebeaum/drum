@@ -2,6 +2,7 @@
 ;;;; W::CURRENT
 ;;;;
 
+#|
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
   (W::CURRENT
@@ -14,6 +15,7 @@
     )
    )
 ))
+|#
 
 (define-words :pos w::N 
   :templ other-reln-templ

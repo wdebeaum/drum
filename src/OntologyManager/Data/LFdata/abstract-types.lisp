@@ -1533,7 +1533,7 @@
 ;; We need f::situation counterparts for medical words classified as ont::treatment or ont::diagnostic for i2b2 because we don't have multiple inheritance
 ;; surgery
 (define-type ONT::medical-event
- :wordnet-sense-keys ("care%1:04:01" "attention%1:04:01" "aid%1:04:01" "tending%1:04:00" "regimen%1:09:00::" "regime%1:09:00::")
+ :wordnet-sense-keys ("care%1:04:01" "attention%1:04:01" "aid%1:04:01" "tending%1:04:00" "regimen%1:09:00" "regime%1:09:00" "immunization%1:04:00")
  :parent ONT::event-defined-by-activity
  :sem (F::Situation (F::aspect F::dynamic))
  :arguments ((:OPTIONAL ONT::FIGURE)

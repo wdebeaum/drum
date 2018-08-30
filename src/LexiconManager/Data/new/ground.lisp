@@ -9,7 +9,7 @@
   (W::GROUND
    (SENSES
      ((meta-data :origin monroe :entry-date 20031219 :change-date nil :wn ("ground%1:17:00" "ground%1:27:00" "ground%1:17:01") :comments s3)
-      (LF-PARENT ONT::geo-formation)
+      (LF-PARENT ONT::land)
       )
      )
    )

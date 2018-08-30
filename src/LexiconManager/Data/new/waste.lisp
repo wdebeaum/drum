@@ -6,7 +6,7 @@
  :words (
   (W::waste
    (SENSES
-    ((LF-PARENT ONT::disposable)
+    ((LF-PARENT ONT::waste)
      (EXAMPLE "it's waste")
      (meta-data :origin calo-ontology :entry-date 20051214 :change-date nil :wn ("waste%1:27:00") :comments nil)
      )
@@ -28,7 +28,7 @@
      (TEMPL neutral-duration-templ) ; like spend
      (PREFERENCE 0.96)
      )
-    ;;;; we have wasted 45 minutes
+    ;;;; we wasted an opportunity
     ((meta-data :origin trips :entry-date 20060414 :change-date 20090504 :comments nil :vn ("destroy-44") :wn ("waste%2:30:00" "waste%2:35:00"))
      (LF-PARENT ONT::destroy)
      )

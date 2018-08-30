@@ -2,6 +2,7 @@
 ;;;; W::SPICE
 ;;;;
 
+#|
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
   (W::SPICE
@@ -12,6 +13,7 @@
     )
    )
 ))
+|#
 
 (define-words :pos W::n
  :words (

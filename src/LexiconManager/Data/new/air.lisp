@@ -40,7 +40,8 @@
  :words (
    (W::AIR
    (SENSES
-    ((LF-PARENT ONT::natural-substance)
+    (;(LF-PARENT ONT::natural-substance)
+     (LF-PARENT ONT::AIR)
      (SEM (F::form F::gas))
      (TEMPL MASS-PRED-TEMPL)
      (meta-data :origin calo-ontology :entry-date 20060425 :change-date nil :wn ("air%1:27:00") :comments nil)

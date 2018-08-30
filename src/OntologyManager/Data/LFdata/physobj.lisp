@@ -37,7 +37,7 @@
 
 ;; UMLS
 (define-type ONT::organism
-    :wordnet-sense-keys ("organism%1:03:00" "being%1:03:00" "life%1:19:00" "life%1:26:00")
+    :wordnet-sense-keys ("organism%1:03:00" "being%1:03:00" "life%1:19:00" "life%1:26:00" "life%1:03:00")
     :parent ONT::natural-object
     :sem (F::Phys-obj (F::origin F::living))
     )
@@ -221,8 +221,14 @@
     :sem (F::Phys-obj (F::origin F::natural) (F::trajectory -))
     )
 
+(define-type ONT::watershed
+    :wordnet-sense-keys ("watershed%1:15:01" "watershed%1:15:00" )
+    :parent ONT::GEO-OBJECT
+    :sem (F::Phys-obj (F::origin F::natural) (F::trajectory -))
+    )
+
 (define-type ONT::land
-    :wordnet-sense-keys ("land%1:17:00" "grassland%1:15:00")
+    :wordnet-sense-keys ("land%1:17:00" "grassland%1:15:00" "wetland%1:17:00")
     :parent ONT::GEO-formation
     :sem (F::Phys-obj (F::origin F::natural) (F::trajectory -))
     )
@@ -376,6 +382,11 @@
 
 (define-type ONT::general-structure
     :parent ONT::man-made-structure
+    )
+
+(define-type ONT::bridge
+    :wordnet-sense-keys ("bridge%1:06:00")
+    :parent ONT::general-structure
     )
 
 (define-type ONT::FACILITY
@@ -569,6 +580,11 @@
     :sem (F::Phys-obj (f::origin f::natural))
     )
 
+(define-type ONT::earth-substance
+    :wordnet-sense-keys ("soil%1:27:01" "soil%1:17:00" "earth%1:27:00")
+    :parent ONT::natural-substance
+    )
+
 (define-type ONT::gas-SUBSTANCE
     :parent ONT::SUBSTANCE
     :wordnet-sense-keys ("gas%1:27:00")
@@ -579,6 +595,12 @@
     :wordnet-sense-keys ("liquid%1:27:00")
     :parent ONT::SUBSTANCE
     :sem (F::Phys-obj (F::form F::Liquid))
+    )
+
+(define-type ONT::fuel
+     :wordnet-sense-keys ("fuel%1:27:00")
+    :parent ONT::liquid-SUBSTANCE
+    :sem (F::Phys-obj (F::form F::Liquid) (f::origin f::natural))
     )
 
 (define-type ONT::natural-LIQUID-SUBSTANCE
@@ -651,14 +673,15 @@
     )
 
 ;; trash, waste
-(define-type ONT::disposable
+(define-type ONT::waste
     :wordnet-sense-keys ("waste%1:27:00" "waste_material%1:27:00" "waste_matter%1:27:00" "waste_product%1:27:00")
     :parent ONT::material
     )
 
 ;; these are marked intentional + because intentional + is a required setting for e.g. motion verbs like walk and run so either that requirement must be removed or animals must be intentional +
 (define-type ONT::ANIMAL
-    :wordnet-sense-keys ("animal%1:03:00" "animate_being%1:03:00" "beast%1:03:00" "brute%1:03:00" "creature%1:03:00" "fauna%1:14:00")
+    :wordnet-sense-keys ("animal%1:03:00" "animate_being%1:03:00" "beast%1:03:00" "brute%1:03:00" "creature%1:03:00" "fauna%1:14:00"
+					  "wildlife%1:14:00")
     :parent ONT::organism ;; umls
     :sem (F::Phys-obj (F::intentional +) (f::form f::solid-object) (F::origin (? o f::human f::non-human-animal)) (F::trajectory -))
     )
@@ -1256,10 +1279,6 @@
     :sem (F::Phys-obj (F::Form F::solid-object) (F::Object-Function F::furniture))
     )
 
-
-
-
-
 ;; anywhere, anyplace, ...
 (define-type ONT::wh-location
     :parent ONT::location
@@ -1281,7 +1300,7 @@
     )
 
 (define-type ONT::loc-as-area
-    :comment " places that occupy space"
+    :comment "places that occupy space"
     :parent ONT::location-by-description
     )
 
@@ -1302,15 +1321,34 @@
     :parent ONT::loc-as-area
     )
 
-; coal mine
+(define-type ONT::workplace
+    :wordnet-sense-keys ("work%1:06:01")
+    :parent ONT::area-def-by-use
+    )
+
 (define-type ONT::mine
     :wordnet-sense-keys ("mine%1:06:01")
-    :parent ONT::area-def-by-use
+    :parent ONT::workplace
+    )
+
+(define-type ONT::fishery
+    :wordnet-sense-keys ("fishery%1:06:00" "fish_farm%1:06:00")
+    :parent ONT::workplace
+    )
+
+(define-type ONT::bakery
+    :wordnet-sense-keys ("bakery%1:06:00")
+    :parent ONT::workplace
+    )
+
+(define-type ONT::lumberyard
+    :wordnet-sense-keys ("lumberyard%1:06:00")
+    :parent ONT::workplace
     )
 
 (define-type ONT::farm
     :wordnet-sense-keys ("farm%1:06:00")
-    :parent ONT::area-def-by-use
+    :parent ONT::workplace
     )
 
 (define-type ONT::loc-defined-by-contrast
@@ -2122,7 +2160,7 @@
 
 ;; power
 (define-type ONT::POWER
-    :wordnet-sense-keys ("electricity%1:19:01" "electrical_energy%1:19:00")
+    :wordnet-sense-keys ("electricity%1:19:01" "electrical_energy%1:19:00" "electricity%1:19:00" "energy%1:19:00")
     :parent ONT::substance
     )
 
@@ -2678,6 +2716,7 @@
     )
 
 (define-type ONT::SPICES-HERBS
+    :wordnet-sense-keys ("spice%1:27:00" "spice%1:13:00" "herb%1:13:00")
     :parent ONT::INGREDIENTS
     )
 
@@ -2761,6 +2800,7 @@
               )
   )
 
+
 (define-type ONT::system
   :wordnet-sense-keys ("system%1:06:00" "system%1:14:00")
   :comment "An interconnected group of objects, abstract or physical"
@@ -2772,6 +2812,12 @@
   :comment "An interconnected group of] entities fo5ming an ecosystem"
  :parent ONT::system
  )
+
+(define-type ONT::structure
+  :wordnet-sense-keys ("structure%1:07:00")
+  :comment "A collection of objects organized for some purpose" 
+  :parent ONT::system
+  )
 
 (define-type ONT::economic-system
   :wordnet-sense-keys ("economy%1:14:00" )

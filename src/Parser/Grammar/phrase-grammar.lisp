@@ -1782,7 +1782,7 @@
         
     ;; e.g., the mountain route, the truck plan, the security zone, ...
    ;;   such as "The small car lot"    
-    ((N1 (RESTR ?new) (SORT ?sort) (sem ?sem) (class (? c ONT::REFERENTIAL-SEM))
+    ((N1 (RESTR ?new) (SORT ?sort) (sem ?sem) (class ?c) ;(class (? c ONT::REFERENTIAL-SEM))
       (N-N-MOD +) (QUAL -) (relc -) (subcat ?subcat) (gap ?gap))
       
      -n-sing-n1-> 0.98 ;; prevent this from happening too often
@@ -1798,7 +1798,7 @@
       (postadvbl -) (post-subcat -) 
       )
      (head (N1 (VAR ?v2) (QUAL -) (subcat ?subcat) (sort ?sort) (one -) ; exclude the referential-sem w::one
-	       (sem ?sem)  (class (? c ONT::REFERENTIAL-SEM))
+	       (sem ?sem)  (class ?c) ;(class (? c ONT::REFERENTIAL-SEM)) ; "monsoon season": season is not referential-sem
 	       (generated -)
 	       ;;(sem ($ (? x F::ABSTR-OBJ F::PHYS-OBJ))) ;;If we put this in, the SEM info doesn't get passed up!!
 	       (RESTR ?r) 
@@ -4180,8 +4180,9 @@
       (subj-map -)  ; eliminate subj-map too
       (dobj ?!dobj)
       (dobj-map -) ;; eliminate the dobj-map 
-      (comp3 ?comp3)
-      (comp3-map ?comp-map)
+      ;(comp3 ?comp3)
+      ;(comp3-map ?comp-map)
+      (comp3-map -)
       )
      -nom-n-n-subj> 
      (np (AGR 3s) (abbrev -) (sort pred) (headless -)
@@ -4201,8 +4202,9 @@
 		(restr ?restr)
 		(subj ?subj) (subj (% ?s1 (lex ?subjlex) (agr ?subjagr) (var ?v1) (sem ?subjsem) (gap -)))
 		(subj-map ?!subjmap)
-		(comp3 ?comp3)
-		(comp3-map ?comp-map)
+		;(comp3 ?comp3)
+		;(comp3-map ?comp-map)
+		(comp3-map -)
 		(AGENT-NOM -) ;; can't apply to agentive nominalizations
 		))
      (add-to-conjunct (val (& (?!subjmap ?v1))) (old ?restr) (new ?newrestr))

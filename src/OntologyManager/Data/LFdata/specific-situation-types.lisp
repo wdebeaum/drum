@@ -1679,7 +1679,7 @@
  )
 
 (define-type ont::evoke-hunger
- :wordnet-sense-keys ("starve%2:34:00" "starve%2:34:03")
+ :wordnet-sense-keys ("starve%2:34:00" "starve%2:34:03" "starvation%1:26:00" "starvation%1:04:00")
  :parent ont::evoke-discomfort
 )
 
@@ -3540,7 +3540,7 @@
  )
 
 (define-type ONT::ATTACK
- :wordnet-sense-keys ("attack%2:33:00" "attack%2:32:00" "attack%2:33:02" "attack%2:29:00")
+ :wordnet-sense-keys ("attack%2:33:00" "attack%2:32:00" "attack%2:33:02" "attack%2:29:00" "attack%1:04:00")
 ; :parent ONT::event-of-causation
  :parent ONT::transgress
  )
@@ -4425,7 +4425,7 @@
 
 ;; FN
 (define-type ont::fluidic-motion
- :wordnet-sense-keys ("course%2:38:00" "feed%2:38:04" "flow%2:38:00" "run%2:38:01" "flow%2:38:01" "flux%2:38:00" "flow%2:38:02" "pour%2:38:03")
+ :wordnet-sense-keys ("course%2:38:00" "feed%2:38:04" "flow%2:38:00" "run%2:38:01" "flow%2:38:01" "flux%2:38:00" "flow%2:38:02" "pour%2:38:03" "flow%1:11:00")
     :parent ont::motion
     :sem (f::situation (f::trajectory +))
     :arguments ((:required ont::formal (f::phys-obj (f::form (? ff f::liquid f::gas f::wave))))
@@ -4645,7 +4645,7 @@
  )
 
 (define-type ont::poverty
-  :parent ont::finacial-condition
+  :parent ont::financial-condition
   :wordnet-sense-keys ("poverty%1:26:00")
  :arguments ((:OPTIONAL ONT::FIGURE)
              )

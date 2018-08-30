@@ -7,7 +7,8 @@
   (W::ENERGY
    (SENSES
     ((meta-data :origin calo :entry-date 20031230 :change-date nil :wn ("energy%1:19:00") :comments html-purchasing-corpus)
-     (LF-PARENT ONT::substance)
+     ;(LF-PARENT ONT::substance)
+     (LF-PARENT ONT::power)
      (SEM (f::form f::wave))
      (TEMPL MASS-PRED-TEMPL)
      )

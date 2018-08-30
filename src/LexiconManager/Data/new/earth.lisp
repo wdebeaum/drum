@@ -11,7 +11,8 @@
      (LF-PARENT ONT::geo-formation)
      )
     ((meta-data :origin step :entry-date 20080623 :change-date nil :comments nil :wn ("earth%1:27:00" "earth%1:27:01"))
-     (LF-PARENT ONT::substance) ;like dirt
+     ;(LF-PARENT ONT::substance) ;like dirt
+     (LF-PARENT ONT::earth-substance)
      )
     )
    )

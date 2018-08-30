@@ -7,7 +7,7 @@
   (W::FUEL
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("fuel%1:27:00"))
-     (LF-PARENT ONT::LIQUID-SUBSTANCE)
+     (LF-PARENT ONT::FUEL)
      (TEMPL MASS-PRED-TEMPL)
      )
     )
