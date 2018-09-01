@@ -11,6 +11,7 @@
      (LF-PARENT ONT::swell)
      (SYNTAX (w::resultative +))
      (templ affected-unaccusative-templ)
+     (SEM (F::Aspect F::bounded) (F::Time-span F::extended) (F::scale ont::size-scale))
  ; like ferment
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090504 :comments nil :vn ("entity_specific_cos-45.5"))
@@ -18,6 +19,8 @@
      (preference .97) ;; this is a rare usage; prefer intransitive
      (example "the medication swelled his ankles")
      (templ agent-affected-xp-templ)
+     (SEM (F::Aspect F::bounded) (F::Time-span F::extended) (F::scale ont::size-scale))
+
  ; like ferment
      )
     )
@@ -33,12 +36,14 @@
      (LF-PARENT ONT::swell)
      (SYNTAX (w::resultative +))
      (templ affected-unaccusative-templ)
+     (SEM (F::Aspect F::bounded) (F::Time-span F::extended) (F::scale ont::size-scale))
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090504 :comments nil :vn ("entity_specific_cos-45.5"))
      (LF-PARENT ONT::swell)
      (preference .98) ;; prefer intransitive
      (example "the medication swelled up his ankles")
      (templ agent-affected-xp-templ)
+     (SEM (F::Aspect F::bounded) (F::Time-span F::extended) (F::scale ont::size-scale))
  ; like ferment
      )
     )

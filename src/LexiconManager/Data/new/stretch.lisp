@@ -35,3 +35,20 @@
    )
 ))
 
+(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+ :words (
+(W::stretch
+   (SENSES
+    ((meta-data :origin cause-result-relations :entry-date 20180803 :change-date nil :comments nil)
+     (EXAMPLE "She stretched the fabric.")
+     (LF-PARENT ONT::extend)
+     (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended) (F::scale ont::area-scale))
+     )
+    ((meta-data :origin cause-result-relations :entry-date 20180803 :change-date nil :comments nil)
+     (EXAMPLE "The fabric stretched in the wash.")
+     (LF-PARENT ONT::extend)
+     (SEM (F::Aspect F::bounded) (F::Time-span F::extended) (F::scale ont::area-scale))
+     (TEMPL affected-unaccusative-templ)
+     )
+))))
+

@@ -33,9 +33,37 @@
  ;; WORDS: quality
 )
 
-;; APPEARANCE SCALE
+
+;; PHYSICAL-PROPERTY-SCALE
+(define-type ont::physical-property-scale
+ :parent ont::attributive-scale
+ :comment "scales associated with properties pertaining to the attributes of physical entities or substances. Note: many properties can apply to non-physical objects."
+)
+
+
+;; configuration property scale
+(define-type ont::configuration-property-scale
+ :parent ont::physical-property-scale
+ :comment "scales for properties regarding the configuration, arrangement or layout of elements"
+)
+
+(define-type ont::constriction-scale
+ :parent ont::configuration-property-scale
+)
+
+(define-type ont::tightness-scale
+ :parent ont::constriction-scale
+ :wordnet-sense-keys("tightness%1:07:00")
+)
+
+(define-type ont::looseness-scale
+ :parent ont::constriction-scale
+ :wordnet-sense-keys("looseness%1:07:00")
+)
+
+;;  appearance scale
 (define-type ont::appearance-scale
- :parent ont::attributive-scale 
+ :parent ont::physical-property-scale 
  :comment "scales related to surface appearance of a physical entity or object preceptible through sensory input"
  :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
              )
@@ -125,6 +153,16 @@
  :parent ont::tactile-scale 
  :wordnet-sense-keys ("texture%1:07:00")
  ;; WORDS: texture
+)
+
+(define-type ont::texture-thickness-scale
+ :parent ont::texture-scale
+ :wordnet-sense-keys ("thickness%1:07:02")
+)
+
+(define-type ont::texture-thinness-scale
+ :parent ont::texture-scale
+ :wordnet-sense-keys ("thinness%1:07:02")
 )
 
 (define-type ont::roughness-scale
@@ -255,7 +293,76 @@
 )
 
 
-;;; behavioral-scale
+;; sensory scale
+(define-type ont::sensory-scale
+ :parent ont::physical-property-scale
+ :comment "scales that deal with the quality to being perceivable through sensory input"
+ ;; WORDS: sensitivity
+)
+
+(define-type ont::sensitivity-scale
+ :parent ont::sensory-scale
+ :wordnet-sense-keys ("sensitivity%1:09:00")
+)
+
+(define-type ont::sight-scale
+ :parent ont::sensory-scale 
+ ;; WORDS: invisibility, visibility
+)
+
+(define-type ont::visibility-scale
+ :parent ont::sight-scale
+ :wordnet-sense-keys ("visibility%1:07:00")
+)
+
+(define-type ont::invisibility-scale
+ :parent ont::sight-scale
+ :wordnet-sense-keys ("invisibility%1:07:00")
+)
+
+(define-type ont::touch-scale
+ :parent ont::sensory-scale 
+ ;; WORDS: tangibility, intangibility
+)
+
+(define-type ont::tangibility-scale
+ :parent ont::touch-scale
+ :wordnet-sense-keys ("tangibility%1:07:00")
+)
+
+(define-type ont::intangibility-scale
+ :parent ont::touch-scale
+ :wordnet-sense-keys ("intangibility%1:07:00")
+)
+
+(define-type ont::auditory-scale
+ :parent ont::sensory-scale 
+ :wordnet-sense-keys ("audition%1:09:00")
+)
+
+;; dampness scale
+
+(define-type ont::moisture-content-scale
+ :parent ont::physical-property-scale
+)
+
+(define-type ont::wet-scale
+ :parent ont::moisture-content-scale
+ :wordnet-sense-keys ("wetness%1:26:00")
+)
+
+(define-type ont::dry-scale
+ :parent ont::moisture-content-scale
+ :wordnet-sense-keys ("dryness%1:26:00")
+)
+
+(define-type ont::dehydrated-scale
+ :parent ont::dry-scale
+ :wordnet-sense-keys ("dehydration%1:26:00")
+)
+
+
+;;; BEHAVIORAL SCALE
 (define-type ont::behavioral-scale
  :parent ont::attributive-scale
  :comment "scales relating to behavioral or psychological attributes that characterize an entity. Property-val counterparts in this scale include both psychological-property-val and animal-propensity-val. To be distinguished from the temporary conditions (stage-scale)." 
@@ -918,52 +1025,7 @@
 )
 
 
-;; SENSORY SCALE
-(define-type ont::sensory-scale
- :parent ont::attributive-scale 
- :comment "scales that deal with the quality to being perceivable through sensory input"
- ;; WORDS: sensitivity
-)
 
-(define-type ont::sensitivity-scale
- :parent ont::sensory-scale
- :wordnet-sense-keys ("sensitivity%1:09:00")
-)
-
-(define-type ont::sight-scale
- :parent ont::sensory-scale 
- ;; WORDS: invisibility, visibility
-)
-
-(define-type ont::visibility-scale
- :parent ont::sight-scale
- :wordnet-sense-keys ("visibility%1:07:00")
-)
-
-(define-type ont::invisibility-scale
- :parent ont::sight-scale
- :wordnet-sense-keys ("invisibility%1:07:00")
-)
-
-(define-type ont::touch-scale
- :parent ont::sensory-scale 
- ;; WORDS: tangibility, intangibility
-)
-
-(define-type ont::tangibility-scale
- :parent ont::touch-scale
- :wordnet-sense-keys ("tangibility%1:07:00")
-)
-
-(define-type ont::intangibility-scale
- :parent ont::touch-scale
- :wordnet-sense-keys ("intangibility%1:07:00")
-)
-
-(define-type ont::auditory-scale
- :parent ont::sensory-scale 
- :wordnet-sense-keys ("audition%1:09:00")
-)
 ;; STATUS SCALE
 
 (define-type ont::status-property-scale

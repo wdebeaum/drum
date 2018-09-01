@@ -21,10 +21,10 @@
    )
   |#
   ((example "the changes extended the process")
-   (sem (f::aspect f::dynamic))
    (templ agent-affected-xp-templ)
    (meta-data :origin step :entry-date 20080626 :change-date 20090504 :comments nil)
-   (LF-PARENT ONT::increase)
+   (LF-PARENT ONT::extend-time)
+   (SEM (F::Aspect F::bounded) (F::Time-span F::atomic) (F::scale ont::duration-scale))
    )
   ((example "the line extends here")
    (templ neutral-templ)

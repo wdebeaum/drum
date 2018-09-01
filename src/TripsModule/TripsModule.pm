@@ -252,4 +252,18 @@ sub dispatch_messages
     }
 }
 
+# sorry messages are ignored by default
+sub receive_sorry
+{
+    my ($self, $msg, $content) = @_;
+    1;
+}
+
+# error messages are ignored by default
+sub receive_error
+{
+    my ($self, $msg, $content) = @_;
+    1;
+}
+
 1;

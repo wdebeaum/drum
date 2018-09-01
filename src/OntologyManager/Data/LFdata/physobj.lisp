@@ -469,7 +469,7 @@
     )
 
 (define-type ont::nutrient
-    :wordnet-sense-keys ("nutient%1:03:01")
+    :wordnet-sense-keys ("nutrient%1:03:01")
     :Parent ont::chemical
     )
 

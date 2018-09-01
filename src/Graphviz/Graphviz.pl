@@ -89,6 +89,8 @@ sub receive_tell {
 	# we're telling ourself that the user closed a window
 	$self->{wm}->closed_window($report->{':what'});
       }
+    } elsif ($content->{verb} eq 'start-conversation') {
+      # nop
     } else {
       die "Unknown tell verb " . $content->{verb};
     }

@@ -29,7 +29,7 @@
 ))
 
 (define-words :pos W::V 
-  :templ agent-theme-xp-templ
+  :templ agent-affected-xp-templ
  :words (
 (w::chill
  (senses
@@ -37,8 +37,14 @@
    (LF-PARENT ONT::cool)
    (example "chill the juice" "the wind chilled him")
    (syntax (w::resultative +))
-   (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
+   (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended) (F::scale ont::cold-scale))
     )
+    ((meta-data :origin cause-result-relations :entry-date 20180803 :change-date nil :comments nil)
+     (EXAMPLE "The juice chilled in the cooler")
+     (LF-PARENT ONT::cool)
+     (SEM (F::Aspect F::bounded) (F::Time-span F::extended) (F::scale ont::cold-scale))
+     (TEMPL affected-unaccusative-templ)
+     )
   )
  )
 ))

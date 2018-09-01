@@ -14,3 +14,20 @@
 		:COMMENTS HTML-PURCHASING-CORPUS))
 ))))
 
+(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+ :words (
+(W::age
+   (SENSES
+    ((meta-data :origin cause-result-relations :entry-date 20180803 :change-date nil :comments nil)
+     (EXAMPLE "The death of his child aged him tremendously")
+     (LF-PARENT ONT::age)
+     (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended) (F::scale ont::age-scale))
+     )
+    ((meta-data :origin cause-result-relations :entry-date 20180803 :change-date nil :comments nil)
+     (EXAMPLE "The wine aged beautifully")
+     (LF-PARENT ONT::age)
+     (SEM (F::Aspect F::bounded) (F::Time-span F::extended) (F::scale ont::age-scale))
+     (TEMPL affected-unaccusative-templ)
+     )
+))))
+

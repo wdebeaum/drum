@@ -29,6 +29,23 @@
  :comment "properties which need an observer to be recognized -- subjective to the observer"
 )
 
+;; fresh, stale
+(define-type ont::freshness-val
+ :parent ont::evaluation-attribute-val 
+ :comment "relating to how recently an object was made or obtained"
+)
+
+(define-type ont::fresh-val
+ :parent ont::freshness-val 
+ :wordnet-sense-keys ("recent%5:00:00:new:00" "recent%5:00:00:past:00" "new%3:00:00" "fresh%3:00:01")
+)
+
+(define-type ont::not-fresh-val
+ :parent ont::freshness-val 
+ :wordnet-sense-keys ("stale%3:00:00" "rusty%5:00:00:old:01")
+)
+
+
 ; adjectives to do with cost
 (define-type ont::cost-val
  :parent ont::evaluation-attribute-val 
@@ -1218,18 +1235,23 @@
 )
 
 ;; wet, dry
-(define-type ont::dampness-val
+(define-type ont::moisture-content-val
  :parent ont::physical-property-val 
  :arguments ((:REQUIRED ONT::FIGURE ((? lof f::phys-obj f::situation )))) ;; dry towel, a dry cough
 )
 
 (define-type ont::dry-val
- :parent ont::dampness-val 
+ :parent ont::moisture-content-val 
  :wordnet-sense-keys ("dry%3:00:01" )
 )
 
+(define-type ont::dehydrated-val
+ :parent ont::dry-val
+ :wordnet-sense-keys("withered%5:00:00:dry:01" "dehydrated%5:00:00:preserved:02")
+)
+
 (define-type ont::wet-val
- :parent ont::dampness-val 
+ :parent ont::moisture-content-val 
  :wordnet-sense-keys ("wet%3:00:01" )
 )
 
@@ -1318,6 +1340,20 @@
 (define-type ont::texture-val
  :parent ont::tangibility-val 
  :sem (F::Abstr-obj (F::MEasure-function F::VALUE ))
+)
+
+(define-type ont::thickeness-in-texture-val
+ :parent ont::texture-val
+)
+
+(define-type ont::thick-texture-val
+ :parent ont::thickeness-in-texture-val
+ :wordnet-sense-keys ("thick%3:00:02")
+)
+
+(define-type ont::thin-texture-val
+ :parent ont::thickeness-in-texture-val
+ :wordnet-sense-keys ("thin%3:00:02")
 )
 
 (define-type ont::hardness-val
@@ -1819,7 +1855,7 @@
  :wordnet-sense-keys ("aching%5:00:00:painful:00" "achy%5:00:00:painful:00" "painful%3:00:00" )
 )
 
-(define-type ont::dehydrated-val
+(define-type ont::medical-dehydration-val
  :parent ont::medical-symptom-val
  :wordnet-sense-keys ("dehydrated%5:00:00:unhealthy:00" )
 )
@@ -2748,7 +2784,6 @@
 
 (define-type ont::lean-val
  :parent ont::fattiness-val 
- :wordnet-sense-keys("lean%3:00:04")
 )
 
 (define-type ont::fatty-val
@@ -2925,23 +2960,6 @@
  :parent ont::age-val 
  :wordnet-sense-keys ("young%3:00:00" "immature%3:00:03" "new%3:00:09")
 )
-
-;; fresh, stale
-(define-type ont::freshness-val
- :parent ont::temporal-val 
- :comment "relating to how recently an object was made or obtained"
-)
-
-(define-type ont::fresh-val
- :parent ont::freshness-val 
- :wordnet-sense-keys ("recent%5:00:00:new:00" "recent%5:00:00:past:00" "new%3:00:00" "fresh%3:00:01")
-)
-
-(define-type ont::not-fresh-val
- :parent ont::freshness-val 
- :wordnet-sense-keys ("stale%3:00:00" "rusty%5:00:00:old:01")
-)
-
 
 (define-type ont::historical-era-val
  :parent ont::temporal-val 
