@@ -6,7 +6,8 @@
  :words (
   (W::household
    (SENSES
-    ((LF-PARENT ONT::social-group)
+    (;(LF-PARENT ONT::social-group)
+     (LF-PARENT ONT::family-group)
      (EXAMPLE "sparky lives in their household")
      (meta-data :origin task-learning :entry-date 20050919 :change-date nil :wn ("household%1:14:00") :comments nil)
      )

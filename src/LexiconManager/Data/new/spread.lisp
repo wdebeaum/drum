@@ -18,7 +18,7 @@
 (define-words :pos W::v :templ agent-affected-xp-templ
  :words (
   (W::spread
-   (wordfeats (W::morph (:forms (-vb) :past W::spread :ing W::spreading)))
+   (wordfeats (W::morph (:forms (-vb) :past W::spread :ing W::spreading :nom w::spread)))
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("spray-9.7-1") :wn ("spread%2:35:13"))
      (LF-PARENT ONT::apply-on-surface)
@@ -28,7 +28,11 @@
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("spray-9.7-1"))
      (LF-PARENT ONT::disperse)
      (example "electricity distribution spread to farmers and country towns" "windmill usage spread across the country")
-     (TEMPL agent-TEMPL)
+     (TEMPL affected-TEMPL)
+     )
+    ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("spray-9.7-1"))
+     (LF-PARENT ONT::disperse)
+     (TEMPL agent-affected-xp-TEMPL)
      )
     )
    )

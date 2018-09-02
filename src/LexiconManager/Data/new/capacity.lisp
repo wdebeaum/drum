@@ -8,7 +8,8 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
      (LF-PARENT ONT::able-scale)
-     (TEMPL OTHER-RELN-templ)
+     ;(TEMPL OTHER-RELN-templ)
+     (templ other-reln-templ (XP (% W::CP (W::CTYPE W::s-to))))
      )
     )
    )  

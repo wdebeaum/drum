@@ -2852,6 +2852,11 @@
   :arguments ((:OPTIONAL ONT::FIGURE ((? lof f::phys-obj f::abstr-obj))))
   )
 
+(define-type ont::family-group
+  :wordnet-sense-keys ("family%1:14:02")
+    :parent ont::social-group
+    )
+
 ;; swift 20110928 crew defined for obtw demo
 (define-type ont::crew-phys
     :parent ont::social-group
@@ -2928,6 +2933,7 @@
 ;; ansi
 (define-type ONT::regulatory-organization
  :parent ONT::organization
+ :wordnet-sense-keys ("organization%1:14:01")
  )
 
 (define-type ONT::airline

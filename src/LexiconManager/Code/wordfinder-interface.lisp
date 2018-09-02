@@ -421,9 +421,12 @@
 	    ))))
 
 (defun lookup-type-in-lexicon (w)
-  "this looks up a word in the lexicon and retruns the ONT type of the first entry"
-  (let* ((entries (remove-if #'(lambda (x)
-				(eq (second (fourth x)) 'w::word))
+  "this looks up a word in the lexicon and retruns the ONT type of the first noun entry"
+  (let* (;(entries (remove-if #'(lambda (x)
+	;			(eq (second (fourth x)) 'w::word))
+	;		     (get-word-def w nil)))
+	 (entries (remove-if-not #'(lambda (x)
+				(eq (second (fourth x)) 'w::n))
 			     (get-word-def w nil)))
 	 (c (cddr (fourth (first entries))))
 	 (lf (parser::get-fvalue c 'w::lf)))
@@ -494,7 +497,9 @@
 	     (setq feats (append feats (list (list 'w::pertainym (list :* pert-lf (car pert-lf-form)))
 					     (list 'w::pert-domain-info pert-domain-info))))
 	     (if (member lf '(ONT::MODIFIER ONT::REFERENTIAL-SEM))
-		 (setq lf '(:* ONT::ASSOC-WITH lf-form)))
+		 ;(setq lf '(:* ONT::ASSOC-WITH lf-form))
+		 (setq lf 'ONT::ASSOC-WITH)
+	       )
 	     (setq sem (get-lf-sem 'ont::ASSOC-WITH :no-defaults nil))
 	     (setq domain-info nil))
 	     ;;  no pertainym, so do normal computation off the LF

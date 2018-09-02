@@ -1692,6 +1692,7 @@
 ;; sickness                                                                                                         
 (define-type ONT::disease
  :wordnet-sense-keys ("disease%1:26:00" "ailment%1:26:00" "abnormality%1:26:00")
+ :sem (F::situation (F::mobility f::movable)) ; movable: the disease has spread
  :parent ONT::medical-disorders-and-conditions
  )
 

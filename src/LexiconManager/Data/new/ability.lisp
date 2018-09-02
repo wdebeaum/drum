@@ -20,7 +20,8 @@
    (SENSES
     ((meta-data :origin domain-reorganization :entry-date 20170810 :change-date nil :wn ("ability%1:07:00") :comments caloy3)
      (LF-PARENT ONT::able-scale)
-     (TEMPL MASS-PRED-TEMPL)
+     ;(TEMPL MASS-PRED-TEMPL)
+     (templ other-reln-templ (XP (% W::CP (W::CTYPE W::s-to))))
      )
     )
    )
