@@ -22,7 +22,8 @@
      (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
      (example "he damaged the computer")
      )||#
-    ((LF-PARENT ont::break-object)
+    (;(LF-PARENT ont::break-object)
+     (LF-PARENT ont::damage)
      (meta-data :origin task-learning :entry-date 20050823 :change-date nil :comments nil)
      ;;(SEM (F::Cause F::Phenomenal) (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL agent-affected-xp-templ)

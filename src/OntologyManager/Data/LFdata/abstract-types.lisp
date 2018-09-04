@@ -95,6 +95,11 @@
  :wordnet-sense-keys ("flavor%1:09:00")
 )
 
+(define-type ont::perceivable-sound-property
+ :parent ont::perceivable-property
+ :wordnet-sense-keys ("sound%1:07:00" "sound%1:09:00" "sound%1:19:00" "sound%1:11:00")
+)
+
 (define-type ONT::grouping
     :comment "a  classification, category, variety of things. Not a set of objects!"
     :parent ONT::version
@@ -702,7 +707,7 @@
  )
 
 (define-type ONT::ASSETS
- :wordnet-sense-keys ("assets%1:21:00" "resource%1:21:00")
+ :wordnet-sense-keys ("assets%1:21:00" "resource%1:21:00" "reserve%1:21:00")
 ; :parent ONT::MEASURE-DOMAIN
  :parent ONT::FUNCTION-OBJECT
  :sem (F::Abstr-obj (F::Scale Ont::money-scale))
@@ -1349,8 +1354,7 @@
 
 ;;
 (define-type ONT::VALUE-COST
- :wordnet-sense-keys ("change%1:21:02" "return%1:21:00" "issue%1:21:00" "take%1:21:00" "takings%1:21:00" "proceeds%1:21:00" "yield%1:21:00" "payoff%1:21:02")
- :wordnet-sense-keys ("change%1:21:02" "return%1:21:00" "issue%1:21:00" "take%1:21:00" "takings%1:21:00" "proceeds%1:21:00" "yield%1:21:00" "payoff%1:21:02")
+ :wordnet-sense-keys ("change%1:21:02")
  :parent ONT::value
  :arguments (
 	     ;(:REQUIRED ONT::FIGURE (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
@@ -1358,6 +1362,16 @@
 	     (:REQUIRED ONT::EXTENT (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
 	     )
  )
+
+(define-type ont::expense
+ :wordnet-sense-keys ("cost%1:21:00")
+  :parent ont::value-cost
+  )
+
+(define-type ont::revenue
+ :wordnet-sense-keys ("financial_gain%1:21:00" "return%1:21:00")
+  :parent ont::value-cost
+  )
 
 ;; unique lf for price
 (define-type ONT::PRICE

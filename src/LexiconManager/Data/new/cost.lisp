@@ -7,11 +7,13 @@
   (W::COST
    (SENSES
     (
-     (LF-PARENT ONT::value-COST)
+     ;(LF-PARENT ONT::value-COST)
+     (LF-PARENT ONT::expense)
      (TEMPL OTHER-RELN-TEMPL)
      )
     (
-     (LF-PARENT ONT::value-COST)
+     ;(LF-PARENT ONT::value-COST)
+     (LF-PARENT ONT::expense)
      (TEMPL reln-subcat-of-units-TEMPL)
      )
     )

@@ -1316,7 +1316,7 @@
 
 ; oil field, wheat field
 (define-type ONT::area-def-by-use
-    :wordnet-sense-keys ("field%1:15:00" "field%1:15:05" "plot%1:15:00")
+    :wordnet-sense-keys ("field%1:15:00" "field%1:15:05" "plot%1:15:00" "pasture%1:15:00")
     :comment "places defined by their function: e.g.,  lot, plot, region, scene, section, site, territory, zone"
     :parent ONT::loc-as-area
     )

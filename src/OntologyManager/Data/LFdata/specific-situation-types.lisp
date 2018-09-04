@@ -2839,7 +2839,8 @@
 ;; collect, gather up
 (define-type ONT::collect
  :wordnet-sense-keys ("gather%2:35:00" "garner%2:35:00" "collect%2:35:00" "pull_together%2:35:00")
- :parent ont::event-of-causation
+; :parent ont::event-of-causation
+ :parent ont::acquire
  :arguments ((:ESSENTIAL ONT::agent)
 	     ;;(:essential ont::formal)
              )
@@ -3881,7 +3882,7 @@
  )
 
 (define-type ONT::transgress
- :wordnet-sense-keys ("transgress%2:41:00" "transgress%2:41:02" "transgress%2:38:00" "infringe%2:41:00" "infringe%2:38:00" "intrude%2:41:00" "violate%2:42:00" "violate%2:41:00" "violate%2:41:02" "violate%2:35:00")
+ :wordnet-sense-keys ("transgress%2:41:00" "transgress%2:41:02" "transgress%2:38:00" "infringe%2:41:00" "infringe%2:38:00" "intrude%2:41:00" "violate%2:42:00" "violate%2:41:00" "violate%2:41:02" "violate%2:35:00" "conflict%1:26:00")
  :parent ONT::event-of-causation
  )
 

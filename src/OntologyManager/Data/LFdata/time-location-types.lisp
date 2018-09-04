@@ -665,6 +665,7 @@
 
 (define-type ONT::direction
     :parent ONT::position-reln
+    :wordnet-sense-keys ("direction%1:15:00")
     :comment "a direction = a spatial relation between the location (FIGURE) of an object and its previous location"
  :arguments ((:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj
 					 F::abstr-obj ; "move the plan up the agenda"?

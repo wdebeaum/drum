@@ -100,7 +100,7 @@
     ((LF-PARENT ONT::REASON)
      (TEMPL binary-constraint-s-decl-templ)
      )
-    ((LF-PARENT ONT::while-when)
+    ((LF-PARENT ONT::when-while)
      (TEMPL binary-constraint-S-decl-TEMPL)
      (meta-data :origin mobius :entry-date 20080702 :change-date nil :comments nil)
      (example "as this happens the valve closes")

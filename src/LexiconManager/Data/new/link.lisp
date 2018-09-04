@@ -21,12 +21,12 @@
     ;;;; link the car to the train
     ((LF-PARENT ONT::ATTACH)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-affected2-optional-TEMPL (xp (% W::pp (W::ptype W::to))))
+     (TEMPL AGENT-affected2-optional-TEMPL (xp (% W::pp (w::ptype (? pt W::to w::with)))))
      )
     ;;;; the path links one city to/with another
     ((LF-PARENT ONT::CONNECTED)
      (SEM (F::Aspect F::indiv-level))
-     (TEMPL neutral-neutral-xp-templ)
+     (TEMPL neutral-neutral-xp-templ (xp (% W::pp (W::ptype (? pt W::to w::with)))) )
      )
     ;;;; the path links 2 cities
     ((LF-PARENT ONT::CONNECTED)
