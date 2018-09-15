@@ -3530,8 +3530,8 @@
 
 (parser::augment-grammar 
  '((headfeatures
-    (s vform neg sem subjvar dobjvar cont  lex headcat transform subj advbl-needed)
-    (sseq vform neg sem subjvar dobjvar cont  lex headcat transform subj advbl-needed)
+    (s vform neg sem subjvar dobjvar cont lex headcat transform subj advbl-needed)
+    (sseq vform neg sem subjvar dobjvar cont lex headcat transform subj advbl-needed)
     (vbarseq sem)
     (vpseq sem)
     ;;(vp- sem)
@@ -3714,7 +3714,7 @@
    ;; he had eaten and slept, to puncture or penetrate or pierce, to fight but accept, 
    ; This uses this rule: The mouse is caught by the dog and caught by the cat.
    ((vp- (seq +) (vform ?vf) (var *)  (subjvar ?subj)  (subj ?subject) (agr ?agr) (gap ?gap)(subj-map ?subjmap)
-     (class ?class) (sem ?sem)
+     (class ?class) (sem ?sem)  (lex ?lex)
      (constraint (&  (OPERATOR ?lx) 
 		     (SEQUENCE 
 		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (sem ?sem1) (constraint ?con1))
@@ -3724,7 +3724,7 @@
     (head (vp- (vform ?vf) (subjvar ?subj)  (subj ?subject) (var ?v1) (seq -)  (agr ?agr) (gap ?gap)
 	       (advbl-needed -) (class ?c1) (constraint ?con1) (tma ?tma1) (sem ?sem1) (subj-map ?subjmap)
 	   ))
-    (CONJ (lf ?lx) (but-not -)) ;;(? lx or but however plus otherwise so and)))
+    (CONJ (lf ?lx) (lex ?lex) (but-not -)) ;;(? lx or but however plus otherwise so and)))
     (vp- (vform ?vf) (var ?v2) (subjvar ?subj) (subj ?subject) (agr ?agr) (gap ?gap)
      (Advbl-needed -) (class ?c2) (constraint ?con2)  (tma ?tma2) (sem ?sem2))
     (sem-least-upper-bound (in1 ?sem1) (in2 ?sem2) (out ?sem))
@@ -3734,7 +3734,7 @@
 
    ; (the dog that) chased and ate the cat
    ((vp- (seq +) (vform ?vf) (var *)  (subjvar ?subj)  (subj ?subject) (agr ?agr) (gap ?gap)(subj-map ?subjmap)
-     (class ?class) (sem ?sem)
+     (class ?class) (sem ?sem)  (lex ?lex)
      (constraint (&  (OPERATOR ?lx) 
 		     (SEQUENCE 
 		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (sem ?sem1) (constraint ?con1))
@@ -3744,7 +3744,7 @@
     (head (vp- (vform ?vf) (subjvar ?subj)  (subj ?subject) (var ?v1) (seq -)  (agr ?agr) (gap ?!dobj)
 	       (advbl-needed -) (class ?c1) (constraint ?con1) (tma ?tma1) (sem ?sem1) (subj-map ?subjmap)
 	   ))
-    (CONJ (lf ?lx) (but-not -)) ;;(? lx or but however plus otherwise so and)))
+    (CONJ (lf ?lx)  (lex ?lex) (but-not -)) ;;(? lx or but however plus otherwise so and)))
     (vp- (vform ?vf) (var ?v2) (subjvar ?subj) (subj ?subject) (agr ?agr) (gap -) (dobj ?!dobj)
      (Advbl-needed -) (class ?c2) (constraint ?con2)  (tma ?tma2) (sem ?sem2))
     (sem-least-upper-bound (in1 ?sem1) (in2 ?sem2) (out ?sem))
@@ -3791,7 +3791,7 @@
 
    ;; ending the VBARSEQ 
    ((VP- (vform ?vf) (var *) (seq +) (subjvar ?subj) (subj ?subject)  (gap ?gap)  (agr ?agr) (sem ?sem)
-     (class ?class) 
+     (class ?class)  (lex ?lex)
      (constraint (&  (OPERATOR ?lx) 
 		     (SEQUENCE ?newlf)))
      )
@@ -3800,7 +3800,7 @@
 		   (constraint (& (sequence ?lf))) (agr ?agr)
 		   (vform ?vf)
 		   ))
-    (CONJ (lf (? lx ont::and ont::or)))
+    (CONJ  (lex ?lex) (lf  (? lx ont::and ont::or)))
     (vp- (vform ?vf) (subjvar ?subj) (subj ?subject)(var ?v2) (seq -)  (gap ?gap) (sem ?s2)
      (advbl-needed -)  (agr ?agr) (class ?c2) (constraint ?con2) (tma ?tma2))
     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
@@ -3811,7 +3811,7 @@
 
    ;; ending the VBARSEQ - WITH BUT-NOT - ONLY WORKS FOR only workd of -ing and BARE forms
    ((VP- (vform (? vf w::ing w::base)) (var *) (seq +) (subjvar ?subj) 
-     (subj ?subject)  (gap ?gap)  (agr ?agr) (sem ?sem)
+     (subj ?subject)  (gap ?gap)  (agr ?agr) (sem ?sem)  (lex ?lex)
      (class ?class)
      (constraint (&  (OPERATOR ?conj) 
 		     (SEQUENCE ?seq)
@@ -3822,7 +3822,7 @@
 		   (constraint (& (sequence ?seq))) (agr ?agr)
 		   (vform (? vf w::ing w::base))
 		   ))
-    (CONJ (lf ?conj) (but-not +))
+    (CONJ (lf ?conj)  (lex ?lex) (but-not +))
     (vp- (vform (? vf w::ing w::base)) (subjvar ?subj) (subj ?subject)(var ?v2) (seq -)  (gap ?gap)
      (advbl-needed -) (sem ?s2) (agr ?agr) (class ?c2) (constraint ?con2) (tma ?tma2))
     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
@@ -3831,7 +3831,7 @@
 
      ;; ending the VBARSEQ, with comma 
    ((VP- (vform ?vf) (var *) (seq +) (subjvar ?subj) (subj ?subject)  (gap ?gap)  (agr ?agr) (sem ?sem)
-     (class ?class)
+     (class ?class)  (lex ?lex)
      (constraint (&  (OPERATOR ?lx) 
 		     (SEQUENCE ?newlf)))
      )
@@ -3841,7 +3841,7 @@
 		   (vform ?vf)
 		   ))
     (punc  (lex (? x W::punc-comma)))
-    (CONJ (lf (? lx ont::and ont::or)))
+    (CONJ  (lex ?lex) (lf (? lx ont::and ont::or)))
     (vp- (vform ?vf) (subjvar ?subj) (subj ?subject)(var ?v2) (seq -)  (gap ?gap) (sem ?s2)
      (advbl-needed -)  (agr ?agr) (class ?c2) (constraint ?con2) (tma ?tma2))
     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
@@ -3888,7 +3888,7 @@
 
    ;; Ending the VPSEQ 
    ;; both Ss must be of the same type, decl or imperative
-   ((VP (vform ?vf) (var *) (seq +) (subjvar ?subj) (subj ?subject)  (gap ?gap)  (agr ?agr) (sem ?sem)
+   ((VP (vform ?vf) (var *) (seq +) (subjvar ?subj) (subj ?subject)  (gap ?gap)  (agr ?agr) (sem ?sem)  (lex ?lex)
      (LF (% prop (var *) (class ?class)  
 	    (constraint (&  (OPERATOR ?lx) (SEQUENCE ?newlf)))
 	    ))
@@ -3898,7 +3898,7 @@
 		(sequence ?lf) (agr ?agr) (class ?c1) (sem ?s1)
 		(vform ?vf)
 		))
-    (CONJ (lf (? lx ont::and ont::or)))
+    (CONJ  (lex ?lex) (lf (? lx ont::and ont::or)))
     (vp (vform ?vf) (subjvar ?subj) (subj ?subject)(var ?v2) (seq -)  (gap ?gap)
      (advbl-needed -)  (agr ?agr) (sem ?s2)
      (lf (% prop (class ?c2) (tma ?tma2))))

@@ -1912,7 +1912,7 @@
       (CLASS ?c) (SORT ?sort) (QUAL ?qual) (COMPLEX +) (var ?v)
       (relc +)  (subcat (% -)) (post-subcat -)
       )
-    -n1-qual-rel>
+    -n1-qual-rel> .96
     (head (N1 (VAR ?v) (RESTR ?r)
 	      (CLASS ?c) (SORT ?sort) (QUAL ?qual)
 	      (SEM ?sem) ;;(subcat -) 
