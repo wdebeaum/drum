@@ -116,7 +116,7 @@ sub run_enju {
   for my $sentence (@input_tags) {
     next unless ($sentence->{type} eq 'sentence');
     my $text = $sentence->{text};
-    $text =~ s/[[:space:]]/ /g;
+    $text =~ s/[[:space:]\000]/ /g;
     my $multibyte_offsets = get_multibyte_offsets($text);
     print $enju_out $text . "\n";
     while (<$enju_in>) {
