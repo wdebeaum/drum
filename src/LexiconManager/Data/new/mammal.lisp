@@ -6,7 +6,7 @@
  :words (
   (w::mammal
    (SENSES
-    ((LF-PARENT ONT::animal)
+    ((LF-PARENT ONT::mammal)
      (EXAMPLE "dogs are mammals")
      (meta-data :origin task-learning :entry-date 20050919 :change-date nil :wn ("mammal%1:05:00") :comments nil)
      )

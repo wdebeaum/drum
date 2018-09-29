@@ -2826,12 +2826,13 @@
 
     ;; test: he barked, he said.
     ;; test: he barked, he told me.
-    ;; test: did he bark? he asked.
+    ;; test: did he bark? he asked.  ; to fix: ask is not a decl
     ((s (stype decl) (subjvar ?subjvar) (dobjvar ?dobjvar) (subj ?subj)
 	(lf ?lf) (var ?v))
      -utt-role-fronting> .97
      (utt (var ?uttvar) (sem ?uttsem))
-     (head (s (stype ?st) (main -) (lf (% prop (class ont::report-speech))) (var ?v) (sem ?sem)
+     (head (s (stype ?st) (main -) (lf (% prop (class ont::communication)))
+	      (var ?v) (sem ?sem)
 	      (gap (% utt (sem ?uttsem) (var ?uttvar)))
 	      ))
      )
