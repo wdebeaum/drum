@@ -625,7 +625,7 @@
 (define-type ONT::bodily-fluid
     :wordnet-sense-keys ("liquid_body_substance%1:08:00" "bodily_fluid%1:08:00" "body_fluid%1:08:00" "humor%1:08:00" "humour%1:08:00" "secretion%1:08:00" "sweat%1:08:00" "mucus%1:08:00" "phlegm%1:08:00" )
     :parent ONT::natural-LIQUID-SUBSTANCE
-    :sem (F::Phys-obj (F::form F::Liquid) (f::origin f::living))
+    :sem (F::Phys-obj (F::form F::Liquid)) ;;(f::origin f::living))
     )
 
 ;; water
@@ -1863,7 +1863,8 @@
 (define-type ONT::body-part
     :wordnet-sense-keys ("body_part%1:08:00" "organ%1:08:00" )
     :parent ONT::anatomy
-    :sem (F::Phys-obj (F::origin F::living) (f::intentional -) (f::form f::object) (f::object-function f::body-part) (f::container +))
+    :sem (F::Phys-obj ;;(F::origin F::living)
+		      (f::intentional -) (f::form f::object) (f::object-function f::body-part) (f::container +))
  ;;; too strong, but better than unconstrained
     :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::origin F::living) (f::form f::object)))
 		)

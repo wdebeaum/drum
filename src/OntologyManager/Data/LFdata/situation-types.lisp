@@ -701,7 +701,7 @@
 	     ;; This is eat with a spoon/fork etc.
 ;             (:OPTIONAL ONT::Instrument (F::Phys-obj (F::mobility F::movable) (F::intentional -) (f::form f::solid-object) (f::information -)))
 	     ;;; Myrosia added accompaniment to account for frequent usages of "take/eat it with food/milk etc
-	     (:OPTIONAL ONT::Assoc-with (F::Phys-obj (F::Form F::substance) (F::mobility F::movable)))
+	     ;;(:OPTIONAL ONT::Assoc-with (F::Phys-obj (F::Form F::substance) (F::mobility F::movable)))
              )
  )
 

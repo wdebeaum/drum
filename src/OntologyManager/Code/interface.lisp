@@ -121,6 +121,14 @@
       retval))
     ))
 
+(defun best-lfs-from-sem (semexpr)
+  "Top level function to find compatible LFs for a SEM feature list"
+  (let ((sem (cond ((consp semexpr) (make-typed-sem semexpr))
+		   ((feature-list-p semexpr) semexpr)
+		   (t (format t "Error: argument must be a feature list")
+		      nil))))
+    (when sem
+      (find-best-lfs-for-sem sem *lf-ontology*))))
 
 (defun lf-GCB (fs1 fs2)
   "@param  fs1 list form of a feature set

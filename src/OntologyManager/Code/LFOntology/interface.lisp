@@ -76,26 +76,101 @@
   (let ((def (get-lf-definition lf lfontology)))
     (and def (lf-description-coercions def))))
 
-(defun find-most-specific-lfs-for-sem (sem lfontology)
-  "Given a sem, find a LF or a set of LF's that define as many features as possible from this sem, but not more"
-  (mmapcan #'(lambda (x) (find-most-specific-lf-recursive x sem lfontology)) (ling-ontology-lf-table-roots lfontology))
+(defun find-best-lfs-for-sem (sem lfontology)
+  "Given a sem, find the most general LF type or a set of LF's that match the SEM"
+  ;; we deal with one special case when the F::TYPE feature is specified
+  (let ((explicit-type (if (feature-list-p sem) (assoc 'F::TYPE (feature-list-features sem)))))
+    (if explicit-type
+	(list (cadr explicit-type))
+	;; otherwise we add a F::TYPE based on the SEM type
+	(let ((newsem (make-feature-list :type (feature-list-type sem)
+					 :features (cons (list 'F::TYPE (classify-LF-type (feature-list-type sem)))
+							 (feature-list-features sem)))))
+	  (mmapcan #'(lambda (x) (find-best-lf-recursive x newsem lfontology))
+		   (ling-ontology-lf-table-roots lfontology))
+	  )))
   )
 
+(defun classify-LF-type (semtype)
+  (case semtype
+    (F::PHYS-OBJ 'ONT::PHYS-OBJECT)
+    (F::ABSTR-OBJ 'ont::ABSTRACT-OBJECT)
+    (F::TIME 'ont::TIME-OBJECT)
+    (F::SITUATION 'ont::situation-root)
+    (otherwise 'ont::referential-sem)))
 
-(defun find-most-specific-lf-recursive (lfname sem lfontology)
-  "Given a lf name, if it is consistent with the sem, return the most specific children still consistent with the sem, or NIL otherwise"
+(defun find-best-lf-recursive (lfname sem lfontology)
+  "if the LFNAME fully satisfies the SEM then return it, if it is consistent with the SEM
+     then check its children, and return them if found (otherise return this one), otherwise if it is inconsistent with the SEM, then fail"
   (let* ((lfdef (get-lf-definition lfname lfontology))
 	 (lfsem (lf-description-sem lfdef))
-	 (tmpres (and lfsem (compatible-pattern-sem lfsem sem :typeh (ling-ontology-subtype-hierarchy lfontology)) (list lfname))))
-    (when (or tmpres (null lfsem))
-      (let ((chres (mapcar #'(lambda (x) (find-most-specific-lf-recursive x sem lfontology))
-			   (remove-if #'listp (lf-description-children lfdef)))))
-	(cond
-	 ((null lfsem) (reduce #'append chres))
-	 ((null chres) tmpres)
-	 (t (reduce #'append chres))
 	 )
-	))
+    (when lfsem
+      (if (satisfies-sem lfsem sem :typeh (ling-ontology-subtype-hierarchy lfontology))
+	  ;; so the LF fully satisfies the SEM
+	  (list lfname)
+	  (if (consistent-pattern-sem lfsem sem :typeh (ling-ontology-subtype-hierarchy lfontology))
+	      ;;  LF sem was consistent, so check children
+	      (let ((chres (remove-if #'null
+				      (mapcar #'(lambda (x) (find-best-lf-recursive x sem lfontology))
+					      (remove-if #'listp (lf-description-children lfdef))))))
+		(if chres
+		    ;; otherwise return the children
+		    (reduce #'append chres))
+		)
+	      )
+	  )))
+  )
+
+(defun satisfies-sem (lf-sem pattern-sem &key (typeh nil))
+  "succeeds only if lf-sem satisfies the pattern-sem"
+  (cond 
+    ((null pattern-sem) t)
+    ((null lf-sem) nil)
+    (t 
+     ;; we check that types are compatible and then that feature lists are comp.
+     (when (merge-types (feature-list-type lf-sem) (feature-list-type pattern-sem) :typeh typeh)
+       (compatible-pattern-feature-lists (feature-list-features pattern-sem)
+					(feature-list-features lf-sem)
+					:value-test (lambda (x y) (compatible-symbol-values x y :typeh typeh))
+					)
+      ))
+    ))
+
+(defun consistent-pattern-sem (result pattern &key (typeh nil))
+  "two sems are consistent as long as no feature in the pattern is inconsistent"
+  (cond 
+    ((null pattern) t)
+    ((null result) nil)
+    (t 
+     ;; we check that types are compatible and then that feature lists are comp.
+     (when (merge-types (feature-list-type pattern) (feature-list-type result) :typeh typeh)
+       (compatible-with-pattern (feature-list-features pattern)
+				(feature-list-features result) typeh
+			;;	:value-test (lambda (x y) (consistent-symbol-values x y :typeh typeh))
+				)
+      ))
+   ))
+
+(defun compatible-with-pattern (patfeats lffeats typeh)
+  (every #'(lambda (x) (consistent-feat-values x lffeats typeh))
+	 patfeats))
+
+(defun consistent-feat-values (pat lffeats typeh)
+  (let ((patfeat (car pat)))
+    (or (not (assoc patfeat lffeats))
+	(consistent-symbol-values (cadr pat) (cadr (assoc patfeat lffeats)) :typeh typeh))
+    ))
+  
+(defun consistent-symbol-values (v1 v2 &key (typeh nil))
+  "Calls subtype if typeh is defined and equality otherwise, returns the most specific compatible value"
+  ;;(trace subtype-in compatible-symbol-values)
+  (cond    
+    ((eql v1 v2) v1)
+    ((null v2) v1)
+    ((null v1) v2)
+    ((subtype-in v1 v2 typeh) v2)
+    ((subtype-in v2 v1 typeh) v1)
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

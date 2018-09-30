@@ -1039,7 +1039,7 @@
     :parent ONT::change-state
     :comment "an AFFECTED undergoes a change of physical or chemical state that affects its integrity, e.g., thaw. Allows but does not require an AGENT"
     :sem (F::Situation (F::Trajectory -))
-    :arguments ((:OPTIONAL ONT::Result (F::Phys-obj))
+    :arguments ((:OPTIONAL ONT::Result (F::abstr-obj (F::TYPE ont::resulting-state)))
 		)
     )
 
@@ -2383,7 +2383,7 @@
  :parent ONT::giving
  :sem (F::Situation (F::Cause F::Agentive))
  :arguments ((:REQUIRED ONT::agent  ((? ag f::phys-obj f::abstr-obj) (f::intentional +)))
-	     (:REQUIRED ont::result (f::phys-obj (f::intentional +)))
+	     ;;(:REQUIRED ont::result (f::phys-obj (f::intentional +)))
 	     ;; a medication, a regime ...
 	     (:essential ont::formal ((? tt f::phys-obj f::abstr-obj) (f::intentional -)))
              )
@@ -4223,7 +4223,7 @@
   :sem (F::Situation (F::Aspect F::Stage-level))
   :arguments ((:REQUIRED ONT::neutral ((? them F::Phys-obj F::abstr-obj F::situation))) ;; the figure
 	      (:optional ont::neutral1)
-	      (:OPTIONAL ont::result (F::phys-obj))  ;; for the causal form: face the statue wowards the water
+	      ;(:OPTIONAL ont::result (F::phys-obj))  ;; for the causal form: face the statue wowards the water
 	      )
  )
 

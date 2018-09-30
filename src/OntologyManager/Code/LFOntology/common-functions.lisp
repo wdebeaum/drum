@@ -493,7 +493,9 @@
   "Calls subtype if typeh is defined and equality otherwise, returns the most specific compatible value"
   ;;(trace subtype-in compatible-symbol-values)
   (cond    
-   ((eql v1 v2) v1)
+    ((eql v1 v2) v1)
+    ((null v2) v1)
+    ((null v1) v2)
    (t (subtype-in v1 v2 typeh))
    ))
 
