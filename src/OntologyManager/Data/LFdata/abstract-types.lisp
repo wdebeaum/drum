@@ -688,7 +688,7 @@
 ;; three fold
 (define-type ONT::multiple
  :parent ONT::MATHEMATICAL-TERM
- :sem (F::Abstr-obj (F::Scale ?sc))  ; "by three fold" needs scale
+ :sem (F::Abstr-obj (F::Scale ont::DOMAIN))  ; "by three fold" needs scale
  )
 
 ;; percent

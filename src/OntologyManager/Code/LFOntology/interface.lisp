@@ -129,7 +129,7 @@
     ((null lf-sem) nil)
     (t 
      ;; we check that types are compatible and then that feature lists are comp.
-     (when (merge-types (feature-list-type lf-sem) (feature-list-type pattern-sem) :typeh typeh)
+     (when (satisfies-types (feature-list-type lf-sem) (feature-list-type pattern-sem) :typeh typeh)
        (compatible-pattern-feature-lists (feature-list-features pattern-sem)
 					(feature-list-features lf-sem)
 					:value-test (lambda (x y) (compatible-symbol-values x y :typeh typeh))

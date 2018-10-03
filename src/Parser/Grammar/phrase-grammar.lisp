@@ -658,7 +658,7 @@
      (add-to-conjunct (val (?smap ?v1)) (old ?r) (new ?con1))
      (add-to-conjunct (val (scale ?sc)) (old ?con1) (new ?con))
      )
-  
+
    ;; there are a few relational nouns with two complements  e.g., ratio of the length to the height
    ;; the intersection of acorn with booth
     ;; but this is not for e.g., distance of 5 miles -- filled pp-of unit measures should go through n1-reln4
@@ -1791,9 +1791,9 @@
 	;;  removed this to handle things like "computing services"
 	;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
       (sem ?n-sem) (derived-from-name -) ; names go through -name-n1>
-      (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -)   ;;  can't require COMPLEX - any more -- e.g., "p53 expression levels"  -- now we can!! This goes through nom-rate instead.
+      (CLASS ?modc) (PRO -) (N-N-MOD -) ;(COMPLEX -)   ;;  can't require COMPLEX - any more -- e.g., "p53 expression levels"  -- now we can!! This goes through nom-rate instead.
       ; set two-n1-conjunct to complex - so that e.g., <trade and migration> route, can go through this rule
-
+      ; removed "COMPLEX -" again: "water treatment plant" (added complex + back to two-n1-conjunct)
       (SUBCAT ?ignore) (GAP -) (kr-type ?kr-type)
       (postadvbl -) (post-subcat -) 
       )
@@ -1801,7 +1801,7 @@
 	       (sem ?sem)  (class ?c) ;(class (? c ONT::REFERENTIAL-SEM)) ; "monsoon season": season is not referential-sem
 	       (generated -)
 	       ;;(sem ($ (? x F::ABSTR-OBJ F::PHYS-OBJ))) ;;If we put this in, the SEM info doesn't get passed up!!
-	       (RESTR ?r) 
+	       (RESTR ?r)
 	       (SORT PRED) (gap ?gap) 
 	    (relc -)  (postadvbl -) (post-subcat -) 
 	    (subjmap -)  ;; nominalized verbs have their own rules
@@ -1818,7 +1818,8 @@
      -n-sing-hyphen-n1-> .98
      (n1 (AGR 3s) 
         (var ?v1) (sem ?sem) (restr ?modr) (derived-from-name -) ; names go through -name-n1>
-      (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -) (SUBCAT (% -)) (GAP -)
+	(CLASS ?modc) (PRO -) (N-N-MOD -) ;(COMPLEX -)
+	(SUBCAT (% -)) (GAP -)
       (postadvbl -) (post-subcat -) (n-sing-already -)
       )
      (word (lex w::punc-minus))
@@ -1837,7 +1838,8 @@
      -n-sing-reln1-> 
      (n1 (AGR 3s) 
         (var ?v1) (sem ?sem) (restr ?modr) 
-      (CLASS ?modc) (PRO -) (N-N-MOD -) (COMPLEX -) (SUBCAT (% -)) (GAP -)
+	(CLASS ?modc) (PRO -) (N-N-MOD -) ;(COMPLEX -)
+	(SUBCAT (% -)) (GAP -)
       (postadvbl -) (post-subcat -)
       )
      (head (N1 (VAR ?v2) (QUAL -) (subcat (% ?cat (sem ?sem)))
@@ -5202,7 +5204,7 @@
 	     (sem ?sem) (CASE ?c)
 	     (mass ?m1) 
 	     ))
-      ;(COMPLEX +) ; see comment in -two-n1-conjunct>
+      (COMPLEX +)
       (SORT PRED) (wh ?wh)
       (generated ?generated)
        )
@@ -5599,8 +5601,8 @@
 			   (% *PRO* (status ?status-out) (var ?v2) (class ?c2) (constraint ?con2) (sem ?s2) (lex ?lex2))))))
       (CASE ?c)
       (mass ?m1) 
-      ;(COMPLEX +) ; commented out so that it would go through n-sing-n1 (e.g., trade and migration routes)
-      (SORT PRED)
+      (COMPLEX +) 
+      (sort (? !sort unit-measure)) ;(SORT PRED)
       (generated ?generated)
       (lex ?op)
       )

@@ -183,6 +183,39 @@
 		  ))
    ))
 
+
+;; T1 must be identical or a subtype of PAT
+(defun satisfies-types (t1 pat &key (typeh nil) (lfontology nil) (two-way nil))  
+  (let ((t1 (if (consp t1)
+		(if (is-variable-name (car t1))
+		    (cddr t1)
+		    t1)
+		(list t1)))
+	(pat (if (consp pat)
+		 (if (is-variable-name (car PAT))
+		     (cddr PAT)
+		     pat)
+		 (list pat))))
+    
+    (if (null pat) t1
+	(every #'(lambda (x) (sat-types x pat typeh))
+	       t1
+	       ))))
+
+(defun sat-types (type pat typeh)
+  (some #'(lambda (y)
+		   (cond
+		     ((eql type y) type)
+		     (typeh
+		      (subtype-in type y typeh)
+		      )
+		     (lfontology
+		      ;;(or (sub-semvalue x y lfontology) (and two-way (sub-semvalue y x lfontology))))
+		      (and (eql type y) type))
+		     (t nil)
+		     ))
+	 Pat))
+
 ;; Takes 2 feature list structures and attempts to merge them together
 ;; both for types and names
 (defun merge-feature-list-with-defaults (features defaults &key (typeh nil))
