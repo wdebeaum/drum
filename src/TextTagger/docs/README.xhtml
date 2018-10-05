@@ -982,7 +982,7 @@ as the clauses end up long enough, and they agree with other sources of clause t
 <td>sense</td>
 <td>X</td>
 <td>X</td>
-<td>Looks up biological mechanism terms for the Deep Reader for Understanding Mechanisms (DRUM). See the section on <a href="#sec-5.6.">The Drum tagger</a>.</td>
+<td>Looks up biological mechanism terms for the Deep Reader for Understanding Mechanisms (DRUM). See the section on <a href="#sec-5.7.">The Drum tagger</a>.</td>
 </tr><tr>
 <td>Enju</td>
 <td>clause, phrase, pos</td>
@@ -1218,6 +1218,13 @@ foo BarBaz don't 123,456 12EA56
 <tr><td>subword</td><td>Affixes, Misspellings, Words</td></tr>
 <tr><td>word</td><td>Gold, StanfordCoreNLP, Words</td></tr>
 </table>
+</div>
+
+<div class="section">
+<h3>Tagger/tag type dependency graph</h3>
+<p>This automatically-generated bipartite graph shows how taggers and tag types in TextTagger depend on each other. You can think of data as flowing along the edges forwards. And, roughly speaking, you can think of specifying a <a href="#sec-3.5.2."><code>:type</code></a> as selecting a subset of the nodes in this graph. Then TextTagger completes that subgraph by tracing the connected black edges backwards all the way to "input text", and forwards to the next tag type node(s) if a selected node was a tagger node. There is no final output node in the graph, because all of the tag types can affect the output (also, there are some non-tagger output stages not pictured; see <a href="#sec-4.1.2.">Combining tags</a>).</p>
+<p>Also note that each TRIPS system only includes a subset of the taggers. If your system includes Graphviz, you can regenerate this graph for that subset by running <code>make clean &amp;&amp; make</code> in <code><var>$TRIPS_BASE</var>/src/TextTagger/docs/</code>. Please take care not to commit such a partial graph. In order to generate the full graph you must have all of the taggers checked out.</p>
+<a href="tagger-deps.svg"><img src="tagger-deps.svg" style="max-width: 100%" /></a>
 </div>
 
 <div class="section">
@@ -1574,6 +1581,119 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
  <td>"The Pfam database is a large collection of protein families, each represented by multiple sequence alignments and hidden Markov models (HMMs). ... There are two components to Pfam: Pfam-A and Pfam-B. Pfam-A entries are high quality, manually curated families."</td>
 </tr>
 </table>
+</div>
+
+</div>
+
+<div class="section">
+<h3>How to write and/or integrate your own tagger in TextTagger</h3>
+<p>First, consider whether you actually need to do this. Look at the <a href="#sec-5.2.">table of taggers</a> to see if one of those taggers already does the thing you want to do, or can be configured to do so. The Input, NamesFromFile, TermsFromFile, TermsInput, and XMLInput taggers are particularly configurable. Many of those make use of TextTagger's <a href="#sec-4.2.">native tag format</a> for their configuration input.</p>
+<p>You may instead wish to bypass TextTagger entirely, and provide your input directly to the Parser. In that case, you should familiarize yourself with the <a href="#sec-4.1.">lattice message format</a> that the Parser expects. It may also help to look at some examples of TextTagger's output with <a href="#sec-3.5.4."><code>:imitate-keyboard-manager t</code></a> passed to <a href="#sec-3.5.">the tag request</a>.</p>
+<p>To write a tagger as part of TextTagger, you must write a Perl module under the <code>TextTagger</code> package (i.e. in <code><var>$TRIPS_BASE</var>/src/TextTagger/Perl/TextTagger/</code>), and it must push a hashref describing itself onto the <code>@TextTagger::taggers</code> array. You must also add a <code>use</code> statement using your module in the <code>Config.pm.in</code> file, under <code># all optional taggers</code> (preferably in alphabetical order). Note the <code>.in</code> ending: the build system uses this file as input when creating the <code>Config.pm</code> Perl module. Modify the <code>.in</code> version, not the automatically generated version. Do not commit <code>Config.pm</code>.</p>
+<p>See <a href="#sec-5.1.">a word on naming</a> for guidance on how to format the name of your tagger in various contexts, in order to be consistent with the other taggers. However, you probably don't need to create your own tag <em>type</em>; you can (and probably should) get away with reusing existing types such as <code>sense</code> and <code>pos</code>. If you do add a new tag type, you should add it to <code>@TextTagger::all_tag_types</code> in <code>TextTagger.pm</code>, and you'll probably need to handle it somehow in <code>CombineTags.pm</code> and/or <code>Tags2Trips.pm</code>.</p>
+
+<div class="section">
+<h4>Tagger description fields</h4>
+<p>The hashref describing your tagger can have the following fields:</p>
+<dl>
+ <dt><code>name</code> (required)</dt>
+  <dd>The name of your tagger, lowercase with underscores, e.g. <code>"mome_rath"</code>.</dd>
+ <dt><code>tag_function</code> (required)</dt>
+  <dd>The function to be called for each tag request that selects your tagger. Its arguments will be the TextTagger object (usually called <code>$self</code>), the input text string (if <code>input_text =&gt; 1</code> is specified), and the list (not listref) of tags that have been found so far (if <code>input_types</code> is specified). It should return the listref (not list) of tags found by your tagger.</dd>
+ <dt><code>output_types</code> (required)</dt>
+  <dd>A listref of the types of tags your tagger is capable of outputting. If your tagger is capable of outputting any type of tag, use <code>[@TextTagger::all_tag_types]</code>.</dd>
+ <dt><code>init_function</code> (optional)</dt>
+  <dd>The function to be called to initialize your tagger. Normally this will happen when TextTagger starts up, and your tagger is listed in an <a href="#sec-3.1.2."><code>-init-taggers</code> option</a>. It can also be called in response to an <a href="#sec-3.3."><code>init</code> or <code>re-init</code> request</a>. Its only argument will be <code>$self</code> (the TextTagger object).</dd>
+ <dt><code>fini_function</code> (optional)</dt>
+  <dd>The function to be called to finalize your tagger. Normally this will happen when TextTagger exits, and your tagger was previously initialized. Only taggers with <code>init_function</code>s may also have <code>fini_function</code>s. Your <code>fini_function</code> can also be called in response to a <a href="#sec-3.1.2."><code>fini</code> or <code>re-init</code> request</a>. Its only argument will be <code>$self</code> (the TextTagger object).</dd>
+ <dt><code>ready_function</code> (optional)</dt>
+  <dd>The function to be called to wait for your tagger to finish initializing. You can make your <code>init_function</code> merely start the initialization process in parallel with other taggers (e.g. by spawning an external process), and this function will be called after all taggers have started initializing but before any tag requests are processed. This parallelization can decrease TextTagger's overall startup time. It is optional, though; you may define an <code>init_function</code> without defining a <code>ready_function</code>, in which case your tagger will be considered ready when your <code>init_function</code> returns. Note that the return value of the <code>ready_function</code> is not used, only the timing of when it returns. Its only argument will be <code>$self</code> (the TextTagger object).</dd>
+ <dt><code>input_text</code> (optional)</dt>
+  <dd>A boolean that indicates whether your tagger uses the raw input text string, as opposed to using tags from other taggers as input. The default is false. Using both the input text and input tags is allowed; the text will be passed first.</dd>
+ <dt><code>input_types</code> (optional)</dt>
+  <dd>A listref of the types of tags your tagger needs as input. Listing a type here will cause TextTagger to pull in other taggers that can output that type if none are already pulled in. Note that this is a list of <em>tag types</em>, not taggers; taggers cannot directly depend on each other.</dd>
+ <dt><code>optional_input_types</code> (optional)</dt>
+  <dd>A listref of the types of taggers your tagger can use as input, but doesn't strictly need. Listing type here will cause TextTagger to make an effort to run your tagger only after all taggers that can output that type have already run, but it won't cause any new taggers to be pulled in just for the purpose of getting that tag type. You may list the same type as both an input type and an optional output type; in this case your tagger is a "loopy" tagger, and will run after the non-loopy taggers outputting that type. But it might or might not run after other loopy taggers for that type. Other kinds of cycles in the <a href="#sec-5.4.">dependency graph</a> are not allowed. (See also the last paragraph of the section on <a href="#sec-3.5.2."><code>:type</code></a>.)</dd>
+</dl>
+
+<p>Note that all the functions take <code>$self</code>, the TextTagger object, as their first argument. This is a <code>TripsModule</code> object, so you can use it to make requests of other TRIPS modules by calling the <code>send_and_wait</code> method. Some taggers also use <code>$self</code> to help propagate their parameters from <a href="#sec-3.1.">the command line</a>, <a href="#sec-3.2."><code>set-parameters</code> requests</a>, or <a href="#sec-3.5."><code>tag</code> requests</a>, but currently this is kind of ugly and requires cooperation in <code>TextTagger.pm</code> itself.</p>
+</div>
+
+<div class="section">
+<h4>Tagger template</h4>
+<p>In general, if you were to write a tagger Perl module called <code>MomeRaths.pm</code>, it should look something like this. Please do not cargo-cult copy-and-paste everything from this template, as some of it surely doesn't apply to your tagger. Update the comments, at least.</p>
+<blockquote><samp>
+package TextTagger::MomeRaths;
+require Exporter;
+@ISA = qw(Exporter);
+@EXPORT_OK = qw(init_mome_raths ready_mome_raths fini_mome_raths tag_mome_raths);
+
+sub init_mome_raths {
+  my $self = shift;
+  # initialization code goes here, e.g. loading data, starting external processes
+}
+
+sub ready_mome_raths {
+  my $self = shift;
+  # do things like waiting for an external process to finish its initialization here
+}
+
+sub fini_mome_raths {
+  my $self = shift;
+  # finalization code goes here, e.g. stopping external processes
+}
+
+sub tag_mome_raths {
+  # for taggers that only need text input:
+  # my ($self, $input_text) = @_;
+  # for taggers that only need tag input:
+  # my ($self, @input_tags) = @_;
+  # for taggers that use both:
+  my ($self, $input_text, @input_tags) = @_;
+
+  my @output_tags = ();
+
+  # MAIN TAGGING CODE GOES HERE
+
+  # adding an example POS tag:
+  push @output_tags, {
+    type =&gt; 'pos',
+    start =&gt; $start,
+    end =&gt; $end,
+    lex =&gt; substr($input_text, $start, $end - $start),
+    'penn-pos' =&gt; ['NN', 'NNP'] # noun or proper noun (singular)
+  };
+
+  # a common pattern is to run a regex over the $input_text and tag the matches;
+  # the match2tag function in Util.pm helps with this by making the
+  # start/end/lex fields for you from the most recent match:
+  while ($input_text =~ /your regex here/g) {
+    push @output_tags, +{
+      type =&gt; 'sense',
+      lftype =&gt; ['GEOGRAPHIC-REGION'], # a list of ONT types
+      match2tag()
+    };
+  }
+
+  return [@output_tags];
+}
+
+push @TextTagger::taggers, {
+  # most of these fields are optional
+  name =&gt; 'mome_raths', # required
+  init_function =&gt; \&amp;init_mome_raths,
+  ready_function =&gt; \&amp;ready_mome_raths,
+  fini_function =&gt; \&amp;fini_mome_raths,
+  tag_function =&gt; \&amp;tag_mome_raths, # required
+  output_types =&gt; [qw(pos sense)], # required
+  input_text =&gt; 1,
+  input_types =&gt; ['sentence'],
+  optional_input_types =&gt; ['clause']
+};
+
+1;
+</samp></blockquote>
+
 </div>
 
 </div>
