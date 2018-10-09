@@ -178,9 +178,14 @@
 
 <xsl:template match="word">
  <xsl:value-of select="@first-word" />
- <xsl:value-of select="@remaining-words" />
+ <xsl:if test="@remaining-words">
+  <xsl:text> </xsl:text>
+  <xsl:value-of select="@remaining-words" />
+ </xsl:if>
  <xsl:if test="@particle">
-  (<xsl:value-of select="@particle" />)
+  <xsl:text> (</xsl:text>
+  <xsl:value-of select="@particle" />
+  <xsl:text>)</xsl:text>
  </xsl:if>
 </xsl:template>
 
