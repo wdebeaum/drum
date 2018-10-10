@@ -59,6 +59,54 @@
       (t 'ld::t)
       )))
 
+(defun convert-feature-value-hierarchy (tree)
+  (mapcar
+    (lambda (child)
+      `(ld::concept ,(intern (symbol-name (car child)) :f) ; for f::+/-
+        ,@(convert-feature-value-hierarchy (cdr child))))
+    tree))
+
+(defun prepend-any (feat-name)
+  (intern (concatenate 'string "ANY-" (symbol-name feat-name)) :F))
+
+(defmacro ld::define-feature (feat-name &key values name-only)
+  `(ld::concept ,feat-name
+    ;; for F::foo, make an alias F::ANY-foo
+    (ld::alias ,(prepend-any feat-name))
+    ;; check that values/name-only are specified correctly; turn values tree
+    ;; into a hierarchy of concepts named by the feature values
+    ,@(cond
+        ((and values name-only)
+	  (error "expected feature ~s definition to have either :values or :name-only, but got both" feat-name))
+	(name-only nil)
+	(values (convert-feature-value-hierarchy values))
+	(t (error "expected feature ~s definition to have either :values or :name-only, but got neither" feat-name))
+	)))
+
+(defmacro ld::define-feature-rule (rule-name &key feature implies)
+    (declare (ignore rule-name)) ; FIXME?
+  ;; FIXME: this assumes that feature values used in rules like this are not
+  ;; shared among multiple features, which is true for now, but only because
+  ;; the shared +/- values aren't used for rules
+  `(ld::concept ,(second feature)
+    ,(convert-old-sem implies :part-p t)))
+
+(defmacro ld::define-feature-list-type (fltype-name &key features defaults)
+  (unless (assoc 'f::type defaults)
+    (push '(f::type ont::any-sem) defaults))
+  ;; the default default for a feature is the feature name with "ANY-"
+  ;; prepended, except for F::type/ONT::any-sem handled above
+  (dolist (f features)
+    (unless (assoc f defaults)
+      (push (list f (prepend-any f)) defaults)))
+  `(ld::sem-feats ,fltype-name
+    ;; FIXME: for historical reasons, feature names/values are referred to as
+    ;; plain symbols (in LD package) instead of the concepts (with names in F
+    ;; package) they now are (also need to account for f::type values that are
+    ;; ONT types instead of F symbols like other feature values)
+    ,@(convert-variables-to-disjunctions
+          (util::convert-to-package defaults :ld))))
+
 (defun convert-sense-key (sk-str)
   "Convert a WordNet sense key string as it appears in the Lisp TRIPS ontology
    to a symbol compatible with other resources."

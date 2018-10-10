@@ -302,6 +302,20 @@
 	      :provenance-name (intern (package-name pkg) :ld))))
       *resource-versions*))
 
+(defresource (F)
+  ( :base-dir (pathname-directory #!TRIPS"src;OntologyManager;Data;LFdata;*")
+    :get-all-files
+    (lambda (rv)
+      (let ((bd (base-dir rv)))
+	(mapcar
+	    (lambda (s)
+	      (make-pathname :defaults bd :name s :type "lisp"))
+	    '("feature-declarations"
+	      "feature-types"
+	      )
+	    )))
+    ))
+
 (defresource (ONT)
   ( :base-dir (pathname-directory #!TRIPS"src;OntologyManager;Data;LFdata;*")
     :get-all-files

@@ -3448,7 +3448,8 @@
 	   (sem ($ f::situation (f::aspect ?aspect) (f::time-span ?time)))
 	   ;;(subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
 	   (iobj (% -)) (part (% -)) (dobj (% -))
-	   (comp3 ?comp) 
+	   (comp3 ?comp)
+	   (comp3 (% vp- (vform ?vform2)))
 	  #|| (comp3 (% vp- (class ?class)  (constraint ?con1) (tma ?tma1) (var ?var)
 		     (case (? ccase obj -)) (var ?compvar)  
 		     (gap ?gap)	(lex ?lex)	     
@@ -3470,6 +3471,7 @@
 		     (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -) (expletive ?exp)))
 		     (advbl-needed -) (subj-map ?lsubj-map)
 		     (auxname ?compauxname)
+		     (vform ?vform2)
      )
     (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?newtma)) ;; add aux feature to tma
     ;; change the temporal values in sem to be consistent with the aux
