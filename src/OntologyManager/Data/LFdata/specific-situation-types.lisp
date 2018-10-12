@@ -3964,11 +3964,12 @@
 )
 
 (define-type ont::governing
-    :parent ont::control-manage
-    :arguments ((:REQUIRED ONT::Agent ((? aff F::situation F::phys-obj)))
-		(:required ont::affected ((? aff F::situation F::phys-obj)
-					  (F::type (? typ ont::device ont::located-event ont::molecular-part)))))
-    :comment "control, influence, or regulate a process"
+    :parent ont::managing
+    ;:parent ont::control-manage
+    ;:arguments ((:REQUIRED ONT::Agent ((? aff F::situation F::phys-obj)))
+		;(:required ont::affected ((? aff F::situation F::phys-obj) ; also abstr-obj: signaling pathway
+		;			  (F::type (? typ ont::device ont::located-event ont::molecular-part)))))
+    ;:comment "control, influence, or regulate a process"
     )
 
 ;; for configure, arrange X (into Y) e.g. he arranged them into groups of three

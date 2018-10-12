@@ -676,30 +676,65 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
     (declare (ignore w))
     (let* ((wdef (remove-if #'null wdef))
 	  (combined-domain-sense-preferences (append lxm::*domain-sense-preferences-tmp* lxm::*domain-sense-preferences*)) ; tmp before permanent so that the tmp preferences can override the permanent preferences
-	  (all-onttypes (mapcar #'(lambda (x) (car x)) (get-lf w)))
-	  (preferred-type (find-if #'(lambda (y) (is-subtype-of (mapcar #'(lambda (x) (car x)) combined-domain-sense-preferences) y)) all-onttypes))
-	  )
-    (dolist (def wdef)
-      (with-slots ((this-pref pref)) def
-	(let* ((feats (lex-entry-feats def))
-	       (lf-pair (get-feature-values feats 'w::lf))
-	       (this-lf (strip-out-lf lf-pair))
-	       (lex (if (consp lf-pair) (third lf-pair) lf-pair))
-	       (onttype (if (consp lf-pair) (second lf-pair) lf-pair))
-	       (preferred-domain-sense (cadr (assoc lex combined-domain-sense-preferences)))
-	       )
-	  (when (or preferred-domain-sense preferred-type)
-	    (if (and this-lf onttype ;this-lf and onttype are nil when non-hierarchy
-		     (or (eq this-lf preferred-domain-sense) 
-			 (eq onttype preferred-type)))
-		(setf this-pref .99)
-	      ;; demote competing word senses
-	      (if (> this-pref .97)
-		  (decf this-pref .01)))	  
-	    (pushnew def wdef))))
+	   (all-onttypes (mapcar #'(lambda (x) (car x)) (get-lf w)))
+	   (preferred-types (find-preferences-for-word w combined-domain-sense-preferences))
+	   )
+      (when (and preferred-types (union all-onttypes preferred-types))
+	(dolist (def wdef)
+	  (with-slots ((this-pref pref)) def
+	    (let* ((feats (lex-entry-feats def))
+		   (lf-pair (get-feature-values feats 'w::lf))
+		   (this-lf (strip-out-lf lf-pair))
+		   (lex (if (consp lf-pair) (third lf-pair) lf-pair))
+		   (onttype (if (consp lf-pair) (second lf-pair) lf-pair))
+		   )
+	      (if (and this-lf onttype ;this-lf and onttype are nil when non-hierarchy
+		       (member onttype preferred-types))
+		  (setf this-pref (adjust-pref this-pref 1.1))
+		  ;; demote competing word senses
+		  (setf this-pref (adjust-pref this-pref .99))))	  
+	      (pushnew def wdef))))
 	)
     wdef)
+
+
+(defun find-preferences-for-word (word preferences)
+  (let ((stem (stem-word word)))
+    (append (find-preferences-for-stem word preferences)
+	    (when stem (find-preferences-for-stem stem preferences)))))
+
+(defun stem-word (w)
+  "removes common suffixes such as S and ED"
+  (if (symbolp w)
+      (let* ((reversed-chars (reverse (coerce (symbol-name w) 'list)))
+	 (stemmed (cond ((eq (car reversed-chars) #\S)
+			 (if (eq (cadr reversed-chars) #\E)
+			     (setq reversed-chars (cddr reversed-chars))
+			     (setq reversed-chars (cdr reversed-chars))))
+			((and (eq (car reversed-chars) #\D)
+			      (eq (cadr reversed-chars) #\E))
+			 (setq reversed-chars (cddr reversed-chars)))
+			)))
+    ;;(format t "~% Reverse is ~S  stemmed is ~S" reversed-chars stemmed)
+	(when stemmed
+	  (intern (coerce (reverse stemmed)'string) :W)
+	  )
+    )))
+
+(defun find-preferences-for-stem (word preferences)
+  (let ((explicit-preferences (mapcar #'cadr (remove-if-not  #'(lambda (x)
+								 (eq (car x) word))
+							     preferences))))
+    (append explicit-preferences
+	    (cdr
+	     (assoc 'W::ALWAYS preferences)))
+    )
   )
+
+(defun adjust-pref (pref adjust)
+  (if (> adjust 1)
+      (+ pref (* (- 1 pref) (- adjust 1)))
+      (* pref adjust)))
 
 (defun filter-by-senses (wdef w trips-pos-list penn-tags ont-types wn-sense-keys domain-info &key tagged-senses-only)
   "filter the word definitions to return only senses corresponding to the sense classes in the list. If no such sense exists, a default sense is created on the fly using the available sense and pos information, or defaults if missing"
