@@ -635,7 +635,8 @@
     ))
 
   (reln-agent-affected-optional-templ
-   (SYNTAX(W::sort W::other-reln)  (W::CASE (? cas W::sub W::obj)) ;(w::allow-deleted-comp +)
+   (SYNTAX(W::sort W::other-reln)  (W::CASE (? cas W::sub W::obj))
+	  (w::allow-deleted-comp +) ; this is so that it can go through n1-reln1 (even though the subcat subcat2 are optional)
 	  (W::MASS W::COUNT))
    (ARGUMENTS
     (SUBCAT  (:parameter xp1 (:default (% W::PP (W::ptype w::of)))) ONT::agent optional)

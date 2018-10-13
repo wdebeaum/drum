@@ -900,6 +900,11 @@
  :comment "properties regarding the configuration, arrangement, or layout of elements"
 )
 
+(define-type ont::equipped-val
+ :wordnet-sense-keys ("equipped%3:00:00" "equipped%3:00:02" "equipped%5:00:00:prepared:00" "armed%3:00:01")
+ :parent ont::configuration-property-val 
+)
+
 ;; flexible vs. rigid
 (define-type ont::flexibility-val
  :parent ont::configuration-property-val 

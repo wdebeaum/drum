@@ -889,6 +889,12 @@
 		(:essential ont::formal)   ;; stay in motion, stay happy, ...
 		)
     )
+
+(define-type ont::confine
+ :wordnet-sense-keys ("confine%2:41:00" "confine%2:35:01" "confinement%1:04:00" "confinement%1:04:01")
+  :parent ont::located-move-state
+  )
+
 #||
 (define-type ONT::STOP-MOVE
  :wordnet-sense-keys ("park%2:35:00")
@@ -4301,8 +4307,6 @@
 ;  :parent ont::manipulate
   :parent ont::control-manage
   )
-
-
 
 ;; 20120524 GUM change new type
 (define-type ont::cope-deal

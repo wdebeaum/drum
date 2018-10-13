@@ -8,7 +8,8 @@
 ;; those are adjectives
 ;; external
   (W::ARM
-  (senses((LF-PARENT ONT::external-body-part)
+   (senses
+    ((LF-PARENT ONT::external-body-part)
     (TEMPL body-part-reln-templ)
     )
    )
@@ -25,4 +26,14 @@
 	   )
 )
 ))
+
+(define-words :pos W::v
+ :words (
+  (W::ARM
+   (senses
+    ((LF-PARENT ONT::SUPPLY) 
+     (TEMPL AGENT-AFFECTED-XP-TEMPL)
+     )
+    )
+   )))
 

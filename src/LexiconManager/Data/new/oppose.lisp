@@ -5,6 +5,7 @@
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
   (W::oppose
+   (wordfeats (W::morph (:forms (-vb) :nom w::opposition)))
    (SENSES
     ((meta-data :origin calo :entry-date 20050905 :change-date 20090508 :comments projector-purchasing)
      ;;(LF-PARENT ONT::contest)

@@ -38,15 +38,25 @@
          (old-fl-type (car old-sem-disj))
 	 (old-fl (cdr old-sem-disj))
 	 )
-    ;; for now just flatten :required and :default
+    ;; for now just flatten :required and :default (but only use :default if
+    ;; part-p, since it has no effect for role restrictions)
     (setf old-fl
           (mapcan
 	      (lambda (x)
-	        (if (member (car x) '(:required :default))
-		  (cdr x)
-		  (list x)
+	        (cond
+		  ((eq :required (car x))
+		    (cdr x))
+		  ((not (eq :default (car x)))
+		    (list x))
+		  ;; NOPE! actually :defaults in define-type are never used
+		  ;(part-p
+		  ;  (cdr x))
+		  (t nil) ; :default and not part-p
 		  ))
 	      old-fl))
+    ;; get rid of fl-type if it's just a variable
+    (when (util::variable-p old-fl-type)
+      (setf old-fl-type nil))
     (cond
       ((and old-fl-type old-fl)
           `(ld::sem-feats (ld::inherit ,old-fl-type) ,@old-fl))
@@ -129,7 +139,8 @@
     ,@(when wordnet-sense-keys
       `((ld::overlap ,@(mapcar #'convert-sense-key wordnet-sense-keys))))
     ,@(when sem
-      (list (convert-old-sem sem :part-p t)))
+      (let ((sem-with-type `(,(car sem) (f::type ,type) ,@(cdr sem))))
+	(list (convert-old-sem sem-with-type :part-p t))))
     ,@(when arguments
       `((ld::sem-frame
         ,@(mapcar
@@ -144,7 +155,7 @@
 				role))
 		       (restr (convert-old-sem restr-sem))
 		       )
-		  `(,roles ,restr ,@(when (eq :optional optionality) '(ld::optional))))))
+		  `(,roles ,restr ,@(unless (eq :required optionality) '(ld::optional)))))) ; :essential is (confusingly) a kind of optional
 	    arguments))))
     ;; TODO coercions is only used once in the entire ontology, is it worth it?
     ))
