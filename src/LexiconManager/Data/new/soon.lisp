@@ -7,7 +7,7 @@
  :words (
   (W::SOON
    (SENSES
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::soon)
      (TEMPL PRED-S-VP-TEMPL)
      )
     )

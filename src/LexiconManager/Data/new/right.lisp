@@ -82,7 +82,7 @@
  :words (
   ((W::right W::away)
    (SENSES
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::soon)
      (TEMPL PRED-S-POST-templ)
      )
     )
@@ -94,7 +94,7 @@
     ((W::right W::now)
    (SENSES
     (;(LF-PARENT ONT::event-time-rel)
-     (LF-PARENT ONT::EVENT-TIME-REL-NOW)
+     (LF-PARENT ONT::NOW)
      (TEMPL PRED-S-POST-templ)
      )
     )

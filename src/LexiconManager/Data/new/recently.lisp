@@ -6,7 +6,7 @@
  :words (
   (W::RECENTLY
    (SENSES
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::recent)
      (TEMPL pred-s-vp-TEMPL)
      )
     )

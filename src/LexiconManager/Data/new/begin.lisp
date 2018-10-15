@@ -6,7 +6,7 @@
  :tags (:base500)
  :words (
   (W::begin
-   (wordfeats (W::morph (:forms (-vb) :past W::began :pastpart W::begun :nom w::beginning)))
+   (wordfeats (W::morph (:forms (-vb) :past W::began :pastpart W::begun))) ;:nom w::beginning)))
    (SENSES
     ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("begin-55.1-1"))
      (LF-PARENT ONT::startoff-begin-commence-start)
@@ -43,3 +43,17 @@
    )
 ))
 
+(define-words :pos W::ADV
+ :tags (:base500)
+ :words (
+  (W::beginning
+   (wordfeats (W::VFORM W::ing) (W::MORPH (:forms NIL)))
+   (SENSES
+    (
+     (LF-PARENT ONT::start-time)
+     (example "Beginning Monday I work.")
+     (TEMPL binary-constraint-S-templ (xp (% W::NP (W::case (? cas W::obj -)) (w::lf (% w::description (w::class ont::time-loc))))))
+     )
+    )
+   )
+))

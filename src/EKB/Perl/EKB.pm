@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Fri Jun 23 10:07:07 CDT 2017 lgalescu>
+# Time-stamp: <Sun Oct 14 17:38:28 CDT 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.34 2017/10/04 20:51:56 lgalescu Exp $
+# $Id: EKB.pm,v 1.36 2018/10/14 23:56:42 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -331,7 +331,7 @@ sub new {
   }
   # add a timestamp, if it doesn't have one
   unless ($self->get_attr('timestamp')) {
-    $self->set_attr('timestamp', _timestamp());
+    $self->set_timestamp;
   }
   return $self;
 }
@@ -379,6 +379,11 @@ Returns the XML document backing up this EKB.
 sub get_document {
   my $self = shift;
   return $self->{document};
+}
+
+sub set_timestamp {
+  my $self = shift;
+  $self->set_attr('timestamp', _timestamp());
 }
 
 =head1 METHODS
@@ -755,9 +760,10 @@ Generic filter for removing paragraphs and/or sentences and related assertions.
 Unlike crop(), this method does not attempt to keep frame numbers valid after
 paragraphs are removed. 
 
-$options is a reference to a hash. The only keys handled are C<paragraphs> and
-C<sentences>. The value for each such key is a reference to a list of ids. The
-result of the filter is such that only the paragraphs and/or sentences
+$options is a reference to a hash. The only keys handled are C<files>, 
+C<paragraphs> and C<sentences>. The value for each such key is a reference to 
+a list of file names for the first case and a list of ids for the other two cases. 
+The result of the filter is such that only the paragraphs and/or sentences
 indicated are kept. 
 
 Caveat: The way this method works when both paragraphs and sentences are
@@ -772,6 +778,19 @@ sub filter {
 
   return unless (defined($opts) and ref($opts) eq 'HASH');
 
+  if (exists $opts->{files} ) {
+    my @to_keep = @{ $opts->{files} };
+    if (scalar(@to_keep)) {
+      DEBUG 2, "Will keep paragraphs for file: %s", Dumper(\@to_keep);
+      foreach my $p ($self->get_paragraphs) {
+	my $p_file = $p->getAttribute('file');	
+	my $p_id = $p->getAttribute('id');	
+	next if grep { $p_file eq $_ } @to_keep;
+	DEBUG 2, "Removing paragraph: %s", $p_id;
+	$self->remove_paragraph($p_id);
+      }
+    }
+  }
   if (exists $opts->{paragraphs} ) {
     my @to_keep = @{ $opts->{paragraphs} };
     if (scalar(@to_keep)) {

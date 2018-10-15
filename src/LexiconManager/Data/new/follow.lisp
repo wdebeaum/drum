@@ -20,3 +20,14 @@
    )
 ))
 
+(define-words :pos W::v 
+ :words (
+  ((W::follow (W::up))
+   (SENSES
+    ((LF-PARENT ONT::activity-ongoing)
+     (TEMPL AGENT-NEUTRAL-XP-TEMPL)
+     (example "I followed up the leads.")
+     )
+    )
+   )
+))

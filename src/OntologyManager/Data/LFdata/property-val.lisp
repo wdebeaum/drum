@@ -25,9 +25,10 @@
 
 ;; higher-level type for evaluation
 (define-type ont::evaluation-attribute-val
- :parent ont::property-val 
- :comment "properties which need an observer to be recognized -- subjective to the observer"
-)
+    :parent ont::property-val
+    :arguments ((:REQUIRED ONT::FIGURE (?any (F::tangible +))))
+    :comment "properties which need an observer to be recognized -- subjective to the observer"
+    )
 
 ;; fresh, stale
 (define-type ont::freshness-val

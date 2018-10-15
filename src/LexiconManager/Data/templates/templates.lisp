@@ -3892,12 +3892,12 @@
     ))
   
   (name-templ
-   (SYNTAX(W::agr W::3s) (W::name +) (W::generated -))
+   (SYNTAX(W::agr W::3s) (W::name +) (W::generated -) (w::SORT (? !s w::PP-WORD))) ; so it doesn't go through -np-pp-word2>
    (ARGUMENTS
     ))
 
    (nname-templ   ;; template for special names that can be used as modifiers in constructions like "delta 567"
-    (SYNTAX (W::agr W::3s) (W::name +) (W::nname +) (W::generated -))
+    (SYNTAX (W::agr W::3s) (W::name +) (W::nname +) (W::generated -) (w::SORT (? !s w::PP-WORD)))
     (ARGUMENTS
      ))
   

@@ -3011,13 +3011,15 @@
       
    ;;  NP with SPECS that subcategorize for "of" PP's that are mass
     ;; e.g., three gallons of water
-   ((NP (LF (% description (STATUS ?spec) (VAR *) (CLASS ?c) (CONSTRAINT ?newr)
+      ((NP (LF (% description (STATUS ?spec) (var ?v) ;(VAR *)
+		  (CLASS ?c) (CONSTRAINT ?newr)
 	       (sem ?sem)  (transform ?transform) 
 	       ))
      (case ?case)
      (SORT PRED)
      (MASS mass) (AGR ?agr)
-     (VAR *) (WH ?w));; must move WH feature up by hand here as it is explicitly specified in a daughter.
+     (var ?v) ;(VAR *)
+     (WH ?w));; must move WH feature up by hand here as it is explicitly specified in a daughter.
     -np-spec-of-mass-indef-pp>
     (SPEC (LF ?spec) (ARG ?v) (VAR ?specvar) (name-spec -) (mass mass) 
      (POSS -)
@@ -3037,13 +3039,15 @@
 
    ;;  NP with SPECS that subcategorize for "of" PP's that are plural
     ;; e.g., three gallons of beans
-   ((NP (LF (% description (STATUS ?spec) (VAR *) (CLASS ?c) (CONSTRAINT ?newr)
+   ((NP (LF (% description (STATUS ?spec) (var ?v) ;(VAR *)
+	       (CLASS ?c) (CONSTRAINT ?newr)
 	       (sem ?sem)  (transform ?transform) 
 	       ))
      (case ?case)
      (SORT PRED)
-     (MASS count)
-     (VAR *) (WH ?w));; must move WH feature up by hand here as it is explicitly specified in a daughter.
+     (MASS count) (agr ?agr)
+     (var ?v) ;(VAR *)
+     (WH ?w));; must move WH feature up by hand here as it is explicitly specified in a daughter.
     -np-spec-quantity-of-def-pp>
     (SPEC (LF ?spec) (ARG ?v) (VAR ?specvar) (name-spec -)
      (POSS -)

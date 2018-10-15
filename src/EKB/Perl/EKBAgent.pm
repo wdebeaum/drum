@@ -1,6 +1,6 @@
 # EKBAgent.pm
 #
-# Time-stamp: <Tue Mar  6 00:10:20 CST 2018 lgalescu>
+# Time-stamp: <Sun Oct 14 18:56:25 CDT 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 13 Feb 2017
 #
@@ -18,6 +18,10 @@ Description:
     EKB generation.
 
 Arguments:
+
+    -store <path>
+
+    Path to folder where EKBs are stored.
 
     -testFile <testFileName>
 
@@ -125,6 +129,8 @@ use TripsModule::TripsModule;
 
 use strict vars;
 
+use re 'debug';
+
 use File::Basename;
 use File::Spec::Functions;
 use File::Slurp qw(read_file);
@@ -142,17 +148,22 @@ use AKRL::AKRLList;
 use AKRL2EKB;
 
 use util::Log;
-#local $util::Log::DebugLevel = 0;
+#local $util::Log::DebugLevel = 2;
 #local $util::Log::CallerInfo = 0;
 #local $util::Log::Quiet = 0;
 
 sub init {
   my $self = shift;
   $self->{name} = 'EKB-AGENT';
-  $self->{usage} .= " [-testFile <file containing assertions to test>] [-compareEnabled] [-saveResultsFolder <path to output folder>]";
+  $self->{usage} .= " [-store <path to EKB store>] [-testFile <file containing assertions to test>] [-compareEnabled] [-saveResultsFolder <path to output folder>]";
   $self->SUPER::init();
   $self->handle_parameters();
   $self->send_subscriptions();
+
+  if ($self->{storePath}) {
+    $self->loadStore();
+  }
+  
   INFO ("Initialized $self->{name}\n");
 
   if ($self->{testing}) {
@@ -164,6 +175,7 @@ sub handle_parameters {
   my $self = shift;
   my @argv = @{$self->{argv}};
 
+  $self->{storePath} = undef;
   $self->{compareEnabled} = 0;
   $self->{saveResultsFolder} = 'ekb-agent-tests';
   $self->{testing} = 0;
@@ -171,7 +183,17 @@ sub handle_parameters {
   eval {
     while (@argv) {
       my $opt = shift @argv;
-      if ($opt eq '-debugLevel')
+      if ($opt eq '-store') {
+	die "-store option requires an argument"
+	  unless (@argv > 0);
+	my $store_path = shift @argv;
+	unless (-d $store_path) {
+	  FATAL ("Folder doesn't exist: $store_path");
+	}
+        $self->{storePath} = $store_path;
+        INFO ("EKB store: $self->{storePath}");
+      }
+      elsif ($opt eq '-debugLevel')
       {
         die "-debugLevel option requires an argument"
             unless (@argv > 0);
@@ -211,6 +233,8 @@ sub send_subscriptions {
   $self->send_msg('(subscribe :content (request &key :content (do-ekb-inference . *)))');
   # AKRL 2 EKB helper
   $self->send_msg('(subscribe :content (request &key :content (get-ekb-representation . *)))');
+  # get EKB for file
+  $self->send_msg('(subscribe :content (request &key :content (get-ekb . *)))');
 
   if ($self->{compareEnabled} or $self->{testing}) {
     $self->send_msg('(subscribe :content (request &key :content (interpret-speech-act . *)))');
@@ -257,119 +281,29 @@ sub receive_request {
   DEBUG (2, "Received a request for: '$verb' from '$sender'\n");
 
   eval {
-  if ($verb eq 'do-ekb-inference') {
-    # get reasoner
-    my $domain = $content->{':domain'};
-    unless (defined($domain)) {
-      ERROR ":domain parameter missing";
-      $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :domain parameter is missing.\"))");
-      return;
-    }
-    $domain = KQML::KQMLStringAtomAsPerlString($domain);
-    # get EKB file
-    my $ekb_file = $content->{':ekb'};
-    unless (defined($ekb_file)) {
-      ERROR ":ekb parameter missing";
-      $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :ekb parameter is missing.\"))");
-      return;
-    }
-    $ekb_file = KQML::KQMLStringAtomAsPerlString($ekb_file);
-    # does caller want actual EKB as string?
-    my $return_string = TripsModule::boolean_opt(':return-string',
-						 $content->{':return-string'} // 0);
-    # is pub EKB?
-    # so far, this was an external parameter; i think i should make it part of the EKB encoding itself!!! [FIXME]
-    # do inference
-    my $result = $self->do_inference($domain,
-				     $ekb_file,
-				     { return_string => $return_string});
-    if ($result) {
-      $self->reply_to_msg($msg,
-			  "(reply :content (done :result \"".
-			  escape_string($result) .
-			  "\"))");
-    } else {
-      $self->reply_to_msg($msg, "(reply :content (failure :reason \"Couldn't do it.\"))");
-    }
-  }
-  elsif ($verb eq 'get-ekb-representation')
-    {
-      # get ids
-      my $ids = $content->{':ids'};
-      # get AKRL context
-      my $akrl = $content->{':context'};
-      unless (defined($akrl)) {
-        ERROR ":context parameter missing";
-        $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :context parameter is missing.\"))");
-        return;
-      }
-
-      # parse the AKRL
-      $akrl = parseAKRL($akrl);
-
-      # Convert it to EKB
-      my $ekb = toEKB($akrl, $ids);
-
-      if ($ekb) {
-        my $ekbString = $ekb->toString();
-	    $ekb->print($ekb->get_attr('timestamp') . ".ekb");
-        $ekbString = escape_string($ekbString);
-        $self->reply_to_msg($msg, "(reply :content (done :result \"".$ekbString."\"))");
-      } else {
-        $self->reply_to_msg($msg, "(reply :content (failure :reason \"Couldn't do it.\"))");
-      }
-    }
-  elsif ($verb eq 'generate')
-    {
-      if ($self->{testing})
-      {
+    if ($verb eq 'do-ekb-inference') {
+      $self->handle_request_ekb_inference($msg, $content);
+      return 1;
+    } elsif ($verb eq 'get-ekb-representation') {
+      $self->handle_request_get_ekb_representation($msg, $content);
+      return 1;
+    } elsif ($verb eq 'get-ekb') {
+      $self->handle_request_get_ekb($msg, $content);
+      return 1;
+    } elsif ($verb eq 'generate') {
+      if ($self->{testing}) {
         sleep 1;
-        if ($self->{testing})
-        {
+        if ($self->{testing}) {
           $self->sendNextTest();
         }
       }
       return 1;
-    }
-  elsif ($verb eq 'interpret-speech-act')
-    {
-      if (($self->{testing} or $self->{compareEnabled})) {
-        INFO("TESTING string : '".$self->{textToParse}."'");
-        $self->{drumEKBText} = undef;
-        $self->{agentEKBText} = undef;
-        $self->{akrlText} = undef;
-
-        my $assertion = $content->{':content'};
-        $assertion = KQML::KQMLKeywordify($assertion);
-        $assertion = $assertion->{':context'};
-        $self->{akrlText} = KQML::KQMLAsString($assertion);
-
-        if (defined ($self->{akrlText})) {
-          # parse the AKRL
-          my $akrl = parseAKRL($self->{akrlText});
-
-          # Convert it to EKB
-          my $ekb = toEKB($akrl);
-
-          if (defined($ekb)) {
-            $self->{agentEKBText} = $ekb->toString();
-          }
-        }
-
-        $self->{drumEKBText} = getDRUM_EKB($self->{textToParse});
-
-        # Compare the xml from both.
-        $self->compareEKB();
-      }
-      return 1;
-    }
-    else
-    {
+    } elsif ($verb eq 'interpret-speech-act') {
+      $self->handle_request_interpret_speech_act($msg, $content);
+    } else {
       DEBUG (2, " - Failed to handle message: ".escape_string($@));
       $self->reply_to_msg($msg, "(reply :content (failure :reason \"".escape_string($@)."\"))");
     }
-
-
   } || $self->reply_to_msg_debug($msg, "(reply :content (failure :reason \"" . escape_string($@) . "\"))");
 
 }
@@ -394,6 +328,196 @@ sub receive_sorry {
 
   DEBUG (2, "Received a SORRY: $content->{':result'} [from] $sender.");
 }
+
+# handler for 'do-ekb-inference' requests
+sub handle_request_ekb_inference {
+  my ($self, $msg, $content) = @_;
+
+  # get reasoner
+  my $domain = $content->{':domain'};
+  unless (defined($domain)) {
+    ERROR ":domain parameter missing";
+    $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :domain parameter is missing.\"))");
+    return;
+  }
+  $domain = KQML::KQMLStringAtomAsPerlString($domain);
+  # get EKB file
+  my $ekb_file = $content->{':ekb'};
+  unless (defined($ekb_file)) {
+    ERROR ":ekb parameter missing";
+    $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :ekb parameter is missing.\"))");
+    return;
+  }
+  $ekb_file = KQML::KQMLStringAtomAsPerlString($ekb_file);
+  # does caller want actual EKB as string?
+  my $return_string = TripsModule::boolean_opt(':return-string',
+					       $content->{':return-string'} // 0);
+  # is pub EKB?
+  # so far, this was an external parameter; i think i should make it part of the EKB encoding itself!!! [FIXME]
+  # do inference
+  my $result = $self->do_inference($domain,
+				   $ekb_file,
+				   {
+				    return_string => $return_string});
+  if ($result) {
+    $self->reply_to_msg($msg,
+			"(reply :content (done :result \"".
+			escape_string($result) .
+			"\"))");
+  } else {
+    $self->reply_to_msg($msg, "(reply :content (failure :reason \"Couldn't do it.\"))");
+  }
+}
+
+# handler for 'get-ekb' requests
+sub handle_request_get_ekb {
+  my ($self, $msg, $content) = @_;
+
+  my $doc = $content->{':document'};
+  unless (defined $doc) {
+    ERROR ":document parameter missing";
+    $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :document parameter is missing.\"))");
+    return;
+  }
+  $doc = KQML::KQMLStringAtomAsPerlString($doc);
+
+  my $ekb_file = $self->store_get($doc);
+  unless (defined $ekb_file) {
+    $self->reply_to_msg($msg, "(reply :content (failure :reason \"No EKB found\"))");
+    return;
+  }
+
+  my $ekb = EKB->new(catfile($self->{storePath}, $ekb_file));
+  $ekb->normalize();
+  $ekb->filter( { files => [ $doc ] });
+  my $doc_basename = basename($doc, (".xml", ".txt"));
+  $ekb->print($doc_basename . ".ekb");
+  
+  my $ekbString = escape_string($ekb->toString());
+  my $reply = "(reply :content (done :result \"" . $ekbString . "\"))";
+  $self->reply_to_msg($msg, $reply);
+}
+
+
+# handler for 'get-ekb-representation' requests
+sub handle_request_get_ekb_representation {
+  my ($self, $msg, $content) = @_;
+
+  # get ids
+  my $ids = $content->{':ids'};
+  # get AKRL context
+  my $akrl = $content->{':context'};
+  unless (defined($akrl)) {
+    ERROR ":context parameter missing";
+    $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :context parameter is missing.\"))");
+    return;
+  }
+
+  # parse the AKRL
+  $akrl = parseAKRL($akrl);
+
+  # Convert it to EKB
+  my $ekb = toEKB($akrl, $ids);
+
+  if ($ekb) {
+    my $ekbString = $ekb->toString();
+    $ekb->print($ekb->get_attr('timestamp') . ".ekb");
+    $ekbString = escape_string($ekbString);
+    $self->reply_to_msg($msg, "(reply :content (done :result \"".$ekbString."\"))");
+  } else {
+    $self->reply_to_msg($msg, "(reply :content (failure :reason \"Couldn't do it.\"))");
+  }
+}
+
+# handler for 'interpret-speech-act' requests
+sub handle_request_interpret_speech_act {
+  my ($self, $msg, $content) = @_;
+
+  if (($self->{testing} or $self->{compareEnabled})) {
+    INFO("TESTING string : '".$self->{textToParse}."'");
+    $self->{drumEKBText} = undef;
+    $self->{agentEKBText} = undef;
+    $self->{akrlText} = undef;
+
+    my $assertion = $content->{':content'};
+    $assertion = KQML::KQMLKeywordify($assertion);
+    $assertion = $assertion->{':context'};
+    $self->{akrlText} = KQML::KQMLAsString($assertion);
+
+    if (defined ($self->{akrlText})) {
+      # parse the AKRL
+      my $akrl = parseAKRL($self->{akrlText});
+
+      # Convert it to EKB
+      my $ekb = toEKB($akrl);
+
+      if (defined($ekb)) {
+	$self->{agentEKBText} = $ekb->toString();
+      }
+    }
+
+    $self->{drumEKBText} = getDRUM_EKB($self->{textToParse});
+
+    # Compare the xml from both.
+    $self->compareEKB();
+  }
+  return 1;
+}
+
+## FIXME: should make new class for storage and retrieval!
+
+# loads EKB store into $self->{docs}
+sub loadStore {
+  my ($self) = @_;
+
+  my $storePath = $self->{storePath};
+  opendir my($store), $storePath
+    or WARN("Cannot open $storePath");
+
+  my @ekb_files = grep { /\.ekb$/ } readdir $store;
+  WARN ("Found %d ekbs: %s", scalar(@ekb_files), "@ekb_files");
+  foreach my $ekb_file (@ekb_files) {
+    my $ekb = EKB->new(catfile($storePath,$ekb_file));
+    my @paragraphs = $ekb->get_paragraphs;
+    foreach my $p (@paragraphs) {
+      $self->store_add($p->getAttribute('file'), $ekb_file);
+    }
+  }
+
+  if ($self->store_empty) {
+    INFO ("No document EKBs in store!");
+  } else {
+    INFO ("Storage has EKBs for %d documents", scalar(keys %{$self->{store}}))
+  }
+}
+
+sub store_add {
+  my ($self, $doc, $ekb) = @_;
+
+  $self->{store}{$doc} = $ekb;
+  INFO ("Added to store: $doc => $ekb");
+}
+
+sub store_get {
+  my ($self, $doc) = @_;
+
+  #return if ($self->store_empty || !(exists $self->{store}{$doc}));
+  if ($self->store_empty) {
+    INFO ("No document EKBs in store!");
+  }
+  unless (exists $self->{store}{$doc}) {
+    INFO ("Document not in store!");
+  }
+
+  return $self->{store}{$doc};
+}
+
+sub store_empty {
+  my ($self) = @_;
+  return
+    !((exists ($self->{store})) && scalar(keys %{$self->{store}}));
+}
+
 
 # runs the specified domain reasoner over an EKB file, saves the result into
 # another EKB file

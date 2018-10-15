@@ -178,7 +178,8 @@
 
 ; figure is related by inherent orientation of ground
 (define-type ont::oriented-loc-reln
-    :comment "FIGURE is located by a directional relationship with the GROUD"
+    :comment "FIGURE is located by a directional relationship with the GROUND"
+    :arguments ((:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj f::abstr-obj)) (f::type (? !t ONT::TIME-MEASURE-SCALE))))
     :parent ont::position-as-point-reln
     )
 
@@ -925,7 +926,8 @@
 (define-type ONT::time-span-rel
  :parent ONT::temporal-location
  :arguments ((:ESSENTIAL ONT::GROUND (F::time (F::time-scale f::interval)
-			 (F::time-function (? funcn F::month-name F::year-name F::day-period))))
+					      (F::time-function (? funcn F::month-name F::year-name F::day-period))
+					      ))
 
 ;	     (:ESSENTIAL ONT::SIT-VAL (F::situation))
 	     ;;(:ESSENTIAL ONT::VAL (F::time ((? vl F::abstr-obj f::time) (F::scale ont::duration-scale))) ;; five minutes/days/hours
@@ -937,12 +939,16 @@
 ;; the meeting next week; he arrives next week
 (define-type ONT::event-time-rel
  :parent ONT::temporal-location
- :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (F::aspect (? asp F::dynamic F::stage-level))))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation)) ;(F::aspect (? asp F::dynamic F::stage-level)))) ; can be indiv-level: I was a pumpkin before midnight
              (:ESSENTIAL ONT::GROUND ((? vl F::time f::situation)))
 	     ; 3/2011 conflating time and situation in the val role to reduce search space
 ;             (:ESSENTIAL ONT::SIT-VAL (F::situation)) ;; swift 04/14/02 added this to handle when/before/as soon as/etc. + S, e.g. when I go
              )
  )
+
+(define-type ont::start-time
+    :parent ont::event-time-rel
+    )
 
 (define-type ont::before
     :parent ont::event-time-rel
@@ -978,10 +984,26 @@
              )
  )
 
-(define-type ONT::event-time-rel-now
-     :wordnet-sense-keys ("now%4:02:05" "now%4:02:01")
-     :parent ONT::event-time-rel
- )
+(define-type ONT::event-time-wrt-now
+    :parent ONT::event-time-rel
+     )
+
+(define-type ONT::now
+     :wordnet-sense-keys ("now%4:02:05" "now%4:02:01" "presently%04:02:00")
+     :parent ONT::event-time-wrt-now
+     )
+
+(define-type ONT::recent
+     :wordnet-sense-keys ("new%3:00:00" "past%3:00:00")
+     :parent ONT::event-time-wrt-now
+     )
+
+(define-type ONT::soon
+     :wordnet-sense-keys ("soon%4:02:00")
+     :parent ONT::event-time-wrt-now
+     )
+
+
 
 (define-type ONT::implicit-overlap
     :comment "this is the implicit relation between the events in sentences like He walked down the street whistling a tune"
@@ -1089,10 +1111,10 @@
 (define-type ONT::Time-interval
  :wordnet-sense-keys ("interval%1:28:00" "time_interval%1:28:00" "time%1:28:03" "clock_time%1:28:00" "time%1:28:00" "time%1:28:05" "time_period%1:28:00")
  :parent ONT::TIME-OBJECT
- :sem (F::time (F::time-scale (? sc F::interval)) (F::Scale -)) ;;Ont::duration-scale))
+ :sem (F::time (F::time-scale (? sc F::interval)) (F::Scale -) (F::Tangible +)) ;;Ont::duration-scale))
  :arguments ((:OPTIONAL ONT::GROUND (F::time (f::time-function f::time-frame) (f::time-scale f::interval) (f::scale ont::duration-scale)))
              ;;; a time of two hours
-             (:OPTIONAL ONT::FIGURE ((? t f::situation f::abstr-obj)))
+             (:OPTIONAL ONT::FIGURE ((? t f::situation f::abstr-obj f::time)))
 	     (:OPTIONAL ONT::EXTENT (F::Abstr-obj (f::time-scale f::interval) (f::scale ont::duration-scale)))
              )
  )
@@ -1113,6 +1135,21 @@
 ;;  this type is also constructed by the grammar for dates, times of day, etc.
 (define-type ONT::TIME-LOC
  :parent ONT::time-object)
+
+(define-type ONT::today
+     :wordnet-sense-keys ("today%4:02:00")
+     :parent ONT::time-loc
+     )
+
+(define-type ONT::yesterday
+     :wordnet-sense-keys ("yesterday%4:02:00" "yesterday%4:02:01")
+     :parent ONT::time-loc
+     )
+
+(define-type ONT::tomorrow
+     :wordnet-sense-keys ("tomorrow%4:02:00")
+     :parent ONT::time-loc
+     )
 
 (define-type ONT::recurring-time-of-day
     :comment "recurring moments of the day, defined by some event"
