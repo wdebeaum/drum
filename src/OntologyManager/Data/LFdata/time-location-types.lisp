@@ -939,7 +939,7 @@
 ;; the meeting next week; he arrives next week
 (define-type ONT::event-time-rel
  :parent ONT::temporal-location
- :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation)) ;(F::aspect (? asp F::dynamic F::stage-level)))) ; can be indiv-level: I was a pumpkin before midnight
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? f F::Situation F::time))) ; time: recent weeks ;(F::aspect (? asp F::dynamic F::stage-level)))) ; can be indiv-level: I was a pumpkin before midnight
              (:ESSENTIAL ONT::GROUND ((? vl F::time f::situation)))
 	     ; 3/2011 conflating time and situation in the val role to reduce search space
 ;             (:ESSENTIAL ONT::SIT-VAL (F::situation)) ;; swift 04/14/02 added this to handle when/before/as soon as/etc. + S, e.g. when I go

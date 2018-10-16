@@ -34,3 +34,17 @@
    )
 ))
 
+(define-words :pos W::ADV
+ :tags (:base500)
+ :words (
+  (W::beginning
+   (SENSES
+    (
+     (LF-PARENT ONT::start-time)
+     (example "Beginning Monday I work.")
+     (TEMPL binary-constraint-S-templ (xp (% W::NP (W::case (? cas W::obj -)) (w::lf (% w::description (w::class ont::time-loc))))))
+     )
+    )
+   )
+))
+
