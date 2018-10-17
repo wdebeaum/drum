@@ -37,10 +37,10 @@
   (W::NOW
    (wordfeats (W::ATYPE (? atype W::pre W::post)))
    (SENSES
-    (;(LF-PARENT ONT::EVENT-TIME-REL)
-     (LF-PARENT ONT::NOW)
-;     (SYNTAX (W::IMPRO-CLASS (:* ONT::TIME-LOC W::NOW)))
-     (SYNTAX (W::IMPRO-CLASS ONT::TIME-LOC))
+    ((LF-PARENT ONT::EVENT-TIME-REL)
+     ;; (LF-PARENT ONT::NOW)
+     ;; (SYNTAX (W::IMPRO-CLASS (:* ONT::TIME-LOC W::NOW)))
+     (SYNTAX (W::IMPRO-CLASS ONT::NOW))
      (TEMPL pred-s-vp-templ)
      )
     ))
@@ -51,7 +51,7 @@
  :words (
   (W::NOW
    (SENSES
-    ((LF-PARENT ONT::time-loc)
+    ((LF-PARENT ONT::NOW)
      (PREFERENCE 0.97)
      )
     )

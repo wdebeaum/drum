@@ -11,6 +11,17 @@ use strict vars;
 
 my $debug = 0;
 
+# blacklist closed-class temporal names
+# see also PersonalNames.pm
+my @blacklist = (
+  # week days
+  qw(Sunday Monday Tuesday Wednesday Thursday Friday Saturday),
+  # months
+  qw(January February March April May June July August September October November December),
+  # seasons
+  qw(Spring Summer Fall Autumn Winter)
+);
+
 my ($terms_in, $terms_out, $terms_pid);
 
 sub init_term_tagger
@@ -50,13 +61,15 @@ sub tag_terms
     last if ($term eq '');
     die "Bogus output from term tagger: '$term'"
       unless ($term =~ /\s+(\d+)\s+(\d+)$/);
+    my ($lex, $start, $end) = ($`, $1, $2);
+    next if (grep { $lex eq $_ } @blacklist);
     push @terms, { type => "named-entity",
                    lftype => ["GEOGRAPHIC-REGION"],
-		   lex => $`,
-		   start => $1,
-		   end => $2
+		   lex => $lex,
+		   start => $start,
+		   end => $end
 		 };
-    print STDERR "Got term '$`'.\n"
+    print STDERR "Got term '$lex'.\n"
       if ($debug);
   }
   return [@terms];

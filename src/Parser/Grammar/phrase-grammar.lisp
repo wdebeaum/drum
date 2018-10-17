@@ -1675,7 +1675,8 @@
      (head (ADJ1 (LF ?lf)  (VAR ?v)
 	    (transform ?transform) (comparative ?cmp)
 	    (SUBCAT ?subcat) (SUBCAT-MAP ?reln) (SUBCAT (% ?xx (var ?argv) (gap ?gap))) 
-	    (SUBCAT2 ?subcat2) (SUBCAT2-MAP ?reln2) (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
+	    (SUBCAT2 ?subcat2)
+	    (SUBCAT2-MAP (? !reln2 ONT::NOROLE -)) (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
 	    (post-subcat -)
 	    (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale) (F::intensity ?ints) (F::orientation ?orient)))
 	    (ARGUMENT-MAP ?argmap) (arg ?arg) (prefix -)
@@ -1685,7 +1686,7 @@
      ?subcat2
      (recompute-atype (atype ?atype) (subcat ?subcat) (subcat2 ?subcat2) (result ?newatype))
      (append-conjuncts (conj1 ?con) (conj2 (& (?argmap ?arg)
-					      (?reln ?argv) (?reln2 ?argv2)
+					      (?reln ?argv) (?!reln2 ?argv2)
 					      (scale ?scale) (intensity ?ints) (orientation ?orient))
 					     )
 		       (new ?newc)))
@@ -1700,8 +1701,12 @@
      -adj-pred-twosubcats-rev>
      (head (ADJ1 (LF ?lf)  (VAR ?v)
 	    (transform ?transform) 
-	    (SUBCAT ?subcat) (SUBCAT-MAP ?reln) (SUBCAT (% ?xx (var ?argv) (gap ?gap))) 
-	    (SUBCAT2 ?subcat2) (SUBCAT2-MAP ?reln2) (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
+	    (SUBCAT ?subcat) (SUBCAT-MAP ?reln)
+	    (SUBCAT (% ?xx (var ?argv) (gap ?gap))) 
+	    (SUBCAT2-MAP (? !reln2 ONT::NOROLE ))
+	    (SUBCAT2-MAP ?reln2)
+	    (SUBCAT2 ?subcat2)
+	    (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
 	    (post-subcat -)
 	    (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale) (F::intensity ?ints) (F::orientation ?orient)))
 	    (ARGUMENT-MAP ?argmap) (arg ?arg) (prefix -)
@@ -1710,9 +1715,9 @@
     ?subcat2
     ?subcat
     (both-bound (subcat ?subcat) (subcat2 ?subcat2)) ;;  both of these must be bound, otherwise this is a duplicate to a constit produced by the twosubcats rule above
-     (recompute-atype (atype ?atype) (subcat ?subcat) (subcat2 ?subcat2) (result ?newatype))
+     (recompute-atype (atype ?atype) (subcat ?subcat) (subcat2 !subcat2) (result ?newatype))
      (append-conjuncts (conj1 ?con) (conj2 (& (?argmap ?arg)
-					      (?reln ?argv) (?reln2 ?argv2)
+					      (?reln ?argv) (?!reln2 ?argv2)
 					      (scale ?scale) (intensity ?ints) (orientation ?orient))
 					     )
 		       (new ?newc)))
@@ -3379,6 +3384,7 @@
 	   (vform (? pp passive pastpart))
 	   (complex -)
            (advbl-needed -)
+	   (dobj (% -))  ;; we can't say "the cooked the steak meat" but "the cooked meat" is fine.
            ))
      ;(append-conjuncts (conj1 ?cons) (conj2 (& (ont::affected ?arg))) (new ?newc))
      (append-conjuncts (conj1 ?cons) (conj2 (& (?subjmap ?arg))) (new ?newc))

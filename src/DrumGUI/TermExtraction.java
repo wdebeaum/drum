@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.51 2018/06/30 15:11:00 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.53 2018/10/16 19:58:14 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -66,6 +66,7 @@ public class TermExtraction extends Extraction {
         MONTH(":MONTH"), // time
         YEAR(":YEAR"), // time
         TIME(":TIME"), // time
+        QUANTITY(":QUANTITY"), // quantities
         AMOUNT(":AMOUNT"), // quantities
         UNIT(":UNIT"), // quantities
         RATE_QUAN(":REPEATS"), // rates
@@ -419,6 +420,7 @@ public class TermExtraction extends Extraction {
             conts.add(xml_value());
         conts.add(xml_unit());
         conts.add(xml_amount());
+        conts.add(xml_quantity());
         if (ontType.equalsIgnoreCase("ONT::RATE"))
             conts.add(xml_rate());
         // sequences of numbers
@@ -458,6 +460,26 @@ public class TermExtraction extends Extraction {
             }
         } else { // an actual value
             return xml_element("amount", null, value.toString());
+        }
+     }
+
+    /**
+     * Quantities
+     */
+    private String xml_quantity() {
+        KQMLObject value = attributes.get(Attribute.QUANTITY);
+        if (value == null) 
+            return "";
+        
+        if (isOntVar(value.toString())) {
+            String var = value.toString();
+            if (ekbFindExtraction(var) != null) { 
+                return xml_elementWithID("quantity", var);
+            } else { // we need to define the item here
+                return xml_lfTerm("quantity", var);
+            }
+        } else { // an actual value
+            return xml_element("quantity", null, value.toString());
         }
      }
 
