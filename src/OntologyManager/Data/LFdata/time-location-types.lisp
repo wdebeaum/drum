@@ -1173,6 +1173,11 @@
     :parent ont::time-interval
     )
 
+(define-type ONT::week
+    :comment "time interval of a week"
+    :parent ont::time-interval
+    )
+
 (define-type ONT::day
     :comment "time interval of a day"
     :parent ont::time-interval
@@ -1287,9 +1292,9 @@
  :sem (F::time (F::time-function F::month-name))
  )
 
-(define-type ONT::week
+(define-type ONT::week-object
     :parent ONT::year-stage
-    :wordnet-sense-keys ("week%1:28:00" )
+    :wordnet-sense-keys ("calendar_week%1:28:00" )
     :sem (F::time (F::time-function F::time-of-year))
     )
 

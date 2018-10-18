@@ -6,8 +6,10 @@
  :tags (:base500)
  :words (
   (w::weekday
-  (senses((LF-PARENT ONT::time-interval)
-    (SEM (F::time-function F::day-period))
+   (senses
+    (;(LF-PARENT ONT::time-interval)
+     (LF-PARENT ONT::day)
+     (SEM (F::time-function F::day-period))
     (templ time-reln-templ)
     )
    )

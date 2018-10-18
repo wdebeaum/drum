@@ -1704,7 +1704,6 @@
 	    (SUBCAT ?subcat) (SUBCAT-MAP ?reln)
 	    (SUBCAT (% ?xx (var ?argv) (gap ?gap))) 
 	    (SUBCAT2-MAP (? !reln2 ONT::NOROLE ))
-	    (SUBCAT2-MAP ?reln2)
 	    (SUBCAT2 ?subcat2)
 	    (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
 	    (post-subcat -)
@@ -1715,7 +1714,7 @@
     ?subcat2
     ?subcat
     (both-bound (subcat ?subcat) (subcat2 ?subcat2)) ;;  both of these must be bound, otherwise this is a duplicate to a constit produced by the twosubcats rule above
-     (recompute-atype (atype ?atype) (subcat ?subcat) (subcat2 !subcat2) (result ?newatype))
+     (recompute-atype (atype ?atype) (subcat ?subcat) (subcat2 ?subcat2) (result ?newatype))
      (append-conjuncts (conj1 ?con) (conj2 (& (?argmap ?arg)
 					      (?reln ?argv) (?!reln2 ?argv2)
 					      (scale ?scale) (intensity ?ints) (orientation ?orient))

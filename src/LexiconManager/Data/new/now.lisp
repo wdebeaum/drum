@@ -35,7 +35,7 @@
  :tags (:base500)
  :words (
   (W::NOW
-   (wordfeats (W::ATYPE (? atype W::pre W::post)))
+   ;(wordfeats (W::ATYPE (? atype W::pre W::post)))
    (SENSES
     ((LF-PARENT ONT::EVENT-TIME-REL)
      ;; (LF-PARENT ONT::NOW)

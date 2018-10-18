@@ -23,10 +23,15 @@
 (define-words :pos W::v 
  :words (
   ((W::follow (W::up))
+   (wordfeats (W::morph (:forms (-vb) :nom (w::follow w::up))))
    (SENSES
     ((LF-PARENT ONT::activity-ongoing)
      (TEMPL AGENT-NEUTRAL-XP-TEMPL)
      (example "I followed up the leads.")
+     )
+    ((LF-PARENT ONT::activity-ongoing)
+     (TEMPL AGENT-NEUTRAL-XP-TEMPL (xp (% W::pp (W::ptype (? xx W::on)))))
+     (example "I followed up on the leads.")
      )
     )
    )

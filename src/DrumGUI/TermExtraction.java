@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.53 2018/10/16 19:58:14 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.55 2018/10/17 23:31:41 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -47,13 +47,13 @@ public class TermExtraction extends Extraction {
         OP(":OPERATOR"),
         // :EXCEPT --> works in conjunction w/ SEQ ; ** FIXME: currently not provided! **
         SEQ_EXC(":EXCEPT"),
-        // :CELL-LINE context-term-id --> cell line
+        // [DRUM] :CELL-LINE context-term-id --> cell line
         CELL_LINE(":CELL-LINE"),
-        // :ACTIVE bool --> activation
+        // [DRUM] :ACTIVE bool --> activation
         ACTIVE(":ACTIVE"),
-        // :SITE context-term-id: ID for site (residue, domain) on a protein
+        // [DRUM] :SITE context-term-id: ID for site (residue, domain) on a protein
         SITE(":SITE"),
-        // CWMS: the following are LF attributes, or substitutes thereof
+        // [CWMS] the rest are made-up roles for CWMS
         SIZE(":SIZE"),
         SCALE(":SCALE"),
         QUAN(":QUAN"), // quantifier
@@ -62,15 +62,19 @@ public class TermExtraction extends Extraction {
         MIN(":MIN"), // numbers
         MAX(":MAX"), // numbers
         VALSEQ(":VAL"), // sequence of numbers
+        DOW(":DAY-OF-WEEK"), // time
         DAY(":DAY"), // time
         MONTH(":MONTH"), // time
         YEAR(":YEAR"), // time
         TIME(":TIME"), // time
+        TIMEMOD(":TIMEMOD"), // time modifier
         QUANTITY(":QUANTITY"), // quantities
         AMOUNT(":AMOUNT"), // quantities
         UNIT(":UNIT"), // quantities
         RATE_QUAN(":REPEATS"), // rates
         RATE_OVER(":OVER-PERIOD"), // rates
+        LOC(":LOC"), // location
+        LOCMOD(":LOCMOD"), // location modifier
         SEQ(":SEQUENCE") // sequence
         ;
         private String attrName;
@@ -109,13 +113,13 @@ public class TermExtraction extends Extraction {
         // :INEVENT id: ID for event in which this term participates in some role
         INEVENT(":INEVENT"),
         // :LOC id: ID for cellular location term
-        CELL_LOC(":LOC"),
+        CELL_LOC(":CELL-LOC"), // FIXME: this is :LOC, in fact, but it clobbers the Attribute for CWMS
+        LOCATION(":LOCATION"), // [DRUM]
         // :MUTATION id: ID for mutation term
         MUTATION(":MUTATION"),
-        // THE FOLLOWING ARE LF attributes, or substitutes thereof, used in CWMS
+        // [CWMS] THE FOLLOWING ARE LF attributes, or substitutes thereof, used in CWMS
         QUAL(":QUAL"),
-        ASSOC(":ASSOC"),
-        LOCATION(":LOCATION")
+        ASSOC(":ASSOC")
        ;
         private String attrName;
 
@@ -415,6 +419,7 @@ public class TermExtraction extends Extraction {
         conts.add(xml_size());
         conts.add(xml_quantifier());
         conts.add(xml_scale());
+        conts.add(xml_location());
         conts.add(xml_timex());
         if (ontType.equalsIgnoreCase("ONT::NUMBER") || ontType.equalsIgnoreCase("ONT::NUMBER-UNIT"))
             conts.add(xml_value());
@@ -527,36 +532,6 @@ public class TermExtraction extends Extraction {
                 conts.add(xml_element("item", null, val.toString()));
         }
         return xml_element("values", null, conts);
-    }
-
-    /**
-     * Time expressions
-     * @return
-     */
-    private String xml_timex() {
-        List<String> attrs = new ArrayList<String>();
-        List<String> conts = new ArrayList<String>();
-        KQMLObject day = attributes.get(Attribute.DAY);
-        if (day != null) {
-            conts.add(xml_element("day", null, day.toString()));
-        }
-        KQMLObject month = attributes.get(Attribute.MONTH);
-        if (month != null) {
-            String mtext = "";
-            if (month instanceof KQMLList) {
-                mtext = normalizeOnt(((KQMLList) month).get(2).toString());
-            }
-            conts.add(xml_element("month", null, mtext));
-        }
-        KQMLObject year = attributes.get(Attribute.YEAR);
-        if (year != null) {
-            conts.add(xml_element("year", null, year.toString()));
-        }
-        if (conts.isEmpty()) 
-            return "";
-        
-        attrs.add(xml_attribute("type","DATE"));
-        return xml_element("timex", attrs, conts);
     }
 
     /**
@@ -952,11 +927,13 @@ public class TermExtraction extends Extraction {
         conts.add(xml_inevent());
         conts.add(xml_active());
         conts.add(xml_time()); // time
-        conts.add(xml_location()); // location (DRUM: cellular ~)
-        conts.add(xml_mutation()); // mutations (for proteins, etc.)
-        conts.add(xml_site()); // domain
-        conts.add(xml_residue()); // residue
-        conts.add(xml_cellline()); // cell-line
+        /* temporarily disabled for CWMS LG@20181016
+        conts.add(xml_cell_location()); // [DRUM] cellular location
+        conts.add(xml_mutation()); // [DRUM] mutations (for proteins, etc.)
+        conts.add(xml_site()); // [DRUM] domain
+        conts.add(xml_residue()); // [DRUM] residue
+        conts.add(xml_cellline()); // [DRUM] cell-line
+        */
         return xml_element("features", null, conts);
     }
     
@@ -968,6 +945,40 @@ public class TermExtraction extends Extraction {
     }
     
     /**
+     * Time expressions
+     * @return
+     */
+    private String xml_timex() {
+        List<String> attrs = new ArrayList<String>();
+        List<String> conts = new ArrayList<String>();
+        KQMLObject dow = attributes.get(Attribute.DOW);
+        if (dow != null) {
+            conts.add(xml_element("dow", null, removePackage(((KQMLList) dow).get(2).toString())));
+        }
+        KQMLObject day = attributes.get(Attribute.DAY);
+        if (day != null) {
+            conts.add(xml_element("day", null, day.toString()));
+        }
+        KQMLObject month = attributes.get(Attribute.MONTH);
+        if (month != null) {
+            String mtext = "";
+            if (month instanceof KQMLList) {
+                mtext = normalizeOnt(((KQMLList) month).get(2).toString());
+            }
+            conts.add(xml_element("month", null, mtext));
+        }
+        KQMLObject year = attributes.get(Attribute.YEAR);
+        if (year != null) {
+            conts.add(xml_element("year", null, year.toString()));
+        }
+        if (conts.isEmpty()) 
+            return "";
+        
+        attrs.add(xml_attribute("type","DATE"));
+        return xml_element("timex", attrs, conts);
+    }
+
+    /**
      * Time feature
      * @return
      */
@@ -975,29 +986,66 @@ public class TermExtraction extends Extraction {
         KQMLObject time = attributes.get(Attribute.TIME);
         if (time == null)
             return "";
+        KQMLObject modObj = attributes.get(Attribute.TIMEMOD);
+        String mod = null;
+        if (modObj instanceof KQMLList) {
+            mod = ((KQMLList) modObj).get(1).toString();
+        }
+        List<String> attrs = new ArrayList<String>();
+        if (mod != null) {
+            attrs.add(xml_attribute("mod", mod.toString()));
+        }
+        
         if (isOntVar(time.toString())) {
             String var = time.toString();
             if (ekbFindExtraction(var) != null) { 
-                return xml_elementWithID("time", var);
+                return xml_elementWithID("time", var, attrs);
             } else { // we need to define the item here
-                return xml_lfTerm("time", var);
+                return xml_lfTerm("time", var, attrs);
             }
         } else { // should not happen!
             Debug.error("unexpected " + Attribute.TIME + " value: " + time);
-            return xml_element("time", "", removePackage(time.toString(), false));
+            return xml_element("time", "", removePackage(time.toString(), false)); 
         }
     }
 
-    // TODO: add locmods
+    // TODO: multiple locations (make it poly-attribute)
     private String xml_location() {
+        KQMLObject loc = attributes.get(Attribute.LOC);
+        if (loc == null) 
+            return "";
+
+        String mod = null;
+        KQMLObject modObj = attributes.get(Attribute.LOCMOD);
+        if (modObj instanceof KQMLList) {
+            mod = ((KQMLList) modObj).get(1).toString();
+        } else if (modObj instanceof KQMLToken) { // TODO: remove (obsolete)
+            mod = modObj.toString();
+        }
+        List<String> attrs = new ArrayList<String>();
+        if (mod != null) {
+            attrs.add(xml_attribute("mod", removePackage(mod, false)));
+        }
+
+        String result = "";
+        if (isOntVar(loc.toString())) {
+            String var = loc.toString();
+            if (ekbFindExtraction(var) != null) {
+                result += xml_elementWithID("location", var, attrs);
+            } else { // we need to define the item here
+                result += xml_lfTerm("location", var, attrs);
+            }
+        } else {
+            Debug.warn("unexpected " + Attribute.LOC + " value: " + loc);
+        }
+        return result;
+    }
+    
+   private String xml_cell_location() {
         List<KQMLObject> locations = new ArrayList<KQMLObject>();
         ArrayList<KQMLObject> cellLocs = polyAttributes.get(PolyAttribute.CELL_LOC);
         if (cellLocs != null) {
             locations.addAll(cellLocs); // DRUM
-        }
-        ArrayList<KQMLObject> locs = polyAttributes.get(PolyAttribute.LOCATION);
-        if (locs != null) {
-            locations.addAll(locs); // CWMS
         }
 
         // TODO: figure out what situations w/ multiple locations look like
@@ -1011,7 +1059,7 @@ public class TermExtraction extends Extraction {
                     result += xml_lfTerm("location", var);
                 }
             } else {
-                Debug.warn("unexpected " + PolyAttribute.LOCATION + " value: " + location);
+                Debug.warn("unexpected " + PolyAttribute.CELL_LOC + " value: " + location);
             }
         }
         return result;

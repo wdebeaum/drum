@@ -1,6 +1,6 @@
 # EKBAgent.pm
 #
-# Time-stamp: <Sun Oct 14 18:56:25 CDT 2018 lgalescu>
+# Time-stamp: <Wed Oct 17 15:16:58 CDT 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 13 Feb 2017
 #
@@ -129,7 +129,7 @@ use TripsModule::TripsModule;
 
 use strict vars;
 
-use re 'debug';
+#use re 'debug';
 
 use File::Basename;
 use File::Spec::Functions;
@@ -233,8 +233,10 @@ sub send_subscriptions {
   $self->send_msg('(subscribe :content (request &key :content (do-ekb-inference . *)))');
   # AKRL 2 EKB helper
   $self->send_msg('(subscribe :content (request &key :content (get-ekb-representation . *)))');
-  # get EKB for file
+  # get EKB for file (from EKB store)
   $self->send_msg('(subscribe :content (request &key :content (get-ekb . *)))');
+  # query EKBs from store
+  $self->send_msg('(subscribe :content (request &key :content (query-ekb . *)))');
 
   if ($self->{compareEnabled} or $self->{testing}) {
     $self->send_msg('(subscribe :content (request &key :content (interpret-speech-act . *)))');
@@ -289,6 +291,9 @@ sub receive_request {
       return 1;
     } elsif ($verb eq 'get-ekb') {
       $self->handle_request_get_ekb($msg, $content);
+      return 1;
+    } elsif ($verb eq 'query-ekb') {
+      $self->handle_request_query_ekb($msg, $content);
       return 1;
     } elsif ($verb eq 'generate') {
       if ($self->{testing}) {
@@ -373,26 +378,20 @@ sub handle_request_ekb_inference {
 sub handle_request_get_ekb {
   my ($self, $msg, $content) = @_;
 
-  my $doc = $content->{':document'};
-  unless (defined $doc) {
-    ERROR ":document parameter missing";
-    $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :document parameter is missing.\"))");
-    return;
-  }
+  my $doc = $content->{':document'}
+    or do {
+      ERROR ":document parameter missing";
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :document parameter is missing.\"))");
+      return;
+    };
   $doc = KQML::KQMLStringAtomAsPerlString($doc);
 
-  my $ekb_file = $self->store_get($doc);
-  unless (defined $ekb_file) {
-    $self->reply_to_msg($msg, "(reply :content (failure :reason \"No EKB found\"))");
-    return;
-  }
+  my $ekb = $self->store_get($doc)
+    or do {
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"No EKB found\"))");
+      return;
+    };
 
-  my $ekb = EKB->new(catfile($self->{storePath}, $ekb_file));
-  $ekb->normalize();
-  $ekb->filter( { files => [ $doc ] });
-  my $doc_basename = basename($doc, (".xml", ".txt"));
-  $ekb->print($doc_basename . ".ekb");
-  
   my $ekbString = escape_string($ekb->toString());
   my $reply = "(reply :content (done :result \"" . $ekbString . "\"))";
   $self->reply_to_msg($msg, $reply);
@@ -428,6 +427,39 @@ sub handle_request_get_ekb_representation {
     $self->reply_to_msg($msg, "(reply :content (failure :reason \"Couldn't do it.\"))");
   }
 }
+
+
+# handler for 'query-ekb' requests
+sub handle_request_query_ekb {
+  my ($self, $msg, $content) = @_;
+
+  my $query = $content->{':query'}
+    or do {
+      ERROR ":query parameter missing";
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :query parameter is missing.\"))");
+      return;
+    };
+  $query = KQML::KQMLKeywordify($query);
+  my $ekb_query = $self->parse_query($query)
+    or do {
+      ERROR ":query unparseable";
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"Could not parse :query value.\"))");
+      return;
+    };
+
+  my $reply;
+  my $result_ekbs = $self->store_query($ekb_query);
+  if (defined($result_ekbs) && scalar(@$result_ekbs)) {
+    # for now we just pick the first ekb
+    my $result_ekb = $result_ekbs->[0];
+    my $ekbString = escape_string($result_ekb->toString());
+    $reply = "(reply :content (done :result \"" . $ekbString . "\"))";
+  } else {
+    $reply = "(reply :content (done :result NIL))";
+  }
+  $self->reply_to_msg($msg, $reply);
+}
+
 
 # handler for 'interpret-speech-act' requests
 sub handle_request_interpret_speech_act {
@@ -466,7 +498,7 @@ sub handle_request_interpret_speech_act {
 
 ## FIXME: should make new class for storage and retrieval!
 
-# loads EKB store into $self->{docs}
+# loads EKB store info into $self->{docs}
 sub loadStore {
   my ($self) = @_;
 
@@ -477,11 +509,8 @@ sub loadStore {
   my @ekb_files = grep { /\.ekb$/ } readdir $store;
   WARN ("Found %d ekbs: %s", scalar(@ekb_files), "@ekb_files");
   foreach my $ekb_file (@ekb_files) {
-    my $ekb = EKB->new(catfile($storePath,$ekb_file));
-    my @paragraphs = $ekb->get_paragraphs;
-    foreach my $p (@paragraphs) {
-      $self->store_add($p->getAttribute('file'), $ekb_file);
-    }
+    my $ekb_path = catfile($storePath, $ekb_file);
+    $self->store_add_ekb($ekb_path);
   }
 
   if ($self->store_empty) {
@@ -491,31 +520,86 @@ sub loadStore {
   }
 }
 
-sub store_add {
-  my ($self, $doc, $ekb) = @_;
+# add EKB file to store
+sub store_add_ekb {
+  my ($self, $ekb_path) = @_;
 
-  $self->{store}{$doc} = $ekb;
-  INFO ("Added to store: $doc => $ekb");
+  my $ekb = EKB->new($ekb_path);
+  my @paragraphs = $ekb->get_paragraphs;
+  foreach my $p (@paragraphs) {
+    $self->store_add_doc($p->getAttribute('file'), $ekb_path);
+  }
 }
 
+# add <document, ekb> to EKB store
+sub store_add_doc {
+  my ($self, $doc_path, $ekb_path) = @_;
+
+  my $ekb = EKB->new($ekb_path);
+  $ekb->normalize( {keep_lisp => 1} );
+  $ekb->filter( { files => [ $doc_path ] });
+  my $doc_basename = basename($doc_path, (".xml", ".txt"));
+  $ekb->print($doc_basename . ".ekb");
+
+  $self->{store}{$doc_path} = $ekb;
+  INFO ("Added to store: %s => %s", $doc_path, $ekb->get_file());
+}
+
+# get EKB for a document from the EKB store; returns undef if none is found
 sub store_get {
   my ($self, $doc) = @_;
 
   #return if ($self->store_empty || !(exists $self->{store}{$doc}));
   if ($self->store_empty) {
     INFO ("No document EKBs in store!");
+    return;
   }
   unless (exists $self->{store}{$doc}) {
     INFO ("Document not in store!");
+    return;
   }
 
   return $self->{store}{$doc};
 }
 
+# check if EKB store is empty
 sub store_empty {
   my ($self) = @_;
   return
     !((exists ($self->{store})) && scalar(keys %{$self->{store}}));
+}
+
+# parse KQML query into an EKB query (a structure pattern for now)
+sub parse_query {
+  my ($self, $query) = @_;
+  WARN "Query: %s", Dumper($query);
+  my $structure;
+  if (my $v = $query->{':type'}) {
+    $structure->{'type'} = KQML::KQMLStringAtomAsPerlString($v);
+  }
+  WARN "Parsed query: %s", Dumper($structure);
+  return $structure;
+}
+
+# query EKBs from store
+sub store_query {
+  my ($self, $query) = @_;
+
+  my @result;
+  foreach my $d (keys %{ $self->{store} }) {
+    WARN "Checking $d...";
+    my $ekb = $self->{store}{$d};
+    my @assertions = $ekb->query_assertions($query);
+    WARN "Got %d assertions from %s", scalar(@assertions), $ekb->get_file();
+    next unless @assertions;
+    my %uttnums;
+    foreach my $a (@assertions) {
+      $uttnums{ $a->getAttribute('uttnum') } = 1;
+    }
+    $ekb->filter( { sentences => [ keys(%uttnums) ] });
+    push @result, $ekb;
+  }
+  return \@result;
 }
 
 

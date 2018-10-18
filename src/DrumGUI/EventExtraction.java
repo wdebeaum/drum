@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.58 2018/06/30 15:11:00 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.60 2018/10/17 23:31:41 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -70,7 +70,7 @@ public class EventExtraction extends Extraction {
         CELL_LINE(":CELL-LINE"),
         // :LOCMOD ontType :LOC context-term-id --> cell component/location
         LOCMOD(":LOCMOD"),
-        CELL_LOC(":LOC"),
+        CELL_LOC(":CEll-LOC"), // modified temporarily for CWMS (it uses :LOC)
         // [:SITEMOD ontType] :SITE context-term-id --> eg, at/SITEMOD Y200/SITE
         SITEMOD(":SITEMOD"),
         SITE(":SITE"),
@@ -78,9 +78,9 @@ public class EventExtraction extends Extraction {
         FROM(":FROM"),
         TO(":TO"),
         // CWMS
-        LOCATION(":LOCATION"),
-        TIMEMOD(":TIMEMOD"),
-        TIME(":TIME") // time
+        LOC(":LOC"),
+        TIME(":TIME"), // time
+        TIMEMOD(":TIMEMOD")
         ;
         private String featureName;
         private Feature(String name) { featureName = name; }
@@ -796,6 +796,7 @@ public class EventExtraction extends Extraction {
         conts.add(xml_site());
         conts.add(xml_time());
         conts.add(xml_location());
+        conts.add(xml_cell_location());
         conts.add(xml_fromLocation());
         conts.add(xml_toLocation());
         conts.add(xml_cellline());
@@ -1008,10 +1009,41 @@ public class EventExtraction extends Extraction {
      * or the empty string if no such information exists. 
      */
     private String xml_location() {
-        KQMLObject loc = features.get(Feature.CELL_LOC);
-        if (loc == null) {
-            loc = features.get(Feature.LOCATION);
+        KQMLObject loc = features.get(Feature.LOC);
+        if (loc == null) 
+            return "";
+        
+        List<String> attrs = new ArrayList<String>();
+        String mod = null;
+        KQMLObject modObj = features.get(Feature.LOCMOD);
+        if (modObj instanceof KQMLList) {
+            mod = ((KQMLList) modObj).get(0).toString();
+        } else if (modObj instanceof KQMLToken) { // TODO: remove (obsolete)
+            mod = modObj.toString();
         }
+        if (mod != null) {
+            attrs.add(xml_attribute("mod", removePackage(mod, false)));
+        }
+        
+        if (isOntVar(loc.toString())) {
+            String var = loc.toString();
+            if (ekbFindExtraction(var) != null) {
+                return xml_elementWithID("location", var, attrs);
+            } else { // we need to define the item here
+                return xml_lfTerm("location", var, attrs);
+            }
+        } else {
+            Debug.warn("unexpected location value: " + loc);
+            return "";
+        }
+    }
+
+    /**
+     * Returns a {@code <location>} XML element representing location information attached to the event, 
+     * or the empty string if no such information exists. 
+     */
+    private String xml_cell_location() {
+        KQMLObject loc = features.get(Feature.CELL_LOC);
         if (loc == null) 
             return "";
         

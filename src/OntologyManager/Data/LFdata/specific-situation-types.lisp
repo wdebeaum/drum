@@ -2126,7 +2126,7 @@
  :parent ont::awareness ;; 20120529 GUM change
  ;;:parent ONT::SALIENCE + args
  :arguments ((:REQUIRED ONT::Formal)
-             (:OPTIONAL ONT::Neutral (F::phys-obj (F::intentional +)))  ; how about "I know the city/the lines (of the play) very well"?
+             (:OPTIONAL ONT::Neutral (F::phys-obj (F::origin f::human) (F::intentional +)))  ; how about "I know this dog/the city/the lines (of the play) very well"?
 	     (:OPTIONAL ONT::neutral1)  ;; thing known
              ;;; Ground/ Loc-Perc
 ;             (:OPTIONAL ONT::Place)

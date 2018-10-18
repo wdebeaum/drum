@@ -560,7 +560,7 @@
  )
 
 (define-type ONT::LENGTH-UNIT
- :wordnet-sense-keys ("linear_measure%1:23:00" "linear_unit%1:23:00" "week%1:28:00" "hebdomad%1:28:00")
+ :wordnet-sense-keys ("linear_measure%1:23:00" "linear_unit%1:23:00")
  :parent ONT::tangible-unit
  :sem (F::Abstr-obj (F::Scale ONT::LINEAR-EXTENT-SCALE)) ;ONT::LINEAR-D)) ; Ont::length))  ; e.g., km: not just length but could also be width, height, etc
  )

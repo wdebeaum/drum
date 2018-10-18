@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Sun Oct 14 17:38:28 CDT 2018 lgalescu>
+# Time-stamp: <Wed Oct 17 15:16:23 CDT 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.36 2018/10/14 23:56:42 lgalescu Exp $
+# $Id: EKB.pm,v 1.37 2018/10/17 20:30:48 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -552,7 +552,7 @@ sub save {
   $self->print($self->{file});
 }
 
-=head2 normalize( )
+=head2 normalize( $opts )
 
 Normalizes the EKB. Specifically, it modifies the EKB so that:
 
@@ -560,7 +560,7 @@ Normalizes the EKB. Specifically, it modifies the EKB so that:
 
 =item - uttnums start at 1;
 
-=item - lisp code is removed;
+=item - lisp code is removed, unless given the option {keep_lisp => 1} ;
 
 =item - duplicative information is removed from event arguments.
 
@@ -571,7 +571,7 @@ Normalizes the EKB. Specifically, it modifies the EKB so that:
 =cut
 
 sub normalize {
-  my $self = shift;
+  my ($self, $opts) = @_;
 
   DEBUG 2, "Normalizing...";
   
@@ -593,7 +593,7 @@ sub normalize {
     }
   }
   # cleanup assertions
-  map { $self->clean_assertion($_) } @assertions;
+  map { $self->clean_assertion($_, $opts) } @assertions;
 }
 
 # check if EKB input document is "article"
@@ -817,6 +817,13 @@ sub filter {
   }
 }
 
+=head2 remove_paragraph( $pid )
+
+Removes the paragraph with the id $pid, all its sentences and all assertions 
+derived from it.
+
+=cut
+
 sub remove_paragraph {
   my ($self, $pid) = @_;
   my $para = $self->get_paragraph($pid)
@@ -854,6 +861,7 @@ sub remove_sentence {
     $self->remove_paragraph($pid);
   }
 }
+
 
 # 4. EKB getters and setters
 
@@ -1051,6 +1059,15 @@ sub get_assertion {
   return $result;
 }
 
+# N.B. currently $query can only be a structure expression that can be used
+# by match_structure!
+# example: { type => "ONT::THING" }
+sub query_assertions {
+  my ($self, $query) = @_;
+  return grep { match_structure($_, $query) } $self->get_assertions();
+}
+
+
 # find assertions referencing another one
 # optionally, restrict assertions to a given type
 sub find_referrers {
@@ -1204,16 +1221,18 @@ sub clone_assertion {
   $a;
 }
 
-=head2 clean_assertion( $assertion )
+=head2 clean_assertion( $assertion, $opts )
 
 Removes unnecessary attributes and content from the assertion.
+Use { keep_lisp => } to keep lisp representation.
 
 =cut
 
 sub clean_assertion {
-  my ($self, $a) = @_;
+  my ($self, $a, $opts) = @_;
   # remove unnecessary attributes
-  $a->removeAttribute('lisp');
+  $a->removeAttribute('lisp')
+    unless ($opts && $opts->{keep_lisp});
 
   DEBUG 2, "Cleaning up: %s", $a;
   # remove unnecessary stuff from args & pseudoargs

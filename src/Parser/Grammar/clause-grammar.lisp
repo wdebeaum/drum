@@ -488,7 +488,7 @@
 	    ))
      (preadvbl +)
      )
-     -s1-here> .9
+     -s1-here> ;.9
     (advbl (lex here) 
      (argument (% s (sem ($ f::situation ))))
      (argument ?a)
@@ -2313,7 +2313,7 @@
 	   (tma ?tma) (vform ?vf) 
 	   ;; no uniform & unique lf's for main verb be uses, so have to match the lex
 	   ;; unless we can match the lf-form be
-	   (lex (? lx am are is was were ^s))
+	   (lex (? lx am are is was were)) ; ^s)) ; no contraction
 	   (subj ?subj) (subj (% ?s1 (var ?subjvar) (sem ?subjsem) (agr ?subjagr) (lex ?subjlex) (gap -))) ;; note double matching required
 	   (iobj (% -))
 	   (part (% -));; (part ?part) 
@@ -2487,7 +2487,7 @@
    
 	   ;; no uniform & unique lf's for main verb be uses, so have to match the lex
 	   ;; unless we can match the lf-form be
-	   (lex (? lx are is was were ^s))
+	   (lex (? lx are is was were)) ; ^s)) ; no contraction
 	   (subj ?subj) (subj (% ?s1 (case sub) (var ?subjvar) (sem ?subjsem) (agr ?subjagr) (lex ?subjlex) (gap -))) ;; note double matching required
 	   (iobj (% -))
 	   (part (% -))
