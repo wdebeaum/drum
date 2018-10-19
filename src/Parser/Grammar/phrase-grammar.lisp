@@ -1703,7 +1703,7 @@
 	    (transform ?transform) 
 	    (SUBCAT ?subcat) (SUBCAT-MAP ?reln)
 	    (SUBCAT (% ?xx (var ?argv) (gap ?gap))) 
-	    (SUBCAT2-MAP (? !reln2 ONT::NOROLE ))
+	    (SUBCAT2-MAP (? !reln2 ONT::NOROLE -))
 	    (SUBCAT2 ?subcat2)
 	    (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
 	    (post-subcat -)
@@ -1724,6 +1724,34 @@
    ;;  To handle the variety of ways that COMPARs are expressed, we use an intermediate constituent COMPAR
    ;; some of these are very unrestrictive so have to be ranked low to allow other alternatives to dominate
 
+   ;; adjectives that map to predicates with only one subcat, e.g., X is dependent on Y
+   ((ADJ1 (ARG ?arg) (VAR ?v) (COMPLEX +) (atype ?newatype) ;(atype (? atp postpositive predicative-only))
+	  (gap ?gap)
+      (CONSTRAINT ?newc) (ARGUMENT-MAP ?argmap)
+      (transform ?transform) (sem ?sem) (comparative ?cmp)
+      (subcat ?subcat) ; pass up subcat so it can be used in -NP-ADJ-MISSING-HEAD-COMPAR> ; if we pass up both subcats we go into an infinite loop because this rule can be rematched!
+	    )           
+     -adj-pred-onesubcat> 
+     (head (ADJ1 (LF ?lf)  (VAR ?v)
+	    (transform ?transform) (comparative ?cmp)
+	    (SUBCAT ?subcat) (SUBCAT-MAP ?reln) (SUBCAT (% ?xx (var ?argv) (gap ?gap))) 
+	    (SUBCAT2 ?subcat2) (SUBCAT2 (% - (W::VAR -)))
+	    ;(SUBCAT2-MAP (? !reln2 ONT::NOROLE -)) (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
+	    (post-subcat -)
+	    (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale) (F::intensity ?ints) (F::orientation ?orient)))
+	    (ARGUMENT-MAP ?argmap) (arg ?arg) (prefix -)
+	    (CONSTRAINT ?con) (atype ?atype)
+	    (SORT PRED)))
+     ?subcat
+     ;?subcat2
+     (recompute-atype (atype ?atype) (subcat ?subcat) (subcat2 ?subcat2) (result ?newatype))
+     (append-conjuncts (conj1 ?con) (conj2 (& (?argmap ?arg)
+					      (?reln ?argv) ;(?!reln2 ?argv2)
+					      (scale ?scale) (intensity ?ints) (orientation ?orient))
+					     )
+		       (new ?newc)))
+
+   
    ;; the standard "than PP" is the typical case
    ((COMPAR (var ?v))
     -compar-than-pp> 1

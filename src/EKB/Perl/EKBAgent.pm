@@ -1,6 +1,6 @@
 # EKBAgent.pm
 #
-# Time-stamp: <Wed Oct 17 15:16:58 CDT 2018 lgalescu>
+# Time-stamp: <Thu Oct 18 16:55:57 CDT 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 13 Feb 2017
 #
@@ -237,7 +237,9 @@ sub send_subscriptions {
   $self->send_msg('(subscribe :content (request &key :content (get-ekb . *)))');
   # query EKBs from store
   $self->send_msg('(subscribe :content (request &key :content (query-ekb . *)))');
-
+  # show EKB
+  $self->send_msg('(subscribe :content (request &key :content (show-ekb . *)))');
+ 
   if ($self->{compareEnabled} or $self->{testing}) {
     $self->send_msg('(subscribe :content (request &key :content (interpret-speech-act . *)))');
     $self->send_msg('(subscribe :content (tell &key :content (utterance . *)))');
@@ -294,6 +296,9 @@ sub receive_request {
       return 1;
     } elsif ($verb eq 'query-ekb') {
       $self->handle_request_query_ekb($msg, $content);
+      return 1;
+    } elsif ($verb eq 'show-ekb') { 
+      $self->handle_request_show_ekb($msg, $content);
       return 1;
     } elsif ($verb eq 'generate') {
       if ($self->{testing}) {
@@ -392,7 +397,7 @@ sub handle_request_get_ekb {
       return;
     };
 
-  my $ekbString = escape_string($ekb->toString());
+  my $ekbString = escape_string($ekb->toString);
   my $reply = "(reply :content (done :result \"" . $ekbString . "\"))";
   $self->reply_to_msg($msg, $reply);
 }
@@ -452,7 +457,7 @@ sub handle_request_query_ekb {
   if (defined($result_ekbs) && scalar(@$result_ekbs)) {
     # for now we just pick the first ekb
     my $result_ekb = $result_ekbs->[0];
-    my $ekbString = escape_string($result_ekb->toString());
+    my $ekbString = escape_string($result_ekb->toString);
     $reply = "(reply :content (done :result \"" . $ekbString . "\"))";
   } else {
     $reply = "(reply :content (done :result NIL))";
@@ -460,6 +465,29 @@ sub handle_request_query_ekb {
   $self->reply_to_msg($msg, $reply);
 }
 
+# handler for 'show-ekb' requests
+sub handle_request_show_ekb {
+  my ($self, $msg, $content) = @_;
+
+  my $ekb_file = $content->{':ekb'}
+    or do {
+      ERROR ":ekb parameter missing";
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :ekb parameter is missing.\"))");
+      return;
+    };
+  $ekb_file = KQML::KQMLStringAtomAsPerlString($ekb_file);
+  my $ekb = EKB->new($ekb_file)
+    or do {
+      ERROR "Error reading EKB file: $ekb_file";
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"Cannot read or interpret EKB file.\"))");
+      return;
+    };
+  $ekb->normalize();
+  my $ekbString = escape_string($ekb->toString);
+  my $display_action = "(request :receiver GraphDisplay :content (display-ekb :ekb \"". $ekbString ."\"))";
+  $self->send_msg($display_action);
+  $self->reply_to_msg($msg, "(reply :content (done))");
+}
 
 # handler for 'interpret-speech-act' requests
 sub handle_request_interpret_speech_act {
