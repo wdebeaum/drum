@@ -239,14 +239,14 @@
     
     ;; e.g., military speak:  e.g., day 5; business speak: week 2
 
-    ((value (LF (% time-description (sem ?sem) (class ?lf)
+    ((value (LF (% time-description (sem ?sem) (class ?lf) (var ?var)
 		   (constraint (& (?lx ?n)))))
       (sem ?sem)
       (AGR 3s) 
       (time-converted +)
       )
      -day-n>
-     (head (N (lex (? lx day week month year)) (sem ?sem) (lf ?lf)))
+     (head (N (lex (? lx day week month year)) (sem ?sem) (lf ?lf) (var ?var)))
      (number (VAL ?n)))
     
     ;; e.g., between day 5 and day 7
@@ -465,7 +465,7 @@
        -value-np1> .98 
        (head (value  (time-converted +) 
 	      (sem ?sem)
-	      (LF ?lf)
+	      (LF ?lf) (var ?v)
 	      (lf (% time-description (constraint ?con)))
 		  (lex ?hl) (headcat ?hc)
 	      ))
@@ -715,8 +715,8 @@
      (head (number (lf ?lf) (val ?!v1) (lex ?l1) (sem ?sem) (fraction -)  ;;(NTYPE (? ntt1 w::DIGIT w::ZERO))
 		   (coerce ?coerce)))
      (punc (lex (? l point punc-period)))
-     (number (val ?!v2) (lex ?l2) (NTYPE (? ntt2 w::DIGIT w::TWODIGIT w::THREEDIGIT w::ZERO)) (coerce ?coerce))
-     (compute-val-and-ntype (expr (decimal-point ?!v1 ?!v2)) (newval ?newval) (ntype ?ntype)))
+     (number (val ?!v2) (lex ?l2) (NTYPE (? ntt2 w::DIGIT w::TWODIGIT w::THREEDIGIT w::ZERO)) (coerce ?coerce) (number-digits ?ndigits2))
+     (compute-val-and-ntype (expr (decimal-point ?!v1 ?!v2 ?ndigits2)) (newval ?newval) (ntype ?ntype)))
 
     ;; fractions expressed with ordinals: two thirds
     ((number (VAL ?newval) (agr ?agr) (lex (?l1 ?l2)) 
@@ -786,8 +786,8 @@
      -point-decimal-digit>
      (punc (lex (? l point punc-period)))
      (head (number (lf ?lf) (val ?!v1) (lex ?l1) (coerce ?coerce) (sem ?sem)
-		   (NTYPE (? ntt1 w::DIGIT w::TWODIGIT w::THREEDIGIT w::ZERO))))
-     (compute-val-and-ntype (expr (decimal-point 0 ?!v1)) (newval ?newval) (ntype ?ntype)))
+		   (NTYPE (? ntt1 w::DIGIT w::TWODIGIT w::THREEDIGIT w::ZERO)) (number-digits ?ndigits)))
+     (compute-val-and-ntype (expr (decimal-point 0 ?!v1 ?ndigits)) (newval ?newval) (ntype ?ntype)))
     
     ;; number unit  e.g., fifteen hundred, three hundred thousand
 
@@ -1543,6 +1543,7 @@
     (DATE (var ?v) (DAY ?!day) (Month ?m) (DOW -) (Year ?y)
 	  (lex ?hlex) (headcat ?hcat) (phase ?phase)))
 
+   
     ;;  three days before yesterday, two hours before noon, a few minutes after noon, 5 days ago
     ;;  create an NP here that can then either be the object of a prep (until 5 days ago) or made into an ADVBL
     

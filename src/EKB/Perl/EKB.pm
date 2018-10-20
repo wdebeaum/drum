@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Wed Oct 17 15:16:23 CDT 2018 lgalescu>
+# Time-stamp: <Fri Oct 19 13:10:04 CDT 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.37 2018/10/17 20:30:48 lgalescu Exp $
+# $Id: EKB.pm,v 1.38 2018/10/19 19:26:08 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -138,7 +138,7 @@ a. EKB operations
   $ekb->print($filepath); # writes EKB to file
   $ekb->normalize(); # normalizes EKB
   $ekb->crop($uttnum); # crops EKB to content derived from a given utterance
-  $ekb->save(); # saves EKB (writes it to the save file it was read from)
+  $ekb->save(); # saves EKB (writes it to the same file it was read from)
 
 b. Search
 

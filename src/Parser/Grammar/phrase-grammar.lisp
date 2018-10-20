@@ -888,13 +888,13 @@
       )
      -N1-post-twosubcats>
      (ADJ1 (atype (? at attributive-only central)) 
-      (LF ?qual) 
+      (LF ?qual) (lex ?lex1)
       (ARG ?v) (VAR ?adjv)
       (argument (% NP (sem ?nsem))) 
       (COMPLEX -) (comparative ?com)
       (constraint ?adjcon)
-      (subcat-map ?submap) (subcat ?subcat) (SUBCAT (% ?xx (var ?argv))) 
-      (subcat2-map ?submap2) (subcat2 ?subcat2) (SUBCAT2 (% ?xx2 (var ?argv2)))
+      (subcat-map ?!submap) (subcat ?!subcat) (SUBCAT (% ?xx (var ?argv))) 
+      (subcat2-map (? !submap2 ONT::NOROLE -)) (subcat2 ?!subcat2) (SUBCAT2 (% ?xx2 (var ?argv2)))
       (argument-map ?argmap)
       (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale) (F::intensity ?ints) (F::orientation ?orient)))
       ;;(post-subcat ?!post-subcat)
@@ -904,14 +904,14 @@
 	    (post-subcat -)
 	    )
       )
-     ?subcat
-     ?subcat2
+     ?!subcat
+     ?!subcat2
      ;;(UNIFY (arg1 (% ?xxx (var ?psvar))) (arg2 ?!post-subcat))
-     (append-conjuncts  (conj1 ?adjcon) (conj2 (& (?submap ?argv) (?submap2 ?argv2) (?argmap ?v)
+     (append-conjuncts  (conj1 ?adjcon) (conj2 (& (?!submap ?argv) (?!submap2 ?argv2) (?argmap ?v)
 						  (scale ?scale) (intensity ?ints) (orientation ?orient)))
 			(new ?newadjcon))
       (add-to-conjunct (val (:MOD 
-			     (% *pro* (var ?adjv) (status ont::f) (class ?qual)
+			     (% *pro* (var ?adjv) (status ont::f) (class ?qual) (lex ?lex1)
 				    (constraint ?newadjcon))))
 				   
        (old ?r) (new ?newr))
@@ -927,13 +927,13 @@
       )
      -N1-post-twosubcats-rev>
      (ADJ1 (atype (? at attributive-only central)) 
-      (LF ?qual) 
+      (LF ?qual) (lex ?lex1)
       (ARG ?v) (VAR ?adjv)
       (argument (% NP (sem ?nsem))) 
       (COMPLEX -) (comparative ?com)
       (constraint ?adjcon)
-      (subcat-map ?submap) (subcat ?subcat) (SUBCAT (% ?xx (var ?argv))) 
-      (subcat2-map ?submap2) (subcat2 ?subcat2) (SUBCAT2 (% ?xx2 (var ?argv2)))
+      (subcat-map ?!submap) (subcat ?!subcat) (SUBCAT (% ?xx (var ?argv))) 
+      (subcat2-map (? !submap2 ONT::NOROLE -)) (subcat2 ?!subcat2) (SUBCAT2 (% ?xx2 (var ?argv2)))
       (argument-map ?argmap)
       (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale) (F::intensity ?ints) (F::orientation ?orient)))
       ;;(post-subcat ?!post-subcat)
@@ -943,14 +943,14 @@
 	    (post-subcat -)
 	    )
       )
-     ?subcat2
-     ?subcat
+     ?!subcat2
+     ?!subcat
      ;;(UNIFY (arg1 (% ?xxx (var ?psvar))) (arg2 ?!post-subcat))
-     (append-conjuncts  (conj1 ?adjcon) (conj2 (& (?submap ?argv) (?submap2 ?argv2) (?argmap ?v)
+     (append-conjuncts  (conj1 ?adjcon) (conj2 (& (?!submap ?argv) (?!submap2 ?argv2) (?argmap ?v)
 						  (scale ?scale) (intensity ?ints) (orientation ?orient)))
 			(new ?newadjcon))
       (add-to-conjunct (val (:MOD 
-			     (% *pro* (var ?adjv) (status ont::f) (class ?qual)
+			     (% *pro* (var ?adjv) (status ont::f) (class ?qual) (lex ?lex1)
 				    (constraint ?newadjcon))))
 				   
        (old ?r) (new ?newr))
@@ -1690,7 +1690,7 @@
 					      (scale ?scale) (intensity ?ints) (orientation ?orient))
 					     )
 		       (new ?newc)))
-
+   
    ;; adjectives that map to predicates with two subcats, e.g.,  closer than bath to avon
    ((ADJ1 (ARG ?arg) (VAR ?v) (COMPLEX +) (atype ?newatype) ;(atype (? atp postpositive predicative-only))
 	  (gap ?gap)

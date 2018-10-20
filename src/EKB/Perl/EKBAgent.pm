@@ -1,6 +1,6 @@
 # EKBAgent.pm
 #
-# Time-stamp: <Thu Oct 18 16:55:57 CDT 2018 lgalescu>
+# Time-stamp: <Fri Oct 19 14:12:09 CDT 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 13 Feb 2017
 #
@@ -131,6 +131,7 @@ use strict vars;
 
 #use re 'debug';
 
+use Cwd 'realpath';
 use File::Basename;
 use File::Spec::Functions;
 use File::Slurp qw(read_file);
@@ -175,7 +176,8 @@ sub handle_parameters {
   my $self = shift;
   my @argv = @{$self->{argv}};
 
-  $self->{storePath} = undef;
+  $self->{storePath} = undef; # EKB store path
+  $self->{store} = {}; # EKB store ("doc" => ekb)
   $self->{compareEnabled} = 0;
   $self->{saveResultsFolder} = 'ekb-agent-tests';
   $self->{testing} = 0;
@@ -233,6 +235,14 @@ sub send_subscriptions {
   $self->send_msg('(subscribe :content (request &key :content (do-ekb-inference . *)))');
   # AKRL 2 EKB helper
   $self->send_msg('(subscribe :content (request &key :content (get-ekb-representation . *)))');
+  # save EKBs to store
+  $self->send_msg('(subscribe :content (request &key :content (store-ekb . *)))');
+  # remove EKB from store
+  $self->send_msg('(subscribe :content (request &key :content (remove-ekb . *)))');
+  # remove doc from store
+  $self->send_msg('(subscribe :content (request &key :content (remove-doc . *)))');
+  # show docs in EKB store
+  $self->send_msg('(subscribe :content (request &key :content (get-ekb-store-contents . *)))');
   # get EKB for file (from EKB store)
   $self->send_msg('(subscribe :content (request &key :content (get-ekb . *)))');
   # query EKBs from store
@@ -290,6 +300,18 @@ sub receive_request {
       return 1;
     } elsif ($verb eq 'get-ekb-representation') {
       $self->handle_request_get_ekb_representation($msg, $content);
+      return 1;
+    } elsif ($verb eq 'store-ekb') {
+      $self->handle_request_store_ekb($msg, $content);
+      return 1;
+    } elsif ($verb eq 'remove-doc') {
+      $self->handle_request_remove_doc($msg, $content);
+      return 1;
+    } elsif ($verb eq 'remove-ekb') {
+      $self->handle_request_remove_ekb($msg, $content);
+      return 1;
+    } elsif ($verb eq 'get-ekb-store-contents') {
+      $self->handle_request_get_store_contents($msg, $content);
       return 1;
     } elsif ($verb eq 'get-ekb') {
       $self->handle_request_get_ekb($msg, $content);
@@ -379,30 +401,6 @@ sub handle_request_ekb_inference {
   }
 }
 
-# handler for 'get-ekb' requests
-sub handle_request_get_ekb {
-  my ($self, $msg, $content) = @_;
-
-  my $doc = $content->{':document'}
-    or do {
-      ERROR ":document parameter missing";
-      $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :document parameter is missing.\"))");
-      return;
-    };
-  $doc = KQML::KQMLStringAtomAsPerlString($doc);
-
-  my $ekb = $self->store_get($doc)
-    or do {
-      $self->reply_to_msg($msg, "(reply :content (failure :reason \"No EKB found\"))");
-      return;
-    };
-
-  my $ekbString = escape_string($ekb->toString);
-  my $reply = "(reply :content (done :result \"" . $ekbString . "\"))";
-  $self->reply_to_msg($msg, $reply);
-}
-
-
 # handler for 'get-ekb-representation' requests
 sub handle_request_get_ekb_representation {
   my ($self, $msg, $content) = @_;
@@ -433,6 +431,149 @@ sub handle_request_get_ekb_representation {
   }
 }
 
+# handler for 'store-ekb' requests
+sub handle_request_store_ekb {
+  my ($self, $msg, $content) = @_;
+
+  my $ekb_file = $content->{':ekb'}
+    or do {
+      ERROR ":ekb parameter missing";
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :ekb parameter is missing.\"))");
+      return;
+    };
+  $ekb_file = KQML::KQMLStringAtomAsPerlString($ekb_file);
+  my $ekb = EKB->new($ekb_file)
+    or do {
+      ERROR "Error reading EKB file: $ekb_file";
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"Cannot read or interpret EKB file.\"))");
+      return;
+    };
+
+  my $storePath = $self->{storePath};
+  opendir my($store), $storePath
+    or do {
+      ERROR("Cannot open $storePath");
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"Cannot open store folder: $storePath.\"))");
+      return;
+    };
+
+  my $new_ekb_file = catfile($storePath, basename($ekb->get_file));
+  $ekb->set_file($new_ekb_file);
+  $ekb->print($new_ekb_file);
+  $self->store_add_ekb($new_ekb_file);
+
+  my $reply = "(reply :content (done))";
+  $self->reply_to_msg($msg, $reply);
+}
+
+# handler for 'get-ekb-store-contents' requests
+sub handle_request_get_store_contents {
+  my ($self, $msg, $content) = @_;
+
+  my $result;
+  foreach my $d (keys %{ $self->{store} }) {
+    my $e = $self->{store}{$d}->get_file;
+    $result .= " " if $result;
+    $result .= "(document :source \"" .$d. "\" :ekb \"" .$e. "\")";
+  }
+  if ($result) {
+    $result = "(" . $result . ")";
+  } else {
+    $result = "NIL";
+  }
+  my $reply = "(reply :content (ekb-store :content " . $result . "))";
+  WARN "Result: $reply";
+  $self->reply_to_msg($msg, $reply);
+}
+
+# handler for 'remove-ekb' requests
+sub handle_request_remove_ekb {
+  my ($self, $msg, $content) = @_;
+
+  my $ekb_file = $content->{':ekb'}
+    or do {
+      ERROR ":ekb parameter missing";
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :ekb parameter is missing.\"))");
+      return;
+    };
+  $ekb_file = KQML::KQMLStringAtomAsPerlString($ekb_file);
+
+  $self->store_remove_ekb($ekb_file)
+    or do {
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"EKB not found in store\"))");
+      return;
+    };
+
+  my $reply = "(reply :content (done))";
+  $self->reply_to_msg($msg, $reply);
+}
+
+# handler for 'get-ekb' requests
+sub handle_request_get_ekb {
+  my ($self, $msg, $content) = @_;
+
+  my $doc = $content->{':document'}
+    or do {
+      ERROR ":document parameter missing";
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :document parameter is missing.\"))");
+      return;
+    };
+  $doc = KQML::KQMLStringAtomAsPerlString($doc);
+
+  my $ekb = $self->store_get($doc)
+    or do {
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"No EKB found\"))");
+      return;
+    };
+
+  my $ekbString = escape_string($ekb->toString);
+  my $reply = "(reply :content (done :result \"" . $ekbString . "\"))";
+  $self->reply_to_msg($msg, $reply);
+}
+
+# handler for 'remove-doc' requests
+sub handle_request_remove_doc {
+  my ($self, $msg, $content) = @_;
+
+  my $doc = $content->{':document'}
+    or do {
+      ERROR ":document parameter missing";
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :document parameter is missing.\"))");
+      return;
+    };
+  $doc = KQML::KQMLStringAtomAsPerlString($doc);
+
+  $self->store_remove_doc($doc)
+    or do {
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"Document not found\"))");
+      return;
+    };
+  my $reply = "(reply :content (done))";
+  $self->reply_to_msg($msg, $reply);
+}
+
+# handler for 'get-ekb' requests
+sub handle_request_get_ekb {
+  my ($self, $msg, $content) = @_;
+
+  my $doc = $content->{':document'}
+    or do {
+      ERROR ":document parameter missing";
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :document parameter is missing.\"))");
+      return;
+    };
+  $doc = KQML::KQMLStringAtomAsPerlString($doc);
+
+  my $ekb = $self->store_get($doc)
+    or do {
+      $self->reply_to_msg($msg, "(reply :content (failure :reason \"No EKB found\"))");
+      return;
+    };
+
+  my $ekbString = escape_string($ekb->toString);
+  my $reply = "(reply :content (done :result \"" . $ekbString . "\"))";
+  $self->reply_to_msg($msg, $reply);
+}
 
 # handler for 'query-ekb' requests
 sub handle_request_query_ekb {
@@ -526,7 +667,7 @@ sub handle_request_interpret_speech_act {
 
 ## FIXME: should make new class for storage and retrieval!
 
-# loads EKB store info into $self->{docs}
+# loads EKB store info into $self->{store}
 sub loadStore {
   my ($self) = @_;
 
@@ -536,6 +677,8 @@ sub loadStore {
 
   my @ekb_files = grep { /\.ekb$/ } readdir $store;
   WARN ("Found %d ekbs: %s", scalar(@ekb_files), "@ekb_files");
+  # clean store first
+  $self->{store} = {};
   foreach my $ekb_file (@ekb_files) {
     my $ekb_path = catfile($storePath, $ekb_file);
     $self->store_add_ekb($ekb_path);
@@ -551,12 +694,65 @@ sub loadStore {
 # add EKB file to store
 sub store_add_ekb {
   my ($self, $ekb_path) = @_;
-
+  
+  INFO ("Loading from store: %s", $ekb_path);
   my $ekb = EKB->new($ekb_path);
   my @paragraphs = $ekb->get_paragraphs;
   foreach my $p (@paragraphs) {
     $self->store_add_doc($p->getAttribute('file'), $ekb_path);
   }
+}
+
+# remove EKB file from store
+sub store_remove_ekb {
+  my ($self, $ekb_file) = @_;
+
+  my $ekb_dir = dirname(realpath($ekb_file));
+  if ($ekb_dir ne realpath($self->{storePath})) {
+    WARN ("$ekb_file is not part of the EKB store");
+    return;
+  }
+  unless (-f $ekb_file) {
+    WARN ("File not found: $ekb_file");
+    return;
+  }
+  
+  unlink $ekb_file;
+  # update the store (reload)
+  $self->loadStore;
+  return 1;
+}
+
+# remove doc from store
+sub store_remove_doc {
+  my ($self, $doc) = @_;
+
+  my $doc_ekb = $self->store_get($doc)
+    or do {
+      return;
+    };
+
+  my $ekb_file = $doc_ekb->get_file;
+  WARN ("Found $doc in $ekb_file");
+  my @pids = map { $_->getAttribute('id') } $doc_ekb->get_paragraphs;
+  WARN ("will remove (@pids)");
+
+  my $ekb = EKB->new($ekb_file);
+  foreach my $pid (@pids) {
+    $ekb->remove_paragraph($pid);
+  }
+  @pids = map { $_->getAttribute('id') } $ekb->get_paragraphs;
+  WARN ("remaining (@pids)");
+  if (@pids) {
+    $ekb->save;
+    WARN ("Removed $doc from $ekb_file");
+  } else {
+    unlink $ekb_file;
+    WARN ("Deleted $ekb_file");
+  }
+
+  delete $self->{store}{$doc};
+  1;
 }
 
 # add <document, ekb> to EKB store
@@ -566,9 +762,15 @@ sub store_add_doc {
   my $ekb = EKB->new($ekb_path);
   $ekb->normalize( {keep_lisp => 1} );
   $ekb->filter( { files => [ $doc_path ] });
+
+  # TODO: check that the ekb is not empty!!!
+  
   my $doc_basename = basename($doc_path, (".xml", ".txt"));
   $ekb->print($doc_basename . ".ekb");
 
+  # remove the document, if it is already in store;
+  $self->store_remove_doc($doc_path);
+  
   $self->{store}{$doc_path} = $ekb;
   INFO ("Added to store: %s => %s", $doc_path, $ekb->get_file());
 }
@@ -577,13 +779,12 @@ sub store_add_doc {
 sub store_get {
   my ($self, $doc) = @_;
 
-  #return if ($self->store_empty || !(exists $self->{store}{$doc}));
   if ($self->store_empty) {
     INFO ("No document EKBs in store!");
     return;
   }
   unless (exists $self->{store}{$doc}) {
-    INFO ("Document not in store!");
+    INFO ("Document not found in store: $doc");
     return;
   }
 
@@ -594,7 +795,7 @@ sub store_get {
 sub store_empty {
   my ($self) = @_;
   return
-    !((exists ($self->{store})) && scalar(keys %{$self->{store}}));
+    !scalar(keys %{$self->{store}});
 }
 
 # parse KQML query into an EKB query (a structure pattern for now)

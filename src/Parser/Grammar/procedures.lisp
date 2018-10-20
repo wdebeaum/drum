@@ -665,7 +665,7 @@
       (if (consp x)
 	  (cond
 	    ((eq (car x) 'w::decimal-point)
-	     (calculate-fraction-value (add-em-up (second x)) (add-em-up (third x))))
+	     (calculate-fraction-value (add-em-up (second x)) (add-em-up (third x)) (fourth x)))
 	    ((eq (car x) 'w::fraction)
 	     (calculate-fraction (add-em-up (second x)) (add-em-up (third x))))
 	    ((eq (car x) '+)
@@ -685,11 +685,14 @@
 	  0)))
 
 
-(defun calculate-fraction-value (n1 n2)
+(defun calculate-fraction-value (n1 n2 decimal-places) ; n1=2; n2=5 decimal-places=2 --> 2.05
   "Given n1 and n2, return the value n1.n2, taking into account that n1 may be positive or negative"
   ;; convert n2 into a fractional value
   ;;(loop while (>= n2 1) do (setq n2 (* n2 0.1)))   -- this gets us into trouble with floating poitn arithmetic!
-  (setq n2 (read-from-string (format nil ".~A" n2)))
+  (if decimal-places
+      (setq n2 (read-from-string (format nil ".~v,,,'0@A" decimal-places n2)))
+      (setq n2 (read-from-string (format nil ".~A" n2)))
+    )
   (if (>= n1 0)
       (+ n1 n2)
       (- n1 n2)
