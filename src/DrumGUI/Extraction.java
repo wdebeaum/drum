@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.55 2018/06/27 01:17:05 lgalescu Exp $
+ * $Id: Extraction.java,v 1.56 2018/10/21 02:14:28 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -108,7 +108,7 @@ public class Extraction {
         }
 
         id = pullTermVar(value);
-        ontType = pullTermOntType(value);
+        ontType = pullOntType(value);
 
         start = getKeywordArgInt(":START", value);
         end = getKeywordArgInt(":END", value);
@@ -173,24 +173,14 @@ public class Extraction {
     }
 
     /**
-     * Pulls ontology type and word (if available) from LF term. The term format
-     * should be: {@code (?t V (:* T W) ...)}. The result, in this case, is
-     * {@code (T W)}. For incomplete terms, with the format {@code (?t V T ...)}
-     * the result will consist of only the type: {@code (T)}.
+     * Pulls ontology type from LF term. 
+     * 
+     * Note: the format of the onto-type varies. Normally, it is {@code (:* T W)}, but for some terms it may be {@code (:* T)} or even {@code T}.
+     * 
      */
-    protected static KQMLList pullCompleteOntInfo(KQMLList term) {
-        KQMLObject ontVal = term.get(2);
-        KQMLList result = new KQMLList();
-        if (ontVal instanceof KQMLList) {
-            // this may have one or two elements
-            int size = ((KQMLList) ontVal).size();
-            result.addAll(((KQMLList) ontVal).subList(1, size));
-        } else { // should not happen for true LF terms!
-            Debug.warn("Incomplete ONT info in term: " + term);
-            result.add(ontVal);
-        }
-        return result;
-    }
+    protected static KQMLObject pullFullOntType(KQMLList term) {
+        return term.get(2);
+     }
 
     /**
      * Pull the ontology type from LF term. LF term format: {@code (?t V T ...)}
@@ -198,32 +188,57 @@ public class Extraction {
      * 
      * @see #ontType
      */
-    protected static String pullTermOntType(KQMLList term) {
-        String type;
-        if (term == null) {
-            return "";
-        }
-        KQMLObject typeObj = term.get(2);
-        if (typeObj instanceof KQMLList) {
-            type = ((KQMLList) typeObj).get(1).toString();
-        } else { // it must be a KQMLToken
-            type = typeObj.toString();
-        }
-        return type;
+    protected static String pullOntType(KQMLList term) {
+        if (term == null)  return "";
+        return ontType(term.get(2));
     }
 
     /**
      * Pull "normalized" word from LF term. LF term format: (?t V (:* T W) ...)
      * Result: W
      */
-    protected static String pullTermOntWord(KQMLList term) {
-        if (term == null) {
-            return "";
+    protected static String pullOntWord(KQMLList term) {
+        if (term == null) return "";
+        return ontWord(term.get(2));
+    }
+    
+    /**
+     * Get the ont-type T from an ont-type of the form {@code (:* T W)}, {@code (:* T)} or a simple ont-type {@code T}.
+     * 
+     * @param type
+     * @return
+     */
+    protected static String ontType(KQMLObject type) {
+        if (type instanceof KQMLList) {
+            KQMLList typeList = (KQMLList) type;
+            if (typeList.size() < 3) {
+                Debug.error("Incomplete ont-type: " + type);
+            }
+            if (typeList.size() < 2) {
+                return "";
+            }
+            return typeList.get(1).toString();
+        } else if (type instanceof KQMLToken) { 
+            return type.toString();
         }
-        KQMLObject typeObj = term.get(2);
-        Debug.debug("pullTermOntWord:: " + typeObj);
-        if (typeObj instanceof KQMLList) {
-            return ((KQMLList) typeObj).get(2).toString();
+        // should not happen
+        Debug.error("Unexpected ont-type: " + type);
+        return "";
+    }
+
+    /**
+     * Get the word W from a specialized ont-type of the form (:* T W)
+     * @param type
+     * @return
+     */
+    protected static String ontWord(KQMLObject type) {
+        if (type instanceof KQMLList) {
+            KQMLList typeList = (KQMLList) type;
+            if (typeList.size() != 3) {
+                Debug.error("Incomplete ont-type: " + type);
+                return "";
+            }
+            return typeList.get(2).toString();
         }
         return "";
     }
@@ -557,7 +572,7 @@ public class Extraction {
         ListIterator<KQMLObject> iterator = terms.listIterator();
         while (iterator.hasNext()) {
             KQMLList term = (KQMLList) iterator.next();
-            String itemType = pullTermOntType(term);
+            String itemType = pullOntType(term);
             if (type.equalsIgnoreCase(itemType)) {
                 return term;
             }
@@ -677,27 +692,24 @@ public class Extraction {
     // // EKB
 
     /**
-     * Searches the EKB for EVENT or TERM extraction with a given id. If there are both an EVENT and a TERM extraction
-     * sharing the same id, the EVENT extraction is returned.
+     * Searches the EKB for EVENT or TERM extraction with a given id. 
      * 
      * @param id
      * @return an extraction with the given id
      */
     Extraction ekbFindExtraction(String id) {
         ArrayList<Extraction> ekbAssertions = ekb.lookupByID(id); // raw extractions
-        Extraction result = null;
         for (Extraction ex : ekbAssertions) {
             if (ex instanceof TermExtraction) {
-                result = ex;
+                Debug.warn("... a TERM");
+                return ex;
             } else if (ex instanceof EventExtraction) {
-                result = ex;
-            }
-            // other types are ignored
-            if (result != null) {
-                break;
+                Debug.warn("... an EVENT");
+               return ex;
             }
         }
-        return result;
+        Debug.warn("No match in EKB.");
+       return null;
     }
 
     // // OTHER
@@ -794,7 +806,7 @@ public class Extraction {
         List<String> conts = new ArrayList<String>();
         conts.add(xml_element("type", "", ontType));
         conts.add(xml_element("text",
-                xml_attribute("normalization", xml_escape(normalizeOnt(pullTermOntWord(value)))),
+                xml_attribute("normalization", xml_escape(normalizeOnt(pullOntWord(value)))),
                 xml_escape(removeTags(getTextSpan(start, end)))));
         return conts;
     }
@@ -827,8 +839,7 @@ public class Extraction {
      */
     protected String xml_lfTerm(String tag, String var, List<String> attributes) {
         KQMLList lfTerm = findTermByVar(var, context);
-        KQMLList ontVal = pullCompleteOntInfo(lfTerm);
-        String ontText = (ontVal.size() > 1) ? normalizeOnt(ontVal.get(1).toString()) : "";
+        KQMLObject termType = pullFullOntType(lfTerm);
         int start = getKeywordArgInt(":START", lfTerm);
         int end = getKeywordArgInt(":END", lfTerm);
 
@@ -839,9 +850,9 @@ public class Extraction {
         attrs.add(xml_attribute("end", Integer.toString(getOffset(end))));
 
         List<String> conts = new ArrayList<String>();
-        conts.add(xml_element("type", "", ontVal.get(0).toString()));
+        conts.add(xml_element("type", "", ontType(termType)));
         conts.add(xml_element("text",
-                xml_attribute("normalization", xml_escape(ontText)),
+                xml_attribute("normalization", xml_escape(normalizeOnt(ontWord(termType)))),
                 xml_escape(removeTags(getTextSpan(start, end)))));
 
         return xml_element(tag, attrs, conts);
@@ -974,7 +985,7 @@ public class Extraction {
      */
     protected String xml_attribute(String attribute, String value, boolean allowNulls) {
         if (attribute == null) {
-            Debug.error("Null tag!");
+            Debug.error("Null attribute!");
             return "";
         }
         return (!allowNulls && (value == null)) ? ""

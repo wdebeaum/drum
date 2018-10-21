@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EpistemicModalityExtraction.java,v 1.11 2018/06/27 01:17:05 lgalescu Exp $
+ * $Id: EpistemicModalityExtraction.java,v 1.12 2018/10/21 02:14:28 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -11,6 +11,7 @@ package TRIPS.DrumGUI;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.ListIterator;
 
 import TRIPS.KQML.KQMLList;
@@ -219,16 +220,18 @@ public class EpistemicModalityExtraction extends Extraction {
     private void pullModifiers() {
         mods = new LinkedHashMap<Modifier, KQMLObject>();
         for (Modifier mod : Modifier.values()) {
-            KQMLObject value = shortValue.getKeywordArg(mod.toString());
-            if ((value != null) && !value.toString().equals("-")) {
-                if (value instanceof KQMLList) {
-                    KQMLList valueList = (KQMLList) value;
+            KQMLObject aValue = shortValue.getKeywordArg(mod.toString());
+            if ((aValue != null) && !aValue.toString().equals("-")) {
+                /* LG20181020 we don't do this anymore
+                if (aValue instanceof KQMLList) {
+                    KQMLList valueList = (KQMLList) aValue;
                     if (((KQMLToken) valueList.get(0)).equalsIgnoreCase(":*")) {
                         Debug.warn("Removed [:*] from " + valueList);
                         valueList.remove(0);
                     }
                 }
-                mods.put(mod, value);
+                */
+                mods.put(mod, aValue);
             }
         }
     }
@@ -249,23 +252,25 @@ public class EpistemicModalityExtraction extends Extraction {
                     if (key.equalsIgnoreCase(mod.toString())) {
                         // look ahead
                         int nextIndex = iterator.nextIndex();
-                        KQMLObject value = shortValue.get(nextIndex);
+                        KQMLObject aValue = shortValue.get(nextIndex);
                         // Debug.debug("Found poly-modifier: " + key + " " + value);
-                        if ((value instanceof KQMLToken) && ((KQMLToken) value).equalsIgnoreCase("-")) {
-                            Debug.warn("Removed " + key + " " + value);
+                        if ((aValue instanceof KQMLToken) && ((KQMLToken) aValue).equalsIgnoreCase("-")) {
+                            Debug.warn("Removed " + key + " " + aValue);
                             iterator.remove();
                             iterator.next();
                             iterator.remove();
                             continue;
                         }
-                        if (value instanceof KQMLList) { // fix
-                            KQMLList valueList = (KQMLList) value;
+                        /* LG20181020 we don't do this anymore
+                        if (aValue instanceof KQMLList) {
+                            KQMLList valueList = (KQMLList) aValue;
                             if (((KQMLToken) valueList.get(0)).equalsIgnoreCase(":*")) {
                                 Debug.warn("Removed [:*] from " + valueList);
                                 valueList.remove(0);
                             }
                         }
-                        modValues.add(value);
+                        */
+                        modValues.add(aValue);
                         iterator.next();
                     }
                 }
@@ -290,7 +295,6 @@ public class EpistemicModalityExtraction extends Extraction {
         String id = removePackage(var);
         String parID = getParagraphID();
         String text = removeTags(getTextSpan(start, end));
-        Debug.debug("toXML: ready");
 
         String ruleID = getKeywordArgString(":RULE", value);    
         if (ruleID == null) {
@@ -306,11 +310,11 @@ public class EpistemicModalityExtraction extends Extraction {
                 "lisp=\"" + getLispForm() + "\" " +
                 "rule=\"" + ruleID + "\">"
                 + "<type>" + ontType + "</type>"
-                + createNegationXML()
-                + createPolarityXML()
-                + createForceXML()
-                + createModalityXML()
-                + createArgsXML()
+                + xml_negation()
+                + xml_polarity()
+                + xml_force()
+                + xml_modality()
+                + xml_args()
                 + "<text>" + xml_escape(text) + "</text>" +
                 "</" + exType + ">";
     }
@@ -319,9 +323,9 @@ public class EpistemicModalityExtraction extends Extraction {
      * Returns a list of XML elements representing information about all event
      * arguments.
      * 
-     * @see #createArgXML(int, Role, String)
+     * @see #xml_arg(int, Role, String)
      */
-    private String createArgsXML() {
+    private String xml_args() {
         if (roles.isEmpty()) {
             return "";
         }
@@ -331,7 +335,7 @@ public class EpistemicModalityExtraction extends Extraction {
         }
         String result = "";
         for (Role role: roles.keySet()) {
-            result += createArgXML(index++, role, roles.get(role).toString());
+            result += xml_arg(index++, role, roles.get(role).toString());
         }
         return result;
     }
@@ -340,36 +344,36 @@ public class EpistemicModalityExtraction extends Extraction {
      * Returns an XML element representing information about an event argument. The XML tag is either 
      * {@code arg1} or {@code arg2}, depending on the argument type.
      * 
-     * @see #createArgsXML()
+     * @see #xml_args()
      */
-    private String createArgXML(int roleIndex, Role role, String var) {
+    private String xml_arg(int roleIndex, Role role, String var) {
         Debug.debug("arg(" + role + "," + var + ")");
         if (var == null) {
             // shouldn't happen!
             Debug.warn("unexpected role: " + role);
             return "";
         }
-        String id = removePackage(var);
+
         // we obtain the arg from the EKB, if we can; otherwise, we look for the term in the context
         Extraction ekbTerm = ekbFindExtraction(var);
         KQMLList term = (ekbTerm != null) ? ekbTerm.getValue() : findTermByVar(var, context);
-        KQMLList ontInfo = pullCompleteOntInfo(term);
-        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
+        KQMLObject termType = pullFullOntType(term);
         int start = getKeywordArgInt(":START", term);
         int end = getKeywordArgInt(":END", term);
-        String text = removeTags(getTextSpan(start, end));
-        String tag = "arg" + roleIndex;
 
-        Debug.debug("createArgXML: ready");
+        List<String> attrs = new ArrayList<String>();
+        attrs.add(xml_attribute("id", removePackage(var)));
+        attrs.add(xml_attribute("role", role.toString()));
+        attrs.add(xml_attribute("start", String.valueOf(getOffset(start))));
+        attrs.add(xml_attribute("end", String.valueOf(getOffset(end))));
 
-        return "<" + tag + " " +
-                "id=\"" + id + "\" " +
-                "role=\"" + role + "\" " +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\"" + ">"
-                + "<type>" + ontInfo.get(0) + "</type>"
-                + "<text normalization=\"" + xml_escape(ontText) + "\">" + xml_escape(text) + "</text>" +
-                "</" + tag + ">";
+        List<String> conts = new ArrayList<String>();
+        conts.add(xml_element("type", "", ontType(termType)));
+        conts.add(xml_element("text",
+                xml_attribute("normalization", xml_escape(normalizeOnt(ontWord(termType)))),
+                xml_escape(removeTags(getTextSpan(start, end)))));
+
+        return xml_element("arg" + roleIndex, attrs, conts);
     }
 
     /**
@@ -378,12 +382,10 @@ public class EpistemicModalityExtraction extends Extraction {
      * 
      * @see Modifier#NEGATION
      */
-    private String createNegationXML() {
+    private String xml_negation() {
         KQMLObject value = getNegation();
-        if (value != null) {
-            return "<negation>" + value.toString() + "</negation>";
-        }
-        return "";
+        if (value == null)  return "";
+        return xml_element("negation", "", value.toString());
     }
 
     /**
@@ -392,12 +394,10 @@ public class EpistemicModalityExtraction extends Extraction {
      * 
      * @see Modifier#POLARITY
      */
-    private String createPolarityXML() {
+    private String xml_polarity() {
         KQMLObject value = getPolarity();
-        if (value != null) {
-            return "<polarity>" + value.toString() + "</polarity>";
-        }
-        return "";
+        if (value == null)  return "";
+        return xml_element("polarity", "", value.toString());
     }
     
     /**
@@ -406,12 +406,10 @@ public class EpistemicModalityExtraction extends Extraction {
      * 
      * @see Modifier#FORCE
      */
-    private String createForceXML() {
+    private String xml_force() {
         KQMLObject value = getForce();
-        if (value != null) {
-            return "<force>" + value.toString() + "</force>";
-        }
-        return "";
+        if (value == null)  return "";
+        return xml_element("force", "", value.toString());
     }
 
     /**
@@ -420,30 +418,23 @@ public class EpistemicModalityExtraction extends Extraction {
      * 
      * @see Modifier#MODALITY
      */
-    private String createModalityXML() {
+    private String xml_modality() {
         KQMLObject value = getModality();
-        if (value != null) {
-            // typically this is a list; output is an ONT type (should not remove package!)
-            if (value instanceof KQMLList) {
-                value = ((KQMLList) value).get(1);
-            }
-            // other times it is just the ONT type
-            return "<modality>" + value.toString() + "</modality>";
-        }
-        return "";
+        if (value == null) return "";
+        // value is an ONT type (should not remove package!)
+        return xml_element("modality", "", ontType((KQMLList) value));
     }
 
     /**
      * Returns a {@code <mods>} XML element representing the term modifiers, or
      * the empty string if no such information exists.
      */
-    private String createModsXML() {
+    private String xml_mods() {
         String mods = "";
-        mods += createModsXML(PolyModifier.DEGREE, "degree");
-        mods += createModsXML(PolyModifier.FREQUENCY, "frequency");
-        mods += createModsXML(PolyModifier.MODA, "mod");
-        mods += createModsXML(PolyModifier.MODN, "mod");
-
+        mods += xml_mods(PolyModifier.DEGREE, "degree");
+        mods += xml_mods(PolyModifier.FREQUENCY, "frequency");
+        mods += xml_mods(PolyModifier.MODA, "mod");
+        mods += xml_mods(PolyModifier.MODN, "mod");
         return mods.equals("") ? "" : "<mods>" + mods + "</mods>";
     }
 
@@ -456,39 +447,34 @@ public class EpistemicModalityExtraction extends Extraction {
      * @param modType
      * @return
      */
-    private String createModsXML(PolyModifier mod, String modType) {
+    private String xml_mods(PolyModifier mod, String modType) {
         ArrayList<KQMLObject> mods = polyMods.get(mod);
-        if ((mods == null) || mods.isEmpty()) {
-            return "";
-        }
+        if ((mods == null) || mods.isEmpty()) return "";
+        
         String result = "";
         for (KQMLObject modValue : mods) {
             if (modValue instanceof KQMLList) {
-                KQMLList modPair = (KQMLList) modValue;
-                result += "<" + modType + ">"
-                        + "<type>" + modPair.get(0) + "</type>"
-                        + "<value>" + removePackage(modPair.get(1).toString(), false) + "</value>" +
-                        "</" + modType + ">";
+                KQMLList modValueList = (KQMLList) modValue;
+                List<String> conts = new ArrayList<String>();
+                conts.add(xml_element("type", "", ontType(modValueList)));
+                conts.add(xml_element("value", "", removePackage(ontWord(modValueList), false)));
+                result += xml_element(modType, null, conts);
             } else if (isOntVar(modValue.toString())) { // TODO remove (obsolete)
                 KQMLList modTerm = findTermByVar(modValue.toString(), context);
-                KQMLList ontVal = pullCompleteOntInfo(modTerm);
                 int start = getKeywordArgInt(":START", modTerm);
                 int end = getKeywordArgInt(":END", modTerm);
-                String text = removeTags(getTextSpan(start, end));
-                result += "<" + modType + " " +
-                        "start=\"" + getOffset(start) + "\" " +
-                        "end=\"" + getOffset(end) + "\"" + ">"
-                        + "<type>" + ontVal.get(0) + "</type>"
-                        + "<text>" + xml_escape(text) + "</text>" +
-                        "</" + modType + ">";
+                List<String> attrs = new ArrayList<String>();
+                attrs.add(xml_attribute("start", String.valueOf(getOffset(start))));
+                attrs.add(xml_attribute("end", String.valueOf(getOffset(end))));
+                List<String> conts = new ArrayList<String>();
+                conts.add(xml_element("type", "", pullOntType(modTerm)));
+                conts.add(xml_element("text", "", xml_escape(removeTags(getTextSpan(start, end)))));
+                result += xml_element(modType, attrs, conts);
             } else { // should not happen!
                 Debug.error("unexpected " + mod + " value: " + modValue);
-                result += "<" + modType + ">"
-                        + removePackage(modValue.toString(), false) +
-                        "</" + modType + ">";
+                result += xml_element(modType, "", removePackage(modValue.toString(), false));
             }
         }
-
         return result;
     }
 
@@ -525,8 +511,7 @@ public class EpistemicModalityExtraction extends Extraction {
                 if (term == null) {
                     expandedValue.add(item);
                 } else {
-                    KQMLList ontVal = pullCompleteOntInfo(term);
-                    expandedValue.add(ontVal);
+                    expandedValue.add(pullFullOntType(term));
                 }
                 expand = false;
             } else {

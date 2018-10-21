@@ -1,7 +1,7 @@
 /*
  * DrumKB.java
  *
- * $Id: DrumKB.java,v 1.31 2018/06/22 16:41:53 lgalescu Exp $
+ * $Id: DrumKB.java,v 1.32 2018/10/21 02:14:28 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  9 May 2015
  */
@@ -616,7 +616,7 @@ public class DrumKB {
         if (result.isEmpty()) {
             Debug.warn("EKB: no extraction with id=" + id);
         } else if (result.size() > 1) { // should not happen!
-            Debug.warn("EKB: multiple (raw) extractions with id=" + id + ": " + result);
+            Debug.error("EKB: multiple (raw) extractions with id=" + id + ": " + result);
         } else {
             Debug.debug("EKB: found (raw) extraction with id=" + id + ": " + result.get(0));
         }

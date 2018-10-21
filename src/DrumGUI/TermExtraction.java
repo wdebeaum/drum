@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.55 2018/10/17 23:31:41 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.56 2018/10/21 02:14:28 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -78,14 +78,8 @@ public class TermExtraction extends Extraction {
         SEQ(":SEQUENCE") // sequence
         ;
         private String attrName;
-
-        private Attribute(String name) {
-            attrName = name;
-        }
-
-        public String toString() {
-            return attrName;
-        }
+        private Attribute(String name) { attrName = name; }
+        public String toString() { return attrName; }
 
         public static boolean isAttribute(String item) {
             for (Attribute f : Attribute.values()) {
@@ -304,6 +298,15 @@ public class TermExtraction extends Extraction {
             KQMLObject aValue = shortValue.getKeywordArg(aName);
             // note: we ignore dash values, which we interpret as "undefined"
             if ((aValue != null) && !aValue.toString().equals("-")) {
+                /* LG20181020 we don't do this anymore
+                if (aValue instanceof KQMLList) {
+                    KQMLList valueList = (KQMLList) aValue;
+                    if (((KQMLToken) valueList.get(0)).equalsIgnoreCase(":*")) {
+                        Debug.warn("Removed [:*] from " + valueList);
+                        valueList.remove(0);
+                    }
+                }
+                */
                 attributes.put(attr, aValue);
             }
             // fix for :LOGICALOP-SEQUENCE with :EXCEPT -- currently not included in the extraction
@@ -334,23 +337,25 @@ public class TermExtraction extends Extraction {
                     if (key.equalsIgnoreCase(attr.toString())) {
                         // look ahead
                         int nextIndex = iterator.nextIndex();
-                        KQMLObject value = shortValue.get(nextIndex);
-                        Debug.debug("Found poly-attribute: " + key + " " + value);
-                        if ((value instanceof KQMLToken) && ((KQMLToken) value).equalsIgnoreCase("-")) {
-                            Debug.warn("Removed " + key + " " + value);
+                        KQMLObject aValue = shortValue.get(nextIndex);
+                        Debug.debug("Found poly-attribute: " + key + " " + aValue);
+                        if ((aValue instanceof KQMLToken) && ((KQMLToken) aValue).equalsIgnoreCase("-")) {
+                            Debug.warn("Removed " + key + " " + aValue);
                             iterator.remove();
                             iterator.next();
                             iterator.remove();
                             continue;
                         }
-                        if (value instanceof KQMLList) {
-                            KQMLList valueList = (KQMLList) value;
+                        /* LG20181020 we don't do this anymore
+                        if (aValue instanceof KQMLList) {
+                            KQMLList valueList = (KQMLList) aValue;
                             if (((KQMLToken) valueList.get(0)).equalsIgnoreCase(":*")) {
                                 Debug.warn("Removed [:*] from " + valueList);
                                 valueList.remove(0);
                             }
                         }
-                        attrValues.add(value);
+                        */
+                        attrValues.add(aValue);
                         iterator.next();
                     }
                 }
@@ -439,13 +444,15 @@ public class TermExtraction extends Extraction {
      */
     private String xml_unit() {
         KQMLObject unit = attributes.get(Attribute.UNIT);
-        if ((unit != null) && (unit instanceof KQMLList)) {
-            KQMLList unitList = (KQMLList) unit;
-             return xml_element("unit", 
-                     xml_attribute("type", unitList.get(1).toString()), 
-                     removePackage(unitList.get(2).toString()));
-        }
-        return "";
+        if (unit == null) return "";
+        
+        KQMLList unitType = null;
+        if (unit instanceof KQMLList)
+            unitType = (KQMLList) unit;
+        
+        return xml_element("unit", 
+                xml_attribute("type", ontType(unit)), 
+                (unit != null) ? removePackage(ontWord(unitType)) : "");
     }
 
     /**
@@ -453,8 +460,7 @@ public class TermExtraction extends Extraction {
      */
     private String xml_amount() {
         KQMLObject value = attributes.get(Attribute.AMOUNT);
-        if (value == null) 
-            return "";
+        if (value == null) return "";
         
         if (isOntVar(value.toString())) {
             String var = value.toString();
@@ -778,10 +784,11 @@ public class TermExtraction extends Extraction {
         String result = "";
         for (KQMLObject modValue : mods) {
             if (modValue instanceof KQMLList) {
-                KQMLList modPair = (KQMLList) modValue;
-                result += xml_element(modType, null, 
-                        xml_element("type", "", modPair.get(0).toString()) +
-                        xml_element("value", "", removePackage(modPair.get(1).toString(), false)));
+                KQMLList modValueList = (KQMLList) modValue;
+                List<String> conts = new ArrayList<String>();
+                conts.add(xml_element("type", "", ontType(modValueList)));
+                conts.add(xml_element("value", "", removePackage(ontWord(modValueList), false)));
+                result += xml_element(modType, null, conts);
             } else if (isOntVar(modValue.toString())) {
                 String var = modValue.toString();
                 if (ekbFindExtraction(var) != null) { 
@@ -820,8 +827,8 @@ public class TermExtraction extends Extraction {
         String result = "";
         for (KQMLObject valObj : quals) {
             if (valObj instanceof KQMLList) {
-                KQMLList valList = (KQMLList) valObj;
-                result += xml_element(tag, xml_attribute("type", valList.get(0).toString()), null);
+                KQMLList valType = (KQMLList) valObj;
+                result += xml_element(tag, xml_attribute("type", ontType(valType)), null);
             } else if (isOntVar(valObj.toString())) {
                 String var = valObj.toString();
                 if (ekbFindExtraction(var) != null) { 
@@ -850,8 +857,8 @@ public class TermExtraction extends Extraction {
         String result = "";
         for (KQMLObject valObj : assocs) {
             if (valObj instanceof KQMLList) {
-                KQMLList valList = (KQMLList) valObj;
-                result += xml_element("assoc-with", xml_attribute("type", valList.get(0).toString()), null);
+                KQMLList valType = (KQMLList) valObj;
+                result += xml_element("assoc-with", xml_attribute("type", ontType(valType)), null);
             } else if (isOntVar(valObj.toString())) {
                 String var = valObj.toString();
                 if (ekbFindExtraction(var) != null) { 
@@ -953,7 +960,7 @@ public class TermExtraction extends Extraction {
         List<String> conts = new ArrayList<String>();
         KQMLObject dow = attributes.get(Attribute.DOW);
         if (dow != null) {
-            conts.add(xml_element("dow", null, removePackage(((KQMLList) dow).get(2).toString())));
+            conts.add(xml_element("dow", null, removePackage(ontWord(dow))));
         }
         KQMLObject day = attributes.get(Attribute.DAY);
         if (day != null) {
@@ -963,7 +970,7 @@ public class TermExtraction extends Extraction {
         if (month != null) {
             String mtext = "";
             if (month instanceof KQMLList) {
-                mtext = normalizeOnt(((KQMLList) month).get(2).toString());
+                mtext = normalizeOnt(ontWord(month));
             }
             conts.add(xml_element("month", null, mtext));
         }
@@ -986,14 +993,12 @@ public class TermExtraction extends Extraction {
         KQMLObject time = attributes.get(Attribute.TIME);
         if (time == null)
             return "";
-        KQMLObject modObj = attributes.get(Attribute.TIMEMOD);
-        String mod = null;
-        if (modObj instanceof KQMLList) {
-            mod = ((KQMLList) modObj).get(1).toString();
-        }
+        
         List<String> attrs = new ArrayList<String>();
-        if (mod != null) {
-            attrs.add(xml_attribute("mod", mod.toString()));
+        KQMLObject modType = attributes.get(Attribute.TIMEMOD);
+        String mod = ontType(modType);
+        if (!mod.isEmpty()) {
+            attrs.add(xml_attribute("mod", mod));
         }
         
         if (isOntVar(time.toString())) {
@@ -1015,16 +1020,11 @@ public class TermExtraction extends Extraction {
         if (loc == null) 
             return "";
 
-        String mod = null;
-        KQMLObject modObj = attributes.get(Attribute.LOCMOD);
-        if (modObj instanceof KQMLList) {
-            mod = ((KQMLList) modObj).get(1).toString();
-        } else if (modObj instanceof KQMLToken) { // TODO: remove (obsolete)
-            mod = modObj.toString();
-        }
         List<String> attrs = new ArrayList<String>();
-        if (mod != null) {
-            attrs.add(xml_attribute("mod", removePackage(mod, false)));
+        KQMLObject modType = attributes.get(Attribute.LOCMOD);
+        String mod = ontType(modType);
+        if (!mod.isEmpty()) {
+            attrs.add(xml_attribute("mod", mod));
         }
 
         String result = "";
@@ -1337,8 +1337,7 @@ public class TermExtraction extends Extraction {
                 if (term == null) {
                     expandedValue.add(item);
                 } else {
-                    KQMLList ontVal = pullCompleteOntInfo(term);
-                    expandedValue.add(ontVal);
+                    expandedValue.add(pullFullOntType(term));
                 }
                 expand = false;
             } else {

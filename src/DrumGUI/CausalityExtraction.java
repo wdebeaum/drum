@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: CausalityExtraction.java,v 1.12 2018/06/27 01:17:05 lgalescu Exp $
+ * $Id: CausalityExtraction.java,v 1.13 2018/10/21 02:14:28 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -11,6 +11,7 @@ package TRIPS.DrumGUI;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.ListIterator;
 
 import TRIPS.KQML.KQMLList;
@@ -258,6 +259,7 @@ public class CausalityExtraction extends Extraction {
                             iterator.remove();
                             continue;
                         }
+                        /* LG20181020 we don't do this anymore
                         if (value instanceof KQMLList) { // fix
                             KQMLList valueList = (KQMLList) value;
                             if (((KQMLToken) valueList.get(0)).equalsIgnoreCase(":*")) {
@@ -265,6 +267,7 @@ public class CausalityExtraction extends Extraction {
                                 valueList.remove(0);
                             }
                         }
+                        */
                         modValues.add(value);
                         iterator.next();
                     }
@@ -433,12 +436,12 @@ public class CausalityExtraction extends Extraction {
                 "lisp=\"" + getLispForm() + "\" " +
                 "rule=\"" + ruleID + "\">"
                 + "<type>" + ontType + "</type>"
-                + createNegationXML()
-                + createPolarityXML()
-                + createForceXML()
-                + createModalityXML()
-                + createEpiModalityXML()
-                + createArgsXML()
+                + xml_negation()
+                + xml_polarity()
+                + xml_force()
+                + xml_modality()
+                + xml_epimodality()
+                + xml_args()
                 + "<text>" + xml_escape(text) + "</text>" +
                 "</" + exType + ">";
     }
@@ -449,13 +452,13 @@ public class CausalityExtraction extends Extraction {
      * 
      * @see #createArgXML(int, Role, String)
      */
-    private String createArgsXML() {
+    private String xml_args() {
         if (roles.isEmpty()) {
             return "";
         }
         String result = "";
         for (Role role: roles.keySet()) {
-            result += createArgXML(role, roles.get(role));
+            result += xml_arg(role, roles.get(role));
         }
         return result;
     }
@@ -463,9 +466,9 @@ public class CausalityExtraction extends Extraction {
     /**
      * Returns an XML element representing information about an argument.
      * 
-     * @see #createArgsXML()
+     * @see #xml_args()
      */
-    private String createArgXML(Role role, KQMLObject roleValue) {
+    private String xml_arg(Role role, KQMLObject roleValue) {
         Debug.debug("arg(" + role + "," + roleValue + ")");
         if (roleValue == null) {
             // shouldn't happen!
@@ -473,37 +476,34 @@ public class CausalityExtraction extends Extraction {
             return "";
         }
         if (roleValue instanceof KQMLList) {
-            return createSeqArgXML(role, (KQMLList) roleValue);
+            return xml_seqarg(role, (KQMLList) roleValue);
         }
         String idVar = roleValue.toString();
-        String id = removePackage(idVar);
         // we obtain the arg from the EKB, if we can; otherwise, we look for the term in the context
         Extraction ekbTerm = ekbFindExtraction(idVar);
         KQMLList term = (ekbTerm != null) ? ekbTerm.getValue() : findTermByVar(idVar, context);
         int start = getKeywordArgInt(":START", term);
         int end = getKeywordArgInt(":END", term);
 
+        List<String> attrs = new ArrayList<String>();
+        attrs.add(xml_attribute("id", removePackage(idVar)));
+        attrs.add(xml_attribute("role", role.toString()));
+        attrs.add(xml_attribute("start", String.valueOf(getOffset(start))));
+        attrs.add(xml_attribute("end", String.valueOf(getOffset(end))));
+
         if (ekbTerm != null) {
-            return "<arg " +
-                    "id=\"" + id + "\" " +
-                    "role=\"" + role + "\" " +
-                    "start=\"" + getOffset(start) + "\" " +
-                    "end=\"" + getOffset(end) + "\" />";
+            return xml_element("arg", attrs, null);
         } else {
-            KQMLList ontInfo = pullCompleteOntInfo(term);
-            String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
-            String text = removeTags(getTextSpan(start, end));
+            KQMLObject termType = pullFullOntType(term);
 
-            Debug.debug("createArgXML: ready");
+            List<String> conts = new ArrayList<String>();
+            conts.add(xml_element("type", "", ontType(termType)));
+            conts.add(xml_element("text",
+                    xml_attribute("normalization", xml_escape(normalizeOnt(ontWord(termType)))),
+                    xml_escape(removeTags(getTextSpan(start, end)))));
 
-            return "<arg " +
-                    "id=\"" + id + "\" " +
-                    "role=\"" + role + "\" " +
-                    "start=\"" + getOffset(start) + "\" " +
-                    "end=\"" + getOffset(end) + "\"" + ">"
-                    + "<type>" + ontInfo.get(0) + "</type>"
-                    + "<text normalization=\"" + xml_escape(ontText) + "\">" + xml_escape(text) + "</text>" +
-                    "</arg>";
+            return xml_element("arg", attrs, conts);
+
         }
     }
     
@@ -512,9 +512,9 @@ public class CausalityExtraction extends Extraction {
      * <p>
      * Currently this applies only to {@link CausalityExtraction.Role#FACTOR_SEQUENCE}
      * 
-     * @see #createArsXML()
+     * @see #createArgXML()
      */
-    private String createSeqArgXML(Role role, KQMLList roleValue) {
+    private String xml_seqarg(Role role, KQMLList roleValue) {
         Debug.debug("arg(" + role + "," + roleValue + ")");
         if (roleValue == null) {
             // shouldn't happen!
@@ -525,37 +525,31 @@ public class CausalityExtraction extends Extraction {
         int seqIndex = 0;
         for (KQMLObject tVar : roleValue) { // TODO: check that tVar is, indeed, an OntVar!
             String idVar = tVar.toString();
-            String id = removePackage(idVar);
-
             // we obtain the arg from the EKB, if we can; otherwise, we look for the term in the context
             Extraction ekbTerm = ekbFindExtraction(idVar);
             KQMLList term = (ekbTerm != null) ? ekbTerm.getValue() : findTermByVar(idVar, context);
             int start = getKeywordArgInt(":START", term);
             int end = getKeywordArgInt(":END", term);
 
-            if (ekbTerm != null) {
-                seqArgs += "<arg " +
-                        "id=\"" + id + "\" " +
-                        "role=\"" + role + "\" " +
-                        "seqno=\"" + (++seqIndex) + "\" " +
-                        "start=\"" + getOffset(start) + "\" " +
-                        "end=\"" + getOffset(end) + "\" />";
+            List<String> attrs = new ArrayList<String>();
+            attrs.add(xml_attribute("id", removePackage(idVar)));
+            attrs.add(xml_attribute("role", role.toString()));
+            attrs.add(xml_attribute("seqno", String.valueOf(++seqIndex)));
+            attrs.add(xml_attribute("start", String.valueOf(getOffset(start))));
+            attrs.add(xml_attribute("end", String.valueOf(getOffset(end))));
+
+            if (ekbTerm != null) {                
+                seqArgs += xml_element("arg", attrs, null);
             } else {
-                KQMLList ontInfo = pullCompleteOntInfo(term);
-                String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
-                String text = removeTags(getTextSpan(start, end));
+                KQMLObject termType = pullFullOntType(term);
 
-                Debug.debug("createSeqArgXML: ready");
+                List<String> conts = new ArrayList<String>();
+                conts.add(xml_element("type", "", ontType(termType)));
+                conts.add(xml_element("text",
+                        xml_attribute("normalization", xml_escape(normalizeOnt(ontWord(termType)))),
+                        xml_escape(removeTags(getTextSpan(start, end)))));
 
-                seqArgs += "<arg " +
-                        "id=\"" + id + "\" " +
-                        "role=\"" + role + "\" " +
-                        "seqno=\"" + (++seqIndex) + "\" " +
-                        "start=\"" + getOffset(start) + "\" " +
-                        "end=\"" + getOffset(end) + "\"" + ">"
-                        + "<type>" + ontInfo.get(0) + "</type>"
-                        + "<text normalization=\"" + xml_escape(ontText) + "\">" + xml_escape(text) + "</text>" +
-                        "</arg>";
+                seqArgs += xml_element("arg", attrs, conts);
             }
         }
 
@@ -568,12 +562,10 @@ public class CausalityExtraction extends Extraction {
      * 
      * @see Modifier#NEGATION
      */
-    private String createNegationXML() {
-        KQMLObject negation = getNegation();
-        if (negation != null) {
-            return "<negation>" + negation.toString() + "</negation>";
-        }
-        return "";
+    private String xml_negation() {
+        KQMLObject value = getNegation();
+        if (value == null)  return "";
+        return xml_element("negation", "", value.toString());
     }
     
     /**
@@ -582,12 +574,10 @@ public class CausalityExtraction extends Extraction {
      * 
      * @see Modifier#POLARITY
      */
-    private String createPolarityXML() {
-        KQMLObject polarity = getPolarity();
-        if (polarity != null) {
-            return "<polarity>" + polarity.toString() + "</polarity>";
-        }
-        return "";
+    private String xml_polarity() {
+        KQMLObject value = getPolarity();
+        if (value == null)  return "";
+        return xml_element("polarity", "", value.toString());
     }
     
     /**
@@ -596,12 +586,10 @@ public class CausalityExtraction extends Extraction {
      * 
      * @see Modifier#FORCE
      */
-    private String createForceXML() {
+    private String xml_force() {
         KQMLObject value = getForce();
-        if (value != null) {
-            return "<force>" + value.toString() + "</force>";
-        }
-        return "";
+        if (value == null)  return "";
+        return xml_element("force", "", value.toString());
     }
 
     /**
@@ -610,17 +598,11 @@ public class CausalityExtraction extends Extraction {
      * 
      * @see Modifier#MODALITY
      */
-    private String createModalityXML() {
+    private String xml_modality() {
         KQMLObject value = getModality();
-        if (value != null) {
-            // typically this is a list; output is an ONT type (should not remove package!)
-            if (value instanceof KQMLList) {
-                value = ((KQMLList) value).get(1);
-            }
-            // other times it is just the ONT type
-            return "<modality>" + value.toString() + "</modality>";
-        }
-        return "";
+        if (value == null) return "";
+        // value is an ONT type (should not remove package!)
+        return xml_element("modality", "", ontType((KQMLList) value));
     }
 
     /**
@@ -629,25 +611,22 @@ public class CausalityExtraction extends Extraction {
      * 
      * @see Modifier#EPI
      */
-    private String createEpiModalityXML() {
+    private String xml_epimodality() {
         KQMLObject value = getEpiModality();
-        if (value != null) { // must be a variable
-            return "<epistemic-modality id=\"" + removePackage(value.toString()) + "\" />";
-        }
-        return "";
+        if (value == null)  return "";
+        return xml_element("epistemic-modality", "", value.toString());
     }
 
     /**
      * Returns a {@code <mods>} XML element representing the term modifiers, or
      * the empty string if no such information exists.
      */
-    private String createModsXML() {
+    private String xml_mods() {
         String mods = "";
-        mods += createModsXML(PolyModifier.DEGREE, "degree");
-        mods += createModsXML(PolyModifier.FREQUENCY, "frequency");
-        mods += createModsXML(PolyModifier.MODA, "mod");
-        mods += createModsXML(PolyModifier.MODN, "mod");
-
+        mods += xml_mods(PolyModifier.DEGREE, "degree");
+        mods += xml_mods(PolyModifier.FREQUENCY, "frequency");
+        mods += xml_mods(PolyModifier.MODA, "mod");
+        mods += xml_mods(PolyModifier.MODN, "mod");
         return mods.equals("") ? "" : "<mods>" + mods + "</mods>";
     }
 
@@ -660,39 +639,34 @@ public class CausalityExtraction extends Extraction {
      * @param modType
      * @return
      */
-    private String createModsXML(PolyModifier mod, String modType) {
+    private String xml_mods(PolyModifier mod, String modType) {
         ArrayList<KQMLObject> mods = polyMods.get(mod);
-        if ((mods == null) || mods.isEmpty()) {
-            return "";
-        }
+        if ((mods == null) || mods.isEmpty()) return "";
+        
         String result = "";
         for (KQMLObject modValue : mods) {
             if (modValue instanceof KQMLList) {
-                KQMLList modPair = (KQMLList) modValue;
-                result += "<" + modType + ">"
-                        + "<type>" + modPair.get(0) + "</type>"
-                        + "<value>" + removePackage(modPair.get(1).toString(), false) + "</value>" +
-                        "</" + modType + ">";
+                KQMLList modValueList = (KQMLList) modValue;
+                List<String> conts = new ArrayList<String>();
+                conts.add(xml_element("type", "", ontType(modValueList)));
+                conts.add(xml_element("value", "", removePackage(ontWord(modValueList), false)));
+                result += xml_element(modType, null, conts);
             } else if (isOntVar(modValue.toString())) { // TODO remove (obsolete)
                 KQMLList modTerm = findTermByVar(modValue.toString(), context);
-                KQMLList ontVal = pullCompleteOntInfo(modTerm);
                 int start = getKeywordArgInt(":START", modTerm);
                 int end = getKeywordArgInt(":END", modTerm);
-                String text = removeTags(getTextSpan(start, end));
-                result += "<" + modType + " " +
-                        "start=\"" + getOffset(start) + "\" " +
-                        "end=\"" + getOffset(end) + "\"" + ">"
-                        + "<type>" + ontVal.get(0) + "</type>"
-                        + "<text>" + xml_escape(text) + "</text>" +
-                        "</" + modType + ">";
+                List<String> attrs = new ArrayList<String>();
+                attrs.add(xml_attribute("start", String.valueOf(getOffset(start))));
+                attrs.add(xml_attribute("end", String.valueOf(getOffset(end))));
+                List<String> conts = new ArrayList<String>();
+                conts.add(xml_element("type", "", pullOntType(modTerm)));
+                conts.add(xml_element("text", "", xml_escape(removeTags(getTextSpan(start, end)))));
+                result += xml_element(modType, attrs, conts);
             } else { // should not happen!
                 Debug.error("unexpected " + mod + " value: " + modValue);
-                result += "<" + modType + ">"
-                        + removePackage(modValue.toString(), false) +
-                        "</" + modType + ">";
+                result += xml_element(modType, "", removePackage(modValue.toString(), false));
             }
         }
-
         return result;
     }
 
@@ -729,8 +703,7 @@ public class CausalityExtraction extends Extraction {
                 if (term == null) {
                     expandedValue.add(item);
                 } else {
-                    KQMLList ontVal = pullCompleteOntInfo(term);
-                    expandedValue.add(ontVal);
+                    expandedValue.add(pullFullOntType(term));
                 }
                 expand = false;
             } else {

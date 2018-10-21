@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.60 2018/10/17 23:31:41 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.61 2018/10/21 02:14:28 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -109,14 +109,8 @@ public class EventExtraction extends Extraction {
         // METHOD(":METHOD");
 
         private String modName;
-
-        private Modifier(String name) {
-            modName = name;
-        }
-
-        public String toString() {
-            return modName;
-        }
+        private Modifier(String name) { modName = name; }
+        public String toString() { return modName; }
 
         public static boolean isModifier(String item) {
             Modifier m = fromString(item);
@@ -305,17 +299,19 @@ public class EventExtraction extends Extraction {
     private void pullFeatures() {
         features = new LinkedHashMap<Feature, KQMLObject>();
         for (Feature feat : Feature.values()) {
-            KQMLObject value = shortValue.getKeywordArg(feat.toString());
+            KQMLObject aValue = shortValue.getKeywordArg(feat.toString());
             // note: we ignore dash values, which we interpret as "undefined"
-            if ((value != null) && !value.toString().equals("-")) {
-                if (value instanceof KQMLList) {
-                    KQMLList valueList = (KQMLList) value;
+            if ((aValue != null) && !aValue.toString().equals("-")) {
+                /* LG20181020 we don't do this anymore
+                if (aValue instanceof KQMLList) {
+                    KQMLList valueList = (KQMLList) aValue;
                     if (((KQMLToken) valueList.get(0)).equalsIgnoreCase(":*")) {
                         Debug.warn("Removed [:*] from " + valueList);
                         valueList.remove(0);
                     }
                 }
-                features.put(feat, value);
+                */
+                features.put(feat, aValue);
             }
         }
     }
@@ -326,16 +322,18 @@ public class EventExtraction extends Extraction {
     private void pullModifiers() {
         mods = new LinkedHashMap<Modifier, KQMLObject>();
         for (Modifier mod : Modifier.values()) {
-            KQMLObject value = shortValue.getKeywordArg(mod.toString());
-            if ((value != null) && !value.toString().equals("-")) {
-                if (value instanceof KQMLList) {
-                    KQMLList valueList = (KQMLList) value;
+            KQMLObject aValue = shortValue.getKeywordArg(mod.toString());
+            if ((aValue != null) && !aValue.toString().equals("-")) {
+                /* LG20181020 we don't do this anymore
+                if (aValue instanceof KQMLList) {
+                    KQMLList valueList = (KQMLList) aValue;
                     if (((KQMLToken) valueList.get(0)).equalsIgnoreCase(":*")) {
                         Debug.warn("Removed [:*] from " + valueList);
                         valueList.remove(0);
                     }
                 }
-                mods.put(mod, value);
+                */
+                mods.put(mod, aValue);
             }
         }
     }
@@ -356,23 +354,25 @@ public class EventExtraction extends Extraction {
                     if (key.equalsIgnoreCase(mod.toString())) {
                         // look ahead
                         int nextIndex = iterator.nextIndex();
-                        KQMLObject value = shortValue.get(nextIndex);
+                        KQMLObject aValue = shortValue.get(nextIndex);
                         // Debug.debug("Found poly-modifier: " + key + " " + value);
-                        if ((value instanceof KQMLToken) && ((KQMLToken) value).equalsIgnoreCase("-")) {
-                            Debug.warn("Removed " + key + " " + value);
+                        if ((aValue instanceof KQMLToken) && ((KQMLToken) aValue).equalsIgnoreCase("-")) {
+                            Debug.warn("Removed " + key + " " + aValue);
                             iterator.remove();
                             iterator.next();
                             iterator.remove();
                             continue;
                         }
-                        if (value instanceof KQMLList) { // fix
-                            KQMLList valueList = (KQMLList) value;
+                        /* LG20181020 we don't do this anymore
+                        if (aValue instanceof KQMLList) {
+                            KQMLList valueList = (KQMLList) aValue;
                             if (((KQMLToken) valueList.get(0)).equalsIgnoreCase(":*")) {
                                 Debug.warn("Removed [:*] from " + valueList);
                                 valueList.remove(0);
                             }
                         }
-                        modValues.add(value);
+                        */
+                        modValues.add(aValue);
                         iterator.next();
                     }
                 }
@@ -757,6 +757,7 @@ public class EventExtraction extends Extraction {
      * result is a sequence of {@code <event>} XML elements. 
      */
     public String toXML() {
+        Debug.debug("event: " + value);
         // if we have sub-events, concatenate them and return the result
         if ((subEvents != null) && (!subEvents.isEmpty())) {
             String result = "";
@@ -815,7 +816,7 @@ public class EventExtraction extends Extraction {
         conts.add(xml_negation());
         conts.add(xml_polarity());
         conts.add(xml_modality());
-        conts.add(xml_epiModality());
+        conts.add(xml_epimodality());
         conts.add(xml_force());
         return conts;
     }
@@ -857,24 +858,20 @@ public class EventExtraction extends Extraction {
      */
     private String xml_predicate() {
         String var = pullTermVar(value);
-        String id = removePackage(var);
+
         KQMLList contextTerm = findTermByVar(getBaseVar(var), context);
-        String predType;
+        String predType = ontType; // default
         String textAttr = "";
+        // if we do have a context term, we pull info from there
         if (contextTerm != null) {
-            KQMLList ontInfo = pullCompleteOntInfo(contextTerm);
-            if (ontInfo.size() > 1) {
-                // complete context term
-                String ontText = removePackage(ontInfo.get(1).toString());
-                predType = ontInfo.get(0).toString();
-                textAttr = xml_attribute("normalization", xml_escape(ontText));
-            } else {
-                // incomplete context term
-                predType = ontType;
+            KQMLObject termType = pullFullOntType(contextTerm);
+            String termOntWord = ontWord(termType);
+            if (!termOntWord.isEmpty()) {
+                textAttr = xml_attribute("normalization", xml_escape(normalizeOnt(termOntWord)));
             }
-        } else {
-            // when events are inferred rather than read off the LF, we have no context term
-            predType = ontType;
+            String termOntType = ontType(termType);
+            if (!termOntType.isEmpty()) 
+                predType = termOntType;
         }
         int start = getKeywordArgInt(":START", contextTerm);
         int end = getKeywordArgInt(":END", contextTerm);
@@ -928,8 +925,7 @@ public class EventExtraction extends Extraction {
         // we obtain the arg from the EKB, if we can; otherwise, we look for the term in the context
         Extraction ekbTerm = ekbFindExtraction(var);
         KQMLList term = (ekbTerm != null) ? ekbTerm.getValue() : findTermByVar(var, context);
-        KQMLList ontInfo = pullCompleteOntInfo(term);
-        String ontText = (ontInfo.size() > 1) ? normalizeOnt(ontInfo.get(1).toString()) : "";
+        KQMLObject termType = pullFullOntType(term);
         int start = getKeywordArgInt(":START", term);
         int end = getKeywordArgInt(":END", term);
         
@@ -940,9 +936,9 @@ public class EventExtraction extends Extraction {
         attrs.add(xml_attribute("end", String.valueOf(getOffset(end))));
 
         List<String> conts = new ArrayList<String>();
-        conts.add(xml_element("type", "", ontInfo.get(0).toString()));
+        conts.add(xml_element("type", "", ontType(termType)));
         conts.add(xml_element("text",
-                xml_attribute("normalization", xml_escape(ontText)),
+                xml_attribute("normalization", xml_escape(normalizeOnt(ontWord(termType)))),
                 xml_escape(removeTags(getTextSpan(start, end)))));
 
         return xml_element("arg" + roleIndex, attrs, conts);
@@ -980,23 +976,18 @@ public class EventExtraction extends Extraction {
             return "";
         
         List<String> attrs = new ArrayList<String>();
-        String mod = null;
-        KQMLObject modObj = features.get(Feature.TIMEMOD);
-        if (modObj instanceof KQMLList) {
-            mod = ((KQMLList) modObj).get(0).toString();
-        } else if (modObj instanceof KQMLToken) { // TODO: remove (obsolete)
-            mod = modObj.toString();
-        }
-        if (mod != null) {
-            attrs.add(xml_attribute("mod", removePackage(mod, false)));
+        KQMLObject modType = features.get(Feature.TIMEMOD);
+        String mod = ontType(modType);
+        if (!mod.isEmpty()) {
+            attrs.add(xml_attribute("mod", mod));
         }
         
         if (isOntVar(time.toString())) {
             String var = time.toString();
             if (ekbFindExtraction(var) != null) { 
-                return xml_elementWithID("time", var);
+                return xml_elementWithID("time", var, attrs);
             } else { // we need to define the item here
-                return xml_lfTerm("time", var);
+                return xml_lfTerm("time", var, attrs);
             }
         } else { // should not happen!
             Debug.error("unexpected " + Feature.TIME + " value: " + time);
@@ -1014,15 +1005,10 @@ public class EventExtraction extends Extraction {
             return "";
         
         List<String> attrs = new ArrayList<String>();
-        String mod = null;
-        KQMLObject modObj = features.get(Feature.LOCMOD);
-        if (modObj instanceof KQMLList) {
-            mod = ((KQMLList) modObj).get(0).toString();
-        } else if (modObj instanceof KQMLToken) { // TODO: remove (obsolete)
-            mod = modObj.toString();
-        }
-        if (mod != null) {
-            attrs.add(xml_attribute("mod", removePackage(mod, false)));
+        KQMLObject modType = features.get(Feature.LOCMOD);
+        String mod = ontType(modType);
+        if (!mod.isEmpty()) {
+            attrs.add(xml_attribute("mod", mod));
         }
         
         if (isOntVar(loc.toString())) {
@@ -1048,17 +1034,12 @@ public class EventExtraction extends Extraction {
             return "";
         
         List<String> attrs = new ArrayList<String>();
-        String mod = null;
-        KQMLObject modObj = features.get(Feature.LOCMOD);
-        if (modObj instanceof KQMLList) {
-            mod = ((KQMLList) modObj).get(0).toString();
-        } else if (modObj instanceof KQMLToken) { // TODO: remove (obsolete)
-            mod = modObj.toString();
+        KQMLObject modType = features.get(Feature.LOCMOD);
+        String mod = ontType(modType);
+        if (!mod.isEmpty()) {
+            attrs.add(xml_attribute("mod", mod));
         }
-        if (mod != null) {
-            attrs.add(xml_attribute("mod", removePackage(mod, false)));
-        }
-        
+
         if (isOntVar(loc.toString())) {
             String var = loc.toString();
             if (ekbFindExtraction(var) != null) {
@@ -1149,8 +1130,7 @@ public class EventExtraction extends Extraction {
      */
     private String xml_negation() {
         KQMLObject value = getNegation();
-        if (value == null) 
-            return "";
+        if (value == null)  return "";
         return xml_element("negation", "", value.toString());
     }
     
@@ -1162,8 +1142,7 @@ public class EventExtraction extends Extraction {
      */
     private String xml_polarity() {
         KQMLObject value = getPolarity();
-        if (value == null) 
-            return "";
+        if (value == null)  return "";
         return xml_element("polarity", "", value.toString());
     }
 
@@ -1175,8 +1154,7 @@ public class EventExtraction extends Extraction {
      */
     private String xml_force() {
         KQMLObject value = getForce();
-        if (value == null) 
-            return "";
+        if (value == null)  return "";
         return xml_element("force", "", value.toString());
     }
 
@@ -1188,14 +1166,9 @@ public class EventExtraction extends Extraction {
      */
     private String xml_modality() {
         KQMLObject value = getModality();
-        if (value == null) 
-            return "";
-        // typically this is a list; output is an ONT type (should not remove package!)
-        if (value instanceof KQMLList) {
-            value = ((KQMLList) value).get(1);
-        }
-        // other times it is just the ONT type
-        return xml_element("modality", "", value.toString());
+        if (value == null) return "";
+        // value is an ONT type (should not remove package!)
+         return xml_element("modality", "", ontType((KQMLList) value));
     }
 
     /**
@@ -1204,10 +1177,9 @@ public class EventExtraction extends Extraction {
      * 
      * @see Modifier#EPI
      */
-    private String xml_epiModality() {
+    private String xml_epimodality() {
         KQMLObject value = getEpiModality();
-        if (value == null) 
-            return "";
+        if (value == null) return "";
         // it must be a variable
         return xml_elementWithID("epistemic-modality", value.toString());
     }
@@ -1243,10 +1215,11 @@ public class EventExtraction extends Extraction {
         String result = "";
         for (KQMLObject modValue : mods) {
             if (modValue instanceof KQMLList) {
-                KQMLList modPair = (KQMLList) modValue;
-                result += xml_element(modType, "", 
-                        xml_element("type", "", modPair.get(0).toString()) +
-                        xml_element("value", "", removePackage(modPair.get(1).toString(), false)));
+                KQMLList modValueList = (KQMLList) modValue;
+                List<String> conts = new ArrayList<String>();
+                conts.add(xml_element("type", "", ontType(modValueList)));
+                conts.add(xml_element("value", "", removePackage(ontWord(modValueList), false)));
+                result += xml_element(modType, null, conts);
             } else if (isOntVar(modValue.toString())) { // TODO remove (obsolete)
                 String var = modValue.toString();
                 if (ekbFindExtraction(var) != null) { 
@@ -1285,8 +1258,8 @@ public class EventExtraction extends Extraction {
         String result = "";
         for (KQMLObject valObj : quals) {
             if (valObj instanceof KQMLList) {
-                KQMLList valList = (KQMLList) valObj;
-                result += xml_element(tag, xml_attribute("type", valList.get(0).toString()), null);
+                KQMLList valType = (KQMLList) valObj;
+                result += xml_element(tag, xml_attribute("type", ontType(valType)), null);
             } else if (isOntVar(valObj.toString())) {
                 String var = valObj.toString();
                 if (ekbFindExtraction(var) != null) {
@@ -1373,8 +1346,7 @@ public class EventExtraction extends Extraction {
                 if (term == null) {
                     expandedValue.add(item);
                 } else {
-                    KQMLList ontVal = pullCompleteOntInfo(term);
-                    expandedValue.add(ontVal);
+                    expandedValue.add(pullFullOntType(term));
                 }
                 expand = false;
             } else { // default
