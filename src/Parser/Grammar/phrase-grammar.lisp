@@ -404,6 +404,55 @@
          )
     
 	))
+
+
+(parser::augment-grammar
+ '((headfeatures
+    (ADJ arg lex headcat transform argument sort) ;; post-subcat) ; no sem    
+    )
+
+   ; get FUNCTN into SCALE
+   ((ADJ (LF (:* ?lftype ?w)) ;(LF (:* ?pred ?lftype))
+     (VAR ?v) (comparative +)
+     (gap ?gap)
+     ;(ALLOW-POST-N1-SUBCAT ?xx)
+     (SUBCAT-MAP ?subcat-map)
+     (subcat  ?subcat)
+     (SUBCAT2-MAP ?subcat2-map)
+     (subcat2  ?subcat2)
+     ;(comp-ptype ?pt)
+     ;(ground-oblig ?go)
+     ;(ground-subcat ?ground-subcat)
+     (ATYPE CENTRAL)
+     (SORT PRED)
+     ;(sem ($ F::ABSTR-OBJ (f::scale ?!functn)))
+     (sem ?newsem)
+     (allow-deleted-comp +) (allow-post-n1-subcat +)
+     ;(sem ?sem)
+     (transform ?transform) (argument-map ont::figure) (argument ?argument)  (arg ?arg)
+     )
+     -adj-compar-functn-to-scale> 1.0
+    ;(ADV (compar-op +) (lf (:* ?pred ?xx)) (ground-oblig ?go) (SUBCAT ?ground-subcat))
+     (head (ADJ (LF (:* ?lftype ?w)) (LF ?oldlf)
+		(var ?v)  (gap ?gap)
+		;(SUBCAT2 -) (post-subcat -)
+		(subcat2 ?subcat2) (subcat2-map ?subcat2-map)
+		(VAR ?v) (comparative (? xxx + superl))
+	       (SUBCAT ?subcat) 
+	       (subcat-map ?subcat-map)
+	       (ATYPE central)
+	       (argument ?argument) (arg ?arg)
+	       (SORT PRED)
+	       (FUNCTN ?!functn)
+	       ;(sem ($ F::ABSTR-OBJ (f::scale ?scale)))
+	       (sem ?sem)
+	       (transform ?transform)
+	       ))
+     (change-feature-values (old ?sem) (new ?newsem) (newvalues ((f::scale ?!functn))))
+    )
+))
+   
+
 ;;;
 
 ;; headfeatures
@@ -880,7 +929,7 @@
     |#
 
     ;; A few adjectives can have their subcat after the head noun, e.e., "the same ideas as me", "a faster car than that"
-    ; the city closer to Avon than London
+    ; London is a closer city to Barcelona than Avon.
      ((N1 (RESTR ?newr) (CLASS ?c) (SORT ?sort) (QUAL -) (COMPLEX +)(set-restr ?sr)
        (relc ?relc) (subcat ?nsubcat)
        ;;(post-subcat +)
@@ -919,7 +968,7 @@
 
 
     ;; A few adjectives can have their subcat after the head noun, e.e., "the same ideas as me", "a faster car than that"
-    ; the city closer than London to Avon 
+    ; London is a closer city than Avon to Barcelona
      ((N1 (RESTR ?newr) (CLASS ?c) (SORT ?sort) (QUAL -) (COMPLEX +)(set-restr ?sr)
        (relc ?relc) (subcat ?nsubcat)
        ;;(post-subcat +)
@@ -956,7 +1005,47 @@
        (old ?r) (new ?newr))
       )
      
-    
+    ;; A few adjectives can have their subcat after the head noun
+    ;; a larger truck than that
+     ((N1 (RESTR ?newr) (CLASS ?c) (SORT ?sort) (QUAL -) (COMPLEX +)(set-restr ?sr)
+       (relc ?relc) (subcat ?nsubcat)
+       ;;(post-subcat +)
+       (no-postmodifiers +) ;; add an extra feature to say "no further postmodifiers". If we say "The bulb in 1 is in the same path as the battery in 1", we don't want "in 1" to attach to "the path"
+      )
+     -N1-post-onesubcat>
+     (ADJ1 (atype (? at attributive-only central)) 
+      (LF ?qual) (lex ?lex1)
+      (ARG ?v) (VAR ?adjv)
+      (argument (% NP (sem ?nsem))) 
+      (COMPLEX -) (comparative ?com)
+      (constraint ?adjcon)
+      (subcat-map ?!submap) (subcat ?!subcat) (SUBCAT (% ?xx (var ?argv))) 
+      ;(subcat2-map (? !submap2 ONT::NOROLE -)) (subcat2 ?!subcat2) (SUBCAT2 (% ?xx2 (var ?argv2)))
+      (SUBCAT2 (% - (W::VAR -)))
+      (argument-map ?argmap)
+      (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale) (F::intensity ?ints) (F::orientation ?orient)))
+      ;;(post-subcat ?!post-subcat)
+      )
+     (head (N1 (RESTR ?r) (VAR ?v) (SEM ?nsem) (CLASS ?c)(set-restr ?sr)
+	    (SORT ?sort) (relc ?relc) (subcat ?nsubcat) 
+	    (post-subcat -)
+	    )
+      )
+     ?!subcat
+     ;?!subcat2
+     ;;(UNIFY (arg1 (% ?xxx (var ?psvar))) (arg2 ?!post-subcat))
+     (append-conjuncts  (conj1 ?adjcon) (conj2 (& (?!submap ?argv) ;(?!submap2 ?argv2)
+						  (?argmap ?v)
+						  (scale ?scale) (intensity ?ints) (orientation ?orient)))
+			(new ?newadjcon))
+      (add-to-conjunct (val (:MOD 
+			     (% *pro* (var ?adjv) (status ont::f) (class ?qual) (lex ?lex1)
+				    (constraint ?newadjcon))))
+				   
+       (old ?r) (new ?newr))
+      )
+
+     
     ;; 500 mb or greater
     ;; note that this rule doesn't handle -500 mb of ram or greater; -a 500 mb ram or greater
     ;; note also that there is a similar rule in adverbial-grammar.lisp for NP or adv-er
@@ -1481,7 +1570,7 @@
     )
 |#
 
-   ;;  special rule for COMPAR-OPS, converting an adjective to a comparative adjective
+   ;;  special rule for COMPAR-OPS, converting an adjective to a comparative adjective (without subcats)
    ((ADJ (LF (:* ?new-pred ?w)) ;(LF (:* ?pred ?lftype))
      (VAR ?v) (comp-op ?comp-op)
      ;(allow-deleted-comp +)  ;(ALLOW-POST-N1-SUBCAT ?xx)
@@ -1513,7 +1602,7 @@
     (recompute-more-less (adv-op ?pred) (adj-op ?comp-op) (result ?new-pred))
     )
 
-   ;;  special rule for COMPAR-OPS, converting an adjective to a comparative adjective
+   ;;  special rule for COMPAR-OPS, converting an adjective to a comparative adjective (with subcat)
    ((ADJ (LF (:* ?new-pred ?w)) ;(LF (:* ?pred ?lftype))
      (VAR ?v) (comp-op ?comp-op)
      ;(allow-deleted-comp +)  ;(ALLOW-POST-N1-SUBCAT ?xx)
@@ -1586,45 +1675,7 @@
 	       (transform ?transform)
 	       ))
     )
-   
-   ; get FUNCTN into SCALE
-   ((ADJ (LF (:* ?lftype ?w)) ;(LF (:* ?pred ?lftype))
-     (VAR ?v) (comparative +)
-     (gap ?gap)
-     ;(ALLOW-POST-N1-SUBCAT ?xx)
-     (SUBCAT-MAP ?subcat-map)
-     (subcat  ?subcat)
-     (SUBCAT2-MAP ?subcat2-map)
-     (subcat2  ?subcat2)
-     ;(comp-ptype ?pt)
-     ;(ground-oblig ?go)
-     ;(ground-subcat ?ground-subcat)
-     (ATYPE CENTRAL)
-     (SORT PRED)
-     (sem ($ F::ABSTR-OBJ (f::scale ?!functn)))
-     (allow-deleted-comp +) (allow-post-n1-subcat +)
-     ;(sem ?sem)
-     (transform ?transform) (argument-map ont::figure) (argument ?argument)  (arg ?arg)
-     )
-     -adj-compar-functn-to-scale> 1.0
-    ;(ADV (compar-op +) (lf (:* ?pred ?xx)) (ground-oblig ?go) (SUBCAT ?ground-subcat))
-     (head (ADJ (LF (:* ?lftype ?w)) (LF ?oldlf)
-		(var ?v)  (gap ?gap)
-		;(SUBCAT2 -) (post-subcat -)
-		(subcat2 ?subcat2) (subcat2-map ?subcat2-map)
-		(VAR ?v) (comparative (? xxx + superl))
-	       (SUBCAT ?subcat) 
-	       (subcat-map ?subcat-map)
-	       (ATYPE central)
-	       (argument ?argument) (arg ?arg)
-	       (SORT PRED)
-	       (FUNCTN ?!functn)
-	       ;(sem ($ F::ABSTR-OBJ (f::scale ?scale)))
-	       ;(sem ?sem)
-	       (transform ?transform)
-	       ))
-    )
-   
+
 #||
 
    ((less-more (pred ONT::MORE-VAL) (ptype w::than))

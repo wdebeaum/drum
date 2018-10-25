@@ -180,6 +180,7 @@
     :parent ONT::GEO-OBJECT
     :sem (F::Phys-obj (F::origin F::non-living)
 		      (F::Form F::Geographical-Object)
+		      (F::MOBILITY F::fixed)
 ;		   (F::Object-Function F::Place)
 		      ;;(F::Object-Function F::Spatial-object)
 		      )

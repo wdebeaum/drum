@@ -8,7 +8,8 @@
   (W::VOICE
    (SENSES
     ((meta-data :origin boudreaux :entry-date 20031024 :wn ("voice%1:07:00"))
-     (LF-PARENT ONT::body-part)
+     ;(LF-PARENT ONT::body-part)
+     (LF-PARENT ONT::body-property)
      (EXAMPLE "he has a deep voice")
      )
     )

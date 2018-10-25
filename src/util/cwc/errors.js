@@ -8,7 +8,7 @@ const KQML = require('KQML/kqml.js');
  */
 function programError(message) {
   return { 0: 'failure', type: 'cannot-perform', reason:
-    { 0: 'program-error', message: `"${KQML.escapeForQuotes(message)}"` }
+    { 0: 'program-error', message: '"' + KQML.escapeForQuotes(message) + '"' }
   };
 }
 
@@ -40,7 +40,7 @@ function invalidArgument(operation, argument, expected) {
     { 0: 'invalid-argument',
       operator: op,
       argument: argument,
-      expected: `"${KQML.escapeForQuotes(expected)}"`,
+      expected: '"' + KQML.escapeForQuotes(expected) + '"',
       got: got
     }
   };
@@ -53,7 +53,7 @@ function invalidArgumentCount(operation, expected) {
   return { 0: 'failure', type: 'failed-to-interpret', reason:
     { 0: 'invalid-argument-count',
       operator: op,
-      expected: `"${KQML.escapeForQuotes(expected)}"`,
+      expected: '"' + KQML.escapeForQuotes(expected) + '"',
       got: got
     }
   };
@@ -65,7 +65,7 @@ function invalidArgumentCount(operation, expected) {
 function invalidArgumentCombo(comment) {
   return { 0: 'failure', type: 'failed-to-interpret', reason:
     { 0: 'invalid-argument-combo',
-      comment: `"${KQML.escapeForQuotes(comment)}"`
+      comment: '"' + KQML.escapeForQuotes(comment) + '"'
     }
   };
 }
