@@ -27,6 +27,12 @@ public class StandardCWCModule extends StandardTripsModule {
     super.send(msg);
   }
 
+  // override protected to public so that WindowConfig can get parameters
+  @Override
+  public String getParameter(String parm) {
+    return super.getParameter(parm);
+  }
+
   // SWM also needs the module name so it can include it in IDs
   /** Get the name of this module. */
   public String getName() {

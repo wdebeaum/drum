@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.61 2018/10/21 02:14:28 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.62 2018/10/26 01:33:42 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -66,19 +66,18 @@ public class EventExtraction extends Extraction {
 
     /** Event features (domain-specific) */
     protected enum Feature {
-        // :CELL-LINE context-term-id --> cell line
+        // {DRUM} :CELL-LINE id --> cell line
         CELL_LINE(":CELL-LINE"),
-        // :LOCMOD ontType :LOC context-term-id --> cell component/location
-        LOCMOD(":LOCMOD"),
-        CELL_LOC(":CEll-LOC"), // modified temporarily for CWMS (it uses :LOC)
-        // [:SITEMOD ontType] :SITE context-term-id --> eg, at/SITEMOD Y200/SITE
-        SITEMOD(":SITEMOD"),
+        // {DRUM} :SITE id [:SITEMOD ontType] --> eg, at/SITEMOD Y200/SITE
         SITE(":SITE"),
-        // [:FROM context-term-id] :TO context-term-id: cell components/locations
+        SITEMOD(":SITEMOD"),
+        // :LOC id :LOCMOD ontType --> location
+        LOC(":LOC"),
+        LOCMOD(":LOCMOD"),
+        // [:FROM id] :TO id --> {DRUM} cell components/locations
         FROM(":FROM"),
         TO(":TO"),
-        // CWMS
-        LOC(":LOC"),
+        // :TIME :TIMEMOD
         TIME(":TIME"), // time
         TIMEMOD(":TIMEMOD")
         ;
@@ -790,19 +789,19 @@ public class EventExtraction extends Extraction {
         }
         
         conts.add(xml_mods());
-        conts.add(xml_qualifiers()); // CWMS
+        conts.add(xml_qualifiers());
         conts.add(xml_features());
         conts.add(xml_predicate());
         conts.add(xml_args());
-        conts.add(xml_site());
         conts.add(xml_time());
-        conts.add(xml_location());
-        conts.add(xml_cell_location());
+        conts.add(xml_location());     
         conts.add(xml_fromLocation());
         conts.add(xml_toLocation());
-        conts.add(xml_cellline());
-        conts.add(xml_drumTerms());
-
+        if (ExtractionFactory.getProperty("extractions.mode").equals("DRUM")) {
+            conts.add(xml_site());
+            conts.add(xml_cellline());
+            conts.add(xml_drumTerms());
+        }
         return xml_element(exType, attrs, conts);
     }
 
@@ -1011,35 +1010,6 @@ public class EventExtraction extends Extraction {
             attrs.add(xml_attribute("mod", mod));
         }
         
-        if (isOntVar(loc.toString())) {
-            String var = loc.toString();
-            if (ekbFindExtraction(var) != null) {
-                return xml_elementWithID("location", var, attrs);
-            } else { // we need to define the item here
-                return xml_lfTerm("location", var, attrs);
-            }
-        } else {
-            Debug.warn("unexpected location value: " + loc);
-            return "";
-        }
-    }
-
-    /**
-     * Returns a {@code <location>} XML element representing location information attached to the event, 
-     * or the empty string if no such information exists. 
-     */
-    private String xml_cell_location() {
-        KQMLObject loc = features.get(Feature.CELL_LOC);
-        if (loc == null) 
-            return "";
-        
-        List<String> attrs = new ArrayList<String>();
-        KQMLObject modType = features.get(Feature.LOCMOD);
-        String mod = ontType(modType);
-        if (!mod.isEmpty()) {
-            attrs.add(xml_attribute("mod", mod));
-        }
-
         if (isOntVar(loc.toString())) {
             String var = loc.toString();
             if (ekbFindExtraction(var) != null) {

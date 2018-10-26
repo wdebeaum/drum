@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.56 2018/10/21 02:14:28 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.57 2018/10/26 01:33:43 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -31,51 +31,56 @@ public class TermExtraction extends Extraction {
      * @author lgalescu
      */
     protected enum Attribute {
-        // :NAME lexeme --> name of term
+        // :NAME symbol --> name of term (in W:: package)
         NAME(":NAME"),
         // :SPEC --> quantifier 
         SPEC(":SPEC"),
-        // :PRO context-term-id --> ID for event describing modifier
+        // :PRO id --> ID for event describing modifier
         PRO(":PRO"),
         // :BASE id --> an assoc-with for compositional terms, eg, "the Erk gene"
         BASE(":BASE"),
-        // :M-SEQUENCE context-term-id --> sequence of term IDs
+        // {DRUM} :M-SEQUENCE id --> sequence of term IDs
         MSEQ(":M-SEQUENCE"),
-        // :LOGICALOP-SEQUENCE context-term-id --> sequence of term IDs
+        // {DRUM} :LOGICALOP-SEQUENCE id --> sequence of term IDs
         LSEQ(":LOGICALOP-SEQUENCE"),
+        // ordinary sequences
+        SEQ(":SEQUENCE"), // sequence
         // :OP ontType --> operator joining SEQ
         OP(":OPERATOR"),
         // :EXCEPT --> works in conjunction w/ SEQ ; ** FIXME: currently not provided! **
         SEQ_EXC(":EXCEPT"),
-        // [DRUM] :CELL-LINE context-term-id --> cell line
+        // {DRUM} :CELL-LINE id --> cell line
         CELL_LINE(":CELL-LINE"),
-        // [DRUM] :ACTIVE bool --> activation
+        // {DRUM} :ACTIVE bool --> activation
         ACTIVE(":ACTIVE"),
-        // [DRUM] :SITE context-term-id: ID for site (residue, domain) on a protein
+        // {DRUM} :SITE id: ID for site (residue, domain) on a protein
         SITE(":SITE"),
-        // [CWMS] the rest are made-up roles for CWMS
+        // :LOC id :LOCMOD ontType --> location
+        LOC(":LOC"),
+        LOCMOD(":LOCMOD"), // location modifier
+        //
+        ASSOC_POSS(":ASSOC-POSS"),
+        // various 
         SIZE(":SIZE"),
         SCALE(":SCALE"),
         QUAN(":QUAN"), // quantifier
-        ASSOC_POSS(":ASSOC-POSS"),
+        // numbers
         VALUE(":VALUE"), // numbers
         MIN(":MIN"), // numbers
         MAX(":MAX"), // numbers
         VALSEQ(":VAL"), // sequence of numbers
-        DOW(":DAY-OF-WEEK"), // time
-        DAY(":DAY"), // time
-        MONTH(":MONTH"), // time
-        YEAR(":YEAR"), // time
-        TIME(":TIME"), // time
-        TIMEMOD(":TIMEMOD"), // time modifier
         QUANTITY(":QUANTITY"), // quantities
         AMOUNT(":AMOUNT"), // quantities
         UNIT(":UNIT"), // quantities
         RATE_QUAN(":REPEATS"), // rates
         RATE_OVER(":OVER-PERIOD"), // rates
-        LOC(":LOC"), // location
-        LOCMOD(":LOCMOD"), // location modifier
-        SEQ(":SEQUENCE") // sequence
+        // temporal expressions
+        DOW(":DAY-OF-WEEK"), // time
+        DAY(":DAY"), // time
+        MONTH(":MONTH"), // time
+        YEAR(":YEAR"), // time
+        TIME(":TIME"), // time
+        TIMEMOD(":TIMEMOD") // time modifier
         ;
         private String attrName;
         private Attribute(String name) { attrName = name; }
@@ -106,12 +111,9 @@ public class TermExtraction extends Extraction {
         MODN(":MODN"),
         // :INEVENT id: ID for event in which this term participates in some role
         INEVENT(":INEVENT"),
-        // :LOC id: ID for cellular location term
-        CELL_LOC(":CELL-LOC"), // FIXME: this is :LOC, in fact, but it clobbers the Attribute for CWMS
-        LOCATION(":LOCATION"), // [DRUM]
         // :MUTATION id: ID for mutation term
         MUTATION(":MUTATION"),
-        // [CWMS] THE FOLLOWING ARE LF attributes, or substitutes thereof, used in CWMS
+        // {CWMS} the following are LF attributes, or substitutes thereof
         QUAL(":QUAL"),
         ASSOC(":ASSOC")
        ;
@@ -380,7 +382,7 @@ public class TermExtraction extends Extraction {
         if (attributes.get(Attribute.MSEQ) != null) { // complex sequence
             return xml_complexTerm();
         }
-        if (attributes.get(Attribute.SEQ) != null) { // logical sequence, CWMS
+        if (attributes.get(Attribute.SEQ) != null) { // logical sequence
             return xml_sequenceTerm();
         }
         if (ontType.equalsIgnoreCase("ONT::MUTATION")) { // info from drumTerms
@@ -412,12 +414,16 @@ public class TermExtraction extends Extraction {
         Debug.debug("pTERM(" + value + ")");
         
         List<String> attrs = xml_commonAttributes();
-        attrs.add(xml_attribute("dbid", getDBTermIds()));
- 
         List<String> conts = xml_commonContents();
+
         conts.add(xml_base());
-        conts.add(xml_drumTerms());
-        // CWMS
+
+        if (ExtractionFactory.getProperty("extractions.mode").equals("DRUM")) {
+            attrs.add(xml_attribute("dbid", getDBTermIds()));
+            
+            conts.add(xml_drumTerms());
+        } 
+
         conts.add(xml_assocs());
         conts.add(xml_assocPoss());
         conts.add(xml_qualifiers());
@@ -637,6 +643,8 @@ public class TermExtraction extends Extraction {
 
     /**
      * Returns a {@code <term>} XML element representing a mutation term.
+     * <b>
+     * Domains: DRUM.
      */
     private String xml_mutationTerm() {
         Debug.debug("mTERM(" + value + ")");
@@ -899,8 +907,7 @@ public class TermExtraction extends Extraction {
     }
 
     /**
-     * Assoc-poss -- this is an abstract relation of possession between two entities. Reasoners may resolve it as a
-     * possessed-by relation (e.g., "John's car"), or as an attribute-of relation (e.g., "the color of the car").
+     * XML element for quantifier.
      * 
      * @return
      */
@@ -932,15 +939,15 @@ public class TermExtraction extends Extraction {
     private String xml_features() {
         List<String> conts = new ArrayList<String>();
         conts.add(xml_inevent());
-        conts.add(xml_active());
         conts.add(xml_time()); // time
-        /* temporarily disabled for CWMS LG@20181016
-        conts.add(xml_cell_location()); // [DRUM] cellular location
-        conts.add(xml_mutation()); // [DRUM] mutations (for proteins, etc.)
-        conts.add(xml_site()); // [DRUM] domain
-        conts.add(xml_residue()); // [DRUM] residue
-        conts.add(xml_cellline()); // [DRUM] cell-line
-        */
+        if (ExtractionFactory.getProperty("extractions.mode").equals("DRUM")) {
+            conts.add(xml_active());
+            conts.add(xml_location()); // {DRUM} cellular location
+            conts.add(xml_mutation()); // {DRUM} mutations (for proteins, etc.)
+            conts.add(xml_site()); // {DRUM} domain
+            conts.add(xml_residue()); // {DRUM} residue
+            conts.add(xml_cellline()); // {DRUM} cell-line
+        }
         return xml_element("features", null, conts);
     }
     
@@ -1041,29 +1048,6 @@ public class TermExtraction extends Extraction {
         return result;
     }
     
-   private String xml_cell_location() {
-        List<KQMLObject> locations = new ArrayList<KQMLObject>();
-        ArrayList<KQMLObject> cellLocs = polyAttributes.get(PolyAttribute.CELL_LOC);
-        if (cellLocs != null) {
-            locations.addAll(cellLocs); // DRUM
-        }
-
-        // TODO: figure out what situations w/ multiple locations look like
-        String result = "";
-        for (KQMLObject location : locations) {
-            String var = location.toString();
-            if (isOntVar(var)) {
-                if (ekbFindExtraction(var) != null) {
-                    result += xml_elementWithID("location", var);
-                } else { // we need to define the item here
-                    result += xml_lfTerm("location", var);
-                }
-            } else {
-                Debug.warn("unexpected " + PolyAttribute.CELL_LOC + " value: " + location);
-            }
-        }
-        return result;
-    }
     
     /**
      * Creates explicit site (eg, domain) property for the term.
@@ -1086,6 +1070,10 @@ public class TermExtraction extends Extraction {
         }
     }
 
+    /**
+     * 
+     * @return
+     */
     private String xml_mutation() {
         ArrayList<KQMLObject> mutations = polyAttributes.get(PolyAttribute.MUTATION);
         if ((mutations == null) || mutations.isEmpty()) 

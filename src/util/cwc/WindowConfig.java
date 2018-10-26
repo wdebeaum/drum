@@ -1,5 +1,8 @@
 package TRIPS.util.cwc;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.util.regex.*;
 import javax.swing.JFrame;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -65,6 +68,51 @@ public class WindowConfig {
     } else {
       throw new RuntimeException("WindowConfig.fromWindow() expected a Stage or a JFrame, but got a " + window.getClass().getSimpleName());
     }
+  }
+
+  /** Get a WindowConfig from the command-line parameters of a
+   * StandardCWCModule. (This would work with a regular old
+   * StandardTripsModule, except that getParameter() is protected and we're not
+   * in that package. Sigh.)
+   */
+  public static WindowConfig fromParameters(StandardCWCModule m) {
+    String title = m.getParameter("-title");
+    // title defaults to module name
+    if (title == null) { title = m.getName(); }
+    String geometry = m.getParameter("-geometry");
+    Integer left = null, top = null, width = null, height = null;
+    if (geometry != null) {
+      Pattern p = Pattern.compile(
+        "((?<w>\\d+)x(?<h>\\d+))?((?<x>[+-]\\d+)(?<y>[+-]\\d+))?",
+	Pattern.CASE_INSENSITIVE
+      );
+      Matcher matcher = p.matcher(geometry);
+      if (!matcher.matches()) {
+	throw new RuntimeException("expected WxH+X+Y after -geometry, but got " + geometry);
+      }
+      boolean haveSize = (matcher.group("w") != null);
+      if (haveSize) {
+	width = Integer.valueOf(matcher.group("w"));
+	height = Integer.valueOf(matcher.group("h"));
+      }
+      if (matcher.group("x") != null) {
+	String xStr = matcher.group("x"), yStr = matcher.group("y");
+	int x = Integer.parseInt(xStr), y = Integer.parseInt(yStr);
+	boolean xNeg = xStr.startsWith("-"), yNeg = yStr.startsWith("-");
+	// convert negative offsets (relative to bottom right corner) to
+	// positive offsets (relative to top left corner)
+	if (xNeg || yNeg) {
+	  if (!haveSize) {
+	    throw new RuntimeException("can't convert negative offsets in '-geometry " + geometry + "' to positive offsets without window dimensions");
+	  }
+	  Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	  if (xNeg) { x += screenSize.getWidth() - width; }
+	  if (yNeg) { y += screenSize.getHeight() - height; }
+	}
+	left = x; top = y; // convert int to Integer
+      }
+    }
+    return new WindowConfig(title, left, top, width, height);
   }
 
   /** Extract configuration from a KQML description. */

@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.56 2018/10/21 02:14:28 lgalescu Exp $
+ * $Id: Extraction.java,v 1.57 2018/10/26 01:33:43 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -33,6 +33,8 @@
 
 package TRIPS.DrumGUI;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -222,7 +224,11 @@ public class Extraction {
             return type.toString();
         }
         // should not happen
-        Debug.error("Unexpected ont-type: " + type);
+        {
+            StringWriter sw = new StringWriter();
+            new Throwable("").printStackTrace(new PrintWriter(sw));
+            Debug.error("Unexpected ont-type: " + type + "\n" + sw.toString());
+        }
         return "";
     }
 

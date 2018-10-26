@@ -1,7 +1,7 @@
 /*
  * ExtractionFactory.java
  *
- * $Id: ExtractionFactory.java,v 1.11 2018/06/22 16:41:53 lgalescu Exp $
+ * $Id: ExtractionFactory.java,v 1.12 2018/10/26 01:33:43 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -28,32 +28,78 @@ import TRIPS.KQML.KQMLToken;
  */
 public class ExtractionFactory {
     
+    /**
+     * Properties
+     */
+    private static Properties properties;
+    
+    /**
+     * Specifier mappings
+     */
     private static Hashtable<String, String> specMap;
     
-    private static void setSpecifierMap (Properties props) {
-        specMap = new Hashtable<String, String>();
+    /**
+     * Sets properties. 
+     * <p>
+     * Note: Extraction properties start with "ekb." and "extractions.".
+     * 
+     * @param props
+     */
+    public static void setProperties (Properties props) {
+        properties = props;
+        setSpecifierMap();
+    }
+    
+    /**
+     * Obtains the value of a property. Returns {@code null} if the property is not found.
+     * 
+     * @param key
+     * @return
+     */
+    public static String getProperty (String key) {
+        return properties.getProperty(key);
+    }
+    
+    /**
+     * Obtains the value of a list property. A list property value is given as "X, Y, Z, ...". The result is the list of these values, i.e, (X, Y, Z, ...).
+     * @param key
+     * @return
+     */
+    public static List<String> getPropertyList (String key) {
         final Pattern listPattern = Pattern.compile(", *");
+
+        String prop = properties.getProperty(key);
+        if (prop == null) {
+            return null;
+        }
+        String[] list = listPattern.split(prop);
+        return Arrays.asList(list);
+    }
+    
+    private static void setSpecifierMap () {
         final Pattern mapPattern = Pattern.compile(" *=> *");
-        if (props == null) {
+
+        specMap = new Hashtable<String, String>();
+        if (properties == null) {
             return;
         }
-        String specMapString = props.getProperty("extractions.specifiers.map");
-        if (specMapString == null) {
+        List<String> mappings = getPropertyList("extractions.specifiers.map");
+        if (mappings == null) {
             return;
         }
-        String[] mappings = listPattern.split(specMapString);
         for (String mapping : mappings) {
             String[] pair = mapPattern.split(mapping);
             specMap.put(pair[0], pair[1]);
         }
     }
 
+    /**
+     * Builds an extraction of the appropriate type from a KQMLList object.
+     * @param ekb
+     * @param extractionResult
+     * @return
+     */
     public static List<Extraction> buildExtraction(DrumKB ekb, KQMLList extractionResult) {
-        return buildExtraction(ekb, extractionResult, null);
-    }
-    
-    public static List<Extraction> buildExtraction(DrumKB ekb, KQMLList extractionResult, Properties props) {
-        setSpecifierMap(props);
 
         KQMLList kqmlValueList = (KQMLList) extractionResult.getKeywordArg(":VALUE");
         KQMLList context = (KQMLList) extractionResult.getKeywordArg(":CONTEXT");
@@ -69,7 +115,7 @@ public class ExtractionFactory {
         return extractions;
     }
 
-    public static Extraction buildExtraction(DrumKB ekb, KQMLList value, KQMLList context, int uttnum) {
+    private static Extraction buildExtraction(DrumKB ekb, KQMLList value, KQMLList context, int uttnum) {
         Extraction extraction = null;
         String extractionType = null;
         

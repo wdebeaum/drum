@@ -3,7 +3,7 @@
 <!-- DTD schema for the EKB
 
 Author: Lucian Galescu <lgalescu@ihmc.us> 03/04/2016
-$Id: ekb.dtd,v 1.1 2017/06/09 03:54:39 lgalescu Exp $
+$Id: ekb.dtd,v 1.2 2018/10/26 02:09:59 lgalescu Exp $
 
 When the EKB is used for annotation, textual elements must be present (eg, <input>, <text>, @start, @end, @uttnum, @paragraph). 
 
@@ -70,12 +70,14 @@ Structural definition of the EKB data and metadata.
 <!-- 2.1 ROOT ELEMENT
 
 @attr id	A textual identifier for the input data (may be empty). 
+@attr domain    A string; indicates type of NLP applied tp document.
 @attr complete	A boolean; false iff input data was not processed completely.
 @attr timestamp A Datetime timestamp.
 -->
 <!ELEMENT ekb (input?,(CC|EPI|EVENT|MODALITY|TERM)*)>
 <!ATTLIST ekb
   id CDATA #IMPLIED 
+  domain CDATA #IMPLIED 
   complete %boolean; #IMPLIED
   timestamp %datetime; #IMPLIED>
 

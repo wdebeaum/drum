@@ -1,7 +1,7 @@
 /*
  * DrumKB.java
  *
- * $Id: DrumKB.java,v 1.32 2018/10/21 02:14:28 lgalescu Exp $
+ * $Id: DrumKB.java,v 1.33 2018/10/26 01:33:42 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  9 May 2015
  */
@@ -293,6 +293,7 @@ public class DrumKB {
             }
         }
         init();
+        ExtractionFactory.setProperties(properties);
     }
 
     /**
@@ -580,7 +581,7 @@ public class DrumKB {
      */
     protected List<Extraction> add(KQMLList content) {
         try {
-            List<Extraction> newExtractions = ExtractionFactory.buildExtraction(this, content, properties);
+            List<Extraction> newExtractions = ExtractionFactory.buildExtraction(this, content);
             for (Extraction x : newExtractions) {
                 add(x);
             }
@@ -764,6 +765,10 @@ public class DrumKB {
         Attr csAttr = doc.createAttribute("complete");
         csAttr.setValue(String.valueOf(completionStatus));
         root.setAttributeNode(csAttr);
+        // domain 
+        Attr emAttr = doc.createAttribute("domain");
+        emAttr.setValue(String.valueOf(properties.get("extractions.mode")));
+        root.setAttributeNode(emAttr);
         // done
         root.appendChild(makeInputElement(doc));
         doc.appendChild(root);

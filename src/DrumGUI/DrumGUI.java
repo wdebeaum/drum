@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.77 2018/06/27 22:14:43 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.78 2018/10/26 01:33:42 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -247,7 +247,7 @@ public class DrumGUI extends StandardTripsModule {
         tagOptions = defaultTagOptions;
 
         // breakLines?
-        breakLines = getBoolean("input.split-on-newlines");
+        breakLines = propertyValueBoolean("input.split-on-newlines");
         
         // ready
         sendSubscriptions();
@@ -281,7 +281,7 @@ public class DrumGUI extends StandardTripsModule {
         Debug.warn("showDisplay = " + showDisplay);
         if (showDisplay) {
             display = new Display(this, name);
-            display.setSelectorMode(getInteger("Display.SelectorPanel.mode"));
+            display.setSelectorMode(propertyValueInt("Display.SelectorPanel.mode"));
             display.setExtractorMode(getProperty("Display.ExtractorPanel.mode"));
             display.showDataset(false);
         }
@@ -405,7 +405,7 @@ public class DrumGUI extends StandardTripsModule {
      * @param prop
      * @return
      */
-    protected int getInteger(String prop) {
+    protected int propertyValueInt(String prop) {
         return Integer.parseInt(properties.getProperty(prop));
     }
 
@@ -415,7 +415,7 @@ public class DrumGUI extends StandardTripsModule {
      * @param prop
      * @return
      */
-    protected boolean getBoolean(String prop) {
+    protected boolean propertyValueBoolean(String prop) {
         return Boolean.parseBoolean(properties.getProperty(prop, "false"));
     }
 
