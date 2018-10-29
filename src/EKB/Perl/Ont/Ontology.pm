@@ -2,7 +2,7 @@
 
 # Ontology.pm
 #
-# Time-stamp: <Fri Feb  3 15:02:48 CST 2017 lgalescu>
+# Time-stamp: <Fri Jun 23 13:08:51 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 27 May 2016
 #
@@ -70,6 +70,7 @@ sub add {
   }
 }
 
+# recursive IS-A
 sub is_a {
     my $self = shift;
     my ($a, $b) = @_;

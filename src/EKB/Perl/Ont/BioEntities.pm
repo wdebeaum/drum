@@ -2,7 +2,7 @@
 
 # BioEntities.pm
 #
-# Time-stamp: <Tue Jan 17 22:21:04 CST 2017 lgalescu>
+# Time-stamp: <Sun Oct 28 16:39:50 CDT 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 27 May 2016
 #
@@ -55,6 +55,7 @@ my @data = (# biomolecular branch
 	    'ONT::LIQUID-SUBSTANCE' => 'ONT::SUBSTANCE',
 	    'ONT::SOLID-SUBSTANCE' => 'ONT::SUBSTANCE',
 	    'ONT::CHEMICAL' => 'ONT::SUBSTANCE',
+	    'ONT::MINERALS' => 'ONT::SUBSTANCE',
 	    'ONT::CHEMICAL' => 'ONT::MOLECULE', # added
 	    'ONT::PHARMACOLOGIC-SUBSTANCE' => 'ONT::CHEMICAL',
 	    'ONT::MEDICATION' => 'ONT::PHARMACOLOGIC-SUBSTANCE',
