@@ -2,7 +2,7 @@
 #
 # ekb_test.pl
 #
-# Time-stamp: <Sat Jun 24 23:06:15 CDT 2017 lgalescu>
+# Time-stamp: <Fri Aug 11 09:49:09 CDT 2017 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Jun 2016
 #
@@ -377,7 +377,11 @@ sub t_update {
   }
   # test data change?
   if (defined $ekbFile) {
-    $test->set_test_data($testName, $ekbFile, $sentId);
+    if (defined $refFile) {
+      
+    } else {
+      $test->set_test_data($testName, $ekbFile, $sentId);
+    }
   }
   $test->write();
 }

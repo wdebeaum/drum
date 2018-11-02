@@ -1,6 +1,6 @@
 # EKBAgent.pm
 #
-# Time-stamp: <Fri Oct 19 14:12:09 CDT 2018 lgalescu>
+# Time-stamp: <Thu Nov  1 15:21:47 CDT 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 13 Feb 2017
 #
@@ -13,9 +13,7 @@ EKBAgent
 
 Description:
 
-    A TRIPS Agent for handling the conversion of ARKL to EKB and for
-    testing and comparing this feature with the drum version of the
-    EKB generation.
+    A TRIPS Agent for handling Extraction Knowledge Bases (EKBs).
 
 Arguments:
 
@@ -58,28 +56,32 @@ Usage:
 
           perl EKBAgent.pl
 
-        This is the default way to run the agent.  No assertions will be compared.
+        This is the default way to run the agent.  No assertions will be
+        compared.
 
           perl EKBAgent.pl -testFile AKRL/drumBobTestsAll.txt
 
-        This will compare all assertions in the specified file and display the results
-        on the console. Results are stored in './ekb-agent-tests'.
+        This will compare all assertions in the specified file and display the
+        results O the console. Results are stored in './ekb-agent-tests'.
 
           perl EKBAgent.pl -testFile AKRL/drumBobTestsAll.txt -saveResultsFolder ARKL/results
 
-        This will compare all assertions in the specified file and display the results
-        on the console and save the EKB, AKRL, and results in the specified foler.
+        This will compare all assertions in the specified file and display the
+        results on the console and save the EKB, AKRL, and results in the
+        specified foler.
 
           perl EKBAgent.pl -compareEnabled -saveResultsFolder ARKL/results
 
-        This will compare all assertions entered into the BOB chat dialog and display the results
-        on the console and save the EKB, AKRL, and results in the specified foler.
+        This will compare all assertions entered into the BOB chat dialog and
+        display the results on the console and save the EKB, AKRL, and results
+        in the specified foler.
 
           perl EKBAgent.pl -compareEnabled -testFile AKRL/drumBobTestsAll.txt -saveResultsFolder ARKL/results
 
-        This will compare all assertions in the specified file and those entered into the BOB
-        chat dialog. The results will also be displayed on the console and the EKB, AKRL, and
-        results will be saved in the specified foler.
+        This will compare all assertions in the specified file and entered
+        into the BOB chat dialog. The results will also be displayed on the
+        console and the EKB, AKRL, and results will be saved in the specified
+        foler.
 
 Messaging:
 
@@ -101,7 +103,7 @@ Messaging:
          - EKB is:
            - the KQML-stringified EKB when B is TRUE
            - the name of the file containing the inferred EKB, when B is FALSE
-        Note: If :return-string is ommitted, the result is the file name
+             (or :return-string is ommitted)
 
     2. AKRL-to-EKB
 
@@ -120,6 +122,28 @@ Messaging:
 
       where:
         - EKB_TEXT is KQML-stringified EKB.
+
+    3. Handling EKB persistent storage
+
+       The agent can maintain persistent storage. The -store option must be 
+       given to enable this behavior.
+
+       Operations allowed (via REQUEST performatives):
+
+       - get-ekb-store-contents: returns the contents of the EKB store
+       - store-ekb: adds EKB to store
+       - remove-ekb: removes EKB from store
+       - remove-doc: removes extractions for the given document from all 
+         stored EKBs (typically just one).
+       - get-ekb: returns EKB for a given document from store (if it exists)
+       - query-ekb: returns an EKB with parts of the EKB store (from possibly 
+         multiple documents) containing extractions that match a query
+       - show-ekb: displays an EKB, assuming an appropriate display is 
+         available
+
+       [TODO: flesh out messaging]
+
+Functions (incomplete):
 
 =cut
 

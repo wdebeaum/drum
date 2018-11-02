@@ -27,7 +27,7 @@ use warnings;
 
 use Data::Dumper;
 use XML::LibXML;
-use List::Util qw(all any first min max uniq);
+use List::Util qw(all any first min max);
 
 use EKB;
 use EKB::Match;

@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Fri Oct 19 13:10:04 CDT 2018 lgalescu>
+# Time-stamp: <Thu Nov  1 15:42:38 CDT 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.38 2018/10/19 19:26:08 lgalescu Exp $
+# $Id: EKB.pm,v 1.39 2018/11/01 20:57:31 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -103,14 +103,22 @@
 # - moved a few methods into package functions
 # 2017/05/15 v1.14.1	lgalescu
 # - added initialization from string
+# 2017/05/22 (r.1.30) rcarff
+# - added make_conjoined_event()
+# - some other minor mods for feature handling
 # 2017/05/25 v1.14.2	lgalescu
 # - slight modification of the format for the 'inevent' feature
 # 2017/05/29 v1.14.3	lgalescu
 # - added a bit more documentation
 # 2017/06/13 v1.14.4	lgalescu
-# - modified normalization: now dangling IDs in arguments are left alone -- they
-#   are required for graphs to look good.
-#
+# - modified normalization: now dangling IDs in arguments are left alone -- 
+#   they are required for graphs to look good.
+# 2018/10/14-19 v1.15.0 (r1.39) lgalescu
+# - added method for setting the timestamp: set_timestamp()
+# - added options for normalization; affects normalize() and clean_assertions()
+# - added method for removing paragraphs: remove_paragraphs()
+# - added method for querying an EKB: query_assertions()
+
 
 # TODO:
 # - maybe split off non-OO extensions for manipulating XML objects into a separate package?
@@ -118,7 +126,7 @@
 
 package EKB;
 
-$VERSION = '1.14.3';
+$VERSION = '1.15.0';
 
 =head1 NAME
 
