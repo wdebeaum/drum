@@ -69,6 +69,16 @@ public interface Args {
       } else {
 	throw new InvalidArgument(perf, key, "Double");
       }
+    } else if (t.equals(Boolean.class)) {// special case for KQMLToken->Boolean
+      if (val instanceof KQMLToken) {
+	String str = val.toString().toLowerCase();
+	if (str.equals("nil")) {
+	  return t.cast(false);
+	} else if (str.equals("t")) {
+	  return t.cast(true);
+	}
+      }
+      throw new InvalidArgument(perf, key, "Boolean");
     } else { // general case for KQMLObjects
       if (t.isInstance(val)) {
 	return t.cast(val);
@@ -123,6 +133,16 @@ public interface Args {
       } else {
 	throw new InvalidArgument(perf, key, "Double");
       }
+    } else if (t.equals(Boolean.class)) {// special case for KQMLToken->Boolean
+      if (val instanceof KQMLToken) {
+	String str = val.toString().toLowerCase();
+	if (str.equals("nil")) {
+	  return t.cast(false);
+	} else if (str.equals("t")) {
+	  return t.cast(true);
+	}
+      }
+      throw new InvalidArgument(perf, key, "Boolean");
     } else {
       if (t.isInstance(val)) {
 	return t.cast(val);
