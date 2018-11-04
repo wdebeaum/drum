@@ -1,6 +1,6 @@
 # EKBAgent.pm
 #
-# Time-stamp: <Thu Nov  1 15:21:47 CDT 2018 lgalescu>
+# Time-stamp: <Sat Nov  3 20:56:49 CDT 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 13 Feb 2017
 #
@@ -168,6 +168,7 @@ use EKB;
 use EKB::Compare;
 use EKB::Reasoner::Drum;
 use EKB::Reasoner::CWMS;
+use EKB::Store;
 
 use AKRL::AKRLList;
 use AKRL2EKB;
@@ -181,14 +182,17 @@ sub init {
   my $self = shift;
   $self->{name} = 'EKB-AGENT';
   $self->{usage} .= " [-store <path to EKB store>] [-testFile <file containing assertions to test>] [-compareEnabled] [-saveResultsFolder <path to output folder>]";
+  
+  $self->{store} = undef;  # EKB Store
+
+  $self->{compareEnabled} = 0;
+  $self->{saveResultsFolder} = 'ekb-agent-tests'; # default path for tests
+  $self->{testing} = 0;
+
   $self->SUPER::init();
   $self->handle_parameters();
   $self->send_subscriptions();
 
-  if ($self->{storePath}) {
-    $self->loadStore();
-  }
-  
   INFO ("Initialized $self->{name}\n");
 
   if ($self->{testing}) {
@@ -199,13 +203,7 @@ sub init {
 sub handle_parameters {
   my $self = shift;
   my @argv = @{$self->{argv}};
-
-  $self->{storePath} = undef; # EKB store path
-  $self->{store} = {}; # EKB store ("doc" => ekb)
-  $self->{compareEnabled} = 0;
-  $self->{saveResultsFolder} = 'ekb-agent-tests';
-  $self->{testing} = 0;
-
+  
   eval {
     while (@argv) {
       my $opt = shift @argv;
@@ -215,9 +213,9 @@ sub handle_parameters {
 	my $store_path = shift @argv;
 	unless (-d $store_path) {
 	  FATAL ("Folder doesn't exist: $store_path");
-	}
-        $self->{storePath} = $store_path;
-        INFO ("EKB store: $self->{storePath}");
+	} 
+	$self->{store} = EKB::Store->new($store_path);
+        INFO ("EKB store: $store_path");
       }
       elsif ($opt eq '-debugLevel')
       {
@@ -473,19 +471,10 @@ sub handle_request_store_ekb {
       return;
     };
 
-  my $storePath = $self->{storePath};
-  opendir my($store), $storePath
-    or do {
-      ERROR("Cannot open $storePath");
-      $self->reply_to_msg($msg, "(reply :content (failure :reason \"Cannot open store folder: $storePath.\"))");
-      return;
-    };
+  $self->{store}->add_ekb($ekb);
 
-  my $new_ekb_file = catfile($storePath, basename($ekb->get_file));
-  $ekb->set_file($new_ekb_file);
-  $ekb->print($new_ekb_file);
-  $self->store_add_ekb($new_ekb_file);
-
+  # FIXME: failures
+  
   my $reply = "(reply :content (done))";
   $self->reply_to_msg($msg, $reply);
 }
@@ -494,19 +483,20 @@ sub handle_request_store_ekb {
 sub handle_request_get_store_contents {
   my ($self, $msg, $content) = @_;
 
-  my $result;
-  foreach my $d (keys %{ $self->{store} }) {
-    my $e = $self->{store}{$d}->get_file;
-    $result .= " " if $result;
-    $result .= "(document :source \"" .$d. "\" :ekb \"" .$e. "\")";
-  }
+  my %data_index = $self->{store}->getIndex;
+  DEBUG (1, "store index: %s", Dumper(\%data_index));
+  my $result =
+    join(" ",
+	 map { sprintf("(document :id \"%s\" :ekb \"%s\")",
+		       $_, $data_index{$_}) }
+	 keys %data_index);
+
   if ($result) {
     $result = "(" . $result . ")";
   } else {
     $result = "NIL";
   }
   my $reply = "(reply :content (ekb-store :content " . $result . "))";
-  WARN "Result: $reply";
   $self->reply_to_msg($msg, $reply);
 }
 
@@ -522,7 +512,7 @@ sub handle_request_remove_ekb {
     };
   $ekb_file = KQML::KQMLStringAtomAsPerlString($ekb_file);
 
-  $self->store_remove_ekb($ekb_file)
+  $self->{store}->remove_ekb($ekb_file)
     or do {
       $self->reply_to_msg($msg, "(reply :content (failure :reason \"EKB not found in store\"))");
       return;
@@ -544,7 +534,7 @@ sub handle_request_get_ekb {
     };
   $doc = KQML::KQMLStringAtomAsPerlString($doc);
 
-  my $ekb = $self->store_get($doc)
+  my $ekb = $self->{store}->get_doc($doc)
     or do {
       $self->reply_to_msg($msg, "(reply :content (failure :reason \"No EKB found\"))");
       return;
@@ -567,35 +557,12 @@ sub handle_request_remove_doc {
     };
   $doc = KQML::KQMLStringAtomAsPerlString($doc);
 
-  $self->store_remove_doc($doc)
+  $self->{store}->remove_doc($doc)
     or do {
       $self->reply_to_msg($msg, "(reply :content (failure :reason \"Document not found\"))");
       return;
     };
   my $reply = "(reply :content (done))";
-  $self->reply_to_msg($msg, $reply);
-}
-
-# handler for 'get-ekb' requests
-sub handle_request_get_ekb {
-  my ($self, $msg, $content) = @_;
-
-  my $doc = $content->{':document'}
-    or do {
-      ERROR ":document parameter missing";
-      $self->reply_to_msg($msg, "(reply :content (failure :reason \"The :document parameter is missing.\"))");
-      return;
-    };
-  $doc = KQML::KQMLStringAtomAsPerlString($doc);
-
-  my $ekb = $self->store_get($doc)
-    or do {
-      $self->reply_to_msg($msg, "(reply :content (failure :reason \"No EKB found\"))");
-      return;
-    };
-
-  my $ekbString = escape_string($ekb->toString);
-  my $reply = "(reply :content (done :result \"" . $ekbString . "\"))";
   $self->reply_to_msg($msg, $reply);
 }
 
@@ -618,9 +585,10 @@ sub handle_request_query_ekb {
     };
 
   my $reply;
-  my $result_ekbs = $self->store_query($ekb_query);
+  my $result_ekbs = $self->{store}->query($ekb_query);
   if (defined($result_ekbs) && scalar(@$result_ekbs)) {
     # for now we just pick the first ekb
+    # TODO: combine results into single EKB? return multiple?
     my $result_ekb = $result_ekbs->[0];
     my $ekbString = escape_string($result_ekb->toString);
     $reply = "(reply :content (done :result \"" . $ekbString . "\"))";
@@ -630,7 +598,21 @@ sub handle_request_query_ekb {
   $self->reply_to_msg($msg, $reply);
 }
 
+# parse KQML query into an EKB query (a structure pattern for now)
+sub parse_query {
+  my ($self, $query) = @_;
+  DEBUG (1, "Query: %s", Dumper($query));
+  my $structure;
+  if (my $v = $query->{':type'}) {
+    $structure->{'type'} = KQML::KQMLStringAtomAsPerlString($v);
+  }
+  DEBUG (1, "Parsed query: %s", Dumper($structure));
+  return $structure;
+}
+
+
 # handler for 'show-ekb' requests
+# TODO: is this relevant? do I have to modify, eg to display EKB in focus?
 sub handle_request_show_ekb {
   my ($self, $msg, $content) = @_;
 
@@ -687,172 +669,6 @@ sub handle_request_interpret_speech_act {
     $self->compareEKB();
   }
   return 1;
-}
-
-## FIXME: should make new class for storage and retrieval!
-
-# loads EKB store info into $self->{store}
-sub loadStore {
-  my ($self) = @_;
-
-  my $storePath = $self->{storePath};
-  opendir my($store), $storePath
-    or WARN("Cannot open $storePath");
-
-  my @ekb_files = grep { /\.ekb$/ } readdir $store;
-  WARN ("Found %d ekbs: %s", scalar(@ekb_files), "@ekb_files");
-  # clean store first
-  $self->{store} = {};
-  foreach my $ekb_file (@ekb_files) {
-    my $ekb_path = catfile($storePath, $ekb_file);
-    $self->store_add_ekb($ekb_path);
-  }
-
-  if ($self->store_empty) {
-    INFO ("No document EKBs in store!");
-  } else {
-    INFO ("Storage has EKBs for %d documents", scalar(keys %{$self->{store}}))
-  }
-}
-
-# add EKB file to store
-sub store_add_ekb {
-  my ($self, $ekb_path) = @_;
-  
-  INFO ("Loading from store: %s", $ekb_path);
-  my $ekb = EKB->new($ekb_path);
-  my @paragraphs = $ekb->get_paragraphs;
-  foreach my $p (@paragraphs) {
-    $self->store_add_doc($p->getAttribute('file'), $ekb_path);
-  }
-}
-
-# remove EKB file from store
-sub store_remove_ekb {
-  my ($self, $ekb_file) = @_;
-
-  my $ekb_dir = dirname(realpath($ekb_file));
-  if ($ekb_dir ne realpath($self->{storePath})) {
-    WARN ("$ekb_file is not part of the EKB store");
-    return;
-  }
-  unless (-f $ekb_file) {
-    WARN ("File not found: $ekb_file");
-    return;
-  }
-  
-  unlink $ekb_file;
-  # update the store (reload)
-  $self->loadStore;
-  return 1;
-}
-
-# remove doc from store
-sub store_remove_doc {
-  my ($self, $doc) = @_;
-
-  my $doc_ekb = $self->store_get($doc)
-    or do {
-      return;
-    };
-
-  my $ekb_file = $doc_ekb->get_file;
-  WARN ("Found $doc in $ekb_file");
-  my @pids = map { $_->getAttribute('id') } $doc_ekb->get_paragraphs;
-  WARN ("will remove (@pids)");
-
-  my $ekb = EKB->new($ekb_file);
-  foreach my $pid (@pids) {
-    $ekb->remove_paragraph($pid);
-  }
-  @pids = map { $_->getAttribute('id') } $ekb->get_paragraphs;
-  WARN ("remaining (@pids)");
-  if (@pids) {
-    $ekb->save;
-    WARN ("Removed $doc from $ekb_file");
-  } else {
-    unlink $ekb_file;
-    WARN ("Deleted $ekb_file");
-  }
-
-  delete $self->{store}{$doc};
-  1;
-}
-
-# add <document, ekb> to EKB store
-sub store_add_doc {
-  my ($self, $doc_path, $ekb_path) = @_;
-
-  my $ekb = EKB->new($ekb_path);
-  $ekb->normalize( {keep_lisp => 1} );
-  $ekb->filter( { files => [ $doc_path ] });
-
-  # TODO: check that the ekb is not empty!!!
-  
-  my $doc_basename = basename($doc_path, (".xml", ".txt"));
-  $ekb->print($doc_basename . ".ekb");
-
-  # remove the document, if it is already in store;
-  $self->store_remove_doc($doc_path);
-  
-  $self->{store}{$doc_path} = $ekb;
-  INFO ("Added to store: %s => %s", $doc_path, $ekb->get_file());
-}
-
-# get EKB for a document from the EKB store; returns undef if none is found
-sub store_get {
-  my ($self, $doc) = @_;
-
-  if ($self->store_empty) {
-    INFO ("No document EKBs in store!");
-    return;
-  }
-  unless (exists $self->{store}{$doc}) {
-    INFO ("Document not found in store: $doc");
-    return;
-  }
-
-  return $self->{store}{$doc};
-}
-
-# check if EKB store is empty
-sub store_empty {
-  my ($self) = @_;
-  return
-    !scalar(keys %{$self->{store}});
-}
-
-# parse KQML query into an EKB query (a structure pattern for now)
-sub parse_query {
-  my ($self, $query) = @_;
-  WARN "Query: %s", Dumper($query);
-  my $structure;
-  if (my $v = $query->{':type'}) {
-    $structure->{'type'} = KQML::KQMLStringAtomAsPerlString($v);
-  }
-  WARN "Parsed query: %s", Dumper($structure);
-  return $structure;
-}
-
-# query EKBs from store
-sub store_query {
-  my ($self, $query) = @_;
-
-  my @result;
-  foreach my $d (keys %{ $self->{store} }) {
-    WARN "Checking $d...";
-    my $ekb = $self->{store}{$d};
-    my @assertions = $ekb->query_assertions($query);
-    WARN "Got %d assertions from %s", scalar(@assertions), $ekb->get_file();
-    next unless @assertions;
-    my %uttnums;
-    foreach my $a (@assertions) {
-      $uttnums{ $a->getAttribute('uttnum') } = 1;
-    }
-    $ekb->filter( { sentences => [ keys(%uttnums) ] });
-    push @result, $ekb;
-  }
-  return \@result;
 }
 
 
@@ -1163,7 +979,7 @@ sub writeToFile
     $extension = "txt";
   }
 
-  $filename =~ s/\.+$//;           # remove trailing .'s
+  $filename =~ s/\.+$//;          # remove trailing .'s
   $filename =~ s/\//-P-SLASH-/g;  # replace slashes so they do not make new folders
   $filename =~ s/,/-P-COMMA-/g;   # replace commas.
   $filename =~ s/ /_/g;           # replace spaces.
@@ -1174,3 +990,26 @@ sub writeToFile
 }
 
 1;
+
+=head1 BUGS
+
+Probably.
+
+=head1 AUTHORS
+
+Roger Carff E<lt>rcarff@ihmc.usE<gt> (Initial implementation)
+
+Lucian Galescu E<lt>lgalescu@ihmc.usE<gt> (Subsequent modifications)
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2018 by Lucian Galescu E<lt>lgalescu@ihmc.usE<gt>
+
+This module is free software. You may redistribute it and/or modify it under 
+the terms of the Artistic License 2.0.
+
+This program is distributed in the hope that it will be useful, but without 
+any warranty; without even the implied warranty of merchantability or fitness 
+for a particular purpose.
+
+=cut

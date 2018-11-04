@@ -2,7 +2,7 @@
 # Makefile -- install a set of Perl modules
 #
 # Lucian Galescu <lgalescu@ihmc.us> 2017/02/03
-# $Id: Makefile,v 1.5 2018/03/05 22:08:42 lgalescu Exp $
+# $Id: Makefile,v 1.6 2018/11/04 03:04:57 lgalescu Exp $
 #
 
 # Will come from parent Makefile...
@@ -27,6 +27,7 @@ SRCS =  AKRL2EKB.pm \
 	EKB/Reasoner/CWMS.pm \
 	EKB/Reasoner/Rule.pm \
 	EKB/Reasoner.pm \
+	EKB/Store.pm \
 	EKB/Test.pm \
 	EKB.pm \
 	Ont/BioEntities.pm \

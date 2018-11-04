@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Thu Nov  1 15:42:38 CDT 2018 lgalescu>
+# Time-stamp: <Sat Nov  3 20:41:59 CDT 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.39 2018/11/01 20:57:31 lgalescu Exp $
+# $Id: EKB.pm,v 1.40 2018/11/04 03:04:56 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -118,7 +118,11 @@
 # - added options for normalization; affects normalize() and clean_assertions()
 # - added method for removing paragraphs: remove_paragraphs()
 # - added method for querying an EKB: query_assertions()
-
+# 2018/11/03 v1.16.0 lgalescu
+# - added <document/> elements; source file is listed there now; paragraphs
+#   now refer to the document using the docid attribute
+# - added fix() method to transform old format to new one
+# - many changes to handle document elements and ids,
 
 # TODO:
 # - maybe split off non-OO extensions for manipulating XML objects into a separate package?
@@ -126,7 +130,7 @@
 
 package EKB;
 
-$VERSION = '1.15.0';
+$VERSION = '1.16.0';
 
 =head1 NAME
 
@@ -187,7 +191,7 @@ Non-OO utility functions:
 =head1 DESCRIPTION
 
 An EKB is an XML-based representation of events and concepts. EKBs are used 
-in the TRIPS system to represent knowledge, typically extracted from text.
+in the TRIPS system to represent knowledge extracted from text.
 
 This module offers an OO Perl representation of an EKB, with methods for 
 manipulating it. Most methods operate on the XML document itself, and are 
@@ -211,15 +215,24 @@ NOTE: "slot" is another name for "property"
 
 Typically, these assertions are extracted from text, in which case: 
 
-=over 10
+=over
 
 =item - the EKB includes a representation of the input text in two forms: 
 as a collection of paragraphs, and as a collection of sentences. 
 
 =item - the assertions include attributes pointing at the sentence, 
-paragraph, and frames in the paragraph from which the assertion was derived.
+paragraph, and specific parts of the sentence from which the assertion was 
+derived.
 
 =back
+
+Thus, the EKB representation can serve as an annotation format.
+
+For reasoning purposes, only the assertions are meaningful. An EKB 
+representation can be derived directly from AKRL -- the KR representation
+language used in TRIPS -- in which case the EKB only contains assertions, 
+suitable for reasoning. This functionality is used by some reasoners who 
+understand the EKB representation but not the AKRL representation.
 
 This package includes a number of helper functions that are not part of the
 OO representation. Most can be thought of as extensions of L<XML::LibXML> 
@@ -394,6 +407,19 @@ sub set_timestamp {
   $self->set_attr('timestamp', _timestamp());
 }
 
+=head2 get_input( )
+
+Returns the XML element containing the input data, if any.
+
+=cut
+
+sub get_input {
+  my $self = shift;
+  my ($input_elem) = $self->get_document()->findnodes('//input');
+  return $input_elem;
+}
+
+
 =head1 METHODS
 
 =cut
@@ -560,11 +586,49 @@ sub save {
   $self->print($self->{file});
 }
 
+=head2 fix( )
+
+Upgrades older EKB formats to the current format. Limited capabilities.
+
+=cut
+
+sub fix {
+  my ($self, $opts) = @_;
+
+  DEBUG 2, "Fixing format...";
+
+  my $docs = $self->get_docs;
+  unless ($docs) {
+    my %doc_elems;
+    my @doc_files; # keep'em sorted
+    my @paragraphs = $self->get_paragraphs;
+    foreach my $p (@paragraphs) {
+      my $file = $p->getAttribute('file');
+      unless (exists $doc_elems{$file}) {
+	$doc_elems{$file} = 
+	  make_node("document", {
+				 id => $self->_gensym("D", { padding => 4}),
+				 file => $file,
+				});
+	push @doc_files, $file;
+      }
+      set_attribute($p, 'docid' => $doc_elems{$file}->getAttribute('id'));
+      $p->removeAttribute('file');
+    }
+    if (%doc_elems) {
+      my $docs_elem =
+	make_node("documents", map { $doc_elems{$_} } @doc_files);
+      my $input = $self->get_input;
+      $input->insertBefore($docs_elem, $input->firstChild);
+    }
+  }
+}
+
 =head2 normalize( $opts )
 
 Normalizes the EKB. Specifically, it modifies the EKB so that:
 
-=over 10
+=over
 
 =item - uttnums start at 1;
 
@@ -576,12 +640,17 @@ Normalizes the EKB. Specifically, it modifies the EKB so that:
 
 =back
 
+It also calls See: L<fix()|/> to fix formatting issues.
+
 =cut
 
 sub normalize {
   my ($self, $opts) = @_;
 
   DEBUG 2, "Normalizing...";
+
+  # fix document format
+  $self->fix;
   
   # fix sentence ids
   my @sentences = $self->get_sentences();
@@ -688,11 +757,13 @@ sub crop {
   my $snode = $self->get_sentence($sid)
     or FATAL "Failed to find sentence with id=%s!", $sid;
 
-  my $stext = $snode->textContent;
   my $pid = $snode->getAttribute('pid');
+  my $did = $self->get_paragraph($pid)->getAttribute('docid');
+
+  my $stext = $snode->textContent;
   my @assertions = $self->get_assertions({ uttnum => $sid });
 
-  DEBUG 0, "Cropping: [pid=%s sid=%s] \"%s\"", $pid, $sid, $stext;
+  DEBUG 0, "Cropping: [did=%s pid=%s sid=%s] \"%s\"", $did, $pid, $sid, $stext;
   DEBUG 3, "Found %d assertions", scalar(@assertions);
   
   # find text in paragraph
@@ -763,20 +834,24 @@ sub crop {
 
 =head2 filter( $options )
 
-Generic filter for removing paragraphs and/or sentences and related assertions.
+Generic filter for removing parts of the input and related assertions.
 
-Unlike crop(), this method does not attempt to keep frame numbers valid after
-paragraphs are removed. 
-
-$options is a reference to a hash. The only keys handled are C<files>, 
+$options is a reference to a hash. The only keys handled are C<documents>, 
 C<paragraphs> and C<sentences>. The value for each such key is a reference to 
-a list of file names for the first case and a list of ids for the other two cases. 
-The result of the filter is such that only the paragraphs and/or sentences
+a list of appropriate IDs. 
+The result of the filter is such that only the document/paragraphs/sentences
 indicated are kept. 
 
-Caveat: The way this method works when both paragraphs and sentences are
-specified might not be what you expect. Also, its behavior might change in the
-future, so don't rely on the current behavior! 
+Caveats:
+
+=over
+
+=item 1) Unlike crop(), this method does not attempt to keep frame numbers valid after paragraphs are removed. 
+
+=item 2) Using multiple keys simultaneously that are not consistent with each 
+other may not work as expected, so we discourge such use! 
+
+=back
 
 =cut
 
@@ -786,16 +861,18 @@ sub filter {
 
   return unless (defined($opts) and ref($opts) eq 'HASH');
 
-  if (exists $opts->{files} ) {
-    my @to_keep = @{ $opts->{files} };
+  # temporary, to handle EKBs in document-less EKBs  
+  $self->fix;
+  
+  if (exists $opts->{documents} ) {
+    my @to_keep = @{ $opts->{documents} };
     if (scalar(@to_keep)) {
-      DEBUG 2, "Will keep paragraphs for file: %s", Dumper(\@to_keep);
-      foreach my $p ($self->get_paragraphs) {
-	my $p_file = $p->getAttribute('file');	
-	my $p_id = $p->getAttribute('id');	
-	next if grep { $p_file eq $_ } @to_keep;
-	DEBUG 2, "Removing paragraph: %s", $p_id;
-	$self->remove_paragraph($p_id);
+      DEBUG 2, "Will keep documents: %s", Dumper(\@to_keep);
+      foreach my $d ($self->get_docs) {
+	my $docid = $d->getAttribute('id');	
+	next if grep { $docid eq $_ } @to_keep;
+	DEBUG 2, "Removing document: %s", $docid;
+	$self->remove_document($docid);
       }
     }
   }
@@ -823,6 +900,25 @@ sub filter {
       }
     }
   }
+}
+
+=head2 remove_doc( $docid )
+
+Removes the document with the id $docid, all its paragraphs and sentences, 
+and all the assertions derived from it.
+
+=cut
+
+sub remove_doc {
+  my ($self, $docid) = @_;
+  my $doc = $self->get_doc($docid)
+    or return;
+  ($doc->parentNode)->removeChild($doc);
+  my @pids = map { $_->getAttribute('id') } $self->get_paragraphs($docid);
+  foreach my $pid (@pids) {
+    $self->remove_paragraph($pid);
+  }
+  DEBUG 3, "Removed document $docid";
 }
 
 =head2 remove_paragraph( $pid )
@@ -906,18 +1002,63 @@ sub set_attr {
 }
 
 
-=head2 get_paragraphs( )
+=head2 get_docs( )
 
-Returns the list of paragraph nodes.
+Returns the list of document nodes.
 
 =cut
 
-# get paragraphs
-sub get_paragraphs {
+sub get_docs {
   my $self = shift;
   my $doc = $self->get_document()
     or return undef; 
-  return $doc->findnodes('//input//paragraph');
+  return $doc->findnodes('//input//document');
+}
+
+=head2 get_doc( $docid )
+
+Returns the document node with the given document ID.
+
+=cut
+
+sub get_doc {
+  my ($self, $docid) = @_;
+  my @docs = $self->get_docs;
+  return
+    first { $_->getAttribute('id') eq $docid } @docs;
+}
+
+=head2 set_docid ( $docid, $new_docid )
+
+Replaces the document ID.
+
+=cut
+
+sub set_docid {
+  my ($self, $docid, $new_docid) = @_;
+  my $doc_elem = $self->get_doc($docid);
+  my @p = $self->get_paragraphs($docid);
+  set_attribute($doc_elem, 'id' => $new_docid);
+  map { set_attribute($_, 'docid' => $new_docid ) } @p;
+}
+
+=head2 get_paragraphs( $docid )
+
+Returns the list of paragraph nodes. If the optional argument is given, 
+the list is restricted to the paragraphs with the given document ID.
+
+=cut
+
+sub get_paragraphs {
+  my ($self, $docid) = @_;
+  my $doc = $self->get_document()
+    or return undef; 
+  my @result = $doc->findnodes('//input//paragraph');
+  if ($docid) {
+    @result =
+      grep { $_->getAttribute('docid') eq $docid } @result;
+  }
+  return @result;
 }
 
 =head2 get_paragraph( $pid )
@@ -926,34 +1067,28 @@ Returns the paragraph node with the given paragraph ID.
 
 =cut
 
-# get paragraph w/ given id
 sub get_paragraph {
-  my $self = shift;
-  my $id = shift;
+  my ($self, $pid) = @_;
   my @paras = $self->get_paragraphs();
   return
-    first { $_->getAttribute('id') eq $id } @paras;
+    first { $_->getAttribute('id') eq $pid } @paras;
 }
 
 =head2 get_sentences( $pid )
 
 Returns the list of sentence nodes. If the optional argument is given, 
-the list is restricted to the sentences with the given paragraph id.
+the list is restricted to the sentences with the given paragraph ID.
 
 =cut
 
-# get sentence nodes
-# optionally, a paragraph id may be specified to get only the sentences
-# in that paragraph
 sub get_sentences {
-  my $self = shift;
-  my $opt_pid = shift;
+  my ($self, $pid) = @_;
   my $doc = $self->get_document()
     or return undef; 
   my @result = $doc->findnodes('//input//sentence');
-  if ($opt_pid) {
+  if ($pid) {
     @result =
-      grep { $_->getAttribute('pid') eq $opt_pid } @result;
+      grep { $_->getAttribute('pid') eq $pid } @result;
   }
   return @result;
 }
@@ -964,11 +1099,9 @@ Returns the sentence node with the given sentence ID.
 
 =cut
 
-# get sentence node w/ given id
 sub get_sentence {
-  my $self = shift;
-  my $id = shift;
-  first { $_->getAttribute('id') eq $id } $self->get_sentences();
+  my ($self, $sid) = @_;
+  first { $_->getAttribute('id') eq $sid } $self->get_sentences();
 }
 
 =head2 get_assertions( $atype, $attributes )
@@ -992,8 +1125,7 @@ given values.
 # FIXME: however, the attributes could be useful for improving efficiency,
 # if checked during search
 sub get_assertions {
-  my $self = shift;
-  my ($atype, $opt_attrs) = @_;
+  my ($self, $atype, $opt_attrs) = @_;
 
   if (ref($atype) eq "HASH") {
     $opt_attrs = $atype;
@@ -1037,9 +1169,7 @@ C<undef> if a matching assertion cannot be found.
 # to impose additional constraints on the desired assertion. this feature is
 # experimental; it is possible to do without it
 sub get_assertion {
-  my $self = shift;
-  my $id = shift;
-  my ($atype, $opt_attrs) = @_;
+  my ($self, $id, $atype, $opt_attrs) = @_;
   if (! $id) { # if the caller doesn't check, we need to fail safely
     ERROR "get_assertion: no id";
     return undef;
@@ -1079,8 +1209,7 @@ sub query_assertions {
 # find assertions referencing another one
 # optionally, restrict assertions to a given type
 sub find_referrers {
-  my $self = shift;
-  my ($id, $atype) = @_;
+  my ($self, $id, $atype) = @_;
 
   # all assertions containing a descendant node that has an attribute id
   # referring to the arg id; exclusions: self and corefs
@@ -1162,7 +1291,7 @@ Creates a new assertion based on the one with the given ID.
 The new assertion will be a shallow copy of the old one, where only 
 text-related attributes and properties are preserved. Specifically: 
 
-=over 10
+=over
 
 =item a) the new assertion will have the same type as the old one, unless 
 $atype is specified, in which case the new assertion will be of the type 
@@ -1932,35 +2061,36 @@ sub get_span_text {
   return substr($p_node->textContent, $start, ($end - $start));
 }
 
-=head2 new_id( $prefix )
+=head2 new_id( $prefix, $length )
 
 Generates a new id. 
 
-The prefix is optional; if none is used, the default is "R".
+Both parameters are optional. The default prefix is "R", and the default 
+length is 6.
 
-The default format is $prefix . "999999". Currently, there is no way to 
-change this.
+The id generated will be the concatenation of $prefix and a number with 
+$length digits. Currently, there is no way to change this format.
+
+This function guarantees that the id is unique by always incrementing the 
+number portion of the id.
 
 =cut
 
 # I'm not sure this should be in the public interface! Maybe make it private?!?
 sub new_id {
-  my $self = shift;
-  my $prefix = shift;
-  $self->_gensym($prefix // "R", { padding => 6 });
+  my ($self, $prefix, $length) = @_;
+  $self->_gensym($prefix // "R", { padding => $length // 6 });
 }
 
 
 # Private!
 sub _gensym {
-  my $self = shift;
-  my $prefix = shift;
-  my $opt = shift;
-  my $padding = "";
+  my ($self, $prefix, $opt) = @_;
+  my $n_fmt = "";
   if (ref($opt) eq 'HASH') {
-    $padding = ("0" . $opt->{'padding'}) // "";
+    $n_fmt = ("0" . $opt->{'padding'}) // "";
   }
-  return sprintf("%s%${padding}d", $prefix, ++($self->{symbol_table}{$prefix}));
+  return sprintf("%s%${n_fmt}d", $prefix, ++($self->{symbol_table}{$prefix}));
 }
 
 
@@ -2536,6 +2666,10 @@ sub _parse_node_args {
 }
 
 1;
+
+=head1 BUGS
+
+Probably.
 
 =head1 AUTHOR
 
