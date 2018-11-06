@@ -2,7 +2,7 @@
 
 # make-wordnet-sql-db.pl - Make an SQL version of the WordNet (3.0) database
 # William de Beaumont
-# $Date: 2014/07/15 17:42:39 $
+# $Date: 2018/11/05 21:07:12 $
 
 # USAGE: make-wordnet-sql-db.pl path/to/WordNet dbname
 
@@ -211,6 +211,8 @@ sub for_each_line_in_file {
   my ($filename, $fn) = @_;
   print "$filename\n";
   my $num_lines = `wc -l $filename`;
+  $num_lines =~ s/^\s+//;
+  $num_lines =~ s/\s.*//;
   my $progress = ($have_pb ? Term::ProgressBar->new({ count => $num_lines, ETA => 'linear' }) : undef);
   my $next_update = 0;
   open DATA, "<$filename" or die "Can't open $filename: $!";

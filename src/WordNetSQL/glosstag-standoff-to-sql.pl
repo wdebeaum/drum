@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
 use DBI;
+use lib '.';
 require 'get-del-ins.ph';
 
 use strict vars;
