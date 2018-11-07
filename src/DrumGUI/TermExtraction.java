@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.57 2018/10/26 01:33:43 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.58 2018/11/06 16:58:12 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -1003,9 +1003,11 @@ public class TermExtraction extends Extraction {
         
         List<String> attrs = new ArrayList<String>();
         KQMLObject modType = attributes.get(Attribute.TIMEMOD);
-        String mod = ontType(modType);
-        if (!mod.isEmpty()) {
-            attrs.add(xml_attribute("mod", mod));
+        if (modType != null) {
+            String mod = ontType(modType);
+            if (!mod.isEmpty()) {
+                attrs.add(xml_attribute("mod", mod));
+            }
         }
         
         if (isOntVar(time.toString())) {
@@ -1029,11 +1031,13 @@ public class TermExtraction extends Extraction {
 
         List<String> attrs = new ArrayList<String>();
         KQMLObject modType = attributes.get(Attribute.LOCMOD);
-        String mod = ontType(modType);
-        if (!mod.isEmpty()) {
-            attrs.add(xml_attribute("mod", mod));
+        if (modType != null) {
+            String mod = ontType(modType);
+            if (!mod.isEmpty()) {
+                attrs.add(xml_attribute("mod", mod));
+            }
         }
-
+        
         String result = "";
         if (isOntVar(loc.toString())) {
             String var = loc.toString();

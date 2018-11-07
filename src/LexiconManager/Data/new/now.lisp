@@ -31,27 +31,30 @@
     ))
 ))
 
+
 (define-words :pos W::adv :templ PPWORD-ADV-TEMPL
  :tags (:base500)
  :words (
   (W::NOW
-   ;(wordfeats (W::ATYPE (? atype W::pre W::post)))
+   ;(wordfeats (W::ATYPE (? atype W::pre W::post w::pre-vp)))
    (SENSES
-    ((LF-PARENT ONT::EVENT-TIME-REL)
-     ;; (LF-PARENT ONT::NOW)
+    (;(LF-PARENT ONT::EVENT-TIME-REL)
+     (LF-PARENT ONT::NOW)
      ;; (SYNTAX (W::IMPRO-CLASS (:* ONT::TIME-LOC W::NOW)))
-     (SYNTAX (W::IMPRO-CLASS ONT::NOW))
+     ;(SYNTAX (W::IMPRO-CLASS ONT::NOW))
      (TEMPL pred-s-vp-templ)
      )
     ))
 ))
+
 
 (define-words :pos W::n :templ PPWORD-N-TEMPL
  :tags (:base500)
  :words (
   (W::NOW
    (SENSES
-    ((LF-PARENT ONT::NOW)
+    (;(LF-PARENT ONT::NOW)
+     (LF-PARENT ONT::TIME-LOC)
      (PREFERENCE 0.97)
      )
     )

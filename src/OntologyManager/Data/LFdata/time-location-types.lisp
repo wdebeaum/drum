@@ -1136,21 +1136,6 @@
 (define-type ONT::TIME-LOC
  :parent ONT::time-object)
 
-(define-type ONT::today
-     :wordnet-sense-keys ("today%4:02:00")
-     :parent ONT::time-loc
-     )
-
-(define-type ONT::yesterday
-     :wordnet-sense-keys ("yesterday%4:02:00" "yesterday%4:02:01")
-     :parent ONT::time-loc
-     )
-
-(define-type ONT::tomorrow
-     :wordnet-sense-keys ("tomorrow%4:02:00")
-     :parent ONT::time-loc
-     )
-
 (define-type ONT::recurring-time-of-day
     :comment "recurring moments of the day, defined by some event"
     :sem (F::time (F::time-function F::day-point))
@@ -1225,6 +1210,24 @@
     :comment "temporal objects that use IN - e.g., in June"
     :parent ONT::TIME-Object
     )
+
+(define-type ONT::today
+     :wordnet-sense-keys ("today%4:02:00" "today%1:28:01")
+     ;:parent ONT::time-loc
+     :parent ONT::date-object
+     )
+
+(define-type ONT::yesterday
+     :wordnet-sense-keys ("yesterday%4:02:00" "yesterday%1:28:01")
+     ;:parent ONT::time-loc
+     :parent ONT::date-object
+     )
+
+(define-type ONT::tomorrow
+     :wordnet-sense-keys ("tomorrow%4:02:00" "tomorrow%1:28:01")
+     ;:parent ONT::time-loc
+     :parent ONT::date-object
+     )
 
 ;;; future, past
 (define-type ONT::time-span

@@ -583,7 +583,7 @@
 		  (sem ?sem)))
      )
 
-     ;; this morning, this year, that week, next week, ...
+     ;; this morning, this year, that week, ...
     ((advbl (sort constraint)
       (argument (% S (var ?argvar) (sem ($ f::situation)) ))
       (subcatsem ?valsem)  (bare-advbl +)
@@ -596,20 +596,20 @@
      -deictic-time-advbl> 1
      (head (np (sem ?valsem) (var ?valvar) (headless -) (coerced -)
 	       (sem ($ f::time (f::time-scale F::INTERVAL)))
-	       (LF (% DESCRIPTION (status ont::definite) (class ont::time-object);;(CONSTRAINT (& (proform (? cr W::THIS W::THAT W::THOSE W::THESE)))))) ;;(? cr this that those these))))))
+	       (LF (% DESCRIPTION (status ont::definite) (class ont::time-object) (CONSTRAINT (& (proform (? cr W::THIS W::THAT W::THOSE W::THESE)))) ;;(? cr this that those these))))))
 		      ))
 	       ))
      (compute-sem-features (lf ont::event-time-rel) (sem ?sem)))
 
     ;;  Special construction for last year/next week/ etc which doesn't seem to generalize to non-temporal
-    ((np (var ?v) (sort pred) (agr 3s) 
+    ((np (var ?v) (sort pred) (agr 3s) (lex ?n_lex)
       (LF (% description (var ?v) (status ont::definite)
 	     (class ont::time-loc) (constraint (& (proform ?lex) (extent ?class))) (sem ($ f::time (f::time-scale F::INTERVAL)))))
       (sem ($ f::time (f::time-scale F::INTERVAL))))
       -next-last-time1> 1
       (adjp (lex (? x next last)) (lex ?lex)
        (var ?adjv) (arg ?v))
-      (Head (n1 (sem ?valsem) (var ?v) (class ?class) (restr ?r)
+      (Head (n1 (sem ?valsem) (var ?v) (class ?class) (restr ?r) (lex ?n_lex)
 	       (sem ($ f::time (f::time-scale F::INTERVAL)))
 	       )))
 
@@ -1291,11 +1291,13 @@
 		(var ?v) (class ?c) (lex ?l))))
 
     ;; today, tomorrow, ...
-    ((DATE (var *) (INT +) (LF ONT::DAY-NAME) (DAY ?day) (lex ?hlex) (headcat ?hcat) (day-specified +))
+    ((DATE (var *) (INT +) (LF ONT::DAY-NAME) (DAY ?day) ;(DAY ?class)
+	   (lex ?hlex) (headcat ?hcat) (day-specified +))
      -dt-pro-day> 1.0
-     (head (NP (LF (% description (CLASS ONT::DATE-OBJECT))) (PRO +) (var ?day)
+     (head (NP ;(LF (% description (CLASS ONT::DATE-OBJECT)))
+	       (PRO +) (var ?day) (class (? class ont::date-object))
 	       (lex ?hlex) (headcat ?hcat)
-	       )))
+	       )))    
     
     ))
 
@@ -1331,19 +1333,30 @@
       -dt-year2>
       (word (lex w::^))
       (HEAD (Number (VAL ?n) (NTYPE w::TWODIGIT) (range -) (lex ?hlex) (headcat ?hcat) (comma -))))
+
+     #|
+  ;; Monday
+    ((DATE (var *) (INT +) (LF ONT::DAY-NAME) (DOW ?var) ;(DOW ?dow)
+	   (lex ?hlex) (headcat ?hcat) (day-specified +) (sem ?sem)) 
+   -dt-dow> 1.0
+   (head (Name (LF ONT::DAY-NAME)    
+	    (lf ?dow)  (lex ?hlex) (headcat ?hcat) (sem ?sem) (var ?var)
+	    )))
+     |#
+
+  ;; Monday
+    ((DATE (INT +) (LF ONT::DAY-NAME) (DOW ?dow)
+	   (lex ?hlex) (headcat ?hcat) (day-specified +) (sem ?sem)) 
+   -dt-dow> 1.0
+   (head (Name (LF ONT::DAY-NAME)    
+	    (lf ?dow)  (lex ?hlex) (headcat ?hcat) (sem ?sem) (var ?var)
+	    )))
     
     ;; July
     ((DATE (INT +) (MONTH ?M) (lex ?hlex) (headcat ?hcat))
      -dt-month> 1.0
      (head (name
 	    (lf ?M) (LF ONT::MONTH-NAME) (lex ?hlex) (headcat ?hcat)
-	    )))
-
-  ;; Monday
-  ((DATE (INT +) (LF ONT::DAY-NAME) (DOW ?dow) (lex ?hlex) (headcat ?hcat) (day-specified +))
-   -dt-dow> 1.0
-   (head (Name (LF ONT::DAY-NAME)    
-	    (lf ?dow)  (lex ?hlex) (headcat ?hcat)
 	    )))
 
     ;; 7/31/2007 (31 July 2007)  or 7-31-2007
@@ -1508,40 +1521,50 @@
 
    ;;  Dates as adverbials
    ;; Those with a day of the week, e.g.,  Monday I go
-   ((ADVBL (ARG ?arg) (ROLE (:* ONT::EVENT-TIME-REL W::DATE))
+     ((ADVBL (ARG ?arg) ;(ROLE (:* ONT::EVENT-TIME-REL W::DATE))
+	     (sem ?sem) ;(SEM (? SEM8045 ($ F::abstr-obj  (F::TYPE ONT::EVENT-TIME-REL))))
 	   (SORT BINARY-CONSTRAINT)
-	   (LF (% PROP (VAR ?v) (CLASS (:* ONT::EVENT-TIME-REL W::DATE))
+	   (LF (% PROP (VAR ?v) (CLASS ONT::EVENT-TIME-REL) ;(CLASS (:* ONT::EVENT-TIME-REL W::DATE))
 		  (CONSTRAINT (& (FIGURE ?arg) (GROUND (% *PRO* (VAR *)
-						       (CLASS ONT::TIME-LOC)
+						       (CLASS ONT::TIME-LOC) (lex ?hlex)
 						       (CONSTRAINT (& (DAY ?day) (Month ?m) (DAY-OF-WEEK ?!dow) (YEAR ?y) (AM-pm ?ampm) (phase ?phase)))))))))
 	   (VAR ?v) (ATYPE (? x W::PRE W::POST))  (bare-advbl +)
-	   (lex ?hlex) (headcat ?hcat)
+	   ;(lex ?hlex)
+	   (headcat ?hcat)
 	   (ARGUMENT (% (? ARGCAT8043 W::S
 				     W::NP
 				     W::VP)
+			(lex ?arglex)
 			(SEM (? SEM8044 ($ F::SITUATION (F::ASPECT ( ? ASP8042 F::DYNAMIC
 								       F::STAGE-LEVEL))))))))
     -date-advbl1>
     (DATE (var ?v) (DAY ?day) (Month ?m) (DOW ?!dow) (Year ?y) (phase ?phase) (AM-pm ?ampm)
-	  (lex ?hlex) (headcat ?hcat)))
+	  (lex ?hlex) (headcat ?hcat))
+    (compute-sem-features (lf ont::event-time-rel) (sem ?sem))
+    )
 
    ;; this one covers the other case, e.g., I go July third
-   ((ADVBL (ARG ?arg) (ROLE (:* ONT::EVENT-TIME-REL W::DATE))
+   ((ADVBL (ARG ?arg) ;(ROLE (:* ONT::EVENT-TIME-REL W::DATE))
+	   (sem ?sem) ;(SEM (? SEM8045 ($ F::abstr-obj  (F::TYPE ONT::EVENT-TIME-REL))))
 	   (SORT BINARY-CONSTRAINT)  (bare-advbl +)
-	   (LF (% PROP (VAR ?v) (CLASS (:* ONT::EVENT-TIME-REL W::DATE))
+	   (LF (% PROP (VAR ?v) (CLASS ONT::EVENT-TIME-REL) ;(CLASS (:* ONT::EVENT-TIME-REL W::DATE))
 		  (CONSTRAINT (& (FIGURE ?arg) (GROUND (% *PRO* (VAR *) (STATUS ont::definite)
-						       (CLASS ONT::TIME-LOC)
+						       (CLASS ONT::TIME-LOC) (lex ?hlex)
 						       (CONSTRAINT (& (DAY ?!day) (Month ?m) (YEAR ?y) (phase ?phase)))))))))
 	   (VAR ?v) (ATYPE (? x W::PRE W::POST))
-	   (lex ?hlex) (headcat ?hcat)
+	   ;(lex ?hlex)
+	   (headcat ?hcat)
 	   (ARGUMENT (% (? ARGCAT8043 W::S
 				     W::NP
 				     W::VP)
+			(lex ?arglex)
 			(SEM (? SEM8044 ($ F::SITUATION (F::ASPECT ( ? ASP8042 F::DYNAMIC
 										       F::STAGE-LEVEL))))))))
     -date-advbl2> .98
     (DATE (var ?v) (DAY ?!day) (Month ?m) (DOW -) (Year ?y)
-	  (lex ?hlex) (headcat ?hcat) (phase ?phase)))
+	  (lex ?hlex) (headcat ?hcat) (phase ?phase))
+    (compute-sem-features (lf ont::event-time-rel) (sem ?sem))
+    )
 
    
     ;;  three days before yesterday, two hours before noon, a few minutes after noon, 5 days ago
@@ -1610,7 +1633,8 @@
    ;; July third, etc, no day of the week
     ((NP (LF  (% DESCRIPTION (VAR ?v) (STATUS ont::definite)
 		(CLASS ONT::TIME-LOC) (CONSTRAINT (& (DAY ?!day) (Month ?m) (YEAR ?y)))))
-	(SEM ($ F::TIME (F::TIME-FUNCTION F::DAY-OF-WEEK) (F::TIME-SCALE F::INTERVAL) (F::SCALE -)))
+	 (SEM ($ F::TIME (F::TIME-FUNCTION F::DATE) ;(F::TIME-FUNCTION F::DAY-OF-WEEK)
+		 (F::TIME-SCALE F::INTERVAL) (F::SCALE -)))
 	(Sort pred)
       (VAR ?v) (NAME +)
 	(lex ?hlex) (headcat ?hcat))

@@ -3692,13 +3692,13 @@
 
     ;; This constructs an NP to stand for the implicit object introduced
     ;;  by the pp-word, e.g., for "why" it is a REASON, for "HOW" it is a METHOD, etc
-    ((NP (PP-WORD +) (SORT PRED) (VAR ?v) (SEM ?s) (lex ?lex) 
-         (WH Q) (WH-VAR ?v) (CASE ?case) (pred ?lf) 
-         (LF (% Description (status WH) (var ?v) (Class ?lf) (SORT (?agr -))
+    ((NP (PP-WORD +) (SORT PRED) (VAR ?v) (SEM ?sem) (lex ?lex) 
+         (WH Q) (WH-VAR ?v) (CASE ?case) (class ?lf) ;(pred ?lf)
+         (LF (% Description (status WH) (var ?v) (Class ?lf) (SORT PRED) ;(SORT (?agr -))
                 (Lex ?lex) (sem ?sem) (transform ?transform) (constraint (% & (proform ?lex)))
                 )))
      -np-pp-word1>
-     (head (n (SORT PP-WORD) (SEM ?s) (AGR ?agr) (SORT ?sort)
+     (head (n (SORT PP-WORD) (AGR ?agr) (SORT ?sort)
               (LF ?lf) (sem ?sem)
               (LEX ?lex) (VAR ?v) (WH Q)
               (transform ?transform)
@@ -3707,13 +3707,13 @@
     ;; why not e.g., I don't know why not
     ((NP (PP-WORD +) (SORT PRED) (VAR ?v) (SEM ?s) (lex why) 
          (WH Q) (CASE ?case) (pred ?lf)
-         (LF (% Description (status WH) (var ?v) (Class ?lf) (SORT (?agr -))
+         (LF (% Description (status WH) (var ?v) (Class ?lf) (SORT PRED) ;(SORT (?agr -))
                 (lex why) (sem ?sem) (transform ?transform)
                 )))
      -np-pp-word-why-not>
      (head (n (SORT PP-WORD) (lex why) (SEM ?s) (AGR ?agr) (SORT ?sort)
               (LF ?lf) (sem ?sem)
-              (VAR ?v) (WH Q)`
+              (VAR ?v) (WH Q)
               (transform ?transform)
               ))
      (word (lex not))
@@ -3722,7 +3722,7 @@
     ;;  e.g., what else
     ((NP (PP-WORD +) (SORT pred) (VAR ?v) (SEM ?s) (lex ?lex) 
          (WH Q) (WH-VAR ?v) (CASE ?case) (pred ?lf)
-         (LF (% Description (status WH) (var ?v) (Class ?lf) (SORT (?agr -))
+         (LF (% Description (status WH) (var ?v) (Class ?lf) (SORT PRED) ;(SORT (?agr -))
                 (Lex ?lex) (sem ?sem) 
 		(constraint (& (MODS ?else-v)))
 			     ;;(?ELSE-LF (% *PRO* (var *) (class ?lf) (sem ?sem) (constraint (& (proform ?else-lex)))))))
@@ -3740,13 +3740,14 @@
     
     ;;  Words like there, here, tomorrow (no WH terms) are treated as PRO forms
 
-    ((NP (PP-WORD +) (PRO +) (SORT (? srt pred set)) (VAR ?v) (SEM ?s) (lex ?lex)
-         (role ?lf) (agr (? agr 3s 3p -)) (case ?case)
-         (LF (% Description (status ont::pRO) (var ?v) (Class ?lf) (SORT (?agr -))
+    ((NP ;(PP-WORD +) ; so that this can be the np in -s1>
+	 (PRO +) (SORT (? srt pred set)) (VAR ?v) (SEM ?sem) (lex ?lex)
+         (role ?lf) (agr (? agr 3s 3p -)) (case ?case) (class ?lf)
+         (LF (% Description (status ont::pRO) (var ?v) (Class ?lf) (SORT (? srt pred set)) ;(SORT (?agr -))
                 (Lex ?lex) (sem ?sem) (transform ?transform) (constraint (% & (proform ?lex)))
                 )))
      -np-pp-word2>
-     (head (N (SEM ?s) (AGR ?agr) (SORT PP-WORD)
+     (head (N (AGR ?agr) (SORT PP-WORD)
               (LEX ?lex) (VAR ?v) (WH -)
               (lf ?lf)
               (sem ?sem) (transform ?transform)

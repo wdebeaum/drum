@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.62 2018/10/26 01:33:42 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.63 2018/11/06 16:58:12 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -976,9 +976,11 @@ public class EventExtraction extends Extraction {
         
         List<String> attrs = new ArrayList<String>();
         KQMLObject modType = features.get(Feature.TIMEMOD);
-        String mod = ontType(modType);
-        if (!mod.isEmpty()) {
-            attrs.add(xml_attribute("mod", mod));
+        if (modType != null) {
+            String mod = ontType(modType);
+            if (!mod.isEmpty()) {
+                attrs.add(xml_attribute("mod", mod));
+            }
         }
         
         if (isOntVar(time.toString())) {
@@ -1005,9 +1007,11 @@ public class EventExtraction extends Extraction {
         
         List<String> attrs = new ArrayList<String>();
         KQMLObject modType = features.get(Feature.LOCMOD);
-        String mod = ontType(modType);
-        if (!mod.isEmpty()) {
-            attrs.add(xml_attribute("mod", mod));
+        if (modType != null) {
+            String mod = ontType(modType);
+            if (!mod.isEmpty()) {
+                attrs.add(xml_attribute("mod", mod));
+            }
         }
         
         if (isOntVar(loc.toString())) {

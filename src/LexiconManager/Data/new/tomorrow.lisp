@@ -2,6 +2,7 @@
 ;;;; W::TOMORROW
 ;;;;
 
+#|
 (define-words :pos W::adv :templ PPWORD-ADV-TEMPL
  :tags (:base500)
  :words (
@@ -14,14 +15,16 @@
     )
    )
 ))
+|#
 
 (define-words :pos W::n :templ PPWORD-N-TEMPL
  :tags (:base500)
  :words (
   (W::TOMORROW
    (SENSES
-    ((LF-PARENT ONT::DATE-OBJECT)
-     (PREFERENCE 0.97)
+    (;(LF-PARENT ONT::DATE-OBJECT)
+     (LF-PARENT ONT::TOMORROW)
+     ;(PREFERENCE 0.97)
      )
     )
    )
