@@ -1,7 +1,7 @@
 /*
  * ExtractionFactory.java
  *
- * $Id: ExtractionFactory.java,v 1.12 2018/10/26 01:33:43 lgalescu Exp $
+ * $Id: ExtractionFactory.java,v 1.13 2018/11/08 21:25:42 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -27,45 +27,47 @@ import TRIPS.KQML.KQMLToken;
  * @see Extraction
  */
 public class ExtractionFactory {
-    
+
     /**
      * Properties
      */
     private static Properties properties;
-    
+
     /**
      * Specifier mappings
      */
     private static Hashtable<String, String> specMap;
-    
+
     /**
-     * Sets properties. 
+     * Sets properties.
      * <p>
      * Note: Extraction properties start with "ekb." and "extractions.".
      * 
      * @param props
      */
-    public static void setProperties (Properties props) {
+    public static void setProperties(Properties props) {
         properties = props;
         setSpecifierMap();
     }
-    
+
     /**
      * Obtains the value of a property. Returns {@code null} if the property is not found.
      * 
      * @param key
      * @return
      */
-    public static String getProperty (String key) {
+    public static String getProperty(String key) {
         return properties.getProperty(key);
     }
-    
+
     /**
-     * Obtains the value of a list property. A list property value is given as "X, Y, Z, ...". The result is the list of these values, i.e, (X, Y, Z, ...).
+     * Obtains the value of a list property. A list property value is given as "X, Y, Z, ...". The result is the list of
+     * these values, i.e, (X, Y, Z, ...).
+     * 
      * @param key
      * @return
      */
-    public static List<String> getPropertyList (String key) {
+    public static List<String> getPropertyList(String key) {
         final Pattern listPattern = Pattern.compile(", *");
 
         String prop = properties.getProperty(key);
@@ -75,8 +77,8 @@ public class ExtractionFactory {
         String[] list = listPattern.split(prop);
         return Arrays.asList(list);
     }
-    
-    private static void setSpecifierMap () {
+
+    private static void setSpecifierMap() {
         final Pattern mapPattern = Pattern.compile(" *=> *");
 
         specMap = new Hashtable<String, String>();
@@ -95,6 +97,7 @@ public class ExtractionFactory {
 
     /**
      * Builds an extraction of the appropriate type from a KQMLList object.
+     * 
      * @param ekb
      * @param extractionResult
      * @return
@@ -118,7 +121,7 @@ public class ExtractionFactory {
     private static Extraction buildExtraction(DrumKB ekb, KQMLList value, KQMLList context, int uttnum) {
         Extraction extraction = null;
         String extractionType = null;
-        
+
         if (value != null) {
             // FIXME: temporarily, we handle both bare and ONT-prefixed types; eventually we'll use ONT
             extractionType = value.get(0).toString();
@@ -137,23 +140,17 @@ public class ExtractionFactory {
             // TODO
         }
 
-        if (extractionType.equalsIgnoreCase("EVENT")) 
-        {
+        if (extractionType.equalsIgnoreCase("EVENT")) {
             extraction = new EventExtraction(ekb, value, context, uttnum);
-        } else if (extractionType.equalsIgnoreCase("TERM"))
-        {
+        } else if (extractionType.equalsIgnoreCase("TERM")) {
             extraction = new TermExtraction(ekb, value, context, uttnum);
-        } else if (extractionType.equalsIgnoreCase("MODALITY")) 
-        {
+        } else if (extractionType.equalsIgnoreCase("MODALITY")) {
             extraction = new ModalityExtraction(ekb, value, context, uttnum);
-        } else if (extractionType.equalsIgnoreCase("EPI")) 
-        {
+        } else if (extractionType.equalsIgnoreCase("EPI")) {
             extraction = new EpistemicModalityExtraction(ekb, value, context, uttnum);
-        } else if (extractionType.equalsIgnoreCase("CC")) 
-        {
+        } else if (extractionType.equalsIgnoreCase("CC")) {
             extraction = new CausalityExtraction(ekb, value, context, uttnum);
-        } else 
-        {
+        } else {
             extraction = new Extraction(ekb, value, context, uttnum);
         }
 

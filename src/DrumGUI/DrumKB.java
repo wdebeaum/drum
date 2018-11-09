@@ -1,7 +1,7 @@
 /*
  * DrumKB.java
  *
- * $Id: DrumKB.java,v 1.33 2018/10/26 01:33:42 lgalescu Exp $
+ * $Id: DrumKB.java,v 1.34 2018/11/08 21:25:42 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  9 May 2015
  */
@@ -75,7 +75,7 @@ public class DrumKB {
         /**
          * @return the pid
          */
-        protected String getPID() {
+        protected String getParagraphId() {
             return pid;
         }
 
@@ -138,22 +138,47 @@ public class DrumKB {
 
     }
 
+    /**
+     * Class for representing paragraph information.
+     * <p>
+     * Note: In this representation this class is used to represent everything known about the input document. As of
+     * November 2018, the EKB format allows a separate {@code <document/>} element, which could be used to represent
+     * information about the full document. Thus, it is possible be that there will be changes in the future to this
+     * class.
+     * 
+     * @author lgalescu
+     *
+     */
     private class Paragraph {
-        private String pid;
+        private String id;
         private String file;
         private String text;
 
-        public Paragraph(String pid, String file, String text) {
-            this.pid = pid;
+        public Paragraph(String id, String file, String text) {
+            this.id = id;
+            this.file = file;
+            this.text = text;
+        }
+
+        public Paragraph(String file, String text) {
             this.file = file;
             this.text = text;
         }
 
         /**
-         * @return the pid
+         * Sets the paragraph id.
+         * 
+         * @param id
          */
-        protected String getPID() {
-            return pid;
+        public void setID(String id) {
+            this.id = id;
+        }
+
+        /**
+         * @return the id
+         */
+        protected String getID() {
+            return id;
         }
 
         /**
@@ -187,12 +212,13 @@ public class DrumKB {
      */
     private ArrayList<Sentence> sentences;
 
-    /** 
+    /**
      * List containing the extractions.
      * There should be one entry for each unique extraction (thus, logically,
-     * this is a set). 
+     * this is a set).
+     * 
      * @see TRIPS.DrumGUI.Extraction#equals(Extraction) equals
-     */ 
+     */
     ArrayList<Extraction> extractions;
 
     /**
@@ -224,7 +250,7 @@ public class DrumKB {
      * File where the EKB is saved.
      */
     private File ekbFile;
-    
+
     /**
      * Properties
      */
@@ -234,23 +260,21 @@ public class DrumKB {
      * Constructor.
      */
     public DrumKB() {
-        id = null;
-        timestamp = null;
-        ekb = null;
-        ekbFile = null;
-        ekbFolder = null;
-        _ekb_needs_update = false;
-        completionStatus = false;
-        docType = "text";
         paragraphs = new ArrayList<Paragraph>();
         sentences = new ArrayList<Sentence>();
         extractions = new ArrayList<Extraction>();
         properties = new Properties();
     }
 
+    public DrumKB(Properties props) {
+        this();
+        init(props);
+    }
+    
     /**
      * Clears data.
      */
+    @Deprecated
     protected void clear() {
         id = null;
         timestamp = null;
@@ -272,13 +296,13 @@ public class DrumKB {
      * @param id
      */
     protected void init() {
-        clear();
+        //clear();
         setTimestamp();
         Debug.debug("The EKB was initialized (ts=" + timestamp + ")");
     }
 
     /**
-     * Initializes the KB and sets its properties. 
+     * Initializes the KB and sets its properties.
      * <p>
      * Note: only properties with a prefix of "extractions" or "ekb" are set!
      * 
@@ -386,8 +410,7 @@ public class DrumKB {
      * @see {@link #makeEKBFileName()}
      */
     private void setEKBFile()
-            throws NullPointerException
-    {
+            throws NullPointerException {
         // don't set it if it is already set!
         if (ekbFile == null) {
             String filename = makeEKBFileName();
@@ -405,8 +428,7 @@ public class DrumKB {
      * @throws NullPointerException
      */
     protected void setEKBFile(File file)
-            throws NullPointerException
-    {
+            throws NullPointerException {
         ekbFile = file;
         ekbFolder = ekbFile.getParent();
         Debug.info("ekbFile set to: " + ekbFile);
@@ -418,13 +440,12 @@ public class DrumKB {
      * @throws RuntimeException
      */
     protected String getEKBFile()
-            throws RuntimeException
-    {
+            throws RuntimeException {
         return ekbFile.getAbsolutePath();
     }
 
     /**
-     * Sets current paragraph.
+     * Sets current paragraph/document text and source file.
      * 
      * @param file
      *            the input file
@@ -433,9 +454,21 @@ public class DrumKB {
      * @param pid
      *            the paragraph id
      */
-    protected void setParagraph(String pid, String file, String text) {
-        Debug.info("DrumKB: setting paragraph: \n\tid: " + pid + "\n\tfile: " + file + "\n\ttext: " + text);
-        paragraphs.add(new Paragraph(pid, file, text));
+    protected void setParagraph(String file, String text) {
+        Debug.info("DrumKB: setting paragraph: \n\tfile: " + file + "\n\ttext: " + text);
+        paragraphs.add(new Paragraph(file, text));
+        _ekb_needs_update = true;
+    }
+
+    /**
+     * Sets current paragraph id.
+     * 
+     * @param pid
+      *            the paragraph id
+    */
+    protected void setParagraphId(String pid) {
+        Debug.info("DrumKB: setting paragraph: \n\tid: " + pid);
+        getParagraph().setID(pid);
         _ekb_needs_update = true;
     }
 
@@ -446,9 +479,8 @@ public class DrumKB {
      * @throws RuntimeException
      *             if there are no paragraphs
      */
-    private Paragraph getCurrentParagraph()
-            throws RuntimeException
-    {
+    private Paragraph getParagraph()
+            throws RuntimeException {
         try {
             Paragraph last = paragraphs.get(paragraphs.size() - 1);
             return last;
@@ -462,9 +494,9 @@ public class DrumKB {
      * Returns the current paragraph ID.
      * 
      */
-    protected String getCurrentPID() {
+    protected String getParagraphId() {
         try {
-            return getCurrentParagraph().getPID();
+            return getParagraph().getID();
         } catch (Exception e) {
             Debug.error("Cannot get paragraph ID: " + e);
             return null;
@@ -474,9 +506,9 @@ public class DrumKB {
     /**
      * Returns the text of the current paragraph.
      */
-    protected String getCurrentText() {
+    protected String getParagraphText() {
         try {
-            return getCurrentParagraph().getText();
+            return getParagraph().getText();
         } catch (Exception e) {
             Debug.error("Cannot get paragraph ID: " + e);
             return null;
@@ -523,7 +555,7 @@ public class DrumKB {
      */
     private Paragraph getParagraph(String pid) {
         for (Paragraph p : paragraphs) {
-            if (p.getPID().equals(pid)) {
+            if (p.getID().equals(pid)) {
                 return p;
             }
         }
@@ -543,7 +575,7 @@ public class DrumKB {
     protected void addUtterance(int uttnum, String utt) {
         Sentence sentence = getSentence(uttnum);
         if (sentence == null) { // new utterance: we normalize it
-            sentences.add(new Sentence(uttnum, getCurrentPID(), utt));
+            sentences.add(new Sentence(uttnum, getParagraphId(), utt));
         } else { // additional clause of an already existing utterance
             sentence.addText(utt);
         }
@@ -653,14 +685,12 @@ public class DrumKB {
      *            the uttnum for the given sentence
      * @return the paragraph id
      */
-    protected String getPID(int uttnum) {
-        Sentence s = getSentence(uttnum);
-        return s.getPID();
+    protected String getParagraphIdForSentence(int uttnum) {
+        return getSentence(uttnum).getParagraphId();
     }
 
     /**
-     * Get offset from start of paragraph for a given character frame in an utterance (identified by its {@code uttnum}
-     * ).
+     * Get offset from start of paragraph for a given character frame in an utterance (identified by its {@code uttnum}).
      * 
      * @param uttnum
      * @param frame
@@ -675,9 +705,7 @@ public class DrumKB {
      * 
      */
     protected String getTextSpan(int uttnum, int start, int end) {
-        Sentence s = getSentence(uttnum);
-        Paragraph p = getParagraph(s.getPID());
-        String text = p.getText();
+        String text = getParagraph(getParagraphIdForSentence(uttnum)).getText();
         if (text == null) {
             Debug.error("No text?!?");
             return null;
@@ -698,8 +726,7 @@ public class DrumKB {
      * @see #ekb
      */
     private void makeEKB()
-            throws RuntimeException
-    {
+            throws RuntimeException {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder;
         try {
@@ -718,7 +745,7 @@ public class DrumKB {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        for (Extraction ke: extractions) {
+        for (Extraction ke : extractions) {
             String x = null;
             try {
                 x = ke.toXML();
@@ -726,7 +753,8 @@ public class DrumKB {
                 Debug.debug("Error generating XML for: " + ke);
                 e.printStackTrace();
             }
-            if (x == null) continue; // FIXME: eventually all extractions should be output!
+            if (x == null)
+                continue; // FIXME: eventually all extractions should be output!
             try {
                 // FIXME: currently, Extraction#toXML() can generate multiple
                 // elements; the following is a temporary fix:
@@ -765,7 +793,7 @@ public class DrumKB {
         Attr csAttr = doc.createAttribute("complete");
         csAttr.setValue(String.valueOf(completionStatus));
         root.setAttributeNode(csAttr);
-        // domain 
+        // domain
         Attr emAttr = doc.createAttribute("domain");
         emAttr.setValue(String.valueOf(properties.get("extractions.mode")));
         root.setAttributeNode(emAttr);
@@ -816,7 +844,7 @@ public class DrumKB {
     private Element makeParagraphElement(Paragraph para, Document doc) {
         Element element = doc.createElement("paragraph");
         Attr id = doc.createAttribute("id");
-        id.setValue(para.getPID());
+        id.setValue(para.getID());
         element.setAttributeNode(id);
         Attr attr = doc.createAttribute("file");
         attr.setValue(para.getFile());
@@ -841,7 +869,7 @@ public class DrumKB {
         id.setValue(Integer.toString(sentence.getUttnum()));
         element.setAttributeNode(id);
         Attr pid = doc.createAttribute("pid");
-        pid.setValue(sentence.getPID());
+        pid.setValue(sentence.getParagraphId());
         element.setAttributeNode(pid);
         Text uttContent = doc.createTextNode(sentence.getText());
         element.appendChild(uttContent);
@@ -876,8 +904,7 @@ public class DrumKB {
      * @see #ekbFolder
      */
     protected String saveEKB()
-            throws RuntimeException
-    {
+            throws RuntimeException {
         // create file, if it hasn't been created already
         setEKBFile();
         // make the EKB, if we don't have it already

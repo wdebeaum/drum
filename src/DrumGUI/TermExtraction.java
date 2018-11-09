@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.58 2018/11/06 16:58:12 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.59 2018/11/08 21:25:42 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -28,7 +28,6 @@ public class TermExtraction extends Extraction {
     /**
      * Term attributes
      * 
-     * @author lgalescu
      */
     protected enum Attribute {
         // :NAME symbol --> name of term (in W:: package)
@@ -98,7 +97,6 @@ public class TermExtraction extends Extraction {
     /**
      * Term poly-attributes (each attribute may appear multiple times)
      * 
-     * @author lgalescu
      */
     protected enum PolyAttribute {
         // :DEGREE hyper-/hypo-/under-/over-

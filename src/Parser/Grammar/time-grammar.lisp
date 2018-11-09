@@ -1346,12 +1346,12 @@
 
   ;; Monday
     ((DATE (INT +) (LF ONT::DAY-NAME) (DOW ?dow)
-	   (lex ?hlex) (headcat ?hcat) (day-specified +) (sem ?sem)) 
-   -dt-dow> 1.0
-   (head (Name (LF ONT::DAY-NAME)    
-	    (lf ?dow)  (lex ?hlex) (headcat ?hcat) (sem ?sem) (var ?var)
-	    )))
-    
+      (lex ?hlex) (headcat ?hcat) (day-specified +) (sem ?sem)) 
+     -dt-dow> 1.0
+     (head (Name (lf (? xx ONT::DAY-NAME ONT::TODAY ONT::YESTERDAY ONT::TOMORROW))
+		 (lf ?dow)  (lex ?hlex) (headcat ?hcat) (sem ?sem) (var ?var)
+		 )))
+
     ;; July
     ((DATE (INT +) (MONTH ?M) (lex ?hlex) (headcat ?hcat))
      -dt-month> 1.0
@@ -1519,13 +1519,13 @@
       )
 
 
-   ;;  Dates as adverbials
+   ;;  Dates as adverbials: must eithger have a DOW or a DAY feature - so we use two rules...
    ;; Those with a day of the week, e.g.,  Monday I go
      ((ADVBL (ARG ?arg) ;(ROLE (:* ONT::EVENT-TIME-REL W::DATE))
 	     (sem ?sem) ;(SEM (? SEM8045 ($ F::abstr-obj  (F::TYPE ONT::EVENT-TIME-REL))))
 	   (SORT BINARY-CONSTRAINT)
-	   (LF (% PROP (VAR ?v) (CLASS ONT::EVENT-TIME-REL) ;(CLASS (:* ONT::EVENT-TIME-REL W::DATE))
-		  (CONSTRAINT (& (FIGURE ?arg) (GROUND (% *PRO* (VAR *)
+	   (LF (% PROP (VAR ?v) (CLASS ONT::TIME-SPAN-REL) ;(CLASS (:* ONT::EVENT-TIME-REL W::DATE))
+		  (CONSTRAINT (& (FIGURE ?arg) (GROUND (% *PRO* (VAR *)  (STATUS ont::definite)
 						       (CLASS ONT::TIME-LOC) (lex ?hlex)
 						       (CONSTRAINT (& (DAY ?day) (Month ?m) (DAY-OF-WEEK ?!dow) (YEAR ?y) (AM-pm ?ampm) (phase ?phase)))))))))
 	   (VAR ?v) (ATYPE (? x W::PRE W::POST))  (bare-advbl +)
@@ -1540,7 +1540,7 @@
     -date-advbl1>
     (DATE (var ?v) (DAY ?day) (Month ?m) (DOW ?!dow) (Year ?y) (phase ?phase) (AM-pm ?ampm)
 	  (lex ?hlex) (headcat ?hcat))
-    (compute-sem-features (lf ont::event-time-rel) (sem ?sem))
+    (compute-sem-features (lf ont::time-span-rel) (sem ?sem))
     )
 
    ;; this one covers the other case, e.g., I go July third

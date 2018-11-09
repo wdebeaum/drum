@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.57 2018/10/26 01:33:43 lgalescu Exp $
+ * $Id: Extraction.java,v 1.58 2018/11/08 21:25:42 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -265,7 +265,7 @@ public class Extraction {
      * 
      */
     protected String getParagraphID() {
-        return ekb.getPID(uttnum);
+        return ekb.getParagraphIdForSentence(uttnum);
     }
 
     /**

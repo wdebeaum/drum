@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.78 2018/10/26 01:33:42 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.79 2018/11/08 21:25:42 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -27,10 +27,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -102,29 +104,30 @@ public class DrumGUI extends StandardTripsModule {
     private Mode mode = Mode.CONNECTED;
 
     // display
-    protected Display display = null; 
+    protected Display display = null;
     private boolean showDisplay = true;
 
-    // selected datasets
+    // dataset (sets of files)
+    // the files to be processed during a run are those in the dataset that are selected
     protected DataSet dataset = new DataSet();
     /** Input file currently being processed. */
     protected String currentInputFile;
     /** String form of data currently being processed. */
     protected String currentInputData;
 
-    // useful stuff for syncing with other TRIPS modules
+    // useful stuff for sync-ing with other TRIPS modules
     private boolean isSysReady = false;
     /** When true, we can do whatever to close off the current document, then can move on to a new one */
     private boolean documentDone = true;
-    /** ID for current document (corresponds to paragraph ID in the rest of the system). */
-    protected String documentID;
+    /** ID for the paragraph currently being processed. */
+    protected String paragraphId;
     /** Counter for external {@code run-text} requests. */
     protected int runTextCounter = 0;
-    /** Utterance number (uttnum) of the last utterance of the current paragraph. */
-    private int pLastUttnum = 0;
-    /** Number of clauses for the last utterance of the current paragraph that remain to be processed. */
-    private int pLastClausesToDo = 0;
-    /** True iff full paragraph sent to TextTagger was OKed for processing */
+    /** Utterance number (uttnum) of the last utterance of the current fragment. */
+    private int lastUttnumInFragment = 0;
+    /** Number of clauses for the last utterance of the current fragment that remain to be processed. */
+    private int clausesRemaining = 0;
+    /** True iff fragment sent to TextTagger was OKed for processing */
     private boolean gotOK = false;
     /**
      * Utterances we're waiting on. Each utterance, represented by its {@code uttnum}, maps to a list of clauses. The
@@ -162,35 +165,67 @@ public class DrumGUI extends StandardTripsModule {
     /** Time of last activity seen on the rest of the system */
     private long timeOfLastSystemActivity;
 
-
     /**
      * The KB.
      */
-    private static DrumKB kb = new DrumKB();
+    private DrumKB kb;
 
     // logging
     protected Log log = null;
     protected boolean logging = false;
 
     // things relevant for STANDALONE mode
-    protected String cacheDir;  // cached input directory
+    protected String cacheDir; // cached input directory
     protected String traceFile; // msg input for rerunning a full session
     // things relevant for BATCH mode
     protected String batchFile; // lists data files to be processed in batch mode
 
     // LG 20110710: ideally the processing model should allow for documents to be structured in more complex
-    // hierarchies. For now, we have only two options:
-    // i) process whole document in one step (single-paragraph mode); and
-    // ii) process a document as a sequence of paragraphs, separated by line-breaks.
-    private boolean breakLines; // TODO: change name
-    /** paragraphs, obtained from a document by splitting at line breaks */
-    String[] paragraphs;
-    /** paragraph offsets relative to document */
-    int[] paragraphOffsets;
-    /** maps each uttnum to a paragraph index (starting at 0) */
+    // hierarchies.
+    /**
+     * If {@code true}, a document will be split into paragraphs at two consecutive linebreaks. If {@code false} (the
+     * default), the document is processed in a single piece.
+     * <p>
+     * Note: Other TRIPS components may impose limits on the length of text they can process at once. It is advisable
+     * that very long text be pre-processed in smaller, paragraph-size fragments, or that this setting is turned on
+     * (assuming the two-linebreaks convention is followed in the input text).
+     * 
+     * @see #splitOnNewlines
+     */
+    private boolean splitParagraphsMode = false;
+    /**
+     * If {@code true}, the document is considered pre-processed to contain one sentence per line. For the moment this
+     * turns off {@link #splitParagraphsMode}.
+     * If {@code false} (the default) no such assumption is made.
+     * <p>
+     * Note: There is no check that the input actually conforms to the one-sentence-per-line convention; this setting
+     * only controls the behavior of this component, but has no effect on subsequent decisions by other TRIPS
+     * components.
+     * 
+     * @see #splitParagraphsMode
+     */
+    private boolean splitOnNewlines = false;
+    /**
+     * Text fragments (paragraphs or lines) in the current document. Used only if a splitting mode is used, i.e., either
+     * {@link #splitParagraphsMode} or {@link #splitOnNewlines} is turned on.
+     * 
+     * @see #splitParagraphsMode
+     * @see #splitOnNewlines
+     */
+    String[] fragments;
+    /**
+     * Fragment offsets relative to document. Used in conjunction with {@link #fragments}.
+     * 
+     * @see #fragments
+     */
+    int[] fragmentOffsets;
+    /**
+     * Maps each uttnum to a fragment index (starting at 0). Uttnums are utterance numbers coming out of the sentence
+     * splitter. This object holds a mapping between those numbers and the text fragment they belong to.
+     */
     HashMap<Integer, Integer> docMap;
-    /** number of paragraphs processed */
-    int paragraphsDone = 0;
+    /** Number of text fragments (paragraphs or lines) processed */
+    int fragmentsDone = 0;
 
     int currentDatasetIndex = 0;
 
@@ -204,23 +239,28 @@ public class DrumGUI extends StandardTripsModule {
     private String inputTermsFolder = null;
     private String inputTermsFileExtension = "its";
 
-    /** main()
+    /**
+     * main()
      */
     public static void main(String argv[]) {
         new DrumGUI(argv, true).run();
     }
-    /** Constructor
+
+    /**
+     * Constructor
      */
     public DrumGUI(String argv[], boolean isApplication) {
         super(argv, isApplication);
     }
-    /** Constructor
+
+    /**
+     * Constructor
      */
     public DrumGUI(String argv[]) {
         this(argv, false);
     }
 
-    /** 
+    /**
      * Performs initializations.
      */
     public void init() {
@@ -246,9 +286,11 @@ public class DrumGUI extends StandardTripsModule {
         }
         tagOptions = defaultTagOptions;
 
-        // breakLines?
-        breakLines = propertyValueBoolean("input.split-on-newlines");
-        
+        // break document into lines?
+        splitOnNewlines = propertyValueBoolean("input.split-on-newlines");
+        // break document into paragraphs?
+        splitParagraphsMode = propertyValueBoolean("input.split-into-paragraphs") && !splitOnNewlines;
+
         // ready
         sendSubscriptions();
         initLog();
@@ -266,7 +308,7 @@ public class DrumGUI extends StandardTripsModule {
             dataset.selectAll();
             if (isSysReady) { // normally we'd have to wait for this...
                 sendGetTTParameters();
-                initiateProcessing();
+                initiateProcessing(true);
             }
         } else if (mode == Mode.STANDALONE) {
             if ((cacheDir == null) && (traceFile == null)) {
@@ -298,7 +340,7 @@ public class DrumGUI extends StandardTripsModule {
         docMap = new HashMap<Integer, Integer>();
     }
 
-    /** 
+    /**
      * Handles command-line parameters.
      */
     protected void handleParameters() {
@@ -337,7 +379,7 @@ public class DrumGUI extends StandardTripsModule {
             logging = StringUtils.stringToBoolean(value);
         }
         if ((value = getParameter("-wait")) != null) {
-            isSysReady = ! StringUtils.stringToBoolean(value);
+            isSysReady = !StringUtils.stringToBoolean(value);
         }
     }
 
@@ -348,6 +390,7 @@ public class DrumGUI extends StandardTripsModule {
         properties.put("Display.ExtractorPanel.mode", "TREE");
         properties.put("Display.SelectorPanel.mode", "2");
         properties.put("tag.options.default", "(:split-clauses true :split-sentences true)");
+        properties.put("input.split-into-paragraphs", "false");
         properties.put("input.split-on-newlines", "false");
         properties.put("extractions.mode", "DRUM");
         properties.put("ekb.reasoner", "DRUM");
@@ -419,7 +462,7 @@ public class DrumGUI extends StandardTripsModule {
         return Boolean.parseBoolean(properties.getProperty(prop, "false"));
     }
 
-    /** 
+    /**
      * Sends message subscriptions.
      */
     protected void sendSubscriptions() {
@@ -464,8 +507,9 @@ public class DrumGUI extends StandardTripsModule {
         }
     }
 
-    /** Requests that the {@code TextTagger} component send back its 
-     * configuration. Currently this ifnormation is not processed in any way, 
+    /**
+     * Requests that the {@code TextTagger} component send back its
+     * configuration. Currently this information is not processed in any way,
      * but is logged so it can be inspected.
      */
     protected void sendGetTTParameters() {
@@ -481,7 +525,7 @@ public class DrumGUI extends StandardTripsModule {
         }
     }
 
-    /** 
+    /**
      * Handles {@code tell} messages.
      */
     public void receiveTell(KQMLPerformative msg, Object contentobj) {
@@ -492,7 +536,7 @@ public class DrumGUI extends StandardTripsModule {
             return;
         }
 
-        KQMLList content = (KQMLList)contentobj;
+        KQMLList content = (KQMLList) contentobj;
         String verb = content.get(0).toString();
 
         this.setTimeOfSystemActivity();
@@ -525,7 +569,7 @@ public class DrumGUI extends StandardTripsModule {
         }
     }
 
-    /** 
+    /**
      * Handles {@code request} messages.
      */
     public void receiveRequest(KQMLPerformative msg, Object contentObject) {
@@ -551,8 +595,7 @@ public class DrumGUI extends StandardTripsModule {
         } else if (verb.equalsIgnoreCase("run-text") || verb.equalsIgnoreCase("load-text")
                 || verb.equalsIgnoreCase("run-file") || verb.equalsIgnoreCase("load-file")
                 || verb.equalsIgnoreCase("run-all-files")
-                || verb.equalsIgnoreCase("run-pmcid"))
-        {
+                || verb.equalsIgnoreCase("run-pmcid")) {
             handleTaskRequest(msg, content);
         } else if (verb.equalsIgnoreCase("get-status")) {
             // initiate processing of files from folder
@@ -610,7 +653,7 @@ public class DrumGUI extends StandardTripsModule {
         }
     }
 
-    /** 
+    /**
      * Handles {@code reply} messages.
      */
     public void receiveReply(KQMLPerformative msg, Object contentObject) {
@@ -631,8 +674,8 @@ public class DrumGUI extends StandardTripsModule {
         }
     }
 
-    /** 
-     * Handler for 'overheard' {@code tag} requests to TextTagger 
+    /**
+     * Handler for 'overheard' {@code tag} requests to TextTagger
      * (<em>i.e.</em>, messages sent from some other TRIPS component).
      */
     private void handleTag(KQMLPerformative msg, KQMLList content) {
@@ -738,7 +781,7 @@ public class DrumGUI extends StandardTripsModule {
         inputTermsFileExtension = "its";
         Debug.info("Input terms parameters have been reset");
     }
-    
+
     /**
      * Set common task parameters.
      * 
@@ -774,7 +817,7 @@ public class DrumGUI extends StandardTripsModule {
         } else {
             replyWhenDone = reply_when_done || replyWithEKB;
         }
-        
+
         // Ask EKBAgent to do inference on the resulting EKB?
         KQMLObject doInferenceObj = content.getKeywordArg(":do-inference");
         if (doInferenceObj != null) {
@@ -798,8 +841,7 @@ public class DrumGUI extends StandardTripsModule {
      *            performative content
      */
     private void handleRunText(KQMLPerformative msg, KQMLList content)
-            throws RuntimeException, IOException
-    {
+            throws RuntimeException, IOException {
         // common task parameters
         setCommonTaskParameters(msg, content, true, true);
 
@@ -827,7 +869,7 @@ public class DrumGUI extends StandardTripsModule {
         setDatasetToFile(folder, filename);
 
         // init the EKB
-        kb.init(properties);
+        kb = new DrumKB(properties);
         kb.setID(filename);
 
         // send accepted?
@@ -837,7 +879,7 @@ public class DrumGUI extends StandardTripsModule {
             } catch (Exception e) {
                 e.printStackTrace();
                 errorReply(taskRequest, "Error: EKB cannot be saved");
-                kb.clear();
+                //kb.clear();
                 return;
             }
 
@@ -859,8 +901,7 @@ public class DrumGUI extends StandardTripsModule {
      *            performative content
      */
     private void handleRunFile(KQMLPerformative msg, KQMLList content)
-            throws RuntimeException
-    {
+            throws RuntimeException {
         // common task parameters
         setCommonTaskParameters(msg, content, true, false);
 
@@ -877,7 +918,7 @@ public class DrumGUI extends StandardTripsModule {
         }
 
         // init the EKB
-        kb.init(properties);
+        kb = new DrumKB(properties);
 
         // set id for this run to the basename of the file
         int pos = filename.lastIndexOf(".");
@@ -891,7 +932,7 @@ public class DrumGUI extends StandardTripsModule {
             } catch (Exception e) {
                 e.printStackTrace();
                 errorReply(taskRequest, "Error: EKB cannot be saved");
-                kb.clear();
+                //kb.clear();
                 return;
             }
 
@@ -916,8 +957,7 @@ public class DrumGUI extends StandardTripsModule {
      *            performative content
      */
     private void handleRunAllFiles(KQMLPerformative msg, KQMLList content)
-            throws RuntimeException
-    {
+            throws RuntimeException {
         // common task parameters
         setCommonTaskParameters(msg, content, false, false);
 
@@ -940,7 +980,7 @@ public class DrumGUI extends StandardTripsModule {
         if (singleEKB) {
             // init the ekb; use folder name as id
             String ekb_id = (new File(folder)).getName();
-            kb.init(properties);
+            kb = new DrumKB(properties);
             kb.setID(ekb_id);
 
             // send accepted?
@@ -950,7 +990,7 @@ public class DrumGUI extends StandardTripsModule {
                 } catch (Exception e) {
                     e.printStackTrace();
                     errorReply(taskRequest, "Error: EKB cannot be saved");
-                    kb.clear();
+                    //kb.clear();
                     return;
                 }
 
@@ -998,8 +1038,7 @@ public class DrumGUI extends StandardTripsModule {
      * TODO: should do a better job checking on "ekb-path".
      */
     private void handleRunPMCID(KQMLPerformative msg, KQMLList content)
-            throws RuntimeException
-    {
+            throws RuntimeException {
         // for now this is fixed
         final String pmcidFileType = ".*\\.xml";
 
@@ -1046,7 +1085,7 @@ public class DrumGUI extends StandardTripsModule {
         setCommonTaskParameters(msg, content, false, false);
 
         // init the EKB
-        kb.init(properties);
+        kb = new DrumKB(properties);
         kb.setID(pmcid);
         kb.setDocType("article");
         if (saveto != null) {
@@ -1068,7 +1107,7 @@ public class DrumGUI extends StandardTripsModule {
             } catch (Exception e) {
                 e.printStackTrace();
                 errorReply(taskRequest, "Error: EKB cannot be saved");
-                kb.clear();
+                //kb.clear();
                 return;
             }
 
@@ -1079,7 +1118,7 @@ public class DrumGUI extends StandardTripsModule {
         } catch (Exception e) {
             e.printStackTrace();
             errorReply(msg, "Cannot find folder for the PMCID given");
-            kb.clear();
+            //kb.clear();
             return;
         }
 
@@ -1104,7 +1143,7 @@ public class DrumGUI extends StandardTripsModule {
         }
     }
 
-    /** 
+    /**
      * Handler for {@code utterance} messages (from TextTagger).
      */
     private void handleUtterance(KQMLPerformative msg, KQMLList content) {
@@ -1120,17 +1159,19 @@ public class DrumGUI extends StandardTripsModule {
             kb.addUtterance(uttnum, text.stringValue());
         }
         //
-        if (uttnum > pLastUttnum) {
-            pLastUttnum = uttnum;
-            pLastClausesToDo = 1;
-        } else if (uttnum == pLastUttnum) {
-            pLastClausesToDo++;
+        if (uttnum > lastUttnumInFragment) {
+            lastUttnumInFragment = uttnum;
+            clausesRemaining = 1;
+        } else if (uttnum == lastUttnumInFragment) {
+            clausesRemaining++;
+        } else {
+            clausesRemaining = 0;
         }
     }
 
-    /** 
+    /**
      * Handler for {@code module-status} (from TextTagger)).
-     *  In "live" mode we wait for this before enabling input processing.
+     * In "live" mode we wait for this before enabling input processing.
      */
     private void handleModuleStatus(KQMLPerformative msg, KQMLList content) {
         KQMLToken sender = (KQMLToken) msg.getParameter(":sender");
@@ -1153,7 +1194,7 @@ public class DrumGUI extends StandardTripsModule {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-                initiateProcessing();
+                initiateProcessing(false);
             }
             if (display != null)
                 display.setState(Display.State.READY);
@@ -1164,21 +1205,25 @@ public class DrumGUI extends StandardTripsModule {
      * Handler for {@code start-paragraph}. This signals that the the tag request has now started cascading through the
      * system.
      * <p>
-     * Note: Normally this message comes from TextTagger; however, when {@code input.split-on-newlines} is {@code true},
+     * Note: Normally this message comes from TextTagger; however, when {@link #splitOnNewlines} is {@code true},
      * we self-generate it.
+     * 
+     * @see #splitOnNewlines
      */
     private void handleStartParagraph(KQMLList content) {
-        documentID = content.getKeywordArg(":id").toString();
-        if (documentID == null) {
+        paragraphId = content.getKeywordArg(":id").toString();
+        if (paragraphId == null) {
             Debug.error("No paragraph ID?!?! " + content);
             return;
         }
-        kb.setParagraph(documentID, currentInputFile, currentInputData);
-        Debug.debug("STATE: start-paragraph " + documentID);
+        String pid = kb.getParagraphId();
+        if (pid == null) {
+            kb.setParagraphId(paragraphId);
+        }
     }
 
-    /** 
-     * Handler for {@code reply} messages signaling the tag request was processed. 
+    /**
+     * Handler for {@code reply} messages signaling the tag request was processed.
      */
     private void handleReplyOK(KQMLList content) {
         // TODO: i should do a better job managing requests and replies. here i'm simplifying things based on a few
@@ -1191,15 +1236,17 @@ public class DrumGUI extends StandardTripsModule {
             if (uttnums.isEmpty()) {
                 Debug.error("STATE: No uttnums");
             } else {
-                pLastUttnum = Integer.parseInt(uttnums.get(uttnums.size() - 1).toString());
+                // record some info for state tracking
+                lastUttnumInFragment = Integer.parseInt(uttnums.get(uttnums.size() - 1).toString());
+                addUttnumsToWaitingList(uttnums);
                 Debug.debug("STATE: OK - uttnums: " + uttnums);
                 gotOK = true;
             }
         }
     }
 
-    /** 
-     * Handler for {@code reply} messages signaling the tag request was rejected. 
+    /**
+     * Handler for {@code reply} messages signaling the tag request was rejected.
      */
     private void handleReplyReject(KQMLList content) {
         KQMLString reason = (KQMLString) content.getKeywordArg(":reason");
@@ -1213,7 +1260,7 @@ public class DrumGUI extends StandardTripsModule {
             rcontent.add(reason);
             rmsg.setParameter(":content", rcontent);
             reply(taskRequest, rmsg);
-            kb.clear();
+            //kb.clear();
         }
         // and we move on
         finishCurrentDocument();
@@ -1233,22 +1280,22 @@ public class DrumGUI extends StandardTripsModule {
 
     /**
      * Handler for {@code paragraph-done} messages. This indicates we've reached the end of processing for the
-     * current document.
+     * current fragment or document, depending on the document model in force.
      * <p>
-     * We also track the state of the system utterance-by-utterance.
+     * This is only used for debugging, it doesn't affect the system state, which is tracked utterance-by-utterance.
      * 
      * @see #handleUtteranceDone(KQMLList)
      * @see #waitingList
      */
     private void handleParagraphDone(KQMLList content) {
         String pID = content.getKeywordArg(":id").toString();
+        // check if we're waiting for more utterances to be processed
         if (!waitingList.isEmpty()) {
-            Debug.error("STATE: Document done: " + pID + ", but waiting on: " + waitingList);
-            documentDone = true;
+            Debug.error("STATE: Paragraph done: " + pID + ", but waiting on: " + waitingList);
             return;
         }
-        Debug.warn("STATE: Document done [IM is done]: " + pID);
-        documentDone();
+        Debug.warn("STATE: Paragraph done [IM is done]: " + pID);
+        //checkIfDoneProcessing(); -- we handle this at utterance level
     }
 
     /**
@@ -1266,14 +1313,14 @@ public class DrumGUI extends StandardTripsModule {
         // eg: (:TREE NIL)
         if ((wordsObj == null) || wordsObj.toString().equals("NIL")) {
             Debug.debug("STATE: Parser failure"); // we won't be getting anything meaningful from the IM
-            if (waitingList.isEmpty()) { 
+            if (waitingList.isEmpty()) {
                 // discard clause
                 KQMLObject unObject = act.getKeywordArg(":uttnum");
                 if (unObject != null) {
                     int uttnum = Integer.parseInt(unObject.toString());
-                    if (uttnum == pLastUttnum) {
-                        pLastClausesToDo--;
-                        Debug.debug("STATE: Assuming clause failed; " + pLastClausesToDo
+                    if (uttnum == lastUttnumInFragment) {
+                        clausesRemaining--;
+                        Debug.debug("STATE: Assuming clause failed; " + clausesRemaining
                                 + " clauses remaining");
                     }
                 } else {
@@ -1311,7 +1358,7 @@ public class DrumGUI extends StandardTripsModule {
                 waitingList.put(uttnum, clauses);
             }
         }
-        Debug.warn("STATE: Waiting on: " + waitingList);
+        Debug.warn("STATE: got new SA; waiting on: " + waitingList);
     }
 
     /**
@@ -1328,10 +1375,10 @@ public class DrumGUI extends StandardTripsModule {
             Debug.error("STATE: Stray fragment? (ignored) :uttnum " + uttnum);
             return;
         } else {
-            Debug.debug("STATE: Utterance failed :uttnum " + uttnum + " (waiting for " + pLastUttnum + ")");
-            if (uttnum == pLastUttnum) {
-                pLastClausesToDo--;
-                Debug.debug("STATE: " + pLastClausesToDo + " clauses remaining");
+            Debug.debug("STATE: Utterance failed :uttnum " + uttnum + " (waiting for " + lastUttnumInFragment + ")");
+            if (uttnum == lastUttnumInFragment) {
+                clausesRemaining--;
+                Debug.debug("STATE: " + clausesRemaining + " clauses remaining");
             }
         }
         //
@@ -1346,29 +1393,43 @@ public class DrumGUI extends StandardTripsModule {
     private void handleUtteranceDone(KQMLList content) {
         KQMLObject wordsObj = content.getKeywordArg(":words");
 
+        // get uttnum
+        KQMLObject uttnumObj = content.getKeywordArg(":uttnum");
+        // FIXME: is is possible for it to be missing?
+        int uttnum = Integer.parseInt(uttnumObj.toString());
+
         // case #1: IM failure
         // eg, (INTERPRETATION-FAILED :WORDS NIL ...)
         if (wordsObj instanceof KQMLToken) { // must be NIL
-            Debug.debug("STATE: Pathologic utterance or fragment: " + wordsObj);
+            Debug.debug("STATE: Pathologic interpretation at uttnum=" + uttnum + ": " + wordsObj);
+            // if we're on the last utterance, skip clause
+            if (clausesRemaining > 0) {
+                clausesRemaining--; 
+                Debug.debug("STATE: Skipped clause; " + clausesRemaining + " clauses remaining");
+            } 
+            // skip the whole utterance and remove the uttnum from the waiting list (check if this might be too drastic!)
+            ArrayList<KQMLList> clause = waitingList.remove(uttnum);
+            Debug.debug("STATE: Removed from waiting list: uttnum=" + uttnum + " "+clause);
+            
             checkIfDoneProcessing();
             return;
         }
 
         KQMLList words = (KQMLList) wordsObj;
-        KQMLObject uttnumObj = content.getKeywordArg(":uttnum");
-        int uttnum = Integer.parseInt(uttnumObj.toString());
 
         if (waitingList.containsKey(uttnum)) {
+            // in case there were pathological utterances skipped, we clear them up
+            clearWaitingList(uttnum);
             Debug.debug("STATE: Waiting list match for: " + uttnum);
             // case #2: successful interpretation; we discharge the clause
             if (waitingList.get(uttnum).remove(words)) {
                 if (waitingList.get(uttnum).isEmpty()) {
                     waitingList.remove(uttnum);
-                    Debug.debug("STATE: Utterance done :uttnum " + uttnum + " (waiting for " + pLastUttnum + ")");
+                    Debug.debug("STATE: Utterance done :uttnum " + uttnum + " (waiting for " + lastUttnumInFragment + ")");
                 }
-                if (uttnum == pLastUttnum) {
-                    pLastClausesToDo--;
-                    Debug.debug("STATE: " + pLastClausesToDo + " clauses remaining");
+                if (uttnum == lastUttnumInFragment) {
+                    clausesRemaining--;
+                    Debug.debug("STATE: Utterance done " + clausesRemaining + " clauses remaining");
                 }
             } else {
                 // case #3: fragment: keep waiting
@@ -1390,9 +1451,9 @@ public class DrumGUI extends StandardTripsModule {
      * @see #documentDone()
      */
     private void checkIfDoneProcessing() {
-        // have we got the full paragraph through?
+        // have we got the full fragment through?
         if (!gotOK) {
-            Debug.debug("STATE: No OK");
+            Debug.debug("STATE: No OK yet");
             return;
         }
         // are we still waiting for utterances to be processed?
@@ -1400,30 +1461,27 @@ public class DrumGUI extends StandardTripsModule {
             Debug.debug("STATE: Still waiting on: " + waitingList);
             return;
         }
-        // we are on the last utterance but waiting for some clauses to make it through?
-        if (pLastClausesToDo > 0) {
+        // are we on the last utterance but waiting for some clauses to make it through?
+        if (clausesRemaining > 0) {
+            Debug.debug("STATE: " + clausesRemaining + " clauses remaining");
             return;
         }
-        // done?
-        paragraphsDone++;
-        if (breakLines) {
-            int linesToDo = paragraphs.length - paragraphsDone;
-            Debug.debug("STATE: Paragraphs done: " + paragraphsDone + " (to do: " + linesToDo + ")");
-            if (linesToDo == 0) {
-                Debug.debug("STATE: Document done [nothing left to do]");
-                if (documentDone) {
-                    documentDone();
-                }
+        // are we done with all the fragments?
+        if (splitParagraphsMode || splitOnNewlines) {
+            if (fragmentsDone < fragments.length) fragmentsDone++;
+            int fragsToDo = fragments.length - fragmentsDone;
+            Debug.debug("STATE: Fragments done: " + fragmentsDone + " (to do: " + fragsToDo + ")");
+            if (fragsToDo == 0) {
+                Debug.debug("STATE: Document done [nothing left to do]; documentDone="+documentDone);
+                documentDone();
             } else {
                 // send next fragment for tagging
-                Debug.debug("STATE: Moving on to next paragraph");
-                sendTagRequestForParagraph();
+                Debug.debug("STATE: Moving on to next fragment");
+                sendTagRequestForFragment();
             }
         } else {
-            Debug.debug("STATE: Document done [nothing left to do]");
-            if (documentDone) {
-                documentDone();
-            }
+            Debug.debug("STATE: Document done [nothing left to do]; documentDone="+documentDone);
+            documentDone();
         }
     }
 
@@ -1464,20 +1522,24 @@ public class DrumGUI extends StandardTripsModule {
             content.add(":dataset");
             String kbId = kb.getID();
             content.add(new KQMLString(String.valueOf(kbId == null ? "" : kbId)));
-            content.add(":paragraphs-to-do");
+            content.add(":documents-to-do");
             content.add(String.valueOf(toDo));
-            if (documentID != null) { // we check, in case we get a call before the first dataset gets going
+            if (paragraphId != null) { // we check, in case we get a call before the first dataset gets going
                 content.add(":current-paragraph");
-                content.add(documentID);
+                content.add(paragraphId);
             }
             if (taskRequest != null) {
                 content.add(":current-task");
                 content.add(taskRequest.getParameter(":reply-with"));
             }
         }
-        if (breakLines) {
+        if (splitParagraphsMode) {
+            content.add(":paragraphs-to-do");
+            content.add(String.valueOf(fragments.length - fragmentsDone));
+        }
+        if (splitOnNewlines) {
             content.add(":lines-to-do");
-            content.add(String.valueOf(paragraphs.length - paragraphsDone));
+            content.add(String.valueOf(fragments.length - fragmentsDone));
         }
         synchronized (taskQueue) {
             if (!taskQueue.isEmpty()) {
@@ -1493,11 +1555,9 @@ public class DrumGUI extends StandardTripsModule {
         reply(msg, perf);
     }
 
-    // FIXME: paragraph->document, fragment->paragraph
-
     /**
      * Finishes processing of the current document. If more documents remain to be
-     * processed, moves on to the next one (by calling {@link processSelectedDatatset}).
+     * processed, calls {@link processSelectedDatatset} to move on to the next one.
      * 
      * @see #processSelectedDataset()
      */
@@ -1538,11 +1598,11 @@ public class DrumGUI extends StandardTripsModule {
             }
         }
     }
-    
+
     /**
      * Finish task according to mode and clean up or exit
      * 
-     * @param taskRequest 
+     * @param taskRequest
      */
     private void finishAndCleanup(KQMLPerformative taskRequest) {
         if (mode != Mode.STANDALONE) {
@@ -1557,7 +1617,7 @@ public class DrumGUI extends StandardTripsModule {
                 Debug.warn("Task finished (no callback).");
             }
         }
-        
+
         // quit?
         if (exitWhenDone && taskQueue.isEmpty()) {
             sendExitRequest();
@@ -1566,7 +1626,7 @@ public class DrumGUI extends StandardTripsModule {
             System.exit(0);
         }
 
-        // reset display 
+        // reset display
         if (display != null) {
             display.unsetState(Display.State.RUNNING);
             display.clearSelections();
@@ -1579,14 +1639,14 @@ public class DrumGUI extends StandardTripsModule {
      * Send back reply if task wanted it.
      * 
      * @param taskRequest
-     * @param haveInferredEKB 
+     * @param haveInferredEKB
      */
     private void callback(KQMLPerformative taskRequest, boolean haveInferredEKB) {
         if (gotOK) { // otherwise we must have rejected it already
-            reply(taskRequest, makeExtractionsResultMessage(documentID));
+            reply(taskRequest, makeExtractionsResultMessage());
         }
     }
-    
+
     /**
      * Calls EKBAgent to do inference on the current EKB
      * 
@@ -1610,9 +1670,9 @@ public class DrumGUI extends StandardTripsModule {
         perf.setParameter(":content", content);
         inferredEKBAsKQMLString = null;
         inferredEKBFileName = null;
-        sendWithContinuation(perf, new DoInferenceReplyHandler(taskRequest, documentID, requestEKB));
+        sendWithContinuation(perf, new DoInferenceReplyHandler(taskRequest, requestEKB));
     }
-    
+
     /**
      * Sets the current dataset to a given file in a given folder. As a side effect, if a display is available, it will
      * show the selection in the display.
@@ -1664,10 +1724,8 @@ public class DrumGUI extends StandardTripsModule {
     /**
      * Initiates the processing of a dataset.
      * 
-     * @param initKB
-     *            if true, the EKB is also initialized
      */
-    protected void initiateProcessing(boolean initKB) {
+    protected void initiateProcessing(boolean init) {
         // set display
         if (display != null) {
             display.disableSelector();
@@ -1677,23 +1735,15 @@ public class DrumGUI extends StandardTripsModule {
         // send the input terms
         sendInputTerms();
 
-        // init the EKB
-        if (initKB) {
-            kb.init(properties);
+        // set up the KB, if not done already
+        if (init) {
+            kb = new DrumKB(properties);
         }
 
         Debug.info("Initialization complete. Ready to go");
 
         // go!
         processSelectedDataset();
-    }
-
-    /**
-     * Initiates the processing of a dataset.
-     * 
-     */
-    protected void initiateProcessing() {
-        initiateProcessing(true);
     }
 
     /**
@@ -1706,6 +1756,7 @@ public class DrumGUI extends StandardTripsModule {
      * 
      * @see #sendTagRequest()
      * @see #processCache(String)
+     * @see DrumKB#setParagraph(String, String, String)
      */
     protected void processSelectedDataset() {
         if (dataset.isSelectionEmpty()) {
@@ -1716,7 +1767,7 @@ public class DrumGUI extends StandardTripsModule {
         }
         //
         documentDone = false;
-        paragraphsDone = 0;
+        fragmentsDone = 0;
         // get data item
         String dataFolder = dataset.getFolder();
         String dataFile = dataset.getFirstSelection();
@@ -1742,6 +1793,12 @@ public class DrumGUI extends StandardTripsModule {
             if (cacheDir != null)
                 processCache(dataFile);
         } else {
+            // normalize document
+            normalizeDocument();
+            // set the document in the KB
+            kb.setParagraph(currentInputFile, currentInputData);
+            Debug.debug("STATE: set-paragraph");
+            // and push to the rest of the system
             sendTagRequest();
         }
     }
@@ -1779,7 +1836,8 @@ public class DrumGUI extends StandardTripsModule {
                 }
             }
         } catch (Exception e) {
-            Debug.fatal("Problem processing cache file. Check that the file exists and each line contains a proper KQML message.");
+            Debug.fatal(
+                    "Problem processing cache file. Check that the file exists and each line contains a proper KQML message.");
         }
         // just in case we don't have paragraph-done in the cache file
         if (display != null)
@@ -1953,71 +2011,80 @@ public class DrumGUI extends StandardTripsModule {
 
     /**
      * Creates tag message(s) for the current document and sends them off.
-     * If {@code breakLines} is {@code true}, the document is first split into fragments, then
-     * {@link #sendTagRequestForFragment} is called to send a tag request for the first line. This initiates an
-     * iterative process by which all lines from the current document are eventually sent out for tagging.
+     * If in document splitting mode, the document is first split into fragments, then
+     * {@link #sendTagRequestForFragment} is called to send a tag request for the first text fragment. This initiates an
+     * iterative process by which all fragments from the current document are eventually sent out for tagging.
      * 
-     * @see #splitDocumentIntoParagraphs()
-     * @see #sendTagRequestForParagraph()
+     * @see #splitDocumentIntoFragments()
+     * @see #sendTagRequestForFragment()
      */
     private void sendTagRequest() {
         currentDatasetIndex++;
         gotOK = false;
-        if (breakLines) {
+        if (splitParagraphsMode || splitOnNewlines) {
             // first, break item into paragraphs
-            splitDocumentIntoParagraphs();
+            splitDocumentIntoFragments();
             docMap.clear();
-            // and send the first paragraph; the rest will be sent off in turn, after each one is finished
-            sendTagRequestForParagraph();
+            // and send the first fragment; the rest will be sent off in turn, after each one is finished
+            sendTagRequestForFragment();
         } else {
             send(makeTagMessage(currentInputData));
-            Debug.debug("STATE: tag");
+            Debug.debug("STATE: tag request sent");
         }
-        paragraphsDone = 0;
+        fragmentsDone = 0;
     }
 
     /**
-     * Breaks data into paragraphs. Currently a line break is the only separator considered.
-     * All empty lines and line-initial white space are skipped.
+     * Document normalization.
+     * <p>
+     * Not implemented.
      */
-    private void splitDocumentIntoParagraphs() {
-        Pattern fPattern = Pattern.compile("^(\\s*)(\\S.*)$", Pattern.MULTILINE);
+    private void normalizeDocument() {
+        currentInputData = currentInputData.replace("\u000C", "\n");
+    }
+
+    /**
+     * Breaks document into fragments (paragraphs or lines). By default, a paragraph break is defined
+     * as too consecutive line terminators. 
+     * <p>
+     * Note: All empty lines and line-initial white space are skipped.
+     * 
+     * @see #fragments
+     */
+    private void splitDocumentIntoFragments() {
+        final String paragraphRegex = "(?s)\\s*+(\\S.*?)(?:\\R{2,}+|$)";
+        final String lineRegex = "(?m)^\\s*+(\\S.*?)$";
+        String splitRegex = (splitOnNewlines) ? lineRegex : paragraphRegex;
+        Debug.debug("Splitting doc with: " + splitRegex);
+        Pattern fPattern = Pattern.compile(splitRegex);
         Matcher fMatcher = fPattern.matcher(currentInputData);
-        Vector<String> lines = new Vector<String>();
+        Vector<String> frags = new Vector<String>();
         Vector<Integer> offsets = new Vector<Integer>();
-        int n = 0;
         while (fMatcher.find()) {
-            n++;
-            lines.add(fMatcher.group(2));
-            offsets.add(fMatcher.start() + fMatcher.group(1).length());
-            // Debug.debug("line " + n + ":" + offsets.lastElement() + ":" + lines.lastElement());
+            frags.add(fMatcher.group(1));
+            offsets.add(fMatcher.start(1));
+            Debug.debug("frag " + frags.size() + ":" + offsets.lastElement() + ":" + frags.lastElement());
         }
-        paragraphs = lines.toArray(new String[n]);
-        paragraphOffsets = new int[n];
+        int n = frags.size();
+        fragments = frags.toArray(new String[n]);
+        fragmentOffsets = new int[n];
         for (int i = 0; i < n; i++) {
-            paragraphOffsets[i] = offsets.get(i);
+            fragmentOffsets[i] = offsets.get(i);
         }
     }
 
     /**
-     * Sends tag request for current paragraph.
+     * Sends tag request for current paragraph. Sent at the beginning of processing when {@link #splitOnNewlines} is {@code true}
      */
-    private void sendTagRequestForParagraph() {
-        if (paragraphsDone == 0) {
-            // send start-para
+    private void sendTagRequestForFragment() {
+        // if we handle the paragraph IDs, we need to send start-paragraph
+        sendStartParagraph();
+        if (fragmentsDone < fragments.length) {
             try {
-                send(KQMLPerformative.fromString("(tell :content (start-paragraph :id paragraph" + currentDatasetIndex
-                        + "))"));
-                Debug.debug("STATE: start-paragraph");
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-        if (paragraphsDone < paragraphs.length) {
-            try {
-                // Debug.debug("Processing fragment["+fragmentsProcessed+"]: /"+(fragmentOffsets[fragmentsProcessed])+"/");
-                sendWithContinuation(makeTagMessage(paragraphs[paragraphsDone]), 
-                        new TagReplyHandler(paragraphsDone));
+                // Debug.debug("Processing fragment["+fragmentsProcessed+"]:
+                // /"+(fragmentOffsets[fragmentsProcessed])+"/");
+                sendWithContinuation(makeTagMessage(fragments[fragmentsDone]),
+                        new TagReplyHandler(fragmentsDone));
                 Debug.debug("STATE: tag");
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -2026,17 +2093,65 @@ public class DrumGUI extends StandardTripsModule {
     }
 
     /**
-     * Sends end-paragraph message.
+     * Sends start-paragraph message. Only used when {@link #splitOnNewlines} is {@code true}, at the start of processing.
+     * 
+     */
+    private void sendStartParagraph() {
+        if (splitOnNewlines && (fragmentsDone == 0)) {
+            try {
+                send(KQMLPerformative.fromString("(tell :content (start-paragraph :id paragraph" + currentDatasetIndex
+                        + "))"));
+                Debug.debug("STATE: start-paragraph");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Sends end-paragraph message. Only used when {@link #splitOnNewlines} is {@code true}, at the end of processing.
      * 
      */
     private void sendEndParagraph() {
-        try {
-            // send end-para
-            send(KQMLPerformative.fromString("(tell :content (end-paragraph :id paragraph"
-                    + currentDatasetIndex + "))"));
-            Debug.debug("STATE: end-paragraph");
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        if (splitOnNewlines && (fragmentsDone + 1 == fragments.length)) {
+            try {
+                send(KQMLPerformative.fromString("(tell :content (end-paragraph :id paragraph"
+                        + currentDatasetIndex + "))"));
+                Debug.debug("STATE: end-paragraph");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Sets up the waiting list for utterances.
+     * 
+     * @param uttnums
+     * 
+     * @see #waitingList
+     */
+    private void addUttnumsToWaitingList(KQMLList uttnums) {
+        if (uttnums == null)
+            return;
+        ListIterator<KQMLObject> iterator = uttnums.listIterator();
+        while (iterator.hasNext()) {
+            int uttnum = Integer.parseInt(iterator.next().toString());
+            waitingList.put(uttnum, new ArrayList<KQMLList>());
+        }  
+    }
+
+    /**
+     * Clear waiting list up to (but not including) {@code uttnum}.
+     * 
+     * @param uttnum
+     */
+    private void clearWaitingList(int uttnum) {
+        for (Iterator<Entry<Integer, ArrayList<KQMLList>>> it = waitingList.entrySet().iterator(); it.hasNext();) {
+            Entry<Integer, ArrayList<KQMLList>> entry = it.next();
+            if (entry.getKey() < uttnum) {
+                it.remove();
+            }
         }
     }
 
@@ -2054,7 +2169,7 @@ public class DrumGUI extends StandardTripsModule {
         ListIterator<KQMLObject> iterator = uttnums.listIterator();
         while (iterator.hasNext()) {
             int uttnum = Integer.parseInt(iterator.next().toString());
-            kb.setOffset(uttnum, paragraphOffsets[index]);
+            kb.setOffset(uttnum, fragmentOffsets[index]);
             docMap.put(uttnum, index);
         }
     }
@@ -2069,11 +2184,11 @@ public class DrumGUI extends StandardTripsModule {
             String message = "(tag :text "
                     + (new KQMLString(text)).toString()
                     + " :imitate-keyboard-manager T"
-                    + " :next-uttnum " + (pLastUttnum + 1)
+                    + " :next-uttnum " + (lastUttnumInFragment + 1)
                     + ")";
             KQMLList content = KQMLList.fromString(message);
             // when we break the input document ourselves, we need to send :paragraph nil
-            if (breakLines) {
+            if (splitOnNewlines) {
                 content.add(":paragraph");
                 content.add("nil");
             }
@@ -2128,11 +2243,8 @@ public class DrumGUI extends StandardTripsModule {
 
     /**
      * Makes reply message containing extractions.
-     * 
-     * @param pid
-     *            Currently ignored (since we only handle one paragraph at the time).
      */
-    private KQMLPerformative makeExtractionsResultMessage(String pid) {
+    private KQMLPerformative makeExtractionsResultMessage() {
         KQMLPerformative perf = new KQMLPerformative("reply");
         KQMLList content = new KQMLList();
         content.add("result");
@@ -2155,7 +2267,7 @@ public class DrumGUI extends StandardTripsModule {
             } else {
                 if (inferredEKBFileName != null) {
                     content.add(":inferred-ekb-file");
-                    content.add(new KQMLString(inferredEKBFileName)); 
+                    content.add(new KQMLString(inferredEKBFileName));
                 }
             }
         }
@@ -2167,7 +2279,7 @@ public class DrumGUI extends StandardTripsModule {
      */
     private void initLog() {
         if (!logging)
-            return; 
+            return;
         try {
             log = new Log(name + ".log");
         } catch (IOException ex) {
@@ -2178,7 +2290,8 @@ public class DrumGUI extends StandardTripsModule {
     /**
      * Writes string to log file.
      *
-     * @param text String to write.
+     * @param text
+     *            String to write.
      * @see #handleParameters
      */
     private void log(String text) {
@@ -2189,7 +2302,8 @@ public class DrumGUI extends StandardTripsModule {
         }
     }
 
-    /** Closes log file.
+    /**
+     * Closes log file.
      */
     private void closeLog() {
         if (log != null) {
@@ -2197,7 +2311,7 @@ public class DrumGUI extends StandardTripsModule {
         }
     }
 
-    /** 
+    /**
      * Delete selected dataset.
      */
     protected void deleteSelectedDataset() {
@@ -2249,13 +2363,13 @@ public class DrumGUI extends StandardTripsModule {
     }
 
     /**
-     * Handler for replies to tag messages for paragraphs.
+     * Handler for replies to tag messages for fragments.
      */
     protected class TagReplyHandler implements KQMLContinuation {
-        int paragraphNumber;
+        int fragmentNumber;
 
         public TagReplyHandler(int index) {
-            paragraphNumber = index;
+            fragmentNumber = index;
         }
 
         public void receive(KQMLPerformative replyMsg) {
@@ -2268,15 +2382,14 @@ public class DrumGUI extends StandardTripsModule {
             if (reply.equalsIgnoreCase("ok")) {
                 log("<received>\n" + replyMsg + "\n</received>");
                 KQMLObject uttnums = ((KQMLList) content).getKeywordArg(":uttnums");
-                Debug.debug("STATE: OK/TR - uttnums: " + uttnums);
+                Debug.debug("STATE: got OK - uttnums: " + uttnums);
                 if (uttnums != null) {
-                    setUtteranceOffsetsForParagraph(paragraphNumber, (KQMLList) uttnums);
-                    Debug.debug("paragraph " + paragraphNumber + " => uttnums " + uttnums);
+                    addUttnumsToWaitingList((KQMLList) uttnums);
+                    setUtteranceOffsetsForParagraph(fragmentNumber, (KQMLList) uttnums);
+                    Debug.debug("fragment " + fragmentNumber + " => uttnums " + uttnums);
                     gotOK = true;
-                    // when we're at the last fragment, we send out end-paragraphs
-                    if (paragraphsDone + 1 == paragraphs.length) {
-                        sendEndParagraph();
-                    }
+                    // if we handle paragraph ids, we send out end-paragraph
+                    sendEndParagraph();
                 } else {
                     errorReply(replyMsg, "Missing :uttnums values");
                     // we keep going, but with unpredictable behavior
@@ -2313,12 +2426,12 @@ public class DrumGUI extends StandardTripsModule {
                 KQMLObject folder = ((KQMLList) content).getKeywordArg(":output-folder");
                 Debug.debug("Will process pmcid paragraphs from folder: " + folder);
                 // update task params
-                cmd.add(":folder"); cmd.add(folder);
+                cmd.add(":folder");
+                cmd.add(folder);
                 msg.setParameter(":content", cmd);
                 // and re-submit the task
                 handleTaskRequest(msg, cmd);
-            }
-            else if (reply.equalsIgnoreCase("failure")) {
+            } else if (reply.equalsIgnoreCase("failure")) {
                 KQMLObject errorMsg = ((KQMLList) content).getKeywordArg(":msg");
                 if (errorMsg != null) {
                     errorReply(msg, errorMsg.stringValue());
@@ -2338,13 +2451,10 @@ public class DrumGUI extends StandardTripsModule {
      */
     protected class DoInferenceReplyHandler implements KQMLContinuation {
         private KQMLPerformative task;
-        private String documentID;
         private boolean requestEKB;
 
-        public DoInferenceReplyHandler(KQMLPerformative task, String documentID, boolean requestEKB) {
-            // TODO Auto-generated constructor stub
+        public DoInferenceReplyHandler(KQMLPerformative task, boolean requestEKB) {
             this.task = task;
-            this.documentID = documentID;
             this.requestEKB = requestEKB;
         }
 
@@ -2364,8 +2474,7 @@ public class DrumGUI extends StandardTripsModule {
                 } else {
                     inferredEKBFileName = result.stringValue();
                 }
-            }
-            else if (replyVerb.equalsIgnoreCase("failure")) {
+            } else if (replyVerb.equalsIgnoreCase("failure")) {
                 // we log the error, but otherwise don't do anything
                 KQMLObject errorMsg = ((KQMLList) content).getKeywordArg(":msg");
                 if (errorMsg != null) {
@@ -2392,6 +2501,7 @@ public class DrumGUI extends StandardTripsModule {
             this.msg = msg;
             this.content = content;
         }
+
         public String toString() {
             // TODO
             KQMLObject replyWith = msg.getParameter(":reply-with");

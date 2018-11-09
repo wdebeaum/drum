@@ -1,7 +1,7 @@
 /* 
  * Display.java
  *
- * $Id: Display.java,v 1.24 2016/02/19 00:11:43 lgalescu Exp $
+ * $Id: Display.java,v 1.25 2018/11/08 21:25:41 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  3 Jul 2010
  */
@@ -381,7 +381,7 @@ public class Display extends JFrame
             }
         } else if (cmd.equals("run")) {
             clearOutputPanels();
-            parent.initiateProcessing();
+            parent.initiateProcessing(true);
         }
     }
 

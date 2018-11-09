@@ -128,6 +128,12 @@ class KQML
 
   # Concatenate positional and keyword arguments separately.
   def +(other)
+    # convert other to KQML object first
+    if (Array === other)
+      other = KQML[*other]
+    elsif (Hash === other)
+      other = KQML[other]
+    end
     KQML.new(@positional_arguments + other.positional_arguments,
              @keyword_arguments.merge(other.keyword_arguments))
   end
