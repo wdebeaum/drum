@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.79 2018/11/08 21:25:42 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.80 2018/11/09 16:34:40 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -1369,19 +1369,7 @@ public class DrumGUI extends StandardTripsModule {
     private void handleUtteranceFailed(KQMLList content) {
         KQMLObject uttnumObj = content.getKeywordArg(":uttnum");
         int uttnum = Integer.parseInt(uttnumObj.toString());
-        //
-        if (waitingList.containsKey(uttnum)) {
-            // is this actually happening???
-            Debug.error("STATE: Stray fragment? (ignored) :uttnum " + uttnum);
-            return;
-        } else {
-            Debug.debug("STATE: Utterance failed :uttnum " + uttnum + " (waiting for " + lastUttnumInFragment + ")");
-            if (uttnum == lastUttnumInFragment) {
-                clausesRemaining--;
-                Debug.debug("STATE: " + clausesRemaining + " clauses remaining");
-            }
-        }
-        //
+        abandonUttnum(uttnum);
         checkIfDoneProcessing();
     }
 
@@ -1401,16 +1389,8 @@ public class DrumGUI extends StandardTripsModule {
         // case #1: IM failure
         // eg, (INTERPRETATION-FAILED :WORDS NIL ...)
         if (wordsObj instanceof KQMLToken) { // must be NIL
-            Debug.debug("STATE: Pathologic interpretation at uttnum=" + uttnum + ": " + wordsObj);
-            // if we're on the last utterance, skip clause
-            if (clausesRemaining > 0) {
-                clausesRemaining--; 
-                Debug.debug("STATE: Skipped clause; " + clausesRemaining + " clauses remaining");
-            } 
-            // skip the whole utterance and remove the uttnum from the waiting list (check if this might be too drastic!)
-            ArrayList<KQMLList> clause = waitingList.remove(uttnum);
-            Debug.debug("STATE: Removed from waiting list: uttnum=" + uttnum + " "+clause);
-            
+            Debug.error("STATE: Pathologic interpretation at uttnum=" + uttnum + ": " + wordsObj);
+            abandonUttnum(uttnum);            
             checkIfDoneProcessing();
             return;
         }
@@ -1418,27 +1398,20 @@ public class DrumGUI extends StandardTripsModule {
         KQMLList words = (KQMLList) wordsObj;
 
         if (waitingList.containsKey(uttnum)) {
+            Debug.debug("STATE: Waiting list match for: " + uttnum);
             // in case there were pathological utterances skipped, we clear them up
             clearWaitingList(uttnum);
-            Debug.debug("STATE: Waiting list match for: " + uttnum);
             // case #2: successful interpretation; we discharge the clause
             if (waitingList.get(uttnum).remove(words)) {
-                if (waitingList.get(uttnum).isEmpty()) {
-                    waitingList.remove(uttnum);
-                    Debug.debug("STATE: Utterance done :uttnum " + uttnum + " (waiting for " + lastUttnumInFragment + ")");
-                }
-                if (uttnum == lastUttnumInFragment) {
-                    clausesRemaining--;
-                    Debug.debug("STATE: Utterance done " + clausesRemaining + " clauses remaining");
-                }
+                doneClause(uttnum);
             } else {
                 // case #3: fragment: keep waiting
-                Debug.error("STATE: Unexpected fragment(?) :uttnum " + uttnum + " :words " + words);
+                Debug.error("STATE: Unexpected fragment :uttnum " + uttnum + " :words " + words);
                 return;
             }
         } else {
-            // case #4: is this possible? TODO:
-            Debug.error("STATE: Stray fragment? (ignored) :uttnum " + uttnum + " :words " + words);
+            // case #4: i don't think this is possible anymore (if it ever was)!
+            Debug.error("STATE: Stray fragment (ignored) :uttnum " + uttnum + " :words " + words);
             return;
         }
         //
@@ -2142,18 +2115,58 @@ public class DrumGUI extends StandardTripsModule {
     }
 
     /**
+     * Removes entry for {@code uttnum} from {@link #waitingList}.
+     * 
+     * @param uttnum
+     * 
+     * @see #waitingList
+     */
+    private void doneClause(int uttnum) {
+        if (waitingList.get(uttnum).isEmpty()) {
+            waitingList.remove(uttnum);
+            Debug.debug("STATE: Utterance done :uttnum " + uttnum + " (waiting for " + lastUttnumInFragment + ")");
+        }
+        // if we're on the last utterance, skip clause
+        if (uttnum == lastUttnumInFragment) {
+            clausesRemaining--; 
+            Debug.debug("STATE: Utterance done " + clausesRemaining + " clauses remaining");
+        } 
+    }
+
+    /**
+     * Removes entry for {@code uttnum} from {@link #waitingList}.
+     * 
+     * @param uttnum
+     * 
+     * @see #waitingList
+     */
+    private void abandonUttnum(int uttnum) {
+        // if we're on the last utterance, skip clause
+        if ((uttnum == lastUttnumInFragment) && (clausesRemaining > 0)) {
+            clausesRemaining--; 
+            Debug.error("STATE: Skipped clause; " + clausesRemaining + " clauses remaining");
+        } 
+        ArrayList<KQMLList> clause = waitingList.remove(uttnum);
+        Debug.error("STATE: Abandoned: uttnum=" + uttnum + " " + clause);
+
+    }
+
+    /**
      * Clear waiting list up to (but not including) {@code uttnum}.
      * 
      * @param uttnum
+     * 
+     * @see #waitingList
      */
     private void clearWaitingList(int uttnum) {
         for (Iterator<Entry<Integer, ArrayList<KQMLList>>> it = waitingList.entrySet().iterator(); it.hasNext();) {
             Entry<Integer, ArrayList<KQMLList>> entry = it.next();
             if (entry.getKey() < uttnum) {
                 it.remove();
+                Debug.debug("STATE: Removed waiting list entry: " + entry);
             }
         }
-    }
+   }
 
     /**
      * Sets utterance offsets for the current paragraph of the current document.

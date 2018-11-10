@@ -136,6 +136,9 @@ the output archive.
 You should create a new output directory every time you run batch.rb with
 different options or different input files.
 
+Exactly one of the options --input-file, --input-directory, or
+--input-file-list must be given.
+
 EOB
   opts.banner += Options.extra_banner
 
@@ -143,30 +146,44 @@ EOB
 
   opts.on('-fFILE', '--input-file=FILE',
     #                                           # text must be between the #s 
-    "A single file to take input from. You must",
-    "use either this option or",
-    #v space prevents this being interpreted as a spelling of the option
-    " \b--input-directory, but not both.") { |f|
-    # ^^ backspace character erases the space
+    "A single file to take input from.") { |f|
     File.exists?(f) or raise "input file #{f.inspect} does not exist"
     File.directory?(f) and
       raise "input file #{f.inspect} is actually a directory; " +
 	    "use --input-directory=#{f.inspect} instead if this is intentional"
     Options.input = f
-    Options.input_is_dir = false
+    Options.input_is_a = :file
   }
 
   opts.on('-dDIR', '--input-directory=DIR',
     #                                           #
     "A directory full of files to take input",
-    "from. You must use either this option or",
-    " \b--input-file, but not both.") { |d|
+    "from.") { |d|
     File.exists?(d) or raise "input file #{d.inspect} does not exist"
     File.directory?(d) or
       raise "input directory #{d.inspect} is actually a file; " +
 	    "use --input-file=#{d.inspect} instead if this is intentional"
     Options.input = d
-    Options.input_is_dir = true
+    Options.input_is_a = :directory
+  }
+
+  opts.on('-FFILE', '--input-file-list=FILE',
+    #                                           #
+    "A file listing other files to take input",
+    "from, one file per line. Blank lines,",
+    "leading and trailing whitespace, and",
+    "comments starting with # are ignored. ~/",
+    "and ~username/ are interpreted as user home",
+    "directories. Other special shell characters",
+    "like '\\' and '$' are not interpreted.",
+    "Relative paths are allowed, and are",
+    "relative to the directory the list is in.") { |f|
+    File.exists?(f) or raise "input file list #{f.inspect} does not exist"
+    File.directory?(f) and
+      raise "input file list #{f.inspect} is actually a directory; " +
+            "use --input-directory=#{f.inspect} instead if this is intentional"
+    Options.input = f
+    Options.input_is_a = :file_list
   }
 
   # format of the input
@@ -177,8 +194,9 @@ EOB
     "input file(s). Must be one of the",
     "following:",
     "  'txt': plain text (may be one big text",
-    "    unit or a text unit for each line),",
-    "  'tsv': tab-separated values,",
+    "    unit or a text unit for each line or",
+    "    paragraph),",
+    "  'tsv': tab-separated values (table),",
     "  'csv': comma-separated values (may have",
     "    quotes around values, etc.),",
     "  'psv': pipe-separated values.",
@@ -197,7 +215,9 @@ EOB
     #                                           #
     "(Mnemonic: headinG) Drop the first row of",
     "each input file. Not valid with",
+    #v space prevents this being interpreted as a spelling of the option
     " \b--input-file-format=txt.") {
+    # ^^ backspace character erases the space
     Options.drop_headings = true
   }
 
@@ -365,6 +385,25 @@ EOB
     Options.timeout = t
   }
 
+  unless (Options.send_to == :webparser)
+    opts.on('-N', '--pass-file-names', 
+      #                                           #
+      "Pass the names of input files instead of",
+      "their contents to DrumGUI, using run-file",
+      "instead of run-text. Note that this is",
+      "incompatible with most of the input format",
+      "options, since batch.rb is no longer the",
+      "one reading the input files. Also, if you",
+      "are passing a large file that DrumGUI will",
+      "split into many text units itself, batch.rb",
+      "will still see the whole file as one text",
+      "unit, so it's recommended to set a low",
+      " \b--batch-size and high --timeout to",
+      "compensate for that.") {
+      Options.pass_file_names = true
+    }
+  end
+
   # help
 
   opts.on('-h', '--help', 'Prints this help and exits.') {
@@ -378,22 +417,40 @@ def parse_and_check_options
 
   # additional sanity checks
   Options.input.nil? and
-    raise "one of --input-file or --input-directory is required"
+    raise "one of --input-file, --input-directory, or --input-file-list is required"
   Options.port_base + Options.num_tripses <= 65536 or
     raise "expected port-base + num-tripses <= 65536, but got " +
 	  "#{Options.port_base} + #{Options.num_tripses} = " +
 	  "#{Options.port_base + Options.num_tripses} > 65536"
   if (Options.input_format == 'txt')
-    Options.drop_headings and
-      raise "--drop-headings is incompatible with --input-file-format=txt"
     Options.id_column_ranges.nil? or
       raise "--id-columns is incompatible with --input-file-format=txt"
     Options.text_column_ranges.nil? or
       raise "--text-columns is incompatible with --input-file-format=txt"
-    Options.pass_sentences.nil? or
-      raise "--pass-sentences is incompatible with --input-file-format=txt"
-    Options.sentence_split_regexp.nil? or
-      raise "--sentence-split-regexp is incompatible with --input-file-format=txt"
+    %w{
+      drop_headings
+      pass_sentences
+      sentence_split_regexp
+    }.each { |o|
+      Options[o] and
+        raise "--#{o.gsub(/_/,'-')} is incompatible with --input-file-format=txt"
+    }
+  end
+  if (Options.pass_file_names)
+    Options.id_column_ranges.nil? or
+      raise "--id-columns is incompatible with --pass-file-names"
+    Options.text_column_ranges.nil? or
+      raise "--text-columns is incompatible with --pass-file-names"
+    %w{
+      drop_headings
+      one_text_unit_per_file
+      pass_sentences
+      sentence_split_regexp
+      split_text_on_blank_lines
+    }.each { |o|
+      Options[o] and
+        raise "--#{o.gsub(/_/,'-')} is incompatible with --pass-file-names"
+    }
   end
   if (Options.output_archive_dir and not Options.output_archive)
     raise "--output-archive-directory is incompatible with --no-output-archive"
@@ -503,6 +560,7 @@ end
 # its name
 def read_text_units_from_file(filename)
   bn = File.basename(filename)
+  return [[bn, filename]] if (Options.pass_file_names)
   File.open(filename, 'r') { |f|
     if (Options.input_format == 'txt')
       if (Options.one_text_unit_per_file)
@@ -565,12 +623,26 @@ end
 
 # return the list of text units ([id, text] pairs) from all input files
 def read_text_units
-  if (Options.input_is_dir)
-    Dir[Options.input + '/*'].collect_concat { |f|
-      read_text_units_from_file(f)
-    }
-  else # input is file
-    read_text_units_from_file(Options.input)
+  case Options.input_is_a
+    when :directory
+      Dir[Options.input + '/*'].collect_concat { |f|
+	read_text_units_from_file(f)
+      }
+    when :file_list
+      input_dir = File.dirname(File.expand_path(Options.input))
+      File.open(Options.input).each_line.collect_concat { |f|
+        # remove leading and trailing whitespace and comments
+        f = f.sub(/^\s+/,'').sub(/\s*(#.*)?$/,'')
+	if (f.empty?) # otherwise blank line
+	  []
+	else # line with a file on it
+	  f = File.expand_path(f, input_dir)
+	  File.exists?(f) or raise "input file #{f.inspect} (listed in #{Options.input.inspect}) does not exist"
+	  read_text_units_from_file(f)
+	end
+      }
+    when :file
+      read_text_units_from_file(Options.input)
   end
 end
 

@@ -75,13 +75,19 @@ class BatchModule
 	  raise "expected string in :content" unless (String === reply[:content])
 	  File.open(output_file, 'w').print reply[:content]
 	}
-      else # send to DrumGUI (whatever it calls itself in this system)
+      # else send to DrumGUI (whatever it calls itself in this system)
+      elsif (Options.pass_file_names) # send just the file name to DrumGUI
+	# in this case the "text" is the expanded file path (see
+	# read_text_units_from_file and read_text_units in batch.rb)
+	# for some reason DrumGUI wants this separated into folder and file
+	folder = File.dirname(text)
+	file = File.basename(text)
 	times = Benchmark.measure {
 	  send_and_wait(KQML[:request, :receiver => Options.send_to, :content =>
-	    KQML[:"run-text", :text => text, :"reply-when-done" => true]
-# historical note: we used to send DrumGUI file and folder names instead of text strings, in one of these ways:
-#	    KQML[:"load-file", :folder => File.dirname(absolute_path),
-#			       :file => File.basename(absolute_path)]
+	    KQML[:"run-file", :folder => folder, :file => file,
+		 :"reply-when-done" => true]
+# historical note: we have also used these requests in the past, with drum's
+# old batch.rb
 #	    KQML[:"run-pmcid", :folder => File.dirname(absolute_path),
 #			       :pmcid => File.basename(absolute_path),
 #			       :"reply-when-done" => true]
@@ -89,7 +95,13 @@ class BatchModule
 #				   :select => ".*\\.txt",
 #				   :"single-ekb" => true,
 #				   :"reply-when-done" => true]
-	  ]);
+	  ])
+	}
+      else # send the text we read to DrumGUI
+	times = Benchmark.measure {
+	  send_and_wait(KQML[:request, :receiver => Options.send_to, :content =>
+	    KQML[:"run-text", :text => text, :"reply-when-done" => true]
+	  ])
 	}
       end
       $stderr.puts "processing #{id} took #{times.real} seconds"
