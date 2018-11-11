@@ -890,6 +890,7 @@
 
 ;;; this is a fixed frequency - e .g. do it 3 times
 (define-type ONT::repetition
+ :wordnet-sense-keys ("repeatedly%4:02:00" "over_and_over%4:02:00")
  :parent ONT::FREQUENCY
  )
 
@@ -1036,11 +1037,21 @@
 ;             )
 ; )
 
-;;; some things apply only to day names
+;;; some things apply only to day names, etc
 ;; on Monday, on the next day
 (define-type ONT::time-on-rel
- :parent ONT::temporal-location
+ ;:parent ONT::temporal-location
+ :parent ONT::time-span-rel
  :arguments ((:ESSENTIAL ONT::GROUND (F::time (f::type ont::date-object-on))
+             )
+ ))
+
+;;; some things apply only to month names, etc
+;; in June
+(define-type ONT::time-in-rel
+ ;:parent ONT::temporal-location
+ :parent ONT::time-span-rel
+ :arguments ((:ESSENTIAL ONT::GROUND (F::time (f::type ont::date-object-in))
              )
  ))
 
@@ -1206,6 +1217,7 @@
     :parent ONT::TIME-Object
     )
 
+; if considering moving date-object-in to under date-object, check -dt-dow> ("June" is a NAME but should not go through -dt-dow>)
 (define-type ont::date-object-in
     :comment "temporal objects that use IN - e.g., in June"
     :parent ONT::TIME-Object

@@ -3230,4 +3230,11 @@ soil_erosion%1:22:00::
 juncture%1:11:00::
 occasion%1:11:00::
 up_on%5:00:00:informed:00
-follow_up_on%2:41:00
+follow_up_on%2:41:00::
+monday%1:28:00::
+tuesday%1:28:00::
+wednesday%1:28:00::
+thursday%1:28:00::
+friday%1:28:00::
+saturday%1:28:00::
+sunday%1:28:00::

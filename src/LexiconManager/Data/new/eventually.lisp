@@ -17,8 +17,9 @@
      (
 ;      (LF-PARENT ONT::QUALIFICATION)
       (LF-PARENT ONT::event-time-rel-culmination)
-      (TEMPL PRED-VP-TEMPL)
-     )
+      ;(TEMPL PRED-VP-TEMPL)
+      (TEMPL pred-s-vp-templ)
+      )
     )
    )
 ))

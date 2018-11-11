@@ -21,7 +21,7 @@
   (W::WHILE
    (SENSES
     ((LF-PARENT ONT::Qualification )
-     ;; FIXME -- we might want syntax to be pre-only
+     ;; FIXME -- we might want syntax to be pre-only ;; not true.  We can say "A is true while B is not"
      (TEMPL binary-constraint-s-decl-templ)
      (Example "while A is true, B is not")     
      (meta-data :origin beetle2 :entry-date 20070609 :change-date nil :comments sentential-conjunction-cleanup)
@@ -34,7 +34,7 @@
  :words (
   (W::WHILE
    (SENSES
-    ((LF-PARENT ONT::whne-while)
+    ((LF-PARENT ONT::when-while)
      (TEMPL binary-constraint-s-decl-templ)
      )
     ((LF-PARENT ONT::when-while)

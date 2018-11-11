@@ -17,6 +17,7 @@
 ))
 |#
 
+#|
 (define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
  :words (
   ((W::break w::down)
@@ -31,6 +32,7 @@
      )
     ))
 ))
+|#
 
 (define-words :pos W::v :templ agent-affected-xp-templ
  :words (

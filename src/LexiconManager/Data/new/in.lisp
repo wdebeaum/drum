@@ -445,7 +445,8 @@
      (preference .98)
      )||#
      ;;;;;need specific constraints that we're lacking now
-    ((LF-PARENT ONT::TIME-span-rel)
+    (;(LF-PARENT ONT::TIME-span-rel)
+     (LF-PARENT ONT::TIME-IN-REL)
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      (example "he ran the race in June" "in the middle of the night")
      )

@@ -1433,15 +1433,15 @@
      ;; swift -- adding check for subjvar since for topic advbls this must be filled
      (advbl (sort DISC) (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -)
       (WH -) (argument (% UTT (subjvar ?sv))))
-     (head (Utt (ended -) (LF (% SPEECHACT (class ?sa) (constraint ?adv1))) (var ?v) (punc -) (subjvar ?sv)))
+     (head (Utt (ended -) (LF (% SPEECHACT (class ?sa) (constraint ?adv1))) (var ?v) (punctype ?pn) (punc -) (subjvar ?sv)))
      (add-to-conjunct (val (MODS ?advv)) (old ?adv1) (new ?adv)))
 
     ((Utt (LF (% SPEECHACT (class ?sa) (var ?v) (constraint ?adv))) (var ?v) (punctype ?pn))
      -disc-comma> 
      (advbl (sort DISC) (ATYPE PRE) (arg ?v) (SA-ID -) (VAR ?advv) (gap -) (WH -)
-      (argument (% UTT)))
+      (argument (% UTT (subjvar ?sv))))
      (punc (lex w::punc-comma))
-     (head (Utt (ended -) (var ?v) (LF (% SPEECHACT (class ?sa) (constraint ?adv1))) (punc -) (punctype ?pn)))
+     (head (Utt (ended -) (var ?v) (LF (% SPEECHACT (class ?sa) (constraint ?adv1))) (punctype ?pn) (punc -) (subjvar ?sv)))
      (add-to-conjunct (val (MODS ?advv)) (old ?adv1) (new ?adv)))
 
     ; Sadly, no.

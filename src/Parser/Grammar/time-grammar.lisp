@@ -1519,13 +1519,13 @@
       )
 
 
-   ;;  Dates as adverbials: must eithger have a DOW or a DAY feature - so we use two rules...
+   ;;  Dates as adverbials: must either have a DOW or a DAY feature (i.e., we can't have all of them empty) - so we use two rules...
    ;; Those with a day of the week, e.g.,  Monday I go
      ((ADVBL (ARG ?arg) ;(ROLE (:* ONT::EVENT-TIME-REL W::DATE))
 	     (sem ?sem) ;(SEM (? SEM8045 ($ F::abstr-obj  (F::TYPE ONT::EVENT-TIME-REL))))
 	   (SORT BINARY-CONSTRAINT)
 	   (LF (% PROP (VAR ?v) (CLASS ONT::TIME-SPAN-REL) ;(CLASS (:* ONT::EVENT-TIME-REL W::DATE))
-		  (CONSTRAINT (& (FIGURE ?arg) (GROUND (% *PRO* (VAR *)  (STATUS ont::definite)
+		  (CONSTRAINT (& (FIGURE ?arg) (GROUND (% *PRO* (VAR *)  (STATUS ?newspec)
 						       (CLASS ONT::TIME-LOC) (lex ?hlex)
 						       (CONSTRAINT (& (DAY ?day) (Month ?m) (DAY-OF-WEEK ?!dow) (YEAR ?y) (AM-pm ?ampm) (phase ?phase)))))))))
 	   (VAR ?v) (ATYPE (? x W::PRE W::POST))  (bare-advbl +)
@@ -1541,13 +1541,14 @@
     (DATE (var ?v) (DAY ?day) (Month ?m) (DOW ?!dow) (Year ?y) (phase ?phase) (AM-pm ?ampm)
 	  (lex ?hlex) (headcat ?hcat))
     (compute-sem-features (lf ont::time-span-rel) (sem ?sem))
+    (recompute-spec (spec ont::definite) (agr ?agr) (result ?newspec))
     )
 
    ;; this one covers the other case, e.g., I go July third
    ((ADVBL (ARG ?arg) ;(ROLE (:* ONT::EVENT-TIME-REL W::DATE))
 	   (sem ?sem) ;(SEM (? SEM8045 ($ F::abstr-obj  (F::TYPE ONT::EVENT-TIME-REL))))
 	   (SORT BINARY-CONSTRAINT)  (bare-advbl +)
-	   (LF (% PROP (VAR ?v) (CLASS ONT::EVENT-TIME-REL) ;(CLASS (:* ONT::EVENT-TIME-REL W::DATE))
+	   (LF (% PROP (VAR ?v) (CLASS ONT::TIME-SPAN-REL) ;(CLASS (:* ONT::EVENT-TIME-REL W::DATE))
 		  (CONSTRAINT (& (FIGURE ?arg) (GROUND (% *PRO* (VAR *) (STATUS ont::definite)
 						       (CLASS ONT::TIME-LOC) (lex ?hlex)
 						       (CONSTRAINT (& (DAY ?!day) (Month ?m) (YEAR ?y) (phase ?phase)))))))))
@@ -1563,7 +1564,7 @@
     -date-advbl2> .98
     (DATE (var ?v) (DAY ?!day) (Month ?m) (DOW -) (Year ?y)
 	  (lex ?hlex) (headcat ?hcat) (phase ?phase))
-    (compute-sem-features (lf ont::event-time-rel) (sem ?sem))
+    (compute-sem-features (lf ont::time-span-rel) (sem ?sem))
     )
 
    

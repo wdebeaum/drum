@@ -3852,7 +3852,7 @@
       (var ?v) 
       (LF (% PROP (VAR ?v) (CLASS ?reln) 
 	     (CONSTRAINT (& (?!submap (% *PRO*
-					 (VAR *) (CLASS ?pro-class)
+					 (VAR *) (CLASS ?!pro-class)
 					 (SEM ?subcatsem) (CONSTRAINT (& (proform ?lex)))))
 			    ;;(suchthat ?v)))))
 			    (?!argmap ?argvar)))
@@ -3861,7 +3861,7 @@
       (role ?reln)
              )
      -advbl-pp-word>     
-     (head (adv (SORT PP-WORD) (wh -) (IMPRO-CLASS ?pro-class)
+     (head (adv (SORT PP-WORD) (wh -) (IMPRO-CLASS ?!pro-class)
 		(argument ?argument)
 	        (ARGUMENT (% ?argcat (var ?argvar)))
 	        (SUBCAT (% ?x (SEM ?subcatsem))) 
