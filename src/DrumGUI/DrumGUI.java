@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.80 2018/11/09 16:34:40 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.81 2018/11/11 20:57:02 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -127,7 +127,7 @@ public class DrumGUI extends StandardTripsModule {
     private int lastUttnumInFragment = 0;
     /** Number of clauses for the last utterance of the current fragment that remain to be processed. */
     private int clausesRemaining = 0;
-    /** True iff fragment sent to TextTagger was OKed for processing */
+    /** True iff fragment sent to TextTagger was OKed for processing. */
     private boolean gotOK = false;
     /**
      * Utterances we're waiting on. Each utterance, represented by its {@code uttnum}, maps to a list of clauses. The
@@ -135,6 +135,13 @@ public class DrumGUI extends StandardTripsModule {
      */
     private LinkedHashMap<Integer, ArrayList<KQMLList>> waitingList = new LinkedHashMap<Integer, ArrayList<KQMLList>>();
 
+    /**
+     * List of failed utterances we get before the full paragraph was OKed. 
+     * 
+     * @see {@link #gotOK}
+     */
+    private ArrayList<Integer> earlyFailures = new ArrayList<Integer>();
+    
     /**
      * List of run requests that haven't been processed yet. If we're working on a dataset and another request comes
      * in, it is queued up here. When a dataset is finished processing, the first request from this list is taken up.
@@ -879,7 +886,7 @@ public class DrumGUI extends StandardTripsModule {
             } catch (Exception e) {
                 e.printStackTrace();
                 errorReply(taskRequest, "Error: EKB cannot be saved");
-                //kb.clear();
+                // kb.clear();
                 return;
             }
 
@@ -932,7 +939,7 @@ public class DrumGUI extends StandardTripsModule {
             } catch (Exception e) {
                 e.printStackTrace();
                 errorReply(taskRequest, "Error: EKB cannot be saved");
-                //kb.clear();
+                // kb.clear();
                 return;
             }
 
@@ -990,7 +997,7 @@ public class DrumGUI extends StandardTripsModule {
                 } catch (Exception e) {
                     e.printStackTrace();
                     errorReply(taskRequest, "Error: EKB cannot be saved");
-                    //kb.clear();
+                    // kb.clear();
                     return;
                 }
 
@@ -1107,7 +1114,7 @@ public class DrumGUI extends StandardTripsModule {
             } catch (Exception e) {
                 e.printStackTrace();
                 errorReply(taskRequest, "Error: EKB cannot be saved");
-                //kb.clear();
+                // kb.clear();
                 return;
             }
 
@@ -1118,7 +1125,7 @@ public class DrumGUI extends StandardTripsModule {
         } catch (Exception e) {
             e.printStackTrace();
             errorReply(msg, "Cannot find folder for the PMCID given");
-            //kb.clear();
+            // kb.clear();
             return;
         }
 
@@ -1260,7 +1267,7 @@ public class DrumGUI extends StandardTripsModule {
             rcontent.add(reason);
             rmsg.setParameter(":content", rcontent);
             reply(taskRequest, rmsg);
-            //kb.clear();
+            // kb.clear();
         }
         // and we move on
         finishCurrentDocument();
@@ -1295,7 +1302,7 @@ public class DrumGUI extends StandardTripsModule {
             return;
         }
         Debug.warn("STATE: Paragraph done [IM is done]: " + pID);
-        //checkIfDoneProcessing(); -- we handle this at utterance level
+        // checkIfDoneProcessing(); -- we handle this at utterance level
     }
 
     /**
@@ -1337,26 +1344,14 @@ public class DrumGUI extends StandardTripsModule {
         // case #2.1: single SA
         if (actType.toString().equalsIgnoreCase("UTT")) {
             int uttnum = Integer.parseInt(act.getKeywordArg(":uttnum").toString());
-            if (waitingList.containsKey(uttnum)) {
-                waitingList.get(uttnum).add(words);
-            } else {
-                ArrayList<KQMLList> clauses = new ArrayList<KQMLList>();
-                clauses.add(words);
-                waitingList.put(uttnum, clauses);
-            }
+            newUttnum(uttnum, words);
         } else
         // case #2.2: compound SA (CCA)
         if (actType.toString().equalsIgnoreCase("COMPOUND-COMMUNICATION-ACT")) {
             KQMLList acts = (KQMLList) act.getKeywordArg(":acts");
             KQMLList firstAct = (KQMLList) acts.get(0);
             int uttnum = Integer.parseInt(firstAct.getKeywordArg(":uttnum").toString());
-            if (waitingList.containsKey(uttnum)) {
-                waitingList.get(uttnum).add(words);
-            } else {
-                ArrayList<KQMLList> clauses = new ArrayList<KQMLList>();
-                clauses.add(words);
-                waitingList.put(uttnum, clauses);
-            }
+            newUttnum(uttnum, words);
         }
         Debug.warn("STATE: got new SA; waiting on: " + waitingList);
     }
@@ -1374,7 +1369,9 @@ public class DrumGUI extends StandardTripsModule {
     }
 
     /**
-     * Handler for messages signaling utterance was fully processed.
+     * Handler for messages signaling utterance was fully processed, successfully via {@code end-of-turn} or
+     * unsuccessfully, via {@code interpretation-failed}.
+     * <p>
      * When last utterance for the current input is done, the data item is considered
      * done as well, which may trigger special actions.
      */
@@ -1390,7 +1387,7 @@ public class DrumGUI extends StandardTripsModule {
         // eg, (INTERPRETATION-FAILED :WORDS NIL ...)
         if (wordsObj instanceof KQMLToken) { // must be NIL
             Debug.error("STATE: Pathologic interpretation at uttnum=" + uttnum + ": " + wordsObj);
-            abandonUttnum(uttnum);            
+            abandonUttnum(uttnum);
             checkIfDoneProcessing();
             return;
         }
@@ -1441,11 +1438,12 @@ public class DrumGUI extends StandardTripsModule {
         }
         // are we done with all the fragments?
         if (splitParagraphsMode || splitOnNewlines) {
-            if (fragmentsDone < fragments.length) fragmentsDone++;
+            if (fragmentsDone < fragments.length)
+                fragmentsDone++;
             int fragsToDo = fragments.length - fragmentsDone;
             Debug.debug("STATE: Fragments done: " + fragmentsDone + " (to do: " + fragsToDo + ")");
             if (fragsToDo == 0) {
-                Debug.debug("STATE: Document done [nothing left to do]; documentDone="+documentDone);
+                Debug.debug("STATE: Document done [nothing left to do]; documentDone=" + documentDone);
                 documentDone();
             } else {
                 // send next fragment for tagging
@@ -1453,7 +1451,7 @@ public class DrumGUI extends StandardTripsModule {
                 sendTagRequestForFragment();
             }
         } else {
-            Debug.debug("STATE: Document done [nothing left to do]; documentDone="+documentDone);
+            Debug.debug("STATE: Document done [nothing left to do]; documentDone=" + documentDone);
             documentDone();
         }
     }
@@ -2018,14 +2016,14 @@ public class DrumGUI extends StandardTripsModule {
 
     /**
      * Breaks document into fragments (paragraphs or lines). By default, a paragraph break is defined
-     * as too consecutive line terminators. 
+     * as too consecutive line terminators, potentially preceded by whitespace.
      * <p>
      * Note: All empty lines and line-initial white space are skipped.
      * 
      * @see #fragments
      */
     private void splitDocumentIntoFragments() {
-        final String paragraphRegex = "(?s)\\s*+(\\S.*?)(?:\\R{2,}+|$)";
+        final String paragraphRegex = "(?s)\\s*+(\\S.*?)(?:(?:\\s*?\\R){2,}+|$)";
         final String lineRegex = "(?m)^\\s*+(\\S.*?)$";
         String splitRegex = (splitOnNewlines) ? lineRegex : paragraphRegex;
         Debug.debug("Splitting doc with: " + splitRegex);
@@ -2047,7 +2045,8 @@ public class DrumGUI extends StandardTripsModule {
     }
 
     /**
-     * Sends tag request for current paragraph. Sent at the beginning of processing when {@link #splitOnNewlines} is {@code true}
+     * Sends tag request for current paragraph. Sent at the beginning of processing when {@link #splitOnNewlines} is
+     * {@code true}
      */
     private void sendTagRequestForFragment() {
         // if we handle the paragraph IDs, we need to send start-paragraph
@@ -2063,10 +2062,14 @@ public class DrumGUI extends StandardTripsModule {
                 ex.printStackTrace();
             }
         }
+        // these should not be needed, but, just in case...
+        earlyFailures.clear();
+        waitingList.clear();
     }
 
     /**
-     * Sends start-paragraph message. Only used when {@link #splitOnNewlines} is {@code true}, at the start of processing.
+     * Sends start-paragraph message. Only used when {@link #splitOnNewlines} is {@code true}, at the start of
+     * processing.
      * 
      */
     private void sendStartParagraph() {
@@ -2110,8 +2113,13 @@ public class DrumGUI extends StandardTripsModule {
         ListIterator<KQMLObject> iterator = uttnums.listIterator();
         while (iterator.hasNext()) {
             int uttnum = Integer.parseInt(iterator.next().toString());
-            waitingList.put(uttnum, new ArrayList<KQMLList>());
-        }  
+            if (earlyFailures.contains(uttnum)) {
+                earlyFailures.remove(new Integer(uttnum));
+                Debug.debug("STATE: skipped early failure uttnum=" + uttnum);
+            } else {
+                newUttnum(uttnum, null);
+            }
+        }
     }
 
     /**
@@ -2128,11 +2136,31 @@ public class DrumGUI extends StandardTripsModule {
         }
         // if we're on the last utterance, skip clause
         if (uttnum == lastUttnumInFragment) {
-            clausesRemaining--; 
+            clausesRemaining--;
             Debug.debug("STATE: Utterance done " + clausesRemaining + " clauses remaining");
-        } 
+        }
     }
 
+    /**
+     * Adds new uttnum to {@link #waitingList}.
+     *  
+     * @param uttnum Utterance number
+     * @param words List of words (may be {@code null}, if not known yet) 
+     */
+    private void newUttnum(int  uttnum, KQMLList words) {
+        if (waitingList.containsKey(uttnum)) {
+            if (words != null && !words.isEmpty()) {
+                waitingList.get(uttnum).add(words);
+            }
+        } else {
+            ArrayList<KQMLList> clauses = new ArrayList<KQMLList>();
+            if (words != null && !words.isEmpty()) {
+                clauses.add(words);
+            }
+            waitingList.put(uttnum, clauses);
+        }
+    }
+    
     /**
      * Removes entry for {@code uttnum} from {@link #waitingList}.
      * 
@@ -2143,12 +2171,21 @@ public class DrumGUI extends StandardTripsModule {
     private void abandonUttnum(int uttnum) {
         // if we're on the last utterance, skip clause
         if ((uttnum == lastUttnumInFragment) && (clausesRemaining > 0)) {
-            clausesRemaining--; 
+            clausesRemaining--;
             Debug.error("STATE: Skipped clause; " + clausesRemaining + " clauses remaining");
-        } 
-        ArrayList<KQMLList> clause = waitingList.remove(uttnum);
-        Debug.error("STATE: Abandoned: uttnum=" + uttnum + " " + clause);
-
+            if (clausesRemaining > 0) {
+                // we're still waiting for END-OF-TURN
+                return;
+            }
+        }
+        // we keep track of interpretation-failed before the full paragraph got OK-ed
+        if (gotOK) {
+            ArrayList<KQMLList> clause = waitingList.remove(uttnum);
+            Debug.error("STATE: Abandoned: uttnum=" + uttnum + " " + clause);
+        } else {
+            earlyFailures.add(uttnum);
+            Debug.error("STATE: Early failure: uttnum=" + uttnum);
+        }
     }
 
     /**
@@ -2166,7 +2203,7 @@ public class DrumGUI extends StandardTripsModule {
                 Debug.debug("STATE: Removed waiting list entry: " + entry);
             }
         }
-   }
+    }
 
     /**
      * Sets utterance offsets for the current paragraph of the current document.
