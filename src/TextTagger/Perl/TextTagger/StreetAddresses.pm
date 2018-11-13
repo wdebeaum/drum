@@ -8,15 +8,34 @@ require Exporter;
 use Geo::StreetAddress::US;
 use TextTagger::Util qw(match2tag);
 
+# construct a street address regex from bits of Geo::StreetAddress::US,
+# excluding the "city, state zipcode" line
 my $number_re = $Geo::StreetAddress::US::Addr_Match{number};
 my $fraction_re = $Geo::StreetAddress::US::Addr_Match{fraction};
-my $street_re = $Geo::StreetAddress::US::Addr_Match{street};
+#my $street_re = $Geo::StreetAddress::US::Addr_Match{street};
+# the library's street regex matches almost anything (e.g. "pm" in "2 pm"),
+# we'd like to be more specific
+my $direct_re = $Geo::StreetAddress::US::Addr_Match{direct};
+my $type_re = $Geo::StreetAddress::US::Addr_Match{type};
+my $street_re = qr/
+		   (?:
+		     # e.g. South Alcaniz
+		     (?: $direct_re ) \W+ \w+ \b
+		     |
+		     # e.g. Clinton Avenue South
+		     (?: [^\w,]+ \w+ ){0,3}?
+		     (?: [^\w,]+ (?: $type_re ) \b )
+		     (?: [^\w,]+ (?: $direct_re ) \b )?
+		   )
+		  /ix;
 my $unit_re = $Geo::StreetAddress::US::Addr_Match{unit};
-my $street_address_re = qr/(?<!\p{Sc})$number_re(?!\%)\W*
-                           (?:$fraction_re\W*)?
+my $street_address_re = qr/
+			   # building numbers except currency and percent
+			   (?<! \p{Sc} ) $number_re (?! \% ) \W*
+                           (?: $fraction_re \W* )?
 			   $street_re
-			   (?:\W+$unit_re)?
-			   (?=\W)
+			   (?: \W+ $unit_re )?
+			   (?= \W | $) # like one-sided \b
 			  /ix;
 
 use strict vars;
