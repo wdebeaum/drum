@@ -620,8 +620,13 @@
   :parent ont::time-measure-scale
 )
 
+(define-type ont::number-scale
+  :parent ont::measure-scale
+)
+
 (define-type ont::total-scale
- :parent ont::measure-scale
+; :parent ont::measure-scale
+ :parent ont::number-scale
  :wordnet-sense-keys ("total%1:06:00" "count%1:23:00")
  ;; WORDS: aggregate, total, count
 )

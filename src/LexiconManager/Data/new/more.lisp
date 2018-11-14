@@ -10,7 +10,8 @@
 		       (SENSES
 			((LF-PARENT ONT::MORE-VAL) ;; (:* ONT::QMODIFIER W::MORE)) ;; for some reason, LF-PARENT doesn't work here
 			 (example "more than seven" "more trucks than that" "more people" "more of the people" "more than seven of the people")
-			 (non-hierarchy-lf t)(TEMPL quan-than-comp)
+			 ;(non-hierarchy-lf t)
+			 (TEMPL quan-than-comp)
 			 (SYNTAX (W::agr (? ag w::3s W::3p))) ;; more than half can still be less than one
 			 )
 			)
