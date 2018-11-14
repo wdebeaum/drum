@@ -12,6 +12,7 @@ config.log
 config.status
 TRIPS-stamp
 /src/*/TRIPS
+/src/util/cwc/TRIPS
 MANIFEST.MF
 trips-*.core
 /src/Makefile
@@ -72,6 +73,7 @@ trips-*.core
 /src/TextTagger/personal-names.tsv
 /src/TextTagger/get-ssh-tunnel
 /src/TextTagger/wn-multiwords.tsv
+/src/TextTagger/countries.tsv
 /src/TextTagger/*-terms.tsv
 /src/TextTagger/downloads/
 /src/TextTagger/drum-dsl/
@@ -80,9 +82,11 @@ trips-*.core
 /src/TextTagger/Perl/Geo
 /src/TextTagger/Perl/Lingua
 /src/TextTagger/Perl/TextTagger/Config.pm
+/src/TextTagger/terms2/terms2
 # WordNetSQL
 /src/WordNetSQL/glosstags.psv
 /src/WordNetSQL/wn.db
+/src/WordNetSQL/wn.db-no-really
 /src/WordNetSQL/gsts-warnings.txt
 /src/WordNetSQL/eswn-relation.psv
 /src/WordNetSQL/eswn-synset.psv
@@ -97,6 +101,7 @@ trips-*.core
 /src/Graphviz/Graphviz
 /src/Graphviz/Configuration.pm
 /src/KQML/extract-messages
+/src/KQML/find-messages
 /src/SpeechOut/SpeechOut
 /src/SpeechOutMac/SpeechOutMac
 /src/SpeechOutNot/SpeechOutNot
@@ -118,9 +123,19 @@ trips-*.core
 /src/WordNetWeb/add_suffix.ph
 # system run scripts
 /src/Systems/bob/trips-bob
+/src/Systems/bob/trips-bob-lisp
 /src/Systems/cabot/trips-cabot
+/src/Systems/cabot/trips-cabot-lisp
+/src/Systems/cabot/trips-cogent
+/src/Systems/cabot/trips-cogent-lisp
+/src/Systems/cwms/trips-cwms
+/src/Systems/cwms/trips-cwms-lisp
 /src/Systems/drum/trips-drum
+/src/Systems/drum/trips-drum-lisp
+/src/Systems/musica/trips-musica
+/src/Systems/musica/trips-musica-lisp
 /src/Systems/STEP/trips-step
+/src/Systems/STEP/trips-step-lisp
 # junk certain editors create
 .*.swp
 *~
