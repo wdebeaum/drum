@@ -1869,7 +1869,7 @@
       (N-N-MOD +) (QUAL -) (relc -) (subcat ?subcat) (gap ?gap))
       
      -n-sing-n1-> 0.98 ;; prevent this from happening too often
-     (n1 (AGR 3s) (abbrev -) (generated -)
+     (n1 (AGR 3s) (abbrev -) (generated -) (lex ?lex)
         (var ?v1) (restr ?modr)  (gerund -)   ;; we expect gerunds as modifiers to be adjectives, not N1
 	;;  removed this to handle things like "computing services"
 	;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
@@ -1891,7 +1891,7 @@
 	    (abbrev -)
 	       ))
      (add-to-conjunct 
-      (val (ASSOC-WITH (% *PRO* (status ont::kind) (var ?v1) (class ?modc) (constraint ?modr) (sem ?n-sem) (kr-type ?kr-type)))) 
+      (val (ASSOC-WITH (% *PRO* (status ont::kind) (var ?v1) (class ?modc) (constraint ?modr) (sem ?n-sem) (kr-type ?kr-type) (lex ?lex)))) 
       (old ?r) (new ?new)))
 
     ;; n-n mods with hyphen  -- this allows us to override our otherwise strict requirement to attach on the right

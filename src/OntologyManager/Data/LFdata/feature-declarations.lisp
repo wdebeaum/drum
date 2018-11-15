@@ -435,17 +435,21 @@
 
 ;;; this is a hack for now to handle times etc. We will need to fix it
 ;;;)
+#|
 (define-feature F::Time-Scale
  ;;;(F_Any-Scale
  :values ((F::POINT)
           (F::INTERVAL)
           )
  )
+|#
 
+#|
 ;; here the feature should be time-frame, not time-period because time-units can be points
 (define-feature-rule time-period-rule
     :feature (f::time-function f::time-frame)
     :implies (f::time (f::time-scale f::interval)))
+|#
 
 
 ; Myrosia 2005

@@ -60,12 +60,13 @@
  
 
 (define-feature-list-type F::time
-    :features (F::time-function f::scale F::time-scale F::kr-type f::type)
+  :features (F::time-function f::scale ;F::time-scale
+			      F::kr-type f::type)
     :defaults (
 	       (F::type ont::any-time-object)
 	       (F::time-function F::Any-time-function)
-	       (F::time-scale F::point)
-	       (f::scale -)
+	       ;(F::time-scale F::point)
+	       (F::SCALE ONT::TIME-LOC-SCALE) ;(f::scale -)
 	       ;;ont::time-measure-scale) ;; a default -- we need f::scale to allow role restriction sharing between durations such as abstract quantities w/ times, like five minutes, which are (f::scale f::duration), and ont::time-intervals
 	       )
     )

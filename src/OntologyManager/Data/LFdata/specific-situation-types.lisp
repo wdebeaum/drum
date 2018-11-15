@@ -4265,6 +4265,8 @@
  :wordnet-sense-keys ("belong%2:42:03" "go%2:42:04" "belong%2:42:06")
  :parent ONT::be-at
  :sem (F::Situation (F::aspect F::stage-level))
+ :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj (F::intentional -))) 
+             )
  )
 
 ;; this fits here

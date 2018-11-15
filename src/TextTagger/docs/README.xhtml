@@ -1707,7 +1707,7 @@ push @TextTagger::taggers, {
 <li>They convert most kinds of braces ( ([&lt; and &gt;]) ) to -LRB- and -RRB-, which are the Penn tags for Left Round Brace and Right Round Brace, which is wrong because [&lt;&gt;] are not round.</li>
 <li>They convert curly braces { and } to -LCB- and -RCB-, which are correct according to Penn, but why pick these out from all the other braces they say are "round"?</li>
 <li>Stanford Parser sometimes <em>doesn't</em> convert ( and ) to -LRB- and -RRB-, making the Lispy parse trees it outputs more difficult to interpret.</li>
-<li>They convert ". . ." to "..." (removing spaces).</li>
+<li>They convert ". . ." to "..." (removing spaces), and convert "…" to "..." (Unicode to ASCII).</li>
 <li>They convert " to `` or '', if they think it's the start or end of a quotation, respectively.</li>
 <li>They convert ' to ` in similar situations.</li>
 <li>They convert Unicode quote marks (except low ones and high-reversed-9 ones) to ASCII equivalents using backticks ` and apostrophes ', including right single quotes used as apostrophes in endings like "n't"/"n’t".</li>

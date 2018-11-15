@@ -19,7 +19,7 @@
  :arguments (;(:ESSENTIAL ONT::OF ((? of F::Phys-obj F::Situation f::abstr-obj)))
 	     ;(:ESSENTIAL ONT::val ((? val F::Phys-obj F::Situation f::abstr-obj)))
 	     (:ESSENTIAL ONT::FIGURE ((? fig F::Phys-obj F::Situation f::abstr-obj)))
-	     (:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj F::Situation f::abstr-obj)) (f::type (? !t ONT::TIME-MEASURE-SCALE))
+	     (:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj F::Situation f::abstr-obj) (f::scale (? !t ONT::TIME-MEASURE-SCALE)))
              ))
  )
 
@@ -43,6 +43,9 @@
 (define-type ont::at-loc
     :comment "prototypical locating of a FIGURE wrt a point-like GROUND"
     :parent ont::position-as-point-reln
+    :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj f::abstr-obj) 
+					 (f::scale (? !t ONT::TIME-MEASURE-SCALE ONT::RATE-SCALE ONT::MONEY-SCALE ONT::NUMBER-SCALE)) ; excludes "at four"
+				       )))
     )
 
 ; figure is viewed as a point and related to ground by (abstract) containment
@@ -926,8 +929,8 @@
 ;; so I uncommented the first defn of ONT::VAL
 (define-type ONT::time-span-rel
  :parent ONT::temporal-location
- :arguments ((:ESSENTIAL ONT::GROUND (F::time (F::time-scale f::interval)
-					      (F::time-function (? funcn F::month-name F::year-name F::day-period))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::time ;(F::time-scale f::interval)
+					      ;(F::time-function (? funcn F::month-name F::year-name F::day-period))
 					      ))
 
 ;	     (:ESSENTIAL ONT::SIT-VAL (F::situation))
@@ -1058,7 +1061,7 @@
 ;;; some things apply only to time specifications like 5am/noon
 (define-type ONT::time-clock-rel
  :parent ONT::temporal-location
- :arguments ((:ESSENTIAL ONT::GROUND (F::time (F::time-function (? fn F::clock-time F::day-point)) (f::time-scale f::point)))
+ :arguments ((:ESSENTIAL ONT::GROUND (F::time (F::time-function (? fn F::clock-time F::day-point)))) ;(f::time-scale f::point)))
 ;	     (:ESSENTIAL ONT::SIT-VAL (F::situation))
              )
  )
@@ -1067,7 +1070,7 @@
 ;; short term parking; a long day
 (define-type ONT::interval-duration-modifier
  :parent ONT::event-duration-modifier
- :arguments ((:essential ONT::FIGURE (F::time (f::time-function f::time-frame) (f::time-scale f::interval)))
+ :arguments ((:essential ONT::FIGURE (F::time (f::time-function f::time-frame))) ;(f::time-scale f::interval)))
              )
  )
 
@@ -1107,14 +1110,14 @@
 ;;; this is used only for "that/it". Most normal time object denote intervals or units
 (define-type ONT::Any-Time-object
     :parent ONT::ANY-SEM
-    :sem (F::time (F::time-function F::Any-time-function) (F::time-scale (? sc F::interval F::point)))
+    :sem (F::time (F::time-function F::Any-time-function) (F::scale ONT::TIME-LOC-SCALE)) ;(F::time-scale (? sc F::interval F::point)))
     )
 
 (define-type ONT::Time-object
     :comment "objects that refer to temporal locations in some way"
     :parent ONT::ANY-TIME-OBJECT
     :arguments ((:OPTIONAL ONT::FIGURE))
-    :sem (F::time (F::time-scale (? sc F::point F::interval)))
+    ;:sem (F::time (F::time-scale (? sc F::point F::interval)))
     )
 
 ;; these are intervals such as "duration", which cannot generally be counted
@@ -1122,11 +1125,14 @@
 (define-type ONT::Time-interval
  :wordnet-sense-keys ("interval%1:28:00" "time_interval%1:28:00" "time%1:28:03" "clock_time%1:28:00" "time%1:28:00" "time%1:28:05" "time_period%1:28:00")
  :parent ONT::TIME-OBJECT
- :sem (F::time (F::time-scale (? sc F::interval)) (F::Scale -) (F::Tangible +)) ;;Ont::duration-scale))
- :arguments ((:OPTIONAL ONT::GROUND (F::time (f::time-function f::time-frame) (f::time-scale f::interval) (f::scale ont::duration-scale)))
+ ;:sem (F::time (F::time-scale (? sc F::interval)) (F::Scale -) (F::Tangible +)) ;;Ont::duration-scale))
+ :sem (F::time (F::Tangible +)) ;;Ont::duration-scale))
+ :arguments ((:OPTIONAL ONT::GROUND (F::time (f::time-function f::time-frame) ;(f::time-scale f::interval)
+					     (f::scale ont::duration-scale)))
              ;;; a time of two hours
              (:OPTIONAL ONT::FIGURE ((? t f::situation f::abstr-obj f::time)))
-	     (:OPTIONAL ONT::EXTENT (F::Abstr-obj (f::time-scale f::interval) (f::scale ont::duration-scale)))
+	     (:OPTIONAL ONT::EXTENT (F::Abstr-obj ;(f::time-scale f::interval)
+						  (f::scale ont::duration-scale)))
              )
  )
 
@@ -1195,7 +1201,7 @@
 (define-type ONT::Time-point
  :wordnet-sense-keys ("time%1:28:06" "clip%1:11:00" "time%1:11:00" "point%1:28:00" "point_in_time%1:28:00")
  :parent ONT::TIME-OBJECT
- :sem (F::time (f::time-scale f::point))
+ ;:sem (F::time (f::time-scale f::point))
  :arguments ((:OPTIONAL ONT::FIGURE ((? lof f::situation F::time)))
 	     ;; this is because we may have things "the end of an event". In reality, there should be a coercion rule, but we are not doing it yet
 	     ;; middle of the meeting
@@ -1209,7 +1215,7 @@
  :wordnet-sense-keys ("date%1:28:03" "time%1:03:00")
  :comment "classification of time intervals with respect to some conceptual organization (e.g., calendar)"
  :parent ONT::TIME-Object
- :sem (F::time (F::time-function F::time-of-year) (f::time-scale f::interval))
+ :sem (F::time (F::time-function F::time-of-year)) ;(f::time-scale f::interval))
  )
 
 (define-type ont::date-object-on

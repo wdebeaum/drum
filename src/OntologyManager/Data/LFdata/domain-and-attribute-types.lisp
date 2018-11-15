@@ -611,12 +611,17 @@
   :parent ont::measure-scale
  )
 
+(define-type ont::duration-scale
+  :parent ont::time-measure-scale
+)
+
 (define-type ont::age-scale
- :parent ont::time-measure-scale
+ ;:parent ont::time-measure-scale
+ :parent ont::duration-scale
  :wordnet-sense-keys ("age%1:28:00" "age%1:07:00")
 )
 
-(define-type ont::duration-scale
+(define-type ont::time-loc-scale
   :parent ont::time-measure-scale
 )
 

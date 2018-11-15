@@ -2078,7 +2078,7 @@
 ;; persistence
 (define-type ont::persistence-val
  :parent ont::temporal-occurrence-val 
- :sem (F::Abstr-obj (F::scale ONT::TIME-MEASURE-SCALE )(F::TIME-SCALE F::INTERVAL ))
+ :sem (F::Abstr-obj (F::scale ONT::TIME-MEASURE-SCALE ));(F::TIME-SCALE F::INTERVAL ))
 )
 
 (define-type ont::persistent

@@ -122,7 +122,7 @@ sub stanford_word_re {
   } elsif ($word eq '-RRB-') {
     $re = qr/[\)\]\>]/;
   } elsif ($word eq '...') {
-    $re = qr/\.\s*\.\s*\./;
+    $re = qr/\x{2026}|\.\s*\.\s*\./; # horizontal ellipsis
   } elsif ($word eq '--') {
     $re = qr/--|\x{2013}|\x{2014}|&mdash;/; # en- and em-dashes
   } elsif (exists($penn2trips_punc{$word})) {
