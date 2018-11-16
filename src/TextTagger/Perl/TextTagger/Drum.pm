@@ -726,6 +726,7 @@ sub tag_protmods {
       my $tag = $_;
       # make sure the match is of the form we're looking for, and not plural
       my $keep =
+	$tag->{lex} =~ /at(es|ed|ing|ion)$/ and # e.g. not /ation-$/
 	grep { $_->{matched} =~ /^protein (?:\S+\s+)?\S+ation$/ and
 	       not exists($_->{'depluralization-score'})
 	     } @{$tag->{'domain-specific-info'}{matches}};
