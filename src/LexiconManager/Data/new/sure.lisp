@@ -15,7 +15,7 @@
       )
      ((LF-PARENT ONT::CERTAIN)
       (example "he is sure of the plan")
-      (TEMPL CENTRAL-ADJ-XP-TEMPL (XP (% W::pp (W::ptype W::of))))
+      (TEMPL CENTRAL-ADJ-XP-TEMPL (XP (% W::pp (W::ptype (? ptype W::of w::about)))))
       )
      ((LF-PARENT ONT::CERTAIN)
       (example "he is sure that he will win")

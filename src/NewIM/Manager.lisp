@@ -356,8 +356,13 @@
 (defun replace-role-name (sv-list oldname newname)
   (when sv-list
     (if (eq (car sv-list) oldname)
-	(cons newname (cdr sv-list))
-	(reuse-cons (car sv-list)
+	;(cons newname (cdr sv-list))
+	(reuse-cons newname
+		    (reuse-cons (cadr sv-list)
+				(replace-role-name (cddr sv-list) oldname newname)
+				(cdr sv-list))
+		    sv-list)
+        (reuse-cons (car sv-list)
 		    (reuse-cons (cadr sv-list)
 				(replace-role-name (cddr sv-list) oldname newname)
 				(cdr sv-list))

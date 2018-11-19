@@ -182,7 +182,7 @@
 ; figure is related by inherent orientation of ground
 (define-type ont::oriented-loc-reln
     :comment "FIGURE is located by a directional relationship with the GROUND"
-    :arguments ((:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj f::abstr-obj)) (f::type (? !t ONT::TIME-MEASURE-SCALE))))
+    :arguments ((:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj f::abstr-obj) (f::type (? !t ONT::TIME-MEASURE-SCALE)))))
     :parent ont::position-as-point-reln
     )
 

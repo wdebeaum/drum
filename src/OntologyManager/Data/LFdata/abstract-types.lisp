@@ -102,7 +102,8 @@
 
 (define-type ONT::grouping
     :comment "a  classification, category, variety of things. Not a set of objects!"
-    :parent ONT::version
+    ;:parent ONT::version
+    :parent ont::kind
     )
 
 (define-type ONT::FUNCTION-OBJECT
@@ -1001,7 +1002,6 @@
 
 ;; idea
 (define-type ONT::mental-object
- :wordnet-sense-keys ("cognition%1:03:00" "noesis%1:03:00" "grounds%1:10:00" "reason%1:10:00")
  :parent ONT::mental-construction
 ;; :sem (F::Abstr-obj (F::container +))
  :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
@@ -1062,7 +1062,7 @@
 
 ;; reason, motivation
 (define-type ONT::motive
-  :wordnet-sense-keys ("motivation%1:03:00")
+  :wordnet-sense-keys ("motivation%1:03:00" "reason%1:10:00")
  :parent ONT::mental-object
  :arguments (
 ;	     (:optional ONT::Associated-information)

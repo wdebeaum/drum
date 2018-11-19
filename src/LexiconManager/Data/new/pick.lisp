@@ -21,7 +21,8 @@
    (SENSES
     ((LF-PARENT ONT::SELECT)
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (PREFERENCE 0.95)
+     ;(PREFERENCE 0.95)
+     (templ agent-neutral-xp-templ)
      (example "pick the route")
      )
     ((meta-data :origin plow :entry-date 20060531 :change-date nil :comments nil)
@@ -29,7 +30,7 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (EXAMPLE "pick red")
      (templ agent-theme-pred-templ)
-     (preference .95)
+     ;(preference .95)
      )
     )
    )

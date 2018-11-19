@@ -301,11 +301,12 @@
     ;;  e.g., on the top
     
     ((PP (PTYPE ?pt) (var ?v) (lf ?lf) (case ?c) (sem ?sem) 
-		 (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
+	 (lex ?nplex) ;(lex ?pt)
+	 (headcat ?hc) (fake-head 0) ;;me
 		 )   ; I set the case here to a var, in order to allow -np-spec-of-pp> to work. Otherwise, CASE is not used in PPs
      -pp1> 1  ;; since PPs are only used if subcategorized, we set this to 1
      (prep (LEX ?pt) (headcat ?hc))
-     (head (np (lf ?lf) (sem ?sem)  (var ?v)
+     (head (np (lf ?lf) (sem ?sem)  (var ?v) (lex ?nplex)
 	       ;; 02/07/08 allow bare numbers here! 
 	      ;; (LF (% ?cat (STATUS (? !st number)))) ; disallowing bare numbers here to prevent 'more than 5' w/ bare (referential-sem) interp
 	       (lf (% ?cat (status (? !st ONT::PRO ONT::PRO-SET)))) ;; disallowing proforms here -- use pp1-pro>
@@ -316,14 +317,15 @@
     ;; this rule requires the prep to the identicial, and merges the NP's into a conjunction
      ((PP (PTYPE ?pt) (var ?vc) (lf (% PROP (class ?class) (var ?vc) (sem ?sem) (constraint (& (operator ont::and) (sequence (?v1 ?v2))))))
        (case ?c) (sem ?sem)
-		 (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
+       (lex ?lex) ;(lex ?pt)
+       (headcat ?hc) (fake-head 0) ;;me
        )
       -pp-conj1>
       (head (PP (PTYPE ?pt) (var ?v1) (case ?c) (sem ?s1)
 		(gap ?gap)
 		(LF (% ?sort1 (class ?c1) (status ?status)))
 		))
-      (CONJ (LF ?conj) (var ?vc) (but-not -) (but -))
+      (CONJ (LF ?conj) (var ?vc) (but-not -) (but -) (lex ?lex))
       (PP (PTYPE ?pt) (var ?v2) (case ?c) (sem ?s2)
        (gap ?gap)
        (LF (% ?sort2 (class ?c2)))
@@ -331,19 +333,20 @@
       (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
       (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class)))
 
-    ;; I ate a dollop of the ice cream but not the ice
+    ;; I ate a dollop of the ice cream but not of the ice
     ((PP (PTYPE ?pt) (var ?vc) 
       (lf (% PROP (class ?class) (var ?vc) (sem ?sem) 
 	     (constraint (& (operator ont::and) (sequence ?v1) (except ?v2)))))
       (case ?c) (sem ?sem)
-      (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
+      (lex ?lex) ;(lex ?pt)
+      (headcat ?hc) (fake-head 0) ;;me
       )
      -pp-conj-but-not1>
      (head (PP (PTYPE ?pt) (var ?v1) (case ?c) (sem ?s1)
 	       (gap ?gap)
 	       (LF (% ?sort1 (class ?c1) (status ?status)))
 	       ))
-     (CONJ (LF ?conj) (var ?vc) (but-not +))
+     (CONJ (LF ?conj) (var ?vc) (but-not +) (lex ?lex))
      (PP (PTYPE ?pt) (var ?v2) (case ?c) (sem ?s2)
       (gap ?gap)
       (LF (% ?sort2 (class ?c2)))
@@ -356,7 +359,8 @@
       (lf (% PROP (class ?class) (var ?vc) (sem ?sem) 
 	     (constraint (& (operator ont::and) (sequence ?v1) (except ?v2)))))
       (case ?c) (sem ?sem)
-      (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
+      (lex ?lex) ;(lex ?pt)
+      (headcat ?hc) (fake-head 0) ;;me
       )
      -pp-conj-but-not-comma>
      (head (PP (PTYPE ?pt) (var ?v1) (case ?c) (sem ?s1)
@@ -364,7 +368,7 @@
 	       (LF (% ?sort1 (class ?c1) (status ?status)))
 	       ))
      (punc (lex w::punc-comma))
-     (CONJ (LF ?conj) (var ?vc) (but-not +))
+     (CONJ (LF ?conj) (var ?vc) (but-not +) (lex ?lex))
      (PP (PTYPE ?pt) (var ?v2) (case ?c) (sem ?s2)
       (gap ?gap)
       (LF (% ?sort2 (class ?c2)))
@@ -375,7 +379,8 @@
 
     ;; for subcat pp'w with proforms -- but not w::one
     ((PP (PTYPE ?pt) (lf ?lf) (case ?c) (sem ?sem)  (var ?v)
-      (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
+	 (lex ?!nlx) ;(lex ?pt)
+	 (headcat ?hc) (fake-head 0) ;;me
       )   ; I set the case here to a var, in order to allow -np-spec-of-pp> to work. Otherwise, CASE is not used in PPs
      -pp1-pro>
      (prep (LEX ?pt) (headcat ?hc))
@@ -386,7 +391,8 @@
 
     ;; subcat pp with proform one has lower preference to prefer number subcats
     ((PP (PTYPE ?pt) (lf ?lf) (case ?c) (sem ?sem)  (var ?v)
-      (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
+	 (lex w::one) ;(lex ?pt)
+	 (headcat ?hc) (fake-head 0) ;;me
       )   ; I set the case here to a var, in order to allow -np-spec-of-pp> to work. Otherwise, CASE is not used in PPs
      -pp1-pro-one> .9
      (prep (LEX ?pt) (headcat ?hc))
@@ -398,11 +404,12 @@
        
      ;; more than five (trucks) 
     ((PP (PTYPE ?pt) (lf ?lf) (case ?c) (mass count)  (var ?v)
-		 (lex ?pt) (headcat ?hc) (fake-head 0) ;;me
+	 (lex ?lex) ;(lex ?pt)
+	 (headcat ?hc) (fake-head 0) ;;me
 		 ) 
      -pp1-number> .9
      (prep (LEX ?pt) (headcat ?hc))
-     (head (cardinality (lf ?lf)  (var ?v)))
+     (head (cardinality (lf ?lf)  (var ?v) (lex ?lex)))
       )
 
     ; "in" already has a sense that takes an adjective
