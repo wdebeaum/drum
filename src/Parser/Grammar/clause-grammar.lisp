@@ -3722,16 +3722,20 @@
 		     (SEQUENCE 
 		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (sem ?sem1) (lex ?lex1) (constraint ?con1))
 		       (% *PRO* (var ?v2) (status ont::f) (class ?c2) (tma ?tma2) (sem ?sem2) (lex ?lex2) (constraint ?con2)))))))
-     
     -vbar-conj>
-    (head (vp- (vform ?vf) (subjvar ?subj)  (subj ?subject) (var ?v1) (seq -)  (agr ?agr) (gap ?gap)
-	      (lex ?lex1) (advbl-needed -) (class ?c1) (constraint ?con1) (tma ?tma1) (sem ?sem1) (subj-map ?subjmap)
+
+    (head (vp- (vform ?vf) (subjvar ?subj)  (subj ?subject) (var ?v1) (seq -)  (agr ?agr) (gap ?gap) (lex ?lex1)
+	       (advbl-needed -) (class ?c1) (constraint ?con1) (tma ?tma1) (sem ?sem1) (subj-map ?subjmap)
 	   ))
     (CONJ (lf ?lx) (lex ?lex) (but-not -)) ;;(? lx or but however plus otherwise so and)))
+
     (vp- (vform ?vf) (var ?v2) (subjvar ?subj) (subj ?subject) (agr ?agr) (gap ?gap)
      (lex ?lex2) (Advbl-needed -) (class ?c2) (constraint ?con2)  (tma ?tma2) (sem ?sem2))
+
     (sem-least-upper-bound (in1 ?sem1) (in2 ?sem2) (out ?sem))
     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+    (add-to-conjunct (old ?con1) (new (lex ?lex1)) (new ?constraint1))
+    (add-to-conjunct (old ?con2) (new (lex ?lex2)) (new ?constraint2))
     
     )
 
@@ -3740,19 +3744,20 @@
      (class ?class) (sem ?sem)  (lex ?lex)
      (constraint (&  (OPERATOR ?lx) 
 		     (SEQUENCE 
-		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (sem ?sem1) (constraint ?con1))
-		       (% *PRO* (var ?v2) (status ont::f) (class ?c2) (tma ?tma2) (sem ?sem2) (constraint ?con2)))))))
+		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (sem ?sem1) (constraint ?constraint1))
+		       (% *PRO* (var ?v2) (status ont::f) (class ?c2) (tma ?tma2) (sem ?sem2) (constraint ?constraint2)))))))
      
     -vbar-conj-dobj>
-    (head (vp- (vform ?vf) (subjvar ?subj)  (subj ?subject) (var ?v1) (seq -)  (agr ?agr) (gap ?!dobj)
+    (head (vp- (vform ?vf) (subjvar ?subj)  (subj ?subject) (var ?v1) (seq -)  (agr ?agr) (gap ?!dobj) (lex ?lex1)
 	       (advbl-needed -) (class ?c1) (constraint ?con1) (tma ?tma1) (sem ?sem1) (subj-map ?subjmap)
 	   ))
     (CONJ (lf ?lx)  (lex ?lex) (but-not -)) ;;(? lx or but however plus otherwise so and)))
-    (vp- (vform ?vf) (var ?v2) (subjvar ?subj) (subj ?subject) (agr ?agr) (gap -) (dobj ?!dobj)
+    (vp- (vform ?vf) (var ?v2) (subjvar ?subj) (subj ?subject) (agr ?agr) (gap -) (dobj ?!dobj) (lex ?lex2)
      (Advbl-needed -) (class ?c2) (constraint ?con2)  (tma ?tma2) (sem ?sem2))
     (sem-least-upper-bound (in1 ?sem1) (in2 ?sem2) (out ?sem))
     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
-    
+    (add-to-conjunct (old ?con1) (new (lex ?lex1)) (new ?constraint1))
+    (add-to-conjunct (old ?con2) (new (lex ?lex2)) (new ?constraint2))
     )
    
    ;; they had come, seen and conquered
@@ -3761,17 +3766,20 @@
      (class ?class) (sem ?sem)
      (constraint (& 
 		     (SEQUENCE 
-		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (constraint ?con1))
-		       (% *PRO* (var ?v2) (status ont::f) (class ?c2) (tma ?tma2) (constraint ?con2)))))))
+		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (constraint ?constraint1))
+		       (% *PRO* (var ?v2) (status ont::f) (class ?c2) (tma ?tma2) (constraint ?constraint2)))))))
     -vbar-conj-seq1>
     (head (vp- (vform ?vf) (subjvar ?subj) (subj ?subject) (var ?v1) (seq -) (gap ?gap) (agr ?agr)
-	       (advbl-needed -) (class ?c1) (constraint ?con1) (tma ?tma1) (sem ?s1)
+	       (advbl-needed -) (class ?c1) (constraint ?con1) (tma ?tma1) (sem ?s1) (lex ?lex1)
 	   ))
     (punc (lex (? x W::punc-comma)))
-    (vp- (vform ?vf) (var ?v2) (seq -) (subjvar ?subj)  (subj ?subject)  (gap ?gap) (agr ?agr)
+    (vp- (vform ?vf) (var ?v2) (seq -) (subjvar ?subj)  (subj ?subject)  (gap ?gap) (agr ?agr) (lex ?lex2)
      (advbl-needed -) (class ?c2) (constraint ?con2)  (tma ?tma2) (sem ?s2))
     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+    (add-to-conjunct (old ?con1) (new (lex ?lex1)) (new ?constraint1))
+    (add-to-conjunct (old ?con2) (new (lex ?lex2)) (new ?constraint2))
+    
     )
     
     ;; extending the VBARSEQ
@@ -3788,8 +3796,9 @@
      (advbl-needed -) (subjvar ?subj) (subj ?subject) (class ?c2) (constraint ?con2) (tma ?tma2))
     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+    (add-to-conjunct (old ?con2) (new (lex ?lex1)) (new ?constraint))
     (add-to-end-of-list (list ?lf) 
-     (val (% *PRO* (var ?v2) (class ?c2) (constraint ?con2) (tma ?tma2))) (newlist ?newlf))
+     (val (% *PRO* (var ?v2) (class ?c2) (constraint ?constraint) (tma ?tma2))) (newlist ?newlf))
    )
 
    ;; ending the VBARSEQ 

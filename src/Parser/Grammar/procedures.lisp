@@ -283,13 +283,13 @@
 	(result (get-fvalue args 'w::result)))
     (case spec
       ((ONT::DEFINITE W::DEFINITE)
-       (if (match-vals nil agr 'w::|3P|) ;(equal agr 'w::|3P|) ; agr can be a variable
-	   (match-vals nil result 'ONT::DEFINITE-PLURAL)
-	 (match-vals nil result 'ONT::DEFINITE)))
+       (if (match-vals nil agr 'w::|3S|) ;(equal agr 'w::|3P|) ; agr can be a variable
+	   (match-vals nil result 'ONT::DEFINITE)
+	 (match-vals nil result 'ONT::DEFINITE-PLURAL)))
       ((ONT::INDEFINITE W::INDEFINITE)
-       (if (match-vals nil agr 'w::|3P|) ;(equal agr 'w::|3P|)
-	   (match-vals nil result 'ONT::INDEFINITE-PLURAL)
-	 (match-vals nil result 'ONT::INDEFINITE)))
+       (if (match-vals nil agr 'w::|3S|) ;(equal agr 'w::|3P|)
+	   (match-vals nil result 'ONT::INDEFINITE)
+	 (match-vals nil result 'ONT::INDEFINITE-PLURAL)))
       ((ONT::wh ONT::what ONT::which ONT::whose ONT::*wh-term*)
        (if (match-vals nil agr 'w::|3P|) ;(equal agr 'w::|3P|)
 	   (match-vals nil result 'ONT::WH-PLURAL)

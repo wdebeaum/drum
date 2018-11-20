@@ -3,7 +3,7 @@
 ;;;
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
-;;; Time-stamp: <Thu Jun 28 17:19:29 EDT 2018 james>
+;;; Time-stamp: <Sun Nov 18 18:02:04 EST 2018 james>
 
 (in-package "PARSER")
 
@@ -1269,19 +1269,20 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
   (cond
    ((isvar expr)
     (let* ((vnam (second expr))
-       (val (third expr))
-       (negated (fourth expr));;(eql (char (symbol-name vname) 0) #\!))
+	   (val (third expr))
+	   (negated (or (fourth expr) (and (symbolp vnam) (eql (char (symbol-name vnam) 0) #\!))))
        )
-      (if (listp val)
-      (let ((reduced-val (remove-if #'null val)))
-        (if (eql (list-length reduced-val) 0)
-        nil
-        (if (eql (list-length reduced-val) 1)
-            (car reduced-val)
-	    (if (eq (car reduced-val) '$)
-            (mapcar #'clean-out-vars reduced-val)
-            (car val)))))
-      val)))
+      (when (not negated)
+	(if (listp val)
+	  (let ((reduced-val (remove-if #'null val)))
+	    (if (eql (list-length reduced-val) 0)
+		nil
+		(if (eql (list-length reduced-val) 1)
+		    (car reduced-val)
+		    (if (eq (car reduced-val) '$)
+			(mapcar #'clean-out-vars reduced-val)
+			(car val)))))
+	  val))))
    ((consp expr)
     (if (eq (car expr) 'w::sem)
 	(if (consp (cadr expr))

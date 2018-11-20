@@ -1,6 +1,6 @@
 (in-package W)
 
-(parser::add-ontology-hierarchical-features '(SUBCATSEM SEM role class))
+(parser::add-ontology-hierarchical-features '(SUBCATSEM SEM LF role class))
 
 (parser::add-syntax-hierarchical-features '(VFORM SA TYPE ctype sort))
 
