@@ -945,7 +945,7 @@
     ;;;;; the arg of the pred will be the subject of the verb
 	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar))) (:required (W::filled -)
 					;(W::argument ?lsubj)
-					 (W::argument (% W::np (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive -)
+										 (W::argument (% W::np (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive -)
 							 ))
 					 (w::arg ?subjvar) (W::gap ?gap))) ONT::FORMAL)
 	))
@@ -2862,11 +2862,17 @@
     ))
   
   (binary-constraint-NP-templ
-   ;(SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? atype W::POST w::pre)))
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? atype W::POST w::pre w::pre-vp)))
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::figure)
     (SUBCAT (:parameter xp (:default (% W::NP (W::case (? cas W::obj -))))) ONT::ground)
+    ))
+
+  (binary-constraint-NP-plural-templ
+   (SYNTAX (W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? atype W::POST w::pre w::pre-vp)))
+   (ARGUMENTS
+    (ARGUMENT (% W::NP) ONT::figure)
+    (SUBCAT (:parameter xp (:default (% W::NP (W::agr 3p) (W::case (? cas W::obj -))))) ONT::ground)
     ))
 
 ; 2 by 4 (ONT::DIMENSION)
@@ -3527,7 +3533,7 @@
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::figure)
     (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to)))) ONT::ground optional)
-    (subcat2 (% -) ONT::NOROLE)
+    ;;(subcat2 (% -) ONT::NOROLE)
     ))
 
     ;; optional subcat that can also be a pre modifier

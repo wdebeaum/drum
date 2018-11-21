@@ -200,7 +200,7 @@ sub read_from_terms2 {
 	my $match_with_status = +{ %$match, status => $status };
 	print STDERR "id=$id; status=$status\n" if ($debug);
 	my $tp = undef;
-	if ($id =~ /^((?:XFAM|UP):\S+) (\S+)$/) {
+	if ($id =~ /^((?:XFAM|UP|HGNC):\S+) (\S+)$/) {
 	  ($id, $tp) = ($1, $2);
 	}
 	my $lftypes = undef;
@@ -227,8 +227,14 @@ sub read_from_terms2 {
 			 @{$mapped_id_to_matches_with_status{$id}});
 	  $id2name{$id} = $name;
 	# for the rest, base senses only on which ontology the term came from
-	} elsif ($id =~ /^HGNC:/) { # everything's a gene
-	  $lftypes = ['GENE'];
+	} elsif ($id =~ /^HGNC:/) { # everything's a gene or an RNA
+	  if ($tp eq 'G') {
+	    $lftypes = ['GENE'];
+	  } elsif ($tp eq 'R') {
+	    $lftypes = ['RNA'];
+	  } else {
+	    print STDERR "Warning: bogus HGNC entry type: $tp\n";
+	  }
 	  push @dbxrefs, get_dbxrefs($id);
 	} elsif ($id =~ /^UP::SL/) { # everything's a subcellular location (sorta)
 	  if ($tp eq 'D') { # location

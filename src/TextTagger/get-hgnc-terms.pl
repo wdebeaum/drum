@@ -9,10 +9,17 @@ use strict vars;
 
 my %word_to_infos = ();
 
+# HACK: We know the Makefile gives us the genes first, then the RNAs. Both have
+# heading rows at the beginning that we otherwise ignore, so when we see a
+# heading row ($status is 'Status'), we go to the next type.
+my @tps = (' bogus', ' G', ' R');
+
 while (<>) {
   chomp;
   my ($id, $symbol, $name, $status, $prev_syms, $prev_names, $synonyms, undef, undef, undef) = split(/\t/);
+  shift @tps if ($status eq 'Status');
   next unless ($status eq 'Approved');
+  $id .= $tps[0];
   $prev_names =~ s/^"|"$//g;
   # get all the words that are directly in there
   my %common = (id => $id, name => $name);

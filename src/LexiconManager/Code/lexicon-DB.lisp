@@ -662,8 +662,9 @@ intersection of an entry's tags and these tags is non-empty."
   "Constructs a LEX-ENTRY form using information specified in a WORD-SENSE-DEFINITION entry"
   (let* ((id (word-sense-definition-name entry)) ;; rule-id is never used
 	 ;; -- why is it here?
-;;	 (rule-id (list nil id))  ;; a fake rule so read-fv-pair can be used
-	 (result-type (make-type-spec (cadr (assoc 'ont::result (word-sense-definition-roles entry)))))
+	 ;;	 (rule-id (list nil id))  ;; a fake rule so read-fv-pair can be used
+	 (result-decl (cadr (assoc 'ont::result (word-sense-definition-roles entry))))
+	 (result-type (if result-decl (make-type-spec result-decl )))
          (prob (or (word-sense-definition-pref entry) *no-kr-probability*))
          (cat (word-sense-definition-pos entry))
 	 (coerce (or (mapcar (lambda (x)
@@ -684,7 +685,7 @@ intersection of an entry's tags and these tags is non-empty."
 		  ;;,@(make-role-restrictions (word-sense-definition-roles entry))
 		  ,@(build-synt-arguments (word-sense-definition-mappings entry) (word-sense-definition-roles entry))
 		  ))
-	 ;; add RESULT if in the ontology as its not usually in thw synt arguments
+	 ;; add RESULT if in the ontology as its not usually in the synt arguments
 	 (feats (if result-type
 		    (cons `(W::result ,result-type)
 			  feats1)

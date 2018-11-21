@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.113 2018/07/26 17:45:11 wdebeaum Exp $
+# $Id: Makefile,v 1.114 2018/11/20 21:14:03 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -222,9 +222,10 @@ go_protmods.obo: go_protmods.pl downloads/go.obo
 go_protmods.tsv: get-obo-terms.pl go_protmods.obo
 	TRIPS_BASE=$(prefix) ./$^ >$@
 
-hgnc-terms.tsv: get-hgnc-terms.pl downloads/protein-coding_gene.txt.gz
-	gunzip -c <downloads/protein-coding_gene.txt.gz \
-	| ./get-hgnc-terms.pl \
+hgnc-terms.tsv: get-hgnc-terms.pl downloads/protein-coding_gene.txt.gz downloads/non-coding_RNA.txt.gz
+	( gunzip -c <downloads/protein-coding_gene.txt.gz && \
+	  gunzip -c <downloads/non-coding_RNA.txt.gz \
+	) | ./get-hgnc-terms.pl \
 	>$@
 
 uniprot-terms.tsv: get-uniprot-terms.pl downloads/uniprot_sprot.dat.gz uniprot-species.pl
@@ -346,6 +347,9 @@ downloads/psi-mi25.obo:
 
 downloads/protein-coding_gene.txt.gz:
 	$(call download,"ftp://ftp.ebi.ac.uk/pub/databases/genenames/locus_groups/protein-coding_gene.txt.gz")
+
+downloads/non-coding_RNA.txt.gz:
+	$(call download,"ftp://ftp.ebi.ac.uk/pub/databases/genenames/locus_groups/non-coding_RNA.txt.gz")
 
 # see http://www.uniprot.org/
 

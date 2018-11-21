@@ -48,6 +48,7 @@
 	       (F::tangible -)
 	       ))
 
+#|
 (define-feature-list-type F::Proposition
     :features (F::intentional F::information F::container F::gradability F::kr-type f::type f::origin)
     :defaults (
@@ -57,7 +58,7 @@
 	       (F::information F::information-content) (F::container -)
 	       (f::origin f::any-origin)
 	       ))
- 
+|# 
 
 (define-feature-list-type F::time
   :features (F::time-function f::scale ;F::time-scale

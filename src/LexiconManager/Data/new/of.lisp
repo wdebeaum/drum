@@ -13,7 +13,7 @@
     ((LF-PARENT ONT::TOPIC-SIGNAL)
      (TEMPL DISC-TEMPL)
      (meta-data :origin cardiac :entry-date 20090427 :change-date nil :comments nil)
-     (preference. 98)
+     (preference .98)
      )
     )
    )
@@ -28,9 +28,11 @@
      (example "the budget of the company is 6000 dollars")
      (preference .98) ;; prefer CONTAIN-RELN if it works
      (meta-data :origin calo :entry-date 20040901 :change-date nil :comments calo-y2))
+
     
     ((LF-PARENT ONT::CONTAIN-RELN)
-     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
+     (example "A box of oranges")
+     (TEMPL BINARY-CONSTRAINT-NP-PLURAL-TEMPL)
      )
     )
    )

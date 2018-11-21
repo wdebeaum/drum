@@ -618,7 +618,7 @@
 
 (define-type ont::actuality-val
  :parent ont::real-vs-fake-val 
- :arguments ((:REQUIRED ONT::FIGURE (F::proposition (F::information F::mental-construct )))) 
+ ;:arguments ((:REQUIRED ONT::FIGURE (F::proposition (F::information F::mental-construct )))) 
  :comment "existing or occuring in fact vs. imagined or supposed"
 )
 

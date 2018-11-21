@@ -697,16 +697,32 @@
 	 (gap ?gap)
       (subcat ?!subcat)
       )
-     -N1-reln3>
+     -N1-reln-scale>
      (head (n (sort reln) (lf ?lf) (RESTR ?r)
 	      (subcat ?!subcat)
 	      (subcat (% ?scat (var ?v1) (sem ?ssem) (lf ?lf2) (gap ?gap) )) ;;(sort (? srt pred individual set comparative reln))))
-	      (SEM ($ ?type (f::scale ?sc)))
+	      (SEM ($ F::ABSTR-OBJ (f::scale ?sc)))
 	      (subcat-map ?smap)))
      ?!subcat
      (add-to-conjunct (val (?smap ?v1)) (old ?r) (new ?con1))
      (add-to-conjunct (val (scale ?sc)) (old ?con1) (new ?con))
      )
+
+   ;; relational non-scale nouns with filled PP-of complements  e.g. top of the box
+   ((N1 (sort pred) (var ?v) (class ?lf) (qual -) (COMPLEX +)
+     (RESTR ?con) ;(restr (& (?smap ?v1) (scale ?sc)))
+     (gap ?gap)
+     (subcat ?!subcat)
+     )
+    -N1-reln-parts>
+    (head (n (sort reln) (lf ?lf) (RESTR ?r)
+	     (subcat ?!subcat)
+	     (subcat (% ?scat (var ?v1) (sem ?ssem) (lf ?lf2) (gap ?gap) )) ;;(sort (? srt pred individual set comparative reln))))
+	     (SEM ($ F::PHYS-OBJ))
+	     (subcat-map ?smap)))
+    ?!subcat
+    (add-to-conjunct (val (?smap ?v1)) (old ?r) (new ?con1))
+    )
 
    ;; there are a few relational nouns with two complements  e.g., ratio of the length to the height
    ;; the intersection of acorn with booth
@@ -2756,7 +2772,7 @@
         ((NP (SORT PRED)
              (VAR ?v) 
 	     (sem ?sem)
-	     (lex ?lex) (WH Q) (WH-VAR ?v)
+	     (lex ?lex) (WH ?wh) (WH-VAR ?v)
              (LF (% Description (status ?newspec) (var ?v) (Class ?s) (SORT (?agr -))
 	            (Lex ?lex) (sem ?sem) (transform ?transform)
 		    (constraint (& (proform ?lex)))
@@ -3930,6 +3946,7 @@
      (Advbl (sort else) (var ?else-v) (arg ?v)))
      
     ;; Special construction only for relative clause advbls - we need this only to build the right semantic form
+    ;;  e.g., the box WHERE we stood
     ((ADVBL-R  (ARG ?argvar) (SUBCATSEM ?subcatsem) (ARG2 ?arg2var)
              (FOCUS *) 
              (var ?v) 
@@ -3940,8 +3957,8 @@
              (gap -) (pp-word +)
              (role ?reln)
              )
-     -advbl-r-word>     
-     (head (adv (SORT PP-WORD) (wh Q)
+     -advbl-rel-pro>     
+     (head (adv (SORT PP-WORD) (wh R)
 	        (ARGUMENT (% ?argcat (var ?argvar)))
 	        (SUBCAT (% ?x (SEM ?subcatsem))) 
 	        (subcat-map ?!submap)
@@ -3950,8 +3967,34 @@
 	        (sem ?sem) (transform ?trans)
 	        ))
      )
+    ))
 
-))    
+(parser::augment-grammar 
+  '((headfeatures
+     (ADVBL-R VAR SEM LEX ATYPE argument lex headcat transform))
+    ;;   e.g., the box ON WHICH we stood
+    ((ADVBL-R  (ARG ?argvar) (SUBCATSEM ?subcatsem) (ARG2 ?arg2var)
+             (FOCUS *) 
+             (var ?v) (WH R)
+             (LF (% PROP (VAR ?v) (CLASS ?reln) 
+	            (CONSTRAINT (& (?!submap ?arg2var)
+			           (?!argmap ?argvar)))
+	            (sem ?sem) (transform ?trans)))
+             (gap -) (pp-word +)
+             (role ?reln)
+             )
+     -advbl-rel-advbl-which>     
+     (head (adv (SORT BINARY-CONSTRAINT)
+	        (ARGUMENT (% ?argcat (var ?argvar)))
+	        (SUBCAT (% ?x (SEM ?subcatsem))) 
+	        (subcat-map ?!submap)
+	        (argument-map ?!argmap)
+	        (LF (? reln ont::position-reln ont::temporal-relation)) (lex ?lex)
+	        (sem ?sem) (transform ?trans)
+	        ))
+     (pro (lex w::which) (wh R))
+     )
+    ))
     
 ; nominalizations
 ; pass up subcat
@@ -4529,7 +4572,8 @@
 ;;(cl:setq *grammar-CONJ*
 (parser::augment-grammar	 
   '((headfeatures
-     (NP NAME PRO Changeagr lex headcat transform refl)
+     (NP ;;NAME   -- putting it in the NP-NAME rule 
+      PRO Changeagr lex headcat transform refl)
      (NPSEQ CASE MASS NAME PRO lex headcat transform)
      (NSEQ CASE MASS NAME lex headcat transform)
      (N1 sem lf lex headcat transform set-restr refl abbrev rate-activity-nom); agent-nom)
@@ -4576,24 +4620,26 @@
     ;; NP -> NAME
     ;; Myrosia 5/19/00 Changed the rule to apply only to "true" names
     ;; "generated" names get status "GNAME" in the next rule
-    ((NP (SORT PRED)
+    ((NP (SORT ?sort)
          (var ?v) (Class ?lf) (sem ?sem) (agr ?agr) (case (? cas sub obj -))
-         (LF (% Description (Status Ont::definite) (var ?v) (Sort Individual)
+         (LF (% Description (Status ?newspec) (var ?v) (Sort Individual)
                 (class ?lf) (lex ?l) (sem ?sem) 
                 (transform ?transform)  (generated ?gen)
 		(constraint ?con)
                 ))
-         (mass count) (name +) (simple +) (time-converted ?tc) (generated ?gen)
-	 (postadvbl ?gen) ;; swift -- setting postadvl to gen as part of eliminating gname rule but still allowing e.g. truck 1
-         )
+      (mass count) (name +) (simple +) (time-converted ?tc) (generated ?gen)
+      (postadvbl ?gen) ;; swift -- setting postadvl to gen as part of eliminating gname rule but still allowing e.g. truck 1
+      )
      -np-name> 0.995
      (head (name (lex ?l) (sem ?sem) (var ?v) (agr ?agr) (lf ?lf) (class ?class)
-	    (full-name ?fname) (time-converted ?tc)
-	    ;; swift 11/28/2007 removing gname rule & passing up generated feature (instead of restriction (generated -))
-	    (generated ?gen)  (transform ?transform) (title -)
-	    (restr ?restr)
-	    ))
-     (add-to-conjunct (val (:name-of ?l)) (old ?restr) (new ?con)))
+		 (sort ?sort)
+		 (full-name ?fname) (time-converted ?tc)
+		 ;; swift 11/28/2007 removing gname rule & passing up generated feature (instead of restriction (generated -))
+		 (generated ?gen)  (transform ?transform) (title -)
+		 (restr ?restr)
+		 ))
+     (add-to-conjunct (val (:name-of ?l)) (old ?restr) (new ?con))
+     (recompute-spec (spec ont::definite) (agr ?agr) (result ?newspec)))
 
     
     ;; number or number-and-letter sequences
@@ -4628,7 +4674,7 @@
 	     ))
       (postadvbl +)
       )
-     -NP-adj-missing-head> .97 ; .96
+     -NP-adj-missing-head> .981  ;; just a hair above the PLUR forms to set the defaulr
      (head (spec  (poss -) (restr ?restr) (wh-var ?whv)
 		  (WH -)   ;;tentatively eliminating WH terms  -- is there an example like "show me which large?"
 		  ;(restr (& (proform -)))  ;; prevent this and that, which should be pronouns

@@ -34,16 +34,17 @@
    ;;  e.g., 5
     ((time-value 
       (Hour ?r) (am-pm ?x) (minute ?m) 
-      (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::clock-time) (f::time-scale f::point)))
+      (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::clock-time))) ;(f::time-scale f::point)))
+      (lex ?lex)
       )
      -time0>  .97  ;; we reduce the weight to prefer straight number interpretations
-     (head (NUMBER (VAL ?r) (NTYPE (? n W::HOUR12))))
+     (head (NUMBER (VAL ?r) (NTYPE (? n W::HOUR12)) (lex ?lex)))
      )
 
     ;;  e.g., 5:30
     ((time-value 
       (Hour ?r) (Minute ?r2) (am-pm ?x) (time-converted +)
-      (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::clock-time) (f::time-scale f::point)))
+      (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::clock-time))) ;(f::time-scale f::point)))
       )
      -time1> 1.0
      (head (NUMBER (VAL ?r) (NTYPE (? n W::HOUR12 W::HOUR24))))
@@ -53,7 +54,7 @@
     ;;  E.G., FIVE THIRTY
     ((time-value 
       (Hour ?r) (Minute ?r2) (am-pm ?x)
-      (sem ($ f::time (f::intentional -) (f::information -) (f::time-function f::clock-time) (f::time-scale f::point)))
+      (sem ($ f::time (f::intentional -) (f::information -) (f::time-function f::clock-time))) ;(f::time-scale f::point)))
       )
      -time1A> .98 ;; don't prefer times over plain numbers  -> "one fifty" should be first a number, not a time
      (head (NUMBER (VAL ?r) (NTYPE (? n w::HOUR12 w::HOUR24))))
@@ -161,16 +162,16 @@
     ((time-value ;;(LF (% time-description (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::clock-time) (f::time-scale f::point)))
              ;;(constraint ?newcon)))
       (Hour ?hour) (Minute ?minute) (am-pm (:* ont::TIME-OBJECT (? x AM PM)))
-      (AGR 3s) 
-      (sem ($ f::time (f::time-function f::clock-time) (f::intentional -) (f::information -) (f::time-scale f::point)))
+      (AGR 3s) (lex (?lex1 ?lex2))
+      (sem ($ f::time (f::time-function f::clock-time) (f::intentional -) (f::information -))) ;(f::time-scale f::point)))
       )
 
      -time2> 1.0
      ;;(head (NUMBER (VAL ?n) (NTYPE w::HOUR12)))
-     (head (time-value (date-added -)
+     (head (time-value (date-added -) (lex ?lex1)
 		       (Hour ?hour) (Minute ?minute) (am-pm -)))
 		 ;; (LF (% time-description (sem ?sem) (constraint ?con)))))
-     (N (SORT PRED)      
+     (N (SORT PRED) (lex ?lex2)     
       (LF (:* ont::TIME-OBJECT (? x AM PM))))
       )
      ;;(add-to-conjunct (val (am-pm ?lf)) (old ?con) (new ?newcon)))
@@ -179,7 +180,7 @@
     ((time-value
       (hour 12) (am-pm ?ref)
       (var ?v)
-      (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::clock-time) (f::time-scale f::point)))
+      (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::clock-time))) ;(f::time-scale f::point)))
       )
      -noon1> 1.0
      (head (pro (lf (:* ONT::TIME-OBJECT (? ref W::NOON W::MIDNIGHT)))))
@@ -189,7 +190,7 @@
     ((time-value
       (hour 12) (am-pm ?ref)
       (var ?v)
-      (sem ($ f::time (f::time-function f::clock-time) (f::intentional -) (f::information -) (f::time-scale f::point)))
+      (sem ($ f::time (f::time-function f::clock-time) (f::intentional -) (f::information -))) ;(f::time-scale f::point)))
       )
      -time-noon> 1.0
      (head (time-value 
@@ -204,7 +205,7 @@
      ;;  e.g., 5 o'clock
     ((time-value
       (Hour ?n) (am-pm ?x)
-      (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::clock-time) (f::time-scale f::point)))
+      (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::clock-time))) ;(f::time-scale f::point)))
       )
      -time3>
      (head (NUMBER (VAL ?n) (NTYPE w::HOUR12)))
@@ -215,7 +216,7 @@
      ((time-value
        (Hour ?hour) (Minute ?min) (am-pm ?x) (year ?year) (dow ?dow) (day ?day) (month ?month) (century ?century) (era ?era)
        (date-added +)
-       (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::clock-time) (f::time-scale f::point)))
+       (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::clock-time))) ;(f::time-scale f::point)))
        )
      -time-date>
       (head (time-value (date-added -)
@@ -228,7 +229,7 @@
     ((time-value
       (Hour ?hour) (Minute ?min) (am-pm ?x) (year ?year) (dow ?dow) (day ?day) (month ?month) (century ?century) (era ?era)
       (date-added +)
-      (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::clock-time) (f::time-scale f::point)))
+      (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::clock-time))) ;(f::time-scale f::point)))
       )
      -time-date1>
      (date (int +) (year ?year) (dow ?dow) (day ?day)
@@ -254,7 +255,7 @@
     ((value (LF (% time-description (start ?date1) (end ?date2)))
       (AGR 3s) 
       (time-converted +)
-      (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::time-interval) (f::time-scale f::interval)))
+      (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::time-interval))) ;(f::time-scale f::interval)))
       )
      -interval1>
      ;; Myrosia 03/08/00 Matching class values avoid cases like
@@ -564,7 +565,8 @@
       )
      -period-value-advbl1> .98
      (head (np (sem ?valsem) (var ?valvar)
-	       (sem ($ f::time (f::time-scale F::INTERVAL))) (headless -)
+	       (sem ($ f::time)) ;(f::time-scale F::INTERVAL)))
+	       (headless -)
 	       (LF (% DESCRIPTION (status (? xx ont::quantifier)))) ;; indefinite))))   
 	       ))
      (compute-sem-features (lf ont::iteration-period) (sem ?sem))
@@ -595,7 +597,7 @@
       )
      -deictic-time-advbl> 1
      (head (np (sem ?valsem) (var ?valvar) (headless -) (coerced -)
-	       (sem ($ f::time (f::time-scale F::INTERVAL)))
+	       (sem ($ f::time)) ;(f::time-scale F::INTERVAL)))
 	       (LF (% DESCRIPTION (status ont::definite) (class ont::time-object) (CONSTRAINT (& (proform (? cr W::THIS W::THAT W::THOSE W::THESE)))) ;;(? cr this that those these))))))
 		      ))
 	       ))
@@ -604,20 +606,20 @@
     ;;  Special construction for last year/next week/ etc which doesn't seem to generalize to non-temporal
     ((np (var ?v) (sort pred) (agr 3s) (lex ?n_lex)
       (LF (% description (var ?v) (status ont::definite)
-	     (class ont::time-loc) (constraint (& (proform ?lex) (extent ?class))) (sem ($ f::time (f::time-scale F::INTERVAL)))))
-      (sem ($ f::time (f::time-scale F::INTERVAL))))
+	     (class ont::time-loc) (constraint (& (proform ?lex) (extent ?class))) (sem ($ f::time)))) ;(f::time-scale F::INTERVAL)))))
+      (sem ($ f::time))) ;(f::time-scale F::INTERVAL))))
       -next-last-time1> 1
       (adjp (lex (? x next last)) (lex ?lex)
        (var ?adjv) (arg ?v))
       (Head (n1 (sem ?valsem) (var ?v) (class ?class) (restr ?r) (lex ?n_lex)
-	       (sem ($ f::time (f::time-scale F::INTERVAL)))
+	       (sem ($ f::time)) ;(f::time-scale F::INTERVAL)))
 	       )))
 
     ;; E.G., last February 15th, next Tuesday
       
     ((np (var ?v) (sort pred)  (LF (% description (var ?v) (status ont::definite)
-		(class ONT::TIME-LOC) (constraint ?new) (sem ($ f::time (f::time-scale F::INTERVAL)))))
-      (sem ($ f::time (f::time-scale F::INTERVAL))))
+		(class ONT::TIME-LOC) (constraint ?new) (sem ($ f::time)))) ;(f::time-scale F::INTERVAL)))))
+      (sem ($ f::time))) ;(f::time-scale F::INTERVAL))))
      -next-last-date> 1
      (adjp (lex (? x next last)) (lex ?lex)
       (var ?adjv) (arg ?v))
@@ -631,8 +633,8 @@
 
     ((np (sort pred) (agr 3s) (var *) (LF (% description (var *) (status ont::definite)
 		(class ONT::TIME-LOC) (constraint (& (proform ?lex) (extent ?v)))
-		(sem ($ f::time (f::time-scale F::INTERVAL)))))
-      (sem ($ f::time (f::time-scale F::INTERVAL))))
+		(sem ($ f::time)))) ;(f::time-scale F::INTERVAL)))))
+      (sem ($ f::time))) ;(f::time-scale F::INTERVAL))))
       -the-last-dur> 1.0
      (art (lex the))
      (adjp (lex (? lex next last))
@@ -646,8 +648,8 @@
     ;;  Special construction for quantifications of dates: every Monday, each june 1st, this friday, 
     
     ((np (var ?v) (LF (% description (var ?v) (status ont::quantifier)
-		(class ONT::TIME-LOC) (constraint ?new) (sem ($ f::time (f::time-scale F::INTERVAL)))))
-      (sem ($ f::time (f::time-scale F::INTERVAL))))
+		(class ONT::TIME-LOC) (constraint ?new) (sem ($ f::time)))) ;(f::time-scale F::INTERVAL)))))
+      (sem ($ f::time))) ;(f::time-scale F::INTERVAL))))
      -quant-date>
      (spec (pred (? x ont::every ont::each)) (restr ?r) (arg ?v))
      (head (DATE (var ?v) (month ?m) (year -) (day ?d) (dow ?dow)))
@@ -1168,7 +1170,7 @@
      ;; Myrosia 10/26/03 added (name -) to prevent cases like "aspirin 7" or "pittsford 8"
      ;; also lowered the probability considerably to avoid overgeneration
      ;; swift 09/22/11 removing the sem restriction to allow "unit 1" "scenario 2" etc.
-     (head (name (name +) (nname +) (SEM ?sem) ; (SEM ($ f::PHYS-OBJ))
+     (head (name (name +) (nname +) (sem ($ (? !f f::time))) ; excludes "Monday_4 pm" ; (SEM ($ f::PHYS-OBJ))
 	      (WH -) (lf ?cl) 
 	    (LF (:* ?lfparent ?lfform))
 	    (lex ?lex))) 
@@ -1283,30 +1285,47 @@
 	     (constraint (& (mod ?sub))))))
 
       -sublocation>
-      (ADJP (atype (? at attributive-only central)) (var ?sub) (LF (? qual ont::spatial)) (ARG ?v) (VAR ?adjv) (WH -)
-	    (argument (% NP (sem ?nsem))) (COMPLEX -) (comparative ?com) (Set-modifier -)
-	    (post-subcat -)
-	    )
+     (ADJP (atype (? at attributive-only central)) (var ?sub) (LF (? qual ont::spatial)) (ARG ?v) (VAR ?adjv) (WH -)
+      (argument (% NP (sem ?nsem))) (COMPLEX -) (comparative ?com) (Set-modifier -)
+      (post-subcat -)
+      )
      (head (NP (name +) (sem ?nsem) (sem ($ F::PHYS-OBJ (f::spatial-abstraction F::spatial-region)))
-		(var ?v) (class ?c) (lex ?l))))
+	       (headless -)
+	       (var ?v) (class ?c) (lex ?l))))
 
     ;; today, tomorrow, ...
     ((DATE (var *) (INT +) (LF ONT::DAY-NAME) (DAY ?day) ;(DAY ?class)
-	   (lex ?hlex) (headcat ?hcat) (day-specified +))
+      (lex ?hlex) (headcat ?hcat) (day-specified +))
      -dt-pro-day> 1.0
      (head (NP ;(LF (% description (CLASS ONT::DATE-OBJECT)))
-	       (PRO +) (var ?day) (class (? class ont::date-object))
-	       (lex ?hlex) (headcat ?hcat)
-	       )))    
+	    (PRO +) (var ?day) (class (? class ont::date-object))
+	    (headless -)
+	    (lex ?hlex) (headcat ?hcat)
+	    )))    
     
     ))
 
+
+(parser::augment-grammar
+  '((headfeatures 
+     (DATE lex headcat agr)
+     (number ntype var lex headcat)
+     )
+;; Monday
+    ((DATE (INT +) (LF ONT::DAY-NAME) (DOW ?var) (var *)
+      (lex ?hlex) (headcat ?hcat) (day-specified +) (sem ?sem)) 
+     -dt-dow> 1.0
+     (head (NP (class (? xx ONT::DAY-NAME ONT::TODAY ONT::YESTERDAY ONT::TOMORROW))
+	       (headless -)
+	       (lf ?dow)  (lex ?hlex) (headcat ?hcat) (sem ?sem) (var ?var) (wh -)
+	       )))
+    ))
 
 ;;  DATES
 ;; lex and headcat added for aug-trips
 (parser::augment-grammar
   '((headfeatures 
-     (DATE var lex headcat)
+     (DATE var lex headcat agr)
      (number ntype var lex headcat)
      )
 
@@ -1344,13 +1363,7 @@
 	    )))
      |#
 
-  ;; Monday
-    ((DATE (INT +) (LF ONT::DAY-NAME) (DOW ?dow)
-      (lex ?hlex) (headcat ?hcat) (day-specified +) (sem ?sem)) 
-     -dt-dow> 1.0
-     (head (Name (lf (? xx ONT::DAY-NAME ONT::TODAY ONT::YESTERDAY ONT::TOMORROW))
-		 (lf ?dow)  (lex ?hlex) (headcat ?hcat) (sem ?sem) (var ?var)
-		 )))
+  
 
     ;; July
     ((DATE (INT +) (MONTH ?M) (lex ?hlex) (headcat ?hcat))
@@ -1471,17 +1484,17 @@
 	    ))
     (DATE (day ?!day) (dow -) (year ?year) (month ?m)))
 
-    ;; Monday afternoon
+    ;; Monday afternoon, Monday 4pm, ...
     ;;  note there is also a time-value rule like this -- we need this one for the ADVBL use - should clean up sometime
-    ((DATE (INT +) (dow ?!dow) (DAY ?!day) (month ?m) (am-pm ?v1) (year ?year) (lex ?hlex) (headcat ?hcat) (day-specified +))
+    ((DATE (INT +) (dow ?!dow) (DAY ?day) (month ?m) (am-pm ?v1) (year ?year) (lex ?hlex) (headcat ?hcat) (hour ?hour) (day-specified +))
      -dt-day-period-date> 1.01
      (head (DATE (LF ONT::DAY-NAME) (dow ?!dow)   
 		 (month -) (year -) (day -)
 		 ))
-      (np (SORT pred) 
-	       (SEM ($ f::time (F::Time-Function (? xx F::day-period F::day-part F::day-point))))
-	       (var ?v1)
-	       (Lex ?lf2))
+     (time-value 
+      (SEM ($ f::time (F::Time-Function (? xx F::day-period F::day-part F::day-point))))
+      (DAY ?day) (month ?m) (am-pm ?v1) (year ?year) (hour ?hour) (dow -)
+      (Lex ?lf2))
      )
      
      
@@ -1527,7 +1540,7 @@
 	   (LF (% PROP (VAR ?v) (CLASS ONT::TIME-SPAN-REL) ;(CLASS (:* ONT::EVENT-TIME-REL W::DATE))
 		  (CONSTRAINT (& (FIGURE ?arg) (GROUND (% *PRO* (VAR *)  (STATUS ?newspec)
 						       (CLASS ONT::TIME-LOC) (lex ?hlex)
-						       (CONSTRAINT (& (DAY ?day) (Month ?m) (DAY-OF-WEEK ?!dow) (YEAR ?y) (AM-pm ?ampm) (phase ?phase)))))))))
+						       (CONSTRAINT (& (DAY ?day) (Month ?m) (DAY-OF-WEEK ?!dow) (YEAR ?y) (hour ?hr) (AM-pm ?ampm) (phase ?phase)))))))))
 	   (VAR ?v) (ATYPE (? x W::PRE W::POST))  (bare-advbl +)
 	   ;(lex ?hlex)
 	   (headcat ?hcat)
@@ -1538,8 +1551,8 @@
 			(SEM (? SEM8044 ($ F::SITUATION (F::ASPECT ( ? ASP8042 F::DYNAMIC
 								       F::STAGE-LEVEL))))))))
     -date-advbl1>
-    (DATE (var ?v) (DAY ?day) (Month ?m) (DOW ?!dow) (Year ?y) (phase ?phase) (AM-pm ?ampm)
-	  (lex ?hlex) (headcat ?hcat))
+    (DATE (var ?v) (DAY ?day) (Month ?m) (DOW ?!dow) (Year ?y) (hour ?hr) (phase ?phase) (AM-pm ?ampm)
+	  (lex ?hlex) (headcat ?hcat) (agr ?agr))
     (compute-sem-features (lf ont::time-span-rel) (sem ?sem))
     (recompute-spec (spec ont::definite) (agr ?agr) (result ?newspec))
     )
@@ -1575,7 +1588,7 @@
 		 (CLASS ONT::TIME-LOC) 
 		 (CONSTRAINT (& (MODS (% *PRO* (status ont::F) (CLASS (? ev ONT::EVENT-TIME-REL)) (var ?v)
 					(constraint ?newc)))))))
-      (SEM ($ F::TIME (F::TIME-FUNCTION F::YEAR-NAME) (F::TIME-SCALE F::INTERVAL)))
+      (SEM ($ F::TIME (F::TIME-FUNCTION F::YEAR-NAME))) ;(F::TIME-SCALE F::INTERVAL)))
       (VAR *) (sort pred) (NAME +)
       (lex ?hlex) (headcat ?hcat))
      -durational-date> 1.0
@@ -1590,7 +1603,7 @@
     ;; 2 days ago as an ADVBL
      ((ADVBL (LF (% PROP (CLASS (? ev ONT::EVENT-TIME-REL)) (var ?v)
 			 (constraint ?newc)))
-      (SEM ($ F::TIME (F::TIME-FUNCTION F::YEAR-NAME) (F::TIME-SCALE F::INTERVAL)))
+      (SEM ($ F::TIME (F::TIME-FUNCTION F::YEAR-NAME))) ;(F::TIME-SCALE F::INTERVAL)))
       (VAR ?v) (sort pred) (NAME +) (atype ?atype) (arg ?arg) (argument (% S (var ?arg) (sem ($ f::situation)) ))
       (lex ?hlex) (headcat ?hcat))
      -durational-date-constraint> 1.0
@@ -1622,20 +1635,22 @@
 
    ;;  Monday, Monday July 4, Monday July 4 2003
    
-   ((NP (LF  (% DESCRIPTION (VAR ?v) (STATUS ont::definite)
+   ((NP (LF  (% DESCRIPTION (VAR ?v) (STATUS ?newspec)
 		(CLASS ONT::TIME-LOC) (CONSTRAINT (& (DAY-OF-WEEK ?!dow) (DAY ?day) (Month ?m) (YEAR ?y)))))
-	(SEM ($ F::TIME (F::TIME-FUNCTION F::DAY-OF-WEEK) (F::TIME-SCALE F::INTERVAL) (F::SCALE -)))
-	(VAR ?v) (NAME +) (Sort pred)
+	(SEM ($ F::TIME (F::TIME-FUNCTION F::DAY-OF-WEEK))) ;(F::TIME-SCALE F::INTERVAL) (F::SCALE -)))
+	(VAR ?v) (NAME +) (Sort pred) (agr ?agr)
 	(lex ?hlex) (headcat ?hcat))
-    -NP-date1>
-    (DATE (DOW ?!dow) (var ?v) (DAY ?day) (Month ?m)  (Year ?y)
-	  (lex ?hlex) (headcat ?hcat)))
+    -NP-date1> 1.01
+    (DATE (DOW ?!dow) (var ?v) (DAY ?day) (Month ?m)  (Year ?y) (agr ?agr)
+	  (lex ?hlex) (headcat ?hcat))
+    (recompute-spec (spec ont::definite) (agr ?agr) (result ?newspec))
+    )
 
    ;; July third, etc, no day of the week
     ((NP (LF  (% DESCRIPTION (VAR ?v) (STATUS ont::definite)
 		(CLASS ONT::TIME-LOC) (CONSTRAINT (& (DAY ?!day) (Month ?m) (YEAR ?y)))))
-	 (SEM ($ F::TIME (F::TIME-FUNCTION F::DATE) ;(F::TIME-FUNCTION F::DAY-OF-WEEK)
-		 (F::TIME-SCALE F::INTERVAL) (F::SCALE -)))
+	 (SEM ($ F::TIME (F::TIME-FUNCTION F::DATE))) ;(F::TIME-FUNCTION F::DAY-OF-WEEK)
+		 ;(F::TIME-SCALE F::INTERVAL) (F::SCALE -)))
 	(Sort pred)
       (VAR ?v) (NAME +)
 	(lex ?hlex) (headcat ?hcat))
@@ -1647,7 +1662,7 @@
     ;;  e.g.,  July, and July 2004
     ((NP (LF  (% DESCRIPTION (VAR ?v) (STATUS ont::DEFINITE) (NAME +)
 		(CLASS ONT::TIME-LOC) (CONSTRAINT (& (Month ?!m) (YEAR ?y) (phase ?phase))))) (sort pred) 
-	(SEM ($ F::TIME (F::TIME-FUNCTION F::MONTH-NAME) (F::TIME-SCALE F::INTERVAL) (F::SCALE -)))
+	(SEM ($ F::TIME (F::TIME-FUNCTION F::MONTH-NAME))) ;(F::TIME-SCALE F::INTERVAL) (F::SCALE -)))
 	(VAR ?v) (lex ?hlex) (headcat ?hcat))
      -NP-date3> 1.0
      (DATE (DOW -) (var ?v) (DAY -) (Month ?!m)  (Year ?y) 
@@ -1657,7 +1672,7 @@
     ;; 2004,  the second century, ...
      ((NP (LF  (% DESCRIPTION (VAR ?v) (STATUS ont::DEFINITE)
 		(CLASS ONT::TIME-LOC) (CONSTRAINT (& (YEAR ?y) (century ?c) (era ?e)(phase ?phase)))))
-	(SEM ($ F::TIME (F::TIME-FUNCTION F::YEAR-NAME) (F::TIME-SCALE F::INTERVAL) (F::SCALE -)))
+	(SEM ($ F::TIME (F::TIME-FUNCTION F::YEAR-NAME))) ;(F::TIME-SCALE F::INTERVAL) (F::SCALE -)))
 	(VAR ?v) (sort pred) (NAME +)
 	(lex ?hlex) (headcat ?hcat))
      -NP-date4> 1.0

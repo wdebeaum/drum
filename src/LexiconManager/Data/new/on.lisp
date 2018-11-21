@@ -74,36 +74,36 @@
 	     (meta-data :origin bee :entry-date 20040408 :change-date nil :wn ("on%3:00:00") :comments test-s)
 	     )
 	    )
-	  )))
+	   )))
 
 (define-words :pos W::adv :templ DISC-PRE-TEMPL
- :words (
-  ((W::ON W::PURPOSE)
-   (SENSES
-    ((LF-PARENT ONT::intentional-val)
-     (TEMPL PRED-S-POST-templ)
-     )
-    )
-   )
-))
+	      :words (
+		      ((W::ON W::PURPOSE)
+		       (SENSES
+			((LF-PARENT ONT::intentional-val)
+			 (TEMPL PRED-S-POST-templ)
+			 )
+			)
+		       )
+		      ))
 
-(define-words :pos W::adv :templ PPWORD-ADV-TEMPL
- :words (
-  ((W::on W::an W::empty W::stomach)
-   (wordfeats (W::morph NIL))
-   (SENSES
-    (;(LF-PARENT ONT::assoc-with)
-     ;(LF-FORM W::with_meal)
-     ;(TEMPL ppword-adv-templ (xp (% W::s)))
-     ;(SYNTAX (W::atype W::post))
-     (LF-PARENT ONT::associated-with-food-val)
-     (TEMPL PRED-S-POST-templ)
-     )
-    )
-   )
-))
+(define-words :pos W::adv :templ PRED-S-VP-TEMPL
+	      :words (
+		      ((W::on W::an W::empty W::stomach)
+		       (wordfeats (W::morph NIL))
+		       (SENSES
+			(;(LF-PARENT ONT::assoc-with)
+					;(LF-FORM W::with_meal)
+					;(TEMPL ppword-adv-templ (xp (% W::s)))
+					;(SYNTAX (W::atype W::post))
+			 (LF-PARENT ONT::associated-with-food-val)
+			 (TEMPL PRED-S-POST-templ)
+			 )
+			)
+		       )
+		      ))
 
-(define-words :pos W::adv :templ PPWORD-ADV-TEMPL
+(define-words :pos W::adv :templ PRED-S-VP-TEMPL
  :words (
   ((W::on W::a W::full W::stomach)
    (wordfeats (W::morph NIL))
@@ -117,41 +117,43 @@
      )
     )
    )
-))
+  ))
 
 (define-words :pos W::ADV
- :tags (:base500)
- :words (
-  (W::ON
-   (SENSES
-    ((LF-PARENT ONT::TIME-on-rel)
-     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
-     (example "he departed on Monday")
-     )
-    #|
-    ((LF-PARENT ONT::time-on-rel)
-     (TEMPL BINARY-CONSTRAINT-adj-postpos-TEMPL)
-     (meta-data :origin cernl :entry-date 20110114 :change-date nil :comments hpi-acn-3)
-     (example "the device placed on that day")
-     (preference .98)
-     )
-    |#
-    ((LF-PARENT ONT::ON)
-     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
-     (example "it is on the corner")
-     )
+  :tags (:base500)
+  :words (
+	  (W::ON
+	   (SENSES
+	    ((LF-PARENT ONT::TIME-on-rel)
+	     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
+	     (example "he departed on Monday")
+	     (preference .985)
+	     )
+	    #|
+	    ((LF-PARENT ONT::time-on-rel)
+	    (TEMPL BINARY-CONSTRAINT-adj-postpos-TEMPL)
+	    (meta-data :origin cernl :entry-date 20110114 :change-date nil :comments hpi-acn-3)
+	    (example "the device placed on that day")
+	    (preference .98)
+	    )
+	    |#
+	    ((LF-PARENT ONT::ON)
+	     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
+	     (example "it is on the corner")
+	     )
     ;;;;; on drugs, on antibiotics
-    ((LF-PARENT ONT::on-medication)
-     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
-     )
-   ((LF-PARENT ONT::ASSOC-WITH)
-     (example "get me a quote on the ibm thinkpad")
-     (meta-data :origin calo :entry-date 20041130 :change-date nil :comments calo-y2)
-     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
-     (PREFERENCE 0.97)
-     )
-    )
-   )
+	    ((LF-PARENT ONT::on-medication)
+	     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
+	     (preference .98)
+	     )
+	    ((LF-PARENT ONT::ASSOC-WITH)
+	     (example "get me a quote on the ibm thinkpad")
+	     (meta-data :origin calo :entry-date 20041130 :change-date nil :comments calo-y2)
+	     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
+	     (PREFERENCE 0.975)
+	     )
+	    )
+	   )
 ))
 
 (define-words :pos W::ADV
@@ -177,7 +179,7 @@
     )
    )
 ))
-
+#||
 (define-words :pos W::pro :boost-word t :templ PRONOUN-TEMPL
 	      :words (
   ((w::on W::which)
@@ -190,4 +192,4 @@
     
    )
 ))
-)
+)||#

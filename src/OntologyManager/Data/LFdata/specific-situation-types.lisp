@@ -1511,14 +1511,14 @@
 (define-type ONT::READ
  :wordnet-sense-keys ("translate%2:31:00" "interpret%2:31:02" "read%2:31:04" "understand%2:31:03" "read%2:31:01" "read%2:31:00")
  :parent ONT::acquire-belief
- :arguments ((:ESSENTIAL ONT::FORMAL ((? tt F::phys-obj F::abstr-obj F::proposition) (F::information F::information-content)))
+ :arguments ((:ESSENTIAL ONT::FORMAL ((? tt F::phys-obj F::abstr-obj f::situation) (F::information F::information-content)))
              )
  )
 
 (define-type ONT::decide
  :wordnet-sense-keys ("decide%2:31:00" "decide%2:31:02")
  :parent ONT::acquire-belief
- :arguments ((:ESSENTIAL ONT::FORMAL ((? tt F::phys-obj F::abstr-obj F::proposition f::situation) (F::information F::information-content)))
+ :arguments ((:ESSENTIAL ONT::FORMAL ((? tt F::phys-obj F::abstr-obj f::situation) (F::information F::information-content)))
              )
  )
 
@@ -2161,7 +2161,7 @@
  :parent ONT::conversing
  :comment "extended communicative interaction, FORMAL is the topic of discussion"
  :sem (F::Situation (F::Cause F::agentive) (F::Time-span F::extended))
- :arguments ((:ESSENTIAL ONT::formal ((? th20 F::Abstr-obj F::Situation F::Proposition f::phys-obj)))
+ :arguments ((:ESSENTIAL ONT::formal ((? th20 F::Abstr-obj F::Situation f::phys-obj)))
              )
  )
 

@@ -17,7 +17,7 @@
 )
 |#
 
-(define-words :pos W::name :templ PPWORD-N-TEMPL
+(define-words :pos W::name :templ nname-templ
  :tags (:base500)
  :words (
   (W::TODAY

@@ -2971,21 +2971,24 @@
  ;; test: yes
  ;; test: maybe
  ;; test: no
-   ((utt (var *) (sem ($ f::proposition)) (uttword +)
+    ((utt (var *) ;(sem ($ f::proposition))
+	  (uttword +)
          ;(lf (% speechact (var *) (class ?sa) (constraint (& (content (?lf :content ?lex))))))
          (lf (% speechact (var *) (class ?sa) (constraint (& (content ?lf)))))
          (punctype (? x decl imp)))
     -utt4a>
     (head (uttword (lf (?lf)) (lex ?lex) (var ?v) (sa ?sa))))
 
-    ((utt (var *) (sem ($ f::proposition)) (uttword +)
+    ((utt (var *) ;(sem ($ f::proposition))
+	  (uttword +)
       (lf (% speechact (var *) (class  ont::sa_apologize) (constraint (& (content ?reason)))))
       (punctype (? x decl imp)))
      -utt-sa-cp>
      (head (uttword (lf (?lf)) (lex ?lex) (var ?v) (sa ont::sa_apologize)))
      (cp (var ?reason)))
 
-    ((utt (var *) (sem ($ f::proposition)) (uttword +)
+    ((utt (var *) ;(sem ($ f::proposition))
+	  (uttword +)
       (lf (% speechact (var *) (class (? sa ont::sa_apologize ont::sa_thank)) (constraint (& (reason ?reason)))))
       (punctype (? x decl imp)))
      -utt-sa-for>
@@ -3720,8 +3723,8 @@
      (class ?class) (sem ?sem)  (lex ?lex)
      (constraint (&  (OPERATOR ?lx) 
 		     (SEQUENCE 
-		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (sem ?sem1) (lex ?lex1) (constraint ?con1))
-		       (% *PRO* (var ?v2) (status ont::f) (class ?c2) (tma ?tma2) (sem ?sem2) (lex ?lex2) (constraint ?con2)))))))
+		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (sem ?sem1) (lex ?lex1) (constraint ?constraint1))
+		       (% *PRO* (var ?v2) (status ont::f) (class ?c2) (tma ?tma2) (sem ?sem2) (lex ?lex2) (constraint ?constraint2)))))))
     -vbar-conj>
 
     (head (vp- (vform ?vf) (subjvar ?subj)  (subj ?subject) (var ?v1) (seq -)  (agr ?agr) (gap ?gap) (lex ?lex1)
@@ -3792,7 +3795,7 @@
 		   (vform ?vf) (punc ?punc)
 		   ))
     (punc (lex ?punc))
-    (vp- (vform ?vf) (var ?v2) (seq -)  (gap ?gap)  (agr ?agr) (sem ?s2)
+    (vp- (vform ?vf) (var ?v2) (seq -)  (gap ?gap)  (agr ?agr) (sem ?s2) (lex ?lex1)
      (advbl-needed -) (subjvar ?subj) (subj ?subject) (class ?c2) (constraint ?con2) (tma ?tma2))
     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
