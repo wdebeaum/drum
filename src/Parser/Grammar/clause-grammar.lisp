@@ -2665,11 +2665,12 @@
     ;;  note, utterances like "not avon, bath" are now treated as two speech acts
      
 
-;;;    ;;  e.g., not avon
-;;;    ((utt (var *) (lf (% speechact (var *) (class ont::sa_reject) (constraint (& (content ?v1))))))
-;;;     -reject-np>
-;;;     (word (lex not))
-;;;     (head ((? cat np) (var ?v1))))
+    ;;  e.g., not avon
+    ((utt (var *) (lf (% speechact (var *) (class ont::sa_reject) (constraint (& (content ?v1))))))
+     -reject-np>
+     (word (lex not))
+     (head ((? cat np) (var ?v1))))
+    
 ;;;
 ;;;    ;;  not via bath
 ;;;    ((utt (var **) (lf (% speechact (var ?nv) (class ont::sa_reject) (constraint (& (content ?v))))))   
@@ -3153,7 +3154,7 @@
       (punctype (? x imp decl)))
      -evaluate1>
      (head (adjp (wh -) (var ?v) (arg (% *pro* (var *) (class ont::any-sem))) ;; changing this from ont::situation, which is too restrictive for cardiac domain
-      (lf (% prop (class ont::acceptability-val))) (gap -))))
+      (lf (% prop (class (? xx ont::acceptability-val ont::polarity-val)))) (gap -))))
 
    ;; test: good,
    ;; test: ok,
@@ -3163,7 +3164,7 @@
 	 (punctype (? x imp decl)))
     -evaluate1b>
     (head (adjp (wh -) (var ?v) (arg (% *pro* (var *) (class ont::any-sem))) ;; changing this from ont::situation, which is too restrictive for cardiac domain
-	   (lf (% prop (class ont::acceptability-val))) (gap -)))
+	   (lf (% prop (class (? xx ont::acceptability-val ont::polarity-val)))) (gap -)))
     (punc (lex punc-comma) (var ?v1)))
    
    

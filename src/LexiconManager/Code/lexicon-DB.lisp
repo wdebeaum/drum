@@ -26,7 +26,11 @@
 	     (w::sort ?srt)
 	     (w::mass ?mss)
 	     (w::subcat (% -))
+	     (w::subcat2 (% -))
 	     ))
+      (w::adj
+       ((w::subcat (% -))
+	(w::subcat2 (% -))))
       ; NAME is the same as N
       (w::NAME ((w::morph (:forms (-S-3P)))                           ;;  default values
 	     (w::SEM ?sem)

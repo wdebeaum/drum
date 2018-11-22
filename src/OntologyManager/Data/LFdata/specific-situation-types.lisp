@@ -451,6 +451,11 @@
 	     (:optional ont::neutral (F::phys-obj (f::type ont::geo-object))  ;; the path, road, as in "walk the path, walk the hills"
              )))
 
+(define-type ont::locomote-up
+    :wordnet-sense-keys ("climb%2:38:00" "climb%2:38:01" "ascend%2:38:02")
+    :parent ONT::self-locomote
+    )
+
 (define-type ONT::swim
  :wordnet-sense-keys ("float%2:38:01" "swim%2:38:01")
  :parent ONT::self-locomote
@@ -3020,7 +3025,7 @@
  )
 
 (define-type ONT::take-in
-    :wordnet-sense-keys ("absorb%2:35:00" "absorb%2:43:00")
+    :wordnet-sense-keys ("absorb%2:35:00" "absorb%2:43:00" "suck%2:34:04" "suck%2:38:00" "suck%2:35:00")
     :parent ONT::event-of-causation
     :arguments ((:REQUIRED ONT::Agent)
 		(:REQUIRED ONT::affected)

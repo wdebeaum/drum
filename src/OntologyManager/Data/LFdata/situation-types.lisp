@@ -695,15 +695,22 @@
  :parent ONT::event-of-causation
  :sem (F::Situation (:required (F::trajectory -))(:default (F::Cause F::agentive) (F::aspect F::dynamic) (F::time-span F::extended)))
  :arguments ((:REQUIRED ONT::Agent (F::Phys-obj (f::origin f::living)))
-             ;;; Formal changed to comestible, although probably too strong
-	     ;; form substance is also too strong.
-             (:REQUIRED ONT::Affected (F::Phys-obj (F::mobility F::movable) (F::form F::substance) (f::object-function f::comestible)))
-	     ;; This is eat with a spoon/fork etc.
-;             (:OPTIONAL ONT::Instrument (F::Phys-obj (F::mobility F::movable) (F::intentional -) (f::form f::solid-object) (f::information -)))
-	     ;;; Myrosia added accompaniment to account for frequent usages of "take/eat it with food/milk etc
-	     ;;(:OPTIONAL ONT::Assoc-with (F::Phys-obj (F::Form F::substance) (F::mobility F::movable)))
+             (:REQUIRED ONT::Affected (F::Phys-obj (F::mobility F::movable) (F::form F::substance) (f::object-function f::comestible)))   
              )
  )
+
+(define-type ONT::drink
+ :wordnet-sense-keys ("drink%2:34:00" "drink%2:34:12")
+ :parent ONT::consume
+  :arguments ((:REQUIRED ONT::Affected (F::Phys-obj (F::Form f::liquid))))
+ )
+
+(define-type ONT::eat
+ :wordnet-sense-keys ("eat%2:34:00" "eat%2:34:02")
+ :parent ONT::consume
+  :arguments ((:REQUIRED ONT::Affected (F::Phys-obj (F::Form f::solid))))
+ )
+
 
 (define-type ONT::AUX
  :parent ONT::SITUATION-ROOT
