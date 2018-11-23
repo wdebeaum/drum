@@ -32,8 +32,8 @@
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      (preference .98) 
      )
-    ;; requires ont::val to be a time
-    ((LF-PARENT ONT::event-time-rel)
+    
+    ((LF-PARENT ONT::start-time)
      (TEMPL BINARY-CONSTRAINT-S-or-NP-TEMPL)
      (example "the meeting lasted from five to seven pm ")
      )

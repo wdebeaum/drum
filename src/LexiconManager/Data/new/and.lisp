@@ -74,15 +74,15 @@
 
 (define-words 
     :pos W::adv :templ DISC-PRE-TEMPL
- :tags (:base500)
- :words (
-  (W::AND
-   (SENSES
-    ((LF-PARENT ONT::CONJUNCT)
-     )
-    )
-   )
-))
+    :tags (:base500)
+    :words (
+	    (W::AND
+	     (SENSES
+	      ((LF-PARENT ONT::CONJUNCT)
+	       )
+	      )
+	     )
+	    ))
 
 (define-words :pos W::conj :boost-word t
  :tags (:base500)

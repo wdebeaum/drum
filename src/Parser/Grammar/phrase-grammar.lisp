@@ -2772,7 +2772,7 @@
         ((NP (SORT PRED)
              (VAR ?v) 
 	     (sem ?sem)
-	     (lex ?lex) (WH ?wh) (WH-VAR ?v)
+	     (lex ?lex) (WH Q) (WH-VAR ?v)
              (LF (% Description (status ?newspec) (var ?v) (Class ?s) (SORT (?agr -))
 	            (Lex ?lex) (sem ?sem) (transform ?transform)
 		    (constraint (& (proform ?lex)))
