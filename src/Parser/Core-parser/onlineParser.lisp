@@ -1014,11 +1014,13 @@
 (defun filter-sequences (msgs)
   "we are looking for sequences using punctuation that are not domain known entities already"
   (let ((sequences (remove-if-not #'(lambda (x)
-				      (and (not (message-domain-specific-info x))
-					   (member (message-pos x) '(w::NAME W::N))
+				      (progn
+					;(format t "~%~%message domain-specific-info:~S pos:~S word:~S" (message-domain-specific-info x) (message-pos x) (message-word x))
+					(and (not (message-domain-specific-info x))
+					     (intersection (message-pos x) '(W::NAME w::N))
 					   (let ((w  (coerce (message-word x) 'list)))
 					     (and (> (list-length w) 1)
-						  (intersection *sequence-separators* w  :test #'string-equal)))))
+						  (intersection *sequence-separators* w  :test #'string-equal))))))
 				  msgs)))
     (format t "~%~%SEQUENCES FOUND ARE ~S" sequences)
     (if (null sequences)

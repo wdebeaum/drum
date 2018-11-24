@@ -29,6 +29,7 @@
 (defvar *sem-size* nil)
 (defvar *feature-to-index*)
 (defvar *index-to-feature*)
+(defvar *kr-type-index* )
 
 (defun get-sem-features nil
   *sem-features*)
@@ -59,6 +60,7 @@
     (setq *sem-size* (+ common-size Max-indiv-size 1))
     (setq *feature-to-index* (make-hash-table :size *sem-size*))
     (setq *index-to-feature* (make-hash-table))
+    (setq *kr-type-index* (gethash 'f::kr-type *feature-to-index*))
     (setf (gethash 'common *index-to-feature*) (make-array *sem-size* :initial-element nil))			
     (init-feature-to-index common-features 1 :type 'common)
     (mapcar #'(lambda (x)
@@ -213,13 +215,13 @@
             ((subtype 'w::sem v2 v1)
              (setf (aref result i) v2)
              (setq s1-modified t))
-            (t 
+            (t
 	     (if (flexible-semantic-matching *chart*)
-		 ;; note: position 1 (KR-TYPE) is a special case --we don't penalized based on mismatches
+		 ;; note: KR-TYPE is a special case --we don't penalized based on mismatches
 		 (progn
 		   (setq s1-modified t) (setq s2-modified t)
 		   (trace-msg 1 "~%Semantic feature violation found: values ~S and ~S" v1 v2)
-		   (if (not (eql i 1))
+		   (if (not (eql i *kr-type-index*))
 		       (Setq accumulated-prob (* accumulated-prob (compute-sem-failure-penalty i v1 v2)))
 		       (trace-msg 1 "~%No penalty for the KR-TYPE feature in ~S and ~S" v1 v2)))
 		 (setq fail t)))))
@@ -249,7 +251,7 @@
 		(if (flexible-semantic-matching *chart*)
 		 (progn
 		   (setq s1-modified t) (setq s2-modified t)
-		   (if (not (eql i 1))
+		   (if (not (eql i *kr-type-index*))
 		     (progn
 		       (trace-msg 1 "~%Semantic feature violation found")
 		       (Setq accumulated-prob (* accumulated-prob (compute-sem-failure-penalty i v1 v2))))

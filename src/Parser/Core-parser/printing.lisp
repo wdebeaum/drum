@@ -2031,7 +2031,8 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	 ((ont::beneficiary) :beneficiary)
 	 ((ont::source-reln) :source)
 	 (;(ont::manner ont::abstract-object-property ont::pivot) :manner)
-	  (ont::manner ont::property-val) :manner)
+	  ;(ont::manner ont::property-val) :manner)
+	  (ont::manner ont::process-val) :manner) ; e.g., quickly
 	 ((ont::likelihood ont::qualification) :qualification)
 	 )
 	((ont::referential-sem :mod)  ; agentnom and missing head
