@@ -220,7 +220,7 @@
 	(in2 (get-fvalue args 'w::in2))
 	(out (get-fvalue args 'w::out))
 	)
-    (if (and (eq in1 'w::3s) (eq in2 'w::3s))
+    (if (and (member in1 '(w::3s (? agr-out w::3s w::3p))) (eq in2 'w::3s))
 	(match-vals nil out (read-expression '(? agr-out w::3s w::3p)))
       (match-vals nil out 'w::3p)
       )
@@ -585,7 +585,23 @@
       (progn
 	(format t "~%Failed trying to cons ~S to ~S" out (cons in1 in2))
 	nil))))
-		
+
+(define-predicate 'w::simple-cons1
+  #'(lambda (args)
+      (simple-cons args)))
+
+(defun simple-cons (args)
+  (let ((in1 (second (assoc 'w::in1 args)))
+        (in2 (second (assoc 'w::in2 args)))
+	(OUT (second (assoc 'w::out args))))
+    ;(if (and (symbolp in1) (listp in2))
+      (match-vals nil out
+		  (cons in1 in2))
+      ;(progn
+	;(format t "~%Failed trying to cons ~S to ~S" out (cons in1 in2))
+	;nil)
+))
+
 (define-predicate 'W::substitute-vars
   #'(lambda (args)
       (subst-var args)))

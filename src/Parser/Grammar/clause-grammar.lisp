@@ -3093,7 +3093,44 @@
       )
      (append-conjuncts (conj1 (& (tense pres))) (conj2 ?tma) (new ?newtma))
      )
-     
+
+    ;; test: let's not chase the cat.
+    ((s (stype imp) 
+	(lf (% prop (var ?v) (class ?c) (constraint ?con)
+	    (sem ?sem) (tma ?newtma)
+	    (transform ?transform)
+	    ))
+	)
+     -lets-not-imp> 1.0 ;; get let's to go through this rule instead of command-imp2
+     (word (lex let))
+     ;(np (lex us) (var ?npvar))
+     (word (lex ^s))
+     (word (lex not))
+     (head (vp (gap  -) (sem ?sem)
+	       (sem ($ f::situation (f::aspect (? aspc f::dynamic f::stage-level))))
+	       (var ?v) (aux -) (tma ?tma)
+	       (constraint ?con)
+	       ;(subj (% np (var ?npvar)
+			;(sem ?subjsem)))
+	       ;(subjvar ?npvar)
+	       (subj (% np (var (% *pro* (status ont::pro-set) (class ont::person) (var *) (sem ?subjsem) (constraint (& (proform w::us)))
+				))
+			(sem ($ f::phys-obj (f::form f::solid-object) (f::spatial-abstraction f::spatial-point)
+				(f::information -) (f::trajectory -) (f::container -) (f::group -)
+				(f::mobility f::self-moving) (f::origin f::human) (f::intentional +)))
+			(sem ?subjsem)))
+	       (subjvar (% *pro* (status ont::pro-set) (class ont::person) (var *) (constraint (& (proform w::us)))
+			   (sem ?subjsem)))
+	       (class ?c)
+	       (vform base) (postadvbl ?pa) (main ?ma)
+	    (transform ?transform)
+	    (advbl-needed -)
+	    )
+      )
+     ;(append-conjuncts (conj1 (& (tense pres))) (conj2 ?tma) (new ?newtma))
+     (change-feature-values (old ?tma) (new ?newtma) (newvalues ((tense pres) (negation +)))) 
+     )    
+    
     ;; negative commands, e.g., don't tell me the plan
     ;; test: don't bark.
     ;; test: don't chase the cat.

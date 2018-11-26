@@ -1882,10 +1882,13 @@
     ;; e.g., the mountain route, the truck plan, the security zone, ...
    ;;   such as "The small car lot"    
     ((N1 (RESTR ?new) (SORT ?sort) (sem ?sem) (class ?c) ;(class (? c ONT::REFERENTIAL-SEM))
-      (N-N-MOD +) (QUAL -) (relc -) (subcat ?subcat) (gap ?gap))
+	 (N-N-MOD +) (QUAL -) (relc -) (subcat ?subcat) (gap ?gap)
+	 (complex +) ; to prevent "the X, Y and Z boxes" to make "Z boxes" one of the conjuncts in n1-conj1
+	 )
       
      -n-sing-n1-> 0.98 ;; prevent this from happening too often
-     (n1 (AGR 3s) (abbrev -) (generated -) (lex ?lex)
+     (n1 ;(AGR 3s) ; agr could be 3p for "the dog and cat boxes"
+	 (abbrev -) (generated -) (lex ?lex)
         (var ?v1) (restr ?modr)  (gerund -)   ;; we expect gerunds as modifiers to be adjectives, not N1
 	;;  removed this to handle things like "computing services"
 	;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
@@ -5474,7 +5477,7 @@
      )||#
 
     ((NPSEQ  (SEM  ?sem) (LF ?newlf) (AGR 3s) (CASE ?case) (mass ?m) (class ?class)
-      (generated ?gen) (time-conevn1-from-rted ?tc1) (separator (? p w::punc-comma w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash w::punc-minus))
+      (generated ?gen) (time-converted ?tc1) (separator (? p w::punc-comma w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash w::punc-minus))
       )
      npseq-add-next-comma> 1.02 
      (head (NPSEQ  (SEM ?s1) (LF ?lf) (MASS ?m) (class ?c1) (CASE ?case)
@@ -5491,7 +5494,7 @@
 
 
     ((NPSEQ  (SEM  ?sem) (LF ?newlf) (AGR 3s) (CASE ?case) (mass ?m) (class ?class)
-      (generated ?gen) (time-conevn1-from-rted ?tc1) (separator (? p w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash  w::punc-minus))
+      (generated ?gen) (time-converted ?tc1) (separator (? p w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash  w::punc-minus))
       )
      npseq-add-next> 1.02 
      (head (NPSEQ  (SEM ?s1) (LF ?lf) (MASS ?m) (class ?c1) (CASE ?case)
@@ -5760,7 +5763,104 @@
      (combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
      (recompute-agr (in1 ?agr) (in2 ?agr1) (out ?agr-out))
      )
+    
+    ;; 
+    ((N1SEQ  (SEM ?sem) ;(LF (?v1 ?v2))
+	     (restr (& ;(operator ?op)
+		(sequence ((% *PRO* (status ?status-out) (var ?v1) (class ?c1) (constraint ?con) (sem ?s1) (lex ?lex1))
+			   (% *PRO* (status ?status-out) (var ?v2) (class ?c2) (constraint ?con2) (sem ?s2) (lex ?lex2))))))
+	     (AGR ?agr-out) (mass ?m) (class ?class) (case ?c) (status ?status-out)
+      (generated ?gen)  (time-converted ?tc1) (separator w::punc-comma)
+      )
+     -n1seq-initial-sequence-comma> 1.01
+     (head (N1 (SEM ?s1) (VAR ?v1) (agr ?agr) ;;(agr ?agr)   ;; AGR is not reliably determined for proper names
+	       (complex -) (headless -) (expletive -) ;;(bare-np ?bnp)
+	    (generated ?gen1)  (time-converted ?tc1)
+	    ;; (bare-sequence -)
+	    (class ?c1) ;(LF (% ?sort (class ?c1)))
+	    (CASE ?c) (restr ?con) (mass ?m) (status ?status) (lex ?lex1)
+	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram] 	    
+	    ))
+     (punc (lex w::punc-comma))
+     (N1 (SEM ?s2) (VAR ?v2) (agr ?agr1) ;;(agr ?agr)  
+      (complex -) (headless -) (expletive -) ;;(bare-np ?bnp)
+	    (generated ?gen2)  (time-converted ?tc1)
+	    ;; (bare-sequence -)
+	    (class ?c2) ;(LF (% ?sort (class ?c2)))
+	    (CASE ?c) (restr ?con2) (mass ?m) (status ?status2) (lex ?lex2)
+	    (sort (? !sort unit-measure)))
+     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+     (logical-and (in1 ?gen1) (in2 ?gen2) (out ?gen))
+     (combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
+     (recompute-agr (in1 ?agr) (in2 ?agr1) (out ?agr-out))
+     )
 
+    ;;
+    ((N1SEQ  (SEM  ?sem) ;(LF ?newlf)
+	     (agr ?agr-out) ;(AGR 3s)
+	     (CASE ?case) (mass ?m) (class ?class) (status ?status-out)
+	     (generated ?gen) (time-coverted ?tc1) (separator (? p w::punc-comma w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash w::punc-minus))
+	     (restr (& (sequence ?members)))
+	     (COMPLEX +) (SORT PRED)	     
+      )
+     n1seq-add-next-comma> 1.02 
+     (head (N1SEQ  (SEM ?s1) (restr (& (sequence ?seq))) ;(LF ?lf)
+		   (MASS ?m) (class ?c1) (CASE ?case) (agr ?agr) (status ?status)
+	    (generated ?gen1) (time-converted ?tc1) (separator (? p w::punc-comma w::punc-slash w::punc-colon w::punc-minus w::punc-en-dash w::punc-minus))
+	    )) 
+     (punc  (lex w::punc-comma))
+     (N1 (SEM ?s2) (VAR ?v2) (MASS ?m) (COMPLEX -) (name-mod -) (bare-sequence -) (class ?c2) (CASE ?case) (expletive -)
+	 (agr ?agr1) (status ?status2) (restr ?con) (lex ?lex2) (sort (? !sort unit-measure)) (complex -)
+      (generated ?gen2)  (time-converted ?tc1)) ;; MD 2008/03/06 Introduced restriction that only items with the same time-converted status can combine - i.e. don't mix number notation for times or non-times. 
+     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+     (logical-and (in1 ?gen1) (in2 ?gen2) (out ?gen))
+     (combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
+     (recompute-agr (in1 ?agr) (in2 ?agr1) (out ?agr-out))
+     (simple-cons1 (in1 (% *PRO* (status ?status-out) (var ?v2) (class ?c2) (constraint ?con) (sem ?s2) (lex ?lex2)))
+		   (in2 ?seq) (out ?members))
+     )
+    
+    ;;  X and Y,  A, Y and Z
+    ((N1 (ATTACH ?a) (var ?v) (agr ?agr-out) ;(agr 3p)
+	 (SEM ?sem) (class ?class) (status status-out) (mass ?m1) (case ?case) (lex ?op)
+	 #|
+      (LF (% Description (Status ?status) (var ?v) 
+	     (class ?class)
+	     (constraint (& (operator ?op) (sequence ?members)))
+	     (sem ?sem) (CASE ?case1)
+	     (mass ?m1) 
+	     ))
+	 |#
+	 (restr (& (operator ?op)
+		(sequence ?members)))
+	 (COMPLEX +) (SORT PRED)
+      (generated ?generated)
+      )
+     n1-conj1> 
+     (N1SEQ (var ?v1) (SEM ?s1) ;(lf ?lf1)
+	    (class ?c1) (CASE ?case) (mass ?m1) (status ?status) (restr (& (sequence ?seq)))
+      (generated ?generated1) (separator W::punc-comma) (agr ?agr)
+      (time-converted ?tc1) ;; MD 2008/03/06 Introduced restriction that only items with the same time-converted status can combine - i.e. don't mix number notation for times or non-times. 
+      )
+     (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v)) ;; (status ?status))
+     (head (N1 (VAR ?v2) (SEM ?s2) (ATTACH ?a) (agr ?agr1) ;(lf ?lf2)
+	       (class ?c2) (status ?status2) ;(LF (% ?d (class ?c2) (status ?status)))
+	       (CASE ?case2) (mass ?m2) (restr ?con)
+	    (generated ?generated2) (lex ?lex2)
+	    (sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
+	    (time-converted ?tc1)
+	    (complex -)
+	    ))
+     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+     (logical-and (in1 ?generated1) (in2 ?generated2) (out ?generated))
+     (combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
+     (recompute-agr (in1 ?agr) (in2 ?agr1) (out ?agr-out))
+     (simple-cons1 (in1 (% *PRO* (status ?status-out) (var ?v2) (class ?c2) (constraint ?con) (sem ?s2) (lex ?lex2)))
+		   (in2 ?seq) (out ?members))
+     )    
     
      
     ))
@@ -6183,7 +6283,7 @@
 
 	((puncpause (skip +) (lex ?lex)) ;; (? lex w::punc-comma w::punc-colon W::semi-colon W::punc-hashmark)))
 	 -skip-punc1>
-	 (head (W::punc (skip -) (lex (? lex w::punc-comma w::punc-colon W::semi-colon W::punc-hashmark w::punc-quotemark)))))
+	 (head (W::punc (skip -) (lex (? lex w::punc-comma w::punc-colon W::punc-semicolon W::punc-hashmark w::punc-quotemark)))))
 
 	))
 
