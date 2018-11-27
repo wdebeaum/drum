@@ -1292,7 +1292,7 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 
 <div class="section">
 <h4>Scoring</h4>
-<p>The result of the table lookup has both the unnormalized form of the term constructed from the lattice entries, and the unnormalized form of each matching term from one of our data sources. These two forms are not in general the same, but they do normalize to the same string. We count the ways in which they differ (which can only involve letter case and the presence or absence of dashes; we ignore the specific type of dash used, and the amount of whitespace), and that contributes to a match score, along with the status of the term in the data source it came from, and whether a depluralized lattice entry contributed to the match. Higher scores are better (i.e. they are not costs, but benefits).</p>
+<p>The result of the table lookup has both the unnormalized form of the term constructed from the lattice entries, and the unnormalized form of each matching term from one of our data sources. These two forms are not in general the same, but they do normalize to the same string. We count the ways in which they differ (which can only involve letter case and the presence or absence of dashes; we ignore the specific type of dash used, and the amount of whitespace), and that contributes to a match score, along with the status of the term in the data source it came from, and whether a depluralized or spelling-corrected lattice entry contributed to the match. Higher scores are better (i.e. they are not costs, but benefits).</p>
 
 <p>The status score is a simple hand-built ranking of the status annotations from all of the data sources, ranging from 0 to 5 (except that we add 1 for terms from the BioEntities (BE) source, so it's really 0 to 6):</p>
 <table>
@@ -1311,6 +1311,8 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 <td><code>fake</code></td></tr>
 </table>
 <p>(The <code>fake</code> status is for the <code>UP:etc</code> IDs added to the table to replace the excessive number of IDs that certain terms in UniProt have.)</p>
+
+<p>The spelling correction score is 0 if any spelling correction was necessary to match the term, 1 otherwise.</p>
 
 <p>The depluralization score is basically 2 if no depluralization was necessary to match the term, 1 if only one word in the term was depluralized, and 0 if more than one word was depluralized. But we also add the worst (i.e. minimum) score of any depluralized word in the term, which is between 0 and 1. That comes from the Specialist tagger, and it uses only the case/dash match score, because the other two components are not available to it. In total, the depluralization score is still between 0 and 2, because when the base score is 2 there is no worst score for a depluralized word, because there is no depluralized word.</p>
 
@@ -1370,13 +1372,14 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
   ) / 539
 </pre>
 
-<p>Finally, the status score, depluralization score, and case/dash score are themselves combined in a similar way:</p>
+<p>Finally, the status score, spelling correction score, depluralization score, and case/dash score are themselves combined in a similar way:</p>
 <pre>final_score =
-  ((((0
+  (((((0
   ) * 7 + status_score
+  ) * 2 + spelling_correction_score
   ) * 3 + depluralization_score
   ) * 2 + case_dash_score
-  ) / 41
+  ) / 83
 </pre>
 </div>
 

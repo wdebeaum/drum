@@ -482,7 +482,7 @@ sub domainSpecificInfo2trips {
 	  if (exists($info->{$key}));
       }
       # put these numbers up front
-      for my $key (qw(maybe-depluralized surely-depluralized depluralization-score dash-no-dash no-dash-dash exact)) {
+      for my $key (qw(maybe-depluralized surely-depluralized depluralization-score corrected dash-no-dash no-dash-dash exact)) {
 	my $val = $info->{$key};
 	$val = sprintf("%.5f", $val) if ($key eq 'depluralization-score');
 	push @$trips, ':' . $key, $info->{$key}
@@ -490,7 +490,7 @@ sub domainSpecificInfo2trips {
       }
       # do the rest of the numbers
       for my $key (sort keys %$info) {
-	next if (grep { $_ eq $key } qw(type matched status score maybe-depluralized surely-depluralized depluralization-score dash-no-dash no-dash-dash exact));
+	next if (grep { $_ eq $key } qw(type matched status score maybe-depluralized surely-depluralized depluralization-score corrected dash-no-dash no-dash-dash exact));
 	push @$trips, ':' . $key, $info->{$key}
 	  if (exists($info->{$key}));
       }

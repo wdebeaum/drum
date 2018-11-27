@@ -2771,7 +2771,7 @@
   :sem (F::Situation (F::Aspect F::Dynamic))
  :arguments ( ;; run the script/program
 	     (:essential ont::agent (F::PHYS-OBJ (f::intentional +) (F::origin F::human)))
-	     (:optional ont::neutral ((? thm f::abstr-obj f::situation) (f::type (? tt ONT::PROCEDURE ONT::EVENT-OF-ACTION ))))
+	     (:optional ont::neutral ((? thm f::abstr-obj f::situation) (f::type (? tt ONT::PROCEDURE)))) ;; ONT::EVENT-OF-ACTION ))))
 	     (:optional ont::result ((? res1 F::SITUATION F::ABSTR-OBJ))) ; copied from CAUSE-EFFECT
 	     (:optional ont::formal ((? res2 F::SITUATION F::ABSTR-OBJ)
 				     (F::type (? ftype ONT::SITUATION-ROOT ONT::PROPERTY-VAL));; ONT::POSITION-RELN)) ;; here for now while we decide the FORMAL/RESULT issue
@@ -3016,8 +3016,7 @@
 
 (define-type ONT::parts-removed
   :wordnet-sense-keys ("precipitate%2:30:00")
-; :parent ONT::come-from
- :parent ONT::cause-out-of
+  :parent ONT::cause-out-of
   :comment "the part removed is the good part"
   :arguments ((:OPTIONAL ONT::Agent)
 	      (:OPTIONAL ONT::AFFECTED1)

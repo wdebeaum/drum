@@ -95,7 +95,7 @@ sub is_all_prefixes {
 # tag_protmods
 sub read_from_terms2 {
   my $stream = shift;
-  our ($self, $str, @prefixes, %sentence_starts, %plural_entries, %singular_entries, %listed_variant_entries);
+  our ($self, $str, @prefixes, %sentence_starts, %plural_entries, %singular_entries, %listed_variant_entries, %corrected_entries);
   my @terms = ();
   while (my $term = <$stream>) {
     print STDERR "from drum/protmod terms:\n$term" if ($debug);
@@ -140,8 +140,8 @@ sub read_from_terms2 {
     next if (@used_entries > 1 and
     	     $end < length($str) and substr($str, $end, 1) =~ /\w/ and
 	     is_all_prefixes($start, $end, \@prefixes));
-    # compute depluralization fields for matches (which don't depend on
-    # $matched_variant)
+    # compute depluralization and misspelling fields for matches (which don't
+    # depend on $matched_variant)
     my $num_maybe_depluralized =
       grep { exists($plural_entries{$_}) } @used_entries;
     my $num_surely_depluralized =
@@ -156,6 +156,8 @@ sub read_from_terms2 {
 	      $plural_entries{$_} < $min_depluralization_score);
       }
     }
+    my $num_corrected =
+      grep { exists($corrected_entries{$_}) } @used_entries;
     while (@rest) {
       my $matched_variant = shift(@rest); # unnormalized
       my $skip = 0; # should we skip this variant?
@@ -187,6 +189,9 @@ sub read_from_terms2 {
 	$match->{'maybe-depluralized'} = $num_maybe_depluralized;
 	$match->{'surely-depluralized'} = $num_surely_depluralized;
 	$match->{'depluralization-score'} = $min_depluralization_score;
+      }
+      if ($num_corrected > 0) {
+	$match->{corrected} = $num_corrected;
       }
       print STDERR Data::Dumper->Dump([$match],['*match']) if ($debug);
       my %mapped_id_to_matches_with_status = ();
@@ -404,6 +409,9 @@ sub tag_drum_terms {
   # also record entries from VariantLists tagger to avoid throwing them out for
   # being too short and not matching exactly
   our %listed_variant_entries = ();
+  # and record entries from Misspellings in order to penalize them for being
+  # spelling-corrected
+  our %corrected_entries = ();
   for my $tag (@input_tags) {
     my $entry = undef;
     if ($tag->{source} eq 'specialist') {
@@ -448,6 +456,8 @@ sub tag_drum_terms {
       $entry = "$tag->{lex}\t$tag->{start}\t$tag->{end}\n";
       if ($tag->{source} eq 'variant_lists') {
 	$listed_variant_entries{$entry} = 1;
+      } elsif ($tag->{source} eq 'misspellings') {
+	$corrected_entries{$entry} = 1;
       }
     } else {
       next;
@@ -1193,13 +1203,16 @@ sub tag_mirnas {
 
 # given the package of the ID symbol of a matched term, and the match structure
 # returned by characterize_match and augmented with 'status' and possibly
-# 'surely-depluralized' fields, return a score between 0 and 1, where 1 is an
-# exact match, and 0 is the worst kind of match
+# 'surely-depluralized' and 'corrected' fields, return a score between 0 and
+# 1, where 1 is an exact match, and 0 is the worst kind of match
 sub score_match {
   my ($pkg, $m) = @_;
   print STDERR "Drum::score_match(" . Data::Dumper->Dump([$pkg, $m],[qw(pkg *m)]) . ")\n" if ($debug);
   # the part of the score due to the way the case/dash variant matched
   my $variant_score = TextTagger::Normalize::score_match($m);
+
+  # penalize corrected match
+  my $corrected = (exists($m->{corrected}) ? 0 : 1);
   
   # penalize depluralized match; more if more than one word was depluralized
   my $depluralized = (2 - $m->{'surely-depluralized'});
@@ -1249,11 +1262,12 @@ sub score_match {
   }
 
   print STDERR Data::Dumper->Dump([$status_score, $depluralized, $variant_score],[qw(status_score depluralized variant_score)]) if ($debug);
-  my $final_score = ((((0
+  my $final_score = (((((0
     ) * 7 + $status_score
+    ) * 2 + $corrected
     ) * 3 + $depluralized
     ) * 2 + $variant_score
-    ) / 41.0; # product of the coefficients -1
+    ) / 83.0; # product of the coefficients -1
   print STDERR "Drum::score_match returning $final_score\n" if ($debug);
   return $final_score;
 }

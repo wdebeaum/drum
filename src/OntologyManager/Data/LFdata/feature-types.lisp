@@ -19,7 +19,7 @@
 	       ))
   
 (define-feature-list-type F::Situation
-    :features (F::aspect F::time-span F::cause F::trajectory F::locative F::intentional F::information F::container F::kr-type F::type f::origin f::iobj)
+    :features (F::aspect F::time-span F::cause F::trajectory F::locative F::intentional F::information F::container F::kr-type F::type f::origin f::iobj f::tangible)
     :defaults (
 	       (F::type ont::situation) 	       
 	       (F::intentional -)
@@ -29,6 +29,7 @@
 	       (F::Locative -)
 	       (f::origin f::any-origin)
 	       (f::iobj -)
+	       (f::tangible -)
 	       )) 
 
 ;; swier added gradability feature
