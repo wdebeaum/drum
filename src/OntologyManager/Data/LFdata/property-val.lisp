@@ -4249,7 +4249,7 @@
              )
  )
 
-(define-type ONT::relative-quantity-val
+(define-type ONT::additional-val
  :parent ONT::quantity-related-property-val
  )
 

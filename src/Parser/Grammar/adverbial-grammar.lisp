@@ -4,6 +4,28 @@
 ;;;;
 (in-package :W)
 
+(parser::augment-grammar
+  '((headfeatures
+	 ;;lex headcat removed --me
+     (PP KIND MASS NAME agr SEM SORT PRO SPEC CLASS transform gap gerund)
+     ;;(ADVBLS FOCUS VAR SEM SORT ATYPE ARG SEM ARGUMENT NEG TO QTYPE lex transform)
+     (ADVBL VAR SORT ARGSORT SEM ARGUMENT ARG lex headcat transform neg result-only))
+
+    ;;  ADJ -> ADVBL -- location adjective phrases can be used as adverbials e.g., put it right of the door
+
+    ((ADVBL (ARG ?arg) (gap ?gap)
+      (LF ?lf)
+      (sem ?sem) (atype post)
+      )
+     -advbl-adj>
+     (head (adjp (lf ?lf) (var ?v) (comparative -)  (gap ?gap) (atype predicative-only)
+		 (argument (% ?xxx (var ?arg)))
+		 (sem ?sem) (sem ($ f::ABSTR-OBJ (f::type ont::location-val)))
+		 
+      )))
+
+    ))
+     
 
 (parser::augment-grammar
   '((headfeatures
@@ -227,7 +249,7 @@
      )
 
 
-    ;;  BINARY-CONSTRAINT adverbials that allow omitted objects, e.g., nearby, near, below, about, ...
+       ;;  BINARY-CONSTRAINT adverbials that allow omitted objects, e.g., nearby, near, below, about, ...
     ;; TEST: The dog chased the cat below.
     ((ADVBL (ARG ?arg) (QTYPE ?wh) (FOCUS ?var)
 	    (LF (% PROP (VAR ?v) (CLASS ?lf) (CONSTRAINT (& (?submap (% *PRO* (var *) (CLASS ONT::ANY-SEM)
@@ -926,7 +948,7 @@
      (advbl (ATYPE POST) 
       (result-only -)  ;; only allow adverbials that may be interpreted as something other than a result
       (ARGUMENT (% NP (sem ?argsem) (constraint ?c) (var ?v1) ))
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::predicate ont::position-reln))))
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::predicate ont::position-reln ont::location-val))))
       (arg ?v1) (VAR ?mod) (WH -) (gap ?gap) ;(GAP -)
       (particle -)  ;; exclude particles as they should attach to the verb
       )

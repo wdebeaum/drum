@@ -47,3 +47,15 @@
    )
 ))
 
+(define-words :pos w::adj 
+ :tags (:base500)
+ :words (
+   (W::more
+    (SENSES
+    ((LF-PARENT ONT::additional-val)
+     (templ central-adj-templ)
+     )
+    )
+   )
+))
+

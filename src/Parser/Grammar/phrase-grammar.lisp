@@ -2413,7 +2413,7 @@
 	 (add-to-conjunct (val (?subcat-map ?sc-var)) (old ?r) (new ?newr))
 	 (append-conjuncts (conj1 ?spec-restr) (conj2 ?newr) (new ?con1))
 	 )
-	
+#||	
         ;; e.g., (two/some) more/less eggs
 	((N1 (VAR ?v) (SORT PRED) (CLASS ?c) (MASS ?m)
 	     (KIND -) (agr ?agr) (RESTR ?restr1) (rate-activity-nom -)
@@ -2432,7 +2432,7 @@
 		       (constraint (& (figure ?v) (ground (% *PRO* (var **) (class ?c))) ))))) ;(val (quan ?cmp))
 			  (old ?r) (new ?restr1))
 	 )
-
+||#
 	
 	;; quantifier with post N1 complement , e.g. more trains than that,
 	
@@ -3621,6 +3621,7 @@
               (VAR ?v) (transform ?transform)
 	      (SEM ($ F::situation (f::type ont::event-of-action)))
 	      (COMP3-map -)
+	      (dobj-map -)  ;; seems right, but maybe too strong?   JFA 11/18
 ;	      (prefix ?prefix)
 	      (restr ?prefix)
 	      (part (% -))

@@ -13,6 +13,12 @@
      (TEMPL agent-neutral-xp-templ)
      (example "perform the activity/task") 
      )
+    ((LF-PARENT ONT::act-behave)
+     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
+     (TEMPL agent-templ)
+     (example "he performed for us ") 
+     )
     )
+   
    )
 ))

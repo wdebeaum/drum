@@ -30,8 +30,9 @@
 	    ((lf-parent ont::act-behave)
 	      ;; the like modification is a function of the adverbial
 ;	     (templ agent-theme-optional-templ (xp (% w::pp (w::ptype (? pt w::like w::as)))))
-	     (templ agent-formal-templ (xp (% w::pp (w::ptype (? pt w::like w::as)))))
-	     (example "he acts as a judge")
+	     (templ agent-templ)
+	     ;;(templ agent-formal-templ (xp (% w::pp (w::ptype (? pt w::like w::as)))))
+	     (example "he acts as/like a judge/ in the play")
 	     (meta-data :origin bee :entry-date 20040609 :change-date nil :comments portability-experiment)
 	     )
 	    ;; this should be a different sense
@@ -43,7 +44,7 @@
 	     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
 ;	     (TEMPL agent-effect-xp-templ (xp (% w::pp (w::ptype w::on))))
 ;	     (TEMPL AGENT-THEME-OPTIONAL-TEMPL (xp (% w::pp (w::ptype w::on))))
-	     (TEMPL AGENT-NEUTRAL-optional-TEMPL (xp (% w::pp (w::ptype w::on))))
+	     (TEMPL AGENT-NEUTRAL-xp-TEMPL (xp (% w::pp (w::ptype w::on))))
 	     (example "he acted on the plan")
 	     )
 	    ))

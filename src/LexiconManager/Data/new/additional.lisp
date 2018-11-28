@@ -7,8 +7,7 @@
   (W::ADDITIONAL
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
-    ((LF-PARENT ONT::relative-quantity-val)
-     (meta-data :origin calo :entry-date 20040406 :change-date nil :wn ("additional%5:00:03:additive:00") :comments calo-y1v5)
+    ((LF-PARENT ONT::additional-val)
      (SEM (F::GRADABILITY F::-))
      (TEMPL central-adj-optional-xp-TEMPL)
      )

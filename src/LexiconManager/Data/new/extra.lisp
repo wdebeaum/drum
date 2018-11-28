@@ -7,7 +7,7 @@
   (W::EXTRA
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("extra%5:00:00:unnecessary:00"))
-     (LF-PARENT ONT::relative-quantity-val)
+     (LF-PARENT ONT::additional-val)
      )
     )
    )
