@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.63 2018/11/06 16:58:12 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.64 2018/11/28 21:01:32 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -1306,13 +1306,12 @@ public class EventExtraction extends Extraction {
                 expandedValue.add(item);
                 if (Role.isRole(itemAsString)
                         || Feature.isFeature(itemAsString)
-                        || (Modifier.isModifier(itemAsString) && Modifier.fromString(itemAsString).hasReferent()))
+                        || Modifier.isModifier(itemAsString)
+                        || PolyModifier.isModifier(itemAsString))
                 {
                     expand = false;
                 } else { // expandable modifier
-                    if (!Modifier.isModifier(itemAsString) && !PolyModifier.isModifier(itemAsString)) {
-                        Debug.warn("Unrecognized event attribute: " + itemAsString);
-                    }
+                    Debug.warn("Unrecognized event attribute: " + itemAsString);
                     expand = true;
                 }
             } else if (expand && isOntVar(itemAsString)) { // variable

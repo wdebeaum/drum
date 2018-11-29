@@ -20,6 +20,9 @@
      (TEMPL count-pred-templ)
      (meta-data :origin lam :entry-date 20050707 :change-date nil :wn ("factor%1:23:01") :comments nil)
      )
+    ((LF-PARENT ONT::multiple)
+     (TEMPL reln-subcat-of-number-TEMPL)
+     )
   ))
 ))
 

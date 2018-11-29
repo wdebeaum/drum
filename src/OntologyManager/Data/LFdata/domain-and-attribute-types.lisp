@@ -1082,6 +1082,11 @@
  :parent ont::body-condition-scale
 )
 
+(define-type ont::not-well-nourished-scale
+ :parent ont::negative-body-condition-scale
+ :wordnet-sense-keys ("hunger%1:26:00" "thirst%1:26:00")
+)
+
 (define-type ont::illness-scale
  :parent ont::negative-body-condition-scale
  :wordnet-sense-keys ("unhealthiness%1:26:00" "illness%1:26:00")

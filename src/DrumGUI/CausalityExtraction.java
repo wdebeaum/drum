@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: CausalityExtraction.java,v 1.13 2018/10/21 02:14:28 lgalescu Exp $
+ * $Id: CausalityExtraction.java,v 1.14 2018/11/28 21:01:32 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -61,6 +61,27 @@ public class CausalityExtraction extends Extraction {
             return false;
         }
     };
+
+    /** Features */
+    protected enum Feature {
+        // :LOC id :LOCMOD ontType --> location
+        LOC(":LOC"),
+        LOCMOD(":LOCMOD"),
+        // :TIME :TIMEMOD
+        TIME(":TIME"), // time
+        TIMEMOD(":TIMEMOD")
+        ;
+        private String featureName;
+        private Feature(String name) { featureName = name; }
+        public String toString() { return featureName; }
+        public static boolean isFeature(String item) {
+            for (Feature f: Feature.values()) {
+                if (f.featureName.equalsIgnoreCase(item)) return true;
+            }
+            return false;
+        }
+    };
+
 
     /** Event modifiers */
     private enum Modifier {
@@ -124,6 +145,8 @@ public class CausalityExtraction extends Extraction {
 
     /* roles list (in order): mapping from role names to term vars */
     private LinkedHashMap<Role, KQMLObject> roles;
+    /* features list */
+    private LinkedHashMap<Feature, KQMLObject> features;
     /* mods list */
     private LinkedHashMap<Modifier, KQMLObject> mods;
     /* poly-mods list */
@@ -135,6 +158,7 @@ public class CausalityExtraction extends Extraction {
 
         // get roles, features, modifiers
         pullRoles();
+        pullFeatures();
         pullModifiers();
         pullPolyModifiers();
 
@@ -149,6 +173,13 @@ public class CausalityExtraction extends Extraction {
      */
     public LinkedHashMap<Role, KQMLObject> getRoles() {
         return roles;
+    }
+    
+    /**
+     * Gets the list of features.
+     */
+    public LinkedHashMap<Feature, KQMLObject> getFeatures() {
+        return features;
     }
     
     /**
@@ -220,6 +251,21 @@ public class CausalityExtraction extends Extraction {
             }
         }
     }
+
+    /**
+     * Pulls features.
+     */
+    private void pullFeatures() {
+        features = new LinkedHashMap<Feature, KQMLObject>();
+        for (Feature feat : Feature.values()) {
+            KQMLObject aValue = shortValue.getKeywordArg(feat.toString());
+            // note: we ignore dash values, which we interpret as "undefined"
+            if ((aValue != null) && !aValue.toString().equals("-")) {
+                features.put(feat, aValue);
+            }
+        }
+    }
+
 
     /**
      * Pulls modifiers.
@@ -338,6 +384,24 @@ public class CausalityExtraction extends Extraction {
             roles = newRoles;
         }
 
+        // check features; issue error if any are different, but keep going anyway
+        LinkedHashMap<Feature, KQMLObject> eFeats = e.getFeatures();
+        for (Feature attr: eFeats.keySet()) {
+            KQMLObject newVal = eFeats.get(attr);
+            if (newVal == null) continue;
+            KQMLObject oldVal = features.get(attr);
+            if (oldVal == null) {
+                features.put(attr, newVal);
+                shortValue.add(attr.toString());
+                shortValue.add(newVal);
+                Debug.debug("Updated: " + attr + " to: " + newVal);
+            } else if (!oldVal.equals(newVal)) {
+                Debug.error("Conflicting values for " + attr + ":\n\told: " + oldVal + "\n\tnew: " + newVal
+                        + "\n\t=> Will keep original.");
+            }
+
+        }
+    
         // check mods
         LinkedHashMap<Modifier, KQMLObject> eMods = e.getMods();
         for (Modifier attr : eMods.keySet()) {
@@ -416,34 +480,19 @@ public class CausalityExtraction extends Extraction {
      * result is a sequence of {@code <event>} XML elements. 
      */
     public String toXML() {
-        String var = pullTermVar(value);
-        String id = removePackage(var);
-        String parID = getParagraphID();
-        String text = removeTags(getTextSpan(start, end));
-        Debug.debug("toXML: ready");
+        List<String> attrs = xml_commonAttributes();
+        List<String> conts = xml_commonContents();
 
-        String ruleID = getKeywordArgString(":RULE", value);    
-        if (ruleID == null) {
-            Debug.warn("No :RULE? value=" + value);
-        }
+        conts.add(xml_negation());
+        conts.add(xml_polarity());
+        conts.add(xml_modality());
+        conts.add(xml_epimodality());
+        conts.add(xml_force());
+        conts.add(xml_args());
+        conts.add(xml_time());
+        conts.add(xml_location());     
         
-        return "<" + exType + " " +
-                "id=\"" + id + "\" " +
-                "start=\"" + getOffset(start) + "\" " +
-                "end=\"" + getOffset(end) + "\" " +
-                "paragraph=\"" + parID + "\" " +
-                "uttnum=\"" + uttnum + "\" " +
-                "lisp=\"" + getLispForm() + "\" " +
-                "rule=\"" + ruleID + "\">"
-                + "<type>" + ontType + "</type>"
-                + xml_negation()
-                + xml_polarity()
-                + xml_force()
-                + xml_modality()
-                + xml_epimodality()
-                + xml_args()
-                + "<text>" + xml_escape(text) + "</text>" +
-                "</" + exType + ">";
+        return xml_element(exType, attrs, conts);
     }
 
     /**
@@ -618,6 +667,68 @@ public class CausalityExtraction extends Extraction {
     }
 
     /**
+     * Time feature
+     * @return
+     */
+    private String xml_time() {
+        KQMLObject time = features.get(Feature.TIME);
+        if (time == null)
+            return "";
+        
+        List<String> attrs = new ArrayList<String>();
+        KQMLObject modType = features.get(Feature.TIMEMOD);
+        if (modType != null) {
+            String mod = ontType(modType);
+            if (!mod.isEmpty()) {
+                attrs.add(xml_attribute("mod", mod));
+            }
+        }
+        
+        if (isOntVar(time.toString())) {
+            String var = time.toString();
+            if (ekbFindExtraction(var) != null) { 
+                return xml_elementWithID("time", var, attrs);
+            } else { // we need to define the item here
+                return xml_lfTerm("time", var, attrs);
+            }
+        } else { // should not happen!
+            Debug.error("unexpected " + Feature.TIME + " value: " + time);
+            return xml_element("time", "", removePackage(time.toString(), false));
+        }
+    }
+
+    /**
+     * Returns a {@code <location>} XML element representing location information attached to the event, 
+     * or the empty string if no such information exists. 
+     */
+    private String xml_location() {
+        KQMLObject loc = features.get(Feature.LOC);
+        if (loc == null) 
+            return "";
+        
+        List<String> attrs = new ArrayList<String>();
+        KQMLObject modType = features.get(Feature.LOCMOD);
+        if (modType != null) {
+            String mod = ontType(modType);
+            if (!mod.isEmpty()) {
+                attrs.add(xml_attribute("mod", mod));
+            }
+        }
+        
+        if (isOntVar(loc.toString())) {
+            String var = loc.toString();
+            if (ekbFindExtraction(var) != null) {
+                return xml_elementWithID("location", var, attrs);
+            } else { // we need to define the item here
+                return xml_lfTerm("location", var, attrs);
+            }
+        } else {
+            Debug.warn("unexpected location value: " + loc);
+            return "";
+        }
+    }
+
+    /**
      * Returns a {@code <mods>} XML element representing the term modifiers, or
      * the empty string if no such information exists.
      */
@@ -688,16 +799,19 @@ public class CausalityExtraction extends Extraction {
             String itemAsString = item.toString();
             if (index < 3) { // first 3 items are special
                 expandedValue.add(item);
-            } else if (Role.isRole(itemAsString)) { // event arg
-                expandedValue.add(item);
-                expand = false;
             } else if (itemAsString.startsWith(":")) { // attribute?
-                // check if known
-                if (!Modifier.isModifier(itemAsString)) {
-                    Debug.warn("Unrecognized modality attribute: " + itemAsString);
-                    }
                 expandedValue.add(item);
-                expand = true;
+                // check if known
+                if (Role.isRole(itemAsString) // arg
+                        || Feature.isFeature(itemAsString) // feature
+                        || Modifier.isModifier(itemAsString) // mod
+                        || PolyModifier.isModifier(itemAsString)) // poly-mod
+                { 
+                    expand = false;
+                } else {
+                    Debug.warn("Unrecognized CC attribute: " + itemAsString);
+                    expand = true;
+                }
             } else if (expand && isOntVar(itemAsString)) { // variable?
                 KQMLList term = findTermByVar(itemAsString, context);
                 if (term == null) {

@@ -1896,7 +1896,8 @@
       (CLASS ?modc) (PRO -) (N-N-MOD -) ;(COMPLEX -)   ;;  can't require COMPLEX - any more -- e.g., "p53 expression levels"  -- now we can!! This goes through nom-rate instead.
       ; set two-n1-conjunct to complex - so that e.g., <trade and migration> route, can go through this rule
       ; removed "COMPLEX -" again: "water treatment plant" (added complex + back to two-n1-conjunct)
-      (SUBCAT ?ignore) (GAP -) (kr-type ?kr-type)
+      (SUBCAT (% -)) ;(SUBCAT ?ignore)
+      (GAP -) (kr-type ?kr-type)
       (postadvbl -) (post-subcat -) 
       )
      (head (N1 (VAR ?v2) (QUAL -) (subcat ?subcat) (sort ?sort) (one -) ; exclude the referential-sem w::one

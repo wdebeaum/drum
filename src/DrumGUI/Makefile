@@ -32,6 +32,7 @@ SRCS =  DrumGUI.java \
 	CausalityExtraction.java
 
 CLASSES = $(SRCS:.java=.class) \
+	CausalityExtraction$$Feature.class \
 	CausalityExtraction$$Modifier.class \
 	CausalityExtraction$$PolyModifier.class \
 	CausalityExtraction$$Role.class \
