@@ -35,3 +35,15 @@
    )
 ))
 
+(define-words :pos W::UttWord :boost-word t :templ NO-FEATURES-TEMPL
+ :tags (:base500)
+ :words (
+  ((W::MAYBE w::not)
+   (SENSES
+    ((LF (ONT::UNSURE-NEG))
+     (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
+     )
+    )
+   )
+))
+

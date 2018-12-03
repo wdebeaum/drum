@@ -844,7 +844,7 @@
 ;; temporal locations of events, things
 (define-type ONT::temporal-location
  :parent ONT::TEMPORAL-MODIFIER
- :arguments ((:ESSENTIAL ONT::FIGURE ((? of F::abstr-obj f::situation f::time))) ; abstr-obj: price
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? of F::phys-obj F::abstr-obj f::situation f::time))) ; abstr-obj: price; phys-obj: plant
              )
  )
 

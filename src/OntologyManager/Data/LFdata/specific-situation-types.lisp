@@ -275,6 +275,7 @@
 					       ;(:default (F::Mobility F::Self-Moving))))
 ;             (:OPTIONAL ONT::purpose (F::Situation (F::Cause F::Agentive) (F::Aspect F::Dynamic)))
 	     (:OPTIONAL ONT::REASON (F::Situation (F::Cause F::Agentive) (F::Aspect F::Dynamic)))
+	     (:essential ont::scale (F::abstr-obj  (F::scale ont::domain)))
              )
  )
 

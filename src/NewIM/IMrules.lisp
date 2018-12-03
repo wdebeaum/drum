@@ -834,10 +834,11 @@
 		   ;; :what ?PROP :CONTEXT ?context)
 	    ))
 
-	   ((ONT::SPEECHACT ?!vv ONT::SA_REJECT)
+	  ; ?c is optional, e.g., "not the cat"
+	   ((ONT::SPEECHACT ?!vv ONT::SA_REJECT :CONTENT ?c) 
 	    ;;(CALL (ACTIVE-PROPOSAL-ON-STACK ?prop ?context))
 	    -gen-proposal-rule4>
-	    (ONT::REJECT :who *USER* :to *ME*)
+	    (ONT::REJECT :who *USER* :to *ME* :what ?c)
 	    )
 
 	   ;; that's right/that could be right
@@ -862,14 +863,14 @@
 	  ((ONT::SPEECHACT ?a ONT::SA_TELL :content ?!cc)
 	   (ONT::F ?!cc ONT::HAVE-PROPERTY :FORMAL ?!dd :neutral ?!x :force (? force ONT::TRUE ONT::ALLOWED ONT::REQUIRED))
 	   (ONT::PRO ?!x (:* ONT::REFERENTIAL-SEM W::THAT))
-	   (ONT::F ?!dd (:* ONT::GOOD (? xx W::GOOD W::OKAY)))
+	   (ONT::F ?!dd (:* ONT::GOOD)) ;(? xx W::GOOD W::OKAY))) ; also fine/great/excellent
 	   ;;(CALL (ACTIVE-PROPOSAL-ON-STACK ?prop ?context))   deleted for demo - readd
 	   -confirm3>
-	   (ONT::ACCEPT :who *USER* :to *ME* :what ?x) )
+	   (ONT::ACCEPT :who *USER* :to *ME* :what ?!x) )
 
 	  ;;  OKAY, good
 	  ((ONT::SPEECHACT ?!a ONT::SA_EVALUATE :CONTENT ?!vv)
-	    (ONT::F ?!vv (:* ONT::GOOD (? xx W::GOOD W::OKAY)))
+	    (ONT::F ?!vv (:* ONT::GOOD)) ;(? xx W::GOOD W::OKAY))) ; also fine/great/excellent
 	   -confirm-okay>
 	   (ONT::ACCEPT :who *USER* :to *ME* :what ?!vv)
 	   )

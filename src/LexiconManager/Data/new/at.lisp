@@ -49,12 +49,14 @@
   (W::AT
    (SENSES
     ((LF-PARENT ONT::time-clock-rel)
-     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     (TEMPL BINARY-CONSTRAINT-S-or-NP-TEMPL)
      )
+    #|
      ((LF-PARENT ONT::time-clock-rel)
       (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
       (preference .97)
       )
+    |#
     #||((LF-PARENT ONT::time-clock-rel)
      (TEMPL BINARY-CONSTRAINT-adj-postpos-TEMPL)
      (meta-data :origin cernl :entry-date 20110114 :change-date nil :comments hpi-acn-3)
