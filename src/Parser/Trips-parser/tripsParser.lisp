@@ -603,7 +603,8 @@
 	  (cond 
 	    (sense-info   ;; if the sense-info is defined, its a single lexical item even if multiple words)
 	     ;; we also remove the under-bars which might have been introduced from sources of compound words, like WordNet
-	     (list (list* 'word (if (consp word) (remove-if #'(lambda (x) (eq x 'w::UNDER-BAR)) word) word) :start start :end end :prob prob reduced-features)))
+	     (list (list* 'word (if (consp word)
+				    (remove-if #'(lambda (x) (eq x 'w::UNDER-BAR)) word) word) :start start :end end :prob prob reduced-features)))
 	    ((< span-length number-of-tokens)
 	     ;;  ERROR condition: more tokens that can fit between frame numbers
 	     ;;    we ignore the end index after generatingan error message
@@ -640,7 +641,8 @@
 	  ;;(if alternatives
 	  ;;    (handle-first-word tokens start end prob score feats filter)
 	  (let* ((word (car tokens))
-		 (newend (if (cdr tokens) (floor (+ start (/ (- end start) 2)))
+		 (newend (if (cdr tokens)
+			     (compute-end-position start word);;(floor (+ start (/ (- end start) 2)))
 			     end)))
 	    (if (> newend start)
 		(cons (list* 'word word :start start :end newend :prob prob others)
@@ -654,6 +656,8 @@
 	(format t "~%~% Error is tokenization found (start > end!):start=~S end=~S tokens= ~S" start end tokens)
 	nil)))
 
+(defun compute-end-position (start word)
+  (+ start (list-length (coerce (symbol-name word) 'list)) 1))
      
 
 ;; ==============================================

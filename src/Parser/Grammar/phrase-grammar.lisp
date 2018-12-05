@@ -2711,11 +2711,11 @@
 	     (simple +)
 	     )
          -protein-name-constructor> 0.995
-         (head (N1 (SORT PRED) (MASS  count) (gerund -) (complex -) 
+         (head (N (SORT PRED) (MASS  count) (gerund -) (complex -) 
 		   (name-or-bare ?nob) (lex ?lex)
 		   (derived-from-name -)  ;; names already can become NPs by simpler derivations
 		   (AGR 3s) (VAR ?v)
-		   (CLASS (? c ONT::GENE-PROTEIN)) (CLASS (? !c ONT::REFERENTIAL-SEM))
+		   (LF (? c ONT::GENE-PROTEIN)) ;;(CLASS (? !c ONT::REFERENTIAL-SEM))
 		   (RESTR ?r) (rate-activity-nom -) (agent-nom -)
 		(sem ?sem) (transform ?transform) (headless -) ; exclude missing-heads
 		(sem ($ (? x F::PHYS-OBJ) (F::KR-TYPE ?kr)))
@@ -3464,7 +3464,8 @@
 
 
     ; TEST: the quickly loaded truck ; the quickly computer generated truck
-     ;; Myrosia 11/26/01 we only allow those phrases before the verbs. After the verbs, they should be treated as reduced relative clauses
+    ;; Myrosia 11/26/01 we only allow those phrases before the verbs. After the verbs, they should be treated as reduced relative clauses
+    
      ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem) (class ?lf)
 	    (subcatmap ?subjmap) ;(SUBCATMAP (? x ont::affected ont::affected-result ont::neutral))
 	    (ARGUMENT ?subj)

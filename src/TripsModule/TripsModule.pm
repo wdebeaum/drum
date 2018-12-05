@@ -120,7 +120,10 @@ sub handle_common_parameters
     my @unused_argv = ();
     while (@argv) {
 	my $opt = shift @argv;
-	if ($opt eq '-debug') {
+	if ($opt eq '-help') {
+	    print "$self->{usage}\n";
+	    exit 1;
+	} elsif ($opt eq '-debug') {
 	    $self->{debug} = boolean_opt($opt, shift @argv);
 	} elsif ($opt eq '-connect') {
 	    my $value = shift @argv;
