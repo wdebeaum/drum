@@ -657,7 +657,12 @@
 	nil)))
 
 (defun compute-end-position (start word)
-  (+ start (list-length (coerce (symbol-name word) 'list)) 1))
+  (cond ((symbolp word)
+	 (+ start (list-length (coerce (symbol-name word) 'list)) 1))
+	((numberp word)
+	 (+ start (list-length (coerce (format nil "~A" word) 'list)) 1))
+	(t (+ start 1))))
+	 
      
 
 ;; ==============================================
