@@ -30,6 +30,7 @@
 ;   )
 ;))
 
+#|
 (define-words :pos W::n 
  :words (
    (W::hit
@@ -40,6 +41,7 @@
     )
    )
 ))
+|#
 
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
