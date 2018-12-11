@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.114 2018/11/20 21:14:03 wdebeaum Exp $
+# $Id: Makefile,v 1.115 2018/12/10 17:44:37 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -283,7 +283,7 @@ install:: drum.aspell
 # it actually doesn't work on Debian without this; it fails to find the "en"
 # language data file in that directory. (Why, Debian, why?)
 specialist.aspell: downloads/inflection.table
-	cut -d'|' -f1 <$< |perl -CSD -p -e 's/\W+/\n/g;' |sort |uniq \
+	cut -d'|' -f1 <$< |perl -CSD -p -e "s/[^\\w']+/\\n/g;" |sort |uniq \
 	|$(TEXTTAGGER_aspell) \
 	  --local-data-dir="`$(TEXTTAGGER_aspell) config local-data-dir`" \
 	  --encoding=utf-8 --lang=en create master ./$@ \
@@ -292,7 +292,7 @@ specialist.aspell: downloads/inflection.table
 drum.aspell: downloads/inflection.table drum-terms.tsv
 	( cut -d'|' -f1 <downloads/inflection.table && \
 	  cut -f1 <drum-terms.tsv \
-	) | perl -CSD -p -e 's/\W+/\n/g;' |sort |uniq \
+	) | perl -CSD -p -e "s/[^\\w']+/\\n/g;" |sort |uniq \
 	| perl -n -e 'print unless (length($$_) > 100);' \
 	| $(TEXTTAGGER_aspell) \
 	  --local-data-dir="`$(TEXTTAGGER_aspell) config local-data-dir`" \

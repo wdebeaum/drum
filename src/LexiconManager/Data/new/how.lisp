@@ -14,7 +14,7 @@
     ((LF-PARENT ont::at-scale-value)
      (example "how are you")
       (TEMPL ppword-question-adv-pred-templ)
-     (syntax (W::IMPRO-CLASS ONT::STATUS))
+     (syntax (W::IMPRO-CLASS ONT::STATUS) (W::HOW +))
      )
     )
    )))
@@ -26,7 +26,7 @@
    (SENSES
     ((LF-PARENT ONT::DEGREE)
      (example "how blue is it")
-     (SYNTAX (W::IMPRO-CLASS ONT::degree))
+     (SYNTAX (W::IMPRO-CLASS ONT::degree) (W::HOW +))
      (SEM (F::information F::information-content))
      (templ ppword-question-adv-how-templ)
      (preference .97) ;; prefer method sense

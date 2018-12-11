@@ -66,6 +66,13 @@
              )
  )
 
+(define-type ONT::in-scale
+	:parent ONT::SITUATION-MODIFIER 
+	:arguments ((:ESSENTIAL ONT::FIGURE ((? xxx F::Situation))) 
+		    (:REQUIRED ONT::GROUND ((? x F::ABSTR-OBJ) (F::type (? t ONT::DOMAIN))))
+		    )
+	)
+
 (define-type ONT::CONJUNCT
  :parent ONT::PREDICATE
  )

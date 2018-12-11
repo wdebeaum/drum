@@ -16,12 +16,37 @@ use IO::Handle; # for ungetc
 
 use strict vars;
 
+# buf_getc and buf_ungetc are like getc and ungetc, but reads are done in
+# chunks of 512 for performance reasons
+
+my $read_buffer;
+
+sub buf_getc {
+  my $fh = shift;
+  if ($read_buffer eq '') {
+    my $chars_read = read($fh, $read_buffer, 512);
+    if ($chars_read == 0) {
+      return undef;
+    }
+    # prevent false eof by ungetc-ing the last char
+    if ($chars_read > 1 and $fh->eof) {
+      $fh->ungetc(ord(substr($read_buffer, -1, 1, '')));
+    }
+  }
+  return substr($read_buffer, 0, 1, '');
+}
+
+sub buf_ungetc {
+  my ($fh, $c) = @_;
+  substr($read_buffer, 0, 0, chr($c));
+}
+
 # Get a single character from a filehandle and immediately put it back so it's
 # available for the next read. Return undef at end of file.
 sub peek_char {
   my $fh = shift;
-  my $c = $fh->getc;
-  $fh->ungetc(ord($c)) if (defined($c));
+  my $c = buf_getc($fh);
+  buf_ungetc($fh, ord($c)) if (defined($c));
   return $c;
 }
 
@@ -31,11 +56,11 @@ sub read_until {
   my ($fh, $re) = @_;
   my $c;
   do {
-    $c = $fh->getc;
+    $c = buf_getc($fh);
     $.++ if ($c eq "\n");
   } while (defined($c) and $c !~ $re);
   if (defined($c)) {
-    $fh->ungetc(ord($c));
+    buf_ungetc($fh, ord($c));
     $.-- if ($c eq "\n");
   }
   return $c;
@@ -65,23 +90,24 @@ my %escapes = (
 ); 
 
 # Like read_until, except that it interprets escapes (without checking the
-# unescaped character against $re) and returns the read string instead of the
-# next character.
+# unescaped character against $chars) and returns the read string instead of the
+# next character. It also uses a list of chars instead of a regex for
+# performance reasons.
 sub read_escaped_until {
-  my ($fh, $re) = @_;
+  my ($fh, $chars) = @_;
   my $str = '';
   my $c;
   for(;;) {
-    $c = $fh->getc;
+    $c = buf_getc($fh);
     return $str unless (defined($c)); # eof
     $.++ if ($c eq "\n");
     if ($c eq "\\") {
-      $c = $fh->getc;
+      $c = buf_getc($fh);
       defined($c) or die "backslash at end of file";
       $.++ if ($c eq "\n");
       $c = $escapes{$c} if (exists($escapes{$c}));
-    } elsif ($c =~ $re) {
-      $fh->ungetc(ord($c));
+    } elsif (grep { $c eq $_ } @$chars) {
+      buf_ungetc($fh, ord($c));
       $.-- if ($c eq "\n");
       return $str;
     }
@@ -92,12 +118,12 @@ sub read_escaped_until {
 # Read a string enclosed by double quotes, possibly including escapes.
 sub read_quoted_string {
   my $fh = shift;
-  my $c = $fh->getc;
+  my $c = buf_getc($fh);
   defined($c) or die "expected quoted string at end of file";
   $c eq '"' or die "expected '\"' but got '$c'";
-  my $str = read_escaped_until($fh, '"');
+  my $str = read_escaped_until($fh, ['"']);
   # discard close "
-  defined($fh->getc) or die "expected closing '\"' at end of file";
+  defined(buf_getc($fh)) or die "expected closing '\"' at end of file";
   return $str;
 }
 
@@ -107,7 +133,7 @@ sub read_line {
   my $str = '';
   my $c;
   do {
-    $c = $fh->getc;
+    $c = buf_getc($fh);
     unless (defined($c)) {
       last unless ($str eq '');
       return undef;
@@ -123,7 +149,7 @@ sub read_and_parse_synonym {
   my ($fh, $name) = @_;
   read_whitespace($fh);
   my $synonym = read_quoted_string($fh);
-  my $rest = read_escaped_until($fh, qr/[!\r\n]/);
+  my $rest = read_escaped_until($fh, ['!',"\r","\n"]);
   my @groups = ($rest =~ /
     ^ \s*
     (?: ( EXACT | BROAD | NARROW | RELATED ) \s+ )?
@@ -155,16 +181,16 @@ sub remove_trailing_modifier {
 # case, synonym tags are parsed into hashrefs.
 sub read_tag_value_pair {
   my $fh = shift;
-  my $name = read_escaped_until($fh, qr/:/);
+  my $name = read_escaped_until($fh, [':']);
   $name =~ s/^\s+|\s+$//g; # trim whitespace from name
   # discard :
-  defined($fh->getc) or die "tag with no value at end of file: $name";
+  defined(buf_getc($fh)) or die "tag with no value at end of file: $name";
   my $value;
   if ($name =~ /^(exact_|narrow_|broad_|)synonym$/) {
     $value = read_and_parse_synonym($fh, $name);
     $name = 'synonym';
   } else {
-    $value = read_escaped_until($fh, qr/[!\r\n]/);
+    $value = read_escaped_until($fh, ['!',"\r","\n"]);
     $value =~ s/^\s+|\s+$//g; # trim whitespace from value
   }
   read_whitespace($fh);

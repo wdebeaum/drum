@@ -475,8 +475,14 @@
      (preference 0.98)
      )
     ;; in the air (excluded by ont::spatial-loc)
+
+    ;; It increased in temperature
+    ((LF-PARENT ONT::in-scale)
+     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
+     (preference 0.98)
      )
-    )
+     )
+   )
   ))
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
