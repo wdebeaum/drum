@@ -1220,10 +1220,11 @@
 		      (F::mobility f::fixed) (f::container +))
     )
 
-;; door, window
+;; door, window, gate
 (define-type ont::structural-opening
     :parent ONT::general-structure
-    :wordnet-sense-keys ("entrance%1:06:00" "entranceway%1:06:00" "entryway%1:06:00" "entry%1:06:00" "window%1:06:00" "window%1:06:01" "window%1:06:05")
+    :wordnet-sense-keys ("entrance%1:06:00" "entranceway%1:06:00" "entryway%1:06:00" "entry%1:06:00" "window%1:06:00" "window%1:06:01" "window%1:06:05"
+					    "movable_barrier%1:06:00")
     :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj))
 		)
     )

@@ -3432,8 +3432,10 @@
 ;; CHANGE IN PHYSICAL PROPERTY SCALE
 (define-type ont::change-in-physical-property-scale
  :parent ont::change-in-scale
- :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::physical-property-scale))))
-)
+ :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::physical-property-scale)))
+	    (:optional ONT::RESULT (f::abstr-obj (f::type (? xxx ont::path ont::resulting-object ont::resulting-state))))
+	    )
+ )
 
 ; configuration
 (define-type ont::change-in-configuration
@@ -3628,7 +3630,7 @@
 	     ;(:essential ont::affected (F::abstr-obj (f::scale ont::domain))) ; e.g., rainfall is physobj; flood is situation 
 	     (:essential ont::affected)
 	     (:essential ONT::scale (f::abstr-obj (F::scale ont::domain)))
-	     (:optional  ONT::result ((? cau2 F::situation F::Abstr-obj f::phys-obj) (F::type (? !t ont::in-loc ont::at-loc))))) 
+	     (:optional  ONT::result ((? cau2 F::situation F::Abstr-obj f::phys-obj) (F::type (? t ont::goal-reln ont::source-reln))))) 
 ; :parent ONT::adjust
  :parent ont::change-in-scale
  )

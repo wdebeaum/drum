@@ -16,9 +16,9 @@
   ((meta-data :origin step :entry-date 20080626 :change-date 20090504 :comments nil)
    (LF-PARENT ONT::decrease)
    (example "it decreased in temperature")
-   (templ affected-theme-xp-optional-templ  (xp (% W::PP (W::ptype (? pt w::in W::with)))))
+   (templ affected-templ))
    )
   )
  )
-))
+)
 

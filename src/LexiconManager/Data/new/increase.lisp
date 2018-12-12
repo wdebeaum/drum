@@ -5,15 +5,16 @@
 (define-words :pos W::v :templ AGENT-affected-XP-TEMPL
 	      :words (
 		      (w::increase
-		       (wordfeats (W::morph (:forms (-vb) :nom w::increase :nomobjpreps (w::in w::of))))
+		       (wordfeats (W::morph (:forms (-vb) :nom w::increase :nomobjpreps (;w::in
+											 w::of))))
 		       ; the increase in temperature; the increase of bees
 		       (senses
 			((LF-PARENT ONT::increase)
 			 (example "increase the budget [to 3K]")
 			 (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
 			 ;;(TEMPL AGENT-AFFECTED-scale-XP-optional-TEMPL (xp (% W::PP (W::ptype (? pt w::in W::with)))))
-			 (TEMPL AGENT-AFFECTED-TEMPL)
-			 (preference .98)
+			 (TEMPL AGENT-AFFECTED-XP-TEMPL)
+			 ;(preference .98)
 			 )
 			((meta-data :origin step :entry-date 20080626 :change-date 20090504 :comments nil)
 			 (LF-PARENT ONT::increase)
