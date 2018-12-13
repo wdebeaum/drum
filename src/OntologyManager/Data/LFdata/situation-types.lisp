@@ -93,7 +93,7 @@
  :sem (F::Situation (F::Cause F::agentive) (F::Trajectory -));  (F::Aspect F::bounded) (F::Time-span F::extended))
  :arguments ((:ESSENTIAL ONT::Affected ((? adr F::Phys-obj f::abstr-obj)))
 	     (:OPTIONAL ONT::Formal ((? th21 F::Abstr-obj F::Situation)))
-	     (:OPTIONAL ONT::NEUTRAL ((? n1 F::Phys-obj f::abstr-obj))); (F::information F::information-content)))
+	     (:OPTIONAL ONT::NEUTRAL ((? n1 F::Phys-obj f::abstr-obj F::situation))); (F::information F::information-content))) ; situation: describe the situation
 	     (:optional ont::norole)
 	     (:optional ont::location ((? cg2 f::abstr-obj F::Phys-obj)))
 	     )

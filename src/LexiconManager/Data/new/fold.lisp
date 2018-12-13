@@ -37,6 +37,7 @@
    (LF-PARENT ONT::combine-objects)
    (example "fold in the remaining ingredients")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
+   (TEMPL agent-affected-xp-templ)
    )
   )
  )
