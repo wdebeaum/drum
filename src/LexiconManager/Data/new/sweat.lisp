@@ -56,13 +56,13 @@
   (W::sweat
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("breathe-40.1.2") :wn ("sweat%2:29:00"))
-     (LF-PARENT ONT::bodily-process)
+     (LF-PARENT ONT::sweat)
      (example "he sweated blood")
-     (TEMPL agent-affected-xp-templ) ; like vomit
+     (TEMPL affected-affected-templ) ; like vomit
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("breathe-40.1.2") :wn ("sweat%2:29:00"))
-     (LF-PARENT ONT::bodily-process)
-     (TEMPL agent-templ) ; like bleed
+     (LF-PARENT ONT::sweat)
+     (TEMPL affected-templ) ; like bleed
      )
     )
    )

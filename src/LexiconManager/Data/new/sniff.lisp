@@ -7,7 +7,8 @@
   (W::sniff
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("nonverbal_expression-40.2") :wn ("sniff%2:29:00"))
-     (LF-PARENT ont::nonverbal-expression)
+     (LF-PARENT ont::sound-expression)
+     (EXAMPLE "She sniffed noisily and glared.")
      (TEMPL agent-templ) ; like laugh
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("sight-30.2") :wn ("sniff%2:39:00"))

@@ -22,6 +22,7 @@ while (<>) {
 
 while (<>) {
   chomp;
+  next if ($_ eq '');
   /^(..)(?: [\. ] |$)/ or die "malformed line: $_";
   my ($code, $line) = ($1, $');
   if ($code eq 'ID') {

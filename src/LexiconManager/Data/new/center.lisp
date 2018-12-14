@@ -28,7 +28,7 @@
 ;     (example "center on Atlanta")
 ;     (preference 0.98)
 ;     )
-    ((LF-PARENT ONT::cause-make-things)
+    ((LF-PARENT ONT::place-in-position)
      (SEM (F::Aspect F::bounded) (F::Time-span F::Atomic))
      (TEMPL AGENT-affected-XP-TEMPL)
      (meta-data :origin task-learning :entry-date 20050923 :change-date 20090507 :comments nil)

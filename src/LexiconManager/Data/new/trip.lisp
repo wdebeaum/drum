@@ -31,8 +31,8 @@
   ((W::trip w::out)
    (SENSES
       ((meta-data :origin cause-result-relations :entry-date 20180411 :change-date nil :comments nil)
-     (LF-PARENT ont::trip-out)
-     (TEMPL agent-templ) 
+     (LF-PARENT ont::alter-consciousness)
+     (TEMPL affected-templ) 
      (EXAMPLE "He tripped out every weekend")
      )
     )

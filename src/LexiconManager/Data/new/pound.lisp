@@ -33,7 +33,7 @@
    (W::pound
    (wordfeats (W::morph (:forms (-vb))))
    (SENSES
-    ((LF-PARENT ONT::pulse)
+    ((LF-PARENT ONT::rhythmic-motion)
      (example "his heart pounds after exercise")
      (TEMPL affected-templ)
      (preference .96) ;; prefer noun sense

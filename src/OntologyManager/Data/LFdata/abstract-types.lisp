@@ -44,6 +44,12 @@
  :wordnet-sense-keys ("custom%1:09:00" "practice%1:09:00" "habit%1:09:00" "routine%1:04:00")
 )
 
+
+(define-type ont::desire
+ :parent ont::mental-construction
+ :wordnet-sense-keys ("desire%1:07:00" "appetite%1:12:00")
+)
+
 ; perceptual-construction
 (define-type ont::perceptual-construction
  :parent ont::mental-construction
@@ -360,7 +366,7 @@
 ;;; objects: identity, distance, whatever. Will need better sorting at
 ;;; a future data
 (define-type ONT::relation
- :wordnet-sense-keys ("relation%1:03:00" "amount%2:42:03" "bear_on%2:42:00")
+ :wordnet-sense-keys ("relation%1:03:00" "amount%2:42:03")
  :parent ONT::abstract-object
  :arguments ((:REQUIRED ONT::FIGURE)
 	     (:REQUIRED ONT::GROUND)
@@ -777,7 +783,7 @@
 
 ;; information
 (define-type ONT::information
- :wordnet-sense-keys ("information%1:09:00" "information%1:10:00" "info%1:10:00" "indication%1:10:00")
+ :wordnet-sense-keys ("information%1:09:00" "information%1:10:00" "info%1:10:00" "indication%1:10:00" "vital_sign%1:26:00")
  :parent ONT::information-function-object
  ;:arguments ((:optional ONT::formal (F::prop))) ; copied from ONT::MESSAGE
  :arguments ((:optional ONT::formal (F::situation))) ; copied from ONT::MESSAGE

@@ -26,9 +26,9 @@
      (PREFERENCE 0.96)
      )
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090504 :comments nil :vn ("preparing-26.3-1"))
-     (LF-PARENT ONT::cooking)
+     (LF-PARENT ONT::create-by-cooking)
      (example "fix dinner")
-     (TEMPL agent-affected-xp-templ) ; like prepare
+     (TEMPL agent-affected-create-templ) ; like prepare
      (PREFERENCE 0.96)
      )
     ((LF-PARENT ONT::REPAIR)

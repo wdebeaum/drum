@@ -8,7 +8,7 @@
    (W::sleep
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("nap%1:28:00"))
-     (LF-PARENT ONT::bodily-process)
+     (LF-PARENT ONT::sleep)
      (example "he's having a sleep")
      )
     )
@@ -21,8 +21,8 @@
   (W::sleep
    (wordfeats (W::morph (:forms (-vb) :past W::slept :nom W::sleep)))
    (SENSES
-    ((LF-PARENT ONT::bodily-process)
-     (TEMPL agent-templ)
+    ((LF-PARENT ONT::sleep)
+     (TEMPL affected-templ)
      )
     )
    )

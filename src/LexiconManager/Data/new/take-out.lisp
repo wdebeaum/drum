@@ -4,7 +4,7 @@
 
 (define-words :pos W::n
  :words (
-  (w::take-out
+  ((w::take w::punc-minus w::out)
   (senses
 	   ((LF-PARENT ONT::MEALS)
 	    (TEMPL MASS-PRED-TEMPL)

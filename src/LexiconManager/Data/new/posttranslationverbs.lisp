@@ -289,14 +289,14 @@
 
   ;; skipping pyroglutamate formation
 
-  (W::S-glutathionylate
-   (wordfeats (W::morph (:forms (-vb) :nom w::S-glutathionylation)))
+  ((W::S w::punc-minus w::glutathionylate)
+   (wordfeats (W::morph (:forms (-vb) :nom (w::S w::punc-minus w::glutathionylation))))
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))
 
-  (W::S-nitrosylate
-   (wordfeats (W::morph (:forms (-vb) :nom w::S-nitrosylation)))
+  ((W::S w::punc-minus w::nitrosylate)
+   (wordfeats (W::morph (:forms (-vb) :nom (w::S w::punc-minus w::nitrosylation))))
    (SENSES
     ((LF-PARENT ONT::post-translational-modification))
     ))

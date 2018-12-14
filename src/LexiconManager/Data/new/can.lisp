@@ -34,7 +34,7 @@
      (TEMPL MODAL-AUX-NOCOMP-TEMPL)
      (SYNTAX (W::VFORM W::PRES) (W::changesem +))
      )
-    ((LF-PARENT ONT::FIRE-DISMISS)
+    ((LF-PARENT ONT::terminate)
      (preference .96)
      (TEMPL agent-affected-xp-templ)
      )

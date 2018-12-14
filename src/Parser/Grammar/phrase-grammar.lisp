@@ -3796,10 +3796,10 @@
 			    (?!argmap ?argvar)))
 	     (sem ?sem) (transform ?trans)))
       (gap -) (pp-word +)
-      (role ?reln)
+      (role ?reln) (how ?how) 
       )
      -advbl-wh-word> 
-     (head (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ?pro-class)
+     (head (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ?pro-class) (how ?how)
 	    (argument ?argument)
 	    (ARGUMENT (% ?argcat (var ?argvar)))
 	    (SUBCAT (% ?x (SEM ?subcatsem))) 
@@ -5336,6 +5336,7 @@
      (logical-and (in1 ?gen1) (in2 ?gen2) (out ?gen))
      )
 
+     ; 20181213: changed head from the first NP to conj in the next four rules so that we can pass on its lex
      ;;  simple conjuncts/disjunct of NPS, e.g., the dog and the cat, the horse or the cow
      ((NP (ATTACH ?a) (var ?v) (agr ?agr-out) ;(agr 3p) ; the ice and the fire could be 3s or 3p
 	  (SEM ?sem) (gerund ?ger) (mass ?m1) ; should really be some combination of m1 and m2
@@ -5350,13 +5351,13 @@
       (generated ?generated)
        )
      -two-np-conjunct> 
-     (head (NP (SEM ?s1) (VAR ?v1) (agr ?agr)  (complex -) (expletive -) ;;(bare-np ?bnp)
+     (NP (SEM ?s1) (VAR ?v1) (agr ?agr)  (complex -) (expletive -) ;;(bare-np ?bnp)
 	    (generated ?gen1)  (time-converted ?tc1) (gerund ?ger) (wh ?wh); ok: which cats and which dogs; ok: which <cats and dogs> (use -two-n1-conjunct>); not ok: <which cat> and dog 
 	    ;; (bare-sequence -)
 	    (LF (% ?sort (class ?c1) (status ?status))) (CASE ?c) (constraint ?con) (mass ?m2) ;; allowing mismatch on mass
 	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram] 	    
-	    ))
-      (conj (SEQ +) (LF ?op) (var ?v) ) ;;(status ?status))
+	    )
+      (head (conj (SEQ +) (LF ?op) (var ?v) )) ;;(status ?status))
       (NP (SEM ?s2) (VAR ?v2) (agr ?agr1)  (complex -) (expletive -)
        (bare-np -)  ;; bare-NP should go through N!-conjunct, not NP-conjunct
        (generated ?gen2)  (time-converted ?tc1)  (gerund ?ger) (wh ?wh)
@@ -5383,13 +5384,13 @@
       (generated ?generated)  (time-converted ?tc1) 
        )
      -np-but-not-conjunct> 
-     (head (NP (SEM ?s1) (VAR ?v1) (agr ?agr)  (complex -) (expletive -) ;;(bare-np ?bnp)
+     (NP (SEM ?s1) (VAR ?v1) (agr ?agr)  (complex -) (expletive -) ;;(bare-np ?bnp)
 	    (generated ?generated)  (time-converted ?tc1) (gerund ?ger)
 	    ;; (bare-sequence -)
 	    (LF (% ?sort (class ?c1) (status ?status))) (CASE ?c) (constraint ?con) (mass ?m2) ;; allowing mismatch on mass
 	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram] 	    
-	    ))
-      (conj (but-not +) (var ?v))
+	    )
+      (head (conj (but-not +) (var ?v)))
       (np (var ?exception))
       )
 ;;  But not construction, e,g,. apples but not pears, apples not pears, 
@@ -5404,14 +5405,14 @@
       (generated ?generated)  (time-converted ?tc1) 
        )
      -np-but-not-conjunct-with-comma> 
-     (head (NP (SEM ?s1) (VAR ?v1) (agr ?agr)  (complex -) (expletive -) ;;(bare-np ?bnp)
+     (NP (SEM ?s1) (VAR ?v1) (agr ?agr)  (complex -) (expletive -) ;;(bare-np ?bnp)
 	    (generated ?generated)  (time-converted ?tc1) (gerund ?ger)
 	    ;; (bare-sequence -)
 	    (LF (% ?sort (class ?c1) (status ?status))) (CASE ?c) (constraint ?con) (mass ?m2) ;; allowing mismatch on mass
 	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram] 	    
-	    ))
+	    )
       (punc  (lex w::punc-comma))
-      (conj (but-not +) (var ?v))
+      (head (conj (but-not +) (var ?v)))
       (np (var ?exception))
       )
 
@@ -5427,14 +5428,14 @@
       (generated ?generated)
        )
      -two-np-conjunct-with-exceptions> 
-      (head (NP (SEM ?s1) (VAR ?v1) (agr ?agr)  (complex -) (expletive -) ;;(bare-np ?bnp)
+      (NP (SEM ?s1) (VAR ?v1) (agr ?agr)  (complex -) (expletive -) ;;(bare-np ?bnp)
 	       (generated ?gen1)  (time-converted ?tc1) (gerund ?ger)
 	    ;; (bare-sequence -)
 	    (LF (% ?sort (class ?c1) (status ?status))) (CASE ?c) (constraint ?con) (mass ?m2) ;; allowing mismatch on mass
 	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram] 	    
-	    ))
+	    )
       
-      (conj (SEQ +) (LF ?op) (var ?v) ) ;;(status ?status))
+      (head (conj (SEQ +) (LF ?op) (var ?v) )) ;;(status ?status))
       (NP (SEM ?s2) (VAR ?v2) (agr ?agr1)  (complex -) (expletive -) ;;(bare-np ?bnp)
 	    (generated ?gen2)  (time-converted ?tc1)  (gerund ?ger)
 	    ;; (bare-sequence -)
@@ -5737,7 +5738,7 @@
 	 (SEM ?sem) (gerund ?ger) 
       (Status ?status-out)
       (class ?class)
-      (restr (& (operator ?op)
+      (restr (& (operator ?op) (lex ?lex)
 		(sequence ((% *PRO* (status ?status-out) (var ?v1) (class ?c1) (constraint ?con) (sem ?s1) (lex ?lex1))
 			   (% *PRO* (status ?status-out) (var ?v2) (class ?c2) (constraint ?con2) (sem ?s2) (lex ?lex2))))))
       (CASE ?c)
@@ -5745,7 +5746,7 @@
       (COMPLEX +) 
       (sort (? !sort unit-measure)) ;(SORT PRED)
       (generated ?generated)
-      (lex ?op)
+      (lex ?lex) ;(lex ?op)
       )
      -two-n1-conjunct> 
      (head (N1 (SEM ?s1) (VAR ?v1) (agr ?agr)  (complex -) (expletive -) ;;(bare-np ?bnp)
@@ -5754,7 +5755,7 @@
 	    (class ?c1) (status ?status) (CASE ?c) (restr ?con) (mass ?m2) ;; allowing mismatch on mass
 	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram]
 	    ))
-     (conj (SEQ +) (LF ?op) (var ?v) ) ;;(status ?status))
+     (conj (SEQ +) (LF ?op) (lex ?lex) (var ?v) ) ;;(status ?status))
      (N1 (SEM ?s2) (VAR ?v2) (agr ?agr1)  (complex -) (expletive -) ;;(bare-np ?bnp)
 	    (generated ?gen2)  (time-converted ?tc1)  (gerund ?ger)
 	     (lex ?lex2)

@@ -17,11 +17,11 @@
 (define-words :pos W::v 
  :words (
  (W::pee
-   (wordfeats (W::morph (:forms (-vb) :past W::peed :ing W::peeing :nom w::pee)))
+   (wordfeats (W::morph (:forms (-vb) :past W::peed :ing W::peeing)))
    (SENSES
     ((meta-data :origin chf :entry-date 20070827 :change-date nil :comments chf-dialogues)
-     (LF-PARENT ONT::bodily-process)
-     (templ agent-templ)
+     (LF-PARENT ONT::excrete-waste)
+     (templ affected-templ)
      )
     )
    )

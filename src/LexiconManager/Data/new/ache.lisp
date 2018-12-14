@@ -8,7 +8,7 @@
    (wordfeats (W::morph (:forms (-vb) :past W::ached :nom W::ache)))
    (SENSES
     ((meta-data :origin chf :entry-date 20070827 :change-date nil :comments chf-dialogues)
-     (LF-PARENT ONT::bodily-process)
+     (LF-PARENT ONT::experiencer-obj)
      (templ affected-templ)
      )
     )

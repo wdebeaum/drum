@@ -26,7 +26,7 @@
    (wordfeats (W::morph (:forms (-vb) :past (W::stir w::fried) :ing( W::stir w::frying) )))
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("cooking-45.3"))
-     (LF-PARENT ONT::cooking) ; like bake,blanch,boil,braise,cook,fry
+     (LF-PARENT ONT::cook-in-fat) ; like bake,blanch,boil,braise,cook,fry
      )
     )
    )

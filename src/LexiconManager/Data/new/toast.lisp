@@ -13,7 +13,7 @@
      (PREFERENCE 0.96)
      )
   ((meta-data :origin foodkb :entry-date 20050811 :change-date nil :comments nil)
-   (LF-PARENT ONT::cooking)
+   (LF-PARENT ONT::cook-result)
    (example "toast the bread")
    (syntax (w::resultative +))
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))

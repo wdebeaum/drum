@@ -8,8 +8,8 @@
     (wordfeats (W::morph (:forms (-vb) :nom w::hyperventilation)))
    (SENSES
     ((meta-data :origin cardiac :entry-date 20090408 :change-date nil :comments nil)
-     (LF-PARENT ONT::bodily-process)
-     (TEMPL agent-templ) ; like bleed
+     (LF-PARENT ONT::breathe)
+     (TEMPL affected-templ) ; like bleed
      )
     )
    )

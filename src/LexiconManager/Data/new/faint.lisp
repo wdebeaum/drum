@@ -6,9 +6,9 @@
  :words (
   (w::faint
     (SENSES
-     ((LF-PARENT ONT::bodily-process) ;; not a process - need a new lf type
+     ((LF-PARENT ONT::lose-consciousness) ;; not a process - need a new lf type
      (meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
-     (templ agent-templ)
+     (templ affected-templ)
      (example "he fainted")
      )
     )

@@ -7,7 +7,7 @@
   (W::throb
    (wordfeats (W::morph (:forms (-vb) :nom W::throb)))
    (SENSES
-    ((LF-PARENT ONT::pulse)
+    ((LF-PARENT ONT::rhythmic-motion)
      (example "his heart throbbed")
      (TEMPL affected-templ)
      (meta-data :origin cardiac :entry-date 20081215 :change-date nil :comments LM-vocab)

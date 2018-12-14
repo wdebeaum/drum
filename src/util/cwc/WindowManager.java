@@ -67,11 +67,7 @@ public abstract class WindowManager<W> {
       return false;
     }
     if (answer != null) {
-      KQMLPerformative report = new KQMLPerformative("report");
-      report.setParameter(":content", answer);
-      KQMLPerformative reply = new KQMLPerformative("reply");
-      reply.setParameter(":content", report);
-      module.reply(msg, reply);
+      module.report(msg, answer);
     }
     return true;
   }
@@ -134,14 +130,10 @@ public abstract class WindowManager<W> {
    */
   void openedOrClosedWindow(KQMLToken id, boolean opened, boolean bySystem) {
     if (id == null) return;
-    KQMLPerformative tell = new KQMLPerformative("tell");
-    KQMLPerformative report = new KQMLPerformative("report");
-    tell.setParameter(":content", report);
-    KQMLPerformative cont = new KQMLPerformative(opened ? "opened" : "closed");
-    report.setParameter(":content", cont);
-    cont.setParameter(":what", id);
-    cont.setParameter(":who", (bySystem ? "sys" : "usr"));
-    module.send(tell);
+    KQMLPerformative act = new KQMLPerformative(opened ? "opened" : "closed");
+    act.setParameter(":what", id);
+    act.setParameter(":who", (bySystem ? "sys" : "usr"));
+    module.report(act);
     if (!opened) { // closed, forget this window
       try {
 	win2id.remove(getWindow(id));

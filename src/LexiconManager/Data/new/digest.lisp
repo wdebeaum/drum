@@ -7,13 +7,13 @@
   (W::digest
    (SENSES
     ((EXAMPLE "he digested the meal")
-     (LF-PARENT ONT::bodily-process)
+     (LF-PARENT ONT::digest)
      (meta-data :origin cardiac :entry-date 20090408 :change-date nil :comments nil)
-     (TEMPL agent-affected-xp-TEMPL)
+     (TEMPL affected-affected-TEMPL)
      )
     ((EXAMPLE "he digested in silence")
-     (LF-PARENT ONT::bodily-process)
-     (TEMPL agent-TEMPL)
+     (LF-PARENT ONT::digest)
+     (TEMPL affected-TEMPL)
      )
     ((LF-PARENT ONT::CONSUME)
      (TEMPL agent-affected-xp-TEMPL)

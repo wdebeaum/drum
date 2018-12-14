@@ -20,14 +20,14 @@
 (w::steam
  (senses
   ((meta-data :origin foodkb :entry-date 20050811 :change-date nil :comments nil)
-   (LF-PARENT ONT::cooking)
+   (LF-PARENT ONT::cook-in-steam)
    (example "steam the vegetables")
-   (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
+   (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
    )
    ((meta-data :origin cardiac :entry-date 20081005 :change-date nil :comments nil)
-   (LF-PARENT ONT::cooking)
+   (LF-PARENT ONT::cook-in-steam)
    (example "the vegetables steamed")
-   (SEM (F::Cause F::Agentive) (F::Aspect F::bounded))
+   (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (f::time-span f::extended))
    (templ affected-templ)
    )
   )

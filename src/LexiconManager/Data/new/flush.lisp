@@ -13,9 +13,9 @@
      (TEMPL agent-affected-xp-templ)
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("breathe-40.1.2") :wn ("sweat%2:29:00"))
-     (LF-PARENT ONT::bodily-process)
+     (LF-PARENT ONT::change-skin-color)
      (example "he was flushed")
-     (TEMPL agent-templ) ; like bleed
+     (TEMPL affected-templ) ; like bleed
      )
     )
    )

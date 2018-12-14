@@ -275,7 +275,7 @@
 
 
 (define-type ONT::Cogitation
- :wordnet-sense-keys ("look_at%2:31:00" "deal%2:31:10" "take%2:31:03" "consider%2:31:01" "cogitate%2:31:01" "bethink%2:39:00" "brood%2:42:00" "consider%2:32:00")
+ :wordnet-sense-keys ("look_at%2:31:00" "deal%2:31:10" "take%2:31:03" "consider%2:31:01" "cogitate%2:31:01" "bethink%2:39:00" "brood%2:42:00" "consider%2:32:00" "think%2:31:08")
  :parent ONT::change-awareness
  :sem (F::Situation (:required (F::Trajectory -)))
  :arguments ((:ESSENTIAL ONT::Neutral ((? atp F::phys-obj F::abstr-obj F::situation)))
@@ -546,7 +546,7 @@
     )
 
 (define-type ONT::apply-force
- :parent ont::touch
+ :parent ont::event-of-causation
  :sem (F::Situation (F::Cause F::Force) )
  :arguments ((:ESSENTIAL ONT::agent)
              (:OPTIONAL ont::result (F::abstr-obj (F::type (? t ont::position-reln ont::direction ont::path))))
@@ -687,6 +687,7 @@
  :parent ONT::event-of-action
   :sem (F::Situation (:required (F::trajectory -))(:default (F::aspect F::dynamic)(F::time-span F::extended)))
  )
+
 
 ;;; general class for ingesting, eat, drink, take (drugs), ...
 ;;; NB: figure out about feed.
@@ -894,13 +895,18 @@
 
 ;;; predicates of comparison, e.g. equals, resembles
 (define-type ONT::OBJECT-COMPARE
-  :wordnet-sense-keys ("resemble%2:42:00" "match%2:42:00" "coordinate%2:30:01")
+  :wordnet-sense-keys ("match%2:42:00" "coordinate%2:30:01")
  :parent ONT::event-of-state
  :sem (F::Situation (F::Trajectory -))
  :arguments ((:REQUIRED ONT::NEUTRAL ((? oc F::Phys-obj F::Abstr-obj F::Situation F::time)))
              (:REQUIRED ONT::neutral1 ((? oc1 F::Phys-obj F::Abstr-obj F::Situation F::time)))
              )
  )
+
+(define-type ont::cohere
+ :wordnet-sense-keys ("cohere%2:42:00" "harmonize%2:42:00")
+ :parent ont::object-compare
+)
 
 (define-type ONT::IN-RELATION
  :wordnet-sense-keys ("diverge%2:42:00" "dominate%2:42:00" "go_by%2:32:00" "exceed%2:42:01" "follow%2:42:00")
@@ -915,6 +921,7 @@
  )
 
 (define-type ONT::RESEMBLE
+ :wordnet-sense-keys ("resemble%2:42:00")
  :parent ONT::OBJECT-COMPARE
  :sem (F::Situation (F::Trajectory -))
  :arguments ((:REQUIRED ONT::FORMAL ((? oc1 F::Phys-obj F::Abstr-obj F::Situation)))
@@ -1072,8 +1079,8 @@
     )
 
 (define-type ONT::direct-at
-    :wordnet-sense-keys ("target%2:33:00")
-    :parent ont::event-of-state
+    :wordnet-sense-keys ("target%2:33:00" "shine%2:43:03" "orient%2:42:01")
+    :parent ont::event-of-action
     :arguments (
 		(:OPTIONAL ONT::NEUTRAL1)
 		)

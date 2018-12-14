@@ -8,7 +8,7 @@
       (wordfeats (W::morph (:forms (-vb) :past (W::deep w::fried) :ing( W::deep w::frying) )))
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("cooking-45.3") :wn ("deep-fry%2:30:00"))
-     (LF-PARENT ONT::cooking)
+     (LF-PARENT ONT::cook-in-fat)
  ; like bake,blanch,boil,braise,cook,fry
      )
     )
