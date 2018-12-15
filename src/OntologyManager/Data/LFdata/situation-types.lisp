@@ -1079,8 +1079,8 @@
     )
 
 (define-type ONT::direct-at
-    :wordnet-sense-keys ("target%2:33:00" "shine%2:43:03" "orient%2:42:01")
-    :parent ont::event-of-action
+    :wordnet-sense-keys ("target%2:33:00")
+    :parent ont::event-of-state
     :arguments (
 		(:OPTIONAL ONT::NEUTRAL1)
 		)
