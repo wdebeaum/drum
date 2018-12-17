@@ -2050,11 +2050,13 @@
     ;; I have a job to do, an option to suggest
   ((N1 (RESTR ?con) (gap -)
       (CLASS ?c) (SORT ?sort) (QUAL ?qual) (COMPLEX +)
-      (subcat -) (post-subcat -)
+      (subcat (% - (W::VAR -))) ;(subcat -)
+      (post-subcat -)
       )
      -n1-inf> .92
      (head (N1 (VAR ?v) (RESTR ?r) (SEM ?sem) (CLASS ?c) (SORT ?sort) (QUAL ?qual)
-	    (subcat -) (post-subcat -)
+	       (subcat (% - (W::VAR -))) ;(subcat -)
+	       (post-subcat -)
 	    (no-postmodifiers -) ;; exclude "the same path as the battery I saw" and cp attaching to "path"
 	    ))
      (cp (ctype s-to) (VAR ?tov) (subj ?subj)   (gap (% np (sem ?sem) (var ?v)))
@@ -2162,24 +2164,27 @@
     ;;   simple appositives,
     ;;  e.g., city avon, as in "the city avon"
     ;;
-    ((N1 (RESTR ?con) (CLASS ?c) (SORT ?sort) (QUAL ?qual) (COMPLEX +)
-      (subcat -) (post-subcat -)
+    ((N1 (RESTR ?con) (CLASS ?c) (SORT ?sort) (QUAL ?qual) ;(COMPLEX +)  ; took out complex + so this will go through two-np-conjunct
+	 (subcat (% - (W::VAR -))) ;(subcat -)
+	 (post-subcat -)
       )
      -N1-appos1> .98
      (head (N1 (VAR ?v1) (RESTR ?r) (CLASS ?c) (sort (? !sort unit-measure)) ;(SORT ?sort) 
 	       (QUAL ?qual) (relc -) (sem ?sem)
-	    (subcat -) (post-subcat -) (complex -) (derived-from-name -) (time-converted -)
+	       (subcat (% - (W::VAR -))) ;(subcat -)
+	       (post-subcat -) (complex -) (derived-from-name -) (time-converted -)
 	    )      
       )
      (np (name +) (generated -) (sem ?sem) (class ?lf) (VAR ?v2) (time-converted -))
      (add-to-conjunct (val (IDENTIFIED-AS ?v2)) (old ?r) (new ?con)))
 	
    ;; same with comma  the city, avon
-    ((N1 (RESTR ?con) (CLASS ?c) (SORT ?sort) (QUAL ?qual) (COMPLEX +) 
-      (subcat -))
+    ((N1 (RESTR ?con) (CLASS ?c) (SORT ?sort) (QUAL ?qual) ;(COMPLEX +) 
+      (subcat (% - (W::VAR -)))) ;(subcat -))
      -N1-appos2>
      (head (N1 (VAR ?v1) (RESTR ?r) (CLASS ?c) (SORT ?sort) (QUAL ?qual) (relc -)
-	    (subcat -) (post-subcat -) (sem ?sem)
+	       (subcat (% - (W::VAR -))) ;(subcat -)
+	       (post-subcat -) (sem ?sem)
 	    ))
      (punc (lex w::punc-comma))
      (np (name +) (generated -) (CLASS ?c) (sem ?sem) (VAR ?v2))
