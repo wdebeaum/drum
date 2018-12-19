@@ -387,7 +387,8 @@
  )
 
 (define-type ONT::exclusive   ; alone, myself
- :parent ONT::MANNER
+ :wordnet-sense-keys ("alone%4:02:00")
+  :parent ONT::MANNER
  )
 
 (define-type ONT::inclusive  ; co-, together

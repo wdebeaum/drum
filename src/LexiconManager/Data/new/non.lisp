@@ -2,6 +2,7 @@
 ;;;; w::non
 ;;;;
 
+#|
 (define-words :pos W::adj 
   :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -13,6 +14,7 @@
 	     )
 	    ))	  
 ))
+|#
 
 (define-words :pos w::adv
  :words (

@@ -3183,7 +3183,7 @@
 
 (define-type ont::private
  :parent ont::privacy-val 
- :wordnet-sense-keys ("private%5:00:02:personal:00" "personal%3:00:00" "private%3:00:00" "privy%5:00:00:private:00" "exclusive%3:00:00" "confidential%5:00:00:private:00" "private%5:00:00:personal:00" )
+ :wordnet-sense-keys ("private%5:00:02:personal:00" "personal%3:00:00" "private%3:00:00" "privy%5:00:00:private:00" "confidential%5:00:00:private:00" "private%5:00:00:personal:00" )
  ; Words: (W::PERSONAL W::PRIVATE W::SECRET)
  ; Antonym: NIL (W::PUBLIC)
 )
@@ -4293,6 +4293,7 @@
  :wordnet-sense-keys("duplex%5:00:00:multiple:00" "multiplex%5:00:00:multiple:00")
 )
 
+#|
 (define-type ONT::zero-val
  :parent ONT::cardinality-val
  :wordnet-sense-keys("zero%5:00:00:cardinal:00")
@@ -4301,6 +4302,7 @@
 (define-type ONT::non-zero-val
  :parent ONT::cardinality-val
  )
+|#
 
 (define-type ONT::numerical-grouping-VAL
  :parent ONT::number-related-property-val

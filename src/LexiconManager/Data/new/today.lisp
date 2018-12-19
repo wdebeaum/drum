@@ -2,7 +2,7 @@
 ;;;; W::TODAY
 ;;;;
 
-#|
+
 (define-words :pos W::adv :templ PPWORD-ADV-TEMPL
  :tags (:base500)
  :words (
@@ -15,9 +15,9 @@
     )
    )
 )
-|#
 
-(define-words :pos W::name :templ nname-templ
+
+(define-words :pos W::pro :templ pronoun-templ
  :tags (:base500)
  :words (
   (W::TODAY
@@ -29,4 +29,3 @@
     )
    )
 ))
-

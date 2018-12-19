@@ -1293,6 +1293,7 @@
 	       (headless -)
 	       (var ?v) (class ?c) (lex ?l))))
 
+    #||
     ;; today, tomorrow, ...
     ((DATE (var *) (INT +) (LF ONT::DAY-NAME) (DAY ?day) ;(DAY ?class)
       (lex ?hlex) (headcat ?hcat) (day-specified +))
@@ -1301,7 +1302,7 @@
 	    (PRO +) (var ?day) (class (? class ont::date-object))
 	    (headless -)
 	    (lex ?hlex) (headcat ?hcat)
-	    )))    
+	    )))  ||#  
     
     ))
 
@@ -1315,7 +1316,7 @@
     ((DATE (INT +) (LF ONT::DAY-NAME) (DOW ?var) (var *)
       (lex ?hlex) (headcat ?hcat) (day-specified +) (sem ?sem)) 
      -dt-dow> 1.0
-     (head (NP (class (? xx ONT::DAY-NAME ONT::TODAY ONT::YESTERDAY ONT::TOMORROW))
+     (head (NP (class (? xx ONT::DAY-NAME)) ;; ONT::TODAY ONT::YESTERDAY ONT::TOMORROW))
 	       (headless -)
 	       (lf ?dow)  (lex ?hlex) (headcat ?hcat) (sem ?sem) (var ?var) (wh -)
 	       )))

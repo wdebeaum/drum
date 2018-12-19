@@ -2,6 +2,7 @@
 
 
 (setf lxm::*domain-sense-preferences* '((w::expression ont::gene-expression)
+					(w::express ont::gene-expression)
 				       (W::TRANSCRIPT ONT::RNA)
 				       (W::SITE ONT::MOLECULAR-SITE)
 				       (W::POSITION ONT::MOLECULAR-SITE)
@@ -12,6 +13,7 @@
 				       (W::INTERACT ONT::BIND-INTERACT)
 				       (W::interaction ONT::BIND-INTERACT)
 				       (W::FDA ONT::PROFESSIONAL-ORGANIZATION) ; as opposed to PROTEIN
+				       (W::model ONT::REPRESENTATION)
 				       ))
 
 
