@@ -23,11 +23,12 @@
     (example "I'll contact the lab manager")
     (TEMPL AGENT-ADDRESSEE-TEMPL)
     )
-   ((meta-data :origin calo :entry-date 20031212 :change-date 20090508 :comments calo-y1script)
+    ;; NOW COMPOSITIONAL
+   #|((meta-data :origin calo :entry-date 20031212 :change-date 20090508 :comments calo-y1script)
     (LF-PARENT ONT::establish-communication)
     (example "I'll contact the lab manager about it")
     (TEMPL AGENT-ADDRESSEE-Associated-information-TEMPL)
-    )
+    )|#
    )
    )
 ))

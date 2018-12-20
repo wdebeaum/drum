@@ -4317,7 +4317,11 @@
 ;; alone, individual
 (define-type ONT::Singularity-VAL
  :parent ONT::numerical-grouping-val
- :wordnet-sense-keys("singularity%1:07:01" "singular%3:00:01" "alone%5:00:00:exclusive:00" "individual%3:00:00")
+ :wordnet-sense-keys("singularity%1:07:01" "singular%3:00:01" "alone%5:00:00:exclusive:00" "individual%3:00:00" "alone%4:02:00")
+ )
+
+(define-type ONT::inclusive  ; co-, together
+ :parent ONT::numerical-grouping-val
  )
 
 ;; duplicate

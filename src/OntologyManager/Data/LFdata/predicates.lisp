@@ -386,6 +386,8 @@
              )
  )
 
+; moved into numerical-grouping-val
+#|
 (define-type ONT::exclusive   ; alone, myself
  :wordnet-sense-keys ("alone%4:02:00")
   :parent ONT::MANNER
@@ -394,6 +396,7 @@
 (define-type ONT::inclusive  ; co-, together
  :parent ONT::MANNER
  )
+|#
 
 ;; in that event
 (define-type ONT::situated-in

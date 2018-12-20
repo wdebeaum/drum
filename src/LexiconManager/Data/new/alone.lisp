@@ -19,7 +19,8 @@
  :words (
   (W::ALONE
    (SENSES
-    ((LF-PARENT ONT::exclusive)
+    (;(LF-PARENT ONT::exclusive)
+     (LF-PARENT ONT::singularity-val )
      (LF-FORM W::alone)
      (example "he sang alone")
      (meta-data :origin calo :entry-date 20040907 :change-date nil :comments caloy2)

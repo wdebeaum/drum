@@ -299,23 +299,6 @@
    )
 ))
 
-(define-words 
-    :pos W::adv :templ pred-s-post-templ
- :tags (:base500)
- :words (
-;; Added by myrosia for Bee corpus
-	    (w::in
-	     (senses
-	      ((lf-parent ont::manner)
-	       (meta-data :origin bee :entry-date 20040407 :change-date 20080417 :comments (test-s36 test-s37)) 
-	       (example "in general" "in particular" "in short" "in series" "in parallel" "in full" "in earnest" "the room is done in green")
-	       ;; a restriction of ADJP with no argument
-	       (templ binary-constraint-S-templ (xp (% w::ADJP (w::var ?var) (w::sem ?sem) (w::set-modifier -))))
-	       (preference 0.9)
-	       )
-	      ))
-))
-
 (define-words :pos W::ADV
   :tags (:base500)
   :words (
@@ -474,12 +457,22 @@
      (TEMPL PRED-S-POST-TEMPL)
      (preference 0.98)
      )
+    
+    ;; Added by myrosia for Bee corpus
+    ((lf-parent ont::manner)
+     (meta-data :origin bee :entry-date 20040407 :change-date 20080417 :comments (test-s36 test-s37)) 
+     (example "in general" "in particular" "in short" "in series" "in parallel" "in full" "in earnest" "the room is done in green")
+     ;; a restriction of ADJP with no argument
+     (templ binary-constraint-S-templ (xp (% w::ADJP (w::var ?var) (w::sem ?sem) (w::set-modifier -))))
+     (preference 0.9)
+     )
+
     ;; in the air (excluded by ont::spatial-loc)
 
     ;; It increased in temperature
     ((LF-PARENT ONT::in-scale)
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
-     (preference 0.98)
+     ;(preference 0.98)
      )
      )
    )

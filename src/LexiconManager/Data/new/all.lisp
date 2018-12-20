@@ -146,9 +146,9 @@
      )
     |#
     ((LF ONT::UNIVERSAL)
-     (example "all of the trucks")
-     (non-hierarchy-lf t)(TEMPL quan-cardinality-pl-templ)
-     (SYNTAX (W::agr (? agr W::3p)) (w::status ont::indefinite-plural))
+     (example "all of the trucks.  all trucks")
+     (non-hierarchy-lf t)(TEMPL quan-pl-count-templ)
+     (SYNTAX (W::agr (? agr W::3p)) (w::status ont::QUANTIFIER))
      )
     ((LF ONT::UNIVERSAL)
      (example "all of the water")

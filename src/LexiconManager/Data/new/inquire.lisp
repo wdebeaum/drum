@@ -13,7 +13,7 @@
      ;;(lf-parent ont::enquire-inquire) ;; 20120524 GUM change new parent
      (LF-PARENT ONT::ASK-QUESTION)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL AGENT-ASSOCIATED-INFORMATION-TEMPL)
+     (TEMPL AGENT-TEMPL)
      )
     )
    )

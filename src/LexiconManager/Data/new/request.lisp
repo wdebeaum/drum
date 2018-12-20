@@ -25,7 +25,7 @@
     ((EXAMPLE "request something")
      (LF-PARENT ONT::REQUEST)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL AGENT-AFFECTED-XP-TEMPL)
+     (TEMPL AGENT-NEUTRAL-XP-TEMPL)
      )
     ((EXAMPLE "request that he do something")
      (LF-PARENT ONT::REQUEST)

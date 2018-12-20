@@ -10,7 +10,7 @@
      (EXAMPLE "he acknowledged the message")
      (LF-PARENT ONT::acknowledge)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-ASSOCIATED-INFORMATION-TEMPL)
+     (TEMPL AGENT-neutral-TEMPL)
      )
     ((meta-data :origin task-learning :entry-date 20050830 :change-date 20090508 :comments nil :vn ("confess-37.10"))
      (EXAMPLE "You acknowledge that Software Product is of U.S.")

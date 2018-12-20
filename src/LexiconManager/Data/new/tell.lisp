@@ -17,11 +17,12 @@
      (example "tell the plan to the driver")
      (TEMPL AGENT-THEME-TO-ADDRESSEE-optional-TEMPL)
      )
+    #||  ;;  Now handled compositionally
     (;;(LF-PARENT ONT::inform)
      (lf-parent ont::tell) ;; 20120524 GUM change new parent
      (example "tell the driver about the plan")
      (TEMPL AGENT-ADDRESSEE-ASSOCIATED-INFORMATION-TEMPL)
-     )
+    )||#
     ((EXAMPLE "Tell the driver that the trucks are ready")
      ;;(LF-PARENT ONT::inform)
      (lf-parent ont::tell) ;; 20120524 GUM change new parent
