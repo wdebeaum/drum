@@ -19,7 +19,8 @@
  :arguments (;(:ESSENTIAL ONT::OF ((? of F::Phys-obj F::Situation f::abstr-obj)))
 	     ;(:ESSENTIAL ONT::val ((? val F::Phys-obj F::Situation f::abstr-obj)))
 	     (:ESSENTIAL ONT::FIGURE ((? fig F::Phys-obj F::Situation f::abstr-obj)))
-	     (:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj F::Situation f::abstr-obj) (f::scale (? !t ONT::TIME-MEASURE-SCALE)))
+	     (:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj F::Situation f::abstr-obj)
+				      (f::scale (? !sc ONT::TIME-MEASURE-SCALE)))
              ))
  )
 
@@ -182,7 +183,8 @@
 ; figure is related by inherent orientation of ground
 (define-type ont::oriented-loc-reln
     :comment "FIGURE is located by a directional relationship with the GROUND"
-    :arguments ((:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj f::abstr-obj) (f::type (? !t ONT::TIME-MEASURE-SCALE)))))
+    :arguments ((:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj f::abstr-obj)
+					 (f::type (? !t ONT::TIME-MEASURE-SCALE)))))
     :parent ont::position-as-point-reln
     )
 

@@ -2067,6 +2067,7 @@
   ;; e.g., anything else, what else
     ((NP (SORT PRED)
          (VAR ?v) (SEM ?sem) (lex ?hl) (headcat ?hc) (Class ?c) (AGR ?agr) (WH ?wh) (PRO INDEF)(case ?case)
+	 (wh-var ?v) ; "anything" shouldn't really have wh-var, but its WH would be - (wh-var is needed to instantiate :focus in questions)
          (LF (% Description (status ?status) (var ?v) (Class ?c) (SORT individual)
                 (Lex ?lex)
                 (sem ?sem) 

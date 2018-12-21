@@ -196,37 +196,37 @@
      ((ONT::SPEECHACT ?x ONT::SA_REQUEST :CONTENT ?!theme)
       (ONT::F ?!theme (? t3 ONT::NAMING ONT::LISTING ONT::TELL ONT::LOOK-UP) :NEUTRAL ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
       (?!spec ?!n ?!t :mods (?!m))
-      (ONT::F ?!m (? !t2 ONT::DOMAIN-PROPERTY ONT::MODIFIER)) ; e.g., *not* beautiful or unknown adjectives, so that it picks the "that" clause instead of the adjective in, e.g., Look up the large dog that bit the cat 
+      (ONT::F ?!m (? !t2 ONT::DOMAIN-PROPERTY ONT::MODIFIER ONT::PREDICATE)) ; e.g., *not* beautiful or unknown adjectives or ASSOC-WITH (for pertainyms) etc , so that it picks the "that" clause instead of the adjective in, e.g., Look up the large dog that bit the cat 
       -request-to-identify>
       (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n :suchthat ?!m)
       )
 
-   ;; e.g., Show/Look up the evidence/information that...
+   ;; e.g., Show/Look up the evidence/information that... (no :suchthat)
    ((ONT::SPEECHACT ?x ONT::SA_REQUEST :CONTENT ?!theme)
     (ONT::F ?!theme (? t3 ONT::SHOW ONT::NAMING ONT::LISTING ONT::TELL ONT::LOOK-UP) :NEUTRAL ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
     (?!spec ?!n (? t2 ONT::INFORMATION) :formal ?!X) ; e.g., evidence that, information, data 
     -request-show-evidence-to-identify>
-    (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n :suchthat ?!X)
+    (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n) ;:suchthat ?!X)
     )
 
-    ;; e.g., Give me the evidence/information that...
+    ;; e.g., Give me the evidence/information that... (no :suchthat)
    ((ONT::SPEECHACT ?x ONT::SA_REQUEST :CONTENT ?!theme)
     (ONT::F ?!theme (? t3 ONT::GIVING) :AFFECTED ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
     (?!spec ?!n (? t2 ONT::INFORMATION) :formal ?!X) ; e.g., evidence that, information, data 
     -request-give-evidence-to-identify>
-    (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n :suchthat ?!X)
+    (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n) ;:suchthat ?!X)
     )
 
-     ;  Name/List/Tell me/Look up the expensive drugs (neutral); no :suchthat
+     ;  Name/List/Tell me/Look up the expensive drugs (neutral) (no :suchthat)
      ((ONT::SPEECHACT ?x ONT::SA_REQUEST :CONTENT ?!theme)
       (ONT::F ?!theme (? t3 ONT::NAMING ONT::LISTING ONT::TELL ONT::LOOK-UP) :NEUTRAL ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
       (?!spec ?!n ?!t :mods (?!m))
-      (ONT::F ?!m (? t2 ONT::DOMAIN-PROPERTY ONT::MODIFIER)) ; e.g., beautiful or unknown adjectives, without the "that" clause
+      (ONT::F ?!m (? t2 ONT::DOMAIN-PROPERTY ONT::MODIFIER ONT::PREDICATE)) ; e.g., beautiful or unknown adjectives, without the "that" clause
       -request-to-identify-adj> 0.98 ; prefer -request-to-identify> and -request-to-identify-b>
       (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n) ;:suchthat ?!m)
       )
 
-     ;  Name/List/Tell me about/Look up the drug (neutral); no :suchthat
+     ;  Name/List/Tell me about/Look up the drug (neutral) (no :suchthat)
      ((ONT::SPEECHACT ?x ONT::SA_REQUEST :CONTENT ?!theme)
       (ONT::F ?!theme (? t3 ONT::NAMING ONT::LISTING ONT::TELL ONT::LOOK-UP) :neutral ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
       (?!spec ?!n ?!t)
@@ -234,7 +234,7 @@
       (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n) ;:suchthat ?!n)
       )
      
-     ;  Name/List/Tell me about/Look up the activation of the drug (formal); no :suchthat
+     ;  Name/List/Tell me about/Look up the activation of the drug (formal) (no :suchthat)
      ((ONT::SPEECHACT ?x ONT::SA_REQUEST :CONTENT ?!theme)
       (ONT::F ?!theme (? t3 ONT::NAMING ONT::LISTING ONT::TELL ONT::LOOK-UP) :FORMAL ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
       (?!spec ?!n ?!t)
@@ -246,7 +246,7 @@
      ((ONT::SPEECHACT ?x ONT::SA_REQUEST :CONTENT ?!theme)
       (ONT::F ?!theme (? t3 ONT::NAMING ONT::LISTING ONT::TELL ONT::LOOK-UP) :NEUTRAL ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
       (?!spec ?!n ?!t :suchthat ?!m)
-      (ONT::F ?!m (? !t2 ONT::DOMAIN-PROPERTY ONT::MODIFIER)) ; e.g., *not* beautiful or unknown adjectives
+      (ONT::F ?!m (? !t2 ONT::DOMAIN-PROPERTY ONT::MODIFIER ONT::PREDICATE)) ; e.g., *not* beautiful or unknown adjectives
       -request-to-identify-b>
       (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n :suchthat ?!m)
       )
@@ -268,7 +268,7 @@
       (ONT::F ?!c ONT::EXISTS :NEUTRAL ?!n2)
       ;(ONT::PRO ?!p ONT::EXPLETIVE :PROFORM w::there) ; this is not put through the match
       (?!spec2 ?!n2 ?!t2 :MODS (?!m))
-      (ONT::F ?!m (? !t4 ONT::DOMAIN-PROPERTY ONT::MODIFIER))
+      (ONT::F ?!m (? !t4 ONT::DOMAIN-PROPERTY ONT::MODIFIER ONT::PREDICATE))
       -request-to-identify3>
       (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n2 :suchthat ?!m)
       )
@@ -306,7 +306,7 @@
       (ONT::F ?!theme (? t3 ONT::WANT) :FORMAL ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
       (ONT::F ?!n ONT::KNOW :NEUTRAL ?!n2) ; note n3, not n
       (?!spec2 ?!n2 ?!t2 :MODS (?!m))
-      (ONT::F ?!m (? !t4 ONT::DOMAIN-PROPERTY ONT::MODIFIER))
+      (ONT::F ?!m (? !t4 ONT::DOMAIN-PROPERTY ONT::MODIFIER ONT::PREDICATE))
       -request-to-identify4>
       (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n2 :suchthat ?!m)
       )
@@ -316,7 +316,7 @@
       (ONT::F ?!theme (? t3 ONT::NAMING ONT::LISTING ONT::TELL ONT::LOOK-UP) :NEUTRAL ?!n 
 	      :AGENT ?!V6 :force (? f ONT::ALLOWED ONT::PROHIBITED ONT::FUTURE ONT::FUTURENOT ONT::POSSIBLE ONT::FUTURE)) 
      (?!spec ?!n ?!t :mods (?!m))
-     (ONT::F ?!m (? !t2 ONT::DOMAIN-PROPERTY ONT::MODIFIER))
+     (ONT::F ?!m (? !t2 ONT::DOMAIN-PROPERTY ONT::MODIFIER ONT::PREDICATE))
      ((? z ONT::PRO) ?!V6 ONT::PERSON :proform (? xx w::you))    
      -can-indirect-yes-no>
      (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n :suchthat ?!m)
@@ -337,7 +337,7 @@
       (ONT::F ?!theme (? t3 ONT::NAMING ONT::LISTING ONT::TELL ONT::LOOK-UP) :NEUTRAL ?!n 
 	      :AGENT ?!V6 :force (? f ONT::ALLOWED ONT::PROHIBITED ONT::FUTURE ONT::FUTURENOT ONT::POSSIBLE ONT::FUTURE)) 
      (?!spec ?!n ?!t :suchthat ?!m)
-     (ONT::F ?!m (? !t2 ONT::DOMAIN-PROPERTY ONT::MODIFIER))
+     (ONT::F ?!m (? !t2 ONT::DOMAIN-PROPERTY ONT::MODIFIER ONT::PREDICATE))
      ((? z ONT::PRO) ?!V6 ONT::PERSON :proform (? xx w::you))    
      -can-indirect-request-b>
      (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n :suchthat ?!m)

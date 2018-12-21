@@ -5,7 +5,7 @@
 (define-words :pos W::v :templ AGENT-affected-XP-TEMPL
  :words (
    (W::upregulate
-    (wordfeats (W::morph (:forms (-vb) :nom w::upregulation)))
+    (wordfeats (W::morph (:forms (-vb) :nom w::upregulation :agentnom w::upregulator)))
     (senses 
      ((LF-PARENT ont::cause-stimulate)
 ;      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
@@ -40,7 +40,8 @@
 				 :past (W::up W::punc-minus W::regulated)
 				 :pastpart (W::up W::punc-minus W::regulated)
 				 :ing (W::up W::punc-minus W::regulating)
-				 :nom (w::up W::punc-minus w::regulation))))
+				 :nom (w::up W::punc-minus w::regulation)
+				 :agentnom (w::up W::punc-minus w::regulator)))) ; this agentnom doesn't work
     (senses 
      ((LF-PARENT ont::cause-stimulate)
       (TEMPL agent-affected-xp-templ)
