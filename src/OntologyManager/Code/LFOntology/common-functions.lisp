@@ -321,7 +321,9 @@
 (defun make-typed-sem (tsem)
   (when tsem
     (let* ((type (make-var-unique (car tsem)))
-	   (flist (cdr tsem))
+	   (flist (mapcar #'(lambda (x)
+			      (list (car x) (make-var-unique (cadr x))))
+			  (cdr tsem)))
 	   (required (cdr (assoc :required flist)))
 	   (default (cdr (assoc :default flist)))
 	   )
@@ -337,13 +339,16 @@
     )))
 
 (defun make-var-unique (class)
-  (if (and (consp class)
-	   (eq (car class) '?))
-      (list* '? (make-name-unique (cadr class)) (cddr class))
-      class))
+  (cond ((and (consp class)
+	      (eq (car class) '?))
+	 (list* '? (make-name-unique (cadr class)) (cddr class)))
+	((is-variable-name class)
+	 (list '? (make-name-unique class)))
+	(t
+	 class)))
 
 (defun make-name-unique (id)
-  (gensym (symbol-name id)))
+  (intern (symbol-name (gensym (symbol-name id))) *ont-package*))
   
 
 ;; takes an untyped feature list in the format type <feature list>

@@ -28,7 +28,7 @@
  :words (
   (W::MAYBE
    (SENSES
-    ((LF (ONT::UNSURE-POS))
+    ((LF ONT::UNSURE-POS)
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      )
     )
@@ -40,7 +40,7 @@
  :words (
   ((W::MAYBE w::not)
    (SENSES
-    ((LF (ONT::UNSURE-NEG))
+    ((LF ONT::UNSURE-NEG)
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      )
     )

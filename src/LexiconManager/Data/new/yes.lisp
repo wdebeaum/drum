@@ -7,7 +7,7 @@
  :words (
   (W::yes
    (SENSES
-    ((LF (ONT::POS))
+    ((LF ONT::POS)
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      )
     )
@@ -18,7 +18,7 @@
  :words (
   ((W::yes W::indeed)
    (SENSES
-    ((LF (ONT::POS))
+    ((LF ONT::POS)
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      )
     )

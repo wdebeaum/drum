@@ -217,10 +217,10 @@
     (word (lex not)))
    
      ;;  e.g., hello with punctuation
-   ((utt (lf (% speechact (var *) (class ?sa) (constraint (& (content (?lf :content ?lex))))))
+   ((utt (lf (% speechact (var *) (class ?sa) (constraint (& (content ?lf)))))
          (var *) (uttword +))
     -utt4b>
-    (head (uttword (lf (?lf)) (lex ?lex) (sa ?sa)))
+    (head (uttword (lf ?lf) (lex ?lex) (sa ?sa)))
     (punc (lex punc-comma) (var ?v1)))
 
      ;;  e.g., thanks for the gift, sorry that I interrupted

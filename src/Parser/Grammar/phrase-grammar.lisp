@@ -2590,7 +2590,7 @@
         ;;  NP with SPECS that subcategorize for NP's
         ;;   all/both/half the boys
         
-        ((NP (LF (% description (STATUS ?spec) (VAR ?specvar) (CLASS ?c) (CONSTRAINT ?newr)
+        ((NP (LF (% description (STATUS ?spec) (VAR ?specvar) (CLASS ?c) (constraint ?r1) ;(CONSTRAINT ?newr) ; don't pass up ?r from the NP so that the mods stay with the refset.  We need this to be the case for -can-indirect-request-b2> in IMRules (e.g., Can you tell me all the cats chased by the dog?)
 		    (sem ?sem)  (transform ?transform)
 		    ))
              (SORT PRED) (VAR ?specvar) (WH ?w));; must move WH feature up by hand here as it is explicitly specified in a daughter.
@@ -2604,9 +2604,10 @@
 		           (transform ?transform)
 		           ))))
 	 (add-to-conjunct (val (refset ?v)) (old ?restr) (new ?r1))
-	 (append-conjuncts (conj1 ?r1) (conj2 ?r) (new ?newr)))
+	 ;(append-conjuncts (conj1 ?r1) (conj2 ?r) (new ?newr))
+	 )
 
-	((NP (LF (% description (STATUS ?spec) (VAR ?specvar) (CLASS ?c) (CONSTRAINT ?newr)
+	((NP (LF (% description (STATUS ?spec) (VAR ?specvar) (CLASS ?c) (constraint ?r1) ;(CONSTRAINT ?newr)
 		    (sem ?sem)  (transform ?transform)
 		    ))
              (SORT PRED) (VAR ?specvar) (WH ?w));; must move WH feature up by hand here as it is explicitly specified in a daughter.
@@ -2620,7 +2621,8 @@
 		           (transform ?transform)
 		           ))))
 	 (add-to-conjunct (val (refset ?v)) (old ?restr) (new ?r1))
-	 (append-conjuncts (conj1 ?r1) (conj2 ?r) (new ?newr)))
+	 ;(append-conjuncts (conj1 ?r1) (conj2 ?r) (new ?newr))
+	 )
 
         ;;  BARE PLURALS  ---> KINDS
 

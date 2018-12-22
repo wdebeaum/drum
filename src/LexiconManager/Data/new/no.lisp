@@ -79,7 +79,7 @@
  :words (
   (W::NO
    (SENSES
-    ((LF (ONT::NEG))
+    ((LF ONT::NEG)
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      )
     )
@@ -90,7 +90,7 @@
  :words (
   ((W::no W::way)
    (SENSES
-    ((LF (ONT::NEG))
+    ((LF ONT::NEG)
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      )
     )
@@ -101,7 +101,7 @@
  :words (
   ((W::no W::thanks)
    (SENSES
-    ((LF (ONT::NEG))
+    ((LF ONT::NEG)
      (non-hierarchy-lf t)(SYNTAX (W::SA ONT::SA_RESPONSE))
      )
     )
