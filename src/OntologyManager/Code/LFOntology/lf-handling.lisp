@@ -222,7 +222,7 @@ structure out of it."
   (let* ((ess (first arg)) (role (second arg)) 
 	 (restr (third arg)) (params (cdddr arg))
 	 (implements (second (assoc :implements params)))	 
-	 (sem (or (make-typed-sem restr) (make-untyped-sem nil)))
+	 (sem (or (make-typed-sem restr t) (make-untyped-sem nil)))
 	 )        
     (cond
      ((not (member ess '(:REQUIRED :ESSENTIAL :OPTIONAL)))

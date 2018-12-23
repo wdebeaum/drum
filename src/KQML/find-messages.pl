@@ -2,7 +2,7 @@
 
 # find-messages.pl
 #
-# Time-stamp: <Mon Oct  2 14:57:38 CDT 2017 lgalescu>
+# Time-stamp: <Tue Dec 11 20:32:44 CST 2018 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  7 Jun 2006
 #
@@ -58,6 +58,9 @@
 # - Added to TRIPS in src/KQML/.
 # 2017/10/02 lgalescu
 # - Fixed bug.
+# 2018/12/10 lgalescu
+# - Added possibility of specifying performative in module filters.
+# - Simplified grammar somewhat.
 
 #----------------------------------------------------------------
 # Usage:
@@ -65,22 +68,25 @@
 # the configuration file format:
 #   CFG_FILE  ::= (LINE\n)*
 #   LINE      ::= FROM | TO | EXCLUDE | COMMENT
-#   FROM      ::= "from: " (MODULE[:FILTER]*)*
-#   TO        ::= "to: " (MODULE[:FILTER]*)*
-#   EXCLUDE   ::= "exclude: " (PERF[:CONT-HEAD])*
-#   MODULE    ::= NAME | "*"
+#   FROM      ::= "from:" M_PATTERN [...]
+#   TO        ::= "to:" M_PATTERN [...]
+#   EXCLUDE   ::= "exclude:" X_PATTERN [...]
+#   M_PATTERN ::= MODULE(:FILTER)* | M_PATTERN,M_PATTERN
+#   FILTER    ::= C_PATTERN | /PERL-PATTERN/
+#   C_PATTERN ::= (PERF#)?CONT-HEAD
+#   X_PATTERN ::= PERF(#CONT-HEAD)? | X_PATTERN,X_PATTERN
+#   MODULE    ::= <symbol> | "*"
 #   PERF      ::= KQML-PERFORMATIVE
-#   FILTER    ::= CONT-HEAD | /PERL-PATTERN/
-#   CONT-HEAD ::= NAME
+#   CONT-HEAD ::= <symbol>
 #   COMMENT   ::= "#.*"
 
 # command line options
 #   options   ::= option*
 #   option    ::= gen_opt | from_opt | to_opt | excl_opt
 #   gen_opt   ::= -d N | -n | -non | -m | -nom | -i | -noi | -cfg FILE | -q
-#   from_opt  ::= -from MODULE[:FILTER]*[,...]
-#   to_opt    ::= -to MODULE[:FILTER]*[,...]
-#   excl_opt  ::= -x PERF[:CONT-HEAD][,...]
+#   from_opt  ::= -from M_PATTERN
+#   to_opt    ::= -to M_PATTERN
+#   excl_opt  ::= -x X_PATTERN
 
 my $usage;
 my $path;
@@ -118,19 +124,41 @@ PATTERNS
 
 1. exclusion patterns
 
-  --exclude PERF[:CONTENT][,...], -x PERF[:CONTENT][,...]
-\tExclude messages -- from any module! -- matching the performative PERF and, if given, the specified content. Can be repeated. Multiple patterns can also be joined with a comma.
-\tNote: Currently the content can only be identified by the head. 
+  --exclude PERF[#CONTENT][,...]
+  -x PERF[#CONTENT][,...]
+  Exclude messages -- from any module! -- matching the performative PERF and, if 
+  given, the specified content. Can be repeated. Multiple patterns can also be 
+  joined with a comma.
+  Note: Currently the content can only be identified by the head. 
 
 2. search patterns
 
-  --from MODULE[:FILTER][,...], -f MODULE[:FILTER][,...]
-  --to MODULE[:FILTER][,...], -t MODULE[:FILTER][,...]
-\twhere:
-\t  MODULE is the name of a module/component; \"*\" will match any module/component
-\t  FILTER is either the content head, or a regex pattern (using \"/.../\" Perl syntax) to match the whole message. If empty, all messages from MODULE match (unless excluded).
+  --from MODULE[:FILTER]*
+  -f MODULE[:FILTER]*
+  --to MODULE[:FILTER]*
+  -t MODULE[:FILTER]*
+  where:
+  - MODULE is the name of a module/component; \"*\" will match any 
+    module/component
+  - FILTER may be a symbolic pattern or a regex pattern, as follows: 
+    - [PERF#]CONTENT
+      This filter catches messages based on the content (head). Optionally, the 
+      performative may be specified as an additional constraint (Note: it is 
+      unusual for the same content to appear in different performatives).
+    - /REGEX_PATTERN/
+      This filter (using Perl regexp syntax) applies to the whole performative. 
+      N.B.: When using regex patterns, you might have to quote the full pattern 
+      or use double slashes. 
+      While regex filters are more flexible, be warned that KQML syntax does not 
+      specify the order in which performative attributes appear. Thus, the 
+      following are not equivalent (though they will likely be in most cases):
+        -from MODULE:TELL#REPORT
+        -from MODULE:\"/^\\(TELL :CONTENT \\(REPORT/\"
+  If no filter is specified, all messages from or to (depending on the option) 
+  MODULE match (except for the ones specifically excluded).
 
-Both options can be repeated. Also, multiple patterns can be joined with a comma.
+  Both options can be repeated. Also, multiple patterns can be joined with a 
+  comma.
 
 
 FILES
@@ -261,7 +289,7 @@ while (<>) {
   # look for next message
   elsif (/^<R.*S=\"([-A-Z]+\d*)\">/i) {
     # new message from $1
-    if ($hp = get_filter($1, \%hfrom)) {
+    if ($hp = get_filters($1, \%hfrom)) {
       debug(2, "matched :from " . uc($1) . " [$.]");
       $print_msg_maybe = 1;
       $buffer = $_ if $markup_flag;
@@ -269,7 +297,7 @@ while (<>) {
   }
   elsif (/^<S.*R=\"([-A-Z]+\d*)\">/i) {
     # new message to $1
-    if ($hp = get_filter($1, \%hto)) {
+    if ($hp = get_filters($1, \%hto)) {
       debug(2, "matched :to " . uc($1) . " [$.]");
       $print_msg_maybe = 1;
       $buffer = $_ if $markup_flag;
@@ -291,6 +319,8 @@ while (<>) {
       } elsif ($hp == 1) {				# unconditional print
 	$print_msg = 1;
       } elsif (exists $hp->{content}{$content}) {	# always print content specified in filter
+	$print_msg = 1;
+      } elsif (exists $hp->{content}{"$perf#$content"}) {	# always print content specified in filter
 	$print_msg = 1;
       } else {						# check patterns
 	if (exists $hp->{patterns}) {
@@ -340,7 +370,7 @@ sub read_cfg {
     debug(2, "cfg line: $cfg_opt");
     # performative exclusions
     if (m/^exclude:\s*(.*)$/) {
-      push @excluded, split(/\s+/,$1);
+      push @excluded, split(/\s+/, $1);
       next;
     }
     # message rules
@@ -361,17 +391,17 @@ sub read_cfg {
 }
 
 # grammar:
-# <cfg_opt> ::= <mod_opt>( <mod_opt)>*
-# <mod_opt> ::= <module>(:<filter>)*
-# <module> ::= NAME
-# <filter> ::= NAME | /REGEX/
+# <cfg_opt> ::= <mod_opt>( <mod_opt>)*
+# <mod_opt> ::= <module>(:<filter>(,<filter>)*)?
+# <module> ::= MODULE_NAME | "*"
+# <filter> ::= CONTENT_NAME | /REGEX/
 sub process_cfg_opt {
   my $hp = shift;			# which hash to use
   my $arg = shift;
   debug(2, "cfg opt: $arg");
-  my @cfg_opts = parse_cfg_opt(uc($arg));	# config line
+  my @mod_opts = parse_cfg_opt(uc($arg));	# config line
 
-  foreach $mod_opt (@cfg_opts) {
+  foreach $mod_opt (@mod_opts) {
     debug(2, Dumper($mod_opt));
     my ($module, @filters) = @$mod_opt;
     debug(2, "handling: $module [@filters]");
@@ -385,11 +415,12 @@ sub process_cfg_opt {
   }
 }
 
+# iteratively parse configuration option for all module filters
 sub parse_cfg_opt {
   my $s = shift;
   my @result;
   while (length($s) > 0) {
-    my ($mod_opt, $rest) = read_mod_opt($s);
+    my ($mod_opt, $rest) = parse_mod_opt($s);
     push @result, $mod_opt;
     $s = $rest;
   }
@@ -397,45 +428,47 @@ sub parse_cfg_opt {
   return @result;
 }
 
-# $s => (<mod_opt>, $rest)
-sub read_mod_opt {
+# parse a module filter
+# $s => $module:$filters $rest
+sub parse_mod_opt {
   my $s = shift;
-  $s =~ m/^([^:\s]*)(?:(:.*)|(?:\s*(.*)))/
+  $s =~ m/^([^:\s]*)(?:(:.*)|(?:\s+(.*))?)/
     or die "Incorrect configuration string: $s";
-  my ($module, $restf, $rest) = ($1, $2, $3);
-  debug(2, "module=$module, restf=$restf, rest=$rest");
-  if ($restf) {
-    my ($filters, $rest) = read_filters($restf);
+  my ($module, $filters, $rest) = ($1, $2, $3);
+  debug(2, "module=$module, filters=$filters, rest=$rest");
+  if ($filters) {
+    my ($filters, $rest) = parse_filters($filters);
     return [$module, @$filters], $rest;
   } else {
     return [$module], $rest;
   }
 }
 
-# $s => ([<filter>,...], $rest)
-sub read_filters {
+# recursively parse a set of joined filters
+# $s => :$filters $rest
+sub parse_filters {
   my $s = shift;
   if (length($s) == 0) {
     return;
   }
-  my ($filter, $restf, $rest);
+  my ($filter, $filters, $rest);
   if (substr($s,0,2) eq ':/') {
     # regex filter
-    $s =~ m{^:(/(?:\\/|[^/])*/)(?:(:.*)|(?:\s*(.*)))}
+    $s =~ m{^:(/(?:\\/|[^/])*/)(?:(:.*)|(?:\s+(.*))?)}
       or die "Incorrect filter: $s";
-    ($filter, $restf, $rest) = ($1, $2, $3);
+    ($filter, $filters, $rest) = ($1, $2, $3);
     debug(2, "got regex filter: $filter");
   } elsif (substr($s,0,1) eq ':') {
     # name filter
-    $s =~ m/^:([^:\s]*)(?:(:.*)|(?:\s*(.*)))/
+    $s =~ m/^:([^:\s]*)(?:(:.*)|(?:\s+(.*))?)/
       or die "Incorrect filter: $s";
-    ($filter, $restf, $rest) = ($1, $2, $3);
-    debug(2, "got name filter: $filter");
+    ($filter, $filters, $rest) = ($1, $2, $3);
+    debug(2, "got content filter: $filter");
   } else {
     die "Incorrect configuration string: $s";
   }
-  if ($restf) {
-    my ($more_filters, $rest) = read_filters($restf);
+  if ($filters) {
+    my ($more_filters, $rest) = parse_filters($filters);
     return [$filter, @$more_filters], $rest;
   } else {
     return [$filter], $rest;
@@ -528,8 +561,8 @@ sub propagate_any_filters {
   }
 }
 
-# find applicable filter for module $m from $filter hash
-sub get_filter {
+# find applicable filters for module $m from $filter hash
+sub get_filters {
   my ($m, $filter) = @_;
   if (exists $filter->{uc($m)}) {
     return $filter->{uc($m)};
@@ -547,8 +580,8 @@ sub is_excluded {
     if (uc($perf) eq uc($e)) {
       debug(1, "  excluded: $perf");
       return 1;
-    } elsif (uc("$perf:$chead") eq uc($e)) {
-      debug(1, "  excluded: $perf:$chead");
+    } elsif (uc("$perf#$chead") eq uc($e)) {
+      debug(1, "  excluded: $perf#$chead");
       return 1;
     }
   }

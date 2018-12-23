@@ -227,7 +227,7 @@
    ((Utt (lf (% SPEECHACT (VAR *) (CLASS ?sa) (constraint (& (content (?lf :content ?lex :reason ?sc))))))
          (var *) (uttword +))
     -utt4b-with-subcat>
-    (head (uttword (lf (?lf)) (lex ?lex) (sa ?sa) (subcat ?!subcat) (subcat (% ?xx (car ?sc)))))
+    (head (uttword (lf ?lf) (lex ?lex) (sa ?sa) (subcat ?!subcat) (subcat (% ?xx (car ?sc)))))
     ?!subcat
     (punc (lex punc-comma) (var ?v1)))
 
@@ -2978,14 +2978,14 @@
          (lf (% speechact (var *) (class ?sa) (constraint (& (content ?lf)))))
          (punctype (? x decl imp)))
     -utt4a>
-    (head (uttword (lf (?lf)) (lex ?lex) (var ?v) (sa ?sa))))
+    (head (uttword (lf ?lf) (lex ?lex) (var ?v) (sa ?sa))))
 
     ((utt (var *) ;(sem ($ f::proposition))
 	  (uttword +)
       (lf (% speechact (var *) (class  ont::sa_apologize) (constraint (& (content ?reason)))))
       (punctype (? x decl imp)))
      -utt-sa-cp>
-     (head (uttword (lf (?lf)) (lex ?lex) (var ?v) (sa ont::sa_apologize)))
+     (head (uttword (lf ?lf) (lex ?lex) (var ?v) (sa ont::sa_apologize)))
      (cp (var ?reason)))
 
     ((utt (var *) ;(sem ($ f::proposition))
@@ -2993,7 +2993,7 @@
       (lf (% speechact (var *) (class (? sa ont::sa_apologize ont::sa_thank)) (constraint (& (reason ?reason)))))
       (punctype (? x decl imp)))
      -utt-sa-for>
-     (head (uttword (lf (?lf)) (lex ?lex) (var ?v) (sa (? sa ont::sa_apologize ont::sa_thank))))
+     (head (uttword (lf ?lf) (lex ?lex) (var ?v) (sa (? sa ont::sa_apologize ont::sa_thank))))
      (pp (ptype w::for) (var ?reason)))
 
     )
