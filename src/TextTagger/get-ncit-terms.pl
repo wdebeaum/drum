@@ -43,11 +43,24 @@ open(FLAT, '-|', 'unzip', '-p', $ARGV[0])
 
 while (my $line = <FLAT>) {
   chomp $line;
-  my ($code, $concept_name, $parents, $synonyms, undef) # ignore definition
+  # from documentation:
+  # code <tab> concept name <tab> parents <tab> synonyms <tab> definition <tab> display name <tab> concept status <tab> semantic type <EOL>
+  # synonyms: If no preferred name has been stated for the concept, this field contains the concept name.
+  # at some point in 2018 "concept name" switched from an alphanumeric code to an url
+  my ($code, $concept_name, $parents, $synonyms, undef, $display_name) # ignore definition
     = split(/\t/, $line);
-  $concept_name =~ s/_/ /g;
-  $concept_name =~ s/^\s+|\s+$//g;
-  $concept_name =~ s/\s+/ /g;
+  # if the concept name is a url, use diaplay name instead
+  if ($concept_name =~ m/^<http/)  {
+    $concept_name = $display_name;
+  }
+  # if concept name and display name are empty, use first synonym
+  if ($concept_name !~ m/[a-z0-9]/)  {
+    $concept_name = $synonyms;
+    $concept_name =~ s/\|.*//;
+  }
+  $concept_name =~ s/_/ /g; # prolly only useful for old-style concept names
+  $concept_name =~ s/^\s+|\s+$//g; # trim
+  $concept_name =~ s/\s+/ /g; # normalize spaces
   $concept_name = uncapitalize_each_word($concept_name);
   $id_to_name{$code} = $concept_name;
   if ($parents ne '') {
@@ -90,6 +103,7 @@ for my $code (keys %id_to_name) {
   add_entries($concept_name, $code, $concept_name, 'name');
   my @synonyms = split(/\|/, $synonyms);
   for my $synonym (@synonyms) {
+    $synonym =~ s/^\s+|\s+$//g; # trim
     # no plurals, please
     # FIXME: doesn't catch irregular plurals
     next if ($synonym =~ /s$/ and
