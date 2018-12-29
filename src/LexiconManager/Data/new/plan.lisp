@@ -7,10 +7,12 @@
  :words (
   (W::PLAN
    (SENSES
+    #|
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("plan%1:09:00"))
      (EXAMPLE "let's make a plan")
      (LF-PARENT ONT::procedure)
      )
+    |#
     ((meta-data :origin domain-reorganization :entry-date 20170904 :change-date nil :comments nil :wn ("plan%1:09:01"))
      (EXAMPLE "plans to take over the world")
      (LF-PARENT ONT::mental-plan)
@@ -28,7 +30,7 @@
  :tags (:base500)
  :words (
   (W::PLAN
-   (wordfeats (W::morph (:forms (-vb) :past W::planned :ing w::planning :nom w::plan)))
+   (wordfeats (W::morph (:forms (-vb) :past W::planned :ing w::planning)))
    (SENSES
     ((meta-data :origin trips :entry-date 20060414 :change-date 20090515 :comments nil :vn ("wish-62") :wn ("plan%2:31:01" "plan%2:31:00" "plan%2:36:00"))
      (LF-PARENT ONT::planning)

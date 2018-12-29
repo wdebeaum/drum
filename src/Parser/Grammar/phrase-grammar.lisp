@@ -2378,6 +2378,33 @@
 ;;        In plural NPs, the SET-CONSTRAINT apply to the set, and 
 ;;        the CONSTRAINT to individuals in the set
 
+
+(parser::augment-grammar 
+      '((headfeatures
+         (NP CASE MASS NAME agr SEM PRO CLASS Changeagr ARGUMENT argument-map SUBCAT role lex headcat transform postadvbl refl gerund abbrev derived-from-name
+	  subj dobj subcat-map comp3-map)) ; no gap
+
+	;;  special rule for proteins that are tagged as common nouns but used as names
+	((NP (LF (% Description (STATUS ONT::definite) (VAR ?v) (SORT INDIVIDUAL)
+	            (CLASS ?c) (CONSTRAINT ?constraint) (sem ?sem) (transform ?transform)))
+             (SORT PRED) (VAR ?v)
+             (BARE-NP +) (name-or-bare ?nob)
+	     (simple +)
+	     )
+         -protein-name-constructor> 0.995
+         (head (N (SORT PRED) (MASS  count) (gerund -) (complex -) 
+		   (name-or-bare ?nob) (lex ?lex)
+		   (derived-from-name -)  ;; names already can become NPs by simpler derivations
+		   (AGR 3s) (VAR ?v)
+		   (LF (? c ONT::GENE-PROTEIN)) ;;(CLASS (? !c ONT::REFERENTIAL-SEM))
+		   (RESTR ?r) (rate-activity-nom -) (agent-nom -)
+		(sem ?sem) (transform ?transform) (headless -) ; exclude missing-heads
+		(sem ($ (? x F::PHYS-OBJ) (F::KR-TYPE ?kr)))
+		))
+	 (unify (pattern ?!xx) (value ?kr))  ;; we do this because checking this in the SEM, even though it fails, would be ignored!
+	 (add-to-conjunct (val (:name-of ?lex)) (old ?r) (new ?constraint)))
+))
+
 ;;(cl:setq *grammar-NP*
 (parser::augment-grammar 
       '((headfeatures
@@ -2710,26 +2737,6 @@
 		(subcat-map ?subcat-map) (subcat (% ?xx (var ?sc-var))
 		)))
 	 (add-to-conjunct (old ?r) (val (?subcat-map ?sc-var)) (new ?newr)))
-
-	;;  special rule for proteins that are tagged as common nouns but used as names
-	((NP (LF (% Description (STATUS ONT::definite) (VAR ?v) (SORT INDIVIDUAL)
-	            (CLASS ?c) (CONSTRAINT ?constraint) (sem ?sem) (transform ?transform)))
-             (SORT PRED) (VAR ?v)
-             (BARE-NP +) (name-or-bare ?nob)
-	     (simple +)
-	     )
-         -protein-name-constructor> 0.995
-         (head (N (SORT PRED) (MASS  count) (gerund -) (complex -) 
-		   (name-or-bare ?nob) (lex ?lex)
-		   (derived-from-name -)  ;; names already can become NPs by simpler derivations
-		   (AGR 3s) (VAR ?v)
-		   (LF (? c ONT::GENE-PROTEIN)) ;;(CLASS (? !c ONT::REFERENTIAL-SEM))
-		   (RESTR ?r) (rate-activity-nom -) (agent-nom -)
-		(sem ?sem) (transform ?transform) (headless -) ; exclude missing-heads
-		(sem ($ (? x F::PHYS-OBJ) (F::KR-TYPE ?kr)))
-		))
-	 (unify (pattern ?!xx) (value ?kr))  ;; we do this because checking this in the SEM, even though it fails, would be ignored!
-	 (add-to-conjunct (val (:name-of ?lex)) (old ?r) (new ?constraint)))
 
 	#|
         ;;  COMMAS
