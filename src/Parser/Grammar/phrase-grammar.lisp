@@ -697,7 +697,7 @@
 	 (gap ?gap)
       (subcat ?!subcat)
       )
-     -N1-reln-scale>
+     -N1-reln-scale> 
      (head (n (sort reln) (lf ?lf) (RESTR ?r)
 	      (subcat ?!subcat)
 	      (subcat (% ?scat (var ?v1) (sem ?ssem) (lf ?lf2) (gap ?gap) )) ;;(sort (? srt pred individual set comparative reln))))
@@ -714,11 +714,11 @@
      (gap ?gap)
      (subcat ?!subcat)
      )
-    -N1-reln-parts>
+    -N1-reln-parts> 
     (head (n (sort reln) (lf ?lf) (RESTR ?r)
 	     (subcat ?!subcat)
 	     (subcat (% ?scat (var ?v1) (sem ?ssem) (lf ?lf2) (gap ?gap) )) ;;(sort (? srt pred individual set comparative reln))))
-	     (SEM ($ F::PHYS-OBJ))
+	     (SEM ($ ?sem (f::scale -))) ;(SEM ($ F::PHYS-OBJ))
 	     (subcat-map ?smap)))
     ?!subcat
     (add-to-conjunct (val (?smap ?v1)) (old ?r) (new ?con1))
@@ -2214,9 +2214,9 @@
      ;(sem ?sem)
      )
     -adj-pred-scale> 
-    (head (ADJ1 (LF ?lf) (SUBCAT2 -) (post-subcat -)(VAR ?v) (comparative ?comp)
+    (head (ADJ1 (LF ?lf) (post-subcat -)(VAR ?v) (comparative ?comp)
 	       (ARGUMENT-MAP ?argmap) (prefix -) 
-	       (subcat ?subcat) (subcat-map ?subm) (subcat2 ?subcat2) (subcat2-map ?subm2)
+	       (subcat ?subcat) (subcat-map ?subm) (subcat2 ?subcat2) (SUBCAT2 (% - (W::VAR -))) (subcat2-map ?subm2)
 	       (SORT PRED) (constraint ?con)
 	       (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale1) (F::intensity ?ints) (F::orientation ?orient)))
 	       (transform ?transform)
@@ -2238,11 +2238,12 @@
      (sem ?sem)
      )
     -adj-standard> 
-    (head (ADJ1 (LF ?lf) (SUBCAT2 -) (post-subcat -)(VAR ?v) (comparative -) ;(comparative ?comp)
+    (head (ADJ1 (LF ?lf) (post-subcat -)(VAR ?v) (comparative -) ;(comparative ?comp)
 		(ARGUMENT-MAP ?argmap) (prefix -)
 		(ARGUMENT (% ?x (sem ?argsem) (lex ?arglex)))
 	       ;(subcat ?subcat) (subcat-map ?subm)
-	       (SORT PRED) (constraint ?con)
+		(subcat2 ?subcat2) (SUBCAT2 (% - (W::VAR -)))
+		(SORT PRED) (constraint ?con)
 	       (sem ?sem) ;(sem ($ F::ABSTR-OBJ (f::scale ?scale1) (F::intensity ?ints) (F::orientation ?orient)))
 	       (transform ?transform)
 	       (FUNCTN -)

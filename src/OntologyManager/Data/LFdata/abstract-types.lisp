@@ -869,6 +869,9 @@
 (define-type ONT::caused-event
  :parent ONT::EVENT-TYPE
  :sem (F::situation (F::cause (? cause F::agentive F::force)))
+ :arguments ((:OPTIONAL ONT::FIGURE)
+	     (:OPTIONAL ONT::FORMAL)
+             )
  )
 
 ;;; The difference between actions and events is that actions have agents

@@ -470,9 +470,10 @@
 	       (not (member '- (var-values patternval))))
 	       (values *success* nil undos))
 	 ;; otherwise we just fail
-	 (FAILURE-TRACE
-	   (failure-message constitval patternval feat)
-	   (values nil nil undos)))
+	 (t
+	  (when FAILURE-TRACE
+	    (failure-message constitval patternval feat))
+	  (values nil nil undos)))
       ;; either patternval does not have EXLUSION values, or constitval is not - or *empty-constit*
       (multiple-value-bind
 	  (intersection bndgs prob newundos)

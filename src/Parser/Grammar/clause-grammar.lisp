@@ -467,7 +467,7 @@
    ;; test: what will chase the cat?
    ((utt (lf (% speechact (var *) (class ont::sa_wh-question) (constraint (& (content ?v) (focus ?foc)))))
          (var *) (qtype ?type) (punctype ?p))
-    -decl-wh-question1> .98
+    -decl-wh-question1> ;.98
     (head (s (stype (? st decl imp)) (wh q) (gap -) (wh-var ?foc) (var ?v) (advbl-needed -))))
    
    
