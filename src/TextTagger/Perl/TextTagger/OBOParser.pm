@@ -155,7 +155,7 @@ sub read_and_parse_synonym {
     (?: ( EXACT | BROAD | NARROW | RELATED ) \s+ )?
     (?: ( [^\s\[\]]+ ) \s+ )?
     \[ ( [^\]]* ) \] \s*
-    ( { [^}]+ } )?
+    ( \{ [^\}]+ \} )?
     $
   /x);
   @groups or die "malformed synonym tag rest: $rest";
@@ -173,7 +173,7 @@ sub read_and_parse_synonym {
 # Remove a trailing modifier from a tag value.
 sub remove_trailing_modifier {
   my $str = shift;
-  $str =~ s/\s*{[^\}]+?}$//;
+  $str =~ s/\s*\{[^\}]+?\}$//;
   return $str;
 }
 
