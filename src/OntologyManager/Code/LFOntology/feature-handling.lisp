@@ -275,7 +275,8 @@ Excludes -, + features."
        ((null (featval-description-parent subdescr)) nil)
        ((eql (featval-description-value (featval-description-parent subdescr)) super)
 	sub)
-       (t (descendant-featval feat (featval-description-value (featval-description-parent subdescr)) super table))
+       (t (if (descendant-featval feat (featval-description-value (featval-description-parent subdescr)) super table)
+	      sub))
        ))
   ))
 	 
