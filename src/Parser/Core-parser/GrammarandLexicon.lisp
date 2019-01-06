@@ -508,7 +508,9 @@
                   oldvar rule newval))
       (if (not (equal (var-values oldvar) newval))
         (parser-warn "conflicting values (4) given to the same variable ~s in rule ~s~%    other value was ~s"
-                  oldvar rule newval))))
+		     oldvar rule newval))))
+   ((arrayp newval)   ;;  i.e., a SEM value - just let it go
+    )    
    (t (parser-warn "conflicting values (5) given to the same variable ~s in rule ~s~%    other value was ~s"
                                   oldvar rule newval)))
   oldvar)
