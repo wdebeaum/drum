@@ -3854,7 +3854,8 @@
 
 (define-type ont::post-translational-modification
     :parent ont::chemical-change
-    :arguments ((:essential ont::affected (F::PHYS-OBJ (F::type ont::molecular-part)))
+    :arguments ((:essential ont::agent ((? cs f::phys-obj f::abstr-obj f::situation) (F::type (? !t ont::cell-line)))) ; where there is both a gene-protein and a cell with the same name
+		(:essential ont::affected (F::PHYS-OBJ (F::type ont::molecular-part)))
 		(:optional  ont::location )
     ))
 

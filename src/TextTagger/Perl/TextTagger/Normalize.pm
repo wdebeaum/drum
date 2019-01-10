@@ -5,6 +5,7 @@ require Exporter;
 
 use Data::Dumper;
 
+use utf8;
 use strict vars;
 
 my $debug = 0;

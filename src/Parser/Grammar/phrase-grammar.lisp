@@ -3495,11 +3495,13 @@
 	   (SUBJ ?subj) ;; more general to ask for SUBJ to be AFFECTED role, includes
  	                                         ;; the passive as well as unaccusative cases
 	                ;; also neutral/formal: the expected result
+	   (subjvar ?arg)
 	   (gap -) ;;  no gap in the VP
 	   (vform (? pp passive pastpart))
 	   (complex -)
            (advbl-needed -)
 	   (dobj (% -))  ;; we can't say "the cooked the steak meat" but "the cooked meat" is fine.
+	   (comp3 (% -))  ;; sacrificing "the broken by the hammer window"
            ))
      ;(append-conjuncts (conj1 ?cons) (conj2 (& (ont::affected ?arg))) (new ?newc))
      (append-conjuncts (conj1 ?cons) (conj2 (& (?subjmap ?arg))) (new ?newc))

@@ -2,14 +2,16 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.116 2019/01/08 14:53:49 wdebeaum Exp $
+# $Id: Makefile,v 1.117 2019/01/09 20:06:47 wdebeaum Exp $
 #
 
 MODULE = TextTagger
 MAIN   = TextTagger.pl
 SRCS   = TextTagger.pl
-# make all filehandles UTF-8 by default
-export PERL_FLAGS = -CSD
+# make @ARGV and all filehandles UTF-8 by default in run script
+export PERL_FLAGS = -CASD
+# do the same for perl code called from this Makefile
+export PERL_UNICODE = ASD
 SHELL = /bin/bash
 
 SUBDIRS = Perl StanfordNER StanfordPOSTagger StanfordParser StanfordCoreNLP ExtraModels terms2
@@ -207,45 +209,45 @@ install:: mirna-species.tsv drum-terms.tsv drum-dsl/COMPLETE specialist.tsv drum
 drum-terms.tsv: merge-terms-files.pl obo-terms.tsv hgnc-terms.tsv uniprot-terms.tsv uniprot-subcell-terms.tsv nextprot-family-terms.tsv pfam-terms.tsv mesh-scr-terms.tsv ncit-terms.tsv hlsm-terms.tsv
 	./$^ >$@
 
-drum-dbxrefs.tsv: get-uniprot-dbxrefs.pl downloads/uniprot_sprot.dat.gz uniprot-species.pl
-	gunzip -c downloads/uniprot_sprot.dat.gz \
-	| ./$< >$@
+drum-dbxrefs.tsv: downloads/uniprot_sprot.dat.gz get-uniprot-dbxrefs.pl uniprot-species.pl
+	gunzip -c $< \
+	| ./get-uniprot-dbxrefs.pl >$@
 
 OBO_FILES:=$(addprefix downloads/,famplex.obo BrendaTissueOBO cellosaurus.obo chebi.obo cl-basic.obo efo.obo go.obo pro_reasoned.obo unit.obo)
 # psi-mi25.obo so-xp.obo
 
-obo-terms.tsv: get-obo-terms.pl $(OBO_FILES) Makefile
+obo-terms.tsv: $(OBO_FILES) get-obo-terms.pl Perl/TextTagger/Normalize.pm Makefile
 	TRIPS_BASE=$(prefix) ./get-obo-terms.pl $(OBO_FILES) >$@
 
-go_protmods.obo: go_protmods.pl downloads/go.obo
-	./go_protmods.pl -o $@ downloads/go.obo
+go_protmods.obo: downloads/go.obo go_protmods.pl
+	./go_protmods.pl -o $@ $<
 
-go_protmods.tsv: get-obo-terms.pl go_protmods.obo
-	TRIPS_BASE=$(prefix) ./$^ >$@
+go_protmods.tsv: go_protmods.obo get-obo-terms.pl Perl/TextTagger/Normalize.pm
+	TRIPS_BASE=$(prefix) ./get-obo-terms.pl $< >$@
 
-hgnc-terms.tsv: get-hgnc-terms.pl downloads/protein-coding_gene.txt.gz downloads/non-coding_RNA.txt.gz
+hgnc-terms.tsv: downloads/protein-coding_gene.txt.gz downloads/non-coding_RNA.txt.gz get-hgnc-terms.pl Perl/TextTagger/Normalize.pm
 	( gunzip -c <downloads/protein-coding_gene.txt.gz && \
 	  gunzip -c <downloads/non-coding_RNA.txt.gz \
 	) | ./get-hgnc-terms.pl \
 	>$@
 
-uniprot-terms.tsv: get-uniprot-terms.pl downloads/uniprot_sprot.dat.gz uniprot-species.pl
-	gunzip -c <downloads/uniprot_sprot.dat.gz \
+uniprot-terms.tsv: downloads/uniprot_sprot.dat.gz get-uniprot-terms.pl Perl/TextTagger/Normalize.pm uniprot-species.pl
+	gunzip -c <$< \
 	| ./get-uniprot-terms.pl \
 	>$@
 
-uniprot-subcell-terms.tsv: downloads/subcell.txt get-uniprot-subcell-terms.pl
+uniprot-subcell-terms.tsv: downloads/subcell.txt get-uniprot-subcell-terms.pl Perl/TextTagger/Normalize.pm
 	./get-uniprot-subcell-terms.pl <$< >$@
 
-nextprot-family-terms.tsv: downloads/cv_family.txt get-nextprot-family-terms.pl
+nextprot-family-terms.tsv: downloads/cv_family.txt get-nextprot-family-terms.pl Perl/TextTagger/Normalize.pm
 	./get-nextprot-family-terms.pl <$< >$@
 
-pfam-terms.tsv: get-xfam-terms.pl downloads/Pfam-A.seed.gz
-	gunzip -c <downloads/Pfam-A.seed.gz \
+pfam-terms.tsv: downloads/Pfam-A.seed.gz get-xfam-terms.pl Perl/TextTagger/Normalize.pm
+	gunzip -c <$< \
 	| ./get-xfam-terms.pl \
 	>$@
 
-mesh-scr-terms.tsv: get-mesh-scr-terms.pl $(TEXTTAGGER_mesh_scr)
+mesh-scr-terms.tsv: $(TEXTTAGGER_mesh_scr) get-mesh-scr-terms.pl Perl/TextTagger/Normalize.pm
 	if test -z "$(TEXTTAGGER_mesh_scr)" ; then echo "Error: MeSH SCR (c2015.bin.gz) not configured" ; exit 1 ; fi
 	gunzip -c <$(TEXTTAGGER_mesh_scr) \
 	| ./get-mesh-scr-terms.pl \
@@ -259,13 +261,13 @@ NCIT_ZIPFILE=$(shell cd downloads ; ls Thesaurus_??.???.FLAT.zip 2>/dev/null || 
 $(info NCIT_ZIPFILE=$(NCIT_ZIPFILE))
 
 # also writes drum-dsl/NCIT/*
-ncit-terms.tsv: get-ncit-terms.pl downloads/$(NCIT_ZIPFILE)
-	./$^ >$@
+ncit-terms.tsv: downloads/$(NCIT_ZIPFILE) get-ncit-terms.pl Perl/TextTagger/Normalize.pm
+	./get-ncit-terms.pl $< >$@
 
-hlsm-terms.tsv: get-hlsm-terms.pl downloads/small_molecule.csv
-	./$^ >$@
+hlsm-terms.tsv: downloads/small_molecule.csv get-hlsm-terms.pl Perl/TextTagger/Normalize.pm
+	./get-hlsm-terms.pl $< >$@
 
-specialist.tsv: get-specialist-tsv.pl downloads/LEXICON downloads/inflection.table $(prefix)/src/LexiconManager/Data/new
+specialist.tsv: downloads/LEXICON downloads/inflection.table $(prefix)/src/LexiconManager/Data/new get-specialist-tsv.pl Perl/TextTagger/Normalize.pm
 	TRIPS_BASE=$(prefix) ./get-specialist-tsv.pl downloads/LEXICON downloads/inflection.table >$@
 
 # for BOB system
