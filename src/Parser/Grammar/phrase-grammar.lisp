@@ -1889,9 +1889,9 @@
      -n-sing-n1-> 0.98 ;; prevent this from happening too often
      (n1 ;(AGR 3s) ; agr could be 3p for "the dog and cat boxes"
 	 (abbrev -) (generated -) (lex ?lex)
-        (var ?v1) (restr ?modr)  (gerund -)   ;; we expect gerunds as modifiers to be adjectives, not N1
-	;;  removed this to handle things like "computing services"
-	;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
+      (var ?v1) (restr ?modr)  (gerund -)   ;; we expect gerunds as modifiers to be adjectives, not N1
+      ;;  removed this to handle things like "computing services"
+      ;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
       (sem ?n-sem) (derived-from-name -) ; names go through -name-n1>
       (CLASS ?modc) (PRO -) (N-N-MOD -) ;(COMPLEX -)   ;;  can't require COMPLEX - any more -- e.g., "p53 expression levels"  -- now we can!! This goes through nom-rate instead.
       ; set two-n1-conjunct to complex - so that e.g., <trade and migration> route, can go through this rule
@@ -4894,15 +4894,16 @@
     ;; e.g., (I know) when/where the train arrived
     ((np (sort wh-desc)  (gap -) (mass bare) (case (? case SUB OBJ))
             (sem ?s-sem) ;; (sem ?advsem)
-         (var ?npvar) 
+         (var ?xx) 
          (lf (% description (status *wh-term*) (VAR ?npvar) 
-                (class ?impro-class) (constraint (& (suchthat ?s-v))) (sort individual)
+                (class ?impro-class)
+		(constraint (& (suchthat ?newlf))) (sort individual)
                 (sem ?advsem)
                 )
              ))
      -wh-desc1a-norole> 0.98
      (head (advbl (pp-word +) 
-                  (var ?npvar) 
+                  (var ?advblvar) 
 		  (how -) (how-advbl -) ;; how ADJ/ADVBL constructions need their own rule
 		  ;;(argument (% S (sem ($ f::situation (f::type F::EVENTUALITY)))))
 	    (argument (% S (sem ?argsem)))
@@ -4911,11 +4912,14 @@
             (subcatsem ?advsem)
             (focus ?foc) (arg ?s-v) (wh Q) (lf ?lf1)
             ))
-     (s (stype decl) (sem ?argsem) (var ?s-v) (lf ?lf-s) (gap -) ;; no gap here because locations are treated as adjuncts in grammar (except for pred BE!)
+     (s (stype decl) (sem ?argsem) (var ?s-v)
+      (lf ?lf-s)
+      (gap -) ;; no gap here because locations are treated as adjuncts in grammar (except for pred BE!)
       (advbl-needed -) 
       (preadvbl -)   ;; we eliminate preadvbl constructs as they are at best awkward -- e.g., where quickly did you run, and lead to bad parses for how quickly did you run
       )
-     )
+     (add-constraints-to-lf (lf ?lf-s) (new ((MOD ?advblvar))) (result ?newlf)
+     ))
     
     ;;    e.g., (I know) where the dogs are.
     ;; this is the only case where we have a gap
@@ -4991,7 +4995,7 @@
      (cp (ctype s-to) (sem ?argsem) (var ?s-v) (lf ?lf-s) (gap -)
       (lf (% Prop (transform ?transform) (sem ?argsem) (class ?c) (constraint ?con)))
       )
-     (add-to-conjunct (val (suchthat ?advvar))(old ?con) (new ?constraint))
+     (add-to-conjunct (val (suchthat ?advvar)) (old ?con) (new ?constraint))
      )
     
 

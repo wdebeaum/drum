@@ -76,6 +76,36 @@
 	    (comparative -)
 	    ))      
      )
+
+    ;; advbl plus explicit scale
+
+    ((ADVBL (ARG ?arg) (VAR ?v) (COMPLEX +)
+      (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT (& (FIGURE ?arg) (SCALE ?newscale)))
+	     (sem ?sem) (transform ?transform)))
+      (atype (? atp postpositive predicative-only)) (gap ?gap) (SORT PRED)
+      (comparative ?comp) (ARGUMENT-MAP ?argmap) (constraint ?newcon)
+      (sem ($ F::ABSTR-OBJ (f::scale ?newscale) (F::intensity ?ints) (F::orientation ?orient)))
+      (subcat2 ?subcat2) (subcat2-map ?subm2)
+      ;;(LF (% PROP  (CLASS ?lf)
+      ;;(VAR ?v) (CONSTRAINT (& (?argmap ?arg) (?reln ?argv) (FUNCTN ?fn) (scale ?newscale) (intensity ?ints) (orientation ?orient)
+      ;;))
+      (transform ?transform) 
+					;(sem ?sem)
+      )
+     -adv-pred-scale> 
+     (head (ADV (LF ?lf) (SUBCAT2 -) (post-subcat -)(VAR ?v) (comparative ?comp)
+		 (ARGUMENT-MAP ?argmap) (prefix -) 
+		 (subcat ?subcat) (subcat-map ?subm) (subcat2 ?subcat2) (subcat2-map ?subm2)
+		 (SORT PRED) (constraint ?con)
+		 (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale1) (F::intensity ?ints) (F::orientation ?orient)))
+		 (transform ?transform)
+		 (FUNCTN -)
+		 ))
+     (pp (ptype w::in) (var ?sc-var) (sem  ($ F::ABSTR-OBJ (f::type ont::domain)
+					      (f::scale ?!scale2))) (gap ?gap))
+     (class-greatest-lower-bound (in1 ?scale1) (in2 ?!scale2) (out ?newscale))
+     (add-to-conjunct (val (scale ?sc-var)) (old ?con) (new ?newcon))
+     )
      
     
     ;; BINARY-CONSTRAINT adverbials (with a complement)

@@ -373,7 +373,26 @@
    ((or (null oldconstraint) (eq oldconstraint '-) (var-p oldconstraint))
     (match-vals nil newconstraintvar (make-constit :cat '& :feats feats))
     )))
-  
+
+(define-predicate 'w::add-constraints-to-lf
+  #'(lambda (args)
+      (add-constraint-to-LF args)))
+
+(defun add-constraint-to-LF (args)
+  "takes an LF and adds new constraints and returns a *PRO* structure (so it can override the original LF!)"
+  (let* ((lf (second (assoc 'w::lf args)))
+	 (oldconstraint (get-value lf 'w::constraint))
+	 (newc (second (assoc 'w::new args)))
+	 (result (second (assoc 'w::result args)))
+	 (newlf (add-feature-value (replace-feature-value lf 'w::constraint 
+					       (make-constit :cat '& 
+							     :feats  (append newc
+									     (remove-if #'(lambda (c) (eq (car c) '-))
+											(constit-feats oldconstraint)))))
+				   'w::status (constit-cat lf))))
+    (setf (constit-cat newlf) 'w::*PRO*)
+    (format t "Received ~S with new constaints ~S ~% New constraint is ~S " lf newc newlf)
+    (match-vals nil result newlf)))
   
 (define-predicate 'w::Append-conjuncts
   #'(lambda (args)
