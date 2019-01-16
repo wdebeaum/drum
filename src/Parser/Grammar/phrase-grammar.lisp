@@ -3501,8 +3501,10 @@
 	   (complex -)
            (advbl-needed -)
 	   (dobj (% -))  ;; we can't say "the cooked the steak meat" but "the cooked meat" is fine.
-	   (comp3 (% -))  ;; sacrificing "the broken by the hammer window"
+	   ;(comp3 (% -))  ;; sacrificing "the broken by the hammer window"
+	   (comp3 (% ?comp3 (var ?compvar)))  
            ))
+     (not-bound (arg1 ?compvar)) ; optional but unbound
      ;(append-conjuncts (conj1 ?cons) (conj2 (& (ont::affected ?arg))) (new ?newc))
      (append-conjuncts (conj1 ?cons) (conj2 (& (?subjmap ?arg))) (new ?newc))
      )
@@ -4895,7 +4897,7 @@
     ((np (sort wh-desc)  (gap -) (mass bare) (case (? case SUB OBJ))
             (sem ?s-sem) ;; (sem ?advsem)
          (var ?xx) 
-         (lf (% description (status *wh-term*) (VAR ?npvar) 
+         (lf (% description (status *wh-term*) (var ?xx)
                 (class ?impro-class)
 		(constraint (& (suchthat ?newlf))) (sort individual)
                 (sem ?advsem)

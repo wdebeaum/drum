@@ -2,7 +2,7 @@
 ;;;; W::EVEN
 ;;;;
 
-(define-words :pos W::adv :templ DISC-PRE-TEMPL
+(define-words :pos W::adv
  :tags (:base500)
  :words (
   (W::EVEN
@@ -10,6 +10,10 @@
     ((LF-PARENT ONT::modifier)
      (LF-FORM W::even)
      (TEMPL PRED-S-VP-TEMPL)
+     )
+    ((LF-PARENT ONT::modifier)
+     (LF-FORM W::even)
+     (TEMPL DISC-PRE-TEMPL)
      )
     ((LF-PARENT ONT::MODIFIER)
      (LF-FORM W::even)
