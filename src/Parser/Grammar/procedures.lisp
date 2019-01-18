@@ -138,7 +138,7 @@
   "succeeds only if arg is bound to something not equal to -"
   (if (var-p var) 
     (and (var-values var) (not (eq (var-values var) '-)) *success*)
-    *success*))
+    (if (not (eq var '-)) *success*)))
 
 (define-predicate 'w::NOT-BOUND
   #'(lambda (args)
@@ -391,7 +391,7 @@
 											(constit-feats oldconstraint)))))
 				   'w::status (constit-cat lf))))
     (setf (constit-cat newlf) 'w::*PRO*)
-    (format t "Received ~S with new constaints ~S ~% New constraint is ~S " lf newc newlf)
+    ;(format t "Received ~S with new constaints ~S ~% New constraint is ~S " lf newc newlf)
     (match-vals nil result newlf)))
   
 (define-predicate 'w::Append-conjuncts

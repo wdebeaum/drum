@@ -2,7 +2,7 @@
 
 # BioEntities.pm
 #
-# Time-stamp: <Sun Oct 28 16:39:50 CDT 2018 lgalescu>
+# Time-stamp: <Thu Jan 17 21:10:44 CST 2019 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 27 May 2016
 #
@@ -64,6 +64,7 @@ my @data = (# biomolecular branch
 	    # a cell component subclass
 	    'ONT::CELL-PART' => 1,
 	    'ONT::CELL' => 1,
+	    'ONT::CELL-LINE' => 1,
 	   );
 
 sub new {

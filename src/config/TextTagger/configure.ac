@@ -2,7 +2,7 @@
 # File: src/config/TextTagger/configure.ac
 # Creator: George Ferguson
 # Created: Tue Sep  9 10:27:15 2008
-# Time-stamp: <Tue Sep  9 13:44:10 EDT 2008 ferguson>
+# Time-stamp: <Wed Dec 26 20:38:43 CST 2018 lgalescu>
 #
 # Process this file with autoconf to produce a configure script.
 #
@@ -171,11 +171,13 @@ AC_LANG(C++)
 
 # Kludgy workaround for DRUM ticket #44: check whether we're using Clang, and
 # if so, tell it to use GCC's libstdc++ instead of its own
+# LGalescu 20181226 replaced libstdc++ with libc++ for clang v10.0.0
+# (libstdc++ has been deprecated since v8, but now they dropped it for good)
 AC_MSG_CHECKING([for C++ flavor])
 if $CXX --version 2>/dev/null |grep -q clang ; then
   AC_MSG_RESULT([clang])
-  TEXTTAGGER_CXXFLAGS='-O3 -stdlib=libstdc++'
-  TEXTTAGGER_LDFLAGS='-stdlib=libstdc++'
+  TEXTTAGGER_CXXFLAGS='-O3 -stdlib=libc++'
+  TEXTTAGGER_LDFLAGS='-stdlib=libc++'
 else
   AC_MSG_RESULT([assuming g++])
   TEXTTAGGER_CXXFLAGS='-O3'

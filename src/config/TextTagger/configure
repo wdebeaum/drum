@@ -2659,8 +2659,8 @@ $as_echo_n "checking for C++ flavor... " >&6; }
 if $CXX --version 2>/dev/null |grep -q clang ; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: clang" >&5
 $as_echo "clang" >&6; }
-  TEXTTAGGER_CXXFLAGS='-O3 -stdlib=libstdc++'
-  TEXTTAGGER_LDFLAGS='-stdlib=libstdc++'
+  TEXTTAGGER_CXXFLAGS='-O3 -stdlib=libc++'
+  TEXTTAGGER_LDFLAGS='-stdlib=libc++'
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: assuming g++" >&5
 $as_echo "assuming g++" >&6; }
