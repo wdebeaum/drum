@@ -2652,15 +2652,21 @@ ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ex
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 
-# Kludgy workaround for DRUM ticket #44: check whether we're using Clang, and
-# if so, tell it to use GCC's libstdc++ instead of its own
+# Kludgy workaround for DRUM ticket #44: check whether we're using Clang<10, and
+# if so, tell it to use GCC's libstdc++ instead of its own; newer Clangs we
+# can't use because they don't let us use libstdc++, and their own libc++ has a
+# bug that affects terms2.cpp
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for C++ flavor" >&5
 $as_echo_n "checking for C++ flavor... " >&6; }
-if $CXX --version 2>/dev/null |grep -q clang ; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: clang" >&5
-$as_echo "clang" >&6; }
-  TEXTTAGGER_CXXFLAGS='-O3 -stdlib=libc++'
-  TEXTTAGGER_LDFLAGS='-stdlib=libc++'
+if $CXX --version 2>/dev/null |grep -q 'clang-\d\d\d\.' ; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: clang<10" >&5
+$as_echo "clang<10" >&6; }
+  TEXTTAGGER_CXXFLAGS='-O3 -stdlib=libstdc++'
+  TEXTTAGGER_LDFLAGS='-stdlib=libstdc++'
+elif $CXX --version 2>/dev/null |grep -q 'clang-\d\d\d\d\.' ; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: clang>=10" >&5
+$as_echo "clang>=10" >&6; }
+  as_fn_error $? "TextTagger cannot use this C++ compiler. Please install and configure GCC instead. The g++ in XCode is actually Clang, and as of version 10 it no longer includes libstdc++, which would force us to use its libc++ instead, which has a bug that affects terms2.cpp. You can easily install GCC on a Mac using MacPorts (sudo port install gcc8) or Homebrew (brew install gcc). Then set CXX to the path to the g++ program from GCC (e.g. for MacPorts you would run configure like this: CXX=/opt/local/bin/g++-mp-8 ./configure)." "$LINENO" 5
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: assuming g++" >&5
 $as_echo "assuming g++" >&6; }

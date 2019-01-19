@@ -137,22 +137,22 @@
  ;; WORDS: flexibility
 )
 
-(define-type ont::tactile-hardness-scale
+(define-type ont::texture-scale
  :parent ont::tactile-scale 
+ :wordnet-sense-keys ("texture%1:07:00")
+ ;; WORDS: texture
+)
+
+(define-type ont::tactile-hardness-scale
+ :parent ont::texture-scale 
  :wordnet-sense-keys ("hardness%1:07:01")
  ;; WORDS: hardness
 )
 
 (define-type ont::tactile-softness-scale
- :parent ont::tactile-scale 
+ :parent ont::texture-scale 
  :wordnet-sense-keys ("softness%1:07:00")
  ;; WORDS: softness
-)
-
-(define-type ont::texture-scale
- :parent ont::tactile-scale 
- :wordnet-sense-keys ("texture%1:07:00")
- ;; WORDS: texture
 )
 
 (define-type ont::texture-thickness-scale
@@ -242,7 +242,7 @@
 
 (define-type ont::redness-scale
  :parent ont::color-quality-scale
- :wordnet-sense-keys ("redness%1:26:00")
+ :wordnet-sense-keys ("redness%1:07:00")
  ;; WORDS: redness
 )
 
@@ -1481,12 +1481,6 @@
  :parent ont::medical-symptom
  :wordnet-sense-keys("tightness%1:09:00")
 )
-
-; for chill                                                                                                         
-(define-type ONT::chill
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("chill%1:26:01")
- )
 
 ; for constipation                                                                                                  
 (define-type ONT::constipation

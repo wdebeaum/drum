@@ -293,7 +293,7 @@
 
 ;; force, pressure, compression
 (define-type ont::physical-phenomenon
-    :wordnet-sense-keys ("strength%1:07:06" "forcefulness%1:07:00" "force%1:07:00" "force%1:19:00" "causal_agency%1:03:00" "cause%1:03:00" "causal_agent%1:03:00"  "cause%1:10:00" "cause%1:11:00")
+    :wordnet-sense-keys ("strength%1:07:06" "forcefulness%1:07:00" "force%1:07:00" "force%1:19:00" "causal_agency%1:03:00" "cause%1:03:00" "causal_agent%1:03:00"  "cause%1:11:00")
     :parent ont::natural-phenomenon
     :sem (F::Phys-obj (F::origin F::non-living))
     )
@@ -669,7 +669,7 @@
 ;; robot
 (define-type ONT::robot
     :parent ONT::automaton
-    :wordnet-sense-keys ("robot%1:06:00")
+;;    :wordnet-sense-keys ("robot%1:06:00") #in same synset as automaton%1:06:00
     :sem (F::Phys-obj (f::intentional +) (f::object-function f::occupation)) ; certain features to pattern with people
     )
 
@@ -1119,7 +1119,7 @@
 ;; cafe, etc.
 (define-type ONT::eating-establishment
     :parent ONT::commercial-facility
-    :wordnet-sense-keys ("eating_place%1:06:00" "eatery%1:06:00")
+;    :wordnet-sense-keys ("eating_place%1:06:00" "eatery%1:06:00") #these are synsets to restaurant%1:06:00 (see ont::restaurant)
     )
 
 ;; restaurant
@@ -1409,7 +1409,7 @@
 (define-type ONT::ROUTE
     :parent ONT::functional-region
     ;;check this
-    :wordnet-sense-keys ("path%1:17:00" "track%1:17:00" "course%1:17:00" "route%1:06:00")
+    :wordnet-sense-keys ("path%1:17:00" "track%1:17:00" "course%1:17:00")
     :sem (F::Phys-obj (F::origin F::non-living) (F::Form F::Geographical-Object)
 		      (F::Object-Function F::Path) (F::Mobility F::Fixed)
 		      ;; Myrosia 2007/11/20 marked as container + to account for examples like "this path contains a bulb/2 terminals/3 segments"
@@ -1436,13 +1436,13 @@
 ;; highway, expressway
 (define-type ONT::highway
     :parent ONT::route
-    :wordnet-sense-keys ("freeway%1:06:00" "motorway%1:06:00" "pike%1:06:01" "state_highway%1:06:00" "superhighway%1:06:00" "expressway%1:06:00" "highway%1:06:00" "main_road%1:06:00")
+    :wordnet-sense-keys ("highway%1:06:00")
     )
 
 ;; thruway
 (define-type ONT::thruway
     :parent ONT::highway
-    :wordnet-sense-keys ("throughway%1:06:00" "thruway%1:06:00" "throughway%1:06:00")
+    :wordnet-sense-keys ("throughway%1:06:00")
     )
 
 (define-type ONT::tunnel
@@ -1549,13 +1549,14 @@
 		)
     )
 
+;SAME AS ONT::STARTPOINT
 ;;; check this
-(define-type ONT::Origin
-    :parent ONT::LOCATION-by-description
-    :wordnet-sense-keys ("beginning%1:15:00" "origin%1:15:00" "root%1:15:00" "source%1:15:00")
-    :arguments ((:OPTIONAL ONT::FIGURE (F::PHYS-OBJ))
-		)
-    )
+;(define-type ONT::Origin
+;    :parent ONT::LOCATION-by-description
+;    :wordnet-sense-keys ("beginning%1:15:00" "origin%1:15:00" "root%1:15:00" "source%1:15:00")
+;    :arguments ((:OPTIONAL ONT::FIGURE (F::PHYS-OBJ))
+;		)
+;    )
 
 #|
 ;; middle of the road

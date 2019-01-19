@@ -2,7 +2,7 @@
 # File: src/config/TextTagger/configure.ac
 # Creator: George Ferguson
 # Created: Tue Sep  9 10:27:15 2008
-# Time-stamp: <Wed Dec 26 20:38:43 CST 2018 lgalescu>
+# Time-stamp: <Tue Sep  9 13:44:10 EDT 2008 ferguson>
 #
 # Process this file with autoconf to produce a configure script.
 #
@@ -169,15 +169,18 @@ AC_SUBST(TEXTTAGGER_LDFLAGS)
 AC_PROG_CXX
 AC_LANG(C++)
 
-# Kludgy workaround for DRUM ticket #44: check whether we're using Clang, and
-# if so, tell it to use GCC's libstdc++ instead of its own
-# LGalescu 20181226 replaced libstdc++ with libc++ for clang v10.0.0
-# (libstdc++ has been deprecated since v8, but now they dropped it for good)
+# Kludgy workaround for DRUM ticket #44: check whether we're using Clang<10, and
+# if so, tell it to use GCC's libstdc++ instead of its own; newer Clangs we
+# can't use because they don't let us use libstdc++, and their own libc++ has a
+# bug that affects terms2.cpp
 AC_MSG_CHECKING([for C++ flavor])
-if $CXX --version 2>/dev/null |grep -q clang ; then
-  AC_MSG_RESULT([clang])
-  TEXTTAGGER_CXXFLAGS='-O3 -stdlib=libc++'
-  TEXTTAGGER_LDFLAGS='-stdlib=libc++'
+if $CXX --version 2>/dev/null |grep -q 'clang-\d\d\d\.' ; then
+  AC_MSG_RESULT([clang<10])
+  TEXTTAGGER_CXXFLAGS='-O3 -stdlib=libstdc++'
+  TEXTTAGGER_LDFLAGS='-stdlib=libstdc++'
+elif $CXX --version 2>/dev/null |grep -q 'clang-\d\d\d\d\.' ; then
+  AC_MSG_RESULT([clang>=10])
+  AC_MSG_ERROR([TextTagger cannot use this C++ compiler. Please install and configure GCC instead. The g++ in XCode is actually Clang, and as of version 10 it no longer includes libstdc++, which would force us to use its libc++ instead, which has a bug that affects terms2.cpp. You can easily install GCC on a Mac using MacPorts (sudo port install gcc8) or Homebrew (brew install gcc). Then set CXX to the path to the g++ program from GCC (e.g. for MacPorts you would run configure like this: CXX=/opt/local/bin/g++-mp-8 ./configure).])
 else
   AC_MSG_RESULT([assuming g++])
   TEXTTAGGER_CXXFLAGS='-O3'

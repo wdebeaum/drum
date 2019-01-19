@@ -701,7 +701,6 @@
 
 ;; percent
 (define-type ONT::percent
- :wordnet-sense-keys ("percent%1:24:00" "per_centum%1:24:00" "pct%1:24:00")
 ; :parent ONT::quantitative-relation
  :parent ONT::FORMAL-UNIT
  :sem (F::Abstr-obj (F::Scale Ont::percent-scale))
@@ -858,7 +857,7 @@
   )
 
 (define-type  ONT::event-defined-by-activity
- :wordnet-sense-keys ("event%1:03:00" "time_period%1:28:00" "period_of_time%1:28:00" "period%1:28:00")
+ :wordnet-sense-keys ("event%1:03:00")
  :parent ONT::EVENT-TYPE
  :sem (F::Situation (F::aspect F::dynamic))
  :arguments ((:OPTIONAL ONT::FIGURE)
