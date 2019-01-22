@@ -8,7 +8,7 @@
    (wordfeats (W::morph (:forms (-vb) :past W::awoke :pastpart w::awoken :ing W::awaking)))
    (SENSES
     ((EXAMPLE "he awoke at dawn")
-     (LF-PARENT ONT::BODILY-PROCESS)
+     (LF-PARENT ONT::awake)
      (TEMPL agent-TEMPL)
      )
     )

@@ -24,9 +24,9 @@
      (TEMPL agent-affected-xp-templ)
      (meta-data :origin calo-ontology :entry-date 20060712 :change-date 20090506 :comments caloy3)
      )
-    ((LF-PARENT ONT::MOVE)
-     (example "she presented to New York hospital")
-     (TEMPL AGENT-TEMPL))
+    ((LF-PARENT ONT::appear)
+     (example "The patient presented with a right thoracic scoliosis")
+     (TEMPL AFFECTED-TEMPL))
 
     ((LF-PARENT ONT::encodes-message)
      (meta-data :origin "bee" :entry-date 20091394 :change-date nil :comments nil)

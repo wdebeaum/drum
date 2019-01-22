@@ -22,7 +22,7 @@
    (wordfeats (W::morph (:forms (-vb) :past W::covered :ing w::covering)))
    (SENSES
     ((LF-PARENT ONT::cause-cover)
-     (TEMPL AGENT-goal-affected-TEMPL (xp (% W::PP (W::ptype (? pt W::with W::in)))))
+     (TEMPL AGENT-affected2-TEMPL (xp (% W::PP (W::ptype (? pt W::with W::in)))))
  ;    (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "cover the table with the tablecloth")
      (meta-data :origin fruitcarts :entry-date 20060215 :change-date 20090911 :comments nil :vn ("contiguous_location-47.8") :wn ("cover%2:35:01"))

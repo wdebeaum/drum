@@ -18,7 +18,7 @@
   (W::concern
    (SENSES
     ((EXAMPLE "the problem concerns him")
-     (LF-PARENT ONT::AFFECT-experiencer)
+     (LF-PARENT ONT::evoke-worry)
      (meta-data :origin calo :entry-date 20050425 :change-date nil :comments projector-purchasing)
      (TEMPL agent-affected-xp-templ)
      )

@@ -9,6 +9,7 @@
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090601 :comments nil :vn ("cheat-10.6") :wn ("void%2:30:04"))
      (LF-PARENT ONT::remove-from)
      (TEMPL agent-source-affected-optional-templ)
+     (example "he void his bladder of urine")
      )
     )
    )

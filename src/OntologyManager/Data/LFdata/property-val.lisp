@@ -2872,6 +2872,7 @@
 (define-type ont::intensity-val
  :parent ont::dimensional-property-val 
  :comment "indicates relative extent or magnitude of something on an intensity scale"
+ :sem (F::abstr-obj (F::scale ont::intensity-scale))
 )
 
 (define-type ont::intense

@@ -5,6 +5,7 @@
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
   (W::digest
+   (wordfeats (W::morph (:forms (-vb) :nom W::digestion)))
    (SENSES
     ((EXAMPLE "he digested the meal")
      (LF-PARENT ONT::digest)

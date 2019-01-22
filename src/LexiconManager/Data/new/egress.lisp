@@ -6,14 +6,13 @@
  :words (
   (W::egress
    (SENSES
-    ((EXAMPLE "I am starting to egress")
-;     (LF-PARENT ONT::departing)
-     (LF-PARENT ONT::cause-out-of)
+    ((EXAMPLE "They egressed the area by heading southwest.")
+     (LF-PARENT ONT::depart)
+;     (LF-PARENT ONT::cause-out-of)
      (meta-data :origin boudreaux :entry-date 20060414 :change-date nil :comments nil)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-TEMPL)
-     )
+     (TEMPL AGENT-TEMPL)     
+     )    
     )
-   )
-))
+)))
 

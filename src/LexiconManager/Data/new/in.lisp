@@ -329,9 +329,21 @@
 	     (meta-data :origin calo :entry-date 20050216 :change-date nil :comments caloy2)
 	     (example "is it due in part to drought")
 	     )
-	    )
 	   )
-	  )
+
+	  ))
+
+
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+	      :words (
+
+		      ((w::in w::common w::with)
+		       (SENSES
+			((LF-PARENT ONT::SIMILAR)
+			 (templ adj-co-theme-templ (xp (% w::np))))
+			)
+		       )
+		      ))
 
 (define-words :pos W::ADV
  :words (

@@ -3464,12 +3464,14 @@
  :wordnet-sense-keys ("augment%2:30:00" "intensify%2:30:01" "intensify%2:30:00" "sharpen%2:30:01" "sharpen%2:30:00")
  :parent ont::change-in-dimension
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::intensity-scale) (F::orientation f::pos))))
+ :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::extended))
 )
 
 (define-type ont::lessen-intensity
  :wordnet-sense-keys ("weaken%2:30:03" "slack%2:30:04")
  :parent ont::change-in-dimension
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::intensity-scale) (F::orientation f::neg))))
+ :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::extended))
 )
 
 ; lightened:  "I felt my burden lighten as I told the story"
@@ -3560,6 +3562,7 @@
  :parent ont::change-in-dimension
  ;; argument add
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::strength-scale) (F::orientation f::pos))))
+ :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::extended))
 )
 
 ;; weaken
@@ -3568,6 +3571,7 @@
  :parent ont::change-in-dimension
  ;; argument add
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::strength-scale) (F::orientation f::pos))))
+ :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::extended))
 )
 
 ; temperature-scale
@@ -3707,6 +3711,7 @@
  :wordnet-sense-keys ("lighten%2:30:02")
  :parent ont::change-in-visual-scale
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::lightness-scale) (F::orientation f::pos))))
+ :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::extended))
 )
 
 ; darken
@@ -3714,6 +3719,7 @@
  :wordnet-sense-keys ("darken%2:30:01" "darken%2:30:00")
  :parent ont::change-in-visual-scale
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::darkness-scale) (F::orientation f::pos))))
+ :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::extended))
 )
 
 ; brighten
@@ -3721,6 +3727,7 @@
  :wordnet-sense-keys ("brighten%2:30:01")
  :parent ont::change-in-visual-scale
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::brighteness-scale) (F::orientation f::pos))))
+ :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::extended))
 )
 
 
@@ -3734,12 +3741,14 @@
  :parent ont::change-in-sound-scale
  :wordnet-sense-keys ("deafen%2:30:01" "quieten%2:39:00")
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::loudness-scale) (F::orientation f::neg))))
+ :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::atomic))
 )
 
 (define-type ont::louden
  :parent ont::change-in-sound-scale
  :wordnet-sense-keys ("louden%2:39:00" "louden%2:30:00")
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::loudness-scale) (F::orientation f::pos))))
+ :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::atomic))
 )
 
 ; dampness

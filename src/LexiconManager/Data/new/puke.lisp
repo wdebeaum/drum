@@ -7,11 +7,11 @@
   (W::puke
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("breathe-40.1.2") :wn ("puke%2:29:00"))
-     (LF-PARENT ONT::bodily-process)
+     (LF-PARENT ONT::vomit)
      (TEMPL agent-affected-xp-templ) ; like vomit
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("breathe-40.1.2") :wn ("puke%2:29:00"))
-     (LF-PARENT ONT::bodily-process)
+     (LF-PARENT ONT::vomit)
      (TEMPL agent-templ) ; like bleed
      )
     )

@@ -41,7 +41,7 @@
   ((W::pick (W::up))
    (SENSES
     ;;;; swier -- pick up the oranges.
-    ((LF-PARENT ont::pickup)
+    ((LF-PARENT ont::acquire)
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      (prototypical-word t)
      )

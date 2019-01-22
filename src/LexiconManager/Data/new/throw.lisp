@@ -32,7 +32,7 @@
      (example "throw up the map")
      )
     ((EXAMPLE "The patient threw up")
-     (LF-PARENT ONT::bodily-process)
+     (LF-PARENT ONT::vomit)
      (TEMPL agent-TEMPL)
      )
     )
