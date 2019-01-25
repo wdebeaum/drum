@@ -641,7 +641,7 @@
   "this and that allow reference to visually focussed objects as well as discourse concrete and abstract"
   (let ((possibles (progressive-search-for-possible-refs lf-type ;(get-lf-type lf)
 							 (second lf) sem
-							 '(visible-focus concrete event abstract)
+							 '(visible-focus event concrete abstract)
 							 (list (classify-num lf))
 							 (- index 1)
 							 1 ;;2

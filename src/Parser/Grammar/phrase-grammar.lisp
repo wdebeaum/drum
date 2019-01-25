@@ -710,7 +710,7 @@
 
    ;; relational non-scale nouns with filled PP-of complements  e.g. top of the box
    ((N1 (sort pred) (var ?v) (class ?lf) (qual -) (COMPLEX +)
-     (RESTR ?con) ;(restr (& (?smap ?v1) (scale ?sc)))
+     (RESTR ?con1) ;(restr (& (?smap ?v1) (scale ?sc)))
      (gap ?gap)
      (subcat ?!subcat)
      )
@@ -2723,7 +2723,7 @@
         ;;  Bare singular - rare forms/telegraphic speech e.g., status report.
 	;;  Also used for N1 conjunction "the truck and train"
         ((NP (LF (% Description (STATUS ONT::BARE) (VAR ?v) (SORT INDIVIDUAL)
-	            (CLASS ?c) (CONSTRAINT ?r) (sem ?sem) (transform ?transform)))
+	            (CLASS ?c) (CONSTRAINT ?newr) (sem ?sem) (transform ?transform)))
 					;(SORT PRED)
 	  (VAR ?v) (SORT ?!sort)
 	  (BARE-NP +) (name-or-bare ?nob)
