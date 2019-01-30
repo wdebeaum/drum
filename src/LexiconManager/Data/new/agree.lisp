@@ -23,7 +23,7 @@
 	     )	
 	    ((LF-parent ont::accept-agree)
 	     (Example "They agreed that the theory is true.")
-	     (TEMPL neutral-formal-as-comp-templ (xp (% W::cp (W::ctype W::s-finite))))
+	     (TEMPL agent-formal-templ (xp (% W::cp (W::ctype W::s-finite))))
 	     )
 	    (;(LF-parent ont::accept)
 	     (lf-parent ont::accept-agree) ;; 20120523 GUM change new parent
