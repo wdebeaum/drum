@@ -749,9 +749,12 @@
 		(ellipsis -)
 		(result (? advsem ($ f::abstr-obj
 				     ;(F::type (? ttt ont::position-reln ont::resulting-object ont::path))
-				     (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; we allowed "in" for some reason, but I don't remember the example!
+				     (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of
+					;ont::pos-as-containment-reln ; we allowed "in" for some reason, but I don't remember the example! (ah: Put this in the corner)
+						 ont::outside ; take this out of the box; move this outside
 						 ont::pos-directional-reln ont::pos-distance ;ont::pos-wrt-speaker-reln
-						 ont::resulting-object))
+						 ont::resulting-object
+						 ))
 				     )))
 #|
 ;; do not remove this!  We can't have both (? ttt ...) and (? !ttt1 ...) but these are the types we want and don't want here.

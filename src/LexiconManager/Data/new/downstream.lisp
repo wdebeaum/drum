@@ -18,7 +18,7 @@
 (define-words :pos W::adj
  :words (
    (W::DOWNSTREAM
-    (wordfeats (W::ALLOW-POST-N1-SUBCAT +))
+    ;(wordfeats (W::ALLOW-POST-N1-SUBCAT +))
     (SENSES
     ((LF-PARENT ONT::DIRECTION-down-ground )
      (TEMPL adj-CO-THEME-templ (XP (% W::PP (W::PTYPE (? p W::of w::from)))))
