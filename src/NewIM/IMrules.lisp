@@ -293,6 +293,15 @@
     (ONT::ASK-IF :who *user* :to *ME* :what ?!c)
     )
 
+   ;; e.g., I want to learn/find out how...
+   ((ONT::SPEECHACT ?x (? sa ONT::SA_REQUEST ONT::SA_TELL) :CONTENT ?!theme)
+    (ONT::F ?!theme (? t3 ONT::WANT ) :FORMAL ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE))
+    (ONT::F ?!n (? t4 ONT::COGITATION) :FORMAL ?!wh-var)
+    ((? spec ONT::WH-TERM ONT::WH-TERM-SET) ?!wh-var ONT::METHOD :suchthat ?!st)
+    -request-to-identify-which-b> 
+    (ONT::PROPOSE :who *user* :to *ME* :what ?!n :as ONT::GOAL)
+    )   
+   
    ;; e.g., Tell me/Let me know which/what blocks are red.
    ((ONT::SPEECHACT ?x (? sa ONT::SA_REQUEST ONT::SA_TELL) :CONTENT ?!theme)
     (ONT::F ?!theme (? t3 ONT::TELL ONT::ALLOW ONT::WANT ONT::LOOK-UP) :FORMAL ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE))

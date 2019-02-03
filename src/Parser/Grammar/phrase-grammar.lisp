@@ -1029,13 +1029,13 @@
        (no-postmodifiers +) ;; add an extra feature to say "no further postmodifiers". If we say "The bulb in 1 is in the same path as the battery in 1", we don't want "in 1" to attach to "the path"
       )
      -N1-post-onesubcat>
-     (ADJ1 (atype (? at attributive-only central)) (ALLOW-POST-N1-SUBCAT +)
+     (ADJ1 (atype (? at attributive-only central)) ;(ALLOW-POST-N1-SUBCAT +)
       (LF ?qual) (lex ?lex1)
       (ARG ?v) (VAR ?adjv)
       (argument (% NP (sem ?nsem))) 
       (COMPLEX -) (comparative ?com)
       (constraint ?adjcon)
-      (subcat-map ?!submap) (subcat ?!subcat) (SUBCAT (% ?xx (var ?argv))) 
+      (subcat-map ?!submap) (subcat ?!subcat) (SUBCAT (% ?xx (var ?argv) (ptype ?ptype) (sem ?psem))) 
       ;(subcat2-map (? !submap2 ONT::NOROLE -)) (subcat2 ?!subcat2) (SUBCAT2 (% ?xx2 (var ?argv2)))
       (SUBCAT2 (% - (W::VAR -)))
       (argument-map ?argmap)
@@ -1047,7 +1047,7 @@
 	    (post-subcat -)
 	    )
       )
-     ?!subcat
+     (PP (var ?argv) (ptype ?ptype) (sem ?psem) (gap -)) ;?!subcat
      (bound (arg1 ?argv)) ; exclude optional unfilled subcats (not sure why ?!subcat doesn't ensure it exists)
      ;?!subcat2
      ;;(UNIFY (arg1 (% ?xxx (var ?psvar))) (arg2 ?!post-subcat))
