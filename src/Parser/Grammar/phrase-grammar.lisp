@@ -1029,7 +1029,49 @@
        (no-postmodifiers +) ;; add an extra feature to say "no further postmodifiers". If we say "The bulb in 1 is in the same path as the battery in 1", we don't want "in 1" to attach to "the path"
       )
      -N1-post-onesubcat>
-     (ADJ1 (atype (? at attributive-only central)) ;(ALLOW-POST-N1-SUBCAT +)
+     (ADJ1 (atype (? at attributive-only central)) (ALLOW-POST-N1-SUBCAT +)
+      (LF ?qual) (lex ?lex1)
+      (ARG ?v) (VAR ?adjv)
+      (argument (% NP (sem ?nsem))) 
+      (COMPLEX -) (comparative ?com)
+      (constraint ?adjcon)
+      (subcat-map ?!submap) (subcat ?!subcat) (SUBCAT (% ?xx (var ?argv) (ptype ?ptype) (sem ?psem))) 
+      ;(subcat2-map (? !submap2 ONT::NOROLE -)) (subcat2 ?!subcat2) (SUBCAT2 (% ?xx2 (var ?argv2)))
+      (SUBCAT2 (% - (W::VAR -)))
+      (argument-map ?argmap)
+      (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale) (F::intensity ?ints) (F::orientation ?orient)))
+      ;;(post-subcat ?!post-subcat)
+      )
+     (head (N1 (RESTR ?r) (VAR ?v) (SEM ?nsem) (CLASS ?c)(set-restr ?sr)
+	    (SORT ?sort) (relc ?relc) (subcat ?nsubcat) 
+	    (post-subcat -)
+	    )
+      )
+     (PP (var ?argv) (ptype ?ptype) (sem ?psem) (gap -)) ;?!subcat
+     (bound (arg1 ?argv)) ; exclude optional unfilled subcats (not sure why ?!subcat doesn't ensure it exists)
+     ;?!subcat2
+     ;;(UNIFY (arg1 (% ?xxx (var ?psvar))) (arg2 ?!post-subcat))
+     (append-conjuncts  (conj1 ?adjcon) (conj2 (& (?!submap ?argv) ;(?!submap2 ?argv2)
+						  (?argmap ?v)
+						  (scale ?scale) (intensity ?ints) (orientation ?orient)))
+			(new ?newadjcon))
+      (add-to-conjunct (val (:MOD 
+			     (% *pro* (var ?adjv) (status ont::f) (class ?qual) (lex ?lex1)
+				    (constraint ?newadjcon))))
+				   
+       (old ?r) (new ?newr))
+      )
+
+     ; same as -N1-post-onesubcat> but takes adj without ALLOW-POST-N1-SUBCAT
+    ;; A few adjectives can have their subcat after the head noun
+    ;; a larger truck than that
+     ((N1 (RESTR ?newr) (CLASS ?c) (SORT ?sort) (QUAL -) (COMPLEX +)(set-restr ?sr)
+       (relc ?relc) (subcat ?nsubcat)
+       ;;(post-subcat +)
+       (no-postmodifiers +) ;; add an extra feature to say "no further postmodifiers". If we say "The bulb in 1 is in the same path as the battery in 1", we don't want "in 1" to attach to "the path"
+      )
+     -N1-post-onesubcat-b> 0.98
+     (ADJ1 (atype (? at attributive-only central)) (ALLOW-POST-N1-SUBCAT -) ; "-" here so it's mutually exclusive with -N1-post-onesubcat>
       (LF ?qual) (lex ?lex1)
       (ARG ?v) (VAR ?adjv)
       (argument (% NP (sem ?nsem))) 
