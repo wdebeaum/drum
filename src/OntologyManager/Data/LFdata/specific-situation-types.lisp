@@ -3052,7 +3052,7 @@
  :parent ONT::event-of-causation
  :arguments ((:REQUIRED ONT::Agent)
 	     (:required ont::source)
-	     (:optional ont::affected-result (F::phys-obj))
+	     (:optional ont::affected-result ((? thm F::phys-obj F::abstr-obj)))
              )
  )
 
@@ -3127,7 +3127,7 @@
  :wordnet-sense-keys ("empty%2:30:01" "empty%2:30:00")
  :parent ONT::cause-come-from
  :arguments ((:OPTIONAL ONT::Agent)
-             (:OPTIONAL ONT::affected-result (F::phys-obj)) ;(F::Container +)))
+             (:OPTIONAL ONT::affected-result ((? thm F::phys-obj F::abstr-obj) (F::Container +))) ; _lg 20190206 added abstr-obj (for things like models, plans, etc.) and put back in the container feature
 	     (:OPTIONAL ONT::affected)
 	     )
  )

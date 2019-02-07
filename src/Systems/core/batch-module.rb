@@ -71,6 +71,7 @@ class BatchModule
 		KQML[:http, :post, Options.web_parser_name, :query => query]
 	      ])
 	    }
+	  raise "expected a reply with :content but received none (check the end of WEBPARSER.log for a SORRY message)" if (reply.nil?)
 	  raise "expected :content-type \"text/xml...\"" unless (reply[:"content-type"] =~ /^text\/xml/)
 	  raise "expected string in :content" unless (String === reply[:content])
 	  File.open(output_file, 'w').print reply[:content]
