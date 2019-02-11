@@ -13,6 +13,12 @@
      (TEMPL affected-templ)
      ;;(PREFERENCE 0.96)
      )
+    
+    ((LF-PARENT ONT::participate-attend)
+     (EXAMPLE "He participated in/at the meeting" "She participates in these activities regularly")
+     (templ AGENT-neutral-XP-TEMPL (xp (% W::pp (W::ptype (? pp W::in W::at w::for)))))
+     )
+    
     ((meta-data :origin calo :entry-date 20040916 :change-date nil :comments caloy2)
       (LF-PARENT ONT::APPEARS-TO-HAVE-PROPERTY)
      (example "he appears happy") 
