@@ -4060,7 +4060,7 @@
 
 ;; flavor, sweeten, salt, season
 (define-type ont::flavor
- :wordnet-sense-keys ("flavor%2:35:00" "change_taste%2:39:00")
+ :wordnet-sense-keys ("flavor%2:39:00" "change_taste%2:39:00")
  :parent ont::cooking
  :comment "to alter flavor by seasoning or adding ingredients"
 )
