@@ -806,7 +806,7 @@
  :wordnet-sense-keys ("depart%2:38:01" "leave%2:38:01")
  :parent ONT::EVENT-OF-ACTION
  :sem (F::SITUATION (F::Aspect F::Bounded) (F::Cause F::Force) (F::Time-span F::Atomic)) 
- :arguments ((:OPTIONAL ONT::neutral)  ;; I left the party
+ :arguments ((:OPTIONAL ONT::neutral ((? neut F::Phys-obj f::event-type)))  ;; I left the party
 	     (:optional ONT::source  ;; as in "I left from the party"
 			)))
 
@@ -4236,9 +4236,10 @@
 
 ;; manage
 (define-type ONT::managing
- :parent ONT::control-manage
+    :parent ONT::control-manage
+    :arguments ((:ESSENTIAL ONT::Agent ((? agt F::Phys-obj f::abstr-obj) (F::intentional +))))
  :comment "take responsibility over the production of a project, a program, or a production" 
-)
+ )
 
 (define-type ont::tame
  :wordnet-sense-keys ("curb%2:30:01" "keep_down%2:41:00" "break_in%2:30:00" "tame%2:30:00" "hush%2:30:00" "break%2:30:12" "quieten%2:30:00")
@@ -4278,6 +4279,7 @@
  :arguments ((:REQUIRED ONT::Formal ((? obj F::ABSTR-OBJ f::situation f::time)))
 	     (:OPTIONAL ONT::neutral)
 	     (:OPTIONAL ONT::effect (F::situation))
+	     
 	     )
  :comment "make necessary preparations for a program, a project or a production"
  )
@@ -5282,7 +5284,8 @@
     :wordnet-sense-keys ("attend%2:42:00" "participate%2:41:00")
     :parent ont::event-of-causation ;; 20120529 GUM change new parent + args
     :arguments ((:REQUIRED ONT::agent (F::phys-obj (F::intentional +)))
-		(:REQUIRED ONT::neutral ((? xx F::situation F::abstr-obj)
+		(:REQUIRED ONT::neutral (F::situation ;; F::abstr-obj)
+					;; (F::type ONT::GATHERING-EVENT) ;; e.g. meeting, exams, court (legal organization)
 					 )
 			   ))
     )

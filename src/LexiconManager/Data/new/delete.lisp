@@ -13,7 +13,7 @@
      (TEMPL agent-affected-source-optional-templ (xp (% w::pp (w::ptype w::from))))
      )
     
-    ((LF-PARENT ONT::omit)
+    ((LF-PARENT ONT::discard)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL AGENT-TEMPL)
      (meta-data :origin plot :entry-date 20080610 :change-date nil :comments nil :vn ("remove-10.1") :wn ("delete%2:32:00" "delete%2:35:00"))

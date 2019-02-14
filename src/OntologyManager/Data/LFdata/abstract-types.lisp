@@ -191,11 +191,12 @@
  )
 
 (define-type ont::group-object-abstr
- :wordnet-sense-keys ("mathematical_group%1:09:00" "group%1:09:00" "chemical_group%1:27:00" "radical%1:27:00" "group%1:27:00" "group%1:03:00" "grouping%1:03:00")
-  :parent ont::abstract-object-nontemporal
-;  :sem (F::Abstr-obj (f::group +)) ; group feature not defined for abstract objects
-  :arguments ((:OPTIONAL ONT::FIGURE)
-              )
+    :wordnet-sense-keys ("mathematical_group%1:09:00")
+    :comment "a formal concept of a group of objects, e.g., mathematical"
+    :parent ont::abstract-object-nontemporal
+					;  :sem (F::Abstr-obj (f::group +)) ; group feature not defined for abstract objects
+    :arguments ((:OPTIONAL ONT::FIGURE)
+		)
   )
 
 (define-type ONT::system-abstr

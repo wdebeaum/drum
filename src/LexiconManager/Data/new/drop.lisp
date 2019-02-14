@@ -23,7 +23,7 @@
      )
     
     ((meta-data :origin calo-ontology :entry-date 20060710 :change-date nil :comments nil)
-     (LF-PARENT ONT::omit)
+     (LF-PARENT ONT::discard)
      (example "drop this paragraph from the text")
      (TEMPL agent-affected-source-optional-templ (xp (% w::pp (w::ptype w::from))))
      )

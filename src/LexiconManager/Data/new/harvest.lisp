@@ -19,3 +19,15 @@
    )
 ))
 
+(define-words :pos W::n 
+  :words (
+	  (w::harvest
+	   (senses
+	    (
+	     (LF-PARENT ONT::crop)
+	     (TEMPL COUNT-PRED-TEMPL)
+	     (example "the season's harvest")
+	     )
+	    )
+	   )
+	  ))

@@ -6,7 +6,7 @@
  :words (
    (W::shrub
    (SENSES
-    ((LF-PARENT ont::plant)
+    ((LF-PARENT ont::shrub)
      (meta-data :origin calo-ontology :entry-date 20060712 :change-date nil :wn ("shrub%1:20:00") :comment caloy3)
      )
     )

@@ -21,7 +21,7 @@
 (w::crop
  (senses
   (
-   (LF-PARENT ONT::plant)
+   (LF-PARENT ONT::crop)
    (TEMPL COUNT-PRED-TEMPL)
    (example "winter crop")
    )

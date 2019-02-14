@@ -2,25 +2,22 @@
 ;;;; W::kill
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v
  :words (
  (W::kill
    (SENSES
     ((LF-PARENT ONT::STOP)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (example "kill the program")
-     (meta-data :origin calo-ontology :entry-date 20060119 :change-date nil :comments caloy3)
+      (TEMPL AGENT-affected-XP-TEMPL)
      )
-    ((meta-data :origin step :entry-date 20080705 :change-date nil :comments nil)
-     (LF-PARENT ONT::kill)
+    ((LF-PARENT ONT::kill)
+     (example "He killed the rabbit")
+     (TEMPL AGENT-affected-XP-TEMPL)
      )
-    ((meta-data :origin step :entry-date 20080705 :change-date nil :comments nil)
-     (LF-PARENT ONT::kill)
+    ((LF-PARENT ONT::kill)
      (TEMPL agent-templ)
      (example "Poison kills.")
-     )
-   
-    )
-   )
-))
+     ))
+   )))
 
