@@ -288,7 +288,8 @@
 
 (define-type ont::pay-attention
  :parent ont::cogitation
- :wordnet-sense-keys ("watch%2:39:01" "attend%2:39:00")
+ :wordnet-sense-keys ("attend%2:39:00")
+ :comment "focus attention on something"
 )
 
 ;(define-type ONT::mental-action

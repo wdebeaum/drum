@@ -15,6 +15,5 @@
       (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
       )
      )
-    )
-))
+)))
 

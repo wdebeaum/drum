@@ -881,13 +881,16 @@
 
 ;;  wait, watch
 (define-type ONT::wait-watch
-    :wordnet-sense-keys ("wait%2:42:00")
-    :comment "action of being attentive so as to notice something"
-    :parent ont::intentionally-act
-    :sem (F::SITUATION (F::Cause F::Agentive))
-    :arguments ((:optional ont::neutral ((? o F::Phys-obj f::abstr-obj f::situation)))
-		(:optional ont::formal (f::situation))
-	     ))
+    :wordnet-sense-keys ("wait%2:42:00" "expect%2:31:01" "watch%2:39:01")
+    :comment "action of being attentive so as to notice something; stay vigilant"
+    :parent ont::pay-attention
+;    :sem (F::SITUATION (F::Cause F::Agentive))
+;   :parent ont::intentionally-act 
+; commenting out the following arguments as they are inherited from ont::cogitation
+;    :arguments ((:optional ont::neutral ((? o F::Phys-obj f::abstr-obj f::situation)))
+;		(:optional ont::formal (f::situation))
+;	     )
+)
 
 ;; avoid, escape, evade, get around
 (define-type ONT::avoiding
@@ -965,7 +968,7 @@
  )
 
 (define-type ONT::PUSH-LIQUID
- :wordnet-sense-keys ("squirt%2:35:00" "squirt%2:35:10" "sprinkle%2:35:01" "spray%2:35:03")
+ :wordnet-sense-keys ("squirt%2:35:00" "squirt%2:35:10" "sprinkle%2:35:01" "spray%2:35:03" "splash%2:35:04" "splash%2:35:00")
   :parent ONT::push
   )
 
@@ -975,7 +978,7 @@
 )
 
 (define-type ONT::RUB-scrape-wipe
- :wordnet-sense-keys ("rub%2:35:00" "rub%2:39:00" "stroke%2:35:00" "smooth%2:40:00")
+ :wordnet-sense-keys ("rub%2:35:00" "rub%2:39:00" "stroke%2:35:00" "smooth%2:40:00" "swab%2:35:01")
   :parent ONT::apply-force
  )
 
@@ -1314,15 +1317,6 @@
 
 
 
-(define-type ONT::START
- :wordnet-sense-keys ("begin%2:30:01" "start%2:41:00")
-; :wordnet-sense-keys ("take%2:41:13" "start%2:36:00" "begin%2:30:01" "get_down%2:30:00" "begin%2:32:04" "lie_in%2:29:00" "originate_in%2:42:00" "activate%2:36:00" "activate%2:30:00")
- :parent ONT::cause-effect
- :arguments ((:OPTIONAL ONT::neutral ((? agt f::abstr-obj f::situation)))  ;; start the meeting
-	     )
- )
-
-
 ;; 20121027 GUM change new type
 (define-type ONT::prepare
   :wordnet-sense-keys ("arm%2:33:00")
@@ -1339,12 +1333,52 @@
 		)
     )
 
+(define-type ONT::START
+ :wordnet-sense-keys ("begin%2:30:01" "start%2:41:00" "get_down%2:30:00" "start%2:38:00" "start%1:11:00" "start%1:28:00" "take%2:41:13" "take_to%2:41:01" "begin%2:32:04")
+ :parent ONT::cause-effect
+ :arguments ((:OPTIONAL ONT::neutral ((? agt f::abstr-obj f::situation)))  ;; start the meeting
+	     )
+ )
+
+;; 20190125 MERGING ont::startoff-begin-commence-start with ont::start
 ;; 20120523 GUM change new type
-(define-type ont::startoff-begin-commence-start
- :wordnet-sense-keys ("get_down%2:30:00" "start%2:38:00" "start%1:11:00" "start%1:28:00" "take%2:41:13" "take_to%2:41:01" "begin%2:32:04")
-;    :wordnet-sense-keys ("start%2:38:00" "start%2:41:00" "take_to%2:41:01" "start%1:11:00" "start%1:28:00")
-    :parent ont::start
-    )
+;(define-type ont::startoff-begin-commence-start
+; :wordnet-sense-keys ("get_down%2:30:00" "start%2:38:00" "start%1:11:00" "start%1:28:00" "take%2:41:13" "take_to%2:41:01" "begin%2:32:04")
+;;    :wordnet-sense-keys ("start%2:38:00" "start%2:41:00" "take_to%2:41:01" "start%1:11:00" "start%1:28:00")
+;    :parent ont::start
+;    )
+
+
+(define-type ONT::START-OBJECT
+ :wordnet-sense-keys ("start%2:38:01" "start_up%2:38:00" "activate%2:30:00" "trip%2:36:00" "trigger%2:33:00" "go_off%2:30:00" "go_off%2:33:00")
+ :parent ONT::start
+ :sem (F::SITUATION (F::Aspect F::Dynamic))
+ :arguments (;;(:REQUIRED ONT::Formal)
+             (:REQUIRED ONT::Agent)
+	     (:OPTIONAL ONT::Affected (f::phys-obj));; (f::form f::substance))) ;; turn off the water -- you're really runing off the tap which produces water
+             ))
+
+(define-type ont::boot-up
+    :parent ont::start-object
+    :arguments ((:REQUIRED ONT::Affected (f::phys-obj (F::TYPE (? xx ont::device ont::algorithm )))))
+  :wordnet-sense-keys ("boot%2:29:00")
+  :comment "start a computer or software program"
+  )
+
+;(define-type ont::reboot
+;  :parent ont::boot-up
+;  )
+
+;;; This is a hack, and so I leave many features absent.
+;;; This is "no formal" restart referring to dialogue level
+;; restart, start again, start over
+(define-type ONT::RESUME
+  :wordnet-sense-keys ("restart%2:30:00")
+ :parent ONT::start
+ :sem (F::SITUATION (F::Cause F::agentive) (F::Trajectory -) (F::Time-span F::atomic))
+ )
+
+
 
 ;; merged again ASK-QUERY-QUESTION and ENQUIRE-INQUIRE (which mainly takes the intransitive form)
 ;; renamed and moved up to under COMMUNICATION
@@ -1366,14 +1400,7 @@
     )
 |#
 
-;;; This is a hack, and so I leave many features absent.
-;;; This is "no formal" restart referring to dialogue level
-;; restart, start again, start over
-(define-type ONT::RESTART
-  :wordnet-sense-keys ("restart%2:30:00")
- :parent ONT::start
- :sem (F::SITUATION (F::Cause F::agentive) (F::Trajectory -) (F::Time-span F::atomic))
- )
+
 
 (define-type ONT::ATTRACT
  :wordnet-sense-keys ("attract%2:35:00" "attract%2:35:01" "affinity%1:19:01" "affinity%1:19:02")
@@ -1891,20 +1918,14 @@
  :comment "relieve of physical pain or discomfort"
  )
 
-(define-type ONT::evoke-relation
-    :arguments (
-		(:REQUIRED ONT::affected (F::phys-obj (F::origin f::living) (f::intentional +))))
-    :parent ONT::affect-experiencer
-    )
-
 (define-type ONT::evoke-attention
  :wordnet-sense-keys ("interest%2:37:00")
- :parent ONT::evoke-relation
+ :parent ONT::evoke-cognitive-state
  )
 
 (define-type ONT::evoke-attraction
  :wordnet-sense-keys ("capture%2:37:00" "enamour%2:37:00" "trance%2:37:00" "catch%2:37:05" "becharm%2:37:00" "enamor%2:37:00" "captivate%2:37:00" "beguile%2:37:00" "charm%2:37:00" "fascinate%2:37:01" "bewitch%2:37:00" "entrance%2:37:00" "enchant%2:37:01")
- :parent ONT::evoke-relation
+ :parent ONT::evoke-cognitive-state
  )
 
 ;;  This is for "the truck needs repair"
@@ -4848,7 +4869,7 @@
 
 ;; he smeared the paint on the wall
 (define-type ONT::APPLY-ON-SURFACE
- :wordnet-sense-keys ("drizzle%2:35:00" "plaster%2:35:00" "smear%2:35:03" "smudge%2:35:00" "spatter%2:35:00" "splash%2:35:00" "splash%2:35:04" "splatter%2:35:01" "spread%2:35:13" "swab%2:35:01" "scent%2:39:02")
+ :wordnet-sense-keys ("drizzle%2:35:00" "plaster%2:35:00" "smear%2:35:03" "smudge%2:35:00" "spread%2:35:13" "scent%2:39:02")
   :parent ONT::PUT
   :SEM (F::SITUATION (f::Aspect F::Dynamic))
   :arguments
@@ -5049,32 +5070,6 @@
 
 
 
-(define-type ONT::START-OBJECT
- :wordnet-sense-keys ("start%2:38:01" "start_up%2:38:00" "activate%2:30:00")
- :parent ONT::Change-device-state
- :sem (F::SITUATION (F::Aspect F::Dynamic))
- :arguments (;;(:REQUIRED ONT::Formal)
-             (:REQUIRED ONT::Agent)
-	     (:OPTIONAL ONT::Affected (f::phys-obj));; (f::form f::substance))) ;; turn off the water -- you're really runing off the tap which produces water
-             ))
-
-
-(define-type ont::boot-up
-    :parent ont::start-object
-    :arguments ((:REQUIRED ONT::Affected (f::phys-obj (F::TYPE (? xx ont::device ont::algorithm )))))
-  :wordnet-sense-keys ("boot%2:29:00")
-  :comment "start a computer or software program"
-  )
-
-(define-type ont::reboot
-  :parent ont::boot-up
-  )
-
-(define-type ont::trigger-trippable-device
- :parent ont::start-object
- :wordnet-sense-keys ("trip%2:36:00" "trigger%2:33:00" "go_off%2:30:00" "go_off%2:33:00")
- :comment "trigger trippable device like bomb, trap, alarm etc"
-)
 
 ;; GUM change new type 20121030
 (define-type ont::burn-out-light-up-change

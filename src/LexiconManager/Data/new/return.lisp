@@ -25,7 +25,7 @@
    (wordfeats (W::morph (:forms (-vb) :nom W::return)))
    (SENSES
 
-    ((LF-PARENT ONT::RESTART)
+    ((LF-PARENT ONT::RESUME)
      (example "he returned to watching tv")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL AGENT-formal-to-ing-TEMPL)
