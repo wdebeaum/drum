@@ -51,7 +51,7 @@
 
 ; figure is viewed as a point and related to ground by (abstract) containment
 (define-type ont::pos-wrt-containment-reln
-    :comment "locating an object (typically rthe FIGURE) within an extended object (typically the GROUND)"
+    :comment "locating an object (typically the FIGURE) within an extended object (typically the GROUND)"
     :parent ont::position-reln
     )
 
@@ -85,6 +85,7 @@
   :parent ont::outside
   )||#
 
+#|
 (define-type ont::delimit-reln
     :comment "the FIGURE has a value in a rnage that is delimited by the GROUND, e.g., within five dollars of the estimate, within five miles of starbucks"
   :parent ont::pos-wrt-containment-reln
@@ -92,6 +93,7 @@
 	      (:ESSENTIAL ONT::GROUND ((? val F::phys-obj f::abstr-obj)))
 	      )
   )
+|#
 
 					; figure is spatially related to a group of objects (the ground)
 (define-type ont::complex-ground-reln

@@ -971,6 +971,8 @@
       )
      ?!subcat
      ?!subcat2
+     (bound (arg1 ?argv))
+     (bound (arg2 ?argv2))
      ;;(UNIFY (arg1 (% ?xxx (var ?psvar))) (arg2 ?!post-subcat))
      (append-conjuncts  (conj1 ?adjcon) (conj2 (& (?!submap ?argv) (?!submap2 ?argv2) (?argmap ?v)
 						  (scale ?scale) (intensity ?ints) (orientation ?orient)))
@@ -1011,6 +1013,8 @@
      ?!subcat2
      ?!subcat
      ;;(UNIFY (arg1 (% ?xxx (var ?psvar))) (arg2 ?!post-subcat))
+     (bound (arg1 ?argv))
+     (bound (arg2 ?argv2))
      (append-conjuncts  (conj1 ?adjcon) (conj2 (& (?!submap ?argv) (?!submap2 ?argv2) (?argmap ?v)
 						  (scale ?scale) (intensity ?ints) (orientation ?orient)))
 			(new ?newadjcon))

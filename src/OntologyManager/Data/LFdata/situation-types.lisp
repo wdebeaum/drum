@@ -702,7 +702,8 @@
  :parent ONT::event-of-causation
  :sem (F::Situation (:required (F::trajectory -))(:default (F::Cause F::agentive) (F::aspect F::dynamic) (F::time-span F::extended)))
  :arguments ((:REQUIRED ONT::Agent (F::Phys-obj (f::origin f::living)))
-             (:REQUIRED ONT::Affected (F::Phys-obj (F::mobility F::movable) (F::form F::substance) (f::object-function f::comestible)))   
+             (:REQUIRED ONT::Affected (F::Phys-obj (F::mobility F::movable) ;(F::form F::substance) ; allows f::solid-object also (e.g., animals)
+						   (f::object-function f::comestible)))   
              )
  )
 
@@ -715,7 +716,7 @@
 (define-type ONT::eat
  :wordnet-sense-keys ("eat%2:34:00" "eat%2:34:02")
  :parent ONT::consume
-  :arguments ((:REQUIRED ONT::Affected (F::Phys-obj (F::Form f::solid))))
+  :arguments ((:REQUIRED ONT::Affected (F::Phys-obj (F::Form (? f f::solid f::solid-object)))))
  )
 
 

@@ -4258,7 +4258,7 @@
 ;; manage
 (define-type ONT::managing
     :parent ONT::control-manage
-    :arguments ((:ESSENTIAL ONT::Agent ((? agt F::Phys-obj f::abstr-obj) (F::intentional +))))
+    ;:arguments ((:ESSENTIAL ONT::Agent ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))) ; intentional -: the arrows/stars guide..., the proteins regulate... ; f::situation: the activation of the drug subdued...
  :comment "take responsibility over the production of a project, a program, or a production" 
  )
 

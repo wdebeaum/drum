@@ -426,9 +426,11 @@
 	;			(eq (second (fourth x)) 'w::word))
 	;		     (get-word-def w nil)))
 	 (entries (remove-if-not #'(lambda (x)
-				(eq (second (fourth x)) 'w::n))
-			     (get-word-def w nil)))
-	 (c (cddr (fourth (first entries))))
+				     (and (eq (second (fourth x)) 'w::n)
+					  (equal (second x) w))) ; remove multi-words that are returned with the single word lookup
+				 (get-word-def w nil)))
+	 (entries-sorted (sort entries #'> :key #'third))
+	 (c (cddr (fourth (first entries-sorted))))
 	 (lf (parser::get-fvalue c 'w::lf)))
     (second lf)))
     
