@@ -1,6 +1,6 @@
 # Log.pm
 #
-# Time-stamp: <Tue Feb 14 11:38:14 CST 2017 lgalescu>
+# Time-stamp: <Thu Feb 21 12:00:31 CST 2019 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 29 Apr 2016
 #
@@ -22,11 +22,13 @@
 # 2017/01/11 v1.4	lgalescu
 # - Made default not to print caller info (too verbose).
 # 2017/02/03 v1.4.1	lgalescu
-# - made part of TRIPS util (changed package)
+# - Made part of TRIPS util (changed package)
+# 2019/02/21 v1.4.2	lgalescu
+# - Fixed calls to printf to avoid invalid conversion warnings.
 
 package util::Log;
 
-$VERSION = '1.4.1';
+$VERSION = '1.4.2';
   
 use strict 'vars';
 use warnings;
@@ -50,6 +52,10 @@ my $oldfh = select(STDERR); $| = 1; select($oldfh);
 
 sub INFO {
     my ($fmt, @args) = @_;
+    unless (@args) {
+	push @args, $fmt;
+	$fmt = "%s";
+    }
     printf STDERR "[INFO] ".$fmt."\n", @args;
 }
 
@@ -60,6 +66,10 @@ sub WARN {
     if ($CallerInfo) {
 	my ($caller, $file, $line) = caller(0);
 	$call_info = sprintf(" at %s:%d", $file, $line);
+    }
+    unless (@args) {
+	push @args, $fmt;
+	$fmt = "%s";
     }
     printf STDERR "[WARNING%s] ".$fmt."\n", $call_info, @args;
 }
@@ -73,6 +83,10 @@ sub DEBUG {
 	my ($caller, $file, $line, $func) = caller(0);
 	$call_info = sprintf(" at %s:%d in %s()", $file, $line, $func);
     }
+    unless (@args) {
+	push @args, $fmt;
+	$fmt = "%s";
+    }
     printf STDERR "[DEBUG(%d)%s] ".$fmt."\n", $level, $call_info, @args;
 }
 
@@ -84,6 +98,10 @@ sub ERROR {
 	my ($caller, $file, $line, $func) = caller(0);
 	$call_info = sprintf(" at %s:%d in %s()", $file, $line, $func);
     }
+    unless (@args) {
+	push @args, $fmt;
+	$fmt = "%s";
+    }
     printf STDERR "[ERROR%s] ".$fmt."\n", $call_info, @args;
 }
 
@@ -93,6 +111,10 @@ sub FATAL {
     if ($CallerInfo) {
 	my ($caller, $file, $line, $func) = caller(0);
 	$call_info = sprintf(" at %s:%d in %s()", $file, $line, $func);
+    }
+    unless (@args) {
+	push @args, $fmt;
+	$fmt = "%s";
     }
     die sprintf("[FATAL%s] ".$fmt."\n", $call_info, @args);
 }
@@ -144,7 +166,7 @@ the message is printed (unless overridden by B<$util::Log::Quiet>).
 
 =back
 
-Also, as can be seen in the examples above, this logger's functions can use 
+As can be seen in the examples above, this logger's functions can use 
 B<sprintf> formatting.
 
 All logging messages are printed to B<stderr>.
@@ -171,7 +193,7 @@ Lucian Galescu <lgalescu@ihmc.us>
 
 =head1 COPYRIGHT AND LICENCE
 
-Copyright (C) 2016 by Lucian Galescu <lgalescu@ihmc.us>.
+Copyright (C) 2016-2019 by Lucian Galescu <lgalescu@ihmc.us>.
 
 This module is free software. You can redistribute it and/or modify it under 
 the terms of the Artistic License 2.0.
