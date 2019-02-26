@@ -1127,7 +1127,7 @@
 
 ;; top level for change: states, situations, objects
 (define-type ont::change
- :wordnet-sense-keys ("change%1:07:00" "variety%1:07:01" "change%1:06:01" "change%2:30:00" "change%1:04:00" "change%1:19:00" "change%2:30:02" "change%2:30:08" "change%2:30:01" "transition%2:30:00")
+ :wordnet-sense-keys ("change%1:07:00" "change%1:06:01" "change%2:30:00" "change%1:04:00" "change%1:19:00" "change%2:30:02" "change%2:30:08" "change%2:30:01" "transition%2:30:00")
   :parent ont::event-of-causation
   :sem (F::Situation (F::Cause F::force))
   :arguments (
@@ -3872,7 +3872,7 @@
  )
 
 (define-type ONT::increase
- :wordnet-sense-keys ("increase%2:30:00")
+ :wordnet-sense-keys ("increase%2:30:00" "increase%1:11:00")
  :parent ONT::change-magnitude
  )
 
@@ -3899,7 +3899,8 @@
 ; )
 
 (define-type ONT::decrease
- :wordnet-sense-keys ("decrease%2:30:00" "decrease%2:30:01" "diminish%2:30:00" "lessen%2:30:00" "fall%2:30:06" "mitigate%2:32:00")
+    :wordnet-sense-keys ("decrease%2:30:00" "decrease%2:30:01" "diminish%2:30:00" "lessen%2:30:00" "fall%2:30:06" "mitigate%2:32:00"
+					    "decrease%1:11:00")
  :parent ONT::change-magnitude
  )
 
@@ -3911,7 +3912,7 @@
 
 
 (define-type ONT::fluctuate
- :wordnet-sense-keys ("fluctuate%2:30:00")
+ :wordnet-sense-keys ("fluctuate%2:30:00" "fluctuation%1:110:01")
  :parent ONT::change
  )
 
@@ -4198,6 +4199,11 @@
  :parent ont::damage
  :wordnet-sense-keys("mangle%2:30:01" "mar%2:30:00")
 )
+
+(define-type ont::spoil
+ :parent ont::damage
+ :wordnet-sense-keys("adulteration%1:04:00" "spoil%2:30:01")
+ )
 
 (define-type ONT::dent
  :wordnet-sense-keys ("dent%2:35:00" "indent%2:35:00" "bruise%2:30:00")

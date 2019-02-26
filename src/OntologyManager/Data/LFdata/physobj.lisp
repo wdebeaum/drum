@@ -419,6 +419,7 @@
 
 (define-type ONT::FACILITY
     :parent ONT::man-made-structure
+    :wordnet-sense-keys ("facility%1:04:01" "facility%1:06:00")
     :sem (F::Phys-obj (F::spatial-abstraction (? sa F::spatial-point F::spatial-region))
 		      (F::origin F::Artifact)(F::trajectory -)
 		      (f::object-function f::provides-service-open-closed)
@@ -670,7 +671,7 @@
     )
 
 (define-type ONT::MANUFACTURED-OBJECT
-    :wordnet-sense-keys ("instrumentation%1:06:00" "instrumentality%1:06:00" "artifact%1:03:00" "artefact%1:03:00")
+    :wordnet-sense-keys ("artifact%1:03:00" "artefact%1:03:00")
     :parent ONT::PHYS-OBJECT
     :sem (F::Phys-obj (:required (F::origin F::artifact))(:default (F::Form F::solid-object)))
     )
@@ -1027,12 +1028,21 @@
     :sem (F::Phys-obj (F::container +))
     )
 
-(define-type ONT::VEHICLE-CONTAINER
+
+(define-type ONT::vessel
     :parent ONT::MANUFACTURED-OBJECT
-    :sem (F::Phys-obj (F::Mobility F::non-self-moving)
-		      (F::Container +)
+    :comment "an object designed to hold something"
+    :wordnet-sense-keys ("vessel%1:06:01")
+    :sem (F::Phys-obj (F::container +)
 		      (F::Object-Function F::Container-object)
-		      (F::Form F::Enclosure))
+		       (F::Form F::Enclosure))
+    )
+
+(define-type ONT::VEHICLE-CONTAINER
+    :parent ONT::vessel
+   ;; :wordnet-sense-keys ("vessel%1:06:01")
+    :sem (F::Phys-obj (F::Mobility F::non-self-moving)
+		      )
     :arguments ((:OPTIONAL ONT::Contents (F::PHYS-OBJ (F::MOBILITY F::MOVABLE) (F::Spatial-abstraction F::Spatial-point))
 			   )
 		)
@@ -1048,11 +1058,13 @@
     )
 
 (define-type ONT::TANK
-    :parent ONT::VEHICLE-CONTAINER
+    :parent ONT::Vessel
+     :wordnet-sense-keys ("tank%1:06:00")
     )
 
 (define-type ONT::TANKER
     :parent ONT::VEHICLE-CONTAINER
+    :wordnet-sense-keys ("tank%1:06:02")
     )
 
 (define-type ONT::unfortunate
@@ -1897,7 +1909,7 @@
 ;;; maybe this should be renamed to human-body-part?
 ;; what about animal body parts? the dog's leg?
 (define-type ONT::body-part
-    :wordnet-sense-keys ("body_part%1:08:00" "organ%1:08:00" )
+    :wordnet-sense-keys ("body_part%1:08:00" )
     :parent ONT::anatomy
     :sem (F::Phys-obj ;;(F::origin F::living)
 		      (f::intentional -) (f::form f::object) (f::object-function f::body-part) (f::container +))
@@ -2047,7 +2059,7 @@
 
 (define-type ONT::EQUIPMENT
     :parent ONT::MANUFACTURED-OBJECT
-    :wordnet-sense-keys ("equipment%1:06:00")
+    :wordnet-sense-keys ("equipment%1:06:00" "instrumentality%1:06:00")
     :sem (F::Phys-obj (F::Origin F::Artifact))
     )
 
@@ -2271,6 +2283,7 @@
 
 (define-type ONT::FLAG
     :parent ONT::manufactured-object
+    :wordnet-sense-keys ("flag%1:06:00")
     :sem (f::Phys-obj (:required (f::form f::object) (f::intentional -) (f::information -) (f::object-function f::representation))
 		      (:default (f::mobility f::non-self-moving))
 		      ))
