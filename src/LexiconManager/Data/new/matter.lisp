@@ -34,7 +34,7 @@
     ((EXAMPLE "Does it matter")
      (LF-PARENT ONT::SALIENCE)
      (SEM (F::Aspect F::Indiv-level) (F::Time-span F::extended))
-     (TEMPL THEME-TEMPL)
+     (TEMPL NEUTRAL-TEMPL)
      )
     ((EXAMPLE "It doesn't matter that the switch is off")
      (LF-PARENT ONT::SALIENCE)

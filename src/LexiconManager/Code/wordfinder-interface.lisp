@@ -120,7 +120,7 @@
 			     (eq (cadr word) (vocabulary-entry-particle (third x)))))
 			 (getworddefs (car word) *lexicon-data*))
       (getworddefs word *lexicon-data*)))
-      
+
 (defun get-senses-for-words (w words-to-replicate lf pos)
   (let (filtered-words templates-to-replicate senses-to-replicate)
     (dolist (word-pair words-to-replicate)
@@ -138,18 +138,24 @@
 	      (if (eq (sense-definition-lf-parent sense) lf)
 		  (pushnew (list (sense-definition-templ sense) (sense-definition-params sense)) templates-to-replicate  :test #'equal))
 	      )))))
-    ;; create the replicated senses
-    (print-debug "~% templates to replicate = ~S" templates-to-replicate)
-    (dolist (template templates-to-replicate)
-      (pushnew (make-sense-definition :pos pos :lf (list :* lf w) :nonhierarchy-lf nil
-								  :pref *no-kr-probability*
-								  :lf-form (if (listp w) (make-into-symbol w) w)
-								  :lf-parent lf
-								  :templ (first template)
-								  :params (second template)
-								  :boost-word nil) senses-to-replicate :test #'equal))
-    senses-to-replicate)
-  )
+    (if templates-to-replicate
+	(progn
+	  ;; create the replicated senses
+	  (print-debug "~% templates to replicate = ~S" templates-to-replicate)
+	  (dolist (template templates-to-replicate)
+	    (pushnew (make-sense-definition :pos pos :lf (list :* lf w) :nonhierarchy-lf nil
+					    :pref *no-kr-probability*
+					    :lf-form (if (listp w) (make-into-symbol w) w)
+					    :lf-parent lf
+					    :templ (first template)
+					    :params (second template)
+					    :boost-word nil) senses-to-replicate :test #'equal))
+	  senses-to-replicate)
+	;;  sense had no words associated with it, try a subtype
+	(let ((children (om::get-children lf)))
+	  (when children
+	    (get-senses-for-words w (get-words-from-lf (car children)) (car children) pos) 
+	)))))
 
 
 (defun make-default-sense (w lf pos)

@@ -1384,7 +1384,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	   ;(setq type 'ont::phys-object)
 	   (setq res (dynamic-add-lexeme (list word) 'w::n type templ)))
 	  (w::v
-	   (setq templ 'arg0-arg1-xp-templ)
+	   (setq templ 'agent-affected-xp-templ)
 	   ;(setq type 'ont::situation-root)
 	   (setq res (dynamic-add-lexeme (list word) 'w::v type templ)))
 	  (w::adj
