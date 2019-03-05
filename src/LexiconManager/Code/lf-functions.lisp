@@ -141,7 +141,7 @@ structure out of it."
 	    (with-slots ((bfeats feats) (bpref pref) (bid id)) bdef
 	      (let* ((bfeats (lex-entry-feats bdef))
 	             (blf (strip-out-lf (get-feature-values bfeats 'w::lf))))
-		(when (not (is-compared alf blf checked))
+		(when (not (is-compared aid bid checked))
 		  (cond ((equal alf blf) ;; equal -- do nothing
 			)
 		      ((om::is-sublf alf blf) ;; a is a child of b

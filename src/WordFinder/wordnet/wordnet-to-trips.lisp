@@ -59,7 +59,7 @@
   "Each sense returned is associated with a score. Scores begin at .99 and are decremented as we step through the list of senses as a rough means of ranking senses by frequency. WordNet lists senses in order of frequency based on their corpora statistics. The actual sense frequency score is not currently part of the WN download, so we rely on the synset ordering for now to create a relative ranking, which determines which senses are preferred by the parser."
     (declare (ignore wn-sense-keys))
   (let ((ncount 0) (vcount 0) (adjcount 0) (advcount 0)
-	 (nscore 1) (vscore 1) (adjscore 1) (advscore 1) ; we decf before the first sense, so these will be 0.99
+	 (nscore .99) (vscore .99) (adjscore .99) (advscore .99) ; we decf before the first sense, so these will be 0.985
 	 senselist n-lftypes v-lftypes adj-lftypes adv-lftypes)
         ;; get as many as senselimit trips senses for each POS given synsets
 	;; with special handling for names, and verbs mapping to ONT::situation-root
@@ -151,10 +151,10 @@
 	      (loop for (pos . sense) in senselist
 	      	    for new-score =
 		      (ecase pos
-		        (w::n   (decf   nscore 0.01))
-			(w::v   (decf   nscore 0.01))
-			(w::adj (decf adjscore 0.01))
-			(w::adv (decf advscore 0.01))
+		        (w::n   (decf   nscore 0.005))
+			(w::v   (decf   nscore 0.005))
+			(w::adj (decf adjscore 0.005))
+			(w::adv (decf advscore 0.005))
 			)
 		    when sense ; get rid of nil senses for duplicate or subsumed
 		    collect (replace-arg-in-act sense :score new-score)))
@@ -2159,4 +2159,3 @@
         (get-sense-key ss (slot-value (first (slot-value ss 'words)) 'word)))
       lcas
       )))
-
