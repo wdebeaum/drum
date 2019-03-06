@@ -8,7 +8,7 @@
   (wordfeats (W::morph (:forms (-vb) :nom W::translation)))
  (senses
    ((meta-data :origin task-learning :entry-date 20050829 :change-date nil :comments nil)
-   (LF-PARENT ONT::change-format)
+   (LF-PARENT ONT::translate)
    (example "translate the code to java")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
    (TEMPL AGENT-affected-RESULT-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? pt w::into W::to)))))

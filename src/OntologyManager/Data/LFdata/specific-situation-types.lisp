@@ -3510,7 +3510,7 @@
 
 ; size-scale
 (define-type ont::enlarge
- :wordnet-sense-keys ("enlarge%2:30:00" "hypertrophy%2:29:00")
+ :wordnet-sense-keys ("enlarge%2:30:00" "enlarge%2:30:03" "hypertrophy%2:29:00")
  :parent ont::change-in-size
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::size-scale) (F::orientation f::pos))))
 )
@@ -3916,10 +3916,11 @@
  :parent ONT::change
  )
 
-(define-type ONT::change-format
+(define-type ONT::translate
  :parent ONT::adjust
  :arguments ((:optional ont::affected ((? ff F::PHYS-OBJ F::Abstr-obj F::Situation)  (F::INFORMATION F::INFORMATION-CONTENT) ))
 	     )
+ :wordnet-sense-keys ("translate%2:32:00" "translate%2:30:01" "translate%2:32:06")
  )
 
 ; merged with ONT::CHANGE
@@ -4123,12 +4124,13 @@
 ;; cooking in liquid
 (define-type ont::cook-in-liquid
  :parent ont::cook
+ :wordnet-sense-keys ("fricassee%2:30:00" "souse%2:30:00")
 )
 
 ;; specific types for caet
 ;; cook by fully immersing in liquid
 (define-type ont::boil
- :wordnet-sense-keys ("boil%2:30:02" "boil%2:30:01" "boil%2:30:00")
+ :wordnet-sense-keys ("blanch%2:30:00" "boil%2:30:02" "boil%2:30:01" "boil%2:30:00" "coddle%2:30:00" "poach%2:30:00")
  :parent ont::cook-in-liquid
  :comment "cook by fully immersing in boiling (or close to boiling) liquid"
 )
@@ -5357,6 +5359,7 @@
  :parent ONT::domain-property
  :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj (F::origin F::living)))
              )
+ :wordnet-sense-keys ("time_of_life%1:28:00")
  )
 
 (define-type ont::status
@@ -5475,6 +5478,7 @@
              (:REQUIRED ONT::agent ((? ag F::phys-obj F::abstr-obj))) ; (F::intentional +)))
 	     (:ESSENTIAL ONT::formal (F::situation)) ;((? th33 F::phys-obj F::abstr-obj f::situation)))
              )
+ :wordnet-sense-keys ("use%2:41:03")
  )
 
 (define-type ONT::ARRIVE

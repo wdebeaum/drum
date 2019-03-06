@@ -15,6 +15,7 @@
 (define-type ont::social-contract
     :arguments ((:OPTIONAL ONT::FIGURE (f::situation)))
     :parent ont::mental-construction
+    :wordnet-sense-keys ("social_contract%1:26:00")
 )
 
 ;;; ont::social-imperative represents concepts which
@@ -40,7 +41,7 @@
 
 (define-type ont::judgement-val
   :parent ont::social-judgement
-  :wordnet-sense-keys ("justice%1:07:00" "injustice%1:07:00" "moral%3:00:00::" "immoral%3:00:00::" "immoral%3:00:00:wrong:01")
+  :wordnet-sense-keys ("moral%3:00:00::" "immoral%3:00:00::" "immoral%3:00:00:wrong:01")
 )
 
 (define-type ont::essential-contract
@@ -66,7 +67,7 @@
 
 (define-type ont::governing-principle
   :parent ont::social-contract
-  :wordnet-sense-keys ("morality%1:07:00" "morality%1:16:00" "ethic%1:09:00" "ethic%1:10:00")
+  :wordnet-sense-keys ("injustice%1:07:00" "justice%1:07:00" "morality%1:07:00" "morality%1:16:00" "ethic%1:09:00" "ethic%1:10:00")
 )
 
 (define-type ont::external-authority
