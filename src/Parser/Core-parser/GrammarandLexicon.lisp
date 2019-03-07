@@ -1037,7 +1037,8 @@ then convert the result  to the lex-entry format that the old parser code expect
 (defun expand-with-alternatives-if-necessary (entries feats)
   (if (every #'is-a-placeholder entries)
       (let* ((sense-info (car (find-arg feats :sense-info)))
-	     (alternates (find-arg sense-info :alternate-spellings)))
+	     (alternates (find-arg sense-info :alternate-spellings))
+	     (orig-lex (caadar entries))) ; what about multi-words?
 	(if alternates
 	    (let* ((neww (remove-if #'null (lexiconmanager::get-word-def (car (tokenize (car alternates)))
 									(list* :var-prefix *symbol-prefix* feats))))
@@ -1053,7 +1054,8 @@ then convert the result  to the lex-entry format that the old parser code expect
 			(more-good-ones 
 			 (remove-if #'is-a-placeholder next-alt)))
 		    
-			(append (mapcar #'tweak-score (append good-ones more-good-ones))  entries))
+			;(append (mapcar #'tweak-score (append good-ones more-good-ones))  entries))
+			(append (mapcar #'(lambda (x) (add-orig-lex x orig-lex)) (mapcar #'tweak-score (append good-ones more-good-ones)))  entries))
 		  ;; looks for more?
 		  (look-at-other-alternatives entries (cdr alternates) feats)
 		  ))
@@ -1067,6 +1069,14 @@ then convert the result  to the lex-entry format that the old parser code expect
   "lowers score a hair as its coming from the spelling correction"
   (list* (car c) (cadr c) (* (third c) .99)
 	 (cdddr c)))
+
+(defun add-orig-lex (c orig-lex)
+  "add a tag to indicate this is not the original spelling"
+  (list* (car c) (cadr c) (third c) 
+	 (append (cadddr c) (list (list 'w::orig-lex orig-lex)))
+	 (cddddr c) ; in case there are more terms 
+	 )
+  )
 
 (defun look-at-other-alternatives (entries alts feats)
   (if (null alts)

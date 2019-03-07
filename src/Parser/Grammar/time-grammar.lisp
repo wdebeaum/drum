@@ -22,10 +22,10 @@
 ;;(cl:setq *grammar-time-Values*
 (parser::augment-grammar
   '((headfeatures
-     (NP VAR KIND NAME PRO SPEC ATTACH Changeagr transform lex headcat)
-     (PP VAR KIND CASE MASS NAME agr SEM PRO SPEC QUANT ATTACH transform lex headcat)
-     (ADVBL SEM transform lex headcat)
-     (VALUE VAR transform lex headcat)
+     (NP VAR KIND NAME PRO SPEC ATTACH Changeagr transform lex orig-lex headcat)
+     (PP VAR KIND CASE MASS NAME agr SEM PRO SPEC QUANT ATTACH transform lex orig-lex headcat)
+     (ADVBL SEM transform lex orig-lex headcat)
+     (VALUE VAR transform lex orig-lex headcat)
      (time-value var transform headcat)
      )			
 
@@ -430,7 +430,7 @@
 ;;(cl:setq *grammar-TIME-LOC*
 (parser::augment-grammar
   '((headfeatures
-     (advbl headcat lex)
+     (advbl headcat lex orig-lex)
      (np pred  Changeagr transform headcat))
 
     
@@ -669,13 +669,13 @@
 (parser::augment-grammar
   '((headfeatures 
      (name var agr transform headcat)
-     (N1 var lex transform sem quantity subcat argument indef-only headcat)
-     (N var lex transform lf sem agr headcat)
-     (NP headcat lex)
-     (number-sequence headcat lex)
-     (mixed-sequence headcat lex)
+     (N1 var lex orig-lex transform sem quantity subcat argument indef-only headcat)
+     (N var lex orig-lex transform lf sem agr headcat)
+     (NP headcat lex orig-lex)
+     (number-sequence headcat lex orig-lex)
+     (mixed-sequence headcat lex orig-lex)
      (nname headcat)
-     (rnumber headcat lex restr var)
+     (rnumber headcat lex orig-lex restr var)
      (number headcat)
      )    
 
@@ -1309,8 +1309,8 @@
 
 (parser::augment-grammar
   '((headfeatures 
-     (DATE lex headcat agr)
-     (number ntype var lex headcat)
+     (DATE lex orig-lex headcat agr)
+     (number ntype var lex orig-lex headcat)
      )
 ;; Monday
     ((DATE (INT +) (LF ONT::DAY-NAME) (DOW ?var) (var *)
@@ -1326,8 +1326,8 @@
 ;; lex and headcat added for aug-trips
 (parser::augment-grammar
   '((headfeatures 
-     (DATE var lex headcat agr)
-     (number ntype var lex headcat)
+     (DATE var lex orig-lex headcat agr)
+     (number ntype var lex orig-lex headcat)
      )
 
   ;; 2004

@@ -1032,6 +1032,7 @@
     (let* ((constit (car constit-tree))
 	   (lf (get-value constit 'w::lf))
 	   (lex (get-value constit 'W::lex))
+	   (orig-lex (get-value constit 'W::orig-lex))
 	   (sem (get-value constit 'w::sem))
 	   (input (get-value constit 'w::input))
 	   (notes (get-value constit 'w::notes))
@@ -1039,14 +1040,18 @@
       (unless (or (null var) (assoc var (get-temp-symbol-table)))
 	(multiple-value-bind (new-lf pros)
 	    (remove-*pro*-from-lf lf)
-	  (add-to-temp-symbol-table var (if (constit-p new-lf) 
-					    (replace-sem-in-lf
-					     (add-feature-value
-					      (add-feature-value new-lf 'w::input input)
-					      'w::lex
-					      lex)
-							 sem)
-					    new-lf))
+	  (add-to-temp-symbol-table
+	   var
+	   (if (constit-p new-lf)
+	       (let* ((new-lf2 (add-feature-value
+				(add-feature-value new-lf 'w::input input)
+				'w::lex	lex))
+		      (new-lf3 (if (not (member orig-lex '(nil -)))
+				   (add-feature-value new-lf2 'w::orig-lex orig-lex)
+				 new-lf2)))
+		 (replace-sem-in-lf new-lf3 sem))
+	     new-lf))
+	     
 	  ;; if there were *PRO* objects found, add them too
 	  (if pros
 	      (mapc #'(lambda (x)

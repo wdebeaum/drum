@@ -12,7 +12,7 @@
 
 (parser::augment-grammar
  '((headfeatures
-    (vp vform var neg sem iobj dobj comp3 part cont aux tense-pro gap subj subjvar modal auxname lex headcat transform subj-map template complex)
+    (vp vform var neg sem iobj dobj comp3 part cont aux tense-pro gap subj subjvar modal auxname lex orig-lex headcat transform subj-map template complex)
     )
 
  ;; untensed vp
@@ -31,18 +31,18 @@
 
 (parser::augment-grammar
  '((headfeatures
-    (vp vform var agr neg sem iobj dobj comp3 part cont aux tense-pro gap subj subjvar modal auxname lex headcat transform subj-map template complex ellipsis)
-    (vp- vform var agr neg sem iobj dobj comp3 part cont   tense-pro aux modal auxname lex headcat transform subj-map advbl-needed
+    (vp vform var agr neg sem iobj dobj comp3 part cont aux tense-pro gap subj subjvar modal auxname lex orig-lex headcat transform subj-map template complex ellipsis)
+    (vp- vform var agr neg sem iobj dobj comp3 part cont   tense-pro aux modal auxname lex orig-lex headcat transform subj-map advbl-needed
 	 passive passive-map template result) 
-    (s vform var neg sem subjvar dobjvar cont  lex headcat transform ellipsis)
-    (cp vform var neg sem subjvar dobjvar cont  transform subj-map subj lex)
-    (v lex sem lf neg var agr cont aux modal auxname ellipsis tma transform headcat)
-    (aux vform var agr neg sem subj iobj dobj comp3 part cont  tense-pro lex headcat transform subj-map advbl-needed
+    (s vform var neg sem subjvar dobjvar cont  lex orig-lex headcat transform ellipsis)
+    (cp vform var neg sem subjvar dobjvar cont  transform subj-map subj lex orig-lex)
+    (v lex orig-lex sem lf neg var agr cont aux modal auxname ellipsis tma transform headcat)
+    (aux vform var agr neg sem subj iobj dobj comp3 part cont  tense-pro lex orig-lex headcat transform subj-map advbl-needed
 	 passive passive-map ellipsis contraction auxname) 
     ;; (pp var)
     ;; (pps var)
-    (utt neg qtype sem subjvar dobjvar cont lex headcat transform)
-    (pred qtype focus gap filled transform headcat lex)
+    (utt neg qtype sem subjvar dobjvar cont lex orig-lex headcat transform)
+    (pred qtype focus gap filled transform headcat lex orig-lex)
     )
    
    ;;  handling start and end of utterance
@@ -777,7 +777,10 @@
            (preadvbl -)
            (advbl-needed -)
            (lex ?hlex) (headcat ?hcat) ;; aug-trips
-           )))
+	   (dobjvar ?dobjvar)
+           ))
+    (not-bound (arg1 ?dobjvar))
+    )
    
    ;;  e.g., (the train) going to avon, (the train) loaded with oranges 
    ;; test: the dog barking.
@@ -1671,7 +1674,7 @@
      ?dobj
      ?!part
      ?comp
-    (bound (arg ?!gap))  ;; remember, we are parsing bottom up, so this must be bound from below
+    (bound (arg1 ?!gap))  ;; remember, we are parsing bottom up, so this must be bound from below
     )
       
    ;; particles with no independent semantics
@@ -2193,8 +2196,8 @@
  ;;== new passive treatment ====
 (parser::augment-grammar
  '((headfeatures
-    (vp- vform var agr neg sem iobj dobj comp3 part cont   tense-pro aux modal auxname lex headcat transform subj-map advbl-needed passive subjvar template result)
-    (v lex sem lf neg var agr cont aux modal auxname ellipsis tma transform headcat)
+    (vp- vform var agr neg sem iobj dobj comp3 part cont   tense-pro aux modal auxname lex orig-lex headcat transform subj-map advbl-needed passive subjvar template result)
+    (v lex orig-lex sem lf neg var agr cont aux modal auxname ellipsis tma transform headcat)
     (cp vform neg sem subjvar dobjvar cont  transform)
     )
 
@@ -2260,10 +2263,10 @@
 ;;  a few rules with exceptional head features
 (parser::augment-grammar
   '((headfeatures
-     (vp vform agr neg sem var subjvar dobjvar cont  lex headcat tma transform subj-map advbl-needed template)
-    (s vform neg cont  lex headcat transform advbl-needed)
-    (v lex sem lf neg var agr cont lex transform aux modal tma advbl-needed headcat)
-    (utt subjvar dobjvar cont lex headcat transform))  ;; I removes the SEM as i don't think it makes sense to move up to an S/UTT
+     (vp vform agr neg sem var subjvar dobjvar cont  lex orig-lex headcat tma transform subj-map advbl-needed template)
+    (s vform neg cont  lex orig-lex headcat transform advbl-needed)
+    (v lex sem lf neg var agr cont lex orig-lex transform aux modal tma advbl-needed headcat)
+    (utt subjvar dobjvar cont lex orig-lex headcat transform))  ;; I removes the SEM as i don't think it makes sense to move up to an S/UTT
 
     ;; ynq questions with be because subjvar must be set properly
     
@@ -2891,9 +2894,9 @@
 
 (parser::augment-grammar
   '((headfeatures
-     (s vform var neg sem dobjvar cont  lex headcat transform advbl-needed)
-     (pred qtype focus arg var sem wh lf lex headcat transform)
-     (vp- vform var agr neg sem iobj dobj comp3 part cont  tense-pro aux modal lex headcat transform tma subj-map advbl-needed template result)
+     (s vform var neg sem dobjvar cont  lex orig-lex headcat transform advbl-needed)
+     (pred qtype focus arg var sem wh lf lex orig-lex headcat transform)
+     (vp- vform var agr neg sem iobj dobj comp3 part cont  tense-pro aux modal lex orig-lex headcat transform tma subj-map advbl-needed template result)
      )
     
 
@@ -2966,7 +2969,7 @@
 ;; which is what uttwords have
 (parser::augment-grammar
   '((headfeatures
-    (utt cont lex headcat transform))
+    (utt cont lex orig-lex headcat transform))
 
  ;; test: hello
  ;; test: yes
@@ -3001,9 +3004,9 @@
 
 (parser::augment-grammar
  '((headfeatures
-    (vp vform agr comp3 cont postadvbl  aux modal lex headcat tma transform subj-map advbl-needed template)
-    (s vform var neg sem subjvar dobjvar comp3 cont  lex headcat transform subj advbl-needed)
-    (utt sem subjvar dobjvar cont lex headcat transform))
+    (vp vform agr comp3 cont postadvbl  aux modal lex orig-lex headcat tma transform subj-map advbl-needed template)
+    (s vform var neg sem subjvar dobjvar comp3 cont  lex orig-lex headcat transform subj advbl-needed)
+    (utt sem subjvar dobjvar cont lex orig-lex headcat transform))
    
      ;;   basic commands
     
@@ -3247,7 +3250,7 @@
 ;; aux rules which violate vp sem inheritance constraint
 (parser::augment-grammar
   '((headfeatures
-     (vp vform agr cont comp3 postadvbl aux modal auxname lex headcat transform subj-map template)     
+     (vp vform agr cont comp3 postadvbl aux modal auxname lex orig-lex headcat transform subj-map template)     
      (s vform neg comp3 cont headcat transform )
      )
     
@@ -3973,7 +3976,7 @@
 
 (parser::augment-grammar
  '((headfeatures
-    (vp vform agr comp3 cont postadvbl  aux modal lex headcat tma transform subj-map advbl-needed template subj subjvar))
+    (vp vform agr comp3 cont postadvbl  aux modal lex orig-lex headcat tma transform subj-map advbl-needed template subj subjvar))
     
         ;;  The dog barked the cat up the tree.
       ((vp (lf (% prop (class ONT::CAUSE-EFFECT) (var *) 
@@ -4066,7 +4069,7 @@
 
 (parser::augment-grammar
  '((headfeatures
-    (s vform agr comp3 cont postadvbl  aux modal lex headcat tma transform subj-map advbl-needed template subj subjvar))
+    (s vform agr comp3 cont postadvbl  aux modal lex orig-lex headcat tma transform subj-map advbl-needed template subj subjvar))
 
    ;; the news/message arrived that X  ==>   The news that X arrived
    ;;   also variants such as the news came that ...,

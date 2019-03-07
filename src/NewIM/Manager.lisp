@@ -317,10 +317,11 @@
   (if (consp x) (third x) nil))
 
 (defun add-lex (lf w)
-  (if w 
-      (append lf (list :lex w))
-      lf))
-
+;  (if w 
+;      (append lf (list :lex w))  ; we add the lex in the parser now
+;    lf))
+  lf)
+  
 (defun convert-lf-to-akrl (lf)
   (let* ((var (second lf))
 	 (type (get-ont-type (third lf)))
