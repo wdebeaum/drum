@@ -47,6 +47,7 @@ while (<>) {
     $value =~ s/\s*{[\w:\|]+}$//; # strip curly-braced xrefs from name
     $prev_field = $field unless ($field =~ /^\s{8}$/);
     if ($suffix and (not $indent) and $field =~ /^\s{8}$|Name:$/ and
+        $value ne 'Synonyms' and # ugh.
         grep { $_ eq $subfield } @name_subfields) {
       $ac_to_recname{$accession_number} = $value
         if ($field eq 'RecName:' and $subfield eq 'Full');
