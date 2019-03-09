@@ -4,7 +4,7 @@ package TextTagger;
 use TripsModule::TripsModule;
 @ISA = qw(TripsModule);
 
-use TextTagger::Util qw(remove_duplicates sets_equal union intersection set_difference tree_subst);
+use TextTagger::Util qw(remove_duplicates sets_equal union intersection set_difference tree_subst lisp_intern);
 use TextTagger::Escape qw(escape_for_quotes un_pipe_quote);
 use TextTagger::Tags2Trips qw(tags2trips tag2tripsLattice fillGaps sortTags splitClauses splitSentences reconcileQuotationsAndSentences filter_senses_from_word_blacklist filter_sense_infos_from_penn_pos_whitelist filter_phrases_from_short_sentences);
 use TextTagger::CombineTags qw(combine_tags);
@@ -1105,7 +1105,7 @@ sub receive_request
 	      undef
 	      : [map { normalize_drum_species($_) } @$value]);
 	} elsif ($keyword eq ':no-sense-words') {
-	  $self->{no_sense_words} = [map { lc($_) } @$value];
+	  $self->{no_sense_words} = [map { lc(un_pipe_quote($_)) } @$value];
 	} elsif ($keyword eq ':senses-only-for-penn-poss') {
 	  $self->{senses_only_for_penn_poss} = $value;
 	} elsif ($keyword eq ':min-sentence-length-for-phrases') {
@@ -1165,7 +1165,8 @@ sub receive_request
 	          @{$self->{drum_species}}]
 	     : 'all'
 	   ),
-	':no-sense-words', $self->{no_sense_words},
+	':no-sense-words',
+	  [map { lisp_intern(uc($_)) } @{$self->{no_sense_words}}],
 	':senses-only-for-penn-poss', $self->{senses_only_for_penn_poss},
 	':min-sentence-length-for-phrases', $self->{min_sentence_length_for_phrases},
 	':names-file',

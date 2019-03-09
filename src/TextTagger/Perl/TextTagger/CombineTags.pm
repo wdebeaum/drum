@@ -29,7 +29,8 @@ require Exporter;
 @EXPORT_OK = qw(combine_tags);
 
 use Data::Dumper;
-use TextTagger::Util qw(sets_equal union intersection remove_duplicates is_subset word_is_in_trips_lexicon);
+use TextTagger::Util qw(sets_equal union intersection set_difference remove_duplicates is_subset word_is_in_trips_lexicon);
+use TextTagger::Normalize qw(normalize);
 
 use strict vars;
 
@@ -193,23 +194,22 @@ sub sense_tag_to_info {
   };
 }
 
-# combine sense tags (for the same span) with each other, returning a list of sense info lists
-sub combine_sense_tags {
-  my @old_tags = @_;
+sub get_input_sense_info {
   my @new_infos = ();
-  # first, look for a single input sense tag, and just use that if it exists
-  for my $old_tag (@old_tags) {
+  for my $old_tag (@_) {
     if ((grep { $_ eq $old_tag->{source} } qw(input xml_input terms_input terms_from_file)) and
         ((exists($old_tag->{lftype}) and @{$old_tag->{lftype}} == 1) or
 	 (exists($old_tag->{'wn-sense-keys'}) and @{$old_tag->{'wn-sense-keys'}} == 1))) {
       push @new_infos, sense_tag_to_info($old_tag);
     }
   }
-  if (@new_infos == 1) { # found exactly one, return it
-    return @new_infos;
-  } else { # otherwise start over and fall back on the old strategy
-    @new_infos = ();
-  }
+  return @new_infos;
+}
+
+# combine sense tags (for the same span) with each other, returning a list of sense info lists
+sub combine_sense_tags {
+  my @old_tags = @_;
+  my @new_infos = ();
   # stably sort unscored tags before scored, and high scores before low
   use sort 'stable';
   @old_tags = sort {
@@ -248,6 +248,63 @@ sub combine_sense_tags {
     push @new_infos, sense_tag_to_info($old_tag) unless ($added);
   }
   return @new_infos;
+}
+
+# given the list of alternate spellings for the same span and a sense-info,
+# return the subset of the alternate spellings that were used to match that
+# sense (alternate spellings are assumed to be normalized)
+sub spellings_used_for_sense {
+  my ($alternate_spellings, $sense_info) = @_;
+  my $subset = [];
+  if (exists($sense_info->{'domain-specific-info'})) {
+    for my $dsi (@{$sense_info->{'domain-specific-info'}}) {
+      next unless (exists($dsi->{matches}));
+      for my $match (@{$dsi->{matches}}) {
+	my $norm_match = normalize($match->{matched});
+	push @$subset, $norm_match
+	  if (grep { $norm_match eq $_ } @$alternate_spellings);
+      }
+    }
+  }
+  return $subset;
+}
+
+# add alternate spellings to sense infos
+sub add_alternate_spellings {
+  my ($alternate_spellings, $sense_info) = @_;
+  if (@$alternate_spellings) {
+    $alternate_spellings = remove_duplicates($alternate_spellings);
+    my $added = 0; # have we added default alt. spellings to any sense-info yet?
+    if (@$sense_info) {
+      # subtract any alternate spellings that were used for specific senses
+      # from the default list, and add them to those senses
+      my $new_alternate_spellings = $alternate_spellings;
+      for (@$sense_info) {
+	my $subset = spellings_used_for_sense($alternate_spellings, $_);
+	if (@$subset) {
+	  $_->{'alternate-spellings'} = $subset;
+	  $new_alternate_spellings =
+	    set_difference($new_alternate_spellings, $subset);
+	}
+      }
+      $alternate_spellings = $new_alternate_spellings;
+      # if we still have some default alt. spellings left, add them to any
+      # generic senses (no DSI) we have
+      if (@$alternate_spellings) {
+	for (@$sense_info) {
+	  unless (exists($_->{'domain-specific-info'})) {
+	    $_->{'alternate-spellings'} = $alternate_spellings;
+	    $added = 1;
+	  }
+	}
+      }
+    }
+    if (@$alternate_spellings and not $added) { # nowhere for these to go
+      # so make a sense just for them
+      push @$sense_info, { 'alternate-spellings' => $alternate_spellings };
+    }
+  }
+  return @$sense_info;
 }
 
 # combine pos tags (for the same span) with each other, including penn-pos in
@@ -546,7 +603,16 @@ sub combine_tags_for_span {
   }
 
   # get sense info
-  my @sense_info = combine_sense_tags(@old_sense_tags);
+  # first, look for a single input sense tag, and just use that if it exists
+  my @sense_info = get_input_sense_info(@old_sense_tags);
+  unless (@sense_info == 1) {
+    # we didn't find exactly 1; fall back on the old strategy
+    @sense_info = combine_sense_tags(@old_sense_tags);
+    
+    # add alternate spellings to sense info (possibly adding a sense info just
+    # for alternate spellings that didn't fit in the others)
+    @sense_info = add_alternate_spellings($alternate_spellings, \@sense_info);
+  }
 
   # combine pos tags with each other and with the sense info
   @sense_info = combine_pos_tags(\@old_pos_tags, \@sense_info);
@@ -556,18 +622,6 @@ sub combine_tags_for_span {
 					$phrase_tag_sources,
                                         +{ %tag_prototype, type => 'prefer' },
   					@old_phrase_tags);
-
-  # add alternate spellings to sense info
-  if (@$alternate_spellings) {
-    $alternate_spellings = remove_duplicates($alternate_spellings);
-    if (@sense_info) {
-      for (@sense_info) {
-	$_->{'alternate-spellings'} = $alternate_spellings;
-      }
-    } else {
-      push @sense_info, { 'alternate-spellings' => $alternate_spellings };
-    }
-  }
 
   # collect all the tags to return
   my @new_tags = (((@sense_info > 0)?
@@ -614,6 +668,7 @@ sub remove_redundant_names {
 	     }
 	   } grep {
 	     exists($_->{'wn-sense-keys'}) or
+	     (not exists($_->{lftype})) or
 	     grep { $_ ne 'REFERENTIAL-SEM' } @{$_->{lftype}}
 	   } @{$old_tag->{'sense-info'}}
 	 ]

@@ -44,7 +44,7 @@
   (let* ((new-lfs (if *substitute-terms-in-extraction* 
 		      (let ((newlfs (replace-lfs-with-terms prior-extractions lfs nil)))
 			(if prior-extractions 
-			    (trace-msg 1 "~%Replacing LFS with extracted terms: ~S resulting in ~S" prior-extractions newlfs))
+			    (trace-msg 1 "~%Replacing LFS with extracted terms:~%~2:I~S~%... resulting in:~%~2:I~S" prior-extractions newlfs))
 			newlfs)
 		      lfs))
 	 (extractions (extract-events-from-lfs new-lfs (utt-record-uttnum rec) rule-groups)))
