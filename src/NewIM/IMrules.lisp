@@ -106,10 +106,10 @@
    ;; are there any green trucks?
    ((ONT::SPEECHACT ?v ONT::SA_YN-QUESTION :CONTENT ?!v1)
     (ONT::F ?!v1 ONT::EXISTS :neutral ?!n) 
-    (?!spec ?!n ?!t :MODS (?!m))
+    (?!spec ?!n ?!t) ;:MODS (?!m))
     (ONT::F ?!m ?!t2)
     -yes-no-question-suchthat>
-    (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n :suchthat ?!m)
+    (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n) ;:suchthat ?!m)
     ;(?!spec ?!n ?!t :suchthat ?!m)
     )
 

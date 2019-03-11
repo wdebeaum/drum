@@ -71,6 +71,19 @@ ONT::SIGNALING-PATHWAY ONT::MUTANT-OBJ ONT::WILDTYPE-OBJ ))
 	    :negation + 
 	    )
           )
+
+	  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+	  ; the downregulation of the gene
+	  ((ONT::EVENT ?ev ONT::INHIBIT :TYPE ONT::DOWNREGULATE)
+	   -downregulate>
+           100
+	   (ONT::EVENT ?ev ONT::MODULATE
+	    :polarity ONT::NEGATIVE
+	    :rule -downregulate>
+	    )
+          )
+
 	  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

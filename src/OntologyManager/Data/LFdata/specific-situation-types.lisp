@@ -5173,6 +5173,10 @@
  :comment "make it difficult for an effect or event to complete; obstruct an ongoing event"
     )
 
+(define-type ONT::downregulate
+ :parent ONT::hindering
+ )
+
 (define-type ONT::deprive
  :wordnet-sense-keys ("deprive%2:40:01" "strip%2:40:03" "divest%2:40:01")
  :parent ONT::hindering
