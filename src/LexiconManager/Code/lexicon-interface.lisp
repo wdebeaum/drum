@@ -1072,7 +1072,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 
 
 (defun eliminate-redundancies (entries)
-  entries)
+  (remove-duplicates entries :from-end t :test #'eq))
 #||
   "This does a final check to find redundant or subsumed entries from external resources"
   (when entries
