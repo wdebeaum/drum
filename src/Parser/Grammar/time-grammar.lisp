@@ -369,8 +369,12 @@
       ))
 
 
-     ;; m/s = meters per second
-      ((np (LF (% description (var ?v) (class ont::rate) (status indefinite) (constraint (& (repeats ?v1) (over-period ?per)))))
+    ;; m/s = meters per second
+    ;; added kg/ha etc
+    ((np (LF (% description (var ?v) (class ont::rate) (status indefinite)
+		(constraint (& (repeats ?v1)
+			       (over-unit ?per) ;(over-period ?per)
+			       ))))
             (var ?v) (case (? case sub obj)) (SORT UNIT-MEASURE) (AGR 3s)
             (time-converted +)
             (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::mobility -)
@@ -383,8 +387,11 @@
 		 (sem ?sem1)
 	          ))
        (punc (lex (? l slash punc-slash)))
-       (n (w::agr w::3s) (var ?v)	(LF ?per) (mass count)
-	(sem ($ f::time (f::scale ont::duration-scale))) (sem ?sem2)
+       (n (w::agr (? agr w::3s w::3p))  ; km is 3p: e.g., 5km
+	  (var ?v)	(LF ?per) (mass count)
+	  ;(sem ($ f::time (f::scale ont::duration-scale)))
+	  (sem ($ (? t f::time f::abstr-obj) (f::scale ont::measure-scale)))
+	  (sem ?sem2)
 	))
   
     ;; e.g., the gdp / gtp ratio

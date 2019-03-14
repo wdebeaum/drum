@@ -779,7 +779,7 @@
            (lex ?hlex) (headcat ?hcat) ;; aug-trips
 	   (dobjvar ?dobjvar)
            ))
-    (not-bound (arg1 ?dobjvar))
+    ;(not-bound (arg1 ?dobjvar)) ; can't have this for "Are there any genes it is upstream of?": dobj is bound but the pp inside the dobj has a gap
     )
    
    ;;  e.g., (the train) going to avon, (the train) loaded with oranges 
@@ -3631,7 +3631,8 @@
 
    
    ;; sentential conjunction
-   ;; both ss must be of the same type, decl or imperative
+   ;; both ss must be of the same type, decl or imperative <-- not anymore: I ate a pizza but what did Peter eat?
+   ;; stype can also be whq: "... and what did the dog chase?" (cf. "what chased the cat" can be decl)
    ;; he did this and/or/but he did that; do this and/or/but do that
    ;; test: bark and chase the cat.
    ((s (sseq +) (stype ?st) (var *)  (sem ?sem)
@@ -3642,13 +3643,13 @@
 		 (sequence (?v1 ?v2))))))
      )
     -s-conj2>
-    (head (s (stype (? st decl imp)) (subj ?subj1) (var ?v1) (sem ?s1)
+    (head (s (stype (? st decl imp whq)) (subj ?subj1) (var ?v1) (sem ?s1)
 	   (lf (% prop (class ?c1) (tma ?tma1)))
 	   (advbl-needed -)
 	   ))
     (conj (lf (? lx ont::or ont::and ont::but ont::however ont::plus ont::otherwise ont::so))
      (lex ?lex))
-    (s (stype (? st decl imp)) (subj ?subj2) (var ?v2) 
+    (s (stype (? st2 decl imp whq)) (subj ?subj2) (var ?v2)
      (advbl-needed -) (sem ?s2)
      (lf (% prop (class ?c2) (tma ?tma2))))
     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))

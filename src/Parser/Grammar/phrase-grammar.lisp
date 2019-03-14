@@ -3761,7 +3761,10 @@
     ((SPEC (LF ONT::INDEFINITE) ;(LF wh-quantity)
 	   (Lex (How ?l)) (headcat QUAN) (STATUS WH) (AGR ?a)
           (ARG ?arg) (MASS ?m) (WH Q) (WH-VAR *) (QUANT +) (VAR ?v)
-          (RESTR (& (SIZE (% *PRO* (STATUS WH) (VAR *) (CLASS ont::QUANTITY) (CONSTRAINT (& (QUAN ?lf) (suchthat ?arg)))))))
+          (RESTR (& (SIZE (% *PRO* (STATUS WH) (VAR *) (CLASS ont::QUANTITY)
+			     (CONSTRAINT (& (QUAN ?lf)
+					    ;(suchthat ?arg)
+					    ))))))
           (SUBCAT (% PP ))
           )
      -how-many-etc>
@@ -3771,7 +3774,10 @@
     ((SPEC (LF ONT::SM) ;(LF wh-quantity)
 	   (Lex (How ?l)) (headcat QUAN) (STATUS WH) (AGR ?a)
           (ARG ?arg) (MASS ?m) (WH Q) (WH-VAR *) (QUANT +) (VAR ?v)
-          (RESTR (& (QUANTITY (% *PRO* (STATUS WH) (VAR *) (CLASS ont::QUANTITY) (CONSTRAINT (& (QUAN ?lf) (suchthat ?arg)))))))
+          (RESTR (& (QUANTITY (% *PRO* (STATUS WH) (VAR *) (CLASS ont::QUANTITY)
+				 (CONSTRAINT (& (QUAN ?lf)
+						;(suchthat ?arg)
+						))))))
           (SUBCAT (% PP ))
           )
      -how-much>

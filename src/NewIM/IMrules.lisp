@@ -106,13 +106,23 @@
    ;; are there any green trucks?
    ((ONT::SPEECHACT ?v ONT::SA_YN-QUESTION :CONTENT ?!v1)
     (ONT::F ?!v1 ONT::EXISTS :neutral ?!n) 
-    (?!spec ?!n ?!t) ;:MODS (?!m))
+    (?!spec ?!n ?!t :MODS (?!m))
     (ONT::F ?!m ?!t2)
     -yes-no-question-suchthat>
-    (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n) ;:suchthat ?!m)
+    (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n :suchthat ?!m)
     ;(?!spec ?!n ?!t :suchthat ?!m)
     )
 
+   ;; are there any inhibitors?
+   ((ONT::SPEECHACT ?v ONT::SA_YN-QUESTION :CONTENT ?!v1)
+    (ONT::F ?!v1 ONT::EXISTS :neutral ?!n) 
+    (?!spec ?!n ?!t) ;:suchthat ?!m)
+    ;(ONT::F ?!m ?!t2)
+    -yes-no-question-suchthat2>
+    (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n) ;:suchthat ?!m)
+    ;(?!spec ?!n ?!t :suchthat ?!m)
+    )
+   
    ;; Do you know any good books?
    ;; Do you know any drugs for BRAF?
    ((ONT::SPEECHACT ?v ONT::SA_YN-QUESTION :CONTENT ?!v1)
@@ -279,7 +289,8 @@
 
      ;; e.g., Are any of those...
      ((ONT::SPEECHACT ?x (? sa ONT::SA_YN-QUESTION) :CONTENT ?!theme)
-      (?reln ?!theme ?type) ; beats -ynq1>
+      ;(?reln ?!theme ?type) ; beats -ynq1>
+      (?reln ?!theme ONT::BE :NOROLE -) ; beats -ynq1> ; excludes "are there any..."
       (?reln1 ?!t ONT::REFERENTIAL-SEM :QUAN ONT::ANY)
       -request-to-identify3c>
       (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!t :suchthat ?!theme)
@@ -477,7 +488,7 @@
       ;; e.g., What budget are we using?
 
    ((ONT::SPEECHACT ?!a ONT::SA_WH-QUESTION :FOCUS ?!ff :CONTENT ?!rr)
-       ((? spec ONT::WH-TERM ONT::WH-TERM-SET) ?!ff ?!type)
+       ;((? spec ONT::WH-TERM ONT::WH-TERM-SET) ?!ff ?!type)
        -standardQ>
        (ONT::ASK-WHAT-IS :who *USER* :to *ME* :what ?!ff :suchthat ?!rr)
 	)

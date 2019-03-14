@@ -129,7 +129,7 @@
     )
 
 (define-type ONT::GRAINS
-    :wordnet-sense-keys ("cereal%1:20:00")
+    :wordnet-sense-keys ("cereal%1:20:00" "teff%1:20:00")
     :parent ONT::plant
     )
 

@@ -789,7 +789,14 @@
 	(LOBJ (% W::NP) ONT::affected)
 	(LCOMP (:parameter xp (:default (% W::PP (W::ptype W::to)))) ONT::AFFECTED-RESULT)
 	))
-     
+
+      (AGENT-AFFECTED-AR-TO-optional-TEMPL
+       (ARGUMENTS
+	(LSUBJ (% W::NP) ONT::agent)
+	(LOBJ (% W::NP) ONT::affected)
+	(LCOMP (:parameter xp (:default (% W::PP (W::ptype W::to)))) ONT::AFFECTED-RESULT optional)
+	))      
+      
       (AGENT-AFFECTED-GOAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
