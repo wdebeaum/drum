@@ -555,12 +555,12 @@ intersection of an entry's tags and these tags is non-empty."
   )
 
 
-(defun gen-agentnomentry (word form entry)
+(defun gen-argumentnomentry (word form entry nomrolename)
    "This generates reuses the code to build NOM entries, with the additional feature :AGENTNOM +"
    (let* ((nom-entry (gen-nomentry word (case form (:agentnom :nom) (:agentnoms :noms)) entry)))
      (mapcar #'(lambda (x)
 		 (setf (sense-definition-syntax x)
-		       (cons '(W::Agent-nom +) (sense-definition-syntax x))))
+		       (cons (list nomrolename '+) (sense-definition-syntax x))))
 	     (vocabulary-entry-senses nom-entry))
      
      nom-entry
@@ -589,10 +589,10 @@ intersection of an entry's tags and these tags is non-empty."
 	(:agentnom
 	 (if irreg ;; a lexical value must have been defined in order to proceed
 	     (list morph-variant (list form (gen-id morph-variant) 
-				       (gen-agentnomentry morph-variant form entry)))))
+				       (gen-argumentnomentry morph-variant form entry 'w::agent-nom)))))
 	(:agentnoms
 	 (let ((morph-variant (or irreg (add-suffix (find-arg features :agentnom) "S"))))
-	   (list morph-variant (list form (gen-id morph-variant) (gen-agentnomentry morph-variant form entry)))))
+	   (list morph-variant (list form (gen-id morph-variant) (gen-argumentnomentry morph-variant form entry 'w::agent-nom)))))
 	(otherwise  (list morph-variant (list form (gen-id base) entry)))))
      ((listp morph-variant)
       ;; the variant is itself a compound word
@@ -641,7 +641,7 @@ intersection of an entry's tags and these tags is non-empty."
      the lexicon tables. If a composite entry it returns a list of form (COMPOSITE <remaining-words> <lex-entry>)"
   (let* ((sense-definitions (get-word-sense-definitions word lex-info lexicon-data))
 	 )
-	 ;; convert the senses from word-sense-definition format to lex-entry format
+     	 ;; convert the senses from word-sense-definition format to lex-entry format
     (mapcar #'(lambda (e)
 		(make-lexicon-entry word e))
 	    sense-definitions)

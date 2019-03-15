@@ -1105,7 +1105,22 @@ sub receive_request
 	      undef
 	      : [map { normalize_drum_species($_) } @$value]);
 	} elsif ($keyword eq ':no-sense-words') {
-	  $self->{no_sense_words} = [map { lc(un_pipe_quote($_)) } @$value];
+	  # fix pipequoted symbols with spaces in them being split into
+	  # multiple symbols by KQML.pm
+	  my @fixed = ();
+	  my $in_pipe_quote = 0;
+	  for (@$value) {
+	    if (/^\|/ and not /\|$/) {
+	      $in_pipe_quote = 1;
+	      push @fixed, $_;
+	    } elsif ($in_pipe_quote) {
+	      $fixed[-1] .= ' ' . $_;
+	      $in_pipe_quote = 0 if (/\|$/);
+	    } else {
+	      push @fixed, $_;
+	    }
+	  }
+	  $self->{no_sense_words} = [map { lc(un_pipe_quote($_)) } @fixed];
 	} elsif ($keyword eq ':senses-only-for-penn-poss') {
 	  $self->{senses_only_for_penn_poss} = $value;
 	} elsif ($keyword eq ':min-sentence-length-for-phrases') {

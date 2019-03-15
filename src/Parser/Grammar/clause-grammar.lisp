@@ -3635,23 +3635,25 @@
    ;; stype can also be whq: "... and what did the dog chase?" (cf. "what chased the cat" can be decl)
    ;; he did this and/or/but he did that; do this and/or/but do that
    ;; test: bark and chase the cat.
-   ((s (sseq +) (stype ?st) (var *)  (sem ?sem)
+   ((s (sseq +) (stype ?st) (var *)  (sem ?sem) (wh-var (?wh-var1 ?wh-var2))
+
      (lf (% prop (var *) (class ont::?class) 
 	    (constraint 
 	     (&  (operator (? lx ont::or ont::and ont::but ont::however ont::plus ont::otherwise ont::so))
 		 (lex ?lex)
-		 (sequence (?v1 ?v2))))))
+		 (sequence (?v1 ?v2))
+		 ))))
      )
     -s-conj2>
     (head (s (stype (? st decl imp whq)) (subj ?subj1) (var ?v1) (sem ?s1)
 	   (lf (% prop (class ?c1) (tma ?tma1)))
-	   (advbl-needed -)
+	   (advbl-needed -) (wh-var ?wh-var1)
 	   ))
     (conj (lf (? lx ont::or ont::and ont::but ont::however ont::plus ont::otherwise ont::so))
      (lex ?lex))
     (s (stype (? st2 decl imp whq)) (subj ?subj2) (var ?v2)
      (advbl-needed -) (sem ?s2)
-     (lf (% prop (class ?c2) (tma ?tma2))))
+     (lf (% prop (class ?c2) (tma ?tma2))) (wh-var ?wh-var2))
     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
     )

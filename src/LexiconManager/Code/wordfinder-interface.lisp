@@ -442,7 +442,7 @@
 (defun make-unknown-word-entry (word pos score feats wid lflist trips-sense-list penn-tag tagged-ont-types domain-info)
   "make an underspecified lexical entry for the unknown word"
     (declare (ignore tagged-ont-types))
-  (print-debug  "~%MAKE-UNKNOWN-WORD-ENTRY: generating word entry for ~S with ~S and ~S ~%" word pos lflist)
+  ;;(print-debug  "~%MAKE-UNKNOWN-WORD-ENTRY: generating word entry for ~S with ~S and ~S ~%" word pos lflist)
   (let* ((lfform (if (listp word) (make-into-symbol word) word))
 	(lf (car lflist))
 	(pos (if (listp pos) (car pos) pos))
@@ -590,7 +590,7 @@
      ;; if we failed to make an entry above, we do a generic one here
      
      (when (not res) ;; (find pos '(w::v w::adv w::name w::n))) 
-       (print-debug "making word sense for word ~S with pos ~S lf ~S sem ~S domain-info ~S~%" word pos lf sem domain-info)
+       (print-debug "making word sense for word ~S with pos ~S lf ~S sem ~S ~%     score=~S domain-info ~S~%" word pos lf sem score domain-info)
        (let* ((entry (make-word-sense-definition
 		      :name wid
 		      :pos pos
