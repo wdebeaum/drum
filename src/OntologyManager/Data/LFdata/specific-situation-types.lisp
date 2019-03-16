@@ -3088,11 +3088,13 @@
  :parent ONT::cause-come-from
  )
 
+#|
 (define-type ONT::deSelect
  :parent ONT::cause-come-from
  :arguments ((:REQUIRED ONT::AGENT ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
 	     (:ESSENTIAL ONT::FORMAL ((? tt F::phys-obj F::abstr-obj f::situation f::time))))
  )
+|#
 
 (define-type ONT::cause-out-of
  :wordnet-sense-keys ("extract%2:35:04" "pull_out%2:35:00" "pull%2:35:10" "pull_up%2:35:00" "take_out%2:35:09" "draw_out%2:35:05"  "purge%2:29:00")
@@ -3912,7 +3914,7 @@
 
 
 (define-type ONT::fluctuate
- :wordnet-sense-keys ("fluctuate%2:30:00" "fluctuation%1:110:01")
+ :wordnet-sense-keys ("fluctuate%2:30:00" "fluctuation%1:11:01")
  :parent ONT::change
  )
 
@@ -4176,7 +4178,7 @@
 
 ;; grow, thrive, flourish
 (define-type ONT::grow
- :wordnet-sense-keys ("grow%2:30:02" "cultivate%2:36:00" "grow%2:30:01" "develop%2:30:01" "grow%2:30:00" "develop%2:30:00")
+ :wordnet-sense-keys ("cultivate%2:36:00" "develop%2:30:00" "develop%2:30:01" "grow%2:30:00" "grow%2:30:01" "grow%2:30:02")
  :parent ONT::continuous-change
  :sem (F::SITUATION (F::Trajectory -))
  :arguments ((:optional ONT::Agent ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
