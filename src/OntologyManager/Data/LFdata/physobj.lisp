@@ -1730,7 +1730,7 @@
 
 (define-type ONT::CHART
     :parent ONT::direct-REPRESENTATION
-    :wordnet-sense-keys ("chart%1:10:00")
+    :wordnet-sense-keys ("chart%1:10:00" "table%1:14:00")
     :arguments ((:OPTIONAL ONT::FIGURE (?o (F::information F::information-content)))
 		)
     )

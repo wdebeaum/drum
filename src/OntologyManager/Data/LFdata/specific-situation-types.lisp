@@ -5190,7 +5190,7 @@
  )
 
 (define-type ONT::Prohibit
-    :wordnet-sense-keys ("abolish%2:41:00")
+    :wordnet-sense-keys ("abolish%2:41:00" "forbid%2:32:00")
     :parent ONT::inhibit-effect
  )
 
