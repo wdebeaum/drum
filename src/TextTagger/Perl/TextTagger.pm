@@ -141,6 +141,7 @@ sub handle_parameters {
   $self->{xml_tags_mode} = 'keep';
   $self->{parsers_must_agree} = 0;
   $self->{use_wordfinder} = 1;
+  $self->{allow_prefixes_for_words_only_in_wordnet} = 0;
   # process options
   eval {
   while (@argv) {
@@ -301,6 +302,9 @@ sub handle_parameters {
       die "Argument required for -aspell-dict"
         if (not defined($aspell_dict));
       $self->{aspell_dict} = $aspell_dict;
+    } elsif ($opt eq '-allow-prefixes-for-words-only-in-wordnet') {
+      $self->{allow_prefixes_for_words_only_in_wordnet} =
+        TripsModule::boolean_opt($opt, shift @argv);
     } elsif ($opt eq '') {
       # ignore (we get this from a bug in bash 3.2)
     } else {

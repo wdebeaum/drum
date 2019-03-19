@@ -54,7 +54,12 @@ sub remove_unusable_prefix_splits {
     my $root = $prefix->{root};
     my $whole = $prefix->{lex} . $root->{lex};
           # if the whole word is in TRIPS/WN...
-    if (word_is_in_trips_lexicon($self, $whole, 1) or
+    #if (word_is_in_trips_lexicon($self, $whole, 1) or
+    if (($self->{allow_prefixes_for_words_only_in_wordnet} ?
+	 (word_is_in_trips_lexicon($self, $whole, 0) and
+	  not word_is_in_trips_lexicon($self, $whole, 1))
+	 : word_is_in_trips_lexicon($self, $whole, 1)
+        ) or
         # ... or we have no sense (in TRIPS/WN or here) for the root
 	not (word_is_in_trips_lexicon($self, $root->{lex}, 1) or
 	     grep {

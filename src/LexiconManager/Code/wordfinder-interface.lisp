@@ -90,7 +90,7 @@
 	    #||  ;; check for hidden names: tagged as N, not penn taged as NNS and starts with a capital  (not sure what problem this solved - isit obsolete?)
 	      (if (and (eq pos 'w::n) (not (member 'w::nns penntag))
 		       (is-instance this-wf-entry)) (setq pos 'w::name))||#
-	      (let* ((score (get-wf-score this-wf-entry))
+	      (let* ((score (or score (get-wf-score this-wf-entry)))
 		     (feats (get-wf-feats this-wf-entry))
 		     (wf-word (get-wf-word this-wf-entry))
 		     (domain-info (get-wf-domain-info this-wf-entry))
@@ -269,10 +269,10 @@
 	   (w::AGR (? agr (w::1S w::2S w::3S w::1P w::2P w::3P)))))
 	((and (member 'w::VB penn-tags) (member 'w::VBP penn-tags))
 	 '((w::VFORM (? vf (w::BASE w::PRES)))
-	   (w::AGR (? agr (w::1S w::2S w::1P w::2P w::3P)))))
+	   (w::AGR (? agr (w::1S w::2S w::3s w::1P w::2P w::3P)))))
 	((and (member 'w::VBD penn-tags) (member 'w::VBN penn-tags))
 	 '((w::VFORM (? vf (w::PAST w::PASTPART)))
-	   (w::AGR (? agr (w::1S w::2S w::1P w::2P w::3P)))))
+	   (w::AGR (? agr (w::1S w::2S w::3s w::1P w::2P w::3P)))))
 	;; individual tags
 	((case (base-penn-tag penn-tags)
     ;  EX   (PRO)	; Existential there
