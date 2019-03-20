@@ -371,11 +371,10 @@
  )
 
 ;; bounce
-(define-type ONT::move-up-and-down
+(define-type ONT::bounce-reflect
  :parent ONT::MOVE
+ :wordnet-sense-keys ("bounce%2:35:03" "bounce%2:38:00" "bounce%2:38:02" "reflect%2:39:00" "reflect%2:43:00")
  )
-
-
 
 ;; pan
 (define-type ONT::pan
@@ -385,7 +384,7 @@
 ;; jump, hop
 (define-type ONT::jump
  :wordnet-sense-keys ("jump%2:38:01")
- :parent ONT::MOVE-up-and-down
+ :parent ONT::bounce-reflect
  )
 
 ;; sway, rock, quake
@@ -1036,7 +1035,7 @@
   :arguments ((:essential ONT::affected-result (F::Phys-obj (f::type ont::mammal)))))
 
 (define-type ONT::live
- :wordnet-sense-keys ("exist%2:42:01" "live%2:42:06" "live%2:42:07" "survive%2:42:01" "survive%2:42:02" "survive%2:42:00")
+ :wordnet-sense-keys ("exist%2:42:01" "live%2:42:06" "live%2:42:07" "outlast%2:42:00" "survive%2:42:00" "survive%2:42:01" "survive%2:42:02")
  :parent ONT::life-process
   :sem (f::situation (:default (f::aspect f::dynamic)))
   :arguments ((:essential ONT::neutral))
@@ -2165,7 +2164,7 @@
  )
 
 (define-type ONT::indict
- :wordnet-sense-keys ("charge%2:32:02" "accuse%2:32:01")
+ :wordnet-sense-keys ("accuse%2:32:01" "charge%2:32:02" "prosecute%2:41:00")
  :parent ONT::accuse
  )
 
@@ -3518,7 +3517,7 @@
 )
 
 (define-type ONT::swell
- :wordnet-sense-keys ("swell%2:30:00" "swell_up%2:30:00" "intumesce%2:30:00" "tumefy%2:30:00" "tumesce%2:30:00" "swell%2:30:01" "bloat%2:30:01" "bulk%2:30:00" "protrude%2:30:00" "rise%2:38:02" "raise%2:38:01")
+ :wordnet-sense-keys ("bloat%2:30:01" "bulk%2:30:00" "intumesce%2:30:00" "protrude%2:30:00" "protuberate%2:42:00" "protuberate%2:42:01" "raise%2:38:01" "rise%2:38:02" "swell%2:30:00" "swell%2:30:01" "swell_up%2:30:00" "tumefy%2:30:00" "tumesce%2:30:00")
  :parent ONT::change-in-size
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::size-scale) (F::orientation f::pos))))
  )
@@ -3874,7 +3873,7 @@
  )
 
 (define-type ONT::increase
- :wordnet-sense-keys ("increase%2:30:00" "increase%1:11:00")
+ :wordnet-sense-keys ("increase%1:11:00" "increase%2:30:00" "rise%2:37:00")
  :parent ONT::change-magnitude
  )
 
