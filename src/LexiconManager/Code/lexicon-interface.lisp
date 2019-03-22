@@ -697,7 +697,9 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 		    (if preference-found
 			(setf this-pref (boost-pref this-pref weight))
 			;; demote competing word senses
-			(setf this-pref (penalize-pref this-pref weight)))))	  
+			;;(setf this-pref (penalize-pref this-pref weight))
+			)))
+		    
 	      (pushnew def wdef))))
 	)
     wdef)
@@ -1065,7 +1067,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
     (setq res (eliminate-redundancies (remove-if #'null res)))
     (if res
 	(progn
-	  (print-debug "returning entries to parser for ~S ~S~%" w res)
+	  (print-debug "~%returning entries to parser for ~S ~S~%" w res)
 	  (listify-lex-entry res)); listify for the parser
 	;; making unknown word entry failed, make generic entry
 	(listify-lex-entry (make-default-unknown-word-entry w nil '(w::n) nil)))
@@ -1294,7 +1296,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
          ((or merged-trips-wn-pos-list penn-tags)
           (setq res (adjust-pos-preferences res trips-pos-list penn-tags)))
          (t nil))
-   (print-debug "process-word-request returns ~S~%" res)
+   (print-debug "~%process-word-request returns ~S~%" res)
    res)
  )
 

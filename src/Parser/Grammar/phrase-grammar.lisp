@@ -1074,7 +1074,7 @@
        ;;(post-subcat +)
        (no-postmodifiers +) ;; add an extra feature to say "no further postmodifiers". If we say "The bulb in 1 is in the same path as the battery in 1", we don't want "in 1" to attach to "the path"
       )
-     -N1-post-onesubcat-b> 0.98
+     -N1-post-onesubcat-b> 0.97
      (ADJ1 (atype (? at attributive-only central)) (ALLOW-POST-N1-SUBCAT -) ; "-" here so it's mutually exclusive with -N1-post-onesubcat>
       (LF ?qual) (lex ?lex1)
       (ARG ?v) (VAR ?adjv)
@@ -2760,7 +2760,7 @@
 	            (CLASS ?c) (CONSTRAINT ?r) (sem ?sem) (transform ?transform)))
              (SORT PRED) (VAR ?v)
              )
-         -bare-plural-mass>
+         -bare-plural-mass> .988   ;; just a hair less than the COUNT for cases where ther 
          (head (N1 (SORT PRED) (mass mass) (MASS ?m) 
 		(AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -) (agent-nom -)
 		(sem ?sem) (transform ?transform)
@@ -4706,12 +4706,13 @@
                 (transform ?transform)  (generated ?gen)
 		(constraint ?con)
                 ))
-      (mass count) (name +) (simple +) (time-converted ?tc) (generated ?gen)
+	 (mass ?mass) ; amount of Ras (mass)
+	 (name +) (simple +) (time-converted ?tc) (generated ?gen)
       (postadvbl ?gen) ;; swift -- setting postadvl to gen as part of eliminating gname rule but still allowing e.g. truck 1
       )
      -np-name> 0.995
      (head (name (lex ?l) (sem ?sem) (var ?v) (agr ?agr) (lf ?lf) (class ?class)
-		 (sort ?sort)
+		 (sort sort) (sem ($ (? !s F::time)))
 		 (full-name ?fname) (time-converted ?tc)
 		 ;; swift 11/28/2007 removing gname rule & passing up generated feature (instead of restriction (generated -))
 		 (generated ?gen)  (transform ?transform) (title -)
@@ -5318,12 +5319,12 @@
        (time-converted ?tc1) ;; MD 2008/03/06 Introduced restriction that only items with the same time-converted status can combine - i.e. don't mix number notation for times or non-times. 
        )
       (punc (lex punc-comma))
-      (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v)) ;; (status ?status))
-      (head (NP (VAR ?v2) (SEM ?s2) (ATTACH ?a) (lf ?lf2) (LF (% ?d (class ?c2) (status ?status))) (CASE ?case2) (mass ?m2) (constraint ?con)
-		(generated ?generated2)
-		(sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
+      (head (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v))) ;; (status ?status))
+      (NP (VAR ?v2) (SEM ?s2) (ATTACH ?a) (lf ?lf2) (LF (% ?d (class ?c2) (status ?status))) (CASE ?case2) (mass ?m2) (constraint ?con)
+       (generated ?generated2)
+       (sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
 		(time-converted ?tc1) 
-		))
+		)
       (punc (lex punc-comma))      
       (conj (but-not +))
       (np (var ?exception))
@@ -5351,13 +5352,14 @@
       (time-converted ?tc1) ;; MD 2008/03/06 Introduced restriction that only items with the same time-converted status can combine - i.e. don't mix number notation for times or non-times. 
       )
      (punc (lex punc-comma))
-     (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v) (status ?status))
-     (head (NP (VAR ?v2) (SEM ?s2) (ATTACH ?a) (lf ?lf2) (LF (% ?d (class ?c2))) (CASE ?case2) (mass ?m1) ;(mass ?m2)
+     (head (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v) (status ?status)))
+    
+      (NP (VAR ?v2) (SEM ?s2) (ATTACH ?a) (lf ?lf2) (LF (% ?d (class ?c2))) (CASE ?case2) (mass ?m1) ;(mass ?m2)
 	       (constraint ?con)
 	    (generated ?generated2) 
 	    (sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
 	    (time-converted ?tc1) 
-	    ))
+       )
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
      (simple-cons (in1 ?v2) (in2 ?lf1) (out ?members))
@@ -5431,7 +5433,7 @@
      (NP (SEM ?s1) (VAR ?v1) (agr ?agr)  (complex -) (expletive -) ;;(bare-np ?bnp)
 	    (generated ?gen1)  (time-converted ?tc1) (gerund ?ger) (wh ?wh); ok: which cats and which dogs; ok: which <cats and dogs> (use -two-n1-conjunct>); not ok: <which cat> and dog 
 	    ;; (bare-sequence -)
-	    (LF (% ?sort (class ?c1) (status ?status))) (CASE ?c) (constraint ?con) (mass ?m2) ;; allowing mismatch on mass
+	    (LF (% ?sort (class ?c1) (status ?status))) (CASE ?c) (constraint ?con) (mass ?m1) ;; allowing mismatch on mass
 	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram] 	    
 	    )
       (head (conj (SEQ +) (LF ?op) (var ?v) )) ;;(status ?status))
@@ -5439,7 +5441,7 @@
        (bare-np -)  ;; bare-NP should go through N!-conjunct, not NP-conjunct
        (generated ?gen2)  (time-converted ?tc1)  (gerund ?ger) (wh ?wh)
        ;; (bare-sequence -)
-       (LF (% ?sort (class ?c2) (status ?status2))) (CASE ?c) (constraint ?con2) (mass ?m1) ;; allowing mismatch on mass -- e.g. "fatigue and weakness"
+       (LF (% ?sort (class ?c2) (status ?status2))) (CASE ?c) (constraint ?con2) (mass ?m2) ;; allowing mismatch on mass -- e.g. "fatigue and weakness"
        (sort (? !sort unit-measure)))
       (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
       (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))

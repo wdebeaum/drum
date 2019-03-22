@@ -9,10 +9,11 @@
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("amount%1:03:00"))
      ;(LF-PARENT ONT::quantity)
      (LF-PARENT ONT::quantity-abstr)
-     (templ other-reln-templ)
+     (templ other-reln-subcat-mass-templ)
+     ;(templ other-reln-templ)
 ;     (TEMPL indef-classifier-templ)
      ;; ont::of is mass or plural -- amount of cake/*person
-     (example "a(n) (certain) amount of water" "a large amount of people")
+     (example "a(n) (certain) amount of water")
      )
     )
    )

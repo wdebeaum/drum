@@ -270,6 +270,29 @@
 	    ONT::FIGURE)
       ))
 
+  ; number of boxes
+  (OTHER-RELN-subcat-count-TEMPL
+   (SYNTAX(W::AGR (? a W::3s W::3p)) (W::MORPH (:FORMS (-S-3P))) (W::CASE (? cas W::sub W::obj)) (W::SORT 
+      W::OTHER-RELN) (w::allow-deleted-comp +) (W::MASS W::COUNT))
+   (ARGUMENTS
+    (SUBCAT (:parameter xp 
+			(:default (% W::PP (W::ptype W::of) (w::mass w::count))) ; boxes
+			(:required (W::sort (? !sort W::unit-measure))))
+	    ONT::FIGURE)
+      ))  
+
+  ; amount of water
+  (OTHER-RELN-subcat-mass-TEMPL
+   (SYNTAX(W::AGR (? a W::3s W::3p)) (W::MORPH (:FORMS (-S-3P))) (W::CASE (? cas W::sub W::obj)) (W::SORT 
+      W::OTHER-RELN) (w::allow-deleted-comp +) (W::MASS W::COUNT))
+   (ARGUMENTS
+    (SUBCAT (:parameter xp 
+			(:default (% W::PP (W::ptype W::of) (w::mass w::mass))) ; water
+			(:required (W::sort (? !sort W::unit-measure))))
+	    ONT::FIGURE)
+      ))  
+  
+  
   ;; an impro that is a TIME-LOC
    (TIME-RELN-TEMPL
    (SYNTAX(W::AGR (? a W::3s W::3p)) (W::MORPH (:FORMS (-S-3P))) (W::CASE (? cas W::sub W::obj)) (W::SORT 
@@ -495,7 +518,8 @@
   ;; the constraint that it must be less than 500 dollars
   (count-subcat-that-optional-templ
    (SYNTAX(W::AGR (? a W::3s W::3p)) (W::MORPH (:FORMS (-S-3P))) (W::CASE (? cas W::sub W::obj)) (W::SORT 
-      W::PRED) (w::allow-deleted-comp +) (W::MASS W::COUNT))
+      W::PRED) ;(w::allow-deleted-comp +)
+(W::MASS W::COUNT))
    (ARGUMENTS
     (SUBCAT (:parameter xp (:default (% W::cp (W::ctype W::s-finite) (W::subj ?lsubj)))) ONT::formal optional)
     ))
