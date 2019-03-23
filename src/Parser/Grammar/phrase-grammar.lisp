@@ -1867,9 +1867,9 @@
 
    
    ;; the standard "than PP" is the typical case
-   ((COMPAR (var ?v))
+   ((COMPAR (var ?v) (sem ?sem))
     -compar-than-pp> 1
-    (PP (var ?v) (ptype THAN)))
+    (PP (var ?v) (ptype THAN) (sem ?sem)))
 
    ;; e.g.,  It is larger than expected
    ((compar (Var ?v))
