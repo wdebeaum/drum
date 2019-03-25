@@ -2429,18 +2429,19 @@
 
 (parser::augment-grammar 
       '((headfeatures
-         (NP CASE MASS NAME agr SEM PRO CLASS Changeagr ARGUMENT argument-map SUBCAT role lex orig-lex headcat transform postadvbl refl gerund abbrev derived-from-name
-	  subj dobj subcat-map comp3-map)) ; no gap
+         (NP CASE NAME agr SEM PRO CLASS Changeagr ARGUMENT argument-map SUBCAT role lex orig-lex headcat transform postadvbl refl gerund abbrev derived-from-name
+	  subj dobj subcat-map comp3-map)) ; no gap/mass
 
 	;;  special rule for proteins that are tagged as common nouns but used as names
 	((NP (LF (% Description (STATUS ONT::definite) (VAR ?v) (SORT INDIVIDUAL)
 	            (CLASS ?c) (CONSTRAINT ?constraint) (sem ?sem) (transform ?transform)))
              (SORT PRED) (VAR ?v)
              (BARE-NP +) (name-or-bare ?nob)
-	     (simple +)
+	     (simple +) (mass ?mass) ; amount of Ras (mass)
 	     )
          -protein-name-constructor> 0.995
-         (head (N (SORT PRED) (MASS  count) (gerund -) (complex -) 
+         (head (N (SORT PRED) ;(MASS  count)
+		  (gerund -) (complex -) 
 		   (name-or-bare ?nob) (lex ?lex)
 		   (derived-from-name -)  ;; names already can become NPs by simpler derivations
 		   (AGR 3s) (VAR ?v)
@@ -4693,6 +4694,8 @@
 	    ))
      ?part
      )
+
+    
     ;; swift 11/28/2007 there is no more gname status
     ;; Myrosia 2/12/99: changed the rule so that class in LF comes from class
     ;; Added "postadvbl -" to handle things like "elmwood at genesee"
