@@ -3197,6 +3197,10 @@ z%1:10:00::
 
 miss%2:42:02::    ; it only appears like an adjective. "the children are missing" We already have missing as an adjective under NOT-AVAILABLE-VAL.
 
+keep_quiet%2:32:00::
+keep_to_oneself%2:41:00::
+
+
 closer%1:18:00::
 closer%1:18:01::  ; this is possible but really interferes with the adj sense
 least%1:09:00::

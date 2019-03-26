@@ -13,7 +13,7 @@
      (PREFERENCE 0.96)
      )
     
-    ((LF-PARENT ONT::fail)
+    ((LF-PARENT ONT::miss)
      (TEMPL agent-neutral-XP-TEMPL)
      (meta-data :origin fruitcarts :entry-date 20050427 :change-date nil :comments nil)
      (example "miss the target")

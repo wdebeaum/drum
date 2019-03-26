@@ -1055,11 +1055,12 @@
 ;     )
 
 (define-type ont::miss
-    :parent ONT::acting
+    :parent ONT::fail
     :arguments (
 ;		(:OPTIONAL ONT::Instrument (F::Phys-obj (F::intentional -)))
 		(:REQUIRED ONT::affected)
 		)
+    :wordnet-sense-keys ("miss%2:35:00")
  )
 
 #| ; merged into COMPLETE
