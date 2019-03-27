@@ -4695,7 +4695,6 @@
      ?part
      )
 
-    
     ;; swift 11/28/2007 there is no more gname status
     ;; Myrosia 2/12/99: changed the rule so that class in LF comes from class
     ;; Added "postadvbl -" to handle things like "elmwood at genesee"
@@ -5959,7 +5958,7 @@
 
 (parser::augment-grammar	 
   '((headfeatures
-     (N1 lf lex orig-lex headcat transform set-restr refl abbrev subcat subcat-map)
+     (N1 lf headcat transform set-restr refl abbrev subcat subcat-map) ; no lex/orig-lex
      )
 
     ;; this rule handles rate/activity constructions - e.g., the binding rate of ras on raf
@@ -5969,7 +5968,7 @@
 	  (gap -) (var ?v) (agr ?agr) (gerund ?ger)
 	  (sem ?sem) (mass ?mass) (pre-arg-already ?npay)
 	  (case ?case)
-	  (class ?class)
+	  (class ?class) (lex ?lex) (orig-lex ?orig-lex)
 	  (restr ?restr)
 	  (subj ?subj)
 	  (subj-map ?subjmap)
@@ -5977,16 +5976,16 @@
 	  (dobj-map ?dobjmap) ;; eliminate the dobj-map so we can't assign another
 	  (comp3 ?comp3)
 	  (comp3-map ?comp-map)
-	  (rate-activity-nom ?ratelf)
+	  (rate-activity-nom ?ratelf) ; not passing up the orig-lex of this
 	  (nomobjpreps ?nop)
 	  (nomsubjpreps ?nsp)
       )
      -nom-rate> 1.0
 	 (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger) (agr ?agr)
-		    (pre-arg-already ?npay) 
+		    (pre-arg-already ?npay)
 		    (headless -)
 		    (sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
-		    (class ?class) (transform ?transform)
+		    (class ?class) (transform ?transform) (lex ?lex) (orig-lex ?orig-lex)
 		    ;; these are dummy vars for trips-lcflex conversion, please don't delete
 		    ;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
 		    (restr ?restr)
@@ -6014,8 +6013,9 @@
 	   (gap -) (var *) (agr ?agr) (gerund ?ger)
 	   (sem ?newsem) (mass ?mass) (pre-arg-already ?npay)
 	   (case ?case)
-	   (class ?!pred)
+	   (class ?!pred) (lex ?!pred-w)
 	   (restr (& (figure (% *PRO* (status ont::F) (var ?v) (class ?class)
+				(lex ?lex) (orig-lex ?orig-lex)
 				    (constraint ?restr) (sem ?sem)))))
 	   (subj ?subj)
 	   (subj-map ?subjmap)
@@ -6027,7 +6027,7 @@
 	  (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger) (agr ?agr)
 		     (pre-arg-already ?npay) 
 		     (sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
-		     (class ?class) (transform ?transform)
+		     (class ?class) (transform ?transform) (lex ?lex) (orig-lex ?orig-lex)
 		     ;; these are dummy vars for trips-lcflex conversion, please don't delete
 		     ;;(subj ?subj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
 		     (restr ?restr)
@@ -6035,6 +6035,7 @@
 		     (subj-map ?subjmap)
 		     (generated -)
 		     (rate-activity-nom ?!pred)
+		     (rate-activity-nom (:* ?!pred-t ?!pred-w)) ; this assumes the rate always has a w
 		     ))
 	  (compute-sem-features (lf ?!pred) (sem ?newsem))
 	  )

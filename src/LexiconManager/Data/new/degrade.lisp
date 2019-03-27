@@ -9,7 +9,7 @@
  (senses
   ((meta-data :origin cardiac :entry-date 20081223 :change-date 20090504 :comments LM-vocab)
    (LF-PARENT ONT::deteriorate)
-   (example "has his condition degraded")
+   (example "has his condition degraded" "the land has degraded")
    (templ affected-templ)
    )
   ((meta-data :origin cardiac :entry-date 20081223 :change-date 20090504 :comments LM-vocab)

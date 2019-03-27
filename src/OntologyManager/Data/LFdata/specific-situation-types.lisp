@@ -1200,7 +1200,7 @@
 )
 
 (define-type ONT::deteriorate
- :wordnet-sense-keys ("decompose%2:30:02" "decay%2:30:01" "disintegrate%2:30:01" "decay%2:30:02" "acerbate%2:37:00" "decay%2:30:01" "decay%2:30:00" "decay%2:30:02")
+ :wordnet-sense-keys ("acerbate%2:37:00" "decay%2:30:00" "decay%2:30:01" "decay%2:30:02" "decompose%2:30:02" "degrade%2:35:00" "disintegrate%2:30:01")
  :parent ONT::change-integrity
  :arguments ((:REQUIRED ONT::Formal ((? tt f::phys-obj f::abstr-obj f::situation)))
              (:OPTIONAL ONT::Agent)

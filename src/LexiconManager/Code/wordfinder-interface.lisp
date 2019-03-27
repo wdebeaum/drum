@@ -90,7 +90,8 @@
 	    #||  ;; check for hidden names: tagged as N, not penn taged as NNS and starts with a capital  (not sure what problem this solved - isit obsolete?)
 	      (if (and (eq pos 'w::n) (not (member 'w::nns penntag))
 		       (is-instance this-wf-entry)) (setq pos 'w::name))||#
-	      (let* ((score (or score (get-wf-score this-wf-entry)))
+	      (let* ((wfscore (get-wf-score this-wf-entry))
+		     (score (if score (/ (+ wfscore score) 2) wfscore))
 		     (feats (get-wf-feats this-wf-entry))
 		     (wf-word (get-wf-word this-wf-entry))
 		     (domain-info (get-wf-domain-info this-wf-entry))

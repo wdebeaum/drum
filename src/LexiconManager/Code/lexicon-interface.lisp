@@ -1255,7 +1255,11 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 				    (get-unknown-word-def w :pos-list (or (set-difference *default-wf-poslist* this-trips-pos-list) *default-wf-poslist*) :penntag penn-tags :score score)))))
 	;; still no WDEF or WN senses!  try alternate spellings
 	(backup-from-alternates (if (and *use-wordfinder* alternate-spellings merged-trips-wn-pos-list (null wf-wdef) (null backup-wf-wdef))
-				    (gather-defs-from-alternates alternate-spellings merged-trips-wn-pos-list (simplify-tags penn-tags) score)))
+				    (mapcar (lambda (x)
+					      (progn
+						(setf (lex-entry-description x) (append (lex-entry-description x) (list (list 'w::orig-lex w))))
+						x))
+					    (gather-defs-from-alternates alternate-spellings merged-trips-wn-pos-list (simplify-tags penn-tags) score))))
 	#||(mapcan #'(lambda (x) (get-unknown-word-def (intern (string-upcase x) :w) :pos-list merged-trips-wn-pos-list :penntag penn-tags :score score))
 								   alternate-spellings)))|#
 				    
@@ -1306,8 +1310,11 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 (defun gather-defs-from-alternates (alts pos-list penn-tags score)
   "gathers defs for each altyernate spelling, decreasing score as we go to encode preference"
   (when alts
-    (append (get-unknown-word-def (intern (string-upcase (car alts)) :w) :pos-list pos-list :penntag penn-tags :score score)
-	    (gather-defs-from-alternates (cdr alts)  pos-list penn-tags (* score .995)))))
+    (let ((w (intern (string-upcase (car alts)) :w)))
+      (append (or (retrieve-from-lex w)
+		  (get-unknown-word-def w :pos-list pos-list :penntag penn-tags :score score))
+	      (gather-defs-from-alternates (cdr alts)  pos-list penn-tags (* score .995)))
+      )))
     
 		    
 

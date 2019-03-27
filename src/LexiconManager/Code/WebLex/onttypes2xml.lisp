@@ -113,7 +113,7 @@
 	  ))
       (when *web* (mapcar #'sem-argument-xml om::arguments))
       (let ((words (sort (mapcar #'first (lxm::get-words-from-lf om::name)) (lambda (a b) (string< (format nil "~a" a) (format nil "~a" b))))))
-        (mapcar (lambda (w) (list 'word :name (if (listp w) (format nil "~{~a~^_~}" w) w))) words)
+        (mapcar (lambda (w) (list 'word :name (normalize-word-name w))) words)
 	)
       (mapcar
           #'wordnet-mapping-xml

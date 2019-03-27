@@ -93,14 +93,37 @@
 (defun sorted-comma-separated-list (l)
   (comma-separated-list (sort (mapcar #'string l) #'string-lessp)))
 
+(defun undo-punc-symbols (syms)
+  "Given a list of symbols, return a corresponding list of strings, with any
+   w::punc-minus or w::punc-period symbols turned into - or . and used to join
+   neighboring strings."
+  ; TODO? handle other punctuation, especially ^ => '
+  (loop with strs = nil
+	while syms
+	do (let ((sym (pop syms)))
+             (push
+	       (cond
+	         ((eq 'w::punc-minus sym)
+		   (concatenate 'string
+		       (or (pop strs) "") "-" (string (or (pop syms) ""))))
+	         ((eq 'w::punc-period sym)
+		   (concatenate 'string
+		       (or (pop strs) "") "." (string (or (pop syms) ""))))
+		 (t (symbol-name sym))
+		 )
+	       strs))
+        finally (return (nreverse strs))
+	))
+
 (defun normalize-word-name (name)
   (string-downcase (if (consp name)
-		     (format nil "~{~a~^_~}" (util::flatten name))
+		     (format nil "~{~a~^_~}"
+			 (undo-punc-symbols (util::flatten name)))
 		     (format nil "~a" name))))
 
 (defun space-separated-list-or-symbol (los)
   (if (consp los)
-    (format nil "~{~a~^ ~}" (util::flatten los))
+    (format nil "~{~a~^ ~}" (undo-punc-symbols (util::flatten los)))
     (format nil "~a" los)))
 
 (defun get-morphs-xmls (word pos)
