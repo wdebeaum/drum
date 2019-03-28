@@ -3587,11 +3587,10 @@
    
    ;; conjoined vps w/ same subject
    ;; test: the dog barked and chased the cat.
-   ((s (stype ?st) (var ?v3) (sem ?sem)
+   ((s (stype ?st) (var ?v3) (sem ?sem) (lex ?lex)
      (lf (% prop (var ?v3) 
 	    (class ?class)
 	    (constraint (& (operator ?op)
-			   (lex ?lex)
 			   (sequence (?v1 ?v2))))
 	    (tma ?tma)))
      )
@@ -3609,11 +3608,10 @@
 
   ;; conjoined vps w same subject AND object!
    ;; test: the dog chased and caught the cat.
-   ((s (stype ?st) (var ?v3) (sem ?sem)
+   ((s (stype ?st) (var ?v3) (sem ?sem) (lex ?lex)
      (lf (% prop (var ?v3) 
         (class ?class)
         (constraint (& (operator ?op)
-		       (lex ?lex)
 		       (sequence (?v1 ?v2))))
 	(tma ?tma)))
      )
@@ -3636,11 +3634,10 @@
    ;; he did this and/or/but he did that; do this and/or/but do that
    ;; test: bark and chase the cat.
    ((s (sseq +) (stype ?st) (var *)  (sem ?sem) (wh-var (?wh-var1 ?wh-var2))
-
+       (lex ?lex)
      (lf (% prop (var *) (class ont::?class) 
 	    (constraint 
 	     (&  (operator (? lx ont::or ont::and ont::but ont::however ont::plus ont::otherwise ont::so))
-		 (lex ?lex)
 		 (sequence (?v1 ?v2))
 		 ))))
      )
@@ -3700,10 +3697,9 @@
 
    ;; Ending the SSEQ 
    ;; both Ss must be of the same type, decl or imperative
-   ((s (stype ?st) (var *) (sseq +) (sem ?sem)
+   ((s (stype ?st) (var *) (sseq +) (sem ?sem) (lex ?lex)
      (LF (% prop (var *) (class ?class) 
 	    (constraint (&  (OPERATOR ?lx)
-			    (lex ?lex)
 			    (SEQUENCE ?newlf)))
 	    ))
      )
@@ -3731,7 +3727,6 @@
    ((s (stype ?st) (var *) 
      (sem ?sem) (lex ?lex)
      (LF (% prop (var *) (class ?class) (constraint (&  (OPERATOR ?clf)
-							(lex ?lex)
 							(SEQUENCE (?v1 ?v2))))))
      )
     -s-double-conj>
@@ -3752,7 +3747,6 @@
    ;; and the VP version e.g., to either stay or go
    ((VP (var *) (LF (% prop (var *) (class ?class) 
 		       (constraint (&  (OPERATOR ?clf)
-				       (lex ?lex)
 				       (SEQUENCE (?v1 ?v2))))))
      (agr ?agr) (lex ?lex) (vform ?vform) (gap ?g) (subj ?subj) (sem ?sem)
 		       

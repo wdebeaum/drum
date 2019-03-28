@@ -316,31 +316,37 @@
 (defun get-w (x)
   (if (consp x) (third x) nil))
 
+;;; add the normalized lex to the akrl term
 (defun add-lex (lf w)
-  (if w 
-      (append lf (list :llex w))  ; we add the normalized lex as :llex 
+  (if w
+      (append lf (if parser::*add-lex-to-lf*
+		     (list :llex w) ; use :LLEX if we already use :LEX for the surface lex
+		   (list :lex w)))  ; otherwise use :LEX
     lf))
-;  lf)
   
 (defun convert-lf-to-akrl (lf)
   (let* ((var (second lf))
 	 (type (get-ont-type (third lf)))
 	 (w (get-w (third lf)))
-	;; (force (find-arg (cdddr lf) :force))
-	;; (frequency (find-arg (cdddr lf) :frequency))
+	 ;; (force (find-arg (cdddr lf) :force))
+	 ;; (frequency (find-arg (cdddr lf) :frequency))
 	 (akrl 
    	  (cond ((member (car lf) '(ONT::THE-SET ONT::INDEF-SET ONT::PRO-SET ONT::WH-TERM-SET))
-			 (add-lex (list* (map-to-krspec lf) var :instance-of 'ONT::SET :element-type type 
-					 (remove-args (cdddr lf) '(:start :end)) ;'(:proform :start :end))
-					 ) w))
+		 (add-lex (list* (map-to-krspec lf) var :instance-of 'ONT::SET :element-type type 
+				 (remove-args (cdddr lf) '(:start :end)) ;'(:proform :start :end))
+				 )
+			  w))
 		 ((member :operator lf)
 		  (add-lex (list* (map-to-krspec lf) var :instance-of 'ONT::SEQUENCE :element-type type 
 				  (remove-args (cdddr lf) '(:start :end)) ;'(:proform :start :end))
-				  ) w))
-		 (t (add-lex (list* (map-to-krspec lf)  var :instance-of type 
-				    (remove-args (cdddr lf) '(:start :end)) ;'(:proform :start :end))
-				    ) w))))
-	   )
+				  )
+			   w))
+		 (t
+		  (add-lex (list* (map-to-krspec lf)  var :instance-of type 
+				  (remove-args (cdddr lf) '(:start :end)) ;'(:proform :start :end))
+				  )
+			   w))))
+	 )
     ;; now we set the equals value, either to the REFERS-TO, or the COREF links
     (let ((newakrl (replace-role-name akrl :refers-to :equals)))
       ;; if newakrl is EQ to akrl, we didn't find a :refers-to

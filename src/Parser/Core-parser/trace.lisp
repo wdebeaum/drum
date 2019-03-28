@@ -1,7 +1,7 @@
 ;;
 ;; trace.lisp
 ;;
-;; Time-stamp: <Sat Aug  6 09:34:33 EDT 2016 jallen>
+;; Time-stamp: <Wed Mar 20 10:33:11 EDT 2019 james>
 ;;
 ;; History:
 ;;   ?????? james   - written as part of Chart.lisp.
@@ -205,7 +205,7 @@ failure"
 	      (let ((arcprob (* (if (numberp prob) prob 1) (arc-prob arc) (entry-prob entry))))
 		(if (null (first rhss))
 
-		    (format t "~:@_         SUCCESS AND RULE COMPLETE with prob ~S; ~S~:@_" arcprob (length-entry-score (make-entry :end (entry-end entry) :start (arc-start arc))))
+		    (format t "~:@_         SUCCESS AND RULE COMPLETE with prob ~S; ~S~:@_" arcprob (calculate-entry-score (make-entry :end (entry-end entry) :start (arc-start arc) :prob arcprob)))
 		    (format t "~:@_         SUCCESS AND RULE EXTENDED with prob ~S; ~S~:@_" arcprob (length-entry-score (make-entry :end (entry-end entry) :start (arc-start arc)))))
 	        ))))
           )))
