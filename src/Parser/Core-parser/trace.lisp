@@ -1,7 +1,7 @@
 ;;
 ;; trace.lisp
 ;;
-;; Time-stamp: <Wed Mar 20 10:33:11 EDT 2019 james>
+;; Time-stamp: <Thu Mar 28 16:04:41 CDT 2019 james>
 ;;
 ;; History:
 ;;   ?????? james   - written as part of Chart.lisp.
@@ -174,20 +174,21 @@ failure"
      (failure-trace t))
     (if (entry-p entry)
       (let*
-        ((c (entry-constit entry))
-	 ;;(start (entry-start entry))
-	 ;;(end (entry-end entry))
-         (FAILURE-TRACE t))
+	  ((c (entry-constit entry))
+	   (p (entry-prob entry))
+	   ;;(start (entry-start entry))
+	   ;;(end (entry-end entry))
+	   (FAILURE-TRACE t))
         (mapc #'(lambda (x)
-		    (pprint-logical-block (nil nil)
-		      (pprint-newline :fill)
-		      (Format t "~% Matching rule ~S" (rule-id x))
-		      (multiple-value-bind (bndgs prob)
-			  (Constit-Match (car (rule-rhs x)) C)
-			(if bndgs
-			    (Format t "    SUCCESS! with prob ~S" prob))
-			)
-		      (pprint-newline :mandatory))
+		  (pprint-logical-block (nil nil)
+		    (pprint-newline :fill)
+		    (Format t "~% Matching rule ~S" (rule-id x))
+		    (multiple-value-bind (bndgs prob)
+			(Constit-Match (car (rule-rhs x)) C)
+		      (if bndgs
+			  (Format t "    SUCCESS! with prob ~S" (* p (or prob 1) (rule-prob x))))
+		      )
+		    (pprint-newline :mandatory))
 		    )
 	      (lookup-rules c))))
     )

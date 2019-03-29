@@ -533,18 +533,20 @@ intersection of an entry's tags and these tags is non-empty."
 	; (nom-lex (if (eq form :nom)
 	;	      word
 	;	      (add-suffix word "S")))
-	 (nom-def (if word (cons word (list 
-				       (cons 'senses (if objpreps
-							 (mapcar #'(lambda (x) (cons (list 'syntax '(w::sort w::pred)
-											   (list 'w::nomobjpreps (when (not (member objpreps '(- w::-)))
-														   (list '? 'objp objpreps)))
-											   (list 'W::nomsubjpreps (when (not (member subjpreps '(- w::-)))
-														    (list '? 'subjp subjpreps)))
-																     
-											   )
-										     x))
-								 nom-senses)
-							 nom-senses))))))
+	 (nom-syntax
+	   `(syntax
+	      (w::sort w::pred)
+	      (w::nomobjpreps ,(unless (member objpreps '(- w::-))
+				 `(? objp ,objpreps)))
+	      (w::nomsubjpreps ,(unless (member subjpreps '(- w::-))
+				  `(? subjp ,subjpreps)))
+	      (w::nom-of ,(vocabulary-entry-word entry))
+	      ))
+	 (nom-def
+	   (when word
+	     `(,word (senses ,@(if objpreps
+	                         (mapcar (lambda (x) (cons nom-syntax x)) nom-senses)
+				 nom-senses)))))
 	 ;;(xx (format t "~%nom-senses=~S~%objpreps=~S  nom-def= ~S" nom-senses objpreps nom-def))
          (nom-entry (parse-vocab-table-entry nom-def :pos 'w::n :default-template 'other-reln-theme-templ))
          )
