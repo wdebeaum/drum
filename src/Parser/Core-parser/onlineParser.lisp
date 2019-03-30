@@ -259,8 +259,8 @@
       (format t "~%Making ENTRY ~S into agenda item with prob ~S ..." (entry-name entry) (entry-prob entry)
 	      ))
     (if *trace-record* (if (entry-p entry)
-			   (trace-if-desired (entry-start entry) (entry-end entry) (entry-rule-id entry) entry)
-			   (trace-if-desired (agenda-item-start entry) (agenda-item-end entry) (agenda-item-id entry) entry)))
+			   (trace-if-desired (entry-start entry) (entry-end entry) (entry-rule-id entry) entry 'adding)
+			   (trace-if-desired (agenda-item-start entry) (agenda-item-end entry) (agenda-item-id entry) entry 'adding)))
     (Cond
       ((Entry-P entry) (compute-score-and-add (make-agenda-item
 					       :type 'entry :prob (entry-prob entry) :entry entry
@@ -271,7 +271,7 @@
       (t (break "Bad call to add-to-agenda: ~S" entry)))
     ))
 
-(defun trace-if-desired (start end ID entry)
+(defun trace-if-desired (start end ID entry op)
   (when (AND
 	  (or (null (third *trace-record*))
 	      (eq ID (third *trace-record*)))
@@ -279,7 +279,8 @@
 	      (eq start (car *trace-record*)))
 	  (or (null (car *trace-record*))
 	      (eq end (second *trace-record*)  )))
-    (format t "~%~%ADDING with score ~S: ~S"  (calculate-score entry) entry))
+    ;; it can be used to change this to a break when trying to isolate problems
+    (format t "~%~%AGENDA ~S with score ~S: ~S"  op (calculate-score entry) entry))
   )
 
 (defun compute-score-and-add (i)
@@ -323,9 +324,8 @@
     (when (null (aref (agenda *chart*) (top-bucket *chart*)))
       (setf (top-bucket *chart*) (find-new-top-bucket (top-bucket *chart*)))
       )
-    ;;      (format t "~% exploring entry ~S~%" entry)
-    ;; (format t "~% exploring entry ")
-    ;; (show-entry-with-name entry '(lex))      
+    (if *trace-record*
+	(trace-if-desired (agenda-item-start entry) (agenda-item-end entry) (agenda-item-id entry) entry 'processing))
     entry))
 
 (defun agenda-sanity-check nil

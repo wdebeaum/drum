@@ -177,7 +177,7 @@ separate instances of the chart/parser.")
          (subentries (mapcar #'get-entry-by-name subconstitnames))
          (subconstits (mapcar #'entry-constit subentries))
          (bndgs (merge-lists
-                 (cons bindings (mapcar #'constit-match
+                 (cons bindings (mapcar #'robust-constit-match
                                         (entry-rhs entry) subconstits)))))
     (multiple-value-bind (subs new-vars-seen)
 	(subst-in-list subentries bndgs vars-seen)
@@ -186,6 +186,14 @@ separate instances of the chart/parser.")
        (get-entry-with-name entry)
        (mapcar #'(lambda (e) (get-t e bndgs new-vars-seen))
 	       subs)))))
+
+(defun robust-constit-match (rhs c)
+  "This generalizes the constit-match function so that it can function when there aere multiple entires for the same slot,
+      as often happens in LFs with several MOD functions"
+  (or (constit-match rhs c)
+      (progn
+	(format t "constit-match failed on ~S and ~S" rhs c)
+	nil)))
 
 (defun getsubconstitnames (n constit)
   (let ((sub (get-value constit n)))
@@ -709,8 +717,6 @@ separate instances of the chart/parser.")
 ;;  Also, this skips over unknown words and filled pauses
 ;;  if the *ignore-unknown-words* flag is t
 
-
-;;(defvar *dont-build-arcs-until-needed* t)  not used anymore
 
 (defun extend-arc (entry name arc)
   (declare (ignore name))

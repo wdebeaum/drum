@@ -43,7 +43,7 @@ function kqmlStringAsJS(kqml) {
 }
 
 function escapeForQuotes(string) {
-  return string.
+  return (''+string).
     replace(/[\\]/g, "\\\\").
     replace(/[\n]/g, "\\n").
     replace(/[\r]/g, "\\r").

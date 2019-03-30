@@ -431,7 +431,7 @@
 	       (member patternval (list '- *empty-constit*)))
 	  (if (var-values constitval)
 	      ;; if it can't be certain values, then we're OK with '-
-	      (values (make-binding-list constitval patternval))
+	      (values (make-binding-list constitval patternval) nil undos)
 	      ;; the constitval simply must be non empty
 	      (progn
 		(if FAILURE-TRACE (failure-message constitval patternval feat))
