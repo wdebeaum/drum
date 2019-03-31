@@ -2757,8 +2757,8 @@
 	    (add-to-conjunct (val (& (:amount PLURAL) (unit ?c) (scale ?sc))) (old ?r) (new ?newr)))
 	   
         ;;  bare plural mass nouns get SORT STUFF    ;;;  I don't think this is right JFA 12/02  "waters" is a count, isn't it
-
-        ((NP (LF (% Description (STATUS ONT::INDEFINITE) (VAR ?v) (SORT STUFF) 
+	   ;; maybe for "sand and water"
+        ((NP (LF (% Description (STATUS ONT::INDEFINITE-plural) (VAR ?v) (SORT STUFF) 
 	            (CLASS ?c) (CONSTRAINT ?r) (sem ?sem) (transform ?transform)))
              (SORT PRED) (VAR ?v)
              )

@@ -331,13 +331,14 @@
 	 ;; (force (find-arg (cdddr lf) :force))
 	 ;; (frequency (find-arg (cdddr lf) :frequency))
 	 (akrl 
-   	  (cond ((member (car lf) '(ONT::THE-SET ONT::INDEF-SET ONT::PRO-SET ONT::WH-TERM-SET))
-		 (add-lex (list* (map-to-krspec lf) var :instance-of 'ONT::SET :element-type type 
-				 (remove-args (cdddr lf) '(:start :end)) ;'(:proform :start :end))
-				 )
-			  w))
+   	  (cond
 		 ((member :operator lf)
 		  (add-lex (list* (map-to-krspec lf) var :instance-of 'ONT::SEQUENCE :element-type type 
+				  (remove-args (cdddr lf) '(:start :end)) ;'(:proform :start :end))
+				  )
+			   w))
+		 ((member (car lf) '(ONT::THE-SET ONT::INDEF-SET ONT::PRO-SET ONT::WH-TERM-SET))
+		  (add-lex (list* (map-to-krspec lf) var :instance-of 'ONT::SET :element-type type 
 				  (remove-args (cdddr lf) '(:start :end)) ;'(:proform :start :end))
 				  )
 			   w))
