@@ -29,6 +29,12 @@ TRIPS/trips-ont-dsl.lisp: ../code/converters/trips-ont-to-dsl.sh ../code/convert
 TRIPS/trips-ont-dsl.xml: TRIPS/trips-ont-dsl.lisp ../code/converters/dsl-to-xml.sh ../code/converters/dsl-to-xml.lisp $(wildcard $(TRIPS_BASE)/src/OntologyManager/Data/LFdata/*.lisp)
 	cd ../code/converters ; ./dsl-to-xml.sh <../../data/$< >../../data/$@
 
+TRIPS/trips-ont-dsl-inh.lisp: ../code/converters/trips-ont-to-dsl-inh.sh ../code/converters/trips-ont-to-dsl-inh.lisp | TRIPS
+	cd ../code/converters ; ./trips-ont-to-dsl-inh.sh >../../data/$@
+
+TRIPS/trips-ont-dsl-inh.xml: TRIPS/trips-ont-dsl-inh.lisp ../code/converters/dsl-to-xml.sh ../code/converters/dsl-to-xml.lisp $(wildcard $(TRIPS_BASE)/src/OntologyManager/Data/LFdata/*.lisp)
+	cd ../code/converters ; ./dsl-to-xml.sh <../../data/$< >../../data/$@
+
 ON_SIS=$(shell ls $(ONTONOTES)/data/english/metadata/sense-inventories/*.xml \
 	       |$(PERL) -n -e 'print "$$1\n" if (/\/([^\/-]+-[nv])\.xml$$/);')
 
