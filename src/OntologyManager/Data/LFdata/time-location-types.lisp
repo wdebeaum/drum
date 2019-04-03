@@ -797,7 +797,7 @@
  :sem  (F::abstr-obj)
  :arguments (;(:ESSENTIAL ONT::FIGURE (F::Situation))
 	     (:ESSENTIAL ONT::FIGURE (F::Situation (f::type ont::change-magnitude)))
-;	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::length)))
+;	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::length-scale)))
 ;	     (:ESSENTIAL ONT::GROUND (F::abstr-obj))  ; no scale (e.g., increase by three dogs)
 	     (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ?!sc)))  ; put scale back for now
              )
@@ -807,7 +807,7 @@
 (define-type ONT::spatial-distance-rel
  :parent ONT::extent-predicate
  :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (f::trajectory +) (F::aspect (? asp F::unbounded F::stage-level)) (F::time-span F::extended)))
-	      (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::length)))
+	      (:ESSENTIAL ONT::GROUND (F::abstr-obj (F::scale ont::length-scale)))
              )
  )
 

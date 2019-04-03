@@ -1542,7 +1542,7 @@
 
 ;;; When something appears, there are no agents
 (define-type ONT::appear
- :wordnet-sense-keys ("appear%2:30:00" "appear%2:30:02")
+ :wordnet-sense-keys ("appear%2:30:00" "appear%2:30:02" "come_out%2:32:00")
  :parent ONT::event-of-undergoing-action
  :sem (F::Situation (F::Cause F::Phenomenal))
  :arguments ((:optional ont::affected ((? tp f::phys-obj f::abstr-obj)))
@@ -2049,7 +2049,7 @@
 )
 
 (define-type ONT::approve-authorize
- :wordnet-sense-keys ("authorize%2:32:00" "approve%2:31:00" "authorize%2:41:00" "condone%2:32:00")
+ :wordnet-sense-keys ("approve%2:31:00" "authorize%2:32:00" "authorize%2:41:00" "condone%2:32:00")
  :parent ONT::judgement
  :arguments ((:required ONT::AFFECTED ((? t f::abstr-obj f::situation))))
  )
@@ -3691,7 +3691,7 @@
 (define-type ont::thin
  :wordnet-sense-keys ("thin%2:30:01" "thin%2:30:00")
  :parent ont::change-in-tactile-scale
- :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::texture-thiness-scale) (F::orientation f::pos))))
+ :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::texture-thinness-scale) (F::orientation f::pos))))
 )
 
 ; harden the clay
@@ -3748,7 +3748,7 @@
 (define-type ont::brighten
  :wordnet-sense-keys ("brighten%2:30:01")
  :parent ont::change-in-visual-scale
- :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::brighteness-scale) (F::orientation f::pos))))
+ :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::brightness-scale) (F::orientation f::pos))))
  :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::extended))
 )
 

@@ -259,7 +259,7 @@
 
 
 (define-type ONT::Categorization
- :wordnet-sense-keys ("declare%2:32:04" "adjudge%2:32:00" "hold%2:32:11")
+ :wordnet-sense-keys ("adjudge%2:32:00" "declare%2:32:04" "hold%2:32:11")
  :parent ONT::event-of-action
  :sem (F::Situation (F::Cause F::Agentive (F::trajectory -)))
  :arguments ((:ESSENTIAL ONT::Agent ((? cog f::abstr-obj F::phys-obj F::situation))) ;(F::intentional +))) ;situation: It is characterized/marked by a decrease in temperature

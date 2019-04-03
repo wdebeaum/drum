@@ -99,16 +99,13 @@
   '(member object-function origin form mobility group spatial-abstraction intentional information container kr-type trajectory tangible))
 
 (deftype situation-feat ()
-  '(member aspect time-span cause trajectory locative intentional information container kr-type type origin iobj))
+  '(member aspect time-span cause trajectory locative intentional information container kr-type type origin iobj tangible))
 
 (deftype abstr-obj-feat ()
   '(member measure-function scale intentional information container gradability kr-type object-function origin intensity orientation tangible))
 
-(deftype proposition-feat ()
-  '(member intentional information container gradability kr-type origin))
-
 (deftype time-feat ()
-  '(member time-function scale time-scale kr-type))
+  '(member time-function scale kr-type))
 
 (in-package :vn)
 
@@ -130,8 +127,8 @@
 (common-lisp::in-package :dsl)
 
 (deftype sem-feat ()
-  '(or (member type) phys-obj-feat situation-feat abstr-obj-feat
-       proposition-feat time-feat vn::sem-feat))
+  '(or (member type) phys-obj-feat situation-feat abstr-obj-feat time-feat
+       vn::sem-feat))
 
 ;;; feature list types
 
@@ -142,15 +139,14 @@
 
 (common-lisp::deftype sem-role ()
   ;; this list found by grepping templates and OM files (see get-ont-sem-roles.sh)
-  '(common-lisp::member affected affected1 affected-result agent agent1 along arg0 arg1 assoc-with beneficiary between cause cognizer content contents criterion donor effect event-of-change experiencer extent figure figure1 formal formal1 goal goal-reln goods ground ground1 indefinite kind location manner money neutral neutral1 neutral2 norole one-of path position-reln pro pro-det pro-set quantifier reason result scale source source-reln standard stimulus value
+  '(common-lisp::member affected affected1 affected-result agent agent1 along arg0 arg1 assoc-with beneficiary between cause cognizer compar content contents criterion donor effect event-of-change experiencer extent figure figure1 formal formal1 goal goal-reln goods ground ground1 indefinite kind location manner money neutral neutral1 neutral2 norole one-of path position-reln pro pro-det pro-set quantifier reason refset result scale source source-reln standard value
     ;; some I was surprised were no longer there
-    of of1 of2
+    of of1 of2 stimulus
     ;; some I didn't delete because maybe they're just not used *yet*
     ;; (feel free to delete them if you know better) --wdebeaum
     affected-create affected-create1 affected-result1 co-agent co-result co-theme effect-implicit from-loc material obj-val place predicate property purpose-implicit result-val spatial-loc stative theme time-duration-rel to-loc via
     ;; some extras output by src/Systems/gloss/test.lisp
     co-theme patient partner means method
-    compar refset
     ))
 
 (common-lisp::in-package :dsl)

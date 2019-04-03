@@ -109,6 +109,7 @@
 	         ((eq 'w::punc-period sym)
 		   (concatenate 'string
 		       (or (pop strs) "") "." (string (or (pop syms) ""))))
+	         ((not (symbolp sym)) sym)
 		 (t (symbol-name sym))
 		 )
 	       strs))
