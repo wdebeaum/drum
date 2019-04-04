@@ -70,23 +70,29 @@
     s))
 
 (defun adjust-feature-packages (f)
-  "Convert feature names and values to dsl package, and ORs to W package."
-  (list (ld-to-dsl-package (first f))
-	(cond
-	  ((symbolp (second f))
-	    (intern (symbol-name (second f)) :dsl))
-	  ((and (consp (second f))
-		(every #'symbolp (second f))
-		(string= "OR" (symbol-name (first (second f)))))
-	    (cons 'w::or
-		(mapcar
-		    (lambda (s)
-		      (intern (symbol-name s) :dsl))
-		    (cdr (second f))
-		    )))
-	  (t (error "bogus feature: ~s" f))
-	  )
-	))
+  "Convert feature names and values to dsl package (with a few exceptions), and
+   ORs to W package."
+  (let ((new-pkg (if (typep (first f) 'ont-valued-feat) :ont :dsl)))
+    (list (ld-to-dsl-package (first f))
+	  (cond
+	    ((eq 'ld::- (second f)) '-)
+	    ((symbolp (second f))
+	      (intern (symbol-name (second f)) new-pkg))
+	    ((and (consp (second f))
+		  (every #'symbolp (second f))
+		  (string= "OR" (symbol-name (first (second f)))))
+	      (cons 'w::or
+		  (mapcar
+		      (lambda (s)
+		        (if (eq 'ld::- s)
+			  s
+			  (intern (symbol-name s) new-pkg)
+			  ))
+		      (cdr (second f))
+		      )))
+	    (t (error "bogus feature: ~s" f))
+	    )
+	  )))
 
 (defun concept-formula (x)
   "Convert symbols representing concepts in a concept formula like (w::and

@@ -10,7 +10,6 @@
 (in-package :dsl)
 
 (defvar *indent* 0)
-(defvar *read-but-not-loaded* nil "Set to t if the DSL lisp forms were merely read, and not loaded into the DSL database and then listified back out. Affects symbol packages.")
 
 (defmacro indented (&body body)
   `(let ((*indent* (1+ *indent*)))
@@ -41,12 +40,11 @@
   `(let ((body-forms ,body-forms))
     (format ,xml "~&~vt<~(~a~)" *indent* ,tag-name)
     (when (or (symbolp (car body-forms)) (trips-sense-name-p (car body-forms)))
-      (let ((*package* (if *read-but-not-loaded* *package* (find-package :ld)))) ; ick.
-        (format xml " name=\"~(~s~)\"" (pop body-forms))))
+      (format xml " name=\"~(~s~)\"" (pop body-forms)))
     (let (aliases other-forms)
       (loop for f in body-forms
 	    do
-	      (if (member (car f) '(alias aliases))
+	      (if (member (car f) '(ld::alias ld::aliases))
 	        (setf aliases (append aliases (cdr f)))
 		(push f other-forms)
 		))
@@ -86,12 +84,12 @@
     ))
 
 (defvar *form-to-xml-tag-name* '(
-  :1p first-plural
-  :1s first-singular
-  :2p second-plural
-  :2s second-singular
-  :3p third-plural
-  :3s third-singular
+  :1p ld::first-plural
+  :1s ld::first-singular
+  :2p ld::second-plural
+  :2s ld::second-singular
+  :3p ld::third-plural
+  :3s ld::third-singular
   ))
 
 (defun form-to-xml-tag-name (form-name)
@@ -103,7 +101,7 @@
 ;; TODO move xml parameter to first position since that's where it is everywhere else
 (defun dsl-to-xml-stream (dsl xml)
   (ecase (car dsl)
-    (word
+    (ld::word
       ;; TODO now that we're loading the lib anyway, change this to actually make a word object
       (cond
         ((symbolp (second dsl))
@@ -131,11 +129,11 @@
 	)
       (optional-body xml "word" (cddr dsl))
       )
-    (pos
+    (ld::pos
       (format xml "~&~vt<pos pos=\"~(~s~)\"" *indent* (second dsl))
       (optional-body xml "pos" (cddr dsl))
       )
-    (forms
+    (ld::forms
       (format xml "~&~vt<forms>" *indent*)
       (indented
 	(dolist (f (cdr dsl))
@@ -143,7 +141,7 @@
 	    (list
 	      (let ((tag-name (form-to-xml-tag-name (car f))))
 		(format xml "~&~vt<~(~s~)>" *indent* tag-name)
-		(indented (dsl-to-xml-stream (cons 'word (cdr f)) xml))
+		(indented (dsl-to-xml-stream (cons 'ld::word (cdr f)) xml))
 		(format xml "~&~vt</~(~s~)>" *indent* tag-name)
 		))
 	    (symbol
@@ -151,15 +149,15 @@
 	    )))
       (format xml "~&~vt</forms>" *indent*)
       )
-    (provenance
+    (ld::provenance
       (let ((attributes (cdr dsl)) children)
         (when (symbolp (car attributes))
 	  (setf attributes
-	        (cons (list 'name (car attributes)) (cdr attributes))))
+	        (cons (list 'ld::name (car attributes)) (cdr attributes))))
 	(setf attributes
 	      (remove-if
 	          (lambda (form)
-		    (when (eq 'provenance (car form))
+		    (when (eq 'ld::provenance (car form))
 		      (push form children)
 		      t))
 		  attributes))
@@ -176,7 +174,7 @@
 	    (format xml "/>"))
 	  )
 	))
-    (template-call
+    (ld::template-call
       (format xml "~&~vt<template-call template=\"~(~s~)\"" *indent* (car (second dsl)))
       (loop for r on (cdr (second dsl)) by #'cddr
             for key = (first r)
@@ -184,11 +182,11 @@
 	    do (format xml "~( ~a=\"~s\"~)" (symbol-name key) val))
       (format xml " />")
       )
-    ((concept syntax semantics sense)
+    ((ld::concept ld::syntax ld::semantics ld::sense)
       (concept-element (xml (car dsl) operator form (cdr dsl))
         ; no special cases
 	))
-    (sem-frame
+    (ld::sem-frame
       (concept-element (xml (car dsl) operator form (cdr dsl))
 	((typep operator '(or sem-role (and cons (list-of sem-role))))
 	  (destructuring-bind (roles restriction &optional optional) form
@@ -201,9 +199,9 @@
 	    (format xml "~@[~&~vt~]</role-restr-map>" (when (listp restriction) *indent*))
 	    )
 	    )))
-    (syn-sem
+    (ld::syn-sem
       (concept-element (xml (car dsl) operator form (cdr dsl))
-	((typep operator 'syn-arg)
+	((typep (repkg operator :dsl) 'syn-arg)
 	  (destructuring-bind (syn-arg syn-cat &optional sem-role optional) form
 	    (multiple-value-bind (dsl-syn-cat head-word)
 	        (separate-head-word-from-syn-cat syn-cat)
@@ -215,9 +213,10 @@
 		  sem-role
 		  optional
 		  ))))))
-    ((syn-feats sem-feats)
+    ((ld::syn-feats ld::sem-feats)
       (concept-element (xml (car dsl) operator form (cdr dsl))
-	((typep operator '(or syn-feat sem-feat))
+	((or (typep (repkg operator :dsl) 'syn-feat)
+	     (typep (repkg operator :ld) 'sem-feat))
 	  (format xml "~&~vt<feat name=\"~(~s~)\">" *indent* operator)
 	  (etypecase (second form)
 	    (symbol
@@ -228,13 +227,13 @@
 	      )
 	    )
 	  )))
-    (entailments
+    (ld::entailments
       (concept-element (xml (car dsl) operator form (cdr dsl))
         ((stringp form)
 	  (format xml "~&~vt~a" *indent* (xml-escape form))
 	  )))
-    ((definition example)
-      (let ((text (second (assoc 'text (cdr dsl)))))
+    ((ld::definition ld::example)
+      (let ((text (second (assoc 'ld::text (cdr dsl)))))
         (when text (setf text (xml-escape text)))
         (format xml "~&~vt<~(~s~)~@[ text=~s~]>" *indent* (car dsl) text))
       (indented
@@ -243,17 +242,17 @@
 	  ;; move lf-root from the input-text to the lf-terms element, since
 	  ;; that's where it is in the WebParser output
 	  (case (car f)
-	    ((text lf-root)
+	    ((ld::text ld::lf-root)
 	      nil)
-	    (lf-terms
-	      (format xml "~&~vt<lf-terms root=\"~a\">" *indent* (second (assoc 'lf-root (cdr dsl))))
+	    (ld::lf-terms
+	      (format xml "~&~vt<lf-terms root=\"~a\">" *indent* (second (assoc 'ld::lf-root (cdr dsl))))
 	      (indented (lf-to-rdf-stream (cdr f) xml))
 ;	      (indented
 ;		(dolist (term (cdr f))
 ;		  (format xml "~&~vt~s" *indent* term)))
 	      (format xml "~&~vt</lf-terms>" *indent*)
 	      )
-	    (syntax-tree
+	    (ld::syntax-tree
 	      (format xml "~&~vt<syntax-tree>" *indent*)
 	      (indented (syntax-tree-to-xml-stream (second f) xml))
 ;	      (indented
@@ -261,7 +260,7 @@
 ;		  (format xml "~&~vt~s" *indent* (second f))))
 	      (format xml "~&~vt</syntax-tree>" *indent*)
 	      )
-	    (lattice
+	    (ld::lattice
 	      (format xml "~&~vt<lattice>" *indent*)
 	      (indented
 		(dolist (term (cdr f))
@@ -273,7 +272,7 @@
 	    )))
       (format xml "~&~vt</~(~s~)>" *indent* (car dsl))
       )
-    (>
+    (ld::>
       (format xml "~&~vt<relation label=\"~(~s~)\">" *indent* (second dsl))
       (indented
         (dolist (f (cddr dsl))
@@ -286,16 +285,15 @@
 		      (or (char= #\-) (digit-char-p c) (upper-case-p c)))
 		    (symbol-name f))
 		  )
-	      (let ((*package* (if *read-but-not-loaded* *package* (find-package :ld)))) ; ick.
-		(format xml "~&~vt~(~s~)" *indent* f)))
+	      (format xml "~&~vt~(~s~)" *indent* f))
 	    (t
 	      (format xml "~&~vt~s" *indent* f))
 	    )))
       (format xml "~&~vt</relation>" *indent*)
       )
-    ((inherit overlap subtype-of)
-      (dsl-to-xml-stream (cons '> dsl) xml))
-    ((w::and w::or and or morph comment)
+    ((ld::inherit ld::overlap ld::subtype-of)
+      (dsl-to-xml-stream (cons 'ld::> dsl) xml))
+    ((w::and w::or ld::and ld::or ld::morph ld::comment)
       (format xml "~&~vt<~(~s~)>" *indent* (repkg (car dsl)))
       (indented
 	(dolist (f (cdr dsl))
@@ -313,8 +311,7 @@
 
 (defun cl-user::run ()
   (format *standard-output* "~&<?xml version=\"1.0\"?>~&<dsl>")
-  (loop with *package* = (find-package :dsl)
-	with *read-but-not-loaded* = t
+  (loop with *package* = (find-package :ld)
         for expr = (read *standard-input* nil) while expr
         do (indented (dsl-to-xml-stream expr *standard-output*)))
   (format *standard-output* "~&</dsl>~%")

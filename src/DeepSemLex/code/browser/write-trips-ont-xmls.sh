@@ -4,6 +4,8 @@ output_dir=$1
 
 . ../lisp-env.sh
 
+set -eux
+
 # run genericized lisp command
 $LISP \
   $BATCH \

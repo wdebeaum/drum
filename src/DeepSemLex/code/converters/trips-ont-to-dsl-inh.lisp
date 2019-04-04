@@ -27,21 +27,28 @@
          (and (< 2 (length n))
          (string= "?!" (subseq n 0 2))))))
 
+;; TODO? do this in load-old.lisp?
 (defun unmangle-wn-sense (ont-symbol)
   "Given a symbol like ONT::foo*1--02--03, return a proper WN sense symbol like
-   WN::|foo%1:02:03::|. If the input isn't such a symbol, return nil instead.
+   WN::|foo%1:02:03::|. If it's already in that form, return it. If the input
+   isn't such a symbol, return nil instead.
    Assumes the sense isn't a satellite adjective (which has extra fields)."
   (let* ((str (symbol-name ont-symbol))
          (len (length str)))
-    (when (and (> len 10) (char= #\* (char str (- len 10))))
-      (let* ((lemma (subseq str 0 (- len 10)))
-             (lex-sense (subseq str (- len 9)))
-	     (ss-type (subseq lex-sense 0 1))
-	     (lex-filenum (subseq lex-sense 3 5))
-	     (lex-id (subseq lex-sense 7 9)))
-      (intern
-        (format nil "~(~a~)%~a:~a:~a::" lemma ss-type lex-filenum lex-id)
-	:WN)))))
+    (cond
+      ((and (> len 10) (char= #\* (char str (- len 10))))
+	(let* ((lemma (subseq str 0 (- len 10)))
+	       (lex-sense (subseq str (- len 9)))
+	       (ss-type (subseq lex-sense 0 1))
+	       (lex-filenum (subseq lex-sense 3 5))
+	       (lex-id (subseq lex-sense 7 9)))
+	  (intern
+	    (format nil "~(~a~)%~a:~a:~a::" lemma ss-type lex-filenum lex-id)
+	    :WN)))
+      ((position #\% str)
+        ont-symbol)
+      (t nil)
+      )))
 
 (defun feat-val-set (val)
   "Return the set of allowed feature value concepts given either a single
@@ -49,6 +56,7 @@
   (mapcar
     (lambda (val-name)
       (or ; ugh
+	(gethash val-name (concepts *db*))
         (gethash (intern (symbol-name val-name) :F) (concepts *db*))
         (gethash (intern (symbol-name val-name) :ONT) (concepts *db*))
 	(unmangle-wn-sense val-name)
@@ -62,14 +70,9 @@
       )
     ))
 
-(defun f-to-dsl-package (s)
-  (if (string= "F" (package-name (symbol-package s)))
-    (intern (symbol-name s) :dsl)
-    s))
-
 (defun set-to-maybe-disj (vals)
   "Inverse of feat-val-set; assumes vals nonempty."
-  (let ((val-names (mapcar (lambda (v) (f-to-dsl-package (name v))) vals)))
+  (let ((val-names (mapcar #'name vals)))
     (if (= 1 (length val-names))
       (first val-names)
       `(w::or ,@val-names)
@@ -82,9 +85,9 @@
 	  (if (positive-variable-p val)
 	    `(w::or
 	      ;; get all possible values of this feature, except f::-
-	      ,@(when (eq feat 'type) ; ugh
+	      ,@(when (eq feat 'f::type) ; ugh
 	          '(ont::referential-sem))
-	      ,@(when (eq feat 'scale) ; ugh
+	      ,@(when (eq feat 'f::scale) ; ugh
 	          '(ont::domain))
 	      ,@(eval-path-expression
 		  ;; NOTE: this assumes f::- is never a deeply-nested value in
@@ -96,7 +99,7 @@
 			      (string= "F" (package-name (symbol-package n)))
 			      )))
 		     )
-		     name #'f-to-dsl-package)
+		     name)
 		  (list nil))
 	      )
 	    (set-to-maybe-disj (feat-val-set val))))))
@@ -115,6 +118,14 @@
       (and (util::variable-p ancestor)
            (not (and (positive-variable-p ancestor)
 	             (eq 'f::- (name descendant)))))
+      (and (symbolp ancestor)
+           (progn
+	     (require-concept ancestor)
+	     (subsumes-p (gethash ancestor (concepts *db*)) descendant)))
+      (and (symbolp descendant)
+           (progn
+	     (require-concept descendant)
+	     (subsumes-p ancestor (gethash descendant (concepts *db*)))))
       (and (typep ancestor 'concept) (typep descendant 'concept)
 	(member ancestor (eval-path-expression '(* >inherit) (list descendant))
 		:test #'eq))))
@@ -131,7 +142,7 @@
         (pushnew b ret)))
     ret))
 
-(defun merge-sem-feat-vals (child-val parent-val)
+(defun merge-sem-feat-vals (child-val parent-val context-str)
   "Compute the effective value of a feature in a child by intersecting the
    effective parent value with the specified child value."
   (let* ((child-vals (feat-val-set child-val))
@@ -139,7 +150,7 @@
 	 (effective-vals (hierarchical-intersection child-vals parent-vals)))
     (unless effective-vals
       ;(error "intersection of ~s and ~s is empty" child-val parent-val)
-      (warn "~s ∩ ~s = ∅" child-val parent-val)
+      (warn "~a ~s ∩ ~s = ∅" context-str child-val parent-val)
       (setf effective-vals child-vals) ; as evidenced by ONT::adequacy-val's F::scale feature conflicting with its ancestor ONT::domain-property's value
       )
     (set-to-maybe-disj effective-vals)))
@@ -178,7 +189,7 @@
     ;; add new
     (add-relation sf :inherit new-flt)))
 
-(defun merge-sem-feats (child-sf parent-sf)
+(defun merge-sem-feats (child-sf parent-sf context-str)
     (declare (type sem-feats child-sf parent-sf))
   "Modify child-sf by adding the non-conflicting parts of parent-sf to it /
    intersecting feature value sets."
@@ -198,7 +209,8 @@
 	for child-pair = (assoc key new-child-feats)
 	do (if child-pair
 	     (setf (second child-pair)
-		   (merge-sem-feat-vals (second child-pair) parent-val))
+		   (merge-sem-feat-vals (second child-pair) parent-val
+		       (format nil "~a feature ~s values" context-str key)))
 	     (push (list key parent-val) new-child-feats)
 	     )
         finally (setf (features child-sf) new-child-feats)
@@ -262,7 +274,7 @@
         (feats (mapcar #'old-sem-feat (features sf))))
     (cons fltype feats)))
 
-(defun merge-role-restr-map (child-map parent-map)
+(defun merge-role-restr-map (child-map parent-map context-str)
     (declare (type role-restr-map child-map parent-map))
   "Modify child-map by adding the non-conflicting parts of parent-map to it.
    Also add type feature using om::best-lfs-from-sem if it is absent."
@@ -272,23 +284,23 @@
   ;; merge restrictions by normalizing them to sem-feats objects first
   (let ((child-restr (normalize-restriction (restriction child-map)))
         (parent-restr (normalize-restriction (restriction parent-map))))
-    (merge-sem-feats child-restr parent-restr)
+    (merge-sem-feats child-restr parent-restr context-str)
     ;; add type feature if it's missing
-    (unless (assoc 'type (features child-restr))
+    (unless (assoc 'f::type (features child-restr))
       (let ((types (om::best-lfs-from-sem (sem-feats-to-list child-restr))))
         (cond
 	  ((null types) nil)
 	  ((= 1 (length types))
-	    (push `(type ,@types) (features child-restr)))
+	    (push `(f::type ,@types) (features child-restr)))
 	  (t
-	    (push `(type (w::or ,@types)) (features child-restr)))
+	    (push `(f::type (w::or ,@types)) (features child-restr)))
 	  )))
     (setf (restriction child-map) (denormalize-restriction child-restr))
     )
   ;; keep child's optionality no matter what
   )
 
-(defun merge-sem-frame (child-sf parent-sf)
+(defun merge-sem-frame (child-sf parent-sf context-str)
     (declare (type sem-frame child-sf parent-sf))
   "Modify child-sf by adding the non-conflicting parts of parent-sf to it."
   (loop with old-child-maps = (maps child-sf)
@@ -304,7 +316,9 @@
 	do
 	  (if new-child-map
 	    ;; child already has a map for this role, merge them
-	    (merge-role-restr-map new-child-map parent-map)
+	    (merge-role-restr-map new-child-map parent-map
+	        (format nil "~a role(s) ~s" context-str
+		    (intersection (roles new-child-map) (roles parent-map))))
 	    ;; child doesn't have this role yet, add a copy of the parent's map
 	    (push (copy-role-restr-map parent-map) new-child-maps))
 	finally (setf (maps child-sf) new-child-maps)
@@ -318,7 +332,8 @@
       (if parent-sem-feats
         (let ((child-sem-feats (get-parent-of-type child 'sem-feats)))
 	  (if child-sem-feats
-	    (merge-sem-feats child-sem-feats parent-sem-feats)
+	    (merge-sem-feats child-sem-feats parent-sem-feats
+	        (format nil "~s ⊂ ~s but" (name child) (name parent)))
 	    (add-relation child :inherit parent-sem-feats)
 	    ))
 	;; no parent sem-feats, just normalize child feat vals
@@ -331,7 +346,8 @@
       (if parent-sem-frame
         (let ((child-sem-frame (get-parent-of-type child 'sem-frame)))
 	  (if child-sem-frame
-	    (merge-sem-frame child-sem-frame parent-sem-frame)
+	    (merge-sem-frame child-sem-frame parent-sem-frame
+	        (format nil "~s ⊂ ~s but" (name child) (name parent)))
 	    (add-relation child :inherit parent-sem-frame)
 	    ))
 	;; no parent sem-frame, just normalize child feat vals

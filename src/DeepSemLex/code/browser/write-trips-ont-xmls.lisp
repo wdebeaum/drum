@@ -9,7 +9,7 @@
   (require-resource-version :ont)
   (require-resource-version :ont-t)
   (require-resource-version :ont-w)
-  (let ((*package* (find-package :dsl))
+  (let ((*package* (find-package :ld))
 	(ont-pkg (find-package :ont)))
     (maphash
       (lambda (concept-name concept)

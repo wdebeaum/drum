@@ -931,7 +931,7 @@
 
 ; hit, strike
 (define-type ONT::HITTING
- :wordnet-sense-keys ("hit%2:35:03" "strike%2:35:01" )
+ :wordnet-sense-keys ("beat%2:35:01" "hit%2:35:03" "strike%2:35:01" )
  :comment "an agent comes into contact with force with another object, typically harming the other object"
  :parent ONT::MOTION
  :sem (F::SITUATION (F::Trajectory -))
@@ -1326,7 +1326,7 @@
 ;; 20120524 GUM change new type
 (define-type ont::cause-produce-reproduce
     :comment "an AGENT causes a new object to be created"
-  :wordnet-sense-keys ("produce%2:36:03" "yield%2:40:00" "yield%2:40:02")
+  :wordnet-sense-keys ("bring_on%2:39:00" "produce%2:36:03" "yield%2:40:00" "yield%2:40:02")
     :parent ont::cause-effect
     :arguments ((:ESSENTIAL ONT::affected-result ((? agt F::phys-obj f::abstr-obj f::situation)))
 		)
@@ -1542,7 +1542,7 @@
 
 ;;; When something appears, there are no agents
 (define-type ONT::appear
- :wordnet-sense-keys ("appear%2:30:00" "appear%2:30:02" "come_out%2:32:00")
+ :wordnet-sense-keys ("appear%2:30:00" "appear%2:30:02" "break%2:32:05" "come_out%2:32:00")
  :parent ONT::event-of-undergoing-action
  :sem (F::Situation (F::Cause F::Phenomenal))
  :arguments ((:optional ont::affected ((? tp f::phys-obj f::abstr-obj)))
@@ -1687,7 +1687,7 @@
 
 ;; fight, struggle, contend, defend
 (define-type ONT::fighting
- :wordnet-sense-keys ("fight%2:33:00")
+ :wordnet-sense-keys ("campaign%2:33:00" "fight%2:33:00")
  :parent ONT::agent-interaction
  :arguments ((:optional ONT::neutral)  ;; fight with the proposal
 	     (:optional ont::formal)  ;; struggle to breath
@@ -2049,7 +2049,7 @@
 )
 
 (define-type ONT::approve-authorize
- :wordnet-sense-keys ("approve%2:31:00" "authorize%2:32:00" "authorize%2:41:00" "condone%2:32:00")
+ :wordnet-sense-keys ("approve%2:31:00" "authorize%2:32:00" "authorize%2:41:00" "clear%2:40:07" "condone%2:32:00")
  :parent ONT::judgement
  :arguments ((:required ONT::AFFECTED ((? t f::abstr-obj f::situation))))
  )
@@ -2534,6 +2534,14 @@
     :parent ont::event-of-undergoing-action
     )
 
+(define-type ont::receive-punishment
+    :wordnet-sense-keys ("catch_it%2:41:00" "get_it%2:41:00")
+    :arguments ((:REQUIRED ONT::affected ((? obj F::PHYS-OBJ F::ABSTR-OBJ)))
+                (:OPTIONAL ONT::source))
+    :parent ont::incur-inherit-receive
+    )
+
+
 #|
 ;; 20120524 GUM change new type
 (define-type ONT::take-on
@@ -2765,7 +2773,7 @@
  )
 
 (define-type ont::appeal-apply-demand 
-     :wordnet-sense-keys ("turn_to%2:30:00")
+     :wordnet-sense-keys ("call%2:38:00" "turn_to%2:30:00")
      :parent ont::request
     )
 
@@ -2862,7 +2870,7 @@
  :parent ONT::CAUSE-ACTION
  :arguments ((:OPTIONAL ONT::Formal ((? obj F::PHYS-OBJ F::ABSTR-OBJ) (f::intentional -)))
 	     (:OPTIONAL ONT::NEUTRAL ((? obj F::PHYS-OBJ F::ABSTR-OBJ) (f::intentional -))))
- :wordnet-sense-keys ("cancel%2:41:00" "cancel%2:41:03" "void%2:41:00" "void%2:30:00")
+ :wordnet-sense-keys ("call_off%2:41:00" "cancel%2:41:00" "cancel%2:41:03" "void%2:30:00" "void%2:41:00")
  )
 
 
@@ -3691,7 +3699,7 @@
 (define-type ont::thin
  :wordnet-sense-keys ("thin%2:30:01" "thin%2:30:00")
  :parent ont::change-in-tactile-scale
- :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::texture-thinness-scale) (F::orientation f::pos))))
+ :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::texture-thiness-scale) (F::orientation f::pos))))
 )
 
 ; harden the clay
@@ -3748,7 +3756,7 @@
 (define-type ont::brighten
  :wordnet-sense-keys ("brighten%2:30:01")
  :parent ont::change-in-visual-scale
- :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::brightness-scale) (F::orientation f::pos))))
+ :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::brighteness-scale) (F::orientation f::pos))))
  :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::extended))
 )
 
@@ -4574,7 +4582,7 @@
  )
 
 (define-type ONT::CONNECTED
- :wordnet-sense-keys ("connect%2:42:02" "link%2:42:01" "link_up%2:42:00" "join%2:42:01" "unite%2:42:02" "admit%2:42:00" "afford%2:40:01" "converge%2:42:00" "open%2:42:00")
+ :wordnet-sense-keys ("adjoin%2:35:03" "admit%2:42:00" "afford%2:40:01" "connect%2:42:02" "converge%2:42:00" "join%2:42:01" "link%2:42:01" "link_up%2:42:00" "open%2:42:00" "unite%2:42:02")
  :parent ONT::POSITION
  :comment "two objects are touching in some way"
  :sem (F::Situation (F::Aspect F::Indiv-level) (F::Cause -))
@@ -5220,7 +5228,7 @@
 
 ;;
 (define-type ont::undergo-action
-    :wordnet-sense-keys ("go_down%2:42:00" "hesitate%2:42:00" "hover%2:38:01" "photograph%2:42:00" "get_it%2:41:00" "go_into%2:42:00")
+    :wordnet-sense-keys ("go_down%2:42:00" "go_into%2:42:00" "hesitate%2:42:00" "hover%2:38:01" "photograph%2:42:00")
     :parent ont::event-of-undergoing-action
     :arguments ((:optional ont::neutral (f::situation))  ;; the action that is affecting the object
 		)

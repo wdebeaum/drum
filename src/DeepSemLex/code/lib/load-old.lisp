@@ -34,6 +34,7 @@
    corresponding concept."
   (let* ((old-sem-disj
            (convert-variables-to-disjunctions
+	       ;; FIXME? some feature values are ONT types, and need their package preserved, not converted to :ld (is this handled by ont-valued-feat symbol type now?)
 	       (util::convert-to-package old-sem :ld)))
          (old-fl-type (car old-sem-disj))
 	 (old-fl (cdr old-sem-disj))
