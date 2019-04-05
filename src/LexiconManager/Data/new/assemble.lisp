@@ -18,10 +18,10 @@
      (TEMPL agent-affected-PLURAL-TEMPL) 
      )
 
-    ((LF-PARENT ONT::joining)
+   #|| ((LF-PARENT ONT::joining)    ;; now composition
      (example "the pieces assemble (into a toy)")
      (TEMPL affected-result-optional-templ) 
-     )
+     )||#
 
     )
    )

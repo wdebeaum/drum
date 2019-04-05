@@ -20,7 +20,7 @@
  :words (
   ((W::status W::post)
    (SENSES
-    ((LF-PARENT ONT::event-time-rel) ; should be with 'after' and event-time-rel needs subdivision
+    ((LF-PARENT ONT::in-past) 
      (meta-data :origin cernl :entry-date 20100725 :change-date nil :comments nil)
      (example "status post surgery")
      (TEMPL binary-constraint-NP-TEMPL)

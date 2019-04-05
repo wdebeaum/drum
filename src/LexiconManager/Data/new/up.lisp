@@ -18,14 +18,7 @@
      (example "let's practice up to here" "all the way up to my shins")
      )
 
-    
-;; 3/2011 removing sit-val role for event-time-rel
-;    ((LF-PARENT ONT::event-time-rel)
-;     (example "practice up to this step")
-;     (meta-data :origin plot :entry-date 20080613 :change-date nil :comments nil)
-;     (TEMPL binary-constraint-SIT-VAL-NP-TEMPL)
-;     )
-    )
+     )
    )
 ))
 

@@ -6,7 +6,7 @@
  :words (
   (W::simultaneously
    (SENSES
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::simultaneous)
      (LF-FORM W::SIMULTAENOUSLY)
      (TEMPL PRED-VP-TEMPL)
      )

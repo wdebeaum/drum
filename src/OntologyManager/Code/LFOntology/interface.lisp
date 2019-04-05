@@ -13,10 +13,11 @@
    )
   )
 
-(defun add-linguistic-type (type lfontology &key (parent nil) (semantics nil) (arguments nil) (coercions nil) (wordnet-sense-keys nil) (comment nil))
+(defun add-linguistic-type (type lfontology &key (parent nil) (semantics nil) (arguments nil) (coercions nil) (wordnet-sense-keys nil) (comment nil) (definitions nil))
   (add-lf type lfontology :parent parent
 	  :sem semantics :arguments arguments
-	  :coercions coercions :wordnet-sense-keys wordnet-sense-keys :comment comment
+	  :coercions coercions :wordnet-sense-keys wordnet-sense-keys
+	  :comment comment :definitions definitions
 	  )
   )
 

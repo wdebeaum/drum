@@ -49,7 +49,7 @@
 
 (define-type ont::event-of-change 
      :parent ONT::SITUATION-ROOT
-     :comment "Events that involve change or force: should ahve an AGENT or AFFECTED role"
+     :comment "Events that involve change or force: should have an AGENT or AFFECTED role"
      :arguments ((:optional  ONT::agent ((? cau4 F::situation F::Abstr-obj f::phys-obj)))
 		 (:optional  ONT::affected ((? cau3a F::situation F::abstr-obj f::phys-obj) (F::tangible +)))
 		 (:optional  ONT::result (F::Abstr-obj (:default (F::tangible -) (F::type (? !t ont::position-reln)))))
@@ -70,6 +70,8 @@
 (define-type ont::event-of-action 
      :parent ONT::event-of-change
      :comment "events that involve :agent (whether intentional or not)"
+     :definitions ((ont::cause-effect :agent ?agent
+				     :formal (ont::event-of-change)))
      :sem (F::Situation (F::cause F::force))
      :arguments ((:essential ONT::agent ((? cau2a F::situation F::Abstr-obj f::phys-obj)))))
 
@@ -97,6 +99,8 @@
 (define-type ont::event-of-causation 
      :parent ONT::event-of-action
      :comment "events involving an AGENT acting on an AFFECTED"
+     :definitions ((cause-effect :agent ?agent
+				 :formal (ont::event-of-change :affected ?affected)))
      :sem (F::Situation)
      :arguments ((:essential ONT::affected ((? cau5 F::abstr-obj f::phys-obj f::situation) (F::tangible +)))
 		 (:essential ONT::agent ((? cau6 F::abstr-obj f::phys-obj f::situation) (F::tangible +)))
@@ -116,6 +120,8 @@
      :parent ONT::SITUATION-ROOT
      :sem (F::Situation (F::aspect f::static))
      :comment "Events describing a state of affairs holding"
+     :definitions ((ont::imply (ont::DURING :figure ?ANY1 :ground ?time)
+			       (ont::event-of-state :event-id ?event-id :time ?ANY1)))
      :arguments ((:essential ONT::neutral)
 		 (:essential ONT::formal ((? neu F::situation F::Abstr-obj)))
 		 (:optional ont::norole)
@@ -173,9 +179,9 @@
     :sem (F::abstr-obj (F::Scale ont::domain))
     :arguments ((:REQUIRED ONT::FIGURE)
 		(:ESSENTIAL ONT::GROUND)
-		(:ESSENTIAL ONT::SCALE)
+		(:ESSENTIAL ONT::SCALE ((? scale F::abstr-obj) (F::type ONT::DOMAIN)))
 		(:OPTIONAL ONT::NOROLE)
-		(:OPTIONAL ONT::COMPAR)
+		(:OPTIONAL ONT::COMPAR ((? ty f::abstr-obj f::phys-obj) (f::type (? !xx ONT::NUMBER))))
 		(:OPTIONAL ONT::REFSET)
 		)
    )

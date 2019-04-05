@@ -1,30 +1,14 @@
-
-if (!Array.indexOf) { // IE doesn't have indexOf (!)
-  Array.prototype.indexOf = function(obj) {
-    for (var i = 0; i < this.length; i++) {
-      if (this[i] == obj) {
-	return i
-      }
-    }
-    return -1
-  }
-}
-
 // get the stylesheet for ONT types
 var processor = null
-if (window.XSLTProcessor) { // Gecko (Firefox), WebKit (Safari)
+if (window.XSLTProcessor) {
   processor = new XSLTProcessor()
   var xslrequest = new XMLHttpRequest()
   xslrequest.open("GET", "../style/onttype.xsl", false)
   xslrequest.send(null)
   processor.importStylesheet(xslrequest.responseXML)
-} else if (window.ActiveXObject) { // IE
-  processor = new ActiveXObject("Msxml2.DOMDocument")
-  processor.async = false
-  processor.validateOnParse = true
-  processor.load("../style/onttype.xsl")
+  processor.setParameter(null, "mode", "tree")
 } else {
-  alert("Your browser doesn't support XSLTProcessor (Firefox, Safari) or ActiveXObject (IE)")
+  alert("Your browser doesn't support XSLTProcessor (are you still using Internet Explorer?!)")
   throw "Unsupported browser"
 }
 
@@ -38,16 +22,6 @@ function loadONTLI(onttype) {
   if (window.XSLTProcessor) {
     newONTLI = processor.transformToFragment(xmlrequest.responseXML, document)
     oldONTLI.parentNode.replaceChild(newONTLI, oldONTLI)
-  } else if (window.ActiveXObject) {
-    // ugly hack to get around the fact that we can't replaceChild with the
-    // result of transformNodeToObject, and IE doesn't have importNode or
-    // adoptNode
-    newONTLI = xmlrequest.responseXML.transformNode(processor)
-    newID = newONTLI.match(/id=".*?"/)[0]
-    newID = newID.replace(/^id="/,'').replace(/"$/,'')
-    oldONTLI.setAttribute('id',newID)
-    newONTLI = newONTLI.replace(/^.*?<li.*?>/,'').replace(/<\/li>$/,'')
-    oldONTLI.innerHTML = newONTLI
   } else {
     throw "Unsupported browser"
   }
@@ -73,6 +47,10 @@ function toggleWords(onttype) {
 
 function toggleRoles(onttype) {
   genericToggle('roles', onttype)
+}
+
+function toggleDefinitions(onttype) {
+  genericToggle('definitions', onttype)
 }
 
 function toggleComment(onttype) {

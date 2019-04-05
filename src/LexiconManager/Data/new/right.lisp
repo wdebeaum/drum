@@ -93,8 +93,7 @@
  :words (
     ((W::right W::now)
    (SENSES
-    (;(LF-PARENT ONT::event-time-rel)
-     (LF-PARENT ONT::NOW)
+    ((LF-PARENT ONT::NOW)
      (TEMPL PRED-S-POST-templ)
      )
     )

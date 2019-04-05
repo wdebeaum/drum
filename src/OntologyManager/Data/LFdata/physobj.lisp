@@ -2058,6 +2058,7 @@
     )
 
 (define-type ONT::EQUIPMENT
+    :comment "manufactured objects that assist in ior perform some function"
     :parent ONT::MANUFACTURED-OBJECT
     :wordnet-sense-keys ("equipment%1:06:00" "instrumentality%1:06:00")
     :sem (F::Phys-obj (F::Origin F::Artifact))
@@ -2065,9 +2066,39 @@
 
 (define-type ont::tool
     :parent ont::EQUIPMENT
+    :comment "a piece of equipment typically controlled manually (whether powered or not)"
     :wordnet-sense-keys ("tool%1:06:00")
     :sem (f::phys-obj (f::object-function f::instrument))
     )
+
+(define-type ont::cutting-tool
+    :comment "tools that assist in cutting material"
+    :parent ont::TOOL
+    :wordnet-sense-keys ("cutting_implement%1:06:00")
+    :sem (f::phys-obj (f::object-function f::instrument))
+    )
+
+(define-type ont::drilling-tool
+    :comment "tools that are used to create holes in material"
+    :parent ont::TOOL
+    :wordnet-sense-keys ("drill%1:06:00")
+    :sem (f::phys-obj (f::object-function f::instrument))
+    )
+
+(define-type ont::hammer-tool
+    :comment "tools that are used to hit things"
+    :parent ont::TOOL
+    :wordnet-sense-keys ("hammer%1:06:00")
+    :sem (f::phys-obj (f::object-function f::instrument))
+    )
+
+(define-type ont::gripping-tool
+    :comment "tools that are used to hit things"
+    :parent ont::TOOL
+    :wordnet-sense-keys ("plyers%1:06:00" "holding_device%1:06:00")
+    :sem (f::phys-obj (f::object-function f::instrument))
+    )
+
 
 (define-type ONT::machine
     :parent ONT::device

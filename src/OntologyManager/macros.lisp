@@ -80,7 +80,7 @@
 
 (defun lfontology-define-type
     (type &key (parent nil) (sem nil) (arguments nil) (coercions nil) (wordnet-sense-keys nil) (comment nil) (definitions nil) (entailments nil))
-  (add-linguistic-type type *lf-ontology* :parent parent :semantics sem :arguments arguments :coercions coercions :wordnet-sense-keys wordnet-sense-keys :comment comment)
+  (add-linguistic-type type *lf-ontology* :parent parent :semantics sem :arguments arguments :coercions coercions :wordnet-sense-keys wordnet-sense-keys :comment comment :definitions definitions)
   )
 
 (defun lfontology-define-feature (name &key name-only values)

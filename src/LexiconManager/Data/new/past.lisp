@@ -11,16 +11,27 @@
      )
     )
    )
-))
+  ))
+
+(define-words :pos W::adj
+  :words (
+	  (w::past
+	   (senses
+	    ((LF-PARENT ONT::in-past)
+	     (TEMPL central-adj-templ)
+	     )
+	    )
+	   )
+	  ))
 
 (define-words :pos W::ADV
- :words (
-  (W::PAST
-   (SENSES
-    ((LF-PARENT ONT::pos-after-in-trajectory)
+  :words (
+	  (W::PAST
+	   (SENSES
+	    ((LF-PARENT ONT::pos-after-in-trajectory)
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      )
     )
    )
-))
+  ))
 

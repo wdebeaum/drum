@@ -26,13 +26,13 @@
 ;; Takes an LF name with unparsed sem arguments and children values
 ;; and adds it to the lftable as a child of the specified parent
 ;; a wrapper with nicer key interface and error control
-(defun add-lf (name lfontology &key (sem nil) (arguments nil) (parent nil) (coercions nil) (wordnet-sense-keys nil) (comment nil))
+(defun add-lf (name lfontology &key (sem nil) (arguments nil) (parent nil) (coercions nil) (wordnet-sense-keys nil) (comment nil) (definitions nil))
   "Takes lf description and parses it.
 Returns the list of lf-description structures or NIL in case of problems."
   
   ;; Starting point for recursion
   (handler-case (remove-if #'null 
-			   (add-lf-entries name sem arguments parent coercions wordnet-sense-keys lfontology comment))
+			   (add-lf-entries name sem arguments parent coercions wordnet-sense-keys lfontology comment definitions))
     (invalid-lf-entry (err) 
       (lfontology-warn "invalid lf specification for ~S:~%  ~A" name err)
       nil)
@@ -56,7 +56,7 @@ Returns the list of lf-description structures or NIL in case of problems."
 
 ;; The main processing function
 ;; Takes a name and unparsed SEM, ARGUMENTS  and parses and adds it to the ontology
-(defun add-lf-entries (name semf args pname coercions wordnet-sense-keys lfontology comment)
+(defun add-lf-entries (name semf args pname coercions wordnet-sense-keys lfontology comment definitions)
   (let* ((sem nil)
 	 (arguments (mapcar (lambda (x) (make-lf-argument x lfontology)) 
 			   args))
@@ -116,7 +116,8 @@ Returns the list of lf-description structures or NIL in case of problems."
 			  :children nil
 			  :wordnet-sense-keys wordnet-sense-keys
 			  :coercions (merge-in-defaults coercions parentcoercions :key #'lf-coercion-operator-result :test (lambda (x y) (sublf x y lfontology)))
-			  :comment comment)
+			  :comment comment
+			  :definitions definitions)
      lfontology)
     ))
 

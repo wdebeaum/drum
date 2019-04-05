@@ -38,7 +38,7 @@
   (W::NOW
    ;(wordfeats (W::ATYPE (? atype W::pre W::post w::pre-vp)))
    (SENSES
-    (;(LF-PARENT ONT::EVENT-TIME-REL)
+    (
      (LF-PARENT ONT::NOW)
      ;; (SYNTAX (W::IMPRO-CLASS (:* ONT::TIME-LOC W::NOW)))
      ;(SYNTAX (W::IMPRO-CLASS ONT::NOW))

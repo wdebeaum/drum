@@ -984,14 +984,17 @@
 ;; for verbs consistent with ont::affect class but select for sentient entities in the object role -- e.g.
 ;; confuse, bother, annoy
 (define-type ONT::affect-experiencer
- :wordnet-sense-keys ("come_to%2:39:00")
- :parent ONT::event-of-causation
- :sem (F::Situation (F::aspect F::dynamic) (F::cause F::agentive))
- ;; using f::origin f::living here, but this also includes plants -- no easy way to exclude those but include animals with current feature hierarchy ;-(
- :arguments ((:REQUIRED ONT::agent)
- 	     (:REQUIRED ONT::affected (F::phys-obj (F::origin f::living)))
-             )
- )
+    :wordnet-sense-keys ("come_to%2:39:00")
+    :comment "cause an experience on an cognitive agent"
+    :definitions ((ont::cause-effect :agent ?agent
+				     :formal (ont::event-of-experience :experiencer ?affected)))
+    :parent ONT::event-of-causation
+    :sem (F::Situation (F::aspect F::dynamic) (F::cause F::agentive))
+    ;; using f::origin f::living here, but this also includes plants -- no easy way to exclude those but include animals with current feature hierarchy ;-(
+    :arguments ((:REQUIRED ONT::agent)
+		(:REQUIRED ONT::affected (F::phys-obj (F::origin f::living)))
+		)
+    )
 
 (define-type ont::control-manage
  :wordnet-sense-keys ("control%2:41:00" "control%1:04:00""command%2:41:00" "discharge%2:33:01" "direct%2:41:00" )

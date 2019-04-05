@@ -1748,6 +1748,10 @@
 (define-type ONT::fearing
  :wordnet-sense-keys ("fear%2:37:03" "fear%2:37:00" "dread%2:37:00" "fear%2:37:13")
  :parent ONT::experiencer-emotion
+ :definitions ((ont::have-property :neutral ?experiencer
+				   :formal (ont::afraid :figure ?experiencer
+							:ground ?neutral)))
+							
  )
 
 (define-type ONT::care
@@ -1761,9 +1765,13 @@
  )
 
 (define-type ONT::envying
- :wordnet-sense-keys ("envy%2:37:01" "begrudge%2:37:00")
- :parent ONT::experiencer-emotion
- )
+    :wordnet-sense-keys ("envy%2:37:01" "begrudge%2:37:00")
+    :definitions ((ont::have-property :neutral ?experiencer
+				      :formal (ont::envious :figure ?experiencer
+							   :ground ?neutral)))
+
+    :parent ONT::experiencer-emotion
+    )
 
 (define-type ont::evoke-cognitive-state
  :parent ont::affect-experiencer
@@ -1772,6 +1780,9 @@
 (define-type ONT::evoke-emotion
  :wordnet-sense-keys ("arouse%2:37:00" "elicit%2:37:00" "enkindle%2:37:00" "kindle%2:37:00" "evoke%2:37:00" "fire%2:37:00" "raise%2:37:08" "provoke%2:37:00")
  :parent ONT::affect-experiencer
+ :comment "actions the cause some emotion in an agent"
+ :definitions ((ont::cause-effect :agent ?agent
+			   :formal (ont::experiencer-emotion :experiencer ?affected)))
  ;; experiencer restricted to be intentional in order to distinguish certain
  ;; words' senses under ONT::evoke-emotion from those under ONT::evoke-physical
  :arguments ((:REQUIRED ONT::affected (F::phys-obj (F::origin f::living) (F::intentional +)))
@@ -1794,14 +1805,21 @@
  )
 
 (define-type ONT::evoke-anger
- :wordnet-sense-keys ("try%2:37:01" "stress%2:37:00" "strain%2:37:00" "try%2:37:00" "anger%2:37:00")
- :parent ONT::evoke-emotion
+    :wordnet-sense-keys ("try%2:37:01" "stress%2:37:00" "strain%2:37:00" "try%2:37:00" "anger%2:37:00")
+    :comment "cause to be angry"
+    :definitions (ont::cause-effect :agent ?agent
+			     :formal (ont::have-property :neutral ?affected
+							 :formal (ont::angry :figure ?affected)))
+							 
+    :parent ONT::evoke-emotion
  )
 
 (define-type ONT::evoke-fear
- :wordnet-sense-keys ("frighten%2:37:00" "fright%2:37:00" "scare%2:37:00" "affright%2:37:00")
- :parent ONT::evoke-emotion
- )
+    :wordnet-sense-keys ("frighten%2:37:00" "fright%2:37:00" "scare%2:37:00" "affright%2:37:00")
+    :definitions ((ont::cause-effect :agent ?agent
+				     :formal (ont::fearing :experiencer ?affected)))
+    :parent ONT::evoke-emotion
+    )
 
 (define-type ONT::evoke-disgust
  :wordnet-sense-keys ("disgust%2:39:00" "gross_out%2:39:00" "revolt%2:39:00" "repel%2:39:00")
@@ -2201,7 +2219,7 @@
 
 ;; honor, respect, prize, treasure, value
 (define-type ONT::appreciate
- :wordnet-sense-keys ("savour%2:37:00" "savor%2:37:00" "relish%2:37:00" "bask%2:37:13" "enjoy%2:37:00" "appreciate%2:37:00" "like%2:37:04" "love%2:37:00")
+ :wordnet-sense-keys ("savour%2:37:00" "savor%2:37:00" "relish%2:37:00" "bask%2:37:13" "enjoy%2:37:00" "appreciate%2:37:00" "like%2:37:04" "love%2:37:00" "like%2:37:05")
  :parent ONT::experiencer-emotion
  :arguments ((:REQUIRED ONT::Formal ((? t f::phys-obj f::abstr-obj f::situation f::time)))
              (:ESSENTIAL ONT::neutral) ;((? s  f::phys-obj f::abstr-obj) (F::intentional +)))
@@ -2614,13 +2632,20 @@
  )
 
 (define-type ONT::Correlation
- :wordnet-sense-keys ("indicate%2:32:02" "argue%2:32:01" "imply%2:32:01" "entail%2:42:01" "imply%2:42:00" "mean%2:42:00" "affirm%2:31:00" "read%2:32:02"  "underlie%2:42:00")
+ :wordnet-sense-keys ("indicate%2:32:02" "argue%2:32:01" "mean%2:42:00" "affirm%2:31:00" "read%2:32:02"  "underlie%2:42:00")
  :parent ONT::event-of-state
  :sem (F::situation (F::aspect F::static) (F::trajectory -))
  :arguments ((:ESSENTIAL ONT::neutral ((? n  F::Phys-obj f::abstr-obj) (F::intentional -)))
 	     (:OPTIONAL ONT::neutral1 ((? n1 F::Phys-obj f::abstr-obj)))
              (:OPTIONAL ONT::formal (F::situation))
 	     ))
+
+(define-type ONT::IMPLY
+ :wordnet-sense-keys ("imply%2:32:01" "entail%2:42:01")
+ :parent ONT::correlation
+ :comment "an entailment relation holds netween NEUTRAL and NEUTRAL1"
+ )
+
 
 ;;  something that encodes a message
 (define-type ONT::encodes-message

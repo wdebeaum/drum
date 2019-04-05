@@ -125,7 +125,8 @@
 (define-words :pos W::name
  :words (
   ((w::all w::saint^s w::day)
-  (senses((LF-PARENT ONT::holiday)
+   (senses((LF-PARENT ONT::holiday)
+	   
     (TEMPL nname-templ)
     )
    )

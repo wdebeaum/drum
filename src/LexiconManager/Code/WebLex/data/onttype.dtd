@@ -3,7 +3,8 @@
 		  parent CDATA #REQUIRED
 		  modified CDATA #IMPLIED
 		  version CDATA #IMPLIED
-		  comment CDATA #IMPLIED>
+		  comment CDATA #IMPLIED
+		  definitions CDATA #IMPLIED>
 <!ELEMENT SEM (FEATURES?)>
 <!ATTLIST SEM fltype CDATA #REQUIRED>
 <!ELEMENT ARGUMENT (FEATURES?)>

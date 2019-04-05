@@ -48,6 +48,7 @@ print <<EOP;
 <html>
 <head>
 <title>TRIPS Ontology Browser</title>
+<style type="text/css">ul { padding-left: 1em; }</style>
 <script type="text/javascript" src="../style/onttype.js"></script>
 
 <!-- jQuery autocomplete -->
@@ -98,6 +99,8 @@ if ($search ne 'root')
   print "window.location.hash = '$search'\n";
   # and highlight it
   print "document.getElementById('$search').style.background = '#FFFF7F'\n";
+  # and click on its link so the details show up
+  print "document.getElementById('$search-link').click()\n";
 }
 
 # footer, tell the browser to display the modified date for ONT::root.xml

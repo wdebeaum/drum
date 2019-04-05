@@ -18,6 +18,7 @@
   wordnet-sense-keys
 ;  (resource-mappings nil);; mappings to external resources corresponding to this ontology type
   comment
+  definitions
   )
 
 (defstruct lf-coercion-operator

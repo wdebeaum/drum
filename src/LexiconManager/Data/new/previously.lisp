@@ -6,8 +6,7 @@
  :words (
   (W::PREVIOUSLY
    (SENSES
-    ((LF-PARENT ONT::event-time-rel)
-     (LF-FORM W::EARLIER)
+    ((LF-PARENT ONT::in-past)
      (TEMPL PRED-S-VP-TEMPL)
      )
     )

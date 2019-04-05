@@ -100,7 +100,7 @@
 
 ;; takes an lf-description structure
 (defun lf-description-xml (definition)
-  (with-slots (om::name om::sem om::arguments om::parent om::children om::wordnet-sense-keys om::comment) definition
+  (with-slots (om::name om::sem om::arguments om::parent om::children om::wordnet-sense-keys om::comment om::definitions) definition
     (append
       `(onttype :name ,om::name)
       (when *web*
@@ -108,6 +108,10 @@
 	   ;; unix time (1970 epoch)
 	   :modified ,(- (get-universal-time) 2208988800)
 	  ,@(when om::comment `(:comment ,om::comment))
+	  ,@(when om::definitions
+	    `(:definitions 
+	      ,(let ((*package* (find-package :om)))
+		(format nil "~s" om::definitions))))
 	  ,@(when om::sem
 	      (list (feature-list-xml om::sem)))
 	  ))
@@ -160,6 +164,8 @@
 		     )
 		   :direction :output)
     (format f "<?xml version=\"1.0\" encoding=\"UTF-8\"?>~%")
+    (when *web*
+      (format f "<?xml-stylesheet type=\"text/xsl\" href=\"../style/onttype.xsl\"?>~%"))
     (format f "<!DOCTYPE ONTTYPE SYSTEM \"onttype.dtd\">~%")
     (format f (convert-lisp-to-xml (lf-description-xml definition)))
     )

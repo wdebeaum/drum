@@ -948,11 +948,9 @@
 ;; the meeting next week; he arrives next week
 (define-type ONT::event-time-rel
  :parent ONT::temporal-location
- :arguments ((:ESSENTIAL ONT::FIGURE ((? f F::Situation F::time))) ; time: recent weeks ;(F::aspect (? asp F::dynamic F::stage-level)))) ; can be indiv-level: I was a pumpkin before midnight
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? f F::Situation F::time))) 
              (:ESSENTIAL ONT::GROUND ((? vl F::time f::situation)))
-	     ; 3/2011 conflating time and situation in the val role to reduce search space
-;             (:ESSENTIAL ONT::SIT-VAL (F::situation)) ;; swift 04/14/02 added this to handle when/before/as soon as/etc. + S, e.g. when I go
-             )
+	     )
  )
 
 (define-type ont::start-time
@@ -961,12 +959,22 @@
 
 (define-type ont::before
     :parent ont::event-time-rel
-    :wordnet-sense-keys ("after%4:02:00" "after%4:02:01")
+    :wordnet-sense-keys ("before%4:02:03")
     )
 
 (define-type ont::after
     :parent ont::event-time-rel
-    :wordnet-sense-keys ("before%4:02:03")
+    :wordnet-sense-keys ("after%4:02:00" "after%4:02:01")
+    )
+
+(define-type ont::during
+    :parent ont::event-time-rel
+    :comment "DURING, STARTS or ENDS in ITL"
+    )
+
+(define-type ont::simultaneous
+    :parent ont::event-time-rel
+    :comment "EQUAL in ITL"
     )
 
 (define-type ont::immediate
@@ -976,7 +984,7 @@
 
 (define-type ont::when-while
     :parent ont::event-time-rel
-   
+    
     )
 
 (define-type ont::until
@@ -998,17 +1006,32 @@
      )
 
 (define-type ONT::now
-     :wordnet-sense-keys ("now%4:02:05" "presently%4:02:00")
+     :wordnet-sense-keys ("now%4:02:05" "presently%4:02:00" "current%3:00:00" "present%3:00:01")
      :parent ONT::event-time-wrt-now
      )
 
 (define-type ONT::recent
-     :wordnet-sense-keys ("new%3:00:00" "past%3:00:00")
+     :wordnet-sense-keys ("new%3:00:00")
+     :parent ONT::event-time-wrt-now
+     )
+
+(define-type ONT::in-future
+     :wordnet-sense-keys ("future%3:00:00")
+     :parent ONT::event-time-wrt-now
+     )
+
+(define-type ONT::in-past
+     :wordnet-sense-keys ("past%3:00:00")
      :parent ONT::event-time-wrt-now
      )
 
 (define-type ONT::soon
-     :wordnet-sense-keys ("soon%4:02:00")
+     :wordnet-sense-keys ("soon%4:02:00""imminent%3:00:00")
+     :parent ONT::event-time-wrt-now
+     )
+
+(define-type ont::occuring-now
+     :wordnet-sense-keys ("current%3:00:00")
      :parent ONT::event-time-wrt-now
      )
 
