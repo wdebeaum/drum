@@ -3724,7 +3724,7 @@
 (define-type ont::thin
  :wordnet-sense-keys ("thin%2:30:01" "thin%2:30:00")
  :parent ont::change-in-tactile-scale
- :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::texture-thiness-scale) (F::orientation f::pos))))
+ :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::texture-thinness-scale) (F::orientation f::pos))))
 )
 
 ; harden the clay
@@ -3781,7 +3781,7 @@
 (define-type ont::brighten
  :wordnet-sense-keys ("brighten%2:30:01")
  :parent ont::change-in-visual-scale
- :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::brighteness-scale) (F::orientation f::pos))))
+ :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::brightness-scale) (F::orientation f::pos))))
  :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::extended))
 )
 

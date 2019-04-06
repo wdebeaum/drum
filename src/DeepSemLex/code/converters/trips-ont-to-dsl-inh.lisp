@@ -118,11 +118,11 @@
       (and (util::variable-p ancestor)
            (not (and (positive-variable-p ancestor)
 	             (eq 'f::- (name descendant)))))
-      (and (symbolp ancestor)
+      (and ancestor (symbolp ancestor)
            (progn
 	     (require-concept ancestor)
 	     (subsumes-p (gethash ancestor (concepts *db*)) descendant)))
-      (and (symbolp descendant)
+      (and descendant (symbolp descendant)
            (progn
 	     (require-concept descendant)
 	     (subsumes-p ancestor (gethash descendant (concepts *db*)))))

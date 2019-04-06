@@ -8,8 +8,8 @@
 <xsl:template name="sem">
  <xsl:param name="id" />
  <xsl:if test="FEATURES">
-  (<a id="{$id}-sem-link" href="javascript:toggleFeatures('{$id}')">show sem</a>)
-  <span id="{$id}-sem" style="display: none">
+  (<a id="{$id}-sem-link" href="javascript:toggleFeatures('{$id}')">hide sem</a>)
+  <span id="{$id}-sem">
    <br /><xsl:value-of select="@fltype" />
    <ul>
     <xsl:for-each select="FEATURES/@*">
@@ -54,8 +54,8 @@
     </xsl:for-each>)</div>
   </xsl:if>
   <xsl:if test="WORD">
-   <div>(<a id="{@name}-words-link" href="javascript:toggleWords('{@name}')">show words</a>)
-   <span id="{@name}-words" style="display: none">
+   <div>(<a id="{@name}-words-link" href="javascript:toggleWords('{@name}')">hide words</a>)
+   <span id="{@name}-words">
     <xsl:for-each select="WORD">
      <a href="../data/W%3A%3A{@name}.xml"><xsl:value-of select="@name" /></a><xsl:if test="position() != last()">, </xsl:if>
     </xsl:for-each>
@@ -70,8 +70,8 @@
    </div>
   </xsl:for-each>
   <xsl:if test="ARGUMENT">
-   <div>(<a id="{@name}-roles-link" href="javascript:toggleRoles('{@name}')">show roles</a>)
-   <ul id="{@name}-roles" style="display: none">
+   <div>(<a id="{@name}-roles-link" href="javascript:toggleRoles('{@name}')">hide roles</a>)
+   <ul id="{@name}-roles">
     <xsl:for-each select="ARGUMENT">
      <li id="{../@name}-role-{@role}"><xsl:value-of select="@role" />
       <xsl:call-template name="sem">
@@ -83,15 +83,15 @@
    </div>
   </xsl:if>
   <xsl:if test="@definitions">
-   <div>(<a id="{@name}-definitions-link" href="javascript:toggleDefinitions('{@name}')">show definitions</a>)
-   <span id="{@name}-definitions" style="display: none">
+   <div>(<a id="{@name}-definitions-link" href="javascript:toggleDefinitions('{@name}')">hide definitions</a>)
+   <span id="{@name}-definitions">
     <xsl:value-of select="@definitions" />
    </span>
    </div>
   </xsl:if>
   <xsl:if test="@comment">
-   <div>(<a id="{@name}-comment-link" href="javascript:toggleComment('{@name}')">show comment</a>)
-   <span id="{@name}-comment" style="display: none">
+   <div>(<a id="{@name}-comment-link" href="javascript:toggleComment('{@name}')">hide comment</a>)
+   <span id="{@name}-comment">
     <xsl:value-of select="@comment" />
    </span>
    </div>
