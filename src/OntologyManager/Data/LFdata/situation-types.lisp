@@ -500,11 +500,8 @@
              )
  )
 
-;;; swift 10/27/06 changed f::origin f::human to f::origin f::living for e.g. "every dog hates a cat"; "plants love sunshine"
-;;; I conjoined Experiencer-subj with Experiencer-obj
-;;; swift 01/12/01 -- changed aspect feature f_static to F_Stage-Level to allow progressive
 (define-type ONT::Experiencer-emotion
- :wordnet-sense-keys ("like%2:37:05" "experience%2:37:00" "feel%2:37:00")
+ :wordnet-sense-keys ( "experience%2:37:00" "feel%2:37:00")
  :parent ONT::event-of-experience
  :sem (F::Situation (:required (F::Cause F::Mental))(:default (F::Aspect F::Stage-Level)))
  :arguments (

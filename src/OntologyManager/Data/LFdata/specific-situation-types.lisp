@@ -534,9 +534,11 @@
 )
 
 (define-type ont::sleep
- :wordnet-sense-keys("sleep%2:29:00" "oversleep%2:29:00" "go_to_bed%2:29:00" "fall_asleep%2:29:00")
- :parent ont::processes-of-consciousness
-)
+    :wordnet-sense-keys("sleep%2:29:00" "oversleep%2:29:00" "go_to_bed%2:29:00" "fall_asleep%2:29:00")
+    :definitions (ont::become :neutral ?affected
+			      :formal (ont::asleep-val :figure ?affected))
+    :parent ont::processes-of-consciousness
+    )
 
 (define-type ont::lie-dormant
  :wordnet-sense-keys("lie_dormant%2:41:00")
@@ -549,14 +551,18 @@
 )
 
 (define-type ont::lose-consciousness
- :wordnet-sense-keys("zonk_out%2:29:01")
- :parent ont::processes-of-consciousness
-)
+    :wordnet-sense-keys("zonk_out%2:29:01")
+    :definitions (ont::become :neutral ?affected
+			      :formal (ont::not-aware-val :figure ?affected))
+    :parent ont::processes-of-consciousness
+    )
 
 (define-type ont::awake
- :wordnet-sense-keys("wake%2:29:00" "arise%2:29:00" "awake%2:29:00")
- :parent ont::processes-of-consciousness
-)
+    :wordnet-sense-keys("wake%2:29:00" "arise%2:29:00" "awake%2:29:00")
+    :definitions (ont::become :neutral ?affected
+			      :formal (ont::awake-val :figure ?affected))
+    :parent ont::processes-of-consciousness
+    )
 
 (define-type ont::alter-consciousness
  :wordnet-sense-keys ("trip%2:34:00" "hallucinate%2:39:00")
@@ -1220,9 +1226,12 @@
 
 ;; revive, come to, energize, perk up
 (define-type ont::reviving
- :wordnet-sense-keys ("revive%2:29:01" "resuscitate%2:29:00" "stimulate%2:29:00" "arouse%2:29:00" "brace%2:29:00" "energize%2:29:00" "energise%2:29:00" "perk_up%2:29:01" "revive%2:29:02")
-  :parent ont::change-state
-  )
+    :wordnet-sense-keys ("revive%2:29:01" "resuscitate%2:29:00" "stimulate%2:29:00" "arouse%2:29:00" "brace%2:29:00" "energize%2:29:00" "energise%2:29:00" "perk_up%2:29:01" "revive%2:29:02")
+    :definitions ((ont::cause-effect :agent ?agent
+				     :formal (ont::become :affected ?affected
+							  :formal (ont::aware-val :figure ?affected))))
+    :parent ont::change-state
+    )
 
 (define-type ONT::OBJECT-CHANGE
  :parent ONT::change
@@ -1326,8 +1335,11 @@
 ;; 20120524 GUM change new type
 (define-type ont::cause-produce-reproduce
     :comment "an AGENT causes a new object to be created"
-  :wordnet-sense-keys ("bring_on%2:39:00" "produce%2:36:03" "yield%2:40:00" "yield%2:40:02")
+    :wordnet-sense-keys ("bring_on%2:39:00" "produce%2:36:03" "yield%2:40:00" "yield%2:40:02")
     :parent ont::cause-effect
+    :definitions ((ont::cause-effect :agent ?agent
+				     :formal (ont::become
+					      :formal (ont::exists :neutral ?affected))))
     :arguments ((:ESSENTIAL ONT::affected-result ((? agt F::phys-obj f::abstr-obj f::situation)))
 		)
     )
@@ -2767,11 +2779,12 @@
  )
 
 (define-type ONT::Cause-Action
- :parent ONT::CAUSE-effect
- :sem (F::Situation (F::Cause F::Agentive))
- :arguments ((:REQUIRED ONT::Effect (F::Situation (F::Cause F::Agentive) (F::Aspect F::Dynamic)))
-             )
- )
+    :parent ONT::CAUSE-effect
+    
+    :sem (F::Situation (F::Cause F::Agentive))
+    :arguments ((:REQUIRED ONT::Effect (F::Situation (F::Cause F::Agentive) (F::Aspect F::Dynamic)))
+						)
+				    )
 
 
 (define-type ONT::ensure
@@ -2894,10 +2907,14 @@
 (define-type ONT::Cancel
  :parent ONT::CAUSE-ACTION
  :arguments ((:OPTIONAL ONT::Formal ((? obj F::PHYS-OBJ F::ABSTR-OBJ) (f::intentional -)))
-	     (:OPTIONAL ONT::NEUTRAL ((? obj F::PHYS-OBJ F::ABSTR-OBJ) (f::intentional -))))
+	     (:OPTIONAL ONT::NEUTRAL ((? obj F::PHYS-OBJ F::ABSTR-OBJ F::situation) (f::intentional -))))
  :wordnet-sense-keys ("call_off%2:41:00" "cancel%2:41:00" "cancel%2:41:03" "void%2:30:00" "void%2:41:00")
  )
 
+(define-type ONT::renege
+ :parent ONT::CANCEL
+ :wordnet-sense-keys ("renege%2:32:00" "retreat%2:32:00")
+ )
 
 (define-type ont::enable
   :parent ont::cause-effect
@@ -2948,6 +2965,7 @@
  :wordnet-sense-keys ("have%2:30:00" "have%2:36:00" "have%2:32:00" "have%2:40:02" "have%2:29:00")
  :parent ONT::CAUSE-EFFECT
  :sem (F::situation (F::Aspect F::Dynamic))
+ :definitions ((CAUSE-EFFECT :agent ?agent :formal ?formal))
  :arguments ((:REQUIRED ONT::AGENT ((? ag F::PHYS-OBJ F::ABSTR-OBJ) (f::intentional +) )) ; exclude "the structure has blocks painted red"
 	     (:REQUIRED ONT::AFFECTED ((? AFF F::PHYS-OBJ F::ABSTR-OBJ)))
 	     (:REQUIRED ONT::formal (f::situation (f::type ont::event-of-action)))
@@ -3148,7 +3166,7 @@
  )
 
 (define-type ONT::come-out-of
- :wordnet-sense-keys ("egress%1:04:01" "egression%1:04:00::" "emergence%1:04:00")
+ :wordnet-sense-keys ("egress%1:04:01" "egression%1:04:00::" "emergence%1:04:00" "leak%2:30:04")
  :parent ONT::come-from
  :arguments ((:OPTIONAL ONT::Agent)
              )
@@ -3380,7 +3398,7 @@
 ;; 20120524 GUM change new type
 ;; 20121022 GUM change : merging with ont::emit; moving WN mappings here.
 (define-type ont::emit-giveoff-discharge
-    :wordnet-sense-keys ("emission%1:04:00" "emanation%1:04:00" "emit%2:43:00" "discharge%2:29:00" "bubble%2:30:01")
+    :wordnet-sense-keys ("bubble%2:30:01" "discharge%2:29:00" "emanation%1:04:00" "emission%1:04:00" "emit%2:43:00" "leak%2:30:00")
 ;    :parent ont::releasing
     :parent ONT::CAUSE-MAKE-THINGS
     )

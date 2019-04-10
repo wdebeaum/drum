@@ -4703,14 +4703,15 @@
     ;; Myrosia 5/19/00 Changed the rule to apply only to "true" names
     ;; "generated" names get status "GNAME" in the next rule
     ((NP (SORT ?sort)
-         (var ?v) (Class ?lf) (sem ?sem) (agr ?agr) (case (? cas sub obj -))
-         (LF (% Description (Status ?newspec) (var ?v) (Sort Individual)
-                (class ?lf) (lex ?l) (sem ?sem) 
-                (transform ?transform)  (generated ?gen)
-		(constraint ?con)
-                ))
-	 (mass ?mass) ; amount of Ras (mass)
-	 (name +) (simple +) (time-converted ?tc) (generated ?gen)
+      (var ?v) (Class ?lf) (sem ?sem) (agr ?agr) (case (? cas sub obj -))
+      (LF (% Description (Status ?newspec) (var ?v) (Sort Individual)
+	     (class ?lf) (lex ?l) (sem ?sem) 
+	     (transform ?transform)  (generated ?gen)
+	     (constraint ?con)
+	     ))
+      (mass ?mass) ; amount of Ras (mass)
+      (name +) (name-or-bare +) (subcat (% -))
+      (simple +) (time-converted ?tc) (generated ?gen)
       (postadvbl ?gen) ;; swift -- setting postadvl to gen as part of eliminating gname rule but still allowing e.g. truck 1
       )
      -np-name> 0.995

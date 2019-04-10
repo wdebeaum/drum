@@ -99,7 +99,7 @@
 (define-type ont::event-of-causation 
      :parent ONT::event-of-action
      :comment "events involving an AGENT acting on an AFFECTED"
-     :definitions ((cause-effect :agent ?agent
+     :definitions ((ont::cause-effect :agent ?agent
 				 :formal (ont::event-of-change :affected ?affected)))
      :sem (F::Situation)
      :arguments ((:essential ONT::affected ((? cau5 F::abstr-obj f::phys-obj f::situation) (F::tangible +)))
@@ -108,7 +108,10 @@
      )
 
 (define-type ont::event-of-creation
-     :parent ONT::event-of-action
+    :parent ONT::event-of-action
+    :definitions ((cause-effect :agent ?agent
+				:formal (ont::become :affected ?affected
+						     :formal (ONT::EXISTS :neutral ?affected))))
      :comment "Events that involve creating some new object (typically the AFFECTED-RESULT)"
      :sem (F::Situation)
      :arguments ((:optional ONT::result ((? neu F::situation F::Abstr-obj f::phys-obj)))

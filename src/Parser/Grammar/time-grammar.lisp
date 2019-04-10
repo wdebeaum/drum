@@ -316,6 +316,7 @@
 (parser::augment-grammar
   '((headfeatures
      (VALUE transform)
+     (NP subcat)
      )		
    
     ;; rate expressions
@@ -396,21 +397,22 @@
   
     ;; e.g., the gdp / gtp ratio
 
-    ((n1 (sort pred) (var ?v) (class (:* ONT::RATIO ?x)) (agr ?agr) (CASE (? case SUB OBJ))
-      (sem ?sem) (lex ?lex) (subcat -) (restr (& (figure ?v1) (ground ?v2))))
+    ((n1 (sort pred) (var ?v) (class (:* ONT::RATIO W::RATIO)) (agr ?agr) (CASE (? case SUB OBJ))
+      (sem ?sem) (lex ?lex) (subcat (% -)) (restr (& (figure ?v1) (ground ?v2))))
      -ratio1> 1
-     (head (np (lf ?num) (bare-np +) (wh -) (var ?v1) (agr 3s)))
+     (head (np (lf ?num) (name-or-bare +) (wh -) (var ?v1) (agr 3s)))
      (punc (lex (? l slash punc-slash)))
-     (np (w::agr w::3s) (bare-np +) (var ?v2) (LF ?denom))
-     (n (LF (:* ONT::RATIO ?x)) (var ?v) (sem ?sem) (agr ?agr) (lex ?lex))
+     (np (w::agr w::3s) (name-or-bare +) (var ?v2) (LF ?denom))
+     (n (LF (:* ONT::RATIO W::RATIO)) (var ?v) (sem ?sem) (agr ?agr) (lex ?lex))
      )
 
-    ((n1 (sort pred) (var ?v) (class (:* ONT::RATIO ?x)) (agr ?agr) (CASE (? case SUB OBJ))
-      (sem ?sem) (lex ?lex) (subcat -) (restr (& (figure ?v1) (ground ?v2))))
-     -ratio2> 1.1  ;; override parser's reluctance to make bare NP's
-     (head (np (lf ?num) (wh -) (bare-np +) (var ?v1) (agr 3s)))
-     (np (w::agr w::3s) (var ?v2) (bare-np +) (agr ?agr) (LF ?denom))
-     (n (LF (:* ONT::RATIO ?x)) (var ?v) (sem ?sem) (lex ?lex))
+    ((n1 (sort pred) (var ?v) (class (:* ONT::RATIO W::RATIO)) (agr ?agr) (CASE (? case SUB OBJ))
+      (sem ?sem) (lex ?lex) (subcat (% -)) (restr (& (figure ?v1) (ground ?v2))))
+     -ratio2> 1 ;; I deleted 1.1 here as values >1 can caused chaotic search (and did lead to problems)
+                ;;   (if the problem comes up that originally motivated the high value we should consider other ways to fix it JFA 4/19
+     (head (np (lf ?num) (wh -) (name-or-bare +) (var ?v1) (agr 3s)))
+     (np (w::agr w::3s) (var ?v2) (name-or-bare +) (agr ?agr) (LF ?denom))
+     (n (LF (:* ONT::RATIO W::RATIO)) (var ?v) (sem ?sem) (lex ?lex))
      )
 
     #|

@@ -1851,14 +1851,16 @@
 )
 
 (define-type ont::asleep-val
- :parent ont::awakeness-val 
- :wordnet-sense-keys ("asleep%4:02:00" )
-)
+    :parent ont::awakeness-val
+    :definitions (ont::not (ont::awake-val :figure ?neutral))
+    :wordnet-sense-keys ("asleep%4:02:00" )
+    )
 
 (define-type ont::awake-val
- :parent ont::awakeness-val 
- :wordnet-sense-keys ("awake%3:00:00" )
-)
+    :parent ont::awakeness-val
+    :definitions (ont::not (ont::asleep-val :figure ?neutral))
+    :wordnet-sense-keys ("awake%3:00:00" )
+    )
 
 ;; energized or fatigued
 (define-type ont::energy-supply-val
