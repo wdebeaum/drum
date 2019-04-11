@@ -287,10 +287,10 @@
       (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!n2 :suchthat ?!m)
       )
 
-     ;; e.g., Are any of those...
+     ;; e.g., Are any of those.../Do any... 
      ((ONT::SPEECHACT ?x (? sa ONT::SA_YN-QUESTION) :CONTENT ?!theme)
       ;(?reln ?!theme ?type) ; beats -ynq1>
-      (?reln ?!theme ONT::BE :NOROLE -) ; beats -ynq1> ; excludes "are there any..."
+      (?reln ?!theme ?type :NOROLE -) ; beats -ynq1> ; excludes "are there any..."
       (?reln1 ?!t ONT::REFERENTIAL-SEM :QUAN ONT::ANY)
       -request-to-identify3c>
       (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!t :suchthat ?!theme)

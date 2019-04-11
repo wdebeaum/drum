@@ -33,8 +33,9 @@
      )
     ((lf-parent ont::feeding)
 ;     (templ agent-affected-recipient-alternation-templ)
-     (templ AGENT-RECIPIENT-affected-TEMPL)
-     (example "feed the dog some bread")
+     ;(templ AGENT-RECIPIENT-affected-TEMPL)
+     (templ AGENT-RECIPIENT-affected-OPTIONAL-TEMPL (xp (% W::NP)))
+     (example "feed the dog (some bread)")
      )
     
     

@@ -829,7 +829,8 @@
 
 ;; engineer, artist, scientist
 (define-type ONT::professional
-    :wordnet-sense-keys ("professional%1:18:00" "professional_person%1:18:00")
+    :wordnet-sense-keys ("professional%1:18:00" "professional_person%1:18:00"
+						"skilled_worker%1:18:00")
     :comment "a person defined by a role that they play. e.g., doctor, leader, ..."
     :parent ONT::PERSON
     :sem (F::Phys-obj (F::form F::solid-object)
@@ -1912,16 +1913,22 @@
     :wordnet-sense-keys ("body_part%1:08:00" )
     :parent ONT::anatomy
     :sem (F::Phys-obj ;;(F::origin F::living)
-		      (f::intentional -) (f::form f::object) (f::object-function f::body-part) (f::container +))
+	  (f::intentional -) (f::form f::object) (f::object-function f::body-part) (f::container +))
  ;;; too strong, but better than unconstrained
     :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::origin F::living) (f::form f::object)))
 		)
     )
 
 (define-type ONT::external-body-part
-    :wordnet-sense-keys ("animal_skin%1:27:00")
+    :wordnet-sense-keys ("external-body-part%1:08:00" "skin%1:08:00" "animal_skin%1:27:00" )
     :parent ONT::BODY-PART
     :sem (F::Phys-obj (F::intentional -))
+    )
+
+(define-type ont::head
+     :wordnet-sense-keys ("head%1:08:00")
+     :parent ONT::external-BODY-PART
+     :sem (F::Phys-obj (F::intentional -))
     )
 
 (define-type ONT::internal-body-part

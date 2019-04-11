@@ -36,6 +36,90 @@
 	   )
 |#
 
+	  ; skip all imperatives for mod extractions (and regular "you", although this is not always right)
+	  ((?reln ?ev ?t :AGENT ?!ag :NEUTRAL ?n)
+	   (?reln1 ?!ag ?t1 :PRO (? pro W::*YOU* W::YOU))
+	   (?reln2 ?n ?t2)
+	   -rule-imperative1>
+	   200
+	   (?reln ?ev ?t
+	    :rule -rule-imperative1
+	    :AGENT ?!ag
+	    :NEUTRAL ?n
+	    )
+	   )
+
+	  ((?reln ?ev ?t :AGENT ?!ag :FORMAL ?n)
+	   (?reln1 ?!ag ?t1 :PRO (? pro W::*YOU* W::YOU))
+	   (?reln2 ?n ?t2)
+	   -rule-imperative2>
+	   200
+	   (?reln ?ev ?t
+	    :rule -rule-imperative2
+	    :AGENT ?!ag
+	    :FORMAL ?n
+	    )
+	   )
+
+	  ((?reln ?ev ?t :EXPERIENCER ?!ag :NEUTRAL ?n)
+	   (?reln1 ?!ag ?t1 :PRO (? pro W::*YOU* W::YOU))
+	   (?reln2 ?n ?t2)
+	   -rule-imperative3>
+	   200
+	   (?reln ?ev ?t
+	    :rule -rule-imperative3
+	    :EXPERIENCER ?!ag
+	    :NEUTRAL ?n
+	    )
+	   )
+
+	  ((?reln ?ev ?t :EXPERIENCER ?!ag :FORMAL ?n)
+	   (?reln1 ?!ag ?t1 :PRO (? pro W::*YOU* W::YOU))
+	   (?reln2 ?n ?t2)
+	   -rule-imperative4>
+	   200
+	   (?reln ?ev ?t
+	    :rule -rule-imperative4
+	    :EXPERIENCER ?!ag
+	    :FORMAL ?n
+	    )
+	   )
+	  
+	  ((?reln ?ev ?t :NEUTRAL ?!ag :NEUTRAL1 ?n)
+	   (?reln1 ?!ag ?t1 :PRO (? pro W::*YOU* W::YOU))
+	   (?reln2 ?n ?t2)
+	   -rule-imperative5>
+	   200
+	   (?reln ?ev ?t
+	    :rule -rule-imperative5
+	    :NEUTRAL ?!ag
+	    :NEUTRAL1 ?n
+	    )
+	   )
+
+	  ((?reln ?ev ?t :NEUTRAL ?!ag :FORMAL ?n)
+	   (?reln1 ?!ag ?t1 :PRO (? pro W::*YOU* W::YOU))
+	   (?reln2 ?n ?t2)
+	   -rule-imperative6>
+	   200
+	   (?reln ?ev ?t
+	    :rule -rule-imperative6
+	    :NEUTRAL ?!ag
+	    :FORMAL ?n
+	    )
+	   )
+
+	  ((?reln ?ev ?t :NEUTRAL1 ?!ag :NEUTRAL2 ?n)
+	   (?reln1 ?!ag ?t1 :PRO (? pro W::*YOU* W::YOU))
+	   (?reln2 ?n ?t2)
+	   -rule-imperative7>
+	   200
+	   (?reln ?ev ?t
+	    :rule -rule-imperative7
+	    :NEUTRAL1 ?!ag
+	    :NEUTRAL2 ?n
+	    )
+	   )
 	  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; START: rules automatically generated from template
@@ -73,7 +157,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL rule with EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -99,7 +183,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL rule with EXPERIENCER and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -127,7 +211,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -148,7 +232,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -207,7 +291,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -233,7 +317,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL rule with neither EXPERIENCER nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -254,7 +338,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL rule with known EXPERIENCER but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -275,8 +359,8 @@
           ;; rule60_0_EXPERIENCER_FORMAL rule with known EXPERIENCER but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule60_0_EXPERIENCER_FORMAL))
@@ -297,7 +381,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule60_0_EXPERIENCER_FORMAL))
@@ -317,8 +401,8 @@
           ;; rule60_0_EXPERIENCER_FORMAL rule with pronouns as both EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule60_0_EXPERIENCER_FORMAL))
@@ -338,7 +422,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL rule with no EXPERIENCER and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule60_0_EXPERIENCER_FORMAL))
@@ -346,7 +430,6 @@
            59
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-robustPro-FORMAL-only
-            :EXPERIENCER -
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -358,7 +441,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL rule with a pronoun as EXPERIENCER and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule60_0_EXPERIENCER_FORMAL))
@@ -367,7 +450,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :FORMAL -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -380,7 +462,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -409,7 +491,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with EXPERIENCER and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -440,7 +522,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -464,7 +546,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -529,7 +611,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -558,7 +640,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with neither EXPERIENCER nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -582,7 +664,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with known EXPERIENCER but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -606,8 +688,8 @@
           ;; rule60_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with known EXPERIENCER but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -631,7 +713,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -654,8 +736,8 @@
           ;; rule60_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with pronouns as both EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -678,7 +760,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with no EXPERIENCER and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -688,7 +770,6 @@
            59
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-POLARITY1-gd-robustPro-FORMAL-only
-            :EXPERIENCER -
             :FORMAL ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -701,7 +782,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with a pronoun as EXPERIENCER and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -712,7 +793,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-POLARITY1-gd-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :FORMAL -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -726,7 +806,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_1 rule with EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -754,7 +834,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_1 rule with EXPERIENCER and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -784,7 +864,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_1 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -807,7 +887,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_1 rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -870,7 +950,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -898,7 +978,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_1 rule with neither EXPERIENCER nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -921,7 +1001,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_1 rule with known EXPERIENCER but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -944,8 +1024,8 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_1 rule with known EXPERIENCER but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -968,7 +1048,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -990,8 +1070,8 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_1 rule with pronouns as both EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -1013,7 +1093,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_1 rule with no EXPERIENCER and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -1022,7 +1102,6 @@
            59
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODA1_1-robustPro-FORMAL-only
-            :EXPERIENCER -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -1035,7 +1114,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_1 rule with a pronoun as EXPERIENCER and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -1045,7 +1124,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODA1_1-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -1059,7 +1137,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_2 rule with EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1087,7 +1165,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_2 rule with EXPERIENCER and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -1117,7 +1195,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_2 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1140,7 +1218,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_2 rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1203,7 +1281,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1231,7 +1309,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_2 rule with neither EXPERIENCER nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1254,7 +1332,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_2 rule with known EXPERIENCER but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1277,8 +1355,8 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_2 rule with known EXPERIENCER but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -1301,7 +1379,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -1323,8 +1401,8 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_2 rule with pronouns as both EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -1346,7 +1424,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_2 rule with no EXPERIENCER and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -1355,7 +1433,6 @@
            59
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODA1_2-robustPro-FORMAL-only
-            :EXPERIENCER -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -1368,7 +1445,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODA1_2 rule with a pronoun as EXPERIENCER and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -1378,7 +1455,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODA1_2-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -1392,7 +1468,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_1 rule with EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1420,7 +1496,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_1 rule with EXPERIENCER and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -1450,7 +1526,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_1 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1473,7 +1549,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_1 rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1536,7 +1612,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1564,7 +1640,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_1 rule with neither EXPERIENCER nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1587,7 +1663,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_1 rule with known EXPERIENCER but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1610,8 +1686,8 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_1 rule with known EXPERIENCER but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -1634,7 +1710,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -1656,8 +1732,8 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_1 rule with pronouns as both EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -1679,7 +1755,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_1 rule with no EXPERIENCER and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -1688,7 +1764,6 @@
            59
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODN1_1-robustPro-FORMAL-only
-            :EXPERIENCER -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -1701,7 +1776,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_1 rule with a pronoun as EXPERIENCER and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -1711,7 +1786,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODN1_1-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -1725,7 +1799,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_2 rule with EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1753,7 +1827,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_2 rule with EXPERIENCER and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -1783,7 +1857,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_2 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1806,7 +1880,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_2 rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1869,7 +1943,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1897,7 +1971,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_2 rule with neither EXPERIENCER nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1920,7 +1994,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_2 rule with known EXPERIENCER but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -1943,8 +2017,8 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_2 rule with known EXPERIENCER but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -1967,7 +2041,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -1989,8 +2063,8 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_2 rule with pronouns as both EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -2012,7 +2086,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_2 rule with no EXPERIENCER and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -2021,7 +2095,6 @@
            59
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODN1_2-robustPro-FORMAL-only
-            :EXPERIENCER -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -2034,7 +2107,7 @@
           ;; rule60_0_EXPERIENCER_FORMAL-MODN1_2 rule with a pronoun as EXPERIENCER and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -2044,7 +2117,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_FORMAL-MODN1_2-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -2069,7 +2141,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL rule with EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2095,7 +2167,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL rule with EXPERIENCER and NEUTRAL (whether)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -2123,7 +2195,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2144,7 +2216,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2203,7 +2275,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2229,7 +2301,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL rule with neither EXPERIENCER nor NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2250,7 +2322,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL rule with known EXPERIENCER but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2271,8 +2343,8 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL rule with known EXPERIENCER but a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule60_0_EXPERIENCER_NEUTRAL))
@@ -2293,7 +2365,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule60_0_EXPERIENCER_NEUTRAL))
@@ -2313,8 +2385,8 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL rule with pronouns as both EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule60_0_EXPERIENCER_NEUTRAL))
@@ -2334,7 +2406,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL rule with no EXPERIENCER and a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule60_0_EXPERIENCER_NEUTRAL))
@@ -2342,7 +2414,6 @@
            59
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-robustPro-NEUTRAL-only
-            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -2354,7 +2425,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL rule with a pronoun as EXPERIENCER and no NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule60_0_EXPERIENCER_NEUTRAL))
@@ -2363,7 +2434,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :NEUTRAL -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -2376,7 +2446,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2405,7 +2475,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with EXPERIENCER and NEUTRAL (whether)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -2436,7 +2506,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2460,7 +2530,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2525,7 +2595,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2554,7 +2624,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with neither EXPERIENCER nor NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2578,7 +2648,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with known EXPERIENCER but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2602,8 +2672,8 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with known EXPERIENCER but a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -2627,7 +2697,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -2650,8 +2720,8 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with pronouns as both EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -2674,7 +2744,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with no EXPERIENCER and a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -2684,7 +2754,6 @@
            59
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-POLARITY1-gd-robustPro-NEUTRAL-only
-            :EXPERIENCER -
             :NEUTRAL ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -2697,7 +2766,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with a pronoun as EXPERIENCER and no NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -2708,7 +2777,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-POLARITY1-gd-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :NEUTRAL -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -2722,7 +2790,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2750,7 +2818,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with EXPERIENCER and NEUTRAL (whether)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -2780,7 +2848,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2803,7 +2871,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2866,7 +2934,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2894,7 +2962,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with neither EXPERIENCER nor NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2917,7 +2985,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with known EXPERIENCER but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -2940,8 +3008,8 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with known EXPERIENCER but a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -2964,7 +3032,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -2986,8 +3054,8 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with pronouns as both EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -3009,7 +3077,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with no EXPERIENCER and a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -3018,7 +3086,6 @@
            59
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODA1_1-robustPro-NEUTRAL-only
-            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -3031,7 +3098,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with a pronoun as EXPERIENCER and no NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -3041,7 +3108,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODA1_1-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :NEUTRAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -3055,7 +3121,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3083,7 +3149,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with EXPERIENCER and NEUTRAL (whether)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -3113,7 +3179,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3136,7 +3202,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3199,7 +3265,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3227,7 +3293,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with neither EXPERIENCER nor NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3250,7 +3316,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with known EXPERIENCER but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3273,8 +3339,8 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with known EXPERIENCER but a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -3297,7 +3363,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -3319,8 +3385,8 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with pronouns as both EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -3342,7 +3408,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with no EXPERIENCER and a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -3351,7 +3417,6 @@
            59
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODA1_2-robustPro-NEUTRAL-only
-            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -3364,7 +3429,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with a pronoun as EXPERIENCER and no NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -3374,7 +3439,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODA1_2-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :NEUTRAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -3388,7 +3452,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3416,7 +3480,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with EXPERIENCER and NEUTRAL (whether)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -3446,7 +3510,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3469,7 +3533,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3532,7 +3596,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3560,7 +3624,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with neither EXPERIENCER nor NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3583,7 +3647,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with known EXPERIENCER but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3606,8 +3670,8 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with known EXPERIENCER but a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -3630,7 +3694,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -3652,8 +3716,8 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with pronouns as both EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -3675,7 +3739,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with no EXPERIENCER and a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -3684,7 +3748,6 @@
            59
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODN1_1-robustPro-NEUTRAL-only
-            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -3697,7 +3760,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with a pronoun as EXPERIENCER and no NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -3707,7 +3770,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODN1_1-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :NEUTRAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -3721,7 +3783,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3749,7 +3811,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with EXPERIENCER and NEUTRAL (whether)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -3779,7 +3841,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3802,7 +3864,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3865,7 +3927,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3893,7 +3955,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with neither EXPERIENCER nor NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3916,7 +3978,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with known EXPERIENCER but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -3939,8 +4001,8 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with known EXPERIENCER but a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -3963,7 +4025,7 @@
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -3985,8 +4047,8 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with pronouns as both EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -4008,7 +4070,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with no EXPERIENCER and a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -4017,7 +4079,6 @@
            59
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODN1_2-robustPro-NEUTRAL-only
-            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -4030,7 +4091,7 @@
           ;; rule60_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with a pronoun as EXPERIENCER and no NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::ASSUME ONT::SUPPOSE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -4040,7 +4101,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule60_0_EXPERIENCER_NEUTRAL-MODN1_2-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :NEUTRAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -4065,7 +4125,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL rule with EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4091,7 +4151,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL rule with EXPERIENCER and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -4119,7 +4179,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4140,7 +4200,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4199,7 +4259,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4225,7 +4285,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL rule with neither EXPERIENCER nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4246,7 +4306,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL rule with known EXPERIENCER but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4267,8 +4327,8 @@
           ;; rule50_0_EXPERIENCER_FORMAL rule with known EXPERIENCER but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_EXPERIENCER_FORMAL))
@@ -4289,7 +4349,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_EXPERIENCER_FORMAL))
@@ -4309,8 +4369,8 @@
           ;; rule50_0_EXPERIENCER_FORMAL rule with pronouns as both EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_EXPERIENCER_FORMAL))
@@ -4330,7 +4390,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL rule with no EXPERIENCER and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_EXPERIENCER_FORMAL))
@@ -4338,7 +4398,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-robustPro-FORMAL-only
-            :EXPERIENCER -
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -4350,7 +4409,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL rule with a pronoun as EXPERIENCER and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_EXPERIENCER_FORMAL))
@@ -4359,7 +4418,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :FORMAL -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -4372,7 +4430,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4401,7 +4459,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with EXPERIENCER and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -4432,7 +4490,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4456,7 +4514,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4521,7 +4579,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4550,7 +4608,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with neither EXPERIENCER nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4574,7 +4632,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with known EXPERIENCER but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4598,8 +4656,8 @@
           ;; rule50_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with known EXPERIENCER but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -4623,7 +4681,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -4646,8 +4704,8 @@
           ;; rule50_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with pronouns as both EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -4670,7 +4728,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with no EXPERIENCER and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -4680,7 +4738,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-POLARITY1-gd-robustPro-FORMAL-only
-            :EXPERIENCER -
             :FORMAL ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -4693,7 +4750,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-POLARITY1-gd rule with a pronoun as EXPERIENCER and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -4704,7 +4761,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-POLARITY1-gd-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :FORMAL -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -4718,7 +4774,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_1 rule with EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4746,7 +4802,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_1 rule with EXPERIENCER and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -4776,7 +4832,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_1 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4799,7 +4855,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_1 rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4862,7 +4918,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4890,7 +4946,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_1 rule with neither EXPERIENCER nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4913,7 +4969,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_1 rule with known EXPERIENCER but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -4936,8 +4992,8 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_1 rule with known EXPERIENCER but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -4960,7 +5016,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -4982,8 +5038,8 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_1 rule with pronouns as both EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -5005,7 +5061,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_1 rule with no EXPERIENCER and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -5014,7 +5070,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODA1_1-robustPro-FORMAL-only
-            :EXPERIENCER -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -5027,7 +5082,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_1 rule with a pronoun as EXPERIENCER and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -5037,7 +5092,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODA1_1-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -5051,7 +5105,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_2 rule with EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5079,7 +5133,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_2 rule with EXPERIENCER and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -5109,7 +5163,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_2 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5132,7 +5186,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_2 rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5195,7 +5249,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5223,7 +5277,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_2 rule with neither EXPERIENCER nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5246,7 +5300,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_2 rule with known EXPERIENCER but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5269,8 +5323,8 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_2 rule with known EXPERIENCER but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -5293,7 +5347,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -5315,8 +5369,8 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_2 rule with pronouns as both EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -5338,7 +5392,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_2 rule with no EXPERIENCER and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -5347,7 +5401,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODA1_2-robustPro-FORMAL-only
-            :EXPERIENCER -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -5360,7 +5413,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODA1_2 rule with a pronoun as EXPERIENCER and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -5370,7 +5423,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODA1_2-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -5384,7 +5436,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_1 rule with EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5412,7 +5464,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_1 rule with EXPERIENCER and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -5442,7 +5494,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_1 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5465,7 +5517,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_1 rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5528,7 +5580,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5556,7 +5608,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_1 rule with neither EXPERIENCER nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5579,7 +5631,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_1 rule with known EXPERIENCER but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5602,8 +5654,8 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_1 rule with known EXPERIENCER but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -5626,7 +5678,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -5648,8 +5700,8 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_1 rule with pronouns as both EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -5671,7 +5723,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_1 rule with no EXPERIENCER and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -5680,7 +5732,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODN1_1-robustPro-FORMAL-only
-            :EXPERIENCER -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -5693,7 +5744,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_1 rule with a pronoun as EXPERIENCER and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -5703,7 +5754,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODN1_1-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -5717,7 +5767,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_2 rule with EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5745,7 +5795,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_2 rule with EXPERIENCER and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -5775,7 +5825,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_2 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5798,7 +5848,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_2 rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5861,7 +5911,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5889,7 +5939,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_2 rule with neither EXPERIENCER nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5912,7 +5962,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_2 rule with known EXPERIENCER but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -5935,8 +5985,8 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_2 rule with known EXPERIENCER but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -5959,7 +6009,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -5981,8 +6031,8 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_2 rule with pronouns as both EXPERIENCER and FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -6004,7 +6054,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_2 rule with no EXPERIENCER and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -6013,7 +6063,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODN1_2-robustPro-FORMAL-only
-            :EXPERIENCER -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -6026,7 +6075,7 @@
           ;; rule50_0_EXPERIENCER_FORMAL-MODN1_2 rule with a pronoun as EXPERIENCER and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -6036,7 +6085,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_FORMAL-MODN1_2-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -6061,7 +6109,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL rule with EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6087,7 +6135,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL rule with EXPERIENCER and NEUTRAL (whether)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -6115,7 +6163,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6136,7 +6184,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6195,7 +6243,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6221,7 +6269,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL rule with neither EXPERIENCER nor NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6242,7 +6290,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL rule with known EXPERIENCER but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6263,8 +6311,8 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL rule with known EXPERIENCER but a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_EXPERIENCER_NEUTRAL))
@@ -6285,7 +6333,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_EXPERIENCER_NEUTRAL))
@@ -6305,8 +6353,8 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL rule with pronouns as both EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_EXPERIENCER_NEUTRAL))
@@ -6326,7 +6374,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL rule with no EXPERIENCER and a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_EXPERIENCER_NEUTRAL))
@@ -6334,7 +6382,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-robustPro-NEUTRAL-only
-            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -6346,7 +6393,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL rule with a pronoun as EXPERIENCER and no NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_EXPERIENCER_NEUTRAL))
@@ -6355,7 +6402,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :NEUTRAL -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -6368,7 +6414,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6397,7 +6443,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with EXPERIENCER and NEUTRAL (whether)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -6428,7 +6474,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6452,7 +6498,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6517,7 +6563,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6546,7 +6592,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with neither EXPERIENCER nor NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6570,7 +6616,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with known EXPERIENCER but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6594,8 +6640,8 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with known EXPERIENCER but a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -6619,7 +6665,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -6642,8 +6688,8 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with pronouns as both EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -6666,7 +6712,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with no EXPERIENCER and a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -6676,7 +6722,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-POLARITY1-gd-robustPro-NEUTRAL-only
-            :EXPERIENCER -
             :NEUTRAL ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -6689,7 +6734,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-POLARITY1-gd rule with a pronoun as EXPERIENCER and no NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -6700,7 +6745,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-POLARITY1-gd-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :NEUTRAL -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -6714,7 +6758,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6742,7 +6786,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with EXPERIENCER and NEUTRAL (whether)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -6772,7 +6816,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6795,7 +6839,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6858,7 +6902,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6886,7 +6930,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with neither EXPERIENCER nor NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6909,7 +6953,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with known EXPERIENCER but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -6932,8 +6976,8 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with known EXPERIENCER but a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -6956,7 +7000,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -6978,8 +7022,8 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with pronouns as both EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -7001,7 +7045,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with no EXPERIENCER and a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -7010,7 +7054,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODA1_1-robustPro-NEUTRAL-only
-            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -7023,7 +7066,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_1 rule with a pronoun as EXPERIENCER and no NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -7033,7 +7076,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODA1_1-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :NEUTRAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -7047,7 +7089,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7075,7 +7117,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with EXPERIENCER and NEUTRAL (whether)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -7105,7 +7147,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7128,7 +7170,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7191,7 +7233,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7219,7 +7261,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with neither EXPERIENCER nor NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7242,7 +7284,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with known EXPERIENCER but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7265,8 +7307,8 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with known EXPERIENCER but a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -7289,7 +7331,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -7311,8 +7353,8 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with pronouns as both EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -7334,7 +7376,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with no EXPERIENCER and a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -7343,7 +7385,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODA1_2-robustPro-NEUTRAL-only
-            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -7356,7 +7397,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODA1_2 rule with a pronoun as EXPERIENCER and no NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -7366,7 +7407,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODA1_2-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :NEUTRAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -7380,7 +7420,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7408,7 +7448,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with EXPERIENCER and NEUTRAL (whether)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -7438,7 +7478,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7461,7 +7501,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7524,7 +7564,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7552,7 +7592,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with neither EXPERIENCER nor NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7575,7 +7615,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with known EXPERIENCER but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7598,8 +7638,8 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with known EXPERIENCER but a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -7622,7 +7662,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -7644,8 +7684,8 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with pronouns as both EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -7667,7 +7707,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with no EXPERIENCER and a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -7676,7 +7716,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODN1_1-robustPro-NEUTRAL-only
-            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -7689,7 +7728,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_1 rule with a pronoun as EXPERIENCER and no NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -7699,7 +7738,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODN1_1-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :NEUTRAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -7713,7 +7751,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7741,7 +7779,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with EXPERIENCER and NEUTRAL (whether)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -7771,7 +7809,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with only EXPERIENCER
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7794,7 +7832,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7857,7 +7895,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7885,7 +7923,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with neither EXPERIENCER nor NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7908,7 +7946,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with known EXPERIENCER but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -7931,8 +7969,8 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with known EXPERIENCER but a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -7955,7 +7993,7 @@
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -7977,8 +8015,8 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with pronouns as both EXPERIENCER and NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -8000,7 +8038,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with no EXPERIENCER and a pronoun as NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -8009,7 +8047,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODN1_2-robustPro-NEUTRAL-only
-            :EXPERIENCER -
             :NEUTRAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -8022,7 +8059,7 @@
           ;; rule50_0_EXPERIENCER_NEUTRAL-MODN1_2 rule with a pronoun as EXPERIENCER and no NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::KNOW ONT::EXPECTATION ONT::BELIEVE ONT::DOUBT ONT::HYPOTHESIZE ) :EXPERIENCER ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -8032,7 +8069,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_EXPERIENCER_NEUTRAL-MODN1_2-robustPro-EXPERIENCER-only
             :EXPERIENCER ?!ag
-            :NEUTRAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -8057,7 +8093,7 @@
           ;; rule50_0_NEUTRAL_FORMAL rule with NEUTRAL and FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8083,7 +8119,7 @@
           ;; rule50_0_NEUTRAL_FORMAL rule with NEUTRAL and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -8111,7 +8147,7 @@
           ;; rule50_0_NEUTRAL_FORMAL rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8132,7 +8168,7 @@
           ;; rule50_0_NEUTRAL_FORMAL rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8191,7 +8227,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8217,7 +8253,7 @@
           ;; rule50_0_NEUTRAL_FORMAL rule with neither NEUTRAL nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8238,7 +8274,7 @@
           ;; rule50_0_NEUTRAL_FORMAL rule with known NEUTRAL but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8259,8 +8295,8 @@
           ;; rule50_0_NEUTRAL_FORMAL rule with known NEUTRAL but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL_FORMAL))
@@ -8281,7 +8317,7 @@
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL_FORMAL))
@@ -8301,8 +8337,8 @@
           ;; rule50_0_NEUTRAL_FORMAL rule with pronouns as both NEUTRAL and FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL_FORMAL))
@@ -8322,7 +8358,7 @@
           ;; rule50_0_NEUTRAL_FORMAL rule with no NEUTRAL and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL_FORMAL))
@@ -8330,7 +8366,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-robustPro-FORMAL-only
-            :NEUTRAL -
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -8342,7 +8377,7 @@
           ;; rule50_0_NEUTRAL_FORMAL rule with a pronoun as NEUTRAL and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL_FORMAL))
@@ -8351,7 +8386,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-robustPro-NEUTRAL-only
             :NEUTRAL ?!ag
-            :FORMAL -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -8364,7 +8398,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-POLARITY1-gd rule with NEUTRAL and FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8393,7 +8427,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-POLARITY1-gd rule with NEUTRAL and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -8424,7 +8458,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-POLARITY1-gd rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8448,7 +8482,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-POLARITY1-gd rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8513,7 +8547,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8542,7 +8576,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-POLARITY1-gd rule with neither NEUTRAL nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8566,7 +8600,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-POLARITY1-gd rule with known NEUTRAL but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8590,8 +8624,8 @@
           ;; rule50_0_NEUTRAL_FORMAL-POLARITY1-gd rule with known NEUTRAL but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -8615,7 +8649,7 @@
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -8638,8 +8672,8 @@
           ;; rule50_0_NEUTRAL_FORMAL-POLARITY1-gd rule with pronouns as both NEUTRAL and FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -8662,7 +8696,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-POLARITY1-gd rule with no NEUTRAL and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -8672,7 +8706,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-POLARITY1-gd-robustPro-FORMAL-only
-            :NEUTRAL -
             :FORMAL ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -8685,7 +8718,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-POLARITY1-gd rule with a pronoun as NEUTRAL and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -8696,7 +8729,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-POLARITY1-gd-robustPro-NEUTRAL-only
             :NEUTRAL ?!ag
-            :FORMAL -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -8710,7 +8742,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_1 rule with NEUTRAL and FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8738,7 +8770,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_1 rule with NEUTRAL and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -8768,7 +8800,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_1 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8791,7 +8823,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_1 rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8854,7 +8886,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8882,7 +8914,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_1 rule with neither NEUTRAL nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8905,7 +8937,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_1 rule with known NEUTRAL but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -8928,8 +8960,8 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_1 rule with known NEUTRAL but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -8952,7 +8984,7 @@
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -8974,8 +9006,8 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_1 rule with pronouns as both NEUTRAL and FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -8997,7 +9029,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_1 rule with no NEUTRAL and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -9006,7 +9038,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODA1_1-robustPro-FORMAL-only
-            :NEUTRAL -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -9019,7 +9050,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_1 rule with a pronoun as NEUTRAL and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -9029,7 +9060,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODA1_1-robustPro-NEUTRAL-only
             :NEUTRAL ?!ag
-            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -9043,7 +9073,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_2 rule with NEUTRAL and FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9071,7 +9101,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_2 rule with NEUTRAL and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -9101,7 +9131,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_2 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9124,7 +9154,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_2 rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9187,7 +9217,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9215,7 +9245,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_2 rule with neither NEUTRAL nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9238,7 +9268,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_2 rule with known NEUTRAL but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9261,8 +9291,8 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_2 rule with known NEUTRAL but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -9285,7 +9315,7 @@
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -9307,8 +9337,8 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_2 rule with pronouns as both NEUTRAL and FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -9330,7 +9360,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_2 rule with no NEUTRAL and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -9339,7 +9369,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODA1_2-robustPro-FORMAL-only
-            :NEUTRAL -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -9352,7 +9381,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODA1_2 rule with a pronoun as NEUTRAL and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -9362,7 +9391,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODA1_2-robustPro-NEUTRAL-only
             :NEUTRAL ?!ag
-            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -9376,7 +9404,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_1 rule with NEUTRAL and FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9404,7 +9432,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_1 rule with NEUTRAL and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -9434,7 +9462,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_1 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9457,7 +9485,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_1 rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9520,7 +9548,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9548,7 +9576,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_1 rule with neither NEUTRAL nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9571,7 +9599,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_1 rule with known NEUTRAL but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9594,8 +9622,8 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_1 rule with known NEUTRAL but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -9618,7 +9646,7 @@
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -9640,8 +9668,8 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_1 rule with pronouns as both NEUTRAL and FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -9663,7 +9691,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_1 rule with no NEUTRAL and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -9672,7 +9700,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODN1_1-robustPro-FORMAL-only
-            :NEUTRAL -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -9685,7 +9712,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_1 rule with a pronoun as NEUTRAL and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -9695,7 +9722,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODN1_1-robustPro-NEUTRAL-only
             :NEUTRAL ?!ag
-            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -9709,7 +9735,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_2 rule with NEUTRAL and FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9737,7 +9763,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_2 rule with NEUTRAL and FORMAL (whether)
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -9767,7 +9793,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_2 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9790,7 +9816,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_2 rule with only FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9853,7 +9879,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9881,7 +9907,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_2 rule with neither NEUTRAL nor FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9904,7 +9930,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_2 rule with known NEUTRAL but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -9927,8 +9953,8 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_2 rule with known NEUTRAL but a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -9951,7 +9977,7 @@
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -9973,8 +9999,8 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_2 rule with pronouns as both NEUTRAL and FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -9996,7 +10022,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_2 rule with no NEUTRAL and a pronoun as FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -10005,7 +10031,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODN1_2-robustPro-FORMAL-only
-            :NEUTRAL -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -10018,7 +10043,7 @@
           ;; rule50_0_NEUTRAL_FORMAL-MODN1_2 rule with a pronoun as NEUTRAL and no FORMAL
           ((?!reln0 ?ev
             (? type ONT::POSSIBLY-TRUE ONT::APPEARS-TO-HAVE-PROPERTY ONT::BE-INCLINED ONT::CORRELATION ONT::REFUTE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -10028,7 +10053,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_FORMAL-MODN1_2-robustPro-NEUTRAL-only
             :NEUTRAL ?!ag
-            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -10038,7 +10062,7 @@
             :DRUM ?code
             ))
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :MODALITY (:* ?!modality ?!mw))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :MODALITY (:* ?!modality ?!mw))
            (ONT::SPEECHACT ?!sa ?!sa1)
            -rule50_0_AGENT_FORMAL-modality>
            50
@@ -10052,8 +10076,8 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; rule50_0_AGENT_FORMAL ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ;; rule50_0_AGENT_FORMAL rule with AGENT and FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10078,8 +10102,8 @@
            )
           ;; rule50_0_AGENT_FORMAL rule with AGENT and FORMAL (whether)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -10106,8 +10130,8 @@
            )
           ;; rule50_0_AGENT_FORMAL rule with only AGENT
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10127,8 +10151,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL rule with only FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10154,7 +10178,7 @@
           ;; rule50_0_AGENT_FORMAL rule with known FORMAL but unknown proper name argument as AGENT
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?!reln1 ?!ag (:* (? agtype ONT::REFERENTIAL-SEM) ?!agname) :name-of ?!name)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
@@ -10186,8 +10210,8 @@
           ;; rule50_0_AGENT_FORMAL rule with known AGENT but unknown proper name argument as FORMAL
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10212,8 +10236,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL rule with neither AGENT nor FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10233,8 +10257,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL rule with known AGENT but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10254,9 +10278,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL rule with known AGENT but a pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_AGENT_FORMAL))
@@ -10275,9 +10299,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL rule with a pronoun as AGENT but a known FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_AGENT_FORMAL))
@@ -10296,9 +10320,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL rule with pronouns as both AGENT and FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_AGENT_FORMAL))
@@ -10317,8 +10341,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL rule with no AGENT and a pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_AGENT_FORMAL))
@@ -10326,7 +10350,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-robustPro-FORMAL-only
-            :AGENT -
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -10337,8 +10360,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL rule with a pronoun as AGENT and no FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_AGENT_FORMAL))
@@ -10347,7 +10370,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-robustPro-AGENT-only
             :AGENT ?!ag
-            :FORMAL -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -10359,8 +10381,8 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; rule50_0_AGENT_FORMAL-POLARITY1-gd ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ;; rule50_0_AGENT_FORMAL-POLARITY1-gd rule with AGENT and FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10388,8 +10410,8 @@
            )
           ;; rule50_0_AGENT_FORMAL-POLARITY1-gd rule with AGENT and FORMAL (whether)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -10419,8 +10441,8 @@
            )
           ;; rule50_0_AGENT_FORMAL-POLARITY1-gd rule with only AGENT
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10443,8 +10465,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-POLARITY1-gd rule with only FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10473,7 +10495,7 @@
           ;; rule50_0_AGENT_FORMAL-POLARITY1-gd rule with known FORMAL but unknown proper name argument as AGENT
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?!reln1 ?!ag (:* (? agtype ONT::REFERENTIAL-SEM) ?!agname) :name-of ?!name)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
@@ -10508,8 +10530,8 @@
           ;; rule50_0_AGENT_FORMAL-POLARITY1-gd rule with known AGENT but unknown proper name argument as FORMAL
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10537,8 +10559,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-POLARITY1-gd rule with neither AGENT nor FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10561,8 +10583,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-POLARITY1-gd rule with known AGENT but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10585,9 +10607,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL-POLARITY1-gd rule with known AGENT but a pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -10609,9 +10631,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL-POLARITY1-gd rule with a pronoun as AGENT but a known FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -10633,9 +10655,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL-POLARITY1-gd rule with pronouns as both AGENT and FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -10657,8 +10679,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-POLARITY1-gd rule with no AGENT and a pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -10668,7 +10690,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-POLARITY1-gd-robustPro-FORMAL-only
-            :AGENT -
             :FORMAL ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -10680,8 +10701,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-POLARITY1-gd rule with a pronoun as AGENT and no FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -10692,7 +10713,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-POLARITY1-gd-robustPro-AGENT-only
             :AGENT ?!ag
-            :FORMAL -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -10705,8 +10725,8 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; rule50_0_AGENT_FORMAL-MODA1_1 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ;; rule50_0_AGENT_FORMAL-MODA1_1 rule with AGENT and FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10733,8 +10753,8 @@
            )
           ;; rule50_0_AGENT_FORMAL-MODA1_1 rule with AGENT and FORMAL (whether)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -10763,8 +10783,8 @@
            )
           ;; rule50_0_AGENT_FORMAL-MODA1_1 rule with only AGENT
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10786,8 +10806,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_1 rule with only FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10815,7 +10835,7 @@
           ;; rule50_0_AGENT_FORMAL-MODA1_1 rule with known FORMAL but unknown proper name argument as AGENT
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            (?!reln1 ?!ag (:* (? agtype ONT::REFERENTIAL-SEM) ?!agname) :name-of ?!name)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
@@ -10849,8 +10869,8 @@
           ;; rule50_0_AGENT_FORMAL-MODA1_1 rule with known AGENT but unknown proper name argument as FORMAL
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10877,8 +10897,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_1 rule with neither AGENT nor FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10900,8 +10920,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_1 rule with known AGENT but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -10923,9 +10943,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_1 rule with known AGENT but a pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -10946,9 +10966,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_1 rule with a pronoun as AGENT but a known FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -10969,9 +10989,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_1 rule with pronouns as both AGENT and FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -10992,8 +11012,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_1 rule with no AGENT and a pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -11002,7 +11022,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODA1_1-robustPro-FORMAL-only
-            :AGENT -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -11014,8 +11033,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_1 rule with a pronoun as AGENT and no FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -11025,7 +11044,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODA1_1-robustPro-AGENT-only
             :AGENT ?!ag
-            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -11038,8 +11056,8 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; rule50_0_AGENT_FORMAL-MODA1_2 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ;; rule50_0_AGENT_FORMAL-MODA1_2 rule with AGENT and FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11066,8 +11084,8 @@
            )
           ;; rule50_0_AGENT_FORMAL-MODA1_2 rule with AGENT and FORMAL (whether)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -11096,8 +11114,8 @@
            )
           ;; rule50_0_AGENT_FORMAL-MODA1_2 rule with only AGENT
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11119,8 +11137,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_2 rule with only FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11148,7 +11166,7 @@
           ;; rule50_0_AGENT_FORMAL-MODA1_2 rule with known FORMAL but unknown proper name argument as AGENT
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            (?!reln1 ?!ag (:* (? agtype ONT::REFERENTIAL-SEM) ?!agname) :name-of ?!name)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
@@ -11182,8 +11200,8 @@
           ;; rule50_0_AGENT_FORMAL-MODA1_2 rule with known AGENT but unknown proper name argument as FORMAL
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11210,8 +11228,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_2 rule with neither AGENT nor FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11233,8 +11251,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_2 rule with known AGENT but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11256,9 +11274,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_2 rule with known AGENT but a pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -11279,9 +11297,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_2 rule with a pronoun as AGENT but a known FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -11302,9 +11320,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_2 rule with pronouns as both AGENT and FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -11325,8 +11343,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_2 rule with no AGENT and a pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -11335,7 +11353,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODA1_2-robustPro-FORMAL-only
-            :AGENT -
             :FORMAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -11347,8 +11364,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODA1_2 rule with a pronoun as AGENT and no FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -11358,7 +11375,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODA1_2-robustPro-AGENT-only
             :AGENT ?!ag
-            :FORMAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -11371,8 +11387,8 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; rule50_0_AGENT_FORMAL-MODN1_1 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ;; rule50_0_AGENT_FORMAL-MODN1_1 rule with AGENT and FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11399,8 +11415,8 @@
            )
           ;; rule50_0_AGENT_FORMAL-MODN1_1 rule with AGENT and FORMAL (whether)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -11429,8 +11445,8 @@
            )
           ;; rule50_0_AGENT_FORMAL-MODN1_1 rule with only AGENT
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11452,8 +11468,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_1 rule with only FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11481,7 +11497,7 @@
           ;; rule50_0_AGENT_FORMAL-MODN1_1 rule with known FORMAL but unknown proper name argument as AGENT
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            (?!reln1 ?!ag (:* (? agtype ONT::REFERENTIAL-SEM) ?!agname) :name-of ?!name)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
@@ -11515,8 +11531,8 @@
           ;; rule50_0_AGENT_FORMAL-MODN1_1 rule with known AGENT but unknown proper name argument as FORMAL
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11543,8 +11559,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_1 rule with neither AGENT nor FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11566,8 +11582,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_1 rule with known AGENT but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11589,9 +11605,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_1 rule with known AGENT but a pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -11612,9 +11628,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_1 rule with a pronoun as AGENT but a known FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -11635,9 +11651,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_1 rule with pronouns as both AGENT and FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -11658,8 +11674,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_1 rule with no AGENT and a pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -11668,7 +11684,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODN1_1-robustPro-FORMAL-only
-            :AGENT -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -11680,8 +11695,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_1 rule with a pronoun as AGENT and no FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -11691,7 +11706,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODN1_1-robustPro-AGENT-only
             :AGENT ?!ag
-            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -11704,8 +11718,8 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; rule50_0_AGENT_FORMAL-MODN1_2 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ;; rule50_0_AGENT_FORMAL-MODN1_2 rule with AGENT and FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11732,8 +11746,8 @@
            )
           ;; rule50_0_AGENT_FORMAL-MODN1_2 rule with AGENT and FORMAL (whether)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -11762,8 +11776,8 @@
            )
           ;; rule50_0_AGENT_FORMAL-MODN1_2 rule with only AGENT
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11785,8 +11799,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_2 rule with only FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11814,7 +11828,7 @@
           ;; rule50_0_AGENT_FORMAL-MODN1_2 rule with known FORMAL but unknown proper name argument as AGENT
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            (?!reln1 ?!ag (:* (? agtype ONT::REFERENTIAL-SEM) ?!agname) :name-of ?!name)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
@@ -11848,8 +11862,8 @@
           ;; rule50_0_AGENT_FORMAL-MODN1_2 rule with known AGENT but unknown proper name argument as FORMAL
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11876,8 +11890,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_2 rule with neither AGENT nor FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :FORMAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11899,8 +11913,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_2 rule with known AGENT but a reflexive pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -11922,9 +11936,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_2 rule with known AGENT but a pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -11945,9 +11959,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_2 rule with a pronoun as AGENT but a known FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -11968,9 +11982,9 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_2 rule with pronouns as both AGENT and FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -11991,8 +12005,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_2 rule with no AGENT and a pronoun as FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -12001,7 +12015,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODN1_2-robustPro-FORMAL-only
-            :AGENT -
             :FORMAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -12013,8 +12026,8 @@
             ))
           ;; rule50_0_AGENT_FORMAL-MODN1_2 rule with a pronoun as AGENT and no FORMAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::CONTEST ONT::REJECT ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -12024,7 +12037,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_FORMAL-MODN1_2-robustPro-AGENT-only
             :AGENT ?!ag
-            :FORMAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -12034,7 +12046,7 @@
             :DRUM ?code
             ))
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :MODALITY (:* ?!modality ?!mw))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :MODALITY (:* ?!modality ?!mw))
            (ONT::SPEECHACT ?!sa ?!sa1)
            -rule50_0_AGENT_NEUTRAL-modality>
            50
@@ -12048,8 +12060,8 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; rule50_0_AGENT_NEUTRAL ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ;; rule50_0_AGENT_NEUTRAL rule with AGENT and NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12074,8 +12086,8 @@
            )
           ;; rule50_0_AGENT_NEUTRAL rule with AGENT and NEUTRAL (whether)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -12102,8 +12114,8 @@
            )
           ;; rule50_0_AGENT_NEUTRAL rule with only AGENT
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12123,8 +12135,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL rule with only NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12150,7 +12162,7 @@
           ;; rule50_0_AGENT_NEUTRAL rule with known NEUTRAL but unknown proper name argument as AGENT
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?!reln1 ?!ag (:* (? agtype ONT::REFERENTIAL-SEM) ?!agname) :name-of ?!name)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
@@ -12182,8 +12194,8 @@
           ;; rule50_0_AGENT_NEUTRAL rule with known AGENT but unknown proper name argument as NEUTRAL
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12208,8 +12220,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL rule with neither AGENT nor NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12229,8 +12241,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL rule with known AGENT but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12250,9 +12262,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL rule with known AGENT but a pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_AGENT_NEUTRAL))
@@ -12271,9 +12283,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL rule with a pronoun as AGENT but a known NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_AGENT_NEUTRAL))
@@ -12292,9 +12304,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL rule with pronouns as both AGENT and NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_AGENT_NEUTRAL))
@@ -12313,8 +12325,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL rule with no AGENT and a pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_AGENT_NEUTRAL))
@@ -12322,7 +12334,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-robustPro-NEUTRAL-only
-            :AGENT -
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -12333,8 +12344,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL rule with a pronoun as AGENT and no NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_AGENT_NEUTRAL))
@@ -12343,7 +12354,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-robustPro-AGENT-only
             :AGENT ?!ag
-            :NEUTRAL -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -12355,8 +12365,8 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; rule50_0_AGENT_NEUTRAL-POLARITY1-gd ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ;; rule50_0_AGENT_NEUTRAL-POLARITY1-gd rule with AGENT and NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12384,8 +12394,8 @@
            )
           ;; rule50_0_AGENT_NEUTRAL-POLARITY1-gd rule with AGENT and NEUTRAL (whether)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -12415,8 +12425,8 @@
            )
           ;; rule50_0_AGENT_NEUTRAL-POLARITY1-gd rule with only AGENT
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12439,8 +12449,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-POLARITY1-gd rule with only NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12469,7 +12479,7 @@
           ;; rule50_0_AGENT_NEUTRAL-POLARITY1-gd rule with known NEUTRAL but unknown proper name argument as AGENT
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            (?!reln1 ?!ag (:* (? agtype ONT::REFERENTIAL-SEM) ?!agname) :name-of ?!name)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
@@ -12504,8 +12514,8 @@
           ;; rule50_0_AGENT_NEUTRAL-POLARITY1-gd rule with known AGENT but unknown proper name argument as NEUTRAL
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12533,8 +12543,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-POLARITY1-gd rule with neither AGENT nor NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12557,8 +12567,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-POLARITY1-gd rule with known AGENT but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12581,9 +12591,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-POLARITY1-gd rule with known AGENT but a pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -12605,9 +12615,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-POLARITY1-gd rule with a pronoun as AGENT but a known NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -12629,9 +12639,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-POLARITY1-gd rule with pronouns as both AGENT and NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -12653,8 +12663,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-POLARITY1-gd rule with no AGENT and a pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -12664,7 +12674,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-POLARITY1-gd-robustPro-NEUTRAL-only
-            :AGENT -
             :NEUTRAL ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -12676,8 +12685,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-POLARITY1-gd rule with a pronoun as AGENT and no NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -12688,7 +12697,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-POLARITY1-gd-robustPro-AGENT-only
             :AGENT ?!ag
-            :NEUTRAL -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -12701,8 +12709,8 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; rule50_0_AGENT_NEUTRAL-MODA1_1 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ;; rule50_0_AGENT_NEUTRAL-MODA1_1 rule with AGENT and NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12729,8 +12737,8 @@
            )
           ;; rule50_0_AGENT_NEUTRAL-MODA1_1 rule with AGENT and NEUTRAL (whether)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -12759,8 +12767,8 @@
            )
           ;; rule50_0_AGENT_NEUTRAL-MODA1_1 rule with only AGENT
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12782,8 +12790,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_1 rule with only NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12811,7 +12819,7 @@
           ;; rule50_0_AGENT_NEUTRAL-MODA1_1 rule with known NEUTRAL but unknown proper name argument as AGENT
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            (?!reln1 ?!ag (:* (? agtype ONT::REFERENTIAL-SEM) ?!agname) :name-of ?!name)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
@@ -12845,8 +12853,8 @@
           ;; rule50_0_AGENT_NEUTRAL-MODA1_1 rule with known AGENT but unknown proper name argument as NEUTRAL
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12873,8 +12881,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_1 rule with neither AGENT nor NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12896,8 +12904,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_1 rule with known AGENT but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -12919,9 +12927,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_1 rule with known AGENT but a pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -12942,9 +12950,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_1 rule with a pronoun as AGENT but a known NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -12965,9 +12973,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_1 rule with pronouns as both AGENT and NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -12988,8 +12996,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_1 rule with no AGENT and a pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -12998,7 +13006,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODA1_1-robustPro-NEUTRAL-only
-            :AGENT -
             :NEUTRAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -13010,8 +13017,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_1 rule with a pronoun as AGENT and no NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -13021,7 +13028,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODA1_1-robustPro-AGENT-only
             :AGENT ?!ag
-            :NEUTRAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -13034,8 +13040,8 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; rule50_0_AGENT_NEUTRAL-MODA1_2 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ;; rule50_0_AGENT_NEUTRAL-MODA1_2 rule with AGENT and NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13062,8 +13068,8 @@
            )
           ;; rule50_0_AGENT_NEUTRAL-MODA1_2 rule with AGENT and NEUTRAL (whether)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -13092,8 +13098,8 @@
            )
           ;; rule50_0_AGENT_NEUTRAL-MODA1_2 rule with only AGENT
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13115,8 +13121,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_2 rule with only NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13144,7 +13150,7 @@
           ;; rule50_0_AGENT_NEUTRAL-MODA1_2 rule with known NEUTRAL but unknown proper name argument as AGENT
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            (?!reln1 ?!ag (:* (? agtype ONT::REFERENTIAL-SEM) ?!agname) :name-of ?!name)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
@@ -13178,8 +13184,8 @@
           ;; rule50_0_AGENT_NEUTRAL-MODA1_2 rule with known AGENT but unknown proper name argument as NEUTRAL
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13206,8 +13212,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_2 rule with neither AGENT nor NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13229,8 +13235,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_2 rule with known AGENT but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13252,9 +13258,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_2 rule with known AGENT but a pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -13275,9 +13281,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_2 rule with a pronoun as AGENT but a known NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -13298,9 +13304,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_2 rule with pronouns as both AGENT and NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -13321,8 +13327,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_2 rule with no AGENT and a pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -13331,7 +13337,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODA1_2-robustPro-NEUTRAL-only
-            :AGENT -
             :NEUTRAL ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -13343,8 +13348,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODA1_2 rule with a pronoun as AGENT and no NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -13354,7 +13359,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODA1_2-robustPro-AGENT-only
             :AGENT ?!ag
-            :NEUTRAL -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -13367,8 +13371,8 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; rule50_0_AGENT_NEUTRAL-MODN1_1 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ;; rule50_0_AGENT_NEUTRAL-MODN1_1 rule with AGENT and NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13395,8 +13399,8 @@
            )
           ;; rule50_0_AGENT_NEUTRAL-MODN1_1 rule with AGENT and NEUTRAL (whether)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -13425,8 +13429,8 @@
            )
           ;; rule50_0_AGENT_NEUTRAL-MODN1_1 rule with only AGENT
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13448,8 +13452,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_1 rule with only NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13477,7 +13481,7 @@
           ;; rule50_0_AGENT_NEUTRAL-MODN1_1 rule with known NEUTRAL but unknown proper name argument as AGENT
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            (?!reln1 ?!ag (:* (? agtype ONT::REFERENTIAL-SEM) ?!agname) :name-of ?!name)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
@@ -13511,8 +13515,8 @@
           ;; rule50_0_AGENT_NEUTRAL-MODN1_1 rule with known AGENT but unknown proper name argument as NEUTRAL
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13539,8 +13543,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_1 rule with neither AGENT nor NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13562,8 +13566,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_1 rule with known AGENT but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13585,9 +13589,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_1 rule with known AGENT but a pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -13608,9 +13612,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_1 rule with a pronoun as AGENT but a known NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -13631,9 +13635,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_1 rule with pronouns as both AGENT and NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -13654,8 +13658,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_1 rule with no AGENT and a pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -13664,7 +13668,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODN1_1-robustPro-NEUTRAL-only
-            :AGENT -
             :NEUTRAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -13676,8 +13679,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_1 rule with a pronoun as AGENT and no NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -13687,7 +13690,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODN1_1-robustPro-AGENT-only
             :AGENT ?!ag
-            :NEUTRAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -13700,8 +13702,8 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; rule50_0_AGENT_NEUTRAL-MODN1_2 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ;; rule50_0_AGENT_NEUTRAL-MODN1_2 rule with AGENT and NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13728,8 +13730,8 @@
            )
           ;; rule50_0_AGENT_NEUTRAL-MODN1_2 rule with AGENT and NEUTRAL (whether)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -13758,8 +13760,8 @@
            )
           ;; rule50_0_AGENT_NEUTRAL-MODN1_2 rule with only AGENT
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13781,8 +13783,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_2 rule with only NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13810,7 +13812,7 @@
           ;; rule50_0_AGENT_NEUTRAL-MODN1_2 rule with known NEUTRAL but unknown proper name argument as AGENT
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            (?!reln1 ?!ag (:* (? agtype ONT::REFERENTIAL-SEM) ?!agname) :name-of ?!name)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
@@ -13844,8 +13846,8 @@
           ;; rule50_0_AGENT_NEUTRAL-MODN1_2 rule with known AGENT but unknown proper name argument as NEUTRAL
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13872,8 +13874,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_2 rule with neither AGENT nor NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT - :NEUTRAL - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13895,8 +13897,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_2 rule with known AGENT but a reflexive pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -13918,9 +13920,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_2 rule with known AGENT but a pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -13941,9 +13943,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_2 rule with a pronoun as AGENT but a known NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -13964,9 +13966,9 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_2 rule with pronouns as both AGENT and NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -13987,8 +13989,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_2 rule with no AGENT and a pronoun as NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :NEUTRAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -13997,7 +13999,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODN1_2-robustPro-NEUTRAL-only
-            :AGENT -
             :NEUTRAL ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -14009,8 +14010,8 @@
             ))
           ;; rule50_0_AGENT_NEUTRAL-MODN1_2 rule with a pronoun as AGENT and no NEUTRAL
           ((?!reln0 ?ev
-            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SHOW ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+            (? type ONT::CONFIRM ONT::CONSENT ONT::ACCEPT-AGREE ONT::SCRUTINY ONT::QUESTIONING ONT::BECOMING-AWARE ONT::ACTIVE-PERCEPTION ONT::COME-TO-UNDERSTAND ONT::DETERMINE ) :AGENT ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -14020,7 +14021,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_AGENT_NEUTRAL-MODN1_2-robustPro-AGENT-only
             :AGENT ?!ag
-            :NEUTRAL -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -14045,7 +14045,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1 rule with NEUTRAL and NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14071,7 +14071,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1 rule with NEUTRAL and NEUTRAL1 (whether)
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -14099,7 +14099,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14120,7 +14120,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1 rule with only NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14179,7 +14179,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14205,7 +14205,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1 rule with neither NEUTRAL nor NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL - :NEUTRAL1 - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14226,7 +14226,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1 rule with known NEUTRAL but a reflexive pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14247,8 +14247,8 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1 rule with known NEUTRAL but a pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL_NEUTRAL1))
@@ -14269,7 +14269,7 @@
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL_NEUTRAL1))
@@ -14289,8 +14289,8 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1 rule with pronouns as both NEUTRAL and NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL_NEUTRAL1))
@@ -14310,7 +14310,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1 rule with no NEUTRAL and a pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL_NEUTRAL1))
@@ -14318,7 +14318,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-robustPro-NEUTRAL1-only
-            :NEUTRAL -
             :NEUTRAL1 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -14330,7 +14329,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1 rule with a pronoun as NEUTRAL and no NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL_NEUTRAL1))
@@ -14339,7 +14338,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-robustPro-NEUTRAL-only
             :NEUTRAL ?!ag
-            :NEUTRAL1 -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -14352,7 +14350,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-POLARITY1-gd rule with NEUTRAL and NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14381,7 +14379,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-POLARITY1-gd rule with NEUTRAL and NEUTRAL1 (whether)
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -14412,7 +14410,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-POLARITY1-gd rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14436,7 +14434,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-POLARITY1-gd rule with only NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14501,7 +14499,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14530,7 +14528,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-POLARITY1-gd rule with neither NEUTRAL nor NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL - :NEUTRAL1 - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14554,7 +14552,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-POLARITY1-gd rule with known NEUTRAL but a reflexive pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14578,8 +14576,8 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-POLARITY1-gd rule with known NEUTRAL but a pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -14603,7 +14601,7 @@
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -14626,8 +14624,8 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-POLARITY1-gd rule with pronouns as both NEUTRAL and NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -14650,7 +14648,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-POLARITY1-gd rule with no NEUTRAL and a pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -14660,7 +14658,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-POLARITY1-gd-robustPro-NEUTRAL1-only
-            :NEUTRAL -
             :NEUTRAL1 ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -14673,7 +14670,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-POLARITY1-gd rule with a pronoun as NEUTRAL and no NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -14684,7 +14681,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-POLARITY1-gd-robustPro-NEUTRAL-only
             :NEUTRAL ?!ag
-            :NEUTRAL1 -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -14698,7 +14694,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_1 rule with NEUTRAL and NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14726,7 +14722,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_1 rule with NEUTRAL and NEUTRAL1 (whether)
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -14756,7 +14752,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_1 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14779,7 +14775,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_1 rule with only NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14842,7 +14838,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14870,7 +14866,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_1 rule with neither NEUTRAL nor NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL - :NEUTRAL1 - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14893,7 +14889,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_1 rule with known NEUTRAL but a reflexive pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -14916,8 +14912,8 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_1 rule with known NEUTRAL but a pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -14940,7 +14936,7 @@
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -14962,8 +14958,8 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_1 rule with pronouns as both NEUTRAL and NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -14985,7 +14981,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_1 rule with no NEUTRAL and a pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -14994,7 +14990,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODA1_1-robustPro-NEUTRAL1-only
-            :NEUTRAL -
             :NEUTRAL1 ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -15007,7 +15002,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_1 rule with a pronoun as NEUTRAL and no NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -15017,7 +15012,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODA1_1-robustPro-NEUTRAL-only
             :NEUTRAL ?!ag
-            :NEUTRAL1 -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -15031,7 +15025,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_2 rule with NEUTRAL and NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15059,7 +15053,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_2 rule with NEUTRAL and NEUTRAL1 (whether)
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -15089,7 +15083,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_2 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15112,7 +15106,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_2 rule with only NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15175,7 +15169,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15203,7 +15197,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_2 rule with neither NEUTRAL nor NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL - :NEUTRAL1 - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15226,7 +15220,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_2 rule with known NEUTRAL but a reflexive pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15249,8 +15243,8 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_2 rule with known NEUTRAL but a pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -15273,7 +15267,7 @@
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -15295,8 +15289,8 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_2 rule with pronouns as both NEUTRAL and NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -15318,7 +15312,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_2 rule with no NEUTRAL and a pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -15327,7 +15321,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODA1_2-robustPro-NEUTRAL1-only
-            :NEUTRAL -
             :NEUTRAL1 ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -15340,7 +15333,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODA1_2 rule with a pronoun as NEUTRAL and no NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -15350,7 +15343,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODA1_2-robustPro-NEUTRAL-only
             :NEUTRAL ?!ag
-            :NEUTRAL1 -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -15364,7 +15356,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_1 rule with NEUTRAL and NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15392,7 +15384,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_1 rule with NEUTRAL and NEUTRAL1 (whether)
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -15422,7 +15414,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_1 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15445,7 +15437,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_1 rule with only NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15508,7 +15500,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15536,7 +15528,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_1 rule with neither NEUTRAL nor NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL - :NEUTRAL1 - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15559,7 +15551,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_1 rule with known NEUTRAL but a reflexive pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15582,8 +15574,8 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_1 rule with known NEUTRAL but a pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -15606,7 +15598,7 @@
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -15628,8 +15620,8 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_1 rule with pronouns as both NEUTRAL and NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -15651,7 +15643,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_1 rule with no NEUTRAL and a pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -15660,7 +15652,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODN1_1-robustPro-NEUTRAL1-only
-            :NEUTRAL -
             :NEUTRAL1 ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -15673,7 +15664,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_1 rule with a pronoun as NEUTRAL and no NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -15683,7 +15674,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODN1_1-robustPro-NEUTRAL-only
             :NEUTRAL ?!ag
-            :NEUTRAL1 -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -15697,7 +15687,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_2 rule with NEUTRAL and NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15725,7 +15715,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_2 rule with NEUTRAL and NEUTRAL1 (whether)
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -15755,7 +15745,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_2 rule with only NEUTRAL
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15778,7 +15768,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_2 rule with only NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15841,7 +15831,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15869,7 +15859,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_2 rule with neither NEUTRAL nor NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL - :NEUTRAL1 - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15892,7 +15882,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_2 rule with known NEUTRAL but a reflexive pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -15915,8 +15905,8 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_2 rule with known NEUTRAL but a pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -15939,7 +15929,7 @@
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -15961,8 +15951,8 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_2 rule with pronouns as both NEUTRAL and NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -15984,7 +15974,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_2 rule with no NEUTRAL and a pronoun as NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL1 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -15993,7 +15983,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODN1_2-robustPro-NEUTRAL1-only
-            :NEUTRAL -
             :NEUTRAL1 ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -16006,7 +15995,7 @@
           ;; rule50_0_NEUTRAL_NEUTRAL1-MODN1_2 rule with a pronoun as NEUTRAL and no NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::CORRELATION ONT::REFUTE ONT::RELATE ) :NEUTRAL ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -16016,7 +16005,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL_NEUTRAL1-MODN1_2-robustPro-NEUTRAL-only
             :NEUTRAL ?!ag
-            :NEUTRAL1 -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -16041,7 +16029,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2 rule with NEUTRAL1 and NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16067,7 +16055,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2 rule with NEUTRAL1 and NEUTRAL2 (whether)
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -16095,7 +16083,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2 rule with only NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16116,7 +16104,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2 rule with only NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16175,7 +16163,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16201,7 +16189,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2 rule with neither NEUTRAL1 nor NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 - :NEUTRAL2 - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16222,7 +16210,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2 rule with known NEUTRAL1 but a reflexive pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16243,8 +16231,8 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2 rule with known NEUTRAL1 but a pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL1_NEUTRAL2))
@@ -16265,7 +16253,7 @@
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL1_NEUTRAL2))
@@ -16285,8 +16273,8 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2 rule with pronouns as both NEUTRAL1 and NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL1_NEUTRAL2))
@@ -16306,7 +16294,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2 rule with no NEUTRAL1 and a pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL1_NEUTRAL2))
@@ -16314,7 +16302,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-robustPro-NEUTRAL2-only
-            :NEUTRAL1 -
             :NEUTRAL2 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -16326,7 +16313,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2 rule with a pronoun as NEUTRAL1 and no NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::EVAL (symbolmap ?type ?!eventName -rule50_0_NEUTRAL1_NEUTRAL2))
@@ -16335,7 +16322,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-robustPro-NEUTRAL1-only
             :NEUTRAL1 ?!ag
-            :NEUTRAL2 -
             :MODALITY ?modVal
             :FORCE ?fVal
             :DEGREE ?type_degree
@@ -16348,7 +16334,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-POLARITY1-gd rule with NEUTRAL1 and NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16377,7 +16363,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-POLARITY1-gd rule with NEUTRAL1 and NEUTRAL2 (whether)
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -16408,7 +16394,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-POLARITY1-gd rule with only NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16432,7 +16418,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-POLARITY1-gd rule with only NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16497,7 +16483,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16526,7 +16512,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-POLARITY1-gd rule with neither NEUTRAL1 nor NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 - :NEUTRAL2 - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16550,7 +16536,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-POLARITY1-gd rule with known NEUTRAL1 but a reflexive pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16574,8 +16560,8 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-POLARITY1-gd rule with known NEUTRAL1 but a pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -16599,7 +16585,7 @@
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -16622,8 +16608,8 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-POLARITY1-gd rule with pronouns as both NEUTRAL1 and NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -16646,7 +16632,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-POLARITY1-gd rule with no NEUTRAL1 and a pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -16656,7 +16642,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-POLARITY1-gd-robustPro-NEUTRAL2-only
-            :NEUTRAL1 -
             :NEUTRAL2 ?!obj
             :POLARITY ?!m1_new
             :MODALITY ?modVal
@@ -16669,7 +16654,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-POLARITY1-gd rule with a pronoun as NEUTRAL1 and no NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - )
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!mod (? m1 ONT::POLARITY-VAL-POSITIVE ONT::POLARITY-VAL-NEGATIVE) :FIGURE ?ev)
@@ -16680,7 +16665,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-POLARITY1-gd-robustPro-NEUTRAL1-only
             :NEUTRAL1 ?!ag
-            :NEUTRAL2 -
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -16694,7 +16678,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_1 rule with NEUTRAL1 and NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16722,7 +16706,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_1 rule with NEUTRAL1 and NEUTRAL2 (whether)
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -16752,7 +16736,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_1 rule with only NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16775,7 +16759,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_1 rule with only NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16838,7 +16822,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16866,7 +16850,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_1 rule with neither NEUTRAL1 nor NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 - :NEUTRAL2 - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16889,7 +16873,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_1 rule with known NEUTRAL1 but a reflexive pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -16912,8 +16896,8 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_1 rule with known NEUTRAL1 but a pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -16936,7 +16920,7 @@
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -16958,8 +16942,8 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_1 rule with pronouns as both NEUTRAL1 and NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -16981,7 +16965,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_1 rule with no NEUTRAL1 and a pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -16990,7 +16974,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODA1_1-robustPro-NEUTRAL2-only
-            :NEUTRAL1 -
             :NEUTRAL2 ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -17003,7 +16986,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_1 rule with a pronoun as NEUTRAL1 and no NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modA))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -17013,7 +16996,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODA1_1-robustPro-NEUTRAL1-only
             :NEUTRAL1 ?!ag
-            :NEUTRAL2 -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -17027,7 +17009,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_2 rule with NEUTRAL1 and NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17055,7 +17037,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_2 rule with NEUTRAL1 and NEUTRAL2 (whether)
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -17085,7 +17067,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_2 rule with only NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17108,7 +17090,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_2 rule with only NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17171,7 +17153,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17199,7 +17181,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_2 rule with neither NEUTRAL1 nor NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 - :NEUTRAL2 - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17222,7 +17204,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_2 rule with known NEUTRAL1 but a reflexive pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17245,8 +17227,8 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_2 rule with known NEUTRAL1 but a pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -17269,7 +17251,7 @@
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -17291,8 +17273,8 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_2 rule with pronouns as both NEUTRAL1 and NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -17314,7 +17296,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_2 rule with no NEUTRAL1 and a pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -17323,7 +17305,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODA1_2-robustPro-NEUTRAL2-only
-            :NEUTRAL1 -
             :NEUTRAL2 ?!obj
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
@@ -17336,7 +17317,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODA1_2 rule with a pronoun as NEUTRAL1 and no NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modA)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modA (? tmp ONT::MANNER-REFL ONT::SAME ONT::DIFFERENT ONT::CARDINALITY-VAL ONT::TRAJECTORY))
@@ -17346,7 +17327,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODA1_2-robustPro-NEUTRAL1-only
             :NEUTRAL1 ?!ag
-            :NEUTRAL2 -
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -17360,7 +17340,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_1 rule with NEUTRAL1 and NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17388,7 +17368,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_1 rule with NEUTRAL1 and NEUTRAL2 (whether)
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -17418,7 +17398,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_1 rule with only NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17441,7 +17421,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_1 rule with only NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17504,7 +17484,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17532,7 +17512,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_1 rule with neither NEUTRAL1 nor NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 - :NEUTRAL2 - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17555,7 +17535,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_1 rule with known NEUTRAL1 but a reflexive pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17578,8 +17558,8 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_1 rule with known NEUTRAL1 but a pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -17602,7 +17582,7 @@
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -17624,8 +17604,8 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_1 rule with pronouns as both NEUTRAL1 and NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -17647,7 +17627,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_1 rule with no NEUTRAL1 and a pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -17656,7 +17636,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODN1_1-robustPro-NEUTRAL2-only
-            :NEUTRAL1 -
             :NEUTRAL2 ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -17669,7 +17648,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_1 rule with a pronoun as NEUTRAL1 and no NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MODS (?!modN))
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -17679,7 +17658,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODN1_1-robustPro-NEUTRAL1-only
             :NEUTRAL1 ?!ag
-            :NEUTRAL2 -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
@@ -17693,7 +17671,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_2 rule with NEUTRAL1 and NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17721,7 +17699,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_2 rule with NEUTRAL1 and NEUTRAL2 (whether)
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :FORMAL ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::F) ?!obj ONT::CLAUSE-CONDITION :CONTENT ?!cont)
            (ONT::EVENT ?!cont ?t3)
            (ONT::F ?var_degree ?type_degree)  
@@ -17751,7 +17729,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_2 rule with only NEUTRAL1
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17774,7 +17752,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_2 rule with only NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17837,7 +17815,7 @@
           ;; (includes a TERM extraction for the unknown argument)
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            (?!reln1 ?!obj (:* (? objtype ONT::REFERENTIAL-SEM) ?!objname) :name-of ?!name)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17865,7 +17843,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_2 rule with neither NEUTRAL1 nor NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 - :NEUTRAL2 - :AFFECTED - :AFFECTED1 - :AFFECTED-RESULT - :NEUTRAL - :NEUTRAL1 - :NEUTRAL2 - :FORMAL - :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-;           (?reln1 ?!ag ?t1)
+;           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
 ;           ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17888,7 +17866,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_2 rule with known NEUTRAL1 but a reflexive pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
            ((? tself ONT::TERM) ?!obj ?!objtype :PRO (? self W::ITSELF W::THEMSELVES))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
@@ -17911,8 +17889,8 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_2 rule with known NEUTRAL1 but a pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (?reln1 ?!ag ?t1)
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (?reln1 ?!ag ?t1 :PRO (? !p w::*you*))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -17935,7 +17913,7 @@
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
            ((? reln2 ONT::EVENT ONT::TERM) ?!obj ?t2)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -17957,8 +17935,8 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_2 rule with pronouns as both NEUTRAL1 and NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::*you* W::this W::that w::what w::which))
-           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::*you* W::this W::that w::what w::which))
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -17980,7 +17958,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_2 rule with no NEUTRAL1 and a pronoun as NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL2 ?!obj :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!obj ?!objtype :PRO ?!pro)
+           (ONT::TERM ?!obj ?!objtype :PRO (? pro2 W::me W::you W::us W::it W::them W::him W::her W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -17989,7 +17967,6 @@
            49
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODN1_2-robustPro-NEUTRAL2-only
-            :NEUTRAL1 -
             :NEUTRAL2 ?!obj
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
@@ -18002,7 +17979,7 @@
           ;; rule50_0_NEUTRAL1_NEUTRAL2-MODN1_2 rule with a pronoun as NEUTRAL1 and no NEUTRAL2
           ((?!reln0 ?ev
             (? type ONT::RELATE ) :NEUTRAL1 ?!ag :DRUM ?code :MODALITY ?modVal :FORCE ?fVal :DEGREE ?var_degree :FREQUENCY ?var_freq :OPERATOR - :MANNER ?!modN)
-           (ONT::TERM ?!ag ?!agtype :PRO ?!pro)
+           (ONT::TERM ?!ag ?!agtype :PRO (? pro1 W::I W::you W::we W::it W::they W::he W::she W::this W::that w::these w::those w::what w::which w::anything))
            (ONT::F ?var_degree ?type_degree)  
            (ONT::F ?var_freq ?type_freq)
            (ONT::F ?!modN (? tmp ONT::MANNER-UNDO ONT::NEG))
@@ -18012,7 +17989,6 @@
            (ONT::epi ?ev ?!eventName
             :rule -rule50_0_NEUTRAL1_NEUTRAL2-MODN1_2-robustPro-NEUTRAL1-only
             :NEUTRAL1 ?!ag
-            :NEUTRAL2 -
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal

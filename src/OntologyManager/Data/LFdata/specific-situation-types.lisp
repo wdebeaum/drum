@@ -347,6 +347,8 @@
 
 ;; shoot
 (define-type ONT::move-quickly
+    :definitions ((ont::and (ONT::MOVE :id ?ev :agent ?agent :affected ?affected)
+			    (ONT::SPEEDY :figure ?ev)))
  :parent ONT::MOVE
  )
 
@@ -410,6 +412,8 @@
 
 ;; haul, lug
 (define-type ONT::CAUSE-MOVE
+    :definitions ((ont::CAUSE-EFFECT :agent ?agent
+				     :formal (ONT::move :affected ?affected)))
   :parent ONT::MOVE
  )
 
@@ -533,22 +537,31 @@
  :parent ont::bodily-process
 )
 
-(define-type ont::sleep
-    :wordnet-sense-keys("sleep%2:29:00" "oversleep%2:29:00" "go_to_bed%2:29:00" "fall_asleep%2:29:00")
+(define-type ont::fall-asleep
+    :wordnet-sense-keys("go_to_bed%2:29:00" "fall_asleep%2:29:00"  )
     :definitions (ont::become :neutral ?affected
 			      :formal (ont::asleep-val :figure ?affected))
+    :parent ont::processes-of-consciousness
+    )
+
+(define-type ont::sleep
+    :wordnet-sense-keys("sleep%2:29:00" "oversleep%2:29:00" "sleep%1:26:00" "sleep%1:26:02" "nap%1:28:00" )
+    :definitions (ont::have-property :neutral ?affected
+				     :formal (ont::asleep-val :figure ?affected))
     :parent ont::processes-of-consciousness
     )
 
 (define-type ont::lie-dormant
  :wordnet-sense-keys("lie_dormant%2:41:00")
  :parent ont::sleep
-)
+ )
 
-(define-type ont::drowse
- :wordnet-sense-keys("nod%2:29:03")
- :parent ont::sleep
-)
+(define-type ont::nod
+    :wordnet-sense-keys("nod%2:29:03")
+    :definitions ((ont::and (ont::have :neutral ?affected :neutral1 (ont::head :id ?hd :figure ?affected))
+			    (ont::move :affected ?hd))) 
+    :parent ont::bodily-process
+ )
 
 (define-type ont::lose-consciousness
     :wordnet-sense-keys("zonk_out%2:29:01")
