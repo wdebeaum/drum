@@ -1134,8 +1134,9 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
     ;; it's defined if we didn't just make up a single referential-sem sense
     (not (and (= 1 (length defs))
 	      (eq 'ont::referential-sem
-		  (second (second (assoc 'w::lf (cddr (nth 3 (car defs))))))
-		  )))))
+		  (let ((lf (second (assoc 'w::lf (cddr (nth 3 (car defs)))))))
+		    (if (consp lf) (second lf) lf)))
+	      ))))
 
 (defun refine-existing-entry-with-sense-info (wdef sense-info)
   (let ((ont-type (car (find-arg (car sense-info) :ont-types))))

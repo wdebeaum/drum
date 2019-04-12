@@ -583,7 +583,7 @@
 )
 
 (define-type ont::metabolize
- :wordnet-sense-keys ("metabolise%2:34:00")
+ :wordnet-sense-keys ("metabolism%1:22:00")
  :parent ont::bodily-process
 )
 
@@ -3481,7 +3481,7 @@
 
 (define-type ONT::TRANSFORMATION
  :parent ONT::change
- :wordnet-sense-keys ("transform%2:30:00" "transform%2:30:03")
+ :wordnet-sense-keys ("transform%2:30:00" "transform%2:30:03" "metabolize%2:34:00")
  :sem (F::SITUATION (F::Aspect F::Dynamic))
  :arguments (;;(:REQUIRED ONT::affected ((? rcp F::Phys-obj f::abstr-obj f::situation)))
 	     (:optional  ONT::affected1 ((? transform-aff1 F::Phys-obj f::abstr-obj)))
