@@ -2328,12 +2328,14 @@
              )
  )
 
+#|
 (define-type ONT::NOT-FAMILIAR
  :parent ONT::SALIENCE
  :arguments (
 ;	     (:optional ONT::PREDICATE ((? agt F::Phys-obj f::abstr-obj f::situation)))
 	     )
  )
+|#
 
 (define-type ONT::SUPPOSE
  :wordnet-sense-keys ("say%2:32:03" "suppose%2:32:00")
@@ -2552,6 +2554,7 @@
  )
 
 (define-type ont::nominate
+    :wordnet-sense-keys ("nominate%2:41:02")
     :parent ONT::conventional-speech-act
     )
 
@@ -2593,6 +2596,7 @@
 |#
 
 (define-type ONT::PRESCRIBING
+ :wordnet-sense-keys ("prescribe%2:32:00")
  :parent ONT::giving
  :sem (F::Situation (F::Cause F::Agentive))
  :arguments ((:REQUIRED ONT::agent  ((? ag f::phys-obj f::abstr-obj) (f::intentional +)))
@@ -2752,6 +2756,7 @@
 ;; for clicking (with a mouse)
 ;; a specialized form of ont::select where formal must be a physical representation
 (define-type ONT::click
+ :wordnet-sense-keys ("click%2:38:00" "click%1:04:00")
  :parent ONT::apply-force
  :arguments ((:ESSENTIAL ONT::affected (F::phys-obj))) ;(f::object-function f::gui-object))))
  )

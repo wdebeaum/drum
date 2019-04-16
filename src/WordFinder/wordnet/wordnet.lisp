@@ -753,7 +753,19 @@ Signals a condition if EOF is encountered."
 	 (lex-filenum (parse-integer (subseq sense-key (+ pct 3) (+ pct 5))))
 	 (lex-id (parse-integer (subseq sense-key (+ pct 6) (+ pct 8))))
 	 (has-head (and (= ss-type 5) (> (length sense-key) (+ pct 8))))
+	 (synsets
+	   ; match lemma and ss-type (AKA POS)
+	   (get-synsets this (remove-parens-from-lemma lemma) pos))
 	 )
+    ;; prefer to match the specific ss-type of adjectives (head or satellite)
+    (case ss-type
+      (3
+	(setf synsets (append (remove '|s| synsets :key #'get-ss-type)
+			      (remove '|a| synsets :key #'get-ss-type))))
+      (5
+	(setf synsets (append (remove '|a| synsets :key #'get-ss-type)
+			      (remove '|s| synsets :key #'get-ss-type))))
+      )
     (find-if
       (lambda (synset)
 	(and
@@ -776,8 +788,7 @@ Signals a condition if EOF is encountered."
 	      (string= sense-key (get-sense-key synset lemma))
 	      )
 	  ))
-      ; match lemma and ss-type (AKA POS)
-      (get-synsets this (remove-parens-from-lemma lemma) pos)
+      synsets
       )))
 
 (defmethod get-synset ((this wordnet-manager) pos offset)
