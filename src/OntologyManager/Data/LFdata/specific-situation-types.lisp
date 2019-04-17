@@ -3100,6 +3100,7 @@
 
 ;; herd
 (define-type ONT::herd
+ :wordnet-sense-keys ("herd%2:38:00" "herd%2:38:01" "herd%2:42:00")
  :parent ont::cause-to-move
  :arguments ((:ESSENTIAL ONT::agent)
 	     (:essential ont::affected  (F::phys-obj (f::mobility f::movable) (f::intentional +)))
@@ -3107,6 +3108,7 @@
  )
 
 (define-type ONT::sampling
+ :wordnet-sense-keys ("sample%2:34:00")
  :parent ont::choosing
  )
 
