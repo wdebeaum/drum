@@ -1705,7 +1705,7 @@
       ;; ing VPs as adverbials
       ;; TEST: Barking, the dog chased the cat.
    ;; TEST: The dog chased the cat barking.
-   ((advbl (arg ?arg) (sem ($ f::abstr-obj (f::information -) (f::intentional -)))
+   ((advbl (arg ?arg) (sem ($ f::abstr-obj (f::information -) (f::intentional -) (f::type ONT::IMPLICIT-OVERLAP)))
      (argument (% S (sem ($ f::situation (f::aspect f::dynamic))) (subjvar ?!subjvar) (subj ?!subj)
 		  (var ?arg))) 
      (sort pred) (gap -) (atype (? atp pre post))
@@ -1713,10 +1713,10 @@
      (role ONT::MANNER) (var **)
      (LF (% PROP (CLASS ONT::IMPLICIT-OVERLAP) (VAR **) 
 	    (CONSTRAINT (& (FIGURE ?arg) (GROUND ?v)))
-	    (sem ($ f::abstr-obj (f::information -) (f::intentional -)))))
+	    (sem ($ f::abstr-obj (f::information -) (f::intentional -) (f::type ONT::IMPLICIT-OVERLAP)))))
      )
     -vp-ing-advbl> .97
-    (head (vp (vform ing) (var ?v) (gap -) ;;(aux -)
+    (head (vp (vform ing) (var ?v) (gap -) ;;(aux -) ; aux: Having eaten the pizza...
 	      (advbl-necessary -)
 	   (constraint ?con)  (transform ?transform) (class ?class)
 	   (subj (% np (var ?!subjvar) (agr ?subjagr) (sem ?subjsem) (gap -)))

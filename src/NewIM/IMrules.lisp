@@ -536,8 +536,16 @@
    ;; The dog?
      ((ONT::SPEECHACT ?!a ONT::SA_YN-QUESTION :CONTENT ?!rr)
       (?sp ?!rr ?type)
-      -ynq1> 
+      -ynq1> 0.98 ; prefer -ynq1b>
       (ONT::ASK-IF :who *USER* :to *ME* :what ?!rr)
+      )
+
+     ;; Any dog? (no :suchthat)
+     ;; Any inhibitors? (with :suchthat)
+     ((ONT::SPEECHACT ?!a ONT::SA_YN-QUESTION :CONTENT ?!rr)
+      (?sp ?!rr ?type :QUAN ONT::ANY :SUCHTHAT ?st) ; :suchthat optional
+      -ynq1b> 
+      (ONT::ASK-WHAT-IS :who *USER* :to *ME* :what ?!rr :suchthat ?st)
       )
 
      ; Did you eat anything?

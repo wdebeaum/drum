@@ -188,11 +188,11 @@ separate instances of the chart/parser.")
 	       subs)))))
 
 (defun robust-constit-match (rhs c)
-  "This generalizes the constit-match function so that it can function when there aere multiple entires for the same slot,
+  "This generalizes the constit-match function so that it can function when there are multiple entires for the same slot,
       as often happens in LFs with several MOD functions"
   (or (constit-match rhs c)
       (progn
-	(format t "constit-match failed on ~S and ~S" rhs c)
+	;;(format t "~%constit-match failed on ~S and ~S" rhs c)
 	nil)))
 
 (defun getsubconstitnames (n constit)

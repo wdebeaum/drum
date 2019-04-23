@@ -112,7 +112,8 @@
    (trace-msg 3 "Starting extraction on ~S with rules ~S" lfs rule-groups)
    (let* ((tmalfs (if im::*compute-force-from-tmas* (im::interpret-tmas lfs)
 		    lfs))
-	 (newlfs tmalfs)) ;; (refine-types-based-on-coref tmalfs)))
+	  (newlfs tmalfs)) ;; (refine-types-based-on-coref tmalfs)))
+     (trace-msg 1 "Extracting from ~S" newlfs)
      (let ((results 
 	    (compute-entailments newlfs rule-groups)))
 	(trace-msg 3 "~%Extraction results are ~S" results)

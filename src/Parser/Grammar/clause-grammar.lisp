@@ -2402,7 +2402,7 @@
      (subjvar ?subjvar) 
      (dobjvar ?dobjvar)
      
-     (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar)))
+     (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar) (agr ?subjagr)))
      (sort pred) 
      (lf (% prop (var ?v) (class ?belf)
 	    (constraint (& (lsubj ?subjvar)
@@ -2509,7 +2509,7 @@
     ?comp)
 
       ; Is the pizza cold quickly?
-   ((s (stype ynq) (main +) (aux -) (gap -)
+   ((s (stype ynq) (main +) (aux -) (gap ?gap) ;(gap -)
      (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar) (agr ?subjagr)))
      (sort pred) 
      
@@ -2528,7 +2528,7 @@
      (advbl-needed ?avn)
      )
     -s-ynq-be-adv2>
-    (head (s (stype ynq) (main +) (aux -) (gap -)
+    (head (s (stype ynq) (main +) (aux -) (gap ?gap) ;(gap -)
 	     (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar) (agr ?subjagr)))
 	     (sort pred) 
 	     
@@ -2705,6 +2705,14 @@
     (punc (punctype ?p) (lex w::punc-question-mark))
     )
 
+   ; The dog and the cat?
+   ((utt (lf (% speechact (var *) (class ont::SA_YN-QUESTION) (constraint (& (content ?v) (punctype ?p))) )) (var *)
+	 (punc +) (punctype ?p)) 
+    -np-utt-complex-q> .985 ; slightly lower than np-utt-simple-q
+    (head (np (wh -) (sort (? x pred unit-measure)) (complex +) (var ?v) (sem ($ ?!type))))
+    (punc (punctype ?p) (lex w::punc-question-mark))
+    )
+   
     ; which dog?
    ((utt (lf (% speechact (var *) (class ont::SA_WH-QUESTION) (constraint (& (content ?v) (focus ?whv) (punctype ?p))) )) (var *)
 	 (punc +) (punctype ?p)) 
