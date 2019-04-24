@@ -7,7 +7,8 @@
   (W::FORWARDS
    (SENSES
     ((LF-PARENT ONT::DIRECTION-forward)
-     (TEMPL PRED-S-POST-TEMPL)
+     ;(TEMPL PRED-S-POST-TEMPL)
+     (TEMPL PRED-S-VP-templ)
      )
     )
    )

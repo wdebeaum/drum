@@ -595,7 +595,9 @@
       (ARG ?v) (VAR ?mod)
       (role ?advrole)
       ;(SEM ($ f::abstr-obj (F::type (? !ttt ont::position-reln))))
-      (SEM ($ f::abstr-obj (F::type (? !ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; e.g. "decrease in Mexico" but we would need to have "put the box in the corner"
+      (SEM ($ f::abstr-obj (F::type (? !ttt ont::path ont::conventional-position-reln
+				       ;ont::direction ; allow e.g. "forward"
+				       ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; e.g. "decrease in Mexico" but we would need to have "put the box in the corner"
 				       ont::pos-directional-reln ont::pos-distance
 				       ; ont::pos-wrt-speaker-reln ; "I ate there"
 				       ont::resulting-object))))

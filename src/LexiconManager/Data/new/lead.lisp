@@ -42,6 +42,17 @@
      (example "team alpha will lead")
      (TEMPL agent-templ)
      )
+
+    ((LF-PARENT ont::be-ahead)
+     (example "she led her class every year")
+     (TEMPL neutral-neutral-templ)
+     )
+
+    ((LF-PARENT ont::be-ahead)
+     (example "she is leading in the competition" "she is leading")                   
+     (TEMPL neutral-templ)
+    )
+
     )
    )
 ))

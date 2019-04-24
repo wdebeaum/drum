@@ -4702,7 +4702,7 @@
     ;; NP -> NAME
     ;; Myrosia 5/19/00 Changed the rule to apply only to "true" names
     ;; "generated" names get status "GNAME" in the next rule
-    ((NP (SORT ?sort)
+    ((NP (SORT PRED) ;(SORT ?sort)
       (var ?v) (Class ?lf) (sem ?sem) (agr ?agr) (case (? cas sub obj -))
       (LF (% Description (Status ?newspec) (var ?v) (Sort Individual)
 	     (class ?lf) (lex ?l) (sem ?sem) 

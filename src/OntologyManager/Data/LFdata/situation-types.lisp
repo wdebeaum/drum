@@ -917,6 +917,19 @@
  :sem (F::situation (F::Aspect F::static) (F::Time-span F::extended))
  )
 
+(define-type ONT::be-ahead
+ :wordnet-sense-keys ("lead%2:42:01")
+ :arguments ((:ESSENTIAL ONT::NEUTRAL1 ((? bb F::Phys-obj F::Abstr-obj))))
+ :parent ONT::in-relation
+ )
+
+ (define-type ONT::be-behind
+ :wordnet-sense-keys ("lag%2:38:00" "trail%2:38:02")
+ :arguments ((:ESSENTIAL ONT::NEUTRAL1 ((? bb F::Phys-obj F::Abstr-obj))))
+ :parent ONT::in-relation
+ )
+
+
 (define-type ONT::comprise
  :wordnet-sense-keys ("consist%2:42:04")
  :parent ONT::in-relation

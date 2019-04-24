@@ -22,6 +22,17 @@
      (LF-PARENT ONT::pursue)
  ; like track
      )
+
+    ((LF-PARENT ont::be-behind)
+     (example "she trailed the frontrunner by 7000 votes")
+     (TEMPL neutral-neutral-templ)
+     )
+
+    ((LF-PARENT ont::be-behind)
+     (example "they are trailing" "the candidate trailed in the polls") 
+     (TEMPL neutral-templ)
+    )
+
     )
    )
 ))
