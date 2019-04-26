@@ -18,7 +18,7 @@
 (define-words :pos W::v 
  :words (
   (W::alternate
-   (wordfeats (W::morph (:forms (-vb) :nom w::arrangement)))
+   (wordfeats (W::morph (:forms (-vb) :nom w::alternation)))
    (SENSES
     ((lf-parent ont::arranging)
      (example "alternate the color of the blocks")

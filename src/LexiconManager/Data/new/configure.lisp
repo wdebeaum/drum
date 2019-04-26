@@ -17,3 +17,14 @@
  )
 ))
 
+(define-words :pos W::n 
+  :words (
+   (W::configuration
+   (SENSES
+    (
+     (lf-parent ont::arrangement-configuration)
+     (example "A configuration of stones")
+     (TEMPL pred-subcat-contents-templ)
+     )
+   ))
+))

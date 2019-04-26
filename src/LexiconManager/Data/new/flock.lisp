@@ -14,3 +14,14 @@
    )
 ))
 
+(define-words :pos W::n 
+  :words (
+   (W::flock
+   (SENSES
+    (
+     (lf-parent ont::animal-group)
+     (example "A flock of birds")
+     (TEMPL pred-subcat-contents-templ)
+     )
+   ))
+))

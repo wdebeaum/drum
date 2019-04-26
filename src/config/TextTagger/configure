@@ -598,7 +598,6 @@ TEXTTAGGER_LDFLAGS
 TEXTTAGGER_CXXFLAGS
 TEXTTAGGER_aspell
 TEXTTAGGER_enju
-TEXTTAGGER_mesh_scr
 TEXTTAGGER_corenlp
 TEXTTAGGER_metamap
 TEXTTAGGER_semgroups
@@ -674,7 +673,6 @@ with_umls
 with_semgroups
 with_metamap
 with_corenlp
-with_mesh_scr
 with_enju
 with_aspell
 '
@@ -1314,7 +1312,6 @@ Optional Packages:
   --with-semgroups        locate UMLS SemGroups.txt file for TextTagger
   --with-metamap          locate UMLS MetaMap dir for TextTagger
   --with-corenlp          locate Stanford CoreNLP dir for TextTagger
-  --with-mesh-scr         locate MeSH SCR file for TextTagger
   --with-enju             locate Enju parser executable for TextTagger
   --with-aspell           locate aspell executable for TextTagger
 
@@ -1940,7 +1937,7 @@ test -n "$target_alias" &&
 TARGET="$target"
 
 
-ac_packages='geonames ner postagger parser cj_parser biomodel umls semgroups metamap corenlp mesh_scr enju aspell'
+ac_packages='geonames ner postagger parser cj_parser biomodel umls semgroups metamap corenlp enju aspell'
 
 
 # Check whether --with-texttagger-prefix was given.
@@ -1983,7 +1980,6 @@ ac_umls_search_list=`expand_paths UMLS/2010AB/ UMLS/2009AA/`
 ac_semgroups_search_list=`expand_paths UMLS/SemGroups.txt`
 ac_metamap_search_list=`expand_paths UMLS/MetaMap/public_mm/`
 ac_corenlp_search_list=`expand_versioned_paths stanford-corenlp/stanford-corenlp-full-????-??-??/ stanford-corenlp/stanford-corenlp-????-??-??/`
-ac_mesh_scr_search_list=`expand_paths mesh/c2015.bin.gz`
 ac_enju_search_list=`expand_paths enju/enju-2.4.2/enju`
 ac_aspell_search_list=`which aspell || echo /usr/bin/aspell /usr/local/bin/aspell /opt/local/bin/aspell`
 
@@ -2063,14 +2059,6 @@ fi
 # Check whether --with-corenlp was given.
 if test "${with_corenlp+set}" = set; then :
   withval=$with_corenlp;
-fi
-
-
-
-
-# Check whether --with-mesh_scr was given.
-if test "${with_mesh_scr+set}" = set; then :
-  withval=$with_mesh_scr;
 fi
 
 

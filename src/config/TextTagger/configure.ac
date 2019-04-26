@@ -14,7 +14,7 @@ AC_CONFIG_AUX_DIR([../auto])
 AC_CANONICAL_TARGET
 AC_SUBST(TARGET, "$target")
 
-ac_packages='geonames ner postagger parser cj_parser biomodel umls semgroups metamap corenlp mesh_scr enju aspell'
+ac_packages='geonames ner postagger parser cj_parser biomodel umls semgroups metamap corenlp enju aspell'
 
 AC_ARG_WITH(texttagger-prefix,
 	    AC_HELP_STRING([--with-texttagger-prefix],
@@ -54,7 +54,6 @@ ac_umls_search_list=`expand_paths UMLS/2010AB/ UMLS/2009AA/`
 ac_semgroups_search_list=`expand_paths UMLS/SemGroups.txt`
 ac_metamap_search_list=`expand_paths UMLS/MetaMap/public_mm/`
 ac_corenlp_search_list=`expand_versioned_paths stanford-corenlp/stanford-corenlp-full-????-??-??/ stanford-corenlp/stanford-corenlp-????-??-??/`
-ac_mesh_scr_search_list=`expand_paths mesh/c2015.bin.gz`
 ac_enju_search_list=`expand_paths enju/enju-2.4.2/enju`
 ac_aspell_search_list=`which aspell || echo /usr/bin/aspell /usr/local/bin/aspell /opt/local/bin/aspell`
 
@@ -107,11 +106,6 @@ AC_ARG_WITH(corenlp,
 	    AC_HELP_STRING([--with-corenlp],
 			   [locate Stanford CoreNLP dir for TextTagger]))
 AC_SUBST(TEXTTAGGER_corenlp)
-
-AC_ARG_WITH(mesh_scr,
-	    AC_HELP_STRING([--with-mesh-scr],
-			   [locate MeSH SCR file for TextTagger]))
-AC_SUBST(TEXTTAGGER_mesh_scr)
 
 AC_ARG_WITH(enju,
 	    AC_HELP_STRING([--with-enju],

@@ -16,9 +16,15 @@
 )
 
 (define-type ONT::natural-object
-    :wordnet-sense-keys ("natural_object%1:03:00")
+    :wordnet-sense-keys ("natural_object%1:03:00" "actinoid" "rare_earth%1:27:00")
     :parent ONT::PHYS-OBJECT
     :sem (F::Phys-obj (F::origin F::natural)(F::spatial-abstraction (? sa F::spatial-point F::spatial-region)))
+    )
+
+(define-type ONT::Physics-object
+    :comment "objects developed in physics of natural world"
+    :wordnet-sense-keys ("electron_shell%1:14:00" "particle%1:17:00" "halogen%1:27:00") 
+    :parent ONT::natural-object
     )
 
 (define-type ONT::WILDTYPE-OBJ
@@ -387,6 +393,7 @@
 
 (define-type ONT::POLITICAL-REGION
     :parent ONT::geographic-region
+     :wordnet-sense-keys ("circuit%1:14:00")
     :sem (F::Phys-obj (F::spatial-abstraction (? sa F::spatial-point F::spatial-region))
 		      (F::origin F::Artifact)
 		      (F::mobility f::fixed)) ;; (f::intentional +)) ; political regions can be intentional agents   -- have a rule in grammar that handles this
@@ -1449,7 +1456,7 @@
 (define-type ONT::ROUTE
     :parent ONT::functional-region
     ;;check this
-    :wordnet-sense-keys ("path%1:17:00" "track%1:17:00" "course%1:17:00")
+    :wordnet-sense-keys ("path%1:17:00" "track%1:17:00" "course%1:17:00" "route%1:15:00")
     :sem (F::Phys-obj (F::origin F::non-living) (F::Form F::Geographical-Object)
 		      (F::Object-Function F::Path) (F::Mobility F::Fixed)
 		      ;; Myrosia 2007/11/20 marked as container + to account for examples like "this path contains a bulb/2 terminals/3 segments"
@@ -2881,23 +2888,59 @@
 (define-type ont::group-object
     :wordnet-sense-keys ( "grouping%1:03:00")
     :comment "a collection of objects considered as a unit"
- ;:parent ont::abstract-object-nontemporal
- :parent ont::phys-object
-;  :sem (F::Abstr-obj (f::group +)) ; group feature not defined for abstract objects
-  :sem (F::phys-obj (f::container +)) 
-  :arguments ((:OPTIONAL ONT::FIGURE)
-              )
-  )
+					;:parent ont::abstract-object-nontemporal
+    :parent ont::phys-object
+					;  :sem (F::Abstr-obj (f::group +)) ; group feature not defined for abstract objects
+    :sem (F::phys-obj (f::container +)) 
+    :arguments ((:OPTIONAL ONT::FIGURE)
+		(:optional ont::contents)
+		)
+    )
 
+
+(define-type ONT::collection
+ :wordnet-sense-keys ("collection%1:14:00" "array%1:14:00" "array%1:10:00" "series%1:14:01")
+ :parent ONT::group-object
+ )
+					  
+(define-type ONT::arrangement-configuration
+  :wordnet-sense-keys ("arrangement%1:14:00" "straggle%1:14:00" "configuration%1:09:00")
+  :comment "An group of objects organized in some way"
+ :parent ONT::collection
+ )
+
+(define-type ont::natural-group
+    :wordnet-sense-keys ("kingdom%1:14:00" "biological_group%1:14:00" "association%1:14:01")
+    :comment "An group defined by a classification of living things"
+    :parent ONT::group-object
+    )
+
+(define-type ont::animal-group
+    :wordnet-sense-keys ("animal_group%1:14:00")
+    :comment "An group defined by a classification of animals"
+    :parent ONT::group-object
+    )
+
+(define-type ont::people
+    :wordnet-sense-keys ("people%1:14:00" "people%1:14:01" "masses%1:14:00")
+    :comment "a group of persons"
+    :parent ont::animal-group
+    )
+
+(define-type ont::people-subgroup
+    :wordnet-sense-keys ("ethnic_group%1:14:00" "race%1:14:00" "sainthood%1:14:00" "varna%1:14:00")
+    :comment "a group of persons defined by origin or race"
+    :parent ont::group-object
+    )
 
 (define-type ONT::system
-  :wordnet-sense-keys ("system%1:06:00" "system%1:14:00")
+  :wordnet-sense-keys ("system%1:14:00" "system%1:14:00")
   :comment "An interconnected group of objects, abstract or physical"
  :parent ONT::group-object
  )
 
 (define-type ONT::ecosystem
-  :wordnet-sense-keys ("biotic_community%1:14:00" "ecosystem%1:14:00" "biosphere%1:15:00")
+  :wordnet-sense-keys ("biotic_community%1:14:00" rep"ecosystem%1:14:00" "biosphere%1:15:00")
   :comment "An interconnected group of] entities fo5ming an ecosystem"
  :parent ONT::system
  )
@@ -3057,11 +3100,6 @@
 (define-type ONT::military-group
  :wordnet-sense-keys ("military_unit%1:14:00" "military_force%1:14:00" "military_group%1:14:00" "force%1:14:01")
  :parent ONT::social-group
- )
-
-(define-type ONT::collection
- :wordnet-sense-keys ("collection%1:14:00" "aggregation%1:14:00" "accumulation%1:14:00" "assemblage%1:14:01" "array%1:14:00" "array%1:10:00")
- :parent ONT::group-object
  )
 
 ;; surplus, excess

@@ -154,8 +154,6 @@ the file, with dashes. No need to unpack it.</li>
 
 <li>To use WordNet, follow the instructions in <code>src/WordFinder/README.txt</code>. TextTagger will use the WordFinder configuration to find the necessary WordNet files.</li>
 
-<li>To use the Drum tagger, you need to get the ASCII MeSH SCR file <code>c2015.bin.gz</code>, either from <a href="http://www.nlm.nih.gov/mesh/filelist.html">the MeSH website</a> (where you will have to register and agree to a "memorandum of understanding"), or from IHMC's <a href="https://sharebox.ihmc.us/public.php?service=files&amp;t=3a8588532fd22e790ecfa37a16849d88">ownCloud</a> (where you need to sign in with your IHMC login/password). As of this writing it looks like MeSH might not be offering SCR by itself, you'd have to get the whole ASCII MeSH and pull out SCR yourself. Either way, put the file in <code>/usr/local/share/mesh/</code> (don't decompress it, the Makefile will do that for you).</li>
-
 <li>The following Perl modules are also required to build one of the data files for the Drum tagger (<code>go_protmods.tsv</code>): Getopt::Long, Set::Scalar, File::Slurp. If you're using MacPorts, you can install the corresponding packages by downcasing the module name, turning <code>::</code> into <code>-</code> and prepending <code>p5-</code>: <code>sudo port install p5-getopt-long p5-set-scalar p5-file-slurp</code>.</li>
 
 <li>Note that the TextTagger Makefile also downloads and processes some files for you, depending on what parts of it are included in your checkout.</li>
@@ -1402,13 +1400,13 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 
 <p>PFam IDs map to different ONT types depending on the <code>TP</code> field. "Family" maps to <code>ONT::protein-family</code>, while everything else (Domain, Repeat, Motif) maps to <code>ONT::molecular-domain</code>.</p>
 
-<p>IDs from MeSH SCR map to <code>ONT::pharmacologic-substance</code>.</p>
+<p>IDs from MeSH&reg; SCR map to <code>ONT::pharmacologic-substance</code>.</p>
 
 <p>IDs from CVCL map to <code>ONT::cell-line</code>.</p>
 
 <p>IDs from neXtProt-family (FA) map to <code>ONT::protein-family</code>.</p>
 
-<p>We get IDs from HP via EFO, when they are linked to MeSH and/or DOID. These map to <code>ONT::medical-disorders-and-conditions</code>.</p>
+<p>We get IDs from HP via EFO, when they are linked to MeSH&reg; and/or DOID. These map to <code>ONT::medical-disorders-and-conditions</code>.</p>
 </div>
 
 <div class="section">
@@ -1528,9 +1526,9 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
  <td>"The GO project has developed three structured, controlled vocabularies (ontologies) that describe gene products in terms of their associated biological processes, cellular components and molecular functions in a species-independent manner."</td>
 </tr>
 <tr>
- <td><a href="http://www.nlm.nih.gov/mesh/">Medical Subject Headings (MeSH)</a> <a href="http://www.nlm.nih.gov/bsd/indexing/training/CATD_040.html">Supplementary Concept Records (SCR)</a></td>
+ <td><a href="http://www.nlm.nih.gov/mesh/">Medical Subject Headings (MeSH&reg;)</a> <a href="http://www.nlm.nih.gov/bsd/indexing/training/CATD_040.html">Supplementary Concept Records (SCR)</a></td>
  <td>MESH</td>
- <td><a href="http://www.nlm.nih.gov/mesh/ctype.html">ASCII MeSH SCR</a></td>
+ <td><a href="http://www.nlm.nih.gov/mesh/ctype.html">ASCII MeSH&reg; SCR</a></td>
  <td>PHARMACOLOGIC-SUBSTANCE</td>
  <td>Mostly drugs and chemicals. We only get terms in the semantic types "Pharmacologic Substance" (T121), "Antibiotic" (T195), and "Clinical Drug" (T200).</td>
 </tr>

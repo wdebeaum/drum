@@ -952,7 +952,8 @@
 (define-type ONT::HITTING
  :wordnet-sense-keys ("beat%2:35:01" "hit%2:35:03" "strike%2:35:01" )
  :comment "an agent comes into contact with force with another object, typically harming the other object"
- :parent ONT::MOTION
+; :parent ONT::MOTION
+ :parent ONT::apply-force
  :sem (F::SITUATION (F::Trajectory -))
  :arguments ((:required ONT::affected (F::Phys-obj))
              )
@@ -1539,7 +1540,7 @@
 ;; because this is too specific and difficult to disambiguate
 ;; this will be keep, continue, go on, proceed and so forth
 (define-type ont::activity-ongoing
-  :wordnet-sense-keys ("maintain%2:40:10" "keep%2:40:10" "save%2:40:03" "keep%2:40:09" "hold_open%2:40:00" "keep_open%2:40:00" "maintain%2:34:00" "keep%2:34:00" "sustain%2:34:00" "keep_on%2:41:00" "keep%2:41:02" "continue%2:41:00" "retain%2:41:01" "maintain%2:31:00" "keep%2:31:00" "observe%2:31:00" "hold%2:42:00" "maintain%2:42:00" "keep%2:42:00" "continue%2:42:01" "go_on%2:42:00" "proceed%2:42:00" "go_along%2:42:00" "keep%2:42:07" "persist%2:42:01" "welter%2:31:00" "sustain%2:42:01" "keep_up%2:33:00")
+  :wordnet-sense-keys ("maintain%2:40:10" "save%2:40:03" "maintain%2:34:00" "keep_on%2:41:00" "retain%2:41:01" "maintain%2:31:00" "hold%2:42:00" "maintain%2:42:00"  "continue%2:42:01" "persist%2:42:01" "welter%2:31:00" "sustain%2:42:01" "keep_up%2:33:00")
   :parent ont::event-of-action
   :comment "actively doing something to maintain a state (i.e., involves an agent)"
   :sem (f::situation (:default (f::aspect f::dynamic) (f::cause f::phenomenal)) (:required (f::trajectory -)))
@@ -1627,7 +1628,7 @@
 ;; kill, destroy
 (define-type ont::destroy
     :comment "render inoperative"
-    :wordnet-sense-keys ("destroy%2:35:00" "destroy%2:36:00" "down%2:38:00")
+    :wordnet-sense-keys ("destroy%2:35:00" "destroy%2:36:00" "down%2:38:00" "knock_out%2:30:00")
     :arguments ((:REQUIRED ONT::affected ((? xx F::Phys-obj F::Abstr-obj)
 					  (F::type (? tt ONT::phys-object ont::mental-construction)))))
     :parent ont::change-state
@@ -2949,7 +2950,15 @@
 (define-type ont::facilitate
  :parent ont::enable
  :wordnet-sense-keys ("ease%2:30:00" "smooth%2:40:00")
-)
+ )
+
+(define-type ont::maintain-keep
+    :parent ont::cause-effect
+    :definitions ((ONT::CAUSE-EFFECT :agent ?agent
+				     :formal (ONT::ACTIVITY-ONGOING :formal ?formal)))
+    :comment "causing some activity to continue"
+    :wordnet-sense-keys ("maintain%2:42:00" )
+    )
 
 (define-type ont::disable
   :wordnet-sense-keys ("demilitarise%2:33:02")

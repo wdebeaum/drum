@@ -462,8 +462,7 @@
 (define-type ont::path ; for now to avoid conflict w/ old ont::trajectory
  :parent ont::predicate
  :sem (F::abstr-obj)
- ;; situations can be spatially located, e.g. meetings, riots, parties
- ;; so can abstr-obj: the idea in the document; the name on the envelope; the man at the party
+ :comment "constrains the location of an object undergoing motion"
  :arguments ((:ESSENTIAL ONT::FIGURE ((? of F::Phys-obj F::Situation f::abstr-obj)))
 	     (:ESSENTIAL ONT::GROUND ((? val F::Phys-obj F::Situation f::abstr-obj)))
              )
@@ -678,7 +677,7 @@
  :arguments ((:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj
 					 F::abstr-obj ; "move the plan up the agenda"?
 					 F::situation) ; meeting is SITUATION (move the meeting up the stairs)
-				      (F::mobility f::movable)))
+				      (F::mobility f::movable) (F::ASPECT F::DYNAMIC)))
 	     (:ESSENTIAL ONT::GROUND (F::Phys-obj))
 	     (:OPTIONAL ONT::NOROLE)
             )

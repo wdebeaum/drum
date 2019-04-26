@@ -15,7 +15,8 @@
      ))
     ((lf-parent ont::tell) 
      (example "tell the plan to the driver")
-     (TEMPL AGENT-THEME-TO-ADDRESSEE-optional-TEMPL)
+     ;(TEMPL AGENT-THEME-TO-ADDRESSEE-optional-TEMPL)
+     (TEMPL AGENT-neutral-TO-ADDRESSEE-optional-TEMPL)
      )
     #||  ;;  Now handled compositionally
     (;;(LF-PARENT ONT::inform)

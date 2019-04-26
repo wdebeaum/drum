@@ -9,7 +9,7 @@
    (wordfeats (W::morph (:forms (-vb) :ing W::keeping :past W::kept)))
    (SENSES
     ;;;; we may need to devise special case for keeping at a particular location
-    ((LF-PARENT ONT::activity-ongoing)
+    ((LF-PARENT ONT::maintain-keep)
      (example "keep the room clean")
      (meta-data :origin trips :entry-date unknown :change-date 20090220 :comments beetle-pilots)
      (SEM (F::Locative F::Located) (F::Time-span F::extended))
@@ -20,7 +20,8 @@
      (TEMPL agent-theme-complex-subjcontrol-templ)
      (meta-data :origin chf :entry-date 20070817 :change-date 20090220 :comments chf-dialogues)
      )
-    ((lf-parent ont::activity-ongoing)
+    ((lf-parent ont::maintain-keep
+		)
      (SEM (F::Cause F::Agentive) (F::Locative F::Located) (F::Time-span F::extended))
      (example "Keep walking")
      (TEMPL Agent-EFFECT-SUBJCONTROL-TEMPL (xp (% w::VP (w::vform w::ing))))

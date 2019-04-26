@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.117 2019/01/09 20:06:47 wdebeaum Exp $
+# $Id: Makefile,v 1.118 2019/04/25 16:00:42 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -247,11 +247,16 @@ pfam-terms.tsv: downloads/Pfam-A.seed.gz get-xfam-terms.pl Perl/TextTagger/Norma
 	| ./get-xfam-terms.pl \
 	>$@
 
-mesh-scr-terms.tsv: $(TEXTTAGGER_mesh_scr) get-mesh-scr-terms.pl Perl/TextTagger/Normalize.pm
-	if test -z "$(TEXTTAGGER_mesh_scr)" ; then echo "Error: MeSH SCR (c2015.bin.gz) not configured" ; exit 1 ; fi
-	gunzip -c <$(TEXTTAGGER_mesh_scr) \
-	| ./get-mesh-scr-terms.pl \
-	>$@
+# get the current version of MeSH SCR terms, or use an old one if we have it
+# already
+MESH_FILE=$(shell cd downloads ; ls c20??.bin 2>/dev/null || date +c%Y.bin)
+$(info MESH_FILE=$(MESH_FILE))
+
+downloads/$(MESH_FILE):
+	$(call download_compressed,ftp://nlmpubs.nlm.nih.gov/online/mesh/MESH_FILES/asciimesh/$(MESH_FILE))
+
+mesh-scr-terms.tsv: downloads/$(MESH_FILE) get-mesh-scr-terms.pl Perl/TextTagger/Normalize.pm
+	./get-mesh-scr-terms.pl <$< >$@
 
 # get the current version of NCIt, since it changes so often and they don't
 # keep the old ones available (or just use the one we have if we have it

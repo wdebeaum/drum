@@ -14,16 +14,18 @@
  )
 
 (define-type ONT::KIND
- :parent ONT::ABSTRACT-OBJECT-nontemporal
- :sem (F::abstr-obj (F::SCALE -))
- :arguments ((:REQUIRED ONT::FIGURE)
-             )
+    :parent ONT::ABSTRACT-OBJECT-nontemporal
+    :wordnet-sense-keys ("kind%1:09:00")
+    :sem (F::abstr-obj (F::SCALE -))
+    :arguments ((:REQUIRED ONT::FIGURE)
+		)
  )
 
 ;; some kind of replication of the same thing
 ;; version, edition, variant
 (define-type ONT::Version
- :parent ONT::KIND
+    :wordnet-sense-keys ("version%1:09:01" "edition%1:14:00")
+    :parent ONT::KIND
  )
 
 ;; example, illustration, instance

@@ -176,6 +176,7 @@
 (define-type ont::motion
  :parent ONT::EVENT-OF-causation
  :sem (F::Situation (F::Cause (? c F::Force -)) (F::Aspect F::Dynamic))
+ :wordnet-sense-keys ("movement%1:04:04")
  :comment "events of motion through some space (physical or abstract). Even though many motion verbs express simply undergoing motion, all these verbs allow to possibiliity of an AGENT"
  :arguments ((:REQUIRED ONT::affected ((? th1 f::phys-obj f::abstr-obj f::situation f::time) (F::mobility F::movable)))
              (:OPTIONAL ONT::Source)
