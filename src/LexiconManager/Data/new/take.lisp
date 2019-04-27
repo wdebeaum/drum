@@ -67,13 +67,13 @@
      )
 
     ((LF-PARENT ONT::TAKE-TIME)
-     (example "it takes 5 hours to  complete the plan")
+     (example "it took (me) 5 hours to  complete the plan")
      (TEMPL THEME-DURATION-EXPLETIVE-TEMPL)
      (SEM (F::Aspect F::stage-level))
      )
     
     ((LF-PARENT ONT::TAKE-TIME)
-     (example "he took 5 hour to work") 
+     (example "he took 5 hours to work") 
      (TEMPL neutral-DURATION-COMPLEX-SUBJCONTROL-TEMPL)
      )
    

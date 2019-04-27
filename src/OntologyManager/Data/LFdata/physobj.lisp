@@ -16,7 +16,7 @@
 )
 
 (define-type ONT::natural-object
-    :wordnet-sense-keys ("natural_object%1:03:00" "actinoid" "rare_earth%1:27:00")
+    :wordnet-sense-keys ("natural_object%1:03:00" "actinoid%1:27:00::" "rare_earth%1:27:00")
     :parent ONT::PHYS-OBJECT
     :sem (F::Phys-obj (F::origin F::natural)(F::spatial-abstraction (? sa F::spatial-point F::spatial-region)))
     )
@@ -1927,7 +1927,7 @@
     )
 
 (define-type ONT::external-body-part
-    :wordnet-sense-keys ("external-body-part%1:08:00" "skin%1:08:00" "animal_skin%1:27:00" )
+    :wordnet-sense-keys ("external_body_part%1:08:00" "skin%1:08:00" "animal_skin%1:27:00" )
     :parent ONT::BODY-PART
     :sem (F::Phys-obj (F::intentional -))
     )
@@ -2940,8 +2940,8 @@
  )
 
 (define-type ONT::ecosystem
-  :wordnet-sense-keys ("biotic_community%1:14:00" rep"ecosystem%1:14:00" "biosphere%1:15:00")
-  :comment "An interconnected group of] entities fo5ming an ecosystem"
+  :wordnet-sense-keys ("biotic_community%1:14:00" "ecosystem%1:14:00" "biosphere%1:15:00")
+  :comment "An interconnected group of entities forming an ecosystem"
  :parent ONT::system
  )
 

@@ -493,10 +493,11 @@
       (THEME-DURATION-EXPLETIVE-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP (W::sem ($ -)) (W::lex W::it)) ONT::NOROLE)
-	(LIOBJ (% W::NP) ont::formal OPTIONAL)
-;	(LOBJ (% W::NP) ONT::DURATION)
+	(LIOBJ (% W::NP (w::var ?iobjvar) (w::sem ?iobjsem) (w::lex ?iobjlex) (w::expletive ?exp)) ont::neutral OPTIONAL)
 	(LOBJ (% W::NP) ONT::EXTENT)
-	(LCOMP (% W::cp (W::ctype W::s-to)) ont::formal)
+	(LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) 
+			   (:required (W::subj (% W::np (W::sem ?iobjsem) (W::lex ?iobjlex) (W::var ?iobjvar) (w::expletive ?exp)))))
+	       ont::formal)
 	))
 
       (AFFECTED-DURATION-EXPLETIVE-TEMPL
