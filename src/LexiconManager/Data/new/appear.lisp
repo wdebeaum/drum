@@ -16,7 +16,7 @@
     
     ((LF-PARENT ONT::participate-attend)
      (EXAMPLE "He participated in/at the meeting" "She participates in these activities regularly")
-     (templ AGENT-neutral-XP-TEMPL (xp (% W::pp (W::ptype (? pp W::in W::at w::for)))))
+     (templ AGENT-neutral-XP-TEMPL (xp (% W::pp (W::ptype (? pp W::in W::at w::for w::before)))))
      )
     
     ((meta-data :origin calo :entry-date 20040916 :change-date nil :comments caloy2)

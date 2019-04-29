@@ -5,7 +5,7 @@
 (define-words :pos w::N 
  :words (
   (w::russian
-  (senses((LF-parent ONT::nationality) 
+  (senses((LF-parent ONT::person-of-nationality) 
 	    (templ count-pred-templ)
 	    (meta-data :origin calo-ontology :entry-date 20060128 :change-date nil :comments caloy3)
 	    ))

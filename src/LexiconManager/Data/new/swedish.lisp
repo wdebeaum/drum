@@ -5,8 +5,8 @@
 (define-words :pos w::n
  :words (
   (w::swedish
-  (senses((LF-parent ONT::nationality)
-            (templ count-pred-templ)
+  (senses((LF-parent ONT::person-of-nationality)
+            (templ count-pred-3p-templ)
             (meta-data :origin adjective-reorganization :entry-date 20170427 :change-date nil)
             ))
 )

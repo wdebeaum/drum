@@ -779,14 +779,14 @@
 
 ;; carnivore, vegetarian -- can be animals as well as human
 (define-type ONT::eater
-    :wordnet-sense-keys ("eater%1:18:00" "feeder%1:18:00")
+    :wordnet-sense-keys ("eater%1:18:00" "feeder%1:18:00" "people%1:14:00" "people%1:14:01" "masses%1:14:00")
     :parent ONT::organism
     :sem (F::Phys-obj (F::origin f::living) (F::trajectory -))
     )
 
 
 (define-type ONT::person
-    :wordnet-sense-keys ("person%1:03:00" "individual%1:03:00" "someone%1:03:00" "somebody%1:03:00" "mortal%1:03:00" "soul%1:03:00" "imaginary_being%1:18:00")
+    :wordnet-sense-keys ("person%1:03:00" "imaginary_being%1:18:00")
     :parent ONT::mammal ;; umls
     :sem (F::Phys-obj (F::form F::solid-object)
 		      (F::spatial-abstraction F::spatial-point)
@@ -798,6 +798,7 @@
 
 ;; self
 (define-type ont::referential-person
+    :wordnet-sense-keys ("self%1:18:00")
     :parent ont::person
     )
 
@@ -933,14 +934,21 @@
 
 ;; nationality, regional identity
 (define-type ont::identity-and-origin
- :parent ont::person-reln
+    :wordnet-sense-keys ("inhabitant%1:18:00")
+    :parent ont::person-reln
 )
 
-;; american, british, chinese etc
-(define-type ont::nationality
- :parent ont::identity-and-origin
- :wordnet-sense-keys ("american%1:18:00" "british%1:18:00" "chinese%1:10:00" "danish%1:10:00" "dutch%1:18:00" "russian%1:18:00")
-)
+;; american, german, 
+(define-type ont::person-of-nationality
+    :wordnet-sense-keys ("nation%1:14:01" "ethnic_group%1:14:00")
+    :comment "A person classified by their nationality"
+    :parent ont::identity-and-origin
+    )
+
+;;British, 
+(define-type ont::persons-of-nationality
+    :wordnet-sense-keys ()
+    :parent ont::person-of-nationality)
 
 ;; north american, south american, asian etc
 (define-type ont::regional-identity
@@ -2887,7 +2895,7 @@
 
 (define-type ont::group-object
     :wordnet-sense-keys ( "grouping%1:03:00")
-    :comment "a collection of objects considered as a unit"
+    :comment "a collection of objects considered as a unit. So there are many things but grammatically is a singular noun"
 					;:parent ont::abstract-object-nontemporal
     :parent ont::phys-object
 					;  :sem (F::Abstr-obj (f::group +)) ; group feature not defined for abstract objects
@@ -2897,52 +2905,58 @@
 		)
     )
 
-
 (define-type ONT::collection
- :wordnet-sense-keys ("collection%1:14:00" "array%1:14:00" "array%1:10:00" "series%1:14:01")
- :parent ONT::group-object
- )
-					  
+    :comment "This type contains concepts that explicitly denotethe group (rather than the members of the grop), e.g., group, herd, collection,..."
+    :wordnet-sense-keys ("collection%1:14:00" "array%1:14:00" "array%1:10:00" "series%1:14:01")
+    :parent ONT::group-object
+    )
+
 (define-type ONT::arrangement-configuration
-  :wordnet-sense-keys ("arrangement%1:14:00" "straggle%1:14:00" "configuration%1:09:00")
-  :comment "An group of objects organized in some way"
- :parent ONT::collection
- )
+    :wordnet-sense-keys ("arrangement%1:14:00" "straggle%1:14:00" "configuration%1:09:00")
+    :comment "An group of objects organized in some way"
+    :parent ONT::collection
+    )
+
+(define-type ONT::implicit-group
+    :comment "This type contains concepts that denote a group via a common characteristic of the elements, e.g., kingdom, "
+    :parent ONT::group-object)
 
 (define-type ont::natural-group
     :wordnet-sense-keys ("kingdom%1:14:00" "biological_group%1:14:00" "association%1:14:01")
     :comment "An group defined by a classification of living things"
-    :parent ONT::group-object
+    :sem (F::PHYS-OBJ (F::FORM F::SOLID-OBJECT) (F::origin f::living))
+    :parent ONT::implicit-group
     )
 
 (define-type ont::animal-group
     :wordnet-sense-keys ("animal_group%1:14:00")
     :comment "An group defined by a classification of animals"
-    :parent ONT::group-object
+    :sem (F::PHYS-OBJ (F::INTENTIONAL +))
+    :parent ONT::implicit-group
     )
 
-(define-type ont::people
-    :wordnet-sense-keys ("people%1:14:00" "people%1:14:01" "masses%1:14:00")
+(define-type ont::people   ;; are there any words for this that are not just plurals and so under ONT::PERSON?
+    ;;:wordnet-sense-keys ()
     :comment "a group of persons"
     :parent ont::animal-group
     )
 
 (define-type ont::people-subgroup
-    :wordnet-sense-keys ("ethnic_group%1:14:00" "race%1:14:00" "sainthood%1:14:00" "varna%1:14:00")
+    :wordnet-sense-keys ("race%1:14:00" "sainthood%1:14:00" "varna%1:14:00" )
     :comment "a group of persons defined by origin or race"
-    :parent ont::group-object
+    :parent ont::implicit-group
     )
 
 (define-type ONT::system
   :wordnet-sense-keys ("system%1:14:00" "system%1:14:00")
   :comment "An interconnected group of objects, abstract or physical"
- :parent ONT::group-object
+ :parent ONT::collection
  )
 
 (define-type ONT::ecosystem
   :wordnet-sense-keys ("biotic_community%1:14:00" "ecosystem%1:14:00" "biosphere%1:15:00")
   :comment "An interconnected group of entities forming an ecosystem"
- :parent ONT::system
+  :parent ONT::system
  )
 
 (define-type ONT::structure
@@ -2963,7 +2977,7 @@
 
 (define-type ONT::row-formation
  :wordnet-sense-keys ("row%1:14:00" "row%1:17:00")
- :parent ONT::formation
+ :parent ONT::collection
  :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj))  ; to distinguish between steps as steps in a plan and steps in a staircase
              )
  )
@@ -2978,7 +2992,7 @@
 ;; crowd, audience
 (define-type ont::social-group
  :wordnet-sense-keys ("social_group%1:14:00")
-  :parent ont::group-object
+  :parent ont::implicit-object
   ;:sem (F::Abstr-obj (F::information F::information-content) (f::intentional +) (F::Object-Function F::Occupation) (F::Container -))
   :sem (F::phys-obj (f::intentional +) (F::Object-Function F::Occupation)) ; (F::Container -)) GROUP-OBJECT has container +
   :arguments ((:OPTIONAL ONT::FIGURE ((? lof f::phys-obj f::abstr-obj))))
@@ -3126,7 +3140,7 @@
 ;; layer (of ozone, chocolate), sheet (of ice, paper), slice
 (define-type ont::sheet
 ;  :parent ont::non-measure-ordered-domain
-  :parent ONT::GROUP-OBJECT
+  :parent ONT::PHYS-OBJECT   ;; why was this in GROUP? JFA 4/19
   )
 
 ;; a number/amount/quantity of X

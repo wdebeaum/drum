@@ -190,7 +190,7 @@
    )
 
 (define-type ONT::Part
-    :wordnet-sense-keys ("part%1:24:00" "part%1:09:00" "portion%1:24:00" "component_part%1:24:00" "component%1:24:00" "constituent%1:24:00" "part%1:17:00" "piece%1:17:00")
+    :wordnet-sense-keys ("part%1:24:00" "part%1:09:00" "part%1:17:00" "part%1:21:00")
     :comment "Part is actually a conceptualization of things that fill the part-of role"
     :parent ont::referential-sem
     :arguments ((:OPTIONAL ONT::FIGURE )

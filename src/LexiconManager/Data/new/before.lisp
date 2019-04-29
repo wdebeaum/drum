@@ -31,3 +31,12 @@
    )
 ))
 
+(define-words :pos W::PREP :boost-word t :templ NO-FEATURES-TEMPL
+	      :words (
+		      (W::before
+		       (SENSES
+			((LF (W::BEFORE))
+			 (non-hierarchy-lf t))
+			)
+		       )
+		      ))

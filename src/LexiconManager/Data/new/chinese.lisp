@@ -5,31 +5,40 @@
 (define-words :pos W::n
  :words (
   ((W::CHINESE W::CABBAGE)
-  (senses
-	   ((LF-PARENT ONT::VEGETABLE)
-	    (TEMPL COUNT-PRED-TEMPL)
-	    )
-
-	   ((LF-parent ONT::nationality)
-            (templ count-pred-templ)
-            (meta-data :origin adjective-reorganization :entry-date 20170427 :change-date nil)
-            )
-	   )
-)
-))
+   (senses 
+    ((LF-PARENT ONT::VEGETABLE)
+     (TEMPL COUNT-PRED-TEMPL)
+     )
+    ))
+  ))
 
 (define-words :pos w::adj 
  :words (
   (w::chinese
-  (senses((LF-parent ONT::nationality-val) 
+   (senses (
+	   (LF-parent ONT::nationality-val) 
 	    (templ central-adj-templ)
 	    (meta-data :origin calo-ontology :entry-date 20060128 :change-date nil :comments caloy3)
-	    ))
-)
-))
+	   ))
+   )
+  ))
 
-(define-words :pos W::name
- :words (
+(define-words :pos W::n
+  :words (
+	  (W::Chinese
+	   (senses
+	    ((LF-parent ONT::person-of-nationality)
+	     (templ count-pred-3p-templ)
+	     )
+	    
+	  
+
+	    ((LF-PARENT ONT::language)
+	     (TEMPL nname-templ)
+	     )
+	    )
+	   )
+	  ))
 ;; removing names since Parser gets them from TT now
 ;(define-list-of-words :pos W::name
 ;  :senses (((LF-PARENT ONT::country)
@@ -140,11 +149,5 @@
 ;            )
 ;           )
 ; :words (w::pacific w::atlantic  w::arctic (w::north w::pole) (w::south w::pole) (w::arctic w::circle)))
-  (w::chinese
-  (senses((LF-PARENT ONT::language)
-    (TEMPL nname-templ)
-    )
-   )
-)
-))
+  
 

@@ -347,8 +347,8 @@
 
 ;; shoot
 (define-type ONT::move-quickly
-    :definitions ((ont::and (ONT::MOVE :id ?ev :agent ?agent :affected ?affected)
-			    (ONT::SPEEDY :figure ?ev)))
+    :definitions ((ont::and (ONT::MOVE :id ?id :agent ?agent :affected ?affected)
+			    (ONT::SPEEDY :figure ?id)))
  :parent ONT::MOVE
  )
 
@@ -479,7 +479,7 @@
 
 ;; jog
 (define-type ONT::move-rapidly
- :wordnet-sense-keys ("run%2:38:00" "hurry%2:38:00")
+ :wordnet-sense-keys ("run%2:38:00" "hurry%2:38:00" "rush%2:38:00"  "rush%2:30:00" "hasten%2:36:00")
  :parent ONT::self-locomote
  )
 
@@ -538,8 +538,8 @@
 )
 
 (define-type ont::fall-asleep
-    :wordnet-sense-keys("go_to_bed%2:29:00" "fall_asleep%2:29:00"  )
-    :definitions (ont::become :neutral ?affected
+    :wordnet-sense-keys ("go_to_bed%2:29:00" "fall_asleep%2:29:00")
+    :definitions (ont::become :affected ?affected
 			      :formal (ont::asleep-val :figure ?affected))
     :parent ont::processes-of-consciousness
     )
@@ -564,7 +564,7 @@
  )
 
 (define-type ont::lose-consciousness
-    :wordnet-sense-keys("zonk_out%2:29:01")
+    :wordnet-sense-keys("zonk_out%2:29:01" "loss_of_consciousness%1:11:00")
     :definitions (ont::become :neutral ?affected
 			      :formal (ont::not-aware-val :figure ?affected))
     :parent ont::processes-of-consciousness
@@ -1147,15 +1147,16 @@
 ;; top level for change: states, situations, objects
 (define-type ont::change
  :wordnet-sense-keys ("change%1:07:00" "change%1:06:01" "change%2:30:00" "change%1:04:00" "change%1:19:00" "change%2:30:02" "change%2:30:08" "change%2:30:01" "transition%2:30:00")
-  :parent ont::event-of-causation
-  :sem (F::Situation (F::Cause F::force))
-  :arguments (
-	      (:optional ont::agent ((? cs f::phys-obj f::abstr-obj f::situation)))
-	      (:optional ont::result)
-	      ;; e.g. the research fluctuates with the budget; the interest increases with time
-	      (:OPTIONAL ONT::formal ((? cl f::abstr-obj f::situation f::time))) ; was ont::correlate
-	      ;;(:optional ont::agent ((? ag f::abstr-obj F::phys-obj )(F::intentional +))))
-  ))
+ :parent ont::event-of-causation
+ :comment "an event involving some change in an object"
+ :sem (F::Situation (F::Cause F::force))
+ :arguments (
+	     (:optional ont::agent ((? cs f::phys-obj f::abstr-obj f::situation)))
+	     (:optional ont::result)
+	     ;; e.g. the research fluctuates with the budget; the interest increases with time
+	     (:OPTIONAL ONT::formal ((? cl f::abstr-obj f::situation f::time))) ; was ont::correlate
+	     ;;(:optional ont::agent ((? ag f::abstr-obj F::phys-obj )(F::intentional +))))
+	     ))
 
 ;;; Additional class for state changes
 ;; for example for verbs where it doesn't make sense to separate object-change and situation-change senses
@@ -1205,7 +1206,8 @@
 )
 
 (define-type ONT::life-transformation
- :wordnet-sense-keys ("fruit%2:36:01" "cross-fertilize%2:29:00" "cross-fertilize%2:29:01" "work%2:30:14" "work%2:30:13" "ripen%2:30:01" "ripen%2:30:00")
+    :wordnet-sense-keys ("fruit%2:36:01" "cross-fertilize%2:29:00" "cross-fertilize%2:29:01" "work%2:30:14" "work%2:30:13" "ripen%2:30:01" "ripen%2:30:00"
+					 "mutation%1:11:01")
  :parent ONT::change-integrity
  )
 
@@ -1280,7 +1282,7 @@
 
 (define-type ONT::fold
  :parent ONT::shape-change
- :wordnet-sense-keys ("fold%2:35:00")
+ :wordnet-sense-keys ("fold%2:35:00" "deformation%1:11:01")
  :sem (F::situation (F::Aspect F::dynamic))
  )
 
@@ -1853,7 +1855,7 @@
  )
 
 (define-type ONT::evoke-surprise
- :wordnet-sense-keys ("surprise%2:31:00")
+ :wordnet-sense-keys ("surprise%2:31:00" "suprise%1:11:00")
  :parent ONT::evoke-emotion
  )
 
@@ -3434,7 +3436,7 @@
 
 ;; shine, glow, glisten, gleam, sparkle
 (define-type ont::location-of-light
- :wordnet-sense-keys ("shine%2:43:01" "reflect%2:43:00" "shine%2:43:00" "beam%2:43:03" "flash%2:39:00" "shine%2:43:03")
+ :wordnet-sense-keys ("shine%2:43:01" "reflect%2:43:00" "shine%2:43:00" "beam%2:43:03" "flash%2:39:00" "shine%2:43:03" "twinkle%1::11:00" "shimmer%1:11:00")
   :parent ont::emit-giveoff-discharge
   :sem (F::situation (:default (F::trajectory +)))
   ;;:arguments ((:essential ont::formal (f::phys-obj (F::intentional -))) ;; the thing that shines
@@ -3702,13 +3704,13 @@
 
 ;; rush, hasten, speed up
 (define-type ONT::increase-speed
- :wordnet-sense-keys ("hasten%2:36:00" "rush%2:36:00" "stimulate%2:36:00" "induce%2:36:01" "hasten%2:41:00" "expedite%2:41:00" "step_on_it%2:38:00" "belt_along%2:38:00" "bucket_along%2:38:00" "cannonball_along%2:38:00" "rush_along%2:38:00" "pelt_along%2:38:00" "race%2:38:00" "speed%2:38:03" "hie%2:38:00" "hasten%2:38:00" "hotfoot%2:38:00" "rush%2:38:00" "rush%2:30:00" "hasten%2:30:00" "hurry%2:30:00" "look_sharp%2:30:00" "festinate%2:30:00")
+ :wordnet-sense-keys ("hasten%2:41:00" "acceleration%1:07:00")
  :parent ONT::change-in-ratio
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::speed-scale) (F::orientation f::pos))))
  )
 
 (define-type ONT::decrease-speed
- :wordnet-sense-keys ("slow%2:30:00" "slow%2:30:01")
+ :wordnet-sense-keys ("slow%2:30:00" "slow%2:30:01" "deceleration%1:07:00")
  :parent ONT::change-in-ratio
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::speed-scale) (F::orientation f::neg))))
  )
@@ -3993,7 +3995,7 @@
 
 
 (define-type ONT::fluctuate
- :wordnet-sense-keys ("fluctuate%2:30:00" "fluctuation%1:11:01")
+ :wordnet-sense-keys ("fluctuate%2:30:00" "fluctuation%1:11:01" "fluctuation%1:11:00")
  :parent ONT::change
  )
 
@@ -4268,7 +4270,8 @@
 
 ;; crush, smash, mash
 (define-type ONT::damage
- :parent ONT::transformation
+    :parent ONT::transformation
+    :wordnet-sense-keys ("damage%2:30:00" "damage%2:30:01" "damage%1:11:00" "damage%1:14:00")
  :sem (F::SITUATION (F::Cause F::agentive) (F::Trajectory -))
  :arguments ((:REQUIRED ONT::Agent ((? agt F::Phys-obj F::abstr-obj) (f::intentional +)))
              (:REQUIRED ONT::affected)
@@ -4316,7 +4319,7 @@
  )
 
 (define-type ONT::improve
- :wordnet-sense-keys ("enhancement%1:04:00" "sweetening%1:04:02" "meliorate%2:30:01")
+ :wordnet-sense-keys ("enhancement%1:04:00" "sweetening%1:04:02" "meliorate%2:30:01" "improvement%1:04:00")
  :parent ONT::adjust
  :sem (F::SITUATION (F::Cause F::agentive) (F::Trajectory -))
  :arguments ((:REQUIRED ONT::Formal ((? thm F::abstr-obj f::situation f::phys-obj)))
@@ -4476,7 +4479,7 @@
  )
 
 (define-type ONT::separation
- :wordnet-sense-keys ("separate%2:35:01" "disunite%2:35:00" "divide%2:35:01" "part%2:35:01" "break%2:41:13" "divide%2:38:00" "divide%2:42:00" "disjoint%2:35:00" "separate%2:35:00" "separate%2:35:02")
+ :wordnet-sense-keys ("separate%2:35:01" "disunite%2:35:00" "divide%2:35:01" "part%2:35:01" "break%2:41:13" "divide%2:38:00" "divide%2:42:00" "disjoint%2:35:00" "separate%2:35:00" "separate%2:35:02" "separation%1:11:00")
     :parent ONT::event-of-causation
     :comment "abstract, social or physical dissociation"
     :sem (F::SITUATION (:default (F::Cause F::agentive)) (:required (F::trajectory -)))

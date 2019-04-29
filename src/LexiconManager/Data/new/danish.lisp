@@ -10,9 +10,9 @@
 	    (TEMPL count-PRED-TEMPL)
 	    )
 
-	   ((LF-parent ONT::nationality)
-            (templ count-pred-templ)
-            (meta-data :origin adjective-reorganization :entry-date 20170427 :change-date nil)
+	   ((LF-parent ONT::person-of-nationality)
+            (templ count-pred-3p-templ)
+            
             )
 	   )
 )
