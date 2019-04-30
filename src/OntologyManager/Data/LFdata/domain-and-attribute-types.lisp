@@ -637,7 +637,7 @@
 )
 
 (define-type ont::population-scale
- :parent ont::measure-scale
+ :parent ont::total-scale
  :sem (F::Abstr-obj (F::Measure-function F::term))
  :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj (F::form F::geographical-object)))
              )

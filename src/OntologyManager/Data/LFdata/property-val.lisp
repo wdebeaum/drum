@@ -3441,12 +3441,13 @@
 
 ;; confused, surprised, happy
 (define-type ont::psychological-property-val
- :parent ont::property-val 
- :comment "properties pertaining to psychological, mental or emotional states"
-		;;(:optional ont::stimulus ((? stm f::phys-obj f::situation f::abstr-obj)))
-		;; the object that is involved in a situation, but which is not a stimulus directly
-		;; for example, I am afraid for her, for the project
-		;;(:optional ont::formal (f::situation f::phys-obj f::abstr-obj)))
+    :parent ont::property-val
+    :arguments ((:REQUIRED ONT::FIGURE (F::phys-obj (f::intentional +) (f::origin (? org f::human f::non-human-animal))))) 
+    :comment "properties pertaining to psychological, mental or emotional states"
+    ;;(:optional ont::stimulus ((? stm f::phys-obj f::situation f::abstr-obj)))
+    ;; the object that is involved in a situation, but which is not a stimulus directly
+    ;; for example, I am afraid for her, for the project
+    ;;(:optional ont::formal (f::situation f::phys-obj f::abstr-obj)))
 )
 
 ;; reasonable/sensible vs unreasonable (mental states)

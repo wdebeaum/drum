@@ -6,7 +6,7 @@
  :words (
   (W::junk
    (SENSES
-    ((LF-PARENT ONT::mail)
+    ((LF-PARENT ONT::junk-reject)
      (EXAMPLE "Too much of my legitimate email is getting marked as junk")
      (meta-data :origin task-learning :entry-date 20050812 :change-date nil :comments nil)
      )

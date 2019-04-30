@@ -16,7 +16,7 @@
 )
 
 (define-type ONT::natural-object
-    :wordnet-sense-keys ("natural_object%1:03:00" "actinoid%1:27:00::" "rare_earth%1:27:00")
+    :wordnet-sense-keys ("natural_object%1:03:00" "actinoid%1:27:00::" "rare_earth%1:27:00" "galaxy%1:14:00" "galaxy%1:14:01" "oort_cloud%1:14:00")
     :parent ONT::PHYS-OBJECT
     :sem (F::Phys-obj (F::origin F::natural)(F::spatial-abstraction (? sa F::spatial-point F::spatial-region)))
     )
@@ -239,6 +239,7 @@
 
 (define-type ONT::GEOGRAPHIC-REGION
     :parent ONT::specific-loc
+    :wordnet-sense-keys ("north_america%1:14:00" "south_america%1:14:00" "central_america%1:14:00" "asia%1:14:00" "europe%1:14:01")
     :sem (F::Phys-obj (F::form F::geographical-object)
 ;		      (F::spatial-abstraction (? sa F::spatial-point F::spatial-region))  ; It would seem we should have a restriction on spatial-abstraction, but its child ONT::ROUTE wants F::line F::strip and in general we want F::spatial-point F::spatial-region.  That covers all possibilities.
 		      )
@@ -250,7 +251,7 @@
 
 
 (define-type ONT::geo-formation
-    :wordnet-sense-keys ("formation%1:17:00")
+    :wordnet-sense-keys ("formation%1:17:00" "world%1:05:00")
     :parent ONT::GEO-OBJECT
     :sem (F::Phys-obj (F::origin F::natural) (F::trajectory -))
     )
@@ -312,6 +313,7 @@
     :parent ONT::sunken-natural-formation
     :wordnet-sense-keys ("volcanic_crater%1:17:00" "crater%1:17:01" "crater%1:17:00")
     )
+
 
 
 ;; earth, venus, jupiter
@@ -393,7 +395,7 @@
 
 (define-type ONT::POLITICAL-REGION
     :parent ONT::geographic-region
-     :wordnet-sense-keys ("circuit%1:14:00")
+     :wordnet-sense-keys ("circuit%1:14:00" "free_word%1:14:00" "third_word%1:14:00")
     :sem (F::Phys-obj (F::spatial-abstraction (? sa F::spatial-point F::spatial-region))
 		      (F::origin F::Artifact)
 		      (F::mobility f::fixed)) ;; (f::intentional +)) ; political regions can be intentional agents   -- have a rule in grammar that handles this
@@ -416,6 +418,12 @@
     )
 
 (define-type ONT::general-structure
+    :wordnet-sense-keys ("structure%1:06:00" "petting_zoo%1:14:00" "herbarium%1:14:00")
+    :parent ONT::man-made-structure
+    )
+
+(define-type ONT::building
+     :wordnet-sense-keys ("building%1:06:00")
     :parent ONT::man-made-structure
     )
 
@@ -426,7 +434,7 @@
 
 (define-type ONT::FACILITY
     :parent ONT::man-made-structure
-    :wordnet-sense-keys ("facility%1:04:01" "facility%1:06:00")
+    :wordnet-sense-keys ("facility%1:04:01" "facility%1:06:00" "museum%1:06:00")
     :sem (F::Phys-obj (F::spatial-abstraction (? sa F::spatial-point F::spatial-region))
 		      (F::origin F::Artifact)(F::trajectory -)
 		      (f::object-function f::provides-service-open-closed)
@@ -1275,6 +1283,11 @@
 		      (F::mobility f::fixed) (f::container +))
     )
 
+(define-type ont::garden-grounds
+    :wordnet-sense-keys ("garden%1:06:00" "grounds%1:06:00" "plot%1:15:00")
+    :parent ONT::area-def-by-use
+    )
+
 ;; door, window, gate
 (define-type ont::structural-opening
     :parent ONT::general-structure
@@ -1291,6 +1304,8 @@
     :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj))
 		)
     )
+
+
 
 ;; wall, ceiling, floor
 (define-type ont::structure-internal-component
@@ -1657,6 +1672,7 @@
 
 ;; items in this class "stand for" something, and have ont::of arguments
 (define-type ont::direct-representation
+    :comment "a physical object that conatins information (e.g., text, graphics)"
     :parent ONT::info-holder
     )
     
@@ -1709,16 +1725,11 @@
     :parent ONT::official-document
     )
 
-(define-type ont::mail
+(define-type ont::letter-mail
     :parent ONT::direct-representation
-    :wordnet-sense-keys ("letter%1:10:00" "missive%1:10:00" "mail%1:10:01" "mail%1:10:00")
+    :wordnet-sense-keys ("letter%1:10:00" "missive%1:10:00")
     )
 
-;; email, spam
-(define-type ont::email
-    :wordnet-sense-keys ("electronic_mail%1:10:00" "e-mail%1:10:00" "email%1:10:00")
-    :parent ONT::mail
-    )
 
 ;; copy, backup, cc, bcc
 (define-type ont::copy
@@ -1747,6 +1758,13 @@
 (define-type ONT::CHART
     :parent ONT::direct-REPRESENTATION
     :wordnet-sense-keys ("chart%1:10:00" "table%1:14:00")
+    :arguments ((:OPTIONAL ONT::FIGURE (?o (F::information F::information-content)))
+		)
+    )
+
+(define-type ONT::PLOT-DIAGRAM-DRAWING
+    :parent ONT::direct-REPRESENTATION
+    :wordnet-sense-keys ("plot%1:10:01" "spectrum%1:19:00" "diagram%1:06:00")
     :arguments ((:OPTIONAL ONT::FIGURE (?o (F::information F::information-content)))
 		)
     )
@@ -1898,6 +1916,12 @@
     :sem (F::Phys-obj (F::mobility F::movable) (F::form F::any-form))
     )
 
+(define-type ONT::junk-reject
+    :comment "a functional device that does not perform its function"
+    :wordnet-sense-keys ("reject%1:09:00")
+    :parent ONT::commodity
+    )
+
 ;; product
 (define-type ONT::product
     :wordnet-sense-keys ("card%1:06:00" "ware%1:06:01" "product%1:06:01")
@@ -1991,6 +2015,10 @@
     :parent ONT::CELL-PART
     )
 
+(define-type ONT::genome
+    :wordnet-sense-keys ("genome%1:14:00")
+    :parent ONT::CELL-PART
+    )
 ; <
 
 (define-type ONT::DEVICE
@@ -2907,13 +2935,19 @@
 
 (define-type ONT::collection
     :comment "This type contains concepts that explicitly denotethe group (rather than the members of the grop), e.g., group, herd, collection,..."
-    :wordnet-sense-keys ("collection%1:14:00" "array%1:14:00" "array%1:10:00" "series%1:14:01")
+    :wordnet-sense-keys ("collection%1:14:00" "array%1:14:00" "array%1:10:00" "series%1:14:01" "trinketry%1:14:00" "population%1:14:01")
     :parent ONT::group-object
     )
 
 (define-type ONT::arrangement-configuration
-    :wordnet-sense-keys ("arrangement%1:14:00" "straggle%1:14:00" "configuration%1:09:00")
+    :wordnet-sense-keys ("arrangement%1:14:00" "array%1:14:00" "straggle%1:14:00" "configuration%1:09:00")
     :comment "An group of objects organized in some way"
+    :parent ONT::collection
+    )
+
+(define-type ONT::data
+    :wordnet-sense-keys ("data%1:14:00")
+    :comment "A group of information organized in some way"
     :parent ONT::collection
     )
 
@@ -2921,28 +2955,39 @@
     :comment "This type contains concepts that denote a group via a common characteristic of the elements, e.g., kingdom, "
     :parent ONT::group-object)
 
+(define-type ONT::mail
+    :comment "A set of letters"
+    :wordnet-sense-keys ("mail%1:10:01" )
+    :parent ONT::implicit-group)
+
+;; email, spam
+(define-type ont::email
+    :wordnet-sense-keys ("electronic_mail%1:10:00" "e-mail%1:10:00" "email%1:10:00")
+    :parent ONT::mail
+    )
+
 (define-type ont::natural-group
-    :wordnet-sense-keys ("kingdom%1:14:00" "biological_group%1:14:00" "association%1:14:01")
+    :wordnet-sense-keys ("kingdom%1:14:00" "biological_group%1:14:00" "association%1:14:01" "class%1:14:00" "vegetation%1:14:00")
     :comment "An group defined by a classification of living things"
     :sem (F::PHYS-OBJ (F::FORM F::SOLID-OBJECT) (F::origin f::living))
     :parent ONT::implicit-group
     )
 
 (define-type ont::animal-group
-    :wordnet-sense-keys ("animal_group%1:14:00")
+    :wordnet-sense-keys ("animal_group%1:14:00" "bateria_order%1:05:00" "menagerie%1:14:00")
     :comment "An group defined by a classification of animals"
     :sem (F::PHYS-OBJ (F::INTENTIONAL +))
     :parent ONT::implicit-group
     )
 
-(define-type ont::people   ;; are there any words for this that are not just plurals and so under ONT::PERSON?
-    ;;:wordnet-sense-keys ()
+(define-type ont::people-group 
+    :wordnet-sense-keys ("population%1:14:00")
     :comment "a group of persons"
     :parent ont::animal-group
     )
 
 (define-type ont::people-subgroup
-    :wordnet-sense-keys ("race%1:14:00" "sainthood%1:14:00" "varna%1:14:00" )
+    :wordnet-sense-keys ("race%1:14:00" "sainthood%1:14:00" "varna%1:14:00" "congregation%1:14:01" "tenantry%1:14:00")
     :comment "a group of persons defined by origin or race"
     :parent ont::implicit-group
     )
@@ -2954,7 +2999,7 @@
  )
 
 (define-type ONT::ecosystem
-  :wordnet-sense-keys ("biotic_community%1:14:00" "ecosystem%1:14:00" "biosphere%1:15:00")
+  :wordnet-sense-keys ("biotic_community%1:14:00" "ecosystem%1:14:00" "biosphere%1:15:00" "biota%1:14:00")
   :comment "An interconnected group of entities forming an ecosystem"
   :parent ONT::system
  )
@@ -2976,14 +3021,14 @@
  )
 
 (define-type ONT::row-formation
- :wordnet-sense-keys ("row%1:14:00" "row%1:17:00")
- :parent ONT::collection
+ :wordnet-sense-keys ("row%1:14:00" "row%1:14:01" "row%1:17:00")
+ :parent ONT::formation
  :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj))  ; to distinguish between steps as steps in a plan and steps in a staircase
              )
  )
 
 (define-type ONT::column-formation
- :wordnet-sense-keys ("pile%1:14:00" "column%1:14:00" "column%1:25:02")
+ :wordnet-sense-keys ("pile%1:14:00" "column%1:14:00"  "column%1:14:01" "column%1:25:02")
  :parent ONT::formation
  :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj))  ; to distinguish between steps as steps in a plan and steps in a staircase
              )
@@ -3118,7 +3163,7 @@
 
 ;; surplus, excess
 (define-type ONT::surplus
- :parent ONT::group-object
+ :parent ONT::quantity
  :wordnet-sense-keys ("surplus%1:07:00")
  )
 

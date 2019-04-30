@@ -7,7 +7,7 @@
   (W::BRIDGE
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("bridge%1:06:00"))
-     (LF-PARENT ONT::general-structure)
+     (LF-PARENT ONT::bridge)
      (SEM (F::spatial-abstraction (? sabr F::spatial-point F::line)))
      )
     )

@@ -457,7 +457,6 @@
        )
   )
 
-
 (define-type ont::number-result
  :parent ont::number
  :wordnet-sense-keys("sum%1:09:01" "quotient%1:23:00" "product%1:09:00")
@@ -988,7 +987,8 @@
 
 ;; meeting, party, conference
 (define-type ont::gathering-event
-  :parent ont::located-event
+    :wordnet-sense-keys("ceremony%1:04:00")
+    :parent ont::located-event
   )
 
 ;; 20111005 fire type added for obtw demo
@@ -1011,7 +1011,14 @@
 
 ;; talk, lecture, demo, presentation
 (define-type ont::presentation
+    :wordnet-sense-keys("presentation%1:10:00" "presentation%1:10:02" "show%1:04:00")
   :parent ont::gathering-event
+  )
+
+; talk, lecture, demo, presentation
+(define-type ont::exhibition
+    :wordnet-sense-keys("exhibition%1:14:00")
+    :parent ont::gathering-event
   )
 
 ;; idea

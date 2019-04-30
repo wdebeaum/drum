@@ -57,8 +57,10 @@ OFFLINE requests.")
   (let ((augmented-acts (insert-preparses acts)))
     (send-msg `(tell :content ,(if (= (number-parses-desired *chart*) 1)
 				   (list 'new-speech-act (car augmented-acts))
-				   (list 'new-speech-act-hyps augmented-acts)))))
-    (when (eq *in-system* :plow)
+				   (list 'new-speech-act-hyps
+					 (subseq augmented-acts 0 (min (number-parses-desired *chart*)
+								       (number-parses-to-find *chart*))							       ))))))
+  (when (eq *in-system* :plow)
     (send-msg '(request :content (trafficlight green)))) 
   )
 

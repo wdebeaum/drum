@@ -7,7 +7,7 @@
   (W::castle
    (SENSES
     ((meta-data :origin caloy3 :entry-date 20070330 :change-date nil :comments caloy3-test-data)
-     (LF-PARENT ONT::general-structure)
+     (LF-PARENT ONT::building)
      )
     )
    )

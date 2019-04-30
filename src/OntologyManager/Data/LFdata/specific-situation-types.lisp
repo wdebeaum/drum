@@ -1855,7 +1855,7 @@
  )
 
 (define-type ONT::evoke-surprise
- :wordnet-sense-keys ("surprise%2:31:00" "suprise%1:11:00")
+ :wordnet-sense-keys ("surprise%2:31:00" "surprise%1:11:00")
  :parent ONT::evoke-emotion
  )
 
@@ -3436,7 +3436,7 @@
 
 ;; shine, glow, glisten, gleam, sparkle
 (define-type ont::location-of-light
- :wordnet-sense-keys ("shine%2:43:01" "reflect%2:43:00" "shine%2:43:00" "beam%2:43:03" "flash%2:39:00" "shine%2:43:03" "twinkle%1::11:00" "shimmer%1:11:00")
+ :wordnet-sense-keys ("shine%2:43:01" "reflect%2:43:00" "shine%2:43:00" "beam%2:43:03" "flash%2:39:00" "shine%2:43:03" "twinkle%1:11:00" "shimmer%1:11:00")
   :parent ont::emit-giveoff-discharge
   :sem (F::situation (:default (F::trajectory +)))
   ;;:arguments ((:essential ont::formal (f::phys-obj (F::intentional -))) ;; the thing that shines
@@ -4271,14 +4271,13 @@
 ;; crush, smash, mash
 (define-type ONT::damage
     :parent ONT::transformation
-    :wordnet-sense-keys ("damage%2:30:00" "damage%2:30:01" "damage%1:11:00" "damage%1:14:00")
+    :wordnet-sense-keys ("damage%2:30:00" "damage%2:30:01" "damage%1:11:00" "damage%1:04:00")
  :sem (F::SITUATION (F::Cause F::agentive) (F::Trajectory -))
  :arguments ((:REQUIRED ONT::Agent ((? agt F::Phys-obj F::abstr-obj) (f::intentional +)))
              (:REQUIRED ONT::affected)
 	     (:OPTIONAL ONT::Result (f::abstr-obj)) ;; why is the abstr-obj?
 ;	     (:OPTIONAL ONT::instrument (F::phys-obj (F::intentional -) (F::form F::solid-object)))
              )
- :wordnet-sense-keys("damage%2:30:00")
  )
 
 (define-type ont::mangle
