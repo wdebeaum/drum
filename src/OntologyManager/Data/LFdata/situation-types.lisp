@@ -563,12 +563,26 @@
              )
  )
 
+(define-type ONT::cause-position
+    :parent ont::event-of-causation
+    :arguments ((:ESSENTIAL ONT::affected-result)
+		)
+    )
+
 (define-type ONT::cause-cover
- :wordnet-sense-keys ("impregnate%2:30:00" "saturate%2:30:04" "spread%2:35:13")
- :parent ont::event-of-causation
- :arguments ((:ESSENTIAL ONT::affected-result)
-             )
- )
+    :wordnet-sense-keys ("cover%2:35:00" "cover%2:35:14"
+					  "cover%2:35:01" "impregnate%2:30:00" "saturate%2:30:04" "spread%2:35:13")
+    :parent ont::cause-position
+    )
+
+(define-type ONT::orient
+    :comment "cause an AFFECTED to be oriented in some direction"
+    :definitions ((ONT::CAUSE-EFFECT :agent ?agent
+				     :formal (ONT::POINTING-TO :neutral ?affected)))
+    :wordnet-sense-keys ("direct%2:33:00" "take_aim%2:33:00" "train%2:33:00" "point%2:32:00"
+					  "point%2:33:02" "point%2:33:10")
+    :parent ont::cause-position
+    )
 
 ;;; Even if we do not know the path, it is implied in the verb
 (define-type ONT::Path-shape

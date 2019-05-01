@@ -21,13 +21,13 @@
  :words (
  (W::face
    (SENSES
-    ((LF-PARENT ONT::orient)
+    ((LF-PARENT ONT::pointing-to)
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
      (TEMPL neutral-neutral-xp-templ)
      (example "the triangle faces the square")
      (meta-data :origin fruitcarts :entry-date 20050401 :change-date nil :comments nil)
      )
-    ((LF-PARENT ONT::orient)
+    ((LF-PARENT ONT::pointing-to)
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
      (TEMPL neutral-neutral-xp-templ (xp (% W::PP (W::ptype (? pt W::toward w::towards))))) 
      (example "the triangle faces towards the square")

@@ -395,7 +395,7 @@
 
 (define-type ONT::POLITICAL-REGION
     :parent ONT::geographic-region
-     :wordnet-sense-keys ("circuit%1:14:00" "free_word%1:14:00" "third_word%1:14:00")
+     :wordnet-sense-keys ("circuit%1:14:00" "free_world%1:14:00" "third_world%1:14:00")
     :sem (F::Phys-obj (F::spatial-abstraction (? sa F::spatial-point F::spatial-region))
 		      (F::origin F::Artifact)
 		      (F::mobility f::fixed)) ;; (f::intentional +)) ; political regions can be intentional agents   -- have a rule in grammar that handles this
@@ -1283,11 +1283,6 @@
 		      (F::mobility f::fixed) (f::container +))
     )
 
-(define-type ont::garden-grounds
-    :wordnet-sense-keys ("garden%1:06:00" "grounds%1:06:00" "plot%1:15:00")
-    :parent ONT::area-def-by-use
-    )
-
 ;; door, window, gate
 (define-type ont::structural-opening
     :parent ONT::general-structure
@@ -1391,6 +1386,12 @@
     :wordnet-sense-keys ("field%1:15:00" "field%1:15:05" "plot%1:15:00" "pasture%1:15:00")
     :comment "places defined by their function: e.g.,  lot, plot, region, scene, section, site, territory, zone"
     :parent ONT::loc-as-area
+    )
+
+
+(define-type ont::garden-grounds
+    :wordnet-sense-keys ("garden%1:06:00" "grounds%1:06:00" "plot%1:15:00")
+    :parent ONT::area-def-by-use
     )
 
 (define-type ONT::workplace
@@ -1906,6 +1907,7 @@
 ;;;storage, repository
 (define-type ONT::repository
     :wordnet-sense-keys ("depository%1:06:00" "deposit%1:06:00" "depositary%1:06:00" "repository%1:06:00")
+    :sem (F::Phys-obj (F::form F::solid-object) (F::container +))
     :parent ONT::functional-phys-object
     )
 
@@ -2974,7 +2976,7 @@
     )
 
 (define-type ont::animal-group
-    :wordnet-sense-keys ("animal_group%1:14:00" "bateria_order%1:05:00" "menagerie%1:14:00")
+    :wordnet-sense-keys ("animal_group%1:14:00" "bacteria_order%1:05:00" "menagerie%1:14:00")
     :comment "An group defined by a classification of animals"
     :sem (F::PHYS-OBJ (F::INTENTIONAL +))
     :parent ONT::implicit-group
@@ -3037,7 +3039,7 @@
 ;; crowd, audience
 (define-type ont::social-group
  :wordnet-sense-keys ("social_group%1:14:00")
-  :parent ont::implicit-object
+  :parent ont::implicit-group
   ;:sem (F::Abstr-obj (F::information F::information-content) (f::intentional +) (F::Object-Function F::Occupation) (F::Container -))
   :sem (F::phys-obj (f::intentional +) (F::Object-Function F::Occupation)) ; (F::Container -)) GROUP-OBJECT has container +
   :arguments ((:OPTIONAL ONT::FIGURE ((? lof f::phys-obj f::abstr-obj))))
@@ -3161,11 +3163,6 @@
  :parent ONT::social-group
  )
 
-;; surplus, excess
-(define-type ONT::surplus
- :parent ONT::quantity
- :wordnet-sense-keys ("surplus%1:07:00")
- )
 
 (define-type ONT::sequence
  :wordnet-sense-keys ("ordering%1:14:00" "order%1:14:00" "ordination%1:14:00")
@@ -3195,4 +3192,10 @@
  :parent ONT::GROUP-OBJECT
  :arguments ((:ESSENTIAL ONT::FIGURE)
              )
+ )
+
+;; surplus, excess
+(define-type ONT::surplus
+ :parent ONT::quantity
+ :wordnet-sense-keys ("surplus%1:07:00")
  )

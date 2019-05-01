@@ -838,7 +838,11 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
   (let ((wdef (retrieve-from-lex (car words)))
 	res)
     (dolist (def wdef)
-      (if (equal words (lex-entry-words def))
+      (if (or (equal words (lex-entry-words def))
+	      (and (eq (list-length words) 2)
+		   (let ((partconstit (cadr (assoc 'w::part (cdr (lex-entry-description def))))))
+		     (and partconstit (eq (cadr (assoc 'W::lex (cddr partconstit)))
+					  (second words))))))
 	  (pushnew def res)))
     res)
   )
@@ -966,7 +970,8 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	     (print-debug "~% Processing sense ~S" this-sense-keylist)
 	     (let* ((domain-info (find-arg this-sense-keylist :domain-specific-info))
 		    (penn-tags (util::convert-to-package (find-arg this-sense-keylist :penn-parts-of-speech) :w))
-		    (these-ont-types (find-arg this-sense-keylist :ont-types))
+		    (these-ont-types (union (find-arg this-sense-keylist :ont-types)
+					    (map-wnsenses-to-ont-types (find-arg this-sense-keylist :wn-sense-keys))))
 		    
 		    )
 	       
@@ -1090,7 +1095,12 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 						(get-feature-from-lex-entry x 'W::LF))
 					    entries)))
 	 (eliminate-redundancies others))
-  ))))||#
+))))||#
+
+(defun map-wnsenses-to-ont-types (wnsenses)
+  (remove-duplicates (mapcan #'(lambda (wnsense)
+				 (wf::best-ont-type-for-sense-key wnsense))
+			     wnsenses)))
 
 (defun eliminate-redundancy (entries remainingtypes)
   (when entries

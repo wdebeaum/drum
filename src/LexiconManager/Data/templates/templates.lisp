@@ -1817,7 +1817,7 @@
   (AGENT-EFFECT-XP-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::AGENT)
-    (LOBJ (:parameter xp (:default (% W::NP))) ONT::RESULT)
+    (LOBJ (:parameter xp (:default (% W::NP))) ONT::FORMAL)
     ))
   
    ;;;;; swift 24/01/02 use this to replace AGENT-BENEFICIARY-THEME-XP-TEMPL for warn, inform

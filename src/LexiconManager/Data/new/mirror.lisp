@@ -6,7 +6,7 @@
  :words (
  (W::mirror
    (SENSES
-    ((LF-PARENT ONT::orient)
+    ((LF-PARENT ONT::position)
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
      (TEMPL neutral-neutral-xp-templ)
      (example "the bananas  mirror each other")

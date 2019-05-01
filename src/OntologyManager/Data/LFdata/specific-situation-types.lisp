@@ -181,7 +181,7 @@
   )
 
 (define-type ONT::surrender
- :wordnet-sense-keys ("cede%2:40:01" "chuck_up_the_sponge%2:33:00" "concede%2:40:00" "despair%2:37:00" "give_up%2:41:00" "grant%2:40:04" "relent%2:42:00" "submit%2:33:00" "surrender%2:40:00" "yield%2:33:00" "yield%2:40:01" "yield%2:38:00")
+ :wordnet-sense-keys ("cede%2:40:01" "chuck_up_the_sponge%2:33:00" "concede%2:40:00" "despair%2:37:00" "give_up%2:41:00" "grant%2:40:04" "relent%2:42:00" "submit%2:33:00" "surrender%2:40:00" "yield%2:33:00" "yield%2:40:01")
   :parent ONT::relinquish
   :comment " an AGENT relinquishes AFFECTED unwillingly"
   )
@@ -2052,6 +2052,7 @@
  )
 
 (define-type ont::contest-deny-oppose-protest ;; 20120523 GUM change new type
+    :wordnet-sense-keys ("opposition%1:04:01" "oppose%2:32:01" "oppose%2:32:00"  "oppose%2:33:01")
     :parent ont::contest
     )
 
@@ -4597,7 +4598,7 @@
 ;; neutral covers formal, or agent causes affected to cover formal
 ;; (like a cloth)
 (define-type ONT::cover
- :wordnet-sense-keys ("arch_over%2:38:00" "cover%2:35:00" "cover%2:35:14")
+ :wordnet-sense-keys ("arch_over%2:38:00" "cover%2:35:13" "cover%2:29:02")
  :parent ONT::position
  :sem (F::Situation (F::Aspect F::stage-level) (f::time-span f::extended)) ;; allow ing forms
  )
@@ -4668,10 +4669,11 @@
     :sem (F::Situation (F::Aspect F::Indiv-level) (F::Cause -))
     )
 
+
 ;; aim, face, orient, point
 ;; the statue is facing me/east/towards the street
-(define-type ONT::ORIENT
- :wordnet-sense-keys ("direct%2:33:00" "take_aim%2:33:00" "train%2:33:00" "take%2:33:09" "aim%2:33:00" "point%2:42:00" "orient%2:42:00" "orient%2:42:01")
+(define-type ONT::POINTING-TO
+ :wordnet-sense-keys ( "point%2:42:00" "orient%2:42:01")
   :parent ONT::position
   :sem (F::Situation (F::Aspect F::Stage-level))
   :arguments ((:REQUIRED ONT::neutral ((? them F::Phys-obj F::abstr-obj F::situation))) ;; the figure

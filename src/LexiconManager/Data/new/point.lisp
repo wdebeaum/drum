@@ -25,15 +25,15 @@
  :words (
  (W::point
    (SENSES
-    ((LF-PARENT ONT::orient)
+    ((LF-PARENT ONT::pointing-to)
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
      (TEMPL neutral-neutral-xp-templ (xp (% W::PP (W::ptype (? pt W::toward w::towards))))) 
      (example "the triangle points towards the square")
      (meta-data :origin calo-ontology :entry-date 20051213 :change-date nil :comments Orient)
      )
     ((LF-PARENT ONT::orient)
-     (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL agent-affected-goal-optional-TEMPL (xp (% W::PP (W::ptype (? pt W::toward w::towards)))))
+     (SEM (F::Aspect F::dynamic) (F::Time-span F::extended))
+     (TEMPL agent-affected-xp-TEMPL) ;; (xp (% W::PP (W::ptype (? pt W::toward w::towards)))))
      (example "orient the triangle (towards the square)")
      (meta-data :origin calo-ontology :entry-date 20051213 :change-date nil :comments Orient)
      )
