@@ -766,7 +766,8 @@
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
 	(LOBJ (% W::NP) ONT::affected)
-	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln)))) (w::arg ?dobjvar)))) ONT::RESULT)
+	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln))))
+					   (w::arg ?dobjvar)))) ONT::RESULT)
 	))
 
       (AGENT-NEUTRAL-TOAFFECTED-TEMPL
@@ -798,13 +799,14 @@
 	(LCOMP (:parameter xp (:default (% W::PP (W::ptype W::to)))) ONT::AFFECTED-RESULT optional)
 	))      
       
-      (AGENT-AFFECTED-GOAL-TEMPL
+    #|  (AGENT-AFFECTED-GOAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
 	(LOBJ (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::affected)
-	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln ont::position-reln ont::source-reln)))) (w::arg ?dobjvar))))
+	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln ont::position-reln ont::source-reln))))
+					   (w::arg ?dobjvar))))
 	       ONT::RESULT)
-	))
+	))|#
 
       (AGENT-RESULT-AFFECTED-TEMPL
        (ARGUMENTS
@@ -814,7 +816,8 @@
 	(LCOMP (% W::NP (W::lex ?dobjlex) (W::var ?dobjvar)) ONT::affected)
 	))
       
-      (AGENT-AFFECTED-EFFECT-loc-objcontrol-TEMPL
+      (;;AGENT-AFFECTED-EFFECT-loc-objcontrol-TEMPL
+       AGENT-AFFECTED-GOAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
 	(LOBJ (% W::NP  (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar) (w::expletive ?exp)) ONT::affected)
@@ -973,8 +976,9 @@
        (ARGUMENTS
 	(LSUBJ (% W::NP (W::var ?subjvar) (W::lex ?lsubjlex)) ONT::AFFECTED)
        ;;;;; the arg of the pred will be the subject of the verb
-	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar))) (:required (W::filled -) (W::argument ?lsubj) 
-										 (W::gap ?gap))) ONT::FORMAL)
+	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar)))
+			  (:required (W::filled -) (W::argument ?lsubj) 
+				     (W::gap ?gap))) ONT::FORMAL)
 	))
 
 
@@ -2077,8 +2081,9 @@
 (affected-theme-SUBJCONTROL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar) (w::expletive ?exp)) ONT::affected)
-    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required(W::subj (% W::np (W::sem ?lsubjsem) 
-                    (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive ?exp))))) ont::formal)
+    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to)))
+		       (:required(W::subj (% W::np (W::sem ?lsubjsem) 
+					     (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive ?exp))))) ont::formal)
     ))
     ;;;;; e.g., He's gotta go
   ;; added for gotta / CAET tea making

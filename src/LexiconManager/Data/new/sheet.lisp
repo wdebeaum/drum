@@ -12,7 +12,6 @@
      )
     ((lf-parent ont::sheet)
      (example "sheet of paper/ice") 
-     (templ classifier-templ)
      (meta-data :origin plow :entry-date 20060802 :change-date nil :wn ("sheet%1:06:03") :comments weather)
      )
      ((lf-parent ont::bedding)

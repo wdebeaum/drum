@@ -8,7 +8,7 @@
     (senses
      ((lf-parent ont::sheet)
       (example "a slice of pie") 
-      (templ classifier-templ)
+     
       (meta-data :origin plow :entry-date 20060802 :change-date nil :wn ("slice%1:13:00") :comments weather)
       )
      )

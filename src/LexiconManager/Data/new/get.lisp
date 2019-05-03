@@ -19,7 +19,8 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (meta-data :origin vn-analysis :entry-date unknown :change-date 20040617 :comments change-lf)
      (example "get the oranges into the truck" "I got the car from a dealer")
-     (TEMPL agent-affected-effect-loc-objcontrol-templ)
+     ;;(TEMPL agent-affected-effect-loc-objcontrol-templ)
+     (TEMPL agent-affected-goal-templ)
      (preference 1)
      )
 

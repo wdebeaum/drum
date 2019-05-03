@@ -49,7 +49,7 @@
     )
 
 (define-type ONT::MOLECULAR-PART
-    ::wordnet-sense-keys ("chemical_group%1:27:00")
+    ::wordnet-sense-keys ("chemical_group%1:27:00" )
     :parent ONT::natural-object
     )
 
@@ -2091,7 +2091,9 @@
 ;; violin
 (define-type ONT::musical-instrument
     :parent ONT::device
-    :wordnet-sense-keys ("musical_instrument%1:06:00" "instrument%1:06:01")
+    :wordnet-sense-keys ("musical_instrument%1:06:00" "instrument%1:06:01" "brass_family%1:14:00"
+						      "violin_family%1:14:00"   "woodwind_family%1:14:00"
+						     )
     :sem (F::Phys-obj (F::mobility F::non-self-moving)(F::object-function F::instrument))
     )
 
@@ -2969,7 +2971,7 @@
     )
 
 (define-type ont::natural-group
-    :wordnet-sense-keys ("kingdom%1:14:00" "biological_group%1:14:00" "association%1:14:01" "class%1:14:00" "vegetation%1:14:00")
+    :wordnet-sense-keys ("kingdom%1:14:00" "biological_group%1:14:00" "association%1:14:01" "class%1:14:00")
     :comment "An group defined by a classification of living things"
     :sem (F::PHYS-OBJ (F::FORM F::SOLID-OBJECT) (F::origin f::living))
     :parent ONT::implicit-group
@@ -2979,17 +2981,25 @@
     :wordnet-sense-keys ("animal_group%1:14:00" "bacteria_order%1:05:00" "menagerie%1:14:00")
     :comment "An group defined by a classification of animals"
     :sem (F::PHYS-OBJ (F::INTENTIONAL +))
-    :parent ONT::implicit-group
+    :parent ONT::natural-group)
+    
+(define-type ont::plant-group
+    :wordnet-sense-keys ("vegetation%1:14:00")
+    :comment "An group defined by a classification of animals"
+    :sem (F::PHYS-OBJ (F::INTENTIONAL +))
+    :parent ONT::natural-group
     )
 
+
+
 (define-type ont::people-group 
-    :wordnet-sense-keys ("population%1:14:00")
+    :wordnet-sense-keys ("population%1:14:00" )
     :comment "a group of persons"
     :parent ont::animal-group
     )
 
 (define-type ont::people-subgroup
-    :wordnet-sense-keys ("race%1:14:00" "sainthood%1:14:00" "varna%1:14:00" "congregation%1:14:01" "tenantry%1:14:00")
+    :wordnet-sense-keys ("race%1:14:00" "sainthood%1:14:00" "varna%1:14:00" "tenantry%1:14:00")
     :comment "a group of persons defined by origin or race"
     :parent ont::implicit-group
     )
@@ -3038,7 +3048,7 @@
 
 ;; crowd, audience
 (define-type ont::social-group
- :wordnet-sense-keys ("social_group%1:14:00")
+ :wordnet-sense-keys ("social_group%1:14:00"  "congregation%1:14:01")
   :parent ont::implicit-group
   ;:sem (F::Abstr-obj (F::information F::information-content) (f::intentional +) (F::Object-Function F::Occupation) (F::Container -))
   :sem (F::phys-obj (f::intentional +) (F::Object-Function F::Occupation)) ; (F::Container -)) GROUP-OBJECT has container +
@@ -3047,11 +3057,6 @@
 
 (define-type ont::family-group
   :wordnet-sense-keys ("family%1:14:02")
-    :parent ont::social-group
-    )
-
-;; swift 20110928 crew defined for obtw demo
-(define-type ont::crew-phys
     :parent ont::social-group
     )
 

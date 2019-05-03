@@ -1338,7 +1338,14 @@
     :wordnet-sense-keys ("letter%1:10:01")
     :parent ONT::linguistic-object
 ; :sem (F::Abstr-obj (F::information F::data))
- )
+    )
+
+;; letters of the alphabet
+(define-type ONT::grammatical-category
+    :wordnet-sense-keys ("grammatical_category%1:10:00" "declension%1:14:00" "conjugation%1:14:01"
+							"linguistic_relation%1:24:00")
+    :parent ONT::linguistic-object
+    )
 
 ;; alpha, beta, ...
 (define-type ONT::greek-letter-symbol

@@ -1404,7 +1404,8 @@
 )
 
 (define-type ont::gender-scale
- :parent ont::unordered-domain 
+    :parent ont::unordered-domain
+    :wordnet-sense-keys ("sex%1:14:00")
  :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
              )
  :wordnet-sense-keys ("gender%1:07:00")

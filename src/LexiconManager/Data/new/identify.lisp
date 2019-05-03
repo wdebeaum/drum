@@ -6,13 +6,12 @@
  :words (
  (W::identify
    (SENSES
-    ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("amalgamate-22.2-2"))
-     (LF-PARENT ONT::relate)
-     (example "he identifies him with her")
+    #|((LF-PARENT ONT::relate)
+     (example "he related it to/with that")
 ;     (TEMPL agent-affected2-templ (xp (% w::pp (w::ptype w::with)))) ; like affiliate,confederate,muddle,entangle,confuse,associate,team,pair
-     (TEMPL neutral-neutral-neutral-xp-templ (xp (% W::pp (W::ptype W::to))))
+     (TEMPL neutral-neutral-neutral-xp-templ (xp (% W::pp (W::ptype(? ptype W::with W::to)))))
      (PREFERENCE 0.96)
-     )
+     )|#
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090501 :comments nil :vn ("characterize-29.2-1-1"))
      (LF-PARENT ONT::classify)
      (TEMPL agent-theme-xp-templ) ; like represent

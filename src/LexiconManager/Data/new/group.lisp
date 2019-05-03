@@ -10,7 +10,7 @@
     ((meta-data :origin trips :entry-date 20060803 :change-date 20090520 :comments nil :wn ("group%1:03:00"))
      (LF-PARENT ONT::group-object)
      (example "a group of cars")
-     (TEMPL classifier-count-pl-templ)
+     (TEMPL pred-subcat-contents-templ)
      )
     ((LF-PARENT ONT::group-object)
      (TEMPL count-pred-templ)

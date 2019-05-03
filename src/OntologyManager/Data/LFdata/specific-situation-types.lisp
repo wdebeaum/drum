@@ -4972,7 +4972,7 @@
   )
 
 (define-type ONT::immerse
-    :wordnet-sense-keys ("immerse%2:35:00" "plunge%2:35:01" "immerse%2:31:01")
+    :wordnet-sense-keys ("immerse%2:35:00" "plunge%2:35:01" "immerse%2:31:01" "drown%2:35:00")
   :parent ONT::put
   :arguments
   ((:required ONT::AGENT  ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
@@ -4985,11 +4985,6 @@
   :parent ONT::put
  )
 
-
-
-(define-type ONT::dunk
-  :parent ONT::immerse
-  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; boudreaux-types.lisp
