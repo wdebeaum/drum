@@ -674,10 +674,11 @@
     :parent ONT::position-reln
     :wordnet-sense-keys ("direction%1:15:00")
     :comment "a direction = a spatial relation between the location (FIGURE) of an object and its previous location"
- :arguments ((:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj
-					 F::abstr-obj ; "move the plan up the agenda"?
-					 F::situation) ; meeting is SITUATION (move the meeting up the stairs)
-				      (F::mobility f::movable) (F::ASPECT F::DYNAMIC)))
+ :arguments (;(:ESSENTIAL ONT::FIGURE ((? t F::Phys-obj
+					 ;F::abstr-obj ; "move the plan up the agenda"?
+					; F::situation) ; meeting is SITUATION (move the meeting up the stairs)
+				      ;(F::mobility f::movable) (F::ASPECT F::DYNAMIC)))
+	     (:ESSENTIAL ONT::FIGURE (F::SITUATION (f::aspect f::dynamic) (f::trajectory +)))
 	     (:ESSENTIAL ONT::GROUND (F::Phys-obj))
 	     (:OPTIONAL ONT::NOROLE)
             )
