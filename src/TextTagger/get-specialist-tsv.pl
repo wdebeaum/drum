@@ -123,6 +123,7 @@ while (<INFL>) {
   my ($inflected, $pos, undef, $inflection, undef, $eui, undef, $citation) =
     split(/\|/);
   next unless (exists($eui_to_info{$eui}));
+  next if ($pos eq 'prep' and $inflected =~ / (against|among|as|for|from|than|to|of|with(in)?)$/); # skip "prepositions" ending with (certain) prepositions
   next if ($inflected =~ /'s$/ and $pos eq 'noun' and $inflection eq 'plur');
   my $penn_pos = $pos_inflection_to_penn_pos{"$pos|$inflection"};
   next unless (defined($penn_pos));
