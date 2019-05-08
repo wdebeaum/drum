@@ -74,8 +74,9 @@
    ((ONT::SPEECHACT ?V7187 ONT::SA_YN-QUESTION :CONTENT ?!c)
     (ONT::F ?!c ONT::EVENT-OF-CHANGE ;ONT::EVENT-OF-ACTION  ; can you find a drug...
 	    :AGENT ?!V6 :force (? f ONT::ALLOWED ONT::PROHIBITED ONT::FUTURE ONT::FUTURENOT ONT::POSSIBLE ONT::FUTURE))
-    ((? z ONT::PRO ONT::PRO-SET) ?!V6 ONT::PERSON :proform (? xx w::ME w::I w::you w::we w::us))    
-      -can-indirect-proposal>
+    ((? z ONT::PRO ONT::PRO-SET) ?!V6 ONT::PERSON :proform (? xx w::ME w::I w::you w::we w::us))
+    (?s ?v ?t) ; filler to beat -request-to-identify3c>
+      -can-indirect-proposal> .99 ; lower score than the other more specific "can you..." rules, e.g., -can-indirect-request>
       (ONT::PROPOSE :who *USER* :to *ME*
 		   :what ?!c
 		   ;:as ONT::GOAL
