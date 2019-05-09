@@ -22,7 +22,9 @@
    (SENSES
     ((LF-PARENT ONT::DIRECTION-forward)
      ;(TEMPL PRED-S-POST-TEMPL)
-     (TEMPL PRED-S-VP-templ)
+     ;(TEMPL PRED-S-VP-templ)
+     (templ PREDICATIVE-ONLY-ADJ-TEMPL)
+     (example "Move it forward.")
      )
     )
    )

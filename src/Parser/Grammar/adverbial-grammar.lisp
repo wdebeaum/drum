@@ -311,7 +311,8 @@
 	    (sort (? !sort pp-word double-subcat))
             (lf ?lf) (IGNORE -)  (sem ?sem)
             (subcat-map ?submap) (ARGUMENT-MAP ?argmap)
-	    (comparative -) 
+	    (comparative -)
+	    (subcat ?subcat)
             (SUBCAT (% NP (var ?gapv) (sem ?gapsem) 
                        (agr ?gapagr) (case (? case obj -))))))
      )
@@ -596,7 +597,7 @@
       (role ?advrole)
       ;(SEM ($ f::abstr-obj (F::type (? !ttt ont::position-reln))))
       (SEM ($ f::abstr-obj (F::type (? !ttt ont::path ont::conventional-position-reln
-				       ;ont::direction ; allow e.g. "forward"
+				       ont::direction ; do we want to allow "forward" (as MANNER)?
 				       ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; e.g. "decrease in Mexico" but we would need to have "put the box in the corner"
 				       ont::pos-directional-reln ont::pos-distance
 				       ; ont::pos-wrt-speaker-reln ; "I ate there"
@@ -1639,8 +1640,9 @@
 
    ((PP (PTYPE ?pt) (lf ?lf) (case ?c)
 		(lex ?pt) (headcat ?hc)
-     (sem ($ ?somesem)) (var ?gapvar) (agr ?agr)     
-     (gap (% np (lf ?lf) (var ?gapvar) (gap -) (sort (? sort pred descr wh-desc)) (case (? case obj -)) (agr ?agr)))
+		(sem ?somesem) ;(sem ($ ?somesem))
+		(var ?gapvar) (agr ?agr)     
+     (gap (% np (lf ?lf) (var ?gapvar) (gap -) (sort (? sort pred descr wh-desc)) (case (? case obj -)) (agr ?agr) (sem ?somesem)))
      )					; I set the case here to a var, in order to allow -np-spec-of-pp> to work. Otherwise, CASE is not used in PPs
     -pp1-gap> 0.98
     (head (prep (LEX ?pt) (headcat ?hc)))

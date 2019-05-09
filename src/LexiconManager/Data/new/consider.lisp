@@ -9,7 +9,8 @@
    (SENSES
     ((LF-PARENT ONT::SCRUTINY)
      (example "consider this option")
-     (TEMPL agent-theme-xp-templ)
+     ;(TEMPL agent-theme-xp-templ)
+     (TEMPL agent-neutral-xp-templ)
      )
     ((LF-PARENT ONT::believe)
      (example "he considered the speaker a genius")

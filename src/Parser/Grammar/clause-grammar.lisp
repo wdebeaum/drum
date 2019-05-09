@@ -12,7 +12,7 @@
 
 (parser::augment-grammar
  '((headfeatures
-    (vp vform var neg sem iobj dobj comp3 part cont aux tense-pro gap subj subjvar modal auxname lex orig-lex headcat transform subj-map template complex)
+    (vp vform var neg sem iobj dobj comp3 part cont aux tense-pro gap subj subjvar modal auxname lex orig-lex headcat transform subj-map template complex passive)
     )
 
  ;; untensed vp
@@ -35,7 +35,7 @@
     (vp- vform var agr neg sem iobj dobj comp3 part cont   tense-pro aux modal auxname lex orig-lex headcat transform subj-map advbl-needed
 	 passive passive-map template result) 
     (s vform var neg sem subjvar dobjvar cont  lex orig-lex headcat transform ellipsis)
-    (cp vform var neg sem subjvar dobjvar cont  transform subj-map subj lex orig-lex)
+    (cp vform var neg sem subjvar dobjvar cont  transform subj-map subj lex orig-lex comp3) ;comp3 for -DEFN-PASSIVE-GAP>
     (v lex orig-lex sem lf neg var agr cont aux modal auxname ellipsis tma transform headcat)
     (aux vform var agr neg sem subj iobj dobj comp3 part cont  tense-pro lex orig-lex headcat transform subj-map advbl-needed
 	 passive passive-map ellipsis contraction auxname) 
@@ -954,6 +954,7 @@
 	   (dobj ?dobj) 
 	   (lex ?hlex) (headcat ?hcat)
 	   (be-there -)
+	   (passive -)
 	   )))
    
    ;; we need a special rule for cases like "to be taken", because it is aux be, but for passives it's fine
@@ -962,6 +963,7 @@
      (lf ?lf)
 ;;     (lex to) (headcat ?vinf) ;; non-aug-trips settings
      (lex ?hlex) (headcat ?hcat) ;; aug-trips
+     (passive +)
      )
      -to1-passiv>
      (infinitival-to (lex to) (headcat ?vinf))
@@ -3485,6 +3487,8 @@
      (vform ?vform) (transform ?transform)
      (aux +) (auxname ?auxname) 
      (subj-map ?lsubj-map) 
+     (passive ?passive) ; from vp-
+     (comp3 ?v-comp3); from vp-
      )
     -vp-changesem-aux> 1.0
     ;; propagate class, semantics, constraint up from main verb
@@ -3524,6 +3528,8 @@
 		     (advbl-needed -) (subj-map ?lsubj-map)
 		     (auxname ?compauxname)
 		     (vform ?vform2)
+		     (passive ?passive)
+		     (comp3 ?v-comp3)
      )
     (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?newtma)) ;; add aux feature to tma
     ;; change the temporal values in sem to be consistent with the aux

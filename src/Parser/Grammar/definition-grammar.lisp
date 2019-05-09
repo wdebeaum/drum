@@ -36,6 +36,21 @@
 				(constraint (& (:context-rel :dobj)))))))
 		)))
 
+    ;; CP passive with gap, e.g., to be eaten by
+    ((definition (var ?v) (lf ?lf))
+      -defn-passive-gap> 
+     (head (cp (var ?v) (lf ?lf)
+	       (subj (% ?xx (sem ?subjsem)))
+	       (dobjvar -)
+	       (subjvar (% *PRO* (var *) (class ont::ROLE-REF) (sem ?subjsem) (constraint (& (:context-rel :lsubj)))))
+	       (comp3 (% ?comp3 (sem ?compsem)))
+	       (gap (% NP (gap -)
+			(var (% *PRO* (var **) (class ont::ROLE-REF) (sem ?compsem)
+				(constraint (& (:context-rel :lcomp)))))))
+	       (passive +)
+		)))
+    
+    
     ;;  making bread, make bread   (no gap in VP)
     ((definition (var ?v) (lf ?lf))
       -defn-ing>
