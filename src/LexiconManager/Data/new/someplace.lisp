@@ -8,8 +8,8 @@
   (W::SOMEPLACE
    (wordfeats (W::else-word +))
    (SENSES
-    ((LF-PARENT ONT::WH-LOCATION)
-     (SYNTAX (W::IMPRO-CLASS ONT::LOCATION))
+    ((LF-PARENT ONT::AT-LOC)
+     (SYNTAX (W::IMPRO-CLASS ONT::PLACE))
      )
     )
    )

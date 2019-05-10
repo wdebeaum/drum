@@ -1063,7 +1063,7 @@
 ;; fail
 ;; this isn't a subtype of ont::try because the intentionality is indeterminate
 (define-type ONT::fail
- :wordnet-sense-keys ("bomb%2:41:00" "fail%2:30:07" "fail%2:40:00" "fail%2:41:00" "fail%2:41:02" "fail%2:41:08" "fail%2:41:12" "fall_short_of%2:42:00" "neglect%2:41:00")
+ :wordnet-sense-keys ("bomb%2:41:00" "fail%2:30:07" "fail%2:40:00" "fail%2:41:00" "fail%2:41:02" "fail%2:41:08" "fail%2:41:12" "fall_short_of%2:42:00" "neglect%2:41:00" "failure%1:11:00")
  :parent ONT::acting
  :arguments ((:OPTIONAL ONT::neutral)
 	     (:REQUIRED ONT::formal (F::Situation))

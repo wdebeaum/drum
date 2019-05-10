@@ -475,7 +475,8 @@
     ;; Other option might be to subcategorize for adj - need to consider in the future
     (ADJP arg lex orig-lex headcat transform argument sem complex) ;; post-subcat)     
     (ADJ1 arg lex orig-lex headcat transform argument sem sort lf allow-deleted-comp allow-post-n1-subcat gap)
-    (ADJ arg lex orig-lex headcat transform argument sem sort) ;; post-subcat)     
+    (ADJ arg lex orig-lex headcat transform argument sem sort) ;; post-subcat)
+    (COMPAR gap)
     )
    
    ;; common nouns without modifiers, e.g. boxcar, juice, trains
@@ -1870,19 +1871,19 @@
    ;; the standard "than PP" is the typical case
    ((COMPAR (var ?v) (sem ?sem))
     -compar-than-pp> 1
-    (PP (var ?v) (ptype THAN) (sem ?sem)))
+    (head (PP (var ?v) (ptype THAN) (sem ?sem))))
 
    ;; e.g.,  It is larger than expected
    ((compar (Var ?v))
      -compar-vp>
      (word (lex than))
-     (vp (var ?v))
+     (head (vp (var ?v)))
     )
 
    ((compar (var ?v))
     -compar-s-gap> .98  ;; very productive and unconstrained!!
     (word (lex than))
-    (s (var ?v)))
+    (head (s (var ?v))))
        
     ;;=============================================================================
     ;; NOUN-NOUN type  modification
@@ -4955,7 +4956,7 @@
     ((np (sort wh-desc)  (gap -) (mass bare) (case (? case SUB OBJ))
             (sem ?s-sem) ;; (sem ?advsem)
          (var ?xx) 
-         (lf (% description (status *wh-term*) (var ?xx)
+         (lf (% description (status ont::definite) (var ?xx)
                 (class ?impro-class)
 		(constraint (& (suchthat ?newlf))) (sort individual)
                 (sem ?advsem)
@@ -6260,7 +6261,7 @@
 	 )
 
 	;; e.g.,  many, a few, ...
-	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?subcatsem) (case (? case SUB OBJ)) (N-N-MOD +) (AGR 3p) 
+	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?subcatsem) (case (? case SUB OBJ)) (N-N-MOD +) (AGR ?agr) 
 	     (lf (% description (status ?newspec) ;(status ?status)
 		    (var ?v) (sort SET)
 		    (class ont::referential-sem) ;(Class ont::ANY-SEM)
@@ -6271,9 +6272,9 @@
 	  )
 	 -NP-missing-head-plur2> .98 ;.96 ;; Myrosia lowered the preference to be lower than wh-setting1-role, with which this competes on "be" questions
 	 (head (spec (poss -) (restr ?restr) (mass count) (status ?status)
-		     (LF ?spec) (arg ?v) (agr 3p) (var ?v) (nobarespec -)
+		     (LF ?spec) (arg ?v) (agr ?agr) (var ?v) (nobarespec -)
 		     ))
-	 (recompute-spec (spec ?status) (agr 3p) (result ?newspec))
+	 (recompute-spec (spec ?spec) (agr ?agr) (result ?newspec))
 	 )
         
 	;;  e.g., some (as in some pain)  -- we treat these as pre-referential

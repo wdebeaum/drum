@@ -18,8 +18,8 @@
  :words (
 ((W::chill w::out)
    (SENSES
-    ((LF-PARENT ont::evoke-calm)
-     (example "chill out")
+    ((LF-PARENT ont::experiencer-obj)
+     (example "He chilled out on the couch")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL affected-TEMPL)
      (meta-data :origin plow :entry-date 20050922 :change-date nil :comments nil)

@@ -19,11 +19,11 @@
    (W::wild
    (wordfeats (W::morph (:FORMS (-ER -LY))))
    (SENSES
-    ((meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
-     (example "I am wild / an angry person")
-     (LF-PARENT ONT::wild-val)
-     (templ central-adj-experiencer-templ)
-     )
+;    ((meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
+;     (example "I am wild / an angry person")
+;     (LF-PARENT ONT::wild-val)
+;     (templ central-adj-experiencer-templ)
+;     )
     ((meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
      (example "I am wild about her")
      (LF-PARENT ONT::wild-val)

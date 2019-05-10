@@ -26,24 +26,16 @@
     ((meta-data :origin trips :entry-date 20060414 :change-date 20090513 :comments nil :vn ("discover-82-1-1"))
      (EXAMPLE "I'll find out if he can do it")
      (syntax (w::exclude-passive +))
-     ;(LF-PARENT ONT::come-to-understand)
      (LF-PARENT ONT::determine)
      (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-if)))))
      )
 
     (
-;     (LF-PARENT ONT::come-to-understand)
+
      (LF-PARENT ONT::determine)
      (TEMPL agent-neutral-xp-templ (xp (% W::NP (W::sort (? !s W::wh-desc))))) ; too general: this also allows "I found out the key"
      )
     
-    #|
-    ((EXAMPLE "She found out")
-     (LF-PARENT ONT::come-to-understand)
-     (TEMPL agent-templ)
-     (preference .97) 
-     )
-    |#
     )
    )
 ))

@@ -3,7 +3,7 @@
    (w::limited
    (SENSES
     ((meta-data :origin adjective-reorganization :entry-date 20170403 :change-date nil :comments nil :wn nil :comlex nil)
-     (lf-parent ont::limited)
+     (lf-parent ont::limited-val)
      )
     )
    )))

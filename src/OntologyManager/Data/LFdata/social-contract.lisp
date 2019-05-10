@@ -38,11 +38,8 @@
 ;; Maybe there is too much overlap between children in governing-principle and
 ;; judgement-val.  The goal is to extricate the actual judgement from the expression
 ;; which represents it, but that may be too lofty a goal.
-
-(define-type ont::judgement-val
-  :parent ont::social-judgement
-  :wordnet-sense-keys ("moral%3:00:00::" "immoral%3:00:00::" "immoral%3:00:00:wrong:01")
-)
+;; 03/13/19 - judgement-val renamed morality-val and moved under judgement-val
+;;            which is under evaluation-attribute-val
 
 (define-type ont::essential-contract
   :parent ont::social-imperative

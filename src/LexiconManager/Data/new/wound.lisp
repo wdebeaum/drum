@@ -8,7 +8,7 @@
    (wordfeats (W::morph (:forms (-vb))))
    (SENSES
     ((meta-data :origin trips :entry-date 20060414 :change-date 20090512 :comments nil :vn ("amuse-31.1") :wn ("wound%2:37:00"))
-     (LF-PARENT ONT::evoke-injury)
+     (LF-PARENT ONT::evoke-hurt)
      (TEMPL agent-affected-xp-templ)
      )
     )

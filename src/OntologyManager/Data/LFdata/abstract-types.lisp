@@ -150,13 +150,16 @@
   :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (F::INTENTIONAL -))
 		      (:default (F::GRADABILITY +) (F::scale ?!sc)))
   :arguments ((:REQUIRED ONT::FIGURE)
-	      (:REQUIRED ONT::GROUND)))
+	      (:REQUIRED ONT::GROUND))
+ :wordnet-sense-keys ("ultimate%3:00:00" "maximum%3:00:00")
+)
 
 ;; worst, least
 (define-type ONT::MIN-val
   :parent ONT::domain-property
   :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (F::INTENTIONAL -))
 		      (:default (F::GRADABILITY +) (F::scale ?!sc)))
+ :wordnet-sense-keys ("minimum%3:00:00")
   )
 
 ;; as hot as it can be
@@ -1616,7 +1619,7 @@
 
 (define-type ONT::SAME
  :parent ONT::IDENTITY-VAL
- :wordnet-sense-keys ("same%3:00:02" "same%3:00:02" "identical%5:00:00:same:02")
+ :wordnet-sense-keys ("same%3:00:02" "same%3:00:02" "identical%5:00:00:same:02" "same%3:00:00")
  ; Antonym: NIL (W::OTHER)
  )
 

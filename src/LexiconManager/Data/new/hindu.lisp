@@ -17,7 +17,7 @@
    (w::hindu
    (SENSES
     ((meta-data :origin adjective-reorganization :entry-date 20170403 :change-date nil :comments nil :wn nil :comlex nil)
-     (lf-parent ont::religious-identity-val)
+     (lf-parent ont::religion-specific-val)
      )
     )
    )

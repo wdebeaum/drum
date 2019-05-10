@@ -33,7 +33,7 @@
      )
     ((EXAMPLE "The patient threw up")
      (LF-PARENT ONT::vomit)
-     (TEMPL agent-TEMPL)
+     (TEMPL affected-TEMPL)
      )
     )
    )

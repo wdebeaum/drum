@@ -18,15 +18,15 @@
      (SEM (f::gradability +) (f::orientation ont::less) (f::intensity ont::hi))
      (TEMPL adj-purpose-TEMPL)
      )
-    ((meta-data :origin cardiac :entry-date 20080508 :change-date 20090731 :comments LM-vocab)
-      (EXAMPLE "a drug exceptional for cancer")
-     (lf-parent ont::not-tolerable-val)
-     ;; this is a sense that allows for implicit/indirect senses of "for"
-     ;; the main sense is adj-purpose-templ for cases such as "this is good for treating cancer"
-     ;; the adj-purpose-implicit-templ is for indirect purposes, such as "this is good for cancer" where one has to infer that the actual use is in the treatment action
-     (TEMPL adj-purpose-implicit-XP-templ)
-     (SEM (f::gradability +) (f::orientation ont::less) (f::intensity ont::hi))
-     )
+;    ((meta-data :origin cardiac :entry-date 20080508 :change-date 20090731 :comments LM-vocab)
+;      (EXAMPLE "a drug exceptional for cancer")
+;     (lf-parent ont::not-tolerable-val)
+;     ;; this is a sense that allows for implicit/indirect senses of "for"
+;     ;; the main sense is adj-purpose-templ for cases such as "this is good for treating cancer"
+;     ;; the adj-purpose-implicit-templ is for indirect purposes, such as "this is good for cancer" where one has to infer that the actual use is in the treatment action
+;     (TEMPL adj-purpose-implicit-XP-templ)
+;     (SEM (f::gradability +) (f::orientation ont::less) (f::intensity ont::hi))
+;     )
     ((meta-data :origin cardiac :entry-date 20080508 :change-date 20090731 :comments LM-vocab)
      (EXAMPLE "a solution good for him")
      (lf-parent ont::not-tolerable-val)

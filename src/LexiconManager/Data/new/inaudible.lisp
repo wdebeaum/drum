@@ -3,7 +3,7 @@
    (w::inaudible
    (SENSES
     ((meta-data :origin adjective-reorganization :entry-date 20170403 :change-date nil :comments nil :wn nil :comlex nil)
-     (lf-parent ont::inaudibility-val)
+     (lf-parent ont::inaudible-val)
      )
     )
    )))

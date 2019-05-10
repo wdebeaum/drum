@@ -7,14 +7,15 @@
   (w::nervous
   (senses
    
-   ((LF-PARENT ONT::uneasy)
-    (TEMPL central-adj-experiencer-templ)
-    (example "I am nervous")
-    )
+;   ((LF-PARENT ONT::uneasy)
+;    (TEMPL central-adj-experiencer-templ)
+;    (example "I am nervous")
+;    )
 
     (
      (LF-PARENT ONT::uneasy)
-     (templ central-adj-content-templ)
+     (templ central-adj-templ)
+;     (templ central-adj-content-templ)
      (example "a nervous night")
      )
     

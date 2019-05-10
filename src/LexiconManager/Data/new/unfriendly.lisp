@@ -3,7 +3,7 @@
    (w::unfriendly
    (SENSES
     ((meta-data :origin adjective-reorganization :entry-date 20170403 :change-date nil :comments nil :wn nil :comlex nil)
-     (lf-parent ont::not-friendly-val)
+     (lf-parent ont::not-affectionate-val)
      )
     )
    )))

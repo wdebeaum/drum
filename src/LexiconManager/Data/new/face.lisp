@@ -34,7 +34,7 @@
      (meta-data :origin calo-ontology :entry-date 20051213 :change-date nil :comments Orient)
      )
     ((LF-PARENT ONT::orient)
-     (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
+     (SEM (F::Aspect F::dynamic) (F::Time-span F::extended))
      (TEMPL agent-affected-goal-to-TEMPL (xp (% W::PP (W::ptype (? pt W::toward w::towards)))))
      (example "face the triangle towards the square")
      (meta-data :origin calo-ontology :entry-date 20051213 :change-date nil :comments Orient)

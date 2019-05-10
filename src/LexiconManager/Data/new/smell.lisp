@@ -6,7 +6,7 @@
  :words (
   (w::smell
   (senses
-   ((LF-PARENT ONT::olfactory-property-scale)
+   ((LF-PARENT ONT::smell-scale)
     (example "this is far worse than the smell(iness) of dirty socks")
     (TEMPL MASS-PRED-TEMPL)
     )

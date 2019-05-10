@@ -7,7 +7,7 @@
    (w::satisfy
     (senses
      ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090512 :comments nil :vn ("amuse-31.1") :wn ("satisfy%2:37:00"))
-       (LF-PARENT ONT::evoke-joy)
+       (LF-PARENT ONT::evoke-satisfaction)
        (EXAMPLE "I was satisfied to hear that he agreed with me")
        (TEMPL agent-affected-xp-templ)
        (PREFERENCE 0.96)

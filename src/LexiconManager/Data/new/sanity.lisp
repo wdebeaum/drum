@@ -6,7 +6,7 @@
  :words (
   (W::sanity
    (SENSES
-    ((LF-PARENT ONT::sanity-scale)
+    ((LF-PARENT ONT::rational-scale)
      (EXAMPLE "The sanity of the decision was never in question")
      (meta-data :origin domain-reorganization :entry-date 20170831 :CHANGE-date nil :comments nil)
      )

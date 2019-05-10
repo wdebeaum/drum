@@ -9,7 +9,8 @@
    (SENSES
     ((meta-data :origin calo :entry-date 20081016 :change-date nil :comments nil)
      (lf-parent ont::attentive-val)
-     (templ central-adj-experiencer-templ)
+     (templ central-adj-templ)
+;     (templ central-adj-content-templ)
      )
     )
    )

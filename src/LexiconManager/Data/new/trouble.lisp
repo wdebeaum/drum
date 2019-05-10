@@ -24,7 +24,7 @@
   (W::trouble
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090512 :comments nil :vn ("amuse-31.1") :wn ("trouble%2:37:00" "trouble%2:37:01"))
-     (LF-PARENT ONT::evoke-annoyance)
+     (LF-PARENT ONT::evoke-bother)
      (TEMPL agent-affected-xp-templ)
      )
     )

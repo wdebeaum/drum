@@ -17,7 +17,7 @@
      (SEM (f::gradability +) (f::orientation ont::less) (f::intensity ont::med))
      (TEMPL adj-purpose-TEMPL)
      )
-    ((meta-data :origin caloy2 :entry-date 20050418 :change-date 20061106 :wn ("suitable%5:00:00:appropriate:00") :comments projector-purchasing :comlex (ADJECTIVE))
+#|    ((meta-data :origin caloy2 :entry-date 20050418 :change-date 20061106 :wn ("suitable%5:00:00:appropriate:00") :comments projector-purchasing :comlex (ADJECTIVE))
      (EXAMPLE "a drug suitable for cancer")
      (lf-parent ont::not-appropriate-val)
      (SEM (f::gradability +) (f::orientation ont::less) (f::intensity ont::med))
@@ -25,7 +25,7 @@
      ;; the main sense is adj-purpose-templ for cases such as "this is good for treating cancer"
      ;; the adj-purpose-implicit-templ is for indirect purposes, such as "this is good for cancer" where one has to infer that the actual use is in the treatment action
      (TEMPL adj-purpose-implicit-XP-templ)
-     )
+     )|#
     ((meta-data :origin caloy2 :entry-date 20050418 :change-date 20061106 :wn ("suitable%5:00:00:appropriate:00") :comments projector-purchasing :comlex (ADJECTIVE))
      (lf-parent ont::not-appropriate-val)
      (SEM (f::gradability +) (f::orientation ont::less) (f::intensity ont::med))

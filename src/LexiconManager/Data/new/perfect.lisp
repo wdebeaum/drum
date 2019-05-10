@@ -19,7 +19,7 @@
      (SEM (f::orientation ont::more) (f::intensity ont::hi))
      (TEMPL adj-purpose-TEMPL)
      )
-    ((meta-data :origin trips :entry-date 20060824 :change-date 20061106 :comments nil :wn ("perfect%3:00:00") :comlex (EXTRAP-ADJ-FOR-TO-INF-RS))
+#|    ((meta-data :origin trips :entry-date 20060824 :change-date 20061106 :comments nil :wn ("perfect%3:00:00") :comlex (EXTRAP-ADJ-FOR-TO-INF-RS))
      (EXAMPLE "a drug suitable for cancer")
      (lf-parent ont::great-val)
      (SEM (f::orientation ont::more) (f::intensity ont::hi))
@@ -28,7 +28,7 @@
      ;; the adj-purpose-implicit-templ is for indirect purposes, such as "this is good for cancer" where one has to infer that the actual use is in the treatment action
      (TEMPL adj-purpose-implicit-XP-templ)
      (SEM (f::orientation ont::more) (f::intensity ont::hi))
-     )
+     )|#
     ((meta-data :origin trips :entry-date 20060824 :change-date 20061106 :comments nil :wn ("perfect%3:00:00") :comlex (EXTRAP-ADJ-FOR-TO-INF-RS))
      (EXAMPLE "a solution good for him")
      (lf-parent ont::great-val)

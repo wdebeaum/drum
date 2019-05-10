@@ -10,7 +10,7 @@
     ((meta-data :origin task-learning :entry-date 20060524 :change-date nil :comments nil)
      (example "an ingeneous solution")
      (LF-PARENT ONT::clever-val)
-     (templ central-adj-content-templ)
+     (templ central-adj-templ);     (templ central-adj-content-templ)
      )
     )
    )

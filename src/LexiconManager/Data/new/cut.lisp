@@ -9,7 +9,7 @@
    (wordfeats (W::morph (:forms (-vb) :past W::cut :ing W::cutting :nom W::cut)))
    (SENSES
     ((meta-data :origin "verbnet-2.0-corrected" :entry-date 20060315 :change-date 20090512 :comments nil :vn ("amuse-31.1"))
-     (LF-PARENT ONT::evoke-injury)
+     (LF-PARENT ONT::evoke-hurt)
      (example "the criticism cut him deeply")
      (TEMPL agent-affected-xp-templ) 
      (PREFERENCE 0.96)

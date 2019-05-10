@@ -15,9 +15,9 @@
      )
 
     ((meta-data :origin domain-reorganization :entry-date 20170808 :change-date nil :wn ("quality%1:07:00") :comments html-purchasing-corpus)
-     (LF-PARENT ONT::attributive-scale)
+     (LF-PARENT ONT::attribute)
      (TEMPL OTHER-RELN-TEMPL)
-     (EXAMPLE "The quality of mercy is not strained")
+     (EXAMPLE "he shows strong leadership qualities")
      )
     )
    )

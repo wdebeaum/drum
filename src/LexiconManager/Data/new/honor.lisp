@@ -20,17 +20,20 @@
    )
 ))
 
+#|
+
 (define-words :pos W::V 
  :words (
   (W::honor
    (wordfeats (W::morph (:forms (-vb) :past W::honored :ing W::honoring :nom w::honor)))
    (SENSES
     ((meta-data :origin step :entry-date 20080630 :change-date 20090511 :comments nil)
-     (LF-PARENT ONT::evoke-joy)
+     (LF-PARENT ONT::appreciate)
      (example "they honor him")
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL experiencer-neutral-templ)
      )
     )
    )
 ))
 
+|#

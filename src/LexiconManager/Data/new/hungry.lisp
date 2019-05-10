@@ -9,7 +9,7 @@
    (SENSES
     ((meta-data :origin cardiac :entry-date 20080508 :change-date 20090731 :comments LM-vocab)
      (LF-PARENT ONT::HUNGRY)
-     (templ central-adj-experiencer-templ)
+     (templ central-adj-templ);     (templ central-adj-content-templ)
      )
     )
    )

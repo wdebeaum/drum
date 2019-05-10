@@ -28,16 +28,3 @@
    ))
 ))
 
-#|
-(define-words :pos W::v :templ agent-affected-xp-templ
- :words (
-  ((W::change (w::over)) ; not sure this works with morphology -- wdebeaum
-   (SENSES
-    ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("convert-26.6.2-1"))
-     (LF-PARENT ONT::replacement)
- ; like switch
-     )
-    )
-   )
-))
-|#

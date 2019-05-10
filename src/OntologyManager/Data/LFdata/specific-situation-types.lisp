@@ -198,11 +198,12 @@
 	     ))
 
 (define-type ONT::discard
-    :wordnet-sense-keys ("eliminate%2:31:00" "eliminate%2:42:01" "get_rid_of%2:40:01")
- :parent ONT::relinquish
- :arguments ((:OPTIONAL ONT::Source)
-             )
- )
+    :wordnet-sense-keys ("eliminate%2:31:00" "eliminate%2:31:01" "eliminate%2:42:01" "get_rid_of%2:40:01"
+					     )
+    :parent ONT::relinquish
+    :arguments ((:OPTIONAL ONT::Source)
+		)
+    )
 
 (define-type ONT::owe
  :wordnet-sense-keys ("owe%2:40:01")
@@ -641,7 +642,7 @@
 
 (define-type ont::expectorate
  :wordnet-sense-keys ("expectorate%2:29:00")
- :parent ont::excrete
+ :parent ont::push-liquid
 ) 
 
 (define-type ont::bleed
@@ -960,7 +961,7 @@
  )
 
 (define-type ONT::COLLIDE
- :wordnet-sense-keys ("collide_with%2:35:00" "run_into%2:35:01" "strike%2:35:01" "collide%2:35:01"  "collide%2:35:00" "crash%2:38:02" "crash%2:38:01")
+ :wordnet-sense-keys ("collide%2:35:01"  "collide%2:35:00" "crash%2:38:02" "crash%2:38:01")
  :comment "two objects comes into contact with force with another, typically both being negatively affected - also supports the plural subject that cincludes both objects"
  :parent ONT::MOTION
  :sem (F::SITUATION (F::Trajectory -))
@@ -1206,7 +1207,7 @@
 )
 
 (define-type ONT::life-transformation
-    :wordnet-sense-keys ("fruit%2:36:01" "cross-fertilize%2:29:00" "cross-fertilize%2:29:01" "work%2:30:14" "work%2:30:13" "ripen%2:30:01" "ripen%2:30:00"
+    :wordnet-sense-keys ("fruit%2:36:01" "cross-fertilize%2:29:00" "cross-fertilize%2:29:01" "work%2:30:14" "work%2:30:13" "ripen%2:30:01" "ripen%2:30:00" "mellow%2:30:00"
 					 "mutation%1:11:01")
  :parent ONT::change-integrity
  )
@@ -1340,12 +1341,6 @@
  )
 
 
-
-;; 20121027 GUM change new type
-(define-type ONT::prepare
-  :wordnet-sense-keys ("arm%2:33:00")
-  :parent ONT::cause-effect
-  )
 
 
 ;; 20120524 GUM change new type
@@ -1616,6 +1611,11 @@
  :parent ONT::directive
  )
 
+(define-type ont::threaten
+ :wordnet-sense-keys ("threaten%2:32:00" "intimidate%2:37:01" "menace%2:32:00" "harass%2:37:00")
+ :parent ont::directive
+)
+
 #|
 (define-type ONT::instruct
     :parent ONT::directive
@@ -1630,7 +1630,8 @@
 ;; kill, destroy
 (define-type ont::destroy
     :comment "render inoperative"
-    :wordnet-sense-keys ("destroy%2:35:00" "destroy%2:36:00" "down%2:38:00" "knock_out%2:30:00")
+    :wordnet-sense-keys ("destroy%2:35:00" "destroy%2:36:00" "down%2:38:00" "knock_out%2:30:00"
+					   "abortion%1:04:00")
     :arguments ((:REQUIRED ONT::affected ((? xx F::Phys-obj F::Abstr-obj)
 					  (F::type (? tt ONT::phys-object ont::mental-construction)))))
     :parent ont::change-state
@@ -1801,147 +1802,138 @@
     :parent ONT::experiencer-emotion
     )
 
-(define-type ont::evoke-cognitive-state
+;;; AFFECT-EXPERIENCER: NEUTRAL EXPERIENCE
+(define-type ont::neutral-experience
  :parent ont::affect-experiencer
 )
 
-(define-type ONT::evoke-emotion
- :wordnet-sense-keys ("arouse%2:37:00" "elicit%2:37:00" "enkindle%2:37:00" "kindle%2:37:00" "evoke%2:37:00" "fire%2:37:00" "raise%2:37:08" "provoke%2:37:00")
- :parent ONT::affect-experiencer
- :comment "actions the cause some emotion in an agent"
- :definitions ((ont::cause-effect :agent ?agent
-			   :formal (ont::experiencer-emotion :experiencer ?affected)))
- ;; experiencer restricted to be intentional in order to distinguish certain
- ;; words' senses under ONT::evoke-emotion from those under ONT::evoke-physical
- :arguments ((:REQUIRED ONT::affected (F::phys-obj (F::origin f::living) (F::intentional +)))
-             )
+(define-type ont::evoke-numbness
+ :parent ont::neutral-experience
+ :wordnet-sense-keys ("sedate%2:29:00" "numb%2:39:00")
+)
+
+;(define-type ONT::evoke-emotion
+; :wordnet-sense-keys ("arouse%2:37:00" "elicit%2:37:00" "enkindle%2:37:00" "kindle%2:37:00" "evoke%2:37:00" "fire%2:37:00" "raise%2:37:08" "provoke%2:37:00")
+; :parent ONT::affect-experiencer
+; :comment "actions the cause some emotion in an agent"
+; :definitions ((ont::cause-effect :agent ?agent
+;			   :formal (ont::experiencer-emotion :experiencer ?affected)))
+; ;; experiencer restricted to be intentional in order to distinguish certain
+; ;; words' senses under ONT::evoke-emotion from those under ONT::evoke-physical
+; :arguments ((:REQUIRED ONT::affected (F::phys-obj (F::origin f::living) (F::intentional +)))
+;             )
+; )
+;)
+
+(define-type ONT::evoke-excitement
+ :wordnet-sense-keys ("agitate%2:37:00" "overwhelm%2:37:00" "stir%2:37:01")
+ :parent ONT::neutral-experience
+ :comment "stir strong feelings"
+ )
+
+(define-type ONT::evoke-attention
+ :wordnet-sense-keys ("interest%2:37:00" "preoccupy%2:37:00" "intrigue%2:42:00")
+ :parent ONT::neutral-experience
+ )
+
+(define-type ont::evoke-curiosity
+ :wordnet-sense-keys ("intrigue%2:42:00")
+ :parent ont::evoke-attention
+)
+
+(define-type ONT::evoke-attraction
+ :wordnet-sense-keys ("capture%2:37:00" "touch%2:37:00" "disarm%2:37:00")
+ :parent ONT::evoke-attention
+ )
+
+(define-type ONT::evoke-clarity
+ :wordnet-sense-keys ("enlighten%2:32:00")
+ :parent ONT::neutral-experience
+ )
+
+(define-type ONT::evoke-surprise
+ :wordnet-sense-keys ("surprise%2:31:00" "stun%2:39:00" "amaze%2:31:00" "awe%2:37:00" "surprise%1:11:00")
+ :parent ONT::neutral-experience
+ :comment "evoke shock or astonishment via the unexpected"
+ )
+
+(define-type ont::evoke-sensory-perception
+ :wordnet-sense-keys ("sensitize%2:30:02" "greet%2:39:00")
+ :parent ont::neutral-experience
+)
+
+;;; AFFECT-EXPERIENCER: IMPROVE EXPERIENCE
+
+(define-type ont::improve-experience
+ :parent ont::affect-experiencer
+)
+
+(define-type ont::evoke-relief
+ :wordnet-sense-keys ("still%2:37:01" "comfort%2:37:01")
+ :parent ont::improve-experience
+)
+
+(define-type ont::evoke-calm
+ :wordnet-sense-keys ("calm%2:37:01" "pacify%2:37:00" "mellow%2:30:01" "mellow%2:30:03")
+ :parent ont::evoke-relief
+ :comment "verbs dealing specifically with the relief of emotional/mental pain or discomfort"
+)
+
+(define-type ONT::evoke-comfort
+ :parent ONT::evoke-relief
+ :wordnet-sense-keys ("relax%2:29:00" "relax%2:29:01" "rest%2:32:01")
+ :comment "verbs dealing specifically with the relief of physical pain or discomfort"
  )
 
 (define-type ont::evoke-harmony
   :wordnet-sense-keys ("resonate%2:31:00")
-  :parent ont::evoke-emotion
+  :parent ont::improve-experience
 )
 
 (define-type ONT::evoke-joy
-    :wordnet-sense-keys ("please%2:37:00" "delight%2:37:00" "gladden%2:37:01" "gratify%2:37:00" "cheer%2:32:03" "entertain%2:41:00" "indulge%2:41:01" "indulge%2:34:00" "indulge%2:34:12" "indulge%2:41:00" "lighten_up%2:37:01" "greet%2:39:00")
-    :parent ONT::evoke-emotion
+    :wordnet-sense-keys ("gladden%2:37:01" "lighten%2:37:01" "enchant%2:37:00" "elate%2:37:00" "enliven%2:30:00" "cheer%2:32:03" "thrill%2:37:02")
+;"greet%2:39:00"
+    :parent ONT::improve-experience
     )
 
-(define-type ONT::evoke-sadness
- :wordnet-sense-keys ("sadden%2:37:01" "discourage%2:37:00")
- :parent ONT::evoke-emotion
- )
+(define-type ont::evoke-amusement
+ :wordnet-sense-keys ("entertain%2:41:00" "amuse%2:32:00" "amuse%2:41:00")
+ :parent ont::evoke-joy
+ :comment "evoke joy via entertainment, amusement and diversion"
+)
 
-(define-type ONT::evoke-anger
-    :wordnet-sense-keys ("try%2:37:01" "stress%2:37:00" "strain%2:37:00" "try%2:37:00" "anger%2:37:00")
-    :comment "cause to be angry"
-    :definitions (ont::cause-effect :agent ?agent
-			     :formal (ont::have-property :neutral ?affected
-							 :formal (ont::angry :figure ?affected)))
-							 
-    :parent ONT::evoke-emotion
+(define-type ont::evoke-satisfaction
+ :parent ont::evoke-joy
+ :wordnet-sense-keys ("content%2:34:00" "satisfy%2:37:00" "quench%2:34:00" "indulge%2:41:01" "indulge%2:34:00" "indulge%2:34:12" "indulge%2:41:00")
+ :comment "evoke joy via by providing satisfaction and pleasure"
+)
+
+;;; AFFECT-EXPERIENCER: WORSEN EXPERIENCE
+
+(define-type ont::worsen-experience
+ :parent ont::affect-experiencer
+)
+
+(define-type ONT::evoke-confusion
+ :parent ONT::worsen-experience
+ :wordnet-sense-keys ("confuse%2:37:00" "confuse%2:31:03" "bedaze%2:39:00" "flabbergast%2:31:00")
  )
 
 (define-type ONT::evoke-fear
-    :wordnet-sense-keys ("frighten%2:37:00" "fright%2:37:00" "scare%2:37:00" "affright%2:37:00")
+ :parent ONT::worsen-experience
+ :wordnet-sense-keys ("frighten%2:37:00")
     :definitions ((ont::cause-effect :agent ?agent
 				     :formal (ont::fearing :experiencer ?affected)))
-    :parent ONT::evoke-emotion
-    )
-
-(define-type ONT::evoke-disgust
- :wordnet-sense-keys ("disgust%2:39:00" "gross_out%2:39:00" "revolt%2:39:00" "repel%2:39:00")
- :parent ONT::evoke-emotion
- )
-
-(define-type ONT::evoke-surprise
- :wordnet-sense-keys ("surprise%2:31:00" "surprise%1:11:00")
- :parent ONT::evoke-emotion
- )
-
-(define-type ONT::evoke-confusion
- :parent ONT::evoke-cognitive-state
- :wordnet-sense-keys ("confuse%2:37:00" "confuse%2:31:03")
- )
-
-(define-type ont::evoke-insanity
- :parent ont::evoke-cognitive-state
- :wordnet-sense-keys ("madden%2:37:02")
-)
-
-(define-type ONT::evoke-annoyance
- :wordnet-sense-keys ("displease%2:37:00")
- :parent ONT::evoke-emotion
- )
-
-(define-type ONT::evoke-clarity
- :wordnet-sense-keys ("enlighten%2:32:00" "edify%2:32:00")
- :parent ONT::evoke-cognitive-state
- )
-
-(define-type ONT::evoke-excitement
- :wordnet-sense-keys ("agitate%2:37:00" "rouse%2:37:04" "turn_on%2:37:02" "charge%2:37:05" "commove%2:37:00" "excite%2:37:03" "charge_up%2:37:00")
- :parent ONT::evoke-emotion
  )
 
 (define-type ONT::evoke-boredom
  :wordnet-sense-keys ("bore%2:37:00" "tire%2:37:01" "pall%2:30:00" "pall%2:29:00" "pall%2:30:03" "pall%2:30:02")
- :parent ONT::evoke-emotion
- )
-
-(define-type ONT::evoke-distress
- :wordnet-sense-keys ("disturb%2:37:00" "upset%2:37:00" "trouble%2:37:01" "tense_up%2:29:00" "tense_up%2:29:01")
- :parent ONT::evoke-emotion
- )
-
-(define-type ONT::evoke-worry
- :wordnet-sense-keys ("worry%2:37:01")
- :parent ONT::evoke-distress
- )
-
-(define-type ONT::evoke-offense
- :parent ONT::evoke-emotion
- :comment "to cause feeling of offense (hurt, annoyance and resentfulness) in someone"
- :wordnet-sense-keys ("offend%2:37:00")
- )
-
-(define-type ONT::evoke-shame
- :wordnet-sense-keys ("shame%2:37:00" "attaint%2:41:00")
- :parent ONT::evoke-emotion
- )
-
-;; soothe, calm down, relax, settle down
-;(define-type ONT::subduing
-;    :parent ONT::evoke-emotion
-; )
-
-(define-type ont::evoke-calm
- :wordnet-sense-keys ("pacify%2:37:00" "comfort%2:37:01" "mellow%2:30:01" "unwind%2:29:01" "ease%2:37:00" "soothe%2:37:00" "mellow%2:30:03" "mellow%2:30:00" "unwind%2:29:00" "unwind%2:29:01" "rest%2:32:01" "sedate%2:29:00")
- :parent ont::evoke-emotion
-)
-
-(define-type ONT::evoke-physical
- :parent ONT::affect-experiencer
- )
-
-(define-type ont::evoke-sensory-perception
- :wordnet-sense-keys ("sensitize%2:30:02")
- :parent ont::evoke-physical
-)
-
-(define-type ONT::evoke-tiredness
- :wordnet-sense-keys ("exhaust%2:29:00" "wash_up%2:29:01" "beat%2:29:00" "tucker%2:29:00" "tucker_out%2:29:00" "weary%2:29:00")
- :parent ONT::evoke-physical
- )
-
-(define-type ONT::evoke-injury
- :wordnet-sense-keys ("hurt%2:29:01" "blind%2:39:01")
- :parent ONT::evoke-physical
+ :parent ONT::worsen-experience
  )
 
 (define-type ONT::evoke-discomfort
- :wordnet-sense-keys ("chafe%2:35:01" "irritate%2:29:00")
- :parent ONT::evoke-physical
+ :parent ONT::worsen-experience
+ :comment "to cause physical discomfort that are not related to irration/bother"
  )
 
 (define-type ont::evoke-hunger
@@ -1949,29 +1941,119 @@
  :parent ont::evoke-discomfort
 )
 
-(define-type ONT::evoke-pain
+(define-type ONT::evoke-tiredness
+ :wordnet-sense-keys ("exhaust%2:29:00" "tire%2:29:01")
  :parent ONT::evoke-discomfort
+ )
+
+(define-type ONT::evoke-hurt
+ :parent ONT::worsen-experience
+ :wordnet-sense-keys ("hurt%2:29:01" "hurt%2:39:01" "hurt%2:37:01")
+ :comment "cause hurt or suffering"
+ )
+
+;(define-type ONT::evoke-pain
+; :parent ONT::worsen-experience
+; :wordnet-sense-keys ("hurt%2:37:01")
+; :comment "cause pain"
+; )
+
+(define-type ONT::evoke-injury
+ :wordnet-sense-keys ("injure%2:29:00" "maim%2:29:00" "blind%2:39:01")
+ :comment "verbs that specifically deal with physical hurt"
+ :parent ONT::evoke-hurt
+ )
+
+(define-type ONT::evoke-shame
+ :wordnet-sense-keys ("shame%2:37:00" "shame%2:41:00" "humiliate%2:37:00" "embarrass%2:37:00")
+ :parent ONT::evoke-hurt
+ )
+
+(define-type ont::evoke-bother
+ :wordnet-sense-keys ("bother%2:38:00" "bother%2:41:01")
+ :parent ont::worsen-experience
+)
+
+(define-type ONT::evoke-offense
+ :parent ONT::evoke-bother
+ :comment "verbs that specifically deal with mental/emotional hurt"
+ :wordnet-sense-keys ("offend%2:37:00" "offend%2:37:02")
+ )
+
+(define-type ont::evoke-physical-irritation
+ :parent ont::evoke-bother
+ :wordnet-sense-keys ("irritate%2:29:00" "chafe%2:39:00" "rub%2:35:01")
+)
+
+(define-type ont::evoke-social-irritation
+ :parent ont::evoke-bother
+ :wordnet-sense-keys ("antagonize%2:37:00" "frustrate%2:37:00")
+)
+
+(define-type ONT::evoke-annoyance
+ :wordnet-sense-keys ("bother%2:37:00" "dissatisfy%2:37:00" "irk%2:37:00" "displease%2:37:00")
+ :parent ONT::evoke-bother
+ :comment "evoke emotional/mental irritation"
+ )
+
+(define-type ONT::evoke-worry
+ :wordnet-sense-keys ("worry%2:37:01" "haunt%2:37:00")
+ :parent ONT::evoke-bother
+ :comment "cause to be concerned or worried (involving primarily negative thoughts)"
+ )
+
+(define-type ont::evoke-upset
+ :wordnet-sense-keys ("upset%2:37:01" "disturb%2:37:00")
+ :parent ont::evoke-bother
+)
+
+(define-type ont::evoke-distress
+ :wordnet-sense-keys ("tense%2:29:00" "tense%2:29:01"  "jar%2:37:00" "unnerve%2:37:00")
+ :parent ont::evoke-upset
+ :comment "put a stressor on tranquility"
+)
+
+(define-type ONT::evoke-anger
+ :wordnet-sense-keys ("anger%2:37:00" "try%2:37:00" "try%2:37:01")
+ :parent ONT::evoke-upset
+    :comment "cause to be angry"
+    :definitions (ont::cause-effect :agent ?agent
+			     :formal (ont::have-property :neutral ?affected
+							 :formal (ont::angry :figure ?affected)))
+
+ )
+
+(define-type ONT::evoke-sadness
+ :wordnet-sense-keys ("sadden%2:37:01" "discourage%2:37:00" "disappoint%2:37:00" "devastate%2:30:01" "grieve%2:37:01")
+ :parent ONT::evoke-upset
+ :comment "evoke disappointment, disheartening, sadness, or grief"
+ )
+
+(define-type ONT::evoke-disgust
+ :wordnet-sense-keys ("disgust%2:39:00" "repel%2:37:00" "horrify%2:37:01" "nauseate%2:37:00")
+ :parent ONT::evoke-upset
  )
 
 (define-type ONT::evoke-ill-being
- :parent ONT::evoke-discomfort
+ :wordnet-sense-keys ("nauseate%2:39:00")
+ :parent ONT::evoke-disgust
+ :comment "includes physical feeling of nausea"
  )
 
-(define-type ONT::evoke-comfort
- :parent ONT::evoke-physical
- :wordnet-sense-keys ("alleviate%2:29:00" "numb%2:39:00" "ease%2:29:00" "soothe%2:29:00")
- :comment "relieve of physical pain or discomfort"
- )
 
-(define-type ONT::evoke-attention
- :wordnet-sense-keys ("interest%2:37:00")
- :parent ONT::evoke-cognitive-state
- )
+;(define-type ont::evoke-cognitive-state
+; :parent ont::affect-experiencer
+;)
 
-(define-type ONT::evoke-attraction
- :wordnet-sense-keys ("capture%2:37:00" "enamour%2:37:00" "trance%2:37:00" "catch%2:37:05" "becharm%2:37:00" "enamor%2:37:00" "captivate%2:37:00" "beguile%2:37:00" "charm%2:37:00" "fascinate%2:37:01" "bewitch%2:37:00" "entrance%2:37:00" "enchant%2:37:01")
- :parent ONT::evoke-cognitive-state
- )
+;; soothe, calm down, relax, settle down
+;(define-type ONT::subduing
+;    :parent ONT::evoke-emotion
+; )
+
+;(define-type ONT::evoke-physical
+; :parent ONT::affect-experiencer
+; )
+
 
 ;;  This is for "the truck needs repair"
 
@@ -2123,7 +2205,7 @@
 
 (define-type ONT::impress
 ; :wordnet-sense-keys ("affect%2:37:00" "impress%2:37:01" "move%2:37:00" "strike%2:37:00")
- :wordnet-sense-keys ("impress%2:37:00")
+ :wordnet-sense-keys ("impress%2:37:00" "wow%2:37:00" )
  :parent ONT::judgement
 ; :arguments (
 ;	     (:required ONT::cause)
@@ -2232,7 +2314,7 @@
  )
 
 (define-type ONT::greet
- :wordnet-sense-keys ("greet%2:32:00" "recognize%2:32:01" "recognise%2:32:01")
+ :wordnet-sense-keys ("greet%2:32:00" "recognize%2:32:01" "recognise%2:32:01" "greet%2:32:01")
  :parent ONT::conventional-speech-act
  )
 
@@ -2855,7 +2937,7 @@
 
 ;;; I dared to go, I dared John to go.
 (define-type ONT::provoke
- :wordnet-sense-keys ("persuade%2:32:00" "force%2:36:00" "coerce%2:41:00" "subject%2:39:03" "oblige%2:41:00")
+ :wordnet-sense-keys ("persuade%2:32:00" "force%2:36:00" "coerce%2:41:00" "subject%2:39:03" "oblige%2:41:00" "arouse%2:37:00")
  :parent ONT::cause-effect
  :arguments ((:ESSENTIAL ONT::affected ((? exp F::phys-obj f::abstr-obj) (f::intentional +))))
  )
@@ -2945,10 +3027,13 @@
 	      )
   )
 
-(define-type ont::enable-process
- :parent ont::enable
- :wordnet-sense-keys ("sensitize%2:30:01")
-)
+;; 20121027 GUM change new type
+(define-type ONT::prepare
+  :wordnet-sense-keys ("arm%2:33:00" "sensitize%2:30:01")
+  :parent ONT::enable
+  )
+
+
 
 (define-type ont::facilitate
  :parent ont::enable
@@ -3984,7 +4069,7 @@
 
 (define-type ONT::decrease
     :wordnet-sense-keys ("decrease%2:30:00" "decrease%2:30:01" "diminish%2:30:00" "lessen%2:30:00" "fall%2:30:06" "mitigate%2:32:00"
-					    "decrease%1:11:00")
+					    "decrease%1:11:00" "relieve%2:29:00")
  :parent ONT::change-magnitude
  )
 
@@ -5240,18 +5325,20 @@
     :arguments ((:required ont::formal (f::phys-obj (f::form (? ff f::liquid f::gas f::wave))))
 		))
 
+
+
+;; FN
+(define-type ont::hindering
+ :wordnet-sense-keys ("hold_back%2:41:00" "keep_back%2:41:00" "restrain%2:41:01" "throttle%2:30:01" "confine%2:30:00" "bound%2:30:00" "limit%2:30:01" "trammel%2:30:00" "restrain%2:30:00" "restrict%2:30:00" "handicap%2:33:00" "hinder%2:33:00" "hamper%2:33:00"  "barricade%1:06:00" "obstruction%1:06:00" "crush%2:41:00" "disrupt%2:30:01"  "compromise%2:32:03" "hinder%2:41:01")
+    :parent ont::inhibit-effect
+ :comment "make it difficult for an effect or event to complete; obstruct an ongoing event"
+    )
+
 (define-type ONT::prevent
   :wordnet-sense-keys ("prevent%2:41:00" "prevent%2:41:01" "prevention%1:04:00" "keep%2:40:01")
  :parent ONT::inhibit-effect
  :comment "prevent an effect or event from taking place"
  )
-
-;; FN
-(define-type ont::hindering
- :wordnet-sense-keys ("hold_back%2:41:00" "keep_back%2:41:00" "restrain%2:41:01" "keep%2:41:01" "throttle%2:30:01" "confine%2:30:00" "bound%2:30:00" "limit%2:30:01" "trammel%2:30:00" "restrain%2:30:00" "restrict%2:30:00" "handicap%2:33:00" "hinder%2:33:00" "hamper%2:33:00"  "barricade%1:06:00" "obstruction%1:06:00" "crush%2:41:00" "disrupt%2:30:01"  "compromise%2:32:03")
-    :parent ont::inhibit-effect
- :comment "make it difficult for an effect or event to complete; obstruct an ongoing event"
-    )
 
 (define-type ONT::downregulate
  :parent ONT::hindering

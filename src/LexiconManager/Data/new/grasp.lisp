@@ -9,7 +9,6 @@
 	  (w::grasp
 	   (senses
 	    ((LF-parent ont::come-to-understand)
-	     (SEM (F::Aspect F::Stage-level))
 	     (TEMPL agent-theme-xp-templ)
 	     (meta-data :origin bee :entry-date 20040607 :change-date nil :comments portability-expt) 
 	     )

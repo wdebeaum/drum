@@ -6,7 +6,7 @@
  :words (
   (W::palpable
    (SENSES
-    ((lf-parent ont::tangibility-val)
+    ((lf-parent ont::tangible-val)
      (meta-data :origin trips :entry-date 20090915 :change-date nil :comments nil)
      )
     )

@@ -8,7 +8,7 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin trips :entry-date 20090915 :change-date nil :comments nil)
-     (lf-parent ont::preceptibility-val)
+     (lf-parent ont::perceptible-val)
      )
     )
    )

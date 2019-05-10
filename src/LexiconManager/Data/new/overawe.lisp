@@ -7,7 +7,7 @@
   (W::overawe
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090512 :comments nil :vn ("amuse-31.1") :wn ("overawe%2:37:00"))
-     (LF-PARENT ONT::evoke-excitement)
+     (LF-PARENT ONT::impress)
      (TEMPL agent-affected-xp-templ)
      )
     )

@@ -9,7 +9,8 @@
    (SENSES
     ((meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
      (lf-parent ont::thirsty-val)
-     (templ central-adj-experiencer-templ)
+     (templ central-adj-templ)
+;     (templ central-adj-content-templ)
      )
     )
    )

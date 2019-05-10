@@ -9,7 +9,8 @@
 	   (senses
 	    ((lf-parent ont::surprised) (lf-form w::surprised)
 	     (meta-data :origin bee :entry-date 20040608 :change-date nil :comments portability-experiment)
-	     (templ central-adj-experiencer-templ)
+	     (templ central-adj-templ)
+	     ;(templ central-adj-content-templ) 
 	     )
 	   #|| ((lf-parent ont::surprised)
 	     (example "I am surprised that she does that")

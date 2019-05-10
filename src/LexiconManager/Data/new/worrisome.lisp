@@ -18,7 +18,7 @@
      (SEM (f::gradability +) (f::orientation ont::less) (f::intensity ont::med))
      (TEMPL adj-purpose-TEMPL)
      )
-    ((meta-data :origin trips :entry-date 20060824 :change-date 20061106 :comments nil :wn ("worrisome%3:00:04") :comlex (EXTRAP-ADJ-FOR-TO-INF-OMIT))
+#|    ((meta-data :origin trips :entry-date 20060824 :change-date 20061106 :comments nil :wn ("worrisome%3:00:04") :comlex (EXTRAP-ADJ-FOR-TO-INF-OMIT))
      (EXAMPLE "a drug suitable for cancer")
      (lf-parent ont::distressing-val)
      (SEM (f::gradability +) (f::orientation ont::less) (f::intensity ont::med))
@@ -26,7 +26,7 @@
      ;; the main sense is adj-purpose-templ for cases such as "this is good for treating cancer"
      ;; the adj-purpose-implicit-templ is for indirect purposes, such as "this is good for cancer" where one has to infer that the actual use is in the treatment action
      (TEMPL adj-purpose-implicit-XP-templ)
-     )
+     )|#
     ((meta-data :origin trips :entry-date 20060824 :change-date 20061106 :comments nil :wn ("worrisome%3:00:04") :comlex (ADJ-PP-FOR))
      (EXAMPLE "a solution good for him")
      (SEM (f::gradability +) (f::orientation ont::less) (f::intensity ont::med))

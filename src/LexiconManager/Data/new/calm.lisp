@@ -6,14 +6,14 @@
  :words (
 ((W::calm (w::down))
    (SENSES
-    ((LF-PARENT ont::evoke-calm)
+    ((LF-PARENT ont::evoke-relief)
      (example "calm down")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL agent-TEMPL)
      (preference .97) ;; prefer transitive
      (meta-data :origin plow :entry-date 20050922 :change-date nil :comments nil)
      )
-    ((LF-PARENT ont::evoke-calm)
+    ((LF-PARENT ont::evoke-relief)
      (example "calm him down")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL agent-affected-xp-TEMPL)
@@ -34,7 +34,7 @@
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL AGENT-affected-XP-TEMPL)
      )
-    ((LF-PARENT ont::evoke-calm)
+    ((LF-PARENT ont::evoke-relief)
      (example "music calms the savage beast")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL agent-affected-xp-templ)

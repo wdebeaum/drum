@@ -6,7 +6,7 @@
  :words (
   (w::fitness
    (SENSES
-    ((LF-PARENT ONT::suitability-scale)
+    ((LF-PARENT ONT::appropriate-scale)
      (EXAMPLE "the implied warranties of merchantability and fitness for a particular purpose")
      (meta-data :origin task-learning :entry-date 20050825 :change-date nil :wn ("fitness%1:07:00") :comments nil)
      )

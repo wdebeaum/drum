@@ -7,7 +7,7 @@
   (W::recharge
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090512 :comments nil :vn ("amuse-31.1"))
-     (LF-PARENT ONT::evoke-excitement)
+     (LF-PARENT ONT::reviving)
      (example "the pep talk recharged him")
      (TEMPL agent-affected-xp-templ)
      )

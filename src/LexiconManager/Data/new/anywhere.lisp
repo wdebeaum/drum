@@ -9,7 +9,7 @@
   (W::ANYWHERE
    (wordfeats (W::else-word +))
    (SENSES
-    ((LF-PARENT ONT::WH-LOCATION)
+    ((LF-PARENT ONT::AT-LOC)
      (SYNTAX (W::IMPRO-CLASS ONT::LOCATION))
      )
     )
@@ -21,7 +21,7 @@
  :words (
   (W::ANYWHERE
    (SENSES
-    ((LF-PARENT ONT::WH-LOCATION)
+    ((LF-PARENT ONT::LOCATION)
      (PREFERENCE 0.97)
      )
     )

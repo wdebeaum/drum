@@ -7,7 +7,7 @@
   (W::aggrieve
    (SENSES
     ((meta-data :origin "verbnet-2.0-corrected" :entry-date 20060315 :change-date 20090512 :comments nil :vn ("amuse-31.1"))
-     (LF-PARENT ONT::evoke-distress)
+     (LF-PARENT ONT::evoke-sadness)
      (TEMPL agent-affected-xp-templ) 
      )
     )

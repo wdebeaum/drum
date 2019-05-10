@@ -3,7 +3,7 @@
    (w::odorless
    (SENSES
     ((meta-data :origin adjective-reorganization :entry-date 20170413 :change-date nil :comments nil :wn nil :comlex nil)
-     (lf-parent ont::unsmellability-val)
+     (lf-parent ont::unsmellable-val)
      )
     )
    )))
