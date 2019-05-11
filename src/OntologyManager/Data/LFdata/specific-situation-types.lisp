@@ -640,10 +640,6 @@
  :parent ont::excrete
 )
 
-(define-type ont::expectorate
- :wordnet-sense-keys ("expectorate%2:29:00")
- :parent ont::push-liquid
-) 
 
 (define-type ont::bleed
  :wordnet-sense-keys ("bleed%2:29:00" "menstruation%1:22:00")
@@ -991,6 +987,12 @@
  :wordnet-sense-keys ("squirt%2:35:00" "squirt%2:35:10" "sprinkle%2:35:01" "spray%2:35:03" "splash%2:35:04" "splash%2:35:00")
   :parent ONT::push
   )
+
+(define-type ont::expectorate
+ :wordnet-sense-keys ("expectorate%2:29:00")
+ :parent ont::push-liquid
+) 
+
 
 (define-type ont::blow
  :wordnet-sense-keys ("blow%2:29:00")
@@ -2883,7 +2885,7 @@
  )
 
 (define-type ONT::Cause-Action
-    :parent ONT::CAUSE-effect
+    :parent ONT::Acting
     
     :sem (F::Situation (F::Cause F::Agentive))
     :arguments ((:REQUIRED ONT::Effect (F::Situation (F::Cause F::Agentive) (F::Aspect F::Dynamic)))

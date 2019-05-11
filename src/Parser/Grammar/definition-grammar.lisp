@@ -1,7 +1,7 @@
 ;;;;
 ;;;; robust.lisp
 ;;;;
-;;;; Time-stamp: <Fri Apr  7 15:21:36 EDT 2017 jallen>
+;;;; Time-stamp: <Fri May 10 13:13:36 EDT 2019 james>
 ;;;;
 
 (in-package :W)
@@ -65,10 +65,10 @@
       -defn-ing-GAP>
      (head (vp (var ?v) (lf ?lf) (vform (? vf w::ing w::base))
 	       (subj (% ?xx (sem ?subjsem)))
-	       (dobj (% ?yy (sem ?dobjsem)))
+	       ;(dobj (% ?yy (sem ?dobjsem)))
 	       (subjvar (% *PRO* (var *) (class ont::ROLE-REF) (sem ?subjsem)
 			   (constraint (& (:context-rel :lsubj)))))
-	       (gap (% NP (gap -) (sem ?dobjsem)
+	       (gap (% NP (gap -) ;(sem ?dobjsem)
 		       (var (% *PRO* (var **) (class ont::ROLE-REF) (constraint (& (:context-rel :dobj))))))))
 	       ))
 

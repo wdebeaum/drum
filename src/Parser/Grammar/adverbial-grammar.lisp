@@ -1667,7 +1667,7 @@
 			  ;; W::VP)
 		  (SEM ($ F::situation (f::type (? xx ont::event-of-action ont::event-of-state)))))) ;;SITUATION (F::trajectory +)))))))
      )
-    -distance-np-advbl> 1.0 ;.97
+    -extent-np-advbl> 1.0 ;.97
     (head (np (var ?v) (sort unit-measure) (sem ?sem)  
 	      (bare -) ;; we suppress this rule for distances without a specific amount (e.g., "miles")
 	      ;; the semantic restriction is not sufficient to prevent measure-unit phrases such as "a bit" or "a set" as distances so using the lfs to restrict
@@ -1682,14 +1682,14 @@
     )
 
 
-;; adjectival extent adverbials. He jumped three feet high, He jumped three feet higher than than
+;; adjectival extent adverbials. He jumped higher than that
    ((advbl (arg ?arg) ;;(role (:* ONT::distance W::quantity)) 
      (var *) (subj ?anysubj)
 	   (sort binary-constraint) (sem ?sem)
 	   (LF (% PROP (VAR *) (CLASS ONT::extent-predicate) (sem ?sem)
 		  (CONSTRAINT (& (figure ?arg)
 				 (ground (% *PRO* (status definite)
-					    (var **) (class ANYSEM)
+					    (var **) (class ont::VALUE)
 					    (constraint (& (MOD ?v)))))
 				 ))
 		  ))
@@ -1697,17 +1697,17 @@
      (argument (% W::S (subjvar ?anysubj)
 		  (SEM ($ F::situation (f::type (? xx ont::event-of-action ont::event-of-state))))))
      )
-    -extent-adj-advbl> 1.0 ;.97
+    -extent-adj-compar-advbl> 1.0 ;.97
     (head (Adjp (var ?v) (sem ?sem)  (arg **)
 	      (bare -) 
-	      (lf (% prop (class (? cc ont::more-val ont::less-val ont::at-scale-val))))
+	      (lf (% prop (class (? cc ont::more-val ont::less-val))))
 	      (sem ($ f::abstr-obj (f::scale (? sc ont::scale ont::measure-scale)))) 
 	      
 	      ))
      )
 
-      ;; ing VPs as adverbials
-      ;; TEST: Barking, the dog chased the cat.
+   ;; ing VPs as adverbials
+   ;; TEST: Barking, the dog chased the cat.
    ;; TEST: The dog chased the cat barking.
    ((advbl (arg ?arg) (sem ($ f::abstr-obj (f::information -) (f::intentional -) (f::type ONT::IMPLICIT-OVERLAP)))
      (argument (% S (sem ($ f::situation (f::aspect f::dynamic))) (subjvar ?!subjvar) (subj ?!subj)
