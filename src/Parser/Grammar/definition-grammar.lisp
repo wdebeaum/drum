@@ -132,8 +132,10 @@
 
     ((NP (SORT PRED) (generated +) (var *) (class ?class) (agr ?agr)
       (LF (% Description (Status PRO) (var *) (Sort Individual)
-	     (class ?class) (lex ?l) (sem ?sem)  ;; LEX used to be ?fname, but this isn't used any more  JFA 5/04
-	     (constraint (& (:proform ont::something) (:like ?v)))
+	     (class ONT::REFERENTIAL-SEM) ;(class ?class)
+	     (lex ?l)   ;; LEX used to be ?fname, but this isn't used any more  JFA 5/04
+	     (sem ($ ?s (f::type ONT::REFERENTIAL-SEM))) ;(sem ?sem)
+	     (constraint (& (:proform w::something) (:like ?v)))
 	     )))
      -arg-in-paren>
      (punc (lex w::start-paren))
