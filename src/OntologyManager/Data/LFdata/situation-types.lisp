@@ -454,7 +454,7 @@
  )
 
 (define-type ONT::Request
- :wordnet-sense-keys ("request%2:32:01" "request%1:10:00" "call%2:41:04")
+ :wordnet-sense-keys ("call%2:41:04" "insist%2:32:00" "request%1:10:00" "request%2:32:01")
  :parent ONT::directive
  :comment "the generic directive act"
  :sem (F::Situation (F::Cause F::Agentive))

@@ -198,7 +198,7 @@
 	     ))
 
 (define-type ONT::discard
-    :wordnet-sense-keys ("eliminate%2:31:00" "eliminate%2:31:01" "eliminate%2:42:01" "get_rid_of%2:40:01"
+    :wordnet-sense-keys ("eliminate%2:31:00" "eliminate%2:30:01" "eliminate%2:42:01" "get_rid_of%2:40:01"
 					     )
     :parent ONT::relinquish
     :arguments ((:OPTIONAL ONT::Source)
@@ -627,6 +627,11 @@
 
 (define-type ont::vomit
  :wordnet-sense-keys ("vomit%2:29:00" "gag%2:29:01")
+ :parent ont::excrete
+)
+
+(define-type ont::keep-down-vomit
+ :wordnet-sense-keys ("keep_down%2:29:00")
  :parent ont::excrete
 )
 
@@ -2767,7 +2772,7 @@
 ;;  something that encodes a message
 (define-type ONT::encodes-message
     :comment "some artifact conveys some message"
-    :wordnet-sense-keys ("read%2:42:00" "go%2:42:02" "represent%2:36:01")
+    :wordnet-sense-keys ("go%2:42:02" "intend%2:32:02" "read%2:42:00" "represent%2:36:01")
     :arguments ((:REQUIRED ONT::neutral ((? n  F::Phys-obj f::abstr-obj) (f::information f::information-content)))
 		(:OPTIONAL ONT::neutral1 ((? n1 F::Phys-obj f::abstr-obj))))
     :parent ONT::EVENT-OF-STATE
@@ -4677,7 +4682,7 @@
 
 ;; stretch  20120524 GUM change new type
 (define-type ONT::admit
-  :wordnet-sense-keys ("accept%2:40:03" "admit%2:41:00")
+  :wordnet-sense-keys ("accept%2:40:03" "admit%2:41:00" "invite%2:35:12")
   :parent ont::enroll
  )
 

@@ -19,6 +19,12 @@
      (EXAMPLE "intend something to move towards a certain goal")
      (meta-data :origin jr :entry-date 20120806 :change-date nil :comments gloss-owl)
      )
+
+   ((LF-PARENT ONT::ENCODES-MESSAGE)
+     (TEMPL NEUTRAL-NEUTRAL-TEMPL)
+     (EXAMPLE "an example sentence would show what this word intended")
+     )
+      
     )
    )
 ))

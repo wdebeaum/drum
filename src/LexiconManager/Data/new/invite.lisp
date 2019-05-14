@@ -17,6 +17,11 @@
      (templ AGENT-AFFECTED-THEME-OPTIONAL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
      (SEM (F::Aspect F::bounded) (F::time-span F::atomic))
      )
+     
+    ((EXAMPLE "The community warmly invites the refugees.")
+     (LF-PARENT ont::admit)
+     (templ AGENT-AFFECTED-XP-TEMPL)
+     ) 
 
     )
    )

@@ -55,3 +55,14 @@
    )
 ))
 
+(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+ :words (
+  ((W::keep (W::down))
+   (wordfeats (W::morph (:forms (-vb) :past W::kept)))
+   (SENSES
+    ((LF-PARENT ONT::keep-down-vomit)
+     (example "I’d eat something if I thought I could keep it down.")
+     )
+    )
+   )
+))

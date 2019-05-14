@@ -31,6 +31,13 @@
      (TEMPL neutral-TEMPL) (SYNTAX (ADVBL-NECESSARY +))
      (preference 0.98)
      (meta-data :origin bee :entry-date 20040805 :change-date nil :comments portability-followup))
+
+    ((lf-parent ont::occurring)
+     (example "How is it going?")
+     (TEMPL neutral-TEMPL)
+     (meta-data :wn ("go%2:42:03"))
+    )
+
     ((lf-parent ont::execute)
      (example "he went jogging")
      (templ agent-effect-subjcontrol-templ (xp (% W::VP (W::vform W::ing))))

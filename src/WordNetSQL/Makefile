@@ -1,6 +1,6 @@
 # WordNetSQL Makefile
 # William de Beaumont
-# $Date: 2016/09/07 12:49:30 $
+# $Date: 2019/05/13 19:23:25 $
 
 CONFIGDIR=../config
 include $(CONFIGDIR)/defs.mk
@@ -26,7 +26,10 @@ install-lib: word_net_sql.polyglot $(etcdir)/WordNetSQL
 
 install-wn: wn.db $(etcdir)/WordNetSQL 
 	# this file is ~300MB, so try to only keep one copy of it
-	if [ ! -L wn.db ] ; then \
+	if [ -e /dev/shm/wn.db ] ; then \
+	  mv /dev/shm/wn.db $(etcdir)/WordNetSQL/ ; \
+	  ln -sf $(etcdir)/WordNetSQL/wn.db ./ ; \
+	elif [ ! -L wn.db ] ; then \
 	  mv wn.db $(etcdir)/WordNetSQL/ ; \
 	  ln -s $(etcdir)/WordNetSQL/wn.db ./ ; \
 	fi
@@ -57,6 +60,11 @@ endif
 wn.db-no-really: make-wordnet-sql-db.pl glosstags.sqlite glosstag-standoff-to-sql.pl glosstag-standoff-to-sql.xsl get-del-ins.ph fix-glosstag-offsets-manually.pl manual-glosstag-fixes.txt
 	touch $@
 	rm -f wn.db
+	# try to use /dev/shm on linux to speed things up
+	if [ -d /dev/shm ] && [ -w /dev/shm ] ; then \
+	  touch /dev/shm/wn.db ; \
+	  ln -s /dev/shm/wn.db wn.db ; \
+	fi
 	$(PERL) make-wordnet-sql-db.pl $(WORDNET) wn.db
 	sqlite3 wn.db <glosstags.sqlite
 	$(PERL) glosstag-standoff-to-sql.pl $(GLOSSTAG) wn.db >gsts-warnings.txt
