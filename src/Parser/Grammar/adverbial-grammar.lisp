@@ -831,8 +831,9 @@
 		))
 
      (advbl (ATYPE POST) (ARGUMENT (% S (sem ?sem))) (GAP ?!gap)
-      (ARG ?v) (VAR ?mod)
-      (role ?advrole) 
+	    (ARG ?v) (VAR ?mod)
+	    (SEM ($ f::abstr-obj (F::type (? t ONT::by-means-of)))) ; restricted until we find other examples
+	    (role ?advrole) 
       )
      (add-to-conjunct (val (MODS ?mod)) (old ?lf) (new ?new))
      )
