@@ -2,11 +2,21 @@
 ;;;; W::sound
 ;;;;
 
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :words (
+   (W::sound
+   (SENSES
+    ((LF-PARENT ONT::audio)
+     )
+    )
+   )
+   ))
+
 (define-words :pos W::v :templ agent-theme-xp-templ
  :tags (:base500)
  :words (
    (W::sound
-    (wordfeats (W::morph (:forms (-vb) :nom w::sound)))
+    ;(wordfeats (W::morph (:forms (-vb) :nom w::sound)))
    (SENSES
     ((meta-data :origin text-processing :entry-date 20091216 :change-date nil :comments wf-missing-mappings)
      (LF-PARENT ONT::make-sound)
@@ -19,7 +29,8 @@
 ;     (TEMPL agent-neutral-templ) ;; agent emits a sound 
 ;     )
     ((meta-data :origin text-processing :entry-date 20091216 :change-date nil :comments wf-missing-mappings)
-     (LF-PARENT ONT::play)
+     ;(LF-PARENT ONT::play)
+     (LF-PARENT ONT::make-sound)
      (example "he sounded the alarm")
      (TEMPL agent-affected-xp-templ)
      )

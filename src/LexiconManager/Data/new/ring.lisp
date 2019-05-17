@@ -16,7 +16,8 @@
      (TEMPL agent-templ) ;; agent (bell) emits a sound        
      )
     ((meta-data :origin cause-result-relations :entry-date 20091216 :change-date nil :comments wf-missing-mappings)
-     (LF-PARENT ONT::play)
+     ;(LF-PARENT ONT::play)
+     (LF-PARENT ONT::make-sound)
      (example "Joe rang the bell")
      (TEMPL agent-affected-xp-templ)
      )     

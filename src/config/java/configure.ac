@@ -2,7 +2,7 @@
 # configure.ac for java
 #
 # George Ferguson, ferguson@cs.rochester.edu, 3 Jun 2002
-# $Id: configure.ac,v 1.4 2008/08/29 21:33:33 wdebeaum Exp $
+# $Id: configure.ac,v 1.5 2019/05/16 19:11:08 wdebeaum Exp $
 #
 # Process this file with autoconf to produce a configure script.
 #
@@ -101,6 +101,24 @@ if (test $need_symlink_fix_flag = "yes" ); then
       echo 'Renamed src to TRIPS and symlinked, because java does not handle symlinks properly on this OS' >../../../README.txt
    fi
 fi
+
+AC_SUBST(EXTRA_NESTED_PRIVATE_CLASS_FILE)
+AC_MSG_CHECKING([whether nested private class makes an extra class file])
+cat >ConfTest.java <<CONFTEST
+class ConfTest {
+  private class A {}
+  void a() { new A(); }
+}
+CONFTEST
+$JAVAC ConfTest.java
+if test -e ConfTest\$1.class ; then
+  AC_MSG_RESULT([yes])
+  EXTRA_NESTED_PRIVATE_CLASS_FILE='yes'
+else
+  AC_MSG_RESULT([no])
+  EXTRA_NESTED_PRIVATE_CLASS_FILE=''
+fi
+#rm -f ConfTest.java ConfTest*.class
 
 AC_CONFIG_FILES([Makefile defs.mk])
 AC_OUTPUT

@@ -12,7 +12,8 @@
      (example "Napoleon inspired him [to become the Emporer's painter]")
      )
     ((LF-PARENT ont::provoke)
-     (TEMPL agent-effect-affected-optional-templ (xp (% w::pp (w::ptype (? pt w::in w::among))))) ; like annoy,bother,concern,hurt
+     ;(TEMPL agent-effect-affected-optional-templ (xp (% w::pp (w::ptype (? pt w::in w::among))))) ; like annoy,bother,concern,hurt
+     (templ agent-affected-xp-templ)
      (example "he inspired confidence [in them]")
      )
     )

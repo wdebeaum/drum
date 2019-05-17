@@ -12,7 +12,8 @@
      (example "He spurred him [to run for office]")  
      )
     ((LF-PARENT ont::provoke)
-     (TEMPL agent-effect-affected-optional-templ (xp (% w::pp (w::ptype (? pt w::in w::among))))) ; like annoy,bother,concern,hurt
+     ;(TEMPL agent-effect-affected-optional-templ (xp (% w::pp (w::ptype (? pt w::in w::among))))) ; like annoy,bother,concern,hurt
+     (templ agent-affected-xp-templ)
      (example "the lecture spurred anger [in the crowd]")
      )
     )

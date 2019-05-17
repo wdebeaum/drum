@@ -3118,8 +3118,9 @@
 
 ;; play (for asma)
 (define-type ont::play
-    :wordnet-sense-keys ("play%2:33:00" "play%2:41:03" "play%2:41:00" "sound%2:39:01" "ring%2:39:01")
-    :parent ont::execute
+    :wordnet-sense-keys ("play%2:33:00" "play%2:41:03" "play%2:41:00")
+    ;:parent ont::execute
+    :parent ont::event-of-action
     )
 
 ;; take a shower (for asma)
@@ -3539,7 +3540,7 @@
 ;; sound
 ;; 20121022 GUM change parent; this change requires adding an ont::effect role
 (define-type ont::make-sound
-   :wordnet-sense-keys ("clink%2:39:01" "clink%2:39:00" "tinkle%2:39:00" "sound%2:39:00" "ring%2:39:00")
+   :wordnet-sense-keys ("clink%2:39:01" "clink%2:39:00" "tinkle%2:39:00" "sound%2:39:00" "ring%2:39:00" "play%2:36:00" "play%2:36:11" "play%2:36:05" "sound%2:39:01" "ring%2:39:01")
   ;; :parent ont::emit
    :parent ont::emit-giveoff-discharge ;; 20121022 GUM change parent; this change requires adding an ont::effect role
    :arguments ((:OPTIONAL ONT::effect (F::situation))

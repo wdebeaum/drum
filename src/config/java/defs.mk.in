@@ -3,7 +3,7 @@
 # defs.mk for java
 #
 # George Ferguson, ferguson@cs.rochester.edu,  3 Jun 2002
-# $Id: defs.mk.in,v 1.2 2008/08/29 21:33:34 wdebeaum Exp $
+# $Id: defs.mk.in,v 1.3 2019/05/16 19:11:08 wdebeaum Exp $
 #
 # @configure_input@
 #
@@ -18,3 +18,4 @@ NONTRIPS_JAVAC   = @NONTRIPS_JAVAC@
 NONTRIPS_JAR     = @NONTRIPS_JAR@
 NONTRIPS_JAVADOC = @NONTRIPS_JAVADOC@
 TARGET	= @TARGET@
+EXTRA_NESTED_PRIVATE_CLASS_FILE = @EXTRA_NESTED_PRIVATE_CLASS_FILE@

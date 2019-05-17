@@ -247,7 +247,7 @@ fi
 
 # Launch facilitator and send initial messages via stdin
 cat /tmp/trips$$ |\
- $TRIPS_BASE/bin/Facilitator -port $TRIPS_PORT -title 'DRUM' -geometry 260x600-0+0 -notraffic $display_opt >& facilitator.err &
+ $TRIPS_BASE/bin/Facilitator -port $TRIPS_PORT -title 'DRUM' -geometry 260x600-0+0 -notraffic $display_opt >facilitator.err 2>&1 &
 facilitatorPID=$!
 
 # Wait for Facilitator to die

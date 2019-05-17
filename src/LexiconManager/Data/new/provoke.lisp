@@ -13,7 +13,8 @@
      (example "He provoked him [to run for office]")     
      )
     ((LF-PARENT ont::provoke)
-     (TEMPL  agent-effect-affected-optional-templ (xp (% w::pp (w::ptype (? pt w::in w::from))))) ; like annoy,bother,concern,hurt
+     ;(TEMPL  agent-effect-affected-optional-templ (xp (% w::pp (w::ptype (? pt w::in w::from))))) ; like annoy,bother,concern,hurt
+     (templ agent-affected-xp-templ)
      (example "he provoked a response [in the audience]")
      )
     ; he provoked him into running for office

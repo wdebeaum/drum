@@ -14,7 +14,8 @@
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090501 :comments nil :vn ("amuse-31.1") :wn ("tease%2:32:00" "tease%2:37:00"))
      (LF-PARENT ont::provoke)
      (example "he coaxed a promise [from them]")
-     (TEMPL agent-effect-affected-optional-templ (xp (% w::pp (w::ptype (? pt w::from))))) ; like annoy,bother,concern,hurt   
+     (templ agent-affected-xp-templ)
+     ;(TEMPL agent-effect-affected-optional-templ (xp (% w::pp (w::ptype (? pt w::from))))) ; like annoy,bother,concern,hurt   
       )
     )
    )

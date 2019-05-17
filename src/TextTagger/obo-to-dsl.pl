@@ -127,6 +127,7 @@ until (STDIN->eof) {
   $concept .= ")\n";
   for (@all_ids) {
     my $f = file_for_id($_);
+    binmode $f, ':utf8';
     print $f $concept;
   }
 }
@@ -134,6 +135,7 @@ until (STDIN->eof) {
 for my $ont (keys %ont_to_prefix_to_file) {
   for my $prefix (sort keys %{$ont_to_prefix_to_file{$ont}}) {
     my $f = cacheout $ont_to_prefix_to_file{$ont}{$prefix};
+    binmode $f, ':utf8';
     print $f ")\n";
     cacheout_close $f;
   }
