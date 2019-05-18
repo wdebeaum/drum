@@ -6245,7 +6245,7 @@
 
 	;; e.g., the first three, the three,
 	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?subcatsem) (case (? case SUB OBJ)) (N-N-MOD +) (AGR 3p) (Headless +)
-	    (lf (% description (status ?status) (var ?v) (sort SET)
+	    (lf (% description (status ?spec) (var ?v) (sort SET)
 		    (class ont::referential-sem) ;(Class ont::ANY-SEM)
 		    (constraint ?con)
 		    (sem ?subcatsem) 
@@ -6253,7 +6253,7 @@
 	  (postadvbl +)
 	  )
 	 -NP-missing-head-plur> .98 
-	 (head (spec (poss -)  (restr ?restr) (mass count)(status ?status)
+	 (head (spec (poss -)  (restr ?restr) (mass count)
 		     (LF ?spec) (arg ?v) (agr 3p) (var ?v) ;;(NObareSpec -)       removed to handle "the three (arrived)"  jfa 5/10
 		     ))
 	 (CARDINALITY (var ?card) (AGR 3p))

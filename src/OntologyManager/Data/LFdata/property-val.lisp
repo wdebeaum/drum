@@ -869,6 +869,7 @@
 )
 
 (define-type ont::not-comprehensible-val
+ :parent ont::comprehensibility-val
  :wordnet-sense-keys ("incomprehensible%3:00:00" "incomprehensible%3:00:04" "unfriendly%3:00:02")
 )
 

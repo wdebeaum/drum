@@ -479,6 +479,12 @@
      (preference 0.9)
      )
 
+    ((lf-parent ont::purpose)
+     (example "in reply")
+     (templ binary-constraint-S-templ)
+     (preference 0.98)
+     )
+    
     ;; in the air (excluded by ont::spatial-loc)
 
     ;; It increased in temperature
