@@ -559,7 +559,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	(setq compat (list child sense)))
       )
     (print-debug "~%compatibility of ~S and ~S is ~S~%" sense sense-list compat)
-    compat)
+    compat)2
   )
 ||#
 (defun update-tagged-sense-list (sense-list sense)
@@ -1504,8 +1504,10 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 
 (defun get-sem-feature-value (lftype feature)
   "given an lftype and feature, return the sem feature value"
-  (cdr (assoc feature (cddr (make-type-spec (get-lf-sem lftype :no-defaults nil) :semvar nil :feature-list-sign '$))))
-  )
+  (let ((sem (get-lf-sem lftype :no-defaults nil)))
+    (when sem
+      (cdr (assoc feature (cddr (make-type-spec sem :semvar nil :feature-list-sign '$))))
+      )))
 
 (defun is-reln (word lftype)
   "return the subcat role if word with this lftype is a relational noun, otherwise nil. This is used by IM to resolve possessive :assoc-with relations"
