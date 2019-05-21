@@ -135,10 +135,15 @@
   (if (not (eq (car lf) 'ont::F))
       lf
       ;; we compute force only on predicates
-      (let ((modal (find-arg-in-act lf :modality))
+      (let* ((modal (find-arg-in-act lf :modality))
 	    (neg (find-arg-in-act lf :negation))
 	    (mods (find-all-args-for-slot (cdddr lf) :mod))
-	    (frequencylf (find-def-in-lfs (find-arg-in-act lf :frequency) lfs)))
+	    (frequencylfs (mapcar #'(lambda (x)
+				      (find-def-in-lfs x lfs))
+				  (find-all-args-for-slot (cdddr lf) :frequency)))
+	    (frequencyvalues
+	     (mapcar #'(lambda (x)
+			 (get-type (third x))) frequencylfs)))
 	(multiple-value-bind
 	 (negmods othermods)
 	 (split-list #'is-negation-modifier
@@ -148,27 +153,25 @@
 	       (cond ((and (not (null neg)) (not (eq neg '-))) T) ;; if NEG is set (and not -) then negation
 		     ;; NEG was not set, check for modifiers
 		     (negmods T)))
-	 (let* ((frequency-type (third frequencyLF))
-		(frequency (if (consp frequency-type) (third frequency-type) frequency-type))
-		(force
+	 (let* ((force
 		 (if modal
-		     (case (if (consp modal) (cadr modal) modal)
+		     (case (get-type modal)  ;;(if (consp modal) (cadr modal) modal)
 		       ((ONT::ABILITY ONT::CONDITIONAL ONT::POSSIBILITY)
-			(if (or neg (eq frequency 'W::NEVER))
+			(if (or neg (member 'ONT::NEVER frequencyvalues))
 			    'ONT::IMPOSSIBLE 'ONT::POSSIBLE))
 		       ((ONT::SHOULD ONT::MUST)
-					     (if (or neg (eq frequency 'W::NEVER))
-						 'ONT::PROHIBITED 'ONT::REQUIRED))
+			(if (or neg  (member 'ONT::NEVER frequencyvalues))
+			    'ONT::PROHIBITED 'ONT::REQUIRED))
 		       ((ONT::FUTURE ONT::GOING-TO) 
 			(if (or (and neg (not (eq neg '-)))
-				(eq frequency 'W::NEVER))
+				(member 'ONT::NEVER frequencyvalues))
 			    'ONT::FUTURENOT 'ONT::FUTURE))
 		       (otherwise
-			(if (or neg (eq frequency 'W::NEVER))
+			(if (or neg (member 'ONT::NEVER frequencyvalues))
 			    'ONT::FALSE 'ONT::TRUE))
 		       )
 		     ;; no modal
-		     (if (or neg (eq frequency 'W::NEVER))
+		     (if (or neg (member 'ONT::NEVER frequencyvalues))
 			 'ONT::FALSE 'ONT::TRUE)))
 		)
 	   ;;(if force

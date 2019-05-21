@@ -250,20 +250,22 @@
    (t
     (let ((type (merge-types (feature-list-type child) (feature-list-type parent) :two-way two-way :lfontology lfontology))
 	  )
-      (when (null type)
-	;;	(break)
-	(Error 
+      (if (null type)
+	  (progn
+	    (format t "~%inconsistent-feat-spec in merge-typed-feature-lists: ~S and ~S" child parent)
+	    (make-feature-list ))
+	#|(Error 
 	 (make-system-condition 'inconsistent-feat-spec
 			   :format-control "Incompatible sem types in ~S and ~S" 
 			   :format-arguments (list child parent)))
-	)
-      (make-feature-list
-       :type type
-       :features (add-sem-feature-lists (feature-list-features child) (feature-list-features parent) 
-					lfontology :feattable feattable :two-way two-way)
-       :defaults (merge-in-defaults (feature-list-defaults child) (feature-list-defaults parent))       
-       ))
-    )))
+	)|#
+	  (make-feature-list
+	   :type type
+	   :features (add-sem-feature-lists (feature-list-features child) (feature-list-features parent) 
+					    lfontology :feattable feattable :two-way two-way)
+	   :defaults (merge-in-defaults (feature-list-defaults child) (feature-list-defaults parent))       
+	   ))
+      ))))
 
 (defun add-sem-feature-lists (childlist parentlist lfontology &key (feattable nil) (two-way nil))
   (let ((result parentlist))

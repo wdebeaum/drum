@@ -330,7 +330,8 @@
     (:member :member1)
     (:member1 :member2)
     (:assoc-with :assoc-with1)
-    (:assoc-with1 :assoc-with2)))
+    (:assoc-with1 :assoc-with2)
+    (otherwise atom)))
 
 ;;===============================================================================
 ;;

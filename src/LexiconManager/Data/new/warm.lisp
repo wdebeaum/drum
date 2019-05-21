@@ -35,7 +35,7 @@
       )
     ((meta-data :origin step :entry-date  20081027  :change-date nil :comments nil)
      (example "the atmosphere is warm / a warm atmosphere")
-     (LF-PARENT ONT::friendly-VAL)
+     (LF-PARENT ONT::affectionate-VAL)
      (templ central-adj-templ)
      )
     )

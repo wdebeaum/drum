@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.118 2019/04/25 16:00:42 wdebeaum Exp $
+# $Id: Makefile,v 1.119 2019/05/20 19:40:03 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -95,8 +95,8 @@ install:: countries.tsv
 clean::
 	rm -rf countries.tsv
 
-countries.tsv: get-countries-tsv.pl downloads/countries.json
-	./$^ >$@
+countries.tsv: downloads/countries.json get-countries-tsv.pl
+	./get-countries-tsv.pl <$< >$@
 
 downloads/MADE:
 	mkdir -p downloads
