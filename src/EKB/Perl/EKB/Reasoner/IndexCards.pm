@@ -35,7 +35,7 @@ use Ont::BioEntities;
 use Ont::BioEvents;
 use EKB::Reasoner::Rule;
 use EKB::Reasoner;
-use Local::Log;
+use util::Log;
 
 our @ISA = qw(EKB::Reasoner);
 

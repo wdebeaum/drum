@@ -1,0 +1,5 @@
+Algorithm::Diff
+File::Slurp
+List::Util~1.45
+Test::Deep::NoTest
+XML::LibXML
