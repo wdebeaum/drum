@@ -8,13 +8,13 @@
   (W::permission
    (SENSES
     ((EXAMPLE "can I have permission to move it")
-     (LF-PARENT ONT::allow)
-     (TEMPL SUBCAT-mass-EFFECT-TEMPL)
+     (LF-PARENT ONT::right-permission)
+     (TEMPL mass-SUBCAT-INF-TEMPL)
      (meta-data :origin lou :entry-date 20031103)
      )
     ((EXAMPLE "get permission for the purchase")
-     (LF-PARENT ONT::allow) 
-     (TEMPL subcat-mass-effect-TEMPL (xp (% W::pp (W::ptype (? ptp W::for)))))
+     (LF-PARENT ONT::right-permission) 
+     (TEMPL mass-subcat-INF-TEMPL (xp (% W::pp (W::ptype (? ptp W::for)))))
      (meta-data :origin calo :entry-date 20040128 :comments calo-y1script )
      )
     #||((EXAMPLE "get permission")

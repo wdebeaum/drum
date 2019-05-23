@@ -632,7 +632,7 @@
 
 (define-type ont::keep-down-vomit
  :wordnet-sense-keys ("keep_down%2:29:00")
- :parent ont::excrete
+ :parent ont::bodily-process
 )
 
 (define-type ont::sweat
@@ -943,7 +943,7 @@
 ;;; This is only for movable objects meeting
 ;;; Path meeting gets mapped to intersection
 (define-type ONT::MEET
- :wordnet-sense-keys ("meet%2:41:00" "gather%2:41:00" "assemble%2:41:00" "forgather%2:41:00" "foregather%2:41:00" "assemble%2:41:03" "come_across%2:38:00" "encounter%2:33:00" "meet%2:41:03")
+ :wordnet-sense-keys ("meet%2:41:00" "gather%2:41:00" "assemble%2:41:00" "forgather%2:41:00" "foregather%2:41:00"  "come_across%2:38:00" "encounter%2:33:00" "meet%2:41:03"  "meet%2:41:01")
  :parent ONT::agent-interaction
  :sem (F::SITUATION (F::Trajectory -))
  :arguments (
@@ -1593,12 +1593,13 @@
 
 ;;; Complete takes an action that requires an intentional agent
 (define-type ONT::Complete
- :wordnet-sense-keys ("complete%2:30:02" "finish%2:30:02" "carry_to_term%2:29:00" "hold_one's_own%2:42:00" "succeed%2:41:00" "excel%2:42:00")
-; :parent ONT::SITUATION-CHANGE
- :parent ONT::ACTING
- :sem (F::Situation (F::Cause F::agentive))
- :arguments ((:essential ont::formal))
- )
+    :wordnet-sense-keys ("complete%2:30:02" "finish%2:30:02" "carry_to_term%2:29:00" "hold_one's_own%2:42:00" "succeed%2:41:00" "excel%2:42:00"
+					    "success%1:11:00" "success%1:04:00" "completion%1:04:02")
+					; :parent ONT::SITUATION-CHANGE
+    :parent ONT::ACTING
+    :sem (F::Situation (F::Cause F::agentive))
+    :arguments ((:essential ont::formal))
+    )
 
 (define-type ONT::progress
  :wordnet-sense-keys ("go%2:30:02" "progress%2:30:00"  "progress%2:38:00"  "progress%2:30:01")
@@ -1800,6 +1801,16 @@
  :parent ONT::care
  )
 
+(define-type ONT::empathize
+ :wordnet-sense-keys ("empathise%2:31:00" "sympathize%2:37:01" "sympathize%2:37:00")
+ :parent ONT::care
+ )
+
+(define-type ONT::pity
+ :wordnet-sense-keys ("pity%2:37:00")
+ :parent ONT::care
+ )
+
 (define-type ONT::envying
     :wordnet-sense-keys ("envy%2:37:01" "begrudge%2:37:00")
     :definitions ((ont::have-property :neutral ?experiencer
@@ -1839,8 +1850,9 @@
  )
 
 (define-type ONT::evoke-attention
- :wordnet-sense-keys ("interest%2:37:00" "preoccupy%2:37:00" "intrigue%2:42:00")
- :parent ONT::neutral-experience
+    :wordnet-sense-keys ("interest%2:37:00" "preoccupy%2:37:00" "intrigue%2:42:00")
+    :arguments ((:OPTIONAL ONT::formal (F::situation)))     ;; e.g., they engaged him in the movie /He was engaged in the movie
+    :parent ONT::neutral-experience
  )
 
 (define-type ont::evoke-curiosity
@@ -2187,7 +2199,8 @@
 (define-type ONT::approve-authorize
  :wordnet-sense-keys ("approve%2:31:00" "authorize%2:32:00" "authorize%2:41:00" "clear%2:40:07" "condone%2:32:00")
  :parent ONT::judgement
- :arguments ((:required ONT::AFFECTED ((? t f::abstr-obj f::situation))))
+ :arguments ((:required ONT::AFFECTED ((? t f::abstr-obj f::situation)))
+	     (:optional ont::norole))
  )
 
 (define-type ONT::abuse
@@ -3063,7 +3076,7 @@
   )
 
 (define-type ONT::USE
- :wordnet-sense-keys ("use%1:04:01" "habit%1:04:02" "use_of_goods_and_services%1:22:00" "use%1:22:00" "usance%1:22:00" "economic_consumption%1:22:00" "consumption%1:22:00" "use%1:07:02" "exercise%1:04:03" "employment%1:04:01" "utilisation%1:04:00" "utilization%1:04:00" "usage%1:04:00" "use%1:04:00" "practical_application%1:04:00" "application%1:04:02" "use%2:41:03" "use%2:41:04" "apply%2:41:01" "practice%2:41:01" "use%2:41:14" "expend%2:34:00" "use%2:34:00" "habituate%2:34:00" "use%2:34:02" "use%2:34:01" "utilize%2:34:00" "utilise%2:34:00" "apply%2:34:00" "employ%2:34:00")
+ :wordnet-sense-keys ("use%1:04:01" "habit%1:04:02" "use_of_goods_and_services%1:22:00" "use%1:22:00" "usance%1:22:00" "economic_consumption%1:22:00" "consumption%1:22:00" "use%1:07:02" "use%1:04:00" "practical_application%1:04:00" "application%1:04:02" "use%2:41:03" "use%2:41:04" "practice%2:41:01" "expend%2:34:00" "use%2:34:00" "habituate%2:34:00" "use%2:34:02" "use%2:34:01" "utilize%2:34:00" "utilise%2:34:00" "apply%2:34:00" "employ%2:34:00")
  ;:parent ONT::CAUSE-effect
  :parent ONT::ACTING
  :sem (F::SITUATION (F::Cause F::agentive))
@@ -3084,7 +3097,7 @@
  )
 
 (define-type ONT::MAKE-IT-SO
- :wordnet-sense-keys ("have%2:30:00" "have%2:36:00" "have%2:32:00" "have%2:40:02" "have%2:29:00")
+ :wordnet-sense-keys ("have%2:30:00" "have%2:36:00" "have%2:32:00" "have%2:40:02" "have%2:29:00" "make%2:30:00")
  :parent ONT::CAUSE-EFFECT
  :sem (F::situation (F::Aspect F::Dynamic))
  :definitions ((CAUSE-EFFECT :agent ?agent :formal ?formal))
@@ -3132,7 +3145,7 @@
 
 ;; work (on) -- do work (see also related concept ont::function)
 (define-type ONT::WORKING
- :wordnet-sense-keys ("work%2:41:05" "work%2:41:02" "toil%2:41:00")
+ :wordnet-sense-keys ("work%2:41:05" "work%2:41:02" "toil%2:41:00" "practice%1:04:03" "practice%2:41:00")
   :parent ONT::intentionally-act
   :sem (F::Situation (F::Aspect F::unbounded) (F::time-span F::extended) )
   :arguments ((:ESSENTIAL ONT::Formal ((? t F::phys-obj F::abstr-obj F::situation)))
@@ -3187,7 +3200,8 @@
 ;;; The actions of someone else picking up or gathering objects
 ;; collect, gather up
 (define-type ONT::collect
- :wordnet-sense-keys ("gather%2:35:00" "garner%2:35:00" "collect%2:35:00" "pull_together%2:35:00")
+    :wordnet-sense-keys ("gather%2:35:00" "garner%2:35:00" "collect%2:35:00" "pull_together%2:35:00" "assemble%2:41:03"
+					  "gather%2:35:04")
 ; :parent ont::event-of-causation
  :parent ont::acquire
  :arguments ((:ESSENTIAL ONT::agent)
@@ -4443,6 +4457,7 @@
 ;; manage
 (define-type ONT::managing
     :parent ONT::control-manage
+    :wordnet-sense-keys ("management%1:04:00")
     ;:arguments ((:ESSENTIAL ONT::Agent ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))) ; intentional -: the arrows/stars guide..., the proteins regulate... ; f::situation: the activation of the drug subdued...
  :comment "take responsibility over the production of a project, a program, or a production" 
  )
@@ -4714,7 +4729,7 @@
 
 ;;; This corresponds to all cases where things intersect
 (define-type ONT::INTERSECT
- :wordnet-sense-keys ("cross%2:38:03" "intersect%2:38:00" "meet%2:41:01" "get_together%2:41:01" "hold%2:35:01" "coexist%2:42:00")
+ :wordnet-sense-keys ("cross%2:38:03" "intersect%2:38:00" "hold%2:35:01" "coexist%2:42:00")
  :parent ONT::position
  :comment "two objects share a common subpart"
  :sem (F::Situation (F::Aspect F::Indiv-level) (F::Cause -))
@@ -4834,7 +4849,7 @@
 
 ;; manipulate, influence
 (define-type ONT::manipulate
- :wordnet-sense-keys ("operate%2:35:00" "control%2:35:00")
+ :wordnet-sense-keys ("operate%2:35:00" "control%2:35:00" "manipulate%2:35:00")
  :parent ONT::control-manage
  :arguments (
 ;	     (:OPTIONAL ONT::Instrument (F::Phys-obj (F::intentional -)))
@@ -4851,10 +4866,9 @@
   :parent ont::control-manage
   )
 
-;; 20120524 GUM change new type
 (define-type ont::cope-deal
-    :wordnet-sense-keys ("dispense_with%2:41:00" "empathise%2:31:00" "cope%2:41:00")
-    :parent ont::active-perception
+    :wordnet-sense-keys ("dispense_with%2:41:00" "cope%2:41:00")
+    :parent ont::complete
     )
 
 

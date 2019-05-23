@@ -29,6 +29,11 @@
 (define-type ont::social-imperative
   :parent ont::social-contract
   :wordnet-sense-keys ("freedom%1:26:01" "slavery%1:26:00")
+  )
+
+(define-type ont::right-permission
+  :parent ont::social-contract
+  :wordnet-sense-keys ("right%1:07:00" "permission%1:10:00")
 )
 
 (define-type ont::social-judgement

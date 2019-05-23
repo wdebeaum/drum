@@ -14,7 +14,7 @@
      ;; enforced subcat to reduce ambiguity, but prevents "on the right" unless we add another grammar rule
      ;;     (TEMPL other-reln-subcat-required-templ) 
      )
-   ((LF-PARENT ont::social-contract)
+   ((LF-PARENT ont::right-permission)
      (example "the right to sing")
      (TEMPL SUBCAT-INF-TEMPL)
     ))

@@ -802,16 +802,11 @@
 
 ;; success, failure
 (define-type ONT::outcome
- :parent ONT::information-function-object
- :arguments ((:essential ONT::FIGURE)
-	     )
- )
-
-(define-type ONT::result
- :parent ONT::outcome
- :arguments ((:essential ONT::FIGURE)
-	     )
- )
+    :wordnet-sense-keys ("result%1:11:00")
+    :parent ONT::information-function-object
+    :arguments ((:essential ONT::FIGURE)
+		)
+    )
 
 (define-type ONT::clinical-finding
  :parent ONT::result
@@ -990,7 +985,7 @@
 
 ;; meeting, party, conference
 (define-type ont::gathering-event
-    :wordnet-sense-keys("ceremony%1:04:00")
+    :wordnet-sense-keys("ceremony%1:04:00" "gathering%1:14:00")
     :parent ont::located-event
   )
 
@@ -1077,7 +1072,7 @@
 )
 
 (define-type ONT::FEELING
-    :wordnet-sense-keys ("feeling%1:03:00" "bother%1:09:00" "worry%1:09:00" "sorrow%1:09:00" "distress%1:12:02" "restlessness%1:12:00")
+    :wordnet-sense-keys ("feeling%1:03:00" "bother%1:09:00" "worry%1:09:00" "sorrow%1:09:00" "distress%1:12:02" "restlessness%1:12:00" "mercy%1:07:00")
     :parent ONT::mental-construction
     :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
 		)

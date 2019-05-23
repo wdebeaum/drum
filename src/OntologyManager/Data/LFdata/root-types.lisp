@@ -131,6 +131,7 @@
 		 ))
 
 (define-type ONT::event-of-experience
+    :wordnet-sense-keys ("basic_cognitive_process%1:09:00")
    :parent ONT::event-of-state
    :comment "A stative event involving a sentient being in a mental state"
    :arguments ((:ESSENTIAL ONT::experiencer (F::Phys-obj (F::intentional +))))

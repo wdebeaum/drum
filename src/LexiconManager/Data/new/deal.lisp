@@ -11,7 +11,7 @@
      (lf-parent ont::cope-deal) ;; 20120524 GUM change new parent
      (example "deal with it")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL neutral-neutral-TEMPL (xp (% W::pp (W::ptype W::with))))
+     (TEMPL agent-affected-xp-TEMPL (xp (% W::pp (W::ptype W::with))))
      )
     )
    )
