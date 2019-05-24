@@ -902,22 +902,38 @@
  )
 
 (define-type ONT::always
- :parent ONT::FREQUENCY
- )
+    :wordnet-sense-keys ("always%4:02:00" "always%4:02:01" "always%4:02:02" "always%4:02:03" "always%4:02:04")
+    :parent ONT::FREQUENCY
+    )
 
 (define-type ONT::often
- :parent ONT::FREQUENCY
+    :wordnet-sense-keys ("often%4:02:0o" "often%4:02:01")
+    :parent ONT::FREQUENCY
  )
 
 (define-type ONT::sometimes
- :parent ONT::FREQUENCY
+    :wordnet-sense-keys ("sometimes%4:02:01")
+    :parent ONT::FREQUENCY
+ )
+
+(define-type ONT::usually
+    :wordnet-sense-keys ("usually%4:02:00")
+    :parent ONT::FREQUENCY
  )
 
 (define-type ONT::seldom
- :parent ONT::FREQUENCY
+    :wordnet-sense-keys ("seldom%4:02:00")
+    :parent ONT::FREQUENCY
+ )
+
+(define-type ONT::again
+    :wordnet-sense-keys ("again%4:02:00")
+    :parent ONT::FREQUENCY
  )
 
 (define-type ONT::never
+    :wordnet-sense-keys ("never%4:02:00" "never%4:02:01")
+    
  :parent ONT::FREQUENCY
  )
 

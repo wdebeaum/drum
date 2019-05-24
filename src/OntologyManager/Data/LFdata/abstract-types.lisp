@@ -809,7 +809,7 @@
     )
 
 (define-type ONT::clinical-finding
- :parent ONT::result
+ :parent ONT::outcome
  :arguments ((:essential ONT::FIGURE)
 	     )
  )

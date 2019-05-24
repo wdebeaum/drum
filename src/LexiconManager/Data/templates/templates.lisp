@@ -1366,7 +1366,7 @@
 	(LCOMP (:parameter xp (:default (% W::pp (W::ptype (? pt w::to))))) ONT::FORMAL)
 	))
       
-            (AGENT-result-CO-AGENT-OPTIONAL-TEMPL
+(AGENT-result-CO-AGENT-OPTIONAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::AGENT)
 	(LIOBJ (% W::NP) ONT::result)
@@ -1379,6 +1379,14 @@
 	(LIOBJ (% W::NP) ONT::affected)
 	(LCOMP (:parameter xp (:default (% W::pp (W::ptype W::with)))) ONT::AGENT1 OPTIONAL)
 	))
+
+       (agent-affected-agent1-optional-templ
+         (ARGUMENTS
+	  (LSUBJ (% W::NP) ONT::AGENT)
+	  (LOBJ (% W::NP) ONT::affected)
+	  (LCOMP (:parameter xp (:default (% W::pp (W::ptype W::with)))) ONT::AGENT1 OPTIONAL)
+	  ))
+
 
       (AGENT-WITH-CO-AGENT-OPTIONAL-TEMPL
        (ARGUMENTS
@@ -3343,6 +3351,8 @@
     (subcat2 (% -) ONT::NOROLE)
     ))
 
+; same as adj-purpose-templ
+#|
 ;; This is: this drug is good for cancer
   ;; using this template will require a subcat to be present
   ;; For "the place is good" use central-adj-templ in addition to this
@@ -3354,7 +3364,7 @@
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::REASON)
     (subcat2 (% -) ONT::NOROLE)
     ))
-  
+|#  
   
   ;; This template is for "I am happy for her" Note that the
   ;; complement is required. You need a "central-adj-templ" to go with
@@ -3517,21 +3527,26 @@
     (ARGUMENT (% W::NP (w::agr w::3s)) ONT::FIGURE)
     ))
 
-
+; same as central-adj-templ
+#|
   ;; a happy person / the person is happy
   (central-adj-experiencer-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::central) (W::SUBCAT -) (W::ARG ?arg) ) ;(W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
     (ARGUMENT (% W::NP) ont::figure)
     ))
+|#
 
+; same as central-adj-templ
+#|
    ;; a sad movie/ the movie is sad
    ;; more than just information content (e.g., a sad night)
    (central-adj-content-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::central) (W::SUBCAT -) (W::ARG ?arg) ) ;(W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::figure)
-    ))
+    )) 
+|#
   
   (central-adj-plur-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::central) (W::SUBCAT -) (W::ARG ?arg) ) ;(W::ALLOW-DELETED-COMP +))
@@ -3872,7 +3887,8 @@
     (subcat (% ?sc) ONT::GROUND)
     ))
 
-; where can I put the block?
+
+   ; e.g., where can I put the block?   WHERE takes an NP as the FIGURE (in this case with a result proposition)
   (ppword-question-adv-NP-templ
    (SYNTAX (W::sing-lf-only +) (w::else-word +) (W::wh W::q) (W::sort W::pp-word) (W::atype (? atype W::pre W::post)))
    (ARGUMENTS
@@ -3882,6 +3898,8 @@
     (subcat (% ?sc) ONT::GROUND)
     ))
 
+
+;;  e.g., Where did he sing?    WHERE modifiers an event
   (ppword-question-adv-pred-templ
    (SYNTAX (W::sing-lf-only +) (w::else-word +) (W::wh W::q) (W::sort W::pp-word) (W::atype (? atype W::pre W::post)))
    (ARGUMENTS

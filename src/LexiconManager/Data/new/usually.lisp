@@ -6,10 +6,10 @@
  :words (
   (W::USUALLY
    (SENSES
-    ((LF-PARENT ONT::FREQUENCY)
+    ((LF-PARENT ONT::USUALLY)
      (TEMPL PRED-VP-PRE-TEMPL)
      )
-    ((LF-PARENT ONT::FREQUENCY)
+    ((LF-PARENT ONT::USUALLY)
      (TEMPL DISC-TEMPL)
      )
     )

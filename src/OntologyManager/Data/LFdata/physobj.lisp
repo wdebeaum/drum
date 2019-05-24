@@ -39,6 +39,7 @@
 ;; DRUM
 (define-type ONT::CELL-LINE
     :parent ONT::natural-object
+    :sem (F::Phys-obj (F::container +))
     )
 
 ;; UMLS

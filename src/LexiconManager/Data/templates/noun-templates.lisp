@@ -514,6 +514,13 @@
      (SUBCAT (:parameter xp (:default (% W::cp (W::ctype W::s-to) (W::subj ?lsubj)))) ONT::FIGURE)
      ))
 
+  (MASS-SUBCAT-inf-TEMPL
+    (SYNTAX (W::SORT  W::PRED) 
+	    (w::allow-deleted-comp +) (W::MASS W::MASS))
+    (ARGUMENTS
+     (SUBCAT (:parameter xp (:default (% W::cp (W::ctype W::s-to) (W::subj ?lsubj)))) ONT::FIGURE)
+     )) 
+
   ;;; nouns that subcategorize for a "that" clause
   ;; the constraint that it must be less than 500 dollars
   (count-subcat-that-optional-templ

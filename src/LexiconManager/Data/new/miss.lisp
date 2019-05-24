@@ -9,7 +9,9 @@
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("admire-31.2") :wn ("miss%2:37:00"))
      (LF-PARENT ONT::misses)
-     (TEMPL experiencer-action-objcontrol-templ) ; like suffer
+     ; (TEMPL experiencer-action-objcontrol-templ) ; like suffer
+     (TEMPL experiencer-action-SUBJCONTROL-TEMPL  (xp (% W::VP (W::vform W::ing))))
+     (example "I miss eating oranges")
      (PREFERENCE 0.96)
      )
     
