@@ -907,7 +907,7 @@
     )
 
 (define-type ONT::often
-    :wordnet-sense-keys ("often%4:02:0o" "often%4:02:01")
+    :wordnet-sense-keys ("often%4:02:00" "often%4:02:01")
     :parent ONT::FREQUENCY
  )
 
