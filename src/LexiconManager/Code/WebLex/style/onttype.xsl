@@ -7,17 +7,17 @@
 
 <xsl:template name="sem">
  <xsl:param name="id" />
- <xsl:if test="FEATURES">
-  (<a id="{$id}-sem-link" href="javascript:toggleFeatures('{$id}')">hide sem</a>)
-  <span id="{$id}-sem">
-   <br /><xsl:value-of select="@fltype" />
+ (<a id="{$id}-sem-link" href="javascript:toggleFeatures('{$id}')">hide sem</a>)
+ <span id="{$id}-sem">
+  <br /><xsl:value-of select="@fltype" />
+  <xsl:if test="FEATURES">
    <ul>
     <xsl:for-each select="FEATURES/@*">
      <li><xsl:value-of select="name()" /> = <xsl:value-of select="." /></li>
     </xsl:for-each>
    </ul>
-  </span>
- </xsl:if>
+  </xsl:if>
+ </span>
 </xsl:template>
 
 <xsl:template match="/ONTTYPE" mode="tree">

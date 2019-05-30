@@ -223,7 +223,7 @@
 
 
 (define-type ONT::Objective-influence
-    :wordnet-sense-keys ("force%1:07:01" "appeal%2:37:00" "keep_up%2:29:00" "retire%2:33:00" "stampede%2:38:01" "stampede%2:41:01" "trip%2:38:01" "unbalance%2:42:00" "undo%2:36:00")
+    :wordnet-sense-keys ("force%1:07:01" "keep_up%2:29:00" "retire%2:33:00" "stampede%2:38:01" "stampede%2:41:01" "trip%2:38:01" "unbalance%2:42:00" "undo%2:36:00")
     :parent ONT::EVENT-OF-causation
     :comment "an AGENT influences the AFFECTED role in some way (typically unspecified by the verb)"
     :sem (F::Situation (F::Trajectory -))

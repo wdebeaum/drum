@@ -3785,7 +3785,7 @@
    ;; both VP must be of the same vform
    ;; he had eaten and slept, to puncture or penetrate or pierce, to fight but accept, 
    ; This uses this rule: The mouse is caught by the dog and caught by the cat.
-   ((vp- (seq +) (vform ?vf) (var *)  (subjvar ?subj)  (subj ?subject) (agr ?agr) (gap ?gap)(subj-map ?subjmap)
+   ((vp- (seq +) (vform ?vf) (var *)  (subjvar ?subj)  (subj ?subject) (agr ?agr) (gap ?gap)(subj-map ?subjmap) (dobj ?dobj)
      (class ?class) (sem ?sem) (lex ?lex)
      (constraint (&  (OPERATOR ?lx) 
 		     (SEQUENCE 
@@ -3798,7 +3798,7 @@
 	   ))
     (CONJ (lf ?lx) (lex ?lex) (but-not -)) ;;(? lx or but however plus otherwise so and)))
 
-    (vp- (vform ?vf) (var ?v2) (subjvar ?subj) (subj ?subject) (agr ?agr) (gap ?gap)
+    (vp- (vform ?vf) (var ?v2) (subjvar ?subj) (subj ?subject) (agr ?agr) (gap ?gap) (dobj ?dobj)
      (lex ?lex2) (Advbl-needed -) (class ?c2) (constraint ?con2)  (tma ?tma2) (sem ?sem2))
 
     (sem-least-upper-bound (in1 ?sem1) (in2 ?sem2) (out ?sem))
@@ -3824,6 +3824,48 @@
     (sem-least-upper-bound (in1 ?sem1) (in2 ?sem2) (out ?sem))
     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
     )
+
+   
+   ;; that chased, caught and ate the cat
+   ((VP- (vform ?vf) (var *) (seq +) (subjvar ?subj) (subj ?subject)  (gap ?gap)  (agr ?agr) (sem ?sem)
+     (class ?class)  (lex ?lex)
+     (constraint (&  (OPERATOR ?lx) 
+		     (SEQUENCE ?newlf)))
+     )
+    -vbar-conj-seq-dobj> 1.0
+    (head (vbarseq (var ?v1) (subjvar ?subj) (subj ?subject) (gap ?!dobj) (sem ?s1) (class ?c1)
+		   (constraint (& (sequence ?lf))) (agr ?agr)
+		   (vform ?vf)
+		   ))
+    (CONJ  (lex ?lex) (lf  (? lx ont::and ont::or)))
+    (vp- (vform ?vf) (subjvar ?subj) (subj ?subject)(var ?v2) (seq -)  (gap -) (dobj ?!dobj) (sem ?s2) (lex ?lex2)
+     (advbl-needed -)  (agr ?agr) (class ?c2) (constraint ?con2) (tma ?tma2))
+    (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+    (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+    (add-to-end-of-list (list ?lf) 
+     (val (% *PRO* (var ?v2) (status ont::f) (class ?c2) (lex ?lex2) (constraint ?con2) (tma ?tma2))) (newlist ?newlf))
+    )
+
+   ;; chased, caught and ate ; (no cat!)
+   ((VP- (vform ?vf) (var *) (seq +) (subjvar ?subj) (subj ?subject)  (gap ?!gap)  (agr ?agr) (sem ?sem) (dobj ?dobj)
+     (class ?class)  (lex ?lex)
+     (constraint (&  (OPERATOR ?lx) 
+		     (SEQUENCE ?newlf)))
+     )
+    -vbar-conj-seq-gap-all-the-way> 1.0
+    (head (vbarseq (var ?v1) (subjvar ?subj) (subj ?subject) (gap ?!gap) (sem ?s1) (class ?c1)
+		   (constraint (& (sequence ?lf))) (agr ?agr)
+		   (vform ?vf)
+		   ))
+    (CONJ  (lex ?lex) (lf  (? lx ont::and ont::or)))
+    (vp- (vform ?vf) (subjvar ?subj) (subj ?subject)(var ?v2) (seq -)  (gap ?!gap) (sem ?s2) (lex ?lex2) (dobj ?dobj)
+     (advbl-needed -)  (agr ?agr) (class ?c2) (constraint ?con2) (tma ?tma2))
+    (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+    (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+    (add-to-end-of-list (list ?lf) 
+     (val (% *PRO* (var ?v2) (status ont::f) (class ?c2) (lex ?lex2) (constraint ?con2) (tma ?tma2))) (newlist ?newlf))
+    )
+
    
    ;; they had come, seen and conquered
   ;;  starting the VBARSEQ 

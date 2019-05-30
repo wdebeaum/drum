@@ -2350,7 +2350,7 @@
 
 ;; honor, respect, prize, treasure, value
 (define-type ONT::appreciate
- :wordnet-sense-keys ("savour%2:37:00" "savor%2:37:00" "relish%2:37:00" "bask%2:37:13" "enjoy%2:37:00" "appreciate%2:37:00" "like%2:37:04" "love%2:37:00" "like%2:37:05")
+ :wordnet-sense-keys ("savour%2:37:00" "savor%2:37:00" "relish%2:37:00" "bask%2:37:13" "enjoy%2:37:00" "appreciate%2:37:00" "like%2:37:04" "love%2:37:00" "like%2:37:05" "appeal%2:37:00")
  :parent ONT::experiencer-emotion
  :arguments ((:REQUIRED ONT::Formal ((? t f::phys-obj f::abstr-obj f::situation f::time)))
              (:ESSENTIAL ONT::neutral) ;((? s  f::phys-obj f::abstr-obj) (F::intentional +)))
@@ -3951,7 +3951,7 @@
 
 (define-type ont::quieten
  :parent ont::change-in-sound-scale
- :wordnet-sense-keys ("deafen%2:30:01" "quieten%2:39:00")
+ :wordnet-sense-keys ("deafen%2:30:01" "quieten%2:39:00" "hush%2:30:00" "hush%2:30:01")
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::loudness-scale) (F::orientation f::neg))))
  :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::atomic))
 )
@@ -4463,7 +4463,7 @@
  )
 
 (define-type ont::tame
- :wordnet-sense-keys ("curb%2:30:01" "keep_down%2:41:00" "break_in%2:30:00" "tame%2:30:00" "hush%2:30:00" "break%2:30:12" "quieten%2:30:00")
+ :wordnet-sense-keys ("curb%2:30:01" "keep_down%2:41:00" "break_in%2:30:00" "tame%2:30:00" "break%2:30:12")
  :parent ont::managing
 )
 

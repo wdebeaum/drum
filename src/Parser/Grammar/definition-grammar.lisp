@@ -1,7 +1,7 @@
 ;;;;
 ;;;; robust.lisp
 ;;;;
-;;;; Time-stamp: <Fri May 10 13:13:36 EDT 2019 james>
+;;;; Time-stamp: <Wed May 29 13:06:38 EDT 2019 james>
 ;;;;
 
 (in-package :W)
@@ -18,7 +18,7 @@
     ;; CP with no GAP to have a dream
     ((definition (var ?v)  (lf ?lf))
       -defn-no-gap> .97
-     (head (cp (var ?v) (lf ?lf) (subj-map ?!s) (ctype (? x w::s-to)) ;; make sure there's a subj-map (avoid parses for "there is" etc)
+     (head (cp (var ?v) (lf ?lf) (subj-map (? !s ONT::NOROLE)) (ctype (? x w::s-to)) ;; make sure there's a subj-map (avoid parses for "there is" etc)
 	       (subj (% ?xx (sem ?subjsem)))
       (subjvar (% *PRO* (var *) (class ont::ROLE-REF) (sem ?subjsem) (constraint (& (:context-rel :lsubj)))))
       (gap -)

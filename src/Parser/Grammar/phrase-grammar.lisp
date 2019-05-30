@@ -3376,13 +3376,14 @@
 
     ;; e.g., a bunch of trucks
     
-    ((SPEC (SEM ?def) (AGR ?agr) (status ?spec)
+    ((SPEC (SEM ?def) (AGR ?agr) ;(status ?spec)
       (VAR *) (card ?unit-v)     
-      (ARG ?arg) (lex ?lex) (LF ?spec) (SUBCAT ?subcat) (Mass COUNT)
+      (ARG ?arg) (lex ?lex) (LF ?status) ;(LF ?spec)
+      (SUBCAT ?subcat) (Mass COUNT)
       (NOSIMPLE +) (unit-spec +)
       (restr (& (size ?unit-v)))) ;; count nouns get SIZE in the restriction
      -spec-unit-count>
-     (head (NP (sort classifier)
+     (head (NP (sort classifier) (LF (% DESCRIPTION (status ?status)))
 	    (SPEC ?spec) (ARGUMENT ?subcat) (ARGUMENT (% ?xx (MASS COUNT) (AGR ?agr)))
 	    (var ?unit-v) (lex ?unit-lex))))
 
