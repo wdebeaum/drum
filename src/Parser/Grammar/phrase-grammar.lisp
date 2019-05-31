@@ -1654,7 +1654,7 @@
     (ADV (lf (:* ?pred ?xx)) (comparative (? cmp + superl)) (complex -)
      (ground-oblig ?go) (SUBCAT ?ground-subcat) (SUBCAT-MAP ?ground-smap))
     (head (ADJ (LF (:* ?lftype ?w)) (comp-op ?comp-op)
-	       (SUBCAT2 -) (post-subcat -)(VAR ?v) (comparative -)
+	       (SUBCAT2 (% -)) (post-subcat -)(VAR ?v) (comparative -)
 	       (SUBCAT -) 
 	       (subcat-map ?subcat-map)
 	       (ATYPE central)

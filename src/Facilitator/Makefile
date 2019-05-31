@@ -2,12 +2,14 @@
 # Makefile for Java Facilitator (formerly Input Manager)
 #
 # David Costello, costello@cs.rochester.edu,  8 Jul 1999
-# $Id: Makefile,v 1.3 2016/12/14 19:41:26 wdebeaum Exp $
+# $Id: Makefile,v 1.4 2019/05/30 22:33:20 lgalescu Exp $
 #
 
 MAIN    = Facilitator
 PACKAGE = TRIPS.Facilitator
 USES    = TRIPS.KQML TRIPS.util
+
+SUBDIRS = scripts
 
 SRCS = ClientGroup.java \
 	ColumnLayout.java \
@@ -65,7 +67,15 @@ XTRA = images/LEDgreen.gif \
 CONFIGDIR=../config
 include $(CONFIGDIR)/java/prog.mk
 
+all default install clean:: 
+	@for d in $(SUBDIRS); do \
+	  if test -d $$d; then \
+	    (cd $$d && $(MAKE) $@) || exit 1; \
+	fi; \
+	done
+
 test::
 	(sleep 8; cd ../KeyboardManager; make run) &
 	(sleep 8; cd ../SpeechController; make run) &
 	make run
+
