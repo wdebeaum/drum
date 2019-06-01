@@ -823,7 +823,8 @@
 	(LOBJ (% W::NP  (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar) (w::expletive ?exp)) ONT::affected)
 	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln ont::position-reln ont::source-reln))))
 					   (w::arg ?dobjvar)
-					   (W::argument (% W::S (W::sem ?dobjsem)  (W::var ?dobjvar) (W::lex ?dobjlex) (w::expletive ?exp))))))
+					   ;(W::argument (% W::S (W::sem ?dobjsem)  (W::var ?dobjvar) (W::lex ?dobjlex) (w::expletive ?exp))))))
+					   (W::argument (% W::NP (W::sem ?dobjsem)  (W::var ?dobjvar) (W::lex ?dobjlex) (w::expletive ?exp))))))
 	       ONT::result)
 	))
 

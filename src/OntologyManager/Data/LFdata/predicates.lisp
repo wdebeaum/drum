@@ -18,6 +18,7 @@
  :sem (F::ABSTR-OBJ  (:required (F::CONTAINER -) (f::intentional -))
 		     (:default (F::GRADABILITY +) (F::scale -) (f::intensity -) (f::orientation -)))
  :arguments ((:OPTIONAL ONT::GROUND)
+	     (:OPTIONAL ONT::NOROLE)
              )
  )
 

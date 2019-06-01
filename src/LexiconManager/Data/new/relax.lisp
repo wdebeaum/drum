@@ -7,7 +7,8 @@
 (W::relax
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("amuse-31.1") :wn ("relax%2:29:01"))
-     (LF-PARENT ont::experiencer-obj)
+     ;(LF-PARENT ont::experiencer-obj)
+     (LF-PARENT ONT::LOOSEN)
      (example "the muscles relaxed")
      (TEMPL affected-templ) 
      (preference .98) ;; prefer ont::subduing 

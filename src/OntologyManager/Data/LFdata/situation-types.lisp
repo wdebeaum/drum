@@ -987,7 +987,6 @@
 
 ;; e.g., my leg hurts, he itches, They tired of the game
  (define-type ONT::experiencer-obj
- :wordnet-sense-keys ("itch%2:39:02" "ache%2:39:00")
  :parent ONT::event-of-undergoing-action
  :sem (F::Situation (F::aspect F::dynamic) (F::cause F::agentive))
  :arguments (;; (:REQUIRED ONT::cause) ;; this used to include other verbs, but now is a formal (part or an experiencer), or experiencer

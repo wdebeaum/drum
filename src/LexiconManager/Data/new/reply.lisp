@@ -6,7 +6,7 @@
  :words (
   (W::reply
    (SENSES
-    ((LF-PARENT ONT::email)
+    ((LF-PARENT ONT::letter-mail)
      (EXAMPLE "compose a reply")
      (meta-data :origin task-learning :entry-date 20050823 :change-date nil :wn ("reply%1:10:01") :comments nil)
      )

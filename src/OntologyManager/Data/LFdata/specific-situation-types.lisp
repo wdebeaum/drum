@@ -455,7 +455,7 @@
 					       (:default (F::Mobility F::Self-Moving))))
 	     (:optional ont::neutral (F::phys-obj (f::type ont::geo-object))  ;; the path, road, as in "walk the path, walk the hills"
              ))
- :wordnet-sense-keys("splash%2:35:02")
+ :wordnet-sense-keys("splash%2:35:02" "walk%2:38:00" "walk%2:38:02" "walk%2:38:04" "walk%2:38:03")
 )
 
 (define-type ont::locomote-up
@@ -498,9 +498,10 @@
 
 
 
-;; takes a formal object -- walk the dog; walk the patient over to the xray facility
+;; takes a formal object -- walk the dog;
+;; not this one: walk the patient over to the xray facility (accompany)
 (define-type ONT::walking
- :wordnet-sense-keys ("walk%2:38:05" "walk%2:38:00" "walk%2:38:02" "walk%2:38:04")
+ :wordnet-sense-keys ("walk%2:38:05")
  :parent ONT::cause-move
  :arguments ((:ESSENTIAL ONT::affected (F::Phys-obj (F::origin (? o f::non-human-animal F::human))
 						    (F::mobility f::movable)))
@@ -1967,7 +1968,7 @@
 
 (define-type ONT::evoke-hurt
  :parent ONT::worsen-experience
- :wordnet-sense-keys ("hurt%2:29:01" "hurt%2:39:01" "hurt%2:37:01")
+ :wordnet-sense-keys ("hurt%2:29:01" "hurt%2:39:00" "hurt%2:37:01")
  :comment "cause hurt or suffering"
  )
 
@@ -2001,7 +2002,7 @@
 
 (define-type ont::evoke-physical-irritation
  :parent ont::evoke-bother
- :wordnet-sense-keys ("irritate%2:29:00" "chafe%2:39:00" "rub%2:35:01")
+ :wordnet-sense-keys ("irritate%2:29:00" "chafe%2:39:00" "rub%2:35:01" "itch%2:39:02")
 )
 
 (define-type ont::evoke-social-irritation
@@ -5593,7 +5594,7 @@
 ;;;  Actually added chills, nausea & sickness too even though they are nouns but because one can feel them, 
 ;;;   WN has different sense keys for such uses and the illness type noun type use which still is under medical-disorders-and-conditions!
 (define-type ONT::PHYSICAL-SENSATION
- :wordnet-sense-keys ("nauseous%3:00:00:ill:01" "nauseated%3:00:00:ill:01" "queasy%3:00:00:ill:01" "sickish%3:00:00:ill:01" "shivering%1:26:00" "nausea%1:26:00" )
+ :wordnet-sense-keys ("nauseous%3:00:00:ill:01" "nauseated%3:00:00:ill:01" "queasy%3:00:00:ill:01" "sickish%3:00:00:ill:01" "shivering%1:26:00" "nausea%1:26:00" "itch%2:39:00" "ache%2:39:01") 
  :parent ONT::PERCEPTION
  )
 

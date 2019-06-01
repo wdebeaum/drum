@@ -15,7 +15,7 @@
     (
      (LF-PARENT ONT::HYPOTHESIZE)
      (SEM (F::Aspect F::stage-level))
-     (TEMPL neutral-neutral-xp-templ)
+     (TEMPL experiencer-neutral-xp-templ)
      )
 
     )

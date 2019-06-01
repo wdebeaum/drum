@@ -15,7 +15,7 @@
      ((LF-PARENT ONT::motive)
      (example "the reason for the appointment")
 ;     (templ count-subcat-purpose-templ)
-     (TEMPL OTHER-RELN-TEMPL (xp (% W::pp (W::ptype W::for W::of))))
+     (TEMPL OTHER-RELN-TEMPL (xp (% W::pp (W::ptype (? pt W::for W::of)))))
      (meta-data :origin plot :entry-date 20081204 :change-date nil :wn ("reason%1:16:00") :comments caloy2)
      )
     )

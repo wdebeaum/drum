@@ -28,14 +28,21 @@ sub add_tag {
   push @{$normalized2tags{$normalized}}, $tag_str;
 }
 
+my $exprno = 0;
 for(;;) {
+  $exprno++;
   my $kqml_text = '';
   my $kqml = KQML::KQMLRead(\*STDIN, \$kqml_text);
   if (ref($kqml)) {
-    if (ref($kqml->[0])) { # list of tags
-      map { add_tag($_) } @$kqml;
-    } else { # single tag
-      add_tag($kqml);
+    eval {
+      if (ref($kqml->[0])) { # list of tags
+	map { add_tag($_) } @$kqml;
+      } else { # single tag
+	add_tag($kqml);
+      }
+      1
+    } || do {
+      die "Error adding tag in expression number $exprno: $@";
     }
   } elsif ($kqml == 0) {
     last;
