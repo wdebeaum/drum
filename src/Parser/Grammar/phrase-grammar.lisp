@@ -4098,7 +4098,7 @@
                 (sem ?sem) (transform ?transform)
                 ))
 	 )
-     -gerund> .97 ;;.97
+     -gerund> .98 ;;.97
      (head (vp (vform ing) (var ?v) (gap -) (aux -)
                (sem ?sem) 
 	       (class ?class)  (constraint ?con)  (transform ?transform)

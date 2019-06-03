@@ -2505,6 +2505,7 @@
     (add-to-conjunct (val (tense (? vf past pres fut))) (old ?tma) (new ?newtma))
     ?subj
     (advbl (atype pre-vp) (gap -)  ; pre-vp: Is the block eventually red?
+     (sem ($ f::abstr-obj (F::type (? ttt property-val)))) ; "regular" adverbs
      (argument (% s (sem ?sem)))
      (arg ?v) (var ?mod) (role ?advrole) (subcat -))           
     ?dobj
@@ -2549,6 +2550,7 @@
 	     (advbl-needed ?avn)
 	     ))
     (advbl (atype post) (gap -)  ; post: Is the block red eventually?
+     (sem ($ f::abstr-obj (F::type (? ttt property-val)))) ; "regular" adverbs
      (argument (% s (sem ?sem)))
      (arg ?v) (var ?mod) (role ?advrole) (subcat -))
     (add-to-conjunct (val (mod ?mod)) (old ?con) (new ?newcon))
@@ -3645,6 +3647,7 @@
    ;; sentential conjunction
    ;; both ss must be of the same type, decl or imperative <-- not anymore: I ate a pizza but what did Peter eat?
    ;; stype can also be whq: "... and what did the dog chase?" (cf. "what chased the cat" can be decl)
+   ;;               and ynq: "... and is the cat red?"
    ;; he did this and/or/but he did that; do this and/or/but do that
    ;; test: bark and chase the cat.
    ((s (sseq +) (stype ?st) (var *)  (sem ?sem) (wh-var (?wh-var1 ?wh-var2))
@@ -3656,13 +3659,13 @@
 		 ))))
      )
     -s-conj2>
-    (head (s (stype (? st decl imp whq)) (subj ?subj1) (var ?v1) (sem ?s1)
+    (head (s (stype (? st decl imp whq ynq)) (subj ?subj1) (var ?v1) (sem ?s1)
 	   (lf (% prop (class ?c1) (tma ?tma1)))
 	   (advbl-needed -) (wh-var ?wh-var1)
 	   ))
     (conj (lf (? lx ont::or ont::and ont::but ont::however ont::plus ont::otherwise ont::so))
      (lex ?lex))
-    (s (stype (? st2 decl imp whq)) (subj ?subj2) (var ?v2)
+    (s (stype (? st2 decl imp whq ynq)) (subj ?subj2) (var ?v2)
      (advbl-needed -) (sem ?s2)
      (lf (% prop (class ?c2) (tma ?tma2))) (wh-var ?wh-var2))
     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))

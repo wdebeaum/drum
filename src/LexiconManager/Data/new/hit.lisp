@@ -64,12 +64,16 @@
      (TEMPL agent-affected-XP-TEMPL)
      )
     |#
+
+    #|
     ((LF-PARENT ONT::hitting)
      (example "2 trucks hit")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL agent-PLURAL-TEMPL)
      (meta-data :origin monroe :entry-date 20031216)
      )
+    |#
+    
     ((LF-PARENT ONT::INTERSECT)
      (SEM (F::Aspect F::indiv-level) (F::Time-span F::extended))
      (TEMPL neutral-neutral-xp-templ)
