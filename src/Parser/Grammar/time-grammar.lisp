@@ -700,6 +700,19 @@
      (number (val ?!v2) (lex ?l2) (NTYPE w::DIGIT) (coerce ?coerce) (digits -))
      (compute-val-and-ntype (expr (+ ?!v1 ?!v2)) (newval ?newval) (ntype ?ntype)))
 
+    ;; Basic Number Expressions with hyphens
+    ;;  e.g., thirty-one, twenty-seven
+    ((number (VAL ?newval) (agr 3p) (lex (?l1 ?l2)) (ntype ?ntype)
+      (var *) (LF ?lf) (coerce ?coerce) (sem ?sem)
+      (nobarespec ?nbs)
+	     )
+     -tenty-digit-hyphen>
+     (head (number (nobarespec ?nbs) (lf ?lf) (val ?!v1) (lex ?l1) (sem ?sem)
+		   (NTYPE w::TENS) (coerce ?coerce) (digits -)))
+     (punc (lex W::punc-minus))
+     (number (val ?!v2) (lex ?l2) (NTYPE w::DIGIT) (coerce ?coerce) (digits -))
+     (compute-val-and-ntype (expr (+ ?!v1 ?!v2)) (newval ?newval) (ntype ?ntype)))
+
     ;; Written numbers with commas, e.g., 1,939 - we used to remove the commas in tokenization, but this
     ;;   leads to unfortunate parser like 1,939 parsing as a year!
     ((number (VAL ?newval) (agr 3p) (lex (?l1 ?l2)) (ntype ?ntype)
@@ -941,9 +954,11 @@
       (nobarespec ?nbs)
 	     )
      -range-hyphen> 1
-     (head (number (nobarespec ?nbs) (lf ?lf) (val ?!v1) (lex ?l1)))
+     (head (number (nobarespec ?nbs) (lf ?lf) (val ?!v1) (lex ?l1) (has-digits +))) ; excludes three-nine
      (punc (lex  w::punc-minus))
-     (number (val ?!v2) (lex ?l2)))
+     (number (val ?!v2) (lex ?l2) (has-digits +))
+     (less-than (val1 ?!v1) (val2 ?!v2)) ; excludes 9-3
+     )
 
     ;; from 20 to 35
     ((number (RESTR (& (min ?!v1) (max ?!v2))) (agr 3p) (lex (?l1 ?l2)) (ntype ?ntype) (range +)
@@ -1419,6 +1434,15 @@
 		))
    (number (VAL ?n) (NTYPE w::DAY)))
 
+  ;; 31 July
+  ((DATE (INT +) (Month ?m) (DAY ?n)(lex ?hlex) (headcat ?hcat) (day-specified +))
+   -dt-month-day-rev> 1.0
+   (number (VAL ?n) (NTYPE w::DAY))
+   (head (name (LF ONT::MONTH-NAME)
+		(lf ?M) (lex ?hlex) (headcat ?hcat)
+		))
+   )
+  
   ;; July 31st
   ((DATE (INT +) (Month ?m) (DAY ?n)(lex ?hlex) (headcat ?hcat) (day-specified +))
    -dt-month-day-ord> 1.0

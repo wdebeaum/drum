@@ -5,15 +5,22 @@
 (define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
  :tags (:base500)
  :words (
-  (W::move
-   (wordfeats (W::morph (:forms (-vb) :nom w::motion)))
+  (W::move ; no nom
    (SENSES
     ((meta-data :origin "verbnet-1.5-corrected" :entry-date 20051219 :change-date 20090501 :comments nil :vn ("amuse-31.1") :wn ("move%2:37:00" "move%2:37:01"))
      (LF-PARENT ONT::provoke)
      (example "the story moved him [to change his ways]")
       (TEMPL agent-affected-theme-objcontrol-optional-templ) ; like annoy,bother,concern,hurt
       (preference .97)
-     )
+      )
+    ))))
+
+ (define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+ :tags (:base500)
+ :words (
+  (W::move
+   (wordfeats (W::morph (:forms (-vb) :nom w::movement)))
+   (SENSES   
     ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("roll-51.3.1") :wn ("move%2:38:00" "move%2:38:01" "move%2:38:03"))
      (LF-PARENT ONT::MOVE)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))

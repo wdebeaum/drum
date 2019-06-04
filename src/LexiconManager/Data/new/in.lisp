@@ -482,7 +482,7 @@
     ((lf-parent ont::purpose)
      (example "in reply")
      (templ binary-constraint-S-templ)
-     (preference 0.98)
+     (preference 0.98) ; prefer in-loc
      )
     
     ;; in the air (excluded by ont::spatial-loc)

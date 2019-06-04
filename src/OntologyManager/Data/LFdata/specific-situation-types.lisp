@@ -3330,7 +3330,7 @@
  )
 
 (define-type ONT::socially-remove
-    :wordnet-sense-keys ("banishment%1:04:00" "expel%2:41:01" "expel%2:41:00" "ouster%1:04:00")
+    :wordnet-sense-keys ("banishment%1:04:00" "expel%2:41:01" "expel%2:41:00" "ouster%1:04:00" "repatriate%2:41:01")
  :parent ONT::cause-come-from
  :arguments ((:REQUIRED ONT::Formal ((? thm F::phys-obj F::abstr-obj) (F::intentional +)))
              )
@@ -4701,7 +4701,7 @@
 
 ;; stretch  20120524 GUM change new type
 (define-type ONT::admit
-  :wordnet-sense-keys ("accept%2:40:03" "admit%2:41:00" "invite%2:35:12")
+  :wordnet-sense-keys ("accept%2:40:03" "admit%2:41:00" "invite%2:35:12" "admit%2:41:01")
   :parent ont::enroll
  )
 

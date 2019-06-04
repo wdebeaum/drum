@@ -808,11 +808,13 @@
 		)
     )
 
+#|
 (define-type ONT::clinical-finding
  :parent ONT::outcome
  :arguments ((:essential ONT::FIGURE)
 	     )
  )
+|#
 
 ;; identification
 (define-type ONT::identification

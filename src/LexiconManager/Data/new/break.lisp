@@ -88,3 +88,16 @@
    )
 ))
 
+(define-words :pos W::v 
+ :words (
+;   )
+  ((W::break W::out)
+   (wordfeats (W::morph (:forms (-vb) :past W::broke :pastpart W::broken :nom (w::break w::out))))
+   (SENSES
+    ((LF-PARENT ONT::start)
+     (SEM (F::Aspect F::Bounded) (F::Time-span F::Atomic))
+     (TEMPL AFFECTED-TEMPL)
+     )
+    )
+   )
+))

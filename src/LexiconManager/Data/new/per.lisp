@@ -40,3 +40,29 @@
    )
 ))
 
+(define-words :pos W::ADV :templ COUNT-PRED-TEMPL
+ :words (
+   ((W::PER w::cent)
+   (SENSES
+    ((LF-PARENT ONT::FREQUENCY)
+     (TEMPL PRED-VP-TEMPL)
+     (meta-data :origin calo-ontology :entry-date 20060426 :change-date nil :wn ("per_diem%1:21:00") :comments nil)
+     )
+    )
+   )
+))
+
+(define-words :pos W::n 
+ :words (
+   ((W::per w::cent)
+    ;;(wordfeats (W::morph (:forms (-s-3p) :plur W::percent)))
+   (SENSES
+    ((LF-PARENT ONT::percent)
+     (meta-data :origin calo :entry-date 20041206 :change-date nil :wn ("percent%1:24:00") :comments caloy2)
+     (example "this cpu is 20 per cent faster")
+     (TEMPL SUBSTANCE-UNIT-TEMPL)
+     ;;(templ other-reln-theme-templ)
+     )
+    )
+   )
+))
