@@ -3560,7 +3560,13 @@
    :parent ont::emit-giveoff-discharge ;; 20121022 GUM change parent; this change requires adding an ont::effect role
    :arguments ((:OPTIONAL ONT::effect (F::situation))
 	       )
-  )
+   )
+
+(define-type ont::emit-vapor
+    :wordnet-sense-keys ("smoke%2:43:00" "steam%2:43:00")
+    :parent ont::emit-giveoff-discharge
+    :arguments ((:REQUIRED ONT::agent (F::Phys-obj (f::intentional -))))
+    )
 
 
 ;; write a book (about trucks), write your name
@@ -5624,7 +5630,8 @@
 
 ;; smoke (as in cigarettes, pipes)
 (define-type ONT::smoking
- :wordnet-sense-keys ("smoke%2:34:00")
+    :wordnet-sense-keys ("smoke%2:34:00" "smoking%1:04:00")
+     :arguments ((:REQUIRED ONT::Agent (F::Phys-obj (f::origin f::living) (f::intentional +))))
  :parent ONT::consume
  )
 

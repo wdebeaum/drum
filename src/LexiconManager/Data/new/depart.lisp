@@ -5,7 +5,7 @@
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
   (W::depart
-     (wordfeats (W::morph (:forms (-vb) :nom W::departure)))
+     (wordfeats (W::morph (:forms (-vb) :nom W::departure :nomsubjpreps (w::of) :nomobjpreps -)))
    (SENSES
     ((LF-PARENT ONT::DEPART)
      (example "depart from Rochester for NYC")

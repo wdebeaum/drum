@@ -458,7 +458,7 @@ intersection of an entry's tags and these tags is non-empty."
       (setq formlist (mmapcan (lambda (form)
 				(case form 
 				  ;; normal verb forms
-				  (-vb '(:12s123pbase :3s :ing :past :pastpart :nom :agentnom))
+				  (-vb '(:12s123pbase :3s :ing :ings :past :pastpart :nom :agentnom))
 				  ;; normal noun forms
 				  (-s-3p '(:sing :plur))
 ;;				  (-load '(:load :load-p)) ;; no longer used
@@ -617,6 +617,7 @@ intersection of an entry's tags and these tags is non-empty."
     (:12s123pbase base)
     (:3s (add-suffix base "S"))
     (:ing (add-suffix base "ING"))
+    (:ings (add-suffix base "INGS"))
     (:past (add-suffix base "ED"))
     (:pastpart (add-suffix base "ED"))
     ;; noun forms
@@ -751,7 +752,7 @@ intersection of an entry's tags and these tags is non-empty."
     (let ((new-entry (copy-vocabulary-entry entry)))
       (setf (vocabulary-entry-word new-entry) word) 
       (setf (vocabulary-entry-name new-entry) name)
-      (if (member morphfeat '(:load :loads :ly :er :est))
+      (if (member morphfeat '(:load :loads :ly :er :est :ings))
 	  (do-complex-modify word morphfeat new-entry)
 	;; or do a simple modify which is just changes to the SYNTAX feature
 	(progn
@@ -786,6 +787,9 @@ intersection of an entry's tags and these tags is non-empty."
        )
       ((:er :est)
        (make-comparative new-entry morphfeat))
+      (:ings
+       (make-gerund-plural word new-entry)
+       )      
       )
     new-entry
     )
@@ -819,6 +823,20 @@ intersection of an entry's tags and these tags is non-empty."
           (vocabulary-entry-senses entry))
   entry
   )
+
+(defun make-gerund-plural (word entry)
+  (setf (vocabulary-entry-pos entry) 'w::N)
+  (mapcar #'(lambda (s)
+              (setf (sense-definition-pos s) 'w::N)
+	      ;; need to update the lfform with the right form of the word
+	      (setf (sense-definition-lf-form s) word)
+	      (setf (sense-definition-syntax s)
+		    (replace-feat (sense-definition-syntax s) 'w::agr 'w::3p))
+              )
+          (vocabulary-entry-senses entry))
+  entry
+  )
+
 
 (defun make-comparative (entry feat)
   (setf (vocabulary-entry-wfeats entry)
@@ -967,7 +985,9 @@ intersection of an entry's tags and these tags is non-empty."
 
      ; nominalizations - has a separate entry generation function as more than the syntactic features change
      ((:nom :agentnom) nil) 
-     
+
+     (-ings nil)
+
      (otherwise 
       (lexiconmanager-warn "Unknown morphological feature ~S in definition of ~S" morphfeat word)
       nil)))

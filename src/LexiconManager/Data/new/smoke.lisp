@@ -28,6 +28,13 @@
      (example "he smoked a cigarette") ; insufficiently restricted
      (TEMPL AGENT-affected-xp-TEMPL)
      )
+
+    ((LF-PARENT ONT::emit-vapor)
+     (meta-data :origin calo-ontology :entry-date 20060117 :change-date nil :comments caloy3)
+     (example "the logs smoked all night") 
+     (TEMPL AGENT-TEMPL)
+     )
+    
     )
    )
 ))

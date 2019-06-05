@@ -530,8 +530,10 @@
 	 (score
 	  (* (if (and (not (eq (constit-cat c) 'w::pro))
 		      (not (member (get-value c 'w::lex) '(w::one)))
-		      (or (if (symbolp lf) (member lf '(ont::referential-sem ont::modifier)))
-			  (if (consp lf) (intersection lf '(ont::referential-sem ont::modifier)))))
+		      ;(or (if (symbolp lf) (member lf '(ont::referential-sem ont::modifier)))
+			  ;(if (consp lf) (intersection lf '(ont::referential-sem ont::modifier)))))
+		      (or (if (symbolp lf) (member lf '(ont::referential-sem ont::property-val)))
+			  (if (consp lf) (intersection lf '(ont::referential-sem ont::property-val)))))
 		 ;; addition penalty if it contains a hyphen!
 		 (if (position #\- (coerce (symbol-name lex) 'list))
 		     (* *referential-sem-penalty*  *referential-sem-penalty*)

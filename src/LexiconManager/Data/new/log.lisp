@@ -5,14 +5,18 @@
 (define-words :pos w::N 
  :words (
 ;; Mathematical functions
-  (w::log
-  (senses((LF-parent ONT::Number-measure-domain) 
+	 (w::log
+	  (senses
+	   ((LF-parent ONT::Number-measure-domain) 
 	    (templ other-reln-templ)
 	    (meta-data :origin lam :entry-date 20050420 :change-date nil :comments lam-initial)
-	    ))
-  ;; Added by Myrosia during LAM extension
-)
-))
+	    )
+	   ((LF-parent ont::natural-object)
+	    (templ count-pred-templ)
+	    )
+	   )
+	 
+	  )))
 
 (define-words :pos W::v :templ AGENT-neutral-XP-TEMPL
  :words (

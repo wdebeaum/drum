@@ -63,7 +63,8 @@
 
 (defun entry-is-solely-abstract (entry)
   (let ((lfs (find-arg-in-act entry :LFS)))
-    (NOT (set-difference lfs '(ONT::MODIFIER ONT::SITUATION-ROOT ONT::PHYS-OBJECT ONT::ABSTRACT-OBJECT ONT::REFERENTIAL-SEM ONT::SPEECH-ACT ONT::ANY-TIME-OBJECT ONT::ANY-SEM ONT::PREDICATE)))))
+    ;(NOT (set-difference lfs '(ONT::MODIFIER ONT::SITUATION-ROOT ONT::PHYS-OBJECT ONT::ABSTRACT-OBJECT ONT::REFERENTIAL-SEM ONT::SPEECH-ACT ONT::ANY-TIME-OBJECT ONT::ANY-SEM ONT::PREDICATE)))))
+    (NOT (set-difference lfs '(ONT::PROPERTY-VAL ONT::SITUATION-ROOT ONT::PHYS-OBJECT ONT::ABSTRACT-OBJECT ONT::REFERENTIAL-SEM ONT::SPEECH-ACT ONT::ANY-TIME-OBJECT ONT::ANY-SEM ONT::PREDICATE)))))
 
 (defun get-unknown-word-def (w &key (senselimit *wf-sense-limit*) pos-list penntag ont-sense-tags trips-sense-list wn-sense-keys score)
  ;; (when (and (not *no-wf-senses-for-words-tagged-with-ont-types*) (null ont-sense-tags))
@@ -504,7 +505,7 @@
 	     ;;(setq feats (append feats (list (list 'w::pertainym (list (list :* pert-lf pert-lf-form) pert-sem)))))
 	     (setq feats (append feats (list (list 'w::pertainym (list :* pert-lf (car pert-lf-form)))
 					     (list 'w::pert-domain-info pert-domain-info))))
-	     (if (member lf '(ONT::MODIFIER ONT::REFERENTIAL-SEM))
+	     (if (member lf '(ONT::PROPERTY-VAL MODIFIER ONT::REFERENTIAL-SEM)) ;'(ONT::MODIFIER ONT::REFERENTIAL-SEM))
 		 ;(setq lf '(:* ONT::ASSOC-WITH lf-form))
 		 (setq lf 'ONT::ASSOC-WITH)
 	       )
@@ -559,7 +560,7 @@
        (setq res (create-entry-based-on-entries-of-the-same-type word wid lf lfform sem syntax pos trips-sense-list domain-info score))
        ))
       (w::adv
-       (setq replica-entry (make-replica-entry word lf pos '(ont::modifier)))
+       (setq replica-entry (make-replica-entry word lf pos '(ont::property-val))) ;'(ont::modifier)))
 ;       (setq sem (get-lf-sem lf :no-defaults nil ))
 ;       (setq lf (list :* lf lfform))
        (setq syntax (append feats `((w::gap ?gap)

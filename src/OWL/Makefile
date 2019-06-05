@@ -68,8 +68,8 @@ include $(CONFIGDIR)/java/lib.mk
 # stuff to compile the TRIPS ontology to OWL and install the file to etcdir
 LISPONT:=../OntologyManager/Data/LFdata
 
-ontology.lisp:: $(LISPONT)/feature-declarations.lisp $(LISPONT)/feature-types.lisp $(LISPONT)/root-types.lisp $(LISPONT)/speech-acts.lisp $(LISPONT)/predicates.lisp $(LISPONT)/time-location-types.lisp $(LISPONT)/physobj.lisp $(LISPONT)/situation-types.lisp $(LISPONT)/abstract-types.lisp $(LISPONT)/specific-situation-types.lisp
-	cat $(LISPONT)/feature-declarations.lisp $(LISPONT)/feature-types.lisp $(LISPONT)/root-types.lisp $(LISPONT)/speech-acts.lisp $(LISPONT)/predicates.lisp $(LISPONT)/time-location-types.lisp $(LISPONT)/physobj.lisp $(LISPONT)/situation-types.lisp $(LISPONT)/abstract-types.lisp $(LISPONT)/specific-situation-types.lisp \
+ontology.lisp:: $(LISPONT)/feature-declarations.lisp $(LISPONT)/feature-types.lisp $(LISPONT)/root-types.lisp $(LISPONT)/speech-acts.lisp $(LISPONT)/predicates.lisp $(LISPONT)/time-location-types.lisp $(LISPONT)/physobj.lisp $(LISPONT)/situation-types.lisp $(LISPONT)/abstract-types.lisp $(LISPONT)/property-val.lisp $(LISPONT)/domain-and-attribute-types.lisp $(LISPONT)/specific-situation-types.lisp $(LISPONT)/social-contract.lisp $(LISPONT)/music-terminology.lisp
+	cat $^ \
 	| fgrep -i -v ':comment "' \
 	> ontology.lisp
 	# ^^^ hack around the fact that sexp lib can't read :comment strings

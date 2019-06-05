@@ -335,7 +335,7 @@
     )
 
 (define-type ont::atmospheric-phenomenon
-     :wordnet-sense-keys ("atmospheric_phenomenon%1:19:00")
+     :wordnet-sense-keys ("atmospheric_phenomenon%1:19:00" "cloud%1:19:01" "smoke%1:22:00")
     :parent ont::natural-phenomenon
     :sem (F::Phys-obj (F::origin F::non-living) (f::object-function f::weather))
     )

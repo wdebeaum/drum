@@ -1,7 +1,7 @@
 ;;;;
 ;;;; W::smoking
 ;;;;
-
+#|
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
    (W::smoking
@@ -13,4 +13,4 @@
     )
    )
 ))
-
+|#

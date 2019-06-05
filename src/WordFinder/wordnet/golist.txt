@@ -2,4 +2,12 @@
 reassure%2:37:00::
 reassure%2:32:00::
 in_the_nick_of_time%4:02:00::
-
+binary_digit%1:23:00::
+octal_digit%1:23:00::
+decimal_digit%1:23:00::
+duodecimal_digit%1:23:00::
+hexadecimal_digit%1:23:00::
+significant_digit%1:23:00::
+significant_figure%1:23:00::
+non-zero%5:00:00:cardinal:00
+zillion%5:00:00:cardinal:00

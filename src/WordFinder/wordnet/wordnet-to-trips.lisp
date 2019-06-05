@@ -139,7 +139,8 @@
 		      ;; these types)
 		      ont::any-sem		; noun
 		      ont::situation-root	; verb
-		      ont::modifier		; adjective
+		      ;ont::modifier		; adjective
+		      ont::property-val		; adjective
 		      ont::predicate		; adverb
 		      )))
 		senselist)
@@ -1581,8 +1582,10 @@
             (case (slot-value (car hier-rev) 'ss-type)
                   (|n| 'ONT::ANY-SEM) ; noun
                   (|v| 'ONT::SITUATION-ROOT) ; verb
-                  (|a| 'ONT::MODIFIER) ; adjective
-                  (|s| 'ONT::MODIFIER) ; adjective satellite
+                  ;(|a| 'ONT::MODIFIER) ; adjective
+                  ;(|s| 'ONT::MODIFIER) ; adjective satellite
+                  (|a| 'ONT::PROPERTY-VAL) ; adjective
+                  (|s| 'ONT::PROPERTY-VAL) ; adjective satellite
                   (|r| 'ONT::PREDICATE) ; adverb
                   (otherwise (print-debug "WordFinder -- unknown part of speech returned!"))))))
 

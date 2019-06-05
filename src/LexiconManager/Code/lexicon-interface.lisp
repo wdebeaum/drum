@@ -435,7 +435,10 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 ;		(if (and (find 'w::punc-minus w)
 ;			 (not (equal 'w::punc-minus (first w))))
 ;		    (remove 'w::punc-minus w) w) w)) ;; remove non-initial hyphenation 
-	 (default-ont-type (or (cdr (assoc pos '((w::v ont::situation-root) (w::n ont::referential-sem) (w::adv  ont::predicate) (w::adj ont::modifier)))) '(ont::referential-sem)))
+	 (default-ont-type (or (cdr (assoc pos '((w::v ont::situation-root) (w::n ont::referential-sem) (w::adv  ont::predicate)
+						 (w::adj ont::property-val))))
+						 ;(w::adj ont::modifier))))
+			       '(ont::referential-sem)))
 	 res)
     ; turning this off in CERNL.
 ;    (if (and (listp w) (contains-number w)) (setq w (convert-number-to-word w)))
@@ -715,9 +718,13 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
   (if (symbolp w)
       (let* ((reversed-chars (reverse (coerce (symbol-name w) 'list)))
 	     (stemmed (cond ((eq (car reversed-chars) #\S)
-			     (if (eq (cadr reversed-chars) #\E)
-				 (setq reversed-chars (cddr reversed-chars))
-				 (cdr reversed-chars)))
+			     (cond ((eq (cadr reversed-chars) #\E)
+				    (setq reversed-chars (cddr reversed-chars)))
+				   ((and (eq (cadr reversed-chars) #\G) ; e.g., fightings
+					 (eq (caddr reversed-chars) #\N)
+					 (eq (cadddr reversed-chars) #\I))
+				    (cddddr reversed-chars))
+				   (t (cdr reversed-chars))))
 			    ((and (eq (car reversed-chars) #\D)
 				  (eq (cadr reversed-chars) #\E))
 			     (cddr reversed-chars))
@@ -848,7 +855,8 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
   )
 
 (defun abstract-type (ont-type)
-  (member ont-type '(ont::referential-sem ont::abstract-object ont::modifier ont::predicate ont::situation-root ont::phys-object ont::action)
+  (member ont-type '(ont::referential-sem ont::abstract-object ont::property-val ont::predicate ont::situation-root ont::phys-object ont::action)
+  ;(member ont-type '(ont::referential-sem ont::abstract-object ont::modifier ont::predicate ont::situation-root ont::phys-object ont::action)
 	  ;;ont::organization ont::geographic-region))
   ))
 
