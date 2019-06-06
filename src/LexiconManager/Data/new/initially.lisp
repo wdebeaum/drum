@@ -17,7 +17,7 @@
  :words (
   (W::INITIALLY
    (SENSES
-    ((LF-PARENT ONT::temporal-location)
+    ((LF-PARENT ONT::event-time-initially)
      (TEMPL PRED-VP-TEMPL)
      )
     )

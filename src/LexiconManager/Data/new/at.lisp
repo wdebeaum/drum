@@ -66,6 +66,7 @@
     ((LF-PARENT ONT::situated-in);;time-clock-rel)      ;;I think the "sit-val" reading of TiME-CLOCK-REL actually be SITUATED-IN  JFA 1/10
      (TEMPL binary-constraint-NP-TEMPL);;binary-constraint-SIT-VAL-NP-TEMPL)
      (preference .98))
+    
     ((LF-PARENT ONT::AT-LOC)
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      )

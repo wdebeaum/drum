@@ -1002,23 +1002,36 @@
     
     )
 
-(define-type ont::until
+(define-type ont::since-until
     :parent ont::event-time-rel
    
     )
 
+(define-type ont::since
+    :parent ont::since-until
+   
+    )
+
+(define-type ont::until
+    :parent ont::since-until
+   
+    )
+
+
 ;; still, yet, so far, ....
+
+
+(define-type ONT::event-time-wrt-now
+    :parent ONT::event-time-rel
+    )
+
 (define-type ONT::time-rel-so-far
 ; :parent ONT::event-time-rel
-    :parent ONT::EVENT-DURATION-MODIFIER
+    :parent ONT::event-time-wrt-now
     :wordnet-sense-keys ("so_far%4:02:00")
     :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
              )
  )
-
-(define-type ONT::event-time-wrt-now
-    :parent ONT::event-time-rel
-     )
 
 (define-type ONT::now
      :wordnet-sense-keys ("now%4:02:05" "presently%4:02:00" "current%3:00:00" "present%3:00:01")
@@ -1062,7 +1075,7 @@
  )
 
 ;; event times not including situations
-(define-type ONT::event-time
+(define-type ONT::event-time-initially
  :parent ONT::event-time-rel
  :arguments (;(:ESSENTIAL ONT::VAL ((? vl F::time)))
 	     (:ESSENTIAL ONT::GROUND ((? grd F::time)))

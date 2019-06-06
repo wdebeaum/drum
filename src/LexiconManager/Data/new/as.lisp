@@ -2,6 +2,22 @@
 ;;;; w::as
 ;;;;
 
+(define-words 
+    :pos W::adv :templ DISC-PRE-TEMPL
+ :tags (:base500)
+ :words (
+  ((w::as w::of)
+   (SENSES
+    ((LF-PARENT ONT::since-until)
+     (example "As of January, we will start feeding the cat" "As of January, nobody has fed the cat.")
+     (TEMPL binary-constraint-S-or-NP-TEMPL)
+     (meta-data :origin cernl :entry-date 20110105 :change-date nil :comments hpi-acn-4)
+     )
+    )
+   )
+))
+
+
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
    ((w::as w::in)

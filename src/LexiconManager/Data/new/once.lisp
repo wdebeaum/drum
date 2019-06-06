@@ -35,13 +35,14 @@
  :words (
   (W::ONCE
    (SENSES
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::in-past)
      (example "once he was a child")
      (TEMPL pred-s-vp-TEMPL)
      (preference .98)
      )
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::event-event-time)
      (TEMPL binary-constraint-S-decl-TEMPL)
+     (example "Once I opened the box, the cat jumped out")
      )
     ((LF-PARENT ONT::repetition)
      (example "take the medication once")

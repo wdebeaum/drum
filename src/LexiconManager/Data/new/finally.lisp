@@ -19,7 +19,7 @@
  :words (
   (W::FINALLY
    (SENSES
-    ((LF-PARENT ONT::temporal-location)
+    ((LF-PARENT ONT::event-time-rel-culmination)
      (TEMPL PRED-S-VP-TEMPL)
      )
     )

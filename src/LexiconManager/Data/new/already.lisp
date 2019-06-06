@@ -6,7 +6,7 @@
  :words (
   (W::ALREADY
    (SENSES
-    ((LF-PARENT ONT::temporal-location)
+    ((LF-PARENT ONT::IN-PAST)
      (TEMPL PRED-VP-TEMPL)
      )
     )

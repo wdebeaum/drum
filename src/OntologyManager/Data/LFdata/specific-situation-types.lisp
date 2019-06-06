@@ -5567,7 +5567,7 @@
 
 ;; infancy, childhood, adulthood
 (define-type ONT::lifecycle-stage
- :parent ONT::domain-property
+ :parent ONT::event-type
  :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj (F::origin F::living)))
              )
  :wordnet-sense-keys ("time_of_life%1:28:00")

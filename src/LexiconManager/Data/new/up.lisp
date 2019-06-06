@@ -15,12 +15,34 @@
     ((LF-PARENT ONT::UP)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      (meta-data :origin plot :entry-date 20080609 :change-date nil :comments nil)
-     (example "let's practice up to here" "all the way up to my shins")
+     (example "let's practice up to here" "the water rose up to my shins")
      )
 
-     )
+    ((LF-PARENT ONT::UNTIL)
+     (TEMPL binary-constraint-s-templ ))
+    )
    )
-))
+  ))
+
+(define-words :pos W::ADV
+ :words (
+  ((W::UP w::till)
+   (SENSES
+    ((LF-PARENT ONT::UNTIL)
+     (TEMPL binary-constraint-s-templ ))
+    )
+   )
+  ))
+
+(define-words :pos W::ADV
+ :words (
+  ((W::UP w::until)
+   (SENSES
+    ((LF-PARENT ONT::UNTIL)
+     (TEMPL binary-constraint-s-templ ))
+    )
+   )
+  ))
 
 #|
 (define-words :pos W::ADV
