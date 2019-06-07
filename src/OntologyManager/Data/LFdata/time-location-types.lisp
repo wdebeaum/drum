@@ -537,7 +537,10 @@
 
 (define-type ont::source-as-loc
  :parent ont::from
- :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj))
+	     (:ESSENTIAL ONT::GROUND (F::phys-obj
+				      (F::mobility F::movable)) ; exclude "... arrive in country X from country Y"
+				      ))
  )
 
 #| ; now this is :RESULT
@@ -621,6 +624,7 @@
 	     ; copied from to-loc
 	     (:ESSENTIAL ONT::FIGURE ((? f F::PHYS-OBJ F::abstr-obj))); (F::situation (f::type ont::event-of-change)))   ; "I walked to the store" FIGURE should point to "I", not "walked"
 	     (:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj) (f::spatial-abstraction ?!sa)
+				      (F::mobility F::movable) ; exclude "... arrive in country X from country Y"
 					;(F::form F::geographical-object)
 				      ) )  ; spatial-abstraction is not enough: many things have spatial-abstraction, e.g., a frog.  Another possibility is (F::object-function F::spatial-object)
 

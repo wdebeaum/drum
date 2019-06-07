@@ -170,8 +170,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -197,8 +197,8 @@
             :FORMAL ?!cont
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -224,8 +224,8 @@
             :FORMAL -
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -245,8 +245,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -272,8 +272,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -304,8 +304,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -330,8 +330,8 @@
 ;            :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -351,8 +351,8 @@
             :FORMAL ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -372,8 +372,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -393,8 +393,8 @@
             :EXPERIENCER ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -414,8 +414,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -433,8 +433,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -452,8 +452,8 @@
             :EXPERIENCER ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -478,8 +478,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -508,8 +508,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -538,8 +538,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -562,8 +562,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -592,8 +592,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -627,8 +627,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -656,8 +656,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -680,8 +680,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -704,8 +704,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -728,8 +728,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -752,8 +752,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -774,8 +774,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -796,8 +796,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -821,8 +821,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -850,8 +850,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -879,8 +879,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -902,8 +902,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -931,8 +931,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -965,8 +965,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -993,8 +993,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1016,8 +1016,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1039,8 +1039,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1062,8 +1062,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1085,8 +1085,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1106,8 +1106,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1127,8 +1127,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1152,8 +1152,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -1181,8 +1181,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -1210,8 +1210,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1233,8 +1233,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -1262,8 +1262,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -1296,8 +1296,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -1324,8 +1324,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1347,8 +1347,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1370,8 +1370,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1393,8 +1393,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1416,8 +1416,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1437,8 +1437,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1458,8 +1458,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1483,8 +1483,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -1512,8 +1512,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -1541,8 +1541,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1564,8 +1564,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -1593,8 +1593,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -1627,8 +1627,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -1655,8 +1655,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1678,8 +1678,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1701,8 +1701,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1724,8 +1724,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1747,8 +1747,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1768,8 +1768,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1789,8 +1789,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1814,8 +1814,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -1843,8 +1843,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -1872,8 +1872,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -1895,8 +1895,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -1924,8 +1924,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -1958,8 +1958,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -1986,8 +1986,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2009,8 +2009,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2032,8 +2032,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2055,8 +2055,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2078,8 +2078,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2099,8 +2099,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2120,8 +2120,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2154,8 +2154,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -2181,8 +2181,8 @@
             :FORMAL ?!cont
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -2208,8 +2208,8 @@
             :NEUTRAL -
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2229,8 +2229,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -2256,8 +2256,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -2288,8 +2288,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -2314,8 +2314,8 @@
 ;            :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2335,8 +2335,8 @@
             :NEUTRAL ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2356,8 +2356,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2377,8 +2377,8 @@
             :EXPERIENCER ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2398,8 +2398,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2417,8 +2417,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2436,8 +2436,8 @@
             :EXPERIENCER ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2462,8 +2462,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -2492,8 +2492,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -2522,8 +2522,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2546,8 +2546,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -2576,8 +2576,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -2611,8 +2611,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -2640,8 +2640,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2664,8 +2664,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2688,8 +2688,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2712,8 +2712,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2736,8 +2736,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2758,8 +2758,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2780,8 +2780,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2805,8 +2805,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -2834,8 +2834,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -2863,8 +2863,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -2886,8 +2886,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -2915,8 +2915,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -2949,8 +2949,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -2977,8 +2977,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3000,8 +3000,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3023,8 +3023,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3046,8 +3046,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3069,8 +3069,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3090,8 +3090,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3111,8 +3111,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3136,8 +3136,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -3165,8 +3165,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -3194,8 +3194,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3217,8 +3217,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -3246,8 +3246,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -3280,8 +3280,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -3308,8 +3308,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3331,8 +3331,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3354,8 +3354,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3377,8 +3377,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3400,8 +3400,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3421,8 +3421,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3442,8 +3442,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3467,8 +3467,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -3496,8 +3496,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -3525,8 +3525,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3548,8 +3548,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -3577,8 +3577,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -3611,8 +3611,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -3639,8 +3639,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3662,8 +3662,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3685,8 +3685,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3708,8 +3708,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3731,8 +3731,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3752,8 +3752,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3773,8 +3773,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3798,8 +3798,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -3827,8 +3827,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -3856,8 +3856,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3879,8 +3879,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -3908,8 +3908,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -3942,8 +3942,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -3970,8 +3970,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -3993,8 +3993,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4016,8 +4016,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4039,8 +4039,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4062,8 +4062,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4083,8 +4083,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4104,8 +4104,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4138,8 +4138,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -4165,8 +4165,8 @@
             :FORMAL ?!cont
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -4192,8 +4192,8 @@
             :FORMAL -
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4213,8 +4213,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -4240,8 +4240,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -4272,8 +4272,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -4298,8 +4298,8 @@
 ;            :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4319,8 +4319,8 @@
             :FORMAL ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4340,8 +4340,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4361,8 +4361,8 @@
             :EXPERIENCER ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4382,8 +4382,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4401,8 +4401,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4420,8 +4420,8 @@
             :EXPERIENCER ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4446,8 +4446,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -4476,8 +4476,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -4506,8 +4506,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4530,8 +4530,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -4560,8 +4560,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -4595,8 +4595,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -4624,8 +4624,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4648,8 +4648,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4672,8 +4672,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4696,8 +4696,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4720,8 +4720,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4742,8 +4742,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4764,8 +4764,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4789,8 +4789,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -4818,8 +4818,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -4847,8 +4847,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4870,8 +4870,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -4899,8 +4899,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -4933,8 +4933,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -4961,8 +4961,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -4984,8 +4984,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5007,8 +5007,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5030,8 +5030,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5053,8 +5053,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5074,8 +5074,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5095,8 +5095,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5120,8 +5120,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -5149,8 +5149,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -5178,8 +5178,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5201,8 +5201,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -5230,8 +5230,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -5264,8 +5264,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -5292,8 +5292,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5315,8 +5315,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5338,8 +5338,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5361,8 +5361,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5384,8 +5384,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5405,8 +5405,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5426,8 +5426,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5451,8 +5451,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -5480,8 +5480,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -5509,8 +5509,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5532,8 +5532,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -5561,8 +5561,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -5595,8 +5595,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -5623,8 +5623,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5646,8 +5646,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5669,8 +5669,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5692,8 +5692,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5715,8 +5715,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5736,8 +5736,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5757,8 +5757,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5782,8 +5782,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -5811,8 +5811,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -5840,8 +5840,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5863,8 +5863,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -5892,8 +5892,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -5926,8 +5926,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -5954,8 +5954,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -5977,8 +5977,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6000,8 +6000,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6023,8 +6023,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6046,8 +6046,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6067,8 +6067,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6088,8 +6088,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6122,8 +6122,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -6149,8 +6149,8 @@
             :FORMAL ?!cont
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -6176,8 +6176,8 @@
             :NEUTRAL -
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6197,8 +6197,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -6224,8 +6224,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -6256,8 +6256,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -6282,8 +6282,8 @@
 ;            :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6303,8 +6303,8 @@
             :NEUTRAL ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6324,8 +6324,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6345,8 +6345,8 @@
             :EXPERIENCER ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6366,8 +6366,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6385,8 +6385,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6404,8 +6404,8 @@
             :EXPERIENCER ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6430,8 +6430,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -6460,8 +6460,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -6490,8 +6490,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6514,8 +6514,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -6544,8 +6544,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -6579,8 +6579,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -6608,8 +6608,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6632,8 +6632,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6656,8 +6656,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6680,8 +6680,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6704,8 +6704,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6726,8 +6726,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6748,8 +6748,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6773,8 +6773,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -6802,8 +6802,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -6831,8 +6831,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6854,8 +6854,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -6883,8 +6883,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -6917,8 +6917,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -6945,8 +6945,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6968,8 +6968,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -6991,8 +6991,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7014,8 +7014,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7037,8 +7037,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7058,8 +7058,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7079,8 +7079,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7104,8 +7104,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -7133,8 +7133,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -7162,8 +7162,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7185,8 +7185,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -7214,8 +7214,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -7248,8 +7248,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -7276,8 +7276,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7299,8 +7299,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7322,8 +7322,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7345,8 +7345,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7368,8 +7368,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7389,8 +7389,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7410,8 +7410,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7435,8 +7435,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -7464,8 +7464,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -7493,8 +7493,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7516,8 +7516,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -7545,8 +7545,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -7579,8 +7579,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -7607,8 +7607,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7630,8 +7630,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7653,8 +7653,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7676,8 +7676,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7699,8 +7699,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7720,8 +7720,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7741,8 +7741,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7766,8 +7766,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -7795,8 +7795,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -7824,8 +7824,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7847,8 +7847,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -7876,8 +7876,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -7910,8 +7910,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -7938,8 +7938,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7961,8 +7961,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -7984,8 +7984,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8007,8 +8007,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8030,8 +8030,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8051,8 +8051,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8072,8 +8072,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8106,8 +8106,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -8133,8 +8133,8 @@
             :FORMAL ?!cont
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -8160,8 +8160,8 @@
             :FORMAL -
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8181,8 +8181,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -8208,8 +8208,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -8240,8 +8240,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -8266,8 +8266,8 @@
 ;            :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8287,8 +8287,8 @@
             :FORMAL ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8308,8 +8308,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8329,8 +8329,8 @@
             :NEUTRAL ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8350,8 +8350,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8369,8 +8369,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8388,8 +8388,8 @@
             :NEUTRAL ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8414,8 +8414,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -8444,8 +8444,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -8474,8 +8474,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8498,8 +8498,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -8528,8 +8528,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -8563,8 +8563,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -8592,8 +8592,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8616,8 +8616,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8640,8 +8640,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8664,8 +8664,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8688,8 +8688,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8710,8 +8710,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8732,8 +8732,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8757,8 +8757,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -8786,8 +8786,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -8815,8 +8815,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8838,8 +8838,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -8867,8 +8867,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -8901,8 +8901,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -8929,8 +8929,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8952,8 +8952,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8975,8 +8975,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -8998,8 +8998,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9021,8 +9021,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9042,8 +9042,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9063,8 +9063,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9088,8 +9088,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -9117,8 +9117,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -9146,8 +9146,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9169,8 +9169,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -9198,8 +9198,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -9232,8 +9232,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -9260,8 +9260,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9283,8 +9283,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9306,8 +9306,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9329,8 +9329,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9352,8 +9352,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9373,8 +9373,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9394,8 +9394,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9419,8 +9419,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -9448,8 +9448,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -9477,8 +9477,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9500,8 +9500,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -9529,8 +9529,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -9563,8 +9563,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -9591,8 +9591,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9614,8 +9614,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9637,8 +9637,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9660,8 +9660,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9683,8 +9683,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9704,8 +9704,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9725,8 +9725,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9750,8 +9750,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -9779,8 +9779,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -9808,8 +9808,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9831,8 +9831,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -9860,8 +9860,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -9894,8 +9894,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -9922,8 +9922,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9945,8 +9945,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9968,8 +9968,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -9991,8 +9991,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10014,8 +10014,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10035,8 +10035,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10056,8 +10056,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10090,8 +10090,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -10117,8 +10117,8 @@
             :FORMAL ?!cont
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -10144,8 +10144,8 @@
             :FORMAL -
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10165,8 +10165,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -10192,8 +10192,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -10224,8 +10224,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -10250,8 +10250,8 @@
 ;            :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10271,8 +10271,8 @@
             :FORMAL ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10292,8 +10292,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10313,8 +10313,8 @@
             :AGENT ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10334,8 +10334,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10353,8 +10353,8 @@
             :FORMAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10372,8 +10372,8 @@
             :AGENT ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10398,8 +10398,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -10428,8 +10428,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -10458,8 +10458,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10482,8 +10482,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -10512,8 +10512,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -10547,8 +10547,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -10576,8 +10576,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10600,8 +10600,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10624,8 +10624,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10648,8 +10648,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10672,8 +10672,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10694,8 +10694,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10716,8 +10716,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10741,8 +10741,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -10770,8 +10770,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -10799,8 +10799,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10822,8 +10822,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -10851,8 +10851,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -10885,8 +10885,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -10913,8 +10913,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10936,8 +10936,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10959,8 +10959,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -10982,8 +10982,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11005,8 +11005,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11026,8 +11026,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11047,8 +11047,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11072,8 +11072,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -11101,8 +11101,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -11130,8 +11130,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11153,8 +11153,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -11182,8 +11182,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -11216,8 +11216,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -11244,8 +11244,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11267,8 +11267,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11290,8 +11290,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11313,8 +11313,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11336,8 +11336,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11357,8 +11357,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11378,8 +11378,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11403,8 +11403,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -11432,8 +11432,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -11461,8 +11461,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11484,8 +11484,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -11513,8 +11513,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -11547,8 +11547,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -11575,8 +11575,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11598,8 +11598,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11621,8 +11621,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11644,8 +11644,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11667,8 +11667,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11688,8 +11688,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11709,8 +11709,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11734,8 +11734,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -11763,8 +11763,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -11792,8 +11792,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11815,8 +11815,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -11844,8 +11844,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -11878,8 +11878,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -11906,8 +11906,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11929,8 +11929,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11952,8 +11952,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11975,8 +11975,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -11998,8 +11998,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12019,8 +12019,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12040,8 +12040,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12074,8 +12074,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -12101,8 +12101,8 @@
             :FORMAL ?!cont
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -12128,8 +12128,8 @@
             :NEUTRAL -
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12149,8 +12149,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -12176,8 +12176,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -12208,8 +12208,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -12234,8 +12234,8 @@
 ;            :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12255,8 +12255,8 @@
             :NEUTRAL ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12276,8 +12276,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12297,8 +12297,8 @@
             :AGENT ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12318,8 +12318,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12337,8 +12337,8 @@
             :NEUTRAL ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12356,8 +12356,8 @@
             :AGENT ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12382,8 +12382,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -12412,8 +12412,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -12442,8 +12442,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12466,8 +12466,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -12496,8 +12496,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -12531,8 +12531,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -12560,8 +12560,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12584,8 +12584,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12608,8 +12608,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12632,8 +12632,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12656,8 +12656,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12678,8 +12678,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12700,8 +12700,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12725,8 +12725,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -12754,8 +12754,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -12783,8 +12783,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12806,8 +12806,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -12835,8 +12835,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -12869,8 +12869,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -12897,8 +12897,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12920,8 +12920,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12943,8 +12943,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12966,8 +12966,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -12989,8 +12989,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13010,8 +13010,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13031,8 +13031,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13056,8 +13056,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -13085,8 +13085,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -13114,8 +13114,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13137,8 +13137,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -13166,8 +13166,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -13200,8 +13200,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -13228,8 +13228,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13251,8 +13251,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13274,8 +13274,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13297,8 +13297,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13320,8 +13320,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13341,8 +13341,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13362,8 +13362,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13387,8 +13387,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -13416,8 +13416,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -13445,8 +13445,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13468,8 +13468,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -13497,8 +13497,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -13531,8 +13531,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -13559,8 +13559,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13582,8 +13582,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13605,8 +13605,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13628,8 +13628,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13651,8 +13651,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13672,8 +13672,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13693,8 +13693,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13718,8 +13718,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -13747,8 +13747,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -13776,8 +13776,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13799,8 +13799,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -13828,8 +13828,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -13862,8 +13862,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -13890,8 +13890,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13913,8 +13913,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13936,8 +13936,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13959,8 +13959,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -13982,8 +13982,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14003,8 +14003,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14024,8 +14024,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14058,8 +14058,8 @@
             :NEUTRAL1 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -14085,8 +14085,8 @@
             :FORMAL ?!cont
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -14112,8 +14112,8 @@
             :NEUTRAL1 -
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14133,8 +14133,8 @@
             :NEUTRAL1 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -14160,8 +14160,8 @@
             :NEUTRAL1 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -14192,8 +14192,8 @@
             :NEUTRAL1 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -14218,8 +14218,8 @@
 ;            :NEUTRAL1 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14239,8 +14239,8 @@
             :NEUTRAL1 ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14260,8 +14260,8 @@
             :NEUTRAL1 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14281,8 +14281,8 @@
             :NEUTRAL ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14302,8 +14302,8 @@
             :NEUTRAL1 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14321,8 +14321,8 @@
             :NEUTRAL1 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14340,8 +14340,8 @@
             :NEUTRAL ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14366,8 +14366,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -14396,8 +14396,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -14426,8 +14426,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14450,8 +14450,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -14480,8 +14480,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -14515,8 +14515,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -14544,8 +14544,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14568,8 +14568,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14592,8 +14592,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14616,8 +14616,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14640,8 +14640,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14662,8 +14662,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14684,8 +14684,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14709,8 +14709,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -14738,8 +14738,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -14767,8 +14767,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14790,8 +14790,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -14819,8 +14819,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -14853,8 +14853,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -14881,8 +14881,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14904,8 +14904,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14927,8 +14927,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14950,8 +14950,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14973,8 +14973,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -14994,8 +14994,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15015,8 +15015,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15040,8 +15040,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -15069,8 +15069,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -15098,8 +15098,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15121,8 +15121,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -15150,8 +15150,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -15184,8 +15184,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -15212,8 +15212,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15235,8 +15235,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15258,8 +15258,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15281,8 +15281,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15304,8 +15304,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15325,8 +15325,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15346,8 +15346,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15371,8 +15371,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -15400,8 +15400,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -15429,8 +15429,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15452,8 +15452,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -15481,8 +15481,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -15515,8 +15515,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -15543,8 +15543,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15566,8 +15566,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15589,8 +15589,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15612,8 +15612,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15635,8 +15635,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15656,8 +15656,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15677,8 +15677,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15702,8 +15702,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -15731,8 +15731,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -15760,8 +15760,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15783,8 +15783,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -15812,8 +15812,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -15846,8 +15846,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -15874,8 +15874,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15897,8 +15897,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15920,8 +15920,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15943,8 +15943,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15966,8 +15966,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -15987,8 +15987,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16008,8 +16008,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16042,8 +16042,8 @@
             :NEUTRAL2 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -16069,8 +16069,8 @@
             :FORMAL ?!cont
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -16096,8 +16096,8 @@
             :NEUTRAL2 -
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16117,8 +16117,8 @@
             :NEUTRAL2 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -16144,8 +16144,8 @@
             :NEUTRAL2 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -16176,8 +16176,8 @@
             :NEUTRAL2 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -16202,8 +16202,8 @@
 ;            :NEUTRAL2 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16223,8 +16223,8 @@
             :NEUTRAL2 ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16244,8 +16244,8 @@
             :NEUTRAL2 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16265,8 +16265,8 @@
             :NEUTRAL1 ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16286,8 +16286,8 @@
             :NEUTRAL2 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16305,8 +16305,8 @@
             :NEUTRAL2 ?!obj
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16324,8 +16324,8 @@
             :NEUTRAL1 ?!ag
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16350,8 +16350,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -16380,8 +16380,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -16410,8 +16410,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16434,8 +16434,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -16464,8 +16464,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -16499,8 +16499,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -16528,8 +16528,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16552,8 +16552,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16576,8 +16576,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16600,8 +16600,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16624,8 +16624,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16646,8 +16646,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16668,8 +16668,8 @@
             :POLARITY ?!m1_new
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16693,8 +16693,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -16722,8 +16722,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -16751,8 +16751,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16774,8 +16774,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -16803,8 +16803,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -16837,8 +16837,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -16865,8 +16865,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16888,8 +16888,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16911,8 +16911,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16934,8 +16934,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16957,8 +16957,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16978,8 +16978,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -16999,8 +16999,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17024,8 +17024,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -17053,8 +17053,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -17082,8 +17082,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17105,8 +17105,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -17134,8 +17134,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -17168,8 +17168,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -17196,8 +17196,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17219,8 +17219,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17242,8 +17242,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17265,8 +17265,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17288,8 +17288,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17309,8 +17309,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17330,8 +17330,8 @@
             :MODA ?tmp ;?!modA
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17355,8 +17355,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -17384,8 +17384,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -17413,8 +17413,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17436,8 +17436,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -17465,8 +17465,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -17499,8 +17499,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -17527,8 +17527,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17550,8 +17550,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17573,8 +17573,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17596,8 +17596,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17619,8 +17619,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17640,8 +17640,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17661,8 +17661,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17686,8 +17686,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -17715,8 +17715,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -17744,8 +17744,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17767,8 +17767,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -17796,8 +17796,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -17830,8 +17830,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             )
@@ -17858,8 +17858,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17881,8 +17881,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17904,8 +17904,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17927,8 +17927,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17950,8 +17950,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17971,8 +17971,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))
@@ -17992,8 +17992,8 @@
             :MODN ?tmp ;?!modN
             :MODALITY ?modVal
             :FORCE ?fVal
-            :DEGREE ?type_degree
-            :FREQUENCY ?type_freq
+            :DEGREE ?var_degree
+            :FREQUENCY ?var_freq
             :TYPE ?type
             :DRUM ?code
             ))

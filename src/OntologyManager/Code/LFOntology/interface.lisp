@@ -80,17 +80,28 @@
 (defun find-best-lfs-for-sem (sem lfontology)
   "Given a sem, find the most general LF type or a set of LF's that match the SEM"
   ;; we deal with one special case when the F::TYPE feature is specified
-  (let ((explicit-type (if (feature-list-p sem) (assoc 'F::TYPE (feature-list-features sem)))))
-    (if explicit-type
-	(list (cadr explicit-type))
-	;; otherwise we add a F::TYPE based on the SEM type
-	(let ((newsem (make-feature-list :type (feature-list-type sem)
+  (let* ((explicit-ftype (cadr (if (feature-list-p sem) (assoc 'F::TYPE (feature-list-features sem)))))
+	 (explicit-type (consistent-symbol-values explicit-ftype (classify-LF-type (feature-list-type sem)) :typeh (ling-ontology-subtype-hierarchy lfontology)))
+	 (implied-type (let ((newsem (make-feature-list :type (feature-list-type sem)
 					 :features (cons (list 'F::TYPE (classify-LF-type (feature-list-type sem)))
-							 (feature-list-features sem)))))
+							 (remove-if #'(lambda (x) (eq (car x) 'f::TYPE))
+								    (feature-list-features sem))))))
+			 (mmapcan #'(lambda (x) (find-best-lf-recursive x newsem lfontology))
+				  (ling-ontology-lf-table-roots lfontology))
+			 )))
+	  
+    (format t "~%Explicit=~S   Implicit=~S" explicit-type implied-type)
+    (or implied-type
+	(list explicit-type))))
+	;; otherwise we add a F::TYPE based on the SEM type
+	#|(let ((newsem (make-feature-list :type (feature-list-type sem)
+					 :features (cons (list 'F::TYPE (classify-LF-type (feature-list-type sem)))
+							 (remove-if #'(lambda (x) (eq (car x) 'f::TYPE))
+								    (feature-list-features sem))))))
 	  (mmapcan #'(lambda (x) (find-best-lf-recursive x newsem lfontology))
 		   (ling-ontology-lf-table-roots lfontology))
 	  )))
-  )
+  )|#
 
 (defun classify-LF-type (semtype)
   (case semtype
@@ -170,8 +181,8 @@
     ((eql v1 v2) v1)
     ((null v2) v1)
     ((null v1) v2)
-    ((subtype-in v1 v2 typeh) v2)
-    ((subtype-in v2 v1 typeh) v1)
+    ((subtype-in v1 v2 typeh) v1)
+    ((subtype-in v2 v1 typeh) v2)
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

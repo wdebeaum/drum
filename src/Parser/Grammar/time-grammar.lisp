@@ -1350,7 +1350,7 @@
 ;; lex and headcat added for aug-trips
 (parser::augment-grammar
   '((headfeatures 
-     (DATE var lex orig-lex headcat agr)
+     (DATE var lex orig-lex headcat agr restr)
      (number ntype var lex orig-lex headcat)
      )
 
@@ -1557,14 +1557,24 @@
 
    ;; late june, mid 06/2010, early 2006
 
-     ((date (day ?d) (dow ?dow) (month ?month) (year ?year) (phase (? c ont::stage-val  ont::scheduled-time-modifier))
+     ((date (day ?d) (dow ?dow) (month ?month) (year ?year) (phase (? c ont::stage-val  ont::scheduled-time-modifier ont::middle-val))
        (var ?v))
       -mid-month-year> 1.0
-      (adjp (var ?adjv) (LF (% PROP (class (? c ont::stage-val  ont::scheduled-time-modifier)))) (arg ?v))
+      (adjp (var ?adjv) (LF (% PROP (class (? c ont::stage-val  ont::scheduled-time-modifier ont::middle-val)))) (arg ?v))
       (head (date (INT +) (hour -) (minute -) (day ?d) (dow ?dow) (month ?month) (year ?year)))
       
       )
 
+     ; to fix: this assumes there is only one thing in restr
+     ; mid-January (note: mid- is a prefix)
+     ((date (day ?d) (dow ?dow) (month ?month) (year ?year) (phase (:* ONT::MIDDLE-VAL W::MID)) ; note: the "-" is removed from W::MID so it looks like the parse when it uses -mid-month-year> for "mid January"
+       (var ?v))
+      -mid-month-year-prefix> 1.01
+      (head (date (INT +) (hour -) (minute -) (day ?d) (dow ?dow) (month ?month) (year ?year)
+		  (restr (% W:& (:MOD (% w::*PRO* (class (:* ONT::MIDDLE-VAL W::mid-))))))
+		  ))
+      
+      )
 
    ;;  Dates as adverbials: must either have a DOW or a DAY feature (i.e., we can't have all of them empty) - so we use two rules...
    ;; Those with a day of the week, e.g.,  Monday I go

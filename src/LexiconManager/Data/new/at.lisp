@@ -69,6 +69,7 @@
     
     ((LF-PARENT ONT::AT-LOC)
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
+     (preference .991) ; slightly prefer this even if there is a semantic violation for this (and all the other senses)
      )
 
     

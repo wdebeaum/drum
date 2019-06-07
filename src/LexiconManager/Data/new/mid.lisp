@@ -34,9 +34,23 @@
    (SENSES
     ((meta-data :origin step :entry-date 20080528 :change-date nil :comments nil)
      (lf-parent ont::middle-val)
-     (example "the mid-80's" "a mid-life crises")
+     (example "the mid 80's" "a mid life crises")
      )
     )
    )
 ))
+
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+  (W::mid-
+   (SENSES
+    ((meta-data :origin step :entry-date 20080528 :change-date nil :comments nil)
+     (lf-parent ont::middle-val)
+     (templ prefix-adj-templ)
+     (example "mid-January")
+     )
+    )
+   )
+))
+
 
