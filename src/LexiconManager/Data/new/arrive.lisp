@@ -5,7 +5,7 @@
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (
   (W::arrive
-   (wordfeats (W::morph (:forms (-vb) :nom W::arrival :nomsubjpreps (w::of) :nomobjpreps -)))
+   (wordfeats (W::morph (:forms (-vb) :nom W::arrival :nomsubjpreps (w::of) :nomobjpreps - :agentnom w::arrival)))
    (SENSES
     #|
     ((LF-PARENT ONT::ARRIVE)

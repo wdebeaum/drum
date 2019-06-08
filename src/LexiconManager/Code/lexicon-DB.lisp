@@ -27,6 +27,7 @@
 	     (w::mass ?mss)
 	     (w::subcat (% -))
 	     (w::subcat2 (% -))
+	     (w::dobj (% -)) ;; direct object (for nominalizations)
 	     ))
       (w::adj
        ((w::subcat (% -))

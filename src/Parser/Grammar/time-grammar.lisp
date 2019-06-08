@@ -1725,22 +1725,39 @@
 
     ;; Time expression ranges
      
-     ;; dates: march 23 (2004) - april 8 (2004); 11/28/2004 - 12/28/2004
+     ;; date ranges: march 23 (2004) - april 8 (2004); 11/28/2004 - 12/28/2004
      ;; times: 2 - 3pm
+     ;; June to September
     ((NP (LF  (% DESCRIPTION (VAR *) (status ?st)
 		 (CLASS ONT::TIME-RANGE)(CONSTRAINT (& (to ?v2) (from ?v1)))))
-      (SEM ($ F::TIME (F::TIME-FUNCTION ?tf1) (F::SCALE -)))
+      (SEM ($ F::TIME (F::TIME-FUNCTION ?tf1) (F::SCALE -))) (sort pred)
       (VAR *) (headcat ?hcat))
       -date-range>
      (NP (LF  (% DESCRIPTION (VAR ?v1) (status ?st)))
       (SEM ($ F::TIME (F::TIME-FUNCTION ?tf)))
       (VAR ?v1) (headcat ?hcat))
-     (punc (lex (? lx punc-tilde punc-minus))) ;; currently - defined only as punc-minus in parser
+     (word (lex (? c to til through until punc-tilde punc-minus)))
      (head
       (NP (LF  (% DESCRIPTION (VAR ?v2) (status ?st)))
 	  (SEM ($ F::TIME (F::TIME-FUNCTION ?tf)))
 	  (VAR ?v2))))
-   
+
+     ;; from June to September
+    ((NP (LF  (% DESCRIPTION (VAR *) (status ?st)
+		 (CLASS ONT::TIME-RANGE)(CONSTRAINT (& (to ?v2) (from ?v1)))))
+      (SEM ($ F::TIME (F::TIME-FUNCTION ?tf1) (F::SCALE -))) (sort pred)
+      (VAR *) (headcat ?hcat))
+      -date-range-to>
+     (word (lex (? xx from)))
+     (NP (LF  (% DESCRIPTION (VAR ?v1) (status ?st)))
+      (SEM ($ F::TIME (F::TIME-FUNCTION ?tf)))
+      (VAR ?v1) (headcat ?hcat))
+     (word (lex (? c to til through until)))
+     (head
+      (NP (LF  (% DESCRIPTION (VAR ?v2) (status ?st)))
+	  (SEM ($ F::TIME (F::TIME-FUNCTION ?tf)))
+	  (VAR ?v2))))
+    
     ;; e.g., "the 1980s" "the 40s" 
     ;;  we can't build an N1 here as then it would become a SET through the INDV-PLURAL rules.
     ((NP (LF (% DESCRIPTION (VAR ?v) (status ?spec) (CLASS ONT::TIME-RANGE) (CONSTRAINT (& (decade ?n) (poss ?poss)))))

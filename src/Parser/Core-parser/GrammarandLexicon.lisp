@@ -1105,11 +1105,17 @@ then convert the result  to the lex-entry format that the old parser code expect
 
 (defun compress-lex-entries (entries)
   "remove duplicate entries"
+#|
   (if (and entries (cdr entries))
       (cons (car entries)
 	    (compress-lex-entries (remove-if #'(lambda (x) (is-duplicate-entry x (car entries))) (cdr entries))))
-      entries))
+      entries)
+  |#
+  
+  entries ; we don't check for duplicates now
+  )
 
+#|
 (defun is-duplicate-entry (x y)
   "returns t if lex entries X and Y are identical up to variable renaming"
   (when (and (lex-entry-p x) (lex-entry-p y))
@@ -1118,6 +1124,7 @@ then convert the result  to the lex-entry format that the old parser code expect
 	  (and (eq (constit-cat xconstit) (constit-cat yconstit))
 	       (fconstit-match (remove-feat (constit-feats xconstit) 'w::var)
 			       (remove-feat (constit-feats yconstit) 'w::var))))))
+|#
 
  #|| (if *compress-lex-entries*
       (multiple-value-bind (preps others)

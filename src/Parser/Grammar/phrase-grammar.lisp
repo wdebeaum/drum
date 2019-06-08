@@ -575,7 +575,7 @@
 				   (var *) (constraint (& (FIGURE ?v)))))) (old ?r) (new ?con)))
 
 
-     ;;  example??  
+     ;;  mid-January 
    ((NAME (RESTR  ?con)
        (LF ?lf) ;(CLASS ?lf)
        (SORT ?sort) (QUAL +)
@@ -4151,7 +4151,8 @@
             ;; these are dummy vars for trips-lcflex conversion, please don't delete
             ;;(subj ?subj) (dobj ?dobj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
 	    (dobj ?dobj)
-	    (dobj (% NP (var ?dobjvar)))
+	    ;(dobj (% NP (var ?dobjvar)))
+	    (dobj (% ?d (var ?dobjvar)))
 	    (subj ?subj)
 	    (subj (% NP (var ?subjvar)))
       	    (comp3 ?comp3)
@@ -4163,7 +4164,7 @@
 	    ))
       (add-to-conjunct (val (& (?subjmap ?subjvar) ((? !dmap ONT::NOROLE) ?dobjvar))) (old ?r) (new ?newr))
       )
-    
+    #|
  ;; and we have explicit nominalizations (current any N of type EVENT-OF-CHANGE)
     ((N1 (SORT PRED)
       (gap -) (var ?v) (agr ?agr)
@@ -4200,7 +4201,7 @@
 	    ))
       (add-to-conjunct (val (& (?subjmap ?subjvar))) (old ?r) (new ?newr))
       )
-     
+    |#
 
     ;;  of-PP is typically the DOBJ role   
  ;;   e.g., The eradication of the trucks
@@ -6231,7 +6232,7 @@
       )
      -n1-from-name> .995
      (head (name (lex ?l) (sem ?sem) 
-		 (sem ($ (? type f::PHYS-OBJ f::situation) (f::type (? x ont::molecular-part ont::cell-part ont::chemical ont::physical-process ont::organization))))
+		 (sem ($ (? type f::PHYS-OBJ f::situation) (f::type (? x ont::molecular-part ont::cell-part ont::chemical ont::physical-process ont::organization ont::country)))) ; organization: the FDA; country: the DRC
 		 (var ?v) (agr ?agr) ;;(agr 3s) 
 		 (lf ?lf) (class ?class)
 	    (full-name ?fname) (time-converted ?tc)
