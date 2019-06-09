@@ -1895,7 +1895,7 @@
      -name-n1> .98
      (np (name +) (generated -) ;; don't allow numbers or times here
          (VAR ?v1) (gap -))
-     (head (N1 (VAR ?v2) (relc -) (sem ?sem) (sem ($ (? x F::ABSTR-OBJ F::PHYS-OBJ))) ;;  F::SITUATION)))
+     (head (N1 (VAR ?v2) (relc -) (sem ?sem) (sem ($ (? x F::ABSTR-OBJ F::PHYS-OBJ F::SITUATION))) ; F::SITUATION: the South Sudan situation
 	    (RESTR ?r) (CLASS ?c) (SORT PRED) (name-mod -)
 	    (derived-from-name -)  ; the second n shouldn't be a name
 	    ;;(subj-map -)  ;; nominalized verbs have their own rules
