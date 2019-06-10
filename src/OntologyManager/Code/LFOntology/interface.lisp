@@ -90,7 +90,7 @@
 				  (ling-ontology-lf-table-roots lfontology))
 			 )))
 	  
-    (format t "~%Explicit=~S   Implicit=~S" explicit-type implied-type)
+    (format *error-output* "~%Explicit=~S   Implicit=~S" explicit-type implied-type)
     (or implied-type
 	(list explicit-type))))
 	;; otherwise we add a F::TYPE based on the SEM type
