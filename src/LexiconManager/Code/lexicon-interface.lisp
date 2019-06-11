@@ -1242,11 +1242,12 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 			   (remove-if #'wf::stoplist-p
 				      (find-arg keylist :wn-sense-keys))
 			   ))
-	(rawscore (find-arg keylist :score))
+	(domain-info (find-arg keylist :domain-specific-info))
+	(rawscore (find-score keylist domain-info))
 	(alternate-spellings (find-arg keylist :alternate-spellings))
 	(score (if (numberp rawscore) (convert-raw-score rawscore) .98))
 	(wn-pos-list (when wn-sense-keys (trips-pos-for-wn-sense-keys wn-sense-keys)))
-	(domain-info (find-arg keylist :domain-specific-info))
+
 	(merged-trips-wn-pos-list (union trips-pos-list wn-pos-list))
 	(xxx (print-debug "~%MERGED=~S  TRIPS=~S  WN=~S" merged-trips-wn-pos-list trips-pos-list wn-pos-list))
 	
@@ -1329,6 +1330,19 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
    res)
  )
 
+(defun find-score (keylist domain-info)
+  "if the score is not specified at the top, we ook in the MATCHES information"
+  (or (find-arg keylist :score)
+      (let ((matches (find-arg-in-act (cadr (car domain-info)) :matches)))
+	(when (consp matches)
+	  (let ((scores (mapcar #'(lambda (x)
+				    (find-arg-in-act x :score))
+				matches)))
+	    (apply #'max scores)
+	    )
+	  ))))
+	
+      
 (defun simplify-tags (tags)
  nil)
 

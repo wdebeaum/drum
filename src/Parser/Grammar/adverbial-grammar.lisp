@@ -697,7 +697,8 @@
 
      
     ;;  resultative construction using adverbs: e.g., I walked to the store
-    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
+    ((vp- (constraint ?new) (tma ?tma) ;(class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
+					(class (? class ONT::EVENT-OF-CHANGE)) (var ?v) ; it leaked from the roof ; I arrived into the house
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
 ;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
       (SUBJ (% NP (Var ?npvar) (sem ?sem) (agr ?agr) (lex ?lex) (case ?case)))

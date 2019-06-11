@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.120 2019/06/06 21:09:48 wdebeaum Exp $
+# $Id: Makefile,v 1.121 2019/06/10 17:39:06 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -105,7 +105,7 @@ downloads/MADE:
 downloads/countries.json: downloads/MADE
 	curl -L -o $@ "https://raw.githubusercontent.com/mledoze/countries/master/countries.json"
 	# add "CAR" as synonym for "Central African Republic"
-	echo -e "5243a5244\n>             \"CAR\"," |patch $@
+	echo -e "5399a5400\n>             \"CAR\"," |patch $@
 
 endif
 
