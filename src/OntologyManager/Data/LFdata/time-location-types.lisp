@@ -848,6 +848,16 @@
              )
  )
 
+(define-type ont::EARLY-in-process
+    :parent ONT::scheduled-time-modifier
+    :wordnet-sense-keys ("early%3:02:02" "early%4:02:00" )
+    )
+
+(define-type ont::LATE-in-process
+    :parent ONT::scheduled-time-modifier
+    :wordnet-sense-keys ("late%3:02:02" "late%4:02:00" ) 
+    )
+
 ;; temporal locations of events, things
 (define-type ONT::temporal-location
  :parent ONT::TEMPORAL-MODIFIER
@@ -1357,9 +1367,55 @@
 (define-type ONT::day-stage
     :parent ONT::DATE-OBJECT-IN
     :comment "a regular part of the day"
-     :wordnet-sense-keys ("morning%1:28:00" "evening%1:28:00" "night%1:28:00" "twilight%1:28:00" "afternoon%1:28:00"  )
+    :wordnet-sense-keys ("twilight%1:28:00")
     :sem (F::time (f::time-function f::day-period))
- )
+    )
+
+(define-type ont::morning-AM
+    :parent ONT::DAY-STAGE
+    :wordnet-sense-keys ("morning%1:28:00")
+    )
+
+(define-type ont::dat-stage-PM
+    :parent ONT::DAY-STAGE
+    :wordnet-sense-keys ("morning%1:28:00")
+    )
+
+(define-type ont::afternoon
+    :parent ONT::DAY-STAGE
+    :wordnet-sense-keys ("afternoon%1:28:00")
+    )
+
+(define-type ont::noon
+    :parent ONT::DAY-STAGE
+    :wordnet-sense-keys ("noon%1:28:00")
+    )
+
+(define-type ont::evening
+    :parent ONT::DAY-STAGE
+    :wordnet-sense-keys ("evening%1:28:00")
+    )
+
+(define-type ont::night
+    :parent ONT::DAY-STAGE
+    :wordnet-sense-keys ("night%1:28:00")
+    )
+
+
+(define-type ont::midnight
+    :parent ONT::DAY-STAGE
+    :wordnet-sense-keys ("midnight%1:28:00")
+    )
+(define-type ont::sunrise
+    :parent ONT::DAY-STAGE-sunrise
+    :wordnet-sense-keys ("dawn%1:28:00" "sunrise%1:11:00"  "sunrise%1:19:00")
+    )
+
+(define-type ont::sunset
+    :parent ONT::DAY-STAGE-sunset
+    :wordnet-sense-keys ("sunset%1:28:00" "sunset%1:11:00"  "sunset%1:19:00")
+    )
+
 
 (define-type ONT::year-stage
     :parent ONT::DATE-OBJECT-IN

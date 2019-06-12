@@ -9,7 +9,7 @@
    (wordfeats (W::MORPH (:FORMS (-ER -LY))))
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("late%3:00:00"))
-     (LF-PARENT ONT::SCHEDULED-TIME-MODIFIER)
+     (LF-PARENT ONT::LATE-in-process)
      )
     )
    )
@@ -21,7 +21,7 @@
 ;   )
   (W::LATE
    (SENSES
-    ((LF-PARENT ONT::event-time-rel)
+    ((LF-PARENT ONT::late-in-process)
      (templ pred-s-post-templ)
      )
     )

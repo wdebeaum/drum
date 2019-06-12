@@ -55,7 +55,7 @@
  :words (
   (W::AM
    (SENSES
-    ((LF-PARENT ONT::time-object)
+    ((LF-PARENT ONT::morning-AM)
      (SEM (F::time-function F::day-period))
      )
     )

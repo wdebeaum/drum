@@ -415,6 +415,7 @@
     )
 
 (define-type ONT::man-made-structure
+    :comment "man made structures that are attached to the earther and thus act like locations"
     :parent ONT::functional-region
     )
 
@@ -1286,6 +1287,7 @@
 
 ;; door, window, gate
 (define-type ont::structural-opening
+    :comment "part of a structure that can open to allow access"
     :parent ONT::general-structure
     :wordnet-sense-keys ("entrance%1:06:00" "entranceway%1:06:00" "entryway%1:06:00" "entry%1:06:00" "window%1:06:00" "window%1:06:01" "window%1:06:05"
 					    "movable_barrier%1:06:00")
@@ -1901,6 +1903,7 @@
 ;;; these are objects specified by function, e.g. cargo
 (define-type ONT::FUNCTIONAL-PHYS-OBJECT
     :parent ONT::PHYS-OBJECT
+    :comment "These are objects that are described by their function in an activity- and have other physical descriptions: e.g., the things you are travelling with is LUGGAGE" 
     :wordnet-sense-keys ("instrumentality%1:06:00" "instrumentation%1:06:00")
     :sem (F::Phys-obj (:required)(:default (F::origin F::artifact) (F::form F::object) (F::mobility F::movable)))
     )
@@ -1940,7 +1943,7 @@
 ;; card
 (define-type ONT::card
     :wordnet-sense-keys ("card%1:06:00")
-    :parent ONT::functional-phys-object
+    :parent ONT::manufactured-object
     )
 
 ;;; > Anatomy

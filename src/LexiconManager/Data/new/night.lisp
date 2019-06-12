@@ -13,7 +13,7 @@
      (templ unit-templ)
      )
     ((meta-data :origin plow :entry-date 20080117 :change-date nil :comments nil :wn ("night%1:28:00" "night%1:28:01" "night%1:28:04" "night%1:28:05" "night%1:28:03"))
-     (LF-PARENT ONT::recurring-time-of-day)
+     (LF-PARENT ONT::night)
      (templ time-reln-templ)
      )
     )

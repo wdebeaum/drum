@@ -7,7 +7,7 @@
  :words (
   (W::pm
    (SENSES
-    ((LF-PARENT ONT::time-object)
+    ((LF-PARENT ONT::day-stage-PM)
      (SEM (F::time-function F::day-period))
      )
     )

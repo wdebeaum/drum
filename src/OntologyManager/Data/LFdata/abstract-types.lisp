@@ -419,7 +419,7 @@
              (:ESSENTIAL ONT::neutral1 ((? cth f::phys-obj f::abstr-obj)))
              )
  )||#
-
+#|
 ;; how does this relate to ont::truth-val??
 ;;; e.g., wrong, problematic, right,
 ;; the wrong day, the right time, the right number
@@ -429,7 +429,7 @@
 	     (:OPTIONAL  ONT::neutral1 ((? tp1 f::time f::abstr-obj F::phys-obj F::situation)))
              )
  )
-
+|#
 #|
 ;;; Function terms have one or more arguments and have a value
 (define-type ONT::abstract-function

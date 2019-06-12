@@ -226,13 +226,34 @@ void to_all_caps(std::wstring& term) {
   std::transform(term.begin(), term.end(), term.begin(), &towupper);
 }
 
-wchar_t to_normal_space_char(wchar_t c) {
+/*wchar_t to_normal_space_char(wchar_t c) {
   return (is_perl_space(c) ? L' ' : c);
-}
+}*/
 
-// Modify term so that all whitespace characters are the normal ASCII space
+// Modify term so that all strings of whitespace characters become single
+// normal ASCII spaces (i.e. $term =~ s/\s+/ /g;)
 void to_normal_space(std::wstring& term) {
-  std::transform(term.begin(), term.end(), term.begin(), &to_normal_space_char);
+  // old code that merely replaces each space without shortening term
+  //std::transform(term.begin(), term.end(), term.begin(), &to_normal_space_char);
+  std::wstring::iterator begin = term.begin();
+  std::wstring::const_iterator end = term.end();
+  bool prev_is_space = true; // was the previous character a (perl) space?
+  std::wstring::iterator j = begin; // index into the new version
+  // index into the old version
+  for (std::wstring::const_iterator i = begin; i != end; ++i) {
+    if (is_perl_space(*i)) {
+      if (!prev_is_space) { // first space in a string of spaces
+	*j = L' ';
+	++j;
+	prev_is_space = true;
+      }
+    } else { // not a space
+      *j = *i;
+      ++j;
+      prev_is_space = false;
+    }
+  }
+  term.resize(j - begin); // remove the rest of the old version
 }
 
 // Is c some kind of dash?

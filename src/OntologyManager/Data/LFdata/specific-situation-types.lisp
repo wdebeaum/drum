@@ -3267,6 +3267,15 @@
              )
  )
 
+(define-type ONT::cause-in
+ :wordnet-sense-keys ("inject%2:29:00" "inject%2:35:00" "inject%2:34:01" "insert%2:35:00" "insert%2:30:00" "insert%2:35:01")
+ :parent ONT::event-of-causation
+ :arguments ((:REQUIRED ONT::Agent)
+	     (:required ont::source)
+	     (:optional ont::affected-result ((? thm F::phys-obj F::abstr-obj)))
+             )
+ )
+
 
 (define-type ont::shed
  :wordnet-sense-keys ("shed%2:29:00")

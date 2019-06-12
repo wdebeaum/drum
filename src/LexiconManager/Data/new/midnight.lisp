@@ -7,7 +7,7 @@
  :words (
   (W::midnight
    (SENSES
-    ((LF-PARENT ONT::time-object)
+    ((LF-PARENT ONT::midnight)
      (SEM (F::time-function F::day-point))
      )
     )
