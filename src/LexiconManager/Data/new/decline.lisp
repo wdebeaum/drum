@@ -2,7 +2,7 @@
 ;;;; W::decline
 ;;;;
 
-
+#|
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
 ;   )
@@ -15,7 +15,7 @@
      )
     )
    )
-))
+))|#
 
 
 (define-words :pos W::v :templ AGENT-affected-XP-TEMPL

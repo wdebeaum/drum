@@ -133,7 +133,27 @@
 	  ))
     (punc (punctype ?p) (lex (? lex w::punc-exclamation-mark w::punc-period w::punc-question-mark w::punc-colon w::ellipses w::punc-comma w::punc-minus w::punc-semicolon)))
     (add-to-conjunct (val (punctype ?p)) (old ?con) (new ?constraint))
-   )
+    )
+
+   ;;  two utterances seoparated by punctuation - common in text-based dialogue
+
+   ((utt  (var ?v) (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
+     (punc +) (punctype ?p) (uttword ?uw) (sa-seq +)
+     (lf (% sa-seq (var *) (class ont::sa-seq)
+	    (constraint (& (acts (?v1 ?v2))))))
+     (var *))
+    
+   -utt-punctuation-utt>
+   (head (utt (focus ?foc) (ended -) (var ?v1) (punc -) (uttword ?uw)
+	  (lf (% speechact (var ?v1) (class ?cl) (constraint ?con)))
+	  ))
+    (punc (punctype ?p) (lex (? lex w::punc-exclamation-mark w::punc-period w::punc-question-mark w::punc-colon w::ellipses w::punc-comma w::punc-minus)))
+    (utt (focus ?foc) (ended -) (var ?v2) (punc -) (uttword ?uw1)
+     (lf (% speechact (var ?v2) (class ?cl1) (constraint ?con1)))
+     )
+    ;; (add-to-conjunct (val (punctype ?p)) (old ?con) (new ?constraint))
+    )
+   
 
     #||((utt (var *) (punctype ?stype) (lf (% speechact (var *) (class ont::sa_tell) (constraint (& (content ?v)))))) 
     -utt-seq1>
@@ -1115,7 +1135,7 @@
      ((vp (lf (% prop (class ?c) (var ?v) (constraint ?constraint) (tma ?newtma) 
 	         (transform ?transf) (sem ?sem)))
           (class ?c) (var ?v) (constraint ?constraint) (tma ?newtma)  (sem ?sem) (transform ?transf)
-           (vform (? vf past pres fut)) (dobjvar ?dobjvar)
+           (vform (? vf past pres fut)) (subjvar ?sv) (dobjvar ?dobjvar)
           )
       -vp-tns+> 1.0 ;; 1 because we are simply adding tense info, not really using more rules
      (head
@@ -2995,6 +3015,7 @@
     -utt4a>
     (head (uttword (lf ?lf) (lex ?lex) (var ?v) (sa ?sa))))
 
+    ;; what bis this rule for? Add an example here!
     ((utt (var *) ;(sem ($ f::proposition))
 	  (uttword +)
       (lf (% speechact (var *) (class  ont::sa_apologize) (constraint (& (content ?reason)))))
@@ -3003,6 +3024,7 @@
      (head (uttword (lf ?lf) (lex ?lex) (var ?v) (sa ont::sa_apologize)))
      (cp (var ?reason)))
 
+    ;;  thanks for the gift
     ((utt (var *) ;(sem ($ f::proposition))
 	  (uttword +)
       (lf (% speechact (var *) (class (? sa ont::sa_apologize ont::sa_thank)) (constraint (& (reason ?reason)))))

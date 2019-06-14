@@ -1,7 +1,7 @@
 ;;;;
 ;;;; W::shift
 ;;;;
-
+#|
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
 ;   )
@@ -14,7 +14,7 @@
      )
     )
    )
-))
+))|#
 
 (define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
  :words (

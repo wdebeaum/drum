@@ -1,7 +1,7 @@
 ;;;;
 ;;;; W::inspection
 ;;;;
-
+#|   ;; define as nominalization of inspect
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
   (W::inspection
@@ -14,4 +14,4 @@
     )
    )
 ))
-
+|#

@@ -84,7 +84,12 @@
      (example "he worked all day")
      (SEM (F::Cause F::agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
      (templ agent-templ)
-     )    
+     )
+    ((LF-PARENT ONT::WORKING-OUT)
+     (example "You need to work your muscles every day")
+     (meta-data :origin chf :entry-date 20070809 :change-date nil :comments chf-dialogues)
+     (templ agent-affected-xp-templ)
+     )
     (
      (lf-parent ont::work) ;;  20120524 GUM change new parent 
      (example "he works for that company")

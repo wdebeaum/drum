@@ -850,12 +850,12 @@
 
 (define-type ont::EARLY-in-process
     :parent ONT::scheduled-time-modifier
-    :wordnet-sense-keys ("early%3:02:02" "early%4:02:00" )
+    :wordnet-sense-keys ("early%3:00:02" "early%4:02:00" )
     )
 
 (define-type ont::LATE-in-process
     :parent ONT::scheduled-time-modifier
-    :wordnet-sense-keys ("late%3:02:02" "late%4:02:00" ) 
+    :wordnet-sense-keys ("late%3:00:02" "late%4:02:00" ) 
     )
 
 ;; temporal locations of events, things
