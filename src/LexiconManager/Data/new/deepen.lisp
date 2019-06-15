@@ -2,7 +2,7 @@
 ;;;; w::deepen
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 (w::deepen
  (senses
@@ -10,7 +10,7 @@
    (LF-PARENT ONT::deepen)
    (example "they deepened the hole (to 9537 ft)")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended) (f::scale ont::depth-scale))
-   (TEMPL AGENT-affected-xp-templ)
+   (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
    )
    ((meta-data :origin cause-result-relations :entry-date 20180803 :change-date nil :comments nil)
     (EXAMPLE "The hole deepened as the workers continued to dig.")

@@ -14,7 +14,7 @@
 )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::cough
    (SENSES
@@ -44,7 +44,7 @@
    (SENSES
     ((meta-data :origin cardiac :entry-date 20090130 :change-date nil :comments nil)
      (LF-PARENT ont::exhale-forcefully)
-     (TEMPL affected-affected-templ) ; like vomit
+     (TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL) ; like vomit
      )
     )
    )

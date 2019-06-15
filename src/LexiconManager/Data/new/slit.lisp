@@ -2,7 +2,7 @@
 ;;;; W::slit
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::slit
    (wordfeats (W::morph (:forms (-vb) :past W::slit :ing W::slitting)))

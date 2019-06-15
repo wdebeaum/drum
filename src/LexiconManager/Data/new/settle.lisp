@@ -14,14 +14,14 @@
     ((LF-PARENT ONT::decide)
      (example "they settled the issue")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (templ agent-theme-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      (meta-data :origin general :entry-date 20110131 :change-date nil :comments jansen)
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 ((W::settle (w::down))
    (SENSES
@@ -35,7 +35,7 @@
     ((LF-PARENT ont::evoke-relief)
      (example "settle him down")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-affected-xp-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin plow :entry-date 20050922 :change-date nil :comments nil)
      )
     )

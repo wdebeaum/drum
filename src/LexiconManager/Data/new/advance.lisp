@@ -11,7 +11,7 @@
       :COMMENTS HTML-PURCHASING-CORPUS))))
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (W::advance
    (SENSES
@@ -23,7 +23,7 @@
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090501 :comments nil :vn ("future_having-13.3") :wn ("advance%2:40:00"))
      (LF-PARENT ONT::lend)
      (example "advance him the money")
-     (TEMPL agent-affected-recipient-alternation-templ) ; like grant,offer
+     (TEMPL AGENT-AFFECTED-TEMPL) ; like grant,offer
      (PREFERENCE 0.96)
      )
     #||((example "He used an advanced technique")   ;; SUBSUMED BY CAUSE-AFFECTED
@@ -33,7 +33,7 @@
      )||#
     ((example "the improvements advanced the field")
      (sem (f::aspect f::dynamic))
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin step :entry-date 20080626 :change-date nil :comments nil)
      (LF-PARENT ONT::improve)
      )

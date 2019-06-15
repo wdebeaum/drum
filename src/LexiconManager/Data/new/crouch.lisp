@@ -2,7 +2,7 @@
 ;;;; W::crouch
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::crouch
    (SENSES

@@ -8,7 +8,7 @@
    (SENSES
     (
      (LF-PARENT ONT::activity-ongoing)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

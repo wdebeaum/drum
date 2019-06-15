@@ -28,7 +28,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (w::release
    (wordfeats (W::morph (:forms (-vb) :nom W::release)))
@@ -37,7 +37,7 @@
      (meta-data :origin step :entry-date 20060630 :change-date nil :comments nil :vn ("free-78-1"))
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (example "the curtain releases toxic fumes")
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

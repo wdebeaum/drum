@@ -2,7 +2,7 @@
 ;;;; W::write
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-xp-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::write
@@ -23,12 +23,12 @@
 
     ((LF-PARENT ONT::NONVERBAL-SAY)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-THEME-XP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      (EXAMPLE "he wrote that he couldn't come")
      )
     ((LF-PARENT ONT::NONVERBAL-SAY)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-THEME-XP-TEMPL)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      (EXAMPLE "he wrote green")
      (PREFERENCE 0.92) ;; only as a last resort
      )

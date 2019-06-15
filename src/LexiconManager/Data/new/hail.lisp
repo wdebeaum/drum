@@ -14,13 +14,13 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    (w::hail
    (senses
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090508 :comments nil :vn ("judgement-33") :wn ("hail%2:32:02"))
      (LF-PARENT ONT::praise)
-     (TEMPL agent-addressee-templ) ; like thank
+     (TEMPL AGENT-AGENT1-NP-TEMPL) ; like thank
      (PREFERENCE 0.96)
      )
     ((LF-PARENT ONT::precipitating)

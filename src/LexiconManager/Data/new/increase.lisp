@@ -2,7 +2,7 @@
 ;;;; w::increase
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
 	      :words (
 		      (w::increase
 		       (wordfeats (W::morph (:forms (-vb) :nom w::increase :nomobjpreps (;w::in
@@ -13,7 +13,7 @@
 			 (example "increase the budget [to 3K]")
 			 (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
 			 ;;(TEMPL AGENT-AFFECTED-scale-XP-optional-TEMPL (xp (% W::PP (W::ptype (? pt w::in W::with)))))
-			 (TEMPL AGENT-AFFECTED-XP-TEMPL)
+			 (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
 			 ;(preference .98)
 			 )
 			((meta-data :origin step :entry-date 20080626 :change-date 20090504 :comments nil)

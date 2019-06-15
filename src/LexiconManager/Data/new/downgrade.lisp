@@ -11,7 +11,7 @@
    (LF-PARENT ONT::decrease)
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
    ;(TEMPL AGENT-affected-RESULT-OPTIONAL-TEMPL (xp (% W::PP (W::ptype W::to))))
-   (TEMPL AGENT-AFFECTED-XP-TEMPL)
+   (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
    )
   )
  )

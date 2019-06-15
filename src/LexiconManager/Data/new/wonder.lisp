@@ -2,7 +2,7 @@
 ;;;; W::wonder
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::wonder
@@ -11,12 +11,12 @@
     ;;;; I wonder
     ((LF-PARENT ONT::cogitation)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-theme-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      )
     ;;;; I wonder if it will work
     ((LF-PARENT ONT::cogitation)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype W::s-if))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype W::s-if))))
      )
     )
    )

@@ -12,7 +12,7 @@
      )
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("put-9.1") :wn ("lodge%2:35:00"))
      (LF-PARENT ONT::put)
-     (templ agent-affected-goal-templ)
+     (TEMPL AGENT-AFFECTED-RESULT-ADVBL-OBJCONTROL-TEMPL)
  ; like insert,position
      )
     )

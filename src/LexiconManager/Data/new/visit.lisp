@@ -2,7 +2,7 @@
 ;;;; W::visit
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::visit
     (wordfeats (W::morph (:forms (-vb) :past W::visited :ing W::visiting)))
@@ -23,7 +23,7 @@
      (LF-PARENT ONT::Social-activity)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (example "he was visiting with his parents yesterday")
-     (TEMPL AGENT-affected-XP-TEMPL (xp (% W::PP (W::ptype W::with))))
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL (xp (% W::PP (W::ptype W::with))))
      )
     )
    )

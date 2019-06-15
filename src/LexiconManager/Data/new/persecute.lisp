@@ -9,7 +9,7 @@
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090508 :comments nil :vn ("judgement-33") :wn ("persecute%2:41:00"))
      (LF-PARENT ONT::threaten)
-     (TEMPL agent-affected-xp-templ) ; like thank
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) ; like thank
      )
     )
    )

@@ -36,11 +36,11 @@
      )
     ((LF-PARENT ONT::terminate)
      (preference .96)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     ((LF-PARENT ONT::TRANSFORM-TO-PRESERVE)
      (preference .96)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     
    )

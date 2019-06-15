@@ -23,7 +23,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::group
@@ -31,12 +31,12 @@
    ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("herd-47.5.2") :wn ("group%2:31:00" "group%2:33:00"))
      (LF-PARENT ONT::meet)
      (example "they grouped around the painting")
-     (TEMPL agent-plural-templ) ; like congregate,assemble,gather
+     (TEMPL AGENT-NP-PLURAL-TEMPL) ; like congregate,assemble,gather
      (PREFERENCE 0.96)
      )
     ((EXAMPLE "group the red one with those orange ones")
      (LF-PARENT ONT::joining)
-     (TEMPL AGENT-affected2-TEMPL (xp (% W::PP (W::ptype W::with))))
+     (TEMPL AGENT-AFFECTED-AFFECTED1-XP-TEMPL (xp (% W::PP (W::ptype W::with))))
      (meta-data :origin task-learning :entry-date 20050819 :change-date nil :comments nil)
      )
     ((EXAMPLE "group them together")

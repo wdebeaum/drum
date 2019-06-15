@@ -14,13 +14,13 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 (W::border
   (wordfeats (W::morph (:forms (-vb) :past W::bordered :ing w::bordering)))
    (SENSES
     ((LF-PARENT ONT::surround)
-     (TEMPL neutral-neutral-xp-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      (example "the fence borders the meadow")
      (meta-data :origin fruitcarts :entry-date 20060215 :change-date nil :comments nil)
      )

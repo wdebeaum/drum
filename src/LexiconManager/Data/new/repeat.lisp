@@ -2,7 +2,7 @@
 ;;;; W::repeat
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::repeat
      (wordfeats (W::morph (:forms (-vb) :nom W::repetition)))
@@ -13,7 +13,7 @@
      )
      ;;;; repeat that ...
     ((LF-PARENT ONT::REPEAT)
-     (TEMPL AGENT-THEME-XP-TEMPL (xp (% W::cp (W::ctype (? c W::s-that)))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype (? c W::s-that)))))
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      )   
     )

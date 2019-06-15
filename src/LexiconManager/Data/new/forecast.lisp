@@ -15,7 +15,7 @@
    )
 ))||#
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
  (W::forecast
   (wordfeats (W::morph (:forms (-vb) :past W::forecast :nom w::forecast)))

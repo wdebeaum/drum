@@ -2,7 +2,7 @@
 ;;;; W::rotate
 ;;;;
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::rotate
     (wordfeats (W::morph (:forms (-vb) :nom W::rotation)))

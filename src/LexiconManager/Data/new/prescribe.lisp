@@ -10,7 +10,7 @@
      (LF-PARENT ONT::prescribing)
      (example "he prescribed the medication" "she prescribed me Lexapro")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (templ agent-affected-recipient-alternation-templ)
+     (TEMPL AGENT-AFFECTED-TEMPL)
      )
     #||((lf-parent ont::prescribing)
      (templ agent-recipient-affected-alternation-templ)

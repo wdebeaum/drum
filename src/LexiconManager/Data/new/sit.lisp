@@ -26,7 +26,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::sit
@@ -45,13 +45,13 @@
     ((EXAMPLE "Sit the box on the desk" )
      ;;(LF-PARENT ONT::BODY-MOVEMENT)
      (lf-parent ont::place-in-position ) ;; 20120523 GUM change new parent
-      (TEMPL AGENT-AFFECTED-goal-TEMPL)
+      (TEMPL AGENT-AFFECTED-RESULT-ADVBL-OBJCONTROL-TEMPL)
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::sit (W::down))
    (wordfeats (W::morph (:forms (-vb) :past W::sat :ing W::sitting)))
@@ -64,7 +64,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    ((W::sit (W::up))
    (wordfeats (W::morph (:forms (-vb) :past W::sat :ing W::sitting)))

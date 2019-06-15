@@ -2,7 +2,7 @@
 ;;;; W::steam-bake
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((w::steam w::punc-minus w::bake)
    (SENSES

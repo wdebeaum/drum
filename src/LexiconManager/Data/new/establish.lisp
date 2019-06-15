@@ -2,7 +2,7 @@
 ;;;; W::establish
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::establish
      (wordfeats (W::morph (:forms (-vb) :nom w::establishment)))
@@ -16,20 +16,20 @@
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090506 :comments nil :vn ("indicate-76-1-1"))
      (LF-PARENT ONT::show)
      (example "establish that...")
-     (TEMPL agent-theme-xp-templ (xp (% w::cp (w::ctype w::s-finite)))) ; like reveal,prove
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% w::cp (w::ctype w::s-finite)))) ; like reveal,prove
      )
     ((LF-PARENT ONT::establish)
      (example "establish an organization on principle")
      (SEM (F::Aspect F::dynamic) (F::Time-span F::extended))
-     (TEMPL agent-affected-create-manner-optional-templ)
+     (TEMPL AGENT-AFFECTEDR-MANNER-2-XP-3-XP2-OPTIONAL-TEMPL)
      )
     ((LF-PARENT ONT::correlation)
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL neutral-formal-as-comp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL NEUTRAL-FORMAL-XP-NP-1-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      )
     ((LF-PARENT ONT::correlation)
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL neutral-neutral-xp-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      )
     )
    )
@@ -44,7 +44,7 @@
 	   (SENSES
 	    ((EXAMPLE "It has been established that...")
 	     (LF-PARENT ONT::CORRELATION)
-	     (TEMPL EXPLETIVE-FORMAL-TEMPL)
+	     (TEMPL EXPLETIVE-FORMAL-1-XP1-2-XP2-TEMPL)
 	     )
 	    )
 	   ))

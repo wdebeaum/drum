@@ -2,7 +2,7 @@
 ;;;; W::bamboozle
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::bamboozle
    (SENSES
@@ -10,7 +10,7 @@
      ;(LF-PARENT ont::provoke)
      ;(TEMPL agent-affected-xp-templ) ; like dare
      (LF-PARENT ONT::MISINFORM)
-     (TEMPL AGENT-ADDRESSEE-TEMPL)
+     (TEMPL AGENT-AGENT1-NP-TEMPL)
      )
     ; he bamboozled him into believing him
     )

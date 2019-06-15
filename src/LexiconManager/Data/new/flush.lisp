@@ -10,7 +10,7 @@
     ((meta-data :origin "verbnet-2.0" :entry-date 20060608 :change-date 20090528 :comments nil :vn ("hiccup-40.1.1" "wipe_manner-10.4.1") :wn ("flush%2:29:00" "flush%2:30:01" "flush%2:30:02" "flush%2:30:03"))
      (LF-PARENT ONT::push-out-of)
      ;;(TEMPL agent-affected-source-optional-templ)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("breathe-40.1.2") :wn ("sweat%2:29:00"))
      (LF-PARENT ONT::change-skin-color)

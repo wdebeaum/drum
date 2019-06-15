@@ -2,7 +2,7 @@
 ;;;; W::bloat
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::bloat (w::up))
    (SENSES
@@ -17,13 +17,13 @@
      (SYNTAX (w::resultative +))
      (examples "fluid bloats his stomach up")
      (preference .97) ;; ?? prefer intransitive
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )
 ))
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::bloat
    (SENSES
@@ -38,7 +38,7 @@
      (SYNTAX (w::resultative +))
      (examples "fluid bloats his stomach" "rain bloats the river")
      (preference .95) ;; prefer intransitive     (preference .95) ;; prefer intransitive
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

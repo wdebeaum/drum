@@ -2,7 +2,7 @@
 ;;;; W::remove
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::remove
    (SENSES
@@ -10,7 +10,7 @@
      (LF-PARENT ONT::cause-come-from)
      (example "remove the cargo from the truck")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-affected-SOURCE-OPTIONAL-TEMPL (xp (% W::PP (W::ptype W::from))))
+     (TEMPL AGENT-AFFECTED-SOURCE-XP-OPTIONAL-TEMPL (xp (% W::PP (W::ptype W::from))))
      )
     )
    )

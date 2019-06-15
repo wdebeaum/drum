@@ -20,7 +20,7 @@
     ;;;; jump on the highway, jump the fence
     ((LF-PARENT ONT::jump)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-affected-optional-templ)
+     (TEMPL AGENT-AFFECTED-XP-OPTIONAL-B-TEMPL)
      )
     
     )

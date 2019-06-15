@@ -2,14 +2,14 @@
 ;;;; w::assemble
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (w::assemble
    (senses
     ((meta-data :origin calo-ontology :entry-date 20060126 :change-date nil :comments caloy3 :vn ("herd-47.5.2") :wn ("assemble%2:41:00" "assemble%2:41:03"))
      (LF-PARENT ONT::meet)
      (example "they assembled at the church")
-     (TEMPL agent-plural-templ)
+     (TEMPL AGENT-NP-PLURAL-TEMPL)
      )
 
     ((LF-PARENT ONT::joining)

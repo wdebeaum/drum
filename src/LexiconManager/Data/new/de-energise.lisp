@@ -3,7 +3,7 @@
 ;;;;
 
 (define-words :pos W::V 
-  :templ agent-affected-xp-templ
+  :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 	  ((w::de w::punc-minus w::energise)
            (wordfeats (W::morph (:forms (-vb)

@@ -21,7 +21,7 @@
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090501 :comments nil :vn ("future_having-13.3") :wn ("issue%2:41:00"))
      (LF-PARENT ONT::supply)
      (example "issue him a visa")
-     (TEMPL agent-affected-recipient-alternation-templ) ; like grant,offer
+     (TEMPL AGENT-AFFECTED-TEMPL) ; like grant,offer
      )
     )
    )

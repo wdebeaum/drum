@@ -2,7 +2,7 @@
 ;;;; W::delimit
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    (W::delimit ; stative?
     (wordfeats (W::morph (:forms (-vb) :past W::delimited :ing W::delimiting :nom w::delimitation)))
@@ -10,7 +10,7 @@
     ((meta-data :origin chf :entry-date 20070817 :change-date nil :comments nil)
      ;(LF-PARENT ONT::hindering)
      (LF-PARENT ONT::classify)
-     (TEMPL agent-affected-xp-templ) 
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) 
      )
     )
    )

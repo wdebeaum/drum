@@ -13,7 +13,7 @@
      (meta-data :origin caet :entry-date 20120118 :change-date nil :comments nil)
      (example "he's gotta go")
      (SEM (F::Aspect F::Indiv-level) (f::Time-span f::extended)) ;; don't allow temporal mods on the higher verb (need)
-     (TEMPL neutral-effect-SUBJCONTROL-BASE-TEMPL)
+     (TEMPL NEUTRAL-FORMAL-VP-SUBJCONTROL-TEMPL)
      )
     )
    )

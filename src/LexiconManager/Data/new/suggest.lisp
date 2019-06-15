@@ -10,7 +10,7 @@
     ((LF-PARENT ONT::SUGGEST)
      ;;(lf-parent  ont::propose-recommend-suggest) ;; 20120524 GUM change new parent
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-formal-XP-TEMPL (xp (% W::cp (W::ctype (? ctp W::s-finite w::s-that-subjunctive)))))
+     (TEMPL AGENT-FORMAL-XP-CP-TEMPL (xp (% W::cp (W::ctype (? ctp W::s-finite w::s-that-subjunctive)))))
      )
     ((meta-data :origin calo :entry-date 20040121 :change-date nil :comments calo-y1script)
      (LF-PARENT ONT::SUGGEST)
@@ -28,13 +28,13 @@
     (
      (LF-PARENT ONT::CORRELATION)
      (example "The result suggested that the gene activates the protein")
-     (TEMPL neutral-formal-as-comp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL NEUTRAL-FORMAL-XP-NP-1-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      )
 
     (
      (LF-PARENT ONT::CORRELATION)
      (example "The results suggestd the theory")
-     (TEMPL neutral-neutral-xp-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      )
 
 

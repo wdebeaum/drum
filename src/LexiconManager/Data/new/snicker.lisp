@@ -2,7 +2,7 @@
 ;;;; W::snicker
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::snicker
    (wordfeats (W::morph (:forms (-vb) :past W::snickered :ing W::snickering :nom w::snicker)))

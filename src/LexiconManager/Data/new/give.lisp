@@ -2,7 +2,7 @@
 ;;;; w::give
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    ((w::give (w::up))
     (wordfeats (W::morph (:forms (-vb) :past W::gave :pastpart w::given :ing W::giving)))
@@ -15,13 +15,13 @@
       )
      ((LF-PARENT ONT::STOP)
       (example "he gave up smoking")
-      (TEMPL agent-effect-subjcontrol-templ (xp (% W::VP (W::vform W::ing))))
+      (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% W::VP (W::vform W::ing))))
       (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
       (meta-data :origin beetle2-onr2 :entry-date 20071204 :change-date nil :comments nil)
       )
      ((LF-PARENT ONT::STOP)
       (EXAMPLE "He gave up the habit")
-      (templ agent-effect-xp-templ)
+      (TEMPL AGENT-FORMAL-XP-NP-TEMPL)
       (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
       )
      ((LF-PARENT ONT::SURRENDER)
@@ -33,7 +33,7 @@
      ))
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((w::give (w::off))
    (wordfeats (W::morph (:forms (-vb) :past W::gave)))
@@ -41,7 +41,7 @@
     (
      (lf-parent ont::emit-giveoff-discharge) ;; 20120524 GUM change new parent
      (example "the spark plug gives off a spark")
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (meta-data :origin LbR :entry-date 20080922 :change-date nil :comments nil :vn ("free-78-1"))
      )
@@ -49,7 +49,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((w::give w::rise)
    (wordfeats (W::morph (:forms (-vb) :past W::gave)))
@@ -57,14 +57,14 @@
     (
      (lf-parent ont::cause-produce-reproduce) 
      (example "The spark gave rise to a fire")
-     (TEMPL agent-affected-create-templ (xp (% W::PP (W::ptype W::to))))
+     (TEMPL AGENT-AFFECTEDR-XP-TEMPL (xp (% W::PP (W::ptype W::to))))
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::give
@@ -73,16 +73,16 @@
 
     ((lf-parent ont::giving)
      (example "give him a gift/a job")
-;     (templ agent-affected-recipient-alternation-templ)
-     (TEMPL AGENT-RECIPIENT-affected-TEMPL (xp (% W::NP (W::lf (% ?p (w::class (? !x ont::EVENT-OF-CHANGE)))))))
+     ;(templ agent-affected-recipient-alternation-templ)
+     (TEMPL AGENT-AFFECTEDR-AFFECTED-XP-NP-TEMPL (xp (% W::NP (W::lf (% ?p (w::class (? !x ont::EVENT-OF-CHANGE)))))))
      ;; restructured this to allow non-movable things to be given
      (meta-data :origin calo :entry-date unknown :change-date 20040505 :comments calo-y1variants)
     )
    
     ((LF-PARENT ONT::giving)
      (example "give a gift to him")
-;     (TEMPL agent-affected-goal-optional-templ) ; like grant,offer
-     (TEMPL AGENT-AFFECTED-AR-TO-TEMPL)
+     ;(TEMPL agent-affected-goal-optional-templ) ; like grant,offer
+     (TEMPL AGENT-AFFECTED-AFFECTEDR-XP-TEMPL)
      )
     
     #|
@@ -104,8 +104,8 @@
     (
      (LF-PARENT ONT::cause-effect)
      (EXAMPLE "he gave me a beating")
-     (TEMPL AGENT-AFFECTED-FORMAL-SUBJCONTROL-OBJ-TEMPL)
-;     (TEMPL Agent-EFFECT-SUBJCONTROL-TEMPL (xp (% w::VP (w::vform w::ing))))
+     (TEMPL AGENT-AFFECTED-FORMAL-NP-SUBJCONTROL-OBJCONTROL-TEMPL)
+     ;(TEMPL Agent-EFFECT-SUBJCONTROL-TEMPL (xp (% w::VP (w::vform w::ing))))
      (meta-data :origin medadvisor :entry-date 20011227 :change-date nil :comments nil)
      )
     )

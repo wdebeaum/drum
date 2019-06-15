@@ -2,7 +2,7 @@
 ;;;; W::protect
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
  (W::protect
   (wordfeats (W::morph (:forms (-vb) :nom W::protection)))
@@ -11,7 +11,7 @@
      (LF-PARENT ONT::protecting)
      (SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
      (example "buy a warranty to protect your purchase")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )  
     )
    )

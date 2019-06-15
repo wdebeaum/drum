@@ -2,7 +2,7 @@
 ;;;; W::evacuate
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::evacuate
    (SENSES
@@ -20,7 +20,7 @@
      (LF-PARENT ONT::empty)
      (example "evacuate the people" "evacuate the people from the burning building")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-AFFECTED-SOURCE-OPTIONAL-TEMPL)
+     (TEMPL AGENT-AFFECTED-SOURCE-XP-OPTIONAL-TEMPL)
      )
     )
    )

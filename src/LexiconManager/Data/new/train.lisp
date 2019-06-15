@@ -33,7 +33,7 @@
    (senses
     ((EXAMPLE "Train him to do it")
      (LF-PARENT ONT::teach-train) ;; like teach
-     (TEMPL AGENT-ADDRESSEE-THEME-OPTIONAL-TEMPL  (xp (% W::cp (W::ctype W::s-to))))
+     (TEMPL AGENT-AGENT1-FORMAL-2-XP1-3-XP-OPTIONAL-TEMPL  (xp (% W::cp (W::ctype W::s-to))))
      (meta-data :origin task-learning :entry-date 20050825 :change-date nil :comments nil)
      )
     ;; need a non-intentional do
@@ -41,7 +41,7 @@
      (example "train the classifier on the email")
      (SEM (F::Cause F::agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
      (meta-data :origin plow :entry-date 20090129 :change-date nil :comments nil)
-     (TEMPL agent-affected-theme-optional-templ  (xp (% W::PP (W::ptype W::on))))
+     (TEMPL AGENT-AFFECTED-FORMAL-XP-OPTIONAL-A-TEMPL  (xp (% W::PP (W::ptype W::on))))
      )
     )
    )

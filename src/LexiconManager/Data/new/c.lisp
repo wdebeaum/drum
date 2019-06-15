@@ -64,13 +64,13 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
     ((W::c w::c)
     (SENSES
      ((lf-parent ont::sendcopy)
      (SEM (F::aspect F::bounded) (F::time-span F::atomic))
-     (templ agent-recipient-affected-templ (xp (% W::PP (W::ptype w::on))))
+     (TEMPL AGENT-AFFECTEDR-AFFECTED-XP-NP-TEMPL (xp (% W::PP (W::ptype w::on))))
      (example "cc him on that")
      (meta-data :origin calo-ontology :entry-date 20060425 :change-date nil :comments iris)
      )

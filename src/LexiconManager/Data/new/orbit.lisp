@@ -2,7 +2,7 @@
 ;;;; W::orbit
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
  (W::orbit
    (wordfeats (W::morph (:forms (-vb) :past W::orbited :ing w::orbiting :nom w::orbit)))

@@ -2,14 +2,14 @@
 ;;;; W::yield
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::yield
    (wordfeats (W::morph (:forms (-vb) :nom w::yield)))  ; result nominalization, not event nominalization
    (SENSES
     (
      (LF-PARENT ONT::cause-produce-reproduce)
-     (TEMPL agent-affected-create-templ)
+     (TEMPL AGENT-AFFECTEDR-XP-TEMPL)
      (meta-data :wn ("yield%2:40:00" "yield%2:40:02"))
      (example "How much will the account yield?" "A Chance Meeting in a Tiny California Town Yielded This Year's Most Colossal-Sounding Synth Record.")
      )
@@ -18,7 +18,7 @@
    )
 ))
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::yield
    (SENSES

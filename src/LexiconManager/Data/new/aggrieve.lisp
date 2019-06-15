@@ -2,13 +2,13 @@
 ;;;; W::aggrieve
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::aggrieve
    (SENSES
     ((meta-data :origin "verbnet-2.0-corrected" :entry-date 20060315 :change-date 20090512 :comments nil :vn ("amuse-31.1"))
      (LF-PARENT ONT::evoke-sadness)
-     (TEMPL agent-affected-xp-templ) 
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) 
      )
     )
    )

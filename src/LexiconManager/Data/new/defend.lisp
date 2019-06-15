@@ -2,7 +2,7 @@
 ;;;; w::defend
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
        (w::defend
      (senses
@@ -14,7 +14,7 @@
       ))
 ))
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::defend
    (SENSES

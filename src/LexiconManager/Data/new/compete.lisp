@@ -3,7 +3,7 @@
 ;;;;
 
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    (W::compete
      (wordfeats (W::morph (:forms (-vb) :nom W::competition)))
@@ -15,7 +15,7 @@
      )
     (
      (LF-PARENT ONT::compete)
-     (TEMPL agent-affected-as-comp-TEMPL (xp (% W::pp (W::ptype (? xxx W::for W::over)))))
+     (TEMPL AGENT-AFFECTED-XP-PP-TEMPL (xp (% W::pp (W::ptype (? xxx W::for W::over)))))
      (example "They competed for the prize.")
      )
     )

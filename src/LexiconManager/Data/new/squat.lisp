@@ -2,7 +2,7 @@
 ;;;; W::squat
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::squat
    (wordfeats (W::morph (:forms (-vb) :past W::squatted :ing W::squatting)))

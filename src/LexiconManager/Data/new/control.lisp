@@ -14,7 +14,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (W::control
    (wordfeats (W::morph (:forms (-vb) :nom W::control)))
@@ -28,7 +28,7 @@
     ((LF-PARENT ONT::control-manage)
      (example "the piston controls the cylinder")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin LbR :entry-date 20080922 :change-date nil :comments nil)
      )
     )

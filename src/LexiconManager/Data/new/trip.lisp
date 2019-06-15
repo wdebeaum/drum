@@ -13,7 +13,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::trip
    (SENSES
@@ -24,13 +24,13 @@
      )
     ((EXAMPLE "Don't trip the bomb!")
      (LF-PARENT ont::start-object)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::trip w::out)
    (SENSES

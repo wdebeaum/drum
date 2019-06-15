@@ -2,18 +2,18 @@
 ;;;; W::abort
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
  (W::abort
    (SENSES
     ((LF-PARENT ONT::STOP)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-affected-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "abort the mission")
      )
     ((LF-PARENT ONT::DESTROY)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-affected-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "abort the fetus")
      )
     #|((LF-PARENT ONT::DIE)

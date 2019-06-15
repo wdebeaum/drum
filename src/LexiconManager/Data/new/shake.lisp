@@ -14,7 +14,7 @@
 )
 ))
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::shake
    (wordfeats (W::morph (:forms (-vb) :past W::shook :pastpart W::shaken :ing W::shaking)))
@@ -23,7 +23,7 @@
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090512 :comments nil :vn ("amuse-31.1") :wn ("shake%2:37:00"))
      (LF-PARENT ONT::evoke-excitement)
      (example "the problem shook him")
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     ((meta-data :origin cardiac :entry-date 20080222 :change-date nil :comments nil)
      (LF-PARENT ONT::uncontrolled-body-motion)

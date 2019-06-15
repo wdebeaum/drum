@@ -27,14 +27,14 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::NUMBER
    (SENSES
     ((LF-PARENT ONT::categorization)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-THEME-XP-TEMPL)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      )
     )
    )

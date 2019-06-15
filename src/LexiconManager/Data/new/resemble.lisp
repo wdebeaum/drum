@@ -2,7 +2,7 @@
 ;;;; w::resemble
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::resemble
    (SENSES   
@@ -10,7 +10,7 @@
      (LF-PARENT ONT::resemble)
      (example "they resemble dogs")
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL neutral-neutral-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      )
     )
    )

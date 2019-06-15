@@ -13,12 +13,12 @@
 )
 ))
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::sprout
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090504 :comments nil :vn ("entity_specific_cos-45.5") :wn ("sprout%2:30:00"))
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (LF-PARENT ONT::life-transformation) ; like ferment
      )
     ((meta-data :origin step :entry-date 20080623 :change-date 20090504 :comments nil)

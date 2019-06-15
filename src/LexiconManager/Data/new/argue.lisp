@@ -2,7 +2,7 @@
 ;;;; W::argue
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::argue
    (wordfeats (W::morph (:forms (-vb) :nom w::argument)))
@@ -15,12 +15,12 @@
      )
     ((LF-PARENT  ONT::argue)
      (example "he argued with her [about it]")
-     (TEMPL AGENT-ADDRESSEE-THEME-OPTIONAL-TEMPL
+     (TEMPL AGENT-AGENT1-FORMAL-2-XP1-3-XP-OPTIONAL-TEMPL
             (xp1 (% w::pp (w::ptype w::with))))
      )
     ((LF-PARENT  ONT::argue)
      (example "he argued about it [with her]")
-     (TEMPL AGENT-ABOUT-THEME-ADDRESSEE-OPTIONAL-TEMPL)
+     (TEMPL AGENT-FORMAL-AGENT1-2-XP1-PP-3-XP2-PP-WITH-OPTIONAL-TEMPL)
      )
     )
    )

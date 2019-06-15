@@ -2,7 +2,7 @@
 ;;;; w::align
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 (w::align
   (wordfeats (W::morph (:forms (-vb) :nom w::alignment)))
@@ -11,7 +11,7 @@
    (LF-PARENT ONT::arranging)
    (example "align text within a text box")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-   (TEMPL AGENT-affected-xp-templ)
+   (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
    )
   )
  )

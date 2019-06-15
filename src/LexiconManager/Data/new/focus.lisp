@@ -15,7 +15,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 (W::focus
    (SENSES
@@ -29,7 +29,7 @@
      (LF-PARENT ONT::visual-adjust)
      (example "focus the projector")
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-affected-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

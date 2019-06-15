@@ -2,7 +2,7 @@
 ;;;; W::swelled
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    ((W::swelled w::up)
     (wordfeats (W::morph (:forms NIL)) (W::vform W::pastpart))
@@ -16,7 +16,7 @@
    )
 ))
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::swelled
    ;; alternate pastpart

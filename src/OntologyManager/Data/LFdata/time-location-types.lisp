@@ -1407,12 +1407,12 @@
     :wordnet-sense-keys ("midnight%1:28:00")
     )
 (define-type ont::sunrise
-    :parent ONT::DAY-STAGE-sunrise
+    :parent ONT::DAY-STAGE
     :wordnet-sense-keys ("dawn%1:28:00" "sunrise%1:11:00"  "sunrise%1:19:00")
     )
 
 (define-type ont::sunset
-    :parent ONT::DAY-STAGE-sunset
+    :parent ONT::DAY-STAGE
     :wordnet-sense-keys ("sunset%1:28:00" "sunset%1:11:00"  "sunset%1:19:00")
     )
 

@@ -13,7 +13,7 @@
     )
    (SENSES
     ((LF-PARENT ONT::circular-move)
-     (TEMPL AGENT-affected-XP-templ) 
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) 
      )
     )
    )

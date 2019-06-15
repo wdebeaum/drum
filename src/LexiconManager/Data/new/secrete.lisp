@@ -2,7 +2,7 @@
 ;;;; W::secrete
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
     (W::secrete
      (wordfeats (W::morph (:forms (-vb) :nom w::secretion)))
@@ -11,7 +11,7 @@
      ;;(LF-PARENT ONT::emit)
      (lf-parent ont::emit-giveoff-discharge) ;; 20121022 GUM change new parent
      (example "it secreted fluid")
-     (TEMPL agent-affected-xp-templ) 
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) 
      )
     )
    )

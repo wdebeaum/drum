@@ -14,7 +14,7 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    (W::labor
     ;; if we don't specify as irregular we get doubled final consonant
@@ -28,7 +28,7 @@
      (LF-PARENT ONT::working)
      (resultative +)
      (example "he labored over his speech")
-     (TEMPL agent-theme-xp-templ (xp (% w::pp (w::ptype (? p w::on w::over))))) ; like work
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% w::pp (w::ptype (? p w::on w::over))))) ; like work
      )
     )
    )

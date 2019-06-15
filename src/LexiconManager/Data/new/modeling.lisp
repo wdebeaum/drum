@@ -2,7 +2,7 @@
 ;;;; W::modeling
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-create-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTEDR-XP-TEMPL
  :words (
   (W::modeling
    (wordfeats (W::morph (:forms NIL)) (W::vform W::ing))

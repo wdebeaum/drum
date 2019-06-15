@@ -2,14 +2,14 @@
 ;;;; w::extend
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (w::extend
  (senses
   ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("future_having-13.3") :wn ("extend%2:40:05"))
    (LF-PARENT ONT::giving)
    (example "extend him an offer")
-   (TEMPL agent-affected-recipient-alternation-templ) ; like grant,offer
+   (TEMPL AGENT-AFFECTED-TEMPL) ; like grant,offer
      (PREFERENCE 0.96)
      )
   #|
@@ -21,7 +21,7 @@
    )
   |#
   ((example "the changes extended the process")
-   (templ agent-affected-xp-templ)
+   (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
    (meta-data :origin step :entry-date 20080626 :change-date 20090504 :comments nil)
    (LF-PARENT ONT::extend-time)
    (SEM (F::Aspect F::bounded) (F::Time-span F::atomic) (F::scale ont::duration-scale))

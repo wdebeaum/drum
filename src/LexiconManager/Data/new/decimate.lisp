@@ -2,7 +2,7 @@
 ;;;; W::decimate
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::decimate
     (wordfeats (W::morph (:forms (-vb) :nom decimation)))

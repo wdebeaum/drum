@@ -29,7 +29,7 @@
     ((EXAMPLE "he/it woke him")
      (LF-PARENT ONT::objective-influence)
      (SEM (F::trajectory -))
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

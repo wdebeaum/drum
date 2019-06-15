@@ -2,7 +2,7 @@
 ;;;; W::change
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::change
@@ -23,7 +23,7 @@
       (LF-PARENT ONT::change)
       (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
       (example "it changed in color / with time" "the room changed")
-      (templ affected-theme-xp-optional-templ  (xp (% W::PP (W::ptype (? pt w::in W::with)))))
+      (TEMPL AFFECTED-FORMAL-XP-OPTIONAL-TEMPL  (xp (% W::PP (W::ptype (? pt w::in W::with)))))
       )
    ))
 ))

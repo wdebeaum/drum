@@ -2,14 +2,14 @@
 ;;;; W::thank
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::thank
    (SENSES
     ;; the for phrase is ont::reason, generated in the grammar
     ((LF-PARENT ONT::thank)
      (example "thank you [for your help]")
-     (TEMPL AGENT-ADDRESSEE-TEMPL)
+     (TEMPL AGENT-AGENT1-NP-TEMPL)
      )
     )
    )

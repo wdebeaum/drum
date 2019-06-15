@@ -2,7 +2,7 @@
 ;;;; W::dissuade
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::dissuade
    (SENSES
@@ -17,7 +17,7 @@
      ;(LF-PARENT ONT::hindering)
      ;(TEMPL AGENT-EFFECT-AFFECTED-OBJCONTROL-TEMPL (xp (% w::cp (w::ctype w::s-from-ing) (w::ptype w::from))))
      (LF-PARENT ONT::dissuade)
-     (TEMPL agent-addressee-effect-OBJCONTROL-TEMPL (xp (% w::cp (w::ctype w::s-from-ing) (w::ptype w::from))))
+     (TEMPL AGENT-AGENT1-FORMAL-OBJCONTROL-OPTIONAL-TEMPL (xp (% w::cp (w::ctype w::s-from-ing) (w::ptype w::from))))
      (example "It dissuades him from doing something")
      )
     )

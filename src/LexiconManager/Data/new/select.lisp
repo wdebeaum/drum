@@ -2,7 +2,7 @@
 ;;;; W::select
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::select
    (SENSES
@@ -15,7 +15,7 @@
      (LF-PARENT ONT::SELECT)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (EXAMPLE "select red")
-     (templ agent-theme-pred-templ)
+     (TEMPL AGENT-FORMAL-TEMPL)
      )
     )
    )

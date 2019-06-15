@@ -2,7 +2,7 @@
 ;;;; W::depend
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 	 (W::depend
 	  (wordfeats (W::morph (:forms (-vb) :nom w::dependance)))
@@ -15,13 +15,13 @@
 	    (lf-parent ont::rely-depend) ;; 20120523 GUM change new parent
 	    (example "one thing depends on another")
 	    (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-	    (TEMPL neutral-neutral-xp-templ (xp (% W::PP (W::ptype W::on))))
+	    (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL (xp (% W::PP (W::ptype W::on))))
 	    )
 	   (;;(LF-PARENT ont::rely)
 	    (lf-parent ont::rely-depend) ;; 20120523 GUM change new parent
 	    (example "it depends whether it works or not")
 	    (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-	    (TEMPL neutral-theme-xp-templ (xp (% W::NP (W::sort W::wh-desc))))
+	    (TEMPL NEUTRAL-FORMAL-XP-NP-2-TEMPL (xp (% W::NP (W::sort W::wh-desc))))
 	    )
 	   )
    )

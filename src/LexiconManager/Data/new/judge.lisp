@@ -2,7 +2,7 @@
 ;;;; W::judge
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::judge
    (wordfeats (W::morph (:forms (-vb) :nom w::judgement)))
@@ -13,7 +13,7 @@
      )
     ((LF-PARENT ONT::believe)
      (example "he judged his opponent incompetent")
-     (TEMPL experiencer-neutral-objcontrol-pred-templ)
+     (TEMPL EXPERIENCER-NEUTRAL-FORMAL-PRED-OBJCONTROL-TEMPL)
      (meta-data :origin calo :entry-date 20060124 :change-date nil :comments meeting-understanding :vn ("declare-29.4-1-1-2"))
      )
     )

@@ -2,7 +2,7 @@
 ;;;; W::make
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-create-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTEDR-XP-TEMPL
  :tags (:base500)
  :words (
   (W::make
@@ -22,21 +22,21 @@
     ((LF-PARENT ONT::transformation) ;; GUM change new parent 20121027
      (example "make the paper into a square")
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-affected-result-TEMPL (xp (% W::PP (W::ptype W::into))))
+     (TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL (xp (% W::PP (W::ptype W::into))))
      )
     (
      (LF-PARENT ONT::transformation) ;; GUM change new parent 20121027
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "make that triangle a big triangle")
      (preference .98)
-     (TEMPL AGENT-affected-RESULT-TEMPL)
+     (TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL)
      (meta-data :origin fruitcarts :entry-date 20050427 :change-date nil :comments fruitcart-11-4)
      )
     (
      (LF-PARENT ONT::cause-effect) ;; GUM change new parent 20121027
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
        ;;;; at the moment this needs a different template from above; should try to consolidate
-     (TEMPL agent-affected-effect-objcontrol-pred-templ)  
+     (TEMPL AGENT-AFFECTED-FORMAL-OBJCONTROL-TEMPL)  
      (meta-data :origin medadvisor :entry-date 20011126)
      (example "aspirin makes him sick")
      )
@@ -44,7 +44,7 @@
      (LF-PARENT ONT::cause-effect) ;; GUM change new parent 20121027
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
        ;;;; at the moment this needs a different template from above; should try to consolidate
-     (TEMPL agent-EFFECT-affected-OBJCONTROL-TEMPL (xp (% W::VP (W::vform W::base))))
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL (xp (% W::VP (W::vform W::base))))
      (meta-data :origin medadvisor :entry-date 20011126)
      (example "aspirin makes him bleed")
      )

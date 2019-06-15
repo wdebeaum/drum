@@ -11,13 +11,13 @@
      ;(LF-PARENT ont::provoke)
      (LF-PARENT ont::cause-effect)   
      ;(TEMPL agent-affected-theme-objcontrol-templ)  ; like dare
-     (TEMPL agent-effect-affected-objcontrol-templ)  ; like dare
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL)  ; like dare
      (example "He induced him to run for office")  
      )
     (;(LF-PARENT ont::cause-stimulate)
      (LF-PARENT ont::cause-produce-reproduce)   
      (example "the chemical induces phosphorylization")
-     (templ agent-affected-xp-templ))
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL))
     
     #||((LF-PARENT ont::provoke)
      (TEMPL agent-effect-affected-optional-templ (xp (% w::pp (w::ptype (? pt w::from w::in w::among)))))

@@ -2,7 +2,7 @@
 ;;;; w::initiate
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    (w::initiate
     (wordfeats (W::morph (:forms (-vb) :nom w::initiation)))
@@ -11,7 +11,7 @@
       (EXAMPLE "initiate the transition")
       (META-DATA :ORIGIN task-learning :ENTRY-DATE 20050830 :CHANGE-DATE NIL
 		 :COMMENTS nil)
-      (templ agent-affected-xp-templ)
+      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
       (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
       )
      )

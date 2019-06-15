@@ -11,19 +11,19 @@
       :COMMENTS HTML-PURCHASING-CORPUS))))
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::supply
    (SENSES
     ((lf-parent ont::supply)
-     (templ agent-affected-recipient-alternation-templ)
+     (TEMPL AGENT-AFFECTED-TEMPL)
      (example "supply him a job")
      (meta-data :origin task-learning :entry-date 20050822 :change-date 20090501 :comments nil :vn ("fulfilling-13.4.1-1"))
      )
     ((meta-data :origin calo-ontology :entry-date 20060315 :change-date 20090501 :comments nil)
      (LF-PARENT ONT::supply)
      (example "supply him with the goods")
-     (TEMPL agent-recipient-affected-templ (xp (% w::pp (w::ptype w::with))))
+     (TEMPL AGENT-AFFECTEDR-AFFECTED-XP-NP-TEMPL (xp (% w::pp (w::ptype w::with))))
      )
     ((lf-parent ont::supply)
      (templ agent-affected-goal-optional-templ)

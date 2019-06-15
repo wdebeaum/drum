@@ -10,7 +10,7 @@
     (LF-PARENT ONT::decrease)
     (example "knock the price down [to five dollars]")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-   (TEMPL AGENT-affected-RESULT-OPTIONAL-TEMPL (xp (% W::PP (W::ptype W::to))))
+   (TEMPL AGENT-AFFECTED-RESULT-XP-PP-INTO-OPTIONAL-TEMPL (xp (% W::PP (W::ptype W::to))))
    )
   )
  )

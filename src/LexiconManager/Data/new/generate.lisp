@@ -2,7 +2,7 @@
 ;;;; W::generate
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-create-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTEDR-XP-TEMPL
  :words (
   (W::generate
      (wordfeats (W::morph (:forms (-vb) :nom w::generation)))

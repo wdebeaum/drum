@@ -2,7 +2,7 @@
 ;;;; W::ARE
 ;;;;
 
-(define-words :pos W::v :boost-word t :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :boost-word t :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::ARE
@@ -24,7 +24,7 @@
       ;;  you are to arrive at 5
     ((LF-PARENT ONT::EXPECTATION)
      (LF-FORM W::be)
-     (TEMPL neutral-theme-subjcontrol-templ)
+     (TEMPL NEUTRAL-FORMAL-CP-SUBJCONTROL-TEMPL)
      (preference .98) ;; slighly disprefered to favor passive constructions over adjectives
      )
     ;;;; The truck was loaded.
@@ -36,27 +36,27 @@
     ;;;; You are in trouble
     ((LF-PARENT ONT::HAVE-PROPERTY)
      (LF-FORM W::be)
-     (TEMPL neutral-pred-xp-templ)
+     (TEMPL NEUTRAL-FORMAL-PRED-SUBJCONTROL-TEMPL)
      (preference .98) ;; slighly disprefered to favor passive constructions over adjectives
      )
     ;;;; You are the winner
     (;;(LF-PARENT ONT::IN-RELATION)
      (lf-parent ont::be) ;; 20120524 GUM change new parent
      (LF-FORM W::be)
-     (TEMPL neutral-neutral-equal-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL)
     
      )
 
      (  ;; the fact is he's happy
      (lf-parent ont::proposition-equal) 
      (LF-FORM W::be)
-     (TEMPL propositional-equal-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL)
      )
 
     ;;;; .. there is a box
     ((LF-PARENT ONT::EXISTS)
      (LF-FORM W::be)
-     (TEMPL THERE-THEME-TEMPL (xp (% w::NP (w::agr (? ag w::3p w::2s w::2p w::1p)))))
+     (TEMPL EXPLETIVE-NEUTRAL-XP-TEMPL (xp (% w::NP (w::agr (? ag w::3p w::2s w::2p w::1p)))))
      )
     )
    )

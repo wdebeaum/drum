@@ -25,7 +25,7 @@
 )
 ))
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::puff (w::up))
    (SENSES
@@ -40,13 +40,13 @@
      (SYNTAX (w::resultative +))
      (preference .97) ;; prefer intransitive
      (examples "fluid puffs his stomach up")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )
 ))
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::puff
    (SENSES

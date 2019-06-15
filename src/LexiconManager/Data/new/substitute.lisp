@@ -16,7 +16,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
  (W::substitute
     (wordfeats (W::morph (:forms (-vb) :nom W::substitution)))
@@ -29,7 +29,7 @@
      (LF-PARENT ONT::Replacement)
      (SEM (F::Aspect F::Bounded) (F::Time-span F::Atomic))
      (example "substitute the triangle for the square")
-     (TEMPL agent-affected2-templ (xp (% W::PP (W::ptype (? pt w::with W::for)))))
+     (TEMPL AGENT-AFFECTED-AFFECTED1-XP-TEMPL (xp (% W::PP (W::ptype (? pt w::with W::for)))))
      )
     )
    )

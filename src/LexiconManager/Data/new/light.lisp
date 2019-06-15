@@ -36,7 +36,7 @@
 ))
 
 (define-words :pos W::V 
-  :templ agent-affected-xp-templ
+  :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
 	  (w::light
@@ -45,7 +45,7 @@
 	    (;(lf-parent ont::change-device-state)
 	     (lf-parent ont::burn-out-light-up-change) ;; GUM change new parent 20121030
 	     (example "light the lamp")
-	     (templ agent-affected-xp-templ)
+	     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
 	     (meta-data :origin bee :entry-date 20040614 :change-date nil :comments portability-experiment)
 	     )
 	    (;(lf-parent ont::change-device-state)
@@ -60,7 +60,7 @@
 ))
 
 (define-words :pos W::V 
-  :templ agent-affected-xp-templ
+  :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 	  ((w::light (w::up))
 	   (wordfeats (W::morph (:forms (-vb) :past w::lit)))

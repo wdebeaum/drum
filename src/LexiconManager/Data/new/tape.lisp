@@ -30,7 +30,7 @@
     ((LF-PARENT ONT::ATTACH)
      (example "tape the message to the window")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-affected2-optional-TEMPL (xp (% W::pp (W::ptype W::to))))
+     (TEMPL AGENT-AFFECTED-AFFECTED1-XP-OPTIONAL-TEMPL (xp (% W::pp (W::ptype W::to))))
       (meta-data :origin calo-ontology :entry-date 20051214 :change-date nil :comments Break-contact)
      )
     )

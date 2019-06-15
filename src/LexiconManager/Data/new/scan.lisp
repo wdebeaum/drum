@@ -21,7 +21,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 (W::scan
   (wordfeats (W::morph (:forms (-vb) :nom w::scan)))
@@ -30,7 +30,7 @@
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("sight-30.2" "investigate-35.4") :wn ("scan%2:31:01" "scan%2:39:00" "scan%2:39:01"))
      (LF-PARENT ONT::physical-scrutiny)
      (example "he scanned the area")
-     (TEMPL agent-theme-xp-templ) ; like explore,investigate,examine,test,survey,inspect,regard
+     (TEMPL AGENT-FORMAL-XP-TEMPL) ; like explore,investigate,examine,test,survey,inspect,regard
      )
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20061005 :comments nil :vn ("sight-30.2" "investigate-35.4") :wn ("scan%2:31:01" "scan%2:39:00" "scan%2:39:01"))
      (LF-PARENT ONT::physical-scrutiny)

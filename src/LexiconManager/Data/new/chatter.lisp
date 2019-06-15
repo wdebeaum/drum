@@ -2,7 +2,7 @@
 ;;;; W::chatter
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::chatter
    (wordfeats (W::morph (:forms (-vb) :past W::chattered :ing W::chattering :nom w::chatter)))
@@ -15,7 +15,7 @@
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("chit_chat-37.6") :wn ("chatter%2:32:00" "chatter%2:32:01"))
      ;;(LF-PARENT ONT::talk)
      (LF-PARENT  ONT::schmooze-talk)
-     (TEMPL agent-about-theme-addressee-optional-templ)
+     (TEMPL AGENT-FORMAL-AGENT1-2-XP1-PP-3-XP2-PP-WITH-OPTIONAL-TEMPL)
      )
     )
    )

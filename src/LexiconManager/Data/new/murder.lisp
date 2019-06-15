@@ -2,7 +2,7 @@
 ;;;; W::murder
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::murder
    (wordfeats (W::morph (:forms (-vb) :past W::murdered :ing W::murdering :nom w::murder)))

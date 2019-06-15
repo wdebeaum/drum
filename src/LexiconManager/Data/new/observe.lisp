@@ -13,7 +13,7 @@
 
     (
      (LF-PARENT ONT::becoming-aware)
-     (TEMPL agent-theme-xp-templ (xp (% w::cp (w::ctype w::s-finite))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% w::cp (w::ctype w::s-finite))))
      (PREFERENCE 0.96)
      )
     (

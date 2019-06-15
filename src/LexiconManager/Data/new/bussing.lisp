@@ -2,7 +2,7 @@
 ;;;; W::bussing
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::bussing
    (wordfeats (W::morph (:forms NIL)) (W::vform W::ing))

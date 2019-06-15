@@ -15,7 +15,7 @@
 ))
 |#
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
 	      :words (
 		      (W::race
 		       (wordfeats (W::morph (:forms (-vb) :nom W::race)))

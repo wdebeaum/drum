@@ -2,7 +2,7 @@
 ;;;; W::cope
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::cope
    (SENSES
@@ -10,7 +10,7 @@
      (lf-parent ont::cope-deal) ;; 20120524 GUM change new parent
      (example "cope with it")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-affected-xp-TEMPL (xp (% W::pp (W::ptype W::with))))
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL (xp (% W::pp (W::ptype W::with))))
      (meta-data :origin "verbnet-2.0" :entry-date 20060512 :change-date nil :comments nil :vn ("cope-81-1"))
      )
     )

@@ -2,7 +2,7 @@
 ;;;; W::arrive
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::arrive
    (wordfeats (W::morph (:forms (-vb) :nom W::arrival :nomsubjpreps (w::of) :nomobjpreps - :agentnom w::arrival)))

@@ -2,7 +2,7 @@
 ;;;; W::enter
 ;;;;
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::enter
    (wordfeats (W::morph (:forms (-vb) :past W::entered :ing W::entering)))
@@ -16,7 +16,7 @@
     ((EXAMPLE "enter the title in the textbox")
      (meta-data :origin calo :entry-date 20050621 :change-date nil :comments plow)
      (LF-PARENT ONT::put)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      )
      ((EXAMPLE "enter!")

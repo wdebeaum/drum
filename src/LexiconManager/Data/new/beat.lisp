@@ -15,7 +15,7 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (w::beat
    (wordfeats (W::morph (:forms (-vb) :past W::beat :pastpart W::beaten :ing W::beating :nom w::beating)))
@@ -28,7 +28,7 @@
     ((example "he beat his dog")
      (LF-PARENT ont::hitting)
      (meta-data :origin ptb :entry-date 20100526 :change-date nil :comments nil :wn ("beat%2:35:01"))
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

@@ -15,13 +15,13 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::present
    (SENSES
     ((LF-PARENT ONT::show)
      (example "who is going to present the poster (to them)")
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin calo-ontology :entry-date 20060712 :change-date 20090506 :comments caloy3)
      )
     ((LF-PARENT ONT::appear)
@@ -31,7 +31,7 @@
     ((LF-PARENT ONT::encodes-message)
      (meta-data :origin "bee" :entry-date 20091394 :change-date nil :comments nil)
      (example "this book presents a different solution")
-     (TEMPL neutral-THEME-XP-TEMPL)
+     (TEMPL NEUTRAL-FORMAL-XP-NP-2-TEMPL)
      (Preference 0.97) ;; choose agentive interpretation whenever possible
      )
     )

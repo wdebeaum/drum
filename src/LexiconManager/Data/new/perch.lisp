@@ -13,7 +13,7 @@
 )
 ))
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::perch
    (SENSES
@@ -28,7 +28,7 @@
     ((EXAMPLE "perch the box on the desk" )
      ;;(LF-PARENT ONT::BODY-MOVEMENT)
      (lf-parent ont::put ) ;; 20120523 GUM change new parent
-      (TEMPL AGENT-AFFECTED-goal-TEMPL)
+      (TEMPL AGENT-AFFECTED-RESULT-ADVBL-OBJCONTROL-TEMPL)
      )
 
     )

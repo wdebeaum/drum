@@ -2,7 +2,7 @@
 ;;;; W::suffer
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 ;   )
   (W::suffer
@@ -10,7 +10,7 @@
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090511 :comments nil :vn ("admire-31.2") :wn ("suffer%2:29:00" "suffer%2:29:03" "suffer%2:37:00"))
      (LF-PARENT ONT::enduring)
-     (TEMPL agent-neutral-optional-templ)
+     (TEMPL AGENT-NEUTRAL-XP-OPTIONAL-TEMPL)
      )
     )
    )

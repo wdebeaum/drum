@@ -2,7 +2,7 @@
 ;;;; W::believe
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::believe
    (wordfeats (W::morph (:forms (-vb) :nom W::belief)))
@@ -16,7 +16,7 @@
     ((LF-PARENT ONT::believe)     
      (example "they believe her to have cancer")
      (SEM (F::Aspect F::Indiv-level) (F::Time-span F::extended))
-     (TEMPL experiencer-theme-objcontrol-templ)
+     (TEMPL EXPERIENCER-NEUTRAL-FORMAL-CP-OBJCONTROL-B-TEMPL)
      )
      ((LF-PARENT ONT::BELIEVE)     
      (SEM (F::Aspect F::Indiv-level) (F::Time-span F::extended))
@@ -46,7 +46,7 @@
 	   (SENSES
 	    ((EXAMPLE "It is believed (that)...")
 	     (LF-PARENT ONT::expectation)
-	     (TEMPL EXPLETIVE-FORMAL-TEMPL )
+	     (TEMPL EXPLETIVE-FORMAL-1-XP1-2-XP2-TEMPL )
 	     )
 	    )
 	   ))

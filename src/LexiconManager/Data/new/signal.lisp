@@ -21,7 +21,7 @@
 ;    (wordfeats (W::morph (:forms (-vb) :nom w::signaling :nomsubjpreps (w::by w::of) )))
     (SENSES
      ((LF-PARENT ONT::nonverbal-say)
-      (templ agent-affected-xp-templ)
+      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

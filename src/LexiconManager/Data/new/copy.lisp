@@ -2,7 +2,7 @@
 ;;;; W::copy
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    (W::copy
     (wordfeats (W::morph (:forms (-vb) :ing w::copying :nom W::copy)))
@@ -15,13 +15,13 @@
       )
      ((lf-parent ont::sendcopy)
       (SEM (F::aspect F::bounded) (F::time-span F::atomic))
-      (templ agent-recipient-affected-templ (xp (% W::PP (W::ptype w::on))))
+      (TEMPL AGENT-AFFECTEDR-AFFECTED-XP-NP-TEMPL (xp (% W::PP (W::ptype w::on))))
       (example "copy my group on the email")
       (meta-data :origin plow :entry-date 20051004 :change-date nil :comments nil :vn ("send-11.1-1"))
      )
      ((lf-parent ont::sendcopy)
       (SEM (F::aspect F::bounded) (F::time-span F::atomic))
-      (templ agent-affected-goal-templ)
+      (TEMPL AGENT-AFFECTED-RESULT-ADVBL-OBJCONTROL-TEMPL)
       (example "copy that to me")
       (meta-data :origin plow :entry-date 20051004 :change-date nil :comments nil :vn ("send-11.1-1"))
       )

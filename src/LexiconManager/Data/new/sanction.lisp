@@ -2,7 +2,7 @@
 ;;;; W::sanction
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::sanction
    (SENSES
@@ -10,7 +10,7 @@
      ;(LF-PARENT ont::allow)
      (LF-PARENT ONT::approve-authorize)
      (example "he sanctioned their proposal")
-     (TEMPL agent-affected-xp-templ) 
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) 
      )
     )
    )

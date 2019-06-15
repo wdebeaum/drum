@@ -2,12 +2,12 @@
 ;;;; W::wish
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::wish
    (SENSES
     ((LF-PARENT ONT::WANT)
-     (TEMPL experiencer-action-SUBJCONTROL-TEMPL)
+     (TEMPL EXPERIENCER-FORMAL-SUBJCONTROL-TEMPL)
      (EXAMPLE "I wish to copy part of the code")
      (meta-data :origin task-learning :entry-date 20050819 :change-date nil )
      )

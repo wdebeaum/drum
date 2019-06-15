@@ -2,7 +2,7 @@
 ;;;; w::export
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (w::export
   (wordfeats (W::morph (:forms (-vb) :nom w::export)))

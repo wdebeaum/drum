@@ -3,7 +3,7 @@
 ;;;;
 
 (define-words :pos W::V 
-  :templ agent-affected-create-templ
+  :TEMPL AGENT-AFFECTEDR-XP-TEMPL
  :words (
 (w::bake
  (senses
@@ -28,7 +28,7 @@
    (LF-PARENT ONT::bake)
    (example "She baked the turkey in the oven.")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (f::time-span f::extended))
-   (templ agent-affected-xp-templ)
+   (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
    )
   )
  )

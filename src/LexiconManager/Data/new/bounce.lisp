@@ -2,7 +2,7 @@
 ;;;; W::bounce
 ;;;;
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::bounce
    (SENSES
@@ -19,7 +19,7 @@
      )
     ((LF-PARENT ONT::bounce-reflect)
      (example "he bounced the ball")
-     (TEMPL AGENT-AFFECTED-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

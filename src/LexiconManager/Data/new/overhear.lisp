@@ -2,7 +2,7 @@
 ;;;; W::overhear
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::overhear
    (SENSES
@@ -14,7 +14,7 @@
      (LF-PARENT ONT::active-perception)
      (SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
      (example "he overheard him speak about it")
-     (TEMPL experiencer-action-objcontrol-templ (xp (% W::VP (W::vform W::base))))
+     (TEMPL EXPERIENCER-NEUTRAL-FORMAL-CP-OBJCONTROL-A-TEMPL (xp (% W::VP (W::vform W::base))))
      )
     )
    )

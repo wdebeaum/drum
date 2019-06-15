@@ -5,7 +5,7 @@
 ;;;; W::INTERVIEW
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::interview
    (wordfeats (W::morph (:forms (-vb) :nom w::interview)))
@@ -19,7 +19,7 @@
     ((LF-PARENT ONT::interview)
      (example "interview the candidate")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-addressee-templ)
+     (TEMPL AGENT-AGENT1-NP-TEMPL)
      )
     ((LF-PARENT ONT::interview)
      (example "he was interviewing all day")

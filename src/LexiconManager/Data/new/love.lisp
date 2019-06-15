@@ -2,7 +2,7 @@
 ;;;; W::love
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::love
@@ -17,7 +17,7 @@
      (meta-data :origin calo :entry-date 20050425 :change-date 20090508 :comments projector-purchasing)
      (SEM (F::Aspect F::indiv-level))
      (example "I love to dance")
-     (TEMPL experiencer-action-subjcontrol-templ)
+     (TEMPL EXPERIENCER-FORMAL-SUBJCONTROL-TEMPL)
      )
     )
    )

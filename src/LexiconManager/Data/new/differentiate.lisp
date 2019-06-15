@@ -3,7 +3,7 @@
 ;;;;
 
 (define-words :pos W::V 
-  :templ agent-theme-xp-templ
+  :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 ;; defined by Myrosia for lam -- mathematical term words
 	  (w::differentiate

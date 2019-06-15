@@ -28,7 +28,7 @@
 	   (SENSES
 	    ((EXAMPLE "It is known (that)...")
 	     (LF-PARENT ONT::expectation)
-	     (TEMPL EXPLETIVE-FORMAL-TEMPL )
+	     (TEMPL EXPLETIVE-FORMAL-1-XP1-2-XP2-TEMPL )
 	     )
 	    )
 	   ))

@@ -29,7 +29,7 @@
     |#
     ((lf-parent ont::DIRECT-AT)
      (EXAMPLE "This book targets teenagers.  The pickpocket targeted the tourist.")
-     (TEMPL neutral-neutral-xp-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      )
     )
    )

@@ -21,7 +21,7 @@
    (SENSES
     ((EXAMPLE "The stimulation results in the activation")
      (lf-parent ont::cause-produce-reproduce) 
-     (TEMPL AGENT-AFFECTED-as-comp-TEMPL (xp (% W::pp (W::ptype W::in))))
+     (TEMPL AGENT-AFFECTED-XP-PP-TEMPL (xp (% W::pp (W::ptype W::in))))
      )
 
     ((EXAMPLE "Side effects may result.")
@@ -31,7 +31,7 @@
 
     ((EXAMPLE "The stimulation results from the activation")
      (lf-parent ont::cause-produce-reproduce) 
-     (TEMPL AFFECTED-AGENT-as-comp-TEMPL (xp (% W::pp (W::ptype W::from))))
+     (TEMPL AFFECTED-AGENT-XP-PP-TEMPL (xp (% W::pp (W::ptype W::from))))
      )
 
     )

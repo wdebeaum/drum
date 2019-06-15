@@ -2,7 +2,7 @@
 ;;;; W::reckon
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::reckon
    (wordfeats (W::morph (:forms (-vb) :past W::reckoned :ing W::reckoning)))

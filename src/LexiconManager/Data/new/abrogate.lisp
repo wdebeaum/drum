@@ -8,7 +8,7 @@
    (wordfeats (W::morph (:forms (-vb) :nom W::abrogation)))
    (SENSES
     ((LF-PARENT ONT::prohibit)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

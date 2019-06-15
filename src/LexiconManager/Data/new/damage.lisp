@@ -13,7 +13,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::damage
    (SENSES
@@ -26,7 +26,7 @@
      (LF-PARENT ont::damage)
      (meta-data :origin task-learning :entry-date 20050823 :change-date nil :comments nil)
      ;;(SEM (F::Cause F::Phenomenal) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "it damaged the computer")
      )
     )

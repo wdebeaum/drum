@@ -2,19 +2,19 @@
 ;;;; W::pay
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
  (W::pay
    (wordfeats (W::morph (:forms (-vb) :past W::paid :ing w::paying)))
    (SENSES
     ((LF-PARENT ONT::commerce-pay)
-     (TEMPL agent-cost-templ)
+     (TEMPL AGENT-EXTENT-TEMPL)
      (example "he paid 5 dollars")
      (meta-data :origin calo :entry-date 20040504 :change-date nil :comments calo-y1variants)
      )
     ((meta-data :origin calo :entry-date 20031219 :change-date nil :comments nil :vn ("pay-68"))
      (LF-PARENT ONT::commerce-pay)
-     (TEMPL AGENT-COST-neutral-TEMPL (xp (% W::PP (W::ptype W::for))))
+     (TEMPL AGENT-EXTENT-NEUTRAL-XP-TEMPL (xp (% W::PP (W::ptype W::for))))
      (example "he paid 5 dollars for it")
      )
     ((LF-PARENT ONT::commerce-pay)
@@ -27,13 +27,13 @@
      (SEM (F::Aspect F::dynamic) (F::Time-span F::atomic))
      (example "pay the money to me")
      (meta-data :origin calo :entry-date 20040504 :change-date nil :comments calo-y1variants)
-     (TEMPL AGENT-cost-goal-optional-TEMPL (xp (% W::pp (W::ptype W::to))))
+     (TEMPL AGENT-EXTENT-RESULT-XP-OPTIONAL-TEMPL (xp (% W::pp (W::ptype W::to))))
      )
     ((LF-PARENT ONT::commerce-pay)
      (SEM (F::Aspect F::dynamic) (F::Time-span F::atomic))
      (example "pay me the money")
      (meta-data :origin calo :entry-date 20040504 :change-date nil :comments calo-y1variants :vn ("pay-68"))
-     (TEMPL agent-goal-affected-templ)
+     (TEMPL AGENT-AFFECTEDR-AFFECTED-XP-PP-WITH-2-OPTIONAL-TEMPL)
      )
     ;; need to subcat for this use because the definition of ont::instrument is currently limited to phys-obj
     ;; and credit card is classified as an account, which is an abstr-obj (e.g. can also be a grant)
@@ -47,7 +47,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
 	      :words (
 		      ((W::pay W::attention)
 		       (wordfeats (W::morph (:forms (-vb) :past W::paid)))

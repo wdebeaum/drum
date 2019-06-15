@@ -2,7 +2,7 @@
 ;;;; W::retract
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::retract
    (wordfeats (W::morph (:forms (-vb) :nom w::retraction)))
@@ -13,7 +13,7 @@
      )
     ((meta-data :origin "wordnet-3.0" :entry-date 20090602 :change-date nil :comments nil)
      (LF-PARENT ONT::pull-out-of)
-     (TEMPL affected-source-optional-templ)
+     (TEMPL AFFECTED-SOURCE-XP-OPTIONAL-TEMPL)
      (example "The CD tray retracted")
      )
     )

@@ -2,7 +2,7 @@
 ;;;; W::rewrite
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (W::rewrite
  (wordfeats (W::morph (:forms (-vb) :past W::rewrote :pastpart W::rewritten :ing W::rewriting :nom w::rewrite)))
@@ -14,7 +14,7 @@
     ((meta-data :origin lam :entry-date 20050707 :change-date nil :comments missing-as-frame)
      (LF-PARENT ONT::revise)
      (SEM (F::Aspect F::bounded))
-     (TEMPL agent-affected-result-templ (xp (% w::PP (w::ptype w::as)))) 
+     (TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL (xp (% w::PP (w::ptype w::as)))) 
      )
     )
    )

@@ -17,7 +17,7 @@
     
     ((example "the bulbs remain on")
      (LF-PARENT ONT::stay)
-     (TEMPL agent-theme-complex-subjcontrol-templ)
+     (TEMPL AGENT-FORMAL-PRED-SUBJCONTROL-TEMPL)
      (meta-data :origin bee :entry-date 20090220 :change-date nil :comments beetle-pilots)
      )
     )

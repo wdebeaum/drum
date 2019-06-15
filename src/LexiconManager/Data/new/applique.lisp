@@ -2,7 +2,7 @@
 ;;;; W::applique
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::applique
    (wordfeats (W::morph (:forms (-vb) :past W::appliqued :ing W::appliqueing :nom applique)))

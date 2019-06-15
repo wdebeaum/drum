@@ -16,29 +16,29 @@
 ))
 |#
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::promise
     (wordfeats (W::morph (:forms (-vb) :nom W::promise)))
    (SENSES
     ((meta-data :origin "verbnet-1.5-corrected" :entry-date 20051219 :change-date 20060120 :comments nil :vn ("future_having-13.3") :wn ("promise%2:32:01"))
      (lf-parent ont::promise) ;;  ;; 20120524 GUM change new type
-     (TEMPL agent-affected-iobj-theme-templ) ; like grant,offer
+     (TEMPL AGENT-FORMAL-AFFECTED-TEMPL) ; like grant,offer
      )
     (
      (lf-parent ont::promise) ;; 
      (example "he promised to go")
-     (TEMPL AGENT-THEME-SUBJCONTROL-TEMPL))
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL))
 
     (
      (lf-parent ont::promise) ;;  
      (example "he promised me to go")
-     (TEMPL agent-affected-theme-subjcontrol-templ))
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-SUBJCONTROL-TEMPL))
 
     (
      (lf-parent ont::promise) ;;  
      (example "he promised me to go")
-      (TEMPL AGENT-ADDRESSEE-THEME-OPTIONAL-TEMPL (xp (% W::cp (W::ctype W::s-finite)))))
+      (TEMPL AGENT-AGENT1-FORMAL-2-XP1-3-XP-OPTIONAL-TEMPL (xp (% W::cp (W::ctype W::s-finite)))))
     )
    )
 ))

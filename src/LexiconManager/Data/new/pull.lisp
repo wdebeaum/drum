@@ -2,7 +2,7 @@
 ;;;; W::pull
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::pull
@@ -10,7 +10,7 @@
     ;;;; swier -- We can pull one more boxcar.
     ((LF-PARENT ONT::PULL)
      (SEM (F::cause F::agentive) (F::aspect F::unbounded) (F::time-span F::extended))
-     (TEMPL agent-affected-optional-templ)
+     (TEMPL AGENT-AFFECTED-XP-OPTIONAL-B-TEMPL)
      )
     ((LF-PARENT ONT::pull)
      (SEM (F::cause F::agentive) (F::aspect F::bounded) (F::time-span F::extended))

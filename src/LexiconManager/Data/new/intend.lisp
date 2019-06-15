@@ -2,7 +2,7 @@
 ;;;; W::intend
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::intend
    (wordfeats (W::morph (:forms (-vb) :nom w::intention)))
@@ -15,13 +15,13 @@
      )
     ((LF-PARENT ONT::Intention)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL experiencer-theme-OBJCONTROL-TEMPL)
+     (TEMPL EXPERIENCER-NEUTRAL-FORMAL-CP-OBJCONTROL-B-TEMPL)
      (EXAMPLE "intend something to move towards a certain goal")
      (meta-data :origin jr :entry-date 20120806 :change-date nil :comments gloss-owl)
      )
 
    ((LF-PARENT ONT::ENCODES-MESSAGE)
-     (TEMPL NEUTRAL-NEUTRAL-TEMPL)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      (EXAMPLE "an example sentence would show what this word intended")
      )
       

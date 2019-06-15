@@ -10,7 +10,7 @@
     ((EXAMPLE "Can you sell a computer (to me)")
       (meta-data :origin calo :entry-date 20050209 :change-date nil :comments y1-dialog-variations)
      (LF-PARENT ONT::commerce-sell)
-     (TEMPL AGENT-affected-xp-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

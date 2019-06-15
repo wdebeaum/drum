@@ -2,7 +2,7 @@
 ;;;; W::delete
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::delete
      (wordfeats (W::morph (:forms (-vb) :nom w::deletion)))
@@ -10,7 +10,7 @@
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("remove-10.1") :wn ("delete%2:32:00" "delete%2:35:00"))
      (LF-PARENT ONT::omit)
      (example "delete this paragraph from the text")
-     (TEMPL agent-affected-source-optional-templ (xp (% w::pp (w::ptype w::from))))
+     (TEMPL AGENT-AFFECTED-SOURCE-XP-OPTIONAL-TEMPL (xp (% w::pp (w::ptype w::from))))
      )
     
     ((LF-PARENT ONT::discard)

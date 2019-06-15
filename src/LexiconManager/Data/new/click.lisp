@@ -20,7 +20,7 @@
      ))
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::click
    (wordfeats (W::morph (:forms (-vb) :nom W::click)))
@@ -29,7 +29,7 @@
      (LF-PARENT ONT::click)
      (meta-data :origin plow :entry-date 20050315 :change-date nil :comments nil)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-affected-XP-TEMPL (xp (% w::pp (w::ptype (? ptp w::on)))))
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL (xp (% w::pp (w::ptype (? ptp w::on)))))
      )
     ((EXAMPLE "click the link in your browser")
      (LF-PARENT ONT::click)

@@ -22,7 +22,7 @@
    (SENSES
     ((EXAMPLE "phone the doctor")
      (LF-PARENT ONT::establish-communication)
-     (TEMPL AGENT-ADDRESSEE-TEMPL)
+     (TEMPL AGENT-AGENT1-NP-TEMPL)
      (meta-data :origin calo-ontology :entry-date 20060214 :change-date 20090508 :comments nil)  
      (preference .97) ;; prefer noun sense
      )

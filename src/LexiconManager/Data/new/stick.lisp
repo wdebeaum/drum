@@ -27,7 +27,7 @@
     ((example "let's stick with the mac")
      (LF-PARENT ONT::retain)
      ;;(SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-theme-complex-subjcontrol-templ)
+     (TEMPL AGENT-FORMAL-PRED-SUBJCONTROL-TEMPL)
      (meta-data :origin calo :entry-date 20041122 :change-date nil :comments caloy2)
      )
     ((example "it stuck")
@@ -39,20 +39,20 @@
     ((EXAMPLE "he stuck me in the ribs")
      (meta-data :origin calo-ontology :entry-date 20051213 :change-date nil :comments Penetrate)
      (LF-PARENT ONT::penetrate)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      )
 
     ((LF-PARENT ONT::ATTACH)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-affected-xp-TEMPL (xp (% W::pp (W::ptype W::to))))
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL (xp (% W::pp (W::ptype W::to))))
      )
 
     ((LF-PARENT ONT::put)
      (meta-data :origin vn-analysis :entry-date unknown :change-date 20040617 :comments change-lf)
      (example "stick the box in the corner")
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-AFFECTED-GOAL-TEMPL)
+     (TEMPL AGENT-AFFECTED-RESULT-ADVBL-OBJCONTROL-TEMPL)
      )
     
     

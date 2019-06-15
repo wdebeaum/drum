@@ -2,7 +2,7 @@
 ;;;; W::extricate
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::extricate
     (wordfeats (W::morph (:forms (-vb) :nom W::extrication)))

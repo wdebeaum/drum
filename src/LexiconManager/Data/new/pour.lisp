@@ -7,9 +7,9 @@
   (W::pour
    (SENSES
     ((meta-data :origin "kitchen" :entry-date 20101118 :change-date nil :comments nil :wn ("pour%2:38:00"))
-;     (LF-PARENT ont::pour)
+     ;(LF-PARENT ont::pour)
      (LF-PARENT ont::fluidic-motion)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "he poured the water over the floor")
      )
     ((meta-data :origin "kitchen" :entry-date 20101118 :change-date nil :comments nil :wn ("pour%2:38:00"))

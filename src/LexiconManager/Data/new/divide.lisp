@@ -2,7 +2,7 @@
 ;;;; W::divide
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::divide
    (wordfeats (W::morph (:forms (-vb) :nom w::division)))
@@ -11,31 +11,31 @@
       (LF-PARENT ont::separation)
       (example "divide the crews into/in teams" "divide up the crews")
       (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-      (templ agent-affected-result-templ (xp (% W::PP (W::ptype W::into))))
+      (TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL (xp (% W::PP (W::ptype W::into))))
       )
      ((meta-data :origin ptb :entry-date 20100603 :change-date 20090522 :comments s11 :vn ("separate-23.1-1"))
       (LF-PARENT ont::separation)
       (example "critical opinion is divided")
       (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-      (templ agent-affected-xp-templ)
+      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
       )
      ((meta-data :origin beetle :entry-date 20080716 :change-date nil :comments nil :vn ("separate-23.1-2"))
       (LF-PARENT ont::separation) ; TODO change to ONT::spatial-divide
       (EXAMPLE "the divider divides the room")
       (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-      (TEMPL agent-affected-SOURCE-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? t W::from)))))
+      (TEMPL AGENT-AFFECTED-SOURCE-XP-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? t W::from)))))
       )
    
      ((meta-data :origin lam :entry-date 20050420 :change-date 20090522 :comments lam-initial)
       (lf-parent ont::calc-divide)
       (example "divide by 5")
-      (templ agent-theme-xp-templ (xp (% w::pp (w::ptype w::by))))
+      (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% w::pp (w::ptype w::by))))
       (preference .98) ; prefer separation sense 
       )
      ((meta-data :origin "wordnet-3.0" :entry-date 20090522 :change-date nil :comments nil)
       (lf-parent ONT::calc-divide)
       (example "divide 7 into 21")
-      (templ agent-theme-theme-templ)
+      (TEMPL AGENT-FORMAL1-FORMAL-XP-TEMPL)
       (preference .98) ; prefer separation sense 
       )
     )

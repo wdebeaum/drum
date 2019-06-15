@@ -24,7 +24,7 @@
 
 
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
 	      :words (
 		      (W::space
 		       (SENSES

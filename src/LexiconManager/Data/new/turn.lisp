@@ -28,7 +28,7 @@
 ;   )
 ;))
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::TURN
@@ -52,7 +52,7 @@
 
    ;; GUM change 20121027 new word sense as per LF_GUM spreadsheet
     ((LF-PARENT ONT::TRANSFORMATION)
-     (TEMPL agent-affected-result-templ (xp (% w::pp (w::ptype (? w::into)))))
+     (TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL (xp (% w::pp (w::ptype (? w::into)))))
      (example "turn x into y")
      )
      )
@@ -91,14 +91,14 @@
   ))
 |#
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::turn w::out)
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("occurrence-48.3"))
      (LF-PARENT ONT::have-property)
      (example "it happens to be true")
-     (TEMPL neutral-theme-xp-templ (xp (% w::cp (w::ctype w::s-to)))) ; like happen
+     (TEMPL NEUTRAL-FORMAL-XP-NP-2-TEMPL (xp (% w::cp (w::ctype w::s-to)))) ; like happen
      )
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("occurrence-48.3"))
      (LF-PARENT ONT::occurring)

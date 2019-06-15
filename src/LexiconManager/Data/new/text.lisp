@@ -13,7 +13,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
  (W::text
    (SENSES
@@ -27,17 +27,17 @@
     ((LF-PARENT ONT::nonverbal-say)
      (meta-data :origin asma :entry-date 20110921 :change-date nil :comments nil)
      (example "text me a text")
-     (TEMPL agent-affected-iobj-theme-templ)
+     (TEMPL AGENT-FORMAL-AFFECTED-TEMPL)
      )
     ((LF-PARENT ONT::nonverbal-say)
      (meta-data :origin asma :entry-date 20110921 :change-date nil :comments nil)
      (example "text me about the problem")
-     (TEMPL AGENT-ADDRESSEE-ASSOCIATED-INFORMATION-TEMPL)
+     (TEMPL AGENT-AGENT1-FORMAL-XP-PP-ABOUT-TEMPL)
      )
     ((LF-PARENT ONT::nonverbal-say)
      (meta-data :origin asma :entry-date 20110921 :change-date nil :comments nil)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-THEME-XP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      (EXAMPLE "he texted that he couldn't come")
      )
     )

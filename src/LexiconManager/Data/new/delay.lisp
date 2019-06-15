@@ -9,7 +9,7 @@
    (SENSES
     ((meta-data :origin calo :entry-date 20070514 :change-date 20090504 :comments nil)
      (LF-PARENT ONT::delay)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "delay the process")
      )
     )

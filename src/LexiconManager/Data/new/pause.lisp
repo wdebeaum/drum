@@ -20,7 +20,7 @@
      (LF-PARENT ONT::PAUSE)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      ;(TEMPL AGENT-TIME-DURATION-TEMPL)
-     (TEMPL AGENT-AFFECTED-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "I paused the program.")
      )
     

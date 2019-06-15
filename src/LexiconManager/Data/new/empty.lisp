@@ -2,7 +2,7 @@
 ;;;; W::EMPTY
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::EMPTY
    (wordfeats (W::morph (:forms (-vb) :past W::emptied)))
@@ -10,13 +10,13 @@
     ((LF-PARENT ONT::EMPTY)
      (example "empty the oj from the tanker")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL agent-affected-source-templ)
+     (TEMPL AGENT-AFFECTED-SOURCE-XP-TEMPL)
      )
 
     ((LF-PARENT ONT::EMPTY)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "empty the truck of oj")
-     (TEMPL AGENT-source-affected-optional-TEMPL)
+     (TEMPL AGENT-AFFECTEDR-AFFECTED-XP-PP-OF-OPTIONAL-TEMPL)
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090529 :comments nil :vn ("clear-10.3-1"))
      (LF-PARENT ONT::empty)
@@ -26,7 +26,7 @@
    )
   ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::empty (W::out))
    (wordfeats (W::morph (:forms (-vb) :past W::emptied)))

@@ -2,7 +2,7 @@
 ;;;; W::HELP
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::HELP
@@ -17,31 +17,31 @@
     ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("help-70-1"))
      (LF-PARENT ONT::HELP)
      (example "help the workers to load all the oranges")
-     (TEMPL agent-EFFECT-affected-OBJCONTROL-TEMPL)
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL)
      )
 
     ((LF-PARENT ONT::HELP)
      (example "help the people help themselves")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-EFFECT-affected-OBJCONTROL-TEMPL (xp (% W::VP (W::vform W::base))))
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL (xp (% W::VP (W::vform W::base))))
      )
 
     ((LF-PARENT ONT::HELP)
      (example "I helped to load the oranges")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL AGENT-EFFECT-SUBJCONTROL-TEMPL)
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL)
      )
 
     ((LF-PARENT ONT::HELP)
      (example "I helped load the oranges")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL AGENT-EFFECT-SUBJCONTROL-TEMPL (xp (% W::VP (W::vform W::base))))
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% W::VP (W::vform W::base))))
      )
 
     ((LF-PARENT ONT::HELP)
      (example "it helped me")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-      (TEMPL agent-affected-xp-templ)
+      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )   
     )
    )

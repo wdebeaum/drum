@@ -2,7 +2,7 @@
 ;;;; w::surge
 ;;;;
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (w::surge
    (wordfeats (W::morph (:forms (-vb) :nom w::surge)))

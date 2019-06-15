@@ -28,7 +28,7 @@
      )
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("register-54.1") :wn ("total%2:42:00"))
      (LF-PARENT ONT::weigh)
-     (TEMPL neutral-theme-xp-templ) ; like weigh
+     (TEMPL NEUTRAL-FORMAL-XP-NP-2-TEMPL) ; like weigh
      )
     
     )

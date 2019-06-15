@@ -11,7 +11,7 @@
       :COMMENTS HTML-PURCHASING-CORPUS))))
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
  (w::appeal
   (senses
@@ -20,7 +20,7 @@
     (example "Abrams appealed to Browne to hire Chiang")
     (meta-data :origin csli-ts :entry-date 20070313 :change-date nil :comments nil :wn nil)
     (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-    (templ agent-to-addressee-theme-objcontrol-req-templ)
+    (TEMPL AGENT-AGENT1-FORMAL-2-XP1-3-OBJCONTROL-TEMPL)
     )
    ;; need this so passive rule will work
    (;(LF-PARENT ONT::request)
@@ -28,7 +28,7 @@
     (example "Abrams appealed to Browne to hire Chiang")
     (meta-data :origin csli-ts :entry-date 20070313 :change-date nil :comments nil :wn nil)
     (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-    (templ agent-to-addressee-templ)
+    (TEMPL AGENT-AGENT1-PP-TEMPL)
     )
    )
   )

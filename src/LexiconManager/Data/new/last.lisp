@@ -2,13 +2,13 @@
 ;;;; W::last
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::last
    (SENSES
     ((LF-PARENT ONT::take-time)
-     (TEMPL Neutral-DURATION-TEMPL)
+     (TEMPL NEUTRAL-EXTENT-TEMPL)
      (example "the meeting lasted five hours")
      )
     ((LF-PARENT ONT::take-time)

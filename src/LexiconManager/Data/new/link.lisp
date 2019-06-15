@@ -14,24 +14,24 @@
     )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::link
    (SENSES
     ;;;; link the car to the train
     ((LF-PARENT ONT::ATTACH)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-affected2-optional-TEMPL (xp (% W::pp (w::ptype (? pt W::to w::with)))))
+     (TEMPL AGENT-AFFECTED-AFFECTED1-XP-OPTIONAL-TEMPL (xp (% W::pp (w::ptype (? pt W::to w::with)))))
      )
     ;;;; the path links one city to/with another
     ((LF-PARENT ONT::CONNECTED)
      (SEM (F::Aspect F::indiv-level))
-     (TEMPL neutral-neutral-xp-templ (xp (% W::pp (W::ptype (? pt W::to w::with)))) )
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL (xp (% W::pp (W::ptype (? pt W::to w::with)))) )
      )
     ;;;; the path links 2 cities
     ((LF-PARENT ONT::CONNECTED)
      (SEM (F::Aspect F::indiv-level))
-     (TEMPL neutral-neutral-plural-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-PLURAL-TEMPL)
      )
     )
    )

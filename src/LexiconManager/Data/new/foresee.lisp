@@ -2,7 +2,7 @@
 ;;;; W::foresee
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::foresee
    (wordfeats (W::morph (:forms (-vb) :past W::foresaw :pastpart W::foreseen :ing W::foreseeing)))

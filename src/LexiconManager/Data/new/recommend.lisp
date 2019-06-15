@@ -17,7 +17,7 @@
      ;;(lf-parent  ont::propose-recommend-suggest) ;; 20120524 GUM change new parent
      (example "he recommends that you get enough sleep")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-formal-XP-TEMPL (xp (% W::cp (W::ctype (? ctp W::s-finite w::s-that-subjunctive)))))
+     (TEMPL AGENT-FORMAL-XP-CP-TEMPL (xp (% W::cp (W::ctype (? ctp W::s-finite w::s-that-subjunctive)))))
      )
     ;; adding the optional addressee -- otherwise this fails
     ((meta-data :origin calo :entry-date 20040504 :change-date 20090130 :comments html-purchasing-corpus)
@@ -25,7 +25,7 @@
      ;;(lf-parent  ont::propose-recommend-suggest) ;; 20120524 GUM change new parent
      (example "I recommend this computer (to you)")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-THEME-to-addressee-optional-TEMPL)
+     (TEMPL AGENT-FORMAL-AGENT1-OPTIONAL-TEMPL)
      )
     )
    )

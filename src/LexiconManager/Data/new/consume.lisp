@@ -2,7 +2,7 @@
 ;;;; W::consume
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (W::consume
    (wordfeats (W::morph (:forms (-vb) :nom w::consumption)))
@@ -16,7 +16,7 @@
      (LF-PARENT ONT::consume)
      (example "how much bread does he consume")
      (SEM (F::ASPECT F::DYNAMIC))
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

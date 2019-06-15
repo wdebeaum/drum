@@ -22,14 +22,14 @@
 )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 (W::smell
    (SENSES
      ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("stimulus_subject-30.4") :wn ("smell%2:39:00" "smell%2:39:02"))
      (LF-PARENT ONT::appears-to-have-property)
      (example "it smells like trouble")
-     (TEMPL neutral-theme-complex-subjcontrol-templ) ; like look
+     (TEMPL NEUTRAL-FORMAL-SUBJCONTROL-TEMPL) ; like look
      (PREFERENCE 0.96)
      )
     ((meta-data :origin calo :entry-date 20031230 :change-date nil :comments html-purchasing-corpus)
@@ -41,7 +41,7 @@
      (LF-PARENT ONT::active-perception)
      ;;(SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
      (example "he smelled the cake bake")
-     (TEMPL experiencer-action-objcontrol-templ (xp (% W::VP (W::vform (? vf2 W::base w::ing)))))
+     (TEMPL EXPERIENCER-NEUTRAL-FORMAL-CP-OBJCONTROL-A-TEMPL (xp (% W::VP (W::vform (? vf2 W::base w::ing)))))
      )
     )
    )

@@ -2,7 +2,7 @@
 ;;;; w::lean
 ;;;; 
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::lean
    (SENSES
@@ -16,7 +16,7 @@
      )
     ((EXAMPLE "lean the box against the desk" )
      (lf-parent ont::place-in-position) ;; 20120523 GUM change new parent
-      (TEMPL AGENT-AFFECTED-goal-TEMPL)
+      (TEMPL AGENT-AFFECTED-RESULT-ADVBL-OBJCONTROL-TEMPL)
      )
 
     )

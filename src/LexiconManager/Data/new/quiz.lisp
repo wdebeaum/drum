@@ -21,7 +21,7 @@
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("investigate-35.4") :wn ("quiz%2:32:00"))
      (LF-PARENT ONT::questioning)
-     (TEMPL  AGENT-ADDRESSEE-TEMPL)
+     (TEMPL AGENT-AGENT1-NP-TEMPL)
      )
     )
    )

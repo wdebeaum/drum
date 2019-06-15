@@ -9,7 +9,7 @@
     ((meta-data :origin cardiac :entry-date 200904221219)
      (LF-PARENT ONT::avoiding)
      (example "he refrained from jogging")
-     (templ agent-action-subjcontrol-templ (xp (% W::VP (W::vform W::ing))))
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% W::VP (W::vform W::ing))))
      )
     ((meta-data :origin cardiac :entry-date 200904221219)
      (LF-PARENT ONT::avoiding)

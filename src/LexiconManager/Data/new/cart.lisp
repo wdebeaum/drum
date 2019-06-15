@@ -16,14 +16,14 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::cart (W::off))
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("drive-11.5-1"))
      (LF-PARENT ONT::transport)
-     (TEMPL agent-affected-xp-templ) ; like shuttle
-;     (PREFERENCE 0.96)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) ; like shuttle
+     ;(PREFERENCE 0.96)
      )
     
    )

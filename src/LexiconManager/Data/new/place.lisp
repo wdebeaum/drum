@@ -14,7 +14,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::PLACE
@@ -27,7 +27,7 @@
     ((LF-PARENT ONT::put)
      (meta-data :origin plow :entry-date 20050318 :change-date nil :comments nil)
      (example "place the book on the table")
-     (TEMPL AGENT-AFFECTED-GOAL-TEMPL)
+     (TEMPL AGENT-AFFECTED-RESULT-ADVBL-OBJCONTROL-TEMPL)
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      )
     )

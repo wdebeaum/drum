@@ -2,7 +2,7 @@
 ;;;; W::insure
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::insure
    (SENSES
@@ -11,7 +11,7 @@
      (LF-PARENT ONT::ensure)
      (SEM (F::Time-span F::extended))
      (example "his armor insured his safety")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

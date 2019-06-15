@@ -18,27 +18,27 @@
    )
 ))
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::speed (w::up))
    (wordfeats (W::morph (:forms (-vb) :past W::sped :nom (w::speed w::up))))
    (SENSES
     ((meta-data :origin coordops :entry-date 20070514 :change-date 20090504 :comments nil)
-;     (LF-PARENT ONT::increase)
+     ;(LF-PARENT ONT::increase)
      (LF-PARENT ONT::increase-speed)
      (TEMPL agent-templ)
      (example "speed up")
      )
     ((meta-data :origin calo :entry-date 20070514 :change-date 20090504 :comments nil)
      (LF-PARENT ONT::increase-speed)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "speed up the process")
      )
     )
    )
 ))
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::speed
    (wordfeats (W::morph (:forms (-vb) :past W::sped)))

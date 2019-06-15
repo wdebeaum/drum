@@ -2,7 +2,7 @@
 ;;;; w::originate
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    (w::originate
     (wordfeats (W::morph (:forms (-vb) :nom w::origination)))
@@ -19,7 +19,7 @@
       (META-DATA :ORIGIN calo-ontology :ENTRY-DATE 20060426 :CHANGE-DATE NIL
 		 :COMMENTS nil)
       (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-      (templ agent-affected-xp-templ)
+      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
       )
     
     )

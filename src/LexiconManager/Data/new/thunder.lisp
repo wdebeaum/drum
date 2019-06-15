@@ -13,7 +13,7 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::thunder
    (wordfeats (W::morph (:forms (-vb) :past W::thundered :ing W::thundering)))

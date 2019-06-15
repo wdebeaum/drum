@@ -65,7 +65,7 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::fire
@@ -77,7 +77,7 @@
      )
     ((LF-PARENT ONT::explode) ;; like ignite
      (example "the spark plug fires the engine")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin step :entry-date 20080922 :change-date 20090504 :comments nil)	
      )
     ((LF-PARENT ONT::terminate)

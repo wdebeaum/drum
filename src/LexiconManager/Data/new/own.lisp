@@ -10,7 +10,7 @@
    (SENSES
     ((EXAMPLE "he owns a truck")
      (LF-PARENT ONT::possess)
-     (TEMPL neutral-neutral-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
      )
     )

@@ -2,7 +2,7 @@
 ;;;; W::clog
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::clog
    (SENSES
@@ -17,13 +17,13 @@
      (SYNTAX (w::resultative +))
      (preference .95) ;; prefer intransitive
      (examples "rich food clogs his arteries")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )
 ))
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::clog (w::up))
    (SENSES
@@ -38,7 +38,7 @@
      (SYNTAX (w::resultative +))
      (preference .95) ;; prefer intransitive
      (examples "rich food clogs up his arteries")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

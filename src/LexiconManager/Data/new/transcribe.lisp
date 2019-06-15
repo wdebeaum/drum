@@ -17,7 +17,7 @@
       (LF-PARENT ONT::GENE-TRANSCRIPTION) 
       (example "the gene transcribes the mRNA")
       (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-      (TEMPL agent-affected-create-templ)
+      (TEMPL AGENT-AFFECTEDR-XP-TEMPL)
       )
 
      ((meta-data :origin BOB :entry-date 20141212 :change-date nil :comments nil)

@@ -23,7 +23,7 @@
     ((lf-parent ont::arranging)
      (example "alternate the color of the blocks")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL agent-affected-xp-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      
     )
    )

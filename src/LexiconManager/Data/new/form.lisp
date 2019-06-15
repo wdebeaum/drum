@@ -19,7 +19,7 @@
    ))
 ))
 
-(define-words :pos W::v :templ agent-affected-create-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTEDR-XP-TEMPL
  :tags (:base500)
  :words (
   (W::form

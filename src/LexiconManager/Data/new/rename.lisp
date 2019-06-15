@@ -2,7 +2,7 @@
 ;;;; W::RENAME
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::RENAME
    (SENSES
@@ -10,7 +10,7 @@
      (meta-data :origin task-learning :entry-date 20050817 :change-date 20090501 :comments nil)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (example "rename a mailbox")
-     (TEMPL agent-neutral-name-optional-templ)
+     (TEMPL AGENT-NEUTRAL-FORMAL-2-XP-3-XP2-NP-OPTIONAL-TEMPL)
      )
      ;; need this definition to allow v-passive-by rule to apply; comp arg must be -
     ((LF-PARENT ONT::naming)

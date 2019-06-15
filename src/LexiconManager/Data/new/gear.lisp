@@ -14,13 +14,13 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::GEAR
    (SENSES
     ((EXAMPLE "this projector is specifically geared for home theater")
      (LF-PARENT ONT::ACCOMMODATE)
-     (TEMPL agent-affected-xp-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin calo :entry-date 20050527 :change-date nil :comments projector-purchasing)
      )
     ))

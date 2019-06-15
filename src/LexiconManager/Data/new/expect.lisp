@@ -2,7 +2,7 @@
 ;;;; W::expect
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::expect
    (wordfeats (W::morph (:forms (-vb) :nom w::expectation)))
@@ -14,12 +14,12 @@
     ((LF-PARENT ONT::expectation)
      (example "he expects to have a degree next year")
      (meta-data :origin calo :entry-date 20040907 :change-date nil :comments caloy2 :vn ("wish-62") :wn ("expect%2:31:00"))
-     (TEMPL experiencer-action-SUBJCONTROL-TEMPL)
+     (TEMPL EXPERIENCER-FORMAL-SUBJCONTROL-TEMPL)
      )
     ((LF-PARENT ONT::EXPECTATION)
      (example "she expects him to have a degree next year")
      (meta-data :origin calo :entry-date 20040907 :change-date nil :comments caloy2 :vn ("wish-62")  :wn ("expect%2:31:00"))
-     (TEMPL experiencer-ACTION-OBJCONTROL-TEMPL)
+     (TEMPL EXPERIENCER-NEUTRAL-FORMAL-CP-OBJCONTROL-A-TEMPL)
      )
     ((meta-data :origin calo-ontology :entry-date 20060315 :change-date nil :comments nil  :wn ("expect%2:31:00"))
      (LF-PARENT ONT::expectation)
@@ -39,7 +39,7 @@
 	    ((EXAMPLE "It is expected (that)...")
 	     (LF-PARENT ONT::expectation)
 	     ;(TEMPL EXPLETIVE-FORMAL-TEMPL (xp1 (% W::NP (W::lex W::it))) )
-	     (TEMPL EXPLETIVE-FORMAL-TEMPL )
+	     (TEMPL EXPLETIVE-FORMAL-1-XP1-2-XP2-TEMPL )
 	     )
 	    )
 	   ))

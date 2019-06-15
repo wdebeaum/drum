@@ -2,7 +2,7 @@
 ;;;; W::consult
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::consult
    (wordfeats (W::morph (:forms (-vb) :nom w::consultation)))
@@ -17,7 +17,7 @@
     ((LF-PARENT ONT::interview)
      (example "consult the boss" "he was consulted")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-addressee-templ)
+     (TEMPL AGENT-AGENT1-NP-TEMPL)
      )
     ;; consult the manual
     )

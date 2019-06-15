@@ -2,7 +2,7 @@
 ;;;; w::simulate
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    (w::simulate
     (wordfeats (W::morph (:forms (-vb) :nom w::simulation)))

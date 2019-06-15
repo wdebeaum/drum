@@ -17,7 +17,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 ((w::set (w::up))
  (wordfeats (W::morph (:forms (-vb) :past W::set :ing W::setting)))
@@ -25,14 +25,14 @@
   ((lf-parent ont::set-up-device)
    (example "set up the system")
    (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-   (TEMPL agent-theme-xp-templ)
+   (TEMPL AGENT-FORMAL-XP-TEMPL)
    (meta-data :origin calo :entry-date 20041206 :change-date 20090504 :comments caloy2)
    )
   )
  )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::SET
@@ -40,7 +40,7 @@
    (SENSES
     (;(lf-parent ont::change-device-state)
      (lf-parent ont::manipulate)
-     (TEMPL AGENT-affected-RESULT-TEMPL (xp (% w::pp (w::ptype w::to))))
+     (TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL (xp (% w::pp (w::ptype w::to))))
      (Example "Set the knob [to VDC]")
      (meta-data :origin bee :entry-date 20040412 :change-date nil :comments test-s)    
      )    

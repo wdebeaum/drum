@@ -2,7 +2,7 @@
 ;;;; W::^M
 ;;;;
 
-(define-words :pos W::v :boost-word t :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :boost-word t :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::^M
@@ -26,14 +26,14 @@
     ;;;; I^m hungry
     ((LF-PARENT ONT::HAVE-PROPERTY)
      (LF-FORM W::be)
-     (TEMPL neutral-pred-xp-templ)
+     (TEMPL NEUTRAL-FORMAL-PRED-SUBJCONTROL-TEMPL)
      (meta-data :origin trips :entry-date nil :change-date 20073003 :comments csli-revision)
      )
     ;;;; I'm the winner
     (;(;;LF-PARENT ONT::IN-RELATION)
       (lf-parent ont::be) ;; 20120524 GUM change new parent
      (LF-FORM W::be)
-     (TEMPL neutral-neutral-equal-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL)
     
      (meta-data :origin trips :entry-date nil :change-date 20073003 :comments csli-revision)
      )

@@ -14,7 +14,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::estimate
    (SENSES
@@ -23,7 +23,7 @@
     ;;;; estimate oranges. And you cannot estimate a route.
     ((meta-data :origin trips :entry-date 20060414 :change-date 20090522 :comments nil :vn ("price-54.4") :wn ("estimate%2:31:00"))
      (LF-PARENT ONT::becoming-aware-of-value)
-     (templ agent-theme-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      (example "estimate the number of oranges")
      )
     )

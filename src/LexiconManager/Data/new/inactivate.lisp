@@ -2,7 +2,7 @@
 ;;;; W::inactivate
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    (W::inactivate
      (wordfeats (W::morph (:forms (-vb) :nom w::inactivation)))
@@ -16,7 +16,7 @@
       |#
       (
        (LF-PARENT ont::stop)
-      (templ agent-affected-xp-templ)
+      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
       (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::time-span F::atomic))
       )
     )

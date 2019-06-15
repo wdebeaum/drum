@@ -2,7 +2,7 @@
 ;;;; W::pertain
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    (W::pertain
    (SENSES
@@ -10,7 +10,7 @@
      (EXAMPLE "this pertains to that")
      (LF-PARENT ONT::RELATE)
      ;(SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL neutral-neutral-templ (xp (% W::pp (W::ptype W::to))))
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL (xp (% W::pp (W::ptype W::to))))
      )
     )
    )

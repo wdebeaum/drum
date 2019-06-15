@@ -2,7 +2,7 @@
 ;;;; W::relate
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::relate
    (wordfeats (W::morph (:forms (-vb))))
@@ -10,7 +10,7 @@
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("say-37.7") :wn ("relate%2:32:00"))
      ;;(LF-PARENT ONT::talk)
      (lf-parent ont::extended-say)
-     (TEMPL agent-affected-iobj-theme-templ) ; like say
+     (TEMPL AGENT-FORMAL-AFFECTED-TEMPL) ; like say
      (PREFERENCE 0.96)
      )
 #|
@@ -25,7 +25,7 @@
     ((meta-data :origin calo :entry-date 20031230 :change-date nil :comments html-purchasing-corpus)
      (EXAMPLE "It relates to that")
      (LF-PARENT ONT::RELATE)
-     (TEMPL neutral-neutral-xp-templ (xp (% W::pp (W::ptype W::to))))
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL (xp (% W::pp (W::ptype W::to))))
      )
     )
    )

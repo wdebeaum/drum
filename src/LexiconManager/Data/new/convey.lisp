@@ -2,7 +2,7 @@
 ;;;; W::convey
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::convey
    (wordfeats (W::morph (:forms (-vb))))
@@ -15,7 +15,7 @@
     
    ((LF-PARENT ONT::REPEAT)
     (example "please convey my greetings to him")
-     (TEMPL agent-affected-iobj-theme-templ)
+     (TEMPL AGENT-FORMAL-AFFECTED-TEMPL)
      (meta-data :origin calo-ontology :entry-date 20051209 :change-date 20090506 :comments Convey)
      )
     )

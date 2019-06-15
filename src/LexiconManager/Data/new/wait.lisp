@@ -15,7 +15,7 @@
      )
     ((lf-parent ont::wait-watch)
      (example "He is waiting for the boat to arrive")
-     (TEMPL agent-action-templ)
+     (TEMPL AGENT-FORMAL-FOR-TO-SUBJCONTROL-TEMPL)
      )
 
     ((lf-parent ont::wait-watch)

@@ -20,7 +20,7 @@
 	    ))
 ))
 
-(define-words :pos W::v :templ AGENT-theme-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::exercise
    (SENSES
@@ -36,7 +36,7 @@
     ((LF-PARENT ONT::WORKING-OUT)
      (example "You need to exercise your muscles every day")
      (meta-data :origin chf :entry-date 20070809 :change-date nil :comments chf-dialogues)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

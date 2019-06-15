@@ -39,7 +39,7 @@
      (meta-data :origin trips :entry-date 20090910 :change-date nil :comments nil :vn ("register-54.1"))
      )
     ((LF-PARENT ONT::register)
-     (TEMPL agent-neutral-theme-templ)
+     (TEMPL AGENT-NEUTRAL-FORMAL-2-XP1-3-XP2-TEMPL)
      (example "He clocked the runners at different speeds")
      (meta-data :origin trips :entry-date 20090910 :change-date nil :comments nil :vn ("register-54.1"))
      )

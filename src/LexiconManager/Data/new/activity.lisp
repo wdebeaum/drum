@@ -33,7 +33,7 @@
      (wordfeats (W::morph (:forms (-vb) :nom W::activity :nomsubjpreps (w::of w::by) :nomobjpreps (w::on))))
      (SENSES
       ((LF-PARENT ONT::ACTIVITY-EVENT)  
-       (TEMPL agent-affected-xp-templ)
+       (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
 	)
       ((LF-PARENT ONT::ACTIVITY-EVENT)  
         (TEMPL agent-templ)

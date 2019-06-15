@@ -31,7 +31,7 @@
     ((EXAMPLE "does that interest you")
      (LF-PARENT ONT::evoke-attention)
      (meta-data :origin calo :entry-date 20041122 :change-date 20090512 :comments caloy2)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

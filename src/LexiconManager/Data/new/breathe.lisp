@@ -2,7 +2,7 @@
 ;;;; W::breathe
 ;;;;
 
-(define-words :pos W::v :templ affected-affected-templ
+(define-words :pos W::v :TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL
  :words (
   (W::breathe
    (wordfeats (W::morph (:forms (-vb) :nom w::breath)))
@@ -18,7 +18,7 @@
    )
 ))
 
-(define-words :pos W::v :templ affected-affected-templ
+(define-words :pos W::v :TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL
  :words (
   ((W::breathe (w::in))
    (SENSES
@@ -33,7 +33,7 @@
    )
 ))
 
-(define-words :pos W::v :templ affected-affected-templ
+(define-words :pos W::v :TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL
  :words (
     ((W::breathe (w::out))
    (SENSES

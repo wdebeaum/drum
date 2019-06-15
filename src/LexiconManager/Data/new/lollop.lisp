@@ -2,7 +2,7 @@
 ;;;; W::lollop
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::lollop
    (wordfeats (W::morph (:forms (-vb) :past W::lolloped :ing W::lolloping)))

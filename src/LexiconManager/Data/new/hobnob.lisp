@@ -9,7 +9,7 @@
     
     ((LF-PARENT ONT::social-activity)
      (example "he hobnobs with them regularly")
-     (TEMPL AGENT-with-co-agent-optional-TEMPL)
+     (TEMPL AGENT-AGENT1-XP-PP-OPTIONAL-TEMPL)
      )
    ))
 ))

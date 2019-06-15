@@ -19,7 +19,7 @@
 ))
 
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::shade
    (SENSES
@@ -27,7 +27,7 @@
      (LF-PARENT ONT::protecting)
      (SEM (F::Time-span F::extended))
      (example "the tree shaded the courtyard")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
       )
     )
    )

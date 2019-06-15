@@ -9,7 +9,7 @@
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090522 :comments nil :vn ("price-54.4") :wn ("assess%2:31:00" "assess%2:40:00"))
      (LF-PARENT ONT::becoming-aware-of-value)
-     (TEMPL agent-theme-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      (PREFERENCE 0.96)
      )
     ((LF-PARENT ONT::scrutiny)

@@ -15,12 +15,12 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::grant
    (SENSES
     ((lf-parent ont::giving)
-     (templ agent-affected-recipient-alternation-templ)
+     (TEMPL AGENT-AFFECTED-TEMPL)
      (example "grant everyone access in the class")
      (meta-data :origin task-learning :entry-date 20050823 :change-date nil :comments nil)
      )

@@ -2,13 +2,13 @@
 ;;;; w::utter
 ;;;; 
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
  (W::utter
    (SENSES
       ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090505 :comments nil :vn ("say-37.7"))
      (LF-PARENT ONT::say)
-     (TEMPL agent-theme-xp-templ (xp (% w::cp (w::ctype w::s-that)))) ; like disclose
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% w::cp (w::ctype w::s-that)))) ; like disclose
      (PREFERENCE 0.98)
      )
     )

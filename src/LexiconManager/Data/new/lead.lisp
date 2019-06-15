@@ -15,7 +15,7 @@
 )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::lead
@@ -24,18 +24,18 @@
     ((meta-data :origin step :entry-date 20080724 :change-date nil :comments nil :vn ("59-force"))
      (LF-PARENT ont::cause-effect)
      (example "it has led him to find a solution")
-     (templ agent-effect-affected-objcontrol-templ)
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL)
      )
     ((meta-data :origin step :entry-date 20080724 :change-date nil :comments nil :vn ("59-force"))
      (LF-PARENT ont::cause-effect)
      (example "it led to disaster")
      ;(templ agent-effect-xp-templ (xp (% w::PP (w::ptype w::to))))
-     (TEMPL agent-affected-xp-templ (xp (% w::PP (w::ptype w::to))))
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL (xp (% w::PP (w::ptype w::to))))
      )
     ((meta-data :origin coordops :entry-date 20070511 :change-date nil :comments nil :vn ("judgement-33"))
      (LF-PARENT ont::guiding)
      (example "team alpha will lead the activity")
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     ((meta-data :origin coordops :entry-date 20070511 :change-date nil :comments nil :vn ("judgement-33"))
      (LF-PARENT ont::guiding)
@@ -45,7 +45,7 @@
 
     ((LF-PARENT ont::be-ahead)
      (example "she led her class every year")
-     (TEMPL neutral-neutral-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      )
 
     ((LF-PARENT ont::be-ahead)

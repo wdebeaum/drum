@@ -2,7 +2,7 @@
 ;;;; W::buy
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::buy
    (wordfeats (W::morph (:forms (-vb) :past W::bought :ing W::buying)))
@@ -18,7 +18,7 @@
     ((lf-parent ont::purchase)
      (example "buy the book from amazon dot com")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic) (F::trajectory -))
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

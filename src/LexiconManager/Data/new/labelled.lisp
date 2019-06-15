@@ -2,7 +2,7 @@
 ;;;; W::labelled
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ;; capture alternate spelling
   (W::labelled
@@ -12,7 +12,7 @@
      (meta-data :origin plow :entry-date 20050329 :change-date 20090501 :comments nil)
      (LF-PARENT ONT::naming)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL agent-neutral-name-templ)
+     (TEMPL AGENT-NEUTRAL-FORMAL-2-XP-3-XP2-NP-TEMPL)
      )
     )
    )

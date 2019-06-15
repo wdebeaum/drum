@@ -15,7 +15,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::mark
@@ -24,7 +24,7 @@
     ((EXAMPLE "Mark those points red")
      (LF-PARENT ONT::classify)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL agent-neutral-theme-templ)
+     (TEMPL AGENT-NEUTRAL-FORMAL-2-XP1-3-XP2-TEMPL)
      (preference .97) ;; prefer the highlight sense
      )
     ((EXAMPLE "Mark the search criteria")
@@ -38,7 +38,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::mark (W::off))
    (SENSES

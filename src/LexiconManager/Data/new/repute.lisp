@@ -2,7 +2,7 @@
 ;;;; W::repute
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::repute
    (SENSES
@@ -22,7 +22,7 @@
 	   (SENSES
 	    ((EXAMPLE "It is reputed (that)...")
 	     (LF-PARENT ONT::expectation)
-	     (TEMPL EXPLETIVE-FORMAL-TEMPL )
+	     (TEMPL EXPLETIVE-FORMAL-1-XP1-2-XP2-TEMPL )
 	     )
 	    )
 	   ))

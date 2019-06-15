@@ -2,7 +2,7 @@
 ;;;; W::blister
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::blister
    (wordfeats (W::morph (:forms (-vb) :past W::blistered :ing W::blistering)))
@@ -11,7 +11,7 @@
      (LF-PARENT ONT::swell)
      (example "The sun blistered my feet")
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended) (F::scale ont::size-scale))
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
  ; like ferment
      )
    ((meta-data :origin step :entry-date 20080623 :change-date 20090504 :comments nil)

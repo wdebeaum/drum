@@ -9,7 +9,7 @@
    (SENSES
     (
      (LF-PARENT ONT::ATTRACT)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

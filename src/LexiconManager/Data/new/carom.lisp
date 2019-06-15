@@ -2,7 +2,7 @@
 ;;;; W::carom
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::carom
    (wordfeats (W::morph (:forms (-vb) :past W::caromed :ing W::caroming)))

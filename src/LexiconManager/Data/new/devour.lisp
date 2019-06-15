@@ -2,7 +2,7 @@
 ;;;; W::devour
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 (W::devour
    (SENSES
@@ -10,7 +10,7 @@
      (LF-PARENT ONT::consume)
      (example "he devoured it")
      (SEM (F::ASPECT F::DYNAMIC))
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

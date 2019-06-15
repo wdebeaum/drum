@@ -2,7 +2,7 @@
 ;;;; W::peruse
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::peruse
    (wordfeats (W::morph (:forms (-vb) :nom w::perusal)))

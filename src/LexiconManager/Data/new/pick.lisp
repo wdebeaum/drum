@@ -2,7 +2,7 @@
 ;;;; W::pick
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 ((W::pick (w::out))
  (SENSES
@@ -15,7 +15,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::pick
    (SENSES
@@ -29,14 +29,14 @@
      (LF-PARENT ONT::SELECT)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (EXAMPLE "pick red")
-     (templ agent-theme-pred-templ)
+     (TEMPL AGENT-FORMAL-TEMPL)
      ;(preference .95)
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::pick (W::up))
    (SENSES

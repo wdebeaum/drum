@@ -2,7 +2,7 @@
 ;;;; W::pack
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::pack
    (SENSES
@@ -16,13 +16,13 @@
      (LF-PARENT ONT::Fill-container)
      (example "pack the truck with oranges")
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-GOAL-affected-TEMPL (xp (% W::PP (W::ptype (? t W::with)))))
+     (TEMPL AGENT-AFFECTEDR-AFFECTED-XP-PP-WITH-2-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? t W::with)))))
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::pack (W::up))
    (SENSES
@@ -34,7 +34,7 @@
     ;;;; swier -- pack up the truck with oranges
     ((LF-PARENT ONT::Fill-container)
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-GOAL-affected-TEMPL (xp (% W::PP (W::ptype (? t W::with)))))
+     (TEMPL AGENT-AFFECTEDR-AFFECTED-XP-PP-WITH-2-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? t W::with)))))
      )
     )
    )

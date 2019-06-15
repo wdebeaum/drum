@@ -2,14 +2,14 @@
 ;;;; W::destroy
 ;;;;
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
  (W::destroy
    (wordfeats (W::morph (:forms (-vb) :nom w::destruction)))
    (SENSES
     ((meta-data :origin step :entry-date 20080705 :change-date nil :comments nil)
      (LF-PARENT ONT::destroy)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "overwatering destroyed the plants")
      )
     )

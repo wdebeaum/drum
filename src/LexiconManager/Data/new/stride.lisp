@@ -2,7 +2,7 @@
 ;;;; W::stride
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::stride
    (wordfeats (W::morph (:forms (-vb) :past W::strode :pastpart W::stridden :ing W::striding)))

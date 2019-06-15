@@ -13,7 +13,7 @@
 )
 ))
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::shoot
    (wordfeats (W::morph (:forms (-vb) :ing W::shooting :past W::shot)))
@@ -25,7 +25,7 @@
      (example "the truck shot over to beahan")
      )
     ((LF-PARENT ONT::evoke-injury)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

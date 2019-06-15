@@ -2,7 +2,7 @@
 ;;;; W::bussed
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::bussed
    (wordfeats (W::morph (:forms NIL)) (W::vform (? vf W::past)))

@@ -15,14 +15,14 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::picture
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("characterize-29.2"))
      (LF-PARENT ONT::encodes-message)
-     (TEMPL neutral-neutral-as-theme-templ) ; like interpret,classify
+     (TEMPL NEUTRAL-NEUTRAL1-FORMAL-2-XP-3-XP2-PP-TEMPL) ; like interpret,classify
      )
     )
    )

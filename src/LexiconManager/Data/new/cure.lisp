@@ -15,7 +15,7 @@
 )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::cure
    (SENSES
@@ -24,7 +24,7 @@
      )
     ((EXAMPLE "The doctor cured me of arthritis")
      (LF-PARENT ONT::CURE)
-     (TEMPL agent-affected-theme-optional-templ (xp (% w::pp (w::ptype w::of))))
+     (TEMPL AGENT-AFFECTED-FORMAL-XP-OPTIONAL-A-TEMPL (xp (% w::pp (w::ptype w::of))))
      )
     )
    )

@@ -2,7 +2,7 @@
 ;;;; W::cant
 ;;;;
 
-(define-words :pos W::v :boost-word t :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :boost-word t :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 ;; negated auxiliaries with no apostrophe -- added for asma texting 2012/01/30
  (W::cant

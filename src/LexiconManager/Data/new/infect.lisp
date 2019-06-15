@@ -11,7 +11,7 @@
      (meta-data :origin beetle :entry-date 20081107 :change-date nil :comments nil)
      (LF-PARENT ont::objective-influence)
      (EXAMPLE "it infected him")
-     (TEMPL agent-affected-xp-templ) 
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) 
      )
     )
    )

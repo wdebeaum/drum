@@ -2,7 +2,7 @@
 ;;;; W::enameled
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::enameled
    (wordfeats (W::morph (:forms NIL)) (W::vform (? vf W::past w::pastpart)))
@@ -13,7 +13,7 @@
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("coloring-24"))
      (LF-PARENT ont::coloring)
-     (TEMPL agent-affected-result-optional-templ (xp (% w::adjp (w::set-modifier -)))) ; like color,paint
+     (TEMPL AGENT-AFFECTED-RESULT-XP-PP-INTO-OPTIONAL-TEMPL (xp (% w::adjp (w::set-modifier -)))) ; like color,paint
      )
     )
    )

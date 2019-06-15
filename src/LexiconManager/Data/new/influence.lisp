@@ -11,7 +11,7 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (meta-data :origin calo-ontology :entry-date 20051213 :change-date 20081107 :comments nil)
      (LF-PARENT ONT::objective-influence)
-     (TEMPL agent-affected-xp-templ) 
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) 
      )
     )
    )

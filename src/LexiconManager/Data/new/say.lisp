@@ -2,7 +2,7 @@
 ;;;; W::say
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::say
@@ -12,58 +12,58 @@
     ((LF-PARENT ONT::SAY)
      (example "He said (to me) that three teams are going to Delta")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-affected-xp-optional-formal-TEMPL (xp (% W::PP (w::ptype (? ptp w::to)))))
+     (TEMPL AGENT-AFFECTED-FORMAL-2-XP-OPTIONAL-TEMPL (xp (% W::PP (w::ptype (? ptp w::to)))))
      )
     
     ((LF-PARENT ONT::SAY)
      (example "he said go over there")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-THEME-XP-TEMPL (xp (% w::utt)))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% w::utt)))
      )
    
     ((LF-PARENT  ONT::say)
      (example "say it to him")
-     (TEMPL AGENT-neutral-to-addressee-optional-TEMPL)
+     (TEMPL AGENT-NEUTRAL-AGENT1-OPTIONAL-TEMPL)
      )
 
     (
      (LF-PARENT ONT::ASSERT)
      (example "Scientists say wooly mammoths are extinct.")
-     (TEMPL agent-formal-xp-templ) 
+     (TEMPL AGENT-FORMAL-XP-CP-TEMPL) 
      )
 
     (
      (LF-PARENT ONT::encodes-message)
      (example "The book says that it is blue.")
-     (TEMPL neutral-formal-as-comp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL NEUTRAL-FORMAL-XP-NP-1-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      )
 
     (
      (LF-PARENT ONT::encodes-message)
      (example "The book says three years.")
-     (TEMPL neutral-neutral-xp-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      )
 
 
     ((lf-parent ont::encodes-message)
      (Example "The book says to bake the potato.")
-     (TEMPL neutral-theme-subjcontrol-templ)
+     (TEMPL NEUTRAL-FORMAL-CP-SUBJCONTROL-TEMPL)
      )
 
     ((lf-parent ont::locution)
      (example "Say this word to me.")
-     (TEMPL AGENT-neutral-to-addressee-optional-TEMPL)
+     (TEMPL AGENT-NEUTRAL-AGENT1-OPTIONAL-TEMPL)
     )
 
     ((lf-parent ont::command)
      (Example "I said to forget the whole thing.")
-     (TEMPL agent-effect-subjcontrol-templ (xp (% W::cp (W::ctype W::s-to))))
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
      )
 
     ((LF-PARENT ONT::SUGGEST)
      (example "I say we forgot the whole thing.")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-formal-XP-TEMPL (xp (% W::cp (W::ctype (? ctp W::s-finite w::s-that-subjunctive)))))
+     (TEMPL AGENT-FORMAL-XP-CP-TEMPL (xp (% W::cp (W::ctype (? ctp W::s-finite w::s-that-subjunctive)))))
      )
 
 

@@ -13,13 +13,13 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::email
    (SENSES
     ((LF-PARENT ONT::SEND)
      (example "email the image to him" "email him the message")
-     (templ agent-affected-recipient-alternation-templ)
+     (TEMPL AGENT-AFFECTED-TEMPL)
      (SEM (F::aspect F::bounded) (F::time-span F::atomic))
      (meta-data :origin task-learning :entry-date 20050919 :change-date nil :comments nil)
      )

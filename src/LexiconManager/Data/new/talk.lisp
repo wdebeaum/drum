@@ -16,7 +16,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::talk
@@ -30,13 +30,13 @@
     (;;(LF-PARENT ONT::TALK)
      (LF-PARENT  ONT::talk)
      (example "he talked with her [about it]")
-     (TEMPL AGENT-ADDRESSEE-THEME-OPTIONAL-TEMPL 
+     (TEMPL AGENT-AGENT1-FORMAL-2-XP1-3-XP-OPTIONAL-TEMPL 
 	    (xp1 (% w::pp (w::ptype (? ptp w::to w::with)))))
      )
     (;;(LF-PARENT ONT::TALK)
      (LF-PARENT  ONT::talk)
      (example "he talked about it [to/with her]")
-     (TEMPL AGENT-ABOUT-THEME-ADDRESSEE-OPTIONAL-TEMPL)
+     (TEMPL AGENT-FORMAL-AGENT1-2-XP1-PP-3-XP2-PP-WITH-OPTIONAL-TEMPL)
      )
     ))
 ))

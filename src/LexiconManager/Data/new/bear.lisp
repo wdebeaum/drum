@@ -12,7 +12,7 @@
 )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 	 (W::bear
 	  (SENSES
@@ -25,7 +25,7 @@
 	  )
 ))
 
-(define-words :pos W::v :templ agent-affected-create-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTEDR-XP-TEMPL
  :words (
 	 (W::bear
 	  (wordfeats (W::morph (:forms (-vb) :past w::bore :pastpart w::born :nom w::birth)))

@@ -2,7 +2,7 @@
 ;;;; W::evaluate
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::evaluate
    (wordfeats (W::morph (:forms (-vb) :nom W::evaluation)))

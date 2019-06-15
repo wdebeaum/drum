@@ -21,7 +21,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::account
    (wordfeats (W::morph (:forms (-vb) :nom w::account)))
@@ -29,7 +29,7 @@
     ((meta-data :origin monroe :entry-date 20031219 :change-date 20090508 :comments s15)
      (LF-PARENT ONT::explain)
      (example "account for the problem")
-     (templ agent-theme-xp-templ (xp (% W::pp (W::ptype W::for))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::pp (W::ptype W::for))))
      )
     )
    )

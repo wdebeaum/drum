@@ -2,7 +2,7 @@
 ;;;; W::guard
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::guard
    (SENSES
@@ -10,7 +10,7 @@
      (LF-PARENT ONT::protecting)
      (SEM (F::Time-span F::extended))
      (example "the fence guarded the compound")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (preference .98) ;; prefer agentive
      )
     )

@@ -58,16 +58,16 @@
      (LF-PARENT ONT::select)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (meta-data :origin task-learning :entry-date 20050826 :change-date nil :comments nil)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     ((meta-data :origin plow :entry-date 20060531 :change-date nil :comments nil)
      (LF-PARENT ONT::SELECT)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (EXAMPLE "check red")
-     (templ agent-theme-pred-templ)
+     (TEMPL AGENT-FORMAL-TEMPL)
      )
     ((LF-PARENT ONT::determine)
-     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      (example "check whether/if/that it's a book order")
      (meta-data :origin plow :entry-date 20050909 :change-date nil :comments nil)
      )
@@ -84,13 +84,13 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "let me show you how to check in a patient")
      (meta-data :origin plot :entry-date 20081207 :change-date nil :comments nil)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     ((LF-PARENT ONT::enroll)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "when can I check in (at the hotel)")
      (meta-data :origin calo-ontology :entry-date 20060117 :change-date nil :comments caloy3)
-     (templ agent-goal-xp-templ (xp (% W::PP (W::ptype (? t W::to W::at)))))
+     (TEMPL AGENT-RESULT-XP-NP-TEMPL (xp (% W::PP (W::ptype (? t W::to W::at)))))
      (preference .98)
      )
     ((LF-PARENT ONT::enroll)
@@ -113,7 +113,7 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "let me show you how to check out a patient")
      (meta-data :origin plot :entry-date 20081207 :change-date nil :comments nil)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
    
     ((LF-PARENT ONT::enroll)
@@ -127,7 +127,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::check (W::out))
    (SENSES

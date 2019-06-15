@@ -2,7 +2,7 @@
 ;;;; W::simper
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::simper
    (wordfeats (W::morph (:forms (-vb) :past W::simpered :ing W::simpering)))

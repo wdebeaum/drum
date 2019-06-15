@@ -23,7 +23,7 @@
      (lf-parent ont::capture)
      (example "he caught the ball")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic) (F::trajectory -))
-     (TEMPL agent-affected-source-optional-templ (xp (% W::PP (W::ptype (? pt W::from)))))
+     (TEMPL AGENT-AFFECTED-SOURCE-XP-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? pt W::from)))))
      )
    )
 )

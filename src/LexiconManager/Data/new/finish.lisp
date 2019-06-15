@@ -2,14 +2,14 @@
 ;;;; W::finish
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::finish
    (SENSES
     ;;;; swier -- Finish the plan
     ((LF-PARENT ONT::complete)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     ;;;; they finished
     ((LF-PARENT ONT::COMPLETE)
@@ -19,13 +19,13 @@
     ;;;; Finish doing the action
     ((LF-PARENT ONT::COMPLETE)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-THEME-XP-TEMPL (xp (% W::VP (W::vform W::ing))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::VP (W::vform W::ing))))
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::finish (W::up))
    (SENSES
@@ -41,7 +41,7 @@
     ;;;; Finish doing the action
     ((LF-PARENT ONT::COMPLETE)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-THEME-XP-TEMPL (xp (% W::VP (W::vform W::ing))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::VP (W::vform W::ing))))
      )
     )
    )

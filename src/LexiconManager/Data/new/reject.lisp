@@ -2,7 +2,7 @@
 ;;;; W::reject
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::reject
    (SENSES
@@ -16,14 +16,14 @@
      (LF-PARENT ONT::REFUTE)
      (example "The result rejected that the gene activates the protein")
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL neutral-formal-as-comp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL NEUTRAL-FORMAL-XP-NP-1-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      )
 
     (
      (LF-PARENT ONT::REFUTE)
      (example "The result rejected the hypothesis")
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL neutral-neutral-xp-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      )
 
     )

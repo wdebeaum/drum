@@ -2,7 +2,7 @@
 ;;;; W::run
 ;;;;
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::run
@@ -31,10 +31,10 @@
      )
     
     (;;(LF-PARENT ONT::managing)
-     ; (lf-parent  ont::manage) ;; 20120521 GUM change new parent 
+      ;(lf-parent  ont::manage) ;; 20120521 GUM change new parent 
      (lf-parent  ont::governing)
      (example "the piston runs the drive shaft")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin LbR :entry-date 20080922 :change-date nil :comments nil)
      (SEM (F::Aspect F::dynamic) (F::Time-span F::extended))
      )

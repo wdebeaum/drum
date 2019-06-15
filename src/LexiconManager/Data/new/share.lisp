@@ -8,11 +8,11 @@
 	   (senses
 	    ((lf-parent ont::share)
 	     ;;  they shared the cake [with john]
-	     (templ agent-affected-co-agent-optional-templ)
+	     (TEMPL AGENT-AFFECTED-AGENT1-XP-OPTIONAL-TEMPL)
 	     )
 	    ((lf-parent ont::share-property)
 	     ;;  they shared the cake [with john]
-	     (templ neutral-neutral-templ)
+	     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
 	     )
 	    ))
 ))

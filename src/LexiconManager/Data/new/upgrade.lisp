@@ -31,7 +31,7 @@
   ((LF-PARENT ONT::device-adjust)
     (example "you can upgrade your computer")
     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-    (templ agent-affected-xp-templ)
+    (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
     (meta-data :origin calo :entry-date 20041122 :change-date 20090504 :comments caloy2)
     )
    ))

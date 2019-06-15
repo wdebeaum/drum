@@ -13,7 +13,7 @@
 )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::shrink
    (wordfeats (W::morph (:forms (-vb) :past W::shrank :pastpart W::shrunk :ing W::shrinking)))

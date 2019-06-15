@@ -21,7 +21,7 @@
      (LF-PARENT ONT::happen)
      (example "he chanced to see it")
      
-     (TEMPL experiencer-Theme-subjcontrol-TEMPL  (xp (% W::cp (W::ctype W::s-to))))
+     (TEMPL EXPERIENCER-FORMAL-SUBJCONTROL-TEMPL  (xp (% W::cp (W::ctype W::s-to))))
      (SYNTAX (w::exclude-passive +))
      )
     )

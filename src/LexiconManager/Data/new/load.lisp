@@ -42,7 +42,7 @@
      (LF-PARENT ONT::Fill-container)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "load the truck with oj")
-     (TEMPL AGENT-GOAL-affected-TEMPL (xp (% W::PP (W::ptype (? t W::with)))))
+     (TEMPL AGENT-AFFECTEDR-AFFECTED-XP-PP-WITH-2-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? t W::with)))))
      )
     )
    )

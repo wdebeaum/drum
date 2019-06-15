@@ -2,7 +2,7 @@
 ;;;; W::desecrate
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::desecrate
    (wordfeats (W::morph (:forms (-vb) :nom w::desecration)))

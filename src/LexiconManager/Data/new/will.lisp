@@ -2,7 +2,7 @@
 ;;;; W::WILL
 ;;;;
 
-(define-words :pos W::v :boost-word t :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :boost-word t :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::WILL
@@ -31,7 +31,7 @@
 	  (SENSES
 	   ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("future_having-13.3") :wn ("will%2:40:00"))
 	    (LF-PARENT ONT::future-giving)
-	    (TEMPL agent-affected-recipient-alternation-templ) ; like owe
+	    (TEMPL AGENT-AFFECTED-TEMPL) ; like owe
 	    ;; MD 2009/03/18 -- this preference has to be kept quite low or otherwise constructions like
 	    ;; "I think they will light" parse with "will" as future-giving
 	    ;; It should not matter in general because common forms like "willed" and "willing" could not be confused with an auxilliary

@@ -10,11 +10,11 @@
     (
      (LF-PARENT ONT::inhibit-effect)
      (example "it inhibited the sale")
-     (TEMPL AGENT-AFFECTED-XP-TEMPL) 				
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) 				
      )
     (
      (LF-PARENT ONT::inhibit-effect)
-     (TEMPL AGENT-EFFECT-AFFECTED-OBJCONTROL-TEMPL (xp (% w::cp (w::ctype w::s-from-ing) (w::ptype w::from))))
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL (xp (% w::cp (w::ctype w::s-from-ing) (w::ptype w::from))))
      (example "It inhibited him from doing something")
      )
     )

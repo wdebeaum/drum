@@ -2,7 +2,7 @@
 ;;;; W::incur
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::incur
    (wordfeats (W::morph (:forms (-vb) :ing W::incurring :past W::incurred :nom w::incursion)))
@@ -12,7 +12,7 @@
      (meta-data :origin calo :entry-date 20050425 :change-date nil :comments projector-purchasing)
      (example "a cost usually incurred with projectors")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL affected-affected-templ)
+     (TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL)
      )
     )
    )

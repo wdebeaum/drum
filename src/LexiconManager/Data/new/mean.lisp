@@ -2,7 +2,7 @@
 ;;;; W::mean
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::mean
@@ -36,17 +36,17 @@
 ))
 
 (define-words :pos W::V 
-  :templ agent-theme-xp-templ
+  :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
 	  (w::mean
 	   (senses 
 	    ((lf-parent ont::correlation)
-	     (templ neutral-theme-xp-templ)
+	     (TEMPL NEUTRAL-FORMAL-XP-NP-2-TEMPL)
 	     (example "an alarm means trobule")
 	     )	    
 	    ((lf-parent ont::correlation) 
-	     (templ neutral-theme-xp-templ (xp (% w::cp (w::ctype w::s-that))))
+	     (TEMPL NEUTRAL-FORMAL-XP-NP-2-TEMPL (xp (% w::cp (w::ctype w::s-that))))
 	     (example "the exmpalation means that ...")
 	     )	    	    
 	    )

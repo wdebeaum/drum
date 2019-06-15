@@ -13,7 +13,7 @@
 )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::chop (W::up))
    (wordfeats (W::morph (:forms (-vb) :ing W::chopping)))
@@ -26,7 +26,7 @@
 ))
 
 (define-words :pos W::V 
-  :templ agent-affected-xp-templ
+  :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (w::chop
  (senses

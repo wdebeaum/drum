@@ -2,13 +2,13 @@
 ;;;; W::absorb
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::absorb
    (wordfeats (W::morph (:forms (-vb) :nom W::absorption)))
    (SENSES
     ((LF-PARENT ONT::take-in)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     
     ((LF-PARENT ONT::come-to-understand)

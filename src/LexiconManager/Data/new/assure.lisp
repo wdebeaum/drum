@@ -19,7 +19,7 @@
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090506 :comments nil :vn ("advise-37.9"))
      (LF-PARENT ONT::assert)
      (example "he assured me that they sang")
-     (TEMPL agent-addressee-theme-optional-templ (xp (% w::cp (w::ctype w::s-finite)))) ; like notify
+     (TEMPL AGENT-AGENT1-FORMAL-2-XP1-3-XP-OPTIONAL-TEMPL (xp (% w::cp (w::ctype w::s-finite)))) ; like notify
      )
     )
    )

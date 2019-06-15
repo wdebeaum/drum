@@ -2,7 +2,7 @@
 ;;;; W::rush
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::rush
    (SENSES
@@ -12,7 +12,7 @@
      )
     ((lf-parent ont::increase-speed)
      (example "rush the process")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
     )
     )
    )

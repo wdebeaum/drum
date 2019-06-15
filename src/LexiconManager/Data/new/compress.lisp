@@ -2,20 +2,20 @@
 ;;;; w::compress
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 (w::compress
   (wordfeats (W::morph (:forms (-vb) :nom w::compression)))
  (senses
   ;((meta-data :origin calo :entry-date 20050811 :change-date nil :comments nil)
-  ; (LF-PARENT ONT::shrink)
-  ; (example "compress the data")
-  ; (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))   
+   ;(LF-PARENT ONT::shrink)
+   ;(example "compress the data")
+   ;(SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))   
   ;  )
   ((meta-data :origin step :entry-date 20080626 :change-date nil :comments nil)
    (LF-PARENT ONT::shrink)
    (example "it compressed in size")
-   (templ affected-theme-xp-optional-templ  (xp (% W::PP (W::ptype (? pt w::in)))))
+   (TEMPL AFFECTED-FORMAL-XP-OPTIONAL-TEMPL  (xp (% W::PP (W::ptype (? pt w::in)))))
    (SEM (F::Aspect F::bounded) (F::Time-span F::extended) (F::scale ont::size-scale))
    )
   )
@@ -24,7 +24,7 @@
 ))
 
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::compress
      (wordfeats (W::morph (:forms (-vb) :nom w::compression)))

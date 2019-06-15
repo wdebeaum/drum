@@ -34,14 +34,14 @@
 ))
 |#
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::break
    (wordfeats (W::morph (:forms (-vb) :past W::broke :pastpart W::broken :ing W::breaking :nom w::break)))
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090601 :comments nil :vn ("cheat-10.6") :wn ("break%2:42:04"))
      (LF-PARENT ONT::stop)
-     (TEMPL agent-effect-affected-objcontrol-templ)
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL)
      (PREFERENCE 0.96)
      (example "She finally broke herself of smoking cigarettes")
      )
@@ -68,14 +68,14 @@
     ((LF-PARENT ONT::render-ineffective)
      (meta-data :origin calo :entry-date 20040908 :change-date nil :comments caloy2)
      (SEM (F::Aspect F::unbounded))
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "he broke the browser")
      )
     
        )
 )))
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 ;   )
   ((W::break (W::up))

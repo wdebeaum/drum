@@ -2,7 +2,7 @@
 ;;;; W::sniveling
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::sniveling
    (wordfeats (W::morph (:forms NIL)) (W::vform W::ing))

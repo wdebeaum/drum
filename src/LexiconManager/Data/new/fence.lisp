@@ -14,13 +14,13 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::fence
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("contiguous_location-47.8") :wn ("?fence%2:35:00"))
      (LF-PARENT ONT::surround)
-     (TEMPL agent-affected-xp-templ) ; like cover,surround
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) ; like cover,surround
      )
     )
    )

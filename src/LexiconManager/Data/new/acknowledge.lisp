@@ -2,7 +2,7 @@
 ;;;; W::acknowledge
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
  (W::acknowledge
    (SENSES
@@ -16,7 +16,7 @@
      (EXAMPLE "You acknowledge that Software Product is of U.S.")
      (LF-PARENT ONT::acknowledge)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-THEME-XP-TEMPL (xp (% W::cp (W::ctype (? c W::s-that)))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype (? c W::s-that)))))
      )
     )
    )

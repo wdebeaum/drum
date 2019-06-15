@@ -2,7 +2,7 @@
 ;;;; w::enlarge
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (w::enlarge
   (wordfeats (W::morph (:forms (-vb) :nom w::enlargement)))
@@ -12,7 +12,7 @@
    (example "enlarge the image (to full screen)")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::scale ont::size-scale))
    ;(TEMPL AGENT-affected-RESULT-OPTIONAL-TEMPL (xp (% W::PP (W::ptype W::to))));??
-   (TEMPL AGENT-AFFECTED-XP-TEMPL)
+   (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
    )
 
    ((meta-data :origin cause-result-relations :entry-date 20180803 :change-date nil :comments nil)

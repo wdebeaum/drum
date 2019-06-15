@@ -2,7 +2,7 @@
 ;;;; W::announce
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
  (W::announce
    (wordfeats (W::morph (:forms (-vb) :nom w::announcement)))
@@ -12,13 +12,13 @@
      (LF-PARENT ONT::tell)
      (example "announce it to them")
      ;; this verb doesn't participate in the alternation
-     (TEMPL agent-theme-to-addressee-optional-templ) 
+     (TEMPL AGENT-FORMAL-AGENT1-OPTIONAL-TEMPL) 
      )
     ((LF-PARENT ONT::tell)
      (example "microsoft announced yesterday that they will acquire yahoo")
      (meta-data :origin joshua :entry-date 20080905 :change-date 20090506 :comments nil)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-THEME-XP-TEMPL (xp (% W::cp (W::ctype (? c W::s-to W::s-finite)))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype (? c W::s-to W::s-finite)))))
      )
     )
     )

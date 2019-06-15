@@ -2,7 +2,7 @@
 ;;;; W::relax
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (W::relax
    (SENSES
@@ -13,18 +13,18 @@
      (TEMPL affected-templ) 
      (preference .98) ;; prefer ont::subduing 
      )
-;    (;(LF-PARENT ont::wait)
-;     (LF-PARENT ONT::evoke-calm)
-;     (example "relax")
-;     (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-;     (TEMPL affected-TEMPL)
+    ;(;(LF-PARENT ont::wait)
+     ;(LF-PARENT ONT::evoke-calm)
+     ;(example "relax")
+     ;(SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
+     ;(TEMPL affected-TEMPL)
 ;     ;(preference .96) ;; prefer transitive
-;     (meta-data :origin plow :entry-date 20050922 :change-date nil :comments nil)
+     ;(meta-data :origin plow :entry-date 20050922 :change-date nil :comments nil)
 ;     )
     ((LF-PARENT ont::evoke-comfort)
      (example "a massage will relax him")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-affected-xp-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin plow :entry-date 20050922 :change-date nil :comments nil)
      )
     ;; need another sense for "relax the constraints"

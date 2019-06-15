@@ -36,7 +36,7 @@
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("break-45.1") :wn ("chip%2:35:00" "chip%2:35:01" "chip%2:35:03"))
      (LF-PARENT ont::break-object)
-     (TEMPL agent-affected-xp-templ) ; like break
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) ; like break
      )
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("break-45.1") :wn ("chip%2:35:00" "chip%2:35:01" "chip%2:35:03"))
      (LF-PARENT ont::break-object)

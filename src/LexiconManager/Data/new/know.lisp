@@ -2,7 +2,7 @@
 ;;;; W::know
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::know
@@ -17,7 +17,7 @@
       (meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("consider-29.9-2") :wn ("believe%2:31:04:"))
       (example "they know her to have cancer")
       (SEM (F::Time-span F::extended))
-      (TEMPL experiencer-theme-objcontrol-templ)
+      (TEMPL EXPERIENCER-NEUTRAL-FORMAL-CP-OBJCONTROL-B-TEMPL)
       )
     ((LF-PARENT ONT::KNOWIF)
      (example "I know whether he left")
@@ -28,7 +28,7 @@
     ((LF-PARENT ONT::KNOWIF)
      (example "I know whether to leave")
       (meta-data :origin csli-ts :entry-date 20070323 :change-date nil :comments nil :wn ("know%2:31:01"))
-      (TEMPL experiencer-theme-subjcontrol-templ (xp (% W::cp (w::ctype w::s-to) (w::condition (:* ont::pos-condition ?x))
+      (TEMPL EXPERIENCER-FORMAL-SUBJCONTROL-TEMPL (xp (% W::cp (w::ctype w::s-to) (w::condition (:* ont::pos-condition ?x))
 					   (w::wh w::-))))
      )
 ;;;; ::::::: 12/5/07  I'm reinstating this rule to get "I know what city it is in "  to work

@@ -31,7 +31,7 @@
      )
     ((LF-PARENT ONT::determine)
      (example "he guessed the answer")
-     (TEMPL agent-theme-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      (meta-data :origin calo-ontology :entry-date 20060426 :change-date nil :comments nil)
      )
     )

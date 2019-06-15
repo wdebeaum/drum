@@ -8,7 +8,7 @@
    (SENSES
     ((meta-data :origin "wordnet-3.0" :entry-date 20090506 :change-date nil :comments nil)
      (LF-PARENT ONT::undress)
-     (templ agent-affected-optional-templ)
+     (TEMPL AGENT-AFFECTED-XP-OPTIONAL-B-TEMPL)
      )
     )
    )

@@ -13,7 +13,7 @@
 ;;    (SEM (F::Aspect F::bounded) (F::time-span F::atomic))
 ;     )
     ((LF-PARENT ont::start)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "The rain triggered the migration of mice toward the building.")
      )    
     )

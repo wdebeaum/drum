@@ -2,7 +2,7 @@
 ;;;; W::include
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 (W::include
  (wordfeats (W::morph (:forms (-vb) :nom w::inclusion)))
@@ -10,7 +10,7 @@
   ((EXAMPLE "it includes a wireless card")
    (LF-PARENT ONT::HAVE)
    (SEM (F::Aspect F::static) (F::Time-span F::extended))
-   (TEMPL neutral-neutral-xp-templ)
+   (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
    )
   ((EXAMPLE "include a wireless card in the order")
    (meta-data :origin calo :entry-date 20050425 :change-date 20090908 :comments projector-purchasing)

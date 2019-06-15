@@ -15,21 +15,21 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::shape
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090504 :comments nil :vn ("build-26.1-1"))
      (LF-PARENT ONT::shape-change)
-     (TEMPL agent-affected-result-templ (xp (% w::pp (w::ptype w::into)))) ; like carve
+     (TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL (xp (% w::pp (w::ptype w::into)))) ; like carve
      (PREFERENCE 0.96)
      )
     ((LF-PARENT ONT::in-relation)
      (example "a thing shaped like a box")
      (meta-data :origin fruitcarts :entry-date 20050418 :change-date nil :comments nil)
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL neutral-theme-xp-templ (xp (% W::PP (W::ptype W::like)))))
+     (TEMPL NEUTRAL-FORMAL-XP-NP-2-TEMPL (xp (% W::PP (W::ptype W::like)))))
      )
     )
    ))

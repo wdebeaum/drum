@@ -2,7 +2,7 @@
 ;;;; W::scatter
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::scatter
    (wordfeats (W::morph (:forms (-vb) :past W::scattered :ing W::scattering)))

@@ -14,7 +14,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::DISPLAY
    (SENSES
@@ -23,7 +23,7 @@
     ((LF-PARENT ONT::encodes-message)
      (meta-data :origin "bee" :entry-date 20091394 :change-date nil :comments nil)
      (example "this diagram displays a short circuit")
-     (TEMPL neutral-THEME-XP-TEMPL)
+     (TEMPL NEUTRAL-FORMAL-XP-NP-2-TEMPL)
      (Preference 0.97) ;; choose agentive interpretation whenever possible
      )
     )

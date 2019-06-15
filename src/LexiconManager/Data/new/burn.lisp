@@ -2,13 +2,13 @@
 ;;;; W::burn
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    (W::burn
     (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090504 :comments nil :vn ("entity_specific_cos-45.5") :wn ("burn%2:43:01"))
      (LF-PARENT ONT::burn)
-     (TEMPL agent-affected-xp-templ) ; like ferment
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) ; like ferment
      )
     ((meta-data :origin step :entry-date 20081027 :change-date 20090504 :comments nil :vn ("entity_specific_cos-45.5") :wn ("burn%2:43:01"))
      (LF-PARENT ONT::burn)
@@ -26,7 +26,7 @@
     )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    ((W::burn w::out)
     (SENSES

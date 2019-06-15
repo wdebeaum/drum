@@ -17,7 +17,7 @@
 ))
 |#
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 ((w::look (w::over))
  (senses
@@ -32,7 +32,7 @@
 ))
 
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 ((w::look (w::up))
  (senses
@@ -45,7 +45,7 @@
   ((EXAMPLE "look up whether this is true")
    (LF-PARENT ONT::look-up)
    (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-   (TEMPL agent-formal-xp-templ)
+   (TEMPL AGENT-FORMAL-XP-CP-TEMPL)
    (meta-data :origin calo :entry-date 20050323 :change-date nil :comments caloy2)
    )
   )
@@ -53,7 +53,7 @@
 ))
 
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::look
@@ -61,14 +61,14 @@
    (SENSES
     ((LF-PARENT ONT::APPEARS-TO-HAVE-PROPERTY)
      (example "he looks happy (to me)")
-     (TEMPL neutral-theme-complex-subjcontrol-templ)
+     (TEMPL NEUTRAL-FORMAL-SUBJCONTROL-TEMPL)
      )
     ;; but shouldn't this really be an agent??
     
     ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("peer-30.3") :wn ("look%2:39:00" "look%2:39:02"))
      (LF-PARENT ONT::physical-scrutiny)
      (SEM (F::Time-span F::extended))
-;     (TEMPL agent-location-TEMPL)
+     ;(TEMPL agent-location-TEMPL)
      (TEMPL agent-TEMPL)
      (example "look behind the shed")
      )
@@ -88,20 +88,20 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::look W::like)
    (SENSES
     ;;;; It looks like we will have to go
     ((LF-PARENT ONT::POSSIBLY-true)
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL EXPLETIVE-THEME-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
+     (TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
      )
     ((meta-data :origin calo :entry-date 20040421 :change-date nil :comments caloy1v4)
      (LF-PARENT ONT::object-compare)
      (example "they look like dogs")
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL neutral-neutral-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      )
     )
    )

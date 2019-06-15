@@ -34,7 +34,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::DRIVE
@@ -54,7 +54,7 @@
 
     (
      (LF-PARENT ONT::propel)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "The wind drove the boat to the sandbar." "This protein drives the other protein to the nucleus." "Drive the ball far out into the field.")
      (meta-data :origin mobius :entry-date 20070728 :change-date nil :comments engines :wn ("drive%2:35:01"))
      )
@@ -70,8 +70,8 @@
     (
      (LF-PARENT ONT::cause-effect) 
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-;    (TEMPL agent-affected-effect-objcontrol-pred-templ)
-     (TEMPL AGENT-formal-Objcontrol-adj-TEMPL)
+    ;(TEMPL agent-affected-effect-objcontrol-pred-templ)
+     (TEMPL AGENT-AFFECTED-FORMAL-ADJ-OBJCONTROL-TEMPL)
      (example "it drove him crazy")
      (meta-data :origin medadvisor :entry-date 20011126)
      )
@@ -79,14 +79,14 @@
     (;(LF-PARENT ONT::control-manage)
      (LF-PARENT ONT::cause-effect)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-affected-xp-templ (xp (% W::NP (W::lf (% ?p (w::class (? x ont::EVENT-OF-CHANGE)))))))
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL (xp (% W::NP (W::lf (% ?p (w::class (? x ont::EVENT-OF-CHANGE)))))))
      (example "the principle drives the execution")
      )
 
     (
      (LF-PARENT ONT::cause-effect)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-EFFECT-AFFECTED-OBJCONTROL-TEMPL)
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL)
      (example "It drives him to scream")
      )
     

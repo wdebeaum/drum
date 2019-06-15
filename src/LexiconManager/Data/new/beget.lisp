@@ -2,7 +2,7 @@
 ;;;; W::beget
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-create-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTEDR-XP-TEMPL
  :words (
   (W::beget
    (wordfeats (W::morph (:forms (-vb) :past W::begot :pastpart W::begotten :ing W::begetting)))

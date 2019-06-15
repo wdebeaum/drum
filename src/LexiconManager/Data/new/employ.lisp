@@ -2,7 +2,7 @@
 ;;;; W::employ
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::employ
    (wordfeats (W::morph (:forms (-vb) :nom w::employment)))
@@ -16,7 +16,7 @@
      ((LF-PARENT ONT::employ)
      (example "Abrams hired this employee")
      (meta-data :origin csli-ts :entry-date 20070316 :change-date 20090508 :comments nil :wn nil)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
      ))
     )

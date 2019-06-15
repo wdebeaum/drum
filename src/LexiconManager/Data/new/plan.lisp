@@ -26,7 +26,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::PLAN
@@ -34,14 +34,14 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060414 :change-date 20090515 :comments nil :vn ("wish-62") :wn ("plan%2:31:01" "plan%2:31:00" "plan%2:36:00"))
      (LF-PARENT ONT::planning)
-     (templ agent-effect-objcontrol-templ)
+     (TEMPL AGENT-NEUTRAL-FORMAL-CP-OBJCONTROL-TEMPL)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (EXAMPLE "Let's plan the evacuation [to go out this door]")
      )
     ((meta-data :origin trips :entry-date 20060414 :change-date 20090515 :comments nil :vn ("wish-62")  :wn ("plan%2:31:01" "plan%2:31:00" "plan%2:36:00"))
      (LF-PARENT ONT::planning)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype W::s-to))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype W::s-to))))
      (EXAMPLE "Let's plan to evacuate people")
      )
     )

@@ -20,7 +20,7 @@
   (W::attribute
    (SENSES
     ((LF-PARENT ont::attribute-impute)
-     (TEMPL agent-neutral-to-neutral-templ)
+     (TEMPL AGENT-NEUTRAL-NEUTRAL1-2-XP-3-XP2-TEMPL)
      (EXAMPLE "They attribute the crop failure to drought")
      )
     )

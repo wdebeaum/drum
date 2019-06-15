@@ -3,7 +3,7 @@
 ;;;;
 
 ; this is here because the pastpart of sew can be either sewed or sewn
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::sewn
    (wordfeats (W::morph (:forms NIL)) (W::vform W::pastpart))

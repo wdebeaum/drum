@@ -42,7 +42,7 @@
 	    ))
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    (W::charge
    (SENSES
@@ -55,19 +55,19 @@
      (EXAMPLE "charge it to my account")
      (LF-PARENT ONT::commerce-collect)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-AFFECTED-SOURCE-TEMPL (xp (% W::pp (W::ptype (? pt W::to W::on)))))
+     (TEMPL AGENT-AFFECTED-SOURCE-XP-TEMPL (xp (% W::pp (W::ptype (? pt W::to W::on)))))
      )
     ((meta-data :origin calo :entry-date 20040407 :change-date nil :comments y1-variations)
      (EXAMPLE "charge my account")
      (LF-PARENT ONT::commerce-collect)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-SOURCE-TEMPL)
+     (TEMPL AGENT-SOURCE-XP-TEMPL)
      )
     ((meta-data :origin step :entry-date 20080626 :change-date nil :comments nil)
      (EXAMPLE "charge the battery")
      (LF-PARENT ONT::fill-container)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-affected-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

@@ -2,7 +2,7 @@
 ;;;; W::dodder
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::dodder
    (wordfeats (W::morph (:forms (-vb) :past W::doddered :ing W::doddering)))

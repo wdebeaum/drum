@@ -12,7 +12,7 @@
       :COMMENTS HTML-PURCHASING-CORPUS))))
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::walk
@@ -27,7 +27,7 @@
      (LF-PARENT ONT::WALKING)
      (example "walk the dog")
      (preference .98)
-     (TEMPL AGENT-affected-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
      ((meta-data :origin general :entry-date 20110127 :change-date nil :comments nil :vn ("run-51.3.2") :wn ("travel%2:38:00" "travel%2:38:02"))
      (LF-PARENT ONT::self-locomote)

@@ -2,7 +2,7 @@
 ;;;; w::double
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (w::double
  (senses
@@ -11,12 +11,12 @@
    (example "double the budget [to 3K]")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
    ;(TEMPL AGENT-affected-RESULT-OPTIONAL-TEMPL (xp (% W::PP (W::ptype W::to))))
-   (TEMPL AGENT-AFFECTED-XP-TEMPL)
+   (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
    )
   ((meta-data :origin step :entry-date 20080626 :change-date 20090504 :comments nil)
    (LF-PARENT ONT::double)
    (example "it doubled in size")
-   (templ affected-theme-xp-optional-templ  (xp (% W::PP (W::ptype (? pt w::in W::with)))))
+   (TEMPL AFFECTED-FORMAL-XP-OPTIONAL-TEMPL  (xp (% W::PP (W::ptype (? pt w::in W::with)))))
    )
   )
  )

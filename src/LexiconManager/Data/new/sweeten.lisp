@@ -3,7 +3,7 @@
 ;;;;
 
 (define-words :pos W::V 
-  :templ agent-affected-xp-templ
+  :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 ;; verbs for foodkb
 (w::sweeten

@@ -2,7 +2,7 @@
 ;;;; w::direct
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (w::direct
@@ -26,7 +26,7 @@
      ;(LF-PARENT ont::manage)
      (LF-PARENT ont::guiding)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "the supervisor directs the crew")
      )
 

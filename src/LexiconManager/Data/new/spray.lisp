@@ -14,7 +14,7 @@
 )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 ;   )
  (W::SPRAY
@@ -24,7 +24,7 @@
     ((meta-data :origin monroe :entry-date 20031223 :change-date 20040617 :comments s7)
      (lf-parent ont::push-liquid) ;; used to be ont::emit 
      (SEM (F::aspect F::bounded) (F::time-span F::atomic))
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "the fire hydrant sprayed water")
      )
     ((meta-data :origin caet :entry-date 20110114 :change-date nil :comments nil)

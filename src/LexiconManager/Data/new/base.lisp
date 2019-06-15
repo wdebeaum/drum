@@ -42,7 +42,7 @@
     ))   
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
 ; :tags (:base500)
  :words (
   (w::base
@@ -51,7 +51,7 @@
      ((LF-PARENT ONT::establish)
       (EXAMPLE "he based the comparison on price")
       (META-DATA :ORIGIN plow :ENTRY-DATE 20060620 :CHANGE-DATE NIL :COMMENTS pq)
-      (TEMPL agent-affected-create-manner-templ (xp (% w::pp (w::ptype (? pt w::on)))))
+      (TEMPL AGENT-AFFECTEDR-MANNER-2-XP-3-XP2-TEMPL (xp (% w::pp (w::ptype (? pt w::on)))))
       )
      )
     )

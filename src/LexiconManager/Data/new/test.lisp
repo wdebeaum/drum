@@ -15,7 +15,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
  (W::test
@@ -31,8 +31,8 @@
      (LF-PARENT ONT::scrutiny)
      (example "test whether it works")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-;     (TEMPL agent-theme-xp-templ (xp (% w::cp (w::ctype w::s-finite))))
-     (TEMPL agent-formal-xp-templ)
+     ;(TEMPL agent-theme-xp-templ (xp (% w::cp (w::ctype w::s-finite))))
+     (TEMPL AGENT-FORMAL-XP-CP-TEMPL)
      )
     )
    )

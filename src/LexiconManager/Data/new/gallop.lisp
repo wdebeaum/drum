@@ -2,7 +2,7 @@
 ;;;; W::gallop
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::gallop
    (wordfeats (W::morph (:forms (-vb) :past W::galloped :ing W::galloping)))

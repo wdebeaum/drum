@@ -14,7 +14,7 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::sink
    (wordfeats (W::morph (:forms (-vb) :past W::sank :pastpart W::sunk :ing W::sinking :nom w::sink)))

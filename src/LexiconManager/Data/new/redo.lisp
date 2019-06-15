@@ -2,7 +2,7 @@
 ;;;; W::redo
 ;;;;
 
-(define-words :pos W::v :boost-word t :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :boost-word t :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::redo
    (wordfeats (W::morph (:forms (-vb) :past W::redid :pastpart W::redone :3s W::redoes)))

@@ -2,7 +2,7 @@
 ;;;; W::^S
 ;;;;
 
-(define-words :pos W::v :boost-word t :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :boost-word t :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::^S
@@ -36,27 +36,27 @@
     ;;;; she's hungry
     ((LF-PARENT ONT::HAVE-PROPERTY)
      (LF-FORM W::be)
-     (TEMPL neutral-pred-xp-templ)
+     (TEMPL NEUTRAL-FORMAL-PRED-SUBJCONTROL-TEMPL)
      (preference .98)
      )
     ;;;; It's the truck
     (;;(LF-PARENT ONT::IN-RELATION)
      (lf-parent ont::be) ;; 20120524 GUM change new parent
      (LF-FORM W::be)
-     (TEMPL neutral-neutral-equal-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL)
      (preference .98)
      )
     ;;;; .. there's a box
     ((LF-PARENT ONT::EXISTS)
      (LF-FORM W::be)
-     (TEMPL THERE-THEME-TEMPL (xp (% w::NP (w::agr w::3s))) )
+     (TEMPL EXPLETIVE-NEUTRAL-XP-TEMPL (xp (% w::NP (w::agr w::3s))) )
      (preference .98)
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL 
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL 
  :tags (:base500)
  :words (
   (W::^S
@@ -68,12 +68,12 @@
     ;;;; a special contraction for "there's" NOTE the AGR 3p!!
     ((LF-PARENT ONT::Exists)
      (LF-FORM W::be)
-     (TEMPL THERE-THEME-TEMPL (xp (% w::NP (w::agr w::3p))))
+     (TEMPL EXPLETIVE-NEUTRAL-XP-TEMPL (xp (% w::NP (w::agr w::3p))))
      (PREFERENCE 0.97)
      )
     ((LF-PARENT ONT::Have-property)
      (LF-FORM W::be)
-     (TEMPL expletive-theme-pred-templ (xp1 (% W::np (W::lex W::there))))
+     (TEMPL EXPLETIVE-NEUTRAL-FORMAL-1-XP1-2-XP2-TEMPL (xp1 (% W::np (W::lex W::there))))
      (PREFERENCE 0.97)
      )    
     )

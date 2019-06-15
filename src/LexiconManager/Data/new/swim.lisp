@@ -2,7 +2,7 @@
 ;;;; W::swim
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::swim
    (wordfeats (W::morph (:forms (-vb) :past W::swam :pastpart W::swum :ing W::swimming :nom W::swim)))

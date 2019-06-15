@@ -15,20 +15,20 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::figure (W::out))
    (SENSES
     ;;;; I figured out that...
     ((LF-PARENT ONT::determine)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      (meta-data :origin bee :entry-date 20040609 :change-date nil :comments portability-expt)
      )
     ((LF-PARENT ONT::solve)
      (example "figure out a plan" "figure out when to go")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-theme-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      )
     )
    )

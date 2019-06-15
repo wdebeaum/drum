@@ -2,14 +2,14 @@
 ;;;; W::imagine
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::imagine
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("appoint-29.1-2"))
      (LF-PARENT ONT::cogitation)
      (example "I must have imagined it")
-     (TEMPL agent-theme-xp-templ) ; like consider,rate
+     (TEMPL AGENT-FORMAL-XP-TEMPL) ; like consider,rate
      (PREFERENCE 0.96)
      )
     ((meta-data :origin monroe :entry-date 20031217 :change-date nil :comments s7)

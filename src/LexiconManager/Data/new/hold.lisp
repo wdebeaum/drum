@@ -2,13 +2,13 @@
 ;;;; W::hold
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    ((W::hold w::out)
     (wordfeats (W::morph (:forms (-vb) :past W::held)))
     (senses
      ((lf-parent ont::refuse)
-      (templ agent-affected-xp-templ)
+      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
       (example "he held out the data")
       (meta-data :origin calo-ontology :entry-date 20060125 :change-date nil :comments caloy3)
       )
@@ -16,13 +16,13 @@
     )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    ((W::hold w::back)
     (wordfeats (W::morph (:forms (-vb) :past W::held)))
     (senses
      ((lf-parent ont::refuse)
-      (templ agent-affected-xp-templ)
+      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
       (example "he held back his tears")
       (meta-data :origin calo-ontology :entry-date 20060125 :change-date nil :comments caloy3)
       )
@@ -30,7 +30,7 @@
     )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::hold
@@ -39,7 +39,7 @@
     ((EXAMPLE "The truck held the cargo")
      (LF-PARENT ONT::CONTAINMENT)
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL neutral-neutral-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      )
     ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("hold-15.1-1"))
      (EXAMPLE "Hold the cup")

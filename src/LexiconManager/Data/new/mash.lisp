@@ -3,7 +3,7 @@
 ;;;;
 
 (define-words :pos W::V 
-  :templ agent-theme-xp-templ
+  :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 (w::mash
  (senses

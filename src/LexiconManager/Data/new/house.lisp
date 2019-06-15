@@ -14,7 +14,7 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::house
@@ -22,7 +22,7 @@
     ((LF-PARENT ONT::CONTAINMENT)
       (EXAMPLE "The hangar houses an airplane")
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL neutral-neutral-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      (meta-data :origin "verbnet-2.0" :entry-date 20060512 :change-date nil :comments nil :vn ("fit-54.3" "pocket-9.10") :wn ("house%2:41:00"))
      )
     )

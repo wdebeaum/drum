@@ -2,7 +2,7 @@
 ;;;; W::wrap
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::wrap
    (SENSES
@@ -17,7 +17,7 @@
      )
     ((LF-PARENT ONT::cause-cover)
      ;(TEMPL agent-affected-xp-templ (xp (% W::PP (W::ptype (? pt W::with W::in)))))
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin trips :entry-date 20090911 :change-date nil :comments nil)
      (example "wrap the present")
      )

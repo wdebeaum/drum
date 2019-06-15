@@ -9,7 +9,7 @@
     (SENSES
      ((EXAMPLE "The doctor treated me/my arthritis; The doctor treated me for my arthritis")
       (LF-PARENT ONT::CONTROL-MANAGE)
-      (TEMPL AGENT-AFFECTED-THEME-OPTIONAL-TEMPL (xp (% W::pp (W::ptype (? xxx W::for)))))
+      (TEMPL AGENT-AFFECTED-FORMAL-XP-OPTIONAL-A-TEMPL (xp (% W::pp (W::ptype (? xxx W::for)))))
       )
     
      )

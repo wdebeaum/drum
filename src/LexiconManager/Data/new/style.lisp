@@ -15,7 +15,7 @@
    )
 ))
 
-(define-words :pos W::V :templ agent-affected-create-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTEDR-XP-TEMPL
  :words (
   (W::style
    (SENSES

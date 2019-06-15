@@ -2,7 +2,7 @@
 ;;;; W::secure
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
  (W::secure
    (SENSES
@@ -10,7 +10,7 @@
      (LF-PARENT ONT::protecting)
      (SEM (F::Time-span F::extended))
      (example "the bolt secured the door")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

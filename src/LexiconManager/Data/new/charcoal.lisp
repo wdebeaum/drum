@@ -2,7 +2,7 @@
 ;;;; W::charcoal
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::charcoal w::broil)
       (wordfeats (W::morph (:forms (-vb) :past (W::charcoal w::broiled) :ing( W::charcoal w::broiling) )))

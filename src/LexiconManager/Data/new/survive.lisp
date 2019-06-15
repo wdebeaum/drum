@@ -2,7 +2,7 @@
 ;;;; W::survive
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::survive
    (wordfeats (W::morph (:forms (-vb) :nom w::survival :nomsubjpreps (w::of w::by) :nomobjpreps -)))

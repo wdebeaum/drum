@@ -13,7 +13,7 @@
 ))
 |#
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (w::boost
    (wordfeats (W::morph (:forms (-vb) :nom w::boost)))
@@ -31,7 +31,7 @@
    (LF-PARENT ONT::increase)
    (example "it boosted the pressure")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-   (TEMPL agent-affected-xp-templ)
+   (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
    )
   )
   )

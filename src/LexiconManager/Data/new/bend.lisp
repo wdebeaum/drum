@@ -14,7 +14,7 @@
    )
 ))
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::bend
    (wordfeats (W::morph (:forms (-vb) :past W::bent :ing W::bending)))

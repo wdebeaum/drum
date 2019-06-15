@@ -2,7 +2,7 @@
 ;;;; W::hardboil
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::hardboil
    (SENSES
@@ -15,7 +15,7 @@
 ))
 
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::hard w::boil)
    (wordfeats (W::morph (:forms (-vb)
@@ -33,7 +33,7 @@
 ))
 
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::hard w::punc-minus w::boil)
    (wordfeats (W::morph (:forms (-vb)

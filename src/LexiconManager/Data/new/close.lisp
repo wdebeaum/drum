@@ -3,14 +3,14 @@
 ;;;;
 
 (define-words :pos W::V 
-  :templ agent-affected-xp-templ
+  :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
 	  (w::close
 	   (senses
 	    ((LF-parent ont::close)
 	     (example "close the door")
-	     (templ agent-affected-xp-templ)
+	     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
 	     )
 	    ((lf-parent ont::close)
 	     (templ affected-templ)

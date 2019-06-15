@@ -14,13 +14,13 @@
 )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::cramp
    (SENSES
     ((meta-data :origin cardiac :entry-date 20081215 :change-date nil :comments nil :vn ("hurt-40.8.3-2") :wn ("injure%2:29:00"))
      (LF-PARENT ONT::objective-influence)
-     (TEMPL agent-affected-xp-templ) 
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) 
      (example "restrictions cramp his style")
      (preference .95)
      )
@@ -33,7 +33,7 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::cramp w::up)
    (SENSES

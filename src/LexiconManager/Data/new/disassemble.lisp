@@ -21,7 +21,7 @@
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("disassemble-23.3") :wn ("disassemble%2:36:00"))
      (LF-PARENT ONT::separation)
      ;;(TEMPL agent-affected-source-optional-templ (xp (% w::pp (w::ptype (? t w::from))))) ; like detach
-      (TEMPL AGENT-affected-xp-TEMPL)
+      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

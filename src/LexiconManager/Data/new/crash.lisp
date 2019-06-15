@@ -2,18 +2,18 @@
 ;;;; W::crash
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::crash
     (wordfeats (W::morph (:forms (-vb) :nom w::crash)))
    (SENSES
     ((LF-PARENT ont::collide)
      (example "The car crashed into the wall" )
-     (TEMPL affected-affected-templ (xp (% W::PP (W::ptype W::into))))
+     (TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL (xp (% W::PP (W::ptype W::into))))
      )
     ((LF-PARENT ont::collide)
      (example "The cars crashed")
-     (TEMPL affected-plural-templ)
+     (TEMPL AFFECTED-NP-PLURAL-TEMPL)
      )
     ((LF-PARENT ONT::render-ineffective)
      (example "the computer crashed")
@@ -28,7 +28,7 @@
     ((LF-PARENT ont::render-ineffective)
      (meta-data :origin calo :entry-date 20040908 :change-date nil :comments caloy2)
      
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "it crashed the computer")
      )
     )

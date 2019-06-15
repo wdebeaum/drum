@@ -2,7 +2,7 @@
 ;;;; W::recur
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::recur
    (wordfeats (W::morph (:forms (-vb) :nom W::recurrence)))
@@ -17,7 +17,7 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::recur
    (wordfeats (W::morph (:forms (-vb) :nom w::recurrence)))

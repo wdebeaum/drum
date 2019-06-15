@@ -2,7 +2,7 @@
 ;;;; W::undergo
 ;;;;
 
-(define-words :pos W::v :templ Affected-effect-XP-TEMPL
+(define-words :pos W::v :TEMPL AFFECTED-FORMAL-XP-TEMPL
  :words (
    (W::undergo
    (wordfeats (W::morph (:forms (-vb) :3s W::undergoes :past W::underwent :pastpart W::undergone)))

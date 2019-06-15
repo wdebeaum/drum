@@ -7,10 +7,10 @@
 	  (W::engage
 	   (SENSES
 	    ((LF-PARENT ONT::evoke-attention)
-	     (TEMPL agent-affected-xp-templ)
+	     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
 	     )
 	    ((LF-PARENT ONT::employ)
-	     (TEMPL agent-affected-xp-templ)
+	     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
 	     )
 	    (
 	     (LF-PARENT ONT::execute)

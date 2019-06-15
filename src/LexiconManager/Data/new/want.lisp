@@ -2,7 +2,7 @@
 ;;;; W::want
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::want
@@ -12,11 +12,11 @@
      (EXAMPLE "I want a dog")
      )
     ((LF-PARENT ONT::WANT)
-     (TEMPL experiencer-theme-subjcontrol-templ)
+     (TEMPL EXPERIENCER-FORMAL-SUBJCONTROL-TEMPL)
      (EXAMPLE "I want to go")
      )
     ((LF-PARENT ONT::WANT)
-     (TEMPL experiencer-action-OBJCONTROL-TEMPL)
+     (TEMPL EXPERIENCER-NEUTRAL-FORMAL-CP-OBJCONTROL-A-TEMPL)
      (EXAMPLE "I want you to go")
      )
     )

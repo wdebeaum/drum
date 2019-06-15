@@ -2,7 +2,7 @@
 ;;;; W::circumvent
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
  (W::circumvent
    (SENSES
@@ -10,7 +10,7 @@
      (example "the caravan circumvented the lava")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (meta-data :origin calo :entry-date 20041201 :change-date nil :comments caloy2)
-     (TEMPL AGENT-theme-xp-TEMPL)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      )
     ((lf-parent ont::avoiding)
      (example "how did you circumvent the problem")

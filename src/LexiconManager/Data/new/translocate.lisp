@@ -10,7 +10,7 @@
 
     ((LF-PARENT ONT::TRANSLOCATE)
      (example "this protein translocates that protein into the nucleus")
-     (TEMPL AGENT-AFFECTED-optional-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-OPTIONAL-B-TEMPL)
     )
 
     )

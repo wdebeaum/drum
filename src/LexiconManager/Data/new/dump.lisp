@@ -2,7 +2,7 @@
 ;;;; W::dump
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::dump
    (SENSES
@@ -11,7 +11,7 @@
      (LF-PARENT ONT::put)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     
    )

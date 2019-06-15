@@ -2,7 +2,7 @@
 ;;;; W::forget
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::forget
    (wordfeats (W::morph (:forms (-vb) :ing W::forgetting :past W::forgot :pastpart W::forgotten)))
@@ -10,14 +10,14 @@
     ((LF-PARENT ONT::FORGET)
      (example "he forgot to take aspirin")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-theme-subjcontrol-templ)
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL)
      ((meta-data :origin "trips" :entry-date 20060315 :change-date nil :comments nil :wn ( "forget%2:31:03")))
      )
     ((LF-PARENT ONT::FORGET)
      (example "he forgot that he was coming")
      ((meta-data :origin "trips" :entry-date 20060315 :change-date nil :comments nil :wn ("forget%2:31:00" "forget%2:31:01"  "forget%2:31:02")))
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      )
     ((LF-PARENT ONT::FORGET)
      (example "he forgot the recipe")
@@ -40,13 +40,13 @@
     ((LF-PARENT ONT::CANCEL)
      (example "forget the problem")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-affected-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
 
     ((LF-PARENT ONT::CANCEL)
      (example "forget about the problem")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-affected-xp-templ  (xp (% W::pp (W::ptype W::about))))
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL  (xp (% W::pp (W::ptype W::about))))
      )
 
     )

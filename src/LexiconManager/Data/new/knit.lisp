@@ -2,7 +2,7 @@
 ;;;; W::knit
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-create-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTEDR-XP-TEMPL
  :words (
   (W::knit
    (SENSES

@@ -2,7 +2,7 @@
 ;;;; W::snuck
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::snuck
    (wordfeats (W::morph (:forms NIL)) (W::vform (? vf W::past)))

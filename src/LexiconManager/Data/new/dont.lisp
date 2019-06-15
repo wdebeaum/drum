@@ -2,7 +2,7 @@
 ;;;; W::dont
 ;;;;
 
-(define-words :pos W::v :boost-word t :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :boost-word t :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::dont
    (wordfeats (W::morph (:forms NIL)) (W::vform W::pres) (W::agr (? vf W::1s 2s W::1p w::2p w::3p)) (w::neg +))

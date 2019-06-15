@@ -2,13 +2,13 @@
 ;;;; w::welcome
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    (w::welcome
      (wordfeats (W::morph (:forms (-vb) :nom w::welcome)))
    (senses
     ((LF-PARENT ONT::welcome)
-     (TEMPL agent-addressee-TEMPL)
+     (TEMPL AGENT-AGENT1-NP-TEMPL)
      (EXAMPLE "he welcomed the guests")
      (meta-data :origin calo-ontology :entry-date 20060125 :change-date 20090508 :comments meeting-understanding)
      )

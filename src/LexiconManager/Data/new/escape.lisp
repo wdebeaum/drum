@@ -12,7 +12,7 @@
      )
     ((lf-parent ont::depart)
      (example "he escaped from the party")
-     (templ agent-source-templ (xp (% W::PP (W::ptype W::from))))
+     (TEMPL AGENT-SOURCE-XP-TEMPL (xp (% W::PP (W::ptype W::from))))
      (meta-data :origin calo :entry-date 20041201 :change-date 20090608 :comments caloy2)
      )
     )

@@ -2,7 +2,7 @@
 ;;;; W::condone
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
 	      :words (
 		      (W::condone
 		       (SENSES
@@ -10,7 +10,7 @@
 			 ;(LF-PARENT ONT::allow)
 			 (LF-PARENT ONT::approve-authorize)
 			 (example "they condone smoking")
-			 (TEMPL agent-effect-xp-templ) 
+			 (TEMPL AGENT-FORMAL-XP-NP-TEMPL) 
 			 )
 			
 			)

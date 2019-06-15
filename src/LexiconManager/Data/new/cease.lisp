@@ -2,7 +2,7 @@
 ;;;; W::cease
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::cease
    (wordfeats (W::morph (:forms (-vb) :nom W::cessation)))
@@ -15,17 +15,17 @@
     ((meta-data :origin csli-ts :entry-date 20070323 :change-date nil :comments nil)
      (LF-PARENT ONT::stop)
      (example "the managers ceased to work")
-     (TEMPL agent-effect-subjcontrol-templ (xp (% w::cp (w::ctype w::s-to))))
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% w::cp (w::ctype w::s-to))))
      )
     ((meta-data :origin csli-ts :entry-date 20070323 :change-date nil :comments nil)
      (LF-PARENT ONT::stop)
      (example "the managers ceased working")
-     (TEMPL agent-effect-subjcontrol-templ (xp (% w::vp (w::vform w::ing))))
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% w::vp (w::vform w::ing))))
      )
     ((meta-data :origin csli-ts :entry-date 20070323 :change-date nil :comments nil)
      (LF-PARENT ONT::stop)
      (example "cease the process")
-     (templ agent-effect-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-NP-TEMPL)
      )
     )
    )

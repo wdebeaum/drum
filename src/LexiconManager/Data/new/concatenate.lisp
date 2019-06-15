@@ -2,7 +2,7 @@
 ;;;; W::concatenate
 ;;;;
 
-(define-words :pos W::V :templ agent-affected2-optional-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-AFFECTED1-XP-OPTIONAL-TEMPL
  :words (
   (W::concatenate
    (SENSES

@@ -15,22 +15,22 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::center
    (wordfeats (W::morph (:forms (-vb) :ing w::centering :past W::centered)))   
    (SENSES
-;    ((LF-PARENT ONT::computer-action)
-;     (SEM (F::Aspect F::bounded) (F::Time-span F::Atomic))
-;     (TEMPL AGENT-TEMPL)
-;     (meta-data :origin ralf :entry-date 20040621 :change-date nil :comments ralf.txt)
-;     (example "center on Atlanta")
-;     (preference 0.98)
+    ;((LF-PARENT ONT::computer-action)
+     ;(SEM (F::Aspect F::bounded) (F::Time-span F::Atomic))
+     ;(TEMPL AGENT-TEMPL)
+     ;(meta-data :origin ralf :entry-date 20040621 :change-date nil :comments ralf.txt)
+     ;(example "center on Atlanta")
+     ;(preference 0.98)
 ;     )
     ((LF-PARENT ONT::place-in-position)
      (SEM (F::Aspect F::bounded) (F::Time-span F::Atomic))
-     (TEMPL AGENT-affected-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin task-learning :entry-date 20050923 :change-date 20090507 :comments nil)
      (example "center the image within the window")
      )

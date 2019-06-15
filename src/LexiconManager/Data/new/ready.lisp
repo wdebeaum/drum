@@ -2,14 +2,14 @@
 ;;;; w::ready
 ;;;; 
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::ready
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("preparing-26.3-1"))
      (LF-PARENT ONT::PREPARE) ;; GUM change new parent 20121027
-     (templ agent-affected-xp-templ) ;; GUM change new template 20121027
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) ;; GUM change new template 20121027
      ; like prepare
      )
     )

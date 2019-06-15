@@ -2,7 +2,7 @@
 ;;;; w::minimize
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 (w::minimize
   (wordfeats (W::morph (:forms (-vb) :nom w::minimum)))
@@ -11,7 +11,7 @@
    (LF-PARENT ONT::minimize)
    (example "minimize the window")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-   (TEMPL AGENT-THEME-XP-TEMPL)
+   (TEMPL AGENT-FORMAL-XP-TEMPL)
    )
   )
  )

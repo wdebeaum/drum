@@ -15,7 +15,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
 (W::read
@@ -25,7 +25,7 @@
      (EXAMPLE "read the letter")
      (LF-PARENT ONT::read)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (templ agent-theme-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      )
     ((LF-PARENT ONT::read)
      (meta-data :origin calo :entry-date 20031230 :change-date 20090508 :comments html-purchasing-corpus :wn ("read%2:31:00" "read%2:31:04""read%2:31:09""read%2:31:01" ))
@@ -36,7 +36,7 @@
      (meta-data :origin calo :entry-date 20031230 :change-date 20090508 :comments html-purchasing-corpus :wn ("read%2:31:00" "read%2:31:04""read%2:31:09""read%2:31:01" ))
      (LF-PARENT ONT::read)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      )
     
     )

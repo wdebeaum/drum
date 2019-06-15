@@ -56,11 +56,11 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::step
-;    (wordfeats (W::morph (:forms (-vb) :nom W::step)))
+    ;(wordfeats (W::morph (:forms (-vb) :nom W::step)))
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("run-51.3.2"))
      (LF-PARENT ONT::self-locomote)

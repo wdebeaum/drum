@@ -2,7 +2,7 @@
 ;;;; W::happen
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::happen
@@ -25,7 +25,7 @@
     ((LF-PARENT ONT::HAPPEN)
      (example "it happened [to be true]")
      ;;(SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL neutral-theme-subjcontrol-templ  (xp (% W::cp (W::ctype W::s-to))))
+     (TEMPL NEUTRAL-FORMAL-CP-SUBJCONTROL-TEMPL  (xp (% W::cp (W::ctype W::s-to))))
      (SYNTAX (w::exclude-passive +))
      )
     )

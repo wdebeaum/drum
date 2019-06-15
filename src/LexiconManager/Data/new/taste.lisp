@@ -2,7 +2,7 @@
 ;;;; W::taste
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::taste
    (wordfeats (W::morph (:forms (-vb) :nom W::taste)))
@@ -10,7 +10,7 @@
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("stimulus_subject-30.4") :wn ("taste%2:39:02" "taste%2:39:12"))
      (LF-PARENT ONT::appears-to-have-property)
      (example "it tastes good")
-     (TEMPL neutral-pred-xp-templ) ; like look
+     (TEMPL NEUTRAL-FORMAL-PRED-SUBJCONTROL-TEMPL) ; like look
      (PREFERENCE 0.96)
      )
     ((LF-PARENT ONT::active-perception)

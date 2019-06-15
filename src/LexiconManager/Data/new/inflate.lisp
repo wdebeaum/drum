@@ -11,7 +11,7 @@
      (LF-PARENT ONT::increase)
      (example "I inflated the ballon")
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-AFFECTED-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     (
      (LF-PARENT ONT::increase)

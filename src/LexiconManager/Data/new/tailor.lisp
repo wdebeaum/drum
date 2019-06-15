@@ -9,7 +9,7 @@
    (SENSES
     ((EXAMPLE "this message is custom-tailored")
      (LF-PARENT ONT::ACCOMMODATE)
-     (TEMPL agent-affected-xp-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin task-learning :entry-date 200500909 :change-date nil :comments nil)
      )
     ))

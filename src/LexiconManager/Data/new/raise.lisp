@@ -2,7 +2,7 @@
 ;;;; W::raise
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    (W::raise
    (SENSES
@@ -14,7 +14,7 @@
     ((meta-data :origin cause-result-relations :entry-date 20180706 :change-date nil :comments nil)
      (lf-parent ont::nurturing)
      (example "He was raised by his deaf mother.")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

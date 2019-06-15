@@ -11,7 +11,7 @@
     ((LF-PARENT ONT::possibly-true)
      (meta-data :origin cardiac :entry-date 20090416 :change-date nil :comments speechtests)
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL EXPLETIVE-THEME-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
+     (TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
      )
     ))
 ))
@@ -37,12 +37,12 @@
      (LF-PARENT ONT::perception)
      ;;(SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
      (example "he felt him move")
-     (TEMPL experiencer-action-objcontrol-templ (xp (% W::VP (W::vform W::base))))
+     (TEMPL EXPERIENCER-NEUTRAL-FORMAL-CP-OBJCONTROL-A-TEMPL (xp (% W::VP (W::vform W::base))))
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("stimulus_subject-30.4") :wn ("feel%2:39:09" "feel%2:42:00"))
      (LF-PARENT ONT::appears-to-have-property)
      (example "it feels good")
-     (TEMPL EXPLETIVE-THEME-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
+     (TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
      )
     ;;;; I feel poorly
     ;;;; I feel like a coke
@@ -53,7 +53,7 @@
     ;;;; swift 02/12/02 changed subject to experiencer
     ((LF-PARENT ONT::experiencer-emotion)
      (SEM (F::Aspect F::Stage-Level))
-     (TEMPL experiencer-pred-xp-templ)
+     (TEMPL EXPERIENCER-FORMAL-PRED-SUBJCONTROL-TEMPL)
      )
     )
    )

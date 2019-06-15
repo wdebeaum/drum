@@ -2,7 +2,7 @@
 ;;;; w::struggle
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
        (w::struggle
      (senses
@@ -13,7 +13,7 @@
        )
        ((lf-parent ont::fighting)
        (example "he struggled to breath")
-       (TEMPL AGENT-theme-SUBJCONTROL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
+       (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
        (meta-data :origin cardiac :entry-date 20080630 :change-date nil :comments nil)
        )
       ))

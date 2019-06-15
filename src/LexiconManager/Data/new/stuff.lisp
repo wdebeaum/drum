@@ -15,19 +15,19 @@
 )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::stuff
    (SENSES
     ((LF-PARENT ONT::Fill-container)
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL agent-affected-goal-templ (xp (% W::PP (W::ptype (? t W::into W::in)))))
+     (TEMPL AGENT-AFFECTED-RESULT-ADVBL-OBJCONTROL-TEMPL (xp (% W::PP (W::ptype (? t W::into W::in)))))
      (example "stuff the people in/into the rescue vehicle (like sardines)")
      )
     ((LF-PARENT ONT::Fill-container)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "load the truck with oj")
-     (TEMPL AGENT-GOAL-affected-TEMPL (xp (% W::PP (W::ptype (? t W::with)))))
+     (TEMPL AGENT-AFFECTEDR-AFFECTED-XP-PP-WITH-2-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? t W::with)))))
      )
     )
    )

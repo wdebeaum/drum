@@ -2,13 +2,13 @@
 ;;;; W::repair
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::repair
    (SENSES
     ((LF-PARENT ONT::REPAIR)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "repair the truck (with the wrench)")
      )
     )

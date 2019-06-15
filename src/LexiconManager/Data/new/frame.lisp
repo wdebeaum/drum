@@ -14,13 +14,13 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::frame
     (wordfeats (W::morph (:forms (-vb) :nom w::frame)))
    (SENSES
     ((LF-PARENT ONT::surround)
-     (TEMPL neutral-neutral-xp-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      (example "you hair frames you face")
      (meta-data :origin "verbnet-2.0" :entry-date 20060608 :change-date nil :comments nil :vn ("butter-9.9" "contiguous_location-47.8" "fill-9.8") :wn ("frame%2:35:00" "frame%2:42:00"))
      )

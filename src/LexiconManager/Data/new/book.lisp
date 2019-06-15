@@ -17,13 +17,13 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::book
    (senses
     ((lf-parent ont::reserve)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "please book a room for me")
      (meta-data :origin calo-ontology :entry-date 20051214 :change-date nil :comments nil :vn ("get-13.5.1") :wn ("book%2:41:01"))
      )

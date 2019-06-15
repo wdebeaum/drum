@@ -14,7 +14,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::bundle
    (SENSES
@@ -25,7 +25,7 @@
      )
     ((EXAMPLE "bundle the red one with those orange ones")
      (LF-PARENT ONT::joining)
-     (TEMPL AGENT-affected2-TEMPL (xp (% W::PP (W::ptype W::with))))
+     (TEMPL AGENT-AFFECTED-AFFECTED1-XP-TEMPL (xp (% W::PP (W::ptype W::with))))
      )
     )
    )

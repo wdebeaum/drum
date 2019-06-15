@@ -15,7 +15,7 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::remark
     (wordfeats (W::morph (:forms (-vb) :nom W::remark)))
@@ -24,13 +24,13 @@
      (meta-data :origin "verbnet-2.0" :entry-date 20060519 :change-date nil :comments nil :vn ("say-37.7-1" "lecture-37.11-1") :wn ("remark%2:32:00" "remark%2:32:01"))
      (example "He remarked that three teams are going to Delta")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-THEME-XP-TEMPL (xp (% W::cp (W::ctype (? c W::s-finite)))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype (? c W::s-finite)))))
      )
     (
      (LF-PARENT  ONT::SAY)
      (meta-data :origin "verbnet-2.0" :entry-date 20060519 :change-date nil :comments nil :vn ("say-37.7-1" "lecture-37.11-1") :wn ("remark%2:32:00" "remark%2:32:01"))
      (example "he remarked about it [to her]")
-     (TEMPL AGENT-ABOUT-THEME-ADDRESSEE-OPTIONAL-TEMPL)
+     (TEMPL AGENT-FORMAL-AGENT1-2-XP1-PP-3-XP2-PP-WITH-OPTIONAL-TEMPL)
      )
     )
    )

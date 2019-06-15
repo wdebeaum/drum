@@ -2,7 +2,7 @@
 ;;;; W::splatter
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::splatter
    (wordfeats (W::morph (:forms (-vb) :past W::splattered :ing W::splattering :nom w::splatter)))

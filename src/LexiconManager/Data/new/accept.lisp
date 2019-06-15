@@ -2,7 +2,7 @@
 ;;;; W::accept
 ;;;;
 
-(define-words :pos W::v :templ affected-affected-TEMPL
+(define-words :pos W::v :TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL
  :words (
   (W::accept
      (wordfeats (W::morph (:forms (-vb) :nom w::acceptance)))
@@ -14,7 +14,7 @@
     ((LF-PARENT ONT::is-compatible-with)
      (SEM (F::Time-span F::extended) (f::trajectory -))
      (example "that projector accepts european voltage")
-     (templ neutral-theme-xp-templ)
+     (TEMPL NEUTRAL-FORMAL-XP-NP-2-TEMPL)
      (meta-data :origin "wordnet-3.0" :entry-date 20090501 :change-date nil :comments nil)
      )
     )

@@ -2,7 +2,7 @@
 ;;;; W::recede
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::recede
      (wordfeats (W::morph (:forms (-vb) :nom w::recession)))

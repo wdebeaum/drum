@@ -15,7 +15,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::STOP
@@ -24,7 +24,7 @@
     ((EXAMPLE "He stopped rioting; the computer stopped working")
      (LF-PARENT ONT::STOP)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (templ agent-effect-subjcontrol-templ (xp (% w::vp (w::vform w::ing))))
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% w::vp (w::vform w::ing))))
      )
     ((EXAMPLE "he/the truck stopped")
      (LF-PARENT ONT::STOP)
@@ -36,7 +36,7 @@
     ((LF-PARENT ONT::STOP)
      (example "the computers/managers stopped the men working")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-effect-affected-objcontrol-templ (xp (% w::vp (w::vform w::ing))))
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL (xp (% w::vp (w::vform w::ing))))
      )
     ((LF-PARENT ONT::STOP)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
@@ -52,7 +52,7 @@
     |#
      ((meta-data :origin wordnet-3.0 :entry-date 20090528 :change-date nil :comments nil)
      (LF-PARENT ONT::stop)
-     (TEMPL AGENT-EFFECT-AFFECTED-OBJCONTROL-TEMPL (xp (% w::cp (w::ctype w::s-from-ing) (w::ptype w::from))))
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL (xp (% w::cp (w::ctype w::s-from-ing) (w::ptype w::from))))
      (example "The hospital stops visitors from smoking")
      )
     )

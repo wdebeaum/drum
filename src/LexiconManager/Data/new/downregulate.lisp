@@ -2,20 +2,20 @@
 ;;;; W::downregulate
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    (W::downregulate
     (wordfeats (W::morph (:forms (-vb) :nom w::downregulation :agentnom w::downregulator)))
     (senses 
      ((LF-PARENT ont::downregulate)
-;      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-      (TEMPL agent-affected-xp-templ)
+      ;(SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
+      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
       )  
    
    ))
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    ((W::down W::regulate)
     (wordfeats (W::morph (:forms (-vb)
@@ -26,13 +26,13 @@
 				 :nom (w::down w::regulation))))
     (senses 
      ((LF-PARENT ont::downregulate)
-      (TEMPL agent-affected-xp-templ)
+      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
       )  
    
    ))
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    ((W::down W::punc-minus W::regulate)
     (wordfeats (W::morph (:forms (-vb)
@@ -43,7 +43,7 @@
 				 :nom (w::down W::punc-minus w::regulation))))
     (senses 
      ((LF-PARENT ont::downregulate)
-      (TEMPL agent-affected-xp-templ)
+      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
       )  
    
    ))

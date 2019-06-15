@@ -2,14 +2,14 @@
 ;;;; W::attempt
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::attempt
    (wordfeats (W::morph (:forms (-vb) :nom W::attempt)))
    (SENSES
     ((LF-PARENT ONT::TRY)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-effect-subjcontrol-templ (xp (% W::cp (W::ctype (? ct W::s-to)))))
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% W::cp (W::ctype (? ct W::s-to)))))
      (example "he attempted to climb mt everest")
      )
       ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("try-61"))

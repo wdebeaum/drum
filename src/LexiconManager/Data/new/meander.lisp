@@ -2,7 +2,7 @@
 ;;;; W::meander
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::meander
    (wordfeats (W::morph (:forms (-vb) :past W::meandered :ing W::meandering)))

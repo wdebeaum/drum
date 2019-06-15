@@ -46,12 +46,12 @@
    (W::complex
    (SENSES
     ((LF-PARENT ONT::ATTACH)
-     (TEMPL AGENT-affected2-optional-TEMPL (xp (% W::pp (W::ptype (? xxx W::with)))))
+     (TEMPL AGENT-AFFECTED-AFFECTED1-XP-OPTIONAL-TEMPL (xp (% W::pp (W::ptype (? xxx W::with)))))
      (example "We complexed this protein with another protein")
      )
 
     ((LF-PARENT ONT::ATTACH)
-     (TEMPL agent-affected-as-comp-TEMPL (xp (% W::pp (W::ptype (? xxx W::with)))))
+     (TEMPL AGENT-AFFECTED-XP-PP-TEMPL (xp (% W::pp (W::ptype (? xxx W::with)))))
      (example "this protein complexed with another protein")
      )
 

@@ -2,7 +2,7 @@
 ;;;; W::have
 ;;;;
 
-(define-words :pos W::v :boost-word t :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :boost-word t :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::have
@@ -11,15 +11,15 @@
     ((EXAMPLE "I have to go")
      (LF-PARENT ONT::NECESSITY)
      (SEM (F::Aspect F::indiv-level) (F::Time-span F::extended))
-     (TEMPL neutral-theme-subjcontrol-templ)
+     (TEMPL NEUTRAL-FORMAL-CP-SUBJCONTROL-TEMPL)
      ) 
     ((LF-PARENT ONT::HAVE)
      (example "I have a truck")
-     (TEMPL neutral-neutral-xp-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
           )
   
     ((LF-PARENT ONT::CONSUME)
-     (TEMPL AGENT-AFFECTED-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin medadvisor :entry-date 20011121 :change-date nil :comments nil)
      (example "I like to have an antacid at bedtime")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
@@ -29,12 +29,12 @@
      (meta-data :origin trains :entry-date unknown :change-date nil :comments nil)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (example "have the trucks go there")
-     (TEMPL agent-effect-affected-objcontrol-templ (xp (% W::VP (W::vform (? x W::base W::passive)))))
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL (xp (% W::VP (W::vform (? x W::base W::passive)))))
      )
     ((EXAMPLE "A had an effect on C")
      (meta-data :origin csli-ts :entry-date 20070320 :change-date nil :comments nil :wn nil)
      (lf-parent ont::have-influence) 
-     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::NP)))
+     (TEMPL AGENT-FORMAL-XP-CP-TEMPL (xp (% W::NP)))
      )
     
     ((LF-PARENT ONT::have-experience)

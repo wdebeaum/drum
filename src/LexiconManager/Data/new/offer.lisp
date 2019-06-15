@@ -16,13 +16,13 @@
 ))
 ||#
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (W::offer
    (wordfeats (W::morph (:forms (-vb) :past W::offered :ing offering :nom offer)))
    (SENSES
     ((lf-parent ont::offer)
-     (templ agent-addressee-theme-templ)
+     (TEMPL AGENT-AGENT1-FORMAL-2-XP1-3-XP-TEMPL)
      (example "offer him a job")
      ;; restructured this to allow non-movable things to be given
      (meta-data :origin calo :entry-date unknown :change-date 20090513 :comments calo-y1variants)

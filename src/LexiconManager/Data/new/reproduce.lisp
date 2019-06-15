@@ -3,7 +3,7 @@
 ;;;;
 
 (define-words :pos W::V 
-  :templ agent-theme-xp-templ
+  :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 	  (w::reproduce
 	   (wordfeats (W::morph (:forms (-vb) :nom W::reproduction)))
@@ -11,7 +11,7 @@
 	    (
 	     (lf-parent ont::cause-produce-reproduce) ;;  20120524 GUM change new parent
 	     (example "reproduce the effect")
-	     (templ agent-affected-create-templ)
+	     (TEMPL AGENT-AFFECTEDR-XP-TEMPL)
 	     (meta-data :origin bee :entry-date 20040614 :change-date nil :comments portability-experiment)
 	     )	   	   
 	    	    ))

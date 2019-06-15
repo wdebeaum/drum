@@ -2,7 +2,7 @@
 ;;;; W::restart
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::restart
    (SENSES
@@ -14,12 +14,12 @@
     ((LF-PARENT ONT::RESTART)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      (example "restart the action")
-     (templ agent-effect-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-NP-TEMPL)
      )
     ((LF-PARENT ONT::RESTART)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      (example "restart the computer")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

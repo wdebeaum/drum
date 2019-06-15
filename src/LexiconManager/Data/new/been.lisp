@@ -2,7 +2,7 @@
 ;;;; W::BEEN
 ;;;;
 
-(define-words :pos W::v :boost-word t :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :boost-word t :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::BEEN
@@ -32,26 +32,26 @@
     ;;;; she has been hungry
     ((LF-PARENT ONT::HAVE-PROPERTY)
      (LF-FORM W::be)
-     (TEMPL neutral-pred-xp-templ)
+     (TEMPL NEUTRAL-FORMAL-PRED-SUBJCONTROL-TEMPL)
      )
     ;;;; The city has been the largest ...
     (;;(LF-PARENT ONT::IN-RELATION)
      (lf-parent ont::be) ;; 20120524 GUM change new parent
      (LF-FORM W::be)
-     (TEMPL neutral-neutral-equal-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL)
      ;(PREFERENCE 0.96)
      )
 
     (  ;; the fact is he's happy
      (LF-PARENT ont::proposition-equal)
      (LF-FORM w::BE)
-     (TEMPL propositional-equal-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL)
      )
 
     ;;;; There has been an accident.
     ((LF-PARENT ONT::EXISTS)
      (LF-FORM W::be)
-     (TEMPL THERE-THEME-TEMPL)
+     (TEMPL EXPLETIVE-NEUTRAL-XP-TEMPL)
      )
     )
    )

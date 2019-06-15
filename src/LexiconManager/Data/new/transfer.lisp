@@ -17,7 +17,7 @@
 ))
 |#
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::transfer
    ;; adding the morph forms as the doubled consonant with unstressed final syllable is an exception to the morph rule

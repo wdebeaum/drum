@@ -2,7 +2,7 @@
 ;;;; W::sacrifice
 ;;;;
 
-(define-words :pos W::V :templ agent-AFFECTED-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
     (W::sacrifice
    (SENSES

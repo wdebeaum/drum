@@ -32,7 +32,7 @@
      )
     (
      (LF-PARENT ONT::becoming-aware)
-     (TEMPL agent-formal-xp-templ) 
+     (TEMPL AGENT-FORMAL-XP-CP-TEMPL) 
      )
     ((EXAMPLE "note it")
      (LF-PARENT ONT::RECORD)

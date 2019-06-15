@@ -13,7 +13,7 @@
    )
 ))
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ;They reported fifty people to be killed.
   (W::report
@@ -22,26 +22,26 @@
     (;;(LF-parent ONT::announce)
      (lf-parent ont::assert)
      (Example "He reported that they solved the problem")
-     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype W::s-that))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype W::s-that))))
      (meta-data :origin "verbnet-1.5-corrected" :entry-date 20060214 :change-date 20090506 :comments nil :vn ("say-37.7")) 
      )
     (;;(LF-parent ONT::announce)
      (lf-parent ont::assert)
      (Example "He reported the results [to him]")
-     (TEMPL agent-theme-to-addressee-optional-templ)
+     (TEMPL AGENT-FORMAL-AGENT1-OPTIONAL-TEMPL)
      (meta-data :origin "verbnet-1.5-corrected" :entry-date 20060214 :change-date 20090506 :comments nil :vn ("say-37.7")) 
      )
      (;;(LF-parent ONT::announce)
       (lf-parent ont::assert)
      (Example "He reported them ready")
-     (TEMPL agent-neutral-complex-templ)
+     (TEMPL AGENT-NEUTRAL-FORMAL-OBJCONTROL-TEMPL)
      (meta-data :origin trips :entry-date 20090406 :change-date 20090506 :comments nil :vn ("say-37.7")) 
      )
      ;; he reported them killed
     (;;(LF-parent ONT::announce)
      (lf-parent ont::assert)
      (Example "He reported them to be ready")
-     (TEMPL agent-theme-objcontrol-templ (xp (% W::cp (W::ctype W::s-to))))
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
      (meta-data :origin trips :entry-date 20090406 :change-date 20090506 :comments nil :vn ("say-37.7")) 
      )	   
     )

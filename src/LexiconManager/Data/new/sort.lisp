@@ -16,33 +16,33 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::sort
    (SENSES
     ((lf-parent ont::sort)
      (example "sort them into groups of three")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-affected-RESULT-OPTIONAL-TEMPL (xp (% W::PP (W::ptype W::into))))
+     (TEMPL AGENT-AFFECTED-RESULT-XP-PP-INTO-OPTIONAL-TEMPL (xp (% W::PP (W::ptype W::into))))
      (meta-data :origin plow :entry-date 20060626 :change-date 20090505 :comments pq0380)
      )
     ((lf-parent ont::sort)
      (example "sort them by departure date")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-affected-theme-TEMPL (xp (% W::PP (W::ptype W::by))))
+     (TEMPL AGENT-AFFECTED-FORMAL-XP-PP-WITH-TEMPL (xp (% W::PP (W::ptype W::by))))
      (meta-data :origin plow :entry-date 20070928 :change-date 20090505 :comments plow-travel)
      )
     ((lf-parent ont::sort)
      (example "sort by departure date")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-theme-xp-TEMPL (xp (% W::PP (W::ptype W::by))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::PP (W::ptype W::by))))
      (meta-data :origin plow :entry-date 20071003 :change-date 20090505 :comments plow-travel)
      )
     ;; need this for passive
     ((lf-parent ont::sort)
      (example "sort them into groups of three")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin plow :entry-date 20060626 :change-date 20090505 :comments pq0380)
      )
 

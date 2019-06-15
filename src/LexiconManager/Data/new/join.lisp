@@ -8,12 +8,12 @@
    (SENSES
     ((EXAMPLE "green join team bravo")
      (LF-PARENT ONT::JOINING)
-     (TEMPL AGENT-affected-xp-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin coordops :entry-date 20070707 :change-date nil :comments nil)
      )
     ((EXAMPLE "they joined together")
      (LF-PARENT ONT::JOINING)
-     (TEMPL agent-plural-templ) 
+     (TEMPL AGENT-NP-PLURAL-TEMPL) 
      (meta-data :origin general :entry-date 20110128 :change-date nil :comments jantzen)
      )
 
@@ -26,7 +26,7 @@
 
     ((EXAMPLE "join this cell with the next cell")
      (LF-PARENT ONT::joining)
-     (TEMPL AGENT-affected2-TEMPL (xp (% W::PP (W::ptype (? ptype w::to W::with)))))
+     (TEMPL AGENT-AFFECTED-AFFECTED1-XP-TEMPL (xp (% W::PP (W::ptype (? ptype w::to W::with)))))
      (meta-data :origin task-learning :entry-date 20050819 :change-date nil :comments nil)
      )
 
@@ -34,7 +34,7 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (example "join the newsgroup")
      (meta-data :origin calo-ontology :entry-date 20060119 :change-date nil :comments caloy3)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
 
     )

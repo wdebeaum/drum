@@ -2,7 +2,7 @@
 ;;;; W::eyeing
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::eyeing
    (wordfeats (W::morph (:forms NIL)) (W::vform W::ing))

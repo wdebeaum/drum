@@ -2,7 +2,7 @@
 ;;;; W::continue
 ;;;;
 
-(define-words :pos W::v :templ AGENT-effect-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-NP-TEMPL
  :words (
   (W::continue
    (wordfeats (W::morph (:forms (-vb))))
@@ -18,24 +18,24 @@
     ((lf-parent ont::activity-ongoing)
      (SEM (F::Locative F::Located) (F::Time-span F::extended))
      (example "continue walking")
-     (TEMPL Agent-EFFECT-SUBJCONTROL-TEMPL (xp (% w::VP (w::vform w::ing))))
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% w::VP (w::vform w::ing))))
      (meta-data :origin bee :entry-date 20040805 :change-date 20090220 :comments portability-followup)
      )    
     ((lf-parent ont::activity-ongoing)
      (SEM (F::Locative F::Located) (F::Time-span F::extended))
      (example "they will continue to light up")
-     (TEMPL Agent-EFFECT-SUBJCONTROL-TEMPL)
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL)
      (meta-data :origin bee :entry-date 20080923 :change-date 20090220 :comments pilot4)
      )
     ((lf-parent ont::activity-ongoing)
      (SEM (F::Locative F::Located) (F::Time-span F::extended))
      (example "Continue with your work")
-     (TEMPL agent-EFFECT-OPTIONAL-TEMPL (xp (% w::PP (w::pform w::with))))
+     (TEMPL AGENT-FORMAL-XP-OPTIONAL-TEMPL (xp (% w::PP (w::pform w::with))))
      (meta-data :origin bee :entry-date 20040805 :change-date 20090220 :comments portability-followup)
      )
     ((lf-parent ont::activity-ongoing)
      (example "he continued the patient on the therapy" "the patient was continued on the drug")
-     (TEMPL AGENT-AFFECTED-THEME-TEMPL (xp (% W::PP (W::ptype (? pt W::with W::on)))))
+     (TEMPL AGENT-AFFECTED-FORMAL-XP-PP-WITH-TEMPL (xp (% W::PP (W::ptype (? pt W::with W::on)))))
      (meta-data :origin cernl :entry-date 20110210 :change-date nil :comments ticket-242)
      )
 #|
@@ -50,7 +50,7 @@
     ))
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::continue W::on)
    (SENSES
@@ -65,7 +65,7 @@
     ;;;; continue on with the plan
     ((LF-PARENT ONT::ACTIVITY-ONGOING)
      (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL AGENT-neutral-OPTIONAL-TEMPL (xp (% W::pp (W::ptype W::with))))
+     (TEMPL AGENT-NEUTRAL-XP-OPTIONAL-TEMPL (xp (% W::pp (W::ptype W::with))))
      (meta-data :origin bee :entry-date ? :change-date 20040805 :comments portability-followup)
      )
     ))

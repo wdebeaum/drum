@@ -2,7 +2,7 @@
 ;;;; w::put
 ;;;;
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 ((w::put (w::in))
    (wordfeats (W::morph (:forms (-vb) :past W::put)))
@@ -12,7 +12,7 @@
    (lf-parent ont::install)
    (example "put in the phone lines")
    (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-   (TEMPL agent-affected-xp-templ)
+   (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
    (preference .97) ; prefer in as adverbial
    (meta-data :origin calo-ontology :entry-date 20060124 :change-date 20090504 :comments caloy3)
    )
@@ -46,20 +46,20 @@
      (meta-data :origin vn-analysis :entry-date unknown :change-date 20040617 :comments change-lf)
      (example "put the oj into the tanker")
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-AFFECTED-GOAL-TEMPL)
+     (TEMPL AGENT-AFFECTED-RESULT-ADVBL-OBJCONTROL-TEMPL)
      )
     ((LF-PARENT ONT::put)
      (meta-data :origin vn-analysis :entry-date unknown :change-date 20040617 :comments change-lf)
      (example "put down the box")
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-RESULT-AFFECTED-TEMPL)
+     (TEMPL AGENT-RESULT-AFFECTED-2-XP-TEMPL)
      )
     
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::put (w::back))
    (wordfeats (W::morph (:forms (-vb) :past W::put :ing W::putting)))
@@ -73,7 +73,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::put (W::out))
     (wordfeats (W::morph (:forms (-vb) :past W::put :ing W::putting)))
@@ -81,13 +81,13 @@
     ((LF-PARENT ONT::STOP) 
      (example "put out the fire")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
     ((W::put (w::on))
    (wordfeats (W::morph (:forms (-vb) :past W::put)))

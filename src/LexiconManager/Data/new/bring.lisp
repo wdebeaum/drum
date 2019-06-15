@@ -2,7 +2,7 @@
 ;;;; W::bring
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::bring (w::in))
    (wordfeats (W::morph (:forms (-vb) :past W::brought)))
@@ -10,14 +10,14 @@
     ((LF-PARENT ont::add-include)
      (meta-data :origin mobius :entry-date 200808026 :change-date nil :comments nil)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "bring in the experts")
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::bring
@@ -33,22 +33,22 @@
     ((LF-PARENT ONT::adjust)
      (meta-data :origin step :entry-date 20080630 :change-date nil :comments nil)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL agent-affected-result-templ (xp (% W::PP (W::ptype W::to))))
+     (TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL (xp (% W::PP (W::ptype W::to))))
      (example "airing the curtain brings the fumes to acceptable levels")
      )
     (;(LF-PARENT ONT::cause-make)
      (LF-PARENT ONT::cause-produce-reproduce)
      (meta-data :origin step :entry-date 20080630 :change-date nil :comments nil)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-;     (TEMPL agent-effect-xp-templ (xp (% W::PP (W::ptype W::about))))
-     (TEMPL agent-affected-create-templ (xp (% W::PP (W::ptype W::about))))
+     ;(TEMPL agent-effect-xp-templ (xp (% W::PP (W::ptype W::about))))
+     (TEMPL AGENT-AFFECTEDR-XP-TEMPL (xp (% W::PP (W::ptype W::about))))
      (example "his consultations brought about his expertise")
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::bring (W::up))
    (wordfeats (W::morph (:forms (-vb) :past W::brought)))
@@ -60,7 +60,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::bring (w::to))
     (wordfeats (W::morph (:forms (-vb) :past W::brought :ing W::bringing)))
@@ -74,7 +74,7 @@
      (meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "the elixir brought him to")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
       )
      )
    )

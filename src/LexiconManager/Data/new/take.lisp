@@ -2,7 +2,7 @@
 ;;;; :::take
 ;;;;
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::take (W::off))
    (wordfeats (W::morph (:forms (-vb) :past W::took :pastpart W::taken :ing W::taking)))
@@ -10,13 +10,13 @@
     ((LF-PARENT ONT::cause-off)
      (example "take off the coat/take the coat off")
      (SEM (F::Aspect F::bounded) (F::time-span F::extended) (F::cause F::agentive))
-     (TEMPL AGENT-AFFECTED-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::take (W::out))
    (wordfeats (W::morph (:forms (-vb) :past W::took :pastpart W::taken :ing W::taking)))
@@ -29,7 +29,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::take (W::in))
    (wordfeats (W::morph (:forms (-vb) :past W::took :pastpart W::taken :ing W::taking)))
@@ -42,7 +42,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::take
@@ -51,36 +51,36 @@
     ((EXAMPLE "He took the aspirin")
      (LF-PARENT ONT::consume)
      (SEM (F::cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     
     ;;;; Take a path, e.g., The truck takes the route to Avon
     ((LF-PARENT ONT::MOVE-by-means)
      (SEM (F::Aspect F::bounded) (F::time-span F::extended))
      (example "The truck takes the route to Avon")
-     (TEMPL agent-theme-xp-TEMPL)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      )
     
     ((LF-PARENT ONT::TAKE-TIME)
      (example "the plan took [him] 5 hours")
-     (TEMPL neutral-duration-templ)
+     (TEMPL NEUTRAL-EXTENT-TEMPL)
      )
 
     ((LF-PARENT ONT::TAKE-TIME)
      (example "it took (me) 5 hours to  complete the plan")
-     (TEMPL THEME-DURATION-EXPLETIVE-TEMPL)
+     (TEMPL EXPLETIVE-NEUTRAL-EXTENT-FORMAL-2-OPTIONAL-4-OBJCONTROL-TEMPL)
      (SEM (F::Aspect F::stage-level))
      )
     
     ((LF-PARENT ONT::TAKE-TIME)
      (example "he took 5 hours to work") 
-     (TEMPL neutral-DURATION-COMPLEX-SUBJCONTROL-TEMPL)
+     (TEMPL NEUTRAL-EXTENT-FORMAL-SUBJCONTROL-TEMPL)
      )
    
     ((LF-PARENT ONT::create)
      (SEM (F::Cause F::agentive) (F::Aspect F::unbounded) (F::time-span F::extended))
      (example "take notes; take pictures")
-     (TEMPL agent-affected-create-templ)
+     (TEMPL AGENT-AFFECTEDR-XP-TEMPL)
      )
 
     #|
@@ -108,36 +108,36 @@
     ((LF-PARENT ONT::is-compatible-with)
      (SEM (F::Time-span F::extended) (f::trajectory -))
      (example "that projector takes european voltage")
-     (templ neutral-neutral-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      (meta-data :origin calo :entry-date 20050308 :change-date nil :comments projector-corpus)
      )
     ((LF-PARENT ONT::take-execute)
      (example "take action" "take a shower")
      (meta-data :origin asma :entry-date 20111005)
-     (templ agent-effect-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-NP-TEMPL)
      (SEM (F::Aspect F::dynamic) (F::Time-span F::extended))
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::take W::care)
    (wordfeats (W::morph (:forms (-vb) :past W::took :pastpart W::taken)))
    (SENSES
     (;;(LF-PARENT ONT::managing)
-     ; (lf-parent  ont::manage) ;; 20120521 GUM change new parent 
+      ;(lf-parent  ont::manage) ;; 20120521 GUM change new parent 
      (lf-parent ont::taking-care-of)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (example "he took care of the problem")
-     (TEMPL agent-AFFECTED-XP-TEMPL (xp (% W::PP (W::ptype W::of))))
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL (xp (% W::PP (W::ptype W::of))))
      )    
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::take (w::away))
    (wordfeats (W::morph (:forms (-vb) :past W::took :pastpart W::taken :ing W::taking)))
@@ -147,13 +147,13 @@
      (LF-PARENT ONT::cause-come-from)
      (example "take away the cargo" "take it away from the truck")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-AFFECTED-xp-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
  ((W::take (w::over))
   (wordfeats (W::morph (:forms (-vb) :past W::took :pastpart W::taken :ing W::taking :nom (w::take w::over))))
@@ -163,13 +163,13 @@
      (LF-PARENT ONT::appropriate)
      (example "take the project over" "take over the project")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-AFFECTED-xp-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    ((W::take (w::up))
     (wordfeats (W::morph (:forms (-vb) :past W::took :pastpart W::taken :ing W::taking)))
@@ -178,13 +178,13 @@
      (LF-PARENT ONT::appropriate)
      (example "take the slack up" "take up the slack")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-AFFECTED-XP-TEMPL )
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL )
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    ((W::take (w::on))
      (wordfeats (W::morph (:forms (-vb) :past W::took :pastpart W::taken :ing W::taking)))
@@ -195,13 +195,13 @@
      (LF-PARENT ONT::APPROPRIATE)
      (example "take the project on" "take on the project")
      (SEM (F::Aspect F::bounded) )
-     (TEMPL AGENT-AFFECTED-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::take w::a w::chance)
    (wordfeats (W::morph (:forms (-vb) :past W::took :pastpart W::taken :ing W::taking)))

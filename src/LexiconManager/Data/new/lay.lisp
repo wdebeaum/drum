@@ -2,7 +2,7 @@
 ;;;; W::lay
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::lay
    (wordfeats (W::morph (:forms (-vb) :past W::laid :pastpart W::laid :ing W::laying)))
@@ -18,7 +18,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::lay
@@ -32,7 +32,7 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::lay (w::off))
    (wordfeats (W::morph (:forms (-vb) :past W::laid)))

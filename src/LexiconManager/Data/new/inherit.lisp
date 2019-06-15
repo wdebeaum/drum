@@ -11,7 +11,7 @@
      
      (lf-parent ont::incur-inherit-receive) ;; 20120524 GUM change new parent
      (syntax (w::resultative +))
-     (TEMPL affected-affected-templ )
+     (TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL )
      )
     )
    )

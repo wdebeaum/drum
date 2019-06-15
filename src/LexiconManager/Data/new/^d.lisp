@@ -2,7 +2,7 @@
 ;;;; w::^d
 ;;;;
 
-(define-words :pos W::v :boost-word t :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :boost-word t :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((w::^d w::better)   
    (wordfeats (W::morph (:forms NIL))
@@ -26,7 +26,7 @@
    )
 ))
 
-(define-words :pos W::v :boost-word t :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :boost-word t :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::^d

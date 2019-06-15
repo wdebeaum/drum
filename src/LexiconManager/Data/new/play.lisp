@@ -12,7 +12,7 @@
      (meta-data :origin boudreaux :entry-date 20060424 :change-date 20111004 :comments asma)
      ;(LF-PARENT ONT::play)
      (LF-PARENT ONT::make-sound)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      )
     ((EXAMPLE "they are playing")

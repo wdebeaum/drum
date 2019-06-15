@@ -2,7 +2,7 @@
 ;;;; W::build
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-create-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTEDR-XP-TEMPL
  :tags (:base500)
  :words (
   (W::build
@@ -22,13 +22,13 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
  ((W::build (w::up))
    (wordfeats (W::morph (:forms (-vb) :past W::built)))
    (SENSES
     ((LF-PARENT ONT::clog)
-     (TEMPL AGENT-affected-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     ((LF-PARENT ONT::clog)
      (example "the fluid built up in his lungs")

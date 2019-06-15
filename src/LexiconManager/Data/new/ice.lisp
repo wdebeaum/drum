@@ -49,7 +49,7 @@
 ))
 
 (define-words :pos W::V 
-  :templ agent-affected-xp-templ
+  :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (w::ice
  (senses
@@ -58,7 +58,7 @@
    (syntax (w::resultative +))
    (example "he iced the cake")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
-   (TEMPL AGENT-affected-XP-TEMPL)
+   (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
    )
   )
  )

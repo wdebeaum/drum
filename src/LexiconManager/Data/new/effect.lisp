@@ -21,7 +21,7 @@
    (wordfeats (W::morph (:forms (-vb) :nom W::effect :nomsubjpreps (w::of) :nomobjpreps (w::on))))
    (senses
     ((lf-parent ont::objective-influence)
-     (TEMPL agent-affected-xp-templ) 
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) 
      (example "to effect a change")
      )
     ))

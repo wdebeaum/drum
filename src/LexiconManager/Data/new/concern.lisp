@@ -13,14 +13,14 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::concern
    (SENSES
     ((EXAMPLE "the problem concerns him")
      (LF-PARENT ONT::evoke-worry)
      (meta-data :origin calo :entry-date 20050425 :change-date nil :comments projector-purchasing)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
 ;   the problem concerns last year's budget
     )

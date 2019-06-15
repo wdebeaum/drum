@@ -2,7 +2,7 @@
 ;;;; W::confirm
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::confirm
    (SENSES
@@ -10,7 +10,7 @@
      (LF-PARENT ONT::CONFIRM)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (example "confirm that they arrived")
-     (TEMPL AGENT-theme-XP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      )
     ((LF-PARENT ONT::confirm)
      (example "he confirmed the information (with him)")
@@ -18,26 +18,26 @@
      )
     ((LF-PARENT ONT::confirm)
      (example "I confirmed it to be broken")
-     (TEMPL agent-effect-affected-objcontrol-templ)
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL)
     )
     (
      (LF-PARENT ONT::CORRELATION)
      (example "The result confirmed that the gene activates the protein")
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL neutral-formal-as-comp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL NEUTRAL-FORMAL-XP-NP-1-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      )
 
     ((LF-PARENT ONT::confirm)
      (example "we confirm in this paper that it works")
      (preference .98)
-     (TEMPL agent-located-theme-xp-templ (xp (% w::cp (w::ctype w::s-finite))))
+     (TEMPL AGENT-FORMAL-LOCATION-2-XP-TEMPL (xp (% w::cp (w::ctype w::s-finite))))
      )
     
     (
      (LF-PARENT ONT::CORRELATION)
      (example "The result confirmed the hypothesis")
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL neutral-neutral-xp-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      )
 
    ))

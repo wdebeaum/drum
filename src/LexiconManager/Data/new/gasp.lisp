@@ -2,7 +2,7 @@
 ;;;; W::gasp
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::gasp
    (SENSES

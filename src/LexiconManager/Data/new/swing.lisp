@@ -2,7 +2,7 @@
 ;;;; W::swing
 ;;;;
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::swing
    (wordfeats (W::morph (:forms (-vb) :past W::swung :pastpart W::swung :ing W::swinging)))

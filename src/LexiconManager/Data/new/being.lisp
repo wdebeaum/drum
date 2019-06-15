@@ -14,7 +14,7 @@
 	   ))
 ))
 
-(define-words :pos W::v :boost-word t :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :boost-word t :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::BEING
@@ -31,12 +31,12 @@
     ((LF-PARENT ONT::HAVE-PROPERTY)
      (SEM (F::Aspect F::Stage-Level))
      (LF-FORM W::be)
-     (TEMPL neutral-pred-xp-templ)
+     (TEMPL NEUTRAL-FORMAL-PRED-SUBJCONTROL-TEMPL)
      )
     ;;;; .. there is a box
     ((LF-PARENT ONT::EXISTS)
      (LF-FORM W::be)
-     (TEMPL THERE-THEME-TEMPL)
+     (TEMPL EXPLETIVE-NEUTRAL-XP-TEMPL)
      )
     )
    )

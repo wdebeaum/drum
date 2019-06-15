@@ -2,7 +2,7 @@
 ;;;; W::mutate
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::mutate
    (wordfeats (W::morph (:forms (-vb) :nom w::mutation :nomobjpreps (w::in w::of))))
@@ -15,7 +15,7 @@
 
     (
      (LF-PARENT ONT::life-transformation)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     
     )

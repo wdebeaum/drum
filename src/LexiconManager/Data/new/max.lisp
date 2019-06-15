@@ -14,7 +14,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 ((w::max (w::out))
  (senses
@@ -22,7 +22,7 @@
    (LF-PARENT ONT::maximize)
    (example "max out the budget")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-   (TEMPL AGENT-THEME-XP-TEMPL)
+   (TEMPL AGENT-FORMAL-XP-TEMPL)
    )
   )
  )

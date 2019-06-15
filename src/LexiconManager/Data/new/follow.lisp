@@ -13,7 +13,7 @@
      )
     ((LF-PARENT ONT::Compliance)
      (example "follow this procedure")
-     (templ agent-theme-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      (meta-data :origin integrated-learning :entry-date 20050817 :change-date nil :comments nil)
      )
     )

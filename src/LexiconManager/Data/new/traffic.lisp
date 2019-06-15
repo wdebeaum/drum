@@ -22,7 +22,7 @@
    (SENSES
     ((LF-PARENT ONT::TRANSPORT)
      (EXAMPLE "protein trafficking")
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

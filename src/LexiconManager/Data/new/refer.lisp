@@ -2,7 +2,7 @@
 ;;;; W::refer
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
  (W::refer
   (wordfeats (W::morph (:forms (-vb) :past W::referred :ing W::referring :nom referral)))
@@ -17,7 +17,7 @@
      (LF-PARENT ONT::SUGGEST)
      (example "I refer him (to you)")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-THEME-to-addressee-optional-TEMPL)
+     (TEMPL AGENT-FORMAL-AGENT1-OPTIONAL-TEMPL)
      )
      )
    )

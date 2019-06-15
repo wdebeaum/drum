@@ -2,7 +2,7 @@
 ;;;; W::AM
 ;;;;
 
-(define-words :pos W::v :boost-word t :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :boost-word t :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::AM
@@ -30,20 +30,20 @@
   ;;  I am to arrive at 5
     ((LF-PARENT ONT::EXPECTATION)
      (LF-FORM W::be)
-     (TEMPL neutral-theme-subjcontrol-templ)
+     (TEMPL NEUTRAL-FORMAL-CP-SUBJCONTROL-TEMPL)
      (preference .98) ;; slighly disprefered to favor passive constructions over adjectives
      )
     ;;;; I am hungry
     ((LF-PARENT ONT::HAVE-PROPERTY)
      (LF-FORM W::be)
-     (TEMPL neutral-pred-xp-templ) 
+     (TEMPL NEUTRAL-FORMAL-PRED-SUBJCONTROL-TEMPL) 
      (preference .98) ;; slighly disprefered to favor passive constructions over adjectives
      )
     ;;;; I am the best
     (;;(LF-PARENT ONT::IN-RELATION)
      (lf-parent ont::be) ;; 20120524 GUM change new parent
      (LF-FORM W::be)
-     (TEMPL neutral-neutral-equal-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL)
      
      )
     )

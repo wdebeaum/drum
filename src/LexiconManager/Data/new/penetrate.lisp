@@ -2,7 +2,7 @@
 ;;;; W::penetrate
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::penetrate
    (SENSES
@@ -11,7 +11,7 @@
      ;(LF-PARENT ONT::entering)
      (LF-PARENT ONT::penetrate)
      ;(templ agent-neutral-xp-templ)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      )
     )

@@ -13,7 +13,7 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::shed
    (wordfeats (W::morph (:forms (-vb) :past W::shed :ing W::shedding)))
@@ -26,7 +26,7 @@
     ((meta-data :origin "verbnet-2.0" :entry-date 20060606 :change-date nil :comments nil :vn ("substance_emission-43.4") :wn ("shed%2:35:02" "shed%2:35:00" "shed%2:29:00"))
      (EXAMPLE "The snake shed its skin")
      (LF-PARENT ONT::shed)
-     (TEMPL agent-affected-xp-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

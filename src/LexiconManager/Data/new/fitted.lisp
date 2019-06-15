@@ -2,7 +2,7 @@
 ;;;; w::fitted
 ;;;;
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ;; alternate past form
   (w::fitted
@@ -11,7 +11,7 @@
     ((EXAMPLE "He fitted it under the table")
      (LF-PARENT ONT::put)
      (syntax (w::vform (? vf w::past w::pastpart)))
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

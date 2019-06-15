@@ -36,16 +36,16 @@
      ;(LF-PARENT ONT::CREATE)
      (LF-PARENT ont::incur-inherit-receive)
      (example "the patient developed a cough")
-;     (TEMPL affected-result-xp-templ)
-;     (templ AFFECTED-AFFECTED-RESULT-ARG-TEMPL)
-     (templ affected-affected-templ)
+     ;(TEMPL affected-result-xp-templ)
+     ;(templ AFFECTED-AFFECTED-RESULT-ARG-TEMPL)
+     (TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL)
      )
     
     (
      (LF-PARENT ONT::CREATE)
      (example "We developed a theory")
      ;(TEMPL agent-affected-xp-templ)
-     (TEMPL agent-affected-result-arg-templ)
+     (TEMPL AGENT-AFFECTEDR-TEMPL)
      )
 
     )

@@ -2,7 +2,7 @@
 ;;;; W::weave
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-create-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTEDR-XP-TEMPL
  :words (
   (W::weave
    (wordfeats (W::morph (:forms (-vb) :past W::wove :pastpart W::woven :ing W::weaving :nom w::weave)))

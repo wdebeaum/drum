@@ -2,7 +2,7 @@
 ;;;; W::see
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::see
@@ -36,23 +36,23 @@
      (LF-PARENT ONT::becoming-aware)
      ;;(SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
      (example "see whether/if/that it's a book order")
-     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      )
     ((meta-data :origin trips :entry-date 20090330 :change-date nil :comments missing-sense)
      (LF-PARENT ONT::active-perception)
      ;;(SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
      (example "he saw him drink / drinking ")
-     (TEMPL experiencer-action-objcontrol-templ (xp (% W::VP (W::vform (? vf2 W::base w::ing)))))
+     (TEMPL EXPERIENCER-NEUTRAL-FORMAL-CP-OBJCONTROL-A-TEMPL (xp (% W::VP (W::vform (? vf2 W::base w::ing)))))
      )
     ((meta-data :origin trips :entry-date 20090330 :change-date nil :comments missing-sense)
      (LF-PARENT ONT::active-perception)
      ;;(SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
      (example "he saw him happy / drunk ")
-     (TEMPL experiencer-neutral-complex-templ)
+     (TEMPL EXPERIENCER-NEUTRAL-FORMAL-PRED-OBJCONTROL-TEMPL)
      )
     ((LF-PARENT ONT::belief-ascription)
      (example "he sees the situation as positive")
-     (TEMPL experiencer-neutral-as-theme-templ)
+     (TEMPL EXPERIENCER-NEUTRAL-FORMAL-2-XP-3-XP2-PP-TEMPL)
      )
      )
    )

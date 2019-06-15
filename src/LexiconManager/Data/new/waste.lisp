@@ -14,18 +14,18 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::waste
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("consume-65-1"))
      (LF-PARENT ONT::spend-time)
-     (TEMPL agent-duration-theme-templ (xp (% w::pp (w::ptype (? pt w::for w::on))))) ; like spend
+     (TEMPL AGENT-EXTENT-FORMAL-XP-TEMPL (xp (% w::pp (w::ptype (? pt w::for w::on))))) ; like spend
      (PREFERENCE 0.96)
      )
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("consume-65-1"))
      (LF-PARENT ONT::spend-time)
-     (TEMPL neutral-duration-templ) ; like spend
+     (TEMPL NEUTRAL-EXTENT-TEMPL) ; like spend
      (PREFERENCE 0.96)
      )
     ;;;; we wasted an opportunity

@@ -2,7 +2,7 @@
 ;;;; W::proven
 ;;;;
 
-(define-words :pos W::v :templ agent-EFFECT-AFFECTED-OBJCONTROL-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL
  :words (
  ;; alternate pastpart form
  (W::proven

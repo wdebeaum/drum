@@ -2,7 +2,7 @@
 ;;;; W::embroider
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::embroider
    (wordfeats (W::morph (:forms (-vb) :past W::embroidered :ing W::embroidering)))

@@ -19,14 +19,14 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    (W::limit
     (wordfeats (W::morph (:forms (-vb) :past W::limited :ing W::limiting :nom w::limitation)))
    (SENSES
     ((meta-data :origin chf :entry-date 20070817 :change-date nil :comments chf-proposal)
      (LF-PARENT ONT::hindering)
-     (TEMPL agent-affected-xp-templ) 
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) 
      (example "are you limiting your fluid intake")
      )
     )

@@ -19,14 +19,14 @@
    )
 ))
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    (W::button
     (wordfeats (W::morph (:forms (-vb) :past W::buttoned :ing W::buttoning)))
    (SENSES
     ((meta-data :origin trips :entry-date 20090401 :change-date nil :comments nil)
      (LF-PARENT ONT::attach)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

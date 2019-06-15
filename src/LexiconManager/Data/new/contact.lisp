@@ -14,14 +14,14 @@
    )
 ))||#
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::contact
    (senses
    ((meta-data :origin calo :entry-date 20031212 :change-date 20090508 :comments calo-y1script)
     (LF-PARENT ONT::establish-communication)
     (example "I'll contact the lab manager")
-    (TEMPL AGENT-ADDRESSEE-TEMPL)
+    (TEMPL AGENT-AGENT1-NP-TEMPL)
     )
     ;; NOW COMPOSITIONAL
    #|((meta-data :origin calo :entry-date 20031212 :change-date 20090508 :comments calo-y1script)

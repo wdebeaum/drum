@@ -17,7 +17,7 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "register for the conference/at the hotel")
      (meta-data :origin calo-ontology :entry-date 20060117 :change-date nil :comments caloy3)
-     (templ agent-affected-optional-templ (xp (% W::PP (W::ptype (? t W::at W::for)))))
+     (TEMPL AGENT-AFFECTED-XP-OPTIONAL-B-TEMPL (xp (% W::PP (W::ptype (? t W::at W::for)))))
      )
     )
    )

@@ -8,7 +8,7 @@
    (SENSES
     (
      (lf-parent ont::tame) 
-     (TEMPL agent-affected-xp-templ) 
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) 
      (example "I repressed my urge to eat M&Ms.")
      )
     )

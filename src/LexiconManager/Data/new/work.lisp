@@ -21,7 +21,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
  ((W::work W::out)
   (wordfeats (W::morph (:forms (-vb) :nom w::workout)))
@@ -34,13 +34,13 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::work (W::out))
    (SENSES
     ((LF-PARENT ONT::determine)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      (example "he worked out that he already knew the answer")
      (meta-data :origin calo-ontology :entry-date 20060426 :change-date nil :comments nil)
      )
@@ -48,26 +48,26 @@
      (example "work out a plan" "work out when to go")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (meta-data :origin calo-ontology :entry-date 20060426 :change-date nil :comments nil)
-     (TEMPL agent-theme-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::work (W::through))
    (SENSES
     ;;;; swier -- work through the plan
     ((LF-PARENT ONT::information-scrutiny)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL agent-theme-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::WORK
@@ -88,7 +88,7 @@
     ((LF-PARENT ONT::WORKING-OUT)
      (example "You need to work your muscles every day")
      (meta-data :origin chf :entry-date 20070809 :change-date nil :comments chf-dialogues)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     (
      (lf-parent ont::work) ;;  20120524 GUM change new parent 
@@ -100,7 +100,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::WORK

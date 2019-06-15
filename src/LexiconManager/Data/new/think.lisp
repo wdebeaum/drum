@@ -2,7 +2,7 @@
 ;;;; W::think
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::think
@@ -18,7 +18,7 @@
     ((LF-PARENT ONT::cogitation)
      (meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :wn ("think%2:31:01:"))
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-theme-xp-templ (xp (% W::PP (W::ptype (? p W::of W::about)))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::PP (W::ptype (? p W::of W::about)))))
      )
     ;;;; I think
     ((LF-PARENT ONT::believe)
@@ -29,7 +29,7 @@
     ((LF-PARENT ONT::believe)
      (example " they thought her to have cancer")
      (SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
-     (TEMPL experiencer-theme-objcontrol-templ)
+     (TEMPL EXPERIENCER-NEUTRAL-FORMAL-CP-OBJCONTROL-B-TEMPL)
      )
     ;; need this to get the dobj gap
     ((LF-PARENT ONT::believe)
@@ -41,7 +41,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::think (W::through))
    (wordfeats (W::morph (:forms (-vb) :past W::thought)))
@@ -49,7 +49,7 @@
     ;;;; THINK THROUGH THE PLAN!!!
     ((LF-PARENT ONT::information-scrutiny)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL agent-theme-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      )
     )
    )

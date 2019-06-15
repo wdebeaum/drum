@@ -2,7 +2,7 @@
 ;;;; W::eat
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::eat
@@ -10,7 +10,7 @@
    (SENSES
     ((EXAMPLE "Eat a meal" "Eat calcium for your bones")
      (LF-PARENT ONT::EAT)
-     (TEMPL AGENT-AFFECTED-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     ((EXAMPLE "Eat!")
      (LF-PARENT ONT::EAT)

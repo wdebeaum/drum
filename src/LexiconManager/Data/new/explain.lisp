@@ -17,7 +17,7 @@
      (example "He explained that the cat caught the mouse.")
      (meta-data :origin calo :entry-date 20041103 :change-date 20090506 :comments caloy2)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL AGENT-FORMAL-XP-CP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      )
     )
    )

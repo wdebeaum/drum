@@ -40,14 +40,14 @@
 )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
   :words (
   (w::rear
     (senses
     ((meta-data :origin cause-result-relations :entry-date 20180706 :change-date nil :comments nil)
      (lf-parent ont::nurturing)
      (example "he was reared by his deaf mother")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

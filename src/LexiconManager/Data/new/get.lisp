@@ -2,7 +2,7 @@
 ;;;; W::get
 ;;;;
 
-(define-words :pos W::v :templ AGENT-AFFECTED-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::get
@@ -12,7 +12,7 @@
      ((LF-PARENT ONT::CAUSE-EFFECT)
      (example "the truck got to delta" "get out of the car")
      (SEM (F::aspect F::bounded) (F::time-span F::atomic))
-     (TEMPL agent-effect-loc-subjcontrol-TEMPL)
+     (TEMPL AGENT-RESULT-SUBJCONTROL-TEMPL)
       )
      ;; transitive version of the above
     ((LF-PARENT ONT::cause-effect)
@@ -20,7 +20,7 @@
      (meta-data :origin vn-analysis :entry-date unknown :change-date 20040617 :comments change-lf)
      (example "get the oranges into the truck" "I got the car from a dealer")
      ;;(TEMPL agent-affected-effect-loc-objcontrol-templ)
-     (TEMPL agent-affected-goal-templ)
+     (TEMPL AGENT-AFFECTED-RESULT-ADVBL-OBJCONTROL-TEMPL)
      (preference 1)
      )
 
@@ -33,40 +33,40 @@
 ;    ;;;; Let's get the truck going.  Have the can opened.
     ((LF-PARENT ONT::MAKE-IT-SO)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-effect-affected-objcontrol-templ (xp (% W::VP (W::vform (? x W::ing w::passive)))))
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL (xp (% W::VP (W::vform (? x W::ing w::passive)))))
      )
     ;;;; Get Jane to clean the yard
     ((LF-PARENT ONT::MAKE-IT-SO)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-effect-affected-objcontrol-templ (xp (% W::cp (W::ctype W::s-to))))
+     (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
      )
     ;; I got to clean the yard
     ((LF-PARENT ONT::cause-effect)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-effect-subjcontrol-templ)
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL)
      )
 
     ((LF-PARENT ONT::cause-effect) ;; GUM change new parent 20121027
      (example "he got them confused")
      (meta-data :origin medadvisor :entry-date 20020814 :change-date nil :comments nil)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-affected-effect-objcontrol-pred-templ)
+     (TEMPL AGENT-AFFECTED-FORMAL-OBJCONTROL-TEMPL)
      )
   
     ((lf-parent ont::acquire)
      (example "get the book used")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic) (F::trajectory -))
-     (TEMPL agent-affected-objcontrol-pred-templ)
+     (TEMPL AGENT-AFFECTED-RESULT-OBJCONTROL-TEMPL)
      )
 
     ((LF-PARENT ONT::BECOME)
      (meta-data :origin medadvisor :entry-date 20020814 :change-date nil :comments nil)
      (example "he gets nauseous")
-     (TEMPL AFFECTED-PRED-TEMPL)
+     (TEMPL AFFECTED-FORMAL-XP-PRED-TEMPL)
      )
     ((LF-PARENT ONT::come-to-UNDERSTAND)
      (example "I get it")
-     (TEMPL agent-theme-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      (PREFERENCE 0.97)
      )
     
@@ -96,7 +96,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    ((W::get (W::up))
    (wordfeats (W::morph (:forms (-vb) :ing W::getting :past W::got :pastpart W::gotten)))
@@ -109,7 +109,7 @@
     ((EXAMPLE "he got him up")
      (meta-data :origin cardiac :entry-date 20081005 :change-date nil :comments nil)
      (LF-PARENT ONT::BODY-MOVEMENT-self)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
     )
@@ -132,7 +132,7 @@
    )
 ))||#
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    ((w::get w::together)
     (wordfeats (W::morph (:forms (-vb) :past w::got :nom (w::get w::together))))
@@ -140,13 +140,13 @@
     ((meta-data :origin calo-ontology :entry-date 20060126 :change-date nil :comments caloy3 :vn ("herd-47.5.2") :wn ("congregate%2:38:00"))
      (LF-PARENT ONT::meet)
      (example "they got together at the church")
-     (TEMPL agent-plural-TEMPL)
+     (TEMPL AGENT-NP-PLURAL-TEMPL)
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::get W::rid)
    (wordfeats (W::morph (:forms (-vb) :past W::got :pastpart W::gotten)))
@@ -154,7 +154,7 @@
     ;;;; get rid of s.t.
     ((LF-PARENT ONT::discard)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-affected-XP-TEMPL (xp (% W::PP (W::ptype W::of))))
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL (xp (% W::PP (W::ptype W::of))))
      )
     )
    )

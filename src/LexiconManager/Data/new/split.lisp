@@ -26,7 +26,7 @@
 ))
 
 (define-words :pos W::V 
-  :templ agent-affected-xp-templ
+  :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 	  (w::split
 	   (senses
@@ -44,7 +44,7 @@
 	    ((meta-data :origin beetle :entry-date 20080716 :change-date nil :comments nil :vn ("separate-23.1-2"))
 	     (LF-PARENT ont::break-object)
 	     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-	     (TEMPL agent-affected-SOURCE-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? t W::from)))))
+	     (TEMPL AGENT-AFFECTED-SOURCE-XP-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? t W::from)))))
 	     (EXAMPLE "a knife splits the wood")
 	     )
 	    ))

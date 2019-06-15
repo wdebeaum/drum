@@ -29,7 +29,7 @@
    )
 ))
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::wear (w::out))
    (wordfeats (W::morph (:forms (-vb) :past W::wore :pastpart W::worn :ing W::wearing)))
@@ -37,7 +37,7 @@
     ((meta-data :origin cardiac :entry-date 20080508 :change-date 20090511 :comments LM-vocab)
      (LF-PARENT ONT::cause-body-effect)
      (syntax (w::resultative +)) 
-     (TEMPL agent-affected-xp-templ) ; like annoy,bother,concern,hurt
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) ; like annoy,bother,concern,hurt
      )
     )
    )

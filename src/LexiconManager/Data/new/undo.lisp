@@ -2,7 +2,7 @@
 ;;;; W::undo
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::undo
    (wordfeats (W::morph (:forms (-vb) :3s W::undoes :past W::undid)))
@@ -11,7 +11,7 @@
      (example "undo the action")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      ;(TEMPL AGENT-EFFECT-OPTIONAL-TEMPL)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     ((LF-PARENT ONT::UNDO)
      (example "undo")

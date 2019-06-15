@@ -2,7 +2,7 @@
 ;;;; W::enquire
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
  (W::enquire
    (SENSES
@@ -12,7 +12,7 @@
      ;;(lf-parent ont::enquire-inquire) ;; 20120524 GUM change new parent
      (LF-PARENT ONT::ASK-QUESTION)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL AGENT-ASSOCIATED-INFORMATION-TEMPL)
+     (TEMPL AGENT-FORMAL-XP-PP-ABOUT-TEMPL)
      )
     )
    )

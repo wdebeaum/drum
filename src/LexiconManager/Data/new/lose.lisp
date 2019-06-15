@@ -10,7 +10,7 @@
     ((EXAMPLE "He lost the book")
      (LF-PARENT ONT::lose)
      (syntax (w::resultative +))
-     (TEMPL AGENT-affected-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin calo-ontology :entry-date 20060412 :change-date 20090507 :comments nil)
      )
     ((EXAMPLE "He lost.")

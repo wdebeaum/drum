@@ -18,7 +18,7 @@
 ))|#
 
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::decline
    (wordfeats (W::morph (:forms (-vb) :nom w::decline :nomobjpreps (w::of w::in))))
@@ -32,7 +32,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::decline
    (SENSES

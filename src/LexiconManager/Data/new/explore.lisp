@@ -10,7 +10,7 @@
     ((meta-data :origin calo :entry-date 20040402 :change-date 20061005 :comments html-purchasing-corpus :vn ("investigate-35.4") :wn ("explore%2:31:02"))
      (LF-PARENT ONT::physical-scrutiny)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "explore the region")
      )
 

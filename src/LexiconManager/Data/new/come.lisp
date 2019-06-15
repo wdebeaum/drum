@@ -2,7 +2,7 @@
 ;;;; W::come
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::come
@@ -23,10 +23,10 @@
     ((meta-data :origin monroe :entry-date 20031217 :change-date nil :comments s15)
      (lf-parent ont::become)
      (example "Her wish came true")
-     (templ affected-pred-templ))
+     (TEMPL AFFECTED-FORMAL-XP-PRED-TEMPL))
     ))))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
  ((W::come (w::to))
     (wordfeats (W::morph (:forms (-vb) :past W::came :pastpart W::come :ing W::coming)))
@@ -41,7 +41,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
  ((W::come w::out)
     (wordfeats (W::morph (:forms (-vb) :past W::came :pastpart W::come :ing W::coming)))

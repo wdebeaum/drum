@@ -2,7 +2,7 @@
 ;;;; W::deep
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::deep w::fry)
       (wordfeats (W::morph (:forms (-vb) :past (W::deep w::fried) :ing( W::deep w::frying) )))

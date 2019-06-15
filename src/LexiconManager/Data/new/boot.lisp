@@ -14,7 +14,7 @@
 )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    ((W::BOOT (w::up))
     (wordfeats (W::morph (:forms (-vb) :past W::booted :ing W::booting)))

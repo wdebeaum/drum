@@ -2,25 +2,25 @@
 ;;;; W::mix
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   ((W::mix (W::up))
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("mix-22.1-1-1"))
      (LF-PARENT ONT::combine-objects)
-     (TEMPL agent-affected2-optional-templ (xp (% w::pp (w::ptype w::with)))) ; like combine
+     (TEMPL AGENT-AFFECTED-AFFECTED1-XP-OPTIONAL-TEMPL (xp (% w::pp (w::ptype w::with)))) ; like combine
      (PREFERENCE 0.96)
      )
     ((EXAMPLE "He mixes them up ")
      (LF-PARENT ONT::Confuse)
-     (TEMPL agent-theme-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      )
     )
    )
 ))
 
 (define-words :pos W::V 
-  :templ agent-affected-xp-templ
+  :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (w::mix
  (wordfeats (W::morph (:forms (-vb) :nom w::mix)))
@@ -35,7 +35,7 @@
 ))
 
 (define-words :pos W::V 
-  :templ agent-affected-xp-templ
+  :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 ((w::mix (w::in))
  (senses

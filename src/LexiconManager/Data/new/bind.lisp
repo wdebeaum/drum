@@ -2,7 +2,7 @@
 ;;;; W::bind
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::bind
    (wordfeats (W::morph (:forms (-vb) :past W::bound :pastpart w::bound)))
@@ -10,19 +10,19 @@
 
     ((LF-PARENT ONT::ATTACH)
      (SEM (F::Aspect F::Bounded) (F::Time-span F::Atomic))
-     (TEMPL AGENT-affected2-optional-TEMPL (xp (% W::pp (W::ptype (? xx W::to w::with)))))
+     (TEMPL AGENT-AFFECTED-AFFECTED1-XP-OPTIONAL-TEMPL (xp (% W::pp (W::ptype (? xx W::to w::with)))))
      (example "We bind the patient to the stretcher")
      )
  
     ((LF-PARENT ONT::ATTACH)
      (SEM (F::Aspect F::Bounded) (F::Time-span F::Atomic))
-     (TEMPL agent-affected-as-comp-TEMPL (xp (% W::pp (W::ptype (? xxx W::to W::with)))))
+     (TEMPL AGENT-AFFECTED-XP-PP-TEMPL (xp (% W::pp (W::ptype (? xxx W::to W::with)))))
      (example "It binds to the stretcher")
      )
 
     ((LF-PARENT ONT::ATTACH)
      (SEM (F::Aspect F::Bounded) (F::Time-span F::Atomic))
-     (TEMPL agent-plural-TEMPL)
+     (TEMPL AGENT-NP-PLURAL-TEMPL)
      (example "They bind together")
      )
 

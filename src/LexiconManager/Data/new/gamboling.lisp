@@ -2,7 +2,7 @@
 ;;;; W::gamboling
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::gamboling
    (wordfeats (W::morph (:forms NIL)) (W::vform W::ing))

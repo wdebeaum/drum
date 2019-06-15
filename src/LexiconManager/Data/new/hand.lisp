@@ -29,7 +29,7 @@
 )
 ))
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :tags (:base500)
  :words (
   (W::hand
@@ -41,7 +41,7 @@
      )||#
     ((LF-PARENT ONT::giving)
      (example "hand a gift to him")
-     (TEMPL agent-affected-recipient-alternation-templ) ; like grant,offer
+     (TEMPL AGENT-AFFECTED-TEMPL) ; like grant,offer
      )
     )
    )

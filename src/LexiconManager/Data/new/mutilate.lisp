@@ -2,7 +2,7 @@
 ;;;; W::mutilate
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::mutilate
    (wordfeats (W::morph (:forms (-vb) :nom w::mutilation)))

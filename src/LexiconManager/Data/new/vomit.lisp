@@ -13,7 +13,7 @@
      )
     ((EXAMPLE "The patient vomited green matter")
      (LF-PARENT ONT::vomit)
-     (TEMPL affected-affected-TEMPL)
+     (TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL)
      )
     )
    )

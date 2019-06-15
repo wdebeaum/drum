@@ -2,7 +2,7 @@
 ;;;; w::plump
 ;;;; 
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (w::plump
  (senses
@@ -10,13 +10,13 @@
    (LF-PARENT ONT::swell)
    (example "plump the pillows")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-   (TEMPL AGENT-affected-XP-TEMPL)
+   (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
    )
   )
  )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 ((w::plump (w::up))
  (senses
@@ -24,7 +24,7 @@
    (LF-PARENT ONT::swell)
    (example "plump up the pillows")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-   (TEMPL AGENT-affected-XP-TEMPL)
+   (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
    )
   )
  )

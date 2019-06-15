@@ -21,7 +21,7 @@
      (sem (f::aspect f::dynamic))
      (meta-data :origin chf :entry-date 20070827 :change-date nil :comments chf-dialogues)
      (LF-PARENT ONT::advancing-status)
-     (templ agent-source-optional-templ)
+     (TEMPL AGENT-SOURCE-XP-OPTIONAL-TEMPL)
      )
     )
    )

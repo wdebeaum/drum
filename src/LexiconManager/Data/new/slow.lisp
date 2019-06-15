@@ -18,20 +18,20 @@
 ))
 |#
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    ((w::slow) ;(W::slow (w::down))
      ;(wordfeats (W::morph (:forms (-vb) :nom (w::slow w::down))))
    (SENSES
     ((meta-data :origin coordops :entry-date 20070514 :change-date 20090504 :comments nil)
-;     (LF-PARENT ONT::decrease)
+     ;(LF-PARENT ONT::decrease)
      (LF-PARENT ONT::decrease-speed)
      (TEMPL agent-templ)
      (example "slow down")
      )
     ((meta-data :origin calo :entry-date 20070514 :change-date 20090504 :comments nil)
      (LF-PARENT ONT::decrease-speed)
-     (TEMPL  agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "slow down the process")
      )
     )

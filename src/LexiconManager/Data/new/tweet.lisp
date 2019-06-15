@@ -18,7 +18,7 @@
    (SENSES
     (
      (LF-PARENT ONT::nonverbal-say)
-     (TEMPL agent-neutral-optional-templ) 
+     (TEMPL AGENT-NEUTRAL-XP-OPTIONAL-TEMPL) 
      (EXAMPLE "He tweeted (a sentence)." "He tweeted about his vacation")
      )
     )

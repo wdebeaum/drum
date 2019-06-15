@@ -2,7 +2,7 @@
 ;;;; W::fasten
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::fasten
    (wordfeats (W::morph (:forms (-vb) :past W::fastened :ing W::fastening)))
@@ -13,7 +13,7 @@
      )||#
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("shake-22.3-2-1"))
      (LF-PARENT ONT::attach)
-     (TEMPL agent-affected2-optional-templ (xp (% w::pp (w::ptype w::to)))) ; like bind
+     (TEMPL AGENT-AFFECTED-AFFECTED1-XP-OPTIONAL-TEMPL (xp (% w::pp (w::ptype w::to)))) ; like bind
      )
     )
    )

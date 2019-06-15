@@ -2,7 +2,7 @@
 ;;;; W::improve
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 (W::improve
    (SENSES
@@ -10,7 +10,7 @@
      (sem (f::aspect f::dynamic))
      (meta-data :origin calo :entry-date 20040504 :change-date nil :comments calo-y1variants)
      (LF-PARENT ONT::improve)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     ((example "the performance improved")
      (sem (f::aspect f::dynamic))

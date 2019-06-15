@@ -2,7 +2,7 @@
 ;;;; W::constipate
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::constipate
    (SENSES
@@ -10,7 +10,7 @@
      (LF-PARENT ONT::clog)
      (SYNTAX (w::resultative +))
      (examples "this food constipates him")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

@@ -22,7 +22,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::plug
    (SENSES
@@ -30,18 +30,18 @@
      (example "plug the videocard in(to) the computer")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (meta-data :origin calo :entry-date 20050323 :change-date nil :comments caloy2)
-     (TEMPL AGENT-affected2-optional-TEMPL (xp (% W::pp (W::ptype (? pt w::in W::into)))))
+     (TEMPL AGENT-AFFECTED-AFFECTED1-XP-OPTIONAL-TEMPL (xp (% W::pp (W::ptype (? pt w::in W::into)))))
      )
     ((LF-PARENT ONT::connected)
      (example "the video card plugs into the computer")
      (meta-data :origin calo :entry-date 20050323 :change-date nil :comments caloy2)
-     (TEMPL neutral-neutral-xp-templ (xp (% W::pp (W::ptype W::into))))
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL (xp (% W::pp (W::ptype W::into))))
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
  ((W::plug (w::in))
    (SENSES
@@ -49,7 +49,7 @@
      (example "plug in the computer")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (meta-data :origin calo :entry-date 20060128 :change-date nil :comments caloy2)
-     (TEMPL AGENT-affected-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

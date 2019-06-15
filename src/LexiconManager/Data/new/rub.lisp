@@ -2,7 +2,7 @@
 ;;;; W::rub
 ;;;;
 
-(define-words :pos W::v :templ agent-affected-xp-templ
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::rub
   (wordfeats (W::morph (:forms (-vb) :past W::rubbed :ing W::rubbing)))

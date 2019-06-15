@@ -10,7 +10,7 @@
      (lf-parent ont::incur-inherit-receive) ;; 20120524 GUM change new parent
      (example "he received the package")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic) (F::trajectory -))
-     (TEMPL affected-affected-templ)
+     (TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL)
      )
     )
    )

@@ -32,7 +32,7 @@
   (W::ARM
    (senses
     ((LF-PARENT ONT::SUPPLY) 
-     (TEMPL AGENT-AFFECTED-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )))

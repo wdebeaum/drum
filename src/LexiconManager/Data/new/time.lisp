@@ -34,18 +34,18 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::time
    (SENSES
     ((LF-PARENT ONT::register)
-     (TEMPL agent-theme-xp-templ)
+     (TEMPL AGENT-FORMAL-XP-TEMPL)
      (example "He timed the runners")
      (meta-data :origin trips :entry-date 20090910 :change-date nil :comments nil :vn ("register-54.1"))
      )
     ((LF-PARENT ONT::register)
-     (TEMPL agent-neutral-extent-templ)
+     (TEMPL AGENT-NEUTRAL-EXTENT-2-XP1-3-XP2-TEMPL)
      (example "He timed the runner at 1.64")
      (meta-data :origin trips :entry-date 20090910 :change-date nil :comments nil :vn ("register-54.1"))
      )

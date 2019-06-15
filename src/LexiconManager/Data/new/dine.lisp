@@ -2,7 +2,7 @@
 ;;;; W::dine
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 (W::dine
    (SENSES
@@ -10,7 +10,7 @@
      (LF-PARENT ONT::consume)
      (example "he dines (on bread)")
      (SEM (F::ASPECT F::DYNAMIC))
-     (templ agent-affected-optional-templ  (xp (% W::pp (W::ptype W::on))))
+     (TEMPL AGENT-AFFECTED-XP-OPTIONAL-B-TEMPL  (xp (% W::pp (W::ptype W::on))))
      )
     )
    )

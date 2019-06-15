@@ -2,7 +2,7 @@
 ;;;; w::revert
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (w::revert
    (senses
@@ -11,7 +11,7 @@
      (LF-PARENT ONT::undo)
      (example "revert the document to the saved version")
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-affected-RESULT-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? pt W::to)))))
+     (TEMPL AGENT-AFFECTED-RESULT-XP-PP-INTO-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? pt W::to)))))
      )
     )
    )

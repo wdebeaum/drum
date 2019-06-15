@@ -25,7 +25,7 @@
 ))
 
 (define-words :pos W::V 
-  :templ agent-theme-xp-templ
+  :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
 	  (w::measure

@@ -2,7 +2,7 @@
 ;;;; W::express
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    (W::express
     (wordfeats (W::morph (:forms (-vb) :nom w::expression)))
@@ -11,7 +11,7 @@
       (example "she expressed the idea to him")
       (meta-data :origin calo-ontology :entry-date 20051209 :change-date 20090506 :comments Express)
       ;; this verb doesn't participate in the alternation
-      (TEMPL agent-theme-to-addressee-optional-templ)
+      (TEMPL AGENT-FORMAL-AGENT1-OPTIONAL-TEMPL)
       ;;(PREFERENCE 0.98)
       )
           
@@ -19,7 +19,7 @@
       (LF-PARENT ONT::GENE-EXPRESSION) 
       (example "the gene expresses the protein")
       (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-      (TEMPL agent-affected-create-templ)
+      (TEMPL AGENT-AFFECTEDR-XP-TEMPL)
       )
 
      ((meta-data :origin BOB :entry-date 20141212 :change-date nil :comments nil)
@@ -34,7 +34,7 @@
 )
 
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    (W::express
     (wordfeats (W::morph (:forms (-vb))))
@@ -42,13 +42,13 @@
 
      ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("send-11.1-1"))
       (LF-PARENT ONT::send)
-      (TEMPL agent-affected-recipient-alternation-templ) ; like mail,send,forward,transmit
+      (TEMPL AGENT-AFFECTED-TEMPL) ; like mail,send,forward,transmit
       (example "he expressed the package to him")
       (PREFERENCE 0.98)
       )
 ))))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    (W::express
     (wordfeats (W::morph (:forms (-vb) :nom (w::gene w::expression))))
@@ -58,7 +58,7 @@
       (LF-PARENT ONT::GENE-EXPRESSION) 
       (example "the gene expresses the protein")
       (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-      (TEMPL agent-affected-create-templ)
+      (TEMPL AGENT-AFFECTEDR-XP-TEMPL)
       )
 
      ((meta-data :origin BOB :entry-date 20141212 :change-date nil :comments nil)

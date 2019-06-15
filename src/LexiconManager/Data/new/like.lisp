@@ -2,7 +2,7 @@
 ;;;; W::LIKE
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::LIKE
@@ -11,13 +11,13 @@
     ;;;; Swier -- Having just crossed Death Valley, I would like to have some water.
     ((LF-PARENT ONT::want)
      (SEM (F::Aspect F::indiv-level))
-     (TEMPL experiencer-action-SUBJCONTROL-TEMPL)
+     (TEMPL EXPERIENCER-FORMAL-SUBJCONTROL-TEMPL)
      (example "I would like to have some water")
      )
     ((LF-PARENT ONT::appreciate)
      (SEM (F::Aspect F::indiv-level))
      (meta-data :origin cardiac :entry-date 20081005 :change-date 200905008 :comments nil)
-     (TEMPL neutral-action-SUBJCONTROL-TEMPL  (xp (% W::VP (W::vform W::ing))))
+     (TEMPL NEUTRAL-FORMAL-CP-SUBJCONTROL-TEMPL  (xp (% W::VP (W::vform W::ing))))
      (example "He likes drinking water after a hike")
      )
     ((LF-PARENT ONT::appreciate)
@@ -28,7 +28,7 @@
     ((LF-PARENT ONT::want)
      (SEM (F::Aspect F::indiv-level))
      (example "I like him to dance")
-     (TEMPL experiencer-action-objcontrol-templ)
+     (TEMPL EXPERIENCER-NEUTRAL-FORMAL-CP-OBJCONTROL-A-TEMPL)
      )
     )
    )

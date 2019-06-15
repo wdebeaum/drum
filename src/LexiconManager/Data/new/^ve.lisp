@@ -2,7 +2,7 @@
 ;;;; W::^ve
 ;;;;
 
-(define-words :pos W::v :boost-word t :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :boost-word t :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::^ve
@@ -15,7 +15,7 @@
     ((LF-PARENT ONT::PERFECTIVE)
      (meta-data :origin trips :entry-date nil :change-date 20073003 :comments csli-revision)
      (LF-FORM W::have)
-;     (LF-FORM ONT::have)
+     ;(LF-FORM ONT::have)
      (TEMPL PERFECTIVE-TEMPL)
      (example "they've gone")
      (SYNTAX (W::auxname W::perf) (w::changesem +))

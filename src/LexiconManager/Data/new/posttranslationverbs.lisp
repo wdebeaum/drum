@@ -2,7 +2,7 @@
 ;;;; post translational modifications
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-loc-optional-templ 
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-LOCATION-XP-OPTIONAL-TEMPL 
  :words (
   ;; # PTMs involving addition by an enzyme in vivo
   ;; ## PTMs involving addition of hydrophobic groups for membrane localization
@@ -104,11 +104,11 @@
     ((LF-PARENT ONT::ACETYLATION))
     ))
 
-;  (W::deacetylation
+  ;(W::deacetylation
 ;    ;; reverse of acetylation
-;   (wordfeats (W::morph (:forms (-vb) :nom w::deacetylation)))
-;   (SENSES
-;    ((LF-PARENT ONT::post-translational-modification))
+   ;(wordfeats (W::morph (:forms (-vb) :nom w::deacetylation)))
+   ;(SENSES
+    ;((LF-PARENT ONT::post-translational-modification))
 ;    ))
 
   #|| LG20170324 now we get these from TT/go_protmods
@@ -133,11 +133,11 @@
     ((LF-PARENT ONT::METHYLATION))
     ))
 
-;  (W::demethylation
+  ;(W::demethylation
 ;    ;; reverse of methylation
-;   (wordfeats (W::morph (:forms (-vb) :nom w::demethylation)))
-;   (SENSES
-;    ((LF-PARENT ONT::post-translational-modification))
+   ;(wordfeats (W::morph (:forms (-vb) :nom w::demethylation)))
+   ;(SENSES
+    ;((LF-PARENT ONT::post-translational-modification))
 ;    ))
 
   ;; skipping amide bond formation
@@ -264,11 +264,11 @@
     ((LF-PARENT ONT::phosphorylation))
     ))
 
-;  (W::dephosphorylate
-;   (wordfeats (W::morph (:forms (-vb) :nom w::dephosphorylation :nomobjpreps (w::on))))
-;   (SENSES
-;    ((LF-PARENT ONT::post-translational-modification)
-;     (templ agent-affected-loc-optional-templ))  ;; subcat for location to improve attachment decisions
+  ;(W::dephosphorylate
+   ;(wordfeats (W::morph (:forms (-vb) :nom w::dephosphorylation :nomobjpreps (w::on))))
+   ;(SENSES
+    ;((LF-PARENT ONT::post-translational-modification)
+     ;(templ agent-affected-loc-optional-templ))  ;; subcat for location to improve attachment decisions
 ;    ))
 
   #|| LG20170324 now we get these from TT/go_protmods
@@ -362,11 +362,11 @@
     ((LF-PARENT ONT::ubiquitination))
     ))
 
-;  (W::monoubiquitinate
-;   (wordfeats (W::morph (:forms (-vb) :nom w::monoubiquitination :nomobjpreps (w::on))))
-;   (SENSES
-;    ((LF-PARENT ONT::monoubiquitination)
-;     (templ agent-affected-loc-optional-templ))  ;; subcat for location to improve attachment decisions
+  ;(W::monoubiquitinate
+   ;(wordfeats (W::morph (:forms (-vb) :nom w::monoubiquitination :nomobjpreps (w::on))))
+   ;(SENSES
+    ;((LF-PARENT ONT::monoubiquitination)
+     ;(templ agent-affected-loc-optional-templ))  ;; subcat for location to improve attachment decisions
 ;    ))
 
   (W::ubiquitylate

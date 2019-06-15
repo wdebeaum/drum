@@ -2,7 +2,7 @@
 ;;;; W::REBOOT
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::REBOOT
    (wordfeats (W::morph (:forms (-vb) :past W::rebooted :ing W::rebooting)))

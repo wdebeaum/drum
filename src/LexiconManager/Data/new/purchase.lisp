@@ -11,7 +11,7 @@
       (meta-data :origin calo :entry-date 20040401 :change-date nil :comments y1-dialog-variations)
      (LF-PARENT ONT::purchase)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-affected-xp-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
   #||  ((meta-data :origin calo :entry-date 20040505 :change-date nil :comments y1-variations)
      (EXAMPLE "purchase it with a credit card")

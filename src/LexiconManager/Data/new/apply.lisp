@@ -3,7 +3,7 @@
 ;;;;
 
 (define-words :pos W::V 
-  :templ agent-theme-xp-templ
+  :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 	  (W::apply
 	   (wordfeats (W::morph (:forms (-vb) :nom w::application)))
@@ -18,7 +18,7 @@
 	     ;(LF-PARENT ONT::REQUEST)
 	     (lf-parent ont::appeal-apply-demand) ;; 20120523 GUM change new parent
 	     (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
-	     (templ agent-theme-xp-templ (xp (% W::pp (W::ptype W::for))))
+	     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::pp (W::ptype W::for))))
 	     )
 	    ))
 ))

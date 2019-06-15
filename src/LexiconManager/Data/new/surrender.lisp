@@ -2,7 +2,7 @@
 ;;;; W::surrender
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::surrender
     (wordfeats (W::morph (:forms (-vb) :past W::surrendered :ing surrendering)))
@@ -13,7 +13,7 @@
      (meta-data :origin task-learning :entry-date 20050831 :change-date 20090501 :comments nil)
      )
     ((lf-parent ont::surrender)
-     (templ agent-affected-xp-templ (xp (% W::pp (W::ptype W::to))))
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL (xp (% W::pp (W::ptype W::to))))
      (example "he surrendered")
      (meta-data :origin task-learning :entry-date 20050831 :change-date 20090501 :comments nil :wn ("surrender%2:40:00"))
      )

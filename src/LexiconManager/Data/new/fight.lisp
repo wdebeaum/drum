@@ -19,7 +19,7 @@
        )
       ((lf-parent ont::fighting)
        (example "he fought to breathe")
-       (TEMPL AGENT-theme-SUBJCONTROL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
+       (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
        (meta-data :origin cardiac :entry-date 20080630 :change-date nil :comments nil)
        )
       ))

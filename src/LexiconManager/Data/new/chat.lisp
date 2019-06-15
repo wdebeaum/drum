@@ -2,7 +2,7 @@
 ;;;; W::chat
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::chat
    (wordfeats (W::morph (:forms (-vb) :nom w::chat)))
@@ -18,14 +18,14 @@
      (LF-PARENT  ONT::schmooze-talk)
      (meta-data :origin task-learning :entry-date 20050825 :change-date nil :comments nil)
      (example "he chatted with her [about it]")
-     (TEMPL AGENT-ADDRESSEE-THEME-OPTIONAL-TEMPL 
+     (TEMPL AGENT-AGENT1-FORMAL-2-XP1-3-XP-OPTIONAL-TEMPL 
 	    (xp1 (% w::pp (w::ptype (? ptp w::to w::with)))))
      )
     (;;(LF-PARENT ONT::TALK)
      (LF-PARENT  ONT::schmooze-talk)
      (meta-data :origin task-learning :entry-date 20050825 :change-date nil :comments nil)
      (example "he chatted about it [to/with her]")
-     (TEMPL AGENT-ABOUT-THEME-ADDRESSEE-OPTIONAL-TEMPL)
+     (TEMPL AGENT-FORMAL-AGENT1-2-XP1-PP-3-XP2-PP-WITH-OPTIONAL-TEMPL)
      )
     ))
 ))

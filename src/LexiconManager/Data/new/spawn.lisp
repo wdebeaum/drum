@@ -2,7 +2,7 @@
 ;;;; W::spawn
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-create-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTEDR-XP-TEMPL
  :words (
   (W::spawn
     (wordfeats (W::morph (:forms (-vb) :nom w::spawn)))

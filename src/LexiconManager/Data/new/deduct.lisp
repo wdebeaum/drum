@@ -2,7 +2,7 @@
 ;;;; w::deduct
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 (w::deduct
  (senses
@@ -10,7 +10,7 @@
    (LF-PARENT ONT::calc-subtract)
    (example "deduct five dollars [from the price]")
    (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-   (TEMPL agent-theme-theme-optional-templ (xp (% W::PP (W::ptype W::from))))
+   (TEMPL AGENT-FORMAL-FORMAL1-XP-OPTIONAL-TEMPL (xp (% W::PP (W::ptype W::from))))
    )
   )
  )

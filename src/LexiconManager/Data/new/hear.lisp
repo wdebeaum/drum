@@ -2,7 +2,7 @@
 ;;;; W::hear
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::hear
@@ -11,7 +11,7 @@
     ;;;; I heard that you ...
     ((LF-PARENT ONT::becoming-aware)
      (SEM  (F::Time-span F::extended))
-     (TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      )
     ;;;; I heard the sound
     ((LF-PARENT ONT::ACTIVE-PERCEPTION)
@@ -26,7 +26,7 @@
      (LF-PARENT ONT::active-perception)
      ;;(SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
      (example "he heard him arrive")
-     (TEMPL experiencer-action-objcontrol-templ (xp (% W::VP (W::vform (? vf2 W::base w::ing)))))
+     (TEMPL EXPERIENCER-NEUTRAL-FORMAL-CP-OBJCONTROL-A-TEMPL (xp (% W::VP (W::vform (? vf2 W::base w::ing)))))
      )
     )
    )

@@ -2,7 +2,7 @@
 ;;;; W::scutter
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::scutter
    (wordfeats (W::morph (:forms (-vb) :past W::scuttered :ing W::scuttering)))

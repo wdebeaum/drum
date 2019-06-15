@@ -11,14 +11,14 @@
       :COMMENTS HTML-PURCHASING-CORPUS))))
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
  (W::balance
    (SENSES
     ((EXAMPLE "the cost doesn't balance the effort")
      (LF-PARENT ONT::object-compare)
      (SEM (F::Aspect F::static) (F::Time-span F::extended))
-     (TEMPL neutral-neutral-templ)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      (meta-data :origin calo :entry-date 20050425 :change-date nil :comments projector-purchasing)
      )
     )

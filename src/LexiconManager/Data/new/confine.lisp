@@ -9,7 +9,7 @@
     (
      (LF-PARENT ONT::confine)
      (SEM (F::Time-span F::extended))
-     (TEMPL AGENT-AFFECTED-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

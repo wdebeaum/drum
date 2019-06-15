@@ -2,7 +2,7 @@
 ;;;; W::hasten
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::hasten
    (wordfeats (W::morph (:forms (-vb) :past W::hastened :ing W::hastening)))
@@ -13,7 +13,7 @@
      )
     ((lf-parent ont::increase-speed)
      (example "hasten the process")
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
     )
     )
    )

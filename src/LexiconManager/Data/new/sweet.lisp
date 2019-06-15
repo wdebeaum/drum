@@ -47,15 +47,15 @@
 )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::sweet w::talk)
     (wordfeats (W::morph (:forms (-vb) :past (W::sweet w::talked) :ing (w::sweet w::talking))))
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("59-force"))
-;     (LF-PARENT ont::provoke)
+     ;(LF-PARENT ont::provoke)
      (LF-PARENT ont::flatter)
-     (TEMPL agent-affected-theme-objcontrol-optional-templ)  ; like dare
+     (TEMPL AGENT-AFFECTED-FORMAL-OBJCONTROL-OPTIONAL-TEMPL)  ; like dare
      (example "He spurred him [to run for office]")  
      )
     )

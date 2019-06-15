@@ -2,7 +2,7 @@
 ;;;; W::disappear
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::disappear
    (wordfeats (W::morph (:forms (-vb) :nom W::disappearance)))

@@ -2,7 +2,7 @@
 ;;;; W::begin
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::begin
@@ -12,13 +12,13 @@
      (LF-PARENT ONT::start)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (example "He started to eat")
-     (TEMPL agent-effect-subjcontrol-templ (xp (% W::cp (W::ctype W::s-to))))
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
      )
     ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("begin-55.1-1"))
      (lf-parent ont::start)
      (example "the managers began working")
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-effect-subjcontrol-templ (xp (% W::vp (W::vform W::ing))))
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% W::vp (W::vform W::ing))))
      )
 #|    
      ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("begin-55.1-1"))

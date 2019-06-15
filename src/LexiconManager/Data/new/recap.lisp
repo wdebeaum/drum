@@ -2,7 +2,7 @@
 ;;;; W::recap
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::recap
    (SENSES
@@ -17,7 +17,7 @@
     ;;;; he recapped on the injured (monroe s2)
     ((LF-PARENT ONT::REPEAT)
      (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
-     (TEMPL AGENT-COMP-THEME-TEMPL (xp (% W::pp (W::ptype W::on))))
+     (TEMPL AGENT-FORMAL-XP-PP-ABOUT-FOR-TEMPL (xp (% W::pp (W::ptype W::on))))
      )
     )
    )

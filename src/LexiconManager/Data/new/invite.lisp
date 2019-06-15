@@ -9,18 +9,18 @@
    (SENSES
     ((EXAMPLE "He invited me to the beach." "I invited him for pizza.")
      (LF-PARENT ont::request)
-     (templ AGENT-AFFECTED-NEUTRAL-TEMPL (xp (% W::pp (W::ptype (? xx W::to W::for)))))
+     (TEMPL AGENT-AFFECTED-NEUTRAL-XP-TEMPL (xp (% W::pp (W::ptype (? xx W::to W::for)))))
      (SEM (F::Aspect F::bounded) (F::time-span F::atomic))
      )
     ((EXAMPLE "He invited me to go fishing.")
      (LF-PARENT ont::request)
-     (templ AGENT-AFFECTED-THEME-OPTIONAL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
+     (TEMPL AGENT-AFFECTED-FORMAL-XP-OPTIONAL-A-TEMPL (xp (% W::cp (W::ctype W::s-to))))
      (SEM (F::Aspect F::bounded) (F::time-span F::atomic))
      )
      
     ((EXAMPLE "The community warmly invites the refugees.")
      (LF-PARENT ont::admit)
-     (templ AGENT-AFFECTED-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      ) 
 
     )

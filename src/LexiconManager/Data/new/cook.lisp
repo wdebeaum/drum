@@ -3,7 +3,7 @@
 ;;;;
 
 (define-words :pos W::V 
-  :templ agent-affected-xp-templ
+  :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (w::cook
  (senses
@@ -28,7 +28,7 @@
    (LF-PARENT ONT::create-by-cooking)
    (example "Cynthia cooked a mighty feast!")
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded))
-   (TEMPL agent-affected-create-templ)
+   (TEMPL AGENT-AFFECTEDR-XP-TEMPL)
    )
   )
  )

@@ -2,7 +2,7 @@
 ;;;; W::precipitate
 ;;;;
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::precipitate
    (wordfeats (W::morph (:forms (-vb) :nom w::precipitation)))
@@ -36,12 +36,12 @@
    (SENSES
     (
      (LF-PARENT ONT::parts-removed)
-     (TEMPL AFFECTED-affected-as-comp-TEMPL (xp (% W::pp (W::ptype (? xx w::with)))))
+     (TEMPL AFFECTED-AFFECTED1-XP-PP-TEMPL (xp (% W::pp (W::ptype (? xx w::with)))))
      (EXAMPLE "This protein co-immunoprecipitated with that protein.")
      )
     (
      (LF-PARENT ONT::parts-removed)
-     (TEMPL AGENT-AFFECTED-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (EXAMPLE "We immunoprecipitated these proteins.")
      )
     (

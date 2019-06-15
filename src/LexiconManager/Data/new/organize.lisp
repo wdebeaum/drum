@@ -2,7 +2,7 @@
 ;;;; W::organize
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::organize
    (wordfeats (W::morph (:forms (-vb) :nom w::organization)))
@@ -15,7 +15,7 @@
 
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("create-26.4-1"))
      (LF-PARENT ONT::arranging)
-     (TEMPL agent-affected-xp-templ) ; like rearrange
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) ; like rearrange
      )
     
     )

@@ -2,7 +2,7 @@
 ;;;; W::pedaled
 ;;;;
 
-(define-words :pos W::V :templ agent-affected-xp-templ
+(define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::pedaled
    (wordfeats (W::morph (:forms NIL)) (W::vform (? vf W::past)))

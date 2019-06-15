@@ -2,7 +2,7 @@
 ;;;; W::exchange
 ;;;;
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::exchange
    (wordfeats (W::morph (:forms (-vb) :nom W::exchange)))
@@ -14,7 +14,7 @@
     ((LF-PARENT ONT::exchange)
      (SEM (F::Aspect F::Bounded) (F::Time-span F::Atomic))
      (example "exchange the triangle with the square")
-     (TEMPL agent-affected2-templ (xp (% W::PP (W::ptype (? pt w::for W::with)))))
+     (TEMPL AGENT-AFFECTED-AFFECTED1-XP-TEMPL (xp (% W::PP (W::ptype (? pt w::for W::with)))))
      )
     )
    )

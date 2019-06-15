@@ -39,15 +39,15 @@
 ))
 
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::end
-;   (wordfeats (W::morph (:forms (-vb) :nom w::end)))
+   ;(wordfeats (W::morph (:forms (-vb) :nom w::end)))
    (SENSES
     ((EXAMPLE "He/It ended the document/meeting")
      (LF-PARENT ONT::STOP)
-     (templ agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (meta-data :origin task-learning :entry-date 20050826 :change-date nil :comments nil)
      )

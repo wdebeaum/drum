@@ -15,7 +15,7 @@
    )
 ))
 
-(define-words :pos W::v :templ agent-theme-xp-templ
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    (W::stretch
    (SENSES
@@ -29,13 +29,13 @@
      ;;(LF-PARENT ONT::body-movement)
      (lf-parent ont::stretch) ;; 20120523 GUM change new parent
      (example "he stretched his legs")
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )
 ))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (W::stretch
    (SENSES

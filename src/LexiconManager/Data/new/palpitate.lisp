@@ -2,7 +2,7 @@
 ;;;; W::palpitate
 ;;;;
 
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    (W::palpitate
    (SENSES

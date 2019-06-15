@@ -15,7 +15,7 @@
    )
 ))
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
  (w::object
@@ -24,7 +24,7 @@
 	    (;;(LF-parent ont::contest)
 	     (lf-parent ont::object) ;; 20120524 GUM change new parent
 	     (Example "He objects to the findings")
-	     (TEMPL AGENT-THEME-XP-TEMPL  (xp (% w::PP (w::ptype w::to))))
+	     (TEMPL AGENT-FORMAL-XP-TEMPL  (xp (% w::PP (w::ptype w::to))))
 	     (meta-data :origin calo-ontology :entry-date 20060125 :change-date 20090508 :comments caloy3) 
 	     )	    
 	    ))
