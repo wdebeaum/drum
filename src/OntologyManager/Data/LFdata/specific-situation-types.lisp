@@ -951,24 +951,13 @@
              )
  )
 
-; hit, strike
-(define-type ONT::HITTING
- :wordnet-sense-keys ("beat%2:35:01" "hit%2:35:03" "strike%2:35:01" )
- :comment "an agent comes into contact with force with another object, typically harming the other object"
-; :parent ONT::MOTION
- :parent ONT::apply-force
- :sem (F::SITUATION (F::Trajectory -))
- :arguments ((:required ONT::affected (F::Phys-obj))
-             )
- )
-
 (define-type ONT::COLLIDE
  :wordnet-sense-keys ("collide%2:35:01"  "collide%2:35:00" "crash%2:38:02" "crash%2:38:01")
  :comment "two objects comes into contact with force with another, typically both being negatively affected - also supports the plural subject that cincludes both objects"
  :parent ONT::MOTION
  :sem (F::SITUATION (F::Trajectory -))
- :arguments ((:required ONT::affected (F::Phys-obj))
-	     (:optional ONT::affected1 (F::Phys-obj))
+ :arguments ((:required ONT::affected (F::Phys-obj (F::mobility F::movable)))
+	     (:optional ONT::affected1 (F::Phys-obj (F::mobility F::movable)))
              )
  )
 
@@ -4649,7 +4638,7 @@
 (define-type ONT::Joining
  :wordnet-sense-keys ("conjoin%2:35:00" "join%2:35:00")
  :comment "abstract, social, or physical connection of objects such that the objects retain their original make-up/identity (whereas COMBINE-OBJECTS are not un-combinable anymore)"
- :parent ONT::event-of-causation
+ :parent ONT::cause-contact
  :sem (F::Situation (F::Trajectory -))
  :arguments ((:OPTIONAL ONT::AGENT (F::Phys-obj))
 	     (:OPTIONAL ONT::AGENT1 (F::Phys-obj))
@@ -4751,9 +4740,13 @@
  :parent ONT::position
  :comment "two objects share a common subpart"
  :sem (F::Situation (F::Aspect F::Indiv-level) (F::Cause -))
- :arguments ((:REQUIRED ONT::neutral (F::Phys-obj (F::Spatial-abstraction (? sa F::Line F::Strip F::Spatial-region))))
-             (:REQUIRED ONT::neutral1 (F::Phys-obj (F::Spatial-abstraction (? sa1 F::Line F::Strip F::Spatial-region))
-              ))
+ :arguments ((:REQUIRED ONT::neutral (F::Phys-obj
+				      (F::mobility f::fixed)
+				      (F::Spatial-abstraction (? sa F::Line F::Strip F::Spatial-region))))
+             (:REQUIRED ONT::neutral1 (F::Phys-obj
+				       (F::mobility f::fixed)
+				       (F::Spatial-abstraction (? sa1 F::Line F::Strip F::Spatial-region))
+				       ))
              (:ESSENTIAL ONT::location (F::phys-obj))
              )
  )

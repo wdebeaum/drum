@@ -543,9 +543,29 @@
              )
  )
 
+(define-type ONT::cause-contact
+    :parent ONT::event-of-causation
+    :definitions ((ONT::CAUSE-EFFECT :agent ?agent :formal (ONT::CONNECTED :neutral ?agent :neutral1 ?affected)))
+    :arguments ((:required ONT::affected (F::Phys-obj))
+		(:required ONT::AGENT (F::Phys-obj (F::mobility F::movable)))
+		)
+    )
+
+
+; hit, strike
+(define-type ONT::HITTING
+    :wordnet-sense-keys ("beat%2:35:01" "hit%2:35:03" "strike%2:35:01" )
+    :comment "an agent comes into contact with force with another object, typically harming the other object"
+					; :parent ONT::MOTION
+    :parent ONT::cause-contact
+    :sem (F::SITUATION (F::Trajectory -))
+    
+    )
+
+
 (define-type ONT::touch
     :wordnet-sense-keys ("touch%2:35:00" "touch%1:04:00")
-    :parent ONT::event-of-causation
+    :parent ONT::cause-contact
     )
 
 (define-type ONT::apply-force

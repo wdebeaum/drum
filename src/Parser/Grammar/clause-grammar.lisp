@@ -386,7 +386,8 @@
     (np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex) (sort pred) ;; lex needed for expletives? 
       (pp-word -) (changeagr -) (gap -) (expletive ?exp))
     (head (vp (lf ?lf) (gap ?g)
-              (template (? !x  lxm::propositional-equal-templ))
+              ;(template (? !x  lxm::propositional-equal-templ))
+              (template (? !x  lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL))
 	      (subjvar ?npvar)
 	      (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex)
 		       (pp-word -) (changeagr -) (gap -) (expletive ?exp)))
@@ -411,7 +412,9 @@
     -s1-be-prop1>
     (np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex) ;; lex needed for expletives?
      (pp-word -) (changeagr -) (subcat-map ont::formal))
-    (head (vp (lf ?lf) (gap ?g) (template lxm::propositional-equal-templ)
+    (head (vp (lf ?lf) (gap ?g)
+	      ;(template lxm::propositional-equal-templ)
+	      (template lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL)
 	      (subjvar ?npvar)
 	      (subj (% np (sem ?npsem) (agr ?a) (var ?npvar) (lex ?lex)))
 	      (var ?v) (vform fin) (agr ?a)
@@ -434,7 +437,9 @@
     -s1-be-prop2>
     (np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex) ;; lex needed for expletives?
      (pp-word -) (changeagr -) (comp3-map ont::formal))
-    (head (vp (lf ?lf) (gap ?g) (template lxm::propositional-equal-templ)
+    (head (vp (lf ?lf) (gap ?g)
+	      ;(template lxm::propositional-equal-templ)
+	      (template lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL)
 	      (subjvar ?npvar)
 	      (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (lex ?lex)))
 	      (var ?v) (vform fin) (agr ?a)
@@ -4171,7 +4176,8 @@
     (head (vp (lf ?lf)
 	      (gap ?g)
 	      (SEM ($ F::situation (f::type (? vtype ONT::ARRIVE ont::come ont::appear ont::grow ont::show))))
-              (template (? !x  lxm::propositional-equal-templ))
+              ;(template (? !x  lxm::propositional-equal-templ))
+              (template (? !x  lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL))
 	      (subjvar ?npvar)
 	      (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex)
 		       (pp-word -) (changeagr -) (gap -) (expletive ?exp)))
