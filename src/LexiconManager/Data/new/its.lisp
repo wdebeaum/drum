@@ -12,5 +12,12 @@
 	     )
 	    )
 	   )
+	  ((w::it w::^S)  ;; added for rebustness as this is a common error
+	   (wordfeats (W::stem W::it))
+	   (SENSES
+	    ((LF-PARENT ONT::REFERENTIAL-SEM)
+	     )
+	    (preference .97)
+	    ))
 ))
 

@@ -2,7 +2,7 @@
 # Makefile -- install a set of Perl modules
 #
 # Lucian Galescu <lgalescu@ihmc.us> 2017/02/03
-# $Id: Makefile,v 1.6 2018/11/04 03:04:57 lgalescu Exp $
+# $Id: Makefile,v 1.7 2019/06/17 20:24:06 lgalescu Exp $
 #
 
 # Will come from parent Makefile...
@@ -32,6 +32,7 @@ SRCS =  AKRL2EKB.pm \
 	EKB.pm \
 	Ont/BioEntities.pm \
 	Ont/BioEvents.pm \
+	Ont/Geo.pm \
 	Ont/GenericTerms.pm \
 	Ont/Ontology.pm \
 	StringParser.pm

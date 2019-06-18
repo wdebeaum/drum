@@ -1,9 +1,9 @@
 # Drum.pm
 #
-# Time-stamp: <Fri Jun 23 10:01:46 CDT 2017 lgalescu>
+# Time-stamp: <Sat Jun  8 15:24:35 CDT 2019 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  1 Jun 2016
-# $Id: Drum.pm,v 1.13 2017/06/23 15:03:22 lgalescu Exp $
+# $Id: Drum.pm,v 1.14 2019/06/17 23:35:15 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -800,15 +800,13 @@ sub default_options {
 	  # < ! E[negation]
 	  # < E[mods/mod/type=ONT::MANNER-UNDO]
 	  # < E[affected:X]
-	  match_node($_, { SX => { 'negation'
-				   => [OP_NOT, '+'],
-				   'mods/mod'
-				   => { SX => { 'type' => 'ONT::MANNER-UNDO',
-						'value' => 'UN-' } },
-				   'arg2'
-				   => { AX => { 'role' => ':AFFECTED',
-						'id' => $x_id } }
-				 } })
+	  match_node($_,
+		     { SX => { 'negation' => [OP_NOT, '+'],
+			       'mods/mod' => { SX => { 'type' => 'ONT::MANNER-UNDO',
+						       'value' => 'UN-' } },
+			       'arg2' => { AX => { 'role' => ':AFFECTED',
+						   'id' => $x_id } }
+			     } })
 	}
 	map { $ekb->get_assertion($_) }
 	map { $_->value } $x->findnodes('features/inevent/@id');
@@ -872,14 +870,12 @@ sub default_options {
 	    &&
 	    # < E:bind(r1:X,r2:Y,negation:+)
 	    # < r1=AFFECTED && r2=AFFECTED1
-	    match_node($_, { SX => { 'negation' 
-				     => '+',
-				     'arg1' 
-				     => { AX => { 'role' => ':AFFECTED',
-						  'id' => $x_id  } },
-				     'arg2' 
-				     => { AX => { 'role' => ':AFFECTED1'} }
-				   } })
+	    match_node($_,
+		       { SX => { 'negation' => '+',
+				 'arg1' => { AX => { 'role' => ':AFFECTED',
+						     'id' => $x_id  } },
+				 'arg2' => { AX => { 'role' => ':AFFECTED1'} }
+			       } })
 	    &&
 	    # < ! E/arg*[result:*]
 	    ! assertion_args($_, '[@role=":RESULT"]')
@@ -963,14 +959,12 @@ sub default_options {
 	  # < ! E[mods/mod/type=ONT::MANNER-UNDO]
 	  # < ! E[negation)
 	  # < E[affected:X]
-	  match_node($_, { SX => { 'negation' 
-				   => [OP_NOT, '+'],
-				   'mods/mod/type' 
-				   => [OP_NOT, 'ONT::MANNER-UNDO'],
-				   'arg2' 
-				   => { AX => { 'role' => ':AFFECTED',
-						'id' => $x_id } }
-				 } })
+	  match_node($_,
+		     { SX => { 'negation' => [OP_NOT, '+'],
+			       'mods/mod/type' => [OP_NOT, 'ONT::MANNER-UNDO'],
+			       'arg2' => { AX => { 'role' => ':AFFECTED',
+						   'id' => $x_id } }
+			     } })
 	  &&
 	  # < ! E[result]
 	  ! assertion_args($_, '[@role=":RESULT"]')
@@ -1068,25 +1062,22 @@ sub default_options {
 	  # < E:bind(r1:X,!negation:+)
 	  # < ! E/mods/mod/type[ONT::MANNER-UNDO]
 	  # < r1=AGENT && r2=AFFECTED || r1=AFFECTED && r2=AFFECTED1
-	  match_node($_, { SX => { 'negation' 
-				   => [OP_NOT, '+'],
-				   'mods/mod/type' 
-				   => [OP_NOT, 'ONT::MANNER-UNDO']
-				 } })
+	  match_node($_,
+		     { SX => { 'negation' => [OP_NOT, '+'],
+			       'mods/mod/type' => [OP_NOT, 'ONT::MANNER-UNDO']
+			     } })
 	  &&
-	  ( match_node($_, { SX => { 'arg1' 
-				     => { AX => { 'role' => ':AGENT',
-						  'id' => $x_id  } },
-				     'arg2' 
-				     => { AX => { 'role' => ':AFFECTED' } }
-				   } })
+	  ( match_node($_,
+		       { SX => { 'arg1' => { AX => { 'role' => ':AGENT',
+						     'id' => $x_id  } },
+				 'arg2' => { AX => { 'role' => ':AFFECTED' } }
+			       } })
 	    ||
-	    match_node($_, { SX => { 'arg1' 
-				     => { AX => { 'role' => ':AFFECTED',
-						  'id' => $x_id  } },
-				     'arg2' 
-				     => { AX => { 'role' => ':AFFECTED1' } }
-				   } })
+	    match_node($_,
+		       { SX => { 'arg1' => { AX => { 'role' => ':AFFECTED',
+						     'id' => $x_id  } },
+				 'arg2' => { AX => { 'role' => ':AFFECTED1' } }
+			       } })
 	  )
 	  &&
 	  # < ! E/arg*[result:*]
@@ -1161,19 +1152,19 @@ sub default_options {
 	if ($rule->reasoner()->option('add_amount_changes')) {
 	  # > + E1:increase(affected:Z)
 	  my $e1_id =
-	    $ekb->increases($z_id, {refid => "$e_id", rule => $rule->name});
+	    $ekb->increases($z_id, {refid => $e_id, rule => $rule->name});
 	  # > + C1:cause(factor:E,outcome:E1)
-	  $ekb->causes($e_id, $e1_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->causes($e_id, $e1_id, {refid => $e_id, rule => $rule->name});
 	  # > + E2:decrease(affected:X1)
 	  my $e2_id =
-	    $ekb->decreases($x1_id, {refid => "$e_id", rule => $rule->name});
+	    $ekb->decreases($x1_id, {refid => $e_id, rule => $rule->name});
 	  # > + C2:cause(factor:E,outcome:E2)
-	  $ekb->causes($e_id, $e2_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->causes($e_id, $e2_id, {refid => $e_id, rule => $rule->name});
 	  # > + E3:decrease(affected:Y)
 	  my $e3_id =
-	    $ekb->decreases($y_id, {refid => "$e_id", rule => $rule->name});
+	    $ekb->decreases($y_id, {refid => $e_id, rule => $rule->name});
 	  # > + C3:cause(factor:E,outcome:E3)
-	  $ekb->causes($e_id, $e3_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->causes($e_id, $e3_id, {refid => $e_id, rule => $rule->name});
 	}
 
 	$count++;
@@ -1230,16 +1221,13 @@ sub default_options {
 	    # < E:bind(r1:X,!negation:+)
 	    # < ! E/mods/mod/type[ONT::MANNER-UNDO]
 	    # < r1=AGENT && r2=AFFECTED || r1=AFFECTED && r2=AFFECTED1
-	    match_node($_, { SX => { 'negation' 
-				     => [OP_NOT, '+'],
-				     'mods/mod/type' 
-				     => [OP_NOT, 'ONT::MANNER-UNDO'],
-				     'arg1' 
-				     => { AX => { 'role' => ':AGENT'} },
-				     'arg2' 
-				     => { AX => { 'role' => ':AFFECTED',
-						  'id' => $x_id  } }
-				   } })
+	    match_node($_,
+		       { SX => { 'negation' => [OP_NOT, '+'],
+				 'mods/mod/type' => [OP_NOT, 'ONT::MANNER-UNDO'],
+				 'arg1' => { AX => { 'role' => ':AGENT'} },
+				 'arg2' => { AX => { 'role' => ':AFFECTED',
+						     'id' => $x_id  } }
+			       } })
 	    &&
 	    # < ! E/arg*[result:*]
 	    ! assertion_args($_, '[@role=":RESULT"]')
@@ -1315,19 +1303,19 @@ sub default_options {
 	if ($rule->reasoner()->option('add_amount_changes')) {
 	  # > + E1:increase(affected:Z)
 	  my $e1_id =
-	    $ekb->increases($z_id, {refid => "$e_id", rule => $rule->name});
+	    $ekb->increases($z_id, {refid => $e_id, rule => $rule->name});
 	  # > + C1:cause(factor:E,outcome:E1)
-	  $ekb->causes($e_id, $e1_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->causes($e_id, $e1_id, {refid => $e_id, rule => $rule->name});
 	  # > + E2:decrease(affected:X1)
 	  my $e2_id =
-	    $ekb->decreases($x1_id, {refid => "$e_id", rule => $rule->name});
+	    $ekb->decreases($x1_id, {refid => $e_id, rule => $rule->name});
 	  # > + C2:cause(factor:E,outcome:E2)
-	  $ekb->causes($e_id, $e2_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->causes($e_id, $e2_id, {refid => $e_id, rule => $rule->name});
 	  # > + E3:decrease(affected:Y)
 	  my $e3_id =
-	    $ekb->decreases($y_id, {refid => "$e_id", rule => $rule->name});
+	    $ekb->decreases($y_id, {refid => $e_id, rule => $rule->name});
 	  # > + C3:cause(factor:E,outcome:E3)
-	  $ekb->causes($e_id, $e3_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->causes($e_id, $e3_id, {refid => $e_id, rule => $rule->name});
 	}
 
 	$count++;
@@ -1369,12 +1357,11 @@ sub default_options {
 	  # < E:activate(affected:X,!negation)
 	  $ont_events->is_a(get_slot_value($_, 'type'), 'ONT::ACTIVATE')
 	    &&
-	    match_node($_, { SX => { 'negation' 
-				     => [OP_NOT, '+'],
-				     'arg2' 
-				     => { AX => { 'role' => ':AFFECTED',
-						  'id' => $x_id  } }
-				   } })
+	    match_node($_,
+		       { SX => { 'negation' => [OP_NOT, '+'],
+				 'arg2' => { AX => { 'role' => ':AFFECTED',
+						     'id' => $x_id  } }
+			       } })
 	    &&
 	    # < ! E/arg*[result:*]
 	    ! assertion_args($_, '[@role=":RESULT"]')
@@ -1411,14 +1398,14 @@ sub default_options {
 	if ($rule->reasoner()->option('add_amount_changes')) {
 	  # > + E1:increase(affected:X) 
 	  my $e1_id =
-	    $ekb->increases($x_id, {refid => "$e_id", rule => $rule->name});
+	    $ekb->increases($x_id, {refid => $e_id, rule => $rule->name});
 	  # > + C1:cause(factor:E,outcome:E1)
-	  $ekb->causes($e_id, $e1_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->causes($e_id, $e1_id, {refid => $e_id, rule => $rule->name});
 	  # > + E2:decrease(affected:X1)
 	  my $e2_id =
-	    $ekb->decreases($x1_id, {refid => "$e_id", rule => $rule->name});
+	    $ekb->decreases($x1_id, {refid => $e_id, rule => $rule->name});
 	  # > + C2:cause(factor:E,outcome:E2)
-	  $ekb->causes($e_id, $e2_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->causes($e_id, $e2_id, {refid => $e_id, rule => $rule->name});
 	}
 
 	$count++;
@@ -1596,11 +1583,10 @@ sub default_options {
 
       # < E:BIND(agent:Y, !affected)
       # < ! E/mods/mod/type[ONT::MANNER-UNDO]
-      match_node($e, { SX => { 'mods/mod/type' 
-			       => [OP_NOT, 'ONT::MANNER-UNDO'],
-			       'arg1' 
-			       => { AX => { 'role' => ":AGENT" } },
-			     } })
+      match_node($e,
+		 { SX => { 'mods/mod/type' => [OP_NOT, 'ONT::MANNER-UNDO'],
+			   'arg1' => { AX => { 'role' => ":AGENT" } },
+			 } })
 	or return 0;
 
       # < ! arg*(result:*)
@@ -1660,16 +1646,16 @@ sub default_options {
       if ($rule->reasoner()->option('add_amount_changes')) {
 	# add: E1:increase(affected:Z)
 	my $e1_id =
-	  $ekb->increases($z_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->increases($z_id, {refid => $e_id, rule => $rule->name});
 	# add: C1:cause(factor:E,outcome:E1)
-	$ekb->causes($e_id, $e1_id, {refid => "$e_id", rule => $rule->name});
+	$ekb->causes($e_id, $e1_id, {refid => $e_id, rule => $rule->name});
 
 	foreach my $x1_id (@member_ids) {
 	  # add: E2:decrease(affected:X1)
 	  my $e2_id =
-	    $ekb->decreases($x1_id, {refid => "$e_id", rule => $rule->name});
+	    $ekb->decreases($x1_id, {refid => $e_id, rule => $rule->name});
 	  # add: C2:cause(factor:E,outcome:E2)
-	  $ekb->causes($e_id, $e2_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->causes($e_id, $e2_id, {refid => $e_id, rule => $rule->name});
 	}
       }
 
@@ -1705,11 +1691,10 @@ sub default_options {
 
       # < E:BIND(affected:Y, !agent)
       # < ! E/mods/mod/type[ONT::MANNER-UNDO]
-      match_node($e, { SX => { 'mods/mod/type' 
-			       => [OP_NOT, 'ONT::MANNER-UNDO'],
-			       'arg2' 
-			       => { AX => { 'role' => ":AFFECTED" } },
-			     } })
+      match_node($e,
+		 { SX => { 'mods/mod/type' => [OP_NOT, 'ONT::MANNER-UNDO'],
+			   'arg2' => { AX => { 'role' => ":AFFECTED" } },
+			 } })
 	or return 0;
 
       # < ! arg*(result:*)
@@ -1771,16 +1756,16 @@ sub default_options {
       if ($rule->reasoner()->option('add_amount_changes')) {
 	# add: E1:increase(affected:Z)
 	my $e1_id =
-	  $ekb->increases($z_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->increases($z_id, {refid => $e_id, rule => $rule->name});
 	# add: C1:cause(factor:E,outcome:E1)
-	$ekb->causes($e_id, $e1_id, {refid => "$e_id", rule => $rule->name});
+	$ekb->causes($e_id, $e1_id, {refid => $e_id, rule => $rule->name});
 
 	foreach my $x1_id (@member_ids) {
 	  # add: E2:decrease(affected:X1)
 	  my $e2_id =
-	    $ekb->decreases($x1_id, {refid => "$e_id", rule => $rule->name});
+	    $ekb->decreases($x1_id, {refid => $e_id, rule => $rule->name});
 	  # add: C2:cause(factor:E,outcome:E2)
-	  $ekb->causes($e_id, $e2_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->causes($e_id, $e2_id, {refid => $e_id, rule => $rule->name});
 	}
       }
 
@@ -1824,17 +1809,15 @@ sub default_options {
 
       # < ! E/mods/mod/type[ONT::MANNER-UNDO]
       # < r1=AGENT && r2=AFFECTED || r1=AFFECTED && r2=AFFECTED1
-      match_node($e, { SX => { 'mods/mod/type' 
-			       => [OP_NOT, 'ONT::MANNER-UNDO'],
-			       'arg1' 
-			       => { AX => { 'role' => [OP_OR,
-						       ":AGENT",
-						       ":AFFECTED"] } },
-			       'arg2' 
-			       => { AX => { 'role' => [OP_OR,
-						       ":AFFECTED",
-						       ":AFFECTED1"] } }
-			     } })
+      match_node($e,
+		 { SX => { 'mods/mod/type' => [OP_NOT, 'ONT::MANNER-UNDO'],
+			   'arg1' => { AX => { 'role' => [OP_OR,
+							  ":AGENT",
+							  ":AFFECTED"] } },
+			   'arg2' => { AX => { 'role' => [OP_OR,
+							  ":AFFECTED",
+							  ":AFFECTED1"] } }
+			 } })
 	or return 0;
 
       # < ! arg*(result:*)
@@ -1917,19 +1900,19 @@ sub default_options {
       if ($rule->reasoner()->option('add_amount_changes')) {
 	# add: E1:increase(affected:Z)
 	my $e1_id =
-	  $ekb->increases($z_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->increases($z_id, {refid => $e_id, rule => $rule->name});
 	# add: C1:cause(factor:E,outcome:E1)
-	$ekb->causes($e_id, $e1_id, {refid => "$e_id", rule => $rule->name});
+	$ekb->causes($e_id, $e1_id, {refid => $e_id, rule => $rule->name});
 	# add: E2:decrease(affected:X)
 	my $e2_id =
-	  $ekb->decreases($x_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->decreases($x_id, {refid => $e_id, rule => $rule->name});
 	# add: C2:cause(factor:E,outcome:E2)
-	$ekb->causes($e_id, $e2_id, {refid => "$e_id", rule => $rule->name});
+	$ekb->causes($e_id, $e2_id, {refid => $e_id, rule => $rule->name});
 	# add: E3:decrease(affected:Y)
 	my $e3_id =
-	  $ekb->decreases($y_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->decreases($y_id, {refid => $e_id, rule => $rule->name});
 	# add: C3:cause(factor:E,outcome:E3)
-	$ekb->causes($e_id, $e3_id, {refid => "$e_id", rule => $rule->name});
+	$ekb->causes($e_id, $e3_id, {refid => $e_id, rule => $rule->name});
       }
 
       1;
@@ -2006,14 +1989,14 @@ sub default_options {
       if ($rule->reasoner()->option('add_amount_changes')) {
 	# > + E1:increase(affected:X1) 
 	my $e1_id = 
-	  $ekb->increases($x1_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->increases($x1_id, {refid => $e_id, rule => $rule->name});
 	# > + C1:cause(factor:E,outcome:E1)
-	$ekb->causes($e_id, $e1_id, {refid => "$e_id", rule => $rule->name});
+	$ekb->causes($e_id, $e1_id, {refid => $e_id, rule => $rule->name});
 	# > + E2:decrease(affected:X)
 	my $e2_id =
-	  $ekb->decreases($x_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->decreases($x_id, {refid => $e_id, rule => $rule->name});
 	# > + C2:cause(factor:E,outcome:E2)
-	$ekb->causes($e_id, $e2_id, {refid => "$e_id", rule => $rule->name});
+	$ekb->causes($e_id, $e2_id, {refid => $e_id, rule => $rule->name});
       }
 
       1;
@@ -2090,14 +2073,14 @@ sub default_options {
       if ($rule->reasoner()->option('add_amount_changes')) {
 	# > + E1:increase(affected:X1) 
 	my $e1_id = 
-	  $ekb->increases($x1_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->increases($x1_id, {refid => $e_id, rule => $rule->name});
 	# > + C1:cause(factor:E,outcome:E1)
-	$ekb->causes($e_id, $e1_id, {refid => "$e_id", rule => $rule->name});
+	$ekb->causes($e_id, $e1_id, {refid => $e_id, rule => $rule->name});
 	# > + E2:decrease(affected:X)
 	my $e2_id =
-	  $ekb->decreases($x_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->decreases($x_id, {refid => $e_id, rule => $rule->name});
 	# > + C2:cause(factor:E,outcome:E2)
-	$ekb->causes($e_id, $e2_id, {refid => "$e_id", rule => $rule->name});
+	$ekb->causes($e_id, $e2_id, {refid => $e_id, rule => $rule->name});
       }
 
       1;
@@ -2177,14 +2160,14 @@ sub default_options {
       if ($rule->reasoner()->option('add_amount_changes')) {
 	# > + E1:increase(affected:X1) 
 	my $e1_id =
-	  $ekb->increases($x1_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->increases($x1_id, {refid => $e_id, rule => $rule->name});
 	# > + C1:cause(factor:E,outcome:E1)
-	$ekb->causes($e_id, $e1_id, {refid => "$e_id", rule => $rule->name});
+	$ekb->causes($e_id, $e1_id, {refid => $e_id, rule => $rule->name});
 	# > + E2:decrease(affected:X)
 	my $e2_id =
-	  $ekb->decreases($x_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->decreases($x_id, {refid => $e_id, rule => $rule->name});
 	# > + C2:cause(factor:E,outcome:E2)
-	$ekb->causes($e_id, $e2_id, {refid => "$e_id", rule => $rule->name});
+	$ekb->causes($e_id, $e2_id, {refid => $e_id, rule => $rule->name});
       }
       
       1;
@@ -2264,14 +2247,14 @@ sub default_options {
       if ($rule->reasoner()->option('add_amount_changes')) {
 	# > + E1:increase(affected:X1) 
 	my $e1_id =
-	  $ekb->increases($x1_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->increases($x1_id, {refid => $e_id, rule => $rule->name});
 	# > + C1:cause(factor:E,outcome:E1)
-	$ekb->causes($e_id, $e1_id, {refid => "$e_id", rule => $rule->name});
+	$ekb->causes($e_id, $e1_id, {refid => $e_id, rule => $rule->name});
 	# > + E2:decrease(affected:X)
 	my $e2_id =
-	  $ekb->decreases($x_id, {refid => "$e_id", rule => $rule->name});
+	  $ekb->decreases($x_id, {refid => $e_id, rule => $rule->name});
 	# > + C2:cause(factor:E,outcome:E2)
-	$ekb->causes($e_id, $e2_id, {refid => "$e_id", rule => $rule->name});
+	$ekb->causes($e_id, $e2_id, {refid => $e_id, rule => $rule->name});
       }
       
       1;

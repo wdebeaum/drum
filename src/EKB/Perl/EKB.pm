@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Sat Nov  3 20:41:59 CDT 2018 lgalescu>
+# Time-stamp: <Mon Jun 17 15:20:57 CDT 2019 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.40 2018/11/04 03:04:56 lgalescu Exp $
+# $Id: EKB.pm,v 1.41 2019/06/17 20:21:29 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -118,11 +118,15 @@
 # - added options for normalization; affects normalize() and clean_assertions()
 # - added method for removing paragraphs: remove_paragraphs()
 # - added method for querying an EKB: query_assertions()
-# 2018/11/03 v1.16.0 lgalescu
+# 2018/11/03 v1.16.0	lgalescu
 # - added <document/> elements; source file is listed there now; paragraphs
 #   now refer to the document using the docid attribute
 # - added fix() method to transform old format to new one
 # - many changes to handle document elements and ids,
+# 2019/06/17 v1.17	lgalescu
+# - a couple new utility functions
+# - various small improvements 
+
 
 # TODO:
 # - maybe split off non-OO extensions for manipulating XML objects into a separate package?
@@ -130,7 +134,7 @@
 
 package EKB;
 
-$VERSION = '1.16.0';
+$VERSION = '1.17';
 
 =head1 NAME
 
@@ -1284,7 +1288,7 @@ sub remove_assertion {
   DEBUG 2, "Removed assertion: %s", $a;
 }
 
-=head2 derive_assertion( $id, $atype )
+=head2 derive_assertion( $id, $atype, $replace )
 
 Creates a new assertion based on the one with the given ID.
 
@@ -1304,6 +1308,10 @@ C<end>) are copied; and
 
 =back
 
+If $replace is given and resolves to C<true>, the reference assertion is 
+removed, and the new one is added. In this case the new assertion will 
+retain the ID of the reference assertion.
+
 If successful, returns the newly created assertion. If an assertion with 
 the given ID doesn't exist, returns C<undef>. 
 
@@ -1311,20 +1319,27 @@ the given ID doesn't exist, returns C<undef>.
 
 sub derive_assertion {
   my $self = shift;
-  my ($refid, $atype) = @_;
+  my ($refid, $atype, $replace) = @_;
   my $ref = $self->get_assertion($refid)
     or do {
       ERROR "No assertion found with id=%s", $refid;
       return undef;
     };
-  $self->make_assertion( $atype // get_assertion_type($ref),
-			 { refid => $refid,
-			   paragraph => $ref->getAttribute('paragraph'),
-			   uttnum => $ref->getAttribute('uttnum'),
-			   start => $ref->getAttribute('start'),
-			   end => $ref->getAttribute('end') },
-			 make_slot_node( text => get_slot_value($ref, 'text') )
-		       );
+  my $new = $self->make_assertion( $atype // get_assertion_type($ref),
+				   { paragraph => $ref->getAttribute('paragraph'),
+				     uttnum => $ref->getAttribute('uttnum'),
+				     start => $ref->getAttribute('start'),
+				     end => $ref->getAttribute('end') },
+				   make_slot_node( text => get_slot_value($ref, 'text') )
+				 );
+  
+  if ($replace) {
+    $self->remove_assertion($ref);
+    set_attribute($new, 'id' => $refid);
+  } else {
+    set_attribute($new, 'refid' => $refid);
+  }
+  $new;
 }
 
 =head2 clone_assertion( $a, $attributes )
@@ -1349,6 +1364,7 @@ sub clone_assertion {
   my ($ref, $attrs) = @_;
   my $a = clone_node($ref, $self->new_id);
   $self->clean_assertion($a);
+  append_to_attribute($a, 'refid' => $ref->getAttribute('id'));
   if (ref($attrs) eq 'HASH') {
     # should we append the rule???
     if (defined $attrs->{'rule'}){
@@ -1361,7 +1377,7 @@ sub clone_assertion {
 =head2 clean_assertion( $assertion, $opts )
 
 Removes unnecessary attributes and content from the assertion.
-Use { keep_lisp => } to keep lisp representation.
+Use { keep_lisp => 1 } to keep lisp representation.
 
 =cut
 
@@ -1495,28 +1511,27 @@ sub modify_assertion {
 
   # set children and warn on replacements
   foreach my $child (@children) {
-    my $cname = $child->nodeName;
-    # TODO: should we be able to modify args through this method, as well?!?
-    unless (lc($cname) =~ m/^arg/) {
+    # replacement? N.B.: we only replace slots with slots
+    if (is_slot($child)) {
+      my $cname = $child->nodeName;
       my @s = $a->getChildrenByTagName($cname);
-      if (scalar(@s) == 1) {
+      # we assume at most one existing slot with the given name
+      # if the slot is repeatable, the caller should handle removal
+      if (scalar(@s) == 1 && is_slot($s[0])) {
 	$a->removeChild($s[0]);
-	WARN "A child of the same type was deleted: %s", $s[0];
-      } elsif (scalar(@s) > 1) {
-	foreach my $c (@s) { $a->removeChild($c); }
-	WARN "%d existing children of the same type were deleted", scalar(@s);
-      }
+	WARN "A slot of the same type was deleted: %s", $s[0];
+      } 
     }
     $a->appendChild($child);
   }
 
-  # set the 'text' property
+  # set the 'text' property (frame numbers may have changed)
   my $pid =$a->getAttribute('paragraph');
   my $start = $a->getAttribute('start');
   my $end = $a->getAttribute('end');
   if ((defined $pid) && (defined $start) && (defined $end)) {
       my $text = $self->get_span_text($pid, $start, $end);
-      remove_elements($a, './text');
+      remove_elements($a, 'text');
       $a->appendChild(make_slot_node(text => $text)); 
   }
   $a;
@@ -2260,6 +2275,38 @@ sub get_child_node_attr {
   return $fNode;
 }
 
+=head2 is_link( $node )
+
+Checks if a node is a link. A link is an element with an "id" attribute.
+
+=cut
+sub is_link {
+  my ($node) = @_;
+  return ($node->nodeType == XML_ELEMENT_NODE) && $node->hasAttribute("id");
+}
+
+=head2 is_slot( $node )
+
+Checks if a node is a slot. A slot is an element that is not a link and either 
+has no children or has a single child, of type text.
+
+=cut
+sub is_slot {
+  my ($node) = @_;
+  my @children = $node->childNodes;
+  my $result =
+    ($node->nodeType == XML_ELEMENT_NODE)
+    && !is_link($node)
+    && (scalar(@children) == 0
+	|| (scalar(@children) == 1
+	    &&
+	    $children[0]->nodeType == XML_TEXT_NODE));
+
+  DEBUG 2, $result ? "Slot: %s" : "Not a slot: %s", $node;
+  
+  $result;
+}
+
 =head2 get_slot_value( $node, $name )
 
 Gets the value (text content) of $node's slot with the name $name.
@@ -2299,14 +2346,12 @@ sub set_slot_value {
 }
 
 # remove a node's subelements, selected by an xpath
+# N.B.: this function removes descendants at an arbitrary depth. use carefully!
 sub remove_elements {
   my ($node, $path) = @_;
   my @toDelete = $node->findnodes($path);
   return unless @toDelete;
-  foreach my $elem (@toDelete) {
-    my $parent = $elem->parentNode;
-    $parent->removeChild($elem);
-  }
+  map { ($_->parentNode)->removeChild($_) } @toDelete;
   # we may have empty elements, so we clean them all up
   clean_empty_leafs($node);
 }
@@ -2423,16 +2468,10 @@ sub make_components {
   $comps_node; 
 }
 
-# deep clone node
+# deep clone node, possibly setting a new id
 sub clone_node {
   my ($node, $id) = @_;
   my $clone = $node->cloneNode(1);
-  # remove id, if any
-  if ($clone->hasAttribute('id')) {
-    $clone->removeAttribute('id');
-    # FIXME: should we really do this here (instead of on demand)?!?
-    append_to_attribute($clone, 'refid' => $node->getAttribute('id'));
-  }
   # set id, if given
   if (defined $id) {
     set_attribute($clone, 'id' => $id);
@@ -2617,7 +2656,7 @@ sub get_dbid_as_string {
   if (! $dbid) {
     # for protein families, we gather the dbid's of the members
     # we don't check the type, as it may have changed
-    if (&match_node($term, { SX => { 'members' => {} } } )) {
+    if (match_node($term, { SX => { 'members' => {} } } )) {
       my @dbids =
 	map { $_->getAttribute('dbid') }
 	$term->findnodes('members/member');
