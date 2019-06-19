@@ -1392,7 +1392,7 @@
 
 ;; PSYCHOLOGICAL CONDITION SCALE
 (define-type ont::psychological-condition-scale
-    :wordnet-sense-keys ("pyschological_state%1:26:00")
+    :wordnet-sense-keys ("psychological_state%1:26:00")
     :parent ont::ordered-domain 
     )
 

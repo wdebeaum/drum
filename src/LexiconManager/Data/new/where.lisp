@@ -46,6 +46,12 @@
      (SYNTAX (W::wh W::R))
      (TEMPL PPWORD-ADV-TEMPL)
      )
+
+    ((LF-PARENT ONT::AT-LOC)
+     (example "I found it where you put it")
+     (TEMPL binary-constraint-S-decl-TEMPL)
+     )
+    
     )
    )
 ))

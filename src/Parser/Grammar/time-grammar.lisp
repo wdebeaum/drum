@@ -1148,12 +1148,14 @@
      ;; Myrosia 10/26/03 added (name -) to prevent cases like "aspirin 7" or "pittsford 8"
      ;; also lowered the probability considerably to avoid overgeneration
      ;; swift 09/22/11 removing the sem restriction to allow "unit 1" "scenario 2" etc.
-     (head (n (name -) (one -) (SEM ?sem) (SEM ($ (? xx f::PHYS-OBJ f::abstr-obj) (f::scale -)))   ;; don't want scales like "S" for seconds, etc
-	      (WH -) (lf ?cl) 
-	    (LF (:* ?lfparent ?lfform))
-	    (lex ?lex)
-	    (sort (? !sort unit-measure)) (subcat ?subcat) (subcat-map ?smap))) ; pass up sort and subcat so we can use n1-reln3 (e.g., the beat 1 of meausure 1)
-     (BOUND (arg1 ?cl))
+      (head (n (name -) (one -) (SEM ?sem) (SEM ($ (? xx f::PHYS-OBJ f::abstr-obj)
+						   (f::type (? !yy ONT::DOMAIN))
+						   (f::scale -)))   ;; don't want scales like "S" for seconds, etc
+	       (WH -) (lf ?cl) 
+	       (LF (:* ?lfparent ?lfform))
+	       (lex ?lex)
+	       (sort (? !sort unit-measure)) (subcat ?subcat) (subcat-map ?smap))) ; pass up sort and subcat so we can use n1-reln3 (e.g., the beat 1 of meausure 1)
+      (BOUND (arg1 ?cl))
      ;;     (nname (lex ?name))
      (rnumber (val ?name))
      (simple-cons (in1 ?lfform) (in2 ?name) (out ?seq))

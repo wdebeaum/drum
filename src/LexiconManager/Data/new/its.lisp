@@ -16,8 +16,8 @@
 	   (wordfeats (W::stem W::it))
 	   (SENSES
 	    ((LF-PARENT ONT::REFERENTIAL-SEM)
+	     (preference .97)
 	     )
-	    (preference .97)
 	    ))
 ))
 

@@ -954,7 +954,7 @@
 (define-type ONT::COLLIDE
  :wordnet-sense-keys ("collide%2:35:01"  "collide%2:35:00" "crash%2:38:02" "crash%2:38:01")
  :comment "two objects comes into contact with force with another, typically both being negatively affected - also supports the plural subject that cincludes both objects"
- :parent ONT::MOTION
+ :parent ONT::cause-contact
  :sem (F::SITUATION (F::Trajectory -))
  :arguments ((:required ONT::affected (F::Phys-obj (F::mobility F::movable)))
 	     (:optional ONT::affected1 (F::Phys-obj (F::mobility F::movable)))

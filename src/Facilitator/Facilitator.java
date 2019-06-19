@@ -2,7 +2,7 @@
  * @(#)Facilitator.java
  *
  * David Costello, costello@cs.rochester.edu,  8 Jul 1999
- * $Id: Facilitator.java,v 1.9 2016/12/14 19:41:25 wdebeaum Exp $
+ * $Id: Facilitator.java,v 1.10 2019/06/19 00:50:24 lgalescu Exp $
  */
 package TRIPS.Facilitator;
 
@@ -446,9 +446,12 @@ public class Facilitator extends Thread implements Sendable {
 	    }
 	} catch (NoSuchElementException ex) {
 	}
-	// Remove from registry also
+	// Remove from registry 
 	Debug.debug("Facilitator.remove: removing client " + client);
 	registry.remove(client);
+	// Remove subscriptions
+	subscriptionManager.remove(client);
+	// Remove from status 
 	clientStatuses.remove(client);
 	Debug.debug("Facilitator.remove: done");
     }

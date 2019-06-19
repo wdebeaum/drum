@@ -137,7 +137,8 @@
 
    ;;  two utterances seoparated by punctuation - common in text-based dialogue
 
-   ((utt  (var ?v) (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
+   ((utt  ;(var ?v)
+	  (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
      (punc +) (punctype ?p) (uttword ?uw) (sa-seq +)
      (lf (% sa-seq (var *) (class ont::sa-seq)
 	    (constraint (& (acts (?v1 ?v2))))))
@@ -1250,13 +1251,14 @@
 	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (agr ?subjagr) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	    ;;(iobj ?iobj) (iobj (% ?s2  (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))
 	    (part (% -)) 
-	    (dobj ?dobj) (dobj (% np (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap)))	    
-	            ;; we allow a possible gap in the dobj np e.g., "what did he thwart the passage of"
+	    (dobj ?dobj) (dobj (% np (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem)
+				  (sort pred) (gap ?gap)))	    
 	    (comp3 (% -))
 	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	    
 	   ))
-     (np (case (? icase obj -)) (var ?iobjvar) (gerund -) (generated -) (sem ($ (? rcp f::phys-obj f::abstr-obj) (f::intentional +))) (gap -))
+     (np (case (? icase obj -)) (var ?iobjvar) (gerund -) (generated -)
+      (sort pred) (sem ($ (? rcp f::phys-obj f::abstr-obj) (f::intentional +))) (gap -))
      ?dobj
      )
 
@@ -1285,13 +1287,14 @@
 	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (agr ?subjagr) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	    ;;(iobj ?iobj) (iobj (% ?s2  (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))
 	    (part (% -)) 
-	    (dobj ?dobj) (dobj (% np (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (gerund -)))	    
+	    (dobj ?dobj) (dobj (% np (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (sort pred)
+				  (gerund -)))	    
 	            ;; we allow a possible gap in the dobj np e.g., "what did he thwart the passage of"
 	    (comp3 (% -))
 	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	    
 	   ))
-     (np (case (? icase obj -)) (var ?iobjvar) (sem ($ f::phys-obj (f::origin f::living) (f::intentional +) (f::type ont::person))) 
+     (np (case (? icase obj -)) (var ?iobjvar) (sort pred) (sem ($ f::phys-obj (f::origin f::living) (f::intentional +) (f::type ont::person))) 
       (generated -) (gap -))
      ?dobj
      )
@@ -2530,13 +2533,15 @@
     (add-to-conjunct (val (tense (? vf past pres fut))) (old ?tma) (new ?newtma))
     ?subj
     (advbl (atype pre-vp) (gap -)  ; pre-vp: Is the block eventually red?
-     (sem ($ f::abstr-obj (F::type (? ttt property-val)))) ; "regular" adverbs
+     (sem ($ f::abstr-obj (F::type (? ttt ont::property-val ont::position-reln ont::predicate)))) ; "regular" adverbs
      (argument (% s (sem ?sem)))
      (arg ?v) (var ?mod) (role ?advrole) (subcat -))           
     ?dobj
     ?comp)
 
-      ; Is the pizza cold quickly?
+   ; Is the pizza cold quickly/eventually?
+   ; Is the pizza in the oven?  
+   ; Is the pizza cold if I put it in the fridge?
    ((s (stype ynq) (main +) (aux -) (gap ?gap) ;(gap -)
      (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar) (agr ?subjagr)))
      (sort pred) 
@@ -2575,7 +2580,7 @@
 	     (advbl-needed ?avn)
 	     ))
     (advbl (atype post) (gap -)  ; post: Is the block red eventually?
-     (sem ($ f::abstr-obj (F::type (? ttt property-val)))) ; "regular" adverbs
+     (sem ($ f::abstr-obj (F::type (? ttt ont::property-val ont::position-reln ont::predicate)))) ; property-val: "regular" adverbs; position-reln: in; predicate: if, eventually
      (argument (% s (sem ?sem)))
      (arg ?v) (var ?mod) (role ?advrole) (subcat -))
     (add-to-conjunct (val (mod ?mod)) (old ?con) (new ?newcon))
