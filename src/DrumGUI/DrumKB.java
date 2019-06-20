@@ -1,7 +1,7 @@
 /*
  * DrumKB.java
  *
- * $Id: DrumKB.java,v 1.34 2018/11/08 21:25:42 lgalescu Exp $
+ * $Id: DrumKB.java,v 1.35 2019/06/20 04:35:26 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  9 May 2015
  */
@@ -318,6 +318,13 @@ public class DrumKB {
         }
         init();
         ExtractionFactory.setProperties(properties);
+    }
+
+    /**
+     * @return the {@code extractions.mode} property.
+     */
+    protected String getDomain() {
+        return properties.getProperty("extractions.mode");
     }
 
     /**
