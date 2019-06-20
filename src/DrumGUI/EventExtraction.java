@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.64 2018/11/28 21:01:32 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.65 2019/06/20 15:48:33 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -9,6 +9,7 @@
 package TRIPS.DrumGUI;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -74,12 +75,18 @@ public class EventExtraction extends Extraction {
         // :LOC id :LOCMOD ontType --> location
         LOC(":LOC"),
         LOCMOD(":LOCMOD"),
+        LOCATION(":LOCATION"), // LF-term attribute for :LOC
+        // {CWMS} :SOURCE and :RESULT --> location
+        SOURCE(":SOURCE"),
+        RESULT(":RESULT"),
         // [:FROM id] :TO id --> {DRUM} cell components/locations
         FROM(":FROM"),
         TO(":TO"),
         // :TIME :TIMEMOD
         TIME(":TIME"), // time
-        TIMEMOD(":TIMEMOD")
+        TIMEMOD(":TIMEMOD"),
+        // :EXTENT
+        EXTENT(":EXTENT")
         ;
         private String featureName;
         private Feature(String name) { featureName = name; }
@@ -142,11 +149,22 @@ public class EventExtraction extends Extraction {
         MODN(":MODN"),
         // :INEVENT id: ID for event in which this event participates in some role
         INEVENT(":INEVENT"),
-        // CWMS
-        QUAL(":QUAL")
+        // {CWMS} the following are LF attributes, or substitutes thereof
+        QUAL(":QUAL"),
+        ASSOC(":ASSOC")
         ;
         private String modName;
-
+        
+        /**
+         * Stores alternative names of poly-modifiers.
+         * For now we only handle one alternative per modifier.
+         */
+        private static HashMap<PolyModifier, String> altNames;
+        static {
+            altNames = new HashMap<PolyModifier, String>();
+            altNames.put(ASSOC, ":ASSOC-WITH");
+        }
+        
         private PolyModifier(String name) {
             modName = name;
         }
@@ -346,11 +364,12 @@ public class EventExtraction extends Extraction {
             ListIterator<KQMLObject> iterator;
             for (PolyModifier mod : PolyModifier.values()) {
                 String modName = mod.toString();
+                String altName = PolyModifier.altNames.get(mod);
                 iterator = shortValue.listIterator();
                 ArrayList<KQMLObject> modValues = new ArrayList<KQMLObject>();
                 while (iterator.hasNext()) {
                     String key = iterator.next().toString();
-                    if (key.equalsIgnoreCase(mod.toString())) {
+                    if (key.equalsIgnoreCase(modName) || key.equalsIgnoreCase(altName)) {
                         // look ahead
                         int nextIndex = iterator.nextIndex();
                         KQMLObject aValue = shortValue.get(nextIndex);
@@ -371,10 +390,13 @@ public class EventExtraction extends Extraction {
                             }
                         }
                         */
-                        modValues.add(aValue);
+                        if (! modValues.contains(aValue)) {
+                            modValues.add(aValue);
+                        }
                         iterator.next();
                     }
                 }
+                
                 if (!modValues.isEmpty()) {
                     polyMods.put(mod, modValues);
                 }
@@ -778,9 +800,9 @@ public class EventExtraction extends Extraction {
 
         // for PTMs we want a name
         if (ontType.equalsIgnoreCase("ONT::PTM")) {
-            if (!drumTerms.isEmpty()) {
+            if (!dsTerms.isEmpty()) {
                 // just get the first one
-                KQMLList firstTerm = drumTerms.get(0);
+                KQMLList firstTerm = dsTerms.get(0);
                 KQMLObject nameObj = firstTerm.getKeywordArg(":name");
                 if (nameObj != null) {
                     conts.add(xml_element("name", "", nameObj.stringValue()));
@@ -788,19 +810,23 @@ public class EventExtraction extends Extraction {
             }
         }
         
+        conts.add(xml_predicate());
+        conts.add(xml_args());
+        conts.add(xml_assocs());
         conts.add(xml_mods());
         conts.add(xml_qualifiers());
         conts.add(xml_features());
-        conts.add(xml_predicate());
-        conts.add(xml_args());
         conts.add(xml_time());
+        conts.add(xml_extent());
         conts.add(xml_location());     
-        conts.add(xml_fromLocation());
-        conts.add(xml_toLocation());
+        conts.add(xml_from());
+        conts.add(xml_to());
+        conts.add(xml_source());
+        conts.add(xml_result());
         if (ExtractionFactory.getProperty("extractions.mode").equals("DRUM")) {
             conts.add(xml_site());
             conts.add(xml_cellline());
-            conts.add(xml_drumTerms());
+            conts.add(xml_dsTerms());
         }
         return xml_element(exType, attrs, conts);
     }
@@ -997,13 +1023,57 @@ public class EventExtraction extends Extraction {
     }
 
     /**
+     * Extent feature
+     * @return
+     */
+    private String xml_extent() {
+        KQMLObject extent = features.get(Feature.EXTENT);
+        if (extent == null)
+            return "";
+        
+        // modifier?
+        if (isOntVar(extent.toString())) {
+            String var = extent.toString();
+            List<String> attrs = new ArrayList<String>();
+            KQMLList modifierTerm = findTermByVar(var, context);
+            if (modifierTerm != null) {
+                String modOntType = pullOntType(modifierTerm);
+                KQMLObject figure = modifierTerm.getKeywordArg(":FIGURE");
+                String figureVar = figure.toString();
+                // TODO: assert that figureVar.equalsIgnoreCase(id)
+                KQMLObject ground = modifierTerm.getKeywordArg(":GROUND");
+                String groundVar = ground.toString();
+                KQMLList groundTerm = findTermByVar(groundVar, context);
+                String groundOntType = pullOntType(groundTerm);
+                // we handle cases individually
+                if (modOntType.equalsIgnoreCase("ONT::EVENT-DURATION-MODIFIER")
+                        && this.isOntTime(groundOntType))
+                {
+                    attrs.add(xml_attribute("mod", modOntType));
+                    if (ekbFindExtraction(groundVar) != null) {
+                        return xml_elementWithID("time", groundVar, attrs);
+                    } else { // we need to define the item here
+                        return xml_lfTerm("time", groundVar, attrs);
+                    }
+                }
+            }
+        } 
+        // else // should not happen!
+        Debug.error("unexpected " + Feature.EXTENT + " value: " + extent);
+        return xml_element("extent", "", removePackage(extent.toString(), false));
+    }
+        
+    /**
      * Returns a {@code <location>} XML element representing location information attached to the event, 
      * or the empty string if no such information exists. 
      */
     private String xml_location() {
         KQMLObject loc = features.get(Feature.LOC);
-        if (loc == null) 
-            return "";
+        if (loc == null) {
+            loc = features.get(Feature.LOCATION);
+            if (loc == null)
+                return "";
+        }
         
         List<String> attrs = new ArrayList<String>();
         KQMLObject modType = features.get(Feature.LOCMOD);
@@ -1055,7 +1125,7 @@ public class EventExtraction extends Extraction {
      * information attached to the event, or the empty string if no such
      * information exists. Only events of movement will have this feature.
      */
-    private String xml_fromLocation() {
+    private String xml_from() {
         KQMLObject varObj = features.get(Feature.FROM);
         if (varObj == null) 
             return "";
@@ -1063,9 +1133,9 @@ public class EventExtraction extends Extraction {
         String var = varObj.toString();
         if (isOntVar(var)) {
             if (ekbFindExtraction(var) != null) {
-                return xml_elementWithID("from-location", var);
+                return xml_elementWithID("from", var);
             } else { // we need to define the item here
-                return xml_lfTerm("from-location", var);
+                return xml_lfTerm("from", var);
             }
         } else {
             Debug.error("unexpected " + Feature.FROM + " value: " + var);
@@ -1078,7 +1148,7 @@ public class EventExtraction extends Extraction {
      * information attached to the event, or the empty string if no such
      * information exists. Only events of movement will have this feature.
      */
-    private String xml_toLocation() {
+    private String xml_to() {
         KQMLObject varObj = features.get(Feature.TO);
         if (varObj == null) 
             return "";
@@ -1086,12 +1156,81 @@ public class EventExtraction extends Extraction {
         String var = varObj.toString();
         if (isOntVar(var)) {
             if (ekbFindExtraction(var) != null) {
-                return xml_elementWithID("to-location", var);
-            } else { // we need to define the item here
-                return xml_lfTerm("to-location", var);
+                return xml_elementWithID("to", var);
+            } else {
+                // default: we define the item here in full
+                return xml_lfTerm("to", var);
             }
         } else {
             Debug.error("unexpected " + Feature.TO + " value: " + var);
+            return "";
+        }
+    }
+
+    /**
+     * Source
+     * @return
+     */
+    private String xml_source() {
+        KQMLObject varObj = features.get(Feature.SOURCE);
+        if (varObj == null) 
+            return "";
+        
+        String var = varObj.toString();
+        if (isOntVar(var)) {
+            if (ekbFindExtraction(var) != null) {
+                return xml_elementWithID("source", var);
+            } else {
+                // first check if we have a relation to another extraction
+                KQMLList varTerm = findTermByVar(var, context);
+                KQMLObject groundVar = varTerm.getKeywordArg(":GROUND");
+                if (groundVar != null) {
+                    String gVar = groundVar.toString();
+                    if (ekbFindExtraction(gVar) != null) {
+                        List<String> attrs = new ArrayList<String>();
+                        attrs.add(xml_attribute("mod", removePackage(pullOntWord(varTerm))));
+                        return xml_elementWithID("source", gVar, attrs);
+                    }
+                }
+                // default: we define the item here in full
+                return xml_lfTerm("source", var);
+            }
+        } else {
+            Debug.error("unexpected " + Feature.SOURCE + " value: " + var);
+            return "";
+        }
+    }
+
+    /**
+     * Result
+     * @return
+     */
+    private String xml_result() {
+        KQMLObject varObj = features.get(Feature.RESULT);
+        if (varObj == null) 
+            return "";
+        
+        String var = varObj.toString();
+        if (isOntVar(var)) {
+            if (ekbFindExtraction(var) != null) {
+                return xml_elementWithID("result", var);
+            } else {
+                // first check if we have a relation to another extraction
+                KQMLList varTerm = findTermByVar(var, context);
+                KQMLObject groundVar = varTerm.getKeywordArg(":GROUND");
+                if (groundVar != null) {
+                    String gVar = groundVar.toString();
+                    if (ekbFindExtraction(gVar) != null) {
+                        List<String> attrs = new ArrayList<String>();
+                        attrs.add(xml_attribute("mod", removePackage(pullOntWord(varTerm))));
+                        return xml_elementWithID("result", gVar, attrs);
+                    }
+                }
+                // default: we define the item here in full
+                return xml_lfTerm("result", var);
+            }
+        } else {
+            Debug.error("unexpected " + Feature.RESULT + " value: " + var);
             return "";
         }
     }
@@ -1160,6 +1299,36 @@ public class EventExtraction extends Extraction {
     
 
     /**
+     * Assoc-with
+     * 
+     * @return
+     */
+    private String xml_assocs() {
+        ArrayList<KQMLObject> assocs = polyMods.get(PolyModifier.ASSOC);
+        if ((assocs == null) || assocs.isEmpty()) 
+            return "";
+        
+        String result = "";
+        for (KQMLObject valObj : assocs) {
+            if (valObj instanceof KQMLList) {
+                KQMLList valType = (KQMLList) valObj;
+                result += xml_element("assoc-with", xml_attribute("type", ontType(valType)), null);
+            } else if (isOntVar(valObj.toString())) {
+                String var = valObj.toString();
+                if (ekbFindExtraction(var) != null) { 
+                    result += xml_elementWithID("assoc-with", var);
+                } else { // we need to define the item here
+                    result += xml_lfTerm("assoc-with", var);
+                }
+            } else { // should not happen!
+                Debug.warn("unexpected " + PolyModifier.ASSOC + " value: " + valObj);
+                result += xml_element("assoc-with", null, removePackage(valObj.toString(), false));
+            }
+        }
+        return result;
+    }
+
+    /**
      * Returns a {@code <mods>} XML element representing the term modifiers, or
      * the empty string if no such information exists.
      */
@@ -1198,7 +1367,19 @@ public class EventExtraction extends Extraction {
                 String var = modValue.toString();
                 if (ekbFindExtraction(var) != null) { 
                     result += xml_elementWithID(modType, var);
-                } else { // we need to define the item here
+                } else { 
+                    // first check if we have a relation to another extraction
+                    KQMLList varTerm = findTermByVar(var, context);
+                    KQMLObject groundVar = varTerm.getKeywordArg(":GROUND");
+                    if (groundVar != null) {
+                        String gVar = groundVar.toString();
+                        if (ekbFindExtraction(gVar) != null) {
+                            List<String> attrs = new ArrayList<String>();
+                            attrs.add(xml_attribute("mod", removePackage(pullOntWord(varTerm))));
+                            return xml_elementWithID(modType, gVar, attrs);
+                        }
+                    }
+                    // default: we define the item here in full
                     result += xml_lfTerm(modType, var);
                 }
             } else { // should not happen!

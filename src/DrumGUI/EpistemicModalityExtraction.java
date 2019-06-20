@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EpistemicModalityExtraction.java,v 1.12 2018/10/21 02:14:28 lgalescu Exp $
+ * $Id: EpistemicModalityExtraction.java,v 1.13 2019/06/20 15:48:34 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -29,7 +29,7 @@ public class EpistemicModalityExtraction extends Extraction {
     /** Roles (event arguments) */
     private enum Role {
         // Roles:
-        // AGENT -- obsolete?
+        // AGENT -- we use a more expansive definition of epistemic modality, so some statements have agent, rather than experiencer
         AGENT(":AGENT"),
         // EXPERIENCER
         EXPERIENCER(":EXPERIENCER"),
