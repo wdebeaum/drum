@@ -1,9 +1,9 @@
 # CWMS.pm
 #
-# Time-stamp: <Mon Jun 17 21:17:52 CDT 2019 lgalescu>
+# Time-stamp: <Thu Jun 20 15:02:40 CDT 2019 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  1 Jun 2016
-# $Id: CWMS.pm,v 1.2 2019/06/18 02:25:12 lgalescu Exp $
+# $Id: CWMS.pm,v 1.3 2019/06/21 18:41:39 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -450,10 +450,150 @@ sub default_options {
     }
    },
 
-   ## source => from-location
-   # warning only!
+   ## ARRIVE location => to-location
    {
-    name => "EKR:ESourceIsFromLoc",
+    name => "EKR:ArriveIn",
+    constraints => ['EVENT[type[.="ONT::ARRIVE"] and location[@id and @mod]]'],
+    handler => sub  {
+      my ($rule, $ekb, $e) = @_;
+      
+      my $e_id = $e->getAttribute('id');
+
+      my ($s) = $e->findnodes('location[@id]'); 
+      my $mod = $s->getAttribute('mod');
+      any { $mod eq $_ } qw/ONT::IN-LOC/
+	or return 0;
+      my $t_id = $s->getAttribute('id');
+      my $t = $ekb->get_assertion($t_id, "TERM")
+	or return 0;
+      $ont_geo->has(get_slot_value($t, "type"))
+	or return 0;
+
+      # make sure we don't have it already
+      match_node( $t, { SX => { 'to-location' => $t_id } } )
+	and return 0;
+
+      INFO "Rule %s matches term %s (t: %s)",
+	$rule->name(), $e_id, $t_id;
+
+      $e->removeChild($s);
+      $ekb->modify_assertion( $e,
+			      { rule => $rule->name, refid => $t_id },
+			      make_node("to-location", { id => $t_id,
+							 mod => $mod }) );
+
+      1;
+    }
+   },
+   
+   ## location => from-location
+   {
+    name => "EKR:ELoc2FromLoc",
+    constraints => ['EVENT[location[@id and @mod="ONT::FROM-LOC"]]'],
+    handler => sub  {
+      my ($rule, $ekb, $e) = @_;
+      
+      my $e_id = $e->getAttribute('id');
+
+      my ($s) = $e->findnodes('location[@id]'); 
+      my $mod = $s->getAttribute('mod');
+      my $t_id = $s->getAttribute('id');
+      my $t = $ekb->get_assertion($t_id, "TERM")
+	or return 0;
+      $ont_geo->has(get_slot_value($t, "type"))
+	or return 0;
+
+      # make sure we don't have it already
+      match_node( $t, { SX => { 'from-location' => $t_id } } )
+	and return 0;
+
+      INFO "Rule %s matches term %s (t: %s)",
+	$rule->name(), $e_id, $t_id;
+
+      $e->removeChild($s);
+      $ekb->modify_assertion( $e,
+			      { rule => $rule->name, refid => $t_id },
+			      make_node("from-location", { id => $t_id }) );
+
+      1;
+    }
+   },
+   
+   ## location => to-location
+   {
+    name => "EKR:ELoc2ToLoc",
+    constraints => ['EVENT[location[@id and @mod]]'],
+    handler => sub  {
+      my ($rule, $ekb, $e) = @_;
+      
+      my $e_id = $e->getAttribute('id');
+
+      my ($s) = $e->findnodes('location[@id]'); 
+      my $mod = $s->getAttribute('mod');
+      any { $mod eq $_ } qw/ONT::TO-LOC ONT::GOAL-AS-CONTAINMENT/
+	or return 0;
+      my $t_id = $s->getAttribute('id');
+      my $t = $ekb->get_assertion($t_id, "TERM")
+	or return 0;
+      $ont_geo->has(get_slot_value($t, "type"))
+	or return 0;
+
+      # make sure we don't have it already
+      match_node( $t, { SX => { 'to-location' => $t_id } } )
+	and return 0;
+
+      INFO "Rule %s matches term %s (t: %s)",
+	$rule->name(), $e_id, $t_id;
+
+      $e->removeChild($s);
+      $ekb->modify_assertion( $e,
+			      { rule => $rule->name, refid => $t_id },
+			      make_node("to-location", { id => $t_id }) );
+
+      1;
+    }
+   },
+   
+   ## result => to-location
+   {
+    name => "EKR:EResult2ToLoc",
+    constraints => ['EVENT[result/@id and not(to-location)]'],
+    handler => sub  {
+      my ($rule, $ekb, $e) = @_;
+      
+      my $e_id = $e->getAttribute('id');
+
+      my ($s) = $e->findnodes('result[@id]'); 
+      my $t_id = $s->getAttribute('id');
+      my $t = $ekb->get_assertion($t_id, "TERM")
+	or return 0;
+      $ont_geo->has(get_slot_value($t, "type"))
+	or return 0;
+
+      match_node( $t, { SX => { 'to-location' => $t_id } } )
+	and return 0;
+
+      INFO "Rule %s matches term %s (t: %s)",
+	$rule->name(), $e_id, $t_id;
+
+      ## NOT USED -- only issues a warning
+      #WARN "Rule %s not applied.", $rule->name();
+      #return 0;
+
+      my $mod = $s->getAttribute('mod');
+      $e->removeChild($s);
+      $ekb->modify_assertion( $e,
+			      { rule => $rule->name, refid => $t_id },
+			      make_node("to-location", { id => $t_id,
+							 mod => $mod }) );
+
+      1;
+    }
+   },
+
+   ## source => from-location
+   {
+    name => "EKR:ESource2FromLoc",
     constraints => ['EVENT[source/@id and not(from-location)]'],
     handler => sub  {
       my ($rule, $ekb, $e) = @_;
@@ -467,15 +607,11 @@ sub default_options {
       $ont_geo->has(get_slot_value($t, "type"))
 	or return 0;
 
-      match_node( $t, { SX => { from-location => $t_id } } )
+      match_node( $t, { SX => { 'from-location' => $t_id } } )
 	and return 0;
 
       INFO "Rule %s matches term %s (t: %s)",
 	$rule->name(), $e_id, $t_id;
-
-      ## NOT USED -- only issues a warning
-      WARN "Rule %s not applied.", $rule->name();
-      return 0;
 
       my $mod = $s->getAttribute('mod');
       $e->removeChild($s);
@@ -487,11 +623,66 @@ sub default_options {
     }
    },
    
-   ## result => to-location
-   # warning only!
+   ## result = to-location
    {
     name => "EKR:EResultIsToLoc",
-    constraints => ['EVENT[result/@id] and not(to-location)'],
+    constraints => ['EVENT[result/@id and to-location/@id]'],
+    handler => sub  {
+      my ($rule, $ekb, $e) = @_;
+      
+      my $e_id = $e->getAttribute('id');
+
+      my ($s) = $e->findnodes('result[@id]'); 
+      my $t_id = $s->getAttribute('id');
+      my $t = $ekb->get_assertion($t_id, "TERM")
+	or return 0;
+      my $tl_id = $e->findnodes('to-location/@id')
+	or return 0;
+      ($t_id eq $tl_id)
+	or return 0;	
+
+      INFO "Rule %s matches term %s (t: %s)",
+	$rule->name(), $e_id, $t_id;
+
+      $e->removeChild($s);
+      $ekb->modify_assertion( $e, { rule => $rule->name } );
+
+      1;
+    }
+   },
+
+   ## result = from-location
+   {
+    name => "EKR:EResultIsFromLoc",
+    constraints => ['EVENT[result/@id and from-location/@id]'],
+    handler => sub  {
+      my ($rule, $ekb, $e) = @_;
+      
+      my $e_id = $e->getAttribute('id');
+
+      my ($s) = $e->findnodes('result[@id]'); 
+      my $t_id = $s->getAttribute('id');
+      my $t = $ekb->get_assertion($t_id, "TERM")
+	or return 0;
+      my $tl_id = $e->findnodes('from-location/@id')
+	or return 0;
+      ($t_id eq $tl_id)
+	or return 0;	
+
+      INFO "Rule %s matches term %s (t: %s)",
+	$rule->name(), $e_id, $t_id;
+
+      $e->removeChild($s);
+      $ekb->modify_assertion( $e, { rule => $rule->name } );
+
+      1;
+    }
+   },
+
+   ## result => from-location
+   {
+    name => "EKR:EResult2FromLoc",
+    constraints => ['EVENT[result[@id and @mod="FROM"] and not(from-location)]'],
     handler => sub  {
       my ($rule, $ekb, $e) = @_;
       
@@ -504,21 +695,17 @@ sub default_options {
       $ont_geo->has(get_slot_value($t, "type"))
 	or return 0;
 
-      match_node( $t, { SX => { to-location => $t_id } } )
+      match_node( $t, { SX => { 'from-location' => $t_id } } )
 	and return 0;
 
       INFO "Rule %s matches term %s (t: %s)",
 	$rule->name(), $e_id, $t_id;
 
-      ## NOT USED -- only issues a warning
-      WARN "Rule %s not applied.", $rule->name();
-      return 0;
-
       my $mod = $s->getAttribute('mod');
       $e->removeChild($s);
       $ekb->modify_assertion( $e,
 			      { rule => $rule->name, refid => $t_id },
-			      make_node("to-location", { id => $t_id, mod => $mod }) );
+			      make_node("from-location", { id => $t_id, mod => $mod }) );
 
       1;
     }

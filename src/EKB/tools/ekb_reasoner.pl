@@ -83,6 +83,8 @@ if ($opt_pub) {
     $ekb_options{pub} = 1;
 }
 
+INFO "EKB: $ekb_file";
+
 my $ekb = EKB->new($ekb_file, \%ekb_options);
 unless ($ekb) {
   FATAL "Malformed EKB";

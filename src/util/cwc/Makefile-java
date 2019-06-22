@@ -3,6 +3,7 @@ PACKAGE = TRIPS.util.cwc
 SRCS =	Args.java \
 	CWCException.java \
 	InvalidArgument.java \
+	InvalidArgumentCombo.java \
 	JavaFXApp.java \
 	JavaFXWindowManager.java \
 	MissingArgument.java \
