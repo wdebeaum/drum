@@ -3311,7 +3311,7 @@
      (head (N1 (VAR ?v) (class ?c) ;(LF ?c) ; changed N to N1 because some N's need to change to pred (via N1-RELN1)
 	       (Mass count) (sort PRED)  
 	      (KIND -) (agr 3s) (one -) ;; don't allow "one" as the N!
-	      (RESTR ?restr) (sem ($ (? ss  F::PHYS-OBJ F::SITUATION-ROOT  F::ABSTR-OBJ)))
+	      (RESTR ?restr) (sem ($ (? ss  F::PHYS-OBJ F::SITUATION-ROOT)))
 	      (transform ?transform) (postadvbl -)
 	      (post-subcat -) (gap -)
 	      ))
@@ -4772,7 +4772,7 @@
       )
      -np-name> 0.995
      (head (name (lex ?l) (sem ?sem) (var ?v) (agr ?agr) (lf ?lf) (class ?class)
-		 (sort sort) (sem ($ (? !s F::time)))
+		 (sort ?sort) ;;(sem ($ (? !s F::time)))
 		 (full-name ?fname) (time-converted ?tc)
 		 ;; swift 11/28/2007 removing gname rule & passing up generated feature (instead of restriction (generated -))
 		 (generated ?gen)  (transform ?transform) (title -)
