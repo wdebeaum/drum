@@ -973,6 +973,12 @@
  :arguments ((:optional ONT::source (F::abstr-obj (f::type ONT::SOURCE-RELN))))
  )
 
+
+(define-type ONT::SUCK
+ :wordnet-sense-keys ( "suck%1:04:00" "suck%2:34:04")
+ :parent ONT::pull
+ )
+
 (define-type ONT::PUSH
  :wordnet-sense-keys ("poke%2:35:01" "push%2:38:00" "force%2:38:00" "thrust%2:38:00" "thrust%2:42:01" "wedge%2:35:00" "bump%2:35:00")
   :parent ONT::apply-force
@@ -1178,7 +1184,7 @@
     )
 
 (define-type ONT::crush
- :wordnet-sense-keys ("squash%2:35:00" "crush%2:35:00" "squelch%2:35:00" "mash%2:35:00")
+ :wordnet-sense-keys ("squash%2:35:00" "crush%2:35:00" "squelch%2:35:00" "mash%2:35:00" "grind%2:35:00") 
  :parent ONT::change-integrity
  )
 
@@ -1913,7 +1919,7 @@
 
 (define-type ont::evoke-satisfaction
  :parent ont::evoke-joy
- :wordnet-sense-keys ("content%2:34:00" "satisfy%2:37:00" "quench%2:34:00" "indulge%2:41:01" "indulge%2:34:00" "indulge%2:34:12" "indulge%2:41:00")
+ :wordnet-sense-keys ("content%2:34:00" "satisfy%2:37:00" "quench%2:34:00" "indulge%2:41:01" "indulge%2:34:00" "indulge%2:34:12" "indulge%2:41:00" "satisfaction%1:04:00")
  :comment "evoke joy via by providing satisfaction and pleasure"
 )
 
@@ -3335,7 +3341,7 @@
  )
 
 (define-type ONT::empty
- :wordnet-sense-keys ("empty%2:30:01" "empty%2:30:00")
+ :wordnet-sense-keys ("empty%2:30:01" "empty%2:30:00" "evacuate%2:38:01" "evacuate%2:30:00" "evacuate%2:38:00")
  :parent ONT::cause-come-from
  :arguments ((:OPTIONAL ONT::Agent)
              (:OPTIONAL ONT::affected-result ((? thm F::phys-obj F::abstr-obj) (F::Container +))) ; _lg 20190206 added abstr-obj (for things like models, plans, etc.) and put back in the container feature
@@ -4929,17 +4935,17 @@
  :parent ONT::event-of-undergoing-action
  :sem (F::Situation (F::Aspect F::Dynamic) (F::Trajectory -))
  :arguments ((:ESSENTIAL ONT::affected)
-	     (:essential ont::formal) 
-             )
- )
+	     (:essential ont::formal (F::situation (F::TYPE ont::property-val) )
+			 )
+	     ))
 
 (define-type ONT::SPACE
- :wordnet-sense-keys ("space%2:38:00")
- :parent ONT::ARRANGING ;ONT::event-of-causation
- :sem (F::SITUATION (F::Cause F::Agentive) (F::Trajectory -))
- :arguments ((:REQUIRED ONT::affected (F::Phys-obj))
-             (:REQUIRED ONT::AGENT  ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
-             )
+    :wordnet-sense-keys ("space%2:38:00")
+    :parent ONT::ARRANGING ;ONT::event-of-causation
+    :sem (F::SITUATION (F::Cause F::Agentive) (F::Trajectory -))
+    :arguments ((:REQUIRED ONT::affected (F::Phys-obj))
+		(:REQUIRED ONT::AGENT  ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
+		)
  )
 
 ;;; Myrosia 06/09/02 adding an event for a meal
@@ -5230,6 +5236,7 @@
  :comment "agent changes an affected with another affected; switch item to a different item"
  )
 
+#|
 ;; evacuate an area
 (define-type ONT::evacuate
  :wordnet-sense-keys ("evacuate%2:38:00")
@@ -5238,6 +5245,7 @@
  :arguments ((:REQUIRED ONT::affected (F::Phys-obj (F::form F::geographical-object)))
               )
  )
+|#
 
 (define-type ONT::Closure
     :parent ONT::Change-state-action

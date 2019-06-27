@@ -137,7 +137,7 @@
       (ordinal (lex (? x w::half w::quarter)) (lf (nth ?n)))
       (adv (lex past))
       ;;(head (NUMBER (VAL ?hour) (NTYPE w::HOUR12)))
-     (head (pro (lf (:* ONT::TIME-OBJECT (? ref W::NOON W::MIDNIGHT)))))
+     (head (pro (lf (? cc ONT::NOON ONT::MIDNIGHT))))
      (compute-val-and-ntype (expr (/ 60 ?n)) (newval ?minute) (ntype ?n2))
       )
 
@@ -161,7 +161,7 @@
     ;;  e.g.,  5 am, 5 pm
     ((time-value ;;(LF (% time-description (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::clock-time) (f::time-scale f::point)))
              ;;(constraint ?newcon)))
-      (Hour ?hour) (Minute ?minute) (am-pm (:* ont::TIME-OBJECT (? x AM PM)))
+      (Hour ?hour) (Minute ?minute) (am-pm (? tt ont::DAY-STAGE-PM ont::DAY-STAGE-AM))
       (AGR 3s) (lex (?lex1 ?lex2))
       (sem ($ f::time (f::time-function f::clock-time) (f::intentional -) (f::information -))) ;(f::time-scale f::point)))
       )
@@ -172,8 +172,8 @@
 		       (Hour ?hour) (Minute ?minute) (am-pm -)))
 		 ;; (LF (% time-description (sem ?sem) (constraint ?con)))))
      (N (SORT PRED) (lex ?lex2)     
-      (LF (:* ont::TIME-OBJECT (? x AM PM))))
-      )
+      (LF (? tt ont::DAY-STAGE-PM ont::DAY-STAGE-AM))
+      ))
      ;;(add-to-conjunct (val (am-pm ?lf)) (old ?con) (new ?newcon)))
 
     ;;  noon, midnight
@@ -183,7 +183,7 @@
       (sem ($ f::time (f::intentional -) (f::information -)(f::time-function f::clock-time))) ;(f::time-scale f::point)))
       )
      -noon1> 1.0
-     (head (pro (lf (:* ONT::TIME-OBJECT (? ref W::NOON W::MIDNIGHT)))))
+     (head (pro (lf (? tt ONT::NOON ONT::MIDNIGHT))))
      )
     
     ;; Time + temporal pro  e.g., 12 noon, ...
@@ -198,7 +198,7 @@
 			;;(sem ?sem) (lf ?lf)
 			;;(lf (% time-description (constraint ?c1)))
 	      ))
-     (pro (lf (:* ONT::TIME-OBJECT (? ref W::NOON W::MIDNIGHT))))
+     (pro (lf (? tt ONT::NOON ONT::MIDNIGHT)))
      ;;(add-to-conjunct (val (am-pm ?ref)) (old ?c1) (new ?newc))
      )
 
@@ -344,8 +344,9 @@
       (ratenumsem ?sem1)
       (ratedenomsem ?sem2)
        )
-     -units-per-period2> 
+     -units-per-period2> .98
      (head (np (lf ?lf) (sort unit-measure) (wh -) (var ?v1) (lex ?x) (sem ?sem1) (class ?cl)
+	       (ellided -)
 	       ))
      (np (agr 3s) (var ?per) (lf (% description (status ont::indefinite)))
       (sem ?sem2) (mass count)
@@ -568,7 +569,7 @@
       (var *) (case ?case)
       ;;(var ?var)
       (lf (% PROP (class ONT::iteration-period) (var *) (constraint (& (FIGURE ?argvar) (GROUND ?valvar)))))
-      (atype post)
+      (atype (? atype post pre))
       (sem ?sem)
       (arg ?argvar)
       )
@@ -607,7 +608,8 @@
      -deictic-time-advbl> 1
      (head (np (sem ?valsem) (var ?valvar) (headless -) (coerced -)
 	       (sem ($ f::time)) ;(f::time-scale F::INTERVAL)))
-	       (LF (% DESCRIPTION (status ont::definite) (class ont::time-object) (CONSTRAINT (& (proform (? cr W::THIS W::THAT W::THOSE W::THESE)))) ;;(? cr this that those these))))))
+	       (LF (% DESCRIPTION (status ont::definite) (class ont::time-object)
+		      (CONSTRAINT (& (proform (? cr W::THIS W::THAT W::THOSE W::THESE)))) ;;(? cr this that those these))))))
 		      ))
 	       ))
      (compute-sem-features (lf ont::event-time-rel) (sem ?sem)))
@@ -1144,7 +1146,7 @@
      ((name (lex ?seq) (lf ?cl) (SEM ?sem) (agr 3s) (name +) (generated +)
 	    (sort ?sort) (subcat ?subcat) (subcat-map ?smap)
       )
-     -noun-nname2> 0.98 ;0.96  ; increased to 0.98 so "block 1 and block 3" would parse
+     -noun-nname2> 0.97 ;0.96  ; increased  so "block 1 and block 3" would parse
      ;; Myrosia 10/26/03 added (name -) to prevent cases like "aspirin 7" or "pittsford 8"
      ;; also lowered the probability considerably to avoid overgeneration
      ;; swift 09/22/11 removing the sem restriction to allow "unit 1" "scenario 2" etc.
@@ -1823,8 +1825,7 @@
          (add-to-conjunct (val (& (value ?num))) (old ?r) (new ?newr))
 	 (add-to-conjunct (val (& (amount (% *PRO* (status ont::indefinite) (class ont::NUMBER) (VAR ?nv) (constraint ?newr)))
 				  (unit ?c))) (old ?restr) (new ?constr))
-	 )
-    
-  ))
+     )
+    ))
 
   

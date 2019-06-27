@@ -10,7 +10,7 @@
     ((LF-PARENT ONT::EMPTY)
      (example "empty the oj from the tanker")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-AFFECTED-SOURCE-XP-TEMPL)
+     (TEMPL AGENT-AFFECTED-SOURCE-XP-optional-TEMPL)
      )
 
     ((LF-PARENT ONT::EMPTY)

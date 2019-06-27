@@ -8,6 +8,7 @@
    (SENSES
     ((LF-PARENT ONT::rescue)
      (example "save the people")
+     (templ AGENT-AFFECTED-XP-NP-TEMPL)
      )
     ((LF-PARENT ONT::LEAVE-TIME)
      (example "it saves us five hours [to go along the coast]")

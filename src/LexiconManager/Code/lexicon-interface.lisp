@@ -1369,9 +1369,9 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 ; 2019/01/24
 (defun convert-raw-score (score)
  "We want lexical scores to all be relativly high as low ones would never be considered"
-  (cond ((>= score .98) score)
+  (cond ((>= score .99) score)
 	(t (+ *domain-score-lower-bound* (* score ;(* score score score) ; 2019/02/04
-					    (- .98 *domain-score-lower-bound*))))
+					    (- .99 *domain-score-lower-bound*))))
 	)
   )
 

@@ -790,7 +790,8 @@
  :wordnet-sense-keys ("information%1:09:00" "information%1:10:00" "info%1:10:00" "indication%1:10:00" "vital_sign%1:26:00")
  :parent ONT::information-function-object
  ;:arguments ((:optional ONT::formal (F::prop))) ; copied from ONT::MESSAGE
- :arguments ((:optional ONT::formal (F::situation))) ; copied from ONT::MESSAGE
+ :arguments ((:optional ONT::FIGURE)
+	     (:optional ONT::formal (F::situation))) ; copied from ONT::MESSAGE
  )
 
 ;; create an ont::communication-object

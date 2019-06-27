@@ -942,6 +942,7 @@
 (define-type ont::measure-scale
  :parent ont::ordered-domain 
  :wordnet-sense-keys ("quantity%1:03:00" "measurement%1:04:00")
+ :arguments ((:essential ont::figure ((? val f::phys-obj f::abstr-obj f::situation))))
  ;; WORDS: quantity, measurement
 )
 

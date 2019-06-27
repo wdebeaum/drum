@@ -10,6 +10,7 @@
     ;;;; swier -- rescue the people
     ((LF-PARENT ONT::rescue)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
+     (templ AGENT-AFFECTED-XP-NP-TEMPL)
      )
     )
    )

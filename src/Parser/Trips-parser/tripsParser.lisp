@@ -546,7 +546,16 @@
 	(cons (car starts)
 	      (remove-dups (cdr starts) (union (caar starts) seen))))))
     
-     
+
+(defun eliminate-stoplist-senses (sense)
+  (let* ((wnsenses (find-value sense :wn-sense-keys))
+	 (reduced-wnsenses (remove-if #'wf::stoplist-p wnsenses)))
+    (if (null reduced-wnsenses)
+	(remove-arg sense :wn-sense-keys)
+	(if (< (list-length reduced-wnsenses) (list-length wnsenses))
+	    (replace-arg sense :wn-sense-keys reduced-wnsenses)
+	    sense))
+    ))
 
   
 ;; ========================
@@ -584,7 +593,11 @@
 	 ;; (score (find-value in :score))
 	 (prob (find-value in :prob))
 	 (sense-info (find-value in :sense-info))
+	 (reduced-sense-info (remove-if #'null (mapcar #'(lambda (x) (eliminate-stoplist-senses x))
+						       sense-info)))
+	 ;;(xx (format t "~%wnsenses are ~S then ~S" sense-info reduced-sense-info))
 	 (alternative (find-value (car sense-info) :alternate-spellings))
+	 
 	 (reduced-features (remove-args (cddr in) '(:start :end)));; :prob)))
 	 (word (if (and (consp new-tokens) (eq number-of-tokens  1))
 		   (car new-tokens)
