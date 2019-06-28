@@ -650,10 +650,12 @@
 		;;(aux -)   c.f., It had gone bad
 		(gap ?gap)
 		(ellipsis -)
+		(result ?resultsem)
 		))
      (adjp (ARGUMENT (% NP (sem ?sem))) 
       ;(SEM ($ f::abstr-obj (F::type (? ttt ONT::position-reln ont::domain-property)))) ; not sure why we have position-reln here
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::domain-property)))) 
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::domain-property))))
+      (SEM ?resultsem)
       (GAP -)
       ;; (subjvar ?subjvar)
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
@@ -681,11 +683,13 @@
 		;;(aux -)   c.f., It had gone bad
 		(gap ?gap)
 		(ellipsis -)
+		(result ?resultsem)
 		))
      (adjp (ARGUMENT (% NP (sem ?sem))) 
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ONT::path))))
       ;(SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::domain-property))))
       (SEM ($ f::abstr-obj (F::type (? ttt ont::domain-property))))
+      (sem ?resultsem)
       (GAP -)
       ;; (subjvar ?subjvar)
       (SET-MODIFIER -)  ;; mainly eliminate numbers 

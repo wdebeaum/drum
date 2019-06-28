@@ -1214,7 +1214,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 			  newertypes)))     ;;  MAybe we should keep the POS tags???????
 
     (print-debug "Cleaned up senses are ~S" res)
-    res))
+    (or res newertypes)))
 
 (defun penalize-those-with-no-domain-info (types)
   (when types

@@ -165,7 +165,7 @@
       (AGENT-AFFECTED-XP-OPTIONAL-A-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::AGENT)
-	(LOBJ (:parameter xp (:default (% W::NP))) ONT::AFFECTED optional)
+	(LOBJ (:parameter xp (:default (% W::NP (w::sort (? !xx W::unit-measure))))) ONT::AFFECTED optional)
 	))
 
       (AGENT-AFFECTED-nogerund-TEMPL
@@ -356,7 +356,7 @@
       (affected-unaccusative-TEMPL
        (SYNTAX (w::unaccusative +))
        (ARGUMENTS
-	(LSUBJ (% W::NP) ONT::affected)
+	(LSUBJ (:parameter xp (% W::NP (w::sort (? !xx W::unit-measure)))) ONT::affected)
 	))
 
       (AGENT-TEMPL
@@ -371,7 +371,7 @@
       
       (affected-TEMPL
        (ARGUMENTS
-	(LSUBJ (% W::NP) ONT::affected)
+	(LSUBJ (:parameter xp (% W::NP (w::sort (? !xx W::unit-measure)))) ONT::affected)
 	))
 
       (AGENT-EXTENT-OPTIONAL-TEMPL
@@ -489,7 +489,7 @@
       (NEUTRAL-AFFECTED-EXTENT-2-OPTIONAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::neutral)
-	(LOBJ (% W::NP) ONT::Affected OPTIONAL)
+	(LOBJ (:parameter xp (% W::NP (w::sort (? !xx W::unit-measure))))  ONT::Affected OPTIONAL)
 	;(LCOMP (% W::NP) ONT::DURATION)
 	(LCOMP (% W::NP) ONT::EXTENT)
 	))
@@ -497,7 +497,7 @@
       (theme-AFFECTED-DURATION-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ont::formal)
-	(LOBJ (% W::NP) ONT::Affected OPTIONAL)
+	(LOBJ (:parameter xp (% W::NP (w::sort (? !xx W::unit-measure)))) ONT::Affected OPTIONAL)
 ;	(LCOMP (% W::NP) ONT::DURATION)
 	(LCOMP (% W::NP) ONT::EXTENT)
 	))
@@ -515,7 +515,7 @@
       (EXPLETIVE-AFFECTED-EXTENT-FORMAL-2-OPTIONAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP (W::sem ($ -)) (W::lex W::it)) ONT::NOROLE)
-	(LIOBJ (% W::NP) ONT::Affected OPTIONAL)
+	(LIOBJ (:parameter xp (% W::NP (w::sort (? !xx W::unit-measure)))) ONT::Affected OPTIONAL)
 	;(LOBJ (% W::NP) ONT::DURATION)
 	(LOBJ (% W::NP) ONT::EXTENT)
 	(LCOMP (% W::cp (W::ctype W::s-to)) ont::formal)
@@ -2032,12 +2032,14 @@
     (LCOMP (:parameter xp (:default (% W::NP))) ONT::RESULT)
     ))
 
+#|  commenting out this one as we should always use AGENT-AFFECTEDR-XP-TEMPL which excludes SORT UNIT-MEASURE
+
  (AGENT-AFFECTEDR-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::AGENT)
     (LOBJ (% W::NP) ONT::affected-result)
     ))
-
+|#
 #| (Affected-affected-RESULT-arg-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::affected)
@@ -2046,10 +2048,11 @@
 |#
 
 (AGENT-AFFECTEDR-XP-TEMPL
-   (ARGUMENTS
-    (LSUBJ (% W::NP) ONT::AGENT)
-    (LOBJ  (:parameter xp (:default (% W::NP))) ONT::affected-result)
-    ))
+ (ARGUMENTS
+  (LSUBJ (% W::NP) ONT::AGENT)
+  (LOBJ  (:parameter xp (:default (% W::NP  (w::sort (? !xx W::unit-measure)))))
+	 ONT::AFFECTED-RESULT
+	 )))
 
 (AFFECTEDR-TEMPL
    (ARGUMENTS
@@ -2072,7 +2075,7 @@
 
 (affected-RESULT-TEMPL
    (ARGUMENTS
-    (LSUBJ (% W::NP) ONT::affected)
+    (LSUBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::affected)
     (LOBJ (% W::NP) ONT::RESULT)
     ))
 
@@ -3267,7 +3270,7 @@
   (adj-experiencer-theme-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE w::central) (W::ARG ?arg)  (W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ont::affected)
+    (ARGUMENT (% W::NP (w::sort (? !xx W::unit-measure))) ont::affected)
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ont::formal)
     (subcat2 (% -) ONT::NOROLE)
     ))
@@ -3275,7 +3278,7 @@
   (adj-experiencer-theme-req-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE w::central) (W::ARG ?arg)  (W::ALLOW-DELETED-COMP -))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ont::affected)
+    (ARGUMENT (% W::NP (w::sort (? !xx W::unit-measure))) ont::affected)
     (subcat (:parameter xp (:default (% W::np))) ont::formal)
     (subcat2 (% -) ONT::NOROLE)
     ))
@@ -3689,13 +3692,13 @@
   (adj-experiencer-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::SUBCAT -) (W::ARG ?arg) (W::ATYPE W::central))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::AFFECTED)
+    (ARGUMENT (% W::NP (w::sort (? !xx W::unit-measure))) ONT::AFFECTED)
     ))
 
    (adj-experiencer-content-xp-templ
    (SYNTAX (W::SORT W::PRED) (W::ARG ?arg) (W::ATYPE W::central) (w::allow-deleted-comp +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::AFFECTED)
+    (ARGUMENT (% W::NP (w::sort (? !xx W::unit-measure))) ONT::AFFECTED)
 ;    (subcat (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::content)
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::FORMAL)
     (subcat2 (% -) ONT::NOROLE)
