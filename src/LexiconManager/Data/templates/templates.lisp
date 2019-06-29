@@ -123,13 +123,13 @@
        (AFFECTED-AFFECTED1-XP-NP-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::affected)
-	(LOBJ (:parameter xp (:default (% W::NP  (w::sort (? !xx W::unit-measure))))) ONT::AFFECTED1)
+	(LOBJ (:parameter xp (:default (% W::NP  (w::sort (? !xy W::unit-measure))))) ONT::AFFECTED1)
 	))
 
        (AFFECTED1-AFFECTED-XP-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::affected1)
-	(LOBJ (:parameter xp (:default (% W::NP  (w::sort (? !xx W::unit-measure))))) ONT::AFFECTED)
+	(LOBJ (:parameter xp (:default (% W::NP  (w::sort (? !xy W::unit-measure))))) ONT::AFFECTED)
 	))
 
        (AFFECTED-AFFECTED1-XP-PP-TEMPL
@@ -356,7 +356,7 @@
       (affected-unaccusative-TEMPL
        (SYNTAX (w::unaccusative +))
        (ARGUMENTS
-	(LSUBJ (:parameter xp (% W::NP (w::sort (? !xx W::unit-measure)))) ONT::affected)
+	(LSUBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::affected)
 	))
 
       (AGENT-TEMPL
@@ -371,7 +371,7 @@
       
       (affected-TEMPL
        (ARGUMENTS
-	(LSUBJ (:parameter xp (% W::NP (w::sort (? !xx W::unit-measure)))) ONT::affected)
+	(LSUBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::affected)
 	))
 
       (AGENT-EXTENT-OPTIONAL-TEMPL
@@ -489,7 +489,7 @@
       (NEUTRAL-AFFECTED-EXTENT-2-OPTIONAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::neutral)
-	(LOBJ (:parameter xp (% W::NP (w::sort (? !xx W::unit-measure))))  ONT::Affected OPTIONAL)
+	(LOBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::Affected OPTIONAL)
 	;(LCOMP (% W::NP) ONT::DURATION)
 	(LCOMP (% W::NP) ONT::EXTENT)
 	))
@@ -497,7 +497,7 @@
       (theme-AFFECTED-DURATION-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ont::formal)
-	(LOBJ (:parameter xp (% W::NP (w::sort (? !xx W::unit-measure)))) ONT::Affected OPTIONAL)
+	(LOBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::Affected OPTIONAL)
 ;	(LCOMP (% W::NP) ONT::DURATION)
 	(LCOMP (% W::NP) ONT::EXTENT)
 	))
@@ -515,7 +515,7 @@
       (EXPLETIVE-AFFECTED-EXTENT-FORMAL-2-OPTIONAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP (W::sem ($ -)) (W::lex W::it)) ONT::NOROLE)
-	(LIOBJ (:parameter xp (% W::NP (w::sort (? !xx W::unit-measure)))) ONT::Affected OPTIONAL)
+	(LIOBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::Affected OPTIONAL)
 	;(LOBJ (% W::NP) ONT::DURATION)
 	(LOBJ (% W::NP) ONT::EXTENT)
 	(LCOMP (% W::cp (W::ctype W::s-to)) ont::formal)
@@ -3392,7 +3392,7 @@
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) (W::ALLOW-DELETED-COMP -))
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::FIGURE)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::Affected)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::standard)
     (subcat2 (% -) ONT::NOROLE)
     ))
 

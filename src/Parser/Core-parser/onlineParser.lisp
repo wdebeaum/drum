@@ -204,10 +204,18 @@
      experiment with different scoring functions"
   (cond
    ((eql (agenda-item-start i) (agenda-item-end i)) 1) ;;  insurance check
-   (t (min #|(* (probability-score i) 
-	      (arc-length-score i)) 1))))|#
-       (+ (probability-score i) 
-	  (* (- 1 (probability-score i)) (arc-length-score i))) 1))))
+   (t (reached-end-boost (min #|(* (probability-score i) 
+			  (arc-length-score i)) 1))))|#
+			  (+ (probability-score i) 
+			     (* (- 1 (probability-score i)) (arc-length-score i))) 1)
+			 (agenda-item-end i)))))
+			 
+
+(defun reached-end-boost (score end-posn)
+  "This gives the score a boost if it has reached the end of the sentence. This helps focus the search near the end when it often gets swamped"
+  (if (= end-posn (get-max-position))
+      (boost-by-percent score .1)
+      score))
 
 (defun calculate-entry-score (e)
   "This is used for final output, so need not be efficient"

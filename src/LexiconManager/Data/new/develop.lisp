@@ -45,7 +45,7 @@
      (LF-PARENT ONT::CREATE)
      (example "We developed a theory")
      ;(TEMPL agent-affected-xp-templ)
-     (TEMPL AGENT-AFFECTEDR-TEMPL)
+     (TEMPL AGENT-AFFECTEDR-XP-TEMPL)
      )
 
     )

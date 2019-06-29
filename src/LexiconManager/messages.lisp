@@ -206,6 +206,7 @@
   '(tell &key :content (modify-scenario . *))
   #'list)
 
+;;  e.g., (REQUEST :content (LEX-PREF-SENSE :senses ((W::associates ONT::BIND-INTERACT))  :status permanent))
 
 (defcomponent-handler
   '(request &key :content (lex-pref-sense . *))
