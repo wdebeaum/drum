@@ -36,7 +36,7 @@
 	 passive passive-map template result) 
     (s vform var neg sem subjvar dobjvar cont  lex orig-lex headcat transform ellipsis)
     (cp vform var neg sem subjvar dobjvar cont  transform subj-map subj lex orig-lex comp3) ;comp3 for -DEFN-PASSIVE-GAP>
-    (v lex orig-lex sem lf neg var agr cont aux modal auxname ellipsis tma transform headcat)
+    (v lex orig-lex sem lf neg var agr cont aux modal auxname ellipsis tma transform headcat result)
     (aux vform var agr neg sem subj iobj dobj comp3 part cont  tense-pro lex orig-lex headcat transform subj-map advbl-needed
 	 passive passive-map ellipsis contraction auxname) 
     ;; (pp var)

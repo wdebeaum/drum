@@ -1,9 +1,9 @@
 # CWMS.pm
 #
-# Time-stamp: <Thu Jun 20 15:02:40 CDT 2019 lgalescu>
+# Time-stamp: <Mon Jul  1 18:23:41 CDT 2019 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  1 Jun 2016
-# $Id: CWMS.pm,v 1.3 2019/06/21 18:41:39 lgalescu Exp $
+# $Id: CWMS.pm,v 1.4 2019/07/01 23:25:01 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -16,6 +16,8 @@
 # - Started. Copied a few general-purpose rules from DRUM.
 # 2019/06/11 v1.0	lgalescu
 # - Significant additions.
+# 2019/07/01 v1.1	lgalescu
+# - Fixed bugs (getting attribute value from descendants)
 
 #----------------------------------------------------------------
 # Usage:
@@ -23,7 +25,7 @@
 
 package EKB::Reasoner::CWMS;
 
-$VERSION = '1.0';
+$VERSION = '1.1';
 
 use strict 'vars';
 use warnings;
@@ -132,13 +134,13 @@ sub default_options {
    ## e.g., "the year 2016"
    {
     name => "EKR:TimeIdentifiedAs",
-    constraints => ['TERM[type[.="ONT::YEAR"] and equals and scale[.="ONT::TIME-LOC-SCALE"]]'],
+    constraints => ['TERM[type[.="ONT::YEAR"] and equals[@id] and scale[.="ONT::TIME-LOC-SCALE"]]'],
     handler => sub {
       my ($rule, $ekb, $t) = @_;
       
       my $t_id = $t->getAttribute('id');
       
-      my ($tl_id) = $t->findnodes('equals/@id');
+      my $tl_id = getvalue_xpath($t, 'equals/@id');
       my $tl_term = $ekb->get_assertion($tl_id, "TERM");
       match_node( $tl_term,
 		  { SX => { 'type' => "ONT::TIME-LOC",
@@ -261,8 +263,8 @@ sub default_options {
       # clone timex and add mod
       my ($timex) = $tl_term->findnodes('timex');
       my $new_timex = clone_node($timex);
-      my ($p) = $t->findnodes('text/@normalization');
-      $new_timex->setAttribute("mod", $p);
+      my $m = getvalue_xpath($t, 'text/@normalization');
+      $new_timex->setAttribute("mod", $m);
       $new_timex->setAttribute("type", "DURATION");
 
       # remove assoc
@@ -554,16 +556,16 @@ sub default_options {
     }
    },
    
-   ## result => to-location
+   ## result(TO) => to-location
    {
     name => "EKR:EResult2ToLoc",
-    constraints => ['EVENT[result/@id and not(to-location)]'],
+    constraints => ['EVENT[result[@id and mod] and not(to-location)]'],
     handler => sub  {
       my ($rule, $ekb, $e) = @_;
       
       my $e_id = $e->getAttribute('id');
 
-      my ($s) = $e->findnodes('result[@id]'); 
+      my ($s) = $e->findnodes('result[@id and mod]'); 
       my $t_id = $s->getAttribute('id');
       my $t = $ekb->get_assertion($t_id, "TERM")
 	or return 0;
@@ -573,6 +575,11 @@ sub default_options {
       match_node( $t, { SX => { 'to-location' => $t_id } } )
 	and return 0;
 
+      my $mod = $s->getAttribute('mod');
+      any { $mod eq $_ } qw/TO INTO/
+	or return 0;
+
+
       INFO "Rule %s matches term %s (t: %s)",
 	$rule->name(), $e_id, $t_id;
 
@@ -580,7 +587,6 @@ sub default_options {
       #WARN "Rule %s not applied.", $rule->name();
       #return 0;
 
-      my $mod = $s->getAttribute('mod');
       $e->removeChild($s);
       $ekb->modify_assertion( $e,
 			      { rule => $rule->name, refid => $t_id },
@@ -610,10 +616,15 @@ sub default_options {
       match_node( $t, { SX => { 'from-location' => $t_id } } )
 	and return 0;
 
+      my $mod = $s->getAttribute('mod');
+      if ($mod) {
+	any { $mod eq $_ } qw/FROM/
+	  or return 0;
+      }
+      
       INFO "Rule %s matches term %s (t: %s)",
 	$rule->name(), $e_id, $t_id;
 
-      my $mod = $s->getAttribute('mod');
       $e->removeChild($s);
       $ekb->modify_assertion( $e,
 			      { rule => $rule->name, refid => $t_id },
@@ -636,10 +647,13 @@ sub default_options {
       my $t_id = $s->getAttribute('id');
       my $t = $ekb->get_assertion($t_id, "TERM")
 	or return 0;
-      my $tl_id = $e->findnodes('to-location/@id')
+      my $tl_id = getvalue_xpath($e, 'to-location/@id')
 	or return 0;
       ($t_id eq $tl_id)
-	or return 0;	
+	or return 0;
+      # TODO: this would be simpler, but it doesn't work
+      # $e->exists('to-location[@id='.$t_id.']')
+      #   or return 0;
 
       INFO "Rule %s matches term %s (t: %s)",
 	$rule->name(), $e_id, $t_id;
@@ -664,10 +678,13 @@ sub default_options {
       my $t_id = $s->getAttribute('id');
       my $t = $ekb->get_assertion($t_id, "TERM")
 	or return 0;
-      my $tl_id = $e->findnodes('from-location/@id')
-	or return 0;
+      my $tl_id = getvalue_xpath($e, 'from-location/@id')
+      	or return 0;
       ($t_id eq $tl_id)
-	or return 0;	
+      	or return 0;
+      # TODO: this would be simpler, but it doesn't work
+      # $e->exists('from-location[@id='.$t_id.']')
+      # 	or return 0;
 
       INFO "Rule %s matches term %s (t: %s)",
 	$rule->name(), $e_id, $t_id;

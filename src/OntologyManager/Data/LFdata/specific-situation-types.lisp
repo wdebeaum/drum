@@ -3223,9 +3223,8 @@
  )
 
 (define-type ONT::sampling
- :wordnet-sense-keys ("sample%2:34:00")
- :parent ont::choosing
- )
+    :parent ont::choosing
+    )
 
 
 ;; abandon, desert, leave behnid

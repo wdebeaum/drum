@@ -231,7 +231,8 @@
 (define-type ont::orients-to
     :parent ont::oriented-loc-reln
     :comment "FIGURE is located by an object defined by an orientation wrt an object. e.g., to the east, to the back"
-  :arguments ((:essential ONT::GROUND ((? of1  f::phys-obj f::abstr-obj) (f::type (? t ONT::CARDINAL-POINT ONT::object-dependent-location)))))
+    :arguments ((:essential ONT::FIGURE (f::PHYS-OBJ))
+		(:essential ONT::GROUND ((? of1  f::phys-obj f::abstr-obj) (f::type (? t ONT::CARDINAL-POINT ONT::object-dependent-location)))))
   )
 
 ; figure is on an object
@@ -523,7 +524,7 @@
 			   )))
     )
 
-; relates a trajectory/evet to its beginning/source
+; relates a trajectory/change event to its beginning/source/initial state
 (define-type ont::source-reln
  :parent ont::path
  )
@@ -532,8 +533,9 @@
 ; from
 
 (define-type ont::from
-  :parent ont::source-reln
-  )
+    :comment "This is the initial state of a change - not an initial locaition, which is FROM-LOC"
+    :parent ont::source-reln
+    )
 
 (define-type ont::source-as-loc
  :parent ont::from
@@ -617,15 +619,15 @@
  )||#
 
 (define-type ONT::from-loc
- :parent ONT::source-reln
+    :parent ONT::source-reln
+    :comment "This indicates an initial location of an object"
  :arguments (;(:ESSENTIAL ONT::FIGURE ( F::situation (F::type ont::motion)))
 	     ;(:ESSENTIAL ONT::GROUND (F::Phys-obj (f::spatial-abstraction (? sa f::spatial-point))))
 
 	     ; copied from to-loc
-	     (:ESSENTIAL ONT::FIGURE ((? f F::PHYS-OBJ F::abstr-obj))); (F::situation (f::type ont::event-of-change)))   ; "I walked to the store" FIGURE should point to "I", not "walked"
+	     (:ESSENTIAL ONT::FIGURE ((? f F::PHYS-OBJ F::abstr-obj) (F::mobility F::movable)))
 	     (:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj) (f::spatial-abstraction ?!sa)
-				      (F::mobility F::movable) ; exclude "... arrive in country X from country Y"
-					;(F::form F::geographical-object)
+				     ;; (F::mobility F::movable) ; exclude "... arrive in country X from country Y"  JFA I removed the movable constraint to the figure 
 				      ) )  ; spatial-abstraction is not enough: many things have spatial-abstraction, e.g., a frog.  Another possibility is (F::object-function F::spatial-object)
 
 	     )
@@ -844,7 +846,7 @@
 ;; the delayed cargo, a scheduled meeting
 (define-type ONT::scheduled-time-modifier
  :parent ONT::TEMPORAL-MODIFIER
- :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::phys-obj f::situation)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::phys-obj f::situation f::time)))
              )
  )
 

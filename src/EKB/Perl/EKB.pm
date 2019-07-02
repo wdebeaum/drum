@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Mon Jun 17 15:20:57 CDT 2019 lgalescu>
+# Time-stamp: <Mon Jul  1 18:22:42 CDT 2019 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.41 2019/06/17 20:21:29 lgalescu Exp $
+# $Id: EKB.pm,v 1.42 2019/07/01 23:25:00 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -126,6 +126,8 @@
 # 2019/06/17 v1.17	lgalescu
 # - a couple new utility functions
 # - various small improvements 
+# 2019/07/01 v1.18	lgalescu
+# - one more utility function
 
 
 # TODO:
@@ -134,7 +136,7 @@
 
 package EKB;
 
-$VERSION = '1.17';
+$VERSION = '1.18';
 
 =head1 NAME
 
@@ -287,7 +289,8 @@ our @EXPORT = qw(
 		  make_predicate
 		  make_arg
 		  make_components make_complex_name
-
+		  
+		  getvalue_xpath
 		  set_attribute
 		  append_to_attribute
 
@@ -2507,6 +2510,30 @@ sub make_node {
   set_attributes($node, $attrs);
   add_children($node, @children);
   return $node;
+}
+
+=head2 getvalue_xpath( $node, $xpath )
+
+Gets the value of an attribute identified by an xpath expression evaluated 
+on a node.
+
+Essentially, if the xpath expression is "path-to/@attr", this function 
+returns the same value as
+
+  ($node->findnodes("path-to"))[0]->getValue()
+
+except it checks intermediary expressions and returns C<undef> when any of 
+them are undefined.
+
+=cut
+sub getvalue_xpath {
+  my ($node, $xpath) = @_;
+  return undef
+    unless defined $node;
+  my ($aNode) = $node->findnodes($xpath);
+  $aNode
+    ? $aNode->getValue()
+    : undef;
 }
 
 =head2 set_attribute( $node, $attribute, $value )

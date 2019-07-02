@@ -335,7 +335,7 @@
     )
 
 (define-type ont::atmospheric-phenomenon
-     :wordnet-sense-keys ("atmospheric_phenomenon%1:19:00" "cloud%1:19:01" "smoke%1:22:00")
+     :wordnet-sense-keys ("atmospheric_phenomenon%1:19:00")
     :parent ont::natural-phenomenon
     :sem (F::Phys-obj (F::origin F::non-living) (f::object-function f::weather))
     )
@@ -381,7 +381,8 @@
     )
 
 ;; fog, smog, haze
-(define-type ONT::cloud-object
+(define-type ONT::cloud-like-object
+    :wordnet-sense-keys ("cloud%1:19:01" "smoke%1:22:00")
     :parent ONT::atmospheric-phenomenon
     :sem (F::Phys-obj (F::origin F::non-living) (f::form f::substance))
     )
