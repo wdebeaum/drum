@@ -9,12 +9,12 @@
    (SENSES
     ((meta-data :origin cardiac :entry-date 20090130 :change-date nil :comments nil :vn ("breathe-40.1.2") :wn ("breathe%2:29:00" "breathe%2:32:00"))
      (LF-PARENT ONT::inhale)
-     (TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "he inhaled the air")
      )
      ((meta-data :origin cardiac :entry-date 20090130 :change-date nil :comments nil :vn ("breathe-40.1.2") :wn ("breathe%2:29:00" "breathe%2:32:00"))
       (LF-PARENT ONT::inhale)
-     (TEMPL affected-templ) ; like bleed
+     (TEMPL agent-templ) ; like bleed
      )
     )
    )

@@ -6,7 +6,7 @@
  :words (
    (W::cloud
    (SENSES
-    ((LF-PARENT ONT::cloud-object)
+    ((LF-PARENT ONT::cloud-like-object)
      (meta-data :origin calo-ontology :entry-date 20060712 :change-date nil :wn ("cloud%1:19:01" "cloud%1:17:00") :comments caloy3)
      )
     )

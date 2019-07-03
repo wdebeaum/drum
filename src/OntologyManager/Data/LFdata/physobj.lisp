@@ -639,7 +639,7 @@
     )
 
 (define-type ONT::LIQUID-SUBSTANCE
-    :wordnet-sense-keys ("liquid%1:27:00")
+    :wordnet-sense-keys ("liquid%1:27:00" "Fluid%1:27:02")
     :parent ONT::SUBSTANCE
     :sem (F::Phys-obj (F::form F::Liquid))
     )

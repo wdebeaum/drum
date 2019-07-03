@@ -6,7 +6,7 @@
  :words (
   (W::steam
    (SENSES
-    ((LF-PARENT ONT::cloud-object)
+    ((LF-PARENT ONT::cloud-like-object)
      (templ mass-pred-templ)
      (meta-data :origin mobius :entry-date 20060712 :change-date nil :comments engine-texts)
      )

@@ -57,15 +57,14 @@
  )
 
 (define-type ONT::have-influence
- :wordnet-sense-keys ("interact%2:41:00")
- :comment "an AGENT causes some interaction with another agent"
- :parent ONT::CAUSE-EFFECT
- :arguments (
-	     (:REQUIRED ONT::formal (F::Situation (F::type ONT::objective-influence)))
- ))
-
+    :comment "an AGENT causes some influence another agent"
+    :definitions ((ONT::CAUSE-EFFECT :agent ?agent :formal (ONT::OBJECTIVE-INFLUENCE :affected ?affected)))
+    :parent ONT::CAUSE-EFFECT
+    :arguments (
+		(:REQUIRED ONT::formal (F::Situation (F::type ONT::objective-influence)))
+		))
+#|
 (define-type ONT::CAUSE-Interact
- :wordnet-sense-keys ("interact%2:41:00")
  :comment "an AGENT causes some interaction with another agent"
  :parent ONT::CAUSE-EFFECT
  :sem (F::Situation (F::Trajectory -))
@@ -73,7 +72,8 @@
 	     (:REQUIRED ONT::agent ((? o1 F::Situation F::Phys-obj f::abstr-obj)))
 	     (:ESSENTIAL ONT::agent1 ((? o2 F::Situation F::Phys-obj f::abstr-obj)))
              )
- )
+ )|#
+
 
 (define-type ONT::agent-interaction
  :parent ONT::event-of-action
@@ -121,7 +121,7 @@
   )
 
 (define-type ONT::misinform
-  :wordnet-sense-keys ("misinform%2:32:00")
+  :wordnet-sense-keys ("misinform%2:32:00" "deceive%2:41:00" "misrepresent%2:31:00")
     :parent ONT::representative
     )
 
@@ -730,7 +730,7 @@
 ;;; general class for ingesting, eat, drink, take (drugs), ...
 ;;; NB: figure out about feed.
 (define-type ONT::consume
- :wordnet-sense-keys ("consume%2:34:00" "ingest%2:34:00" "take_in%2:34:00" "take%2:34:00" "have%2:34:00" "sample%2:34:00" )
+ :wordnet-sense-keys ("consume%2:34:00" "ingest%2:34:00" "take_in%2:34:00" "take%2:34:00" "have%2:34:00" "sample%2:34:00" "swallow%2:34:00")
  :parent ONT::event-of-causation
  :sem (F::Situation (:required (F::trajectory -))(:default (F::Cause F::agentive) (F::aspect F::dynamic) (F::time-span F::extended)))
  :arguments ((:REQUIRED ONT::Agent (F::Phys-obj (f::origin f::living)))

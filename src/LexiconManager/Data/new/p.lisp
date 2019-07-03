@@ -63,7 +63,7 @@
  :words (
   ((W::p W::m)
    (SENSES
-    ((LF-PARENT ONT::time-object)
+    ((LF-PARENT ONT::day-stage-pm)
      (LF-FORM W::PM)
      (SEM (F::time-function F::day-period))
      )
@@ -75,7 +75,7 @@
  :words (
   ((W::p W::punc-period W::m W::punc-period)
    (SENSES
-    ((LF-PARENT ONT::time-object)
+    ((LF-PARENT ONT::day-stage-pm)
      (LF-FORM W::PM)
      (SEM (F::time-function F::day-period))
      )

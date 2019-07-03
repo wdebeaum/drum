@@ -37,7 +37,8 @@
 (define-type ONT::situation-root
   :parent ont::referential-sem 
   :comment "root for all events, whether verbal or nominal"
-  :sem (F::Situation (F::Intentional -) (F::information F::mental-construct) (F::container -) (f::tangible +))
+  :sem (F::Situation (F::Intentional -) ;;(F::information F::mental-construct)
+		     (F::container -) (f::tangible +))
   :arguments (;;(:optional ont::arg0)  ;; abstract role for robust processing
 	      ;;(:optional ont::arg1)   ;; abstract role for robust processing
 ;	      (:optional ont::norole)
