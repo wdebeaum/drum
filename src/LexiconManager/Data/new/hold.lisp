@@ -64,7 +64,24 @@
      )
     )
    )
-))
+  ))
+
+(define-words :pos W::v :boost-word t :templ AGENT-AFFECTED-XP-NP-TEMPL
+ :words (
+  ((W::hold W::onto)
+   (SENSES
+    ((EXAMPLE "Hold onto the cup")
+     (LF-PARENT ONT::BODY-MANIPULATION)
+     (SEM (F::Cause F::agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
+     )
+
+    ((EXAMPLE "Hold onto the reservation")
+     (LF-PARENT ONT::retain)
+     (SEM (F::Cause F::agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
+     )
+    )
+   )
+  ))
 
 (define-words :pos W::UttWord :boost-word t :templ NO-FEATURES-TEMPL
  :words (

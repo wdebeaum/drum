@@ -27,7 +27,7 @@
      (TEMPL affected-TEMPL)
      )
     ((EXAMPLE "he/it woke him")
-     (LF-PARENT ONT::objective-influence)
+     (LF-PARENT ONT::awake)
      (SEM (F::trajectory -))
      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )

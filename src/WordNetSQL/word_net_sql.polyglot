@@ -309,7 +309,7 @@ executed with arguments @args.
 
 =cut
 sub query_first_column {
-  return map { $_[0] } query(@_);
+  return map { $_->[0] } query(@_);
 }
 
 =item C<is_preposition($word)>
