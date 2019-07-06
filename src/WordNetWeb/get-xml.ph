@@ -252,7 +252,7 @@ sub print_word_xml {
     if ($show_sense_keys);
   print qq(>\n);
   my %pos2rows = ();
-  my $query = $dbh->prepare_cached("SELECT synset_offset,ss_type FROM senses WHERE lemma=? ORDER BY tag_cnt DESC, sense_number ASC;");
+  my $query = $dbh->prepare_cached("SELECT synset_offset,ss_type FROM senses WHERE LOWER(lemma)=? ORDER BY tag_cnt DESC, sense_number ASC;");
   $query->execute($lemma);
   while (my $row = $query->fetchrow_hashref()) {
     push @{$pos2rows{$ss_type2pos{$row->{ss_type}}}}, $row;

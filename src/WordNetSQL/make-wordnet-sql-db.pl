@@ -2,7 +2,7 @@
 
 # make-wordnet-sql-db.pl - Make an SQL version of the WordNet (3.0) database
 # William de Beaumont
-# $Date: 2018/11/05 21:07:12 $
+# $Date: 2019/07/05 15:24:26 $
 
 # USAGE: make-wordnet-sql-db.pl path/to/WordNet dbname
 
@@ -134,7 +134,7 @@ EOS
 my $insert_sense = $dbh->prepare("INSERT INTO senses VALUES (?,?,?,?,?,?,?,?,?);");
 my $insert_capitalization = $dbh->prepare("INSERT INTO capitalization VALUES (?,?,?,?);");
 my $insert_synset = $dbh->prepare("INSERT INTO synsets VALUES (?,?,?,?);");
-my $update_word_number = $dbh->prepare("UPDATE senses SET word_number=? WHERE synset_offset=? AND ss_type=? AND lemma=?;");
+my $update_lemma_and_word_number = $dbh->prepare("UPDATE senses SET lemma=?, word_number=? WHERE synset_offset=? AND ss_type=? AND lemma=? AND word_number=0;");
 my $insert_frame = $dbh->prepare("INSERT INTO frames VALUES (?,?,?,?);");
 my $insert_frame_text = $dbh->prepare("INSERT INTO frames_text VALUES (?,?);");
 my $insert_example = $dbh->prepare("INSERT INTO examples VALUES (?,?);");
@@ -289,11 +289,11 @@ for my $pos (qw(noun verb adj adv)) {
       my @case_dupes = grep { lc($_->[0]) eq $lc_word } @words;
       if (1 < @case_dupes) {
 	if ($word_and_num->[1] == $case_dupes[0][1]) { # first version
-	  $update_word_number->execute($word_and_num->[1], 0+$synset_offset, $ss_type, $lc_word);
+	  $update_lemma_and_word_number->execute(@$word_and_num, 0+$synset_offset, $ss_type, $lc_word);
 	}
 	$insert_capitalization->execute(0+$synset_offset, $ss_type, $word_and_num->[1], $word_and_num->[0]);
       } else { # no case-insensitive duplicates
-	$update_word_number->execute($word_and_num->[1], 0+$synset_offset, $ss_type, $lc_word);
+	$update_lemma_and_word_number->execute(@$word_and_num, 0+$synset_offset, $ss_type, $lc_word);
       }
     }
     for (my $p_cnt = shift @rest; $p_cnt > 0; $p_cnt--) {
@@ -478,7 +478,7 @@ $dbh->do("CREATE INDEX x_exception_generation on exceptions(lemma, pos);");
 print "Cleanup\n";
 undef $insert_sense;
 undef $insert_synset;
-undef $update_word_number;
+undef $update_lemma_and_word_number;
 undef $insert_frame;
 undef $insert_frame_text;
 undef $insert_example;

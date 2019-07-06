@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.121 2019/06/10 17:39:06 wdebeaum Exp $
+# $Id: Makefile,v 1.122 2019/07/05 15:39:05 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -129,11 +129,6 @@ $(prefix)/etc/util/add_suffix.ph: ../util/Makefile-perl ../util/add_suffix.polyg
 # Rules for those using the WordNet multiwords tagger
 #
 ifneq (,$(wildcard get-wn-multiwords.pl))
-WORDNET_BASEPATH=$(shell grep wordnet-basepath $(CONFIGDIR)/WordFinder/defs.lisp | awk '{gsub(/"/,"",$$3); print $$3}')
-
-ifeq (,$(WORDNET_BASEPATH))
-$(error WordNet basepath not configured)
-endif
 
 all:: wn-multiwords.tsv
 
@@ -143,8 +138,9 @@ install:: wn-multiwords.tsv
 clean::
 	rm -rf wn-multiwords.tsv
 
-wn-multiwords.tsv: get-wn-multiwords.pl $(CONFIGDIR)/WordFinder/defs.lisp $(prefix)/etc/WordNetSQL/WordNetSQL.pm $(prefix)/etc/util/add_suffix.ph ../WordFinder/wordnet/stoplist.txt
-	TRIPS_BASE=$(prefix) ./get-wn-multiwords.pl $(WORDNET_BASEPATH) >wn-multiwords.tsv
+wn-multiwords.tsv: get-wn-multiwords.pl $(prefix)/etc/WordNetSQL/wn.db $(prefix)/etc/WordNetSQL/WordNetSQL.pm $(prefix)/etc/util/add_suffix.ph ../WordFinder/wordnet/stoplist.txt
+	TRIPS_BASE=$(prefix) ./$< >$@
+
 endif
 
 #

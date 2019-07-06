@@ -17,7 +17,7 @@
    </xsl:choose>
   </xsl:variable>
   <xsl:choose>
-   <xsl:when test="@lemma = /word/@lemma">
+   <xsl:when test="translate(@lemma,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = /word/@lemma">
     <span class="sense selected" id="{@sense_key}">
      <span class="lemma"><xsl:value-of select="$link-text" /></span>
      <span class="sense_key"><xsl:value-of select="@sense_key" /></span>

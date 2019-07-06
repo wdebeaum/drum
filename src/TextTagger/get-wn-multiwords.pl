@@ -1,20 +1,17 @@
 #!/usr/bin/perl
 
-# get-wn-multiwords.pl - get list of WordNet multiwords from data.{noun,verb,adj,adv}, with tab-separated fields to put in tags
-# Usage: get-wn-multiwords.pl [wordnet home dir] >wn-multiwords.tsv
+# get-wn-multiwords.pl - get list of WordNet multiwords from WordNetSQL, with tab-separated fields to put in tags
+# Usage: get-wn-multiwords.pl >wn-multiwords.tsv
 # Output fields:
-# morphed multiword	(TRIPS POS	morph ID	sense key)+
+# morphed multiword	(Penn POS	sense key)+
 
 use lib "$ENV{TRIPS_BASE}/etc/WordNetSQL";
-use WordNetSQL qw(add_suffix is_preposition);
-# TODO make this actually use SQL instead of reading WN files directly
-# ... and reconcile add_suffixes with apply_morph
+use WordNetSQL qw(add_suffix is_preposition db query_first_column);
+# TODO reconcile add_suffixes with apply_morph
 
 use strict vars;
 
-my $wordnet_basepath = shift(@ARGV) || "/p/nl/wordnet/WordNet-3.0/dict";
-
-my %wn_pos_to_trips_pos = (noun => 'N', verb => 'V', adj => 'ADJ', adv => 'ADV');
+my %ss_type_to_trips_pos = (n => 'N', v => 'V', a => 'ADJ', r => 'ADV', s => 'ADJ');
 
 # map TRIPS POS to hashrefs, each of which maps from suffix to morph ID
 my %trips_pos_to_morph = (
@@ -37,7 +34,7 @@ my %lemma_to_entries = ();
 
 sub is_verb {
   my $word = shift;
-  return grep { $_->{trips_pos} eq 'V' } @{$lemma_to_entries{$word}};
+  return scalar(query_first_column("SELECT 1 FROM senses WHERE lemma=? AND ss_type='v';", $word));
 }
 
 # given an entry containing a lemma and a trips_pos return a list of modified
@@ -83,97 +80,60 @@ sub add_suffixes {
   return @entries;
 }
 
-sub sense_key {
-  my ($lemma, $ss_type, $lex_filenum, $lex_id, $head_word, $head_id) = @_;
-  $ss_type =~ tr/nvars/12345/;
-  my $sk = sprintf("$lemma%%%1d:%02d:%02d", $ss_type, $lex_filenum, $lex_id);
-  if ($ss_type == 5) {
-    (defined($head_word) and defined($head_id)) or
-      die "missing head word and id for satellite sense key $sk";
-    $sk .= sprintf(":$head_word:%02d", $head_id);
-  }
-  # NOTE: to save space in the table, we don't include :: for other sense keys
-  return $sk;
+my $has_instance_hypernym = <<'EOSQL';
+  SELECT 1 FROM pointers
+  WHERE source_synset_offset=? AND source_ss_type=? AND pointer_symbol='@i';
+EOSQL
+
+print STDERR "selecting multiword senses\n";
+# select relevant fields of all multiword senses
+my $sth = db()->prepare(<<'EOSQL');
+  SELECT synset_offset, ss_type, sense_number, sense_key, lemma
+  FROM senses
+  WHERE lemma LIKE '%\_%' ESCAPE '\' OR lemma LIKE '%-%';
+EOSQL
+
+$sth->execute();
+# make an entry for each sense
+while (my @row = $sth->fetchrow_array) {
+  my ($synset_offset, $ss_type, $sense_number, $sense_key, $lemma) = @row;
+  my $trips_pos = $ss_type_to_trips_pos{$ss_type};
+  # nouns with instance hypernyms are proper names, not common nouns
+  $trips_pos = 'NAME'
+    if ($ss_type eq 'n' and
+        scalar(query_first_column($has_instance_hypernym, $synset_offset, $ss_type)));
+  $sense_key =~ s/^[^%]+/$lemma/; # fix capitalization in sense key
+  $lemma =~ s/_/ /g;
+  $sense_key =~ s/::$//; # save space in the lookup table
+  push @{$lemma_to_entries{$lemma}},
+       +{ lemma => $lemma,
+	  trips_pos => $trips_pos,
+	  sense_key => $sense_key,
+	  synset_offset => $synset_offset,
+	  sense_number => $sense_number
+       };
 }
 
-my %member_meronym_to_holonyms = ();
-my %noun_hyponym_to_hypernyms = ();
+my $get_noun_hypernyms = <<'EOSQL';
+  SELECT target_synset_offset FROM pointers
+  WHERE source_synset_offset=? AND source_ss_type='n' AND pointer_symbol='@';
+EOSQL
 
-# get the TRIPS POS and sense key associated with each lemma
-for my $pos (keys %wn_pos_to_trips_pos) {
-  print STDERR "reading data.$pos\n";
-  -f "$wordnet_basepath/data.$pos"
-      or die "File not found: $wordnet_basepath/data.$pos\n";
-  open DATA, "<$wordnet_basepath/data.$pos" 
-      or die "Can't open data.$pos: $!";
-  my %head_adjs = (); # map head adj synset_offsets to first lemma:lex_id
-  while (<DATA>) {
-    next unless (/^\S/);
-    s/\s+\|.*$//g; # discard glosses
-    my @fields = split(/\s+/);
-    my ($synset_offset, $lex_filenum, $ss_type, $w_cnt, @rest) = @fields;
-    $w_cnt = hex($w_cnt);
-    my @sense_words = ();
-    for my $i (1..$w_cnt) {
-      my $word = shift @rest;
-      my $lex_id = hex(shift @rest);
-      $word =~ s/\(.*//; # remove parens from end of adj lemmas
-      #push @sense_words, [$word, sense_key($word, $ss_type, $lex_filenum, $lex_id)];
-      push @sense_words, [$word, $lex_id];
-    }
-    if ($ss_type eq 'a') { # head adj
-      $head_adjs{$synset_offset} = $sense_words[0];
-    }
-    my $head_lemma_id = [];
-    my $proper_name = 0;
-    my $p_cnt = shift @rest;
-    $p_cnt =~ s/^00?//; # remove leading 0s so perl doesn't think it's octal
-    for my $i (1..$p_cnt) {
-      my $pointer_symbol = shift @rest;
-      my $target_synset_offset = shift @rest;
-      my $target_pos = shift @rest;
-      my $source_target = shift @rest;
-      if ($pointer_symbol eq '@i') { # instance hypernym
-	$proper_name = 1;
-      } elsif ($pointer_symbol eq '#m') { # member holonym
-        push @{$member_meronym_to_holonyms{$synset_offset}}, $target_synset_offset;
-      } elsif ($pointer_symbol eq '@' and $pos eq 'noun') { # hypernym
-        push @{$noun_hyponym_to_hypernyms{$synset_offset}}, $target_synset_offset;
-      } elsif ($pointer_symbol eq '&' and $ss_type eq 's') { # sat. similar to
-        exists($head_adjs{$target_synset_offset}) or
-	  die "can't find head word for satellite synset $synset_offset";
-	$head_lemma_id = $head_adjs{$target_synset_offset};
-      }
-    }
-    my $trips_pos = $wn_pos_to_trips_pos{$pos};
-    $trips_pos = 'NAME' if ($proper_name);
-    for my $word (@sense_words) {
-      my ($lemma, $lex_id) = @$word;
-      my $sense_key = sense_key($lemma, $ss_type, $lex_filenum, $lex_id, @$head_lemma_id);
-      $lemma =~ s/_/ /g;
-      $lemma =~ s/\(.*\)$//;
-      push @{$lemma_to_entries{$lemma}},
-	   +{ lemma => $lemma,
-	      trips_pos => $trips_pos,
-	      sense_key => $sense_key,
-	      synset_offset => $synset_offset
-	    };
-    }
-  }
-  close DATA;
-}
-
+my $get_member_holonyms = <<'EOSQL';
+  SELECT target_synset_offset FROM pointers
+  WHERE source_synset_offset=? AND source_ss_type='n' AND pointer_symbol='#m';
+EOSQL
 
 # remove taxonomic noun entries
 
 # is the given noun synset a descendant of 'taxon'?
 my %is_taxon = (
-  '07992450' => 1 # 'taxon' itself
+  '7992450' => 1 # 'taxon' itself
 );
 sub is_taxon {
   my $synset_offset = shift;
   unless (exists($is_taxon{$synset_offset})) {
-    for my $hypernym (@{$noun_hyponym_to_hypernyms{$synset_offset}}) {
+    for my $hypernym (query_first_column($get_noun_hypernyms, $synset_offset)) {
       if (is_taxon($hypernym)) {
 	$is_taxon{$synset_offset} = 1;
 	last;
@@ -188,7 +148,8 @@ sub is_taxon {
 sub is_taxonomic {
   my $synset_offset = shift;
   my $ret = (is_taxon($synset_offset) or
-    (0 < grep { is_taxon($_) } @{$member_meronym_to_holonyms{$synset_offset}}));
+    (0 < grep { is_taxon($_) }
+	      query_first_column($get_member_holonyms, $synset_offset)));
   return $ret;
 }
 
@@ -210,7 +171,7 @@ my %is_day = (
 sub is_day {
   my $synset_offset = shift;
   unless (exists($is_day{$synset_offset})) {
-    for my $hypernym (@{$noun_hyponym_to_hypernyms{$synset_offset}}) {
+    for my $hypernym (query_first_column($get_noun_hypernyms, $synset_offset)) {
       if (is_day($hypernym)) {
 	$is_day{$synset_offset} = 1;
 	last;
@@ -234,18 +195,16 @@ my %morphed_to_entries = ();
 # apply morphology to the multiword lemmas
 print STDERR "applying morphology\n";
 for my $lemma (keys %lemma_to_entries) {
-  if ($lemma =~ /[ -]/) {
-    for my $entry (@{$lemma_to_entries{$lemma}}) {
-      for my $morphed_entry (add_suffixes($entry)) {
-	push @{$morphed_to_entries{$morphed_entry->{morphed}}}, $morphed_entry;
-	# add PASTPART too when morph_id is PAST
-	if ($morphed_entry->{morph_id} eq 'PAST') {
-	  push @{$morphed_to_entries{$morphed_entry->{morphed}}},
-	       +{ %$morphed_entry,
-	          morph_id => 'PASTPART',
-		  penn_pos => $trips_pos_to_morph_to_penn{V}{PASTPART}
-		};
-	}
+  for my $entry (@{$lemma_to_entries{$lemma}}) {
+    for my $morphed_entry (add_suffixes($entry)) {
+      push @{$morphed_to_entries{$morphed_entry->{morphed}}}, $morphed_entry;
+      # add PASTPART too when morph_id is PAST
+      if ($morphed_entry->{morph_id} eq 'PAST') {
+	push @{$morphed_to_entries{$morphed_entry->{morphed}}},
+	     +{ %$morphed_entry,
+		morph_id => 'PASTPART',
+		penn_pos => $trips_pos_to_morph_to_penn{V}{PASTPART}
+	      };
       }
     }
   }
@@ -275,6 +234,24 @@ for (read_stoplist('golist.txt')) {
   delete $stophash{$_};
 }
 
+# this matches WordFinder's parts-of-speech list
+my %trips_pos_rank = ('N' => 1, 'NAME' => 1, 'V' => 2, 'ADJ' => 3, 'ADV' => 4);
+
+sub entry_is_morphed {
+  my $m = $_->{morph_id};
+  return (($m =~ /^(NONE|SING|12S123PBASE)$/) ? 1 : 0);
+}
+
+# sort entries in the same order as WordFinder: base forms first, then morphed
+# forms; then by POS (nvar); then by sense number (i.e. decreasing frequency)
+sub wf_order {
+  sort {
+    (entry_is_morphed($a) <=> entry_is_morphed($b)) ||
+    ($trips_pos_rank{$a->{trips_pos}} <=> $trips_pos_rank{$b->{trips_pos}}) ||
+    ($a->{sense_number} <=> $b->{sense_number})
+  } @_;
+}
+
 # output, removing duplicate/stoplisted entries
 print STDERR "printing output\n";
 for my $morphed (sort keys %morphed_to_entries) {
@@ -282,7 +259,7 @@ for my $morphed (sort keys %morphed_to_entries) {
   next unless (grep { not $stophash{$_->{sense_key}} } @{$morphed_to_entries{$morphed}});
   print $morphed;
   my %entries = ();
-  for my $entry (@{$morphed_to_entries{$morphed}}) {
+  for my $entry (wf_order(@{$morphed_to_entries{$morphed}})) {
     next if ($stophash{$entry->{sense_key}}); # skip stoplisted entries
     my $entry_text = join("\t", @{$entry}{qw(penn_pos sense_key)});
     print "\t$entry_text" unless (exists($entries{$entry_text}));
