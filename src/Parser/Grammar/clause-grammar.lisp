@@ -128,7 +128,7 @@
      (lf (% ?s (var ?sv) (class ?cl) (constraint ?constraint)))
      )
    -utt-punctuation>
-   (head (utt (focus ?foc) (ended -) (var ?v) ;(punc -) ; sa-seq has punc, but now this rule would allow consecutive puncs, e.g., I ate the pizza.?
+   (head (utt (focus ?foc) (ended -) (var ?v) ;(punc -) ; sa-seq has punc, but now this rule would allow consecutive puncs, e.g., I ate the pizza!!
 	      (uttword ?uw)
 	  (lf (% (? s speechact sa-seq) (var ?sv) (class ?cl) (constraint ?con)))
 	  ))
@@ -183,7 +183,7 @@
     ;; (add-to-conjunct (val (punctype ?p)) (old ?con) (new ?constraint))
     (add-to-end-of-list (list ?acts) (val ?v2) (newlist ?newacts))
     )
-   
+
    ; replacing s-conj2
    ; two utts, possibly with different stypes, e.g., 
    ;; stype can also be whq: "... and what did the dog chase?" (cf. "what chased the cat" can be decl)
@@ -2659,7 +2659,9 @@
 	     (advbl-needed ?avn)
 	     ))
     (advbl (atype post) (gap -)  ; post: Is the block red eventually?
-     (sem ($ f::abstr-obj (F::type (? ttt ont::property-val ont::position-reln ont::predicate)))) ; property-val: "regular" adverbs; position-reln: in; predicate: if, eventually
+	   (sem ($ f::abstr-obj (F::type (? ttt ont::property-val
+					    ;ont::position-reln ; commenting this out, but it is needed for, e.g., "Move it forward/in"
+					    ont::predicate)))) ; property-val: "regular" adverbs; position-reln: in; predicate: if, eventually
      (argument (% s (sem ?sem)))
      (arg ?v) (var ?mod) (role ?advrole) (subcat -))
     (add-to-conjunct (val (mod ?mod)) (old ?con) (new ?newcon))

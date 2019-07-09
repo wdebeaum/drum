@@ -22,13 +22,14 @@
       (TEMPL AGENT-AFFECTEDR-XP-TEMPL)
       )
 
+     #|
      ((meta-data :origin BOB :entry-date 20141212 :change-date nil :comments nil)
       (LF-PARENT ONT::GENE-EXPRESSION)
       (example "the gene expresses")
       (SEM (F::Cause F::Agentive) (F::Aspect F::bounded))
       (templ affected-templ)
       )
-     
+     |#
      ))   
    )
 )
@@ -61,13 +62,14 @@
       (TEMPL AGENT-AFFECTEDR-XP-TEMPL)
       )
 
+     #|
      ((meta-data :origin BOB :entry-date 20141212 :change-date nil :comments nil)
       (LF-PARENT ONT::GENE-EXPRESSION)
       (example "the gene expresses")
       (SEM (F::Cause F::Agentive) (F::Aspect F::bounded))
       (templ affected-templ)
       )
-     
+     |#
      ))   
    )
 )

@@ -701,8 +701,9 @@
 
      
     ;;  resultative construction using adverbs: e.g., I walked to the store
-    ((vp- (constraint ?new) (tma ?tma) ;(class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
-					(class (? class ONT::EVENT-OF-CHANGE)) (var ?v) ; it leaked from the roof ; I arrived into the house
+    ;; it seems this is also used for passive transitives, e.g., The box was moved to the corner
+    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
+				       ;(class (? class ONT::EVENT-OF-CHANGE)) (var ?v) ; it leaked from the roof ; I arrived into the house; but we need to exclude e.g, used/expressed in the liver (yes, passive)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
 ;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
       (SUBJ (% NP (Var ?npvar) (sem ?sem) (agr ?agr) (lex ?lex) (case ?case)))

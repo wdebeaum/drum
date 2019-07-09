@@ -79,8 +79,8 @@
  :parent ONT::event-of-action
   :wordnet-sense-keys ("interaction%1:04:00")
  :comment "events that involve the interaction of two or more agents"
- :arguments ((:ESSENTIAL ONT::Agent ((? atp F::phys-obj F::abstr-obj) (F::intentional +)))
-	     (:essential ONT::agent1 ((? cau3 F::Abstr-obj f::phys-obj) (F::intentional +)))
+ :arguments ((:ESSENTIAL ONT::Agent ((? atp F::phys-obj F::abstr-obj) (F::intentional +) (F::tangible +)))
+	     (:essential ONT::agent1 ((? cau3 F::Abstr-obj f::phys-obj) (F::intentional +) (F::tangible +)))
              )
  )
 
@@ -121,7 +121,7 @@
   )
 
 (define-type ONT::misinform
-  :wordnet-sense-keys ("misinform%2:32:00" "deceive%2:41:00" "misrepresent%2:31:00")
+  :wordnet-sense-keys ("misinform%2:32:00" "deceive%2:41:00" "misrepresent%2:32:00")
     :parent ONT::representative
     )
 
