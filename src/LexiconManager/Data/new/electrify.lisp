@@ -7,7 +7,7 @@
   (W::electrify
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090501 :comments nil :vn ("amuse-31.1") :wn ("electrify%2:37:00"))
-     (LF-PARENT ont::provoke)
+     (LF-PARENT ont::evoke-excitement)
      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) ; like annoy,bother,concern,hurt
      (example "the speech electrified the crowd")
      )

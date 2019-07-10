@@ -4,10 +4,10 @@
 
 (define-words :pos W::v 
  :words (
-  ((W::hang (W::out))
+  ((W::hang W::out)
    (wordfeats (W::morph (:forms (-vb) :past W::hung :pastpart W::hung)))   
    (SENSES
-    ((LF-PARENT ONT::WAIT)
+    ((LF-PARENT ONT::hang-out)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL AGENT-TEMPL)
      )

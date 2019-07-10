@@ -618,6 +618,7 @@
     ((np (var ?v) (sort pred) (agr 3s) (lex ?n_lex)
       (LF (% description (var ?v) (status ont::definite)
 	     (class ont::time-loc) (constraint (& (proform ?lex) (extent ?class))) (sem ($ f::time)))) ;(f::time-scale F::INTERVAL)))))
+      (class ont::time-loc)
       (sem ($ f::time))) ;(f::time-scale F::INTERVAL))))
       -next-last-time1> 1
       (adjp (lex (? x next last)) (lex ?lex)
@@ -629,7 +630,8 @@
     ;; E.G., last February 15th, next Tuesday
       
     ((np (var ?v) (sort pred)  (LF (% description (var ?v) (status ont::definite)
-		(class ONT::TIME-LOC) (constraint ?new) (sem ($ f::time)))) ;(f::time-scale F::INTERVAL)))))
+				      (class ONT::TIME-LOC) (constraint ?new) (sem ($ f::time)))) ;(f::time-scale F::INTERVAL)))))
+      (class ont::time-loc)
       (sem ($ f::time))) ;(f::time-scale F::INTERVAL))))
      -next-last-date> 1
      (adjp (lex (? x next last)) (lex ?lex)

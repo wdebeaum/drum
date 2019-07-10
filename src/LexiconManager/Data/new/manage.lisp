@@ -7,7 +7,7 @@
    (W::manage
     (wordfeats (W::morph (:forms (-vb) :nom W::management)))
    (SENSES
-    ((lf-parent ont::achieve)
+    ((lf-parent ont::manage-to-complete)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      (example "he managed to solve the problem")
      (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% w::cp (w::ctype w::s-to))))

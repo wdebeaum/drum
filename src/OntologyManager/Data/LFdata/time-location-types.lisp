@@ -1050,7 +1050,7 @@
  )
 
 (define-type ONT::now
-     :wordnet-sense-keys ("now%4:02:05" "presently%4:02:00" "current%3:00:00" "present%3:00:01")
+     :wordnet-sense-keys ("now%4:02:05" "presently%4:02:00" "present%3:00:01")
      :parent ONT::event-time-wrt-now
      )
 

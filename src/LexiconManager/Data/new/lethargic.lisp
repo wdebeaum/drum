@@ -8,7 +8,7 @@
    (wordfeats (W::morph (:FORMS ( -LY))))
    (SENSES
     ((meta-data :origin cardiac :entry-date 20090422 :change-date 20090731 :comments nil :wn ("tired%3:00:00"))
-     (LF-PARENT ONT::DAZED-VAL)
+     (LF-PARENT ONT::lethargic-VAL)
      (templ central-adj-templ)
      )
     )

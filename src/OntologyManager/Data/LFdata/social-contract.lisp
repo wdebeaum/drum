@@ -48,7 +48,7 @@
 
 (define-type ont::essential-contract
   :parent ont::social-imperative
-  :wordnet-sense-keys ("right%1:07:00" "absolute%1:09:00" "absolute%3:00:00:inalienable:00")
+  :wordnet-sense-keys ("right%1:07:00" "absolute%1:09:00" "absolute%5:00:00:inalienable:00")
 )
 
 
@@ -69,7 +69,7 @@
 
 (define-type ont::governing-principle
   :parent ont::social-contract
-  :wordnet-sense-keys ("injustice%1:07:00" "justice%1:07:00" "morality%1:07:00" "morality%1:16:00" "ethic%1:09:00" "ethic%1:10:00" "rule%1:10:00" "law%1:09:00" "law%1:09:01" "principle%1:09:03" "principle%1:09:01" "generally_accepted_accounting_principles%1:14:00")
+  :wordnet-sense-keys ("injustice%1:07:00" "justice%1:07:00" "morality%1:16:00" "ethic%1:09:00" "ethic%1:10:00" "rule%1:10:00" "law%1:09:00" "law%1:09:01" "principle%1:09:03" "principle%1:09:01" "generally_accepted_accounting_principles%1:14:00")
 )
 
 (define-type ont::external-authority

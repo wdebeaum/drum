@@ -329,7 +329,7 @@
 
 ;; force, pressure, compression
 (define-type ont::physical-phenomenon
-    :wordnet-sense-keys ("strength%1:07:06" "forcefulness%1:07:00" "force%1:07:00" "force%1:19:00" "causal_agency%1:03:00" "cause%1:03:00" "causal_agent%1:03:00"  "cause%1:11:00")
+    :wordnet-sense-keys ("force%1:19:00" "causal_agency%1:03:00" "cause%1:03:00" "causal_agent%1:03:00"  "cause%1:11:00")
     :parent ont::natural-phenomenon
     :sem (F::Phys-obj (F::origin F::non-living))
     )
@@ -511,7 +511,6 @@
 
 ;; UMLS
 (define-type ont::pharmacologic-substance
-    :wordnet-sense-keys ("drug%1:06:00")
     :Parent ont::chemical
     )
 
@@ -945,7 +944,6 @@
 
 ;; nationality, regional identity
 (define-type ont::identity-and-origin
-    :wordnet-sense-keys ("inhabitant%1:18:00")
     :parent ont::person-reln
 )
 
@@ -1026,7 +1024,7 @@
     )
 
 (define-type ONT::LAND-VEHICLE
-    :wordnet-sense-keys ("motortruck%1:06:00" "truck%1:06:00" "motorcar%1:06:00" "machine%1:06:01" "automobile%1:06:00" "auto%1:06:00" "car%1:06:00" "railroad_train%1:06:00" "train%1:06:00" "wheeled_vehicle%1:06:00")
+    :wordnet-sense-keys ("motorcar%1:06:00" "machine%1:06:01" "automobile%1:06:00" "auto%1:06:00" "car%1:06:00" "railroad_train%1:06:00" "train%1:06:00" "wheeled_vehicle%1:06:00")
     :parent ONT::VEHICLE
     :sem (F::Phys-obj (F::mobility F::land-movable) (F::form F::Enclosure) (F::spatial-abstraction F::spatial-point))
     )
@@ -1290,7 +1288,7 @@
 (define-type ont::structural-opening
     :comment "part of a structure that can open to allow access"
     :parent ONT::general-structure
-    :wordnet-sense-keys ("entrance%1:06:00" "entranceway%1:06:00" "entryway%1:06:00" "entry%1:06:00" "window%1:06:00" "window%1:06:01" "window%1:06:05"
+    :wordnet-sense-keys ("entrance%1:06:00" "entranceway%1:06:00" "entryway%1:06:00" "entry%1:06:00" "window%1:06:01" "window%1:06:05"
 					    "movable_barrier%1:06:00")
     :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj))
 		)
@@ -1340,7 +1338,6 @@
 (define-type ont::furnishings-component
     :comment "parts typically of furnishings: e.g., drawer"
     :parent ont::furnishings
-    :wordnet-sense-keys ("drawer%1:06:00")
     )
 
 (define-type ont::bedding
@@ -1387,7 +1384,7 @@
 
 ; oil field, wheat field
 (define-type ONT::area-def-by-use
-    :wordnet-sense-keys ("field%1:15:00" "field%1:15:05" "plot%1:15:00" "pasture%1:15:00")
+    :wordnet-sense-keys ("field%1:15:00" "field%1:15:05" "pasture%1:15:00")
     :comment "places defined by their function: e.g.,  lot, plot, region, scene, section, site, territory, zone"
     :parent ONT::loc-as-area
     )
@@ -1897,7 +1894,7 @@
 ;this overlaps with structural opening
 (define-type ONT::Window
     :parent ONT::MANUFACTURED-OBJECT
-    :wordnet-sense-keys ("window%1:06:00" "window%1:06:01")
+    :wordnet-sense-keys ("window%1:06:00")
     :sem (F::Phys-obj (F::form F::solid-object) (F::mobility F::non-self-moving))
     )
 
@@ -1931,7 +1928,7 @@
 
 ;; product
 (define-type ONT::product
-    :wordnet-sense-keys ("card%1:06:00" "ware%1:06:01" "product%1:06:01")
+    :wordnet-sense-keys ("ware%1:06:01" "product%1:06:01")
     :parent ONT::commodity
     )
 
@@ -2119,7 +2116,7 @@
 (define-type ONT::EQUIPMENT
     :comment "manufactured objects that assist in ior perform some function"
     :parent ONT::MANUFACTURED-OBJECT
-    :wordnet-sense-keys ("equipment%1:06:00" "instrumentality%1:06:00")
+    :wordnet-sense-keys ("equipment%1:06:00")
     :sem (F::Phys-obj (F::Origin F::Artifact))
     )
 
@@ -2436,7 +2433,6 @@
 ;; button, switch
 (define-type ont::operating-switch
     :parent ONT::device-component
-    :wordnet-sense-keys ("pedestal%1:06:00" "stand%1:06:00" "support%1:06:00")
     :sem (F::Phys-obj (F::Form F::solid-object))
     )
 
@@ -2944,7 +2940,7 @@
 
 (define-type ONT::collection
     :comment "This type contains concepts that explicitly denotethe group (rather than the members of the grop), e.g., group, herd, collection,..."
-    :wordnet-sense-keys ("collection%1:14:00" "array%1:14:00" "array%1:10:00" "series%1:14:01" "trinketry%1:14:00" "population%1:14:01")
+    :wordnet-sense-keys ("collection%1:14:00" "array%1:10:00" "series%1:14:01" "trinketry%1:14:00" "population%1:14:01")
     :parent ONT::group-object
     )
 

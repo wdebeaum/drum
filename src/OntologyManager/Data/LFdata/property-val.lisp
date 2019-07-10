@@ -35,17 +35,20 @@
 ;; fresh, stale
 (define-type ont::freshness-val
  :parent ont::evaluation-attribute-val 
- :comment "relating to how recently an object was made or obtained"
+ :comment "property of items made or obtained recently/a while back"
+ :sem (F::abstr-obj (F::scale ont::freshness-scale ))
 )
 
 (define-type ont::fresh-val
  :parent ont::freshness-val 
- :wordnet-sense-keys ("recent%5:00:00:new:00" "recent%5:00:00:past:00" "new%3:00:00" "fresh%3:00:01" "fresh%3:00:02")
+ :wordnet-sense-keys ("fresh%3:00:01" "fresh%3:00:02")
+:sem (F::abstr-obj (F::scale ont::fresh-scale ))
 )
 
 (define-type ont::not-fresh-val
  :parent ont::freshness-val 
  :wordnet-sense-keys ("stale%3:00:00")
+:sem (F::abstr-obj (F::scale ont::not-fresh-scale ))
 )
 
 
@@ -91,7 +94,14 @@
 (define-type ont::great-val
  :parent ont::good 
  :wordnet-sense-keys ("superb%5:00:00:good:01" "bang-up%5:00:00:good:01" "great%5:00:01:extraordinary:00" "phenomenal%5:00:00:extraordinary:00" "fantastic%5:00:00:extraordinary:00" "ideal%3:00:00:perfect:00" "perfect%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::goodness-scale))
 )
+
+(define-type ont::favorite-val
+ :parent ont::good
+ :wordnet-sense-keys ("favourite%3:00:00:popular:00" "favourite%3:00:00:loved:00")
+)
+
 
 (define-type ont::bad
  :parent ont::acceptability-val 
@@ -112,16 +122,30 @@
 
 (define-type ont::tolerability-val
  :parent ont::evaluation-attribute-val 
+ :sem (F::abstr-obj (F::scale ont::tolerability-scale))
 )
 
 (define-type ont::not-tolerable-val
  :parent ont::tolerability-val 
  :wordnet-sense-keys ("impossible%5:00:00:intolerable:00" "unsupportable%5:00:00:intolerable:00" "intolerable%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::tolerability-scale) (f::orientation f::neg))
 )
 
 (define-type ont::tolerable-val
  :parent ont::tolerability-val 
  :wordnet-sense-keys ("bearable%5:00:00:tolerable:00" "tolerable%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::tolerability-scale) (f::orientation f::pos))
+)
+
+;; recommendable
+;(define-type ont::recommendability-val
+; :parent ont::evaluation-attribute-val
+;)
+
+(define-type ont::recommendable-val
+ :parent ont::evaluation-attribute-val
+ :wordnet-sense-keys ("advisable%3:00:00::")
+ :sem (F::abstr-obj (F::scale ont::recommendability-scale))
 )
 
 ;; preferable
@@ -279,16 +303,19 @@
 (define-type ont::harmfulness-val
  :parent ont::evaluation-attribute-val 
  :comment "regarding capability of harm or injury (compare to ont::safety-val)"
+ :sem (F::abstr-obj (F::scale ont::harmfulness-scale))
 )
 
 (define-type ont::benign-val
  :parent ont::harmfulness-val 
  :wordnet-sense-keys ("harmless%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::harmfulness-scale) (f::orientation f::neg))
 )
 
 (define-type ont::harmful-val
  :parent ont::harmfulness-val 
  :wordnet-sense-keys ("damaging%5:00:00:harmful:00" "harmful%3:00:00" "ruinous%5:00:00:harmful:00" )
+ :sem (F::abstr-obj (F::scale ont::harmfulness-scale) (f::orientation f::pos))
 )
 
 ;;; secure, safe
@@ -317,6 +344,7 @@
 ; noticeable, noteworthy
 (define-type ont::attention-worthy-val
  :parent ont::evaluation-attribute-val 
+ :sem (F::abstr-obj (F::scale ont::noticeability-scale))
 )
 
 (define-type ont::noticeable
@@ -324,6 +352,7 @@
  :wordnet-sense-keys ("conspicuous%3:00:00" "noticeable%3:00:00" "marked%5:00:00:noticeable:00" "outstanding%5:00:00:conspicuous:00" "big%5:00:00:conspicuous:00" "obtrusive%3:00:00" )
  ; Words: (W::PROMINENT W::STRIKING W::NOTICEABLE W::PRONOUNCED W::OBTRUSIVE W::CONSPICUOUS)
  ; Antonym: ONT::UNOBTRUSIVE (W::UNOBTRUSIVE W::INCONSPICUOUS W::UNNOTICEABLE)
+ :sem (F::abstr-obj (F::scale ont::noticeability-scale) (f::orientation f::pos))
 )
 
 (define-type ont::unnoticeable
@@ -331,6 +360,7 @@
  :wordnet-sense-keys ("unobtrusive%3:00:00" "obscure%5:00:00:inconspicuous:00" "inconspicuous%3:00:00" )
  ; Words: (W::UNOBTRUSIVE W::INCONSPICUOUS W::UNNOTICEABLE)
  ; Antonym: ONT::OUTSTANDING (W::PROMINENT W::STRIKING W::NOTICEABLE W::PRONOUNCED W::OBTRUSIVE W::CONSPICUOUS)
+ :sem (F::abstr-obj (F::scale ont::noticeability-scale) (f::orientation f::neg))
 )
 
 ;; (un)important, (un)necessary, (in)significant, central, critical, principal
@@ -427,16 +457,19 @@
 (define-type ont::familiarity-val
  :parent ont::evaluation-attribute-val 
   ;;:arguments ((:optional ont::stimulus))
+ :sem (F::abstr-obj (F::scale ont::familiarity-scale))
 )
 
 (define-type ont::familiar-val
  :parent ont::familiarity-val 
  :wordnet-sense-keys ("familiar%3:00:02" "familiar%3:00:00" "known%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::familiar-scale))
 )
 
 (define-type ont::unfamiliar-val
  :parent ont::familiarity-val 
  :wordnet-sense-keys ("unfamiliar%3:00:00" "strange%5:00:01:unfamiliar:00")
+ :sem (F::abstr-obj (F::scale ont::not-familiar-scale))
 )
 
 ;; typical (normal, usual, stereotypical); atypical (uncommon, unusual, strange, exceptional, unique)
@@ -480,40 +513,78 @@
  )
 
 ;; basic, fundamental, inherent
-(define-type ont::fundamental-val
+(define-type ont::basicness-val
  :parent ont::evaluation-attribute-val 
- :comment "forming a necessary base or core"
 )
 
 (define-type ont::basic-val
- :parent ont::fundamental-val 
+ :parent ont::basicness-val 
  :wordnet-sense-keys ("basic%3:00:00" "fundamental%5:00:00:basic:00" "elementary%5:00:00:basic:00" "essential%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::basic-scale))
+ :comment "Having to do with the fundamentals or the essentials"
 )
 
 (define-type ont::intrinsic-val
- :parent ont::fundamental-val 
+ :parent ont::basicness-val 
  :wordnet-sense-keys ("built-in%5:00:00:intrinsic:00" "intrinsic%3:00:00" )
 )
 
+(define-type ont::plain-val
+ :parent ont::basicness-val 
+ :wordnet-sense-keys ("plain%3:00:01" "stark%5:00:00:plain:01" )
+ :comment "inelaborate, simple and plain"
+ :sem (F::abstr-obj (F::scale ont::plain-scale) (f::orientation f::pos))
+)
+
+(define-type ont::mere-val
+ :parent ont::plain-val 
+ :wordnet-sense-keys ("mere%5:00:00:specified:00")
+ :comment "being nothing other than what's specified"
+)
+
+;; fanciful and elaborate
+(define-type ont::not-plain-val
+ :parent ont::basicness-val 
+ :wordnet-sense-keys ("fanciful%5:00:00:fancy:00" "fancy%3:00:00" "elaborate%5:00:00:fancy:00")
+ :sem (F::abstr-obj (F::scale ont::plain-scale) (f::orientation f::neg))
+)
+
+;; explicit, implicit
+(define-type ont::explicitness-val
+ :parent ont::evaluation-attribute-val
+ :sem (F::abstr-obj (F::scale ont::explicitness-scale))
+)
+
+(define-type ont::explicit-val
+ :parent ont::explicitness-val
+ :wordnet-sense-keys ("explicit%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::explicit-scale))
+)
+
 (define-type ont::implicit-val
- :parent ont::fundamental-val 
+ :parent ont::explicitness-val 
  :wordnet-sense-keys ("underlying%5:00:00:implicit:00" "implicit%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::implicit-scale))
 )
 
 ;; superior, inferior
 (define-type ont::quality-val
  :parent ont::evaluation-attribute-val 
+ :sem (F::abstr-obj (F::scale ont::quality-level-scale))
 )
 
 (define-type ont::superior-val
  :parent ont::quality-val 
  :wordnet-sense-keys ("premium%5:00:00:superior:02" "superior%3:00:02" "supreme%5:00:00:superior:02" "sterling%5:00:00:superior:02" )
+ :sem (F::abstr-obj (F::scale ont::superiority-scale))
 )
 
 (define-type ont::substandard-val
  :parent ont::quality-val 
  :wordnet-sense-keys ("second-rate%5:00:00:inferior:02" "low-grade%5:00:00:inferior:02" "substandard%5:00:00:nonstandard:02" "inferior%3:00:02" )
+ :sem (F::abstr-obj (F::scale ont::inferiority-scale))
 )
+
 
 ;; dependable, reliable
 (define-type ont::reliability-val
@@ -541,39 +612,21 @@
 (define-type ont::worthiness-val
  :parent ont::evaluation-attribute-val 
  :comment "evaluation attributes dealing with the value or worth of something"
+ :sem (F::abstr-obj (F::scale ont::worthiness-scale))
 )
 
 (define-type ont::worthy-val
  :parent ont::worthiness-val 
  :wordnet-sense-keys ("worthwhile%5:00:00:worthy:00" "worthy%3:00:00" "valuable%5:00:00:worthy:00" "worthy%5:00:00:fit:02")
+ :sem (F::abstr-obj (F::scale ont::worthiness-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-worthy-val
  :parent ont::worthiness-val 
  :wordnet-sense-keys ("unworthy%3:00:00" "worthless%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::worthiness-scale) (f::orientation f::neg))
 )
 
-;; plain vs. fanciful
-(define-type ont::plainness-val
- :parent ont::evaluation-attribute-val 
- :comment "evaluation attributes dealing with plainess or elaborateness of something"
-)
-
-(define-type ont::not-plain-val
- :parent ont::plainness-val 
- :wordnet-sense-keys ("fanciful%5:00:00:fancy:00" "fancy%3:00:00" "elaborate%5:00:00:fancy:00" )
-)
-
-(define-type ont::plain-val
- :parent ont::plainness-val 
- :wordnet-sense-keys ("plain%3:00:01" "stark%5:00:00:plain:01" )
-)
-
-(define-type ont::mere-val
- :parent ont::plainness-val 
- :wordnet-sense-keys ("mere%5:00:00:specified:00")
- :comment "being nothing other than what's specified"
-)
 
 ;; judgement
 (define-type ont::judgement-val
@@ -584,27 +637,32 @@
 (define-type ont::morality-val
  :parent ont::judgement-val
  :comment "characterized by morality, righteousness, virtuousness, and principle"
+ :sem (F::abstr-obj (F::scale ont::morality-scale))
 )
 
 (define-type ont::moral-val
  :parent ont::morality-val 
  :wordnet-sense-keys ("moral%3:00:00" "virtuous%3:00:00" "chaste%3:00:00" "good%3:00:02" "incorrupt%3:00:00" "principled%3:00:00" "pure%3:00:01" "regenerate%3:00:00" "right%3:00:01" "righteous%3:00:00" "straight%3:00:04")
+ :sem (F::abstr-obj (F::scale ont::morality-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-moral-val
  :parent ont::morality-val
  :wordnet-sense-keys ( "immoral%3:00:00" "immoral%3:00:00:wrong:01" "unprincipled%3:00:00" "unregenerate%3:00:00" "wicked%3:00:00" "corrupt%3:00:00" "crooked%3:00:02" "evil%3:00:00" "illicit%3:00:00" "impure%3:00:01" "licit%3:00:00" "wrong%3:00:01" "unchaste%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::morality-scale) (f::orientation f::neg))
 )
 
 ;; fairness, partiality, bias, and objectivity
 (define-type ont::bias-val
  :parent ont::judgement-val
  :comment "characterized by fairness, partiality, bias and objectivity"
+ :sem (F::abstr-obj (F::scale ont::partiality-scale))
 )
 
 (define-type ont::biased-val
  :parent ont::bias-val
  :wordnet-sense-keys ("subjective%3:00:00" "partial%3:00:01")
+ :sem (F::abstr-obj (F::scale ont::partiality-scale) (f::orientation f::pos))
 )
 
 (define-type ont::prejudiced-val
@@ -616,21 +674,25 @@
 (define-type ont::not-biased-val
  :parent ont::bias-val
  :wordnet-sense-keys ("impartial%3:00:00" "objective%3:00:00" "fair%3:00:03" "unprejudiced%3:00:00" "nonjudgmental%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::partiality-scale) (f::orientation f::neg))
 )
 
 ;; chic, classy, stylish vs. unstylish, tasteless
 (define-type ont::aesthetic-judgement-val
  :parent ont::judgement-val 
+ :sem (F::abstr-obj (F::scale ont::aesthetic-tastefulness-scale))
 )
 
 (define-type ont::good-aesthetic-judgement-val
  :parent ont::aesthetic-judgement-val 
  :wordnet-sense-keys ("chic%5:00:00:stylish:00" "classy%5:00:00:stylish:00" "stylish%3:00:00" "tasteful%3:00:02" "elegant%3:00:00" "fashionable%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::aesthetic-tastefulness-scale) (f::orientation f::pos))
 )
 
 (define-type ont::bad-aesthetic-judgement-val
  :parent ont::aesthetic-judgement-val 
  :wordnet-sense-keys ("unstylish%3:00:00" "tasteless%3:00:02" "unfashionable%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::aesthetic-tastefulness-scale) (f::orientation f::neg))
 )
 
 ;; beautiful, ugly
@@ -656,31 +718,37 @@
 ;; offensive, inoffensive
 (define-type ont::offensiveness-val
  :parent ont::evaluation-attribute-val 
+ :sem (F::abstr-obj (F::scale ont::offensiveness-scale))
 )
 
 (define-type ont::offensive-val
  :parent ont::offensiveness-val 
  :wordnet-sense-keys ("offensive%3:00:04" "offensive%3:00:02" "offensive%3:00:01" "distasteful%5:00:00:offensive:01" "wicked%5:00:00:offensive:01")
+ :sem (F::abstr-obj (F::scale ont::offensiveness-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-offensive-val
  :parent ont::offensiveness-val 
  :wordnet-sense-keys ("inoffensive%3:00:01" )
+ :sem (F::abstr-obj (F::scale ont::offensiveness-scale) (f::orientation f::neg))
 )
 
 ;; neat, tidy, (dis)orderly
 (define-type ont::orderliness-val
  :parent ont::evaluation-attribute-val 
+ :sem (F::abstr-obj (F::scale ont::orderliness-scale))
 )
 
 (define-type ont::tidy-val
  :parent ont::orderliness-val 
  :wordnet-sense-keys ("tidy%5:00:00:groomed:00" "tidy%3:00:00" "neat%5:00:00:tidy:00" "uncluttered%5:00:00:tidy:00" "groomed%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::tidy-scale))
 )
 
 (define-type ont::messy-val
  :parent ont::orderliness-val 
  :wordnet-sense-keys ("messy%5:00:00:untidy:00" "untidy%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::messy-scale))
 )
 
 ;; free vs. bound
@@ -698,29 +766,22 @@
  :wordnet-sense-keys ("servile%5:00:00:unfree:01" "unfree%3:00:01" "stuck%3:00:00" "bound%5:00:00:unfree:00" "unfree%3:00:00")
 )
 
-;; recommendable
-(define-type ont::recommendability-val
- :parent ont::evaluation-attribute-val
-)
-
-(define-type ont::recommendable-val
- :parent ont::recommendability-val
- :wordnet-sense-keys ("advisable%3:00:00::")
-)
-
 ;; real vs. fake
 (define-type ont::real-vs-fake-val
  :parent ont::evaluation-attribute-val
+ :sem (F::abstr-obj (F::scale ont::real-vs-fake-scale))
 )
 
 (define-type ont::artificiality-val
  :parent ont::real-vs-fake-val 
  :comment "artificial vs. natural"
+ :sem (F::abstr-obj (F::scale ont::artificiality-scale))
 )
 
 (define-type ont::artificial
  :parent ont::artificiality-val 
  :wordnet-sense-keys ("synthetic%5:00:00:artificial:00" "false%5:00:00:artificial:00" "artificial%3:00:00" "artificial%5:00:00:affected:01" "unreal%3:00:04" "faux%5:00:00:artificial:00" "imitation%5:00:02:artificial:00" "fake%5:00:00:artificial:00" "affected%3:00:01" "unnatural%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::artificial-scale))
 )
 
 ;; natural, unnatural
@@ -728,18 +789,21 @@
  :parent ont::artificiality-val 
  :wordnet-sense-keys ("natural%3:00:02" )
  :arguments ((:REQUIRED ONT::FIGURE ((? lof f::phys-obj f::abstr-obj f::situation )))) 
+ :sem (F::abstr-obj (F::scale ont::natural-scale))
 )
 
 (define-type ont::actuality-val
  :parent ont::real-vs-fake-val 
  ;:arguments ((:REQUIRED ONT::FIGURE (F::proposition (F::information F::mental-construct )))) 
  :comment "existing or occuring in fact vs. imagined or supposed"
+ :sem (F::abstr-obj (F::scale ont::actuality-scale))
 )
 
 ;; real, actual
 (define-type ont::actual
  :parent ont::actuality-val 
  :wordnet-sense-keys ("real%3:00:00" "actual%5:00:00:real:00" "concrete%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::actual-scale))
 )
 
 ;; fake, imaginary, hypothetical
@@ -747,21 +811,25 @@
 (define-type ont::nonactual
  :parent ont::actuality-val 
  :wordnet-sense-keys ("virtual%5:00:00:essential:00" "imaginary%5:00:00:unreal:00" "theoretical%3:00:00" "hypothetical%5:00:00:theoretical:00" "unreal%3:00:00" "abstract%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::non-actual-scale))
 )
 
 (define-type ont::authenticity-val
  :parent ont::real-vs-fake-val 
  :comment "truly what it is said to be vs. made as imitation"
+ :sem (F::abstr-obj (F::scale ont::authenticity-scale))
 )
 
 (define-type ont::fake-val
  :parent ont::authenticity-val 
  :wordnet-sense-keys ("phoney%5:00:00:counterfeit:00" "fake%5:00:00:counterfeit:00" "counterfeit%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::authenticity-scale) (f::orientation f::neg))
 )
 
 (define-type ont::authentic-val
  :parent ont::authenticity-val 
  :wordnet-sense-keys ("genuine%3:00:00" "genuine%5:00:00:true:00" "authentic%5:00:00:genuine:00" "actual%5:00:00:true:00" "real%5:00:00:true:00" "true%5:00:00:real:02" "real%3:00:02")
+ :sem (F::abstr-obj (F::scale ont::authenticity-scale) (f::orientation f::pos))
 )
 
 ;; INFORMATION PROPERTY
@@ -775,16 +843,19 @@
 
 (define-type ont::precision-val
  :parent ont::information-property-val 
+ :sem (F::abstr-obj (F::scale ont::precision-scale))
 )
 
 (define-type ont::not-precise-val
  :parent ont::precision-val 
  :wordnet-sense-keys ("imprecise%3:00:00" "vague%3:00:04" )
+ :sem (F::abstr-obj (F::scale ont::precision-scale) (f::orientation f::neg))
 )
 
 (define-type ont::precise
  :parent ont::precision-val 
  :wordnet-sense-keys ("dead%5:00:00:precise:00" "precise%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::precision-scale) (f::orientation f::pos))
  ; Words: (W::DEAD W::PRECISE)
  ; Antonym: NIL (W::IMPRECISE)
 )
@@ -792,32 +863,38 @@
 ;; meaningful, meaningless
 (define-type ont::meaningfulness-val
  :parent ont::information-property-val
+ :sem (F::abstr-obj (F::scale ont::meaningfulness-scale))
 )
 
 (define-type ont::meaningful-val
  :parent ont::meaningfulness-val 
  :wordnet-sense-keys ("meaningful%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::meaningfulness-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-meaningful-val
  :parent ont::meaningfulness-val 
  :wordnet-sense-keys ("meaningless%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::meaningfulness-scale) (f::orientation f::neg))
 )
 
 
 ;; credibility
 (define-type ont::credibility-val
  :parent ont::information-property-val 
+ :sem (F::abstr-obj (F::scale ont::credibility-scale))
 )
 
 (define-type ont::credible-val
  :parent ont::credibility-val 
  :wordnet-sense-keys ("credible%3:00:00" "believable%3:00:04" )
+ :sem (F::abstr-obj (F::scale ont::credibility-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-credible-val
  :parent ont::credibility-val 
  :wordnet-sense-keys ("unbelievable%3:00:04" "incredible%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::credibility-scale) (f::orientation f::neg))
 )
 
 ;; likely, unlikely, probably
@@ -845,32 +922,38 @@
 
 (define-type ont::predictability-val
  :parent ont::information-property-val 
+ :sem (F::abstr-obj (F::scale ont::predictability-scale))
 )
 
 (define-type ont::predictable-val
  :parent ont::predictability-val 
  :wordnet-sense-keys ("predictable%3:00:00" "foreseeable%5:00:00:predictable:00" )
+ :sem (F::abstr-obj (F::scale ont::predictability-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-predictable-val
  :parent ont::predictability-val 
  :wordnet-sense-keys ("unpredictable%3:00:00" "unforeseeable%5:00:00:unpredictable:00" )
+ :sem (F::abstr-obj (F::scale ont::predictability-scale) (f::orientation f::neg))
 )
 
 ;; understandable
 (define-type ont::comprehensibility-val
  :parent ont::information-property-val
  :comment "able to be grasped or understood (different from ont::clarity-val e.g., an explanation might be clear but it still may not be understandable because of external reasons"
+ :sem (F::abstr-obj (F::scale ont::comprehensibility-scale))
 )
 
 (define-type ont::comprehensible-val
  :parent ont::comprehensibility-val
  :wordnet-sense-keys ("friendly%3:00:03" "comprehensible%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::comprehensibility-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-comprehensible-val
  :parent ont::comprehensibility-val
  :wordnet-sense-keys ("incomprehensible%3:00:00" "incomprehensible%3:00:04" "unfriendly%3:00:02")
+ :sem (F::abstr-obj (F::scale ont::comprehensibility-scale) (f::orientation f::neg))
 )
 
 ; obvious, obscure apparent
@@ -899,16 +982,19 @@
  :parent ont::information-property-val 
  :arguments ((:REQUIRED ONT::FIGURE ((? lof f::abstr-obj f::situation )))(:REQUIRED ONT::GROUND ((? vl f::abstr-obj f::situation )))) 
  :comment "marked by a (il)logical or (dis)orderly consistent relation of parts"
+ :sem (F::abstr-obj (F::scale ont::consistency-scale))
 )
 
 (define-type ont::consistent
  :parent ont::consistent-val 
  :wordnet-sense-keys ("consistent%3:00:00" "consistent%3:00:01" )
+ :sem (F::abstr-obj (F::scale ont::consistency-scale) (f::orientation f::pos))
 )
 
 (define-type ont::inconsistent
  :parent ont::consistent-val 
  :wordnet-sense-keys ("inconsistent%3:00:00" "inconsistent%5:00:00:irreconcilable:00" )
+ :sem (F::abstr-obj (F::scale ont::consistency-scale) (f::orientation f::neg))
 )
 
 ;;; Myrosia 09/23/03 - a very bad name, really. This is for adjectives like "confused", "mixed up", etc - changed LF_Mistaken to LF_Correctness
@@ -936,20 +1022,24 @@
 
 (define-type ont::validity-val
  :parent ont::information-property-val 
+ :sem (F::abstr-obj (F::scale ont::validity-scale))
 )
 
 (define-type ont::invalid-val
  :parent ont::validity-val 
  :wordnet-sense-keys ("invalid%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::validity-scale) (f::orientation f::neg))
 )
 
 (define-type ont::valid-val
  :parent ont::validity-val 
  :wordnet-sense-keys ("legitimate%5:00:00:valid:00" "valid%3:00:00" "logical%5:00:00:valid:00" )
+ :sem (F::abstr-obj (F::scale ont::validity-scale) (f::orientation f::pos))
 )
 
 (define-type ont::relevance-val
  :parent ont::information-property-val 
+ :sem (F::abstr-obj (F::scale ont::relevance-scale))
 )
 
 (define-type ont::relevant
@@ -957,11 +1047,13 @@
  :wordnet-sense-keys ("pertinent%5:00:00:relevant:00" "applicable%5:00:00:relevant:00" "relevant%3:00:00" )
  ; Words: (W::RELEVANT W::APPLICABLE W::PERTINENT)
  ; Antonym: NIL (W::IRRELEVANT)
+ :sem (F::abstr-obj (F::scale ont::relevance-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-relevant-val
  :parent ont::relevance-val 
  :wordnet-sense-keys ("irrelevant%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::relevance-scale) (f::orientation f::neg))
 )
 
 ;; empirical or theoretical?
@@ -1025,16 +1117,19 @@
 ;; verifiability-val
 (define-type ont::verifiability-val
  :parent ont::information-property-val 
+ :sem (F::abstr-obj (F::scale ont::reproducibility-scale))
 )
 
 (define-type ont::verifiable-val
  :parent ont::verifiability-val
- :wordnet-sense-keys ("verifiable%5:00:00:objective:00" "provable%5:00:00:obvious:00")
+ :wordnet-sense-keys ("verifiable%5:00:00:objective:00" "provable%5:00:00:obvious:00" "reproducible%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::reproducibility-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-verifiable-val
  :parent ont::verifiability-val
- :wordnet-sense-keys ("unverifiable%5:00:00:subjective:00")
+ :wordnet-sense-keys ("unverifiable%5:00:00:subjective:00" "unreproducible%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::reproducibility-scale) (f::orientation f::neg))
 )
 
 ;; PHYSICAL-PROPERTY
@@ -1167,39 +1262,26 @@
  :wordnet-sense-keys ("heterogeneous%3:00:00" )
 )
 
-;; clothed vs. naked
-(define-type ont::clothedness-val
+;; clothedness and adornment
+(define-type ont::clothedness-adornment-val
  :parent ont::configuration-property-val 
-)
-
-(define-type ont::clothed-val
- :parent ont::clothedness-val 
- :wordnet-sense-keys ("clothed%3:00:00" )
-)
-
-(define-type ont::not-clothed-val
- :parent ont::clothedness-val 
- :wordnet-sense-keys ("bare%5:00:00:unclothed:00" "unclothed%3:00:00" "naked%5:00:00:bare:00")
-)
-
-;; adorned vs. unadorned
-(define-type ont::adornment-val
- :parent ont::configuration-property-val 
- :comment "having or missing adornment"
 )
 
 (define-type ont::adorned-val
- :parent ont::adornment-val 
+ :parent ont::clothedness-adornment-val 
  :wordnet-sense-keys ("adorned%3:00:00" )
 )
 
-(define-type ont::unadorned
- :parent ont::adornment-val 
- :wordnet-sense-keys ("bare%5:00:00:unadorned:00" "plain%5:00:00:unadorned:00" "unadorned%3:00:00" "bare%3:00:00" )
- ; Words: (W::BARE W::NAKED W::UNADORNED)
- ; Antonym: nil
+(define-type ont::clothed-val
+ :parent ont::clothedness-adornment-val 
+ :wordnet-sense-keys ("clothed%3:00:00" )
 )
 
+(define-type ont::bare-val
+ :parent ont::clothedness-adornment-val 
+ :wordnet-sense-keys ("bare%5:00:00:unclothed:00" "unclothed%3:00:00" "naked%5:00:00:bare:00" 
+                      "bare%5:00:00:unadorned:00" "unadorned%3:00:00" "bare%3:00:00" )
+)
 
 ;; substantial properties
 (define-type ont::substantial-property-val
@@ -1898,16 +1980,19 @@
 ;; properties relating to ability to perceive
 (define-type ont::perceptibility-val
  :parent ont::sensory-property-val
+ :sem (F::abstr-obj (F::scale ont::perceptibility-scale ))
 )
 
 (define-type ont::perceptible-val
  :parent ont::perceptibility-val 
  :wordnet-sense-keys ("perceptible%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::perceptibility-scale ) (f::orientation f::pos))
 )
 
 (define-type ont::imperceptible-val
  :parent ont::perceptibility-val 
  :wordnet-sense-keys ("imperceptible%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::perceptibility-scale ) (f::orientation f::neg))
 )
 
 ;; properties relating to ability to sense
@@ -1930,16 +2015,19 @@
 (define-type ont::completeness-val
  :parent ont::part-whole-val
  :comment "having or not having all the necessary parts"
+ :sem (F::abstr-obj (F::scale ont::completeness-scale))
 )
 
 (define-type ont::partial-incomplete
  :parent ont::completeness-val 
  :wordnet-sense-keys ("partial%5:00:00:incomplete:00" "incomplete%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::incomplete-scale))
 )
 
 (define-type ont::whole-complete
  :parent ont::completeness-val 
  :wordnet-sense-keys ("complete%3:00:00" "whole%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::complete-scale))
 )
 
 ;; left over
@@ -1991,6 +2079,7 @@
 )
 
 ;; restless, relaxed
+;; THIS REALLY BELONGS TO EXPERIENCER CONDITION/PROPERTIES
 (define-type ont::restlessness-val
  :parent ont::body-condition-property-val 
  :sem (F::abstr-obj (F::scale ont::restlessness-scale))
@@ -2008,61 +2097,24 @@
  :sem (F::abstr-obj (F::scale ont::restlessness-scale) (f::orientation f::neg))
 )
 
-;; alert vs drowsy
-(define-type ont::alertness-val
- :parent ont::body-condition-property-val 
+;; POSITIVE PROPERITIES
+(define-type ont::positive-body-condition-property-val
+ :parent ont::body-condition-property-val
 )
 
+;; alertness
 (define-type ont::alert-val
- :parent ont::alertness-val 
+ :parent ont::positive-body-condition-property-val 
  :wordnet-sense-keys ("alert%5:00:00:aware:00" "alert%5:00:00:energetic:00" )
+ :sem (F::abstr-obj (F::scale ont::alertness-scale))
 )
 
-(define-type ont::drowsy-val
- :parent ont::alertness-val 
- :wordnet-sense-keys ("drowsy%5:00:00:inattentive:00" )
- :sem (F::abstr-obj (F::scale ont::sleepiness-scale))
-)
-
-;; awake vs asleep
-(define-type ont::awakeness-val
- :parent ont::body-condition-property-val 
-)
-
-(define-type ont::asleep-val
-    :parent ont::awakeness-val
-    :definitions (ont::not (ont::awake-val :figure ?neutral))
-    :wordnet-sense-keys ("asleep%4:02:00" )
-    )
-
-(define-type ont::awake-val
-    :parent ont::awakeness-val
-    :definitions (ont::not (ont::asleep-val :figure ?neutral))
-    :wordnet-sense-keys ("awake%3:00:00" )
-    )
-
-;; energized or fatigued
-(define-type ont::energy-supply-val
- :parent ont::body-condition-property-val 
-)
-
-(define-type ont::not-energized-val
- :parent ont::energy-supply-val
-)
-
-(define-type ont::fatigued-val
- :parent ont::not-energized-val 
- :wordnet-sense-keys ("tired%3:00:00" "exhausted%5:00:00:tired:00" "weary%5:00:00:tired:00" )
-)
-
-(define-type ont::dazed-val
- :parent ont::not-energized-val
- :wordnet-sense-keys ("lethargic%3:00:00" "dazed%5:00:00:lethargic:00" "groggy%5:00:00:lethargic:00" )
-)
-
+;; energized, energetic
 (define-type ont::energized-val
- :parent ont::energy-supply-val 
+ :parent ont::positive-body-condition-property-val 
  :wordnet-sense-keys ("energetic%3:00:00" "active%3:00:01")
+ :comment "characterized by being full of energy and activity" 
+:sem (F::abstr-obj (F::scale ont::body-energy-scale))
 )
 
 (define-type ont::athletic-val
@@ -2075,19 +2127,42 @@
  :wordnet-sense-keys ("hyperactive%5:00:00:active:01")
 )
 
-;; sated or hungry/thirsty
-(define-type ont::satedness-val
- :parent ont::body-condition-property-val 
+;; healthy
+(define-type ont::healthy-val
+ :parent ont::positive-body-condition-property-val
+ :wordnet-sense-keys ("well%3:00:01" "healthy%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::health-scale))
 )
 
+;; satiated
 (define-type ont::satiated-val
- :parent ont::satedness-val 
+ :parent ont::positive-body-condition-property-val
  :wordnet-sense-keys ("satiated%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::satiated-scale))
+)
+
+;; fit
+(define-type ont::fit-healthy-val
+ :parent ont::positive-body-condition-property-val
+ :wordnet-sense-keys ("fit%3:00:01")
+ :sem (F::abstr-obj (F::scale ont::fitness-scale))
+)
+
+;; NEGATIVE PROPERTIES
+(define-type ont::negative-body-condition-property-val
+ :parent ont::body-condition-property-val
+)
+
+(define-type ont::pained-val
+ :parent ont::negative-body-condition-property-val
+ :wordnet-sense-keys ("aching%5:00:00:painful:00" "achy%5:00:00:painful:00" "painful%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::pain-scale))
 )
 
 (define-type ont::not-satiated-val
- :parent ont::satedness-val 
+ :parent ont::negative-body-condition-property-val
  :wordnet-sense-keys ("unsatiated%5:00:00:insatiate:00" "unsated%5:00:00:insatiate:00"  "insatiate%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::not-satiated-scale))
 )
 
 (define-type ont::thirsty-val
@@ -2102,31 +2177,85 @@
  ; Antonym: NIL (W::THIRSTY)
 )
 
-;; sweaty
-(define-type ont::sweaty-val
- :parent ont::body-condition-property-val 
- :wordnet-sense-keys ("clammy%5:00:00:wet:01" )
-)
 
-;; healthy or ailing
-(define-type ont::healthiness-val
-  :parent ont::body-condition-property-val
-  :arguments ((:ESSENTIAL ONT::FIGURE (F::Phys-obj (f::origin (? org f::human f::non-human-animal)))))
-)
-
-(define-type ont::healthy-val
- :parent ont::healthiness-val
- :wordnet-sense-keys ("well%3:00:01" "healthy%3:00:00" )
- :sem (F::abstr-obj (F::scale ont::health-scale))
+(define-type ont::dehydration-val
+ :parent ont::not-satiated-val
+ :wordnet-sense-keys ("dehydrated%5:00:00:unhealthy:00" )
 )
 
 (define-type ont::ailing-val
- :parent ont::healthiness-val
+ :parent ont::negative-body-condition-property-val
  :wordnet-sense-keys ("unwell%5:00:01:ill:01" "ailing%5:00:00:ill:01" "sick%3:00:01" "ill%3:00:01" "upset%5:00:00:ill:01" )
  ; Words: (W::SICK W::ILL W::UPSET W::GIDDY W::WOOZY W::LIGHTHEADED W::DIZZY W::UNWELL W::FEVERISH W::NAUSEOUS)
  ; Antonym: NIL (W::WELL)
  :sem (F::abstr-obj (F::scale ont::illness-scale))
  :comment "unhealthy, unwell or ailing"
+)
+
+(define-type ont::feeble-val
+ :parent ont::negative-body-condition-property-val
+ :wordnet-sense-keys ("frail%3:00:00")
+ :comment "frail, feeble or weak in body"
+ :sem (F::abstr-obj (F::scale ont::feebleness-scale))
+)
+
+
+(define-type ont::lack-of-energy-val
+ :parent ont::negative-body-condition-property-val
+ :sem (F::abstr-obj (F::scale ont::lack-of-energy-scale))
+)
+
+(define-type ont::lethargic-val
+ :parent ont::lack-of-energy-val
+ :wordnet-sense-keys ("lethargic%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::lethargy-scale))
+)
+
+(define-type ont::fatigued-val
+ :parent ont::lack-of-energy-val
+ :wordnet-sense-keys ("tired%3:00:00" "exhausted%5:00:00:tired:00" "weary%5:00:00:tired:00" )
+ :sem (F::abstr-obj (F::scale ont::fatigue-scale))
+)
+
+(define-type ont::dazed-val
+ :parent ont::lack-of-energy-val
+ :wordnet-sense-keys ("dazed%5:00:00:lethargic:00" "groggy%5:00:00:lethargic:00" )
+)
+
+
+;; NEUTRAL PROPERITIES
+(define-type ont::neutral-body-condition-property-val
+ :parent ont::body-condition-property-val
+)
+
+(define-type ont::drowsy-val
+ :parent ont::neutral-body-condition-property-val
+ :wordnet-sense-keys ("drowsy%5:00:00:inattentive:00" "drowsy%3:00:00:asleep:00")
+ :sem (F::abstr-obj (F::scale ont::sleepiness-scale))
+)
+
+
+;; awake vs asleep
+(define-type ont::awakeness-val
+ :parent ont::neutral-body-condition-property-val 
+)
+
+(define-type ont::asleep-val
+    :parent ont::awakeness-val
+    :definitions (ont::not (ont::awake-val :figure ?neutral))
+    :wordnet-sense-keys ("asleep%4:02:00" )
+    )
+
+(define-type ont::awake-val
+    :parent ont::awakeness-val
+    :definitions (ont::not (ont::asleep-val :figure ?neutral))
+    :wordnet-sense-keys ("awake%3:00:00" )
+    )
+
+;; sweaty
+(define-type ont::sweaty-val
+ :parent ont::neutral-body-condition-property-val 
+ :wordnet-sense-keys ("clammy%5:00:00:wet:01" )
 )
 
 ;; parallel to ont::medical-condition 
@@ -2160,16 +2289,6 @@
 (define-type ont::breathless-val
  :parent ont::medical-symptom-val
  :wordnet-sense-keys ("breathless%3:00:00" )
-)
-
-(define-type ont::pained-val
- :parent ont::medical-symptom-val
- :wordnet-sense-keys ("aching%5:00:00:painful:00" "achy%5:00:00:painful:00" "painful%3:00:00" )
-)
-
-(define-type ont::medical-dehydration-val
- :parent ont::medical-symptom-val
- :wordnet-sense-keys ("dehydrated%5:00:00:unhealthy:00" )
 )
 
 (define-type ont::feverish-val
@@ -2283,16 +2402,19 @@
 (define-type ont::accessibility-val
  :parent ont::can-be-done-val 
  :arguments ((:REQUIRED ONT::FIGURE (F::phys-obj ))(:ESSENTIAL ONT::GROUND (F::phys-obj ))) 
+; :sem (F::abstr-obj (F::scale ont::accessibility-scale))
 )
 
 (define-type ont::accessible-val
  :parent ont::accessibility-val 
  :wordnet-sense-keys ("accessible%3:00:00" )
+; :sem (F::abstr-obj (F::scale ont::accessibility-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-accessible-val
  :parent ont::accessibility-val 
  :wordnet-sense-keys ("inaccessible%3:00:00" )
+; :sem (F::abstr-obj (F::scale ont::accessibility-scale) (f::orientation f::neg))
 )
 
 
@@ -2312,6 +2434,7 @@
  :wordnet-sense-keys ("controllable%5:00:00:manageable:00" "manageable%3:00:00" )
  ; Words: (W::CONTROLLABLE W::MANAGEABLE)
  ; Antonym: ONT::unmanageable (W::UNCONTROLLABLE W::UNMANAGEABLE)
+ :sem (F::abstr-obj (F::scale ont::manageability-scale) (f::orientation f::pos))
 )
 
 (define-type ont::unmanageable
@@ -2319,6 +2442,7 @@
  :wordnet-sense-keys ("indocile%5:00:00:unmanageable:00" "unmanageable%3:00:00" )
  ; Words: (W::UNCONTROLLABLE W::UNMANAGEABLE)
  ; Antonym: ONT::manageable (W::CONTROLLABLE W::MANAGEABLE)
+ :sem (F::abstr-obj (F::scale ont::manageability-scale) (f::orientation f::neg))
 )
 
 ;; (un)enforceable
@@ -2363,11 +2487,13 @@
 ;; replaceable
 (define-type ont::replaceability-val
  :parent ont::can-be-done-val 
+ :sem (F::abstr-obj (F::scale ont::replaceability-scale))
 )
 
 (define-type ont::replaceable-val
  :parent ont::replaceability-val
  :wordnet-sense-keys ("interchangeable%5:00:00:replaceable:00" "replaceable%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::replaceability-scale) (f::orientation f::pos))
 )
 
 ;; removable, portable
@@ -2383,6 +2509,7 @@
 (define-type ont::portable-val
  :parent ont::movable-val 
  :wordnet-sense-keys ("portable%3:00:00" "movable%5:00:00:portable:00" "movable%5:00:00:mobile:00")
+ :sem (F::abstr-obj (F::scale ont::portability-scale))
 )
 
 ;; readable, writable, burnable
@@ -2581,16 +2708,19 @@
 ;; productive
 (define-type ont::productivity-val
  :parent ont::process-evaluation-val
+ :sem (F::abstr-obj (F::scale ont::productivity-scale))
 )
 
 (define-type ont::productive-val
  :parent ont::productivity-val 
  :wordnet-sense-keys ("productive%3:00:00" "productive%5:00:00:fruitful:00" "fruitful%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::productivity-scale) (f::orientation f::pos))
 )
 
 ;; useful vs. useless
 (define-type ont::usefulness-val
  :parent ont::process-evaluation-val
+ :sem (F::abstr-obj (F::scale ont::utility-scale))
 )
 
 ;; useful
@@ -2599,6 +2729,7 @@
  :wordnet-sense-keys ("useful%3:00:00" "utilitarian%5:00:00:useful:00" "functional%5:00:00:practical:00" "practical%3:00:00" "functional%3:00:00" )
  ; Words: (W::USEFUL W::PRACTICAL W::FUNCTIONAL)
  ; Antonym: ONT::useless (W::USELESS W::IMPRACTICAL)
+ :sem (F::abstr-obj (F::scale ont::utility-scale) (f::orientation f::pos))
 )
 
 (define-type ont::useless
@@ -2606,37 +2737,44 @@
  :wordnet-sense-keys ("impractical%3:00:00" "useless%3:00:00" )
  ; Words: (W::USELESS W::IMPRACTICAL)
  ; Antonym: ONT::USEFUL (W::USEFUL W::PRACTICAL W::FUNCTIONAL)
+ :sem (F::abstr-obj (F::scale ont::utility-scale) (f::orientation f::neg))
 )
 
 ;; effective vs. ineffective
 (define-type ont::effectiveness-val
  :parent ont::process-evaluation-val
  :comment "evaluation attributes dealing with the effectiveness or efficacy of something"
+ :sem (F::abstr-obj (F::scale ont::effectiveness-scale))
 )
 
 (define-type ont::effective-val
  :parent ont::effectiveness-val
  :wordnet-sense-keys ("effective%3:00:00" "effective%5:00:00:efficacious:00" "efficacious%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::effectiveness-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-effective-val
  :parent ont::effectiveness-val
  :wordnet-sense-keys ("ineffective%3:00:00" "toothless%5:00:00:ineffective:00")
+ :sem (F::abstr-obj (F::scale ont::effectiveness-scale) (f::orientation f::neg))
 )
 
 ;; (in)efficient
 (define-type ont::efficiency-val
  :parent ont::process-evaluation-val 
+ :sem (F::abstr-obj (F::scale ont::efficiency-scale))
 )
 
 (define-type ont::efficient-val
  :parent ont::efficiency-val 
  :wordnet-sense-keys ("efficient%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::efficiency-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-efficient-val
  :parent ont::efficiency-val 
  :wordnet-sense-keys ("inefficient%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::efficiency-scale) (f::orientation f::neg))
 )
 
 ;; (un)steady, off balance
@@ -2663,16 +2801,19 @@
 ; (un)successful
 (define-type ont::success-val
  :parent ont::process-evaluation-val 
+ :sem (F::abstr-obj (F::scale ont::successfulness-scale))
 )
 
 (define-type ont::successful-val
  :parent ont::success-val 
  :wordnet-sense-keys ("successful%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::successful-scale))
 )
 
 (define-type ont::not-successful-val
  :parent ont::success-val 
  :wordnet-sense-keys ("unsuccessful%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::failure-scale))
 )
 
 ;; "tough" adjectives, e.g. hard, easy, possible
@@ -2740,16 +2881,19 @@
 ;; (dis)honest
 (define-type ont::honesty-val
  :parent ont::animal-propensity-val 
+ :sem (F::abstr-obj (F::scale ont::honesty-scale))
 )
 
 (define-type ont::honest-val
  :parent ont::honesty-val
  :wordnet-sense-keys ("honest%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::honesty-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-honest-val
  :parent ont::honesty-val
  :wordnet-sense-keys ("misleading%5:00:00:dishonest:00" "dishonest%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::honesty-scale) (f::orientation f::neg))
 )
 
 (define-type ont::sneaky-val
@@ -2760,11 +2904,13 @@
 ;; bold, timid
 (define-type ont::boldness-val
  :parent ont::animal-propensity-val 
+ :comment "foreceful approach to situations or challenge"
 )
 
 (define-type ont::bold-val
  :parent ont::boldness-val 
  :wordnet-sense-keys ("bold%3:00:00" "adventurous%3:00:00" "peremptory%5:00:02:imperative:00")
+ :sem (F::abstr-obj (F::scale ont::boldness-scale) (f::orientation f::pos))
 )
 
 (define-type ont::aggressive-val
@@ -2784,19 +2930,40 @@
  :wordnet-sense-keys ("meek%5:00:00:docile:00" "docile%3:00:00")
 )
 
+;; courageous, cowardly
+(define-type ont::courage-val
+ :parent ont::animal-propensity-val
+ :comment "strength in face of fear or tribulation"
+)
+
+(define-type ont::courageous-val
+ :parent ont::courage-val
+ :wordnet-sense-keys ("courageous%3:00:04")
+ :sem (F::abstr-obj (F::scale ont::courage-scale) (f::orientation f::pos))
+)
+
+(define-type ont::cowardly-val
+ :parent ont::courage-val
+ :wordnet-sense-keys ("cowardly%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::courage-scale) (f::orientation f::neg))
+)
+
 ;; modest, arrogant
 (define-type ont::modesty-val
  :parent ont::animal-propensity-val 
+ :sem (F::abstr-obj (F::scale ont::modesty-scale))
 )
 
 (define-type ont::modest-val
  :parent ont::modesty-val 
  :wordnet-sense-keys ("modest%3:00:02" "unassuming%5:00:00:modest:02" )
+ :sem (F::abstr-obj (F::scale ont::modesty-scale) (f::orientation f::pos))
 )
 
 (define-type ont::arrogant-val
  :parent ont::modesty-val 
  :wordnet-sense-keys ("arrogant%5:00:00:proud:00" "immodest%3:00:02" )
+ :sem (F::abstr-obj (F::scale ont::modesty-scale) (f::orientation f::pos))
 )
 
 ;; friendly, affectionate, kind, mean, considerate
@@ -2804,28 +2971,31 @@
 (define-type ont::social-interaction-val
  :parent ont::animal-propensity-val 
  :arguments ((:required ont::FIGURE ((? lof f::abstr-obj f::phys-obj f::situation )))) 
- :comment "properties of human behavior having to do with social interaction, e.g. friendly, kind, mean.)"
+ :comment "sociability"
+; :comment "properties of human behavior having to do with social interaction, e.g. friendly, kind, mean.)"
 )
 
 ;; social
 (define-type ont::social-val
  :parent ont::social-interaction-val
  :wordnet-sense-keys ("social%3:01:00" "social%3:00:00" "gregarious%3:00:00" "sociable%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::sociability-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-social-val
  :parent ont::social-interaction-val
  :wordnet-sense-keys ("ungregarious%3:00:00" "unsociable%3:00:00" "unsocial%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::sociability-scale) (f::orientation f::neg))
 )
 
 ;; (keep) in touch
 (define-type ont::in-touch-val
- :parent ont::social-interaction-val
+ :parent ont::social-val
 )
 
 ;; responsible, irresponsible
 (define-type ont::responsibility-val
- :parent ont::social-interaction-val 
+ :parent ont::animal-propensity-val 
  :arguments ((:required ont::FIGURE ((? lof f::abstr-obj f::phys-obj f::situation )))(:optional ont::GROUND )) 
  :sem (F::abstr-obj (F::scale ont::responsibility-scale))
 )
@@ -2844,7 +3014,8 @@
 
 ;; willing, unwilling
 (define-type ont::willingness-val
- :parent ont::social-interaction-val 
+ :parent ont::animal-propensity-val 
+ :sem (F::abstr-obj (F::scale ont::willingness-scale))
 )
 
 ;; unwilling
@@ -2855,6 +3026,7 @@
  ; Words: (W::unwilling w::disinclined w::involuntary)
  ; Antonym: ONT::inclined (W::willing w::inclined w::voluntary)
 ;	      (:optional ont::action (f::situation))
+ :sem (F::abstr-obj (F::scale ont::willingness-scale) (f::orientation f::neg))
 )
 
 ;; willing
@@ -2865,71 +3037,90 @@
  ; Words: (W::willing w::inclined w::voluntary)
  ; Antonym: ONT::disinclined (W::unwilling w::disinclined w::involuntary)
 ;	      (:optional ont::action (f::situation))
+ :sem (F::abstr-obj (F::scale ont::willingness-scale) (f::orientation f::pos))
 )
 
 ;; (un)friendly, affectionate
 (define-type ont::affection-val
- :parent ont::social-interaction-val 
+ :parent ont::animal-propensity-val 
+ :sem (F::abstr-obj (F::scale ont::affection-scale))
 )
 
 (define-type ont::affectionate-val
  :parent ont::affection-val 
  :wordnet-sense-keys ("amicable%3:00:00" "warm%3:00:02" "friendly%3:00:01" "loving%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::affection-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-affectionate-val
  :parent ont::affection-val 
  :wordnet-sense-keys ("unfriendly%3:00:01" "hostile%3:00:01" "hostile%5:00:00:irreconcilable:00")
+ :sem (F::abstr-obj (F::scale ont::affection-scale) (f::orientation f::neg))
 )
 
 ;; tame, wild
 (define-type ont::tameness-val
- :parent ont::social-interaction-val 
+ :parent ont::animal-propensity-val 
+ :sem (F::abstr-obj (F::scale ont::tameness-scale))
 )
 
 (define-type ont::wild-val
  :parent ont::tameness-val 
  :wordnet-sense-keys ("wild%3:00:02" )
+ :sem (F::abstr-obj (F::scale ont::wild-scale))
 )
 
 (define-type ont::tame-val
  :parent ont::tameness-val 
  :wordnet-sense-keys ("tame%3:00:02" )
+ :sem (F::abstr-obj (F::scale ont::tame-scale))
 )
 
 ;; graceful, clumsy
 (define-type ont::gracefulness-val
  :parent ont::animal-propensity-val 
+ :sem (F::abstr-obj (F::scale ont::gracefulness-scale))
 )
 
 (define-type ont::awkward-val
  :parent ont::gracefulness-val 
  :wordnet-sense-keys ("awkward%3:00:00" "clumsy%5:00:00:awkward:00" "ungraceful%5:00:00:awkward:00" "graceless%5:00:00:awkward:00" )
+ :sem (F::abstr-obj (F::scale ont::gracefulness-scale) (f::orientation f::neg))
 )
 
 (define-type ont::graceful-val
  :parent ont::gracefulness-val 
  :wordnet-sense-keys ("graceful%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::gracefulness-scale) (f::orientation f::pos))
 )
 
 ;; wise vs. foolish
 (define-type ont::wiseness-val
  :parent ont::animal-propensity-val
+ :sem (F::abstr-obj (F::scale ont::wiseness-scale))
 )
 
 (define-type ont::wise-val
  :parent ont::wiseness-val 
  :wordnet-sense-keys ("wise%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::wisdom-scale))
 )
 
 (define-type ont::foolish-val
  :parent ont::wiseness-val 
  :wordnet-sense-keys ("ridiculous%5:00:00:foolish:00" "absurd%5:00:00:foolish:00" "foolish%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::folly-scale))
 )
 
 (define-type ont::silly-val
  :parent ont::foolish-val 
  :wordnet-sense-keys ("goofy%5:00:00:foolish:00" )
+)
+
+(define-type ont::skillful-val
+ :parent ont::animal-propensity-val
+ :sem (F::abstr-obj (F::scale ont::skillfulness-scale))
+ :wordnet-sense-keys ("skilled%3:00:00")
 )
 
 ;; dimensional-property
@@ -2938,6 +3129,24 @@
     :sem (F::abstr-obj (F::scale ont::measure-scale))
     :comment "properties pertaining to dimensions and measurable extents"
     )
+
+(define-type ont::physical-strength-val
+ :parent ont::dimensional-property-val
+  :sem (F::abstr-obj (F::scale ont::physical-strength-scale))
+)
+
+;; strong, hardy, robust
+(define-type ont::strong-val
+ :parent ont::physical-strength-val
+ :wordnet-sense-keys("strong%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::strength-scale))
+)
+
+(define-type ont::weak-in-strength-val
+ :parent ont::physical-strength-val
+ :wordnet-sense-keys("weak%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::weakness-scale))
+)
 
 (define-type ont::position-on-dimension-scale-val
     :parent ont::dimensional-property-val
@@ -3170,14 +3379,14 @@
 
 (define-type ont::intense
  :parent ont::intensity-val 
- :wordnet-sense-keys ("potent%5:00:00:powerful:00" "strong%3:00:00" "acute%5:00:00:sharp:04" "strong%5:00:00:powerful:00" "intense%5:00:00:sharp:04" "shrill%5:00:00:high:03" "powerful%3:00:00" "strong%5:00:00:intense:00" "sharp%3:00:04" "intense%3:00:00" "high%3:00:03" "deep%5:00:00:intense:00" "intensive%5:00:00:intense:00" "forceful%3:00:00")
+ :wordnet-sense-keys ("potent%5:00:00:powerful:00" "acute%5:00:00:sharp:04" "strong%5:00:00:powerful:00" "intense%5:00:00:sharp:04" "shrill%5:00:00:high:03" "powerful%3:00:00" "strong%5:00:00:intense:00" "sharp%3:00:04" "intense%3:00:00" "high%3:00:03" "deep%5:00:00:intense:00" "intensive%5:00:00:intense:00" "forceful%3:00:00")
  ; Words: (W::HIGH W::LOW W::STRONG W::DEEP W::POWERFUL W::SHARP W::INTENSE W::DULL W::SHALLOW W::POTENT)
  ; Antonym: ONT::weak (W::WEAK W::FAINT)
 )
 
 (define-type ont::weak
  :parent ont::intensity-val 
- :wordnet-sense-keys ("shallow%3:00:02" "faint%5:00:00:weak:00" "weak%3:00:00" "dull%3:00:04" )
+ :wordnet-sense-keys ("shallow%3:00:02" "dull%3:00:04" "weak%5:00:00:perceptible:00" "weak%5:00:00:diluted:00")
  ; Words: (W::WEAK W::FAINT)
  ; Antonym: ONT::intense (W::HIGH W::LOW W::STRONG W::DEEP W::POWERFUL W::SHARP W::INTENSE W::DULL W::SHALLOW W::POTENT)
 )
@@ -3245,28 +3454,75 @@
  :wordnet-sense-keys ("nonfat%3:00:00" "skim%5:00:00:nonfat:00")
 )
 
-;; robust, frail
-(define-type ont::robustness-val
- :parent ont::dimensional-property-val 
- :comment "indicates relative extent on a robustness scale"
-)
-
-(define-type ont::robust-val
- :parent ont::robustness-val 
- :wordnet-sense-keys ("robust%3:00:00" "hardy%5:00:00:robust:00" )
-)
-
-(define-type ont::not-robust-val
- :parent ont::robustness-val 
- :wordnet-sense-keys ("frail%3:00:00" )
-)
-
 ;; relational-attribute: describes an entity with respect to another related entity
 (define-type ont::relational-attribute-val
  :parent ont::property-val 
  :comment "properties that describe an entity with respect to another related entity, an implicit second entity always present when these properties are evoked"
   :sem (F::abstr-obj (F::scale ont::relational-property-scale))
 )
+
+;; similarity
+(define-type ONT::SIMILARITY-val
+ :parent ONT::RELATION
+ :arguments ((:ESSENTIAL ONT::neutral)
+             (:ESSENTIAL ONT::neutral1)
+             (:ESSENTIAL ONT::FIGURE)
+             (:optional ont::formal)
+             (:optional ont::GROUND) ;; for backwards compat
+)
+  :sem (F::abstr-obj (F::scale ont::similarity-scale))
+)
+
+;; such as, as in. These should have the same representation as produced by the grammar rule such-X-as-Y>
+;; using roles :of and :val b.c. the :formal :formal1 roles are going to be replaced real soon now   
+
+(define-type ont::exemplifies
+  :parent ont::similarity-val
+    )
+
+(define-type ONT::IDENTITY-val
+ :parent ONT::similarity-val
+  )
+
+(define-type ONT::SAME
+ :parent ONT::IDENTITY-VAL
+ :wordnet-sense-keys ("same%3:00:02" "same%3:00:02" "identical%5:00:00:same:02" "same%3:00:00")
+ ; Antonym: NIL (W::OTHER) 
+  :sem (F::abstr-obj (F::scale ont::same-scale))
+)
+
+(define-type ONT::other
+ :parent ONT::IDENTITY-VAL
+ :wordnet-sense-keys ("other%3:00:00" "another%3:00:00")
+ )
+
+(define-type ONT::SIMILAR
+ :wordnet-sense-keys ("like%5:00:00:same:00" "comparable%5:00:00:same:00" "like%3:00:04" "similar%3:00:04" "alike%3:00:00" "same%3:00:04" "like%3:00:02" "like%3:00:00" "similar%3:00:02" "corresponding%5:00:00")
+ :wordnet-sense-keys ("like%5:00:00:same:00" "comparable%5:00:00:same:00" "like%3:00:04" "similar%3:00:04" "alike%3:00:00" "same%3:00:04" "like%3:00:02" "like%3:00:00" "similar%3:00:02" "corresponding%5:00:00")
+ :parent ONT::SIMILARITY-VAL
+ ; Words: (W::SIMILAR W::LIKE W::ANALOGOUS W::KINDRED)
+ :wordnet-sense-keys ("like%3:00:00" "like%3:00:00" "analogous%5:00:00:similar:00" "similar%3:00:00" "akin%5:00:00")
+ ; Antonym: ONT::DIFFERENT (W::DIFFERENT W::SEPARATE W::DISTINCT)
+  :sem (F::abstr-obj (F::scale ont::similar-scale))
+ )
+
+(define-type ONT::DIFFERENT
+ :parent ONT::SIMILARITY-VAL
+ ; Words: (W::DIFFERENT W::SEPARATE W::DISTINCT)
+ :wordnet-sense-keys ("unlike%3:00:00" "unlike%3:00:00" "discrete%5:00:00:separate:00" "different%3:00:00" "separate%3:00:00" "distinct%5:00:00")
+ ; Antonym: ONT::SIMILAR (W::SIMILAR W::LIKE W::ANALOGOUS W::KINDRED) 
+  :sem (F::abstr-obj (F::scale ont::different-scale))
+)
+
+(define-type ONT::EQUAL
+ :parent ONT::SIMILARITY-VAL
+ ; Words: (W::EQUAL W::EQUIVALENT)
+ :wordnet-sense-keys ("equal%3:00:00" "equivalent%5:00:00:equal:00" "equal%3:00:00")
+ ; Antonym: NIL (W::UNEQUAL) 
+  :sem (F::abstr-obj (F::scale ont::equal-scale))
+ )
+
+
 
 ;; relative, absolute
 (define-type ont::comparative-val
@@ -3373,7 +3629,7 @@
 
 (define-type ont::middle-val
  :parent ont::sequence-val 
- :wordnet-sense-keys ("halfway%5:00:00:intermediate:00" "middle%5:00:00:intermediate:00" "intermediate%3:00:00" )
+ :wordnet-sense-keys ("halfway%5:00:00:intermediate:00" "intermediate%3:00:00" )
 )
 
 ;; Relating to time
@@ -3415,15 +3671,11 @@
  :wordnet-sense-keys ("modern%3:00:00" "contemporary%5:00:00:modern:00" )
 )
 
-(define-type ont::current-val
- :parent ont::historical-era-val 
- :wordnet-sense-keys ("contemporary%5:00:00:current:00" "current%3:00:00")
-)
-
-(define-type ont::not-current-val
- :parent ont::historical-era-val
- :wordnet-sense-keys ("old-fashioned%5:00:00:unfashionable:00")
-)
+;; this isn't exactly era. current is in ont::now
+;(define-type ont::current-val
+; :parent ont::historical-era-val 
+; :wordnet-sense-keys ("contemporary%5:00:00:current:00" "current%3:00:00")
+;)
 
 ;; object-affordances: properties pertaining to function of an entity or an object
 (define-type ont::object-affordances-val
@@ -3796,17 +4048,20 @@
 )
 
 (define-type ont::attentiveness-val
- :parent ont::attention-val 
+ :parent ont::attention-val
+ :sem (F::abstr-obj (F::scale ont::attentiveness-scale)) 
 )
 
 (define-type ont::attentive-val
  :parent ont::attentiveness-val 
  :wordnet-sense-keys ("attentive%3:00:00" "attentive%3:00:04" )
+ :sem (F::abstr-obj (F::scale ont::attentiveness-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-attentive-val
  :parent ont::attentiveness-val 
  :wordnet-sense-keys ("inattentive%3:00:00" "heedless%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::attentiveness-scale) (f::orientation f::neg))
 )
 
 ;; aware (of x)
@@ -3878,52 +4133,18 @@
  :wordnet-sense-keys ("problematic%5:00:00:questionable:00" "funny%5:00:00:questionable:00" "questionable%3:00:00")
 )
 
-;; (un)interested
-(define-type ont::interest-val
- :parent ont::psychological-property-val 
- :sem (F::abstr-obj (F::scale ont::interest-scale) )
-)
-
-(define-type ont::interested-val
- :parent ont::interest-val 
- :wordnet-sense-keys ("interested%3:00:00" "curious%5:00:00:interested:00" )
- :sem (F::abstr-obj (F::scale ont::interested-scale) )
-
-)
-
-(define-type ont::eager-val
- :parent ont::interested-val 
- :wordnet-sense-keys ("eager%3:00:00" "enthusiastic%3:00:00" )
-)
-
-(define-type ont::not-interested-val
- :parent ont::interest-val 
- :wordnet-sense-keys ("uninterested%3:00:00" "disinterested%5:00:00:impartial:00" )
- :sem (F::abstr-obj (F::scale ont::not-interested-scale) )
-)
-
-;; puzzled
-(define-type ont::puzzlement-val
- :parent ont::psychological-property-val 
-)
-
-(define-type ont::puzzled-val
- :parent ont::puzzlement-val 
- :wordnet-sense-keys ("perplexed%3:00:00" "baffled%5:00:00:perplexed:00" "puzzled%5:00:00:perplexed:00" "stuck%5:00:00:perplexed:00" )
-)
-
 ;; worrying, disturbing, tiresome
-(define-type ont::evoking-emotion-val
+(define-type ont::evoking-experience-property-val
  :parent ont::psychological-property-val 
  :comment "attributes that indicate the evocation of a particular emotion"
 )
 
-(define-type ont::evoking-neg-emotion-val
- :parent ont::evoking-emotion-val 
+(define-type ont::evoking-neg-experience-property-val
+ :parent ont::evoking-experience-property-val 
 )
 
 (define-type ont::distressing-val
- :parent ont::evoking-neg-emotion-val 
+ :parent ont::evoking-neg-experience-property-val 
  :wordnet-sense-keys ("worrying%5:00:00:heavy:02" "distressing%5:00:00:heavy:02" "perturbing%5:00:00:heavy:02" "worrisome%3:00:04" "troubling%5:00:00:heavy:02" "disturbing%5:00:00:heavy:02" "distressful%5:00:00:heavy:02" "worrisome%5:00:00:heavy:02" "appalling%5:00:00:alarming:00" "atrocious%5:00:00:alarming:00" "weighty%5:00:00:heavy:02" "heavy%3:00:02")
  :sem (F::abstr-obj (F::scale ont::distress-scale) )
 )
@@ -3931,31 +4152,34 @@
 
 ; scary, frightening, fearsome
 (define-type ont::frightening-val
- :parent ont::evoking-neg-emotion-val 
+ :parent ont::evoking-neg-experience-property-val 
  :wordnet-sense-keys ("alarming%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::fear-scale) )
 )
 
 (define-type ont::not-pleasing-val
- :parent ont::evoking-neg-emotion-val 
+ :parent ont::evoking-neg-experience-property-val 
  :wordnet-sense-keys ("unwelcome%3:00:00" "disagreeable%5:00:00:uncongenial:00" "unpleasant%3:00:00" "disagreeable%3:00:00" "displeasing%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::pleasantness-scale) (f::orientation f::neg))
 )
 
 (define-type ont::grievous-val
- :parent ont::evoking-neg-emotion-val 
- :wordnet-sense-keys ("heartrending%5:00:00:sorrowful:00" "heartbreaking%5:00:00:sorrowful:00" "grievous%5:00:00:sorrowful:00" "sorrowful%3:00:00")
- :sem (F::abstr-obj (F::scale ont::grief-scale) )
+ :parent ont::evoking-neg-experience-property-val 
+ :wordnet-sense-keys ("heartrending%5:00:00:sorrowful:00" "heartbreaking%5:00:00:sorrowful:00" "grievous%5:00:00:sorrowful:00")
+ :sem (F::abstr-obj (F::scale ont::sadness-scale) )
 )
 
 (define-type ont::confusing-val
- :parent ont::evoking-neg-emotion-val 
+ :parent ont::evoking-neg-experience-property-val 
  :wordnet-sense-keys ("confusing%5:00:00:disorienting:00" )
 )
 
 (define-type ont::boring
- :parent ont::evoking-neg-emotion-val 
+ :parent ont::evoking-neg-experience-property-val 
  :wordnet-sense-keys ("uninteresting%3:00:00" "boring%5:00:00:uninteresting:00" "wearisome%5:00:00:uninteresting:00" "tiresome%5:00:00:uninteresting:00")
  ; Words: (W::DULL W::BORING W::UNINTERESTING)
  ; Antonym: NIL (W::INTERESTING)
+ :sem (F::abstr-obj (F::scale ont::interest-scale) (f::orientation f::neg))
 )
 
 ;(define-type ont::tiresome-val
@@ -3963,204 +4187,262 @@
 ; :wordnet-sense-keys ("burdensome%5:00:00:heavy:02" "oppressive%5:00:00:heavy:02" "leaden%5:00:00:heavy:02")
 ;)
 
-(define-type ont::evoking-pos-emotion-val
- :parent ont::evoking-emotion-val 
+(define-type ont::evoking-pos-experience-property-val
+ :parent ont::evoking-experience-property-val 
 )
 
 (define-type ont::calming-val
- :parent ont::evoking-pos-emotion-val 
+ :parent ont::evoking-pos-experience-property-val 
  :wordnet-sense-keys ("soothing%5:00:00:reassuring:00" "reassuring%3:00:00" "assuasive%5:00:00:reassuring:00")
+ :sem (F::abstr-obj (F::scale ont::calmness-scale) )
 )
 
 (define-type ont::enjoyable-val
- :parent ont::evoking-pos-emotion-val 
+ :parent ont::evoking-pos-experience-property-val 
  :wordnet-sense-keys ("enjoyable%5:00:00:pleasant:00" )
-)
-
-(define-type ont::pleasing-val
- :parent ont::evoking-pos-emotion-val 
- :wordnet-sense-keys ("pleasing%3:00:00" "welcome%3:00:00" "agreeable%3:00:00" "delightful%5:00:00:pleasing:00" )
+ :sem (F::abstr-obj (F::scale ont::pleasurability-scale) )
 )
 
 (define-type ont::interesting-val
- :parent ont::evoking-pos-emotion-val 
+ :parent ont::evoking-pos-experience-property-val 
  :wordnet-sense-keys ("fascinating%5:00:00:interesting:00" "interesting%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::interest-scale) )
 )
 
+(define-type ont::pleasing-val
+ :parent ont::evoking-pos-experience-property-val 
+ :wordnet-sense-keys ("pleasing%3:00:00" "welcome%3:00:00" "agreeable%3:00:00" "delightful%5:00:00:pleasing:00" "pleasant%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::pleasantness-scale) )
+)
+
+;(define-type ONT::PLEASANT
+; :parent ONT::pos-experiencer-property-val
+; :wordnet-sense-keys ("pleasant%3:00:00")
+; :sem (F::abstr-obj (F::scale ont::pleasantness-scale) )
+; )
+
 (define-type ont::desirable-val
- :parent ont::evoking-pos-emotion-val 
+ :parent ont::evoking-pos-experience-property-val 
  :wordnet-sense-keys ("desirable%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::desire-scale) )
+)
+
+
+;; EXPERIENCER PROPERTIES
+(define-type ont::experiencer-property-val
+ :parent ont::psychological-property-val
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Phys-obj (f::origin (? org f::human f::non-human-animal)))))
+ :comment "state of experiencing a particular emotion or cognitive state"
 )
 
 ;; happy, sad, gloomy...
-(define-type ont::emotional-val
- :parent ont::psychological-property-val 
- :arguments ((:ESSENTIAL ONT::FIGURE (F::Phys-obj (f::origin (? org f::human f::non-human-animal)))))
- :comment "state of having a particular emotion"
+;(define-type ont::emotional-val
+; :parent ont::psychological-property-val 
+; :arguments ((:ESSENTIAL ONT::FIGURE (F::Phys-obj (f::origin (? org f::human f::non-human-animal)))))
+; :comment "state of having a particular emotion"
+;)
+
+;; experiencer properties: POSITIVE experiences
+(define-type ont::pos-experiencer-property-val
+ :parent ont::experiencer-property-val
+ :comment "experiencing positive experiences"
 )
 
-(define-type ont::thankfulness-val
- :parent ont::emotional-val 
+;; experiencer properties: NEGATIVE experiences
+(define-type ont::neg-experiencer-property-val
+ :parent ont::experiencer-property-val
+ :comment "experiencing negative experiences"
 )
 
-;;;;;
+;; experiencer properties: NEUTRAL experiences
+(define-type ont::neutral-experiencer-property-val
+ :parent ont::experiencer-property-val
+ :comment "experiencing experiences that are neither positive nor negative"
+)
+
+(define-type ont::surprised
+ :parent ont::neutral-experiencer-property-val
+ :wordnet-sense-keys ("surprised%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::surprise-scale) )
+) 
+
+
+; intellectualy or cognitively attractive
+(define-type ont::interested-val
+ :parent ont::pos-experiencer-property-val 
+ :wordnet-sense-keys ("interested%3:00:00" "curious%5:00:00:interested:00" )
+ :sem (F::abstr-obj (F::scale ont::interest-scale) )
+)
+
+; wanting/desiring
+(define-type ONT::desirous
+ :parent ONT::pos-experiencer-property-val
+ :wordnet-sense-keys ("desirous%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::desire-scale) )
+ ; every living thing is desirous of avoiding pain
+ )
+
+;; both desiring and interested
+(define-type ont::eager-val
+ :parent ont::pos-experiencer-property-val 
+ :wordnet-sense-keys ("eager%3:00:00" "enthusiastic%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::desire-scale) ) 
+; technically this should map to  both desire and interest scales; but 
+; i think it's stronger as desire than interest
+)
+
 (define-type ont::grateful
- :parent ont::thankfulness-val 
+ :parent ont::pos-experiencer-property-val 
  :wordnet-sense-keys ("glad%5:00:00:grateful:00" "grateful%3:00:00" "glad%3:00:00" "thankful%3:00:00" )
  ; Words: (W::GLAD W::GRATEFUL W::CHEERFUL W::THANKFUL)
  ; Antonym: ONT::UNGRATEFUL (W::SAD W::MELANCHOLY W::UNGRATEFUL)
+ :sem (F::abstr-obj (F::scale ont::gratitude-scale) )
 )
 
-(define-type ont::not-grateful-val
- :parent ont::thankfulness-val 
- :wordnet-sense-keys ("ungrateful%3:00:00" "thankless%3:00:00" "unthankful%3:00:00" )
-)
-
-;;;;;
-(define-type ONT::pos-emotional-val
-  :parent ONT::emotional-val
- )
-
-(define-type ONT::neg-emotional-val
-  :parent ONT::emotional-val
- )
-
-(define-type ONT::neutral-emotional-val
-  :parent ONT::emotional-val
- )
-
-(define-type ONT::surprised
-  :parent ONT::emotional-val
-  :wordnet-sense-keys ("surprised%3:00:00")
- )
-
-;; ecstatic
-(define-type ONT::pos-intense-emotional-val
-  :parent ONT::pos-emotional-val
- )
-
-;; glad
-(define-type ONT::pos-soft-emotional-val
-  :parent ONT::pos-emotional-val
- )
-
-;; angry
-(define-type ONT::neg-intense-emotional-val
-  :parent ONT::neg-emotional-val
- )
-
-;; sad
-(define-type ONT::neg-soft-emotional-val
-  :parent ONT::neg-emotional-val
- )
-
-;;;;;
 (define-type ont::proud-val
- :parent ont::pos-intense-emotional-val 
+ :parent ont::pos-experiencer-property-val 
  :wordnet-sense-keys ("proud%3:00:00" )
  :sem (F::abstr-obj (F::scale ont::pride-scale) )
 )
 
+(define-type ont::happy-val
+ :parent ont::pos-experiencer-property-val
+ :wordnet-sense-keys ("happy%3:00:00" "pleased%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::happiness-scale) (F::orientation f::pos)) 
+)
+
 (define-type ONT::EUPHORIC
- :parent ONT::pos-intense-emotional-val
+ :parent ONT::happy-val
  ; Words: (W::HAPPY W::EUPHORIC)
- :wordnet-sense-keys ("euphoric%3:00:00" "happy%3:00:00" "cheerful%3:00:00" "beaming%5:00:00:cheerful:00" "pleased%3:00:00")
+ :wordnet-sense-keys ("euphoric%3:00:00" "cheerful%3:00:00" "beaming%5:00:00:cheerful:00")
  ; Antonym: ONT::UNHAPPY (W::UNHAPPY W::MISERABLE)
- :sem (F::abstr-obj (F::scale ont::happiness-scale) ) 
+ :sem (F::abstr-obj (F::scale ont::happiness-scale) (F::orientation f::pos) (F::intensity f::hi)) 
 )
 
 (define-type ONT::excited
- :parent ONT::pos-intense-emotional-val
+ :parent ONT::pos-experiencer-property-val
  :wordnet-sense-keys ("excited%3:00:00" "excited%5:00:00:wild:02" "pumped-up%5:00:00:tense:03")
  :sem (F::abstr-obj (F::scale ont::excitement-scale) )
  )
 
-(define-type ONT::desirous
- :parent ONT::pos-intense-emotional-val
- :wordnet-sense-keys ("desirous%3:00:00")
- )
 
 (define-type ONT::amused
- :parent ONT::pos-soft-emotional-val
+ :parent ONT::pos-experiencer-property-val
  :wordnet-sense-keys ("amused%5:00:00:pleased:00")
+ :sem (F::abstr-obj (F::scale ont::pleasurability-scale) )
  )
 
 (define-type ONT::calm
- :parent ONT::pos-soft-emotional-val
+ :parent ONT::pos-experiencer-property-val
  :wordnet-sense-keys ("calm%5:00:00:composed:00" "composed%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::calmness-scale) )
  )
 
-(define-type ONT::PLEASANT
- :parent ONT::pos-soft-emotional-val
- :wordnet-sense-keys ("pleasant%3:00:00")
- :sem (F::abstr-obj (F::scale ont::pleasantness-scale) )
- )
 
-;;;;;
+
+;;; negative experiencer properties
+
+(define-type ont::not-grateful-val
+ :parent ont::neg-experiencer-property-val 
+ :wordnet-sense-keys ("ungrateful%3:00:00" "thankless%3:00:00" "unthankful%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::gratitude-scale) )
+)
+
+(define-type ont::not-interested-val
+ :parent ont::neg-experiencer-property-val 
+ :wordnet-sense-keys ("uninterested%3:00:00" "disinterested%5:00:00:impartial:00" )
+ :sem (F::abstr-obj (F::scale ont::apathy-scale) )
+)
+
+(define-type ont::concerned-val
+ :parent ont::evoking-neg-experience-property-val
+ :wordnet-sense-keys ("concerned%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::worry-concern-scale) )
+)
+
+(define-type ont::puzzled-val
+ :parent ont::neg-experiencer-property-val 
+ :wordnet-sense-keys ("perplexed%3:00:00" "baffled%5:00:00:perplexed:00" "puzzled%5:00:00:perplexed:00" "stuck%5:00:00:perplexed:00" )
+ :sem (F::abstr-obj (F::scale ont::confusion-scale) )
+)
+
 (define-type ONT::afraid
- :parent ONT::neg-intense-emotional-val
+ :parent ONT::neg-experiencer-property-val
  :wordnet-sense-keys ("afraid%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::fear-scale) )
  )
 
 (define-type ONT::angry
- :parent ONT::neg-intense-emotional-val
+ :parent ONT::neg-experiencer-property-val
  :wordnet-sense-keys ("angry%3:00:00")
- )
-
-(define-type ONT::agitated
- :parent ONT::neg-intense-emotional-val
- :wordnet-sense-keys ("agitated%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::anger-scale) )
  )
 
 (define-type ONT::envious
- :parent ONT::neg-intense-emotional-val
+ :parent ONT::neg-experiencer-property-val
  :wordnet-sense-keys ("envious%5:00:00:desirous:00")
+ :sem (F::abstr-obj (F::scale ont::envy-scale) )
  )
 
 (define-type ONT::disgusted
- :parent ONT::neg-intense-emotional-val
+ :parent ONT::neg-experiencer-property-val
  :wordnet-sense-keys ("disgusted%5:00:00:displeased:00")
+ :sem (F::abstr-obj (F::scale ont::disgust-scale) )
  )
 
-(define-type ont::frantic-val
- :parent ONT::neg-intense-emotional-val
- :wordnet-sense-keys ("hectic%5:00:00:agitated:00" "frantic%5:00:00:agitated:00" )
-)
+(define-type ONT::agitated
+ :parent ONT::neg-experiencer-property-val
+ :wordnet-sense-keys ("agitated%3:00:00" "hectic%5:00:00:agitated:00" "frantic%5:00:00:agitated:00")
+ :sem (F::abstr-obj (F::scale ont::distress-scale) )
+ )
 
-;;;;;
 (define-type ONT::uneasy
- :parent ONT::neg-soft-emotional-val
+ :parent ONT::neg-experiencer-property-val
  :wordnet-sense-keys ("anxious%5:00:00:troubled:00" "uneasy%3:00:00" "troubled%3:00:00" "tense%3:00:03")
- )
-
-(define-type ONT::grumpy-val
- :parent ONT::neg-soft-emotional-val
- :wordnet-sense-keys ("grumpy%5:00:00:ill-natured:00" "disagreeable%5:00:00:ill-natured:00" "sulky%5:00:00:ill-natured:00" "irritable%5:00:00:ill-natured:00")
+ :sem (F::abstr-obj (F::scale ont::nervousness-scale) ) 
 )
 
-(define-type ONT::UNHAPPY
- :parent ONT::neg-soft-emotional-val
+(define-type ONT::annoyed-val
+ :parent ONT::neg-experiencer-property-val
+ :wordnet-sense-keys ("grumpy%5:00:00:ill-natured:00" "irritable%5:00:00:ill-natured:00")
+ :sem (F::abstr-obj (F::scale ont::bother-scale) )
+)
+
+(define-type ONT::unhappy
+ :parent ONT::neg-experiencer-property-val
  ; Words: (W::UNHAPPY W::MISERABLE)
- :wordnet-sense-keys ("dysphoric%3:00:00" "unhappy%3:00:00" "sad%3:00:00" "gloomy%5:00:00:dejected:00" "melancholy%5:00:00:sad:00" "miserable%5:00:00:unhappy:00" "dejected%3:00:00")
+ :wordnet-sense-keys ("dysphoric%3:00:00" "unhappy%3:00:00" "gloomy%5:00:00:dejected:00" 
+"miserable%5:00:00:unhappy:00" "dejected%3:00:00")
  ; Antonym: ONT::EUPHORIC (W::HAPPY W::EUPHORIC)
- :sem (F::abstr-obj (F::scale ont::sadness-scale) ) 
+ :sem (F::abstr-obj (F::scale ont::happiness-scale) (f::orientation f::neg)) 
+ :comment "not happy, dissatisfied or displeased"
+)
+
+(define-type ont::sad-val
+ :parent ont::neg-experiencer-property-val
+ :wordnet-sense-keys("sad%3:00:00" "melancholy%5:00:00:sad:00" "sorrowful%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::sadness-scale)) 
+ :comment "feeling sorrow and sadness from misfortune, disappointment or regret"
 )
 
 (define-type ONT::sorry
- :parent ONT::neg-soft-emotional-val
+ :parent ONT::neg-experiencer-property-val
  ; Words: (W::sorry)
  :wordnet-sense-keys ("sorry%3:00:02")
+ :sem (F::abstr-obj (F::scale ont::regret-scale) )
  )
 
 (define-type ONT::bored
- :parent ONT::neg-soft-emotional-val
+ :parent ONT::neg-experiencer-property-val
  :wordnet-sense-keys ("bored%5:00:00:tired:00" "bored%5:00:00:uninterested:00")
+ :sem (F::abstr-obj (F::scale ont::interest-scale) (f::orientation f::neg))
  )
 
 
 ;; smart, (un)intelligent
 (define-type ont::intelligence-val
  :parent ont::psychological-property-val 
+ :sem (F::abstr-obj (F::scale ont::intelligence-scale) )
 )
 
 (define-type ont::smart
@@ -4168,6 +4450,7 @@
  :wordnet-sense-keys ("smart%3:00:00" "bright%5:00:00:intelligent:00" "cagey%5:00:00:smart:00" "intelligent%3:00:00" )
  ; Words: (W::CLEVER W::INTELLIGENT W::SMART)
  ; Antonym: ONT::STUPID (W::STUPID W::DUMB)
+ :sem (F::abstr-obj (F::scale ont::intelligence-scale) (f::orientation f::pos))
 )
 
 (define-type ont::clever-val
@@ -4180,37 +4463,44 @@
  :wordnet-sense-keys ("dense%5:00:00:stupid:00" "unintelligent%3:00:00" "stupid%3:00:00" )
  ; Words: (W::STUPID W::DUMB)
  ; Antonym: ONT::smart (W::CLEVER W::INTELLIGENT W::SMART)
+ :sem (F::abstr-obj (F::scale ont::intelligence-scale) (f::orientation f::neg))
 )
 
 ;;; deliberate, on purpose
 (define-type ont::intentionality-val
  :parent ont::psychological-property-val
+ :sem (F::abstr-obj (F::scale ont::intentionality-scale))
  )
 
 (define-type ont::intentional-val
  :parent ont::intentionality-val
  :wordnet-sense-keys("deliberate%5:00:00:intended:00" "intentional%5:00:00:intended:00" "intended%3:00:00") 
+ :sem (F::abstr-obj (F::scale ont::intentionality-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-intentional-val
  :parent ont::intentionality-val
  :wordnet-sense-keys("accidental%5:00:00:unintended:00" "unintentional%5:00:00:unintended:00" "unintended%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::intentionality-scale) (f::orientation f::neg))
  )
 
 ;; ad hoc vs premeditated process
 (define-type ont::premeditation-val
  :parent ont::psychological-property-val 
  :comment "is the process planned (careful forethought and planning)?"
+ :sem (F::abstr-obj (F::scale ont::premeditation-scale))
 )
 
 (define-type ont::premeditated-val
  :parent ont::premeditation-val
  :wordnet-sense-keys ("planned%3:00:00" "premeditated%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::premeditation-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-premeditated-val
  :parent ont::premeditation-val
  :wordnet-sense-keys ("haphazard%5:00:00:random:00" "ad_hoc%5:00:00:unplanned:00" "impulsive%5:00:00:unpremeditated:00" "spontaneous%5:00:00:unscripted:00" "unpremeditated%3:00:00" "unscripted%3:00:00" "unplanned%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::premeditation-scale) (f::orientation f::neg))
 )
 
 ;; resulting-state-val
@@ -4770,7 +5060,7 @@
 (define-type ONT::LEFT
  :parent ONT::LOCATION-VAL
  ; Words: (W::LEFT W::LEFTMOST)
- :wordnet-sense-keys ("left%3:00:00" "center%3:00:00" "leftmost%5:00:00:left:00")
+ :wordnet-sense-keys ("left%3:00:00" "leftmost%5:00:00:left:00")
  ; Antonym: ONT::RIGHT (W::RIGHT W::RIGHTMOST)
  )
 

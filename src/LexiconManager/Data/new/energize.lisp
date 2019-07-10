@@ -8,7 +8,7 @@
 	  (w::energize
 	   (senses
 	    ((LF-parent ont::change-device-state))
-	    ((lf-parent ONT::evoke-excitement)
+	    ((lf-parent ONT::evoke-liveliness)
 	     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
 	     (syntax (w::resultative +))
 	     (example "the film energized him")

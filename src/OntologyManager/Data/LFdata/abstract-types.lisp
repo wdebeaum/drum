@@ -124,7 +124,7 @@
 ;; purpose, function
 (define-type ont::utility
  :parent ont::function-object
- :wordnet-sense-keys ("utility%1:07:00")
+ :wordnet-sense-keys ("role%1:07:00")
   :arguments ((:REQUIRED ONT::FIGURE)
              )
  )
@@ -300,7 +300,8 @@
 
 ;; government, gsa, darpa
 (define-type ONT::federal-organization-abstr
- :wordnet-sense-keys ("government%1:14:00" "authorities%1:14:00" "regime%1:14:00")
+; following in ont::federal-organization
+; :wordnet-sense-keys ("government%1:14:00" "authorities%1:14:00" "regime%1:14:00")
  :parent ONT::organization-abstr
  )
 
@@ -344,7 +345,8 @@
  )
 
 (define-type ONT::military-group-abstr
- :wordnet-sense-keys ("military_unit%1:14:00" "military_force%1:14:00" "military_group%1:14:00" "force%1:14:01")
+; following int ont::military-group
+; :wordnet-sense-keys ("military_unit%1:14:00" "military_force%1:14:00" "military_group%1:14:00" "force%1:14:01")
  :parent ONT::social-group-abstr
  )
 
@@ -391,25 +393,7 @@
   :parent ONT::relation
   )
 
-(define-type ONT::SIMILARITY-val
- :parent ONT::RELATION
- :arguments ((:ESSENTIAL ONT::neutral)
-	     (:ESSENTIAL ONT::neutral1)
-	     (:ESSENTIAL ONT::FIGURE)
-	     (:optional ont::formal)
-	     (:optional ont::GROUND) ;; for backwards compat
-	                  )
- )
-
-;; such as, as in. These should have the same representation as produced by the grammar rule such-X-as-Y>
-;; using roles :of and :val b.c. the :formal :formal1 roles are going to be replaced real soon now
-(define-type ont::exemplifies
-  :parent ont::similarity-val
-    )
-
-(define-type ONT::IDENTITY-val
- :parent ONT::similarity-val
-  )
+;;; NOTE: SIMILARITY-val moved to property-val (june 2019)
 
 #||;;; ownership, property, etc.
 (define-type ONT::possession
@@ -622,7 +606,6 @@
     )
 
 (define-type ONT::rate-unit
- :wordnet-sense-keys ("rate%1:28:00")
  :parent ONT::formal-unit
  :sem (F::Abstr-obj (F::Scale Ont::Rate-scale))
  :arguments ((:ESSENTIAL ONT::FIGURE ((? type F::phys-obj F::situation)))
@@ -1038,7 +1021,7 @@
 )
 
 (define-type ONT::knowledge-belief
-    :wordnet-sense-keys ("knowledge%1:03:00" "wisdom%1:07:00")
+    :wordnet-sense-keys ("knowledge%1:03:00")
     :parent ONT::mental-construction
     :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
 		(:optional ont::FORMAL (f::situation)))
@@ -1075,7 +1058,7 @@
 )
 
 (define-type ONT::FEELING
-    :wordnet-sense-keys ("feeling%1:03:00" "bother%1:09:00" "worry%1:09:00" "sorrow%1:09:00" "distress%1:12:02" "restlessness%1:12:00" "mercy%1:07:00")
+    :wordnet-sense-keys ("feeling%1:03:00" "mercy%1:07:00")
     :parent ONT::mental-construction
     :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
 		)
@@ -1248,7 +1231,7 @@
 
 ;; favorite
 (define-type ONT::favorite
- :wordnet-sense-keys ("favorite%1:09:00" "favourite%3:00:00:popular:00" "favourite%3:00:00:loved:00")
+ :wordnet-sense-keys ("favorite%1:09:00")
  :parent ONT::relation
   )
 
@@ -1592,37 +1575,5 @@
  )
 |#
 
-(define-type ONT::SIMILAR
- :wordnet-sense-keys ("like%5:00:00:same:00" "comparable%5:00:00:same:00" "like%3:00:04" "similar%3:00:04" "alike%3:00:00" "same%3:00:04" "like%3:00:02" "like%3:00:00" "similar%3:00:02" "corresponding%5:00:00")
- :wordnet-sense-keys ("like%5:00:00:same:00" "comparable%5:00:00:same:00" "like%3:00:04" "similar%3:00:04" "alike%3:00:00" "same%3:00:04" "like%3:00:02" "like%3:00:00" "similar%3:00:02" "corresponding%5:00:00")
- :parent ONT::SIMILARITY-VAL
- ; Words: (W::SIMILAR W::LIKE W::ANALOGOUS W::KINDRED)
- :wordnet-sense-keys ("like%3:00:00" "like%3:00:00" "analogous%5:00:00:similar:00" "similar%3:00:00" "akin%5:00:00")
- ; Antonym: ONT::DIFFERENT (W::DIFFERENT W::SEPARATE W::DISTINCT)
- )
 
-(define-type ONT::DIFFERENT
- :parent ONT::SIMILARITY-VAL
- ; Words: (W::DIFFERENT W::SEPARATE W::DISTINCT)
- :wordnet-sense-keys ("unlike%3:00:00" "unlike%3:00:00" "discrete%5:00:00:separate:00" "different%3:00:00" "separate%3:00:00" "distinct%5:00:00")
- ; Antonym: ONT::SIMILAR (W::SIMILAR W::LIKE W::ANALOGOUS W::KINDRED)
- )
-
-(define-type ONT::EQUAL
- :parent ONT::SIMILARITY-VAL
- ; Words: (W::EQUAL W::EQUIVALENT)
- :wordnet-sense-keys ("equal%3:00:00" "equivalent%5:00:00:equal:00" "equal%3:00:00")
- ; Antonym: NIL (W::UNEQUAL)
- )
-
-(define-type ONT::SAME
- :parent ONT::IDENTITY-VAL
- :wordnet-sense-keys ("same%3:00:02" "same%3:00:02" "identical%5:00:00:same:02" "same%3:00:00")
- ; Antonym: NIL (W::OTHER)
- )
-
-(define-type ONT::other
- :parent ONT::IDENTITY-VAL
- :wordnet-sense-keys ("other%3:00:00" "another%3:00:00")
- )
 

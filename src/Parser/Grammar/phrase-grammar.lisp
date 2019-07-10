@@ -4864,7 +4864,7 @@
      -np-name> 0.995
      (head (name (lex ?l) (sem ?sem) (var ?v) (agr ?agr) (lf ?lf) (class ?class)
 		 (sort ?sort) ;;(sem ($ (? !s F::time)))
-		 (full-name ?fname) (time-converted ?tc)
+		 (full-name ?fname) (time-converted ?tc) (mass ?mass)
 		 ;; swift 11/28/2007 removing gname rule & passing up generated feature (instead of restriction (generated -))
 		 (generated ?gen)  (transform ?transform) (title -)
 		 (restr ?restr)

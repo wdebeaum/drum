@@ -7,7 +7,8 @@
    (W::dehydrated
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("dehydrated%5:00:00:preserved:02"))
-     (lf-parent ont::medical-dehydration-val)
+     (lf-parent ont::dehydration-val)
+     (example "Why am I so dehydrated?")
      (templ central-adj-templ)
      )
     )

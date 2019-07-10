@@ -25,7 +25,6 @@
 (define-type ONT::PITCH-UNIT
  :parent ONT::SOUND-UNIT
  :sem (F::Abstr-obj (F::scale ONT::pitch-scale))
- :wordnet-sense-keys ("musical_interval%1:10:00")
 )
 
 (define-type ONT::NOTE-LENGTH-UNIT

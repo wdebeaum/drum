@@ -14,3 +14,12 @@
    )
 ))
 
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+  (W::favorite
+   (SENSES
+    ((example "my favorite book")
+     (lf-parent ont::favorite-val)
+     (TEMPL central-adj-templ)
+     )
+))))

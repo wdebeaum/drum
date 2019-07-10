@@ -11,7 +11,7 @@
      ;(SEM (F::Aspect F::bounded) (F::Time-span F::extended))
 ;      )
     ;;;; hover over the landscape 
-    ((LF-PARENT ONT::WAIT)
+    ((LF-PARENT ONT::hang-out)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL AGENT-TEMPL)
      )

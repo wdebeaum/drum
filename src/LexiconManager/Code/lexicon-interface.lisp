@@ -803,13 +803,16 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	   ) 
 	  ))
     (print-debug "wdef is ~S~% compatible-defs is ~S~% other-defs are ~S~%" wdef compatible-defs other-defs)
-    (when (and tagged-senses-remaining (or *use-trips-and-wf-senses* (null trips-defs)))
-      (print-debug "No compatible sense found for ~S in sense list ~S~%" w tagged-senses-remaining)
+    ;;  We have now found any entries in the TRIPS lexicon, and retrieved WordNet senses as well if desired
+    ;;   But we still should check whether there are some texttagger interpretations that have not been found.
+    (when  
+	(and tagged-senses-remaining (or *use-trips-and-wf-senses* (null trips-defs) (null compatible-defs)))
+      (print-debug "No compatible sense found for ~S in sense list ~S~% Domain info is ~S~%" w tagged-senses-remaining domain-info)
       (dolist (ont-type tagged-senses-remaining)
 	(dolist (pos orig-pos-list)
 	  (cond ((and pos (compatible-pos-and-ont-type pos ont-type))
 		 ;; create a new entry with the given pos and sense as long as they are compatible
-		 (print-debug "~%point 2")
+		 (print-debug "~%point 2: ")
 		 (let ((new-entry (car (make-unknown-word-entry w pos (convert-raw-score (find-score-in-domain-info domain-info)) nil (gen-id w) (list ont-type) nil penn-tags (list ont-type) domain-info))))
 		   (when new-entry (push new-entry compatible-defs)))
 		 (print-debug "making new sense for ~S as ~S ~S~%" w pos ont-type)
