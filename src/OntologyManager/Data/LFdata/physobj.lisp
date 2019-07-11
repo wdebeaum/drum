@@ -3188,7 +3188,7 @@
 ;; layer (of ozone, chocolate), sheet (of ice, paper), slice
 (define-type ont::sheet
 ;  :parent ont::non-measure-ordered-domain
-  :parent ONT::PHYS-OBJECT   ;; why was this in GROUP? JFA 4/19
+  :parent ONT::SHAPE   ;; why was this in GROUP? JFA 4/19
   )
 
 ;; a number/amount/quantity of X

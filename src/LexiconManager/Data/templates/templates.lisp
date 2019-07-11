@@ -3997,7 +3997,12 @@
     ))
   
   (name-templ
-   (SYNTAX(W::agr W::3s) (W::name +) (W::generated -) (w::SORT (? !s w::PP-WORD))) ; so it doesn't go through -np-pp-word2>
+   (SYNTAX (W::agr W::3s) (W::name +) (W::generated -) (w::SORT (? !s w::PP-WORD))) ; so it doesn't go through -np-pp-word2>
+   (ARGUMENTS
+    ))
+
+  (name-count-templ
+   (SYNTAX (W::agr W::3s) (W::name +) (W::mass W::count) (W::generated -) (w::SORT (? !s w::PP-WORD))) ; so it doesn't go through -np-pp-word2>
    (ARGUMENTS
     ))
 

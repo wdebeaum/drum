@@ -1,3 +1,4 @@
+
 ;;;;
 ;;;; W::JUNE
 ;;;;
@@ -8,7 +9,7 @@
   (senses
    ((LF-PARENT ONT::MONTH-NAME)
 ;    (TEMPL value-templ)
-    (templ nname-templ)
+    (templ name-count-templ)
     )
    )
 )
