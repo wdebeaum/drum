@@ -41,7 +41,8 @@
 	 passive passive-map ellipsis contraction auxname) 
     ;; (pp var)
     ;; (pps var)
-    (utt neg qtype sem subjvar dobjvar cont lex orig-lex headcat transform)
+    (utt neg qtype ;; sem
+     subjvar dobjvar cont lex orig-lex headcat transform)
     (pred qtype focus gap filled transform headcat lex orig-lex)
     )
    
@@ -151,7 +152,7 @@
 		     (class (? cl ONT::SA_TELL ONT::SA_REQUEST ONT::SA_YN-QUESTION ONT::SA_WH-QUESTION)) ;(class ?cl) ; exclude simple NP conjunctions for example
 		     (constraint ?con)))
 	  ))
-   (punc (punctype ?p) (lex (? lex w::punc-exclamation-mark w::punc-period w::punc-question-mark w::punc-colon w::ellipses w::punc-comma w::punc-minus)))
+   (punc (punctype ?p) (lex (? lex w::punc-exclamation-mark w::punc-period w::punc-question-mark w::punc-colon w::ellipses w::punc-comma w::punc-minus w::punc-semicolon)))
    (utt (focus ?foc2) (ended -) (var ?v2) (punc -) (uttword ?uw1)
 	(lf (% speechact (var ?v2)
 	       (class (? cl1 ONT::SA_TELL ONT::SA_REQUEST ONT::SA_YN-QUESTION ONT::SA_WH-QUESTION)) ;(class ?cl1)
@@ -811,12 +812,13 @@
    
    ;; test: the city in which i live
    ;; fixme:: the argsem isn't being propagated for (wh r) adverbials. so 
-   ((cp (ctype relc) (arg ?srole) (argsem ?srolesem) (gap -)
+   ((cp (ctype relc) (arg ?srole) (argsem ?argsem) (gap -)
+     ;;(argsem ?srolesem) (gap -)
      (lf ?newlf) (agr ?newagr)
      ;; (lex ?l) (headcat ?vcomp) ;; non-aug-trips settings
      (lex ?hlex) (headcat ?hcat) ;; aug-trips
      )
-    -rel4> .92
+    -rel4> .98 ;;.92
     ;; fixme -- this is really hacked to transfer the role from the wh pronoun to the np it will eventually modify
     ;; wh r should only come out of advbl-binary-relative
     (advbl-r (atype pre) (argument (% s (sem ?argsem))) 
@@ -825,7 +827,8 @@
      (subcatsem ?srolesem)
      (arg2 ?srole)
      )
-    (head (s (var ?v) (lf ?lf) (lf (% prop (constraint ?con))) (sem ?argsem) (aux -)
+    (head (s (var ?v) (lf ?lf) (lf (% prop (constraint ?con))) (sem ?subcatsem) (aux -)
+	     ;;(sem ?argsem) (aux -)
 	      (adj-s-prepost -)
 	    (tma ?tma) (stype (? stp decl imp how-about))
 	   (wh -) (stype decl) (vform fin) (preadvbl -) (lex ?hlex) (headcat ?hcat)
@@ -1365,7 +1368,7 @@
 	    ;; (subj (? subj (% ?s1 (var ?subjvar))))
 	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (agr ?subjagr) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	    ;;(iobj ?iobj) (iobj (% ?s2  (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))
-	    (part (% -)) 
+	    (part (% -)) `_
 	    (dobj ?dobj) (dobj (% np (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (sort pred)
 				  (gerund -)))	    
 	            ;; we allow a possible gap in the dobj np e.g., "what did he thwart the passage of"
@@ -2660,9 +2663,11 @@
 	     ))
     (advbl (atype post) (gap -)  ; post: Is the block red eventually?
 	   (sem ($ f::abstr-obj (F::type (? ttt ont::property-val
+					    ont::pos-wrt-containment-reln ont::position-as-point-reln ; in/on/at
 					    ;ont::position-reln ; commenting this out, but it is needed for, e.g., "Move it forward/in"
 					    ont::predicate)))) ; property-val: "regular" adverbs; position-reln: in; predicate: if, eventually
      (argument (% s (sem ?sem)))
+     (result-only -)
      (arg ?v) (var ?mod) (role ?advrole) (subcat -))
     (add-to-conjunct (val (mod ?mod)) (old ?con) (new ?newcon))
     )

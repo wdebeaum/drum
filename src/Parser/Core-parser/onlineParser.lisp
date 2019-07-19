@@ -447,17 +447,23 @@
 	 (*duplicate* nil)
 	 (extrafeats (find-arg others :feats))
 	 ;;(domain-specific-info (find-arg others :domain-specific-info))
-	 (wn-senses (find-arg (car (find-arg others :sense-info)) :wn-sense-keys))
-	 (wn-domain-info  (if wn-senses (list (cons 'WN wn-senses)))))
-			  
+	 (all-wn-senses (flatten (mapcar #'(lambda (x) (find-arg x :wn-sense-keys))
+					 (find-arg others :sense-info))))
+	
+	 )
+    ;;(format t "~%all wordnet mappings = ~S" all-wn-senses)
     (mapcar #'(lambda (lex-entry)
 		(when (lex-entry-is-new lex-entry word start end)
 		    (cond
 		      ;;  Normal case:  we have a lex-entry struct.
 		      ((lex-entry-p lex-entry)
-		       (let ((id (lex-entry-id lex-entry))
-			     (domain-info (or (get-value (lex-entry-constit lex-entry) 'w::kr-type)
-					      wn-domain-info)))
+		       (let* ((lexc (lex-entry-constit lex-entry))
+			      (id (lex-entry-id lex-entry))
+			      (domain-info (or (get-value lexc 'w::kr-type)
+					       (let ((lf (get-value lexc 'w::lf)))
+						 (list (find-wn-mapping (if (consp lf) (third lf) word)
+								  (get-type lf)
+								  all-wn-senses))))))
 
 			 (setq entries (cons (build-entry 
 					      (instantiateVAR (append-features (set-domain-info word (copy-constit (lex-entry-constit lex-entry)) 
@@ -485,6 +491,45 @@
       (setq entries (list (build-entry (build-constit 'UNKNOWN (list (list 'w::input (list word))) nil)
                                        start end  nil 'UNK 1 nil 'w::unknown))))
     entries))
+
+(defun find-wn-mapping (word type wnsenses)
+  (when *wn-wsd-enabled*
+  (let* ((wordsenses (or wnsenses (get-wnsenses-for-word word)))
+	(res
+	 (remove-if #'null
+		   (or
+		;; first try the low hanging fruit
+		(intersection
+		 (om::ont-type-wordnet-sense-keys type) wordsenses :test #'equal)
+		(let* ((sense-mappings (remove-if #'(lambda (x)
+						      (member (car x) '(ONT::ANY-SEM ONT::REFERENTIAL-SEM ONT::SITUATION-ROOT ONT::MODIFIER)))
+						  (mapcar #'(lambda (x) (list (car (wf::best-ont-type-for-sense-key x)) x)) wordsenses)))
+		       (best-senses (if type (or (remove-if-not #'(lambda (x) (eq (car x) type))
+								sense-mappings)
+						 ;; if no direct match, look for hierarchical relationship
+						 (remove-if-not #'(lambda (x)
+								    (om::subtype type (car x)))
+								sense-mappings))
+					sense-mappings)))
+		  ;;(format t "~% mapping ~S best = ~S~%" sense-mappings best-senses)
+		  (or
+		   (mapcar #'cadr best-senses)
+		   wnsenses
+		   (list (car (om::ont-type-wordnet-sense-keys type)))  ;; there is no sense, return a sense associated with the type
+		   (list (car wordsenses))   ;; if all else fails, return the first sense of the the word
+		   ))))))
+    (if res
+	(cons 'WN res)))))
+
+(defun get-wnsenses-for-word (w)
+  (let ((*package* (find-package :wf))
+	(word (if (symbolp w)
+		  (symbol-name w)
+		  )))
+    (when word
+      (flatten (mapcar (lambda (ss) (wf::sense-key-for-word-and-synset word ss))
+		     (wf::get-all-synsets wf::wm word))
+    ))))
 
 (defun lex-entry-is-new (le word start end)
   t)
@@ -579,8 +624,8 @@
 	(lf (get-value c 'W::LF))
 	)
     (when (and (var-p sem) (consp lf)) ;;(not (member (third lf) '(W::BE W::HAVE W::BEING W::HAVING))))
-	  
-      (if (and *wn-wsd-enabled* (member 'wn sense-info))  ;; here we try to guess the best sense from WN
+	  ;;  commented out as we've already computed the WN sense
+      #|(if (and *wn-wsd-enabled* (member 'wn sense-info))  ;; here we try to guess the best sense from WN
 	  (let ((sense
 		 (multiple-value-bind (core non-core)
 		     (get-wordnet-sense-keys word (list (constit-cat c)))
@@ -594,8 +639,8 @@
 			 (caar best-matches))))))
 		(if sense
 		    (set-kr-type sem (append sense-info (list (list 'WN (list sense)))))
-		    (set-kr-type sem sense-info)))
-	  (set-kr-type sem sense-info)))
+		    (set-kr-type sem sense-info)))|#
+	  (set-kr-type sem sense-info))
     c))
 
 

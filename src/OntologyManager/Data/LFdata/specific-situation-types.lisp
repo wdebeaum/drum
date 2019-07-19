@@ -398,11 +398,13 @@
 
 ;; fall, tumble
 (define-type ONT::fall
- :parent ONT::MOVE-downward
- )
+    :wordnet-sense-keys ("fall%2:38:03"  "fall%2:38:00")
+  :parent ONT::MOVE-downward
+  )
 
 ;; drift
 (define-type ONT::drift
+     :wordnet-sense-keys ("drift%2:38:02" "drift%2:38:04" "drift%2:38:01")
  :parent ONT::MOVE
  )
 
@@ -1066,7 +1068,7 @@
 
 ;; birth, death
 (define-type ONT::be-born
- :wordnet-sense-keys ("nascence%1:11:00" "nascency%1:11:00" "nativity%1:11:00" "birth%1:11:00")
+ :wordnet-sense-keys ("nascence%1:11:00" "nascency%1:11:00" "nativity%1:11:00" "birth%1:11:00" "bear%2:29:01")
  :parent ONT::life-process
   :sem (f::situation (:default (f::aspect f::dynamic)))
   :arguments ((:essential ONT::affected-result (F::Phys-obj (f::type ont::mammal)))))
@@ -3414,7 +3416,7 @@
  )
 
 (define-type ONT::take-in
-    :wordnet-sense-keys ("absorb%2:35:00" "absorb%2:43:00" "intake%1:04:00" "bilge%2:30:01" "bilge%2:30:00" "suck%2:38:00" "suck%2:35:00")
+    :wordnet-sense-keys ("absorb%2:35:00" "absorb%2:43:00" "intake%1:04:00" "bilge%2:30:01" "bilge%2:30:00" "suck%2:38:00" "suck%2:35:00" "take_up%2:34:00")
     :parent ONT::event-of-causation
     :arguments ((:REQUIRED ONT::Agent)
 		(:REQUIRED ONT::affected)
@@ -4950,11 +4952,11 @@
 
 ;;; swift 11/26/01 -- added this for inchoative verbs, e.g. get as in 'get nauseous'
 (define-type ONT::BECOME
- :wordnet-sense-keys ("take%2:30:09" "come%2:30:03" "become%2:42:00" "become%2:30:00" "go%2:30:04" "get%2:30:00" "open_up%2:30:01")
+ :wordnet-sense-keys ("take%2:30:09" "come%2:30:03" "become%2:42:00" "become%2:30:00" "go%2:30:04" "get%2:30:00" "open_up%2:30:01" "turn%2:30:04")
  :parent ONT::event-of-undergoing-action
  :sem (F::Situation (F::Aspect F::Dynamic) (F::Trajectory -))
  :arguments ((:ESSENTIAL ONT::affected)
-	     (:essential ont::formal (F::situation (F::TYPE ont::property-val) )
+	     (:essential ont::formal (F::abstr-obj (F::TYPE ont::property-val) )
 			 )
 	     ))
 

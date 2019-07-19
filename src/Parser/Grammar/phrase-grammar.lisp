@@ -1925,7 +1925,7 @@
          (QUAL -) (relc -) (subcat ?subcat) (name-mod +)  ;; only allow one name modifier
      ) 
      -name-n1> .98
-     (np (name +) (generated -) ;; don't allow numbers or times here
+     (np (name +) (generated -) (LF (% ?xx (class ?c1))) ;; don't allow numbers or times here
          (VAR ?v1) (gap -))
      (head (N1 (VAR ?v2) (relc -) (sem ?sem) (sem ($ (? x F::ABSTR-OBJ F::PHYS-OBJ F::SITUATION))) ; F::SITUATION: the South Sudan situation
 	    (RESTR ?r) (CLASS ?c) (SORT PRED) (name-mod -)
@@ -2250,7 +2250,7 @@
 	 (subcat (% - (W::VAR -))) ;(subcat -)
 	 (post-subcat -)
       )
-     -N1-appos1> .98
+     -N1-appos1>
      (head (N1 (VAR ?v1) (RESTR ?r) (CLASS ?c) (sort (? !sort unit-measure)) ;(SORT ?sort) 
 	       (QUAL ?qual) (relc -) (sem ?sem)
 	       (subcat (% - (W::VAR -))) ;(subcat -)
@@ -2259,6 +2259,23 @@
       )
      (np (name +) (generated -) (sem ?sem) (class ?lf) (VAR ?v2) (time-converted -))
      (add-to-conjunct (val (IDENTIFIED-AS ?v2)) (old ?r) (new ?con)))
+
+   ;; and the opposite - The Ras protein, the Avon city
+
+   ((N1 (RESTR ?con) (CLASS ?c) (SORT ?sort) (QUAL ?qual) ;(COMPLEX +)  ; took out complex + so this will go through two-np-conjunct
+	 (subcat (% - (W::VAR -))) ;(subcat -)
+	 (post-subcat -)
+      )
+    -N1-appos-rev>
+    (np (name +) (generated -) (sem ?sem) (class ?lf) (VAR ?v2) (time-converted -))
+    (head (N1 (VAR ?v1) (RESTR ?r) (CLASS ?c) (sort (? !sort unit-measure)) ;(SORT ?sort) 
+	      (QUAL ?qual) (relc -) (sem ?sem) (class (? !c ONT::SITUATION-ROOT))
+	      (subcat (% - (W::VAR -))) ;(subcat -)
+	      (post-subcat -) (complex -) (derived-from-name -) (time-converted -)
+	      )      
+     )
+    
+    (add-to-conjunct (val (IDENTIFIED-AS ?v2)) (old ?r) (new ?con)))
 	
    ;; same with comma  the city, avon
     ((N1 (RESTR ?con) (CLASS ?c) (SORT ?sort) (QUAL ?qual) ;(COMPLEX +) 
@@ -2484,7 +2501,7 @@
 		(sem ?sem) (transform ?transform) (headless -) ; exclude missing-heads
 		(sem ($ (? x F::PHYS-OBJ) (F::KR-TYPE ?kr)))
 		))
-	 (unify (pattern ?!xx) (value ?kr))  ;; we do this because checking this in the SEM, even though it fails, would be ignored!
+	 (assoc-val (feat parser::drum) (val ?kr) (result ?!result)) ;; only do this for DRUM
 	 (add-to-conjunct (val (:name-of ?lex)) (old ?r) (new ?constraint)))
 ))
 

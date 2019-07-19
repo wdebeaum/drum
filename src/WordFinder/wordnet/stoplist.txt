@@ -2732,9 +2732,7 @@ sweep_up%2:42:00::
 swell_up%2:30:00::
 swoop_up%2:35:00::
 swot_up%2:31:00::
-take_up%2:34:00::
 take_up%2:35:00::
-take_up%2:35:03::
 take_up%2:35:04::
 take_up%2:38:03::
 take_up%2:40:00::
@@ -3941,3 +3939,6 @@ two_weeks%1:28:00::
 first_trimester%1:28:00::
 second_trimester%1:28:00::
 third_trimester%1:28:00::
+
+lamb%1:18:01::
+lamb%1:18:00::

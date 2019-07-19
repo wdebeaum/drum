@@ -3,7 +3,7 @@
 ;;;
 ;;; Author:  James Allen <james@cs.rochester.edu>
 ;;;
-;;; Time-stamp: <Sun Nov 18 18:02:04 EST 2018 james>
+;;; Time-stamp: <Thu Jul 11 16:16:59 EDT 2019 james>
 
 (in-package "PARSER")
 
@@ -1527,7 +1527,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 
 (defun convert-to-ont-if-in-parser-package (val)
   (cond ((symbolp val)
-	 (if (eq (symbol-package val) *parser-package*)
+	 (if (member (symbol-package val) (list *parser-package* *f-package*))
 	     (build-value (util::convert-to-package val *ont-package*))
 	   val))
 	((numberp val)
@@ -1777,6 +1777,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
   )
 
 (defvar *parser-package* (find-package "PARSER"))
+(defvar *f-package* (find-package "F"))
 
 (defun show-tree (&optional feats)
   (show-t1 (list (car (get-answers))) feats))

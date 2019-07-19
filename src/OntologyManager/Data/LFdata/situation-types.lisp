@@ -748,9 +748,11 @@
  )
 
 (define-type ONT::eat
- :wordnet-sense-keys ("eat%2:34:00" "eat%2:34:02")
+ :wordnet-sense-keys ("eat%2:34:00" "eat%2:34:02" "taste%2:34:00")
  :parent ONT::consume
-  :arguments ((:REQUIRED ONT::Affected (F::Phys-obj (F::Form (? f f::solid f::solid-object)))))
+ :arguments
+ ((:REQUIRED ONT::Affected (F::Phys-obj (F::Form (? f f::solid f::solid-object))
+					(f::type (? t ont::food F::organism)))))
  )
 
 

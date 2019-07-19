@@ -60,15 +60,18 @@
     (setq *sem-size* (+ common-size Max-indiv-size 1))
     (setq *feature-to-index* (make-hash-table :size *sem-size*))
     (setq *index-to-feature* (make-hash-table))
-    (setq *kr-type-index* (gethash 'f::kr-type *feature-to-index*))
+    
     (setf (gethash 'common *index-to-feature*) (make-array *sem-size* :initial-element nil))			
     (init-feature-to-index common-features 1 :type 'common)
     (mapcar #'(lambda (x)
 		(setf (gethash x *index-to-feature*) (make-array *sem-size* :initial-element nil)))			
                 ;;(init-feature-to-index (cdr x) start-indiv-count :type (car x)))
             types)
+    (setq *kr-type-index* (gethash 'f::kr-type *feature-to-index*))
     (setq *default-sem-array* nil) ;;(build-sem-array nil nil))
     (values)))
+
+(trace compile-sem-features)
 
 (defun init-feature-to-index (feats index &key (type nil))
   "Builds hash table to map features names to array indices"

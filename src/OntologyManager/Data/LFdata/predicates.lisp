@@ -99,15 +99,20 @@
  )))
 
 (define-type ONT::DEGREE-MODIFIER-VERYHIGH
- :parent ONT::DEGREE-MODIFIER
+    :wordnet-sense-keys ("absolutely%4:02:00" "absolutely%4:02:01" "completely%4:02:04"
+					      "completely%4:02:03" "extremely%4:02:00"
+					      "extremely%4:02:02" "fully%4:02:02" "truly%4:02:04")
+			 :parent ONT::DEGREE-MODIFIER
  )
 
 (define-type ONT::DEGREE-MODIFIER-HIGH
+    :wordnet-sense-keys ("very%4:02:00")
     :parent ONT::DEGREE-MODIFIER
     :arguments ((:REQUIRED ONT::FIGURE (F::abstr-obj (F::type ont::property-val))))
     )
 
 (define-type ONT::DEGREE-MODIFIER-HIGH-EVENT
+     :wordnet-sense-keys ("so%4:02:00")
     :parent ONT::DEGREE-MODIFIER
     :arguments ((:REQUIRED ONT::FIGURE (F::situation (F::type ont::event-of-experience)
 						     ))))
@@ -117,8 +122,9 @@
     )
 
 (define-type ONT::DEGREE-MODIFIER-LOW
- :parent ONT::DEGREE-MODIFIER
- )
+    :wordnet-sense-keys ("almost%4:02:00" "barely%4:02:00" "barely%4:02:02" "barely%4:02:03" "comparatively%4:02:00" "relatively%4:02:00" "slightly%4:02:01"  "slightly%4:02:02" "somewhat%4:02:01")
+    :parent ONT::DEGREE-MODIFIER
+    )
 
 (define-type ONT::DEGREE-MODIFIER-VERYLOW
  :parent ONT::DEGREE-MODIFIER

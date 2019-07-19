@@ -862,6 +862,7 @@
       (find w '(w::myself w::yourself w::himself w::herself w::itself w::ourself w::ourselves w::yourselves w::themself w::themselves w::self w::whoever w::whomever w::whatever w::whenever w::however w::whose w::whom))
       (find w '(w::today w::yesterday w::tomorrow w::tonight w::tonite w::now w::then w::sometime w::sometimes w::anytime w::yet w::until))
       (find w '(w::yes w::no w::maybe w::probably w::certainly))
+      (find w '(w::january w::february w::march w::april w::may w::june w::july w::august w::september w::october w::november w::december w::jan w::feb w::mar w::apr w::jun w::jul w::aug w::sep w::oct w::nov w::dec))
   ))
 
 

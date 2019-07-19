@@ -46,6 +46,7 @@
       (LF-PARENT ONT::inadequate)
       (example "he is short of breath" "short of time")
       (TEMPL central-adj-xp-required-TEMPL (XP (% W::PP (W::Ptype (? pt w::on W::of)))))
+      (preference 0.98)
      )
     )
    )

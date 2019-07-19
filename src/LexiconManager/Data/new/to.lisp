@@ -35,81 +35,64 @@
      )
     )
    )
-))
+  ))
+
+;; senses that are not RESULTs
 
 (define-words :pos W::ADV
- :tags (:base500)
- :words (
-  (W::TO
-   ;(wordfeats (w::result-only +))
-   (SENSES
-    ((LF-PARENT ONT::orients-to)
-     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
-     (example "I see the building to my right")
-     ;(PREFERENCE 0.9) ;; prefer vp attachment
-     (preference 0.97)
-     )
-    ))))
+  :words (
+	  (W::TO
+					;(wordfeats (w::result-only +))
+	   (SENSES
+	    ((LF-PARENT ONT::orients-to)
+	     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
+	     (example "I see the building to my right")
+	     (preference 0.97)
+	     )
+	    ((LF-PARENT ONT::until)
+	     (example "the meeting should go to five pm")
+	     (TEMPL BINARY-CONSTRAINT-S-or-NP-TEMPL)
+	     (PREFERENCE 0.97)
+	     )
+	    ;; need a sense of to that attaches to non-trajectory NPs like plane, train
+	    ((LF-PARENT ONT::destination-LOC)
+	     (meta-data :origin ralf :entry-date 20040803 :change-date nil :comments nil)
+	     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
+	     (example "the plane to rochester")
+	     (PREFERENCE 0.97))
+	    )
+	   
+	   ((LF-PARENT ONT::PURPOSE)
+	    (example "aspirin is used to treat headaches")
+	    (meta-data :origin medadvisor :entry-date 20011126 :change-date nil :comments nil)
+	    (TEMPL BINARY-CONSTRAINT-S-VPbase-TEMPL)
+	    )
+	   ))
+  )
 
 (define-words :pos W::ADV
- :tags (:base500)
  :words (
   (W::TO
    (wordfeats (w::result-only +))
    (SENSES
-    ((LF-PARENT ONT::PURPOSE)
-     (example "aspirin is used to treat headaches")
-     (meta-data :origin medadvisor :entry-date 20011126 :change-date nil :comments nil)
-     (TEMPL BINARY-CONSTRAINT-S-VPbase-TEMPL)
-     )
+    
     ;;  this is the goal sense, prefers events of change
     ((LF-PARENT ONT::TO-LOC)
      (example "go to the building" "the relocation to the building")
-;     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      )
 
     ((LF-PARENT ONT::RESULTING-OBJECT)
      (example "change to a toad")
-;     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      )
 
     ((LF-PARENT ONT::RESULTING-STATE)
      (example "change to a waking state")
-;     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      )
 
-   #|| ;; a generalized sense of to
-    ((LF-PARENT ONT::TO)
-     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
-     (meta-data :origin navigation :entry-date 20080902 :change-date nil :comments nil)
-     (example "I see the building to my right")
-     (preference .98) ;; prefer to-loc if applicable
-     )||#
-
-    ;; 04 2010 no longer needed?rate
-;    ((LF-PARENT ONT::TO-LOC-DEGREES)
-;     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
-;     (example "pan camera to 45 degrees")
-;     (meta-data :origin coordops :entry-date 20070516 :change-date nil :comments nil)
-;     )
-    ((LF-PARENT ONT::until)
-     (example "the meeting should go to five pm")
-     (TEMPL BINARY-CONSTRAINT-S-or-NP-TEMPL)
-     (PREFERENCE 0.97)
-     )
-    ;; need a sense of to that attaches to non-trajectory NPs like plane, train
-    ((LF-PARENT ONT::destination-LOC)
-     (meta-data :origin ralf :entry-date 20040803 :change-date nil :comments nil)
-     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
-     (example "the plane to rochester")
-     (PREFERENCE 0.97)
-     )
-    )
-   )
-))
+    ))))
 
 (define-words :pos W::PREP :boost-word t :templ NO-FEATURES-TEMPL
  :tags (:base500)

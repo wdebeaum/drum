@@ -224,7 +224,19 @@
 	(match-vals nil out (read-expression '(? agr-out w::3s w::3p)))
       (match-vals nil out 'w::3p)
       )
-   ))
+    ))
+
+(define-predicate 'w::assoc-val
+  #'(lambda (args)
+      (do-assoc args)))
+
+(defun do-assoc (args)
+  (let ((feat (get-fvalue args 'w::feat))
+	(val (get-fvalue args 'w::val))
+	(result (get-fvalue args 'w::result))
+	)
+   	(match-vals nil RESULT (assoc feat val))
+	))
 
 
 #|
@@ -549,13 +561,19 @@
     (cond ((and (not (intersection (list core-in1 core-in2) '(ont::referential-sem)))
 		(member lub '(ont::referential-sem ont::any-sem))) .9)
 	  ((equal core-in1 core-in2) 1)  
-	  ((and parents1 parents2) (+ 0.96 (/ 0.04 (+ (if (position lub parents1)
-							  (+ 1 (position lub parents1))
-							  0)
-						      (if (position lub parents2)
-							  (+ 1 (position lub parents2))
-							  0)))))
+	  ((and parents1 parents2) (+ 0.96 (/ 0.04 (adjust-lub-score (+ (if (position lub parents1)
+									    (+ 1 (position lub parents1))
+									    0)
+									(if (position lub parents2)
+									    (+ 1 (position lub parents2))
+									    0))))))
 	  (t .96)))))
+
+(defun adjust-lub-score (x)
+  (if (numberp x)
+      (if (< x 2) 1
+	  (* x .8))
+      1))
 
 (defun core-type (x)
   (if (consp x) (second x)
