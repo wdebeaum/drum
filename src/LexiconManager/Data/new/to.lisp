@@ -60,7 +60,7 @@
 	     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
 	     (example "the plane to rochester")
 	     (PREFERENCE 0.97))
-	    )
+	    
 	   
 	   ((LF-PARENT ONT::PURPOSE)
 	    (example "aspirin is used to treat headaches")
@@ -68,7 +68,7 @@
 	    (TEMPL BINARY-CONSTRAINT-S-VPbase-TEMPL)
 	    )
 	   ))
-  )
+  ))
 
 (define-words :pos W::ADV
  :words (

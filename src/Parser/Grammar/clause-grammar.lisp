@@ -175,7 +175,7 @@
 	      (lf (% sa-seq (var ?v1) (class ?cl) (constraint ?con)))
 	      (acts ?acts)
 	  ))
-   (punc (punctype ?p) (lex (? lex w::punc-exclamation-mark w::punc-period w::punc-question-mark w::punc-colon w::ellipses w::punc-comma w::punc-minus)))
+   (punc (punctype ?p) (lex (? lex w::punc-exclamation-mark w::punc-period w::punc-question-mark w::punc-colon w::ellipses w::punc-comma w::punc-minus w::punc-semicolon)))
    (utt (focus ?foc2) (ended -) (var ?v2) (punc -) (uttword ?uw1)
 	(lf (% speechact (var ?v2)
 	       (class (? cl1 ONT::SA_TELL ONT::SA_REQUEST ONT::SA_YN-QUESTION ONT::SA_WH-QUESTION)) ;(class ?cl1)
@@ -1368,7 +1368,7 @@
 	    ;; (subj (? subj (% ?s1 (var ?subjvar))))
 	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (agr ?subjagr) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	    ;;(iobj ?iobj) (iobj (% ?s2  (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))
-	    (part (% -)) `_
+	    (part (% -))
 	    (dobj ?dobj) (dobj (% np (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (sort pred)
 				  (gerund -)))	    
 	            ;; we allow a possible gap in the dobj np e.g., "what did he thwart the passage of"
@@ -3136,7 +3136,7 @@
  '((headfeatures
     (vp vform agr comp3 cont postadvbl  aux modal lex orig-lex headcat tma transform subj-map advbl-needed template)
     (s vform var neg sem subjvar dobjvar comp3 cont  lex orig-lex headcat transform subj advbl-needed)
-    (utt sem subjvar dobjvar cont lex orig-lex headcat transform))
+    (utt subjvar dobjvar cont lex orig-lex headcat transform)) ; took out sem
    
      ;;   basic commands
     
