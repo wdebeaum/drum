@@ -241,7 +241,7 @@ that when <code>utterance</code>s are sent in rapid succession, relying on
 <code>utterance</code> is error-prone because you might get a
 <code>started-speaking</code> for the next utterance/sentence from the original
 sender before the <code>utterance</code> for the previous utterance from
-TextTagger.)</p>
+TextTagger. See the section on <a href="#sec-4.1.3.">splitting utterances</a>.)</p>
 </div>
 
 <div class="section">
@@ -497,7 +497,7 @@ output it.</p>
 
 <p>For example, if you wanted to get all part of speech tags except those produced by minipar, you would use <code>:type (and (type pos) (not (source minipar)))</code></p>
 
-<p>In general, you don't need to worry about the order of taggers/tag types in the <code>:type</code> argument. Each tagger has lists of tag types that it requires as input, that it may optionally use as input, and that it may output. TextTagger uses this information to select taggers that output types required by already-selected taggers, and to sort the final list of taggers to be run so that each tagger has all the input tags it needs when it runs. There are no cycles in the dependency graph formed by all the taggers and types in TextTagger, except that some taggers output some of the same tag types that they optionally take as input. These loopy taggers are sorted after other taggers outputting that type and before other taggers inputting that type.</p>
+<p>In general, you don't need to worry about the order of taggers/tag types in the <code>:type</code> argument. Each tagger has lists of tag types that it requires as input, that it may optionally use as input, and that it may output. TextTagger uses this information to select taggers that output types required by already-selected taggers, and to sort the final list of taggers to be run so that each tagger has all the input tags it needs when it runs. There are no cycles in the <a href="#sec-5.4.">dependency graph</a> formed by all the taggers and types in TextTagger, except that some taggers output some of the same tag types that they optionally take as input. These loopy taggers are sorted after other taggers outputting that type and before other taggers inputting that type.</p>
 </div>
 
 <div class="section">
@@ -511,32 +511,33 @@ output it.</p>
 <div class="section">
 <h4>:imitate-keyboard-manager</h4>
 <p><code>:imitate-keyboard-manager <var>boolean</var></code> (default nil)</p>
-<p>Send the same kinds of messages that KeyboardManager would send, sending both the whole utterance and each word (tag) individually in its own message. Reply with a message like <code>(tell :content (ok :uttnums <var>list-of-utterance-numbers</var>))</code>, giving all the utterance numbers output for this request.</p>
+<p>Send the same kinds of messages that KeyboardManager would send, sending both the whole utterance and each word (tag) individually in its own message. Reply with a message like <code>(reply :content (ok :uttnums <var>list-of-utterance-numbers</var>))</code>, giving all the utterance numbers output for this request.</p>
 <p><code>sentence</code> tags are required in order to make uttnums. If <code>:type</code> doesn't already have a source of <code>sentence</code> tags (Sentences, OneSentencePerLine, or StanfordCoreNLP), the Sentences tagger will be selected by mapping <code>:type <var>type</var></code> to <code>:type (or sentences <var>type</var>)</code>. Note that using both dedicated sentence taggers at the same time will lead to bad results. But if StanfordCoreNLP and another sentence tagger are selected, StanfordCoreNLP will consume rather than produce sentence tags, so there will be no conflict.</p>
+<p>See also <a href="#sec-4.1.3.">splitting utterances</a>.</p>
 </div>
 
 <div class="section">
 <h4>:split-clauses</h4>
 <p><code>:split-clauses <var>boolean</var></code> (default nil)</p>
-<p>(implies that <code>:type</code> includes <code>clauses</code>) Treat each clause from the Clauses tagger as its own utterance. Note that while other taggers may produce clause tags, only those from the Clauses tagger are used, since it in turn uses the clauses from other taggers to filter its clause boundaries. When used without <code>:imitate-keyboard-manager t</code>, this still adds uttnums and some of the extra messages that that option would, but the messages are packed into the reply rather than sent individually.</p>
+<p>(implies that <code>:type</code> includes <code>clauses</code>) Treat each clause from the Clauses tagger as its own utterance. Note that while other taggers may produce clause tags, only those from the Clauses tagger are used, since it in turn uses the clauses from other taggers to filter its clause boundaries. When used without <code>:imitate-keyboard-manager t</code>, this still adds uttnums and some of the extra messages that that option would, but the messages are packed into the reply rather than sent individually. See also <a href="#sec-4.1.3.">splitting utterances</a>.</p>
 </div>
 
 <div class="section">
 <h4>:split-sentences</h4>
 <p><code>:split-sentences <var>boolean</var></code> (default nil)</p>
-<p>Treat each sentence as its own utterance. When used without <code>:imitate-keyboard-manager t</code>, this still adds uttnums and some of the extra messages that that option would, but the messages are packed into the reply rather than sent individually.</p>
+<p>Treat each sentence as its own utterance. When used without <code>:imitate-keyboard-manager t</code>, this still adds uttnums and some of the extra messages that that option would, but the messages are packed into the reply rather than sent individually. See also <a href="#sec-4.1.3.">splitting utterances</a>.</p>
 </div>
 
 <div class="section">
 <h4>:paragraph</h4>
 <p><code>:paragraph <var>boolean</var></code> (default t if :split-* is t and :imitate-keyboard-manager is t, nil otherwise)</p>
-<p>Treat the text as a paragraph. That is, send <code>start-</code> and <code>end-paragraph</code> messages before and after the rest of the messages, respectively. It's useful to set e.g. <code>:split-clauses t :paragraph nil</code> if you're sending the sentences in a paragraph individually through TextTagger, and you want to send <code>start-</code> and <code>end-paragraph</code> yourself.</p>
+<p>Treat the text as a paragraph. That is, send <code>start-</code> and <code>end-paragraph</code> messages before and after the rest of the messages, respectively. It's useful to set e.g. <code>:split-clauses t :paragraph nil</code> if you're sending the sentences in a paragraph individually through TextTagger, and you want to send <code>start-</code> and <code>end-paragraph</code> yourself. See also <a href="#sec-4.1.3.">splitting utterances</a>.</p>
 </div>
 
 <div class="section">
 <h4>:next-uttnum</h4>
 <p><code>:next-uttnum <var>integer</var></code> (default 1 + the last uttnum output, or 0 if :paragraph was t last time)</p>
-<p>Use the given number for the next :uttnum in the output. You can set this to 0 for the first in a sequence of <code>:paragraph nil</code> requests representing a paragraph, and the following requests will use the automatically incremented value.</p>
+<p>Use the given number for the next :uttnum in the output. You can set this to 0 for the first in a sequence of <code>:paragraph nil</code> requests representing a paragraph, and the following requests will use the automatically incremented value. See also <a href="#sec-4.1.3.">splitting utterances</a>.</p>
 </div>
 
 <div class="section">
@@ -635,7 +636,7 @@ sentences <var>foo</var>)</code> (see
 <code>:split-clauses</code> is <code>t</code>, sentence and clause tags are not
 output, but without it, they are. This includes the case
 <code>:imitate-keyboard-manager t :split-clauses nil</code>, where you'll get
-sentence tags even if you didn't explicitly ask for them.</p>
+sentence tags even if you didn't explicitly ask for them. See also <a href="#sec-4.1.3.">splitting utterances</a>.</p>
 </div>
 
 <div class="section">
@@ -820,6 +821,56 @@ fake KQML message using <code>receive_request</code>. The taggers in the <a href
 <p>Currently, POS tags from the Specialist tagger are the only fallback tags, and POS tags from the following taggers are unioned tags (the rest are intersected): POS (stanford-pos), StanfordParser, StanfordCoreNLP, CJParser, Enju, and the input taggers listed above. POS tags for multi-word expressions that were added as described above are also unioned.</p>
 </div>
 
+<div class="section">
+<h4>Splitting the message sequence into utterances</h4>
+<p>When using the output of the <a href="#sec-3.5."><code>tag</code></a> request as input to the Parser, you should use <a href="#sec-3.5.4."><code>:imitate-keyboard-manager t</code></a>. This will result in a sequence of messages like this, in general:</p>
+<blockquote><samp>
+(tell :content (start-paragraph :id <var>paragraph-id</var>))
+
+(tell :content (started-speaking <var>extra-tag-args</var> :uttnum <var>uttnum-1</var>))
+(tell :content (stopped-speaking <var>extra-tag-args</var> :uttnum <var>uttnum-1</var>))
+[word, prefix, and prefer messages for sentence 1, clause 1, with <var>extra-tag-args</var> and :uttnum <var>uttnum-1</var>]
+(tell :content (utterance <var>extra-tag-args</var> :uttnum <var>uttnum-1</var> :text "<var>sentence-1-clause-1-text</var>"))
+
+(tell :content (started-speaking <var>extra-tag-args</var> :uttnum <var>uttnum-1</var>))
+(tell :content (stopped-speaking <var>extra-tag-args</var> :uttnum <var>uttnum-1</var>))
+[word, prefix, and prefer messages for sentence 1, clause 2, with <var>extra-tag-args</var> and :uttnum <var>uttnum-1</var>]
+(tell :content (utterance <var>extra-tag-args</var> :uttnum <var>uttnum-1</var> :text "<var>sentence-1-clause-2-text</var>"))
+
+(tell :content (started-speaking <var>extra-tag-args</var> :uttnum <var>uttnum-2</var>))
+(tell :content (stopped-speaking <var>extra-tag-args</var> :uttnum <var>uttnum-2</var>))
+[word, prefix, and prefer messages for sentence 2, clause 1, with <var>extra-tag-args</var> and :uttnum <var>uttnum-2</var>]
+(tell :content (utterance <var>extra-tag-args</var> :uttnum <var>uttnum-2</var> :text "<var>sentence-2-clause-1-text</var>"))
+
+...
+
+(tell :content (end-paragraph :id <var>paragraph-id</var>))
+(reply :content (ok :uttnums (<var>uttnum-1</var> <var>uttnum-2</var> ...)))
+</samp></blockquote>
+<p>There are several things to note about this, though:</p>
+<ul>
+ <li>A chunk of messages starting with <code>started-speaking</code> and ending with <code>utterance</code> represents an "utterance".</li>
+ <li>With <a href="#sec-3.5.5."><code>:split-clauses t</code></a>, utterances correspond to clauses, but <code>:uttnum</code> counts sentences, so you can have multiple utterances with the same <code>:uttnum</code>.</li>
+ <li>With only <a href="#sec-3.5.6."><code>:split-sentences t</code></a>, utterances correspond to sentences, so in this case utterances and <code>:uttnum</code>s are 1:1.</li>
+ <li>With neither (the default, <code>:split-clauses nil :split-sentences nil</code>), you will only get one utterance and one <code>:uttnum</code> for the whole input text.</li>
+ <li>Using <a href="#sec-3.1.5."><code>-process-input-utterances yes</code></a> and the actual KeyboardManager will have a similar effect (no splitting).</li>
+ <li>The <code>UTT</code> structures that come out of the Parser mostly correspond to utterances, not <code>:uttnum</code>s (though they can be further fragmented in <code>COMPOUND-COMMUNICATION-ACT</code>s). Yes, the naming is confusing.</li>
+ <li>You will only get the <code>start/end-paragraph</code> messages with <a href="#sec-3.5.7.">:paragraph t</a> (which is the default when splitting utterances and imitating KeyboardManager; otherwise it's <code>nil</code>).</li>
+ <li>The <var>extra-tag-args</var> come from the <a href="#sec-3.5.14."><code>:extra-tag-args</code></a> argument (or the input <code>utterance</code> message), and will usually be something like <code>:channel Desktop :direction input</code>; specifying <code>:imitate-keyboard-manager t</code> will add those arguments if they're not already specified with <code>:extra-tag-args</code>.</li>
+</ul>
+
+<p>When utterance splitting is requested (<code>:split-clauses t</code> or <code>:split-sentences t</code>), TextTagger will ensure the appropriate tags are produced by modifying the <a href="#sec-3.5.2."><code>:type</code></a> argument if necessary. If no sentence tags would otherwise be produced (not counting those produced by the input taggers, which might produce any type of tag), the <code>sentences</code> tagger will be added to the <code>:type</code>. If clause splitting is requested, the <code>clauses</code> tagger will be added (even if other clause tags might be produced, e.g. by CoreNLP).</p>
+
+<p>However, merely specifying a <code>:type</code> (or <a href="#sec-3.1.4."><code>-default-type</code></a>) that would produce sentence or clause tags is not sufficient to turn on sentence or clause splitting. You must also use <code>:split-clauses t</code> or <code>:split-sentences t</code> as appropriate, if you want multiple utterances as in the above sample message sequence.</p>
+
+<p>Specifying <code>:imitate-keyboard-manager t</code> without splitting will also ensure that sentence tags are produced (in the same way as <code>:split-sentences t</code>), but they will then merely become <code>prefer</code> messages.</p>
+
+<p>Note that there are no corresponding <a href="#sec-3.1.">command-line</a> (or <a href="#sec-3.1.1.">config-file</a>) parameters for <code>:split-clauses</code> and <code>:split-sentences</code>, and you can't set them with <a href="#sec-3.2."><code>set-parameters</code></a>. You can only use them directly with a <code>tag</code> request. This is because they affect not just which tags are output or what is in each tag, but the overall structure of the sequence of output tags/messages. Whatever TRIPS module is sending input to TextTagger (and presumably expecting corresponding output from the Parser or IM) needs to know about that structure.</p>
+
+<p>If you're using the Lisp functions defined in <code><var>$TRIPS_BASE</var>/src/Systems/core/test.lisp</code> to send input through TextTagger to the Parser, you can select how you want utterances to be split by setting the Lisp variable <code>*texttagger-split-mode*</code> to <code>:split-clauses</code> or <code>:split-sentences</code>. Setting it to <code>nil</code> disables utterance splitting. The <code>*use-texttagger*</code> Lisp variable must also be set to <code>t</code> for these functions to send input via TextTagger at all (if it's <code>nil</code>, the input goes directly to the Parser instead). This <em>only</em> applies to input sent using these functions, not input sent via other modules such as KeyboardManager, SpeechIn, WebParser (including <code>batch.rb</code>), or DrumGUI, nor input sent using the <code>p</code> function defined in the Parser itself.</p>
+
+</div>
+
 </div>
 
 <div class="section">
@@ -966,7 +1017,7 @@ named-entity with LF type <code>REFERENTIAL-SEM</code>.</td>
 <td></td>
 <td></td>
 <td>Splits sentences into clauses at certain punctuation (e.g. commas), as long
-as the clauses end up long enough, and they agree with other sources of clause tags if enabled.</td>
+as the clauses end up long enough, and they agree with other sources of clause tags if enabled. Only clauses from this tagger are used for <a href="#sec-3.5.5."><code>:split-clauses t</code></a> mode. See also <a href="#sec-4.1.3.">splitting utterances</a>.</td>
 </tr><tr>
 <td>Countries</td>
 <td>named-entity</td>
@@ -1053,7 +1104,7 @@ a real KQML connection to talk to the Minipar TRIPS module.</td>
 <td>sentence</td>
 <td></td>
 <td></td>
-<td>Tags nonempty lines as sentences.</td>
+<td>Tags nonempty lines as sentences. See also <a href="#sec-4.1.3.">splitting utterances</a>.</td>
 </tr><tr>
 <td>PersonalNames</td>
 <td>named-entity</td>
@@ -1103,7 +1154,7 @@ in the string.</td>
 <td></td>
 <td></td>
 <td>Uses the <a href="http://search.cpan.org/~shlomoy/Lingua-EN-Sentence-0.25/lib/Lingua/EN/Sentence.pm"><code>Lingua::EN::Sentence</code></a>
-Perl module to split the string into sentences.</td>
+Perl module to split the string into sentences. See also <a href="#sec-4.1.3.">splitting utterances</a>.</td>
 </tr><tr>
 <td>SpacedChunks</td>
 <td>spaced-chunk</td>
@@ -1296,7 +1347,7 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 <h4>Scoring</h4>
 <p>The result of the table lookup has both the unnormalized form of the term constructed from the lattice entries, and the unnormalized form of each matching term from one of our data sources. These two forms are not in general the same, but they do normalize to the same string. We count the ways in which they differ (which can only involve letter case and the presence or absence of dashes; we ignore the specific type of dash used, and the amount of whitespace), and that contributes to a match score, along with the status of the term in the data source it came from, and whether a depluralized or spelling-corrected lattice entry contributed to the match. Higher scores are better (i.e. they are not costs, but benefits).</p>
 
-<p>The status score is a simple hand-built ranking of the status annotations from all of the data sources, ranging from 0 to 5 (except that we add 1 for terms from the BioEntities (BE) source, so it's really 0 to 6):</p>
+<p>The status score is a simple hand-built ranking of the status annotations from all of the data sources, ranging from 0 to 5 (except that we add 1 for terms from the FamPlex (FPLX) source, so it's really 0 to 6):</p>
 <table>
 <tr><th>score</th><th>meaning</th><th>status annotations</th></tr>
 <tr><td>5</td><td>the most official name or abbreviation</td>
@@ -1388,7 +1439,7 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 <div class="section">
 <h4>Ontology mapping</h4>
 
-<p>Most of our data sources have is-a hierarchies, or something similar. When we look up a term and get an ID belonging to one of these data sources, we travel up the hierarchy until we reach an ID with a mapping into the TRIPS ontology. These mappings are defined in <code>drum-mappings.lisp</code> (except for BE which defines its own TRIPS mappings). Traversal of the hierarchy, as well as caching, are handled separately from TextTagger by the DeepSemLex TRIPS module. Some data sources use multiple inheritance, so this can result in multiple mappings to different ONT types. If a traversal yields no TRIPS mappings for a match, the match is discarded.</p>
+<p>Most of our data sources have is-a hierarchies, or something similar. When we look up a term and get an ID belonging to one of these data sources, we travel up the hierarchy until we reach an ID with a mapping into the TRIPS ontology. These mappings are defined in <code>drum-mappings.lisp</code>. Traversal of the hierarchy, as well as caching, are handled separately from TextTagger by the DeepSemLex TRIPS module. Some data sources use multiple inheritance, so this can result in multiple mappings to different ONT types. If a traversal yields no TRIPS mappings for a match, the match is discarded.</p>
 
 <p>For other data sources (and certain parts of those with hierarchies), we have a few ad hoc mapping rules depending on which data source the ID is from:</p>
 
@@ -1467,16 +1518,9 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 <table>
 <tr><th>data source name/link</th><th>ID prefix</th><th>file format</th><th>maps to TRIPS types</th><th>description</th></tr>
 <tr>
- <td><a href="https://github.com/sorgerlab/bioentities">Bioentities</a></td>
- <td>BE</td>
- <td><a href="http://owlcollab.github.io/oboformat/doc/GO.format.obo-1_2.html">OBO</a></td>
- <td>PROTEIN-FAMILY (possibly more in the future)</td>
- <td>"Bioentities is a collection of resources for grounding biological entities from text and describing their hierarchical relationships. Resources were developed by manual curation for use by natural language processing and biological modeling teams in the DARPA Big Mechanism and Communicating with Computers programs."</td>
-</tr>
-<tr>
  <td><a href="http://www.brenda-enzymes.info/">BRENDA</a> Tissue Ontology</td>
  <td>BTO</td>
- <td>OBO</td>
+ <td><a href="http://owlcollab.github.io/oboformat/doc/GO.format.obo-1_2.html">OBO</a></td>
  <td>CELL, CELL-LINE, INTERNAL-BODY-PART</td>
  <td>"A structured controlled vocabulary for the source of an enzyme. It comprises terms of tissues, cell lines, cell types and cell cultures from uni- and multicellular organisms."</td>
 </tr>
@@ -1514,6 +1558,13 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
  <td>EMBL?</td>
  <td>PROTEIN-FAMILY</td>
  <td>Protein families from neXtProt's <code>cv_family.txt</code>. "Developed in collaboration between the SIB Swiss Institute of Bioinformatics and Geneva Bioinformatics (GeneBio) SA, neXtProt will be a comprehensive human-centric discovery platform, offering its users a seamless integration of and navigation through protein-related data."</td>
+</tr>
+<tr>
+ <td><a href="https://github.com/sorgerlab/famplex">FamPlex</a> (formerly Bioentities)</td>
+ <td>FPLX</td>
+ <td>OBO</td>
+ <td>PROTEIN-FAMILY (possibly more in the future)</td>
+ <td>"FamPlex is a collection of resources for grounding biological entities from text and describing their hierarchical relationships. Resources were developed by manual curation for use by natural language processing and biological modeling teams in the DARPA Big Mechanism and Communicating with Computers programs."</td>
 </tr>
 <tr>
  <td><a href="http://www.genenames.org/">HUGO Gene Nomenclature Committee</a></td>
