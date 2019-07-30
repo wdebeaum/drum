@@ -42,6 +42,7 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      ;(TEMPL agent-effect-xp-templ (xp (% W::PP (W::ptype W::about))))
      (TEMPL AGENT-AFFECTEDR-XP-TEMPL (xp (% W::PP (W::ptype W::about))))
+     ;(TEMPL agent-affected-create-templ (xp (% W::PP (W::ptype W::about))))
      (example "his consultations brought about his expertise")
      )
     )
@@ -80,3 +81,15 @@
    )
 ))
 
+(define-words :pos W::v :templ AGENT-affected-XP-NP-TEMPL
+ :words (
+  ((W::bring W::on)
+   (wordfeats (W::morph (:forms (-vb) :past W::brought)))
+   (SENSES
+    ((example "bring on the movie")
+     (LF-PARENT ONT::cause-produce-reproduce)
+     (meta-data :wn ("bring_on%2:39:00"))
+     )
+    )
+   )
+))

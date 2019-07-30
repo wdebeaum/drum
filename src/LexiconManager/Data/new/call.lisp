@@ -38,5 +38,25 @@
      (TEMPL AGENT-FORMAL-XP-PP-ABOUT-TEMPL  (xp (% W::PP (W::ptype W::for))))
      (meta-data :origin step :entry-date 20080629 :change-date 20090508 :comments nil)
      )
+
+    ((EXAMPLE "they called the dancers")
+     (LF-PARENT ONT::appeal-apply-demand)
+     (TEMPL AGENT-NEUTRAL-TEMPL)
+     (meta-data :wn ("call%2:38:00"))
+     )
+
     ))))
+
+(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+ :words (
+  ((W::call W::off)
+   (wordfeats (W::morph (:forms (-vb) :past W::called)))
+   (SENSES
+    ((example "call off the engagement")
+     (LF-PARENT ONT::cancel)
+     (meta-data :wn ("call_off%2:41:00"))
+     )
+    )
+   )
+))
 

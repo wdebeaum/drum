@@ -181,3 +181,17 @@
     )
    )
 ))||#
+
+(define-words :pos W::v
+ :words (
+  ((W::get W::it)
+   (wordfeats (W::morph (:forms (-vb) :past W::got)))
+   (SENSES
+    ((example "you are going to get it")
+     (LF-PARENT ONT::RECEIVE-PUNISHMENT)
+     (meta-data :wn ("get_it%2:41:00"))
+     (templ affected-SOURCE-XP-OPTIONAL-TEMPL)
+     )
+    )
+   )
+))

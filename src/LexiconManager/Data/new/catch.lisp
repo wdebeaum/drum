@@ -29,3 +29,16 @@
 )
 ))
 
+(define-words :pos W::v
+ :words (
+  ((W::catch W::it)
+   (wordfeats (W::morph (:forms (-vb) :past W::caught)))
+   (SENSES
+    ((example "I really caught it the other day" "we really caught it from the storm last week")
+     (LF-PARENT ONT::RECEIVE-PUNISHMENT)
+     (meta-data :wn ("catch_it%2:41:00"))
+     (templ affected-SOURCE-XP-OPTIONAL-TEMPL)
+     )
+    )
+   )
+))
