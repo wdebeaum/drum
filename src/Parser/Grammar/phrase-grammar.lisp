@@ -702,7 +702,7 @@
      (head (n (sort reln) (lf ?lf) (RESTR ?r)
 	      (subcat ?!subcat)
 	      (subcat (% ?scat (var ?v1) (sem ?ssem) (lf ?lf2) (gap ?gap) )) ;;(sort (? srt pred individual set comparative reln))))
-	      (SEM ($ F::ABSTR-OBJ (f::scale ?sc)))
+	      (SEM ($ F::ABSTR-OBJ (f::scale ?!sc)))
 	      (subcat-map ?smap)))
      ?!subcat
      (add-to-conjunct (val (?smap ?v1)) (old ?r) (new ?con1))
@@ -2765,7 +2765,7 @@
              (SORT PRED))
          -bare-plural-count> 
          ;; Myrosia 10/13/03 added a possibility of (mass bare) -- e.g. for "lunches" undergoing this rule
-         (head (N1 (SORT PRED) (mass (? mass count bare)) (mass ?m)
+         (head (N1 (SORT PRED) (mass (? mass count bare)) (mass ?m) (complex -)
 		   (AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -) (agent-nom -)
 		   (sem ?sem) (transform ?transform)
 		   (subcat-map ?subcat-map)
@@ -2814,7 +2814,7 @@
              (SORT PRED) (VAR ?v)
              )
          -bare-plural-mass> .988   ;; just a hair less than the COUNT for cases where ther 
-         (head (N1 (SORT PRED) (mass mass) (MASS ?m) 
+         (head (N1 (SORT PRED) (mass mass) (MASS ?m) (complex -)
 		(AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -) (agent-nom -)
 		(sem ?sem) (transform ?transform)
 		(post-subcat -)
@@ -5583,6 +5583,30 @@
      (logical-and (in1 ?gen1) (in2 ?gen2) (out ?gen))
      )
 
+    ((NPSEQ  (SEM ?sem) (LF (?v1 ?v2)) (AGR ?agr) (mass ?m) (class ?class) (case ?c)
+      (generated ?gen)  (time-converted ?tc1) (separator ?sep)
+      )
+     -npseq-initial-sequence-explicit-conjunct> 1.01
+     (head (NP (SEM ?s1) (VAR ?v1) ;;(agr ?agr)   ;; AGR is not reliably determined for proper names
+	       (complex -) (headless -) 
+	       (expletive -) ;;(bare-np ?bnp)
+	    (generated ?gen1)  (time-converted ?tc1)
+	    ;; (bare-sequence -)
+	    (LF (% ?sort (class ?c1))) (CASE ?c) (constraint ?con) (mass ?m)
+	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram] 	    
+	    ))
+     (conj (SEQ +) (LF ?op) (var ?v))
+     (NP (SEM ?s2) (VAR ?v2) ;;(agr ?agr)  
+      (complex -) (expletive -) 
+      (headless -)
+	    (generated ?gen2)  (time-converted ?tc1)
+	    ;; (bare-sequence -)
+	    (LF (% ?sort (class ?c2))) (CASE ?c) (constraint ?con2) (mass ?m)
+	    (sort (? !sort unit-measure)))
+     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+     (logical-and (in1 ?gen1) (in2 ?gen2) (out ?gen))
+     )
      ; 20181213: changed head from the first NP to conj in the next four rules so that we can pass on its lex
      ;;  simple conjuncts/disjunct of NPS, e.g., the dog and the cat, the horse or the cow
      ((NP (ATTACH ?a) (var ?v) (agr ?agr-out) ;(agr 3p) ; the ice and the fire could be 3s or 3p

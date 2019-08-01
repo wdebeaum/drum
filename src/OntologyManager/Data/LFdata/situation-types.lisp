@@ -133,6 +133,7 @@
     )
 
 (define-type ONT::loaded-claim
+    :wordnet-sense-keys ("case%1:04:00" "complain%2:32:01")
     :parent ONT::representative
     :comment "speech act that expresses the speakers belief with a particular purpose (e.g., accuse, complain)"
     )
@@ -537,7 +538,7 @@
 
 
 (define-type ONT::Cause-to-Move
- :wordnet-sense-keys ("drive%2:35:01" "drive%2:41:02")
+ :wordnet-sense-keys ("drive%2:35:01" "drive%2:41:02" "move%2:38:01")
  :parent ont::motion
  :sem (F::Situation (F::Cause F::Force) (f::trajectory +))
  :arguments ((:ESSENTIAL ONT::agent)
@@ -906,7 +907,7 @@
 
 ;; possess -- specific for ownership
 (define-type ont::possess
- :wordnet-sense-keys ("own%2:40:00" "have%2:40:04" "possess%2:40:00" "belong%2:40:00" "possession%1:03:00")
+ :wordnet-sense-keys ("own%2:40:00" "have%2:40:04" "possess%2:40:00" "belong%2:40:00" "possession%1:03:00" "possession%1:04:00" "ownership%1:21:00" "ownership%1:26:00")
   :parent ont::have
   :sem (F::SITUATION (F::Aspect F::stage-level) (F::Time-span F::Extended))
   :arguments ((:required ont::neutral (F::phys-obj (f::intentional +))) ;; owner is typically a person or organization

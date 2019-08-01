@@ -24,17 +24,18 @@
     ((lf-parent ont::undergo-action)
      (example "I kept going")
      (TEMPL affected-TEMPL)
-     (preference .97)  ;; this really should be a last resort
+     (preference .98)  ;; this really should be a last resort
      (meta-data :origin bee :entry-date 20040805 :change-date nil :comments portability-followup))
     ((lf-parent ont::occurring)
      (example "The interview went well")
      (TEMPL neutral-TEMPL) (SYNTAX (ADVBL-NECESSARY +))
-     (preference 0.98)
+     (preference 0.985)
      (meta-data :origin bee :entry-date 20040805 :change-date nil :comments portability-followup))
 
     ((lf-parent ont::occurring)
      (example "How is it going?")
      (TEMPL neutral-TEMPL)
+      (preference 0.985)
      (meta-data :wn ("go%2:42:03"))
     )
 

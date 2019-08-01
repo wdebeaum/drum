@@ -42,7 +42,7 @@
 
     
     ((LF-PARENT ONT::BY-MEANS-OF)
-     (TEMPL BINARY-CONSTRAINT-S-subjcontrol-TEMPL)
+     (TEMPL BINARY-CONSTRAINT-S-OR-NP-subjcontrol-TEMPL)
      (EXAMPLE "he killed it by immersing it in water")
      )
     ;;;;; ont::via requires a point or region

@@ -18,12 +18,12 @@
      (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
           )
   
-    ((LF-PARENT ONT::CONSUME)
+    ((LF-PARENT ONT::EAT)
      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin medadvisor :entry-date 20011121 :change-date nil :comments nil)
      (example "I like to have an antacid at bedtime")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (preference .98)
+     (preference .991)  ;; slightly preferred if the COMESTIBLE restriction is satisfied
      )
     ((LF-PARENT ONT::MAKE-IT-SO)
      (meta-data :origin trains :entry-date unknown :change-date nil :comments nil)

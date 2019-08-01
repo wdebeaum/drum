@@ -31,6 +31,10 @@
      (SEM (F::Aspect F::indiv-level) (F::Time-span F::extended))
      (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
      )
+    ;;  cross a river
+    ((LF-PARENT ONT::PASS-ACROSS)
+     (TEMPL AGENT-NEUTRAL-XP-TEMPL)
+     )
     )
    )
 ))

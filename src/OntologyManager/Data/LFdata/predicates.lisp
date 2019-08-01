@@ -233,13 +233,11 @@
              )
  )
 
-; against
-(define-type ONT::CONTRA
+					; against
+(define-type ONT::CONTRA-FORCE
  :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation))
-;;             (:REQUIRED ONT::VAL (F::Situation (F::aspect F::dynamic)))
-	     ;; purposes don't have to be dynamic -- e.g. to store something, to remember, etc.
-	     (:REQUIRED ONT::GROUND (F::Situation))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation)  (F::aspect F::dynamic) (F::type ont::event-of-action))
+	     (:REQUIRED ONT::GROUND ((? xx F::Situation F::phys-obj F::abstr-obj)))
              )
  )
 
@@ -362,7 +360,7 @@
 (define-type ONT::manner
  :parent ONT::SITUATION-MODIFIER
  :arguments ((:ESSENTIAL ONT::FIGURE (F::situation (f::type ont::event-of-action)))
-             (:REQUIRED ONT::GROUND ((? at F::abstr-obj F::situation f::phys-obj) (f::intentional -))) ;; don't want times to work here
+             (:REQUIRED ONT::GROUND ((? at F::abstr-obj F::situation) (f::intentional -))) ;; don't want times to work here
              )
  )
 

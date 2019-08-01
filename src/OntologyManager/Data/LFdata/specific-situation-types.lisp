@@ -119,7 +119,10 @@
  :parent ONT::RELINQUISH
  :comment "To relinquish control of AFFECTED AFFECTED-RESULT, typically voluntarily and possibly in exchange for something"
  :sem (F::SITUATION (f::cause f::agentive) (F::iobj F::recipient))
- :arguments ((:REQUIRED ONT::affected ((? tc1  F::Phys-obj f::abstr-obj) ))
+ :arguments ((:REQUIRED ONT::affected ((? oc F::Phys-obj F::Abstr-obj F::situation)
+				       (f::type (? typ ont::Phys-object ont::loaded-claim  ;;  lawsuit
+						   ont::mental-construction)))
+			(f::tangible +))
 	     (:REQUIRED ONT::affected-result ((? tc2  F::Phys-obj f::abstr-obj)))
 	     (:optional ONT::RESULT ((? tc3  F::Phys-obj f::abstr-obj)))
              )
@@ -887,7 +890,7 @@
 
 
 ;;; We assume that passing moving objects is a different sense
-(define-type ONT::PASS
+(define-type ONT::PASS-ACROSS
  :wordnet-sense-keys ("pass%2:38:00" "go_through%2:38:00" "go_across%2:38:00")
  :parent ONT::co-motion
  :sem (F::SITUATION (F::Trajectory -))
@@ -2176,7 +2179,7 @@
     )
 
 (define-type ont::object ;; 20120524 GUM change new type
-    :wordnet-sense-keys ("object%2:42:00")
+    :wordnet-sense-keys ("object%2:42:00"  "objection%1:10:00")
     :parent ont::contest
     )
 
@@ -2975,7 +2978,7 @@
 
 ;;; I dared to go, I dared John to go.
 (define-type ONT::provoke
- :wordnet-sense-keys ("persuade%2:32:00" "force%2:36:00" "coerce%2:41:00" "subject%2:39:03" "oblige%2:41:00" "arouse%2:37:00")
+ :wordnet-sense-keys ("persuade%2:32:00" "force%2:36:00" "coerce%2:41:00" "subject%2:39:03" "oblige%2:41:00" "arouse%2:37:00" "provoke%2:32:00")
  :parent ONT::cause-effect
  :arguments ((:ESSENTIAL ONT::affected ((? exp F::phys-obj f::abstr-obj) (f::intentional +))))
  )
@@ -4859,8 +4862,9 @@
  :wordnet-sense-keys ("belong%2:42:03" "go%2:42:04" "belong%2:42:06")
  :parent ONT::be-at
  :sem (F::Situation (F::aspect F::stage-level))
- :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj (F::intentional -))) 
-             )
+ :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj (F::intentional -)))
+	     (:essential ont::location (F::Abstr-obj (f::type (? type ont::loc-where-rel ont::oriented-loc-reln ont::pos-distance ont::pos-wrt-speaker-reln)))
+             ))
  )
 
 ;; this fits here
@@ -4872,11 +4876,19 @@
 ;; for positionals: lie, stand
 (define-type ONT::BE-AT-LOC
  :comment "relations that indicate an postural attitude as well as a location"
- :wordnet-sense-keys ("sit%2:35:00" "sit_down%2:35:03" "settle%2:30:00" "fall%2:35:00" "hang%2:35:03" "hang%2:35:05" "hang%2:35:06" "hang%2:42:01" "lie%2:35:00" "trail%2:35:05" "lie%2:42:00")
+ :wordnet-sense-keys ("sit%2:35:00" "sit_down%2:35:03" "settle%2:30:00" "hang%2:35:03" "hang%2:35:05" "hang%2:35:06" "hang%2:42:01" "lie%2:35:00" "trail%2:35:05" "lie%2:42:00")
  :parent ONT::BE-AT
  :sem (F::Situation (F::aspect F::stage-level))
  :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj)) ;; formal is restricted to phys-obj; otherwise same as be-at
              )
+ )
+
+(define-type ONT::location-as-motion
+ :comment "relations that locate in terms of some motion"
+ :wordnet-sense-keys ("range%2:42:00" "flow%2:35:04")
+ :parent ONT::BE-AT
+ :sem (F::Situation (F::aspect F::stage-level))
+ :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj))              )
  )
 
 ;; tilt,lean
@@ -5231,7 +5243,9 @@
  :wordnet-sense-keys ("submit%2:32:01" "subject%2:32:04")
  :parent ONT::giving
  :sem (F::situation)
- :arguments ((:REQUIRED ONT::affected ((? oc F::Phys-obj F::Abstr-obj)))
+ :arguments ((:REQUIRED ONT::affected ((? oc F::Phys-obj F::Abstr-obj F::situation) (f::type (? typ ont::info-holder ;;document
+												ont::loaded-claim  ;;  lawsuit
+												ont::mental-construction))))
 	     (:REQUIRED ONT::Agent)
              )
  )
@@ -5382,7 +5396,7 @@
 
 ;; FN
 (define-type ont::fluidic-motion
- :wordnet-sense-keys ("course%2:38:00" "feed%2:38:04" "flow%2:38:00" "run%2:38:01" "flow%2:38:01" "flux%2:38:00" "flow%2:38:02" "pour%2:38:03" "flow%1:11:00")
+ :wordnet-sense-keys ("course%2:38:00" "feed%2:38:04" "flow%2:38:00" "run%2:38:01" "flow%2:38:01" "flux%2:38:00" "flow%2:38:02" "pour%2:38:03" "flow%1:11:00" "flowe%2:42:00" "flow%2:30:00" "flow%1:04:00")
     :parent ont::motion
     :sem (f::situation (f::trajectory +))
     :arguments ((:required ont::formal (f::phys-obj (f::form (? ff f::liquid f::gas f::wave))))

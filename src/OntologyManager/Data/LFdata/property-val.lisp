@@ -93,7 +93,7 @@
 
 (define-type ont::great-val
  :parent ont::good 
- :wordnet-sense-keys ("superb%5:00:00:good:01" "bang-up%5:00:00:good:01" "great%5:00:01:extraordinary:00" "phenomenal%5:00:00:extraordinary:00" "fantastic%5:00:00:extraordinary:00" "ideal%3:00:00:perfect:00" "perfect%3:00:00" )
+ :wordnet-sense-keys ("superb%5:00:00:good:01" "bang-up%5:00:00:good:01" "great%5:00:01:extraordinary:00" "phenomenal%5:00:00:extraordinary:00" "fantastic%5:00:00:extraordinary:00" "ideal%3:00:00:perfect:00" "perfect%3:00:00" "opulent%3:00:0:rich:03" "opulently%4:02:00")
  :sem (F::abstr-obj (F::scale ont::goodness-scale))
 )
 
@@ -160,9 +160,9 @@
 
 ; (in)appropriate, suitable
 (define-type ont::appropriateness-val
- :parent ont::evaluation-attribute-val 
- :sem (F::abstr-obj (F::scale ont::appropriateness-scale))
-)
+    :parent ont::evaluation-attribute-val
+    :sem (F::abstr-obj (F::scale ont::appropriateness-scale))
+    )
 
 (define-type ont::appropriate-val
  :parent ont::appropriateness-val 
@@ -172,7 +172,7 @@
 
 (define-type ont::not-appropriate-val
  :parent ont::appropriateness-val 
- :wordnet-sense-keys ("inappropriate%3:00:00" "improper%5:00:00:inappropriate:00" )
+ :wordnet-sense-keys ("inappropriate%3:00:00" "improper%5:00:00:inappropriate:00" "immoderate%3:00:00" "immoderately%04:02:00" "immoderately%04:02:02" )
  :sem (F::abstr-obj (F::scale ont::appropriate-scale))
 )
 
@@ -365,10 +365,11 @@
 
 ;; (un)important, (un)necessary, (in)significant, central, critical, principal
 (define-type ont::importance-val
- :parent ont::evaluation-attribute-val 
- :comment "of primary (i.e., major, significant), secondary (i.e., minor), or no importance"
- :sem (F::abstr-obj (F::scale ont::importance-scale))
-)
+    :wordnet-sense-keys ("immodest%3:00:02" "immodestly%4:02:00")
+    :parent ont::evaluation-attribute-val 
+    :comment "of primary (i.e., major, significant), secondary (i.e., minor), or no importance"
+    :sem (F::abstr-obj (F::scale ont::importance-scale))
+    )
 
 (define-type ont::primary
  :parent ont::importance-val 
@@ -381,7 +382,7 @@
 
 (define-type ont::urgent-val
  :parent ont::primary
- :wordnet-sense-keys ("urgent%5:00:00:imperative:00" "serious%5:00:00:critical:03" "critical%3:00:03" "desperate%5:00:00:imperative:00")
+ :wordnet-sense-keys ("urgent%5:00:00:imperative:00" "serious%5:00:00:critical:03" "critical%3:00:03" "desperate%5:00:00:imperative:00" "seriously%4:02:00" "urgently%4:02:00" "desparately%4:02:01")
  :comment "time-sensitive or critical"
 )
 
@@ -2693,7 +2694,8 @@
 
 (define-type ont::speedy
  :parent ont::speed-val 
- :wordnet-sense-keys ("quick%5:00:02:fast:01" "fleet%5:00:00:fast:01" "rapid%5:00:00:fast:01" "rapid%5:00:02:fast:01" "fast%3:00:01" "quick%5:00:00:fast:01" )
+ :wordnet-sense-keys ("quick%5:00:02:fast:01" "fleet%5:00:00:fast:01" "rapid%5:00:00:fast:01" "rapid%5:00:02:fast:01" "fast%3:00:01" "quick%5:00:00:fast:01"
+					      "hurried%3:00:00" "hastily%4:02:00")
  ; Words: (W::QUICK W::FAST W::RAPID W::SWIFT W::SPEEDY)
  ; Antonym: NIL (W::SLOW)
 )
@@ -3379,7 +3381,8 @@
 
 (define-type ont::intense
  :parent ont::intensity-val 
- :wordnet-sense-keys ("potent%5:00:00:powerful:00" "acute%5:00:00:sharp:04" "strong%5:00:00:powerful:00" "intense%5:00:00:sharp:04" "shrill%5:00:00:high:03" "powerful%3:00:00" "strong%5:00:00:intense:00" "sharp%3:00:04" "intense%3:00:00" "high%3:00:03" "deep%5:00:00:intense:00" "intensive%5:00:00:intense:00" "forceful%3:00:00")
+ :wordnet-sense-keys ("potent%5:00:00:powerful:00" "acute%5:00:00:sharp:04" "strong%5:00:00:powerful:00" "intense%5:00:00:sharp:04" "shrill%5:00:00:high:03" "powerful%3:00:00" "strong%5:00:00:intense:00" "sharp%3:00:04" "intense%3:00:00" "high%3:00:03" "deep%5:00:00:intense:00" "intensive%5:00:00:intense:00" "forceful%3:00:00"
+						   "hearty%3:00:00" "heartily%4:02:03" "heartily%4:02:01" )
  ; Words: (W::HIGH W::LOW W::STRONG W::DEEP W::POWERFUL W::SHARP W::INTENSE W::DULL W::SHALLOW W::POTENT)
  ; Antonym: ONT::weak (W::WEAK W::FAINT)
 )
@@ -3394,11 +3397,11 @@
 ;;; the severity of the problem/situation/crisis/emergency
 ;; severe, mild
 (define-type ont::severity-val
- :parent ont::dimensional-property-val 
- :arguments ((:required ont::FIGURE ((? of f::situation f::abstr-obj )))) ;; adding restriction to prevent "acute stomach"
- :comment "indicates relative extent or magnitude of something on a severity scale"
- :sem (F::abstr-obj (F::scale ont::severity-scale))
-)
+    :parent ont::dimensional-property-val 
+    :arguments ((:required ont::FIGURE ((? of f::situation f::abstr-obj )))) ;; adding restriction to prevent "acute stomach"
+    :comment "indicates relative extent or magnitude of something on a severity scale"
+    :sem (F::abstr-obj (F::scale ont::severity-scale))
+    )
 
 (define-type ont::severe-val
  :parent ont::severity-val 
@@ -4277,7 +4280,7 @@
 ; wanting/desiring
 (define-type ONT::desirous
  :parent ONT::pos-experiencer-property-val
- :wordnet-sense-keys ("desirous%3:00:00")
+ :wordnet-sense-keys ("desirous%3:00:00" "avariciously%4:02:00" )
  :sem (F::abstr-obj (F::scale ont::desire-scale) )
  ; every living thing is desirous of avoiding pain
  )

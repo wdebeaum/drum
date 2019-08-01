@@ -1422,9 +1422,10 @@
  :parent ont::size-scale 
  :sem (F::Abstr-obj (F::Scale Ont::Linear-extent-scale))
  :wordnet-sense-keys ("dimension%1:07:00")
- :arguments (;;(:ESSENTIAL ONT::val (F::Abstr-obj (F::Scale Ont::Linear-scale) (F::measure-function F::value)))     
+ :arguments (;;(:ESSENTIAL ONT::val (F::Abstr-obj (F::Scale Ont::Linear-scale) (F::measure-function F::value)))
+	     (:essential ont::figure (F::phys-obj))
              (:ESSENTIAL ONT::EXTENT (F::abstr-obj (F::scale ont::linear-extent-scale) (F::measure-function F::value))))
-)
+ )
 
 (define-type ont::length-scale
  :parent ont::linear-extent-scale 

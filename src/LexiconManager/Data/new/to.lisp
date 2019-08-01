@@ -88,6 +88,7 @@
      )
 
     ((LF-PARENT ONT::RESULTING-STATE)
+     (preference .985)
      (example "change to a waking state")
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      )

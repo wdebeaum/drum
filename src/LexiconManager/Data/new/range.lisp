@@ -16,3 +16,14 @@
    )
 ))
 
+(define-words :pos W::v
+ :words (
+  (W::RANGE
+   (SENSES
+    ((LF-PARENT ONT::location-as-motion)
+     (example "The grass ranges over the hills")
+     (TEMPL NEUTRAL-LOCATION-XP-TEMPL)
+     )
+    )
+   )
+))

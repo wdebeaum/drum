@@ -1,9 +1,17 @@
 (in-package :om)
 
-(define-type ONT::defined-by-sequence-relationship
+
+
+(define-type ONT::object-defined-by-relationship
     :parent ONT::PHYS-OBJECT
+    :wordnet-sense-keys ("possession%1:03:00")
     :arguments ((:required ONT::FIGURE (F::Phys-obj)))
-)
+    )
+
+(define-type ONT::defined-by-sequence-relationship
+    :parent ONT::object-defined-by-relationship
+    :arguments ((:required ONT::FIGURE (F::Phys-obj)))
+    )
 
 (define-type ONT::predecessor
     :parent ONT::defined-by-sequence-relationship
@@ -3226,7 +3234,7 @@
 
 ;; a number/amount/quantity of X
 (define-type ONT::QUANTITY
- :wordnet-sense-keys ("measure%1:03:00" "quantity%1:03:00" "amount%1:03:00")
+ ;;:wordnet-sense-keys ("measure%1:03:00" "quantity%1:03:00" "amount%1:03:00" "quantity%1:09:01")
  ;:parent ONT::ORDERED-DOMAIN
  :parent ONT::GROUP-OBJECT
  :arguments ((:ESSENTIAL ONT::FIGURE ((? val f::phys-obj f::abstr-obj f::situation )))

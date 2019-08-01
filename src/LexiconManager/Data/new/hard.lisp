@@ -93,7 +93,7 @@
  :words (
 	 (W::hard
 	  (SENSES
-	   ((LF-PARENT ONT::manner)
+	   ((LF-PARENT ONT::intense)
 	    (TEMPL PRED-S-POST-TEMPL)
 	    (example "Browne works hard")
 	    (meta-data :origin csli-ts :entry-date 20070320 :change-date nil :comments nil :wn nil)

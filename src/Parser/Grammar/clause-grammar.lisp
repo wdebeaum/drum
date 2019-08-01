@@ -142,7 +142,7 @@
    ((utt  ;(var ?v)
 	  (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
      (punc +) (punctype ?p) (uttword ?uw) (sa-seq +) (acts (?v1 ?v2))
-     (lf (% sa-seq (var *) (class ont::sa-seq)
+     (lf (% sa-seq (var *) (class ont::speech-act)
 	    (constraint (& (acts (?v1 ?v2))))
 	    ))
      (var *))
@@ -165,7 +165,7 @@
    ((utt  ;(var ?v)
 	  (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
      (punc +) (punctype ?p) (uttword ?uw) (sa-seq +) (acts ?newacts)
-     (lf (% sa-seq (var *) (class ont::sa-seq)
+     (lf (% sa-seq (var *) (class ont::speech-act)
 	    (constraint (& (acts ?newacts)))
 	    ))
      (var *))
@@ -192,7 +192,7 @@
    ((utt  ;(var ?v)
 	  (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
      (punc +) (punctype ?p) (uttword ?uw) (sa-seq +) (acts (?v1 ?v2))
-     (lf (% sa-seq (var *) (class ont::sa-seq)
+     (lf (% sa-seq (var *) (class ont::speech-act)
 	    (constraint (& (acts (?v1 ?v2))))))
      (var *))
    -utt-conj-utt>
@@ -215,7 +215,7 @@
    ((utt  ;(var ?v)
 	  (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
      (punc +) (punctype ?p) (uttword ?uw) (sa-seq +) (acts ?newacts)
-     (lf (% sa-seq (var *) (class ont::sa-seq)
+     (lf (% sa-seq (var *) (class ont::speech-act)
 	    (constraint (& (acts ?newacts)))))
      (var *))
    -utt-conj-utt-add-one>
@@ -335,7 +335,7 @@
      
    ;;  compound utt rule - allows uttword+ utterance to preceed other utts (once)
    ;; test: hello hello
-   ((utt (sa-seq +) (lf (% sa-seq (var *) (class ont::sa-seq) (constraint (& (acts (?v1 ?v2))))))
+   ((utt (sa-seq +) (lf (% sa-seq (var *) (class ont::speech-act) (constraint (& (acts (?v1 ?v2))))))
          (var *))
     -uttword-utt> .96
     (utt (lf ?lf1) (var ?v1) (uttword +) (sa-seq -))

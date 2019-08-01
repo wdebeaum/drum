@@ -27,7 +27,7 @@
      (TEMPL disc-templ)
      (preference .97)
      )
-    ((LF-PARENT ONT::manner)
+    ((LF-PARENT ONT::good)
      (TEMPL PRED-S-POST-TEMPL)
      (example "are you breathing well today")
      (meta-data :origin chf :entry-date 20070904 :change-date nil :comments nil :wn nil)

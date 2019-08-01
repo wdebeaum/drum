@@ -471,7 +471,8 @@
 
 ;; a number/amount/quantity of X
 (define-type ONT::QUANTITY-abstr
- :wordnet-sense-keys ("measure%1:03:00" "quantity%1:03:00" "amount%1:03:00")
+    :wordnet-sense-keys ("measure%1:03:00" "quantity%1:03:00" "amount%1:03:00" "quantity%1:09:01"
+					   "amount%1:21:00" "amount%1:07:00")
 ; :parent ONT::DOMAIN-PROPERTY
  :parent ONT::GROUP-OBJECT-abstr
  :sem (F::abstr-obj (F::tangible +))

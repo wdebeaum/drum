@@ -47,7 +47,7 @@
 
     ))))
 
-(define-words :pos W::v :templ AGENT-affected-XP-TEMPL
+(define-words :pos W::v :templ AGENT-affected-TEMPL
  :words (
   ((W::call W::off)
    (wordfeats (W::morph (:forms (-vb) :past W::called)))

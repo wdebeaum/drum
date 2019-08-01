@@ -970,8 +970,8 @@
 
       (NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL
        (ARGUMENTS
-      	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) (w::expletive -)) ONT::neutral)
-	(LOBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) (w::expletive -)) ONT::neutral1)
+      	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) (w::status ont::definiteQ)(w::expletive -)) ONT::neutral)
+	(LOBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) (w::status ont::definiteQ) (w::expletive -)) ONT::neutral1)
 	))
 
       (NEUTRAL-FORMAL-PRED-SUBJCONTROL-TEMPL
@@ -980,11 +980,13 @@
 		  ) ONT::neutral)
     ;;;;;(argument ?lsubj)
     ;;;;; the arg of the pred will be the subject of the verb
-	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar))) (:required (W::filled -)
+	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?lsubjvar)))
+			  (:required (W::filled -)
 					;(W::argument ?lsubj)
-										 (W::argument (% W::np (W::sem ?lsubjsem) (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive -)
+				     (W::argument (% W::np (W::sem ?lsubjsem)
+						     (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive -)
 							 ))
-					 (w::arg ?subjvar) (W::gap ?gap))) ONT::FORMAL)
+				     (w::arg ?lsubjvar) (W::gap ?gap))) ONT::FORMAL)
 	))
 
        (EXPERIENCER-FORMAL-PRED-SUBJCONTROL-TEMPL
@@ -1002,7 +1004,8 @@
        (ARGUMENTS
 	(LSUBJ (% W::NP (W::var ?subjvar) (W::lex ?lsubjlex)) ONT::AFFECTED)
        ;;;;; the arg of the pred will be the subject of the verb
-	(LOBJ (:parameter xp (:default (% W::PRED (W::arg ?subjvar)))
+	;;(LOBJ    ;; shouldn't this be LCOMP -- can't support the passive  JFA 7/19
+	 (LCOMP (:parameter xp (:default (% W::PRED (W::arg ?subjvar)))
 			  (:required (W::filled -) (W::argument ?lsubj) 
 				     (W::gap ?gap))) ONT::FORMAL)
 	))
@@ -1687,7 +1690,6 @@
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::neutral)
     (LCOMP  (:parameter xp (:default  (% W::ADVBL (W::lf (% ?p (w::class (? x ont::position-reln))))))) ONT::location)
-			       ;;(% W::PP (w::ptype (? ptp w::on w::in w::under w::into w::at))))) ONT::location)
     ))
   
 (NEUTRAL-NEUTRAL1-LOCATION-2-XP1-3-XP-TEMPL
@@ -2731,6 +2733,14 @@
      (SUBCAT (:parameter xp (:default (% W::VP  (W::vform W::ing) (w::gap ?gap) (w::subjvar ?subjvar)))) ont::GROUND
 	     )))
 
+  (Binary-constraint-S-or-NP-subjcontrol-templ
+    (SYNTAX (W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
+    (ARGUMENTS
+     (ARGUMENT (% (? xx W::S w::NP) (w::subjvar ?subjvar)) ONT::FIGURE)
+     (SUBCAT (:parameter xp (:default (% W::VP  (W::vform W::ing) (w::gap ?gap) (w::subjvar ?subjvar)))) ont::GROUND
+	     )))
+
+
    (Binary-constraint-S-pp-of-templ
    (SYNTAX(W::SORT W::BINARY-CONSTRAINT) (W::ATYPE (? ATYPE W::PRE W::POST)))
    (ARGUMENTS
@@ -3356,7 +3366,15 @@
      (subcat (:parameter xp (:default (% W::pp (W::ptype W::as)))) ONT::GROUND)
     (subcat2 (% -) ONT::NOROLE)
      ))
- 
+
+    ;; as if happy, as if with a limp
+   (BINARY-CONSTRAINT-S-pred-TEMPL
+    (SYNTAX(W::SORT W::PRED) (W::ATYPE (? xx W::pre w::post)) (W::ARG ?arg))
+    (ARGUMENTS
+     (ARGUMENT (% W::S) ONT::FIGURE)
+     (subcat (:parameter xp (:default (% W::pred))) ONT::GROUND)
+))
+
    (BINARY-CONSTRAINT-time-ADV-result-VAL-TEMPL
    (SYNTAX (w::sort w::binary-constraint)  (W::ATYPE (? ATYPE w::pre W::POST)))
    (ARGUMENTS
@@ -3627,8 +3645,9 @@
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::central) ;(W::ALLOW-DELETED-COMP +)
 (W::ARG ?arg))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::figure)
-    (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to)))) ONT::ground optional)
+    (ARGUMENT (% W::NP (w::var ?fig)) ONT::figure)
+    (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to)
+				    (w::subjvar ?fig)))) ONT::ground optional)
     ;;(subcat2 (% -) ONT::NOROLE)
     ))
 
@@ -3698,20 +3717,32 @@
    (adj-experiencer-content-xp-templ
    (SYNTAX (W::SORT W::PRED) (W::ARG ?arg) (W::ATYPE W::central) (w::allow-deleted-comp +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP (w::sort (? !xx W::unit-measure))) ONT::AFFECTED)
+    (ARGUMENT (% W::NP (w::sort (? !xx W::unit-measure))) ONT::FIGURE)
 ;    (subcat (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::content)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::FORMAL)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::ground)
     (subcat2 (% -) ONT::NOROLE)
     ))
-
+#| not cureently used
 ;; the task is easy to perform/ the car is easy to fix
   (adj-theme-action-templ
    (SYNTAX (W::SORT W::PRED) (W::ATYPE W::PREDICATIVE-only) (W::ARG ?arg)
 	   (W::ALLOW-DELETED-COMP +)
 	  )
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::FORMAL)
-    (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to)))) ONT::FORMAL)
+    (ARGUMENT (% W::NP) ONT::figure)
+    (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to)))) ONT::formal)
+    (subcat2 (% -) ONT::NOROLE)
+))
+|#
+
+  ;; subjcontrol adjp: eager to please, excited to eat
+  (adj-subjcontrol-action-templ
+   (SYNTAX (W::SORT W::PRED) (W::ATYPE W::PREDICATIVE-only) (W::ARG ?arg)
+	   (W::ALLOW-DELETED-COMP +)
+	  )
+   (ARGUMENTS
+    (ARGUMENT (% W::NP (w::var ?fig)) ONT::FIGURE)
+    (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to) (w::subjvar ?fig )))) ONT::FORMAL)
     (subcat2 (% -) ONT::NOROLE)
     ))
   
@@ -3733,7 +3764,8 @@
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ONT::GROUND)
     (subcat2 (% -) ONT::NOROLE)
     ))
-  
+
+
   ;;;;; predicative only. No complement allowed. Ex: "ablaze"
   (predicative-only-adj-templ
    (SYNTAX(W::SUBCAT -) (W::SORT W::PRED) (W::ATYPE W::PREDICATIVE-only) (W::ARG ?arg))
@@ -3744,7 +3776,7 @@
   (predicative-only-experiencer-adj-templ
    (SYNTAX(W::SUBCAT -) (W::SORT W::PRED) (W::ATYPE W::PREDICATIVE-only) (W::ARG ?arg))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ont::affected)
+    (ARGUMENT (% W::NP) ont::figure)
     ))
   
   ;;;;; These are adjectives that can be used post-positively

@@ -36,7 +36,7 @@
     )
     ((lf-parent ont::fighting)
        (example "he campaigned to establish the area")
-       (TEMPL AGENT-theme-SUBJCONTROL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
+       (TEMPL AGENT-formal-SUBJCONTROL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
     )
 
    )

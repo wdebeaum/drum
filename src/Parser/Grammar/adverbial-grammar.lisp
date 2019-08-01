@@ -25,7 +25,31 @@
       )))
 
     ))
-     
+
+
+(parser::augment-grammar
+  '((headfeatures
+	 ;;lex headcat removed --me
+     (PP KIND MASS NAME agr SEM SORT PRO SPEC CLASS transform gap gerund)
+     ;;(ADVBLS FOCUS VAR SEM SORT ATYPE ARG SEM ARGUMENT NEG TO QTYPE lex transform)
+     (ADVBL VAR SORT ARGSORT ATYPE SEM lex orig-lex headcat transform neg result-only)
+     )
+    ;;  simple adverbials- used is the lexical entry does not specify an argument-map
+    ;;  we have iot by itself here as we need to create a non null ARGUMENT value, so it can't be a head feature
+    ((ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT (& (FIGURE ?arg)))
+                              (sem ?sem) (transform ?transform)))
+            ;;(SORT CONSTRAINT)
+      (role ?lf)
+      (argument (% ?argument (var ?arg)))
+      (comparative -)
+      )
+     -advbl-simple-no-argmap>
+     (head (adv (WH -) (sem ?sem) (ARGUMENT-MAP -) ;;(Sort PRED) 
+	    (VAR ?v) (SUBCAT -) (LF ?lf) (implicit-arg -) (prefix -)
+	    (comparative -)
+	    ))      
+     )
+    ))
 
 (parser::augment-grammar
   '((headfeatures
@@ -63,19 +87,7 @@
 		       (new ?newc))
      )
    
-     ;;  simple adverbials- used is the lexical entry does not specify an argument-map
-    ((ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT (& (FIGURE ?arg)))
-                              (sem ?sem) (transform ?transform)))
-            ;;(SORT CONSTRAINT)
-      (role ?lf)
-      (comparative -)
-      )
-     -advbl-simple-no-argmap>
-     (head (adv (WH -) (sem ?sem) (ARGUMENT-MAP -) ;;(Sort PRED) 
-	    (VAR ?v) (SUBCAT -) (LF ?lf) (implicit-arg -) (prefix -)
-	    (comparative -)
-	    ))      
-     )
+    
 
     ;; advbl plus explicit scale
 
@@ -730,7 +742,7 @@
       (GAP -)
       ;; (subjvar ?subjvar)
       (sem ?asem)
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln)))) ;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ))))
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::goal-reln ont::position-reln)))) ;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ))))
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
       (ARG ?npvar) (VAR ?mod)
