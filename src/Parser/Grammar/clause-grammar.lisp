@@ -344,7 +344,7 @@
 
    ;;  tag sentences, allowing uttword
    ;; test: the dog barks doesn't it hello
-   ((utt (sa-seq +) (lf (% sa-seq (var *) (class ont::sa-seq) (constraint (& (acts (?v1 ?v2))))))
+   ((utt (sa-seq +) (lf (% sa-seq (var *) (class ont::speech-act) (constraint (& (acts (?v1 ?v2))))))
          (var *))
     -utt-tag> .90 ;; lowering this from .97 because it was preferred over predicate adjectives, e.g that looks good 
     (utt (lf ?lf1) (var ?v1) (sa-seq -))
@@ -1180,19 +1180,21 @@
 
      ;; e.g., role nps can be predicates "we remained friends"
      
-     ((pred (arg ?arg) (var ?v)  (sem ?sem)
-            (lf (% prop (status ont::f) (arg ?arg) (var ?v) 
-		   (class ?c) (constraint ?newcon)))
+     ((pred (arg ?arg) (var *)  (sem ?newsem)
+            (lf (% prop (status ont::f) (arg ?arg) (var *) (sem ?newsem)
+		   (class ONT::MEMBERSHIP) (constraint (& (figure ?arg) 
+							  (ground (% *pro* (status ont::definite-plural) (var ?v) (class ?c) (constraint ?constr)))
+				  ))))
             (argument ?argument)
             (filled -)
             )
-      -pred4> .97
+      -pred4> 
       (head (np (sem ?sem) (var ?v) (sort pred) (case (? case obj -))
 		(derived-from-name -) (gerund -)
 		(lf (% description (status (? x ont::indefinite ont::bare ont::indefinite-plural)) 
-		       (sem ($ f::phys-obj (f::type ont::role-reln)))
+		       (sem ($ f::phys-obj )) 
 		       (class ?c) (constraint ?constr)))))
-      (add-to-conjunct (val (Figure ?arg)) (old ?constr) (new ?newcon))
+      (compute-sem-features (lf ONT::MEMBERSHIP) (sem ?newsem))
       )
 
    ;; a construction that is limited to pred of emotional state 

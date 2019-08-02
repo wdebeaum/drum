@@ -1,9 +1,13 @@
-(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+(define-words :pos W::adj 
  :words (
    (w::excited
    (SENSES
-    ((meta-data :origin adjective-reorganization :entry-date 20170403 :change-date nil :comments nil :wn nil :comlex nil)
+    (
      (lf-parent ont::excited)
+     (templ central-adj-templ)
      )
-    )
+    ;; excited to sing
+    ((lf-parent ont::excited)
+     (templ adj-subjcontrol-action-templ)
+     ))
    )))

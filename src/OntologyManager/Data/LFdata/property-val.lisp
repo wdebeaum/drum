@@ -93,7 +93,7 @@
 
 (define-type ont::great-val
  :parent ont::good 
- :wordnet-sense-keys ("superb%5:00:00:good:01" "bang-up%5:00:00:good:01" "great%5:00:01:extraordinary:00" "phenomenal%5:00:00:extraordinary:00" "fantastic%5:00:00:extraordinary:00" "ideal%3:00:00:perfect:00" "perfect%3:00:00" "opulent%3:00:0:rich:03" "opulently%4:02:00")
+ :wordnet-sense-keys ("superb%5:00:00:good:01" "bang-up%5:00:00:good:01" "great%5:00:01:extraordinary:00" "phenomenal%5:00:00:extraordinary:00" "fantastic%5:00:00:extraordinary:00" "ideal%3:00:00:perfect:00" "perfect%3:00:00" "opulent%5:00:00:rich:03" "opulently%4:02:00")
  :sem (F::abstr-obj (F::scale ont::goodness-scale))
 )
 
@@ -172,7 +172,7 @@
 
 (define-type ont::not-appropriate-val
  :parent ont::appropriateness-val 
- :wordnet-sense-keys ("inappropriate%3:00:00" "improper%5:00:00:inappropriate:00" "immoderate%3:00:00" "immoderately%04:02:00" "immoderately%04:02:02" )
+ :wordnet-sense-keys ("inappropriate%3:00:00" "improper%5:00:00:inappropriate:00" "immoderate%3:00:00" "immoderately%4:02:00" "immoderately%4:02:02" )
  :sem (F::abstr-obj (F::scale ont::appropriate-scale))
 )
 
@@ -382,7 +382,7 @@
 
 (define-type ont::urgent-val
  :parent ont::primary
- :wordnet-sense-keys ("urgent%5:00:00:imperative:00" "serious%5:00:00:critical:03" "critical%3:00:03" "desperate%5:00:00:imperative:00" "seriously%4:02:00" "urgently%4:02:00" "desparately%4:02:01")
+ :wordnet-sense-keys ("urgent%5:00:00:imperative:00" "serious%5:00:00:critical:03" "critical%3:00:03" "desperate%5:00:00:imperative:00" "seriously%4:02:00" "urgently%4:02:00" "desperately%4:02:01")
  :comment "time-sensitive or critical"
 )
 

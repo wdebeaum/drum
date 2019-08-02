@@ -970,8 +970,10 @@
 
       (NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL
        (ARGUMENTS
-      	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) (w::status ont::definiteQ)(w::expletive -)) ONT::neutral)
-	(LOBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) (w::status ont::definiteQ) (w::expletive -)) ONT::neutral1)
+      	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) ;;(w::status ont::definiteQ)
+		  (w::expletive -)) ONT::neutral)
+	(LOBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) ;;(w::status ont::definiteQ)
+		 (w::expletive -)) ONT::neutral1)
 	))
 
       (NEUTRAL-FORMAL-PRED-SUBJCONTROL-TEMPL
@@ -3438,7 +3440,7 @@
     ))
 
 ; same as adj-purpose-templ
-#|
+
 ;; This is: this drug is good for cancer
   ;; using this template will require a subcat to be present
   ;; For "the place is good" use central-adj-templ in addition to this
@@ -3450,7 +3452,7 @@
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::REASON)
     (subcat2 (% -) ONT::NOROLE)
     ))
-|#  
+
   
   ;; This template is for "I am happy for her" Note that the
   ;; complement is required. You need a "central-adj-templ" to go with

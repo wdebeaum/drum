@@ -2529,8 +2529,9 @@
 		    (CLASS ?c) (CONSTRAINT ?con1)
 		    (sem ?sem)  (transform ?transform) 
 		    ))
-             (SORT PRED) (VAR ?v) (CASE (? case SUB OBJ)) (complex ?complex)
-	    (wh ?w) (wh-var ?whv)
+	  (status ?newspec)
+	  (SORT PRED) (VAR ?v) (CASE (? case SUB OBJ)) (complex ?complex)
+	  (wh ?w) (wh-var ?whv)
 	  )
          -np-indv> 1.0    ;; because determiners are such a closed class, they provide strong evidence for an NP - hence the 1.0 to help with large search spaces
          (SPEC (LF ?spec) (ARG ?v) (mass ?m) ;;(POSS -)
@@ -4737,7 +4738,7 @@
 (parser::augment-grammar	 
   '((headfeatures
      (NP ;;NAME   -- putting it in the NP-NAME rule 
-      PRO Changeagr lex orig-lex headcat transform refl)
+      PRO Changeagr lex orig-lex headcat transform refl status) 
      (NPSEQ CASE MASS NAME PRO lex orig-lex headcat transform)
      (NSEQ CASE MASS NAME lex orig-lex headcat transform)
      (N1 sem lf lex orig-lex headcat transform set-restr refl abbrev rate-activity-nom); agent-nom)
