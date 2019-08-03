@@ -2753,8 +2753,7 @@
 	 ;(append-conjuncts (conj1 ?r1) (conj2 ?r) (new ?newr))
 	 )
 
-        ;;  BARE PLURALS  ---> KINDS
-
+        
 	;;  bare plural count; the set-restr can be a cardinality
 	;; TEST: dogs, five dogs
         ((NP (var ?v) (LF (% Description (STATUS ONT::INDEFINITE-PLURAL)
@@ -2766,7 +2765,7 @@
              (SORT PRED))
          -bare-plural-count> 
          ;; Myrosia 10/13/03 added a possibility of (mass bare) -- e.g. for "lunches" undergoing this rule
-         (head (N1 (SORT PRED) (mass (? mass count bare)) (mass ?m) (complex -)
+         (head (N1 (SORT PRED) (mass (? mass count bare)) (mass ?m) ;;  (complex -)      I can't see the justification for this -- e.g., "cows eating in the field" is a prefectly good NP
 		   (AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -) (agent-nom -)
 		   (sem ?sem) (transform ?transform)
 		   (subcat-map ?subcat-map)

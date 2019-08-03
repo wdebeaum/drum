@@ -252,7 +252,7 @@
 	  )
       (if (null type)
 	  (progn
-	    (format t "~%inconsistent-feat-spec in merge-typed-feature-lists: ~S and ~S" child parent)
+	    (format *error-output* "~%inconsistent-feat-spec in merge-typed-feature-lists: ~S and ~S" child parent)
 	    (make-feature-list ))
 	#|(Error 
 	 (make-system-condition 'inconsistent-feat-spec
