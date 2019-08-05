@@ -5422,7 +5422,7 @@
       )
      np-conj1> 
      (NPSEQ (var ?v1) (SEM ?s1) (lf ?lf1) (class ?c1) (CASE ?case) (mass ?m1)
-      (generated ?generated1) (separator W::punc-comma)
+      (generated ?generated1) (separator (? xxx - W::punc-comma))
       (time-converted ?tc1) ;; MD 2008/03/06 Introduced restriction that only items with the same time-converted status can combine - i.e. don't mix number notation for times or non-times. 
       )
      (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v)) ;; (status ?status))
@@ -5583,8 +5583,8 @@
      (logical-and (in1 ?gen1) (in2 ?gen2) (out ?gen))
      )
 
-    ((NPSEQ  (SEM ?sem) (LF (?v1 ?v2)) (AGR ?agr) (mass ?m) (class ?class) (case ?c)
-      (generated ?gen)  (time-converted ?tc1) (separator ?sep)
+    ((NPSEQ  (SEM ?sem) (LF (?v1 ?v2)) (AGR ?agr) (mass ?m) (class ?class) (case ?c) 
+      (generated ?gen)  (time-converted ?tc1) (seperator -) (operator ?op)
       )
      -npseq-initial-sequence-explicit-conjunct> 1.01
      (head (NP (SEM ?s1) (VAR ?v1) ;;(agr ?agr)   ;; AGR is not reliably determined for proper names
