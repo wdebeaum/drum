@@ -935,6 +935,12 @@
  :comment "waste time and delay what needs to be done. avoid by engaging something other than what one should be doing"
 )
 
+(define-type ONT::ignore
+ :wordnet-sense-keys ("disregard%2:31:00" "ignore%2:31:01" "ignore%2:32:00" "ignore%2:32:02" "ignore%2:39:00" "neglect%2:31:05")
+ :parent ont::intentionally-act
+ :arguments ((:optional ont::neutral ((? o F::Phys-obj f::abstr-obj f::situation))))
+)
+
 (define-type ont::unfocused-activity
  :wordnet-sense-keys ("potter%2:35:01")
  :parent ont::intentionally-act
@@ -1520,7 +1526,7 @@
 ;; find, locate
 ;; compare also ont::becoming-aware, ont::coming-to-belive, ont::seek
 (define-type ONT::FIND
- :wordnet-sense-keys ("find%2:40:01" "come_up%2:40:00" "get_hold%2:40:00" "line_up%2:40:00" "regain%2:40:01" "find%2:40:00" "find%2:40:02" "happen%2:40:12" "chance%2:40:12" "bump%2:40:12" "encounter%2:40:00")
+ :wordnet-sense-keys ("bump%2:40:12" "chance%2:40:12" "come_up%2:40:00" "encounter%2:40:00" "find%2:40:00" "find%2:40:01" "find%2:40:02" "get_hold%2:40:00" "happen%2:40:12" "line_up%2:40:00" "regain%2:40:01")
  :parent ONT::acquire
  :sem (F::SITUATION (F::Aspect F::Dynamic))
  :arguments ((:OPTIONAL ont::result ((? rcp F::Phys-obj f::abstr-obj) (F::intentional +)))

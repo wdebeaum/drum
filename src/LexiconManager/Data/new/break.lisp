@@ -39,6 +39,15 @@
   (W::break
    (wordfeats (W::morph (:forms (-vb) :past W::broke :pastpart W::broken :ing W::breaking :nom w::break)))
    (SENSES
+
+    ((LF-PARENT ONT::appear)
+     (example "news of her death broke in the morning")
+     (meta-data :wn ("break%2:32:05"))
+     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
+     (TEMPL affected-TEMPL)
+     (SYNTAX (w::resultative +))
+    )
+
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090601 :comments nil :vn ("cheat-10.6") :wn ("break%2:42:04"))
      (LF-PARENT ONT::stop)
      (TEMPL AGENT-AFFECTED-FORMAL-CP-OBJCONTROL-TEMPL)
