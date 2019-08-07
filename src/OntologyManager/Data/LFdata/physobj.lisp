@@ -460,7 +460,7 @@
 ;how to deal with this?
 ;State and country are too similar. Perhaps country should be a child of state?
 (define-type ONT::STATE
-    :wordnet-sense-keys ("land%1:15:02" "state%1:15:00" "country%1:15:00" "body_politic%1:14:00" "res_publica%1:14:00" "commonwealth%1:14:00" "land%1:14:00" "country%1:14:00" "nation%1:14:00" "state%1:14:00" "state%1:15:01" "province%1:15:00")
+    :wordnet-sense-keys ("body_politic%1:14:00" "res_publica%1:14:00" "commonwealth%1:14:00" "state%1:15:01" "province%1:15:00")
     :parent ONT::political-region
     )
 
@@ -469,6 +469,7 @@
     )
 
 (define-type ONT::COUNTRY
+    :wordnet-sense-keys ("country%1:15:00" "country%1:14:00")
     :parent ONT::POLITICAL-REGION
     )
 

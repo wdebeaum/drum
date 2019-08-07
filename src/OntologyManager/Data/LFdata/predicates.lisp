@@ -13,6 +13,7 @@
 	      )
   )
 
+
 (define-type ONT::modifier
  :parent ONT::PREDICATE
  :sem (F::ABSTR-OBJ  (:required (F::CONTAINER -) (f::intentional -))
@@ -360,7 +361,7 @@
 (define-type ONT::manner
  :parent ONT::SITUATION-MODIFIER
  :arguments ((:ESSENTIAL ONT::FIGURE (F::situation (f::type ont::event-of-action)))
-             (:REQUIRED ONT::GROUND ((? at F::abstr-obj F::situation) (f::intentional -))) ;; don't want times to work here
+             (:REQUIRED ONT::GROUND ((? at F::abstr-obj F::situation F::phys-obj) (f::intentional -))) ;; don't want times to work here
              )
  )
 

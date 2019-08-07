@@ -24,6 +24,14 @@
  )
 
 
+
+(define-type ONT::STATE-RESULTING-FROM
+    :parent ont::property-val
+    :comment "relates an event to the object changed by that event (e.g., eventually
+               we could map this to a property based on ontological/commonsense knowledge"
+    :arguments ((:essential GROUND (f::situation (F::type ont::event-of-change)))
+		))
+
 ;; higher-level type for evaluation
 (define-type ont::evaluation-attribute-val
     :parent ont::property-val
@@ -3489,7 +3497,7 @@
 
 (define-type ONT::SAME
  :parent ONT::IDENTITY-VAL
- :wordnet-sense-keys ("same%3:00:02" "same%3:00:02" "identical%5:00:00:same:02" "same%3:00:00")
+ :wordnet-sense-keys ("even%3:00:01:equal:00" "identical%5:00:00:same:02" "same%3:00:00" "same%3:00:02")
  ; Antonym: NIL (W::OTHER) 
   :sem (F::abstr-obj (F::scale ont::same-scale))
 )
@@ -3520,7 +3528,7 @@
 (define-type ONT::EQUAL
  :parent ONT::SIMILARITY-VAL
  ; Words: (W::EQUAL W::EQUIVALENT)
- :wordnet-sense-keys ("equal%3:00:00" "equivalent%5:00:00:equal:00" "equal%3:00:00")
+ :wordnet-sense-keys ("equal%3:00:00" "equivalent%5:00:00:equal:00" "even%5:00:01:equal:00" "even%5:00:02:equal:00")
  ; Antonym: NIL (W::UNEQUAL) 
   :sem (F::abstr-obj (F::scale ont::equal-scale))
  )

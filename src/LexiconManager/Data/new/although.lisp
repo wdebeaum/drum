@@ -26,5 +26,8 @@
      (non-hierarchy-lf t)
      (TEMPL SUBCAT-ANY-TEMPL)
      )
+     ((LF-PARENT ONT::qualification)
+     (TEMPL binary-constraint-s-decl-templ)
+      )
     )
    )))

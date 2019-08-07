@@ -407,6 +407,12 @@
     :arguments ((:REQUIRED ONT::neutral1 ((? th7 f::phys-obj f::abstr-obj f::situation))))
     )
 
+(define-type ont::evaluate
+    :parent ont::scrutiny
+    :wordnet-sense-keys ("evaluate%2:31:01" "contrast%2:31:00")
+    :arguments ((:REQUIRED ONT::neutral1 ((? th7 f::phys-obj f::abstr-obj f::situation))))
+    )
+
 ;; cognizer reasoning results in a value
 ;; approximate, assess, estimate, fix, guage
 (define-type ONT::Becoming-Aware-of-value
@@ -862,7 +868,7 @@
 
 ;; be -- this is red
 (define-type ONT::HAVE-PROPERTY
- :wordnet-sense-keys ("be%2:42:03" "be%2:42:05" "sound%2:39:03")
+ :wordnet-sense-keys ("be%2:42:03" "be%2:42:05" "mean%2:42:03" "sound%2:39:03")
  :parent ONT::event-of-state
  :sem (F::Situation (F::Aspect F::static) (F::Time-span F::extended) (F::Trajectory -))
  :arguments ((:REQUIRED ONT::neutral )
@@ -871,6 +877,12 @@
 ;             (:ESSENTIAL ONT::PROPERTY ((? oc2 F::abstr-obj))) ;; only properties (preds) -- for event nouns use ont::have-experience or ont::participating
              )
  )
+
+(define-type ONT::BE-INACTIVE
+ :wordnet-sense-keys ("rest%2:41:00")
+ :parent ONT::HAVE-PROPERTY
+)
+
 
 (define-type ONT::possibly-true
  :wordnet-sense-keys ("seem%2:39:01")
@@ -978,7 +990,7 @@
  )
 
 (define-type ONT::RESEMBLE
- :wordnet-sense-keys ("resemble%2:42:00")
+ :wordnet-sense-keys ("conform%2:42:06" "resemble%2:42:00")
  :parent ONT::OBJECT-COMPARE
  :sem (F::Situation (F::Trajectory -))
  :arguments ((:REQUIRED ONT::FORMAL ((? oc1 F::Phys-obj F::Abstr-obj F::Situation)))
@@ -1132,7 +1144,7 @@
 (define-type ONT::be-inclined
     ;; 20120529 GUM change new parent
     :wordnet-sense-keys ("tend%2:42:01")
-    :parent ont::event-of-state
+    :parent ont::have-property
     :arguments (
 		(:REQUIRED ONT::Formal ((? obj F::SITUATION F::ABSTR-OBJ) (f::intentional -)))
 		)

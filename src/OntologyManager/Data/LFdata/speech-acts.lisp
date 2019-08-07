@@ -64,9 +64,9 @@
 
 (define-type ont::definite :parent ont::definiteQ)
 
-(define-type ont::indefinite :parent ont::definiteness)
+(define-type ont::indefiniteQ :parent ont::definiteness)
 
-(define-type ont::indefiniteQ :parent ont::indefinite)
+(define-type ont::indefinite :parent ont::indefiniteQ)
 
 (define-type ont::the :parent ont::definiteQ)
 

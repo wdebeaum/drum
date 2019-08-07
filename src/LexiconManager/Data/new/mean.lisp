@@ -53,3 +53,14 @@
 	   )
 ))
 
+(define-words :pos W::V
+ :words (
+          (w::mean
+           (senses
+            ((lf-parent ont::have-property)
+             (TEMPL NEUTRAL-NEUTRAL1-TEMPL)
+             (example "my husband means nothing to me")
+             )
+            )
+           )
+))

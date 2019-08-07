@@ -27,6 +27,12 @@
      (LF-PARENT ONT::be-at-loc)
      (TEMPL NEUTRAL-TEMPL) ; like hang,stand,sit
      )
+
+    ((meta-data :wn ("rest%2:41:00"))
+     (LF-PARENT ONT::be-inactive)
+     (TEMPL NEUTRAL-TEMPL)
+     )
+
     )
    )
 ))
