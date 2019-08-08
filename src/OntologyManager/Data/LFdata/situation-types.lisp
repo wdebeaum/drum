@@ -885,7 +885,7 @@
 
 
 (define-type ONT::possibly-true
- :wordnet-sense-keys ("seem%2:39:01")
+ ;:wordnet-sense-keys ("seem%2:39:01")
  :parent ONT::event-of-state
  :arguments ((:REQUIRED ONT::formal (F::situation))))
 
@@ -944,7 +944,7 @@
  )
 
 (define-type ONT::APPEARS-TO-HAVE-PROPERTY
- :wordnet-sense-keys ("sound%2:39:06" "taste%2:39:02")
+ :wordnet-sense-keys ("look%2:39:01" "seem%2:39:01" "seem%2:39:02" "seem%2:42:00" "sound%2:39:06" "taste%2:39:02")
  :parent ONT::HAVE-PROPERTY
  :sem (F::situation (F::Aspect F::stage-level) (F::Time-span F::extended))
  )

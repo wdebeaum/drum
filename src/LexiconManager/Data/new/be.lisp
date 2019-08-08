@@ -44,6 +44,7 @@
      (LF-PARENT ont::proposition-equal)
      (LF-FORM w::BE)
      (TEMPL NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL)
+     (EXAMPLE "the fact is that we went to the store")
      )
 
        ;;;; .. there is a box

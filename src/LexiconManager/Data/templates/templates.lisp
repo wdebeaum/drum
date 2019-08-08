@@ -504,7 +504,7 @@
 
       (EXPLETIVE-NEUTRAL-EXTENT-FORMAL-2-OPTIONAL-4-OBJCONTROL-TEMPL
        (ARGUMENTS
-	(LSUBJ (% W::NP (W::sem ($ -)) (W::lex W::it)) ONT::NOROLE)
+	(LSUBJ (% W::NP (w::expletive +) (W::sem ($ -)) (W::lex W::it)) ONT::NOROLE)
 	(LIOBJ (% W::NP (w::var ?iobjvar) (w::sem ?iobjsem) (w::lex ?iobjlex) (w::expletive ?exp)) ont::neutral OPTIONAL)
 	(LOBJ (% W::NP) ONT::EXTENT)
 	(LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) 
@@ -514,7 +514,7 @@
 
       (EXPLETIVE-AFFECTED-EXTENT-FORMAL-2-OPTIONAL-TEMPL
        (ARGUMENTS
-	(LSUBJ (% W::NP (W::sem ($ -)) (W::lex W::it)) ONT::NOROLE)
+	(LSUBJ (% W::NP (w::expletive +) (W::sem ($ -)) (W::lex W::it)) ONT::NOROLE)
 	(LIOBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::Affected OPTIONAL)
 	;(LOBJ (% W::NP) ONT::DURATION)
 	(LOBJ (% W::NP) ONT::EXTENT)
@@ -614,7 +614,7 @@
           
       (EXPLETIVE-EXTENT-FORMAL-TEMPL
        (ARGUMENTS
-	(LSUBJ (% W::NP (W::sem ($ -)) (W::lex W::it)) ONT::NOROLE)
+	(LSUBJ (% W::NP (w::expletive +) (W::sem ($ -)) (W::lex W::it)) ONT::NOROLE)
 	;(LOBJ (% W::NP) ONT::Cost)
 	(LOBJ (% W::NP) ONT::EXTENT)
 	(LCOMP (% W::cp (W::ctype W::s-to)) ont::formal)
@@ -642,7 +642,7 @@
       
       (EXPLETIVE-NEUTRAL-FORMAL-1-XP1-2-XP2-TEMPL
        (ARGUMENTS
-	(LSUBJ (:parameter xp1 (:default (% W::NP)) (:required (W::sem ($ -)))) ONT::NOROLE)
+	(LSUBJ (:parameter xp1 (:default (% W::NP)) (:required (w::expletive +) (W::sem ($ -)))) ONT::NOROLE)
 	(LOBJ (:parameter xp2 (:default (% W::NP))) ONT::NEUTRAl)
     ;;;;; the arg of the pred will be the subject of the verb
 	(LCOMP (% W::PRED (W::arg ?lobjvar) (W::filled -) (W::argument ?lobj) (W::gap ?gap)) ONT::FORMAL)
@@ -650,14 +650,14 @@
 
       (EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL
        (ARGUMENTS
-	(LSUBJ (:parameter xp1 (:default (% W::NP)) (:required(W::sem ($ -)))) ONT::NOROLE)
+	(LSUBJ (:parameter xp1 (:default (% W::NP)) (:required (w::expletive +) (W::sem ($ -)))) ONT::NOROLE)
 	(LOBJ (:parameter xp2 (:default (% W::CP (w::ctype w::s-finite)))) ONT::NEUTRAL)
 	))
 
       ; it was/has been demonstrated that...
       (EXPLETIVE-FORMAL-1-XP1-2-XP2-TEMPL
        (ARGUMENTS
-	(LSUBJ (:parameter xp1 (:default (% W::NP (w::expletive +) (W::lex W::it))) (:required(W::sem ($ -)) )) ONT::NOROLE)
+	(LSUBJ (:parameter xp1 (:default (% W::NP (W::lex W::it))) (:required (w::expletive +) (W::sem ($ -)) )) ONT::NOROLE)
 	(LOBJ (:parameter xp2 (:default (% W::CP (w::ctype w::s-finite)))) ONT::FORMAL)
 	))
 

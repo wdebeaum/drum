@@ -2681,7 +2681,7 @@
  )
 
 (define-type ONT::SUGGEST
- :wordnet-sense-keys ("propose%2:32:00" "suggest%2:32:00" "advise%2:32:02")
+ :wordnet-sense-keys ("advise%2:32:02" "proposal%1:10:00" "propose%2:32:00" "suggest%2:32:00")
  :parent ONT::directive
  )
 
@@ -4808,7 +4808,7 @@
  )
 
 (define-type ONT::POSSIBLY-EXISTS
- :wordnet-sense-keys ("look%2:39:01" "appear%2:39:00" "seem%2:39:00")
+; :wordnet-sense-keys ("look%2:39:01" "appear%2:39:00" "seem%2:39:00") ;this synset should go under ont::appears-to-have-property
  :parent ONT::EXISTS
  :sem (F::Situation (F::aspect F::stage-level) (F::time-span F::extended)(F::cause -) (F::locative F::located) (F::trajectory -))
  :arguments ((:REQUIRED ONT::neutral (F::situation))
