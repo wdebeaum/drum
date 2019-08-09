@@ -2,7 +2,7 @@ sexp
   = sp val:(list / atom) sp { return val }
 
 list
-  = '(' elts:(sexp*) ')' { return elts }
+  = '(' elts:(sexp*) sp ')' { return elts }
 
 atom
   = string
@@ -29,6 +29,6 @@ symbol_component
 
 sp
   = ( [ \n\r\t] 
-    / ';' [^\r\n]+ [\r\n]
+    / ';' [^\r\n]* [\r\n]
     )*
 

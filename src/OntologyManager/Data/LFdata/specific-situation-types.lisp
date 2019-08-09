@@ -2168,7 +2168,7 @@
     :parent ont::in-relation
     :arguments ((:essential ont::neutral)
 		(:essential ont::formal)
-		;;12/02/08 MD relaxed the restriction on property to handle "voltage is a difference in states between the terminals
+		;;12/02/08 MD relaxed the restriction on property to handle "voltage is a difference in states between the terminals"
 		(:essential ont::extent (f::abstr-obj (f::measure-function f::term)))
 		))
 
@@ -3506,7 +3506,7 @@
  :sem (F::SITUATION (:required (F::Cause F::agentive) (F::Trajectory -))(:default (F::Aspect F::bounded)))
  :arguments (;;(:REQUIRED ONT::FORMAL ((? th F::Phys-obj F::Abstr-obj F::situation)))
 	     ;;(:ESSENTIAL ONT::Agent (F::Phys-obj (F::intentional +)))
-	     ;; for "An open switch creates a gap / FN: "it created fanatics during the Afgan war"
+	     ;; for "An open switch creates a gap" / FN: "it created fanatics during the Afgan war"
 	     ;; the process creates compression
 	     (:OPTIONAL ONT::agent ((? cs F::Phys-obj f::abstr-obj) ))
 	     (:essential ont::affected-result ((? aff  F::Phys-obj f::abstr-obj) 

@@ -58,7 +58,7 @@
     )
 
 (define-type ONT::MOLECULAR-PART
-    ::wordnet-sense-keys ("chemical_group%1:27:00" )
+    :wordnet-sense-keys ("chemical_group%1:27:00" )
     :parent ONT::natural-object
     )
 
