@@ -2798,7 +2798,7 @@
  )
 
 (define-type ONT::Correlation
- :wordnet-sense-keys ("indicate%2:32:02" "argue%2:32:01" "affirm%2:31:00" "read%2:32:02"  "underlie%2:42:00")
+ :wordnet-sense-keys ("affirm%2:31:00" "argue%2:32:01" "indicate%2:32:02" "read%2:32:02" "underlie%2:42:00")
  :parent ONT::event-of-state
  :sem (F::situation (F::aspect F::static) (F::trajectory -))
  :arguments ((:ESSENTIAL ONT::neutral ((? n  F::Phys-obj f::abstr-obj) (F::intentional -)))
@@ -3014,6 +3014,12 @@
  :wordnet-sense-keys ("help%2:41:00" "assist%2:41:02" "aid%2:41:00")
  :parent ONT::CAUSE-EFFECT
  :arguments ((:optional ONT::Affected ((? o1 F::Situation F::Phys-obj f::abstr-obj))))
+ )
+
+(define-type ONT::BACKUP-SUPPORT
+ :wordnet-sense-keys ("back_up%2:41:00" "support%2:41:01")
+ :parent ONT::HELP
+ :arguments ((:required ONT::Affected (F::Phys-obj (F::intentional +))))
  )
 
 ;; rescue the dog
@@ -4807,13 +4813,13 @@
              )
  )
 
-(define-type ONT::POSSIBLY-EXISTS
-; :wordnet-sense-keys ("look%2:39:01" "appear%2:39:00" "seem%2:39:00") ;this synset should go under ont::appears-to-have-property
- :parent ONT::EXISTS
- :sem (F::Situation (F::aspect F::stage-level) (F::time-span F::extended)(F::cause -) (F::locative F::located) (F::trajectory -))
- :arguments ((:REQUIRED ONT::neutral (F::situation))
-             )
- )
+;(define-type ONT::POSSIBLY-EXISTS
+;; :wordnet-sense-keys ("look%2:39:01" "appear%2:39:00" "seem%2:39:00") ;this synset should go under ont::appears-to-have-property
+; :parent ONT::EXISTS
+; :sem (F::Situation (F::aspect F::stage-level) (F::time-span F::extended)(F::cause -) (F::locative F::located) (F::trajectory -))
+; :arguments ((:REQUIRED ONT::neutral (F::situation))
+;             )
+; )
 
 (define-type ONT::CONNECTED
  :wordnet-sense-keys ("adjoin%2:35:03" "admit%2:42:00" "afford%2:40:01" "connect%2:42:02" "converge%2:42:00" "join%2:42:01" "link%2:42:01" "link_up%2:42:00" "open%2:42:00" "unite%2:42:02")

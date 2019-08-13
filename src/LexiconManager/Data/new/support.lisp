@@ -7,18 +7,25 @@
   (W::support
    (wordfeats (W::morph (:forms (-vb) :nom W::support)))
    (SENSES
-    ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("admire-31.2") :wn ("support%2:31:04" "support%2:41:00" "support%2:41:01"))
+    ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("admire-31.2") :wn ("support%2:31:04"))
      (LF-PARENT ONT::CONFIRM)
      (TEMPL agent-neutral-xp-templ) ; like admire,adore,appreciate,despise,detest,dislike,loathe,miss
      (EXAMPLE "He supports the petition")
      )
     ;; the foundation supports the building
 
-    ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("admire-31.2") :wn ("support%2:31:04" "support%2:41:00" "support%2:41:01"))
+    ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("admire-31.2") :wn ("support%2:31:04"))
      (LF-PARENT ONT::CONFIRM)
      (TEMPL AGENT-FORMAL-XP-CP-TEMPL) ; like admire,adore,appreciate,despise,detest,dislike,loathe,miss
      (EXAMPLE "He supports the cat releases the mouse.")
      )
+
+    ((meta-data :wn ("support%2:41:00" "support%2:41:01"))
+     (LF-PARENT ONT::BACKUP-SUPPORT)
+     (TEMPL agent-affected-xp-NP-templ)
+     (EXAMPLE "he supported him")
+     )
+
     (
      (LF-PARENT ONT::CORRELATION)
      (example "The result supported the hypothesis")
