@@ -71,31 +71,6 @@
    )
 ))
 
-#|
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
- :words (
-  ((W::SAY (W::OVER))
-   (wordfeats (W::morph (:forms (-vb) :past W::said)))
-   (SENSES
-    ;;;; swier -- say the plan over.
-    ((LF-PARENT ONT::REPEAT)
-     )
-    )
-   )
-))
-
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
- :words (
-  ((W::SAY (W::AGAIN))
-   (wordfeats (W::morph (:forms (-vb) :past W::said)))
-   (SENSES
-    ((LF-PARENT ONT::REPEAT)
-     )
-    )
-   )
-))
-|#
-
 (define-words :pos W::UttWord :boost-word t :templ NO-FEATURES-TEMPL
  :words (
   ((w::say W::again)

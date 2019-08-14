@@ -749,7 +749,7 @@
  )
 
 (define-type ONT::drink
- :wordnet-sense-keys ("drink%2:34:00" "drink%2:34:12")
+ :wordnet-sense-keys ("drink%2:34:00" "drink%2:34:12" "drinking%1:04:01" "drink%2:34:02")
  :parent ONT::consume
   :arguments ((:REQUIRED ONT::Affected (F::Phys-obj (F::Form f::liquid))))
  )

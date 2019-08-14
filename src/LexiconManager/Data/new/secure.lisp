@@ -16,18 +16,6 @@
    )
 ))
 
-#||(define-words :pos W::V :templ agent-theme-xp-templ
- :words (
-  (W::secure
-   (SENSES
-    ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("get-13.5.1") :wn ("secure%2:40:00"))
-     (LF-PARENT ONT::purchase)
-     (TEMPL agent-recipient-affected-templ) ; like buy,order
-     )
-    )
-   )
-))||#
-
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
 ;   )

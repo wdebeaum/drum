@@ -370,24 +370,6 @@
  :parent ONT::group-object-abstr
  )
 
-;;; This is a catch-all for things that are relations between multiple
-;;; objects: identity, distance, whatever. Will need better sorting at
-;;; a future data
-(define-type ONT::relation
- :wordnet-sense-keys ("relation%1:03:00" "amount%2:42:03")
- :parent ONT::abstract-object
- :arguments ((:REQUIRED ONT::FIGURE)
-	     (:REQUIRED ONT::GROUND)
-	     (:optional ont::neutral)
-	     (:optional ont::neutral1)  ;; some relations based on verbs use this
-	     (:optional ont::norole)
-	     (:OPTIONAL ONT::COMPAR)
-	     (:OPTIONAL ONT::REFSET)
-	     )
- :sem (F::abstr-obj (:required)
-		    (:default (f::intensity ont::hi)))
- )
-
 ;; own: his own truck
 (define-type ONT::own
   :parent ONT::relation
@@ -590,9 +572,10 @@
 
 ;; portion, serving
 (define-type ont::food-measure-unit
- :parent ont::measure-unit
- :arguments ((:essential ont::FIGURE (f::phys-obj (f::form f::substance))))
- )
+    :wordnet-sense-keys ("drink%1:04:00" "serving%1:13:00")
+    :parent ont::measure-unit
+    :arguments ((:essential ont::FIGURE (f::phys-obj (f::form f::substance))))
+    )
 
 (define-type ONT::dose
  :wordnet-sense-keys ("dose%1:06:00" "dosage%1:06:00")

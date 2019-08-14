@@ -178,8 +178,27 @@
     :sem (F::abstr-obj (f::information f::mental-construct))
    )
 
+;;; This is a catch-all for things that are relations between multiple
+;;; objects: identity, distance, whatever. Will need better sorting at
+;;; a future data
+(define-type ONT::relation
+    :comment "All types that denote relations. This is the root of terms under abstract objects that take the ONT::F specifier"
+    :wordnet-sense-keys ("relation%1:03:00" "amount%2:42:03")
+    :parent ONT::abstract-object
+    :arguments ((:REQUIRED ONT::FIGURE)
+		(:REQUIRED ONT::GROUND)
+		(:optional ont::neutral)
+		(:optional ont::neutral1)  ;; some relations based on verbs use this
+		(:optional ont::norole)
+		(:OPTIONAL ONT::COMPAR))
+    :sem (F::abstr-obj (:required)
+		       (:default (f::intensity ont::hi)))
+    )
+ 
+ 
+	     
 (define-type ont::domain-property
-    :parent ont::abstract-object
+    :parent ont::RELATION
     :comment "these are modifiers that characterize an object/event with respect to a scale/domain (in ONT::DOMAIN)"
     :sem (F::abstr-obj (F::Scale ont::domain))
     :arguments ((:REQUIRED ONT::FIGURE)

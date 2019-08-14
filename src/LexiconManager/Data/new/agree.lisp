@@ -36,10 +36,6 @@
 	     (Example "He agreed with the findings")
 	     (TEMPL AGENT-neutral-XP-TEMPL (xp (% W::PP (W::ptype (? xx W::to W::on w::with)))))
 	     )
-	    #||((LF-parent ont::promise)
-	     (Example "He agreed to the arrangements")
-	     (TEMPL AGENT-THEME-XP-TEMPL (xp (% W::PP (W::ptype (? xx W::to W::on )))))
-	     )||#
-
+	  
 	    )))
  )

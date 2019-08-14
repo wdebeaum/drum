@@ -3,45 +3,6 @@
 ;;;;
 
 ;; ;; 20121212 GUM change delete type and associated words
-;(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
-; :words (
-;   ((W::hit w::the w::hay)
-;   (wordfeats (W::morph (:forms (-vb) :3s W::hits :past W::hit)))
-;   (SENSES
-;    ((LF-PARENT ONT::prepare-for-sleep)
-;     (meta-data :origin cardiac :entry-date 20080828 :change-date nil :comments nil)
-;     (TEMPL agent-templ)
-;     )
-;    )
-;   )
-;))
-
-;; ;; 20121212 GUM change delete type and associated words
-;(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
-; :words (
-;    ((W::hit w::the w::sack)
-;   (wordfeats (W::morph (:forms (-vb) :3s W::hits :past W::hit)))
-;   (SENSES
-;    ((LF-PARENT ONT::prepare-for-sleep)
-;     (meta-data :origin cardiac :entry-date 20080828 :change-date nil :comments nil)
-;     (TEMPL agent-templ)
-;     )
-;    )
-;   )
-;))
-
-#|
-(define-words :pos W::n 
- :words (
-   (W::hit
-   (SENSES
-    ((LF-PARENT ONT::ESTABLISH-COMMUNICATION)  
-     (TEMPL COUNT-PRED-TEMPL)
-     )
-    )
-   )
-))
-|#
 
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (

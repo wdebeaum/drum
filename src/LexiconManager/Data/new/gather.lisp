@@ -21,19 +21,4 @@
    )
 ))
 
-#|
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
- :words (
-  ((w::gather (w::up))
-   (wordfeats (W::morph (:forms (-vb) :past W::gathered :ing w::gathering)))
-   (senses
-    ((LF-PARENT ONT::collect)
-     (example "gather up the pieces")
-     (meta-data :origin calo-ontology :entry-date 20060126 :change-date nil :comments caloy3)
-     (TEMPL AGENT-affected-XP-TEMPL)
-     )
-    )
-   )
-))
-|#
 

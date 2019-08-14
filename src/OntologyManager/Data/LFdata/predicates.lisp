@@ -2,7 +2,7 @@
 
 ;;; All these are predicates with arguments
 (define-type ONT::predicate
-  :parent ONT::abstract-object
+  :parent ONT::relation
   :comment "predications that require a subcat to form a modifier, typically adverbials (e.g., on, as well as)"
   :sem (F::ABSTR-OBJ (:default (F::GRADABILITY +) (F::scale -) (f::intensity -) (f::orientation -)  (F::CONTAINER -) (f::intentional -)))
   :arguments (;(:ESSENTIAL ONT::OF)

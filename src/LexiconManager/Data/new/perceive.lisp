@@ -9,7 +9,6 @@
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("see-30.1-1") :wn ("perceive%2:39:00"))
      (LF-PARENT ONT::becoming-aware)
      (example "he perceived that there was a problem")
-     ;(TEMPL agent-theme-xp-templ (xp (% w::cp (w::ctype w::s-finite)))) ; like see
      (TEMPL AGENT-FORMAL-XP-CP-TEMPL)
      (PREFERENCE 0.96)
      )

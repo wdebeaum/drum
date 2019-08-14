@@ -26,7 +26,7 @@
 ))
 
 #||
-(define-words :pos W::V :templ agent-theme-xp-templ
+(define-words :pos W::V 
  :words (
   (W::disgust
    (wordfeats (W::morph (:forms (-vb) :past W::disgusted :ing W::disgusting)))

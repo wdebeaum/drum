@@ -26,7 +26,7 @@
     ((LF-PARENT ONT::SAY)
      (example "if it says rain then answer yes")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-THEME-XP-TEMPL (xp (% w::utt)))
+     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% w::utt)))
      (meta-data :origin task-learning :entry-date 20051109 :change-date nil :comments nil)
      )
 |#

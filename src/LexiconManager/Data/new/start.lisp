@@ -106,25 +106,6 @@
    )
 ))
 
-#|
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
- :words (
-  ((W::start (W::again))
-   (SENSES
-    ((LF-PARENT ONT::RESUME)
-     (example "let's start again")
-     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL agent-templ)
-     )
-    ((LF-PARENT ONT::RESUME)
-     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (example "the rain has started again")
-     (TEMPL affected-TEMPL)
-     )
-    )
-   )
-))
-|#
 
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (

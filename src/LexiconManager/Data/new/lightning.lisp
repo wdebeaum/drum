@@ -26,17 +26,4 @@
    )
 ))
 
-#|
-(define-words :pos W::v :templ agent-theme-xp-templ
- :words (
-  (W::lightning
-   (SENSES
-    ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("weather-57"))
-     (LF-PARENT ont::atmospheric-event)
-     (TEMPL expletive-templ) ; like rain
-     )
-    )
-   )
-))
-|#
 

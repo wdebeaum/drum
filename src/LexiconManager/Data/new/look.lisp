@@ -2,21 +2,6 @@
 ;;;; w::look
 ;;;;
 
-#|
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
- :words (
-((w::look w::for)
- (senses
-  ((EXAMPLE "look for something else")
-   (LF-PARENT ONT::seek)
-   (TEMPL agent-theme-xp-templ)
-   (meta-data :origin calo :entry-date 20050323 :change-date nil :comments caloy2)
-   )
-  )
- )
-))
-|#
-
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 ((w::look (w::over))

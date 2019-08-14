@@ -12,14 +12,12 @@
      (EXAMPLE "I found out that he can do it")
      ;(LF-PARENT ONT::come-to-understand)
      (LF-PARENT ONT::determine)
-     ;(TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-that)))))
      (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype (? ct W::s-finite)))))
      )
 
     ((EXAMPLE "I found out how to do it")
      ;(LF-PARENT ONT::come-to-understand)
      (LF-PARENT ONT::determine)
-     ;(TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-that)))))
      (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::NP (W::sort W::wh-desc))))
      )    
     
@@ -62,14 +60,12 @@
     ((EXAMPLE "I found that he can do it")
      ;(LF-PARENT ONT::come-to-understand)
      (LF-PARENT ONT::determine)
-     ;(TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-that)))))
-     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype (? ct W::s-finite)))))
+          (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype (? ct W::s-finite)))))
      )
 
     ((EXAMPLE "I found how to do it")
      ;(LF-PARENT ONT::come-to-understand)
      (LF-PARENT ONT::determine)
-     ;(TEMPL agent-theme-xp-templ (xp (% W::cp (W::ctype (? ct W::s-that)))))
      (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::NP (W::sort W::wh-desc))))
      )    
 

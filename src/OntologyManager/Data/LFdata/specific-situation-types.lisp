@@ -272,7 +272,7 @@
   )
 
 (define-type ONT::MOVE
-  :wordnet-sense-keys ("make%2:38:05" "take%2:38:05" "travel%2:38:00" "go%2:38:00" "move%2:38:03" "locomote%2:38:00" "ascend%2:38:10" "be_active%2:29:00" "draw%2:35:13" "go%2:42:06" "jaunt%2:38:00" "move%2:38:00" "move%2:38:02" "move_out%2:41:00" "wreathe%2:38:00" "mobilize%2:30:00" "go%2:33:00" "transport%1:04:01" "relocation%1:04:00")
+  :wordnet-sense-keys ("make%2:38:05" "take%2:38:05" "travel%2:38:00" "go%2:38:00" "move%2:38:03" "locomote%2:38:00" "be_active%2:29:00" "draw%2:35:13" "go%2:42:06" "jaunt%2:38:00" "move%2:38:00" "move%2:38:02" "move_out%2:41:00" "wreathe%2:38:00" "mobilize%2:30:00" "go%2:33:00" "transport%1:04:01" "relocation%1:04:00")
  :parent ont::motion
  :sem (F::SITUATION (F::CONTAINER -) (F::Locative -) (F::trajectory +))
  :arguments (;(:OPTIONAL ONT::agent (F::Phys-obj (:required (f::origin (? org f::human f::non-human-animal)))
@@ -499,7 +499,7 @@
 
 ;; dance
 (define-type ONT::dance
- :wordnet-sense-keys ("dance%2:38:01" "dance%2:38:02")
+ :wordnet-sense-keys ("dance%2:38:01" "dance%2:38:02" "dance%2:36:00" "dancing%1:04:00")
  :parent ONT::self-locomote
  )
 
@@ -4104,8 +4104,7 @@
 
 (define-type ONT::change-magnitude
  :wordnet-sense-keys ("change_magnitude%2:30:00" "change_intensity%2:39:00")
- :arguments (;(:essential ont::affected (F::abstr-obj (f::type ont::ordered-domain) (f::scale ont::domain)))
-	     ;(:essential ont::affected (F::abstr-obj (f::scale ont::domain))) ; e.g., rainfall is physobj; flood is situation 
+ :arguments (	     ;(:essential ont::affected (F::abstr-obj (f::scale ont::domain))) ; e.g., rainfall is physobj; flood is situation 
 	     (:essential ont::affected)
 	     (:essential ONT::scale (f::abstr-obj (F::scale ont::domain)))
 	     (:optional  ONT::result ((? cau2 F::situation F::Abstr-obj f::phys-obj) (F::type (? t ont::goal-reln ont::source-reln))))) 
@@ -4772,10 +4771,15 @@
  )
 
 ;; surround, border
-;; the formal surrounds the formal1
 ;; (like a fence)
 (define-type ONT::surround
  :wordnet-sense-keys ("surround%2:35:00" "environ%2:35:00" "ring%2:35:03" "skirt%2:35:00" "border%2:35:01")
+ :parent ONT::position
+ :sem (F::Situation (F::Aspect F::stage-level) (F::time-span f::extended))
+ )
+
+(define-type ONT::spatial-divide
+ :wordnet-sense-keys ("divide%2:42:00")
  :parent ONT::position
  :sem (F::Situation (F::Aspect F::stage-level) (F::time-span f::extended))
  )
@@ -4902,6 +4906,14 @@
 (define-type ONT::location-as-motion
  :comment "relations that locate in terms of some motion"
  :wordnet-sense-keys ("range%2:42:00" "flow%2:35:04")
+ :parent ONT::BE-AT
+ :sem (F::Situation (F::aspect F::stage-level))
+ :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj))              )
+ )
+
+(define-type ONT::location-as-orientation
+ :comment "relations that locate in terms of orientation"
+ :wordnet-sense-keys ("slope%2:38:00" "ascend%2:38:10")
  :parent ONT::BE-AT
  :sem (F::Situation (F::aspect F::stage-level))
  :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj))              )

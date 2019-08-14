@@ -59,16 +59,3 @@
     ))
   ))
 
-#||(define-words :pos W::V 
-  :templ agent-theme-xp-templ
- :words (
-	  (w::stick
-	   (senses
-	    ((LF-PARENT ONT::Compliance)
-	     (example "Stick with the given notation")
-	     (templ agent-theme-xp-templ (xp (% w::PP (w::ptype w::with))))
-	     (meta-data :origin lam :entry-date 20050425 :change-date nil :comments lam-initial)
-	     )
-	    ))
-))||#
-

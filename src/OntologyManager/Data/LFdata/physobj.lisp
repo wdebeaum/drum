@@ -805,7 +805,7 @@
 
 
 (define-type ONT::person
-    :wordnet-sense-keys ("person%1:03:00" "imaginary_being%1:18:00")
+    :wordnet-sense-keys ("person%1:03:00")
     :parent ONT::mammal ;; umls
     :sem (F::Phys-obj (F::form F::solid-object)
 		      (F::spatial-abstraction F::spatial-point)
@@ -823,11 +823,23 @@
 
 ;; angel, devil
 (define-type ONT::supernatural-being
+    :wordnet-sense-keys ("supernatural_being%1:18:00")
     :parent ONT::organism ;; for parsing purposes, they are like people ;) ;; umls
     :sem (F::Phys-obj (F::form F::solid-object)
 		      (F::spatial-abstraction F::spatial-point)
 		      (F::origin F::Human)
 		      (F::Object-Function F::Occupation)
+		      (f::mobility f::self-moving)
+		      (F::Container -) (F::intentional +) (F::information -))
+    )
+
+(define-type ONT::imaginary-being
+    :wordnet-sense-keys ("imaginary_being%1:18:00")
+    :parent ONT::organism ; not all of them are people, e.g., unicorn
+    :sem (F::Phys-obj (F::form F::solid-object)
+		      (F::spatial-abstraction F::spatial-point)
+		      ;(F::origin F::Human)
+		      ;(F::Object-Function F::Occupation)
 		      (f::mobility f::self-moving)
 		      (F::Container -) (F::intentional +) (F::information -))
     )
@@ -1211,7 +1223,7 @@
 ;; bar, lounge
 (define-type ONT::drinking-establishment
     :parent ONT::entertainment-establishment
-    :wordnet-sense-keys ("barroom%1:06:00" "bar%1:06:00" "saloon%1:06:00" "ginmill%1:06:00" "taproom%1:06:00")
+    :wordnet-sense-keys ("barroom%1:06:00" "saloon%1:06:00" "ginmill%1:06:00" "taproom%1:06:00")
     ;;:sem (F::Phys-obj (F::object-function F::Building))
     )
 
@@ -2041,7 +2053,7 @@
 
 (define-type ONT::DEVICE
     :parent ONT::MANUFACTURED-OBJECT
-    :wordnet-sense-keys ("device%1:06:00")
+    :wordnet-sense-keys ("device%1:06:00" "buoy%1:10:00")
     :sem (F::Phys-obj (F::Origin F::Artifact))
     )
 
@@ -2374,9 +2386,10 @@
     :arguments ((:OPTIONAL ONT::FIGURE))
     )
 
-;; square, triangle, etc.  -- shapes that can be moved around on the screen
+;; square, triangle, etc.  -- objects defined by their shape
 (define-type ONT::shape-object
     :parent  ONT::shape
+    :wordnet-sense-keys ("shape%1:03:00")
     :sem (f::Phys-obj (:required  (F::origin f::artifact) (f::form f::object) (f::intentional -) (f::information -)
 				  (f::object-function f::representation))
 		      (:default (f::mobility f::non-self-moving))
@@ -2680,7 +2693,8 @@
 
 (define-type ONT::BEVERAGES
     :parent ONT::FOOD
-    :wordnet-sense-keys ("beverage%1:13:00" "drink%1:13:00" "drinkable%1:13:00" "potable%1:13:00")
+    :wordnet-sense-keys ("beverage%1:13:00" "drink%1:13:00" "drinkable%1:13:00" "potable%1:13:00"
+					    "milkshake%1:13:00")
     :sem (f::phys-obj (F::form F::liquid) (f::origin f::natural))
     )
 

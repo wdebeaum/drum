@@ -2,7 +2,7 @@
 ;;;; W::cohere
 ;;;;
 
-(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
+(define-words :pos W::v 
  :words (
    (W::cohere
    (SENSES

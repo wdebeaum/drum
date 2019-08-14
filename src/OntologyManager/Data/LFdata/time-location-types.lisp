@@ -12,7 +12,7 @@
 ; high-level type for spatial locations
 ; a relation between an object (figure) to another object (ground) by a spatial relation, possible abstract
 (define-type ont::position-reln
- :parent ont::abstract-object
+ :parent ont::relation
  :comment "Spatial relations that locate one object (the figure) in terms of another object (the ground), which often is implicit"
  ;; situations can be spatially located, e.g. meetings, riots, parties
  ;; so can abstr-obj: the idea in the document; the name on the envelope; the man at the party

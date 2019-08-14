@@ -38,16 +38,3 @@
    )
 ))||#
 
-#||(define-words :pos W::v :templ AGENT-THEME-XP-TEMPL
- :words (
-  ((W::pull (W::off))
-   (SENSES
-    ((LF-PARENT ONT::pull-off)
-     (LF-FORM W::pull-off)
-     (SEM (F::cause F::agentive) (F::aspect F::bounded) (F::time-span F::extended))
-     (TEMPL AGENT-affected-SOURCE-OPTIONAL-TEMPL (xp (% W::pp (W::ptype (? ptype W::of W::from)))))
-     )
-    )
-   )
-))||#
-

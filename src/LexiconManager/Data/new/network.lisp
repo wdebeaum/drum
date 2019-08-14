@@ -22,12 +22,7 @@
       ; like connect
      (PREFERENCE 0.96)
      )
-    #|| ;; need this template to go through the adjectival passive rule
-     ((LF-PARENT ONT::attach)
-     (example "the networked computers")
-     (TEMPL AGENT-THEME-xp-TEMPL)
-     )||#
-    ((LF-PARENT ONT::CONNECTED)
+     ((LF-PARENT ONT::CONNECTED)
      (example "the internet networks one computer to another")
      (SEM (F::Aspect F::indiv-level) (F::Time-span F::extended))
      (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)

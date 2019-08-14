@@ -2,7 +2,7 @@
 ;;;; W::disassemble
 ;;;;
 
-#||(define-words :pos W::V :templ agent-theme-xp-templ
+#||(define-words :pos W::V 
  :words (
   (W::disassemble
    (SENSES
