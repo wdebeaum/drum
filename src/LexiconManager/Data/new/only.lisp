@@ -11,7 +11,7 @@
     ;;;;; use this to allow it to appear in the + comparative-adj + cardinal rule
     ;;;;; the only two trucks, the best two trucks
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("only%5:00:00:single:05"))
-     (LF-PARENT ONT::CARDINALITY-VAL)
+     (LF-PARENT ONT::singularity-val)
      (SEM (F::GRADABILITY F::-))
      )
     )

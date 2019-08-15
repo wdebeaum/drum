@@ -6,7 +6,7 @@
  :words (
   (W::bio
    (SENSES
-    ((LF-PARENT ONT::BIOLOGICAL)
+    ((LF-PARENT ONT::BIOLOGY-VAL)
      )
     )
    )
@@ -16,7 +16,7 @@
  :words (
   (w::bio-
   (senses
-   ((lf-parent ont::BIOLOGICAL)
+   ((lf-parent ONT::BIOLOGY-VAL)
     (example "biodegrade")
     (templ V-PREFIX-templ)
     )
@@ -28,7 +28,7 @@
  :words (
   (w::bio-
   (senses
-   ((lf-parent ont::BIOLOGICAL)
+   ((lf-parent ONT::BIOLOGY-VAL)
     (templ prefix-adj-templ)
     (example "biosensor")
     )
@@ -40,7 +40,7 @@
  :words (
   (w::bio-
   (senses
-   ((lf-parent ont::BIOLOGICAL)
+   ((lf-parent ONT::BIOLOGY-VAL)
     (example "biophysical")
     (templ adj-operator-prefix-TEMPL)
     )

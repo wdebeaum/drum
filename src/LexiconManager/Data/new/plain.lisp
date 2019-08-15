@@ -17,7 +17,7 @@
      (example "plain food")
      (meta-data :origin adjective-reorganization :entry-date 20170317 :change-date nil :comments nil)
      )
-    ((LF-PARENT ont::unadorned)
+    ((LF-PARENT ont::bare-val)
      (example "plain white walls")
      (meta-data :origin adjective-reorganization :entry-date 20170317 :change-date nil :comments nil)
      )

@@ -9,7 +9,7 @@
    (SENSES
     ((meta-data :origin calo :entry-date 20040907 :change-date nil :wn ("lone%5:00:00:single:05") :comments caloy2)
      (EXAMPLE "The lone exception")
-     (LF-PARENT ONT::cardinality-VAL)
+     (LF-PARENT ONT::singularity-VAL)
      (SEM (F::GRADABILITY F::-))
      )
     )

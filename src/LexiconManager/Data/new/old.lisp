@@ -31,7 +31,7 @@
    ((w::old w::fashioned)
    (SENSES
     ((meta-data :origin windenergy :entry-date 20080521 :change-date nil :comments nil)
-     (LF-PARENT ONT::not-current-val)
+     (LF-PARENT ONT::old-fashioned-val)
      )
     )
    )

@@ -133,12 +133,14 @@
 ;; more, better
 (define-type ONT::More-val
     :parent ONT::domain-property
+  :wordnet-sense-keys ("better%3:00:00::" "better%3:00:02::" "greater%3:00:00::")
     :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (F::INTENTIONAL -))
 		       (:default (F::GRADABILITY +) (F::scale ?!sc)))
     )
 ;; less, worse
 (define-type ONT::less-val
     :parent ONT::domain-property
+  :wordnet-sense-keys ("worse%3:00:00::" "fewer%3:00:00::" "worse%3:00:02::" "worsened%3:00:00::" "less%3:00:00::")
     :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (F::INTENTIONAL -))
 		       (:default (F::GRADABILITY +) (F::scale ?!sc)))
     )
@@ -151,7 +153,7 @@
 		      (:default (F::GRADABILITY +) (F::scale ?!sc)))
   :arguments ((:REQUIRED ONT::FIGURE)
 	      (:REQUIRED ONT::GROUND))
- :wordnet-sense-keys ("ultimate%3:00:00" "maximum%3:00:00")
+ :wordnet-sense-keys ("best%3:00:00::" "most%3:00:01::" "most%3:00:02::" "ultimate%3:00:00" "maximum%3:00:00")
 )
 
 ;; worst, least
@@ -159,7 +161,7 @@
   :parent ONT::domain-property
   :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (F::INTENTIONAL -))
 		      (:default (F::GRADABILITY +) (F::scale ?!sc)))
- :wordnet-sense-keys ("minimum%3:00:00")
+ :wordnet-sense-keys ("worst%3:00:00::" "minimum%3:00:00")
   )
 
 ;; as hot as it can be

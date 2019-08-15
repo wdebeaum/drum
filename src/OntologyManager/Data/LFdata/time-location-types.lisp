@@ -147,7 +147,7 @@
 ; figure is adjacent to ground
 ; adjacent (to), next (to), alongside (of), beside
 (define-type ont::adjacent
-  :wordnet-sense-keys ("adjacent%5:00:00:close:01")
+  :wordnet-sense-keys ("subjacent%3:00:00::" "adjacent%5:00:00:close:01")
   :parent ont::near-reln
   :arguments ((:essential ONT::FIGURE ) ;((? of1  f::phys-obj f::abstr-obj)))
 	      (:ESSENTIAL ONT::GROUND ((? grd F::Phys-obj)))
@@ -440,11 +440,13 @@
 ; upstairs
 (define-type ont::floor-above
  :parent ont::floor-rel
+  :wordnet-sense-keys ("upstairs%3:00:00::" "upstair%3:00:00::")
  )
 
 ; downstairs
 (define-type ont::floor-below
  :parent ont::floor-rel
+  :wordnet-sense-keys ("downstairs%3:00:00::" "downstair%3:00:00::")
  )
 
 ; figure relates to proximity to city center
@@ -741,11 +743,13 @@
 
 (define-type ont::clockwise
     :parent ont::direction-rotation
+  :wordnet-sense-keys ("clockwise%3:00:00::")
     )
 
 ; counterclockwise
 (define-type ont::counterclockwise
     :parent ont::direction-rotation
+  :wordnet-sense-keys ("counterclockwise%3:00:00::" "anticlockwise%3:00:00::" "contraclockwise%3:00:00::")
     )
 
 (define-type ont::direction-wrt-verticality
@@ -1016,7 +1020,7 @@
 
 (define-type ont::immediate
     :parent ont::event-time-rel
-    :wordnet-sense-keys ("immediately%4:02:00" "immediately%4:02:05")
+    :wordnet-sense-keys ("immediate%3:00:00::" "immediately%4:02:00" "immediately%4:02:05")
     )
 
 (define-type ont::when-while
@@ -1056,7 +1060,7 @@
  )
 
 (define-type ONT::now
-     :wordnet-sense-keys ("now%4:02:05" "presently%4:02:00" "present%3:00:01")
+     :wordnet-sense-keys ("present%3:00:02::" "now%4:02:05" "presently%4:02:00" "present%3:00:01")
      :parent ONT::event-time-wrt-now
      )
 
@@ -1071,7 +1075,7 @@
      )
 
 (define-type ONT::in-past
-     :wordnet-sense-keys ("past%3:00:00")
+     :wordnet-sense-keys ("noncurrent%3:00:00::" "past%3:00:00")
      :parent ONT::event-time-wrt-now
      )
 
