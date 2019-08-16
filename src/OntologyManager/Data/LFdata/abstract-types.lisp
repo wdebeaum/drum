@@ -1179,7 +1179,7 @@
 
 ;; game
 (define-type ONT::game
- :wordnet-sense-keys ("game%1:04:00")
+ :wordnet-sense-keys ("game%1:04:00" "game%1:04:01")
  :parent ONT::competition
  )
 

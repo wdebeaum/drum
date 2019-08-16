@@ -585,10 +585,11 @@
              )
  )
 
-(define-type ONT::Co-motion
- :parent ont::motion
- :arguments ((:essential ont::neutral)   ;; the object with which the motion is relative to
-	     (:essential ONT::AFFECTED ((? ttype f::phys-obj f::abstr-obj)))  ; exclude situation, e.g., "the dog chase the cat barking": "cat barking" should not be a nominalization that is chased 
+(define-type ONT::motion-wrt-another-object
+    :parent ont::motion
+    :comment "motion defined wrt another object, either moving or static"
+    :arguments ((:essential ont::neutral)   ;; the object with which the motion is relative to
+		(:essential ONT::AFFECTED ((? ttype f::phys-obj f::abstr-obj)))  ; exclude situation, e.g., "the dog chase the cat barking": "cat barking" should not be a nominalization that is chased 
              )
  )
 

@@ -20,8 +20,11 @@
      (TEMPL AGENT-neutral-XP-TEMPL)
      (example "He proposed a plan")
      )
-    
+    ((lf-parent ont::SUGGEST)
+     (example "he proposed to go")
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL))
     )
    )
-))
+  )
+ )
 

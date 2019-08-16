@@ -21,8 +21,14 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (TEMPL AGENT-NEUTRAL-XP-OPTIONAL-TEMPL)
      )
-    )
-   )
+
+    ((LF-PARENT ONT::TIME-ELAPSE)
+     (comment "The winter passed")
+     (TEMPL NEUTRAL-TEMPL)
+     (preference .991)  ;; ever so slight preference (when subject is a time!)
+     )
+   
+   ))
 ))
 
 (define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
@@ -34,7 +40,11 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      (TEMPL AGENT-NEUTRAL-XP-OPTIONAL-TEMPL)
      )
-    )
+
+     ((LF-PARENT ONT::TIME-ELAPSE)
+     (TEMPL NEUTRAL-TEMPL)
+     )
+     )
    )
-))
+  ))
 

@@ -7,7 +7,7 @@
  :words (
   (W::follow
    (SENSES
-    ((LF-PARENT ONT::FOLLOW-PATH)
+    ((LF-PARENT ONT::FOLLOW-SOMETHING)
      (example  "I follow truck B" "The truck followed the road to Avon")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      )

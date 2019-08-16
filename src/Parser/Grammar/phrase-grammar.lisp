@@ -298,7 +298,7 @@
 
 	((ADJP (ARG ?arg) (ARGUMENT (% NP))
 	  (AGR ?a)
-	  (sort pred) (VAR ?v) (sem ?sem) (atype w::central) (comparative -) (set-modifier +) 
+	  (sort pred) (VAR ?v) (sem ?sem) (atype (? atype w::central w::postpositive)) (comparative -) (set-modifier +) 
 	  (LF (% DESCRIPTION (STATUS ont::indefinite) (var ?v) (CLASS ONT::NUMBER) (constraint ?newc)))
 	  (post-subcat -)
 	  )

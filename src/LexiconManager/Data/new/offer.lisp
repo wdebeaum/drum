@@ -32,6 +32,11 @@
      (TEMPL agent-affected-goal-optional-TEMPL)
      (meta-data :origin ptb :entry-date 20100604 :change-date 20090501 :comments nil)
      )
+
+    (
+     (lf-parent ont::offer)
+     (example "he offered to go")
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL))
     )
    )
 ))

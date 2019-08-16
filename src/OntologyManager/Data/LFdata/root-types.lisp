@@ -61,11 +61,19 @@
 
 
 (define-type ont::occurring
-     :wordnet-sense-keys ("come%2:30:01" "come%2:42:13" "come_about%2:30:00" "fall_out%2:30:00" "go%2:42:03" "go%2:42:12" "go_on%2:30:00" "hap%2:30:00" "happen%2:30:00" "happening%1:11:00" "natural_event%1:11:00" "occur%2:30:00" "occurrence%1:11:00" "occurrent%1:11:00" "pass%2:30:00" "pass_off%2:30:00" "play%2:42:00" "set_in%2:30:00" "take_place%2:30:00")
+     :wordnet-sense-keys ("come%2:30:01" "come%2:42:13" "come_about%2:30:00" "fall_out%2:30:00" "go%2:42:03" "go%2:42:12" "go_on%2:30:00" "hap%2:30:00" "happen%2:30:00" "happening%1:11:00" "natural_event%1:11:00" "occur%2:30:00" "occurrence%1:11:00" "occurrent%1:11:00" "pass%2:30:00" "pass_off%2:30:00" "play%2:42:00" "set_in%2:30:00" "take_place%2:30:00" "progress%2:38:00")
      :parent ONT::SITUATION-ROOT
      :comment "event occurrence - e.g., an explosion happened"
-     :arguments ((:essential ONT::neutral (f::situation (F::aspect F::dynamic)))
-		 (:optional ONT::affected ((? t F::situation F::Abstr-obj f::phys-obj) (F::tangible +))))
+     :arguments ((:essential ONT::neutral ((? xx f::situation F::time)))
+		 (:optional ONT::affected (f::phys-obj)))
+     :sem (F::Situation (F::aspect F::dynamic)))
+
+
+(define-type ont::time-elapse
+     :wordnet-sense-keys ("pass%2:38:00")
+     :parent ONT::occurring
+     :comment "time occurrence - e.g., time passed by, the winter went on, ..."
+     :arguments ((:essential ONT::neutral (F::time)))
      :sem (F::Situation (F::aspect F::dynamic)))
 
 (define-type ont::event-of-action 
@@ -191,8 +199,6 @@
 		(:optional ont::neutral1)  ;; some relations based on verbs use this
 		(:optional ont::norole)
 		(:OPTIONAL ONT::COMPAR))
-    :sem (F::abstr-obj (:required)
-		       (:default (f::intensity ont::hi)))
     )
  
  

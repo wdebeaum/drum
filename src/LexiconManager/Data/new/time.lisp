@@ -12,6 +12,12 @@
      (example "what time did it arrive")
      (templ other-reln-templ)
      )
+
+    ((LF-PARENT ONT::TIME-LOC)
+     (example "Much time passed")
+     (templ MASS-PRED-TEMPL))
+		
+      
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("time%1:28:05" "time%1:28:00" "time%1:28:03" "time%1:28:01"))
      (LF-PARENT ONT::DURATION-SCALE)
      (example "how much time does it take")

@@ -803,7 +803,7 @@
  )
 
 
-(define-type ONT::FOLLOW-PATH
+(define-type ONT::FOLLOW-SOMETHING
  :wordnet-sense-keys ("follow%2:38:00" "come_after%2:41:00" "follow%2:42:03")
  :parent ONT::CO-MOTION
  :sem (F::SITUATION (F::Aspect F::Unbounded) (F::Cause F::Agentive) (F::Trajectory +))
@@ -831,10 +831,11 @@
  )
 
 (define-type ONT::DEPART
- :wordnet-sense-keys ("depart%2:38:01" "leave%2:38:01" "leave%2:38:00")
- :parent ONT::EVENT-OF-ACTION
- :sem (F::SITUATION (F::Aspect F::Bounded) (F::Cause F::Force) (F::Time-span F::Atomic)) 
- :arguments ((:OPTIONAL ONT::neutral ((? neut F::Phys-obj f::situation)))  ;; I left the party
+    :wordnet-sense-keys ("depart%2:38:01" "leave%2:38:01" "leave%2:38:00")
+    :parent ONT::MOTION-WRT-ANOTHER-OBJECT
+    :comment "Object moves away from another object"
+    :sem (F::SITUATION (F::Aspect F::Bounded) (F::Cause F::Force) (F::Time-span F::Atomic)) 
+    :arguments ((:OPTIONAL ONT::neutral ((? neut F::Phys-obj f::situation)))  ;; I left the party
 	     (:optional ONT::source  ;; as in "I left from the party"
 			)))
 
@@ -957,14 +958,13 @@
 ; )
 
 ;;; This is actually 2 moving objects passing
-;;; I put it into co-motion frame
+;;; I put it into motion-wrt-another-object frame
 (define-type ONT::PASS-BY
   :wordnet-sense-keys ("travel_by%2:38:01" "pass_by%2:38:00" "surpass%2:38:00" "go_past%2:38:00" "go_by%2:38:01" "pass%2:38:05")
- :parent ONT::co-MOTION
- :sem (F::SITUATION (F::Trajectory -))
- :arguments (
-             )
- )
+  :parent ONT::motion-wrt-another-object
+  :sem (F::SITUATION (F::Trajectory -))
+  
+  )
 
 ;;; This is only for movable objects meeting
 ;;; Path meeting gets mapped to intersection
@@ -1625,7 +1625,7 @@
  )
 
 (define-type ONT::progress
- :wordnet-sense-keys ("go%2:30:02" "progress%2:30:00"  "progress%2:38:00"  "progress%2:30:01")
+ :wordnet-sense-keys ("go%2:30:02" "progress%2:30:00"  "progress%2:30:01")
 ; :parent ONT::SITUATION-CHANGE
  :parent ONT::ACTIVITY-ONGOING
  :comment "A situation continues to develop"
@@ -3170,7 +3170,7 @@
 (define-type ont::play
     :wordnet-sense-keys ("play%2:33:00" "play%2:41:03" "play%2:41:00")
     ;:parent ont::execute
-    :parent ont::event-of-action
+    :parent ont::intentionally-act
     )
 
 ;; take a shower (for asma)
@@ -5770,7 +5770,8 @@
 
 (define-type ONT::ARRIVE
  :wordnet-sense-keys ("come%2:38:04" "get%2:38:00" "arrive%2:38:00" "arrive_at%2:38:00")
- :parent ont::event-of-action ;; 20120529 GUM change new parent
+ :parent ONT::MOTION-WRT-ANOTHER-OBJECT
+ :comment "motion that ends in being located with another object"
  :sem (F::SITUATION (:required (F::Aspect F::Bounded)))
  :arguments ((:required ONT::agent (F::Phys-obj (F::type (? obf2 ont::information-function-object ont::phys-object))))
 	     (:ESSENTIAL ONT::location (F::Phys-obj (F::Object-Function (? obf2 F::Place f::representation))))
