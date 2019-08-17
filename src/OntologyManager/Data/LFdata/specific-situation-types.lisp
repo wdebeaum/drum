@@ -805,25 +805,25 @@
 
 (define-type ONT::FOLLOW-SOMETHING
  :wordnet-sense-keys ("follow%2:38:00" "come_after%2:41:00" "follow%2:42:03")
- :parent ONT::CO-MOTION
+ :parent ONT::MOTION-WRT-ANOTHER-OBJECT
  :sem (F::SITUATION (F::Aspect F::Unbounded) (F::Cause F::Agentive) (F::Trajectory +))
  )
 
 (define-type ONT::PURSUE
  :wordnet-sense-keys ("pursue%2:38:00")
- :parent ONT::CO-MOTION
+ :parent ONT::MOTION-WRT-ANOTHER-OBJECT
  :sem (F::SITUATION (F::Aspect F::Unbounded) (F::Cause F::Agentive) (F::Trajectory +))
  )
 
 (define-type ONT::PRECEDE
  :wordnet-sense-keys ("antecede%2:42:00" "come_before%2:41:00")
- :parent ONT::CO-MOTION
+ :parent ONT::MOTION-WRT-ANOTHER-OBJECT
  )
 
 ;; join another agent
 (define-type ONT::CATCH
  :wordnet-sense-keys ("catch%2:33:10")
- :parent ONT::CO-MOTION
+ :parent ONT::MOTION-WRT-ANOTHER-OBJECT
  :sem (F::SITUATION (F::Aspect F::Bounded) (F::Cause F::Agentive) (F::Trajectory +))
  :arguments ((:OPTIONAL ONT::affected (F::Phys-obj (f::intentional +)))
              (:OPTIONAL ONT::agent (F::Phys-obj (f::intentional +)))
@@ -894,7 +894,7 @@
 ;;; We assume that passing moving objects is a different sense
 (define-type ONT::PASS-ACROSS
  :wordnet-sense-keys ("pass%2:38:00" "go_through%2:38:00" "go_across%2:38:00")
- :parent ONT::co-motion
+ :parent ONT::MOTION-WRT-ANOTHER-OBJECT
  :sem (F::SITUATION (F::Trajectory -))
  :arguments (
              )
