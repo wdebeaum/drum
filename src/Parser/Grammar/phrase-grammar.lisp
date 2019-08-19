@@ -6230,10 +6230,11 @@
 		    (nomobjpreps ?nop)
 		    (nomsubjpreps ?nsp)
 		    ))
-	 (n (lf ?ratelf) (sem ($ (? t F::ABSTR-OBJ F::SITUATION F::TIME)  ; (planting) date
-				 ;(f::type (? x ONT::DOMAIN ONT::ACTING))))) ; ACTING: activity
-				 (f::type (? x ONT::DOMAIN ONT::ACTIVITY-EVENT ONT::ABILITY-EVENT ONT::LEVEL ONT::QUANTITY
-					     ONT::time-object))))) ; rate, height, activity, level, amount, (planting) date
+	 (n (lf ?ratelf)
+	  ;; we match the LF here instead of in the SEM in order to get a hard failure 
+	  (lf (? x ONT::DOMAIN ONT::ACTIVITY-EVENT ONT::ABILITY-EVENT ONT::LEVEL ONT::QUANTITY
+		   ONT::time-object))  ; rate, height, activity, level, amount, (planting) date
+	  (sem ($ (? t F::ABSTR-OBJ F::SITUATION F::TIME))))  ; (planting) date
 	 )
 
     ;; this rule then inserts the rate/activity predicate once the arguments have been attached
