@@ -2,6 +2,7 @@
 ;;;; W::SAME
 ;;;;
 
+#| ; "the same" is defined as a multi-word adj
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :tags (:base500)
  :words (
@@ -16,3 +17,4 @@
     ))   
 ))
 
+|#

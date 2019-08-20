@@ -46,6 +46,7 @@
     ((LF-PARENT ONT::REFERENTIAL-SEM)
      (TEMPL PRONOUN-INDEF-TEMPL) ;; need PRO INDEF to get one's
      (example "how does one do that" "a room of one's own")
+     (preference .98) ;; prefer number sense
      )
     )
    )

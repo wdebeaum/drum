@@ -191,9 +191,9 @@
    ;;               and ynq: "... and is the cat red?"
    ((utt  ;(var ?v)
 	  (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
-     (punc +) (punctype ?p) (uttword ?uw) (sa-seq +) (acts (?v1 ?v2))
+     (punc +) (punctype ?p) (uttword ?uw) (sa-seq +) (acts (?v1 ?v2)) (operators (?lx)) ; we should probably add operator placeholders for puncs too (e.g., A dog, a cat and a mouse")
      (lf (% sa-seq (var *) (class ont::speech-act)
-	    (constraint (& (acts (?v1 ?v2))))))
+	    (constraint (& (acts (?v1 ?v2)) (operators (?lx))))))
      (var *))
    -utt-conj-utt>
    (head (utt (focus ?foc) (ended -) (var ?v1) (punc -) (uttword ?uw)
@@ -214,15 +214,15 @@
    ; extend an sa-seq
    ((utt  ;(var ?v)
 	  (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
-     (punc +) (punctype ?p) (uttword ?uw) (sa-seq +) (acts ?newacts)
+     (punc +) (punctype ?p) (uttword ?uw) (sa-seq +) (acts ?newacts) (operators ?newops)
      (lf (% sa-seq (var *) (class ont::speech-act)
-	    (constraint (& (acts ?newacts)))))
+	    (constraint (& (acts ?newacts) (operators ?newops)))))
      (var *))
    -utt-conj-utt-add-one>
    (head (utt (focus ?foc) (ended -) (var ?v1) ;(punc -)
 	      (uttword ?uw)
 	  (lf (% sa-seq (var ?v1) (class ?cl) (constraint ?con)))
-	  (acts ?acts)
+	  (acts ?acts) (operators ?ops)
 	  ))
    (conj (lf (? lx ont::or ont::and ont::but ont::however ont::plus ont::otherwise ont::so))
 	 (lex ?lex))
@@ -233,6 +233,7 @@
      )
     ;; (add-to-conjunct (val (punctype ?p)) (old ?con) (new ?constraint))
     (add-to-end-of-list (list ?acts) (val ?v2) (newlist ?newacts))
+    (add-to-end-of-list (list ?ops) (val ?lx) (newlist ?newops))
     )
 
    

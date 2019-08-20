@@ -9,10 +9,11 @@
     ((EXAMPLE "They are the same [as John's]")
      (LF-PARENT ONT::IDENTITY-VAL)
      (LF-FORM W::SAME)
-     (SYNTAX (w::atype w::predicative-only))
+     (SYNTAX (w::atype (? atype w::predicative-only w::postpositive)))
      (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE W::AS))))
      (preference .97) ;; reduce competition with the article
      )
+    #|
     ((EXAMPLE "I want a book the same as John's")
      (LF-PARENT ONT::IDENTITY-VAL)
      (LF-FORM W::SAME)
@@ -20,6 +21,16 @@
      (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE W::AS))))
      (preference .97) ;; reduce competition with the article
      )    
+    |#
+
+    ((EXAMPLE "They are the same size")
+     (LF-PARENT ONT::IDENTITY-VAL)
+     (LF-FORM W::SAME)
+     (SYNTAX (w::atype w::predicative-only))
+     (TEMPL ADJ-CO-THEME2-TEMPL (XP (% W::PP (W::PTYPE W::AS))))
+     (preference .97) ;; reduce competition with the article
+     )    
+
     ))
 ))
 

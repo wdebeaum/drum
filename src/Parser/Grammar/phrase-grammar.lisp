@@ -298,7 +298,7 @@
 
 	((ADJP (ARG ?arg) (ARGUMENT (% NP))
 	  (AGR ?a)
-	  (sort pred) (VAR ?v) (sem ?sem) (atype (? atype w::central w::postpositive)) (comparative -) (set-modifier +) 
+	  (sort pred) (VAR ?v) (sem ?sem) (atype w::central) (comparative -) (set-modifier +)
 	  (LF (% DESCRIPTION (STATUS ont::indefinite) (var ?v) (CLASS ONT::NUMBER) (constraint ?newc)))
 	  (post-subcat -)
 	  )
@@ -2062,11 +2062,11 @@
     ;; e.g., the train that went to Avon, the train I moved, the train that is in Avon
   
     ((N1 (RESTR ?con)
-      (CLASS ?c) (SORT ?sort) (QUAL ?qual) (COMPLEX +) (var ?v)
+      (CLASS ?c) (SORT ?sort) (QUAL ?qual) (COMPLEX +) (var ?v) (n1-rel +)
       (relc +)  (subcat (% -)) (post-subcat -)
       )
      -n1-rel>
-     (head (N1 (VAR ?v) (RESTR ?r)
+     (head (N1 (VAR ?v) (RESTR ?r) (n1-rel -)
 	       (CLASS ?c) (SORT ?sort) (QUAL ?qual)
 	    (SEM ?sem) ;;(subcat -) 
 	    (post-subcat -) (gap -) ;;(derived-from-name -) 
@@ -2078,6 +2078,25 @@
       (LF ?lf))
      (add-to-conjunct (val (MODS ?relv)) (old ?r) (new ?con)))
 
+    ; we allow multiple relative clauses only when the ones after the first one are not reduced clauses.
+    ((N1 (RESTR ?con)
+      (CLASS ?c) (SORT ?sort) (QUAL ?qual) (COMPLEX +) (var ?v) (n1-rel +)
+      (relc +)  (subcat (% -)) (post-subcat -)
+      )
+     -n1-rel-subsequent>
+     (head (N1 (VAR ?v) (RESTR ?r) (n1-rel +)
+	       (CLASS ?c) (SORT ?sort) (QUAL ?qual)
+	    (SEM ?sem) ;;(subcat -) 
+	    (post-subcat -) (gap -) ;;(derived-from-name -) 
+	    (no-postmodifiers -) ;; exclude "the same path as the battery I saw" and cp attaching to "path"
+	    (agr ?agr) (rate-activity-nom -) (agent-nom -)
+	    ))
+;     (cp (ctype relc) (VAR ?relv) (ARG ?v) (ARGSEM ?argsem) (agr ?agr)
+     (cp (ctype relc) (VAR ?relv) (ARG ?v) (ARGSEM ?sem) (agr ?agr) (reduced -)
+      (LF ?lf))
+     (add-to-conjunct (val (MODS ?relv)) (old ?r) (new ?con)))
+
+    
     ;;  Great construction!:   All he saw (was mountains)
 
   #|| ((NP (LF (% description (status ont::definite) (VAR *)
@@ -2269,7 +2288,7 @@
     -N1-appos-rev>
     (np (name +) (generated -) (sem ?sem) (class ?lf) (VAR ?v2) (time-converted -))
     (head (N1 (VAR ?v1) (RESTR ?r) (CLASS ?c) (sort (? !sort unit-measure)) ;(SORT ?sort) 
-	      (QUAL ?qual) (relc -) (sem ?sem) (class (? !c ONT::SITUATION-ROOT))
+	      (QUAL ?qual) (relc -) (sem ?sem) (class (? !c ONT::SITUATION-ROOT)) ; exclude AGENTNOM (REFERENTIAL-SEM)
 	      (subcat (% - (W::VAR -))) ;(subcat -)
 	      (post-subcat -) (complex -) (derived-from-name -) (time-converted -)
 	      )      
@@ -2998,9 +3017,9 @@
 	  (Mass count)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure))
          -unit-np-number-indef-special-case>
-	 (ART (VAR ?nv) (LEX w::a) )
+	 (ART (VAR ?nv) (LEX (? lex w::a w::an)) )
  	 (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
-		   (KIND -) (sem ?sem) (sem ($ f::abstr-obj  (f::scale ?sc)))
+		   (KIND -) (sem ?sem) (sem ($ f::abstr-obj  (f::scale ?sc) (f::type (? !t ONT::QUANTITY-ABSTR))))
 		   (argument ?argument) (RESTR ?restr)
 		   (post-subcat -)
 		))
@@ -5797,14 +5816,15 @@
     ; TEST: both dogs and cats
     ; TEST: neither dogs nor cats
     ; TEST: either dogs or cats
-    ((NP (ATTACH ?a) (var ?v) (agr ?cagr) (SEM ?sem)  
+    ((NP (ATTACH ?a) (var ?v) (agr ?cagr) (SEM ?sem)  (case ?case)
          (LF (% Description (Status ?cstat) (var ?v) 
                 (class ?class)
                 (constraint (& (operator ?cop) (sequence (?v1 ?v2))))
-                (sem ?sem) (CASE ?case1)
+                (sem ?sem) (CASE ?case)
                 (mass ?m1) 
                 )) 
-         (COMPLEX +) (SORT PRED))
+         ;(COMPLEX +) ; I ate the cake and either the pizza or the bagel
+	 (SORT PRED))
      -np-double-conj1> 
      (conj (SEQ +) (SUBCAT1 NP) (SUBCAT2 ?wlex) (SUBCAT3 NP) 
       (var ?v) 
