@@ -418,6 +418,11 @@
 (define-type ont::data-structure
   :parent ont::mathematical-term
   :wordnet-sense-keys ("matrix%1:14:00")
+  )
+
+(define-type ont::parameter
+  :parent ont::mathematical-term
+  :wordnet-sense-keys ("parameter%1:10:00" "variable%1:10:00" "variable%1:09:00")
 )
 
 (define-type ont::number
@@ -762,6 +767,11 @@
  :arguments ((:optional ONT::FIGURE)
 	     (:optional ONT::formal (F::situation))) ; copied from ONT::MESSAGE
  )
+
+(define-type ONT::measure-metric
+ :wordnet-sense-keys ("metric%1:23:00" "measure%1:10:03" "indicator%1:10:00")
+ :parent ONT::information
+)
 
 ;; create an ont::communication-object
 ;; subject, topic

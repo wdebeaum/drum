@@ -7,13 +7,8 @@
  :words (
   (W::MEASURE
    (SENSES
-    #|
-    (;(LF-PARENT ONT::domain)
-     (LF-PARENT ONT::quantity)
-     (TEMPL OTHER-RELN-TEMPL)
-     (META-DATA :ORIGIN task-learning :ENTRY-DATE 20050926 :CHANGE-DATE NIL :wn ("measure%1:03:00")
-      :COMMENTS nil))
-    |#
+    ((LF-PARENT ONT::measure-metric)
+     (EXAMPLE "a population metric"))
     
     ((LF-PARENT ONT::BAR-MEASURE)
      ;musical notation for a repeating pattern of musical beats
@@ -21,8 +16,8 @@
      (meta-data :wn ("measure%1:10:00"))
      (TEMPL other-reln-TEMPL)
      )
-))
-))
+    ))
+  ))
 
 (define-words :pos W::V 
   :TEMPL AGENT-FORMAL-XP-TEMPL

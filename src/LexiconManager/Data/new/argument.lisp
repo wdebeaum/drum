@@ -6,7 +6,7 @@
  :words (
 ;; Mathematical terms
   (w::argument
-  (senses((LF-parent ONT::Mathematical-term) 
+  (senses((LF-parent ONT::parameter) 
 	    (templ other-reln-templ)
 	    (meta-data :origin lam :entry-date 20050420 :change-date nil :comments lam-initial)
 	    ))
