@@ -3304,6 +3304,14 @@
     (subcat2 (% -) ONT::NOROLE)
     ))
 
+  (adj-CO-THEME2-templ
+   (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) );(W::ALLOW-DELETED-COMP +))
+   (ARGUMENTS
+    (ARGUMENT (% W::NP) ONT::figure)
+    (subcat (% W::NP) ONT::SCALE)
+    (subcat2 (:parameter xp (:default (% W::pp (W::ptype (? pt W::to w::for))))) ONT::ground optional)
+    ))
+
   (adj-central-figure-ground-optional-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) ) ;(W::ALLOW-DELETED-COMP +))
    (ARGUMENTS

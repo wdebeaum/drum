@@ -460,8 +460,8 @@
  :arguments (;(:ESSENTIAL ONT::AGENT (F::Phys-obj (F::origin (? o f::non-human-animal F::human))) (:implements FORMAL))
 	     (:ESSENTIAL ONT::AGENT (F::Phys-obj (:required (f::origin (? org f::human f::non-human-animal)))
 					       (:default (F::Mobility F::Self-Moving))))
-	     (:optional ont::neutral (F::phys-obj (f::type ont::geo-object))  ;; the path, road, as in "walk the path, walk the hills"
-             ))
+	     (:optional ont::neutral (F::phys-obj (f::type ont::geo-object)))  ;; the path, road, as in "walk the path, walk the hills"
+             )
  :wordnet-sense-keys("splash%2:35:02" "walk%2:38:00" "walk%2:38:02" "walk%2:38:04" "walk%2:38:03")
 )
 
@@ -499,9 +499,11 @@
 
 ;; dance
 (define-type ONT::dance
- :wordnet-sense-keys ("dance%2:38:01" "dance%2:38:02" "dance%2:36:00" "dancing%1:04:00")
- :parent ONT::self-locomote
- )
+    :wordnet-sense-keys ("dance%2:38:01" "dance%2:38:02" "dance%2:36:00" "dancing%1:04:00"
+					 "stage_dancing%1:04:00" "choreography%1:04:00")
+    :parent ONT::move
+    :arguments ((:OPTIONAL ONT::neutral (F::situation (f::type ont::dance))))
+    )
 
 
 
@@ -1312,6 +1314,7 @@
 (define-type ONT::fold
  :parent ONT::shape-change
  :wordnet-sense-keys ("fold%2:35:00" "deformation%1:11:01")
+ :arguments ((:required ONT::affected (F::Phys-obj (f::mobility f::movable))))
  :sem (F::situation (F::Aspect F::dynamic))
  )
 

@@ -485,21 +485,27 @@
   )
 
 (define-type ont::Hour-duration
+    :wordnet-sense-keys ("hour%1:28:00")
     :parent ont::time-unit)
 
 (define-type ont::minute-duration
+    :wordnet-sense-keys ("minute%1:28:00")
     :parent ont::time-unit)
 
 (define-type ont::day-duration
+    :wordnet-sense-keys ("day%1:28:00")
     :parent ont::time-unit)
 
 (define-type ont::year-duration
+    :wordnet-sense-keys ("year%1:28:00")
     :parent ont::time-unit)
 
 (define-type ont::week-duration
+    :wordnet-sense-keys ("week%1:28:00")
     :parent ont::time-unit)
 
 (define-type ont::second-duration
+    :wordnet-sense-keys ("second%1:28:00")
     :parent ont::time-unit)
 
 (define-type ont::power-unit

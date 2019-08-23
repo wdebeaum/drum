@@ -11,7 +11,14 @@
      (TEMPL AGENT-TEMPL)
      (example "dance to avon")
      )
+
+    ((LF-PARENT ONT::DANCE)
+    (EXAMPLE "Dance the Tango")
+    (TEMPL AGENT-NEUTRAL-TEMPL)
     )
+    )
+
+   
    )
   ))
-
+ 

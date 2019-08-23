@@ -21,9 +21,10 @@
   (W::FORWARD
    (SENSES
     ((LF-PARENT ONT::DIRECTION-forward)
+     (TEMPL PRED-S-OR-NP-POST-TEMPL)
      ;(TEMPL PRED-S-POST-TEMPL)
      ;(TEMPL PRED-S-VP-templ)
-     (templ PREDICATIVE-ONLY-ADJ-TEMPL)
+     ;;(templ PREDICATIVE-ONLY-ADJ-TEMPL)
      (example "Move it forward.")
      )
     )
