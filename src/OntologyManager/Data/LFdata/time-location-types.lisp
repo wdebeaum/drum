@@ -51,7 +51,7 @@
     )
 
 (define-type ont::loc-where-rel
-    :comment "A subclass of AT-LOC for relative clause relations, e.g., a place where it never rains"
+    :comment "relative clause relations that could be at-loc or in-loc, e.g., a place where it never rains; the city where I live"
     :parent ont::position-as-point-reln
     :arguments ((:ESSENTIAL ONT::FIGURE ((? xx f::phys-obj f::abstr-obj)  (f::tangible +)
 						      (f::type (? tt ont::location ont::mental-construction)))))
@@ -72,12 +72,14 @@
 				       )))
   )
 
+#|
 (define-type ont::in-loc-rel
     :parent ont::in-loc
     :comment "FIGURE is part of the GROUND"
   :arguments ((:ESSENTIAL ONT::FIGURE (f::abstr-obj (f::tangible +)
 						      (f::type ont::mental-construction))))
   )
+|#
 
 (define-type ont::contain-reln
     :comment "a kind of Inverse of IN-LOC, but can't be used as a result location"

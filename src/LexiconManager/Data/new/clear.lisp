@@ -13,7 +13,8 @@
      (PREFERENCE 0.96)
      )
     
-    ((LF-PARENT ONT::empty)
+    (;(LF-PARENT ONT::empty)
+     (LF-PARENT ONT::cause-clear)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
      (TEMPL AGENT-AFFECTEDR-AFFECTED-XP-PP-OF-OPTIONAL-TEMPL (xp (% W::pp (W::ptype W::of))))
      (example "clear the airfield of debris")
@@ -35,7 +36,8 @@
  :words (
   ((W::clear (W::out))
    (SENSES
-    ((LF-PARENT ONT::empty)
+    (;(LF-PARENT ONT::empty)
+     (LF-PARENT ONT::cause-clear)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "clear out the airfield")
      )

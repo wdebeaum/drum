@@ -248,11 +248,11 @@
    ;; test: is the dog barking?
    ;; test: is the dog chasing the cat?
    ((utt (lf (% speechact (class ont::sa_yn-question) 
-		(constraint (& (content ?s-v))) (var *)))
+		(constraint (& (content ?s-v) (mod ?advv))) (var *)))
      (var *) (punctype ?p)
      ) 
     -utt-ynq1>
-    (head (s (stype ynq) (var ?s-v)  (gap -) (wh -) (advbl-needed -))))
+    (head (s (stype ynq) (var ?s-v)  (gap -) (wh -) (advbl-needed -) (disc-advbl ?advv))))
    
    
    ;; tag questions
@@ -3465,6 +3465,50 @@
      (change-feature-values (old ?compsem) (new ?newsem) (newvalues ?sem-contrib))
      )
 
+    ; would you please eat the pizza?
+    ((s (stype ynq) (gap ?gap) (lex ?lx) (disc-advbl ?advv)
+       (subjvar ?subjvar) (dobjvar ?dobjvar) (var ?v)
+      (lf (% prop  (var ?v) (class ?class) (sem ?newsem)
+	     (constraint ?con) (tma ?newtma)
+	     ))
+      
+      (sem ?newsem)
+  ;;    (subj ?subj)
+      (subj (% np (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
+      )
+     -ynq-modal-aux-disc>
+     (head (aux 
+	    (tma-contrib ?tma-contrib)
+	    (sem-contrib ?sem-contrib)
+	    (ellipsis -)
+	    (contraction -)
+	    ;;(lex (? lx w::can w::might w::may w::should w::could w::would)) ;; only full forms here
+	    (vform (? vform pres past fut)) (agr ?a)
+	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
+            (comp3 ?comp)
+	    (comp3 (% ?s4 (class ?class)
+		      (var ?v)  (lex ?lx)
+		      (case (? ccase obj -)) (subj-map ?rsubjmap) 
+		      (constraint ?con) (subjvar ?subjvar) (tma ?tma1)
+		      (var ?compvar) (sem ?compsem) (gap ?gap) (subj (% ?s1 (lex ?subjlex) (case sub) (var ?subjvar)
+									(sem ?subjsem) (agr ?a) (gap -)))
+		      (dobj ?dobj) (dobjvar ?dobjvar)
+		      (advbl-needed -)
+		      ))
+            (comp3-map ?comp3-map)
+            (subj-map ?lsubj-map)
+            ))
+;;     ?subj
+     (np (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)) ;; build an np to get around unifier bug
+     (advbl (sort DISC) (ATYPE PRE-VP) (arg ?utt) (SA-ID -) (VAR ?advv) (gap -) (WH -)
+      (argument (% UTT (var ?utt))))     ; probably "please" is the only one with sort DISC and ATYPE pre-vp
+     ?comp
+     ;; we need to have a sequence of additions to conjunct, to avoid parser warnings
+     (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?ntma))
+     (append-conjuncts (conj1 (& (tense ?vform))) (conj2 ?ntma) (new ?newtma))
+     ;; change the temporal values in sem to be consistent with the aux
+     (change-feature-values (old ?compsem) (new ?newsem) (newvalues ?sem-contrib))
+     )
 
     ;; e.g., can I not open the door?
     ((s (stype ynq) (gap ?gap) (lex ?lx)
@@ -3499,8 +3543,53 @@
             (comp3-map ?comp3-map)
             (subj-map ?lsubj-map)
             ))
-     (neg)
      (np (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)) ;; build an np to get around unifier bug
+     (neg)
+     ?comp
+     ;; we need to have a sequence of additions to conjunct, to avoid parser warnings
+     (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?ntma))
+     (append-conjuncts (conj1 (& (tense ?vform) (negation +))) (conj2 ?ntma) (new ?newtma))
+     ;; change the temporal values in sem to be consistent with the aux
+     (change-feature-values (old ?compsem) (new ?newsem) (newvalues ?sem-contrib))
+     )
+
+   ;; e.g., can I please not open the door?
+    ((s (stype ynq) (gap ?gap) (lex ?lx) (disc-advbl ?advv)
+      (subjvar ?subjvar) (dobjvar ?dobjvar) (var ?v)
+      (lf (% prop  (var ?v) (class ?class) (sem ?newsem)
+	     (constraint ?con) (tma ?newtma)
+	     ))
+      
+      (sem ?newsem)
+      ;;    (subj ?subj)
+      (subj (% np (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
+      )
+     -ynq-modal-neg-aux-disc>
+     (head (aux 
+	    (tma-contrib ?tma-contrib)
+	    (sem-contrib ?sem-contrib)
+	    (ellipsis -)
+	    
+	    ;;(lex (? lx w::can w::might w::may w::should w::could w::would)) ;; only full forms here
+	    (vform (? vform pres past fut)) (agr ?a)
+	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)))
+            (comp3 ?comp)
+	    (comp3 (% ?s4 (class ?class)
+		      (var ?v)  (lex ?lx)
+		      (case (? ccase obj -)) (subj-map ?rsubjmap) 
+		      (constraint ?con) (subjvar ?subjvar) (tma ?tma1)
+		      (var ?compvar) (sem ?compsem) (gap ?gap) (subj (% ?s1 (lex ?subjlex) (case sub) (var ?subjvar)
+									(sem ?subjsem) (agr ?a) (gap -)))
+		      (dobj ?dobj)
+		      (advbl-needed -)
+		      ))
+            (comp3-map ?comp3-map)
+            (subj-map ?lsubj-map)
+            ))
+     (np (lex ?subjlex) (case sub) (var ?subjvar) (sem ?subjsem) (agr ?a) (gap -)) ;; build an np to get around unifier bug
+     (advbl (sort DISC) (ATYPE PRE-VP) (arg ?utt) (SA-ID -) (VAR ?advv) (gap -) (WH -)
+      (argument (% UTT (var ?utt))))     
+     (neg)
      ?comp
      ;; we need to have a sequence of additions to conjunct, to avoid parser warnings
      (add-to-conjunct (old ?tma1) (val ?tma-contrib) (new ?ntma))

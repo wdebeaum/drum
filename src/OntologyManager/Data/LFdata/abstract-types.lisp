@@ -729,7 +729,8 @@
  )
 
 (define-type ONT::prize
- :parent ONT::function-OBJECT
+  :wordnet-sense-keys ("prize%1:21:00" "prize%1:06:00")
+  :parent ONT::function-OBJECT
  :sem (F::Abstr-obj)
  :arguments ((:essential ONT::FIGURE)
 	     )

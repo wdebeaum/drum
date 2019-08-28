@@ -240,6 +240,8 @@
  :wordnet-sense-keys ("change_posture%2:38:00")
  :parent ONT::EVENT-OF-causation
  :sem (F::Situation (f::trajectory +))
+ :arguments ((:ESSENTIAL ONT::Agent (F::phys-obj (F::intentional +)))
+	     )
  )
 
 (define-type ONT::Body-manipulation

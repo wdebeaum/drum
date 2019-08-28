@@ -7,8 +7,8 @@
    (W::express
     (wordfeats (W::morph (:forms (-vb) :nom w::expression)))
     (SENSES
-     ((LF-PARENT ONT::say)
-      (example "she expressed the idea to him")
+     ((LF-PARENT ONT::show)
+      (example "she expressed the idea to him" "she expressed her anger")
       (meta-data :origin calo-ontology :entry-date 20051209 :change-date 20090506 :comments Express)
       ;; this verb doesn't participate in the alternation
       (TEMPL AGENT-FORMAL-AGENT1-OPTIONAL-TEMPL)

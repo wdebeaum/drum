@@ -186,6 +186,8 @@
 (define-type ONT::surrender
  :wordnet-sense-keys ("cede%2:40:01" "chuck_up_the_sponge%2:33:00" "concede%2:40:00" "despair%2:37:00" "give_up%2:41:00" "grant%2:40:04" "relent%2:42:00" "submit%2:33:00" "surrender%2:40:00" "yield%2:33:00" "yield%2:40:01")
   :parent ONT::relinquish
+  :arguments ((:optional ONT::affected-result (F::Phys-obj) (F::tangible +))
+	      )
   :comment " an AGENT relinquishes AFFECTED unwillingly"
   )
 
@@ -1586,8 +1588,9 @@
 
 ;;; When something appears, there are no agents
 (define-type ONT::appear
- :wordnet-sense-keys ("appear%2:30:00" "appear%2:30:02" "break%2:32:05" "come_out%2:32:00")
+ :wordnet-sense-keys ("appear%2:30:00" "appear%2:30:02" "break%2:32:05" "come_out%2:32:00" "materialize%2:30:00")
  :parent ONT::event-of-undergoing-action
+ :comment "an entity comes into existence or comes into view"
  :sem (F::Situation (F::Cause F::Phenomenal))
  :arguments ((:optional ont::affected ((? tp f::phys-obj f::abstr-obj)))
 	     )
@@ -1595,8 +1598,9 @@
 
 ;;; When something appears, there are no agents
 (define-type ONT::disappear
- :wordnet-sense-keys ("disappear%2:30:00" "go_down%2:34:00")
+ :wordnet-sense-keys ("disappear%2:30:00" "go_down%2:34:00" "vanish%2:30:02")
  :parent ONT::event-of-undergoing-action
+ :comment "an entity goes out of existence or goes out of view"
  :sem (F::Situation (F::Cause F::Phenomenal))
  :arguments ((:optional ont::affected ((? tp f::phys-obj f::abstr-obj)))
 	     )
@@ -1916,6 +1920,7 @@
 (define-type ont::evoke-relief
  :wordnet-sense-keys ("still%2:37:01" "comfort%2:37:01")
  :parent ont::improve-experience
+ :arguments ((:REQUIRED ONT::affected (F::phys-obj (F::intentional +))))
 )
 
 (define-type ont::evoke-liveliness
@@ -2181,6 +2186,11 @@
  :parent ONT::response
  )
 
+(define-type ONT::compromise
+ :wordnet-sense-keys ("compromise%2:32:01" "compromise%2:32:00")
+ :parent ONT::accept-agree
+ )
+
 (define-type ONT::contest
  :wordnet-sense-keys ("disagree%2:32:00" "differ%2:32:00" "dissent%2:32:01" "take_issue%2:32:00")
  :parent ONT::response
@@ -2255,6 +2265,11 @@
 (define-type ONT::punish
  :wordnet-sense-keys ("punish%2:41:00" "penalize%2:41:00" "penalise%2:41:00")
  :parent ONT::judgement
+ )
+
+(define-type ONT::revenge-punish
+ :wordnet-sense-keys ("revenge%2:33:00")
+ :parent ONT::punish
  )
 
 (define-type ONT::impress
@@ -2538,7 +2553,7 @@
     )
 
 (define-type ONT::SAY
-    :wordnet-sense-keys ("note%2:32:00" "observe%2:32:00" "mention%2:32:00" "remark%2:32:00" "say%2:32:13"  "say%2:32:01" "talk%2:32:00")
+    :wordnet-sense-keys ("mention%2:32:00" "note%2:32:00" "observe%2:32:00" "remark%2:32:00" "say%2:32:01" "say%2:32:13" "talk%2:32:00")
     :parent ONT::COMMUNICATION
     :comment "A single act of verbal communication, or sequence of acts by the same agent"
     :sem (F::Situation (F::Cause F::agentive))
@@ -2769,7 +2784,7 @@
  )
 
 (define-type ONT::show
- :wordnet-sense-keys ("show%2:39:02" "demo%2:39:00" "exhibit%2:39:00" "present%2:39:00" "demonstrate%2:39:01" "show%2:39:00" "prove%2:31:00")
+ :wordnet-sense-keys ("demo%2:39:00" "demonstrate%2:39:01" "exhibit%2:39:00" "express%2:32:00" "present%2:39:00" "prove%2:31:00" "show%2:39:00" "show%2:39:02")
  :parent ont::COMMUNICATION
  :arguments ((:ESSENTIAL ONT::Agent ((? agt F::Phys-obj f::abstr-obj) (F::intentional +))))
  )
@@ -3129,6 +3144,7 @@
              (:OPTIONAL ONT::REASON (F::Situation))
 	     ;; _the car_ uses petrol to run; _the battery_ uses a chemical reaction to maintain voltage
 	     (:optional ONT::Affected ((? obj f::abstr-obj f::phys-obj)))
+	     (:optional ONT::Affected1 ((? obj2 f::abstr-obj f::phys-obj)))
 	     (:optional ont::result ((? res1 F::SITUATION F::ABSTR-OBJ))) ; copied from CAUSE-EFFECT
 	     (:optional ont::formal ((? res2 F::SITUATION F::ABSTR-OBJ)
 				     (F::type (? ftype ONT::SITUATION-ROOT ONT::PROPERTY-VAL));; ONT::POSITION-RELN)) ;; here for now while we decide the FORMAL/RESULT issue
@@ -3302,6 +3318,7 @@
  :arguments ((:REQUIRED ONT::Agent)
 	     (:required ont::source)
 	     (:optional ont::affected-result ((? thm F::phys-obj F::abstr-obj)))
+	     (:OPTIONAL ONT::affected (?aff (F::mobility F::movable)))
              )
  )
 
@@ -3314,16 +3331,6 @@
              )
  )
 
-
-(define-type ont::shed
- :wordnet-sense-keys ("shed%2:29:00")
- :parent ont::cause-come-from
-)
-
-(define-type ONT::undress
- :wordnet-sense-keys ("undress%2:29:00" "discase%2:29:00" "uncase%2:29:00" "unclothe%2:29:00" "strip%2:29:01" "strip_down%2:29:00" "disrobe%2:29:01" "peel%2:29:02")
- :parent ONT::cause-come-from
- )
 
 #|
 (define-type ONT::deSelect
@@ -3343,6 +3350,18 @@
  :parent ONT::cause-come-from
  :arguments ((:REQUIRED ONT::formal)
              )
+ )
+
+(define-type ont::shed
+ :wordnet-sense-keys ("shed%2:29:00")
+ ;:parent ont::cause-come-from
+ :parent ont::cause-off
+ )
+
+(define-type ONT::undress
+ :wordnet-sense-keys ("undress%2:29:00" "discase%2:29:00" "uncase%2:29:00" "unclothe%2:29:00" "strip%2:29:01" "strip_down%2:29:00" "disrobe%2:29:01" "peel%2:29:02")
+ ;:parent ONT::cause-come-from
+ :parent ont::cause-off
  )
 
 (define-type ONT::rise
@@ -3368,6 +3387,7 @@
  :parent ONT::cause-out-of
  )
 
+#|
 (define-type ONT::pull-off
  :wordnet-sense-keys ("draw_off%2:35:00" "draw_away%2:35:01" "pull_off%2:35:01")
 ; :parent ONT::come-from
@@ -3375,16 +3395,27 @@
  :arguments ((:OPTIONAL ONT::Agent)
              )
  )
+|#
 
 (define-type ONT::socially-remove
     :wordnet-sense-keys ("banishment%1:04:00" "expel%2:41:01" "expel%2:41:00" "ouster%1:04:00" "repatriate%2:41:01")
  :parent ONT::cause-come-from
- :arguments ((:REQUIRED ONT::Formal ((? thm F::phys-obj F::abstr-obj) (F::intentional +)))
+ :arguments (;(:REQUIRED ONT::Formal ((? thm F::phys-obj F::abstr-obj) (F::intentional +)))
+	     (:REQUIRED ONT::affected ((? thm F::phys-obj F::abstr-obj) (F::intentional +)))
              )
  )
 
+(define-type ONT::cause-clear
+ :wordnet-sense-keys ("evacuate%2:38:01" "evacuate%2:30:00" "evacuate%2:38:00")
+ :parent ONT::cause-come-from
+ :arguments ((:OPTIONAL ONT::Agent)
+             (:OPTIONAL ONT::affected-result ((? thm F::phys-obj F::abstr-obj))) ; clear the physical table/abstract chart
+	     ;(:OPTIONAL ONT::affected (?aff (F::mobility F::movable)))
+	     )
+ )
+
 (define-type ONT::empty
- :wordnet-sense-keys ("empty%2:30:01" "empty%2:30:00" "evacuate%2:38:01" "evacuate%2:30:00" "evacuate%2:38:00")
+ :wordnet-sense-keys ("empty%2:30:01" "empty%2:30:00")
  :parent ONT::cause-come-from
  :arguments ((:OPTIONAL ONT::Agent)
              (:OPTIONAL ONT::affected-result ((? thm F::phys-obj F::abstr-obj) (F::Container +))) ; _lg 20190206 added abstr-obj (for things like models, plans, etc.) and put back in the container feature
@@ -4456,26 +4487,50 @@
  :parent ONT::damage
  )
 
-(define-type ONT::coalesce
- :parent ONT::object-change
- :sem (F::SITUATION (F::Cause F::agentive) (f::trajectory +))
- :arguments ((:OPTIONAL ONT::affected1 ((? thm f::situation f::phys-obj F::abstr-obj))))
- :wordnet-sense-keys ("cohere%2:42:01")
- )
+;(define-type ONT::coalesce
+; :parent ONT::object-change
+; :sem (F::SITUATION (F::Cause F::agentive) (f::trajectory +))
+; :arguments ((:OPTIONAL ONT::affected1 ((? thm f::situation f::phys-obj F::abstr-obj))))
+; :wordnet-sense-keys ("cohere%2:42:01")
+; )
 
+(define-type ont::changing-rules
+  :parent ont::event-of-causation
+  :arguments ((:REQUIRED ONT::affected (F::abstr-obj (F::TYPE ONT::SOCIAL-CONTRACT))))
+)
+
+(define-type ont::rescinding-rules
+  :parent ont::changing-rules
+  :wordnet-sense-keys ("deregulate%2:41:00")
+)
+
+(define-type ont::rescind
+  :parent ont::rescinding-rules
+  :wordnet-sense-keys ("repeal%2:32:00")
+)
+  
+(define-type ont::enacting-rules
+  :parent ont::changing-rules
+  :wordnet-sense-keys ("enact%2:41:00" "segregate%2:41:00")   
+  ;currently enact%2:41:00 goes to ONT::TELL in WN mappings
+)
+
+(define-type ONT::putting-together
+ :parent ONT::event-of-causation
+ )
 
 (define-type ONT::combine-objects
     :comment "symmetric combination of objects, abstract or physical: e.g., X combines with y = y combines with x = x and y combine;  the result is a new combination where the original objects cannot be separated"
- :wordnet-sense-keys ("merge%2:30:01" "combine%2:30:00" "meld%2:30:00" "coalesce%2:30:00" "fuse%2:30:00" "immix%2:30:00" "commingle%2:30:00" "conflate%2:30:00" "mix%2:30:00" "flux%2:30:00" "blend%2:30:00" "mix_in%2:30:01" "mix%2:30:01" "mix%2:35:00" "mingle%2:35:00" "commix%2:35:00" "unify%2:35:00" "amalgamate%2:35:00")
- :parent ONT::event-of-causation
+ :wordnet-sense-keys ("amalgamate%2:35:00" "blend%2:30:00" "coalesce%2:30:00" "cohere%2:42:01" "combine%2:30:00" "commingle%2:30:00" "commix%2:35:00" "conflate%2:30:00" "flux%2:30:00" "fuse%2:30:00" "immix%2:30:00" "meld%2:30:00" "merge%2:30:01" "mingle%2:35:00" "mix%2:30:00" "mix%2:30:01" "mix%2:35:00" "mix_in%2:30:01" "unify%2:35:00")
+ :parent ONT::putting-together
  :arguments ((:OPTIONAL ONT::affected1 ((? thm f::situation f::phys-obj F::abstr-obj))))
  :sem (F::SITUATION (F::Cause F::agentive) (f::trajectory +))
  )
 
 (define-type ONT::add-include
-    :wordnet-sense-keys ("include%2:30:00" "introduce%2:38:00" "add%2:30:00")
-    :comment "asymettric composition: one object becomes part of another"
- :parent ONT::adjust
+ :wordnet-sense-keys ("include%2:30:00" "introduce%2:38:00" "add%2:30:00")
+ :comment "asymettric composition: one object becomes part of another"
+ :parent ONT::putting-together ;adjust
  :sem (F::SITUATION)
  :arguments ((:OPTIONAL ont::result ((? cthm f::situation f::phys-obj F::abstr-obj))))
  )
@@ -4686,7 +4741,8 @@
 (define-type ONT::Joining
  :wordnet-sense-keys ("conjoin%2:35:00" "join%2:35:00")
  :comment "abstract, social, or physical connection of objects such that the objects retain their original make-up/identity (whereas COMBINE-OBJECTS are not un-combinable anymore)"
- :parent ONT::cause-contact
+; :parent ONT::cause-contact
+ :parent ONT::putting-together
  :sem (F::Situation (F::Trajectory -))
  :arguments ((:OPTIONAL ONT::AGENT (F::Phys-obj))
 	     (:OPTIONAL ONT::AGENT1 (F::Phys-obj))
