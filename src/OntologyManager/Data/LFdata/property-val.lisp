@@ -1487,7 +1487,7 @@
 
 (define-type ont::cold
  :parent ont::temperature-val 
- :wordnet-sense-keys ("cold%3:00:01::" "cool%3:00:01" "cold%5:00:00:cool:03" "cool%3:00:03" )
+ :wordnet-sense-keys ("cold%3:00:01" "cold%5:00:00:cool:03" "cool%3:00:01" "cool%3:00:03" "freeze%2:43:10")
  ; Words: (W::COLD W::COOL)
  ; Antonym: ONT::WARM (W::HOT W::WARM)
  :sem (F::abstr-obj (F::scale ont::cold-scale ))

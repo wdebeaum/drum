@@ -54,3 +54,15 @@
  )
 ))
 
+(define-words :pos W::v
+ :words (
+ ((W::fall (w::in))
+  (wordfeats (W::morph (:forms (-vb) :past W::fell :pastpart W::fall :ing W::falling)))
+  (SENSES
+   ((LF-PARENT ONT::enroll)
+    (templ agent-neutral-xp-TEMPL (xp (% W::PP (W::ptype (? p W::with)))))
+    (example "he fell in with the wrong crowd")
+   )
+  )
+ )
+))

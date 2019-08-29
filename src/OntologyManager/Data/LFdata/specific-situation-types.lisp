@@ -4766,7 +4766,7 @@
 )
 
 (define-type ONT::ASSOCIATE
- :wordnet-sense-keys ("join%2:41:00" "join%2:41:01" "pair%2:35:01" "pair%2:41:00" "team%2:33:00")
+ :wordnet-sense-keys ("join%2:41:01" "pair%2:35:01" "pair%2:41:00" "team%2:33:00")
  :parent ONT::JOINING
  :sem (F::Situation (F::Aspect F::Dynamic) (F::Cause F::Agentive))
  )
@@ -4798,7 +4798,7 @@
 
 ;; register for a conference, check in/out at a hotel, enroll in a program
 (define-type ONT::enroll
- :wordnet-sense-keys ("enrol%2:41:00" "enroll%2:41:00" "enter%2:33:00" "enter%2:41:06" "inscribe%2:41:00" "recruit%2:41:01")
+ :wordnet-sense-keys ("enrol%2:41:00" "enroll%2:41:00" "enter%2:33:00" "enter%2:41:06" "fall_in%2:41:00" "inscribe%2:41:00" "recruit%2:41:01")
  :parent ONT::joining
  :sem (F::situation)
  :arguments ((:REQUIRED ONT::Formal (f::phys-obj (f::intentional +))) ;; check in a person
@@ -4869,7 +4869,7 @@
 ;; )
 
 (define-type ONT::EXISTS
-  :wordnet-sense-keys ("be%2:42:00" "exist%2:42:00" "be%2:42:04" "dwell%2:42:01" "consist%2:42:00" "lie%2:42:01" "lie_in%2:42:00" "be%2:42:012" "play%2:36:04" "abound%2:42:00")
+  :wordnet-sense-keys ("abound%2:42:00" "be%2:42:00" "be%2:42:012" "be%2:42:04" "consist%2:42:00" "dwell%2:42:01" "exist%2:42:00" "lie%2:42:01" "lie_in%2:42:00" "live%2:42:00" "play%2:36:04")
  :parent ONT::EVENT-OF-STATE
  :sem (F::Situation (F::aspect F::stage-level) (F::time-span F::extended)(F::cause -) (F::locative F::located) (F::trajectory -))
  :arguments ((:REQUIRED ONT::neutral)

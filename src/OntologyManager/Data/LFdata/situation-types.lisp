@@ -1121,6 +1121,12 @@
 ; 		)
 ;     )
 
+(define-type ont::err
+    :parent ONT::fail
+    :arguments ((:REQUIRED ONT::affected))
+    :wordnet-sense-keys ("err%2:31:00")
+ )
+
 (define-type ont::miss
     :parent ONT::fail
     :arguments (

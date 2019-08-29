@@ -357,7 +357,7 @@
 |#
 
 (define-type ont::weather
-    :wordnet-sense-keys ("weather%1:19:00" "weather_condition%1:19:00" "conditions%1:19:00" "atmospheric_condition%1:19:00")
+    :wordnet-sense-keys ("atmospheric_condition%1:19:00" "conditions%1:19:00" "freeze%1:19:00" "weather%1:19:00" "weather_condition%1:19:00")
     :parent ont::atmospheric-phenomenon
     :sem (F::Phys-obj (F::origin F::non-living))
     )
