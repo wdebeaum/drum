@@ -55,7 +55,7 @@
      (TEMPL AGENT-FORMAL-XP-NP-TEMPL (xp (% W::pp (W::ptype (? pt w::for)))))
      (meta-data :origin chf :entry-date 20070904 :change-date nil :comments nil))     
     
-    ((LF-PARENT ONT::MOVE)
+    ((LF-PARENT ONT::self-locomote)
      (SEM (F::aspect F::unbounded) (F::time-span F::extended))
      (example "go to amazon dot com" "go by the store")
      (meta-data :origin plow :entry-date 20050315 :change-date nil :comments nil)
