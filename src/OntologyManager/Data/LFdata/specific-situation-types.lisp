@@ -44,7 +44,7 @@
 |#
 
 (define-type ont::amass
- :wordnet-sense-keys ("accumulate%2:30:00" "cumulate%2:30:00" "conglomerate%2:30:00" "pile_up%2:30:00" "gather%2:30:00" "amass%2:30:00")
+ :wordnet-sense-keys ("accumulate%2:30:00" "cumulate%2:30:00" "conglomerate%2:30:00" "pile_up%2:30:00" "gather%2:30:00" "amass%2:30:00" "accumulation%1:04:00")
   :parent ont::acquire
   )
 
@@ -192,7 +192,7 @@
   )
 
 (define-type ONT::lose
-  :wordnet-sense-keys ("lose%2:39:00" "lose%2:39:01" "lose%2:40:00" "lose%2:40:01" "lose%2:40:02" "lose%2:40:06" "lose_sight_of%2:39:00")
+  :wordnet-sense-keys ("lose%2:39:00" "lose%2:39:01" "lose%2:40:00" "lose%2:40:01" "lose%2:40:02" "lose%2:40:06" "lose_sight_of%2:39:00" "loss%1:04:00")
   :parent ONT::relinquish
   )
 
@@ -548,7 +548,8 @@
 
 (define-type ont::processes-of-consciousness
  :parent ont::bodily-process
-)
+ )
+
 
 (define-type ont::fall-asleep
     :wordnet-sense-keys ("go_to_bed%2:29:00" "fall_asleep%2:29:00")
@@ -788,7 +789,7 @@
 
 
 (define-type ONT::RETURN
- :wordnet-sense-keys ("return%2:38:12" "take_back%2:38:03" "bring_back%2:38:00")
+ :wordnet-sense-keys ("return%2:38:12" "take_back%2:38:03" "bring_back%2:38:00" "return%1:04:01")
  :parent ONT::MOVE
  :sem (F::SITUATION (:required)(:default (F::Aspect F::bounded) (F::Time-span F::atomic)))
  )
@@ -871,7 +872,7 @@
  )
 
 (define-type ONT::SEND
- :wordnet-sense-keys ("send%2:32:00" "post%2:32:02" "mail%2:32:00" "ship%2:38:00" "send%2:38:00" "transport%2:38:01" "transmit%2:35:00" "transfer%2:35:00" "transport%2:35:01" "channel%2:35:00" "channelize%2:35:00" "channelise%2:35:00" "make_pass%2:38:00" "bundle_off%2:38:00")
+ :wordnet-sense-keys ("send%2:32:00" "post%2:32:02" "mail%2:32:00" "ship%2:38:00" "send%2:38:00" "transport%2:38:01" "transmit%2:35:00" "transfer%2:35:00" "transport%2:35:01" "channel%2:35:00" "channelize%2:35:00" "channelise%2:35:00" "make_pass%2:38:00" "bundle_off%2:38:00" "transmission%1:04:01")
  :parent ONT::TRANSFER
  :sem (F::SITUATION (F::Aspect F::Dynamic) (F::trajectory +))
  :arguments ((:OPTIONAL ONT::RESULT ((? rcp F::Phys-obj f::abstr-obj))) ;(F::intentional +)))
@@ -1213,7 +1214,7 @@
     )
 
 (define-type ONT::crush
- :wordnet-sense-keys ("squash%2:35:00" "crush%2:35:00" "squelch%2:35:00" "mash%2:35:00" "grind%2:35:00") 
+ :wordnet-sense-keys ("squash%2:35:00" "crush%2:35:00" "squelch%2:35:00" "mash%2:35:00" "grind%2:35:00" "crush%1:04:00") 
  :parent ONT::change-integrity
  )
 
@@ -1315,7 +1316,7 @@
 
 (define-type ONT::fold
  :parent ONT::shape-change
- :wordnet-sense-keys ("fold%2:35:00" "deformation%1:11:01")
+ :wordnet-sense-keys ("fold%2:35:00" "deformation%1:11:01" "line%1:15:01")
  :arguments ((:required ONT::affected (F::Phys-obj (f::mobility f::movable))))
  :sem (F::situation (F::Aspect F::dynamic))
  )
@@ -1379,7 +1380,8 @@
 ;; 20120524 GUM change new type
 (define-type ont::cause-produce-reproduce
     :comment "an AGENT causes a new object to be created"
-    :wordnet-sense-keys ("bring_on%2:39:00" "produce%2:36:03" "yield%2:40:00" "yield%2:40:02")
+    :wordnet-sense-keys ("bring_on%2:39:00" "produce%2:36:03" "yield%2:40:00" "yield%2:40:02"
+					    "output%1:23:00")
     :parent ont::cause-effect
     :definitions ((ont::cause-effect :agent ?agent
 				     :formal (ont::become
@@ -1428,7 +1430,7 @@
 ;;; This is "no formal" restart referring to dialogue level
 ;; restart, start again, start over
 (define-type ONT::RESUME
-  :wordnet-sense-keys ("restart%2:30:00")
+  :wordnet-sense-keys ("restart%2:30:00" "return%1:04:02")
  :parent ONT::start
  :sem (F::SITUATION (F::Cause F::agentive) (F::Trajectory -) (F::Time-span F::atomic))
  )
@@ -1486,7 +1488,7 @@
 		))
 
 (define-type ont::social-relationship
-  :wordnet-sense-keys ("relationship%1:24:00" "relationship%1:26:00" "romance%1:26:00" "affair%1:26:00")
+  :wordnet-sense-keys ("relationship%1:24:00" "relationship%1:26:00" "romance%1:26:00" "affair%1:26:00" "relationship%1:26:01")
   :parent ont::social-activity
 )
 
@@ -1611,7 +1613,7 @@
 
 ;;; Complete takes an action that requires an intentional agent
 (define-type ONT::Complete
-    :wordnet-sense-keys ("complete%2:30:02" "finish%2:30:02" "carry_to_term%2:29:00" "hold_one's_own%2:42:00" "succeed%2:41:00" "excel%2:42:00"
+    :wordnet-sense-keys ("complete%2:30:02" "finish%2:30:02" "carry_to_term%2:29:00" "hold_one's_own%2:42:00" "succeed%2:41:00" "excel%2:42:00" "completion%1:04:00"
 					    "success%1:11:00" "success%1:04:00" "completion%1:04:02")
 					; :parent ONT::SITUATION-CHANGE
     :parent ONT::ACTING
@@ -1668,7 +1670,7 @@
 ;; kill, destroy
 (define-type ont::destroy
     :comment "render inoperative"
-    :wordnet-sense-keys ("destroy%2:35:00" "destroy%2:36:00" "down%2:38:00" "knock_out%2:30:00" "knock_out%2:30:01"
+    :wordnet-sense-keys ("destroy%2:35:00" "destroy%2:36:00" "down%2:38:00" "knock_out%2:30:00" "knock_out%2:30:01" "destruction%1:04:00"
 					   "abortion%1:04:00")
     :arguments ((:REQUIRED ONT::affected ((? xx F::Phys-obj F::Abstr-obj)
 					  (F::type (? tt ONT::phys-object ont::mental-construction)))))
@@ -1677,7 +1679,7 @@
 
 (define-type ont::kill
     :wordnet-sense-keys ("kill%2:35:00" "kill%2:35:01" "kill%2:35:02" "destroy%2:35:01"
-					"killing%1:04:00")
+					"killing%1:04:00" "corporal_punishment%1:04:00")
     :comment "killing a living being"
     ;;:definitions ((cause-effect :agent (R :agent) :formal (ont::die :affected (R :affected))))
     :arguments ((:ESSENTIAL ONT::affected (F::phys-obj (F::type ont::organism) (F::origin F::living))))
@@ -1731,7 +1733,7 @@
  )
 
 (define-type ONT::decide
- :wordnet-sense-keys ("decide%2:31:00" "decide%2:31:02")
+ :wordnet-sense-keys ("decide%2:31:00" "decide%2:31:02" "decision%1:04:00")
  :parent ONT::acquire-belief
  :arguments ((:ESSENTIAL ONT::FORMAL ((? tt F::phys-obj F::abstr-obj f::situation) (F::information F::information-content)))
              )
@@ -2058,7 +2060,7 @@
  )
 
 (define-type ont::evoke-upset
- :wordnet-sense-keys ("upset%2:37:01" "disturb%2:37:00")
+ :wordnet-sense-keys ("upset%2:37:01" "disturb%2:37:00" "circus%1:04:01" )
  :parent ont::evoke-bother
 )
 
@@ -2182,7 +2184,7 @@
 
 ;; 20120523 GUM change new type
 (define-type ONT::accept-agree
- :wordnet-sense-keys ("grudge%2:37:00" "agree%2:32:00" "agree%2:32:04" "accept%2:32:00" "consent%2:32:00" "go_for%2:32:00" "affirm%2:32:01")
+ :wordnet-sense-keys ("grudge%2:37:00" "agree%2:32:00" "agree%2:32:04" "accept%2:32:00" "consent%2:32:00" "go_for%2:32:00" "affirm%2:32:01" "accepance%1:04:00" )
  :parent ONT::response
  )
 
@@ -2310,7 +2312,7 @@
  )
 
 (define-type ONT::praise
- :wordnet-sense-keys ("praise%2:32:00")
+ :wordnet-sense-keys ("praise%2:32:00" "applase%1:10:00")
  :parent ONT::loaded-claim
  :sem (F::Situation (F::Cause F::Agentive))
  :arguments (
@@ -2357,7 +2359,8 @@
  )
 
 (define-type ONT::defame
- :wordnet-sense-keys ("defame%2:32:00" "slander%2:32:00" "smirch%2:32:00" "asperse%2:32:00" "denigrate%2:32:01" "calumniate%2:32:00" "smear%2:32:00" "sully%2:32:00" "besmirch%2:32:00")
+    :wordnet-sense-keys ("defame%2:32:00" "slander%2:32:00" "smirch%2:32:00" "asperse%2:32:00" "denigrate%2:32:01" "calumniate%2:32:00" "smear%2:32:00" "sully%2:32:00" "besmirch%2:32:00" "charge%1:10:00" "recrimination%1:10:00"
+					  )
  :parent ONT::accuse
  )
 
@@ -2383,7 +2386,7 @@
  )
 
 (define-type ONT::greet
- :wordnet-sense-keys ("greet%2:32:00" "recognize%2:32:01" "recognise%2:32:01" "greet%2:32:01")
+ :wordnet-sense-keys ("greet%2:32:00" "recognize%2:32:01" "recognise%2:32:01" "greet%2:32:01" "greeting%1:10:00")
  :parent ONT::conventional-speech-act
  )
 
@@ -2620,7 +2623,7 @@
 
 (define-type ONT::collaborate
  :parent ONT::agent-interaction
-  :wordnet-sense-keys ("collaborate%2:41:00")
+  :wordnet-sense-keys ("collaborate%2:41:00" "cooperation%1:04:01")
  :arguments ((:REQUIRED ONT::Formal)
              (:REQUIRED ONT::agent)
              )
@@ -2633,7 +2636,17 @@
 
 (define-type ONT::win-compete
  :parent ONT::compete
-  :wordnet-sense-keys ("win%2:33:00")
+  :wordnet-sense-keys ("win%2:33:00" "triumph%1:11:00")
+  )
+
+(define-type ONT::tie-compete
+ :parent ONT::compete
+  :wordnet-sense-keys ("tie%2:33:00" "tie%1:11:00")
+  )
+
+(define-type ONT::score-compete
+ :parent ONT::compete
+  :wordnet-sense-keys ("score%1:04:00")
  )
 
 (define-type ONT::lose-compete
@@ -2926,7 +2939,7 @@
  )
 
 (define-type ont::protecting
- :wordnet-sense-keys ("preserve%2:42:01" "keep%2:42:02" "defend%2:33:00")
+ :wordnet-sense-keys ("preserve%2:42:01" "keep%2:42:02" "defend%2:33:00" "protection%1:21:00")
   :parent ont::event-of-causation
   :arguments ((:REQUIRED ONT::affected((? obj F::PHYS-OBJ F::ABSTR-OBJ)))
 	      (:OPTIONAL ONT::agent (F::phys-obj (F::intentional +)) (:implements cause))
@@ -3029,7 +3042,8 @@
 )
 
 (define-type ONT::HELP
- :wordnet-sense-keys ("help%2:41:00" "assist%2:41:02" "aid%2:41:00")
+    :wordnet-sense-keys ("help%2:41:00" "assist%2:41:02" "aid%2:41:00" "help%1:04:00"
+					"help%1:04:00")
  :parent ONT::CAUSE-EFFECT
  :arguments ((:optional ONT::Affected ((? o1 F::Situation F::Phys-obj f::abstr-obj))))
  )
@@ -3078,6 +3092,7 @@
 
 ;; 20120524 GUM change new type
 (define-type ont::adapt
+    :wordnet-sense-keys ("adaptation%1:22:00")
     :parent ont::accommodate
     )
 
@@ -3313,7 +3328,7 @@
  )
 
 (define-type ONT::cause-come-from
- :wordnet-sense-keys ("remove%2:30:00" "take%2:30:00" "take_away%2:30:01" "withdraw%2:30:01" "remove%2:30:02" "remove%2:41:00" "suction%2:38:00" "percolate%2:38:00")
+ :wordnet-sense-keys ("remove%2:30:00" "take%2:30:00" "take_away%2:30:01" "withdraw%2:30:01" "remove%2:30:02" "remove%2:41:00" "suction%2:38:00" "percolate%2:38:00" "removal%1:04:00")
  :parent ONT::event-of-causation
  :arguments ((:REQUIRED ONT::Agent)
 	     (:required ont::source)
@@ -3398,7 +3413,7 @@
 |#
 
 (define-type ONT::socially-remove
-    :wordnet-sense-keys ("banishment%1:04:00" "expel%2:41:01" "expel%2:41:00" "ouster%1:04:00" "repatriate%2:41:01")
+    :wordnet-sense-keys ("banishment%1:04:00" "expel%2:41:01" "expel%2:41:00" "ouster%1:04:00" "repatriate%2:41:01" "debarment%1:04:00")
  :parent ONT::cause-come-from
  :arguments (;(:REQUIRED ONT::Formal ((? thm F::phys-obj F::abstr-obj) (F::intentional +)))
 	     (:REQUIRED ONT::affected ((? thm F::phys-obj F::abstr-obj) (F::intentional +)))
@@ -3478,7 +3493,7 @@
 
 ;; 20120524 GUM change new type
 (define-type ont::act-behave
-    :wordnet-sense-keys ("act%2:29:00" "act%2:36:04" "behave%2:41:01")
+    :wordnet-sense-keys ("act%2:29:00" "act%2:36:04" "behave%2:41:01" "posturing%1:07:00" "performance%1:04:00" "behavior%1:26:00")
     :parent ont::acting
     :arguments ((:REQUIRED ONT::formal (F::phys-obj)))   ;; the role -- acted as a judges, acts as a catalyst
     )
@@ -4147,7 +4162,7 @@
  )
 
 (define-type ONT::increase
- :wordnet-sense-keys ("increase%1:11:00" "increase%2:30:00" "rise%2:37:00")
+ :wordnet-sense-keys ("increase%1:11:00" "increase%2:30:00" "rise%2:37:00" "increase%1:07:00")
  :parent ONT::change-magnitude
  )
 
@@ -4174,7 +4189,7 @@
 ; )
 
 (define-type ONT::decrease
-    :wordnet-sense-keys ("decrease%2:30:00" "decrease%2:30:01" "diminish%2:30:00" "lessen%2:30:00" "fall%2:30:06" "mitigate%2:32:00"
+    :wordnet-sense-keys ("decrease%2:30:00" "decrease%2:30:01" "diminish%2:30:00" "lessen%2:30:00" "fall%2:30:06" "mitigate%2:32:00" "reduction%1:04:00" "decrement%1:07:00"
 					    "decrease%1:11:00" "relieve%2:29:00")
  :parent ONT::change-magnitude
  )
@@ -4511,7 +4526,7 @@
   
 (define-type ont::enacting-rules
   :parent ont::changing-rules
-  :wordnet-sense-keys ("enact%2:41:00" "segregate%2:41:00")   
+  :wordnet-sense-keys ("enact%2:41:00" "segregate%2:41:00" "imposition%1:04:02")   
   ;currently enact%2:41:00 goes to ONT::TELL in WN mappings
 )
 
@@ -4528,7 +4543,7 @@
  )
 
 (define-type ONT::add-include
- :wordnet-sense-keys ("include%2:30:00" "introduce%2:38:00" "add%2:30:00")
+ :wordnet-sense-keys ("include%2:30:00" "introduce%2:38:00" "add%2:30:00" "inclusion%1:04:00")
  :comment "asymettric composition: one object becomes part of another"
  :parent ONT::putting-together ;adjust
  :sem (F::SITUATION)
@@ -4536,7 +4551,7 @@
  )
 
 (define-type ONT::improve
- :wordnet-sense-keys ("enhancement%1:04:00" "sweetening%1:04:02" "meliorate%2:30:01" "improvement%1:04:00")
+ :wordnet-sense-keys ("enhancement%1:04:00" "sweetening%1:04:02" "meliorate%2:30:01" "improvement%1:04:00" "advance%1:11:01")
  :parent ONT::adjust
  :sem (F::SITUATION (F::Cause F::agentive) (F::Trajectory -))
  :arguments ((:REQUIRED ONT::Formal ((? thm F::abstr-obj f::situation f::phys-obj)))
@@ -5339,7 +5354,7 @@
 
 ;; replace, switch (out), substitute
 (define-type ONT::Replacement
- :wordnet-sense-keys ("change%1:06:00" "change%2:30:06" "change%2:30:03" "change%2:30:05" "shift%2:30:02" "switch%2:30:02" "substitute%2:40:00" "replace%2:40:00" "interchange%2:40:01" "exchange%2:40:02")
+ :wordnet-sense-keys ("change%1:06:00" "change%2:30:06" "change%2:30:03" "change%2:30:05" "shift%2:30:02" "switch%2:30:02" "substitute%2:40:00" "replace%2:40:00" "interchange%2:40:01" "exchange%2:40:02" "substitution%1:11:00")
  :parent ONT::change-state-action
  ;;; Agent, agents, Agent-1
  :arguments ((:ESSENTIAL ONT::Agent)
@@ -5618,17 +5633,8 @@
              )
  )
 
-;(define-type ont::participate-attend
-;    :wordnet-sense-keys ("attend%2:42:00" "participate%2:41:00")
-;    :parent ont::event-of-causation ;; 20120529 GUM change new parent + args
-;    :arguments ((:REQUIRED ONT::agent (F::phys-obj (F::intentional +)))
-;		(:REQUIRED ONT::neutral (F::situation ;; F::abstr-obj)
-					;; (F::type ONT::GATHERING-EVENT) ;; e.g. meeting, exams, court (legal organization)
-;					 )
-;			   ))
-;    )
 (define-type ont::participate-attend
-    :wordnet-sense-keys ("appear%2:41:03" "attend%2:42:00" "participate%2:41:00")
+    :wordnet-sense-keys ("appear%2:41:03" "attend%2:42:00" "participate%2:41:00" "involvement%1:04:00")
     :parent ont::event-of-causation ;; 20120529 GUM change new parent + args
     :arguments ((:REQUIRED ONT::agent (F::phys-obj (F::intentional +)))
 		(:REQUIRED ONT::neutral (F::situation (F::type ONT::gathering-event)))
@@ -5708,7 +5714,7 @@
 
 (define-type ont::status
   :parent ont::situation-root
-  :wordnet-sense-keys ("condition%1:26:00" "status%1:26:01" "state%1:26:02" "state_of_matter%1:26:00" "state%1:03:00" "situation%1:26:00")
+  :wordnet-sense-keys ("condition%1:26:00" "status%1:26:01" "state%1:26:02" "state_of_matter%1:26:00" "state%1:03:00"  "case%1:09:00")
  :arguments ((:OPTIONAL ONT::FIGURE)
              )
  )
@@ -5780,7 +5786,7 @@
 ;; implies motion, allows path phrases (trajectory +)
 ;; e.g. troll/drag the river, patrol the area, comb the beach, scan the area
 (define-type ONT::Physical-scrutiny
- :wordnet-sense-keys ("inspect%2:38:00" "visit%2:38:01" "see%2:39:13" "examine%2:39:00" "check_into%2:31:00" "go_over%2:31:01" "check_over%2:31:00" "suss_out%2:31:00" "check_out%2:31:00" "look_into%2:31:00" "check_up_on%2:31:00" "check%2:31:00" "search%2:35:00" "seek%2:35:00" "look_for%2:35:00")
+ :wordnet-sense-keys ("inspect%2:38:00" "visit%2:38:01" "see%2:39:13" "examine%2:39:00" "check_into%2:31:00" "go_over%2:31:01" "check_over%2:31:00" "suss_out%2:31:00" "check_out%2:31:00" "look_into%2:31:00" "check_up_on%2:31:00" "check%2:31:00" "search%2:35:00" "seek%2:35:00" "look_for%2:35:00" "search%1:04:00")
  :parent ont::scrutiny
  :arguments ((:REQUIRED ONT::Formal ((? th30 f::phys-obj f::abstr-obj f::situation)))
              (:ESSENTIAL ONT::Agent (f::phys-obj  (f::origin (? org f::human f::non-human-animal)) (F::intentional +)))

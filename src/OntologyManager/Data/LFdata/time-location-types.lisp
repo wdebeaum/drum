@@ -270,7 +270,7 @@
 
 ; figure is behind the ground
 ; in back (of), behind
-(define-type ont::back
+(define-type ont::back-of
   :parent ont::oriented-loc-reln
   )
 
@@ -1390,10 +1390,9 @@
     :wordnet-sense-keys ("morning%1:28:00")
     )
 
-(define-type ont::dat-stage-PM
+(define-type ont::day-stage-PM
     :parent ONT::DAY-STAGE
-    :wordnet-sense-keys ("morning%1:28:00")
-    )
+     )
 
 (define-type ont::afternoon
     :parent ONT::DAY-STAGE

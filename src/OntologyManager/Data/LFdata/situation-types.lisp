@@ -189,6 +189,14 @@
 	     )
 	     ))
 
+
+(define-type ont::reaction-to-stimulus
+    :wordnet-sense-keys ("reaction%1:04:00" "reaction%1:09:01" "reaction%1:19:00"
+					  "reaction%1:09:00"  )
+    :parent ont::event-of-action
+    )
+
+
 #||;; must be a movable, physical object
 (define-type ont::physical-motion
  :parent ONT::motion
@@ -262,7 +270,6 @@
              )
  )
 
-
 (define-type ONT::Categorization
  :wordnet-sense-keys ("adjudge%2:32:00" "declare%2:32:04" "hold%2:32:11")
  :parent ONT::event-of-action
@@ -312,7 +319,7 @@
 ;; cognizer reasoning results in a conclusion
 ;; compare related type ont::becoming-aware which relies more on straight perception
 (define-type ONT::DETERMINE ;ONT::Coming-to-Believe
- :wordnet-sense-keys ("reason%2:31:01" "reason_out%2:31:00" "conclude%2:31:00" "ascertain%2:32:00" "ascertain%2:32:01" "discover%2:31:01")
+ :wordnet-sense-keys ("reason%2:31:01" "reason_out%2:31:00" "conclude%2:31:00" "ascertain%2:32:00" "ascertain%2:32:01" "discover%2:31:01" "discovery%1:04:00")
  :parent ONT::cogitation
  :arguments ((:ESSENTIAL ONT::Agent  ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
              ;;; Evidence
@@ -1073,8 +1080,9 @@
 
 ;; release
 (define-type ONT::releasing
- :wordnet-sense-keys ("free%2:41:00" "liberate%2:41:02" "release%2:41:00" "unloose%2:41:00" "unloosen%2:41:00" "loose%2:41:00" "discharge%2:41:01" "exempt%2:41:00" "let_go%2:35:00")
+ :wordnet-sense-keys ("release%1:22:00" "free%2:41:00" "liberate%2:41:02" "release%2:41:00" "unloose%2:41:00" "unloosen%2:41:00" "loose%2:41:00" "discharge%2:41:01" "exempt%2:41:00" "let_go%2:35:00")
  :parent ONT::control-manage
+ :comment "An agent removes the affected from some sort of control (confinement, obligation, etc)"
  :arguments (
 ;	     (:OPTIONAL ONT::Instrument (F::Phys-obj (F::intentional -)))
 	     (:REQUIRED ONT::affected ((? obj F::PHYS-OBJ F::ABSTR-OBJ)))
@@ -1085,7 +1093,7 @@
 
 ;; try, attempt
 (define-type ONT::TRY
- :wordnet-sense-keys ("try%1:04:00" "endeavour%1:04:00" "endeavor%1:04:00" "effort%1:04:00" "attempt%1:04:00" "try%2:29:00" "try_on%2:29:00" "taste%2:34:00" "try_out%2:34:00" "try%2:34:00" "essay%2:41:01" "examine%2:41:00" "try_out%2:41:00" "try%2:41:01" "prove%2:41:03" "test%2:41:00" "try%2:41:00" "seek%2:41:00" "attempt%2:41:00" "essay%2:41:00" "assay%2:41:00" "come_near%2:41:00")
+ :wordnet-sense-keys ("try%1:04:00" "endeavour%1:04:00" "endeavor%1:04:00" "effort%1:04:00" "attempt%1:04:00" "try%2:29:00" "try_on%2:29:00" "taste%2:34:00" "try_out%2:34:00" "try%2:34:00" "essay%2:41:01" "examine%2:41:00" "try_out%2:41:00" "try%2:41:01" "prove%2:41:03" "test%2:41:00" "try%2:41:00" "seek%2:41:00" "attempt%2:41:00" "essay%2:41:00" "assay%2:41:00" "come_near%2:41:00" "push%1:04:01")
  :parent ONT::cause-effect
  :arguments ((:OPTIONAL ONT::neutral ((? agt f::abstr-obj f::situation))))
 ;;((:OPTIONAL ONT::Instrument (F::Phys-obj (F::intentional -)))

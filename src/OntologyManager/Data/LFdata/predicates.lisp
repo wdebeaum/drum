@@ -158,7 +158,7 @@
  )
 
 (define-type ONT::QUALIFICATION
- :parent ONT::PREDICATE
+    :parent ONT::PREDICATE
  )
 
 (define-type ONT::RESTRICTION
@@ -469,6 +469,7 @@
 (define-type ONT::sequence-position
     :comment "Position related to discourse. e.g., First, we laugh"
     :parent ONT::PREDICATE
+    :wordnet-sense-keys ("rank%1:26:00")
     :arguments ((:REQUIRED ONT::FIGURE (F::Situation))
 		)
     )

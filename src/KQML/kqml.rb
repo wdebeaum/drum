@@ -211,8 +211,8 @@ class Symbol
     else
       name = to_s
     end
-    package = '|' + package + '|' if ((not package.nil?) and package =~ /[\s:`,'"\(\)]/)
-    name = '|' + name + '|' if (name =~ /[\s:`,'"\(\)]/)
+    package = '|' + package + '|' if ((not package.nil?) and package =~ /[\s:;`,'"\(\)]/)
+    name = '|' + name + '|' if (name =~ /[\s:;`,'"\(\)]/)
     case package
       when nil
         name
