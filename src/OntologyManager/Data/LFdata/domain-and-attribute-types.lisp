@@ -1078,7 +1078,7 @@
 ;;asethetic-judgement
 (define-type ont::aesthetic-tastefulness-scale
  :parent ont::evaluation-scale
- :wordnet-sense-keys ("stylishness%1gre:07:00")
+ :wordnet-sense-keys ("stylishness%1:07:00")
 )
 
 ;; partiality, bias, prejudice

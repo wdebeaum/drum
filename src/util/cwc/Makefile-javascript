@@ -1,7 +1,8 @@
 MODULE = util/cwc
 SRCS = \
 	cwc-module.js \
-	errors.js
+	errors.js \
+	rgb-bytes.js
 
 CONFIGDIR=../../config
 include $(CONFIGDIR)/javascript/lib.mk

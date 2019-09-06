@@ -2184,7 +2184,7 @@
 
 ;; 20120523 GUM change new type
 (define-type ONT::accept-agree
- :wordnet-sense-keys ("grudge%2:37:00" "agree%2:32:00" "agree%2:32:04" "accept%2:32:00" "consent%2:32:00" "go_for%2:32:00" "affirm%2:32:01" "accepance%1:04:00" )
+ :wordnet-sense-keys ("grudge%2:37:00" "agree%2:32:00" "agree%2:32:04" "accept%2:32:00" "consent%2:32:00" "go_for%2:32:00" "affirm%2:32:01" "acceptance%1:04:00" )
  :parent ONT::response
  )
 
@@ -2312,7 +2312,7 @@
  )
 
 (define-type ONT::praise
- :wordnet-sense-keys ("praise%2:32:00" "applase%1:10:00")
+ :wordnet-sense-keys ("praise%2:32:00" "applause%1:10:00")
  :parent ONT::loaded-claim
  :sem (F::Situation (F::Cause F::Agentive))
  :arguments (

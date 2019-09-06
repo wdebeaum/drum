@@ -124,7 +124,7 @@
 
 (define-type ONT::SOCIAL-SYSTEM
     :parent ONT::tangible-abstract-object
-    :wordnet-sense-keys ("political_system%1:09:00")
+    :wordnet-sense-keys ("political_system%1:14:00")
     :sem (F::Abstr-obj)
     )
 
@@ -1048,7 +1048,7 @@
 )
 
 (define-type ONT::knowledge-belief
-    :wordnet-sense-keys ("knowledge%1:03:00" "know_how%1:09:00")
+    :wordnet-sense-keys ("knowledge%1:03:00" "know-how%1:09:00")
     :parent ONT::mental-construction
     :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
 		(:optional ont::FORMAL (f::situation)))
@@ -1200,7 +1200,7 @@
 ;; task-related things that one commits to
 ;; appointment, schedule, agenda, timeline, campaign
 (define-type ONT::commitment
-    :wordnet-sense-keys ("commiment%1:04:02")
+    :wordnet-sense-keys ("commitment%1:04:02")
  :parent ONT::ps-object
  )
 

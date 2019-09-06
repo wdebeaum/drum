@@ -540,8 +540,7 @@
 
 (define-type ont::intrinsic-val
  :parent ont::basicness-val 
- :wordnet-sense-keys ("built-in%5:00:0
-0:intrinsic:00" "intrinsic%3:00:00" )
+ :wordnet-sense-keys ("built-in%5:00:00:intrinsic:00" "intrinsic%3:00:00" )
 )
 
 (define-type ont::plain-val
@@ -6341,7 +6340,7 @@
 
 (define-type ONT::hateful-val
   :parent ONT::neg-experiencer-property-val
-  :wordnet-sense-keys ("hateful%3:00:00::" "hatred%1:12;00" "evil%1:07:00")
+  :wordnet-sense-keys ("hateful%3:00:00::" "hatred%1:12:00" "evil%1:07:00")
   :comment "(hateful)"
   )
 
