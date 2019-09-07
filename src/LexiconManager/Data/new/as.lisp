@@ -296,7 +296,8 @@
    )
    ((w::AS W::expected)
     (SENSES
-     ((LF-PARENT ONT::PREDICATE)
+     (;(LF-PARENT ONT::PREDICATE)
+      (LF-PARENT ONT::QUALIFICATION)
       (TEMPL DISC-TEMPL)
       )
     )

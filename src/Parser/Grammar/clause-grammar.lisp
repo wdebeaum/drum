@@ -133,10 +133,28 @@
 	      (uttword ?uw)
 	  (lf (% (? s speechact sa-seq) (var ?sv) (class ?cl) (constraint ?con)))
 	  ))
-    (punc (punctype ?p) (lex (? lex w::punc-exclamation-mark w::punc-period w::punc-question-mark w::punc-colon w::ellipses w::punc-comma w::punc-minus w::punc-semicolon)))
+   (punc (punctype ?p) (lex (? lex w::punc-exclamation-mark w::punc-period w::punc-question-mark
+			       w::punc-colon w::ellipses w::punc-comma w::punc-minus w::punc-semicolon)))
     (add-to-conjunct (val (punctype ?p)) (old ?con) (new ?constraint))
     )
 
+   ; if it was an SA_TELL but there is a question mark, change the sa type to SA_YN-QUESTION
+   ; e.g., I ate the pizza?
+   ((utt  (var ?v) (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
+     (punc +) (punctype ?p) (uttword ?uw)
+     (lf (% ?s (var ?sv) (class ONT::SA_YN-QUESTION) ;(class ?cl)
+	    (constraint ?constraint)))
+     )
+   -utt-punctuation-question-mark> 0.991 ; slightly higher priority than -utt-punctuation
+   (head (utt (focus ?foc) (ended -) (var ?v) ;(punc -) ; sa-seq has punc, but now this rule would allow consecutive puncs, e.g., I ate the pizza!!
+	      (uttword ?uw)
+	      (lf (% (? s speechact sa-seq) (var ?sv) (class ONT::SA_TELL)  ;(class ?cl)
+		     (constraint ?con)))
+	  ))
+    (punc (punctype ?p) (lex (? lex w::punc-question-mark)))
+    (add-to-conjunct (val (punctype ?p)) (old ?con) (new ?constraint))
+    )
+   
    ;;  two utterances seoparated by punctuation - common in text-based dialogue
 
    ((utt  ;(var ?v)

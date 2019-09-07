@@ -7,8 +7,10 @@
  :words (
     (W::ANYHOW
    (SENSES
-    ((LF-PARENT ONT::PREDICATE)
-     (TEMPL PRED-S-POST-TEMPL)
+    (;(LF-PARENT ONT::PREDICATE)
+     ;(TEMPL PRED-S-POST-TEMPL)
+     (LF-PARENT ONT::TOPIC-SIGNAL)
+     (TEMPL DISC-TEMPL)
      )
     )
    )
