@@ -575,7 +575,7 @@
       )
      -period-value-advbl1> .98
      (head (np (sem ?valsem) (var ?valvar)
-	       (sem ($ f::time)) ;(f::time-scale F::INTERVAL)))
+	       (sem ($ f::time (f::type ont::time-object))) ;(f::time-scale F::INTERVAL)))
 	       (headless -)
 	       (LF (% DESCRIPTION (status (? xx ont::quantifier)))) ;; indefinite))))   
 	       ))

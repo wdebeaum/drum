@@ -7,7 +7,7 @@
  :words (
   (W::behind
    (SENSES
-    ((LF-PARENT ONT::back)
+    ((LF-PARENT ONT::back-of)
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      (SYNTAX (W::ALLOW-DELETED-COMP +))
      (EXAMPLE "place the image behind the photo")

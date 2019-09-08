@@ -3632,13 +3632,16 @@
     ; TEST: the quickly loaded truck ; the quickly computer generated truck
     ;; Myrosia 11/26/01 we only allow those phrases before the verbs. After the verbs, they should be treated as reduced relative clauses
     
-     ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem) (class ?lf)
+     ((ADJP (ARG ?arg) (VAR *) (sem ?nsem) (class ?lf)
 	    (subcatmap ?subjmap) ;(SUBCATMAP (? x ont::affected ont::affected-result ont::neutral))
 	    (ARGUMENT ?subj)
 	    (atype attributive-only) ;(atype central) 
-	    (LF (% PROP (class ?lf) (VAR ?v) (constraint ?newc)))
-      )
-     -vp-pastprt-adjp>
+       (LF (% PROP (var *) (class ONT::state-resulting-from) (sem ?nsem)
+	      (constraint (& (figure ?arg) 
+			     (ground (% *PRO* (status ont::f) (class ?lf) (VAR ?v) (sem ?sem) (constraint ?newc)))
+			     ))))
+       )
+     -vp-pastprt-adjp-attributive>
      (head
       (vp- (class ?lf) (constraint ?cons) (var ?v) (sem ?sem)
 	   (subj-map ?subjmap) ;(SUBJ-MAP (? x ont::affected ont::affected-result))
@@ -3647,17 +3650,52 @@
 	                ;; also neutral/formal: the expected result
 	   (subjvar ?arg)
 	   (gap -) ;;  no gap in the VP
-	   (vform (? pp passive pastpart))
+	   (vform passive) ;; (? pp passive pastpart))  What's an example of a PASTPRT 
 	   (complex -)
            (advbl-needed -)
 	   (dobj (% -))  ;; we can't say "the cooked the steak meat" but "the cooked meat" is fine.
 	   ;(comp3 (% -))  ;; sacrificing "the broken by the hammer window"
 	   (comp3 (% ?comp3 (var ?compvar)))  
            ))
-     (not-bound (arg1 ?compvar)) ; optional but unbound
+      (not-bound (arg1 ?compvar)) ; optional but unbound
      ;(append-conjuncts (conj1 ?cons) (conj2 (& (ont::affected ?arg))) (new ?newc))
-     (append-conjuncts (conj1 ?cons) (conj2 (& (?subjmap ?arg))) (new ?newc))
-     )
+      (append-conjuncts (conj1 ?cons) (conj2 (& (?subjmap ?arg))) (new ?newc))
+      (compute-sem-features (lf ont::STATE-resultING-FROM) (sem ?nsem)
+       ))
+
+    ((ADJP (ARG ?arg) (VAR *) (sem ?nsem) (class ?lf)
+	    (subcatmap ?subjmap) ;(SUBCATMAP (? x ont::affected ont::affected-result ont::neutral))
+	    (ARGUMENT ?subj)
+	    (atype predicative-only)
+       (LF (% PROP (var *) (class ONT::state-resulting-from) (sem ?nsem)
+	      (constraint (& (figure ?arg) 
+			     (ground (% *PRO* (status ont::f) (class ?lf) (VAR ?v) (sem ?sem) (constraint ?newc)))
+			     ))))
+       )
+     -vp-pastprt-adjp->
+     (head
+      (vp- (class ?lf) (constraint ?cons) (var ?v) (sem ?sem)
+	   (subj-map ?subjmap) ;(SUBJ-MAP (? x ont::affected ont::affected-result))
+	   (SUBJ ?subj) ;; more general to ask for SUBJ to be AFFECTED role, includes
+ 	                                         ;; the passive as well as unaccusative cases
+	                ;; also neutral/formal: the expected result
+	   (subjvar ?arg)
+	   (gap -) ;;  no gap in the VP
+	   (vform passive) ;; (? pp passive pastpart))  What's an example of a PASTPRT 
+	   (complex +)
+           (advbl-needed -)
+	   (dobj (% -))  ;; we can't say "the cooked the steak meat" but "the cooked meat" is fine.
+	   ;(comp3 (% -))  ;; sacrificing "the broken by the hammer window"
+	   (comp3 (% ?comp3 (var ?compvar)))  
+           ))
+      (not-bound (arg1 ?compvar)) ; optional but unbound
+     ;(append-conjuncts (conj1 ?cons) (conj2 (& (ont::affected ?arg))) (new ?newc))
+      (append-conjuncts (conj1 ?cons) (conj2 (& (?subjmap ?arg))) (new ?newc))
+      (compute-sem-features (lf ont::STATE-resultING-FROM) (sem ?nsem)
+       ))
+
+
+    
 
      ; may have been subsumed by -VP-PASTPRT-ADJP>
      ; If using this rule, need to make part "-" or check for matching part

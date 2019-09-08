@@ -349,7 +349,7 @@
  :words (
    ((w::in W::back)
    (SENSES
-    ((LF-PARENT ONT::back)
+    ((LF-PARENT ONT::back-of)
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL  (xp (% w::pp (w::ptype (? pt w::of)))))
       (SYNTAX (W::ALLOW-DELETED-COMP +))
      (EXAMPLE "there is a crater in back of me")
