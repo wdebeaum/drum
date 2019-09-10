@@ -43,24 +43,26 @@
 	   (senses 
 	    ((lf-parent ont::correlation)
 	     (TEMPL NEUTRAL-FORMAL-XP-NP-2-TEMPL)
-	     (example "an alarm means trobule")
+	     (example "an alarm means trouble")
 	     )	    
 	    ((lf-parent ont::correlation) 
 	     (TEMPL NEUTRAL-FORMAL-XP-NP-2-TEMPL (xp (% w::cp (w::ctype w::s-that))))
-	     (example "the exmpalation means that ...")
+	     (example "the explation means that ...")
 	     )	    	    
 	    )
 	   )
 ))
 
-(define-words :pos W::V
- :words (
-          (w::mean
-           (senses
-            ((lf-parent ont::have-property)
-             (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
-             (example "my husband means nothing to me")
-             )
-            )
-           )
-))
+;(define-words :pos W::V
+; :words (
+;          (w::mean
+;           (senses
+;            ((lf-parent ont::have-property)
+;             (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
+;             (TEMPL NEUTRAL-FORMAL-XP-NP-2-TEMPL)
+;             (example "my husband means everything to me")
+;             (example "my husband means nothing to me")
+;             )
+;            )
+;           )
+;))

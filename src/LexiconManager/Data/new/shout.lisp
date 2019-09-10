@@ -26,6 +26,11 @@
      (TEMPL AGENT-TEMPL)
      (meta-data :origin "verbnet-2.0" :entry-date 20060512 :change-date nil :comments nil :vn ("manner_speaking-37.3") :wn ("shout%2:32:08"))
      )
+
+    ((LF-PARENT  ONT::manner-say)
+     (TEMPL agent-formal-for-to-subjcontrol-templ)
+     )
+
     )
    )
 ))
