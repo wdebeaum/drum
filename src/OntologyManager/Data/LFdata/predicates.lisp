@@ -353,9 +353,9 @@
 
 (define-type ONT::attributed-to
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::FIGURE ((? e F::situation F::HAVE-PROPERTY F::CORRELATION)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::situation (F::type (? t ont::HAVE-PROPERTY ont::CORRELATION))))
              ;(:REQUIRED ONT::GROUND ((? s F::Phys-obj F::abstr-obj)))
-             (:ESSENTIAL ONT::GROUND (F::Phys-obj)(f::intentional +))
+             (:ESSENTIAL ONT::GROUND (F::Phys-obj (f::intentional +)))
 	     )
  )
 

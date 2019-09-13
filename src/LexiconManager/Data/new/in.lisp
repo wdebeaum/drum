@@ -466,7 +466,8 @@
      (preference 0.95) ;; don't choose if other options are available
      )||#	      
     ((LF-PARENT ONT::direction-in)
-     (TEMPL PRED-S-POST-TEMPL)
+     ;(TEMPL PRED-S-POST-TEMPL)
+     (TEMPL PRED-NP-TEMPL)
      (preference 0.98)
      )
     

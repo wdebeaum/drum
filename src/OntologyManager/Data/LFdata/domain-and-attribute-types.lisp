@@ -675,7 +675,7 @@
 
 (define-type ont::affection-scale
  :parent ont::behavioral-scale
- :wordnet-sense-keys ("affection%1:12:00")
+ :wordnet-sense-keys ("affection%1:12:00" "friendliness%1:07:00" )
 )
 
 (define-type ont::sociability-scale
