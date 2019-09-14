@@ -36,7 +36,8 @@
  :words (
 	 (W::fast
 	  (SENSES
-	   ((LF-PARENT ONT::manner)
+	   (;(LF-PARENT ONT::manner)
+	    (LF-PARENT ONT::speedy)
 	    (TEMPL PRED-S-POST-TEMPL)
 	    (example "Browne works fast")
 	    (meta-data :origin csli-ts :entry-date 20070320 :change-date nil :comments nil :wn nil)

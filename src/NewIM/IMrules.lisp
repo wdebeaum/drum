@@ -478,6 +478,7 @@
        )
       |#
 
+   #|
       ;;  What next?
       ((ONT::SPEECHACT ?!a ONT::SA_WH-QUESTION :FOCUS ?!ff :CONTENT ?!rr :MOD ?!m1)
        (ONT::WH-TERM ?!ff ?foc-type)
@@ -485,14 +486,26 @@
        -Q-next>
        (ONT::ASK-WHAT-IS :who *USER* :to *ME* :what ?!ff)
        )
-      
-      ;; e.g., What budget are we using?
-
+   |#  
+   
+   ;; e.g., What budget are we using?
    ((ONT::SPEECHACT ?!a ONT::SA_WH-QUESTION :FOCUS ?!ff :CONTENT ?!rr)
        ;((? spec ONT::WH-TERM ONT::WH-TERM-SET) ?!ff ?!type)
        -standardQ>
        (ONT::ASK-WHAT-IS :who *USER* :to *ME* :what ?!ff :suchthat ?!rr)
-	)
+       )
+
+      ; what next?
+      ; to get around that using standardQ would lose the "next" that is on the speechact
+      ((ONT::SPEECHACT ?!V1 ?act :content ?!c :mods (?!seq))
+       (?spec ?!c  (:* ONT::REFERENTIAL-SEM W::WHAT) :PROFORM W::WHAT)
+       (ONT::F ?!seq (:* ONT::SEQUENCE-POSITION w::next))
+      -what-next>
+       (ONT::ASK-WHAT-IS :who *USER* :to *ME* :what ?!c :suchthat ?!V1 )
+       (ONT::F ?!V1 (:* ONT::HAVE-PROPERTY w::BE) :NEUTRAL ?!c :FORMAL ?!seq)
+       (ONT::F ?!seq (:* ONT::SEQUENCE-val-next w::next))
+      )
+   
       
    ;; conditional questions: "What happens to the price of wheat in South Sudan if we cut the amount of fertilizer?"
 
@@ -809,13 +822,14 @@
        ((? act ONT::SA_ACK ONT::SA_THANK ONT::SA_WELCOME)  :who *USER* :to *ME*)
       )
 
+      #|
    ;; extract discourse markers out as their own act if not otherwise handled
       ;; Then take out the garbage.
      ((ONT::SPEECHACT ?!V1 ?act :mods (?!seq))
       (ONT::F ?!seq (:* ONT::SEQUENCE-POSITION ?!indicator))
       -discourse-sequence-marker>
       (ONT::manage-conversation :signal ?!indicator))
-   
+      |#
 
    ;; this rule should only work for questions about how to do this, or what objects we should use for a task, etc.
    ((ONT::SPEECHACT ?!V10966 ONT::SA_REQUEST :CONTENT ?!V10811)

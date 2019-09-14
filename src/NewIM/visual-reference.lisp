@@ -45,6 +45,7 @@
 		     (om::subtype type 'ONT::STATUS))
 		 (tag-and-install-info 'find-var lf input context))
 		((or (om::subtype type 'ONT::SUBSTANCE)
+		     (om::subtype type 'ONT::COMMODITY)
 		     (om::subtype type 'ONT::DOMAIN-PROPERTY)
 		     )
 		 (tag-and-install-info 'find-code lf input context))

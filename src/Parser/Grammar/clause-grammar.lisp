@@ -1929,6 +1929,7 @@
 	   (sem ?asem))
     ?dobj
     ?comp
+    (bound (arg1 ?dobjvar)) ; make sure this is not an unfilled optional argument
     )
  
    

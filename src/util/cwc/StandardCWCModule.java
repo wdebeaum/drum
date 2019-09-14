@@ -205,7 +205,7 @@ public class StandardCWCModule extends StandardTripsModule {
 	throw new UnknownAction(verb);
       }
     } catch (Exception e) {
-      reportFailure(e, msg);
+      reportFailure(e); // NOTE: no msg, we don't want to reply to tells
     }
   }
 

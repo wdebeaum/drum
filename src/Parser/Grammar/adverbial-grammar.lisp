@@ -36,17 +36,17 @@
      )
     ;;  simple adverbials- used is the lexical entry does not specify an argument-map
     ;;  we have iot by itself here as we need to create a non null ARGUMENT value, so it can't be a head feature
-    ((ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT (& (FIGURE ?arg)))
+    ((ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf) (VAR ?v) (CONSTRAINT (& (FIGURE ?arg) (scale ?scale)))
                               (sem ?sem) (transform ?transform)))
             ;;(SORT CONSTRAINT)
-      (role ?lf)
+      (role ?lf) (scale ?scale)
       (argument (% ?argument (var ?arg)))
       (comparative -)
       )
      -advbl-simple-no-argmap>
      (head (adv (WH -) (sem ?sem) (ARGUMENT-MAP -) ;;(Sort PRED) 
 	    (VAR ?v) (SUBCAT -) (LF ?lf) (implicit-arg -) (prefix -)
-	    (comparative -)
+	    (comparative -) (scale ?scale)
 	    ))      
      )
     ))
@@ -583,7 +583,6 @@
       )
      (add-to-conjunct (val (MODS ?mod)) (old ?con) (new ?new)))
    
-    
 
     ((vp- (constraint ?new) (tma ?tma) (class ?class) (sem ?sem) (var ?v)
       (advbl-needed -) (complex +) (subjvar ?subjvar)
@@ -727,6 +726,7 @@
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		;(DOBJVAR -)  ; This doesn't work because it could unify with a dobjvar not yet instantiated
 		(dobj (% -)) ; cannot use (dobj -) because dobj is (% - (W::VAR -))
+		; (dobj ?dobj) ; check that this is not bound below
 		(comp3 (% -)) ; for arguments as complements
 		(SUBJ (% NP (Var ?npvar) (agr ?agr) (sem ?sem) (lex ?lex) (case ?case)))  
 		(subjvar ?npvar)
@@ -748,6 +748,7 @@
       (ARG ?npvar) (VAR ?mod)
       ;;(role ?advrole) 
       )
+     ;(not-bound (arg1 ?dobjvar)) ; accounts for both intransitive case and unbounded optional dobj case
      (add-to-conjunct (val (result ?mod)) (old ?con) (new ?new))  ; The RESULT will be remapped to TRANSIENT-RESULT
      )
     
@@ -797,6 +798,7 @@
       (ARG ?npvar) (VAR ?mod)
       ;;(role ?advrole) 
       )
+     ;(bound (arg1 ?npvar)) ; make sure this is not an unbounded optional argument
      (add-to-conjunct (val (result ?mod)) (old ?con) (new ?new))  ; The RESULT will be remapped to TRANSIENT-RESULT
      )
 
@@ -1260,7 +1262,7 @@
      (word (lex W::as))
      (head (ADVBL (lf (% PROP (CLASS (:* ?c ?w)) (VAR ?v) (CONSTRAINT ?con) (sem ?sem)))
 	    (val ?val) (agr ?agr) (mass ?mass) (argument ?argmt) (arg ?arg)
-	    (gap ?gap) (premod -) 
+	    (gap ?gap) (premod -)
                  ))
      (word (lex w::as))
      (S (var ?sv) (gap -))
@@ -1274,7 +1276,7 @@
       )
      -so-adj-that>
      (word (lex W::so))
-     (head ((? cat ADJP ADVBL)
+     (head (ADJP
 	    (lf (% PROP (CLASS (:* ?c ?w)) (VAR ?v) (CONSTRAINT ?con) (sem ?sem))) 
 	    (val ?val) (agr ?agr) (mass ?mass) (argument ?argmt) (arg ?arg)
 	    (gap ?gap) (premod -) 
@@ -1283,6 +1285,23 @@
      (cp (var ?vs) (gap -) (ctype (? ctype W::S-THAT-MISSING W::S-THAT-OVERT)))
      (add-to-conjunct (val (standard ?vs)) (old ?con) (new ?newc))
      )
+
+     ((ADVBL (LF (% PROP (CLASS (:* ONT::SO-MUCH-THAT ?w)) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
+           (val ?val) (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap) 
+      (argument ?argmt) (premod +) 
+      )
+     -so-adv-that>
+     (word (lex W::so))
+     (head (ADVBL
+	    (lf (% PROP (CLASS (:* ?c ?w)) (VAR ?v) (CONSTRAINT ?con) (sem ?sem))) 
+	    (val ?val) (agr ?agr) (mass ?mass) (argument ?argmt) (arg ?arg)
+	    (gap ?gap) (premod -) 
+                 ))
+     ;;(word (lex w::that))
+     (cp (var ?vs) (gap -) (ctype (? ctype W::S-THAT-MISSING W::S-THAT-OVERT)))
+     (add-to-conjunct (val (standard ?vs)) (old ?con) (new ?newc))
+     )
+     
 #||
     ;; so ADV that ...
      ((ADVBL (LF (% PROP (CLASS (:* ONT::SO-MUCH-THAT ?w)) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
@@ -1560,7 +1579,7 @@
      ;; but this is necessary for making things work in cases like "is this true as well"?
      (advbl (sort DISC) (ATYPE POST) (SA-ID -) (arg ?v) (var ?advv) (gap -) (ing -) (ARGUMENT (% UTT)))
      (add-to-conjunct (val (MODS ?advv)) (old ?adv1) (new ?adv)))
-     
+
     ))
 
 
