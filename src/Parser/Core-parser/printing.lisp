@@ -1219,7 +1219,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
       ;; add a proform feature for the pro unless it is already there
       (setq constraint-list (if (not (get-fvalue (third constraint-list) 'w::proform))
 ;				(insert-into-& (list :proform (or input (list lex))) constraint-list)
-				(insert-into-& (list :proform (or input lex)) constraint-list)
+				(insert-into-& (list :proform (or lex input)) constraint-list)
 				constraint-list))))
     (let* ((newlf (list* (build-spec status)
 			 var
@@ -1848,7 +1848,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
       ;; add a proform feature for the pro unless it is already there
       (setq constraint-list (if (not (get-fvalue (third constraint-list) 'w::proform))
 ;				(insert-into-& (list :proform (or input (list lex))) constraint-list)
-				(insert-into-& (list :proform (or input lex)) constraint-list)
+				(insert-into-& (list :proform (or lex input)) constraint-list)
 			      constraint-list))))
     (list* (build-spec status)
 	   var

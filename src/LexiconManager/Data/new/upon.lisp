@@ -8,7 +8,8 @@
 	    (example "I felt sick upon arriving")
 	    (TEMPL binary-constraint-S-ing-TEMPL)
 	    )||#
-	   ((LF-PARENT ONT::event-event-time)
+	   (;(LF-PARENT ONT::event-event-time)
+	    (LF-PARENT ONT::IMMEDIATE)
 	    (meta-data :origin calo :entry-date 20040809 :change-date nil :comments caloy2)
 	    (example "upon inspection/loading we found the flaw")
 ;	    (TEMPL binary-constraint-s-TEMPL)
