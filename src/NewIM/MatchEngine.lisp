@@ -631,9 +631,14 @@
 	vals))
 
 (defun make-into-constit (lf)
-  (make-constit :cat (car lf)
-			:feats (list* (list :var (cadr lf)) (list :LFtype (caddr lf))
-				      (gen-role-features (cdddr lf)))))
+  (if (member :instance-of lf)
+      (make-constit :cat (car lf)
+		    :feats (list* (list :var (cadr lf)) (gen-role-features (cddr lf))))
+      (make-constit :cat (car lf)
+		    :feats (list* (list :var (cadr lf)) (list :instance-of (caddr lf))
+				  (gen-role-features (cdddr lf)))))
+  )
+  
 (defun gen-role-features (roles)
   (when roles
     (cons (list (car roles) (cadr roles))
