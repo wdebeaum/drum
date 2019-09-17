@@ -23,7 +23,9 @@ William de Beaumont
   <value-of select="substring(@id,1,1)" /><text>','</text>
   <value-of select="@id" /><text>','</text>
   <value-of select="@type" /><text>','</text>
-  <variable name="first-word" select="key('id',@from)[local-name()='struct'] | key('id',key('id',@from)/@ref)" />
+  <!-- NOTE: $first-word originally had key('id',@from) inline in place of $fromnode, but there is a bug in xsltproc's implementation of the key() function that prevents it from working properly in that situation. Factoring out $fromnode fixes it somehow. -->
+  <variable name="fromnode" select="key('id',@from)" />
+  <variable name="first-word" select="$fromnode[local-name()='struct'] | key('id',$fromnode/@ref)" />
   <choose>
    <when test="$first-word">
     <value-of select="$first-word/@from" /><text>','</text>
