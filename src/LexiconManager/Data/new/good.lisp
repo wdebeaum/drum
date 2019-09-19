@@ -37,6 +37,12 @@
      ;; the adj-affected-templ is for cases when adjective describes how people are affected, such as "this is good for him" where one has to infer the exact action/result it is good for
      (TEMPL adj-affected-XP-templ)
      )
+
+    ((EXAMPLE "he is good at bowling")
+      (LF-PARENT ONT::skillful-val)
+      (TEMPL adj-affected-XP-templ (xp (% W::PP (W::ptype W::at)))) 
+    )
+
     )
    )
 ))
