@@ -53,7 +53,7 @@
    )
 ))
 
-(define-words :pos W::adv ;:templ CENTRAL-ADJ-TEMPL
+#|(define-words :pos W::adv ;:templ CENTRAL-ADJ-TEMPL
  :words (
   (W::even
    (SENSES
@@ -62,6 +62,20 @@
      (SEM (F::GRADABILITY f::-))
      (example "the company broke even")
      (templ PRED-S-VP-TEMPL)
+     )
+    )
+   )
+))
+|#
+
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+  (W::even
+   (SENSES
+    ((meta-data :wn ("even%3:00:01"))
+     (LF-PARENT ONT::EQUAL)
+     (SEM (F::GRADABILITY f::-))
+     (example "the company broke even")
      )
     )
    )

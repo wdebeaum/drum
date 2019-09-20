@@ -12,6 +12,14 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (PREFERENCE 0.96)
      )
+    
+    ((LF-PARENT ONT::put)
+     (EXAMPLE "the company located their agents in LA")
+     ;(SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
+     ;(TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL)
+     (TEMPL AGENT-AFFECTED-RESULT-ADVBL-OBJCONTROL-TEMPL)
+     )
+    
     )
    )
 ))

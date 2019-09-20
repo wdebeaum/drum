@@ -193,3 +193,15 @@
    )
 ))
 )||#
+
+(define-words :pos W::ADV
+ :words (
+    ((w::on w::the w::other w::hand)
+     (senses
+     ((LF-PARENT ONT::CONTRASTIVE)
+     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     (example "on the other hand, Kim volunteered")
+     )
+    )
+  )
+))

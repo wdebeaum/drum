@@ -22,6 +22,14 @@
      (EXAMPLE "The news relieved my fears" "This pill will relieve your headaches")
      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
+
+    ((LF-PARENT ont::evoke-relief);this will apply to only animate entities unlike ONT::DECREASE which will apply to other entities.
+     (example "his response relieved my tensions")
+     (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
+     (meta-data :wn ("still%2:37:01"))
+    )
+
 ;    ((meta-data :origin "wordnet-3.0" :entry-date 20090515 :change-date nil :comments nil)
 ;     (LF-PARENT ONT::evoke-relief)
 ;     (EXAMPLE "This pill will relieve your headaches")

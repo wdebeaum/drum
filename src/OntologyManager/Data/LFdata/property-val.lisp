@@ -3586,7 +3586,7 @@
 (define-type ONT::EQUAL
  :parent ONT::SIMILARITY-VAL
  ; Words: (W::EQUAL W::EQUIVALENT)
- :wordnet-sense-keys ("equal%3:00:00" "equivalent%5:00:00:equal:00" "even%3:00:01:equal:00" "even%5:00:01:equal:00" "even%5:00:02:equal:00")
+ :wordnet-sense-keys ("equal%3:00:00" "equivalent%5:00:00:equal:00" "even%3:00:01" "even%3:00:01:equal:00" "even%5:00:01:equal:00" "even%5:00:02:equal:00")
  ; Antonym: NIL (W::UNEQUAL) 
   :sem (F::abstr-obj (F::scale ont::equal-scale))
  )

@@ -503,6 +503,7 @@
  :parent ONT::PREDICATE
  :arguments ((:OPTIONAL ONT::GROUND)
              )
+ :wordnet-sense-keys ("on_the_other_hand%4:02:00")
  )
 
 (define-type ont::parenthetical

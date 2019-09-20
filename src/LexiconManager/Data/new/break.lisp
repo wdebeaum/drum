@@ -48,11 +48,12 @@
      (SYNTAX (w::resultative +))
     )
 
-    ((LF-PARENT ONT::stop)
+    ;((LF-PARENT ONT::stop)
+    ((LF-PARENT ONT::become)
      (example "the company broke even")
      (meta-data :wn ("terminate%2:30:01"))
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL affected-TEMPL)
+     (TEMPL AFFECTED-FORMAL-XP-PRED-TEMPL)
      (SYNTAX (w::resultative +))
     )
 

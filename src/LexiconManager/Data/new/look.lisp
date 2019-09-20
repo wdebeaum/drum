@@ -83,7 +83,7 @@
      (TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
      )
     ((meta-data :origin calo :entry-date 20040421 :change-date nil :comments caloy1v4)
-     (LF-PARENT ONT::object-compare)
+     (LF-PARENT ONT::resemble)
      (example "they look like dogs")
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
      (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)

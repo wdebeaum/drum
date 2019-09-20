@@ -48,11 +48,23 @@
   (w::base
     (wordfeats (W::morph (:forms (-vb) :nom w::base)))
     (SENSES
-     ((LF-PARENT ONT::establish)
-      (EXAMPLE "he based the comparison on price")
-      (META-DATA :ORIGIN plow :ENTRY-DATE 20060620 :CHANGE-DATE NIL :COMMENTS pq)
-      (TEMPL AGENT-AFFECTEDR-MANNER-2-XP-3-XP2-TEMPL (xp (% w::pp (w::ptype (? pt w::on)))))
-      )
+     ;((LF-PARENT ONT::establish)
+     ; (EXAMPLE "he based the comparison on price")
+     ; (META-DATA :ORIGIN plow :ENTRY-DATE 20060620 :CHANGE-DATE NIL :COMMENTS pq)
+     ; (TEMPL AGENT-AFFECTEDR-MANNER-2-XP-3-XP2-TEMPL (xp (% w::pp (w::ptype (? pt w::on)))))
+     ; )
+
+    ((LF-PARENT ONT::attribute-impute) 
+     (EXAMPLE "they based the claim on the observation")
+     (TEMPL AGENT-NEUTRAL-NEUTRAL1-2-XP-3-XP2-TEMPL (xp2 (% w::pp (w::ptype w::on))))
+    )
+
+     ((LF-PARENT ONT::put)
+      (EXAMPLE "we based the company here")
+      (META-DATA :wn ("base%2:42:04"))
+      (TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL) ;AGENT-AFFECTED-RESULT-ADVBL-OBJCONTROL-TEMPL);AGENT-AFFECTED-GOAL-TEMPL)
+     )
+
      )
     )
 ))

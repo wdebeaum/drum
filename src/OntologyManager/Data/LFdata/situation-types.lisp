@@ -513,8 +513,10 @@
 |#
 
 (define-type ONT::offer
+ :wordnet-sense-keys ("volunteer%2:41:00" "volunteer%2:41:01")
  :parent ONT::commissive
- :arguments ((:REQUIRED ont::result)
+ :arguments (;(:REQUIRED ont::result)
+             (:ESSENTIAL ont::formal)
              )
  )
 
@@ -610,9 +612,9 @@
     )
 
 (define-type ONT::cause-cover
-    :wordnet-sense-keys ("cover%2:35:00" "cover%2:35:14"
-					  "cover%2:35:01" "impregnate%2:30:00" "saturate%2:30:04")
+    :wordnet-sense-keys ("cover%2:35:00" "cover%2:35:01" "cover%2:35:14" "impregnate%2:30:00" "saturate%2:30:04")
     :parent ont::cause-position
+    :arguments ((:OPTIONAL ONT::instrument))
     )
 
 (define-type ONT::orient
@@ -635,7 +637,7 @@
 ;; for verbs that commonly allow non-physical and/or non-moveable formals, e.g.
 ;; put the title in the text box, put the city here, insert the text here
 (define-type ONT::put
- :wordnet-sense-keys ("put%2:35:00" "set%2:35:00" "place%2:35:00" "pose%2:35:02" "position%2:35:00" "lay%2:35:01" "interpose%2:38:01")
+ :wordnet-sense-keys ("base%2:42:04" "interpose%2:38:01" "lay%2:35:01" "locate%2:40:01" "place%2:35:00" "pose%2:35:02" "position%2:35:00" "put%2:35:00" "set%2:35:00")
  :parent ont::event-of-causation
  :sem (F::Situation (F::trajectory +))
  :arguments ((:ESSENTIAL ONT::agent)
@@ -878,7 +880,7 @@
 
 ;; be -- this is red
 (define-type ONT::HAVE-PROPERTY
- :wordnet-sense-keys ("be%2:42:03" "be%2:42:05" "mean%2:42:03" "sound%2:39:03")
+ :wordnet-sense-keys ("be%2:42:03" "be%2:42:05" "sound%2:39:03")
  :parent ONT::event-of-state
  :sem (F::Situation (F::Aspect F::static) (F::Time-span F::extended) (F::Trajectory -))
  :arguments ((:REQUIRED ONT::neutral )
@@ -961,12 +963,13 @@
 
 ;;; predicates of comparison, e.g. equals, resembles
 (define-type ONT::OBJECT-COMPARE
-  :wordnet-sense-keys ("match%2:42:00" "coordinate%2:30:01")
+ :wordnet-sense-keys ("coordinate%2:30:01")
  :parent ONT::event-of-state
  :sem (F::Situation (F::Trajectory -))
  :arguments ((:REQUIRED ONT::NEUTRAL ((? oc F::Phys-obj F::Abstr-obj F::Situation F::time)))
              (:REQUIRED ONT::neutral1 ((? oc1 F::Phys-obj F::Abstr-obj F::Situation F::time)))
              )
+ :comment "one object is defined in terms of a static relationship with another object"
  )
 
 (define-type ont::cohere
@@ -995,17 +998,19 @@
 
 (define-type ONT::comprise
  :wordnet-sense-keys ("consist%2:42:04")
- :parent ONT::in-relation
+ :parent ONT::object-compare
  :sem (F::situation (F::Aspect F::static) (F::Time-span F::extended))
+ :comment "one object is defined as a configuration of other objects"
  )
 
 (define-type ONT::RESEMBLE
- :wordnet-sense-keys ("conform%2:42:06" "resemble%2:42:00")
+ :wordnet-sense-keys ("conform%2:42:06" "look_like%2:42:00" "match%2:42:00" "resemble%2:42:00")
  :parent ONT::OBJECT-COMPARE
  :sem (F::Situation (F::Trajectory -))
  :arguments ((:REQUIRED ONT::FORMAL ((? oc1 F::Phys-obj F::Abstr-obj F::Situation)))
              (:REQUIRED ONT::FORMAL1)
              )
+ :comment "one object is similar to another, related to ONT::SIMILAR"
  )
 
 (define-type ont::intentionally-act
