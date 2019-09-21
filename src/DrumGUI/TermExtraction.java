@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.60 2019/06/20 15:48:33 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.61 2019/09/20 20:34:32 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -65,6 +65,7 @@ public class TermExtraction extends Extraction {
         SIZE(":SIZE"),
         SCALE(":SCALE"),
         QUAN(":QUAN"), // quantifier
+        REFSET(":REFSET"), // reference set for parts
         ID_AS(":IDENTIFIED-AS"),
         // numbers
         VALUE(":VALUE"), // numbers
@@ -450,6 +451,7 @@ public class TermExtraction extends Extraction {
         conts.add(xml_qualifiers());
         conts.add(xml_size());
         conts.add(xml_quantifier());
+        conts.add(xml_refset());
         conts.add(xml_scale());
         conts.add(xml_location());
         conts.add(xml_timex());
@@ -986,6 +988,31 @@ public class TermExtraction extends Extraction {
         }
     }
 
+    /**
+     * XML element for refset.
+     * 
+     * @return
+     */
+    private String xml_refset() {
+        KQMLObject quan = attributes.get(Attribute.REFSET);
+        if (quan == null) 
+            return "";
+        
+        String var = quan.toString();
+        if (isOntVar(var)) {
+            if (ekbFindExtraction(var) != null) { 
+                return xml_elementWithID("refset", var);
+            } else { // we need to define the item here
+                return xml_lfTerm("refset", var);
+            }
+        } else if (quan instanceof KQMLToken) { // likely an ont type
+            return xml_element("refset", xml_attribute("type", var), null);
+        } else { // should not happen!
+            Debug.warn("unexpected " + Attribute.REFSET + " value: " + var);
+            return "";
+        }
+    }
+
 
     /**
      * Returns a {@code <features>} XML element representing the term features,
@@ -1316,7 +1343,7 @@ public class TermExtraction extends Extraction {
      */
     private String xml_inevent() {
         ArrayList<KQMLObject> inEvents = polyAttributes.get(PolyAttribute.INEVENT);
-        Debug.warn("poly :INEVENT of " + id + " =  " + inEvents);
+        // Debug.warn("poly :INEVENT of " + id + " =  " + inEvents);
         if ((inEvents == null) || inEvents.isEmpty()) 
             return "";
         

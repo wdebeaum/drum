@@ -192,7 +192,7 @@ separate instances of the chart/parser.")
       as often happens in LFs with several MOD functions"
   (or (constit-match rhs c)
       (progn
-	;;(format t "~%constit-match failed on ~S and ~S" rhs c)
+	(format t "~%constit-match failed on ~S and ~S" rhs c)
 	nil)))
 
 (defun getsubconstitnames (n constit)
@@ -879,7 +879,8 @@ separate instances of the chart/parser.")
 					 :first-cat (arc-first-cat arc)
 					 )))
 		     )))
-            restList new-bndgsList))))
+	      restList new-bndgsList)))
+  )
 
 
 ;; Checks the foot features of the new subconstituent

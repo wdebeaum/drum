@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.59 2019/06/20 04:42:35 lgalescu Exp $
+ * $Id: Extraction.java,v 1.60 2019/09/20 20:23:32 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -388,7 +388,7 @@ public class Extraction {
      */
     protected String getDBTermIds() {
         HashSet<String> ids = new HashSet<String>();
-        if (dsTerms == null) {
+        if (dsTerms == null || dsTerms.isEmpty()) {
             return null;
         }
         for (KQMLList term : dsTerms) {

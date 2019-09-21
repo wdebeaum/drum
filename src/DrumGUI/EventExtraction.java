@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.65 2019/06/20 15:48:33 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.67 2019/09/20 20:40:23 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -67,6 +67,7 @@ public class EventExtraction extends Extraction {
 
     /** Event features (domain-specific) */
     protected enum Feature {
+        TENSE(":TENSE"),
         // {DRUM} :CELL-LINE id --> cell line
         CELL_LINE(":CELL-LINE"),
         // {DRUM} :SITE id [:SITEMOD ontType] --> eg, at/SITEMOD Y200/SITE
@@ -811,6 +812,7 @@ public class EventExtraction extends Extraction {
         }
         
         conts.add(xml_predicate());
+        conts.add(xml_tense());
         conts.add(xml_args());
         conts.add(xml_assocs());
         conts.add(xml_mods());
@@ -846,7 +848,6 @@ public class EventExtraction extends Extraction {
         return conts;
     }
     
-
     private String xml_sequence() {
         KQMLObject sequence = value.getKeywordArg(":SEQUENCE");
         if (sequence == null) 
@@ -992,6 +993,18 @@ public class EventExtraction extends Extraction {
     }
 
     /**
+     * Tense feature
+     * @return
+     */
+    private String xml_tense() {
+        KQMLObject tense = features.get(Feature.TIME);
+        if (tense == null)
+            return "";
+        // should always be a symbol
+        return xml_element("tense", "", removePackage(tense.toString(), false));
+    }
+
+    /**
      * Time feature
      * @return
      */
@@ -1013,13 +1026,34 @@ public class EventExtraction extends Extraction {
             String var = time.toString();
             if (ekbFindExtraction(var) != null) { 
                 return xml_elementWithID("time", var, attrs);
-            } else { // we need to define the item here
-                return xml_lfTerm("time", var, attrs);
+            } else { 
+                // check if there is a RELN term associating the event with a time-loc
+                KQMLList lfTerm = findTermByVar(var, context);
+                if (lfTerm != null) {
+                    String termType = pullOntType(lfTerm);
+                    String figureVar = getKeywordArgString(":FIGURE", lfTerm);
+                    // TODO: assert that figureVar.equalsIgnoreCase(id)
+                    String groundVar = getKeywordArgString(":GROUND", lfTerm);
+                    KQMLList groundTerm = findTermByVar(groundVar, context);
+                    String groundOntType = pullOntType(groundTerm);
+                    // we handle cases individually
+                    if (isOntTime(groundOntType)) //&&
+                       // (termType.equalsIgnoreCase("ONT::BEFORE") || termType.equalsIgnoreCase("ONT::AFTER")
+                       // ))
+                    {
+                        attrs.add(xml_attribute("mod", termType));
+                        if (ekbFindExtraction(groundVar) != null) {
+                            return xml_elementWithID("time", groundVar, attrs);
+                        } else { // we need to define the item here
+                            return xml_lfTerm("time", groundVar, attrs);
+                        }
+                    }
+                }
             }
-        } else { // should not happen!
-            Debug.error("unexpected " + Feature.TIME + " value: " + time);
-            return xml_element("time", "", removePackage(time.toString(), false));
-        }
+        } 
+        // should not happen!
+        Debug.error("unexpected " + Feature.TIME + " value: " + time);
+        return xml_element("time", "", removePackage(time.toString(), false));
     }
 
     /**
@@ -1038,11 +1072,9 @@ public class EventExtraction extends Extraction {
             KQMLList modifierTerm = findTermByVar(var, context);
             if (modifierTerm != null) {
                 String modOntType = pullOntType(modifierTerm);
-                KQMLObject figure = modifierTerm.getKeywordArg(":FIGURE");
-                String figureVar = figure.toString();
+                String figureVar = getKeywordArgString(":FIGURE", modifierTerm);
                 // TODO: assert that figureVar.equalsIgnoreCase(id)
-                KQMLObject ground = modifierTerm.getKeywordArg(":GROUND");
-                String groundVar = ground.toString();
+                String groundVar = getKeywordArgString(":GROUND", modifierTerm);
                 KQMLList groundTerm = findTermByVar(groundVar, context);
                 String groundOntType = pullOntType(groundTerm);
                 // we handle cases individually

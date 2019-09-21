@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.81 2018/11/11 20:57:02 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.82 2019/09/20 20:07:34 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -1411,6 +1411,16 @@ public class DrumGUI extends StandardTripsModule {
             Debug.error("STATE: Stray fragment (ignored) :uttnum " + uttnum + " :words " + words);
             return;
         }
+        // FIXME: this is temporary
+        // update and save the EKB
+        try {
+            String ekbFile = kb.saveEKB();
+            log("<ekb>" + ekbFile + "</ekb>");
+        } catch (Exception e) {
+            // TODO: what do we do in this situation??? task requester expects something...
+            Debug.error("Couldn't save the EKB: " + e);
+        }
+
         //
         checkIfDoneProcessing();
     }
