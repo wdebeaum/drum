@@ -12,7 +12,7 @@
      )
     ((EXAMPLE "The can leaked the water.")
      (LF-PARENT ONT::emit-giveoff-discharge)
-     (TEMPL agent-affected-xp-templ)
+     (TEMPL agent-affected-xp-np-templ)
      )    
     )
 )))
