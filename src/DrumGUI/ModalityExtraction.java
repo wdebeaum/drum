@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: ModalityExtraction.java,v 1.26 2018/10/21 02:14:28 lgalescu Exp $
+ * $Id: ModalityExtraction.java,v 1.27 2019/09/23 05:38:14 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -56,7 +56,7 @@ public class ModalityExtraction extends Extraction {
         }
     };
 
-    /** Event modifiers */
+    /** modifiers */
     private enum Modifier {
         // :NEGATION true|false --> negation
         NEGATION(":NEGATION"),
@@ -311,7 +311,7 @@ public class ModalityExtraction extends Extraction {
     }
 
     /**
-     * Returns an XML element representing information about an event argument. The XML tag is either 
+     * Returns an XML element representing information about an` argument. The XML tag is either 
      * {@code arg1} or {@code arg2}, depending on the argument type.
      * 
      * @see #xml_args()

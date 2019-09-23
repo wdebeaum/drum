@@ -1531,6 +1531,7 @@
      ?dobj  
      ?part
      ?comp
+     (bound (arg1 ?dobjvar)) ; make sure this is not an unfilled optional argument
      )
    
      ;; for pre-adverbials after main verb be
