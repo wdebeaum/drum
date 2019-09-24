@@ -384,19 +384,20 @@
     old))
 
 (defun rename-if-necessary (name feats)
-  (if (assoc name feats)
+  (if (and (not (member name '(ont::agent ont::affected ont::affected1 ont::neutral ont::neutral1 ont::formal)))
+	   (assoc name feats))
       (gen-new-name name feats)
       name))
 
 (defun gen-new-name (name feats)
   (let ((newname
 	 (case name
-	   (w::agent 'w::agent1)
-	   (w::affected 'w::affected1)
-	   (w::affected1 'w::affected2)
-	   (w::neutral 'w::neutral1)
-	   (w::neutral1 'w::neutral2)
-	   (w::formal 'w::formal1)
+	   ;(ont::agent 'ont::agent1)
+	   ;(ont::affected 'ont::affected1)
+	   ;(ont::affected1 'ont::affected2)
+	   ;(ont::neutral 'ont::neutral1)
+	   ;(ont::neutral1 'ont::neutral2)
+	   ;(ont::formal 'ont::formal1)
 	   (w::mod 'w::mod1)
 	   (w::mod1 'w::mod2)
 	   (w::mod2 'w::mod3)
