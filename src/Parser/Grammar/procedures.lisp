@@ -384,7 +384,7 @@
     old))
 
 (defun rename-if-necessary (name feats)
-  (if (and (not (member name '(ont::agent ont::affected ont::affected1 ont::neutral ont::neutral1 ont::formal)))
+  (if (and (member name '(w::assoc-with w::assoc-with1 w::assoc-with2 w::mod w::mod1 w::mod2 w::mod3 w::mod4 w::result w::result1 w::result2 w::mods)) ; not (ont::agent ont::affected ont::affected1 ont::neutral ont::neutral1 ont::formal ont::figure ont::figure1 ont::ground ont::ground1)
 	   (assoc name feats))
       (gen-new-name name feats)
       name))
