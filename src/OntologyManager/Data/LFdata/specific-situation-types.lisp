@@ -1210,7 +1210,7 @@
     :parent ONT::change-state
     :comment "an AFFECTED undergoes a change of physical or chemical state that affects its integrity, e.g., thaw. Allows but does not require an AGENT"
     :sem (F::Situation (F::Trajectory -))
-    :arguments ((:OPTIONAL ONT::Result (F::abstr-obj (F::TYPE ont::resulting-state)))
+    :arguments ((:OPTIONAL ONT::Result (F::abstr-obj (F::TYPE (? t ont::resulting-state ont::domain-property))))
 		)
     )
 
@@ -5128,8 +5128,8 @@
 (define-type ONT::attribute-impute
     :comment "identify a cause of an event"
     :wordnet-sense-keys ("impute%2:31:00" "attribute%2:31:01")
-    :arguments ((:essential ONT::NEUTRAL (F::situation))
-		(:essential ONT::NEUTRAL1 (F::situation)))
+    :arguments ((:essential ONT::NEUTRAL ((? n F::abstr-obj F::situation)))
+		(:essential ONT::NEUTRAL1 ((? n1 F::abstr-obj F::situation))))
     :parent ONT::categorization
     )
 

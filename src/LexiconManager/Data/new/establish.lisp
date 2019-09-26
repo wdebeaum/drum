@@ -19,9 +19,10 @@
      (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% w::cp (w::ctype w::s-finite)))) ; like reveal,prove
      )
     ((LF-PARENT ONT::establish)
-     (example "establish an organization on principle")
+     (example "establish an organization")
      (SEM (F::Aspect F::dynamic) (F::Time-span F::extended))
-     (TEMPL AGENT-AFFECTEDR-MANNER-2-XP-3-XP2-OPTIONAL-TEMPL)
+     ;(TEMPL AGENT-AFFECTEDR-MANNER-2-XP-3-XP2-OPTIONAL-TEMPL)
+     (TEMPL AGENT-AFFECTEDR-XP-TEMPL)
      )
     ((LF-PARENT ONT::correlation)
      (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
