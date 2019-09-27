@@ -10,7 +10,14 @@
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090513 :comments nil :vn ("judgement-33") :wn ("punish%2:41:00"))
      (LF-PARENT ont::punish)
      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
+     (example "he punished him for her murder")
      )
+
+    ((LF-PARENT ont::punish)
+     (TEMPL AGENT-NEUTRAL-TEMPL)
+     (example "he punished the crime")
+     )
+
     )
    )
 ))

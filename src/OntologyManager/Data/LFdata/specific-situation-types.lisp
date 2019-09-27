@@ -2270,12 +2270,14 @@
 (define-type ONT::punish
  :wordnet-sense-keys ("punish%2:41:00" "penalize%2:41:00" "penalise%2:41:00" "revenge%1:04:00")
  :parent ONT::judgement
+ :arguments ((:optional ONT::NEUTRAL))
  )
 
-;(define-type ONT::avenge ;ONT::revenge-punish
-; :wordnet-sense-keys ("revenge%2:33:00")
-; :parent ONT::punish
-; )
+(define-type ONT::avenge ;ONT::revenge-punish
+ :wordnet-sense-keys ("revenge%2:33:00")
+ :parent ONT::judgement
+ :arguments ((:required ONT::NEUTRAL))
+ )
 
 (define-type ONT::impress
 ; :wordnet-sense-keys ("affect%2:37:00" "impress%2:37:01" "move%2:37:00" "strike%2:37:00")
@@ -4829,7 +4831,7 @@
 
 ;; stretch  20120524 GUM change new type
 (define-type ONT::admit
-  :wordnet-sense-keys ("accept%2:40:03" "admit%2:41:00" "invite%2:35:12" "admit%2:41:01")
+  :wordnet-sense-keys ("accept%2:40:03" "admit%2:41:00" "admit%2:41:01")
   :parent ont::enroll
  )
 

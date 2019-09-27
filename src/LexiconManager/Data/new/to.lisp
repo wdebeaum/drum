@@ -44,11 +44,13 @@
 	  (W::TO
 					;(wordfeats (w::result-only +))
 	   (SENSES
+	    #|
 	    ((LF-PARENT ONT::orients-to)
 	     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
 	     (example "I see the building to my right")
 	     (preference 0.97)
 	     )
+	    |#
 	    ((LF-PARENT ONT::until)
 	     (example "the meeting should go to five pm")
 	     (TEMPL BINARY-CONSTRAINT-S-or-NP-TEMPL)
@@ -124,3 +126,24 @@
    )
 ))
 
+(define-words :pos W::ADJ
+ :words (
+  ((W::to w::the w::left)
+   (SENSES
+    ((LF-PARENT ONT::left)
+     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE (? p W::of)))))
+     )
+    )
+   )
+))
+
+(define-words :pos W::ADJ
+ :words (
+  ((W::to w::the w::right)
+   (SENSES
+    ((LF-PARENT ONT::right)
+     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE (? p W::of)))))
+     )
+    )
+   )
+))

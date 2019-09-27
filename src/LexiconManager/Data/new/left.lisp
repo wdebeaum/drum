@@ -2,6 +2,8 @@
 ;;;; w::left
 ;;;; 
 
+; need a sense for "take a left"
+#|
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :tags (:base500)
  :words (
@@ -17,6 +19,7 @@
     )
    )
 ))
+|#
 
 (define-words :pos W::adj 
  :tags (:base500)
@@ -45,7 +48,7 @@
    (SENSES
     ((meta-data :origin bee :entry-date 20040408 :change-date 20090731 :wn ("left%3:00:00") :comments test-s)
      (LF-PARENT ONT::LEFT)
-     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE (? p W::in W::of)))))
+     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE (? p W::of)))))
      )
     ))))
 
@@ -60,7 +63,7 @@
      )
     )
    )
-))
+  ))
 
 (define-words :pos W::adj :templ Central-ADJ-TEMPL
  :words (

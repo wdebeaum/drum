@@ -1,9 +1,9 @@
 # CWMS.pm
 #
-# Time-stamp: <Sun Sep 22 21:51:12 CDT 2019 lgalescu>
+# Time-stamp: <Thu Sep 26 18:46:17 CDT 2019 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  1 Jun 2016
-# $Id: CWMS.pm,v 1.5 2019/09/23 05:34:17 lgalescu Exp $
+# $Id: CWMS.pm,v 1.6 2019/09/26 23:47:07 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -176,14 +176,16 @@ sub default_options {
 
       my $t_id = $t->getAttribute('id');
 
-      # get assoc-with node(s)
+      # get assoc-with node(s) and look for one that is a TIME-LOC
       my $tl_id;
       my $assoc;
       my @assocs = $t->findnodes('assoc-with');
       DEBUG 0, "Found %d assocs: %s", scalar(@assocs), join(", ", map {$_->toString} @assocs);
       foreach my $a (@assocs) {
 	my $a_id = $a->getAttribute('id');
-	my $m = match_node( $ekb->get_assertion($a_id, "TERM"),
+	my $a_term = $ekb->get_assertion($a_id, "TERM")
+	  or next;
+	my $m = match_node( $a_term,
 			    { SX => { 'type' => "ONT::TIME-LOC",
 				      'timex' => {} } }
 			  );
@@ -232,14 +234,16 @@ sub default_options {
 
       my $t_id = $t->getAttribute('id');
 
-      # get assoc-with node(s)
+      # get assoc-with node(s) and look for one that is a TIME-LOC
       my $tl_id;
       my $assoc;
       my @assocs = $t->findnodes('assoc-with');
       DEBUG 0, "Found %d assocs: %s", scalar(@assocs), join(", ", map {$_->toString} @assocs);
       foreach my $a (@assocs) {
 	my $a_id = $a->getAttribute('id');
-	my $m = match_node( $ekb->get_assertion($a_id, "TERM"),
+	my $a_term = $ekb->get_assertion($a_id, "TERM")
+	  or next;
+	my $m = match_node( $a_term,
 			    { SX => { 'type' => "ONT::TIME-LOC",
 				      'timex' => {} } }
 			  );
@@ -304,12 +308,14 @@ sub default_options {
       my $e_id = $e->getAttribute('id');
       my $tl_id;
 
-      # get assoc-with node(s)
+      # get assoc-with node(s) and look for one that is a TIME-LOC
       my @assocs = $e->findnodes('assoc-with');
       DEBUG 0, "Found %d assocs: %s", scalar(@assocs), join(", ", map {$_->toString} @assocs);
       foreach my $a (@assocs) {
 	my $a_id = $a->getAttribute('id');
-	my $m = match_node( $ekb->get_assertion($a_id, "TERM"),
+	my $a_term = $ekb->get_assertion($a_id, "TERM")
+	  or next;
+	my $m = match_node( $a_term,
 			    { SX => { 'type' => "ONT::TIME-LOC",
 				      'timex' => {} } }
 			  );
@@ -369,14 +375,16 @@ sub default_options {
 
       my $t_id = $t->getAttribute('id');
 
-      # get assoc-with node(s)
+      # get assoc-with node(s) and look for one that is a TIME-LOC
       my $tl_id;
       my $assoc;
       my @assocs = $t->findnodes('assoc-with');
       DEBUG 0, "Found %d assocs: %s", scalar(@assocs), join(", ", map {$_->toString} @assocs);
       foreach my $a (@assocs) {
 	my $a_id = $a->getAttribute('id');
-	my $m = match_node( $ekb->get_assertion($a_id, "TERM"),
+	my $a_term = $ekb->get_assertion($a_id, "TERM")
+	  or next;
+	my $m = match_node( $a_term,
 			    { SX => { 'type' => "ONT::TIME-LOC",
 				      'timex' => {} } }
 			  );
@@ -1028,7 +1036,9 @@ sub default_options {
 
       1;
     }
-   }
+   },
+
+   ### TEMPORARY fixes
 
   );
 

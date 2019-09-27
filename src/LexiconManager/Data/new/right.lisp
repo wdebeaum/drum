@@ -7,6 +7,8 @@
  :words (
   (W::RIGHT
    (SENSES
+    ; need a sense for "take a right"
+    #|
     ((meta-data :origin fruitcarts :entry-date 20060803 :change-date nil :comments nil :wn ("right%1:15:00"))
      (LF-PARENT ont::right-loc);ONT::object-dependent-location)
      (example "to the right of the building")
@@ -14,6 +16,7 @@
      ;; enforced subcat to reduce ambiguity, but prevents "on the right" unless we add another grammar rule
      ;;     (TEMPL other-reln-subcat-required-templ) 
      )
+    |#
    ((LF-PARENT ont::right-permission)
      (example "the right to sing")
      (TEMPL SUBCAT-INF-TEMPL)
@@ -55,7 +58,7 @@
    (SENSES
     ((meta-data :origin bee :entry-date 20040408 :change-date 20090731 :wn ("right%3:00:00") :comments test-s)
      (LF-PARENT ONT::right)
-     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE (? p W::in W::of)))))
+     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE (? p W::of)))))
      )
     ))))
 

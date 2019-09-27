@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.61 2019/09/20 20:34:32 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.62 2019/09/26 23:43:32 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -461,8 +461,7 @@ public class TermExtraction extends Extraction {
         conts.add(xml_quantity());
         if (ontType.equalsIgnoreCase("ONT::RATE"))
             conts.add(xml_rate());
-        if (ontType.equalsIgnoreCase("ONT::TIME-RANGE"))
-            conts.add(xml_range_timex());
+        conts.add(xml_timerange());
         // sequences of numbers
         conts.add(xml_valseq());
 
@@ -1083,33 +1082,38 @@ public class TermExtraction extends Extraction {
     }
 
     /**
-     * Time expressions for ranges
+     * Time expressions for time ranges
      * @return
      */
-    private String xml_range_timex() {
-        List<String> attrs = new ArrayList<String>();
+    private String xml_timerange() {
+        if (! ontType.equalsIgnoreCase("ONT::TIME-RANGE")) {
+            return "";
+        }
+
+        //List<String> attrs = new ArrayList<String>();
         List<String> conts = new ArrayList<String>();
         KQMLObject from = attributes.get(Attribute.FROM);
         if (from != null) {
             String var = from.toString();
             if (ekbFindExtraction(var) != null) {
-                conts.add(xml_elementWithID("from", var, null));
+                conts.add(xml_elementWithID("from-time", var, null));
             } else { // we need to define the item here
-                return xml_lfTerm("from", var);
+                conts.add(xml_lfTerm("from-time", var));
             }
         }
         KQMLObject to = attributes.get(Attribute.TO);
         if (to != null) {
             String var = to.toString();
             if (ekbFindExtraction(var) != null) {
-                conts.add(xml_elementWithID("to", var, null));
+                conts.add(xml_elementWithID("to-time", var, null));
             } else { // we need to define the item here
-                return xml_lfTerm("to", var);
+                conts.add(xml_lfTerm("to-time", var));
             }
         }
 
-        attrs.add(xml_attribute("type","DURATION"));
-        return xml_element("timex", attrs, conts);
+        //attrs.add(xml_attribute("type","DURATION"));
+        //return xml_element("timex", attrs, conts);
+        return join("",conts);
     }
 
     /**

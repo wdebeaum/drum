@@ -205,3 +205,26 @@
     )
   )
 ))
+
+
+(define-words :pos W::ADJ
+ :words (
+  ((W::on w::the w::right)
+   (SENSES
+    ((LF-PARENT ONT::right)
+     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE (? p W::of)))))
+     )
+    )
+   )
+))
+
+(define-words :pos W::ADJ
+ :words (
+  ((W::on w::the w::left)
+   (SENSES
+    ((LF-PARENT ONT::left)
+     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE (? p W::of)))))
+     )
+    )
+   )
+))

@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.68 2019/09/23 05:38:14 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.69 2019/09/26 23:42:52 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -1511,10 +1511,12 @@ public class EventExtraction extends Extraction {
         if (isOntVar(var)) {
             // sometimes a mod is mapped to :QUAL
             ArrayList<KQMLObject> quals = polyMods.get(PolyModifier.QUAL);
-            for (KQMLObject valObj : quals) {
-                if (isOntVar(valObj.toString())) {
-                    if (var.equalsIgnoreCase(valObj.toString())) {
-                        return "";
+            if (quals != null) {
+                for (KQMLObject valObj : quals) {
+                    if (isOntVar(valObj.toString())) {
+                        if (var.equalsIgnoreCase(valObj.toString())) {
+                            return "";
+                        }
                     }
                 }
             }
