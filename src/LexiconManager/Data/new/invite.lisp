@@ -7,7 +7,7 @@
   (W::invite
     (wordfeats (W::morph (:forms (-vb) :nom w::invitation)))
    (SENSES
-    ((EXAMPLE "He invited me to the beach." "I invited him for pizza.")
+    ((EXAMPLE "he invited me to the beach" "I invited him for pizza" "the community warmly invites the refugees")
      (LF-PARENT ont::request)
      (TEMPL AGENT-AFFECTED-NEUTRAL-XP-TEMPL (xp (% W::pp (W::ptype (? xx W::to W::for)))))
      (SEM (F::Aspect F::bounded) (F::time-span F::atomic))
