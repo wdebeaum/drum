@@ -107,7 +107,7 @@
  )
 
 (define-type ONT::DEGREE-MODIFIER-HIGH
-    :wordnet-sense-keys ("very%4:02:00")
+    :wordnet-sense-keys ("profusely%4:02:00" "very%4:02:00")
     :parent ONT::DEGREE-MODIFIER
     :arguments ((:REQUIRED ONT::FIGURE (F::abstr-obj (F::type ont::property-val))))
     )
