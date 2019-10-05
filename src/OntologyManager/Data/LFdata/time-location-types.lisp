@@ -1246,6 +1246,7 @@
 
 (define-type ONT::time-defined-by-event
     :comment "times defined by events"
+    :wordnet-sense-keys ("halftime%1:28:00" "quarter%1:28:01")
     :sem (F::time (F::time-function F::day-point))
     :parent ont::time-interval
     )

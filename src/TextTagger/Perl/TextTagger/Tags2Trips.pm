@@ -531,6 +531,8 @@ sub domainSpecificInfo2trips {
       push @$trips, ':matches',
 	   domainSpecificInfo2trips($info->{matches})
 	if (exists($info->{matches}));
+    } elsif ($info->{type} eq 'place') {
+      push @$trips, ':id', $info->{id}, ':status', $info->{status}, ':source', '"' . escape_for_quotes($info->{source}) . '"';
     } else {
       die "Unknown type of domain-specific-info: $info->{type}\n" . Data::Dumper->Dump([$info],['*info']);
     }

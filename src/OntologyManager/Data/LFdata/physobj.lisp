@@ -260,7 +260,7 @@
 
 
 (define-type ONT::geo-formation
-    :wordnet-sense-keys ("formation%1:17:00" "world%1:05:00")
+    :wordnet-sense-keys ("formation%1:17:00" "world%1:17:00")
     :parent ONT::GEO-OBJECT
     :sem (F::Phys-obj (F::origin F::natural) (F::trajectory -))
     )
@@ -405,7 +405,7 @@
 
 (define-type ONT::POLITICAL-REGION
     :parent ONT::geographic-region
-     :wordnet-sense-keys ("circuit%1:14:00" "free_world%1:14:00" "third_world%1:14:00")
+     :wordnet-sense-keys ("circuit%1:14:00" "free_world%1:14:00" "third_world%1:14:00" "eu%1:14:00" "world_power%1:14:00")
     :sem (F::Phys-obj (F::spatial-abstraction (? sa F::spatial-point F::spatial-region))
 		      (F::origin F::Artifact)
 		      (F::mobility f::fixed)) ;; (f::intentional +)) ; political regions can be intentional agents   -- have a rule in grammar that handles this
@@ -490,7 +490,7 @@
     )
 
 (define-type ONT::SUBSTANCE
-    :wordnet-sense-keys ("substance%1:03:00" "substance%1:03:01" "substance%1:27:00" "matter%1:03:00")
+    :wordnet-sense-keys ("substance%1:03:00" "substance%1:03:01" "substance%1:27:00" "matter%1:03:00" "paper%1:27:00")
     :parent ONT::material
     )
 
@@ -1887,6 +1887,7 @@
 
 ;; the physical representation of text
 (define-type ONT::TEXT-REPRESENTATION
+     :wordnet-sense-keys ("matter%1:10:00")
     :parent ONT::symbolic-REPRESENTATION
     )
 
@@ -2337,7 +2338,7 @@
 
 ;; cash, money
 (define-type ONT::money
-    :wordnet-sense-keys ("change%1:21:03" "change%1:21:01")
+    :wordnet-sense-keys ("change%1:21:03" "change%1:21:01" "medium_of_exchange%1:21:00")
     :parent ONT::manufactured-object
     :sem (F::phys-obj (f::object-function f::currency))
     )
@@ -3004,7 +3005,7 @@
 
 (define-type ONT::collection
     :comment "This type contains concepts that explicitly denotethe group (rather than the members of the grop), e.g., group, herd, collection,..."
-    :wordnet-sense-keys ("collection%1:14:00" "array%1:10:00" "series%1:14:01" "trinketry%1:14:00" "population%1:14:01")
+    :wordnet-sense-keys ("collection%1:14:00" "array%1:10:00" "series%1:14:01" "trinketry%1:14:00" "population%1:14:01" "batch%1:23:00")
     :parent ONT::group-object
     )
 
@@ -3064,7 +3065,7 @@
     )
 
 (define-type ont::people-subgroup
-    :wordnet-sense-keys ("race%1:14:00" "sainthood%1:14:00" "varna%1:14:00" "tenantry%1:14:00")
+    :wordnet-sense-keys ("race%1:14:00" "sainthood%1:14:00" "varna%1:14:00" "tenantry%1:14:00" "world%1:05:00")
     :comment "a group of persons defined by origin or race"
     :parent ont::implicit-group
     )
@@ -3113,7 +3114,7 @@
 
 ;; crowd, audience
 (define-type ont::social-group
- :wordnet-sense-keys ("social_group%1:14:00"  "congregation%1:14:01" "defense%1:14:00")
+ :wordnet-sense-keys ("social_group%1:14:00"  "congregation%1:14:01" "defense%1:14:00" "unit%1:14:00")
   :parent ont::implicit-group
   ;:sem (F::Abstr-obj (F::information F::information-content) (f::intentional +) (F::Object-Function F::Occupation) (F::Container -))
   :sem (F::phys-obj (f::intentional +) (F::Object-Function F::Occupation)) ; (F::Container -)) GROUP-OBJECT has container +
@@ -3174,8 +3175,9 @@
 
 ;; court
 (define-type ONT::legal-organization
- :parent ONT::organization
- )
+    :wordnet-sense-keys ("court%1:14:00")
+    :parent ONT::organization
+    )
 
 ;; market
 (define-type ONT::financial-organization

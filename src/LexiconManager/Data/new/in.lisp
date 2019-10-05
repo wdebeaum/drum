@@ -467,7 +467,15 @@
      )||#	      
     ((LF-PARENT ONT::direction-in)
      ;(TEMPL PRED-S-POST-TEMPL)
-     (TEMPL PRED-NP-TEMPL)
+     (TEMPL PREDICATIVE-ONLY-ADJ-TEMPL)
+     ;;(TEMPL PRED-NP-TEMPL)
+     (preference 0.98)
+     )
+
+    ((LF-PARENT ONT::direction-in)
+     ;(TEMPL PRED-S-POST-TEMPL)
+     (TEMPL PARTICLE-TEMPL)
+     ;;(TEMPL PRED-NP-TEMPL)
      (preference 0.98)
      )
     

@@ -20,7 +20,7 @@
 |#
 
 (define-type ONT::referential-sem
- :wordnet-sense-keys ("entity%1:03:00")
+ :wordnet-sense-keys ("entity%1:03:00" "one%1:09:00")
  :comment "The root type for all things that can be referred to: abstract meaning for THIS and IT"
  :parent ONT::ANY-SEM
  :sem ((? rst F::phys-obj F::abstr-obj F::situation))

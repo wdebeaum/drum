@@ -7,6 +7,7 @@
 ;;; A special type for pronouns etc that can refer to arbitrary abstract objects
 ;;; declares all features as arbibtary vars to override default - features
 (define-type ONT::FACT
+     :wordnet-sense-keys ("fact%1:09:00")
  :parent ONT::ABSTRACT-OBJECT-nontemporal
  :sem (F::Abstr-obj (f::tangible +)) ; facts shouldn't be tangible, but we have it here so that we can add/remove facts (from a graph)
  :arguments ((:optional ONT::formal)
@@ -24,7 +25,7 @@
 ;; some kind of replication of the same thing
 ;; version, edition, variant
 (define-type ONT::Version
-    :wordnet-sense-keys ("version%1:09:01" "edition%1:14:00")
+    :wordnet-sense-keys ("version%1:09:01" "edition%1:14:00" "draft%1:10:00")
     :parent ONT::KIND
  )
 
@@ -161,7 +162,7 @@
 		      (:default (F::GRADABILITY +) (F::scale ?!sc)))
   :arguments ((:REQUIRED ONT::FIGURE)
 	      (:REQUIRED ONT::GROUND))
- :wordnet-sense-keys ("best%3:00:00::" "most%3:00:01::" "most%3:00:02::" "ultimate%3:00:00" "maximum%3:00:00")
+ :wordnet-sense-keys ("best%3:00:00::" "most%3:00:01::" "most%3:00:02::" "ultimate%3:00:00" "maximum%3:00:00" "peak%1:23:00")
 )
 
 ;; worst, least
@@ -811,7 +812,7 @@
 
 ;; success, failure
 (define-type ONT::outcome
-    :wordnet-sense-keys ("result%1:11:00")
+    :wordnet-sense-keys ("result%1:11:00" "consequence%1:19:00")
     :parent ONT::information-function-object
     :arguments ((:essential ONT::FIGURE)
 		)
