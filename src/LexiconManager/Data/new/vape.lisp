@@ -20,7 +20,7 @@
    (SENSES
     ((LF-PARENT ONT::Smoking)
      (example "He vaped electronic cigarettes." "He vaped in the house.")
-     (TEMPL AGENT-AFFECTED-XP-OPTIONAL-A-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-OPTIONAL-B-TEMPL)
      )
     )
    )

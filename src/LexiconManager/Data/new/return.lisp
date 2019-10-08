@@ -41,7 +41,7 @@
     ((LF-PARENT ONT::RETURN)
      (example "he returned the hat" "return him to the station")
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::time-span F::atomic))
-     (TEMPL AGENT-AFFECTED-XP-OPTIONAL-A-TEMPL)
+     (TEMPL AGENT-AFFECTED-XP-OPTIONAL-B-TEMPL)
      ;(TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
    

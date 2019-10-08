@@ -7,7 +7,7 @@
 ;;; A special type for pronouns etc that can refer to arbitrary abstract objects
 ;;; declares all features as arbibtary vars to override default - features
 (define-type ONT::FACT
-     :wordnet-sense-keys ("fact%1:09:00")
+     :wordnet-sense-keys ("fact%1:09:01")
  :parent ONT::ABSTRACT-OBJECT-nontemporal
  :sem (F::Abstr-obj (f::tangible +)) ; facts shouldn't be tangible, but we have it here so that we can add/remove facts (from a graph)
  :arguments ((:optional ONT::formal)

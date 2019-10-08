@@ -505,6 +505,91 @@
 
 (parser::augment-grammar
   '((headfeatures
+     (VP- vform var agr neg sem subj iobj dobj dobjvar comp3 part cont class subjvar lex orig-lex headcat transform subj-map tma aux passive passive-map template result) ; no gap
+     )	       		   
+
+    ;;  resultative construction using adjectives with intransitives: e.g., the water froze solid
+    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
+         ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
+      (SUBJ (% NP (Var ?npvar) (LEX ?LEX) (agr ?agr) (sem ?sem)))
+      (advbl-needed -) (complex +) (result-present +) (subjvar ?subjvar)(GAP ?gap)
+      )
+     -vp-result-with-intransitive> .98   ;;  want to prefer explicitly subcategorized attachments
+     (head (vp- (VAR ?v) 
+		(seq -)  ;;  post mods to conjoined VPs is very rare
+		;(DOBJVAR -)  ; This doesn't work because it could unify with a dobjvar not yet instantiated
+		;(dobj (% -)) ; cannot use (dobj -) because dobj is (% - (W::VAR -))
+		(dobj (% ?xx (var ?dobjvar))) ; check that this is not bound below
+		(comp3 (% -)) ; for arguments as complements
+		(SUBJ (% NP (Var ?npvar) (LEX ?LEX)  (agr ?agr)(sem ?sem)))
+		(constraint ?con) (tma ?tma) (result-present -)
+		;;(subjvar ?subjvar)
+		;;(aux -)   c.f., It had gone bad
+		(gap -)
+		(ellipsis -)
+		(result ?resultsem)
+		))
+     (adjp (ARGUMENT (% NP (sem ?sem) (var ?npvar))) 
+;      (SEM ($ f::abstr-obj (F::type (? ttt ONT::path))))
+      ;(SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::domain-property))))
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::domain-property))))
+      (sem ?resultsem)
+      (GAP ?gap)
+      ;; (subjvar ?subjvar)
+      (SET-MODIFIER -)  ;; mainly eliminate numbers 
+      (ARG ?npvar) (VAR ?mod)
+      ;;(role ?advrole) 
+      )
+     (not-bound (arg1 ?dobjvar)) ; accounts for both intransitive case and unbounded optional dobj case
+     (add-to-conjunct (val (RESULT ?mod)) (old ?con) (new ?new))
+     )
+
+     
+    ;;  resultative construction using adverbs: e.g., I walked to the store
+    ;; it seems this is also used for passive transitives, e.g., The box was moved to the corner
+    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
+				       ;(class (? class ONT::EVENT-OF-CHANGE)) (var ?v) ; it leaked from the roof ; I arrived into the house; but we need to exclude e.g, used/expressed in the liver (yes, passive)
+         ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
+;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
+      (SUBJ (% NP (Var ?npvar) (sem ?sem) (agr ?agr) (lex ?lex) (case ?case)))
+      (subjvar ?npvar) ;(result-present +)
+      (advbl-needed -) (complex +) (GAP ?gap)
+      )
+     -vp-result-advbl-intransitive>  
+     (head (vp- (VAR ?v) 
+		(seq -)  ;;  post mods to conjoined VPs is very rare
+		;(DOBJVAR -)  ; This doesn't work because it could unify with a dobjvar not yet instantiated
+		;(dobj (% -)) ; cannot use (dobj -) because dobj is (% - (W::VAR -))
+		(dobj (% ?xx (var ?dobjvar))) ; check that this is not bound below
+		(comp3 (% -)) ; for arguments as complements
+		(SUBJ (% NP (Var ?npvar) (agr ?agr) (sem ?sem) (lex ?lex) (case ?case)))  
+		(subjvar ?npvar)
+		(constraint ?con) (tma ?tma) ;(result-present -)
+		;;(aux -) 
+		(gap -) ; intransitive
+		(ellipsis -)
+		(result ?asem)
+		))
+
+     (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
+			 (sem ?sem) (var ?npvar)))
+      (GAP ?gap)
+      ;; (subjvar ?subjvar)
+      (sem ?advblsem)
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln)))) ;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ))))
+;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
+      (SET-MODIFIER -)  ;; mainly eliminate numbers 
+      (ARG ?npvar) (VAR ?mod)
+      ;;(role ?advrole) 
+      )
+     (unify-but-dont-bind (pattern ?asem) (value ?advblsem))
+     (not-bound (arg1 ?dobjvar)) ; accounts for both intransitive case and unbounded optional dobj case
+     (add-to-conjunct (val (result ?mod)) (old ?con) (new ?new))  ; The RESULT will be remapped to TRANSIENT-RESULT
+     )
+))
+
+(parser::augment-grammar
+  '((headfeatures
      (ADJ VAR ATYPE SORT ARG PRED ARGUMENT lex orig-lex headcat transform)
      ;; MD 2008/07/17 added post-subcat as a head feature so that it doesn't lead to overgeneration
      (ADJP VAR ATYPE SORT ARG COMP-OP PRED ARGUMENT lex orig-lex headcat transform post-subcat sem) 
@@ -675,85 +760,6 @@
       )
      (bound (arg1 ?npvar)) ; make sure this is not an unbounded optional argument
      (add-to-conjunct (val (RESULT ?mod)) (old ?con) (new ?new))
-     )
-
-    ;;  resultative construction using adjectives with intransitives: e.g., the water froze solid
-    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
-         ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
-      (SUBJ (% NP (Var ?npvar) (LEX ?LEX) (agr ?agr) (sem ?sem)))
-      (advbl-needed -) (complex +) (result-present +) (subjvar ?subjvar)(GAP ?gap)
-      )
-     -vp-result-with-intransitive> .98   ;;  want to prefer explicitly subcategorized attachments
-     (head (vp- (VAR ?v) 
-		(seq -)  ;;  post mods to conjoined VPs is very rare
-		;(DOBJVAR -)  ; This doesn't work because it could unify with a dobjvar not yet instantiated
-		;(dobj (% -)) ; cannot use (dobj -) because dobj is (% - (W::VAR -))
-		(dobj (% ?xx (var ?dobjvar))) ; check that this is not bound below
-		(comp3 (% -)) ; for arguments as complements
-		(SUBJ (% NP (Var ?npvar) (LEX ?LEX)  (agr ?agr)(sem ?sem)))
-		(constraint ?con) (tma ?tma) (result-present -)
-		;;(subjvar ?subjvar)
-		;;(aux -)   c.f., It had gone bad
-		(gap ?gap)
-		(ellipsis -)
-		(result ?resultsem)
-		))
-     (adjp (ARGUMENT (% NP (sem ?sem) (var ?npvar))) 
-;      (SEM ($ f::abstr-obj (F::type (? ttt ONT::path))))
-      ;(SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::domain-property))))
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::domain-property))))
-      (sem ?resultsem)
-      (GAP -)
-      ;; (subjvar ?subjvar)
-      (SET-MODIFIER -)  ;; mainly eliminate numbers 
-      (ARG ?npvar) (VAR ?mod)
-      ;;(role ?advrole) 
-      )
-     (not-bound (arg1 ?dobjvar)) ; accounts for both intransitive case and unbounded optional dobj case
-     (add-to-conjunct (val (RESULT ?mod)) (old ?con) (new ?new))
-     )
-
-     
-    ;;  resultative construction using adverbs: e.g., I walked to the store
-    ;; it seems this is also used for passive transitives, e.g., The box was moved to the corner
-    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
-				       ;(class (? class ONT::EVENT-OF-CHANGE)) (var ?v) ; it leaked from the roof ; I arrived into the house; but we need to exclude e.g, used/expressed in the liver (yes, passive)
-         ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
-;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
-      (SUBJ (% NP (Var ?npvar) (sem ?sem) (agr ?agr) (lex ?lex) (case ?case)))
-      (subjvar ?npvar) ;(result-present +)
-      (advbl-needed -) (complex +) (GAP ?gap)
-      )
-     -vp-result-advbl-intransitive>  
-     (head (vp- (VAR ?v) 
-		(seq -)  ;;  post mods to conjoined VPs is very rare
-		;(DOBJVAR -)  ; This doesn't work because it could unify with a dobjvar not yet instantiated
-		;(dobj (% -)) ; cannot use (dobj -) because dobj is (% - (W::VAR -))
-		(dobj (% ?xx (var ?dobjvar))) ; check that this is not bound below
-		(comp3 (% -)) ; for arguments as complements
-		(SUBJ (% NP (Var ?npvar) (agr ?agr) (sem ?sem) (lex ?lex) (case ?case)))  
-		(subjvar ?npvar)
-		(constraint ?con) (tma ?tma) ;(result-present -)
-		;;(aux -) 
-		(gap ?gap)
-		(ellipsis -)
-		(result ?asem)
-		))
-
-     (advbl (ARGUMENT (% NP ;; (? xxx NP S)  ;; we want to eliminate V adverbials, he move quickly  vs he moved into the dorm
-			 (sem ?sem) (var ?npvar)))
-      (GAP -)
-      ;; (subjvar ?subjvar)
-      (sem ?advblsem)
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln)))) ;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ))))
-;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
-      (SET-MODIFIER -)  ;; mainly eliminate numbers 
-      (ARG ?npvar) (VAR ?mod)
-      ;;(role ?advrole) 
-      )
-     (unify-but-dont-bind (pattern ?asem) (value ?advblsem))
-     (not-bound (arg1 ?dobjvar)) ; accounts for both intransitive case and unbounded optional dobj case
-     (add-to-conjunct (val (result ?mod)) (old ?con) (new ?new))  ; The RESULT will be remapped to TRANSIENT-RESULT
      )
     
     ;;  resultative construction using adverbs: e.g., sweep the dust into the corner

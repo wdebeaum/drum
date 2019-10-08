@@ -24,7 +24,7 @@
      (LF-PARENT ONT::consume)
      (example "he fed on bread")
      (SEM (F::ASPECT F::DYNAMIC))
-     (TEMPL AGENT-AFFECTED-XP-optional-a-TEMPL  (xp (% W::pp (W::ptype W::on))))
+     (TEMPL AGENT-AFFECTED-XP-optional-B-TEMPL  (xp (% W::pp (W::ptype W::on))))
      )
     ((LF-PARENT ONT::feeding)
      (example "feed some bread to the dog")

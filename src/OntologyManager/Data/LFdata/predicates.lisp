@@ -368,7 +368,7 @@
 
 (define-type ONT::by-means-of
  :parent ONT::SITUATION-MODIFIER
- :arguments ((:ESSENTIAL ONT::FIGURE (F::situation (F::type ont::event-of-change))) ;(f::aspect (? asp f::dynamic f::stage-level))))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::situation)) ;(F::type ont::event-of-change))) ;(f::aspect (? asp f::dynamic f::stage-level)))) ; event-of-state: "How is this related to/involved in that?"
              (:REQUIRED ONT::GROUND (F::situation)) ; how about: "by phone"?
              )
  )

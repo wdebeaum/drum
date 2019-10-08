@@ -27,6 +27,11 @@
      (LF-PARENT ONT::create)
  ; like produce
      )
+    ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("create-26.4") :wn ("model%2:36:00" "model%2:36:02"))
+     (LF-PARENT ONT::create)
+ ; like produce
+     (TEMPL AGENT-TEMPL)
+     )
     )
    )
 ))
