@@ -1177,7 +1177,7 @@
       (head (adjp (lf ?lf) (sem ?sem)
 		  (var ?v) (arg ?arg) (argument ?argument) (argument (% ?argcat (var ?arg))) ;;(wh -) eliminated to allow "how red"
 	     (set-modifier -) ;; numbers are set-modifier +, and they don't behave as normal adjps in predicates
-	     (atype (? atp central predicative-only))
+	     (atype (? atp central attributive-only predicative-only))
 	     ;; md 2008/17/07 eliminated cases with positive post-subcat, they should only happen when an adjective is looking for an argument after an np, not possible in the pred situation
 	     (post-subcat -) (how ?how)
 	     ))

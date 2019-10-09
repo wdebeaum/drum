@@ -81,6 +81,18 @@ OFFLINE requests.")
 	(t
 	 nil)))
 
+(defcomponent-handler
+  '(request &key :content (parse-text . *))
+  #'(lambda (msg args)
+       (output (apply #'parse-text args)))
+  :subscribe t)
+
+(defcomponent-handler
+  '(request &key :content (parse-and-extract . *))
+  #'(lambda (msg args)
+       (reply-to-msg msg 'reply :content (list 'answer (apply #'parse-and-extract args))))
+  :subscribe t)
+
 
 (defcomponent-handler
   '(request &key :content (exit . *))

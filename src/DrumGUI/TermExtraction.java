@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.62 2019/09/26 23:43:32 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.63 2019/10/08 17:55:29 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -441,8 +441,10 @@ public class TermExtraction extends Extraction {
 
         if (ExtractionFactory.getProperty("extractions.mode").equals("DRUM")) {
             attrs.add(xml_attribute("dbid", getDBTermIds()));
-            
-            conts.add(xml_dsTerms());
+            conts.add(xml_drumTerms());
+        } 
+        if (ExtractionFactory.getProperty("extractions.mode").equals("CWMS")) {
+            conts.add(xml_grounding());
         } 
 
         conts.add(xml_equals());
@@ -466,6 +468,74 @@ public class TermExtraction extends Extraction {
         conts.add(xml_valseq());
 
         return xml_element(exType, attrs, conts);
+    }
+    /**
+     * Returns a domain-specific (e.g., {@code drum-terms}) XML element containing a set of grounding information terms.
+     * 
+     */
+    protected String xml_grounding() {
+        List<String> conts = new ArrayList<String>();
+        for (KQMLList term : dsTerms) {
+            if (pullTermHead(term).equalsIgnoreCase("PLACE")) {
+                conts.add(xml_cwmsPlaceTerm(term));
+            } else {
+                conts.add(xml_cwmsTerm(term));
+            }
+        }
+        return xml_element("grounding", null, conts);
+    }
+
+    /**
+     * Returns a {@code country} XML element containing grounding information for country names.
+     * <p>
+     * Attributes: {@code code}, {@code name}
+     * CAPITAL, REGION, SUBREGION, DEMONYM
+     */
+    protected String xml_cwmsTerm(KQMLList dsTerm) {
+        if (dsTerm == null)
+            return "";
+        String termType = pullTermHead(dsTerm).toLowerCase();
+        List<String> attrs = new ArrayList<String>();
+        // official name
+        KQMLObject name = dsTerm.getKeywordArg(":NAME");
+        if (name != null)
+            attrs.add(xml_attribute("name", xml_escape(name.stringValue())));
+        // code (for countries)
+        KQMLObject code = dsTerm.getKeywordArg(":CODE");
+        if (code != null)
+            attrs.add(xml_attribute("code", xml_escape(code.stringValue())));
+        // country code (for capitals)
+        KQMLObject c_code = dsTerm.getKeywordArg(":COUNTRY");
+        if (c_code != null)
+            attrs.add(xml_attribute("country-code", xml_escape(c_code.stringValue())));
+        // regions, sub-regions and demonyms have :COUNTRIES
+        KQMLObject c_codes = dsTerm.getKeywordArg(":COUNTRIES");
+        if (c_codes != null) {
+            attrs.add(xml_attribute("country-codes", xml_escape(c_codes.stringValue())));
+        }
+        
+        return xml_element(termType, attrs, null);
+    }
+
+    /**
+     * Returns a {@code place} XML element containing grounding (geographic) information for place names.
+     * <p>
+     * Attributes: {@code id}, {@code source}
+     * 
+     */
+    protected String xml_cwmsPlaceTerm(KQMLList dsTerm) {
+        if (dsTerm == null)
+            return "";
+
+        List<String> attrs = new ArrayList<String>();
+        KQMLObject dbID = dsTerm.getKeywordArg(":ID");
+        if (dbID != null)
+            attrs.add(xml_attribute("id", normalizeDBID(dbID.toString())));
+        KQMLObject source = dsTerm.getKeywordArg(":SOURCE");
+        if (source != null)
+            attrs.add(xml_attribute("source", xml_escape(source.stringValue())));
+
+        return xml_element("place", attrs, null);
     }
 
     /**
@@ -661,7 +731,7 @@ public class TermExtraction extends Extraction {
  
         List<String> conts = xml_commonContents();
         conts.add(xml_components((KQMLList) attributes.get(Attribute.MSEQ)));
-        conts.add(xml_dsTerms());
+        conts.add(xml_drumTerms());
  
         return xml_element(exType, attrs, conts);
    }
@@ -731,41 +801,12 @@ public class TermExtraction extends Extraction {
      * 
      * @return
      */
-    protected String xml_dsTerm(KQMLList dsTerm) {
+    protected String xml_drumTerm(KQMLList dsTerm) {
         if (dsTerm == null)
             return "";
         
-        List<String> attrs = new ArrayList<String>();
-        // TODO: find out if other information might be useful
-        KQMLObject dbID = dsTerm.getKeywordArg(":ID");
-        if (dbID != null) 
-            attrs.add(xml_attribute("dbid", normalizeDBID(dbID.toString())));
-        // score may be missing
-        KQMLObject matchScore = dsTerm.getKeywordArg(":SCORE");
-        if (matchScore != null)
-            attrs.add(xml_attribute("match-score", matchScore.toString()));
-        // name may be missing
-        KQMLObject nameObj = dsTerm.getKeywordArg(":NAME");
-        if (nameObj != null)
-            attrs.add(xml_attribute("name", xml_escape(nameObj.stringValue())));
-        // matches may be missing
-        KQMLObject matches = dsTerm.getKeywordArg(":MATCHES");
-        String matchedName = null;
-        if (matches != null) {
-            KQMLObject firstMatch = ((KQMLList) matches).get(0);
-            matchedName = ((KQMLList) firstMatch).getKeywordArg(":MATCHED").stringValue();
-            attrs.add(xml_attribute("matched-name", xml_escape(matchedName)));
-        }
-        
-        List<String> conts = new ArrayList<String>();
-        // ont-types must be present!
-        conts.add(xml_dsTermOntTypes((KQMLList) dsTerm.getKeywordArg(":ONT-TYPES")));
-        // dbxrefs may be missing
-        conts.add(xml_drumTermXrefs((KQMLList) dsTerm.getKeywordArg(":DBXREFS")));
-        // species may be missing
-        KQMLObject species = dsTerm.getKeywordArg(":SPECIES");
-        if (species != null)
-            conts.add(xml_element("species", "", xml_escape(species.stringValue())));
+        List<String> attrs = xml_drumTerm_attributes(dsTerm);     
+        List<String> conts = xml_drumTerm_content(dsTerm);
         conts.add(xml_famMembers(dsTerm));
         
         return xml_element("drum-term", attrs, conts);                

@@ -1,7 +1,7 @@
 /*
  * ExtractionFactory.java
  *
- * $Id: ExtractionFactory.java,v 1.13 2018/11/08 21:25:42 lgalescu Exp $
+ * $Id: ExtractionFactory.java,v 1.14 2019/10/08 17:55:29 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -132,6 +132,17 @@ public class ExtractionFactory {
                 value.add(0, new KQMLToken(newType));
                 extractionType = newType;
                 Debug.warn("Mapped to: " + extractionType);
+            }
+            // F extractions w/ roles map to EVENT
+            if (extractionType.equalsIgnoreCase("ONT::F")) {
+                // try building event extraction object
+                EventExtraction tmpEx = new EventExtraction(ekb, value, context, uttnum);
+                if (! tmpEx.getRoles().isEmpty()) {
+                    extractionType = "ONT::EVENT";
+                    value.remove(0);
+                    value.add(0, new KQMLToken(extractionType));
+                    Debug.warn("Mapped ONT::F to: " + extractionType);
+                }
             }
             extractionType = extractionType.replaceFirst("ONT::", "");
         }

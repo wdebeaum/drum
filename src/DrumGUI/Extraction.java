@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.60 2019/09/20 20:23:32 lgalescu Exp $
+ * $Id: Extraction.java,v 1.61 2019/10/08 17:55:29 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -123,8 +123,8 @@ public class Extraction {
         if (domain.equalsIgnoreCase("DRUM")) {
             // set drumTerms
             fixDrumTermsFormat();
-            pullDrumTerms();
         }
+        pullDomainTerms();
 
         packRules();
 
@@ -345,27 +345,31 @@ public class Extraction {
     }
 
     /**
-     * Pull DRUM terms from {@link #value}.
+     * Pull domain-specific terms from {@link #value}.
      * 
      * @return
      */
-    protected void pullDrumTerms() {
-        KQMLObject drum = value.getKeywordArg(":DRUM");
+    protected void pullDomainTerms() {
+        String domain = ExtractionFactory.getProperty("extractions.mode");
+        if (domain == null) 
+            return;
+        String key = ":" + domain;
+        KQMLObject dsi = value.getKeywordArg(key);
         dsTerms = new ArrayList<KQMLList>();
-        if (drum == null) {
+        if (dsi == null) {
             return;
         }
-        if (drum instanceof KQMLToken) { // when missing, it may show as ":DRUM -"
+        if (dsi instanceof KQMLToken) { // when missing, it may show as ":DRUM -"
             return;
         }
-        KQMLList drumTermsList = findTermByHead(":DRUM", (KQMLList) drum);
+        KQMLList dsTermsList = findTermByHead(key, (KQMLList) dsi);
 
-        if (drumTermsList == null) {
-            Debug.warn("DRUM terms doesn't include any: " + drum);
+        if (dsTermsList == null) {
+            Debug.warn(domain + " terms doesn't include any: " + dsi);
             return;
         }
 
-        for (KQMLObject item : drumTermsList) {
+        for (KQMLObject item : dsTermsList) {
             if (!(item instanceof KQMLList)) {
                 continue;
             }
@@ -378,7 +382,7 @@ public class Extraction {
                 dsTerms.add(term);
             }
         }
-        Debug.warn("DRUM terms found: " + dsTerms);
+        Debug.warn(domain + " terms found: " + dsTerms);
     }
 
     /**
@@ -421,13 +425,18 @@ public class Extraction {
      * string will be returned unchanged, and a warning will be printed to STDERR.
      * 
      * @param dbid
-     *            format: {@code DB::X12345} or {@code DB::|12345|} or {@code DB_X12345}
+     *            format: {@code DB::X12345} or {@code DB::|12345|} or {@code DB::|_12345|} or {@code DB_X12345}
      * @return normalized id in the format: {@code DB:X12345} or {@code DB:12345}
      */
     protected static String normalizeDBID(String dbid) {
         String[] parsed = dbid.split(":+");
         if (parsed.length == 2) {
-            return parsed[0] + ":" + parsed[1].replaceAll("\\|", "");
+            String db = parsed[0];
+            String id = parsed[1].replaceAll("\\|", "");
+            if (id.startsWith("_")) {
+                id = id.replaceFirst("_", "");
+            }
+            return db + ":" + id;
         }
         parsed = dbid.split("_");
         if (parsed.length == 2) {
@@ -890,18 +899,18 @@ public class Extraction {
      * Returns a domain-specific (e.g., {@code drum-terms}) XML element containing a set of grounding information terms.
      * 
      */
-    protected String xml_dsTerms() {
+    protected String xml_drumTerms() {
         List<String> conts = new ArrayList<String>();
         for (KQMLList term : dsTerms) {
             if (pullTermHead(term).equalsIgnoreCase("TERM")) {
-                conts.add(xml_dsTerm(term));
+                conts.add(xml_drumTerm(term));
             }
         }
         return xml_element("drum-terms", null, conts);
     }
 
     /**
-     * Returns a domain-specific (e.g., {@code drum-term}) XML element containing grounding information.
+     * Returns a {@code drum-term} XML element containing grounding information.
      * <p>
      * Attributes: {@code dbid}, {@code name}, {@code match-score}, {@code matched-name} <br>
      * Sub-elements: {@code ont-types}, {@code xrefs}, {@code species}
@@ -909,10 +918,25 @@ public class Extraction {
      * Limitations: we only get the first matched name.
      * 
      */
-    protected String xml_dsTerm(KQMLList dsTerm) {
+    protected String xml_drumTerm(KQMLList dsTerm) {
         if (dsTerm == null)
             return "";
 
+        List<String> attrs = xml_drumTerm_attributes(dsTerm);
+        List<String> conts = xml_drumTerm_content(dsTerm);
+
+        return xml_element("drum-term", attrs, conts);
+    }
+    
+    /**
+     * Returns attributes for a {@code drum-term} XML element containing grounding information.
+     * <p>
+     * Attributes: {@code dbid}, {@code name}, {@code match-score}, {@code matched-name} <br>
+     * <p>
+     * Limitations: we only get the first matched name.
+     * 
+     */
+    protected List<String> xml_drumTerm_attributes(KQMLList dsTerm) {
         List<String> attrs = new ArrayList<String>();
         // TODO: find out if other information might be useful
         KQMLObject dbID = dsTerm.getKeywordArg(":ID");
@@ -934,7 +958,18 @@ public class Extraction {
             matchedName = ((KQMLList) firstMatch).getKeywordArg(":MATCHED").stringValue();
             attrs.add(xml_attribute("matched-name", xml_escape(matchedName)));
         }
-
+        return attrs;
+    }
+    
+    /**
+     * Returns contents of a {@code drum-term} XML element containing grounding information.
+     * <p>
+     * Sub-elements: {@code ont-types}, {@code xrefs}, {@code species}
+     * <p>
+     * Limitations: we only get the first matched name.
+     * 
+     */
+    protected List<String> xml_drumTerm_content(KQMLList dsTerm) {
         List<String> conts = new ArrayList<String>();
         // ont-types must be present!
         conts.add(xml_dsTermOntTypes((KQMLList) dsTerm.getKeywordArg(":ONT-TYPES")));
@@ -944,13 +979,12 @@ public class Extraction {
         KQMLObject species = dsTerm.getKeywordArg(":SPECIES");
         if (species != null)
             conts.add(xml_element("species", "", xml_escape(species.stringValue())));
-
-        return xml_element("drum-term", attrs, conts);
+        return conts;
     }
 
     /**
      * Returns a {@code types} element containing a set of {@code type} sub-elements, each of them denoting a
-     * an ONT type for the DRUM term.
+     * an ONT type for the d term.
      * 
      * @param ontTypes
      */

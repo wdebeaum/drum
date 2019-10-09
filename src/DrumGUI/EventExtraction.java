@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.69 2019/09/26 23:42:52 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.70 2019/10/08 17:55:28 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -839,7 +839,7 @@ public class EventExtraction extends Extraction {
         if (ExtractionFactory.getProperty("extractions.mode").equals("DRUM")) {
             conts.add(xml_site());
             conts.add(xml_cellline());
-            conts.add(xml_dsTerms());
+            conts.add(xml_drumTerms());
         }
         return xml_element(exType, attrs, conts);
     }
