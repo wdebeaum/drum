@@ -16,7 +16,9 @@
 ;;    reply function to swap around sender/receiver and reply-with: etc.
 
 (in-package "ONTOLOGYMANAGER")
+(in-component :om)
 
+#|
 (defvar *module-name* 'ontologymanager
   "Name under which to register this module when we startup. This is also
 used to find the package we should be in runtime when reading messages,
@@ -69,6 +71,7 @@ message in reply to MSG."
   (let ((msg (COMM:recv *module-name*)))
     (LOGGING:log-message-received msg)
     msg))
+
 
 (defun receive-message (msg)
   "Dispatches message MSG for processing."
@@ -412,3 +415,15 @@ returns : function return value"
   (load "../OntologyManager/messages.lisp")
   )
 
+|#
+
+(format t "~%~%LOADING MESSAGES~%~%")
+
+(defcomponent-handler
+    '(request &key :content (preliminary-define-type . *))
+    #'(lambda (msg args)
+	(add-new-type args))
+  :subscribe t)
+
+(defun add-new-type (args)
+  (apply #'lfontology-define-type args))

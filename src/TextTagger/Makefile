@@ -2,7 +2,7 @@
 # Makefile for TextTagger
 #
 # William de Beaumont <wbeaumont@ihmc.us> 2008/3/6
-# $Id: Makefile,v 1.123 2019/10/08 21:05:54 wdebeaum Exp $
+# $Id: Makefile,v 1.124 2019/10/10 16:42:39 wdebeaum Exp $
 #
 
 MODULE = TextTagger
@@ -52,5 +52,7 @@ endif
 .DELETE_ON_ERROR:
 
 # include any separate Makefiles for optional parts of TextTagger
+ifneq (,$(wildcard *.mk))
 include *.mk
+endif
 

@@ -60,7 +60,8 @@
   (let ((return-list nil))
     ;;(when (symbolp w)
       ;;(if (hyphenated-symbolp w) (setq w (get-first-part-of-hyphenated-symbol w)))
-      (let ((defs (or wdef (retrieve-from-lex w) (if (consp w) (retrieve-multiword-from-trips w)))))
+    (let ((defs (or wdef (retrieve-from-lex w)
+		    (if (consp w) (retrieve-multiword-from-trips w)))))
 	(dolist (this-def defs)
 	  (let ((cat (lex-entry-cat this-def))
 		(feats (lex-entry-feats this-def)))
@@ -443,7 +444,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
     ; turning this off in CERNL.
 ;    (if (and (listp w) (contains-number w)) (setq w (convert-number-to-word w)))
     (print-debug "id for ~S is ~S~%" w (gen-id w))
-    (setq res (make-unknown-word-entry w pos .98 nil (gen-id w) (or ont-type default-ont-type) nil penn-tags nil domain-info))
+    (setq res (make-unknown-word-entry w pos .96 nil (gen-id w) (or ont-type default-ont-type) nil penn-tags nil domain-info))
     (print-debug "sense-filtering returns nil; generating ont::referential-sem entry for ~S~%" w)
     res))
 
@@ -789,19 +790,28 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 		      (pushnew def compatible-defs :test #'equal)
 		      (setq tagged-senses-remaining (update-tagged-sense-list tagged-senses-remaining this-lf)))
 		  ; for an incompatible sense, demote the preference unless it's already low
-		     (t  
-                      (if (> (lex-entry-pref def) .97)
-		      (setf (lex-entry-pref def) (- (lex-entry-pref def) .01)))
-		      (print-debug "lowering preference for incompatible sense ~S~%" this-lf)
+		     (t
+		      (print-debug "lowering preference for incompatible sense (1) ~S~%" this-lf)
+                      (if (numberp (lex-entry-pref def))
+			  (setf (lex-entry-pref def)
+				(- (lex-entry-pref def)
+				   ;; we retain incompatible senses even if use-tagged-senses-only is set, but at a quite low level, just for robustness
+				   (if tagged-senses-only .1
+				       .01))))
+		      
 		      (push def other-defs)
 		      )))
 	      (t  ; for an incompatible sense, demote the preference unless it's already low
-	       (if (> (lex-entry-pref def) .97)
-		   (setf (lex-entry-pref def) (- (lex-entry-pref def) .01)))
-	       (print-debug "lowering preference for incompatible sense ~S~%" this-lf)
+	       (print-debug "lowering preference for incompatible sense (2) ~S~%" this-lf)
+	       (if (numberp (lex-entry-pref def))
+		   (setf (lex-entry-pref def)
+			 (- (lex-entry-pref def)
+			    ;; we retain incompatible senses even if use-tagged-senses-only is set, but at a quite low level, just for robustness
+			    (if tagged-senses-only .1
+				.01))))
 	       (push def other-defs))
-	   ) 
-	  ))
+	      ) 
+	))
     (print-debug "wdef is ~S~% compatible-defs is ~S~% other-defs are ~S~%" wdef compatible-defs other-defs)
     ;;  We have now found any entries in the TRIPS lexicon, and retrieved WordNet senses as well if desired
     ;;   But we still should check whether there are some texttagger interpretations that have not been found.
@@ -1059,25 +1069,27 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	     (setq w (remove-noninitial-hyphens w))
 	     ; turning this off in CERNL so we get 30-mg rather than THIRTY-MG
 ;	     (if (contains-number w) (setq w (convert-number-to-word w)))
-	     (print-debug "warning:: creating underspecified entry for domain-tagged multiword ~S~%" w)
+	     (print-debug "warning:: creating underspecified entry for domain-tagged multiword ~S tagged as ~S~%" w tagged-senses)
 	     (dolist (this-sense-keylist tagged-senses)
 	       (let* ((domain-info (find-arg this-sense-keylist :domain-specific-info))
 		      (rawscore (find-arg this-sense-keylist :score))
 		      (score (if (numberp rawscore)
-				 (convert-raw-score rawscore) .98))
+				 (convert-raw-score rawscore) .96))
 				     ;;(if (and (numberp rawscore) (< rawscore .95))
 			;;	 (max (+ rawscore (/ (- 1 rawscore) 1.5)) .95)
 			;;	 rawscore))  ;; reduce the impact of the Texttagger scores
 		      (penn-tags (util::convert-to-package (find-arg this-sense-keylist :penn-parts-of-speech) :w))
 		      (these-word-categories (merge-pos-info nil penn-tags))
 		      (these-ont-types (find-arg this-sense-keylist :ont-types)))
+		 (print-debug "underspecified entry: ont-types=~S score=~S" these-ont-types score)
 		 (dolist (ont-type these-ont-types)
 		   (dolist (cat these-word-categories)
 		     (when (compatible-pos-and-ont-type cat ont-type)
 		       (print-debug "~%point 3")
 		       (setq res (append res (make-unknown-word-entry w cat score NIL (gen-id w) (list ont-type) nil penn-tags these-ont-types domain-info))))
 		     ))
-		 (if (null res) (setq res (append res (make-default-unknown-word-entry w nil penn-tags nil))))
+		 (if (null res)
+		     (setq res (append res (make-default-unknown-word-entry w nil penn-tags nil))))
 	       )))
 	    (t  (print-debug "warning:: LXM found no entries -- returning default entry ~%")
 		(setq res 
@@ -1254,11 +1266,12 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	(wn-pos-list (when wn-sense-keys (trips-pos-for-wn-sense-keys wn-sense-keys)))
 
 	(merged-trips-wn-pos-list (union trips-pos-list wn-pos-list))
-	(xxx (print-debug "~%MERGED=~S  TRIPS=~S  WN=~S" merged-trips-wn-pos-list trips-pos-list wn-pos-list))
+	(xxx (print-debug "~%MERGED=~S  TRIPS=~S  WN=~S Wnsenses=~S " merged-trips-wn-pos-list trips-pos-list wn-pos-list wn-sense-keys))
 	
 	(penn-tags (util::convert-to-package (find-arg keylist :penn-parts-of-speech) :w))
 	(semantics-from-penn-tag (penn-tag-to-trips-semantics penn-tags))
 	(ont-sense-tags (find-arg keylist :ont-types))
+	(yyy (print-debug "~%ONT-SENSE-TAGS=~S" ont-sense-tags))
 	res
 	(*package* *lxm-package-var*)	 
 	(wf-poslist (or merged-trips-wn-pos-list *default-wf-poslist*)) ;; use default pos list if no pos passed in from parser
@@ -1305,7 +1318,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
    ;; now get TRIPS senses from the calling function only
    (setq res (or combined-wdef adjusted-wdef final-wf-wdef))
   
-   (print-debug "~%PROCESS-WORD-REQUEST:  RES is ~S merged-trips-wn-pos-list = ~S" res merged-trips-wn-pos-list)
+   (print-debug "~%PROCESS-WORD-REQUEST:  RES is ~S merged-trips-wn-pos-list = ~S ont-sense-tags = ~S" res merged-trips-wn-pos-list ont-sense-tags)
    ;; filter the results according to tagging information: senses or pos
    (cond (;(and (not (find 'w::name (merge-pos-info trips-pos-list penn-tags))) ; no sense filtering on names
 	  (or (not (null ont-sense-tags)) (not (null wn-sense-keys)));)
