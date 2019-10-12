@@ -417,7 +417,7 @@ returns : function return value"
 
 |#
 
-(format t "~%~%LOADING MESSAGES~%~%")
+(format *error-output* "~%~%LOADING MESSAGES~%~%")
 
 (defcomponent-handler
     '(request &key :content (preliminary-define-type . *))

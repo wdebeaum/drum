@@ -5644,7 +5644,7 @@
  )
 
 (define-type ont::participate-attend
-    :wordnet-sense-keys ("appear%2:41:03" "attend%2:42:00" "participate%2:41:00" "involvement%1:04:00")
+    :wordnet-sense-keys ("appear%2:41:03" "attend%2:42:00" "participate%2:41:00" "involvement%1:04:00" "stag%2:41:00")
     :parent ont::event-of-causation ;; 20120529 GUM change new parent + args
     :arguments ((:REQUIRED ONT::agent (F::phys-obj (F::intentional +)))
 		(:REQUIRED ONT::neutral (F::situation (F::type ONT::gathering-event)))
