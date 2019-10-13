@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.82 2019/09/20 20:07:34 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.84 2019/10/12 15:56:02 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -1556,7 +1556,7 @@ public class DrumGUI extends StandardTripsModule {
                 + Arrays.toString(dataset.getSelection()));
 
         // update and save the EKB
-        kb.setCompletionStatus(remaining == 0);
+        kb.setCompletionStatus(documentDone && (remaining == 0)); // no remaining text in current doc, no remaining docs
         try {
             String ekbFile = kb.saveEKB();
             log("<ekb>" + ekbFile + "</ekb>");
@@ -2454,9 +2454,8 @@ public class DrumGUI extends StandardTripsModule {
                     errorReply(replyMsg, "Missing :uttnums values");
                     // we keep going, but with unpredictable behavior
                 }
-            } else { // TODO: handle reject
-                error("Cannot handle reply");
-                return;
+            } else { // if reject, use the top-level handler
+                receiveReply(replyMsg, content);
             }
         }
     }
