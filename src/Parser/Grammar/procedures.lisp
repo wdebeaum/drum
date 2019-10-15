@@ -402,15 +402,25 @@
 	   (w::mod1 'w::mod2)
 	   (w::mod2 'w::mod3)
 	   (w::mod3 'w::mod4)
+	   (w::mod4 'w::mod5)
 	   (w::assoc-with 'w::assoc-with1)
 	   (w::assoc-with1 'w::assoc-with2)
+	   (w::assoc-with2 'w::assoc-with3)
+	   (w::assoc-with3 'w::assoc-with4)
+	   (w::assoc-with4 'w::assoc-with5)
 	   (w::result 'w::result1)
 	   (w::result1 'w::result2)
 	   ;(w::mods 'w::mods1)
 	   (w::mods 'w::mod)
 	   (otherwise 'w::mod1))))
     (if (assoc newname feats)
-	(gen-new-name newname feats)
+	(if (member newname '(w::mod5 w::assoc-with5 w::result2))
+	    (progn
+	      (format t "~%Warning (gen-new-name): need more names beyond ~S~%" newname)
+	      newname
+	      )
+	  (gen-new-name newname feats)
+	  )
 	newname)))
 	   
 	   
