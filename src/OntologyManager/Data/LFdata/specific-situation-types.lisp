@@ -184,7 +184,7 @@
   )
 
 (define-type ONT::surrender
- :wordnet-sense-keys ("cede%2:40:01" "chuck_up_the_sponge%2:33:00" "concede%2:40:00" "despair%2:37:00" "give_up%2:41:00" "grant%2:40:04" "relent%2:42:00" "submit%2:33:00" "surrender%2:40:00" "yield%2:33:00" "yield%2:40:01")
+ :wordnet-sense-keys ("cede%2:40:01" "chuck_up_the_sponge%2:33:00" "concede%2:40:00" "despair%2:37:00" "give_up%2:41:00" "grant%2:40:04" "relent%2:42:00" "submit%2:33:00" "surrender%2:40:00" "yield%2:33:00" "yield%2:40:01" "abandon%2:31:01" "abandon%2:40:01")
   :parent ONT::relinquish
   :arguments ((:optional ONT::affected-result (F::Phys-obj) (F::tangible +))
 	      )
@@ -334,8 +334,9 @@
 
 ;; advance
 (define-type ONT::move-forward
- :parent ONT::MOVE
- )
+    :wordnet-sense-keys ( "progress%2:38:00")
+    :parent ONT::MOVE
+    )
 
 ;; recede
 (define-type ONT::move-away
@@ -416,11 +417,6 @@
  :parent ONT::MOVE
  )
 
-;; float
-(define-type ONT::float
- :wordnet-sense-keys ("hover%2:38:01")
- :parent ONT::MOVE
- )
 
 ;; haul, lug
 (define-type ONT::CAUSE-MOVE
@@ -475,7 +471,9 @@
     )
 
 (define-type ONT::swim
- :wordnet-sense-keys ("float%2:38:01" "swim%2:38:01")
+    :wordnet-sense-keys ("swim%2:38:00")
+    :definitions ((ont::SELF-LOCOMOTE :agent ?agent
+				      :result (ONT::move :affected ?affected)))
  :parent ONT::self-locomote
  )
 
@@ -1635,7 +1633,7 @@
  )
 
 (define-type ONT::progress
- :wordnet-sense-keys ("go%2:30:02" "progress%2:30:00"  "progress%2:30:01" "progress%2:38:00")
+ :wordnet-sense-keys ("go%2:30:02" "progress%2:30:00"  "progress%2:30:01" )
 ; :parent ONT::SITUATION-CHANGE
  :parent ONT::ACTIVITY-ONGOING
  :comment "A situation continues to develop"
@@ -3311,7 +3309,7 @@
 
 ;; abandon, desert, leave behnid
 (define-type ONT::leave-behind
- :wordnet-sense-keys ("leave%2:31:05" "leave%2:30:03" "leave_behind%2:38:00" "abandon%2:31:01" "abandon%2:40:01")
+ :wordnet-sense-keys ("leave%2:31:05" "leave%2:30:03" "leave_behind%2:38:00"  "abandon%2:40:00")
  :parent ONT::intentionally-act
  :arguments ((:REQUIRED ONT::AGENT ((? ag f::abstr-obj F::Phys-obj) (F::intentional +)))
 	     (:REQUIRED ONT::affected (F::phys-obj (F::mobility f::movable)))
@@ -4984,6 +4982,13 @@
  :sem (F::Situation (F::aspect F::stage-level))
  :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj)) ;; formal is restricted to phys-obj; otherwise same as be-at
              )
+ )
+
+
+;; float
+(define-type ONT::float
+ :wordnet-sense-keys ("hover%2:38:01" "float%2:38:01")
+ :parent ONT::be-at-loc
  )
 
 (define-type ONT::location-as-motion

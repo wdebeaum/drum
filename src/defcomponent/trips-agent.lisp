@@ -142,7 +142,8 @@ and restarts."
 		      (throw :exit 0)	; EOF => exit
 		    (handler-bind
 			((error #'(lambda (err)
-				    (indicate-error m err msg))))
+				    (let ((*package* package))
+				      (indicate-error m err msg)))))
 		      (component-receive-msg m msg))))))))))))
 
 (defmethod run-component ((name t))

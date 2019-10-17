@@ -84,9 +84,11 @@ class BatchModule
 	folder = File.dirname(text)
 	file = File.basename(text)
 	times = Benchmark.measure {
-	  send_and_wait(KQML[:request, :receiver => Options.send_to, :content =>
-	    KQML[:"run-file", :folder => folder, :file => file,
-		 :"reply-when-done" => true]
+	  reply =
+	    timeout(Options.timeout) {
+	      send_and_wait(KQML[:request, :receiver => Options.send_to, :content =>
+	      KQML[:"run-file", :folder => folder, :file => file,
+		   :"reply-when-done" => true]
 # historical note: we have also used these requests in the past, with drum's
 # old batch.rb
 #	    KQML[:"run-pmcid", :folder => File.dirname(absolute_path),
@@ -96,8 +98,10 @@ class BatchModule
 #				   :select => ".*\\.txt",
 #				   :"single-ekb" => true,
 #				   :"reply-when-done" => true]
-	  ])
-	}
+	    ])
+	  }
+	  raise "expected a reply but received none" if (reply.nil?)
+        }
       else # send the text we read to DrumGUI
 	times = Benchmark.measure {
 	  send_and_wait(KQML[:request, :receiver => Options.send_to, :content =>

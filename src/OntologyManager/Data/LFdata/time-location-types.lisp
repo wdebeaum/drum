@@ -658,12 +658,18 @@
 ; transmit the signal: signal is abstr-obj (figure)
 (define-type ONT::to-loc
     :comment "the ending location of an object undergoing motion"
- :parent ONT::goal-reln
- :arguments ((:ESSENTIAL ONT::FIGURE ((? f F::PHYS-OBJ F::abstr-obj) (F::mobility F::movable) ))
-	     (:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj) (f::spatial-abstraction ?!sa)
+    :parent ONT::goal-reln
+    :arguments ((:ESSENTIAL ONT::FIGURE ((? f F::PHYS-OBJ F::abstr-obj) (F::mobility F::movable) ))
+		(:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj) (f::spatial-abstraction ?!sa)
 					;(F::form F::geographical-object)
-				      ) )  ; spatial-abstraction is not enough: many things have spatial-abstraction, e.g., a frog.  Another possibility is (F::object-function F::spatial-object)
+					 ) )  ; spatial-abstraction is not enough: many things have spatial-abstraction, e.g., a frog.  Another possibility is (F::object-function F::spatial-object)
 	     )
+ )
+
+(define-type ONT::to-prior-loc
+    :comment "to a location wheere the object was previously"
+    :parent ONT::to-loc
+    :wordnet-sense-keys ("back%4:02:05" "back%4:02:04")
  )
 
 ;; for to-phrases that modify trajectory related nouns, e.g., paths, and vehicles, e.g. the plane to rochester

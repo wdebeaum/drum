@@ -422,8 +422,93 @@ returns : function return value"
 (defcomponent-handler
     '(request &key :content (preliminary-define-type . *))
     #'(lambda (msg args)
-	(add-new-type args))
+	(apply #'add-new-type args))
   :subscribe t)
 
-(defun add-new-type (args)
-  (apply #'lfontology-define-type args))
+(defmacro preliminary-define-type (&rest args)
+  `(apply #'add-new-type ',args))
+
+(defun add-new-type (&key (wnsense nil) (trips-type nil) (comment nil)
+		       (wordnet-sense-keys nil) (parent nil)
+		       (definitions nil) (arguments nil))
+  (if (not (lf-sem trips-type))
+      ;;  A new type, add the full definition
+      (lfontology-define-type trips-type :parent parent :wordnet-sense-keys wordnet-sense-keys
+			      :comment comment
+			      :arguments (mapcar #'(lambda (a)
+						     (cons :required a)) arguments)
+			      :definitions definitions
+			      )
+      ;;  An existing type, we want to augment the existing definition with the axioms and comments
+      (add-definition-to-existing-type trips-type definitions comment wnsense)
+      ))
+
+(defun add-definition-to-existing-type (type def comment wnsense)
+  (let ((type-record (gethash type (ling-ontology-lf-table *lf-ontology*)))
+	(simplified-def (simplify-def def type)))
+    (when (and type-record simplified-def)
+      (let ((new-definition (combine-defns def (lf-description-definitions type-record)))
+	    (new-comment (if (lf-description-comment type-record)
+			     (if comment
+				 (concatenate 'string (lf-description-comment type-record)
+					  ";;"
+					  comment))
+			     comment)))
+	#|(format t "~%~S" `(add-definition-to-existing-type :type ,type
+							   :wnsense ,wnsense
+							   :def ,simplified-def))))))|#
+	(send-msg `(request :content (add-definition-to-existing-type :type ,type
+								      :wnsense ,wnsense
+								      :def ,simplified-def)))
+	(setf (lf-description-definitions type-record)
+	      new-definition)
+	(when new-comment
+	  (setf (lf-description-comment type-record)
+	      new-comment))))))
+
+(defun simplify-def (def type)
+  "check that we have non redundant content in the def before processing it"
+  (if (eq (car def) 'ont::OR)
+      (let ((newdef (cons 'ONT::OR
+			  (mapcar #'simplify-def1 (cdr def)))))
+	newdef)
+      ;; check for redundant def
+      (if (or (eq (car def) 'ont::and)
+	      (member :formal def))
+	  (simplify-def1 def)
+	  (format t "~%Rejecting definition for type ~S:  ~S" type def))))
+
+(defun simplify-def1 (olddef)
+  "remove WNsense and force"
+  (when olddef
+    (cond ((symbolp olddef)
+	   olddef)
+	  ((member (car olddef) '(ont::and ont::or))
+	   (cons (car olddef)
+		 (remove-if #'null (mapcar #'simplify-def1 (cdr olddef)))))
+	  ((member (car olddef) '(ont::predicate))
+	   nil)
+	  ((consp olddef)
+	   (cons (car olddef) (simplify-roles (cdr olddef))))
+	  (t olddef))))
+
+(defun simplify-roles (args)
+  (cond ((member (car args) '(:wnsense :force))
+	 (simplify-roles (cddr args)))
+	((eq (car args) :formal)
+	 ;;(format t "~% result is ~S" (simplify-def (cadr args)))
+	 (list* :formal (simplify-def1 (cadr args))
+		(simplify-roles (cddr args))))
+	(args
+	 (list* (car args) (cadr args) (simplify-roles (cddr args))))))
+	  
+
+(defun combine-defns (newdef olddef)
+  (if (and newdef olddef)
+      (let ((newdefpreds (if (eq (car newdef) 'ont::or) (cdr newdef)
+			     (list newdef)))
+	    (olddefpreds (if (eq (car olddef) 'ont::or) (cdr olddef)
+			     (list olddef))))
+	(cons 'ont::OR (append olddefpreds newdefpreds)))
+      (or newdef
+	  olddef)))
