@@ -128,7 +128,7 @@
 ;; use WordFinder?
 (setq lxm::*use-wordfinder* t)
 ;; we are trying to really depend on the Stanford parser (for now!)
-(setq lxm::*use-tagged-senses-only* t)
+(setq lxm::*use-tagged-senses-only* nil)
 ;; don't use wordnet if we have domain-specific info from TextTagger
 (setq lxm::*no-wf-senses-for-words-tagged-with-ont-types* t)
 ;; don't use wordnet if we have TRIPS entries  

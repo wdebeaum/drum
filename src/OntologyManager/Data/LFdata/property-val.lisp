@@ -1552,7 +1552,7 @@
 ; loud concert/music/voice/room/floorboard/chair
 (define-type ont::noisy
  :parent ont::loudness-val 
- :wordnet-sense-keys ("noisy%3:00:00" "loud%3:00:00" )
+ :wordnet-sense-keys ("deafening%5:00:00:loud:00" "loud%3:00:00" "noisy%3:00:00")
  ; Words: (W::LOUD W::NOISY)
  ; Antonym: ONT::QUIET (W::SOFT W::QUIET W::SILENT W::STILL)
  :sem (F::abstr-obj (F::scale ont::loudness-scale ))

@@ -2072,7 +2072,7 @@
 )
 
 (define-type ONT::evoke-anger
- :wordnet-sense-keys ("anger%2:37:00" "try%2:37:00" "try%2:37:01")
+ :wordnet-sense-keys ("anger%2:37:00" "madden%2:37:02" "try%2:37:00" "try%2:37:01")
  :parent ONT::evoke-upset
     :comment "cause to be angry"
     :definitions (ont::cause-effect :agent ?agent
@@ -2407,7 +2407,7 @@
 
 ;; honor, respect, prize, treasure, value
 (define-type ONT::appreciate
- :wordnet-sense-keys ("savour%2:37:00" "savor%2:37:00" "relish%2:37:00" "bask%2:37:13" "enjoy%2:37:00" "appreciate%2:37:00" "like%2:37:04" "love%2:37:00" "like%2:37:05" "appeal%2:37:00")
+ :wordnet-sense-keys ("appeal%2:37:00" "appreciate%2:37:00" "bask%2:37:13" "delight%2:34:00" "enjoy%2:37:00" "like%2:37:04" "like%2:37:05" "love%2:37:00" "relish%2:37:00" "savor%2:37:00" "savour%2:37:00")
  :parent ONT::experiencer-emotion
  :arguments ((:REQUIRED ONT::Formal ((? t f::phys-obj f::abstr-obj f::situation f::time)))
              (:ESSENTIAL ONT::neutral) ;((? s  f::phys-obj f::abstr-obj) (F::intentional +)))
@@ -5137,7 +5137,7 @@
 
 (define-type ONT::attribute-impute
     :comment "identify a cause of an event"
-    :wordnet-sense-keys ("impute%2:31:00" "attribute%2:31:01")
+    :wordnet-sense-keys ("attribute%2:31:01" "base%2:31:00" "impute%2:31:00")
     :arguments ((:essential ONT::NEUTRAL ((? n F::abstr-obj F::situation)))
 		(:essential ONT::NEUTRAL1 ((? n1 F::abstr-obj F::situation))))
     :parent ONT::categorization
