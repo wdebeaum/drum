@@ -1112,6 +1112,12 @@ a real KQML connection to talk to the Minipar TRIPS module.</td>
 <td></td>
 <td>Uses the <a href="https://www.ssa.gov/oact/babynames/limits.html">SSA names list</a> to tag personal names, with their gender if it's not too ambiguous.</td>
 </tr><tr>
+<td>PlaceNames</td>
+<td>named-entity</td>
+<td>X</td>
+<td>X</td>
+<td>Looks up place names from several resources (including those of the Countries and Terms taggers, among others), in a similar way to the Drum tagger.</td>
+</tr><tr>
 <td>POS (stanford-pos)</td>
 <td>pos</td>
 <td>X</td>
@@ -1369,12 +1375,12 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 
 <p>The depluralization score is basically 2 if no depluralization was necessary to match the term, 1 if only one word in the term was depluralized, and 0 if more than one word was depluralized. But we also add the worst (i.e. minimum) score of any depluralized word in the term, which is between 0 and 1. That comes from the Specialist tagger, and it uses only the case/dash match score, because the other two components are not available to it. In total, the depluralization score is still between 0 and 2, because when the base score is 2 there is no worst score for a depluralized word, because there is no depluralized word.</p>
 
-<pre>depluralization_score =
+<blockquote><pre>depluralization_score =
     _
    |  2 <b>if</b> 0 lattice entries were depluralized
   &lt;   1 + (the score of the depluralized entry) <b>if</b> 1 lattice entry was depluralized
    |_ (the minimum score of all depluralized entries) <b>otherwise</b>
-</pre>
+</pre></blockquote>
 
 <p>The case/dash match score has several components, which are mostly based on counting the number of places in which the two unnormalized forms of the term differ in particular ways. So first we need to characterize those differences. Call the form derived from the input text A, and the form derived from the data source B. We align A and B so that the corresponding letters line up, and split them into the same sequence of words, such that if there is a dash in either A or B, it will split the word it is in in both A and B. We also count the dashes in A that aren't in B (<code>dash-no-dash</code>) and vice versa (<code>no-dash-dash</code>). (As a special case, we discard matches that involve such dash mismatches between digits.) Then we check whether each word matches exactly in A and B (<code>exact</code>), and if they don't, we characterize the case patterns of A's version and B's version and count that pairing of characterizations. The possible case pattern characterizations are:</p>
 <dl>
@@ -1414,7 +1420,7 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 </dl>
 
 <p>These subcomponents are combined as if they were digits in a number. The base depends on which place the digit is in, since the subcomponents are integers with different ranges. This ensures that the smallest possible change in a more-important subcomponent has a larger effect on the case/dash score than the largest possible change in a less-important subcomponent. The number is then divided by the product of the "bases", minus one. This ensures that the case/dash score is between 0 and 1. The final formula (formatted to emphasize the digits-in-a-number interpretation) is:</p>
-<pre>case_dash_score =
+<blockquote><pre>case_dash_score =
   (((((((0
   ) * 2 + short_abbr
   ) * 3 + mixed
@@ -1423,17 +1429,17 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
   ) * 5 + combo
   ) * 3 + dash
   ) / 539
-</pre>
+</pre></blockquote>
 
 <p>Finally, the status score, spelling correction score, depluralization score, and case/dash score are themselves combined in a similar way:</p>
-<pre>final_score =
+<blockquote><pre>final_score =
   (((((0
   ) * 7 + status_score
   ) * 2 + spelling_correction_score
   ) * 3 + depluralization_score
   ) * 2 + case_dash_score
   ) / 83
-</pre>
+</pre></blockquote>
 </div>
 
 <div class="section">
@@ -1636,6 +1642,166 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
  <td>PROTEIN-FAMILY</td>
  <td>"The Pfam database is a large collection of protein families, each represented by multiple sequence alignments and hidden Markov models (HMMs). ... There are two components to Pfam: Pfam-A and Pfam-B. Pfam-A entries are high quality, manually curated families."</td>
 </tr>
+</table>
+</div>
+
+</div>
+
+<div class="section">
+<h3>The PlaceNames tagger</h3>
+<p>The PlaceNames tagger looks up names of places, and is similar to the Drum tagger described above, so it also deserves its own section.</p>
+
+<div class="section">
+<h4>Building</h4>
+<p>At build time, we fetch a number of data sources (see the table at the end of this section) and use them to build one big table mapping place names to the relevant information from those data sources (<code>place-names.tsv</code>). That information includes IDs and general categories for the places, as well as information about the status of the specific names for the places (e.g. whether it's the official name or an alternative name). The names are normalized in the same way as the Drum terms are (see <a href="#sec-5.7.1.">the corresponding section about the Drum tagger</a>).</p>
+
+<p>Unlike <code>drum-terms.tsv</code>, the non-name information in <code>place-names.tsv</code> is already packaged as a <code>:domain-specific-info</code> structure, one of the following types.</p>
+
+<p>For everything except <code>countries.json</code>:</p>
+<blockquote><code><pre>(place
+  :id <var>id</var>
+  :class <var>feature-class</var>
+  :source "<var>filename</var> [ row <var>row-number</var> ]"
+  [ :status <var>status</var> ]
+  [ :code <var>feature-code</var> ]
+  )
+</pre></code></blockquote>
+
+<p>For <code>countries.json</code> (same as the Countries tagger):</p>
+<blockquote><code><pre>(country
+  :code <var>id</var>
+  :name "<var>official-name</var>"
+  :status "<var>status</var>"
+  )
+
+(capital :country <var>country-id</var> :status name)
+
+({ region | subregion | demonym }
+  :countries (<var>country-id-1</var> <var>country-id-2</var> ...)
+  :status name
+  )
+</pre></code></blockquote>
+
+<p>The country IDs used are ISO 3166-1 alpha-2 codes.</p>
+
+<p>At run time, the PlaceNames tagger adds a <code>:matches</code> field similar to Drum's. It moves the <code>:source</code> and <code>:status</code> fields into the matches, and collapses DSIs that are otherwise identical, since the same input can match the same place ID via different sources. This also simplifies the scoring mechanism.</p>
+
+<p>A subset of data sources to be used can be specified using the <code>$PLACE_NAME_SOURCES</code> environment variable at build time. For example, if you only wanted to use GNO, GADM, and mledoze/countries, you would run:</p>
+<blockquote><pre>PLACE_NAME_SOURCES="GNO GADM countries" make &amp;&amp; make install</pre></blockquote>
+</div>
+
+<div class="section">
+<h4>Lookup</h4>
+<p>At run time, the PlaceNames tagger mainly uses the original text as input (unlike the Drum tagger). It can also use sentence tags to affect the scoring and filtering of potential names at the beginning of sentences. Otherwise place name lookup is done similarly to <a href="#sec-5.7.2.">Drum term lookup</a>.</p>
+</div>
+
+<div class="section">
+<h4>Filtering</h4>
+<p>The PlaceNames tagger does some of the same filtering of bad matches that <a href="#sec-5.7.2.">the Drum tagger does</a>, but it also has its own additional filters. It skips:</p>
+<ul>
+ <li>Matches from a stoplist that includes things like closed-class temporal names (e.g. month names), cardinal direction names (e.g. "Northeast"), and some important classes of English words that could appear capitalized at the beginning of a sentence or in title case, such as determiners and quantifiers, pronouns, question words, and auxiliary verbs.</li>
+ <li>Matches starting or ending with a dash, e.g. "- The".</li>
+ <li>Single words in the TRIPS lexicon (without WordNet) that are either short and at the beginning of a sentence, or uncapitalized.</li>
+ <li>Matches of the form "the &lt;word&gt;", where &lt;word&gt; is in the TRIPS lexicon, and "the" is either lowercase or at the beginning of a sentence (e.g. "The River" → New Brunswick, NJ).</li>
+ <li>Short names that don't match exactly (different case or dashes).</li>
+ <li>Matches from GNIS that involve capitalizing a word, or are a single capitalized word at the beginning of a sentence.</li>
+</ul>
+</div>
+
+<div class="section">
+<h4>Scoring</h4>
+<p>The PlaceNames tagger scores matches using a tiered scoring formula similar to <a href="#sec-5.7.3.">the one used by the Drum tagger</a>, and in fact uses the same <code>case_dash_score</code>. It also has a <code>status_score</code> with the following levels:</p>
+<table>
+<tr><th>score</th><th>meaning</th><th>status annotations</th></tr>
+<tr><td>3</td><td>official/approved name</td><td><code>name</code>, <code>N</code>, <code>NS</code>, <code>official</code></td></tr>
+<tr><td>2</td><td>conventional name or encoding variant</td><td><code>ascii</code>, <code>ref</code>, <code>C</code> <code>VA</code>, <code>common</code></td></tr>
+<tr><td>1</td><td>alternative name</td><td><code>alternate</code>, <code>alt</code>, <code>alt1</code>, <code>alt2</code>, <code>V</code>, <code>VS</code></td></tr>
+<tr><td>0</td><td>unverified name or unknown status</td><td><code>D</code>, <code>P</code>, <code>DS</code>, <code>undef</code></td></tr>
+</table>
+<p>And it has a <code>source_score</code> with the following levels:</p>
+<table>
+<tr><th>score</th><th>meaning</th><th>data source files</th></tr>
+<tr><td rowspan="5">3</td><td rowspan="5">specific to Ethiopia</td>
+     <td><code>gadm_woredas.txt</code> (GADM)</td></tr>
+ <tr><td><code>eth_pop_adm3.csv</code>, <code>eth_populatedplaces_tabulardata.csv</code> (HDX)</td></tr>
+ <tr><td><code>ET.txt</code> (GNO)</td></tr>
+ <tr><td><code>et.txt</code> (GNS)</td></tr>
+ <tr><td><code>eth_bnd_adm2_wfpco.csv</code>, <code>Ethiopia_bnd_adm2_woreda.csv</code> (WFP)</td></tr>
+<tr><td rowspan="4">2</td><td rowspan="4">specific to South Sudan</td>
+     <td><code>ssd_populatedplaces_tabulardata.csv</code> (HDX)</td></tr>
+ <tr><td><code>SS.txt</code> (GNO)</td></tr>
+ <tr><td><code>od.txt</code> (GNS)</td></tr>
+ <tr><td><code>ssd_ica_mainsettlements_geonode_feb2016.csv</code>, <code>ssd_ica_predlhz_geonode_feb2016.csv</code> (WFP)</td></tr>
+<tr><td rowspan="2">1</td><td rowspan="2">unspecific (whole world)</td>
+     <td><code>countries.json</code> (mledoze/countries)</td></tr>
+ <tr><td><code>admin1CodesASCII.txt</code>, <code>admin2Codes.txt</code>, <code>cities50000.txt</code> (GNO)</td></tr>
+<tr><td>0</td><td>specific to USA</td><td><code>NationalFile.txt</code> (GNIS)</td></tr>
+</table>
+<p>The final scoring formula is:</p>
+<blockquote><pre>final_score =
+  ((((0
+  ) * 4 + source_score
+  ) * 4 + status_score
+  ) * 2 + case_dash_score
+  ) / 31
+</pre></blockquote>
+</div>
+
+<div class="section">
+<h4>Ontology mapping</h4>
+<p>The ontology mappings for the PlaceNames tagger are mostly defined in <code>cwms-mappings.lisp</code>, which is loaded for the DeepSemLex TRIPS module to use. This is analogous to <a href="#sec-5.7.4."><code>drum-mappings.lisp</code> for the Drum tagger</a>, except that the GNO and GNIS hierarchies (such as they are) are also defined here, rather than in separate files under <code>cwms-dsl/</code>. And instead of mapping from the individual place IDs, we start from their categories.</p>
+
+<p>The GNO, GADM, and GNS data sources use a common <a href="https://www.geonames.org/export/codes.html">two-level type hierarchy</a>, and while building <code>place-names.tsv</code> we also assign these codes to information we get from HDX and WFP. We use these codes to map place names from all five of those sources. GNIS has its own single level of types (feature classes) which we map separately. <code>countries.json</code> just uses a hash table defined in <code>PlaceNames.pm</code>, <code>%countries_dsi_type2ont_type</code>, which maps each <code>:domain-specific-info</code> type to a TRIPS type (the DSI type is in turn derived from which field in <code>countries.json</code> we got the name from).</p>
+</div>
+
+<div class="section">
+<h4>Table of data sources and files</h4>
+<table>
+<tr><th>data source name/links</th><th>ID prefix</th><th>file</th><th>maps to TRIPS types</th><th>description</th></tr>
+<tr><td><a href="https://github.com/mledoze/countries">mledoze/countries</a></td><td>(none)</td><td><code>countries.json</code></td><td>CITY, COUNTRY, GEOGRAPHIC-REGION, NATIONALITY, NATIONALITY-VAL</td><td>"This repository contains a list of world countries, as defined by ISO Standard 3166-1" (This is the same data used by the Countries tagger.)</td></tr>
+<tr><td>
+ <a href="http://www.arizona.edu/">University of Arizona</a><br/>
+ <a href="http://clulab.cs.arizona.edu/">Computational Language Understanding (CLU) Lab</a><br/>
+ supplementary file for GNO derived from<br/>
+ <a href="https://gadm.org/">the Database of Global Administrative Areas (GADM)</a>
+</td><td>GADM</td><td><code>gadm_woredas.txt</code></td><td>DISTRICT</td><td>"Eidos has provided a supplementary text file that contains woredas from GADM that are not found in the [GNO] allcountries.zip"<br/>"GADM, the Database of Global Administrative Areas, is a high-resolution database of country administrative areas, with a goal of 'all countries, at all levels, at any time period.'"</td></tr>
+<tr><td>
+ <a href="https://www.usgs.gov/">United States Geological Survey (USGS)</a><br/>
+ <a href="https://www.usgs.gov/core-science-systems/ngp/board-on-geographic-names">Board on Geographic Names (BGN)</a><br/>
+ <a href="https://www.usgs.gov/core-science-systems/ngp/board-on-geographic-names/domestic-names">Geographic Names Information System (GNIS)</a>
+</td><td>GNIS</td><td><code>NationalFile.txt</code></td><td>various, mostly under GEOGRAPHIC-REGION and GEO-FORMATION</td><td>"The GNIS contains information about physical and cultural geographic features of all types in the United States, associated areas, and Antarctica, current and historical, but not including roads and highways." (This is the same data used by the Terms tagger.)</td></tr>
+<tr>
+ <td rowspan="5"><a href="https://www.geonames.org/">GeoNames.org</a></td>
+ <td rowspan="5">GNO</td>
+ <td></td>
+ <td></td>
+ <td>"The GeoNames geographical database covers all countries and contains over eleven million placenames that are available for download free of charge."</td>
+</tr>
+ <tr><td><code>admin1CodesASCII.txt</code></td><td>STATE</td><td>"names in English for admin divisions."</td></tr>
+ <tr><td><code>admin2Codes.txt</code></td><td>COUNTY</td><td>"names for administrative subdivision 'admin2 code'"</td></tr>
+ <tr><td><code>cities50000.txt</code></td><td>CITY, DISTRICT</td><td>all cities with a population &gt; 50,000 (derived from <code>cities15000.txt</code>)</td></tr>
+ <tr><td><code>ET.txt</code>, <code>SS.txt</code></td><td>various, mostly under GEOGRAPHIC-REGION and GEO-FORMATION</td><td>"features for country with iso code XX" (ET=Ethiopia, SS=South Sudan)</td></tr>
+<tr><td>
+ <a href="https://www.nga.mil/">National Geospatial-intelligence Agency (NGA)</a><br/>
+ <a href="http://geonames.nga.mil/gns/html/index.html">GEONet Names Server (GNS)</a>
+</td><td>GNS</td><td><code>et.txt</code>, <code>od.txt</code></td><td>various, mostly under GEOGRAPHIC-REGION and GEO-FORMATION</td><td>"The GEOnet Names Server (GNS) is the official repository of standard spellings of all foreign geographic names, sanctioned by the United States Board on Geographic Names (US BGN)." (et=Ethiopia, od=South Sudan)</td></tr>
+<tr>
+ <td rowspan="3"><a href="https://data.humdata.org/">Humanitarian Data Exchange (HDX)</a></td>
+ <td rowspan="3">HDX</td>
+ <td><code>eth_pop_adm3.csv</code></td><td>DISTRICT</td>
+ <td rowspan="3">"Find, share and use humanitarian data all in one place" (eth=Ethiopia, ssd=South Sudan)</td>
+</tr>
+ <tr><td><code>eth_populatedplaces_tabulardata.csv</code></td><td>CITY</td></tr>
+ <tr><td><code>ssd_populatedplaces_tabulardata.csv</code></td><td>CITY</td></tr>
+<tr>
+ <td rowspan="4"><a href="https://www.wfp.org/">World Food Programme (WFP)</a> <a href="https://geonode.wfp.org/">GeoNode</a></td>
+ <td rowspan="4">WFP</td>
+ <td><code>eth_bnd_adm2_wfpco.csv</code></td><td>COUNTY</td>
+ <td rowspan="4">(eth=Ethiopia, ssd=South Sudan)</td>
+</tr>
+ <tr><td><code>Ethiopia_bnd_adm2_woreda.csv</code></td><td>DISTRICT</td></tr>
+ <tr><td><code>ssd_ica_mainsettlements_geonode_feb2016.csv</code></td><td>CITY</td></tr>
+ <tr><td><code>ssd_ica_predlhz_geonode_feb2016.csv</code></td><td>COUNTY</td></tr>
 </table>
 </div>
 

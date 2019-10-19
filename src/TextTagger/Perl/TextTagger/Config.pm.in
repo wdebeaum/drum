@@ -84,6 +84,7 @@ use TextTagger::Music;
 use TextTagger::NamedEntities;
 use TextTagger::NamesFromFile;
 use TextTagger::PersonalNames;
+use TextTagger::PlaceNames;
 use TextTagger::POS;
 use TextTagger::PseudoMetaMap;
 use TextTagger::Specialist;

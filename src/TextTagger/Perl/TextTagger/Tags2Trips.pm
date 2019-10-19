@@ -475,8 +475,8 @@ sub domainSpecificInfo2trips {
       push @$trips, ':score',
            sprintf("%.5f", $info->{score})
 	if (exists($info->{score}));
-      # the only two that are strings instead of numbers
-      for my $key (qw(matched status)) {
+      # the only few that are strings instead of numbers
+      for my $key (qw(matched status source)) {
 	push @$trips, ':' . $key,
 	     '"' . escape_for_quotes($info->{$key}) . '"'
 	  if (exists($info->{$key}));
@@ -490,7 +490,7 @@ sub domainSpecificInfo2trips {
       }
       # do the rest of the numbers
       for my $key (sort keys %$info) {
-	next if (grep { $_ eq $key } qw(type matched status score maybe-depluralized surely-depluralized depluralization-score corrected dash-no-dash no-dash-dash exact));
+	next if (grep { $_ eq $key } qw(type matched status source score maybe-depluralized surely-depluralized depluralization-score corrected dash-no-dash no-dash-dash exact));
 	push @$trips, ':' . $key, $info->{$key}
 	  if (exists($info->{$key}));
       }
@@ -532,7 +532,14 @@ sub domainSpecificInfo2trips {
 	   domainSpecificInfo2trips($info->{matches})
 	if (exists($info->{matches}));
     } elsif ($info->{type} eq 'place') {
-      push @$trips, ':id', $info->{id}, ':status', $info->{status}, ':source', '"' . escape_for_quotes($info->{source}) . '"';
+      push @$trips, ':id', $info->{id};
+      push @$trips, ':status', $info->{status}
+        if (exists($info->{status}));
+      push @$trips, ':source', '"' . escape_for_quotes($info->{source}) . '"'
+        if (exists($info->{source}));
+      push @$trips, ':matches',
+	   domainSpecificInfo2trips($info->{matches})
+	if (exists($info->{matches}));
     } else {
       die "Unknown type of domain-specific-info: $info->{type}\n" . Data::Dumper->Dump([$info],['*info']);
     }

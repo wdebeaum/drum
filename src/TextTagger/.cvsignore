@@ -18,4 +18,5 @@ drum.aspell
 drum.aspell.err
 specialist.aspell
 countries.tsv
+place-names.tsv
 *.old*
