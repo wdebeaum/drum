@@ -38,6 +38,7 @@
 
 (define-type ont::social-judgement
   :parent ont::social-imperative
+  :wordnet-sense-keys ("approve%2:32:00" "sanction%2:32:02")
 )
 
 ;; Maybe there is too much overlap between children in governing-principle and

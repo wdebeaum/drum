@@ -5862,6 +5862,7 @@
 ; vacation
 (define-type ont::vacation
   :parent ONT::event-defined-by-activity
+  :wordnet-sense-keys ("vacation%2:42:00" "vacation%1:28:00")
   )
 
 #| ;moved to ont::recurring-event

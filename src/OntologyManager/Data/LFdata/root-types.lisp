@@ -178,6 +178,7 @@
     :parent ont::abstract-object
     :comment "names of units in various scales/domains"
     :sem (F::abstr-obj)
+    :wordnet-sense-keys ("definite_quantity%1:23:00")
    )
 
 (define-type ont::mental-construction

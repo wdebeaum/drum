@@ -135,6 +135,7 @@
 (define-type ont::least-extent
  :parent ont::modifier
  :comment "to the least extent, to any extent"
+ :wordnet-sense-keys ("least%3:00:00")
 )
 
 ;; so (very good)
@@ -155,6 +156,7 @@
 
 (define-type ONT::PRIORITY
  :parent ONT::PREDICATE
+ :wordnet-sense-keys ("anyway%4:02:01")
  )
 
 (define-type ONT::QUALIFICATION
@@ -214,6 +216,7 @@
 (define-type ONT::therefore
 ; :parent ONT::reason
  :parent ONT::situation-modifier
+ :wordnet-sense-keys ("therefore%4:02:00" "therefore%4:02:01")
  )
 
 (define-type ONT::PURPOSE
@@ -337,12 +340,12 @@
              )
  )
 
-(define-type ONT::instrument
+#|(define-type ONT::instrument
  :parent ONT::SITUATION-MODIFIER
  :arguments ((:ESSENTIAL ONT::FIGURE (F::Situation (F::Aspect F::dynamic)))
              (:REQUIRED ONT::GROUND (F::Phys-obj (F::intentional -) (F::origin (? x F::non-living F::Artifact))))
              )
- )
+ )|#
 
 (define-type ONT::choice-option
  :parent ONT::PREDICATE
@@ -416,12 +419,12 @@
  )
 
 ;; out of the meeting
-(define-type ONT::situated-out
+#|(define-type ONT::situated-out
  :parent ONT::SITUATION-MODIFIER
  :arguments ((:ESSENTIAL ONT::FIGURE ((? xxx F::Situation F::PHYS-OBJ)))
              (:REQUIRED ONT::GROUND (F::situation))
              )
- )
+ )|#
 
 ;; for if-then sentences -- ont::conditional is currently in use for would and should
 (define-type ONT::CONDITION
@@ -516,6 +519,7 @@
 ;;; etcetera, and so on...
 (define-type ONT::etcetera
  :parent ONT::PREDICATE
+ :wordnet-sense-keys ("etcetera%4:02:00")
  )
 
 ;;; swift 03/20/02 defined to handle 'vertical' and 'horizontal'
