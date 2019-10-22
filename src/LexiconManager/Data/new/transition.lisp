@@ -17,15 +17,21 @@
 
 (define-words :pos W::v :templ COUNT-PRED-TEMPL
  :words (
-;      :COMMENTS HTML-PURCHASING-CORPUS))))
+
   (W::TRANSITION
    (wordfeats (W::morph (:forms (-vb) :nom w::transition :nomobjpreps (w::from w::of))))
    (SENSES
-    ((LF-PARENT ONT::event-of-change) 
+    #|((LF-PARENT ONT::event-of-change) 
      (TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL (xp (% w::pp (w::ptype (? tt w::to w::into)))))
-     )
+     )|#
     ((LF-PARENT ONT::change)
-     (TEMPL AFFECTED-FORMAL-XP-OPTIONAL-TEMPL  (xp (% W::PP (W::ptype (? pt w::in W::with)))))
+     (example "it transitioned")
+     (templ affected-templ)
+     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
+     )
+    
+    ((LF-PARENT ONT::change)
+     (TEMPL AFFECTED-FORMAL-XP-PRED-TEMPL  (xp (% W::PP (W::ptype (? pt w::in W::with)))))
      )
 
     ))

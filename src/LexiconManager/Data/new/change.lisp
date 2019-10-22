@@ -18,13 +18,18 @@
      (TEMPL AGENT-affected-RESULT-TEMPL (xp (% w::advbl (W::lf (% ?p (w::class (? x ont::resulting-object ont::resulting-state)))))))
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (meta-data :origin fruitcarts :entry-date 20050331 :change-date nil :comments fruitcarts-11-1 :vn ("turn-26.6-1"))   
-     )||#
-    ((meta-data :origin step :entry-date 20080626 :change-date nil :comments nil)
-      (LF-PARENT ONT::change)
+    )||#
+    ((LF-PARENT ONT::change)
+     (example "it changed")
+     (templ affected-templ)
+     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
+     )
+    ((LF-PARENT ONT::change)
       (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-      (example "it changed in color / with time" "the room changed")
-      (TEMPL AFFECTED-FORMAL-XP-OPTIONAL-TEMPL  (xp (% W::PP (W::ptype (? pt w::in W::with)))))
-      )
+      (example "it changed in color / with time")
+      (TEMPL AFFECTED-FORMAL-XP-PRED-TEMPL  (xp (% W::PP (W::ptype (? pt w::in W::with)))))
+     )
+    
    ))
 ))
 
