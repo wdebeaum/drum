@@ -785,9 +785,11 @@
       (AGENT-AFFECTED-RESULT-TO-OBJCONTROL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
-	(LOBJ (% W::NP) ONT::affected)
-	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::goal-reln))))
-					   (w::arg ?dobjvar)))) ONT::RESULT)
+	(LOBJ (% W::NP (w::var ?dobjvar) ) ONT::affected)
+	(LCOMP (:parameter xp (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::direction ont::goal-reln))))
+					   (w::arg ?dobjvar)
+					   (W::argument (% W::NP (W::sem ?dobjsem)  (W::var ?dobjvar) (W::lex ?dobjlex) (w::expletive ?exp))))))
+	       ONT::RESULT)
 	))
 
 #|      (AGENT-NEUTRAL-TOAFFECTED-TEMPL
@@ -2272,6 +2274,12 @@
  (ARGUMENTS
   (LSUBJ (% W::NP) ONT::neutral)
   (LOBJ  (:parameter xp (:default (% W::NP))) ONT::neutral1)
+  ))
+
+(NEUTRAL-orientation-SUBJCONTROL-TEMPL
+ (ARGUMENTS
+  (LSUBJ (% W::NP (w::var ?subjvar)) ONT::neutral)
+  (LCOMP  (:parameter xp (:default (% W::ADVBL (w::arg ?subjvar) (w::argument (% W::NP (w::var ?subjvar)))))) ONT::orientation)
   ))
 
 (NEUTRAL1-NEUTRAL-XP-TEMPL

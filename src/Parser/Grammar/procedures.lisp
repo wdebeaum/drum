@@ -245,8 +245,9 @@
 	(val (get-fvalue args 'w::val))
 	(result (get-fvalue args 'w::result))
 	)
-   	(match-vals nil RESULT (assoc feat val))
-	))
+    (when (consp val)
+      (match-vals nil RESULT (assoc feat val))
+      )))
 
 
 #|
