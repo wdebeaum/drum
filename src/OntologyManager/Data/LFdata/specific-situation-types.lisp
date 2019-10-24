@@ -4928,6 +4928,7 @@
   :sem (F::Situation (F::Aspect F::Stage-level))
   :arguments ((:REQUIRED ONT::neutral ((? them F::Phys-obj F::abstr-obj F::situation))) ;; the figure
 	      (:optional ont::neutral1)
+	      (:optional ont::orientation (f::abstr-obj (f::type (? xx ont::direction ont::goal-reln))))
 	      ;(:OPTIONAL ont::result (F::phys-obj))  ;; for the causal form: face the statue wowards the water
 	      )
  )

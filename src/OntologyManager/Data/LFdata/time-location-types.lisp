@@ -535,12 +535,13 @@
  )
 
 (define-type ONT::resulting-state
- :parent ONT::goal-reln
- :arguments ((:ESSENTIAL ONT::FIGURE )
-			 ;(F::Situation (f::aspect f::dynamic) (f::type ont::change)))
-             (:REQUIRED ONT::GROUND ((? t F::Abstr-obj F::situation)))
-             )
- )
+    :comment "the RESULT of an event is a new state of the world: e.g., He drove him to despair"
+    :parent ONT::goal-reln
+    :arguments ((:ESSENTIAL ONT::FIGURE )
+					;(F::Situation (f::aspect f::dynamic) (f::type ont::change)))
+		(:REQUIRED ONT::GROUND ((? t F::Abstr-obj F::situation)))
+		)
+    )
 
 ; trajectory ends at the ground
 ; to
@@ -678,7 +679,7 @@
 ; I moved from the chair to the sofa.  not geographic-object (gound)
 ; transmit the signal: signal is abstr-obj (figure)
 (define-type ONT::to-loc
-    :comment "the ending location of an object undergoing motion"
+    :comment "the ending location of an object undergoing motion - including abstract move"
     :parent ONT::goal-reln
     :arguments ((:ESSENTIAL ONT::FIGURE ((? f F::PHYS-OBJ F::abstr-obj) (F::mobility F::movable) ))
 		(:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj) (f::spatial-abstraction ?!sa)

@@ -14,6 +14,7 @@
 
 (define-type ont::social-contract
     :arguments ((:OPTIONAL ONT::FIGURE (f::situation)))
+    :sem (F::abstr-obj (f::spatial-abstraction -))
     :parent ont::mental-construction
     :wordnet-sense-keys ("social_contract%1:26:00")
 )
@@ -32,9 +33,10 @@
   )
 
 (define-type ont::right-permission
-  :parent ont::social-contract
-  :wordnet-sense-keys ("right%1:07:00" "permission%1:10:00")
-)
+    :parent ont::social-contract
+    :arguments ((:essential ont::figure (F::situation)))
+    :wordnet-sense-keys ("right%1:07:00" "permission%1:10:00")
+    )
 
 (define-type ont::social-judgement
   :parent ont::social-imperative
