@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
-<title>Running TRIPS</title>
+<title>TRIPS Development</title>
 <link href="style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
@@ -10,61 +11,55 @@
 <hr>
 <h3>Running TRIPS</h3>
 
-<p>There are two ways of running the full TRIPS system. With lisp from a dumped library, or with lisp from a loaded interpreter. You also have the option of running the speech components or not. The <tt>trips-<i>domain</i></tt> script uses command line arguments to control the execution. This script is located in your <tt>[dir-home]/bin</tt> directory.
+<p>There are two ways of running the full TRIPS system. With Lisp from a dumped library, or with Lisp from a loaded interpreter. You also have the option of running the speech components or not. The <code>trips-<var>system</var></code> script uses command line arguments to control the execution. This script is located in your <code><var>$TRIPS_BASE</var>/bin/</code> directory.</p>
 
-<ul>
- <li><tt>trips-<i>domain</i> -nolisp</tt>
-  <br>Run everything except the lisp
- <li><tt>trips-<i>domain</i> -nospeech</tt>
-  <br>Run everything except speechin and speechout
- <li><tt>trips-<i>domain</i> -nolisp -nospeech</tt>
-  <br>Run everything except speech and lisp
- <!-- LG 20110916 -- this script isn't generated anymore
- <li><i>trips-domain-gen</i>
-  <br>The same as '<i>trips-domain -nolisp -nospeech</i>'. Usually used for testing.
-  -->
-</ul>
+<dl>
+ <dt><code>trips-<var>system</var> -nolisp</code>
+  <dd>Run everything except the Lisp
+ <dt><code>trips-<var>system</var> -nospeech</code>
+  <dd>Run everything except speechin and speechout
+ <dt><code>trips-<var>system</var> -nolisp -nospeech</code>
+  <dd>Run everything except speech and Lisp
+</dl>
 
-Additional options are typically available, some common to all TRIPS domain,
-and some domain-specific. Run <i>trips-domain -help</i> to see what options
-are available.
+<p>Additional options are typically available, some common to all TRIPS systems,
+and some system-specific. Run <code>trips-<var>system</var> -help</code> to see what options
+are available.</p>
 
-The above options startup all or some of TRIPS. If you need to start LISP separately, see the <i>Testing TRIPS</i> section below.
+<p>The above options startup all or some of TRIPS. If you need to start Lisp separately, see the <a href="#testing-trips">Testing TRIPS</a> section below.</p>
 
 
 <hr>
-<h3>Testing TRIPS</h3>
+<h3><a name="testing-trips">Testing TRIPS</a></h3>
 
-<p>Most of the reasoning components in TRIPS are written in LISP. In order to test the system, it is often easiest to debug by loading and running the lisp code in an interpreter (as opposed to running from a lisp dump). If lisp dumps are not working, using the lisp interpreter is required. The following steps assume you will run lisp from within the Emacs editor. You can obviously run it external from Emacs if you'd rather.
+<p>Most of the reasoning components in TRIPS are written in Lisp. In order to test the system, it is often easiest to debug by loading and running the Lisp code in an interpreter (as opposed to running from a Lisp dump). If Lisp dumps are not working, using the Lisp interpreter is required. The following steps assume you will run Lisp from within the Emacs editor. You can obviously run it external from Emacs if you'd rather.</p>
 
 <ol>
- <li>Run the Facilitator and all other non-lisp components
+ <li>Run the Facilitator and all other non-Lisp components
   <br>
-  <tt>[dir-home]/bin/trips-<i>domain</i> -nolisp -nospeech</tt>
- <li>Open <tt>[dir-home]/src/Systems/<i>domain</i>/test.lisp</tt> in Emacs.
- <li>Start a lisp interpreter within Emacs. <i>([M-x] lisp)</i>
+  <code><var>$TRIPS_BASE</var>/bin/trips-<var>system</var> -nolisp -nospeech</code>
+ <li>Open <code><var>$TRIPS_BASE</var>/src/Systems/<var>system</var>/test.lisp</code> in Emacs.
+ <li>Start a Lisp interpreter within Emacs. (<code>[M-x] lisp</code>)
  <li>Load the test file in your interpreter:
   <br>
-  <i>? (open "test.lisp")</i>
- <li>Once loaded, you should see a message like: "Start the TRIPS facilitator if you haven't done so already."
+  <code>? (open "test.lisp")</code>
+ <li>Once loaded, you should see a message like: <code>Start the TRIPS facilitator if you haven't done so already.</code>
   <br>
-  Type <i>(run)</i> in lisp and the modules will connect to the Facilitator
+  Type <code>(run)</code> in Lisp and the modules will connect to the Facilitator
 </ol>
 
-If you do the above 5 steps, you now have TRIPS running (without speechin or speechout). You are able to debug any lisp module by using various <i>trace</i> commands dynamically. You can also stop the lisp by typing <i>(quit)</i>. You can reconnect the lisp as long as you haven't stopped the Facilitator. 
+<p>If you do the above 5 steps, you now have TRIPS running (without speechin or speechout). You are able to debug any Lisp module by using various <code>trace</code> commands dynamically. You can also stop the Lisp by typing <code>(quit)</code>. You can reconnect the Lisp as long as you haven't stopped the Facilitator.</p>
 
-<p><b>A note about <tt>[dir-home]/src/<i>domain</i>/test.lisp</tt></b>:
-<br>
-This file should contain a list of the dialogue utterances for your domain. It is best to keep this file up to date so everyone tests the same sequence.
+<h4>A note about <code><var>$TRIPS_BASE</var>/src/Systems/<var>system</var>/test.lisp</code></h4>
 
-<p><b>Testing the dialogue</b>:
+<p>This file should contain a list of the dialogue utterances for your domain. It is best to keep this file up to date so everyone tests the same sequence.</p>
+
+<h4>Testing the dialogue</h4>
 <ol>
-<li><i>? (next)</i>
- <br>
- Once you have started TRIPS, you can now test the dialogue, step by step. The domain.lisp test file contains a list of the dialogue utterances and external messages that you expect to occur in order. You can send these through the system, one by one in lisp. The (next) function iteratively scales the dialogue list and sends each message to TRIPS. Strings are sent to the Parser as if the user said them. Lists are broadcasted as normal messages.
-<li><i>? (test "blah blah")</i>
- <br>
- You can send an utterance to the Parser with the <i>test</i> function.
+<li><code>? (next)</code>
+<p>Once you have started TRIPS, you can now test the dialogue, step by step. The domain.lisp test file contains a list of the dialogue utterances and external messages that you expect to occur in order. You can send these through the system, one by one in Lisp. The (next) function iteratively scales the dialogue list and sends each message to TRIPS. Strings are sent to the Parser as if the user said them. Lists are broadcasted as normal messages.</p>
+<li><code>? (test "blah blah")</code>
+<p>You can send an utterance to the Parser with the <code>test</code> function.</p>
 </ol>
 
 <hr>
@@ -73,50 +68,57 @@ Sometimes in debugging, it is useful to be able to send arbitrary messages to
 the Facilitator (which will then be forwarded to a given component).
 There are several ways for doing this.
 
-<p><b>Using Lisp</b>
-<br>
-If you are running Lisp components separately (as described above), you can
+<h4>Using Lisp</h4>
+
+<p>If you are running Lisp components separately (as described above), you can
 use one of them to send a message. Just go to a trips component package
-in Lisp and use the <tt>send-msg</tt> function (I think it's called
+in Lisp and use the <code>send-msg</code> function (I think it's called
 that). Caveat: the message you send will be tagged with a somewhat
-arbitrary <tt>:sender</tt>. 
+arbitrary <code>:sender</code>.</p>
 
-<p><b>Using KQML Command-line Tools</b> 
-<br>
-(George Ferguson): In <tt>[dir-home]/src/Tools/</tt> you can find
-<tt>trips_msg</tt>, <tt>trips_cat</tt>, <tt>trips_client</tt>,
-and <tt>trips_exec</tt>. These date back to the pre-history of the
+<h4>Using KQML Command-line Tools</h4>
+
+<p>(George Ferguson): In <code><var>$TRIPS_BASE</var>/src/Tools/</code> you can find
+<code>trips_msg</code>, <code>trips_cat</code>, <code>trips_client</code>,
+and <code>trips_exec</code>. These date back to the pre-history of the
 system, but they do have manpages which may or may not be
-accurate. And they are still used today.
+accurate. And they are still used today.</p>
 
-<p><b>Using Java GUI</b>
-<br>
-You can run the <tt>MessageInjector</tt> module (<tt>src/MessageInjector</tt>), 
-which will show a simple GUI where you can paste in the message to be send.
+<h4>Using Java GUI</h4>
+
+<p>You can run the <code>MessageInjector</code> module (<code>src/MessageInjector</code>), 
+which will show a simple GUI where you can paste in the message to be send.</p>
 
 <p><em><small>
-(L Galescu, 20011/09/16): This module either doesn't exist any more, or it has
+(L Galescu, 2011/09/16): This module either doesn't exist any more, or it has
 been renamed. 
-</small></em>
+</small></em></p>
 
-<p><b>On the command line to the Facilitator</b>
-<br>
-Start the Facilitator alone from the command line and type messages on the
-command line. 
+<h4>On the command line to the Facilitator</h4>
 
-<p><b>Piping a message</b>
-<br>(Will de Beaumont): I have a
-little shell script using the <tt>rlwrap</tt> and <tt>netpipes</tt> utilities:
+<p>Start the Facilitator alone from the command line and type messages on the
+command line.</p>
 
-<blockquote><tt>#!/bin/sh
+<h4>Piping a message</h4>
+<p>(Will de Beaumont): I have a
+little shell script using the <code>rlwrap</code> and <code>netpipes</code> utilities:</p>
+
+<blockquote><code><pre>
+#!/bin/sh
 rlwrap -b '() ' -s 0 hose localhost 6200 --netslave 
-</tt></blockquote>
+</pre></code></blockquote>
 
 <p><em><small>
-(L Galescu, 20011/09/16): Your default system configuration may not include
-the <tt>rlwrap</tt> and <tt>netpipes</tt> utilities, in which case you will
+(L Galescu, 2011/09/16): Your default system configuration may not include
+the <code>rlwrap</code> and <code>netpipes</code> utilities, in which case you will
 obviously need to install them before using this option to send TRIPS messages.
-</small></em>
+</small></em></p>
+
+<p>(Will de Beaumont, 2019-10-24): <code>rlwrap</code> is not strictly necessary here, it's just a convenience. And an alternative to <code>netpipes</code> is <code>netcat</code>, which appears to be installed by default on macOS:</p>
+
+<blockquote><code><pre>
+nc localhost 6200
+</pre></code></blockquote>
 
 
 <hr>

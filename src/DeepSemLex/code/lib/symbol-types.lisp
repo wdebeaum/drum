@@ -156,9 +156,9 @@
 
 (common-lisp::deftype sem-role ()
   ;; this list found by grepping templates and OM files (see get-ont-sem-roles.sh)
-  '(common-lisp::member affected affected1 affected-result agent agent1 along arg0 arg1 assoc-with beneficiary between cause cognizer compar content contents criterion donor effect event-of-change experiencer extent figure figure1 formal formal1 goal goal-reln goods ground ground1 indefinite kind location manner money neutral neutral1 neutral2 norole one-of path position-reln pro pro-det pro-set quantifier reason refset result scale source source-reln standard value
+  '(common-lisp::member affected affected1 affected-result agent agent1 assoc-with beneficiary between cause cognizer compar content contents criterion direction donor effect event-of-change experiencer extent figure figure1 formal formal1 goal goal-reln goods ground ground1 indefinite kind location manner money neutral neutral1 neutral2 norole one-of orientation position-reln pro pro-det pro-set quantifier reason refset result scale source source-reln standard 
     ;; some I was surprised were no longer there
-    of of1 of2 stimulus
+    of of1 of2 stimulus value
     ;; some I didn't delete because maybe they're just not used *yet*
     ;; (feel free to delete them if you know better) --wdebeaum
     affected-create affected-create1 affected-result1 co-agent co-result co-theme effect-implicit from-loc material obj-val place predicate property purpose-implicit result-val spatial-loc stative theme time-duration-rel to-loc via

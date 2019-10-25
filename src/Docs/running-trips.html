@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <!--
 File: running-trips.html
@@ -12,37 +13,28 @@ Time-stamp: <Fri Sep 16 12:49:18 EDT 2011 lgalescu>
 <body>
 <h1>Running TRIPS</h1>
 
-Basic instructions for running TRIPS:
+<p>Basic instructions for running TRIPS:</p>
 <ul>
 <li>
-   Run "<tt>TRIPS_BASE/bin/trips</tt>", where <tt>TRIPS_BASE</tt> is
-   the directory containing the "<tt>src</tt>", "<tt>bin</tt>", and
-   "<tt>etc</tt>" directories (unless you specified 
-   a different installation prefix during configuration).
-</li>
-<li>Note that specific
-   distributions of trips may have specialized run scripts (e.g.,
-   <tt>TRIPS_BASE/bin/trips-plow</tt> for the PLOW system).  Check the
-   <tt>TRIPS_BASE/bin</tt> directory.
-</li>
+   Run "<code><var>$TRIPS_BASE</var>/bin/trips-<var>system</var></code>", where <code><var>$TRIPS_BASE</var></code> is
+   the directory containing the "<code>src</code>", "<code>bin</code>", and
+   "<code>etc</code>" directories, and <code><var>system</var></code> is the name of the specific TRIPS system you installed (e.g. <code>cogent</code>).
 <li>
    If you have moved the installed system from the configured
    location, you must specify the new prefix by setting
-   the <tt>TRIPS_BASE</tt> environment variable prior to launching the
+   the <code><var>$TRIPS_BASE</var></code> environment variable prior to launching the
    system.
 <li>
    A log directory will be created in whatever directory you ran trips
    from (or you can specify where by setting the environment
-   variable <tt>TRIPS_LOGS</tt> prior to running the system). Many
-   people create a tmp or log directory somewhere and then create a
+   variable <code><var>$TRIPS_LOGS</var></code> prior to running the system). Many
+   people create a <code>tmp</code> or <code>log</code> directory somewhere and then create a
    symlink from that directory to the command to run TRIPS.
-</li>
 </ul>
-Developers may also be interested
+<p>Developers may also be interested
    in <a href="trips-devel.html">trips-devel.html</a> for
-   alternate ways of running TRIPS during development.
-<p>
-For instructions on building TRIPS from source, see
-<a href="building-trips.html">building-trips.html</a>.
+   alternate ways of running TRIPS during development.</p>
+<p>For instructions on building TRIPS from source, see
+<a href="building-trips.html">building-trips.html</a>.</p>
 </body>
 </html>

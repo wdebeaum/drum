@@ -2,10 +2,10 @@
 <html>
 <!--
 Author: William de Beaumont, 12/02/2015
-$Id: new-module.html,v 1.3 2015/12/08 15:09:24 wdebeaum Exp $
+$Id: new-module.html,v 1.4 2019/10/24 15:48:42 wdebeaum Exp $
 
 Credits:
-* Based on Scott C. Stoness' old src/Docs/newLispModule.txt
+* Lisp section based on Scott C. Stoness' old src/Docs/newLispModule.txt
 * Minor contributions from: Lucian Galescu
 -->
 <head>
@@ -23,28 +23,28 @@ var {
 <body>
 <h1>New TRIPS module HOWTO</h1>
 
-<p>This file will outline how to create a new Lisp module in the TRIPS system from scratch; that is, from conception to a Lisp module that works in the same manner as other Lisp modules in the system. In the future this file might be generalized to cover other programming languages, but for now it focuses on just Lisp.</p>
+<p>This file will outline how to create a new module in the TRIPS system from scratch; that is, from conception to a module that works in the same manner as other modules in the system.</p>
 
 <p>As a convention, code looks like <code>this</code>, and variables look like <code><var>this</var></code>.</p>
 
 
-<h2>Step 0: check out Hello</h2>
+<h2>Check out Hello</h2>
 
 The Hello folder contains examples of TRIPS modules in a number of different
-programming languages. It is not part of any TRIPS system, so you'll have to
-check it out individually. Assumming you've checked out a TRIPS system in a
-folder we'll call <code><var>$TRIPS_BASE</var></code>:
+programming languages. It might not be part of the TRIPS system you checked
+out, so you might have to check it out individually. Assumming you've checked
+out a TRIPS system in a folder we'll call <code><var>$TRIPS_BASE</var></code>:
 
 <code><pre>
 cd <var>$TRIPS_BASE</var>/src/
 cvs update -d Hello
 </pre></code>
 
-In the following the Hello module will be used as a prototype for your
-new Lisp module.
+In the following the Hello module will be used as a prototype for your new
+module.
 
 
-<h2>Step 1: make a directory for the new module</h2>
+<h2>Make a directory for the new module</h2>
 
 <code><pre>
 cd <var>$TRIPS_BASE</var>/src/
@@ -52,7 +52,11 @@ mkdir <var>ModuleName</var>
 </pre></code>
 
 
-<h2>Step 2: create a <code>Makefile</code></h2>
+<h2><a name="lisp">Lisp</a></h2>
+
+<p>If your new module will be written in Lisp, look at this section; otherwise skip to <a href="#other-languages">the Other languages section</a>.</p>
+
+<h3>Create a <code>Makefile</code></h3>
 
 <p>Copy and modify <code>Makefile-lisp</code> from the Hello module:</p>
 <code><pre>
@@ -61,7 +65,7 @@ cp Hello/Makefile-lisp <var>ModuleName</var>/Makefile
 </pre></code>
 
 
-<h2>Step 3: create a <code>messages.lisp</code> file</h2>
+<h3>Create a <code>messages.lisp</code> file</h3>
 
 <p>Copy and modify <code>messages.lisp</code> from the Hello module:</p>
 <code><pre>
@@ -71,12 +75,8 @@ cp Hello/messages.lisp <var>ModuleName</var>/
 
 <p>This sets up the message handling (and the registration) for the types of messages that your module will be listening to. The Hello module's <code>messages.lisp</code> file also contains its message handling function itself. Note that this is a spectacularly simple and fairly useless message handler; yours will probably be more impressive, and you will probably have more than one. You may wish to put these functions in a separate file from the <code>defcomponent-handler</code> calls, which should remain in <code>messages.lisp</code>. Feel free to create more <code>.lisp</code> files at this time.</p>
 
-<!--
-NB: old docs had an additional step in here; now folded into #3.
--->
 
-
-<h2>Step 4: create a <code>defsys.lisp</code> file</h2>
+<h3>Create a <code>defsys.lisp</code> file</h3>
 
 <p>Copy and modify <code>defsys.lisp</code> from the Hello module:</p>
 <code><pre>
@@ -84,10 +84,10 @@ cp Hello/defsys.lisp <var>ModuleName</var>/
 <var>$EDITOR</var> <var>ModuleName</var>/messages.lisp
 </pre></code>
 
-<p>Make sure you change <code>:hello</code> to your module name. Also, all the <code>.lisp</code> files you've created in step 3 need to be listed in the <code>:components</code> of the <code>dfc:defcomponent</code> call. If you create another file later, make sure to add it here.</p>
+<p>Make sure you change <code>:hello</code> to your module name. Also, all the <code>.lisp</code> files you've created in the previous step need to be listed in the <code>:components</code> of the <code>dfc:defcomponent</code> call. If you create another file later, make sure to add it here.</p>
 
 
-<h2>Step 5: create a <code><var>modulename</var>.lisp</code> file</h2>
+<h3>Create a <code><var>modulename</var>.lisp</code> file</h3>
 
 <p>Copy and modify <code>hello.lisp</code> from the Hello module:</p>
 <code><pre>
@@ -98,42 +98,215 @@ cp Hello/hello.lisp <var>ModuleName</var>/<var>modulename</var>.lisp
 <p>This file is useful for testing your module alone, without running it as part of a larger system. Make sure you change <code>Hello</code> to your <code><var>ModuleName</var></code> in the <code>load</code> command, and <code>:hello</code> in the <code>dfc:load-component</code> and <code>dfc:run-component</code> calls.</p>
 
 
-<h2>Step 6: add your module to a system</h2>
+<h3>Add your module to a system</h3>
 
 <p>Find the <code>system.lisp</code> file for the system you want to add your module to. For example, for the DRUM system, it's <code>src/Systems/<var>drum</var>/system.lisp</code>. In that file there should be a call to <code>trips:def-trips-system</code> with a list of Lisp modules in the system. Add your module like this:</p>
 <code><pre>
 (:dfc-component    <var>:modulename</var>    #!TRIPS"src;<var>ModuleName</var>;")
 </pre></code>
 
-<!--
-NB: old docs had two additional steps in here about make/install/test; now folded in step #8.
--->
+<p>(The first element is which kind of module it is, which for new modules should always be <code>:dfc-component</code>; the second is the name of the module; and the third is the directory where <code>defsys.lisp</code> is, with <code>;</code> instead of <code>/</code>. Lisp modules also write a log file in the log directory called <code><var>MODULENAME</var>.log</code>.)</p>
 
 
-<h2>Step 7: add your module to the <code>Makefile-<var>system</var></code> file</h2>
+<h2><a name="other-languages">Other languages</a></h2>
 
-<p>Edit the <code>Makefile-<var>system</var></code> file at the top level of <code>src</code> (e.g. <code><var>$TRIPS_BASE</var>/src/Makefile-<var>drum</var></code>). Add your <code><var>ModuleName</var></code> to the list of <code>LISP_MODULES</code>. Technically this list is all on one line; the backslashes escape the newline characters, so every line except the last should end with a backslash.</p>
+<p>If your new module will be written in Lisp, look at <a href="#lisp">the Lisp section</a> (if you already did that, <a href="#all-languages">skip this section</a>). Otherwise, read this section.</p>
 
-<!--
-NB: old docs had one additional step in here; no longer relevant
--->
+<h3>Create a <code>Makefile</code> and a main source code file</h3>
 
+<p>Copy and modify the <code>Makefile-<var>language</var></code> file for your language, and the corresponding <code>Hello.<var>ext</var></code> source code file, from the Hello module:</p>
 
-<h2>Step 8: install and run; further development</h2>
+<code><pre>
+cp Hello/Makefile-<var>language</var> <var>ModuleName</var>/Makefile
+cp Hello/Hello.<var>ext</var> <var>ModuleName</var>/<var>ModuleName</var>.<var>ext</var>
+<var>$EDITOR</var> <var>ModuleName</var>/Makefile
+<var>$EDITOR</var> <var>ModuleName</var>/<var>ModuleName</var>.<var>ext</var>
+</pre></code>
+
+<p>For example, if your module is called FooBar and is written in python, and your preferred text editor is nano:</p>
+
+<code><pre>
+cp Hello/Makefile-python FooBar/Makefile
+cp Hello/Hello.py FooBar/FooBar.py
+nano FooBar/Makefile
+nano FooBar/FooBar.py
+</pre></code>
+
+<p>Replace any instances of "Hello" with your module's name in both files, and further edit <code>FooBar.py</code> to implement your module's functionality. If you want to use additional source files, you should add them to the <code>SRCS</code> list in the <code>Makefile</code>, separated by spaces, e.g.:</p>
+
+<code><pre>
+SRCS=FooBar.py another_file.py a_third_file.py
+</pre></code>
+
+<h3>Make sure your language is checked out and configured</h3>
+
+<p>You should also make sure that your TRIPS checkout includes the configuration directory for your language, e.g. for python:</p>
+
+<code><pre>
+# go to the config directory
+cd <var>$TRIPS_BASE</var>/src/config/
+# check for python
+ls <var>python</var>
+ls: cannot access 'python': No such file or directory
+# oops, it's not there! we need to check it out:
+cvs update -d <var>python</var>
+# and then configure, build, and install TRIPS so that it has the correct
+# python configuration for this machine, and installs the appropriate TRIPS
+# libraries for python:
+cd ..
+./configure [<var>options</var>]
+make
+make install
+</pre></code>
+
+(See <a href="building-trips.html">Building TRIPS</a> for more information on that last part.)
+
+<h3>(optional) Install and test your module on its own</h3>
+
+<p>At this point you should be able to install and test your new module on its own, typing messages to it from the console:</p>
+
+<code><pre>
+  cd <var>$TRIPS_BASE</var>/src/<var>ModuleName</var>/
+  make install
+  ./<var>ModuleName</var> -connect no
+  (request :content (<var>verb</var> <var>args...</var>))
+  (reply :content <var>reply-content</var>)
+</pre></code>
+
+<p>Each time you want to test a change you made to the source code, you should run <code>make install</code> again, since the run script, <code>./<var>ModuleName</var></code>, runs the code that's installed in <var>$TRIPS_BASE</var>/etc/<var>ModuleName</var>/, not the code you're editing in <var>$TRIPS_BASE</var>/src/<var>ModuleName</var>/.</p>
+
+<h3>Add your module to the system's run script</h3>
+
+<p>At some point you'll want to test your module interacting with other modules. For a non-Lisp module, you would add a command to run your module to the system's run script. For example, if you wanted to add your module to the <var>cogent</var> system, you would edit:</p>
+
+<code><pre>
+<var>$TRIPS_BASE</var>/src/Systems/<var>cogent</var>/trips-<var>cogent</var>.sh
+</pre></code>
+
+<p>and add a command like this alongside the others like it:</p>
+
+<code><pre>
+# Start <var>ModuleName</var>
+(sleep 5; \
+ <var>$TRIPS_BASE</var>/bin/<var>ModuleName</var> $port_opt \
+ 2&gt;&amp;1 |tee <var>ModuleName</var>.err) &amp;
+</pre></code>
+
+<p>(The first line waits 5 seconds for the Facilitator to start so that it's already there when we try to connect to it; the second line actually starts <code><var>ModuleName</var></code> and gives it the information it might need to connect to the Facilitator if it's not on the standard port, 6200; and the third line redirects the stderr and stdout streams so that they go to both the console and a log file named <code><var>ModuleName</var>.err</code> in the log directory that was created earlier in the <code>trips-<var>cogent</var></code> script. The <code>&amp;</code> at the end makes it so the rest of the script (including starting other modules and the Facilitator) can run in parallel.)</p>
+
+<h4>Java alternative</h4>
+<p>The above will work for a Java module, but there is an alternative way to start a Java module that lets it share the same instance of the JVM with the Facilitator (which is also written in Java). You can append a <code>start-module</code> request to the file <code>/tmp/trips<var>$$</var></code>, which gets piped into the Facilitator when it starts. For example:</p>
+
+<code><pre>
+cat - &lt;&lt;_EOF_ &gt;&gt;/tmp/trips<var>$$</var>
+(request
+ :receiver facilitator
+ :content (start-module
+	   :name <var>ModuleName</var>
+	   :class TRIPS.<var>ModuleName</var>.<var>ModuleName</var>
+	   :urlclasspath ("$TRIPS_BASE/etc/java/TRIPS.<var>ModuleName</var>.jar"
+			  "$TRIPS_BASE/etc/java/TRIPS.TripsModule.jar"
+			  "$TRIPS_BASE/etc/java/TRIPS.KQML.jar"
+			  "$TRIPS_BASE/etc/java/TRIPS.util.jar")
+	   :argv ($port_opt)
+	   ))
+_EOF_
+</pre></code>
+
+<h2><a name="all-languages">All languages</a></h2>
+
+<h2>Add your module to the <code>Makefile-<var>system</var></code> file</h2>
+
+<p>In order to make it so that running <code>make</code> in <code><var>$TRIPS_BASE</var>/src/</code> makes your module too, you should add it to the appropriate list in the <code>Makefile-<var>system</var></code> file.</p>
+
+<p>Edit the <code>Makefile-<var>system</var></code> file at the top level of <code>src</code> (e.g. <code><var>$TRIPS_BASE</var>/src/Makefile-<var>drum</var></code>). Add your <code><var>ModuleName</var></code> to the list of <code>LISP_MODULES</code> if it's written in Lisp, to <code>JAVA_PROGRAMS</code> if it's in Java, or <code>OTHER_PROGRAMS</code> if it's written in another language. Technically this list is all on one line; the backslashes escape the newline characters, so every line except the last should end with a backslash.</p>
+
+<h2>Install and run; further development</h2>
 
 <p>See the separate documentation on <a href="building-trips.html">Building TRIPS</a> and <a href="running-trips.html">Running TRIPS</a> (which <!-- also --> need updating).</p>
 
-<h2>Checking in your module</h2>
+<h2>Make it so other people can use your module</h2>
 
-<p>If your module is finished, and you need to commit it, remember that you need to follow several steps:</p>
-<ul>
-<li>add the module directory from <code>src</code>
-<li>add all the module files
-<li>commit the module
-<li>commit <code>Makefile-<var>system</var></code> and <code>Systems/<var>system</var>/system.lisp</code>
-</ul>
+<p>When your module is ready, there are some additional steps you should take to make it so your module will run in a particular TRIPS system when other people install that system. The following assumes you have a <a href="cvs.html">CVS checkout of TRIPS</a>, not a clone of one of the github mirrors.</p>
 
-<p>i.e.  Make sure you check in everything you had to change so that someone else can run everything smoothly.</p>
+<ol>
+<li>
+<p>Add your module to the TRIPS CVS repository. You should <code>cvs add</code> the directory your module is in, and then each source file and the Makefile:</p>
+<code><pre>
+cd <var>$TRIPS_BASE</var>/src/
+cvs add <var>ModuleName</var>
+cd <var>ModuleName</var>
+cvs add Makefile <var>ModuleName</var>.<var>ext</var> [<var>other source files...</var>]
+</pre></code>
 
+<p>This sets up the new directory with a <code>CVS/</code> subdirectory, and stages the new files so that they may be committed. In general, you should not add automatically-generated files; instead add the code that generated them, and make the <code>Makefile</code> run that code.</p>
+
+<p>Once you've added the files, run <code>cvs commit</code>. You can use the <code>-m</code> option to <code>cvs commit</code> to provide a log message; if you don't, <code>cvs commit</code> will open a text editor for you to write a log message, and the code will be committed when you save the message and exit the editor.</p>
+
+<li>
+<p>Add your TRIPS module to the CVS module that corresponds to the TRIPS system
+you're adding your TRIPS module to.</p>
+
+<p>CVS has a mechanism that is unfortunately also called "modules", which lets you check out a subset of the files and directories from the CVS repository. We use these CVS modules for TRIPS systems, checking out the subset of the TRIPS modules that are used in a given system.</p>
+
+<p>These CVS modules are described in a special file in the repository called <code>CVSROOT/modules</code>. This file is not normally checked out as part of any system, so you must check it out separately to edit it:</p>
+<code><pre>
+cd <var>$TRIPS_BASE</var>/  # NOTE: no src/
+cvs -d <var>$USER</var>@trips.cs.rochester.edu:/p/cvs/trips checkout CVSROOT/modules
+</pre></code>
+
+<p>Each CVS module is defined by a line starting with the name of the CVS module, followed by <code>-a</code>, followed by the list of directories, files, and other CVS modules that should be checked out when this CVS module is. These lines are usually split across multiple lines by putting a backslash at the end of each line except for the last.</p>
+
+<p>So for example, to add your <code><var>ModuleName</var></code> directory to the <code><var>cogent</var></code> system, you would find the section that starts with:</p>
+<code><pre>
+<var>cogent</var> -a \
+</pre></code>
+
+<p>and insert a line like this:</p>
+
+<code><pre>
+	src/<var>ModuleName</var> \
+</pre></code>
+
+<p>making sure that the backslashes still make it all "one line".</p>
+
+<p>If you needed to check out the config directory for your language, you will also need to add it here, e.g.:</p>
+
+<code><pre>
+	src/config/python \
+</pre></code>
+
+<p>(This already happens to be in cogent. This is just an example.)</p>
+
+<p>After editing the <code>CVSROOT/modules</code> file, you can commit it:</p>
+<code><pre>
+cd <var>$TRIPS_BASE</var>/CVSROOT/
+commit modules -m "add new <var>ModuleName</var> module to <var>cogent</var> system"
+</pre></code>
+
+<li><p>Commit the other files you changed in the system. For a Lisp module that would be:</p>
+<code><pre>
+cd <var>$TRIPS_BASE</var>/src/
+cvs commit Makefile-<var>system</var> Systems/<var>system</var>/system.lisp
+</pre></code>
+<p>and for a non-Lisp module you would commit <code>trips-<var>system</var>.sh</code> (note the <code>.sh</code> suffix; do not commit the automatically generated <code>trips-<var>system</var></code> run script) instead of <code>system.lisp</code>:</p>
+<code><pre>
+cd <var>$TRIPS_BASE</var>/src/
+cvs commit Makefile-<var>system</var> Systems/<var>system</var>/trips-<var>system</var>.sh
+</pre></code>
+
+<li><p>Tell anyone who already has a checkout of the system you added your module to how to get the new files.</p>
+
+<p>Unfortunately CVS does not consult the <code>CVSROOT/modules</code> file for each <code>cvs update</code>; it's only used for the initial <code>cvs checkout</code>. This means that anyone updating their existing checkout won't get your new module (or the new language config it might need) unless they specifically ask for it. So after you change the <code>CVSROOT/modules</code> file, you should let others know that they should do this:</p>
+<code><pre>
+cd <var>$TRIPS_BASE</var>/src/
+cvs update -d <var>ModuleName</var>
+</pre></code>
+<p>and if you needed to add the config directory for your language, this:</p>
+<code><pre>
+cvs update -d config/<var>language</var>
+./configure [<var>options</var>]
+</pre></code>
+</ol>
 </body>
 </html>

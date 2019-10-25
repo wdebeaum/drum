@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <!--
 File: building-trips.html
@@ -12,35 +13,29 @@ Time-stamp: <Fri Dec  5 00:30:10 CST 2014 lgalescu>
 <body>
 <h1>Building TRIPS</h1>
 
-This page gives instructions on how to build TRIPS for the first time, and
+<p>This page gives instructions on how to build TRIPS for the first time, and
 rebuild it thereafter.  It assumes
 you have already gotten the TRIPS source files as 
-detailed at <a href="cvs.html">cvs.html</a>.
+detailed at <a href="cvs.html">cvs.html</a>.</p>
+
+<p>See also <a href="https://github.com/wdebeaum/trips-docs/wiki/SystemInstallation">TRIPS System Installation Notes</a> on the trips-docs github wiki, and the
+various ways to set up TRIPS in a
+<a href="https://github.com/wdebeaum/WebParser/blob/master/Vagrantfile">VM</a>
+<a href="https://github.com/tripslab/vagrant-trips/blob/master/Vagrantfile">using</a>
+<a href="https://github.com/wdebeaum/step/blob/master/src/Systems/STEP/Vagrantfile">vagrant</a>
+<a href="https://github.com/wdebeaum/cogent/blob/master/Dockerfile">or</a>
+<a href="https://github.com/wdebeaum/cabot/blob/master/Dockerfile">docker</a>.
+</p>
 
 <h2>Prerequisites</h2>
 
-TRIPS is only regularly used on Linux and OSX.  It can be made to work on windows, but
-but it is a much more difficult process.  (See <a href="README-windows.txt">README-windows.txt</a>
-for details.)  This page only describes building for Linux and OSX.  It also only explains
-the general things needed to build TRIPS.  Each instantiation of TRIPS in different domains
-may have additional requirements.  It is always good to look at the README-(your system).txt
-file (where (your system) is the instantiation, e.g., plow, step, ...) for additional
-details.
+<p>TRIPS is only regularly used on Linux and macOS.  It can be made to work on Windows, but it is a much more difficult process.  (See <a href="README-windows.txt">README-windows.txt</a> for details for Windows XP and CygWin; a more modern strategy might be to use the new Windows Subsystem for Linux (WSL), though as far as we know nobody has tried it yet.)  This page only describes building for Linux and macOS.  It also only explains the general things needed to build TRIPS.  Each instantiation of TRIPS in different domains may have additional requirements.  It is always good to look at the <code>README-<var>(your system)</var>.txt</code> file (where (your system) is the instantiation, e.g., plow, step, ...) for additional details.</p>
 
-<p>
-Here's the developer tools you'll need:
-<ol>
-<li>
-Java (1.5 or above)
-<li>
-A Lisp that supports multithreading.  We are currently using CMUCL for Linux,
-SBCL  (specially compiled by us to turn on 'experimental' multithreading -- talk to
-Lucian to find a copy) for OSX-intel, and OpenMCL for OSX-PPC.  See 
-<a href="../config/lisp/README.html">Lisp configs</a> for more information
-on what other Lisps might work.
-<li>
-(optional) pkill -- this is used to kill parts of the system if it is not shut down properly.  The script will complain about it not being there.  This may already be on your system.  If not, for Mac, you can get it by installing MacPorts, and then running 'sudo port install proctools'
-</ol>
+<p>Here are the developer tools you'll need, at minimum:</p>
+<ul>
+<li>Java (1.5 or above, though specific systems may require newer versions)
+<li>A Lisp that supports multithreading.  We are currently using SBCL (on macOS and <a href="http://www.sbcl.org/manual/index.html#Threading">a few other platforms</a>, threads must be enabled when compiling SBCL; you can talk to Lucian to find such a build of SBCL). We have previously used CMUCL on Linux, and OpenMCL on older, PowerPC-based Macs running OSX.  See <a href="../config/lisp/README.html">Lisp configs</a> for more information on what other Lisps might work.
+</ul>
 
 <p>In addition, TRIPS now uses a number of third-party tools and
 resources. While the required ones may vary depending on the TRIPS
@@ -48,71 +43,81 @@ instantiation you're using, WordFinder and TextTagger have become critical
 components of the system and they do require a number of such third-party
 resources. For details, look into <a
 href="../WordFinder/README.txt">WordFinder's README file</a> and <a
-href="../TextTagger/docs/README.xhtml">TextTagger's README document</a>. 
+href="../TextTagger/docs/README.xhtml">TextTagger's README document</a>.</p> 
 
 <h2>The First Build</h2>
 To build TRIPS from source:
 <ol>
 <li>
-   Configure the system by running "<tt>configure</tt>" in the top level
-   "<tt>src</tt>" directory. Generally, if you have all the resources in default places,
-   you shouldn't need to run <tt>configure</tt> with any parameters (although
-   some TRIPS instantiations do require other parameters -- see the specific README
+   Configure the system by running "<code>configure</code>" in the top level
+   "<code>src</code>" directory. Generally, if you have all the resources in default places,
+   you shouldn't need to run <code>configure</code> with any parameters (although
+   some TRIPS instantiations do require other parameters &mdash; see the specific README
    file for your instantiation).
+   If your lisp implementation isn't called <code>lisp</code> (e.g. SBCL's executable is called <code>sbcl</code> instead), you'll need to use the <code>--with-lisp</code> option (e.g. <code>./configure --with-lisp=sbcl</code>).
    For an automatically generated list of
    configuration options, run
    <blockquote>
-    <tt>./configure --help=recursive</tt>
+    <code>./configure --help=recursive</code>
    </blockquote>
    For more detailed configuration information, look in the
-   "<tt>config</tt>" directory.
+   "<code>config</code>" directory.
 </li>
 <li>
-   Build by running "<tt>make</tt>".
+   Build by running "<code>make</code>".
    This should be GNU make (Sun make used to work, but no longer).
 </li>
 <li>
-   Install by running "<tt>make install</tt>".
-   This will install into "<tt>bin</tt>" and "<tt>etc</tt>" directories
-   at the same level as the "<tt>src</tt>" directory, unless you
+   Install by running "<code>make install</code>".
+   This will install into "<code>bin</code>" and "<code>etc</code>" directories
+   at the same level as the "<code>src</code>" directory, unless you
    specified otherwise during configuration.
 </li>
 </ol>
 
 <h2>Rebuilding after an Update</h2>
-Beware -- there are certain components of the system that won't rebuild with a simple
-<tt>make</tt> and <tt>make install</tt>, because the dependencies haven't been
+<p>Beware &mdash; there are certain components of the system that won't rebuild with a simple
+<code>make</code> and <code>make install</code>, because the dependencies haven't been
 encoded in the makefiles.  No one really understands exactly what pieces these are, but
-here's the latest theory:
+here's the latest theory:</p>
 
 <ul>
 <li>Java: if you have just updated java files, the make process seems to work just fine.
 <li>Perl: these should also work just fine with the make process
-<li>C: there are rumors that some of the SpeechLM stuff might not work with just a make and may need to be cleaned and then remade (i.e., <tt>make clean; make; make install</tt>
-<li>Lisp: lisp updates are <b>definitely</b> not incorporated with a simple <tt>make; make install</tt>.  If you have updates to Lisp files and want to rebuild, you need to minimally do the following (also see the comments under "Total Rebuild" below)
+<li>C: there are rumors that some of the SpeechLM stuff might not work with just a make and may need to be cleaned and then remade (i.e., <code>make clean &amp;&amp; make &amp;&amp; make install</code>)
+<li>Lisp: lisp updates are <b>definitely</b> not incorporated with a simple <code>make &amp;&amp; make install</code>.  If you have updates to Lisp files and want to rebuild, you need to minimally do the following (also see the comments under "Total Rebuild" below)
 <ol>
-<li>cd to each directory that had a change and do <tt>make clean</tt>
-<li>cd to src/LispLauncher and do <tt>make clean</tt>
-<li>cd to src and do <tt>make install-lisp</tt>
+<li><code>cd</code> to each directory that had a change and do <code>make clean</code>
+<li><code>cd</code> to <code>src/Systems/<var>system</var>/</code> and do <code>make clean</code>
+<li><code>cd</code> to <code>src/</code> and do <code>make install-lisp</code>
 </ol>
 </ul>
 
-The above directions try to minimize the amount of recompilation that is done when an
+<p>The above directions try to minimize the amount of recompilation that is done when an
 update is made.  However, be warned that following those instructions <i>may</i> not
-actually incorporate your changes.
-<p>
-George Ferguson believes that "The time you save not recompiling something will almost always be lost later wondering whether you should have recompiled it."
-<p>
-To <b>totally rebuild</b> the system, he does the following:
-<ol>
-<li>rm -rf TRIPS_BASE/{bin,etc,lib,share}
-<li>cd src
-<li>make clean
-<li>cvs update
-<li>./configure
-<li>make
-<li>make install 
-</ol>
+actually incorporate your changes.</p>
+
+<p>Also note that after updating SBCL itself, you will need to get rid of all the compiled lisp code (<code>*.fasl</code> files) that was compiled with the old version of SBCL. "<code>make clean</code>" misses some of these, so in this case it's best to use <code>find</code> to be sure to get all of them:</p>
+<blockquote><code><pre>
+cd <var>$TRIPS_BASE</var>/src/
+find . -name '*.fasl' -delete
+</pre></code></blockquote>
+
+<h2>Total Rebuild</h2>
+
+<p>George Ferguson believes that "The time you save not recompiling something will almost always be lost later wondering whether you should have recompiled it."</p>
+
+<p>To <b>totally rebuild</b> the system, he does the following:</p>
+<blockquote><code><pre>
+cd <var>$TRIPS_BASE</var>/
+rm -rf {bin,etc,lib,share}
+cd src/
+make clean
+cvs update
+./configure [<var>options</var>]
+make
+make install 
+</pre></code></blockquote>
 
 </body>
 </html>

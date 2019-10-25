@@ -32,7 +32,7 @@ li {
 This document describes the use of the Concurrent Version System
 (CVS) in the TRIPS project.
 </p><p>
-The percent sign (<q><tt>%</tt></q>) in the examples that follow
+The percent sign (<q><code>%</code></q>) in the examples that follow
 indicates your shell prompt. You don't type the percent sign.
 </p>
 <hr/>
@@ -40,14 +40,14 @@ indicates your shell prompt. You don't type the percent sign.
 <p>
 This information provided without explanation for CVS experts who just
 want to get on with it.  The TRIPS repository is now hosted on a separate
-machine: <tt>trips.cs.rochester.edu</tt>  Anyone who wants access to the
+machine: <code>trips.cs.rochester.edu</code>  Anyone who wants access to the
 repository will need to get an account for the machine, (even people
 who already have a URCS account).  Talk to Dave Costello to get it.
 <ul>
-  <li>Supported access methods: only <tt>ssh</tt></li>
+  <li>Supported access methods: only <code>ssh</code></li>
   <li>Repository location:
 <blockquote>
-<tt>:ext:username@trips.cs.rochester.edu:/p/cvs/trips</tt>
+<code>:ext:username@trips.cs.rochester.edu:/p/cvs/trips</code>
 </blockquote>
   </li>
 </ul>
@@ -63,36 +63,36 @@ href="https://web.archive.org/web/20140209043007/http://ximbiot.com:80/cvs/manua
 Archive</a>.
 </p><p>
 <ul>
-<li>CVS relies on a <em>repository</em> to store all the files making
+<li>CVS relies on a <dfn>repository</dfn> to store all the files making
 up a project.</li>
-<li>You access the repository to <em>checkout</em> the
-files you want to work with into a <em>working directory</em>.
+<li>You access the repository to <dfn>checkout</dfn> the
+files you want to work with into a <dfn>working directory</dfn>.
 This does not prevent anyone else from also checking out and working
 with those files.</li>
 <li>When you want to make your changes available to
-others, you <em>commit</em> the changes back to the repository.</li>
+others, you <dfn>commit</dfn> the changes back to the repository.</li>
 <li>If someone else has committed changes that overlap with yours, CVS
-indicates a <em>conflict</em> that must be resolved before the
+indicates a <dfn>conflict</dfn> that must be resolved before the
 file can be committed.</li>
-<li>To pick up any changes made by others, you <em>update</em>
+<li>To pick up any changes made by others, you <dfn>update</dfn>
 your working directory.</li>
 <li>Every time a change is committed, CVS makes a new
-<em>version</em> of the file. Versions can be given symbolic
-names, known as <em>tags</em>.
-<li>CVS supports multiple <em>branches</em> of development on the
+<dfn>version</dfn> of the file. Versions can be given symbolic
+names, known as <dfn>tags</dfn>.
+<li>CVS supports multiple <dfn>branches</dfn> of development on the
 same files. Changes on different branches do not affect each other,
-until the branches are <em>merged</em>.
+until the branches are <dfn>merged</dfn>.
 </ul>
 </p>
 <hr/>
 <h2><a name="Repository">Repository</a></h2>
 <p>
 There are three ways to access a CVS repository: <b>(Note: because the repository is now
-located on a different server, it can <em>only</em> be accessed through <tt>ssh</tt>)</b>
+located on a different server, it can <em>only</em> be accessed through <code>ssh</code>)</b>
 <ol>
 <li>On a local filesystem;</li>
-<li>Using external (remote) access, typically <tt>rsh</tt> or
-<tt>ssh</tt>; or</li>
+<li>Using external (remote) access, typically <code>rsh</code> or
+<code>ssh</code>; or</li>
 <li>Via a CVS server (known as a <q>pserver</q>).</li>
 </ol>
 Without going into too many details, let me just say that:
@@ -101,7 +101,7 @@ Without going into too many details, let me just say that:
 but of course you can only access the respository when you can mount
 it. It also has the least control since local users can do arbitrary
 things to the filesystem.</li>
-<li>Remote access via <tt>rsh</tt> or more commonly <tt>ssh</tt> is
+<li>Remote access via <code>rsh</code> or more commonly <code>ssh</code> is
 more flexible, but requires that you have a login account on the machine
 hosting the repository (technically, on a machine that mounts the
 repository).</li>
@@ -118,65 +118,65 @@ stored in the working directory (in the <q>CVS</q> directory, to be
 precise) allows CVS to find the repository.
 <ul>
 <li>To specify a local filesystem repository, give the pathname of the
-repository as the <tt>-d</tt> argument of the <tt>cvs</tt> command, as
+repository as the <code>-d</code> argument of the <code>cvs</code> command, as
 in:
 <blockquote>
-<tt>cvs -d <em>pathname</em> checkout ...</tt>
+<code>cvs -d <var>pathname</var> checkout ...</code>
 </blockquote>
 </li>
 <li>To specify an external repository, you give something that
-looks like a URL but isn't as the <tt>-d</tt> argument, as in:
+looks like a URL but isn't as the <code>-d</code> argument, as in:
 <blockquote>
-<tt>cvs -d :ext:<em>user</em>@<em>host</em>/<em>pathname</em> checkout ...</tt>
+<code>cvs -d :ext:<var>user</var>@<var>host</var>/<var>pathname</var> checkout ...</code>
 </blockquote>
-Note the leading colon in <q><tt>:ext:</tt></q>.
+Note the leading colon in <q><code>:ext:</code></q>.
 </p><p>
-To make CVS use <tt>ssh</tt> rather than its default <tt>rsh</tt>, you
-need to set the environment variable <tt>CVS_RSH</tt> to <tt>ssh</tt>:
+To make CVS use <code>ssh</code> rather than its default <code>rsh</code>, you
+need to set the environment variable <code>CVS_RSH</code> to <code>ssh</code>:
 <ul>
 <li>For csh/tcsh, in .login or .cshrc:
 <blockquote>
-<tt>setenv CVS_RSH ssh</tt>
+<code>setenv CVS_RSH ssh</code>
 </blockquote></li>
 <li>For sh/bash, in .login or .profile:
 <blockquote>
-<tt>CVS_RSH=ssh; export CVS_RSH</tt>
+<code>CVS_RSH=ssh; export CVS_RSH</code>
 </blockquote></li>
 </ul>
 <li>To specify a pserver repository, you use:
 <blockquote>
-<tt>cvs -d :pserver:<em>host</em>/<em>pathname</em> checkout ...</tt>
+<code>cvs -d :pserver:<var>host</var>/<var>pathname</var> checkout ...</code>
 </blockquote>
-Again, note the leading colon in <q><tt>:pserver:</tt></q>.</li>
-<li>Instead of always specifying <tt>-d</tt>, you can set the
-environment variable <tt>CVS_ROOT</tt> before running CVS, for example
+Again, note the leading colon in <q><code>:pserver:</code></q>.</li>
+<li>Instead of always specifying <code>-d</code>, you can set the
+environment variable <code>CVS_ROOT</code> before running CVS, for example
 in a login or startup script.</li>
 </ul>
 </p><p>
-The main CVS repository for TRIPS is: <tt>/p/cvs/trips</tt>
+The main CVS repository for TRIPS is: <code>/p/cvs/trips</code>
 <ul>
 <li>For local access:
 <blockquote>
-<tt>cvs -d /p/cvs/trips checkout ...</tt>
+<code>cvs -d /p/cvs/trips checkout ...</code>
 </blockquote></li>
 <li>For external access:
 <blockquote>
-<tt>setenv CVS_RSH ssh<br/>
-cvs -d :ext:<em>user</em>@<em>host</em>/p/cvs/trips checkout ...</tt>
+<code>setenv CVS_RSH ssh<br/>
+cvs -d :ext:<var>user</var>@<var>host</var>/p/cvs/trips checkout ...</code>
 </blockquote>
-where <tt><em>user</em></tt> is your login username and
-<tt><em>host</em></tt> is any regular URCS hostname, such as
-<tt>cycle1.cs.rochester.edu</tt>.</li>
+where <code><var>user</var></code> is your login username and
+<code><var>host</var></code> is any regular URCS hostname, such as
+<code>cycle1.cs.rochester.edu</code>.</li>
 <li>There is no longer any pserver access to the TRIPS repository.</li>
 </ul>
 </p>
 <p>
 To obtain password-free access to the CVS reporitory, generate SSH keys using
 <blockquote>
-<tt>ssh-keygen -t rsa -b 2048<tt/>
+<code>ssh-keygen -t rsa -b 2048</code>
 </blockquote>
-This will create a private key (in <tt>id_rsa</tt>) and a public key (in
-<tt>id_rsa.pub</tt>). Send your public key to Dave Costello to add it to the
+This will create a private key (in <code>id_rsa</code>) and a public key (in
+<code>id_rsa.pub</code>). Send your public key to Dave Costello to add it to the
 authorized keys on the CVS server. After that, run a CVS command and, when you
 get asked for the password, type it in and tell your SSH agent to remember the
 password. 
@@ -194,7 +194,7 @@ mean by a <q>TRIPS module</q>.
 <ul>
 <li>To checkout the entire source tree into the current directory, use:
 <blockquote>
- <tt>cvs -d <em>repository</em> checkout src</tt>
+ <code>cvs -d <var>repository</var> checkout src</code>
 </blockquote>
 This is not recommended since (a) any given system will only use a
 small part of tree, and (b) the amount of cruft greatly exceeds the
@@ -203,20 +203,20 @@ amount of useful code.
 <li>To checkout an individual directory (for example, an individual
 TRIPS component or library):
 <blockquote>
- <tt>cvs -d <em>repository</em> src/<em>component</em></tt>
+ <code>cvs -d <var>repository</var> checkout src/<var>component</var></code>
 </blockquote>
 This will checkout into a directory named
-<tt>src/<em>component</em></tt> below the current directory.
+<code>src/<var>component</var></code> below the current directory.
 </li>
 <li>To checkout the sources for all the components of a given
 configuration of the TRIPS system:
 <blockquote>
- <tt>cvs -d <em>repository</em> <em>module</em></tt>
+ <code>cvs -d <var>repository</var> checkout <var>module</var></code>
 </blockquote>
-This will checkout into a directory named <tt>src</tt> in the current
+This will checkout into a directory named <code>src</code> in the current
 directory but will only include those components that are part of
-<tt><em>module</em></tt>.
-<p>As of this writing, the there i a long list of defined modules.
+<code><var>module</var></code>.
+<p>As of this writing, the there is a long list of defined modules.
 Other CVS modules may be defined. The only way to know for sure which
 modules are defined is to checkout the modules list, which is left as
 an exercise.
@@ -232,21 +232,19 @@ are used most frequently.
 <h3>Checking out a working directory</h3>
 <p>
 To start working with TRIPS, checkout the source tree. You should
-replace <tt><em>repository</em></tt> with one of the forms listed in
+replace <code><em>repository</em></code> with one of the forms listed in
 the Expert section (either a pathname to a local repository, an
 external specification for a remote repository, or a pserver
 specification).
-<blockquote>
-<tt>
-% mkdir work<br/>
-% cd work<br/>
-% cvs -d <em>repository</em> checkout -P src<br/>
-...<br/>
-% cd src<br/>
-% rm -rf [directories that you don't care about]<br/>
-</tt>
-</blockquote>
-The <tt>-P</tt> option to <tt>checkout</tt> means to ignore
+<blockquote><code><pre>
+% mkdir work
+% cd work
+% cvs -d <var>repository</var> checkout -P src <strong># OMG, don't attempt this, always check out a specific system, not all of src/! -- wdebeaum</strong>
+...
+% cd src
+% rm -rf [<var>directories that you don't care about</var>]
+</pre></code></blockquote>
+The <code>-P</code> option to <code>checkout</code> means to ignore
 (<q>prune</q>) empty directories, which are otherwise left
 behind by CVS when a directory is renamed.
 </p>
@@ -254,45 +252,45 @@ behind by CVS when a directory is renamed.
 <p>
 When you want to check status of your files with respect to the
 repository:
-<blockquote><tt>% cvs status</tt></blockquote>
+<blockquote><code>% cvs status</code></blockquote>
 or, less verbosely and much more readably:
-<blockquote><tt>% cvs -n -q update</tt></blockquote>
-That is, update, but don't actually do it (<tt>-n</tt>) and don't be
-verbose about it (<tt>-q</tt>). This is so handy that you might want
+<blockquote><code>% cvs -n -q update</code></blockquote>
+That is, update, but don't actually do it (<code>-n</code>) and don't be
+verbose about it (<code>-q</code>). This is so handy that you might want
 to make an alias for it.
 With no arguments, both of these commands will do the current directory
 and, recursively, any sub-directories. Or you can specify specific
 files for it to check by given them on the command-line following the
 command.
 </p><p>
-The meanings of the various letters in the output of <tt>cvs
-update</tt> is as follows:
+The meanings of the various letters in the output of <code>cvs
+update</code> is as follows:
 <dl>
-<dt><tt>U</tt></dt>
+<dt><code>U</code></dt>
 <dd>An updated version of the file is available and will be checked
 out if you do an update.</dd>
-<dt><tt>M</tt></dt>
+<dt><code>M</code></dt>
 <dd>You have modified your copy of the file but not committed the
 changes.</dd>
-<dt><tt>C</tt></dt>
+<dt><code>C</code></dt>
 <dd>You have modified your copy of the file, and there is a
 conflict between your changes and the copy currently in the
 repository (ie., someone else has checked in conflicting changes).</dd>
-<dt><tt>A</tt></dt>
-<dd>The file has been scheduled for addition with <tt>cvs add</tt> but
+<dt><code>A</code></dt>
+<dd>The file has been scheduled for addition with <code>cvs add</code> but
 the addition has not yet been committed.</dd>
-<dt><tt>R</tt></dt>
-<dd>The file has been scheduled for removal with <tt>cvs remove</tt>
+<dt><code>R</code></dt>
+<dd>The file has been scheduled for removal with <code>cvs remove</code>
 but the removal has not yet been committed.</dd>
-<dt><tt>?</tt></dt>
-<dd>The file is not under CVS control (use <tt>cvs add</tt> to add
+<dt><code>?</code></dt>
+<dd>The file is not under CVS control (use <code>cvs add</code> to add
 it).</dd>
 </dl>
 </p>
 <h3>Getting other developer's changes</h3>
 <p>
 To put your working directory in sync with the repository:
-<blockquote><tt>% cvs update</tt></blockquote>
+<blockquote><code>% cvs update</code></blockquote>
 <ul>
 <li>Any files changed by others but unchanged by you will be updated
 (ie., the new version will be checked out).</li>
@@ -300,22 +298,22 @@ To put your working directory in sync with the repository:
 you and by others that don't conflict will be updated also.</li>
 <li>Any files for which there is a conflict will be reported by CVS,
 and your working copy will be marked with
-<tt>&gt;&gt;&gt;&gt;</tt> and <tt>&lt;&lt;&lt;&lt;</tt> to indicate
+<code>&gt;&gt;&gt;&gt;</code> and <code>&lt;&lt;&lt;&lt;</code> to indicate
 the conflicting text. You'll
 need to edit them to resolve the conflict before they are useable
 (the original file will be there somewhere renamed with a leading
 "." if you care to look for it).</li>
 <li>If someone has added new directories to the repository, the only
-way to get them is by using the <tt>-d</tt> option to <tt>update</tt>.
+way to get them is by using the <code>-d</code> option to <code>update</code>.
 With one or more names, this will add those directories to your
-working directory. But note that with no arguments, <tt>-d</tt>
+working directory. But note that with no arguments, <code>-d</code>
 causes CVS to add any directories from the repository to your working
 directory if they're not already there. As the CVS documentation
 points out, you may have not checked out or have deleted some
-directories on purpose, and <tt>update -d</tt> will bring them back,
+directories on purpose, and <code>update -d</code> will bring them back,
 which is probably not what you want. In this case you will need to
-checkout the new directories manually (with <tt>checkout</tt>, or do
-<tt>update -d</tt> and then delete the ones you don't want again.</li>
+checkout the new directories manually (with <code>checkout</code>, or do
+<code>update -d</code> and then delete the ones you don't want again.</li>
 </ul>
 </p>
 <h3>Throwing away your changes</h3>
@@ -324,10 +322,10 @@ If you decide that you want to discard any changes to your working
 copy of some file (rather than committing them) and just want a fresh
 copy of the last checked-in version:
 <blockquote>
-<tt>
+<code>
 % rm foo.lisp<br/>
 % cvs update foo.lisp
-</tt>
+</code>
 </blockquote>
 CVS will warn you that <q>foo.lisp was lost</q> and get you a
 new copy, which is what you wanted.
@@ -337,7 +335,7 @@ new copy, which is what you wanted.
 Once you're ready to commit your changes to the repository and make
 them available to others (when they update):
 <blockquote>
-<tt>% cvs commit -m 'Message for log'</tt>
+<code>% cvs commit -m 'Message for log'</code>
 </blockquote>
 <ul>
 <li>With no additional arguments, this will commit the current
@@ -345,7 +343,7 @@ directory and, recursively, any sub-directories. Alternatively, you
 can name specific files and/or directories on the command-line. This
 can be useful if you want to record different log messages for
 different files.</li>
-<li>If you don't give <tt>-m</tt>, you will be prompted for a log
+<li>If you don't give <code>-m</code>, you will be prompted for a log
 message.</li>
 <li>You need to resolve conflicts before CVS will let you commit.</li>
 </ul>
@@ -356,26 +354,26 @@ need for separate update).
 <p>
 <ul>
 <li>To add (place under CVS control) a file:
-<blockquote><tt>% cvs add file</tt></blockquote></li>
+<blockquote><code>% cvs add file</code></blockquote></li>
 <li>To remove a file (from the current branch):
-<blockquote><tt>% cvs remove file</tt></blockquote></li>
+<blockquote><code>% cvs remove file</code></blockquote></li>
 </ul>
 Neither of these operations takes effect until the changes are
 committed.
 </p><p>
-To rename a file, just <tt>cvs remove</tt> the old name and <tt>cvs
-add</tt> the new one.
+To rename a file, just <code>cvs remove</code> the old name and <code>cvs
+add</code> the new one.
 </p><p>
-To add (place under CVS control) a new directory, use <tt>cvs add</tt>
+To add (place under CVS control) a new directory, use <code>cvs add</code>
 as with a file, but note that the change will take immediate effect
 (you will see a "CVS" directory in your working copy of the new
 directory, and the repository will have a new, empty, directory in it
 also).
 </p><p>
 Removing a directory is not really supported by CVS. See the docs for
-more complete discussion. The <q>solution</q> is to <tt>cvs
-remove</tt> all the files in the diectory, and assume that people use
-the <tt>-P</tt> option to <tt>cvs checkout</tt> to avoid seeing empty
+more complete discussion. The <q>solution</q> is to <code>cvs
+remove</code> all the files in the diectory, and assume that people use
+the <code>-P</code> option to <code>cvs checkout</code> to avoid seeing empty
 directories.
 </p>
 <h3>Using tags</h3>
@@ -396,20 +394,20 @@ specific revision, without having to remember which version number
 that was for each of them. The manual actually does a good job of
 explaining this.</li>
 <li>To tag the current directory and any subdirectories:
-<blockquote><tt>% cvs tag <em>name</em></tt></blockquote>
+<blockquote><code>% cvs tag <var>name</var></code></blockquote>
 To tag only specific files or directories, pass them as arguments
 following the tagname.</li>
-<li><b>Note:</b> The one somewhat unintuitive thing about the <tt>cvs
-tag</tt> command is that it operates immediately on the repository
+<li><b>Note:</b> The one somewhat unintuitive thing about the <code>cvs
+tag</code> command is that it operates immediately on the repository
 versions of the files in the working directory. That is, suppose you
 have checked out version 1.3 of some file. Then you modify it. Now if
 you tag the file, it will tag version 1.3. If you mean to tag the
 version you are working on, you need to commit the changes first, then
-tag the new revision. Use the <tt>-c</tt> flag if you want to avoid
+tag the new revision. Use the <code>-c</code> flag if you want to avoid
 this.</li>
 <li>To list any tags defined for a file (or files), use the
-<tt>-v</tt> flag to <tt>cvs status</tt>:
-<blockquote><tt>% cvs status -v <em>file</em></tt></blockquote></li>
+<code>-v</code> flag to <code>cvs status</code>:
+<blockquote><code>% cvs status -v <var>file</var></code></blockquote></li>
 </ul>
 </p>
 <h3>Using branches</h3>
@@ -419,45 +417,45 @@ this.</li>
 simultaneously in development. Changes made in one branch do not
 affect other branches until they are merged.</li>
 <li>To create a branch, you need to tag the appropriate files with the
-branch name, passing the <tt>-b</tt> flag to <tt>cvs tag</tt>:
-<blockquote><tt>% cvs tag -b <em>branchname</em> ...</tt></blockquote>
+branch name, passing the <code>-b</code> flag to <code>cvs tag</code>:
+<blockquote><code>% cvs tag -b <var>branchname</var> ...</code></blockquote>
 Don't forget that this tags the repository revision corresponding to
 your working copy, not whatever you are working on.</li>
 <li>To put your working copy <q>on the branch</q>, specify the
-branch tag name with the <tt>-r</tt> argument to either <tt>cvs
-checkout</tt> (for a new working copy) or <tt>cvs update</tt> (for an
+branch tag name with the <code>-r</code> argument to either <code>cvs
+checkout</code> (for a new working copy) or <code>cvs update</code> (for an
 existing working directory):
-<blockquote><tt>
-% cvs checkout -r <em>branchname</em> ...<br/>
-</tt></blockquote>
+<blockquote><code>
+% cvs checkout -r <var>branchname</var> ...<br/>
+</code></blockquote>
 or
-<blockquote><tt>
-% cvs update -r <em>branchname</em> ...
-</tt></blockquote>
+<blockquote><code>
+% cvs update -r <var>branchname</var> ...
+</code></blockquote>
 Now changes committed to those files will only be seen by other
 developers who have checked out the branch, but will not affect other
 branches including the main trunk.</li>
-<li>Once a working copy is on a branch, <tt>cvs status -v</tt> will
+<li>Once a working copy is on a branch, <code>cvs status -v</code> will
 list it as having a <q>sticky tag.</q></li>
 <li>When you want to make changes on a branch available to the main
 trunk developers, you need to <q>merge</q> the branch. This
 assumes that any desired changes have first been committed on the
 branch. You then checkout a fresh copy of the trunk into a new working
 directory: 
-<blockquote><tt>% cvs checkout ...</tt></blockquote>
-And then use the <tt>-j</tt> (for join) flag to <tt>cvs update</tt> to
+<blockquote><code>% cvs checkout ...</code></blockquote>
+And then use the <code>-j</code> (for join) flag to <code>cvs update</code> to
 merge changes from a given branch (identified by the name of the
 branch tag) into the freshly-checked-out trunk copy:
-<blockquote><tt>% cvs update -j <em>branchname</em> ...</tt></blockquote>
+<blockquote><code>% cvs update -j <var>branchname</var> ...</code></blockquote>
 CVS will identify any conflicts resulting from the merge (i.e., where
 a change on the trunk overlaps with a change on the branch). You will
 need to resolve conflicts before committing the changes on the trunk:
-<blockquote><tt>% cvs commit -m 'Merged <em>branchname</em>' ...</tt></blockquote></li>
+<blockquote><code>% cvs commit -m 'Merged <var>branchname</var>' ...</code></blockquote></li>
 <li>After a merge, the branch continues to exist and can support
 ongoing development independently of other branches (and the trunk).
 If you want to merge again, to incorporate further changes from the
-branch into the trunk, you need to use the <tt>-j</tt> flag twice in
-the <tt>cvs update</tt> command. The manual has some suggestions on
+branch into the trunk, you need to use the <code>-j</code> flag twice in
+the <code>cvs update</code> command. The manual has some suggestions on
 how to use tags to make this easier (and see the next section of this
 document).</li>
 </ul>
@@ -517,7 +515,7 @@ cd src
 Whichever maintainer model we're using, either the maintainer or any
 developer must periodically merge changes from the trunk to the
 release branch. To do this right, you need to operate
-on <emph>both</emph> the trunk and the release branch.
+on <em>both</em> the trunk and the release branch.
 <ul>
 <li>To merge from trunk to release branch the first time:
   <ul>
@@ -565,7 +563,7 @@ on <emph>both</emph> the trunk and the release branch.
       </li>
   </ul>
 </li>
-<li>As always, use <tt>cvs status -v <emph>file</emph></tt> to check
+<li>As always, use <code>cvs status -v <var>file</var></code> to check
   tags.
 </li>
 </ul>
@@ -597,7 +595,7 @@ and
 <hr/>
 <p>
 George Ferguson<br>
-Last change: 20 Nov 2017 (lgalescu)
+Last change: 2019-10-24 (wdebeaum)
 </p>
 </body>
 </html>
