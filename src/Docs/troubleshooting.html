@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Troubleshooting TRIPS</title>
+<style type="text/css">
+code, code pre { background-color: LightGray; }
+var { background-color: SkyBlue; }
+</style>
+</head>
+<body>
+
+<h1>Troubleshooting TRIPS</h1>
+
+<p>This file contains guidelines for what to do and things to check when things go wrong with TRIPS in various ways. It's not meant to be exhaustive, but it covers many common problems.</p>
+
+<p>As a convention, code looks like <code>this</code>, and variables look like <code><var>this</var></code>.</p>
+
+<h2>Initial setup</h2>
+
+<h3>Obtaining source code</h3>
+
+<h4><code>cvs</code> permission denied</h4>
+
+<p>Do you have an account on our CVS server? You won't be able to get a CVS checkout of TRIPS without one. You can ask us for one, or you could instead use one of the mirrors on github for specific systems, like <a href="https://github.com/wdebeaum/cogent">cogent</a> or <a href="https://github.com/wdebeaum/step">step</a>. You would only need a CVS account if you plan to commit changes back to the main repository, or if you need a system that doesn't have a mirror yet.</p>
+
+<p>If you're sure you have an account: Are you using the right user name and password? Are you connecting to the right server (<code>trips.cs.rochester.edu</code>)? This is separate from the main URCS network, so even if you have an account that lets you log into e.g. <code>cycle1.cs.rochester.edu</code>, it might not get you into <code>trips.cs.rochester.edu</code>.</p>
+
+<h4><code>cvs</code> hangs without asking for a password, eventually times out</h4>
+
+<p>Are you connected to the internet?</p>
+
+<p>Are you sure <code>cvs</code> is using the correct protocol (<code>ssh</code>) to connect? Make sure the environment variable <code>CVS_RSH</code> is set to <code>ssh</code>.</p>
+
+<h4><code>cvs</code> is taking a long time, downloading a <strong>lot</strong> of data</h4>
+
+<p>You can interrupt it by pressing Ctrl+C.</p>
+
+<p>Are you trying to check out the whole repository, or all of <code>src/</code>? Don't do that, there's a lot of junk in there that is almost certainly irrelevant to you. Instead, check out a specific TRIPS system (i.e. a CVS module, a subset of the repository).</p>
+
+<p>Are you trying to check out the <code>gloss</code> system? I'm sorry. It includes the <code>src/GlossData/</code> and <code>src/MetaphorData/</code> directories, which contain several large data files. Try going somewhere with a fast internet connection to URCS. Or if you know you don't need this data, you can check out the <code>gloss-nodata</code> CVS module instead.</p>
+
+<h3>Running <code>./configure</code></h3>
+
+<h4><code>./configure</code> says it can't find something and refuses to proceed</h4>
+
+<p>You need to install that thing. If it's already installed, and <code>./configure</code> still can't find it, you might need to explicitly tell <code>./configure</code> where it is, by passing it one of the <code>--with-<var>thing</var></code> options. In particular, <code>./configure</code> expects the Lisp implementation to be called <code>lisp</code>, but SBCL usually calls itself <code>sbcl</code>, so you would need to run <code>./configure --with-lisp=sbcl</code>.</p>
+
+<h4><code>./configure</code> says it can't find something, but continues anyway</h4>
+
+<p>You <em>might</em> need to install that thing. It depends on which system you're trying to install. Refer to the <a href="https://github.com/wdebeaum/trips-docs/wiki/SystemInstallation">system installation notes</a> for that system (or possibly the <code>README.md</code> in the github mirror). If the thing is already installed, you might need to explicitly tell <code>./configure</code> where it is, by passing it one of the <code>--with-<var>thing</var></code> options. Common ones include <code>--with-lisp</code>, <code>--with-python</code> and <code>--with-pip</code> (the two of which should probably be given together), and <code>--with-wordnet</code> (which should be the <code>WordNet-3.0/dict/</code> directory, with the trailing slash).</p>
+
+<h3>Running <code>make && make install</code></h3>
+
+<h4><code>make</code> complains that something isn't configured</h4>
+
+<p>You need to install that thing and run <code>./configure</code> again. See above.</p>
+
+<h4><code>database or disk is full</code> while making WordNetSQL</h4>
+
+<p>You're trying to use docker, aren't you? For some reason, docker only allocates 64MB to <code>/dev/shm</code>, but <code>wn.db</code> (which we make there on Linux to speed up the build) needs at least 300MB. To fix this, you should run:</p>
+
+<blockquote><code><pre>
+docker build --shm-size=512m ...
+</pre></code></blockquote>
+
+<p>If you're using docker (especially writing your own Dockerfile), you should also check the next item.</p>
+
+<h4>Lisp <code>heap exhausted</code></h4>
+
+<p>You can configure <code>sbcl</code> to have more heap space at compile time by adding the appropriate option in the <code>--with-lisp</code> argument:</p>
+
+<blockquote><code><pre>
+./configure --with-lisp="sbcl --dynamic-space-size 4096"
+</pre></code></blockquote>
+
+<h4>Other errors from <code>make</code></h4>
+
+<p>For initial setup, most likely this is still a configuration problem. Look for the subdirectory of <code>src/</code> that <code>make</code> was in when the error happened, and check for a <code>README</code> file there that might explain that module's specific requirements. Failing that, look at the module's <code>Makefile</code> and try to find the specific line that failed. Often a configuration variable being used in that line will be empty, so in <code>make</code>'s output you'll see two spaces separating the words on either side of the variable, when the value of the variable is supposed to go in between the two spaces.</p>
+
+<h2>Starting and using TRIPS</h2>
+
+<h3><a name="where-to-find-error-messages">Where to find error messages and other useful diagnostic information</a></h3>
+
+<p>When the <code>trips-<var>system</var></code> script starts, it creates a subdirectory of the current directory named with the current timestamp (e.g. <code>20191025T1525/</code>), and makes it the current directory. Most modules will make a log file in this directory, with the name of the module followed by <code>.log</code> or <code>.err</code>. The <code>stderr</code> output for the Facilitator (and any Java modules it shares the JVM with) ends up in <code>facilitator.err</code>. For Lisp modules, <code><var>MODULENAME</var>.log</code> will contain messages that particular module sent or received, as well as some notes, in an XML-like format. For other modules, <code><var>ModuleName</var>.log</code> or <code>.err</code> will contain the <code>stderr</code> output. The <code>facilitator.log</code> file will contain all messages sent or received by any module, in a similar but different XML-like format. And the <code>lisp.log</code> file will contain the <code>stderr</code> output of all Lisp modules.</p>
+
+<p>If you're using the <code>-nolisp</code> option and starting the Lisp parts separately, the <code><var>MODULENAME</var>.log</code> will instead end up in the directory where you started Lisp (probably <code><var>$TRIPS_BASE</var>/src/Systems/<var>system</var>/</code>), and there won't be a <code>lisp.log</code>. You can make your own <code>lisp.log</code> by wrapping the Lisp command in a <code>script</code> command, e.g. on Linux:</p>
+<blockquote><code><pre>
+script lisp.log -c "sbcl --load test --eval '(run)'"
+</pre></code></blockquote>
+<p>macOS has a different version of this command, so there you should omit <code>-c</code> and the double-quotes.</p>
+
+<p>If you see a <code>SORRY</code> message coming from one of the Lisp modules, you can get a Lisp backtrace for the error instead by running in <code>-nolisp</code> mode, triggering the error again, and using the Lisp debugger. For SBCL that usually means typing this in the Lisp REPL:</p>
+<blockquote><code><pre>
+(sb-thread:release-foreground)
+:backtrace
+</pre></code></blockquote>
+<p>The first command releases the console from the current foreground thread so that the background thread that actually had the error can have the console and enter the debugger. The second command tells the debugger to print a backtrace (AKA a stack trace).</p>
+
+<h3>A few modules didn't start, or started and immediately disconnected</h3>
+
+<p>Look for error messages at the ends of the log files for the modules that failed, i.e. <code><var>ModuleName</var>.err</code> or <code>.log</code>, or <code>facilitator.err</code> if it was a Java module.</p>
+
+<h3>A lot of modules didn't start</h3>
+
+<p>Usually this is all of the Lisp modules, so look at the end of <code>lisp.log</code>.</p>
+
+<p>If it says <code>heap exhausted</code>, you can try running in <code>-nolisp</code> mode and passing a larger <code>--dynamic-space-size</code> argument to <code>sbcl</code> (without <code>-nolisp</code> we typically give it 4GB, i.e. <code>--dynamic-space-size 4096</code>; SBCL's default is platform dependent: 1GB on macOS and Linux x86_64, less inside docker).</p>
+
+<h3>I did something and a module disconnected</h3>
+
+<p>You can look for error messages in the same places as described above. In addition it may help to look for the last message sent to the module in question in <code>facilitator.log</code>.</p>
+
+<h3>I said something to TRIPS and it didn't say anything in response</h3>
+
+<p>This <em>might</em> actually be OK, try continuing the conversation by saying something else. If TRIPS is still mute, see below.</p>
+
+<h3>TRIPS says "I don't understand" (or similar) to everything</h3>
+
+<p>TRIPS might be expecting a specific kind of response from you (an answer to a question), or the dialog manager might have otherwise gotten into a bad state. You can often restart the conversation to get the system back into a good state by saying something like "start over". Or you can send a KQML message like this (see "Injecting Messages into the System" in <a href="trips-devel.html">TRIPS Development</a>):</p>
+<blockquote><code><pre>
+(tell :content (start-conversation))
+</pre></code></blockquote>
+
+<h2>Using the TRIPS lexicon/ontology</h2>
+
+<h3>What is this Lisp junk? I want XML!</h3>
+
+<p>We have several different XML versions of the TRIPS lexicon and ontology, listed on the <a href="https://github.com/wdebeaum/trips-docs/wiki/Ontology">Ontology</a> page of the trips-docs github wiki.</p>
+
+<h3>This ontology is too big/weird. I want one specifically tailored for my domain!</h3>
+
+<p>You could try using the <a href="http://trips.ihmc.us/ontology-mapper/ontology-mapper.html">Ontology Builder/Mapper</a> tool to build your own domain-specifc ontology and map the TRIPS ontology to it. You can then save your ontology and mappings as a JSON file, and/or build a Lisp extraction rule set that can be used with TRIPS.</p>
+
+<h3>The ontology fails to make some distinctions that are important for my domain</h3>
+
+<p><a href="#contact-us">Let us know!</a> We're constantly trying to improve the ontology. Be sure to include example sentences so we can test any changes we make.</p>
+
+<h2>Updating TRIPS</h2>
+
+<h3>Try a total rebuild</h3>
+
+<p>If you're having problems after an update, try following the "Total Rebuild" instructions at the end of <a href="building-trips.html">Building TRIPS</a>. Often that will fix weird problems that crop up after an update, without having to bother specifically diagnosing them. But it will take a while.</p>
+
+<h3><code>.fasl</code> version mismatch</h3>
+
+<p>If you updated SBCL since you last compiled TRIPS, you might get a message like this:</p>
+<blockquote><code><pre>
+debugger invoked on a SB-FASL::INVALID-FASL-VERSION in thread
+#&lt;THREAD "main thread" RUNNING {<var>10005205B3</var>}&gt;:
+  #&lt;SB-SYS:FD-STREAM for "file <var>$TRIPS_BASE</var>/src/<var>path/to/some</var>.fasl" {<var>10037ECD63</var>}&gt;
+  is a fasl file compiled with SBCL <var>old-version</var>, and can't be loaded into SBCL <var>new-version</var>.
+</pre></code></blockquote>
+
+<p>In this case you should remove all the existing <code>.fasl</code> files in your checkout before compiling again:</p>
+<blockquote><code><pre>
+cd <var>$TRIPS_BASE</var>/src/
+find . -name '*.fasl' -delete
+</pre></code></blockquote>
+
+<p>Note that <code>make clean</code> doesn't quite do enough, since it tends to leave <code>.fasl</code> files in <code><var>$TRIPS_BASE</var>/src/config/lisp/defsystem/</code> (for one) alone. This is the only way to be sure.</p>
+
+<h3>Lisp structure definition problems</h3>
+
+<p>You might see an error like this while building Lisp code after an update:</p>
+
+<blockquote><code><pre>
+debugger invoked on a SIMPLE-ERROR in thread
+#&lt;THREAD "main thread" RUNNING {<var>1002976BF3</var>}&gt;:
+  The loaded code expects an incompatible layout for class <var>CLASSNAME</var>.
+</pre></code></blockquote>
+
+<p>This happens when two pieces of compiled Lisp code see different definitions of the same structure or class, which can happen because Lisp is bad at recognizing when things need to be recompiled. Usually this will fix it:</p>
+<blockquote><code><pre>
+cd <var>$TRIPS_BASE</var>/src/
+make clean-lisp
+</pre></code></blockquote>
+
+<h3>TextTagger won't start, says <code>Unknown tagger: <var>tagger_name</var></code></h3>
+
+<p>This problem can happen when a new tagger in TextTagger is added to the system. You will need to get the tagger (and possibly some other files; check your email) from CVS like this:</p>
+<blockquote><code><pre>
+cd <var>$TRIPS_BASE</var>/src/TextTagger/
+cvs update Perl/TextTagger/<var>TaggerName</var>.pm
+make install
+</pre></code></blockquote>
+
+<p>If you still get the same message, try deleting <code>Config.pm</code>:</p>
+<blockquote><code><pre>
+rm Perl/TextTagger/Config.pm
+make install
+</pre></code></blockquote>
+
+<h2><a name="contact-us">Contacting us about TRIPS</a></h2>
+
+<p>If you need help, find a problem with TRIPS, or want to suggest some other way TRIPS could be improved, you can always send us a message.</p>
+
+<h3>What to include in your message</h3>
+
+<p>You should give us a full description of your problem, with enough information that we should be able to reproduce it. This includes:</p>
+<ul>
+ <li>The name of the TRIPS system you're using.
+ <li>Which OS platform you're using it on, along with the version numbers of any software that seems relevant to the problem.
+ <li>What you were doing when the problem occurred.
+  <ul><li>If this is a problem with parsing input text, you should send us the exact input text that triggered the problem. If it's too big or secret, try to find an alternative input text that seems to trigger the same problem when you test it.</ul>
+ <li>What you expected to happen.
+ <li>What actually did happen.
+ <li>Any error messages that seem relevant to the problem (see <a href="#where-to-find-error-messages">Where to find error messages...</a> above if this is a runtime problem).
+</ul>
+
+<h3>Where to send your message</h3>
+
+<p>Often email to <code><var>cvs-username</var>@cs.rochester.edu</code> or <code><var>cvs-username</var>@ihmc.us</code> will reach us, though this isn't a strict rule. If you have a CVS checkout, you can find the CVS username of the person who last edited some file in CVS by running <code>cvs log <var>file</var> |less</code> and looking at the author of the first log entry (you might need to scroll down past the list of "symbolic names"). Or you could email the person who introduced you to TRIPS, who should be able to forward your message appropriately.</p>
+
+<p>For some systems we also have a <a href="http://trips.ihmc.us/trac/">Trac bug tracker</a> where you can open a ticket. This usually requires a login. Alternatively, you could open a ticket on the github mirror for the TRIPS system you're using. Either way, you should probably search through any existing open tickets to make sure we don't already know about the problem (you may even find a workaround this way).</p>
+
+</body>
+</html>

@@ -333,6 +333,7 @@
 
 (define-type ONT::natural-phenomenon
     :parent ONT::natural-object
+    :wordnet-sense-keys ("natural_phenomenon%1:19:00")
     )
 
 ;; force, pressure, compression
@@ -466,6 +467,7 @@
 
 (define-type ONT::US-STATE
     :parent ONT::STATE
+    :wordnet-sense-keys ("american_state%1:15:00")
     )
 
 (define-type ONT::COUNTRY
@@ -578,6 +580,7 @@
 
 (define-type ONT::pain-reliever
     :parent ont::medication
+    :wordnet-sense-keys ("painkiller%1:06:00")
     )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -976,9 +979,10 @@
     )
 
 ;;British, 
-(define-type ont::persons-of-nationality
+#|(define-type ont::persons-of-nationality
     :wordnet-sense-keys ()
     :parent ont::person-of-nationality)
+|#
 
 ;; north american, south american, asian etc
 (define-type ont::regional-identity
@@ -1116,6 +1120,7 @@
 
 (define-type ONT::unfortunate
     :parent ONT::PERSON
+    :wordnet-sense-keys ("unfortunate%1:18:00" "victim%1:18:00")
     )
 
 (define-type ont::patient
@@ -1132,6 +1137,7 @@
 ;;; swift 24/01/02 added types addressee, recipient, focus-of-emotion to replace roles labelled 'beneficiary' in e.g. verbs of communication
 (define-type ONT::ADDRESSEE
     :parent ONT::PERSON
+    :wordnet-sense-keys ("addressee%1:18:00")
     )
 
 (define-type ONT::OFFICIAL
@@ -1143,6 +1149,7 @@
 
 (define-type ONT::RECIPIENT
     :parent ONT::PERSON
+    :wordnet-sense-keys ("recipient%1:18:00")
     )
 
 (define-type ONT::FOOD
@@ -1154,6 +1161,7 @@
 (define-type ONT::LIGHT
     :parent ONT::SUBSTANCE
     :sem (F::Phys-obj (F::origin F::non-living))
+    :wordnet-sense-keys ("light%1:15:00" "light%1:19:00" "light%1:26:00")
     )
 
 (define-type ONT::PRODUCE
@@ -1172,6 +1180,7 @@
 (define-type ONT::public-service-facility
     :parent ONT::facility
    ;; :sem (F::Phys-obj (F::object-function F::Building))
+    :wordnet-sense-keys ("local_department%1:14:00")
     )
 
 ;; lab, laboratory
@@ -1224,7 +1233,7 @@
 ;; coffee shop, cafe
 (define-type ont::coffee-shop
     :wordnet-sense-keys ("coffeehouse%1:06:00" "coffee_shop%1:06:00" "coffee_bar%1:06:00")
-    :parent ont::restaurant
+    :parent ont::eating-establishment
     )
 
 ;; bar, lounge
@@ -1481,7 +1490,7 @@
 
 (define-type ONT::Center
     :parent ONT::loc-wrt-ground-as-spatial-obj
-    :wordnet-sense-keys ("center%1:15:01" "centre%1:15:01" "middle%1:15:00" "heart%1:15:00" "eye%1:15:00")
+    :wordnet-sense-keys ("center%1:15:00" "center%1:15:01" "centre%1:15:01" "eye%1:15:00" "heart%1:15:00" "middle%1:15:00")
     :sem (F::Phys-obj (F::spatial-abstraction (? sa1 F::spatial-point)))
     :arguments ((:OPTIONAL ONT::FIGURE (F::PHYS-OBJ (F::SPATIAL-ABSTRACTION (? SA F::SPATIAL-REGION))))
 		)
@@ -1698,7 +1707,9 @@
 
 ;; channel
 (define-type ONT::communication-channel
-    :parent ONT::info-holder)
+    :parent ONT::info-holder
+    :wordnet-sense-keys ("channel%1:10:01")
+    )
 
 
 ;; items in this class "stand for" something, and have ont::of arguments
@@ -1737,6 +1748,7 @@
 ;; narratives, stories, accounts, histories
 (define-type ONT::chronicle
     :parent ONT::info-medium
+    :wordnet-sense-keys ("record%1:10:03")
     )
 
 ;; review
@@ -1803,6 +1815,7 @@
 ;which kind?
 (define-type ONT::DISPLAY
     :parent ONT::info-medium
+    :wordnet-sense-keys ("blackboard%1:06:00" "display%1:06:00" "display%1:06:01" "screen%1:06:06")
     )
 
 (define-type ONT::PUBLICATION

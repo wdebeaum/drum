@@ -433,12 +433,14 @@ returns : function return value"
 		       (definitions nil) (arguments nil))
   (if (not (lf-sem trips-type))
       ;;  A new type, add the full definition
-      (lfontology-define-type trips-type :parent parent :wordnet-sense-keys wordnet-sense-keys
+      (progn
+	(lfontology-define-type trips-type :parent parent :wordnet-sense-keys wordnet-sense-keys
 			      :comment comment
 			      :arguments (mapcar #'(lambda (a)
 						     (cons :required a)) arguments)
 			      :definitions definitions
 			      )
+	(recompile-ontology))
       ;;  An existing type, we want to augment the existing definition with the axioms and comments
       (add-definition-to-existing-type trips-type definitions comment wnsense)
       ))

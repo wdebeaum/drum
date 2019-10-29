@@ -198,6 +198,12 @@ apply first.")
       (add-kr-ontology-to-hierarchy *kr-ontology* type-hierarchy)
       )))
 
+(defun recompile-ontology ()
+  "when new types are added dynamically, we must recompile in order to enable subsumption"
+  (let ((type-hierarchy (new-type-hierarchy)))
+      ;; add the base hierarchy to the LF
+      (add-ling-ontology-to-hierarchy *lf-ontology* type-hierarchy)))
+
 (defmethod mk:operate-on-system :after ((name (eql :om)) (operation (eql :load)) &rest args)
     (declare (ignore args))
   (format *trace-output* "~&~%;;; om: initializing ontology~%~%")

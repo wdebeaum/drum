@@ -7,7 +7,7 @@
   (W::MIDPOINT
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
-     (LF-PARENT ONT::waypoint)
+     (LF-PARENT ONT::CENTER);waypoint)
      (example "the midpoint of the road")
  ;    (TEMPL PART-OF-RELN-TEMPL)
      (TEMPL GEN-PART-OF-RELN-TEMPL)

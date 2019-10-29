@@ -2,7 +2,7 @@
 <html>
 <!--
 Author: William de Beaumont, 12/02/2015
-$Id: new-module.html,v 1.4 2019/10/24 15:48:42 wdebeaum Exp $
+$Id: new-module.html,v 1.5 2019/10/28 14:58:46 wdebeaum Exp $
 
 Credits:
 * Lisp section based on Scott C. Stoness' old src/Docs/newLispModule.txt
@@ -32,7 +32,7 @@ var {
 
 The Hello folder contains examples of TRIPS modules in a number of different
 programming languages. It might not be part of the TRIPS system you checked
-out, so you might have to check it out individually. Assumming you've checked
+out, so you might have to check it out individually. Assuming you've checked
 out a TRIPS system in a folder we'll call <code><var>$TRIPS_BASE</var></code>:
 
 <code><pre>
@@ -173,7 +173,7 @@ make install
   (reply :content <var>reply-content</var>)
 </pre></code>
 
-<p>Each time you want to test a change you made to the source code, you should run <code>make install</code> again, since the run script, <code>./<var>ModuleName</var></code>, runs the code that's installed in <var>$TRIPS_BASE</var>/etc/<var>ModuleName</var>/, not the code you're editing in <var>$TRIPS_BASE</var>/src/<var>ModuleName</var>/.</p>
+<p>Each time you want to test a change you made to the source code, you should run <code>make install</code> again, since the run script, <code>./<var>ModuleName</var></code>, runs the code that's installed in <code><var>$TRIPS_BASE</var>/etc/<var>ModuleName</var>/</code>, not the code you're editing in <code><var>$TRIPS_BASE</var>/src/<var>ModuleName</var>/</code>.</p>
 
 <h3>Add your module to the system's run script</h3>
 
@@ -273,7 +273,7 @@ cvs -d <var>$USER</var>@trips.cs.rochester.edu:/p/cvs/trips checkout CVSROOT/mod
 <p>If you needed to check out the config directory for your language, you will also need to add it here, e.g.:</p>
 
 <code><pre>
-	src/config/python \
+	src/config/<var>python</var> \
 </pre></code>
 
 <p>(This already happens to be in cogent. This is just an example.)</p>

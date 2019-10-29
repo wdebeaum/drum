@@ -8,7 +8,7 @@
    (W::record
    (SENSES
     ((meta-data :origin plow :entry-date 20050928 :change-date nil :wn ("record%1:10:03") :comments naive-subjects)
-     (LF-PARENT ONT::info-medium)
+     (LF-PARENT ONT::chronicle) ;info-medium)
      (example "Keep a record of the proceedings")
      )
     )
