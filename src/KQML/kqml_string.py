@@ -6,15 +6,17 @@
 # Slightly modified to retain greater compatibility with old versions by
 # William de Beaumont.
 
-import StringIO
+from io import BytesIO
 from KQML import KQMLObject
+from .util import safe_decode
 
-class KQMLString(object):
+
+class KQMLString(KQMLObject):
     def __init__(self, data=None):
         if data is None:
             self.data = ''
         else:
-            self.data = data
+            self.data = safe_decode(data)
 
     def length(self):
         return len(self.data)
@@ -32,23 +34,23 @@ class KQMLString(object):
             return obj.data == self.data
 
     def write(self, out):
-        out.write('"')
+        out.write(b'"')
         for ch in self.data:
             if ch == '"':
-                out.write('\\')
-            out.write(ch)
-        out.write('"')
+                out.write(b'\\')
+            out.write(ch.encode())
+        out.write(b'"')
 
     def to_string(self):
-        out = StringIO.StringIO()
+        out = BytesIO()
         self.write(out)
-        return out.getvalue()
+        return safe_decode(out.getvalue())
 
     def string_value(self):
         return self.data
 
     def __str__(self):
-        return self.to_string()
+        return safe_decode(self.to_string())
 
     def __repr__(self):
         s = self.__str__()
@@ -57,4 +59,3 @@ class KQMLString(object):
 
     def __getitem__(self, *args):
         return self.data.__getitem__(*args)
-

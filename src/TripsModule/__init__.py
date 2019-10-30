@@ -6,4 +6,4 @@
 # Slightly modified to better match the equivalent libraries in other languages 
 # by William de Beaumont.
 
-from trips_module import TripsModule
+from .trips_module import TripsModule

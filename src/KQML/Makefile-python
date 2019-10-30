@@ -2,7 +2,7 @@
 #
 # Makefile for TRIPS KQML library (in Python)
 #
-# $Id: Makefile-python,v 1.1 2017/02/08 19:02:41 wdebeaum Exp $
+# $Id: Makefile-python,v 1.2 2019/10/29 14:39:15 wdebeaum Exp $
 #
 
 MODULE = KQML
@@ -12,9 +12,11 @@ SRCS = \
 	kqml_exceptions.py \
 	kqml_list.py \
 	kqml_performative.py \
+	kqml_quotation.py \
 	kqml_reader.py \
 	kqml_string.py \
-	kqml_token.py
+	kqml_token.py \
+	util.py
 
 CONFIGDIR=../config
 include $(CONFIGDIR)/python/defs.mk

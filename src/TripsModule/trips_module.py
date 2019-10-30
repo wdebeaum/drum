@@ -3,17 +3,32 @@
 # From the pykqml library available at:
 # https://github.com/bgyori/pykqml
 # Relicensed under GPL 2+ (same as TRIPS) with permission.
-# Slightly modified to better match the equivalent libraries in other languages
-# by William de Beaumont.
+# Slightly modified to better match the equivalent libraries in other
+# languages, and to retain greater compatibility with old versions, by William
+# de Beaumont.
 
 import io
+import os
 import sys
 import socket
 import logging
 from KQML import KQMLReader, KQMLDispatcher
 from KQML import KQMLToken, KQMLString, KQMLList, KQMLPerformative
+from KQML import StopWaitingSignal
 
 logging.basicConfig()
+
+logger = logging.getLogger(__name__)
+
+
+# On Windows, sockets need to be created via the msvcrt
+# package. We try to import it here and use it if available.
+try:
+    import msvcrt
+    use_msvcrt = True
+except ImportError:
+    use_msvcrt = False
+
 
 class TripsModule(object):
     def __init__(self, argv, is_application=False):
@@ -35,7 +50,6 @@ class TripsModule(object):
         self.dispatcher = None
         self.warning_enabled = True
         self.debugging_enabled = False
-        self.logger = logging.getLogger('TripsModule')
         self.init()
 
     def run(self):
@@ -43,22 +57,46 @@ class TripsModule(object):
 
     def init(self):
         self.handle_common_parameters()
-        self.logger = logging.getLogger(self.name)
         if self.auto_connect:
-            self.logger.info('Using socket connection')
+            logger.info('Using socket connection')
             conn = self.connect(self.host, self.port)
             if not conn:
-                self.logger.error('Connection failed')
+                logger.error('Connection failed')
                 self.exit(-1)
+            assert self.inp is not None and self.out is not None,\
+                "Connection formed but input (%s) and output (%s) not set." % (self.inp, self.out)
         else:
-            self.logger.info('Using stdio connection')
-            self.out = sys.stdout
-            self.inp = KQMLReader(sys.stdin)
+            logger.info('Using stdio connection')
+            # pykqml's version of this doesn't actually connect to stdin/out?! -- wdebeaum
+            #self.out = io.BytesIO()
+            #self.inp = KQMLReader(io.BytesIO())
+            if hasattr(sys.stdout, 'buffer'): # python 3
+                self.out = sys.stdout.buffer
+                self.inp = KQMLReader(sys.stdin.buffer)
+            else: # python 2
+                self.out = sys.stdout
+                self.inp = KQMLReader(sys.stdin)
 
         self.dispatcher = KQMLDispatcher(self, self.inp, self.name)
 
         if self.name is not None:
             self.register()
+
+    def subscribe_request(self, req_type):
+        msg = KQMLPerformative('subscribe')
+        content = KQMLList('request')
+        content.append('&key')
+        content.set('content', KQMLList.from_string('(%s . *)' % req_type))
+        msg.set('content', content)
+        self.send(msg)
+
+    def subscribe_tell(self, tell_type):
+        msg = KQMLPerformative('subscribe')
+        content = KQMLList('tell')
+        content.append('&key')
+        content.set('content', KQMLList.from_string('(%s . *)' % tell_type))
+        msg.set('content', content)
+        self.send(msg)
 
     def get_parameter(self, param_str):
         for i, a in enumerate(self.argv):
@@ -115,23 +153,30 @@ class TripsModule(object):
                 conn = self.connect1(host, port, False)
                 if conn:
                     return True
-            self.logger.error('Failed to connect to ' + host + ':' + \
-                              startport + '-' + port)
+            logger.error('Failed to connect to ' + host + ':' + \
+                         startport + '-' + port)
             return False
 
     def connect1(self, host, port, verbose=True):
         try:
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.connect((host, port))
-            sfn = self.socket.makefile().fileno()
-            fio = io.FileIO(sfn, mode='w')
-            self.out = io.BufferedWriter(fio)
-            fio = io.FileIO(sfn, mode='r')
-            self.inp = KQMLReader(io.BufferedReader(fio))
+            if hasattr(socket, 'SocketIO'):
+                sw = socket.SocketIO(self.socket, 'w')
+                self.out = io.BufferedWriter(sw)
+                sr = socket.SocketIO(self.socket, 'r')
+                self.inp = KQMLReader(io.BufferedReader(sr))
+            else:
+                sfn = self.socket.makefile().fileno()
+                fio = io.FileIO(sfn, mode='w')
+                self.out = io.BufferedWriter(fio)
+                fio = io.FileIO(sfn, mode='r')
+                self.inp = KQMLReader(io.BufferedReader(fio))
             return True
         except socket.error as e:
             if verbose:
-                self.logger.error(e)
+                logger.error(e)
+            return False
 
     def register(self):
         if self.name is not None:
@@ -144,14 +189,14 @@ class TripsModule(object):
                     else:
                         perf.set('group', self.group_name)
                 except IOError:
-                    self.logger.error('bad group name: ' + self.group_name)
+                    logger.error('bad group name: ' + self.group_name)
             self.send(perf)
 
     def ready(self):
-        perf = KQMLPerformative('tell')
+        msg = KQMLPerformative('tell')
         content = KQMLList(['module-status', 'ready'])
-        perf.set('content', content)
-        self.send(perf)
+        msg.set('content', content)
+        self.send(msg)
 
     def exit(self, n):
         if self.is_application:
@@ -160,6 +205,9 @@ class TripsModule(object):
             if self.dispatcher is not None:
                 self.dispatcher.shutdown()
             sys.exit(n)
+
+    def stop_waiting(self):
+        raise StopWaitingSignal()
 
     def receive_eof(self):
         self.exit(0)
@@ -183,7 +231,7 @@ class TripsModule(object):
         self.error_reply(msg, 'unexpected performative: stream-all')
 
     def receive_tell(self, msg, content):
-        self.error_reply(msg, 'unexpected performative: tell')
+        logger.error('unexpected performative: tell')
 
     def receive_untell(self, msg, content):
         self.error_reply(msg, 'unexpected performative: untell')
@@ -233,7 +281,7 @@ class TripsModule(object):
     def receive_transport_address(self, msg, content):
         self.error_reply(msg, 'unexpected performative: transport-address')
 
-    def receive_borker_one(self, msg, content):
+    def receive_broker_one(self, msg, content):
         self.error_reply(msg, 'unexpected performative: broker-one')
 
     def receive_broker_all(self, msg, content):
@@ -252,7 +300,7 @@ class TripsModule(object):
         self.error_reply(msg, 'unexpected performative: recruit-all')
 
     def receive_reply(self, msg, content):
-        self.error_reply(msg, 'unexpected performative: reply')
+        logger.error(msg, 'unexpected performative: reply')
 
     def receive_request(self, msg, content):
         self.error_reply(msg, 'unexpected performative: request')
@@ -261,13 +309,13 @@ class TripsModule(object):
         self.error_reply(msg, 'unexpected performative: eos')
 
     def receive_error(self, msg):
-        self.error_reply(msg, 'unexpected performative: error')
+        logger.error('Error received: "%s"' % msg)
 
     def receive_sorry(self, msg):
-        self.error_reply(msg, 'unexpected performative: sorry')
+        logger.error('unexpected performative: sorry')
 
     def receive_ready(self, msg):
-        self.error_reply(msg, 'unexpected performative: ready')
+        logger.error(msg, 'unexpected performative: ready')
 
     def receive_next(self, msg):
         self.error_reply(msg, 'unexpected performative: next')
@@ -279,23 +327,23 @@ class TripsModule(object):
         self.error_reply(msg, 'unexpected performative: discard')
 
     def receive_unregister(self, msg):
-        self.error_reply(msg, 'unexpected performative: unregister')
+        logger.error(msg, 'unexpected performative: unregister')
 
     def receive_other_performative(self, msg):
-        self.error_reply(msg, 'unexpected performative: ' + msg)
+        self.error_reply(msg, 'unexpected performative: ' + str(msg))
 
     def handle_exception(self, ex):
-        sys.stderr.write(self.name + ': ' + str(ex))
+        logger.error(str(ex))
 
     def send(self, msg):
         try:
             msg.write(self.out)
         except IOError:
-            self.logger.error('IOError during message sending')
+            logger.error('IOError during message sending')
             pass
-        self.out.write('\n')
+        self.out.write(b'\n')
         self.out.flush()
-        self.logger.debug(msg.__repr__())
+        logger.debug(msg.__repr__())
 
     def send_with_continuation(self, msg, cont):
         reply_id_base = 'IO-'
@@ -338,6 +386,7 @@ class TripsModule(object):
 
     def set_debugging_enabled(self, enable):
         self.debugging_enabled  = enable
+
 
 if __name__ == '__main__':
     TripsModule(sys.argv[1:]).run()

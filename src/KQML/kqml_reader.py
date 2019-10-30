@@ -3,44 +3,54 @@
 # From the pykqml library available at:
 # https://github.com/bgyori/pykqml
 # Relicensed under GPL 2+ (same as TRIPS) with permission.
-# Slightly modified to better match the equivalent libraries in other languages
-# by William de Beaumont.
+# Slightly modified to better match the equivalent libraries in other
+# languages, and to retain greater compatibility with old versions, by William
+# de Beaumont.
 
 import io
 import logging
-from kqml_exceptions import *
+from .kqml_exceptions import *
 
-import kqml_list
-import kqml_performative
-from kqml_token import KQMLToken
-from kqml_string import KQMLString
+from .kqml_token import KQMLToken
+from .kqml_string import KQMLString
+from .kqml_quotation import KQMLQuotation
 
-logger = logging.getLogger('KQMLReader')
+logger = logging.getLogger(__name__)
+
 
 class KQMLReader(object):
     def __init__(self, reader):
         self.reader = reader
         self.inbuf = ''
-	self.ungot_char = None # (see unget_char)
+        self.ungot_char = None # (see unget_char)
 
     def close(self):
         self.reader.close()
 
     def read_char(self):
-	if self.ungot_char is None: # (see unget_char)
-	    ch = self.reader.read(1)
-	else:
-	    ch = self.ungot_char
-	    self.ungot_char = None
+        if self.ungot_char is None: # (see unget_char)
+            ch = self.reader.read(1)
+            # FIXME!!! ch is empty here?!?!
+            ch_int = ord(ch) # unlike ch[0], this works the same in both python 2 and 3 -- wdebeaum
+            if ch_int >= 192 and ch_int < 224:
+                ch += self.reader.read(1)
+            elif ch_int >= 224 and ch_int < 240:
+                ch += self.reader.read(2)
+            elif ch_int >= 240:
+                ch += self.reader.read(3)
+            ch = ch.decode()
+        else:
+            ch = self.ungot_char
+            self.ungot_char = None
         self.inbuf += ch
         return ch
 
     def unget_char(self, ch):
-	# this is different from pykqml in order to properly support unseekable
-	# streams like stdin -- wdebeaum
-	if self.ungot_char is not None:
-	    raise IOError
-	self.ungot_char = ch
+        # this is different from pykqml in order to properly support unseekable
+        # streams like stdin -- wdebeaum
+        if self.ungot_char is not None:
+            raise IOError
+        self.ungot_char = ch
         self.inbuf = self.inbuf[:-1]
 
     def peek_char(self):
@@ -48,7 +58,7 @@ class KQMLReader(object):
             ch_ = self.reader.peek(1)
             if not ch_:
                 raise EOFError
-            ch = ch_[0]
+            ch = bytes([ch_[0]]).decode()
         else:
             ch = self.read_char()
             self.unget_char(ch)
@@ -157,7 +167,7 @@ class KQMLReader(object):
         else:
             for _ in range(count):
                 buf += self.read_char()
-        return KQMLLString(buf)
+        return KQMLString(buf)
 
     def read_list_for_file(self):
         self.skip_whitespace()
@@ -165,6 +175,7 @@ class KQMLReader(object):
         # TODO: handle EOF
 
     def read_list(self, backquoted=False):
+        from . import kqml_list
         lst = kqml_list.KQMLList()
         ch = self.read_char()
         if ch != '(':
@@ -202,6 +213,8 @@ class KQMLReader(object):
                 self.read_char()
 
     def read_performative(self):
+        from . import kqml_list
+        from . import kqml_performative
         self.inbuf = ''
         self.skip_whitespace()
         self.inbuf = ''
