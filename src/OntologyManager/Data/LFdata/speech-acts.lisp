@@ -88,6 +88,8 @@
 
 (define-type ont::wh-term :parent ont::definiteQ)
 
+(define-type ont::wh-plural :parent ont::definiteQ) ; what
+
 (define-type ont::wh :parent ont::definiteQ)
 
 (define-type ont::implicitQ :parent ont::definiteness)

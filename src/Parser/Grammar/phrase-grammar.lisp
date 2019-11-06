@@ -1324,7 +1324,7 @@
 
     ;;  a (ten foot) high fence, a three mile wide path, .. 
     ((ADJP (ARG ?arg) (VAR ?adjv) (sem ?sem) (atype ?atype) (comparative ?cmp)
-      (LF (% PROP (CLASS ont::at-scale-val) (VAR ?adjv) (CONSTRAINT ?newc)
+      (LF (% PROP (CLASS ont::at-scale-value) (VAR ?adjv) (CONSTRAINT ?newc)
 	     (transform ?transform) (sem ?sem)))
       (argument ?argument)
       )
@@ -1349,7 +1349,7 @@
    ;; of height three feet
    ((ADJP (ARG ?arg) (VAR ?adjv) (sem ?sem) (atype ?atype) (comparative ?cmp)
      (argument (% ?xx (sem ?argsem) (var ?argvar) (lex ?lex)))
-     (LF (% PROP (CLASS ont::at-scale-val) (VAR ?adjv) (CONSTRAINT ?newc)
+     (LF (% PROP (CLASS ont::at-scale-value) (VAR ?adjv) (CONSTRAINT ?newc)
 	    (transform ?transform) (sem ?sem)))
      )
     -adj-of-scale-unit-modifier> 1.0
@@ -1371,7 +1371,7 @@
 
 ;;  a (ten foot)-high fence, a three mile wide path, .. 
     ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem) (atype ?atype) (comparative ?cmp)
-      (LF (% PROP (CLASS ont::at-scale-val) (VAR ?v) (CONSTRAINT ?newc)
+      (LF (% PROP (CLASS ont::at-scale-value) (VAR ?v) (CONSTRAINT ?newc)
 	     (transform ?transform) (sem ?sem)))
       )
      -adj-unit-modifier-HYPHEN> 1.1
@@ -2567,6 +2567,7 @@
 	 (add-to-conjunct (val (?subcat-map ?sc-var)) (old ?r) (new ?newr))
 	 (append-conjuncts (conj1 ?spec-restr) (conj2 ?newr) (new ?con1))
 	 )
+	
 #||	
         ;; e.g., (two/some) more/less eggs
 	((N1 (VAR ?v) (SORT PRED) (CLASS ?c) (MASS ?m)
@@ -3438,7 +3439,7 @@
       (ARG ?arg) (lex ?lex) (LF ont::SM) (SUBCAT ?subcat) (Mass MASS)
       (unit-spec +)
       (restr ?newcon)) ;; mass nouns get QUANTITY in the restriction
-     -spec-indef-unit-mass>
+     -spec-indef-unit-mass> 
      (head (NP (sort unit-measure) (LF (% DESCRIPTION (status (? status ont::indefinite ont::indefinite-plural))
 					  (constraint ?con)))
 	     (ARGUMENT ?subcat) (ARGUMENT (% ?xx (MASS MASS)))
@@ -3755,7 +3756,53 @@
       ))
      )
 
-    
+    ;; TEST: the pizza-eating elephant
+     ((ADJP (VAR ?v)  (arg ?subjvar) (class ?lf) (atype attributive-only) ;(atype w::central)
+	    (argument ?subj) ;(argument (% NP (var ?dobj)))
+	    (vform ing)
+	    (constraint ?constraint) (sem ?sem2) ;(sem ?sem)
+      (LF (% prop (class ?lf) (var ?v)
+	     (constraint 
+	      (& (?!dobj-map (% *PRO* (status ont::kind) (var ?v-n) (class ?nc) (constraint ?nr) (sem ?sem)))
+		 (?reln ?subjvar) ;(?dobj-map ?dobj)
+		 )))))
+     -adj-ing+obj-hyphen> 1
+     (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
+      (sem ?sem) (relc -) (abbrev -) (gap -) (agr 3s)
+	 )
+     (punc (lex w::punc-minus))
+     (head (V (var ?v) (VFORM ing) (subj (% NP (var ?subjvar))) ;(DOBJ (% NP (var ?dobj)))
+	      (sem ?sem2)
+	      (subj ?subj) 
+      (GAP -) (LF ?lf)  (part (% -)) ;; no particle forms
+      (SUBJ-MAP ?reln) (dobj-map ?!dobj-map)
+      (dobj-map (? !dmap ONT::NOROLE))  ; to prevent "RAS-induced phosphorylation of ERK and AKT is compromised" from giving a NOROLE to phosphorylation (using a template for "induce")
+      ))
+     )
+
+    ;; TEST: the pizza eating elephant
+     ((ADJP (VAR ?v)  (arg ?subjvar) (class ?lf) (atype attributive-only) ;(atype w::central)
+	    (argument ?subj) ;(argument (% NP (var ?dobj)))
+	    (vform ing)
+	    (constraint ?constraint) (sem ?sem2) ;(sem ?sem)
+      (LF (% prop (class ?lf) (var ?v)
+	     (constraint 
+	      (& (?!dobj-map (% *PRO* (status ont::kind) (var ?v-n) (class ?nc) (constraint ?nr) (sem ?sem)))
+		 (?reln ?subjvar) ;(?dobj-map ?dobj)
+		 )))))
+     -adj-ing+obj> 1
+     (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
+      (sem ?sem) (relc -) (abbrev -) (gap -) (agr 3s)
+	 )
+     (head (V (var ?v) (VFORM ing) (subj (% NP (var ?subjvar))) ;(DOBJ (% NP (var ?dobj)))
+	      (sem ?sem2)
+	      (subj ?subj) 
+      (GAP -) (LF ?lf)  (part (% -)) ;; no particle forms
+      (SUBJ-MAP ?reln) (dobj-map ?!dobj-map)
+      (dobj-map (? !dmap ONT::NOROLE))  ; to prevent "RAS-induced phosphorylation of ERK and AKT is compromised" from giving a NOROLE to phosphorylation (using a template for "induce")
+      ))
+     )
+     
     ;; TEST: the Ras-dependent activation
     ((ADJP (VAR ?v) (arg ?arg) (class ?lf) (atype w::central) (argument ?argument)
       (constraint ?constraint)
@@ -3814,7 +3861,7 @@
 ;              (VAR ?v) (transform ?transform)
 ;              )
 ;      ))
-;    
+;
     ;;  bare ing form as an adjective (e.g., the running truck)
     ((ADJP (ARG ?arg) (VAR ?v)  (SUBCATMAP ?!reln) (atype attributive-only)
            (ARGUMENT ?subj) (sem ?sem)

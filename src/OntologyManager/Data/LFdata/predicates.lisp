@@ -323,11 +323,13 @@
  :parent ONT::scale-relation
  )
 
+; use AT-SCALE-VALUE instead
+#|
 ;; used in "he is nine years old"   --  he has value on scale AGE-SCALE of 9 years
 (define-type ONT::has-value-on-scale
  :parent ONT::scale-relation
  )
-
+|#
 
 ;; 5 (feet) by 10 (feet)
 (define-type ONT::dimension
