@@ -2920,7 +2920,7 @@
  )
 
 (define-type ONT::Select
-    :wordnet-sense-keys ("take%2:40:02" "pick_out%2:31:00" "select%2:31:00" "take%2:31:01" "choose%2:31:00" "choose%2:31:02" "prefer%2:31:00" "opt%2:31:00" "vote%2:41:09" "determine%2:31:01")
+    :wordnet-sense-keys ("choose%2:31:00" "choose%2:31:02" "determine%2:31:01" "opt%2:31:00" "pick_out%2:31:00" "prefer%2:31:00" "select%2:31:00" "selection%1:04:00" "take%2:31:01" "take%2:40:02" "vote%2:41:09")
     :parent ONT::CHOOSING
     :arguments ((:REQUIRED ONT::AGENT ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
 		(:ESSENTIAL ONT::neutral ((? tt F::phys-obj F::abstr-obj f::situation f::time))))
@@ -4891,7 +4891,7 @@
 ;; )
 
 (define-type ONT::EXISTS
-  :wordnet-sense-keys ("abound%2:42:00" "be%2:42:00" "be%2:42:012" "be%2:42:04" "consist%2:42:00" "dwell%2:42:01" "exist%2:42:00" "lie%2:42:01" "lie_in%2:42:00" "live%2:42:00" "play%2:36:04")
+  :wordnet-sense-keys ("abound%2:42:00" "be%2:42:00" "be%2:42:01" "be%2:42:04" "consist%2:42:00" "dwell%2:42:01" "exist%2:42:00" "lie%2:42:01" "lie_in%2:42:00" "live%2:42:00" "play%2:36:04")
  :parent ONT::EVENT-OF-STATE
  :sem (F::Situation (F::aspect F::stage-level) (F::time-span F::extended)(F::cause -) (F::locative F::located) (F::trajectory -))
  :arguments ((:REQUIRED ONT::neutral)
