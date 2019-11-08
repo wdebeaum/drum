@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.63 2019/10/08 17:55:29 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.65 2019/11/07 19:54:11 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -16,6 +16,7 @@ import java.util.ListIterator;
 
 import TRIPS.KQML.KQMLList;
 import TRIPS.KQML.KQMLObject;
+import TRIPS.KQML.KQMLString;
 import TRIPS.KQML.KQMLToken;
 
 /**
@@ -476,11 +477,7 @@ public class TermExtraction extends Extraction {
     protected String xml_grounding() {
         List<String> conts = new ArrayList<String>();
         for (KQMLList term : dsTerms) {
-            if (pullTermHead(term).equalsIgnoreCase("PLACE")) {
-                conts.add(xml_cwmsPlaceTerm(term));
-            } else {
-                conts.add(xml_cwmsTerm(term));
-            }
+            conts.add(xml_cwmsTerm(term));
         }
         return xml_element("grounding", null, conts);
     }
@@ -496,6 +493,10 @@ public class TermExtraction extends Extraction {
             return "";
         String termType = pullTermHead(dsTerm).toLowerCase();
         List<String> attrs = new ArrayList<String>();
+        // id (may be missing)
+        KQMLObject dbID = dsTerm.getKeywordArg(":ID");
+        if (dbID != null)
+            attrs.add(xml_attribute("id", normalizeDBID(dbID.toString())));
         // official name
         KQMLObject name = dsTerm.getKeywordArg(":NAME");
         if (name != null)
@@ -513,7 +514,40 @@ public class TermExtraction extends Extraction {
         if (c_codes != null) {
             attrs.add(xml_attribute("country-codes", xml_escape(c_codes.stringValue())));
         }
-        
+        // status may be missing
+        KQMLObject status = dsTerm.getKeywordArg(":STATUS");
+        if (status != null)
+            attrs.add(xml_attribute("status", status.toString()));
+        // source
+        KQMLObject source = dsTerm.getKeywordArg(":SOURCE");
+        if (source != null)
+            attrs.add(xml_attribute("source", xml_escape(source.stringValue())));
+        // matches may be missing
+        KQMLObject matches = dsTerm.getKeywordArg(":MATCHES");
+        String matchedName = null;
+        if (matches != null) {
+            KQMLList firstMatch = (KQMLList) ((KQMLList) matches).get(0);
+            matchedName = firstMatch.getKeywordArg(":MATCHED").stringValue();
+            attrs.add(xml_attribute("matched-name", xml_escape(matchedName)));
+            // score may be missing
+            KQMLObject matchScore = firstMatch.getKeywordArg(":SCORE");
+            if (matchScore != null)
+                attrs.add(xml_attribute("match-score", matchScore.toString()));
+            // status may be missing; also, it may be a string rather than a token
+            KQMLObject matchStatus = firstMatch.getKeywordArg(":STATUS");
+            if (matchStatus != null) {
+                if (matchStatus instanceof KQMLString) {
+                    attrs.add(xml_attribute("status", matchStatus.stringValue()));                    
+                } else {
+                    attrs.add(xml_attribute("status", matchStatus.toString()));
+                }
+            }
+            // source
+            KQMLObject matchedSource = firstMatch.getKeywordArg(":SOURCE");
+            if (matchedSource != null)
+                attrs.add(xml_attribute("source", xml_escape(matchedSource.stringValue())));
+        }
+
         return xml_element(termType, attrs, null);
     }
 
@@ -523,6 +557,7 @@ public class TermExtraction extends Extraction {
      * Attributes: {@code id}, {@code source}
      * 
      */
+    @Deprecated
     protected String xml_cwmsPlaceTerm(KQMLList dsTerm) {
         if (dsTerm == null)
             return "";
@@ -531,6 +566,7 @@ public class TermExtraction extends Extraction {
         KQMLObject dbID = dsTerm.getKeywordArg(":ID");
         if (dbID != null)
             attrs.add(xml_attribute("id", normalizeDBID(dbID.toString())));
+        // source
         KQMLObject source = dsTerm.getKeywordArg(":SOURCE");
         if (source != null)
             attrs.add(xml_attribute("source", xml_escape(source.stringValue())));
@@ -1089,7 +1125,15 @@ public class TermExtraction extends Extraction {
         List<String> conts = new ArrayList<String>();
         KQMLObject dow = attributes.get(Attribute.DOW);
         if (dow != null) {
-            conts.add(xml_element("dow", null, removePackage(ontWord(dow))));
+            String var = dow.toString();
+            Extraction ekbTerm = ekbFindExtraction(var);
+            KQMLList term = (ekbTerm != null) ? ekbTerm.getValue() : findTermByVar(var, context);
+            if (term != null) {
+                conts.add(xml_element("dow", null, removePackage(ontWord(pullFullOntType(term)))));
+            } else { // something's wrong
+                conts.add(xml_lfTerm("from-time", var));
+            }
+
         }
         KQMLObject day = attributes.get(Attribute.DAY);
         if (day != null) {

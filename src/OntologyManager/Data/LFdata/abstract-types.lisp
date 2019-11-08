@@ -1344,13 +1344,13 @@
 ;;; there is ont::graphic-symbol; this should be related somehow
 (define-type ONT::punctuation
     :wordnet-sense-keys ("punctuation%1:10:00")
-    :parent ONT::linguistic-object
+    :parent ONT::text-representation ;:parent ONT::linguistic-object
  )
 
 ;; letters of the alphabet
 (define-type ONT::letter-symbol
     :wordnet-sense-keys ("letter%1:10:01")
-    :parent ONT::linguistic-object
+    :parent ONT::text-representation ;:parent ONT::linguistic-object
 ; :sem (F::Abstr-obj (F::information F::data))
     )
 

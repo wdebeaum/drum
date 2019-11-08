@@ -1747,7 +1747,7 @@
 
 ;; narratives, stories, accounts, histories
 (define-type ONT::chronicle
-    :parent ONT::info-medium
+    :parent ONT::document ;:parent ONT::info-medium
     :wordnet-sense-keys ("record%1:10:03")
     )
 
@@ -1888,6 +1888,7 @@
     :parent ONT::template-info-object
     :arguments ((:REQUIRED ONT::FIGURE ((? lof f::abstr-obj f::phys-obj)))
 		)
+    :wordnet-sense-keys ("order%1:10:01")
     )
 
 ;; symbols representing objects/entities, such as squiggle, symbol etc.
@@ -1896,17 +1897,19 @@
     :parent ONT::PHYS-representation
     :sem (F::Phys-obj (:required (F::Form F::Object) (F::Origin F::Artifact) (F::intentional -) (F::object-function F::representation) (F::information F::data))
 		      (:default (F::Container -) (f::mobility f::non-self-moving) (f::spatial-abstraction (? n f::spatial-point f::spatial-region f::line))))
+    :wordnet-sense-keys ("symbol%1:09:00" "url%1:10:00")
     )
 
 ;; the physical representation of text
 (define-type ONT::TEXT-REPRESENTATION
-     :wordnet-sense-keys ("matter%1:10:00")
+     :wordnet-sense-keys ("hypertext%1:10:00" "matter%1:10:00")
     :parent ONT::symbolic-REPRESENTATION
     )
 
 ;; font types and faces
 (define-type ONT::font
     :parent ONT::text-REPRESENTATION
+    :wordnet-sense-keys ("font%1:10:00")
     )
 
 ;; ligature, accent mark, diacritic, etc.
@@ -1924,6 +1927,7 @@
 ;; link
 (define-type ONT::LINK
     :parent ONT::symbolic-representation
+    :wordnet-sense-keys ("link%1:06:03")
     )
 
 ; <

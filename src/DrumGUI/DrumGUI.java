@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.84 2019/10/12 15:56:02 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.85 2019/11/07 16:42:42 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -20,6 +20,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -299,10 +301,11 @@ public class DrumGUI extends StandardTripsModule {
         splitParagraphsMode = propertyValueBoolean("input.split-into-paragraphs") && !splitOnNewlines;
 
         // ready
-        sendSubscriptions();
         initLog();
-        setTimeOfSystemActivity();
+        dumpProperties();
+        sendSubscriptions();
         ready();
+        setTimeOfSystemActivity();
 
         // get dataset
         if (mode == Mode.CONNECTED) {
@@ -358,7 +361,6 @@ public class DrumGUI extends StandardTripsModule {
         if ((value = getParameter("-config")) != null) {
             loadProperties(value);
         }
-        dumpProperties();
 
         if ((value = getParameter("-display")) != null) {
             showDisplay = StringUtils.stringToBoolean(value);
@@ -433,10 +435,12 @@ public class DrumGUI extends StandardTripsModule {
     }
 
     /**
-     * Dumps properties to STDERR.
+     * Dumps properties to logfile or STDERR.
      */
     private void dumpProperties() {
-        properties.list(System.err);
+        StringWriter writer = new StringWriter();
+        properties.list(new PrintWriter(writer));
+        log("properties", writer.getBuffer().toString());
     }
 
     /**
@@ -536,7 +540,7 @@ public class DrumGUI extends StandardTripsModule {
      * Handles {@code tell} messages.
      */
     public void receiveTell(KQMLPerformative msg, Object contentobj) {
-        log("<received>\n" + msg + "\n</received>");
+        log("received", msg.toString());
 
         if (contentobj.toString().equals("NIL")) {
             errorReply(msg, "NIL content in tell");
@@ -580,7 +584,7 @@ public class DrumGUI extends StandardTripsModule {
      * Handles {@code request} messages.
      */
     public void receiveRequest(KQMLPerformative msg, Object contentObject) {
-        log("<received>\n" + msg + "\n</received>");
+        log("received", msg.toString());
 
         if (contentObject.toString().equals("NIL")) {
             errorReply(msg, "NIL content in request");
@@ -664,7 +668,7 @@ public class DrumGUI extends StandardTripsModule {
      * Handles {@code reply} messages.
      */
     public void receiveReply(KQMLPerformative msg, Object contentObject) {
-        log("<received>\n" + msg + "\n</received>");
+        log("received", msg.toString());
 
         KQMLList content = (KQMLList) contentObject;
         String verb = content.get(0).toString();
@@ -1145,7 +1149,7 @@ public class DrumGUI extends StandardTripsModule {
             }
             Debug.debug("STATE: got extraction-result :uttnum " + newExtractions.get(0).getUttnum());
         } catch (Exception e1) {
-            log("[ERROR] Extraction interpretation failed: " + e1);
+            log("error", "Extraction interpretation failed: " + e1);
             Debug.error("STATE: got extraction-result and failed!");
         }
     }
@@ -1415,7 +1419,7 @@ public class DrumGUI extends StandardTripsModule {
         // update and save the EKB
         try {
             String ekbFile = kb.saveEKB();
-            log("<ekb>" + ekbFile + "</ekb>");
+            log("ekb", ekbFile);
         } catch (Exception e) {
             // TODO: what do we do in this situation??? task requester expects something...
             Debug.error("Couldn't save the EKB: " + e);
@@ -1559,7 +1563,7 @@ public class DrumGUI extends StandardTripsModule {
         kb.setCompletionStatus(documentDone && (remaining == 0)); // no remaining text in current doc, no remaining docs
         try {
             String ekbFile = kb.saveEKB();
-            log("<ekb>" + ekbFile + "</ekb>");
+            log("ekb", ekbFile);
         } catch (Exception e) {
             // TODO: what do we do in this situation??? task requester expects something...
             Debug.error("Couldn't save the EKB: " + e);
@@ -1758,8 +1762,8 @@ public class DrumGUI extends StandardTripsModule {
         }
         Debug.debug("STATE: Working on: " + dataFile);
         Debug.debug("full list: " + Arrays.toString(dataset.getSelection()));
-        log("<folder>" + dataFolder + "</folder>\n" + "<file>" + dataFile + "</file>");
         currentInputFile = dataFolder + File.separator + dataFile;
+        log("input", currentInputFile);
         currentInputData = dataset.getText(dataFile);
         // send start-conversation
         try {
@@ -2018,7 +2022,7 @@ public class DrumGUI extends StandardTripsModule {
     /**
      * Document normalization.
      * <p>
-     * Not implemented.
+     * For the moment, this just means replacing Unicode characters that are not valid XML characters. 
      */
     private void normalizeDocument() {
         currentInputData = currentInputData.replace("\u000C", "\n");
@@ -2028,7 +2032,7 @@ public class DrumGUI extends StandardTripsModule {
      * Breaks document into fragments (paragraphs or lines). By default, a paragraph break is defined
      * as too consecutive line terminators, potentially preceded by whitespace.
      * <p>
-     * Note: All empty lines and line-initial white space are skipped.
+     * Note: All separators are skipped.
      * 
      * @see #fragments
      */
@@ -2348,17 +2352,19 @@ public class DrumGUI extends StandardTripsModule {
     }
 
     /**
-     * Writes string to log file.
+     * Writes string to log file, using a specified entry tag. Defaults to writing to STDERR if log file is not defined.
      *
+     * @param tag
+     *            Entry tag
      * @param text
      *            String to write.
-     * @see #handleParameters
+     * @see #logging
      */
-    private void log(String text) {
+    private void log(String tag, String text) {
         if (log != null) {
-            log.log(text);
+            log.log(tag, text);
         } else {
-            System.out.println(text);
+            System.err.println(tag + ": " + text);
         }
     }
 
@@ -2418,7 +2424,7 @@ public class DrumGUI extends StandardTripsModule {
      * Sends a message. Wrapper for {@code super.send()} with logging.
      */
     protected synchronized void send(KQMLPerformative msg) {
-        log("<sent>\n" + msg + "\n</sent>");
+        log("sent", msg.toString());
         super.send(msg);
     }
 
@@ -2440,7 +2446,7 @@ public class DrumGUI extends StandardTripsModule {
             }
             String reply = ((KQMLList) content).get(0).toString();
             if (reply.equalsIgnoreCase("ok")) {
-                log("<received>\n" + replyMsg + "\n</received>");
+                log("received", replyMsg.toString());
                 KQMLObject uttnums = ((KQMLList) content).getKeywordArg(":uttnums");
                 Debug.debug("STATE: got OK - uttnums: " + uttnums);
                 if (uttnums != null) {
@@ -2474,7 +2480,7 @@ public class DrumGUI extends StandardTripsModule {
         }
 
         public void receive(KQMLPerformative replyMsg) {
-            log("<received>\n" + replyMsg + "\n</received>");
+            log("received", replyMsg.toString());
             KQMLObject content = replyMsg.getParameter(":content");
             if (!(content instanceof KQMLList)) {
                 error("Bad message format");
@@ -2518,7 +2524,7 @@ public class DrumGUI extends StandardTripsModule {
         }
 
         public void receive(KQMLPerformative replyMsg) {
-            log("<received>\n" + replyMsg + "\n</received>");
+            log("received", replyMsg.toString());
             KQMLObject content = replyMsg.getParameter(":content");
             if (!(content instanceof KQMLList)) {
                 error("Bad message format");
