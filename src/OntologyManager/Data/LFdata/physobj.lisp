@@ -1996,6 +1996,7 @@
 
 (define-type ont::anatomy
     :parent ont::natural-object
+    :wordnet-sense-keys ("human_body%1:08:00")
     )
 
 ;;; maybe this should be renamed to human-body-part?
@@ -2029,6 +2030,7 @@
 (define-type ONT::internal-body-part
     :parent ONT::BODY-PART
     :sem (F::Phys-obj (F::intentional -))
+    :wordnet-sense-keys ("digestive_system%1:08:00" "somatic_cell%1:08:00" "tract%1:08:01" "vocal_cord%1:08:00" "brain%1:08:00" "blood_vessel%1:08:00" "connective_tissue%1:08:00" "organ%1:08:00" "cavity%1:08:00" "duct%1:08:00" "abdomen%1:08:00" "stomach%1:08:00" "lymphatic_tissue%1:08:00")
     )
 
 (define-type ONT::CELL-PART
@@ -2268,34 +2270,41 @@
     :sem (F::Phys-obj (F::mobility F::non-self-moving)(F::object-function F::instrument) (f::origin f::artifact))
     :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::Origin F::Artifact)(F::mobility F::non-self-moving) ))
 		)
+    :wordnet-sense-keys ("chip%1:06:00" "console%1:06:02" "jack%1:06:04" "computer_circuit%1:06:00" "slot%1:06:02")
     )
 
 (define-type ONT::computer-monitor
     :parent ONT::computer-part
     :sem (F::Phys-obj (F::mobility F::non-self-moving)(F::object-function F::instrument) (f::origin f::artifact))
+    :wordnet-sense-keys ("monitor%1:06:02")
     )
 
 (define-type ONT::computer-hardware
     :parent ONT::computer-PART
+    :wordnet-sense-keys ("hardware%1:06:01")
     )
 
 ;; mouse, keyboard, keypad, trackball, scanner
 (define-type ONT::computer-input-device
     :parent ONT::computer-hardware
+    :wordnet-sense-keys ("keyboard%1:06:01" "mouse%1:06:00" "scanner%1:06:02")
     )
 
 (define-type ONT::computer-firmware
     :parent ONT::computer-hardware
+    :wordnet-sense-keys ("firmware%1:10:00")
     )
 
 (define-type ONT::computer-network
     :parent ONT::computer-PART
+    :wordnet-sense-keys ("computer_network%1:06:00" "digital_subscriber_line%1:06:00" "server%1:06:01")
     )
 
 ;; should these be hardware or software?
-(define-type ONT::computer-network-type
+#|(define-type ONT::computer-network-type
     :parent ONT::computer-network
     )
+|#
 
 (define-type ONT::computer-card
     :parent ONT::COMPUTER-PART
