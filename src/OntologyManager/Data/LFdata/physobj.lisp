@@ -1692,7 +1692,8 @@
 ;; these are typically containers (e.g. diagram, map) to which things can be added
 (define-type ONT::PHYS-REPRESENTATION
     :parent ONT::PHYS-OBJECT
-    :wordnet-sense-keys ("representation%1:06:00" "representation%1:04:01::")
+    :wordnet-sense-keys ("representation%1:04:01" "representation%1:06:00")
+    :comment "anything used to encode/store or share information physically, e.g., it could be a device to store information, or a physical representation to enable encoding information etc."
     :sem (F::Phys-obj (:required (F::Form F::Object) (F::Origin F::Artifact) (F::Intentional -) (F::object-function F::representation) (f::trajectory +))
 		      ;; swift -- we need trajectory + and f::strip so we can scroll up and down displays, pages, documents etc.
 		      (:default (f::container +)  (F::information F::information-content) (f::mobility f::non-self-moving) (f::spatial-abstraction (? sab f::spatial-point f::spatial-region f::strip))))
@@ -1703,20 +1704,22 @@
 (define-type ONT::INFO-HOLDER
     :parent ONT::PHYS-REPRESENTATION
     :arguments ((:optional ONT::formal))
+    :comment "a method/manner or device to store information, may also be used for sharing information"
     )
 
 ;; channel
 (define-type ONT::communication-channel
     :parent ONT::info-holder
     :wordnet-sense-keys ("channel%1:10:01")
+    :comment "means to transmit information (through broadcasting/telecasting)"
     )
 
 
 ;; items in this class "stand for" something, and have ont::of arguments
-(define-type ont::direct-representation
-    :comment "a physical object that conatins information (e.g., text, graphics)"
-    :parent ONT::info-holder
-    )
+;(define-type ont::direct-representation
+;    :comment "a copy of a document or other means to store information in a hard copy" ;"a physical object that conatins information (e.g., text, graphics)"
+;    :parent ONT::info-holder
+;    )
     
 
 ;; items in this class represent comments on something, and have ont::of arguments
@@ -1732,6 +1735,7 @@
 (define-type ont::document
     :parent ONT::info-holder
     :wordnet-sense-keys ("document%1:06:00" "document%1:21:00")
+    :comment "a report or other types of documents to record information"
     :arguments (
 ;;		(:optional ONT::Associated-information)
 		)
@@ -1740,8 +1744,9 @@
 ;; items in this class don't stand for something, but they can contain representations
 ;; e.g. page, book, display
 (define-type ONT::info-medium
-    :wordnet-sense-keys ("written_communication%1:10:00" "speech%1:10:01")
-    :parent ONT::info-holder
+    :wordnet-sense-keys ("speech%1:10:01" "written_communication%1:10:00")
+    :parent ONT::PHYS-REPRESENTATION ;info-holder
+    :comment "a medium to transmit or store information"
     :sem (F::Phys-obj (F::information F::data)) ;; why (f::container -) here?
     )
 
@@ -1758,8 +1763,9 @@
 
 ;; licenses or agreements
 (define-type ont::official-document
-    :parent ont::direct-representation
+    :parent ont::DOCUMENT ;direct-representation
     :wordnet-sense-keys ("document%1:10:00" "written_document%1:10:00" "papers%1:10:00")
+    :comment "a document recording a formal agreement"
     )
 
 ;; e.g. invoice
@@ -1769,7 +1775,7 @@
     )
 
 (define-type ont::letter-mail
-    :parent ONT::direct-representation
+    :parent ONT::DOCUMENT ;direct-representation
     :wordnet-sense-keys ("letter%1:10:00" "missive%1:10:00")
     )
 
@@ -1777,6 +1783,7 @@
 ;; copy, backup, cc, bcc
 (define-type ont::copy
     :parent ONT::direct-representation
+    :comment "a copy of a document or other means to store information in a hard copy"
     )
 
 ;(define-type ONT::reservation
@@ -1784,29 +1791,35 @@
 ;
 ; )
 
+(define-type ONT::INFO-REPRESENTATION
+    :parent ONT::INFO-HOLDER
+    :wordnet-sense-keys ("representation%1:09:00")
+    :comment "method to store/encode information for conveying it in a visual manner"
+    )
+
 (define-type ONT::MAP
-    :parent ONT::direct-REPRESENTATION
+    :parent ONT::INFO-REPRESENTATION ;direct-REPRESENTATION
     :wordnet-sense-keys ("map%1:06:00" "chart%1:06:00")
     :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::form F::Geographical-object)))
 		)
     )
 
 (define-type ONT::IMAGE
-    :parent ONT::direct-REPRESENTATION
+    :parent ONT::INFO-REPRESENTATION ;direct-REPRESENTATION
     :wordnet-sense-keys ("picture%1:06:00" "image%1:06:00" "icon%1:06:00" "ikon%1:06:00")
     :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj))
 		)
     )
 
 (define-type ONT::CHART
-    :parent ONT::direct-REPRESENTATION
+    :parent ONT::INFO-REPRESENTATION ;direct-REPRESENTATION
     :wordnet-sense-keys ("chart%1:10:00" "table%1:14:00")
     :arguments ((:OPTIONAL ONT::FIGURE (?o (F::information F::information-content)))
 		)
     )
 
 (define-type ONT::PLOT-DIAGRAM-DRAWING
-    :parent ONT::direct-REPRESENTATION
+    :parent ONT::INFO-REPRESENTATION ;direct-REPRESENTATION
     :wordnet-sense-keys ("plot%1:10:01" "spectrum%1:19:00" "diagram%1:06:00")
     :arguments ((:OPTIONAL ONT::FIGURE (?o (F::information F::information-content)))
 		)
@@ -1816,11 +1829,13 @@
 (define-type ONT::DISPLAY
     :parent ONT::info-medium
     :wordnet-sense-keys ("blackboard%1:06:00" "display%1:06:00" "display%1:06:01" "screen%1:06:06")
+    :comment "a device used to display information"
     )
 
 (define-type ONT::PUBLICATION
-    :parent ONT::info-medium
+    :parent ONT::DOCUMENT ;info-medium
     :wordnet-sense-keys ("publication%1:10:00")
+    :comment "printed material such as a book"
     :arguments ((:OPTIONAL ONT::FIGURE (?o (F::information F::information-content)))
 ;		(:optional ont::originator (?org (f::intentional +))) ;; a book/paper/article by an author
 		)
@@ -1836,7 +1851,7 @@
 
 ;; rss feed
 (define-type ONT::feed
-    :parent ONT::publication
+    :parent ONT::INFO-HOLDER ;publication
     )
 
 
@@ -1856,7 +1871,7 @@
     )
 
 (define-type ONT::database
-    :parent ONT::info-medium
+    :parent ONT::INFO-HOLDER ;info-medium
     :wordnet-sense-keys ("database%1:10:00")
     )
 
@@ -1867,14 +1882,15 @@
     )
 
 (define-type ONT::WEBSITE
-    :parent ONT::info-medium
+    :parent ONT::INFO-HOLDER ;iinfo-medium
     :wordnet-sense-keys ("web_site%1:10:00" "website%1:10:00" "internet_site%1:10:00" "site%1:10:00")
     )
 
 ;; items in this class can be "filled in"
 ;; e.g. application
 (define-type ONT::template-info-object
-    :parent ONT::info-medium
+    :parent ONT::INFO-HOLDER ;info-medium
+    :comment "a templatic document to store and provide information"
     )
 
 ;; field, slot, box, blank
@@ -1898,12 +1914,14 @@
     :sem (F::Phys-obj (:required (F::Form F::Object) (F::Origin F::Artifact) (F::intentional -) (F::object-function F::representation) (F::information F::data))
 		      (:default (F::Container -) (f::mobility f::non-self-moving) (f::spatial-abstraction (? n f::spatial-point f::spatial-region f::line))))
     :wordnet-sense-keys ("symbol%1:09:00" "url%1:10:00")
+    :comment "method to represent information symbolically"
     )
 
 ;; the physical representation of text
 (define-type ONT::TEXT-REPRESENTATION
      :wordnet-sense-keys ("hypertext%1:10:00" "matter%1:10:00")
     :parent ONT::symbolic-REPRESENTATION
+    :comment "textual symbols used to represent information or properties of text used to represent information"
     )
 
 ;; font types and faces
@@ -1916,6 +1934,7 @@
 (define-type ONT::graphic-symbol
      :wordnet-sense-keys ("mark%1:10:03")
     :parent ONT::symbolic-REPRESENTATION
+    :comment "a symbol to represent information but in a pictorial way"
     )
 
 ;; buttons, arrows (all non-textual)
@@ -2319,7 +2338,8 @@
     )
 
 (define-type ONT::data-storage-medium
-    :parent ONT::info-medium
+    :parent ONT::INFO-HOLDER ;info-medium
+    :comment "physical devices used to store data in a soft copy"
     )
 
 (define-type ONT::io-device
@@ -2698,7 +2718,7 @@
     )
 
 (define-type ONT::prescription
-    :parent ONT::PHYS-REPRESENTATION
+    :parent ONT::DOCUMENT
     :wordnet-sense-keys ("prescription%1:10:02" "prescription%1:10:01")
     :sem (F::PHYS-OBJ (F::FORM F::SOLID-OBJECT) (F::ORIGIN F::ARTIFACT) (F::INTENTIONAL -))
     :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj))

@@ -1352,6 +1352,7 @@
     :wordnet-sense-keys ("letter%1:10:01")
     :parent ONT::text-representation ;:parent ONT::linguistic-object
 ; :sem (F::Abstr-obj (F::information F::data))
+    :comment "a textual symbol to represent information"
     )
 
 ;; letters of the alphabet

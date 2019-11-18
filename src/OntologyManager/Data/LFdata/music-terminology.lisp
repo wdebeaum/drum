@@ -125,7 +125,7 @@
 )
 
 (define-type ONT::MUSICAL-DOCUMENT
- :parent ONT::INFO-MEDIUM
+ :parent ONT::DOCUMENT ;INFO-MEDIUM
  :sem (F::Phys-obj)
  :wordnet-sense-keys ("sheet_music%1:10:00")
 )
