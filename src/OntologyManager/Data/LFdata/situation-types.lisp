@@ -287,7 +287,7 @@
 
 
 (define-type ONT::Cogitation
- :wordnet-sense-keys ("look_at%2:31:00" "deal%2:31:10" "take%2:31:03" "consider%2:31:01" "cogitate%2:31:01" "bethink%2:39:00" "brood%2:42:00" "consider%2:32:00" "think%2:31:08")
+ :wordnet-sense-keys ("look_at%2:31:00" "deal%2:31:10" "take%2:31:03" "consider%2:31:01" "cogitate%2:31:01" "cogitate%2:31:00" "bethink%2:39:00" "brood%2:42:00" "consider%2:32:00" "think%2:31:08" "process%1:09:00")
  :parent ONT::change-awareness
  :sem (F::Situation (:required (F::Trajectory -)))
  :arguments ((:ESSENTIAL ONT::Neutral ((? atp F::phys-obj F::abstr-obj F::situation)))
@@ -472,7 +472,7 @@
  )
 
 (define-type ONT::Request
- :wordnet-sense-keys ("call%2:41:04" "insist%2:32:00" "request%1:10:00" "request%2:32:01")
+ :wordnet-sense-keys ("call%2:41:04" "insist%2:32:00" "request%1:10:00" "request%2:32:01" "demand%1:10:00")
  :parent ONT::directive
  :comment "the generic directive act"
  :sem (F::Situation (F::Cause F::Agentive))

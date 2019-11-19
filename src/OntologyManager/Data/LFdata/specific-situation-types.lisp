@@ -1352,7 +1352,7 @@
 |#
 
 (define-type ONT::Stop
-    :wordnet-sense-keys ("abort%2:29:00" "blow_out%2:43:00" "bog_down%2:38:01" "break%2:42:04" "cease%2:42:00" "discontinue%2:42:00" "expire%2:42:00" "get_off%2:41:00" "give_up%2:42:00" "halt%2:38:01" "lay_off%2:42:00" "quit%2:42:04" "run_out%2:42:00" "stop%2:38:01" "stop%2:42:00" "strand%2:38:02" "strand%2:38:03" "terminate%2:30:01")
+    :wordnet-sense-keys ("abort%2:29:00" "blow_out%2:43:00" "bog_down%2:38:01" "break%2:42:04" "cease%2:42:00" "discontinue%2:42:00" "expire%2:42:00" "get_off%2:41:00" "give_up%2:42:00" "halt%2:38:01" "lay_off%2:42:00" "quit%2:42:04" "run_out%2:42:00" "stop%2:38:01" "stop%2:42:00" "strand%2:38:02" "strand%2:38:03" "terminate%2:30:01" "end%2:42:00")
     :parent ONT::inhibit-effect
 ;    :arguments ((:ESSENTIAL ONT::affected ((? oc F::Situation)))  ; commented this out because we can say "stop the car"
 ;		)    
@@ -2886,7 +2886,7 @@
 
 ;; cognizer performs some mental calculation
 (define-type ONT::calculation
-    :wordnet-sense-keys ("account%2:40:00" "get%2:31:03")
+    :wordnet-sense-keys ("account%2:40:00" "get%2:31:03" "total%2:42:00")
     :parent ONT::becoming-aware-of-value
     )
 
@@ -5495,7 +5495,7 @@
 
 ;; cognizer learns (from) some activity
 (define-type ont::learn
- :wordnet-sense-keys ("learn%2:31:00" "larn%2:31:00" "acquire%2:31:00" "study%2:31:03")
+ :wordnet-sense-keys ("learn%2:31:00" "larn%2:31:00" "acquire%2:31:00" "study%2:31:03" "learning%1:09:00")
     :parent ont::cogitation
     :arguments
     ((:optional ont::agent (f::phys-obj (f::intentional +))) ;; this would be a teacher
