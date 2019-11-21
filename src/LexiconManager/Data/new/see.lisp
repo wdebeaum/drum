@@ -29,7 +29,7 @@
     ((LF-PARENT ONT::understand)
      ;;(SEM (F::Aspect F::Indiv-level) (F::Time-span F::extended))
      (example "I see the problem")
-     (TEMPL experiencer-theme-xp-templ)
+     (TEMPL experiencer-neutral-xp-templ)
      (PREFERENCE 0.98) 
      )
     ((meta-data :origin plow :entry-date 20060414 :change-date nil :comments nil :vn ("see-30.1-1"))

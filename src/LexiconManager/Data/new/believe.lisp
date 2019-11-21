@@ -11,7 +11,7 @@
      (example "I believe that going along the coast is faster")
      (LF-PARENT ONT::BELIEVE)
      (SEM (F::Aspect F::Indiv-level))
-     (TEMPL experiencer-formal-as-comp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL experiencer-formal-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
      )
     ((LF-PARENT ONT::believe)     
      (example "they believe her to have cancer")
@@ -32,7 +32,8 @@
      ((LF-PARENT ONT::TRUST)     
      (SEM (F::Aspect F::Indiv-level) (F::Time-span F::extended))
      (TEMPL experiencer-neutral-xp-templ)
-     (example "I believe him")
+      (example "I believe him")
+     
       )
     )
    )

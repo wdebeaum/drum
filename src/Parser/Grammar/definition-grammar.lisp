@@ -1,7 +1,7 @@
 ;;;;
 ;;;; robust.lisp
 ;;;;
-;;;; Time-stamp: <Tue Jul 30 12:55:41 EDT 2019 james>
+;;;; Time-stamp: <Wed Nov 13 12:42:03 EST 2019 james>
 ;;;;
 
 (in-package :W)
@@ -31,7 +31,7 @@
 	       (subj (% ?xx (sem ?subjsem)))
 	       (dobj (% ?yy (sem ?dobjsem)))
 	       (subjvar (% *PRO* (var *) (class ont::ROLE-REF) (sem ?subjsem) (constraint (& (:context-rel :lsubj)))))
-	       (gap (% NP (gap -)
+	       (gap (% (? x NP PP) (gap -)
 			(var (% *PRO* (var **) (class ont::ROLE-REF) (sem ?dobjsem)
 				(constraint (& (:context-rel :dobj)))))))
 		)))
@@ -44,7 +44,7 @@
 	       (dobjvar -)
 	       (subjvar (% *PRO* (var *) (class ont::ROLE-REF) (sem ?subjsem) (constraint (& (:context-rel :lsubj)))))
 	       (comp3 (% ?comp3 (sem ?compsem)))
-	       (gap (% NP (gap -)
+	       (gap (% (? xx NP PP) (gap -)
 			(var (% *PRO* (var **) (class ont::ROLE-REF) (sem ?compsem)
 				(constraint (& (:context-rel :lcomp)))))))
 	       (passive +)

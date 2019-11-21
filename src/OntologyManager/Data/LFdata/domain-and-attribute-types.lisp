@@ -755,6 +755,11 @@
  ;; WORDS: quality
 )
 
+(define-type ont::fame-scale
+ :parent ont::evaluation-scale
+ :wordnet-sense-keys ("fame%1:26:01" "fame%1:26:02" "prominence%1:26:00")
+)
+
 ;; freshness
 (define-type ont::freshness-scale
  :parent ont::evaluation-scale

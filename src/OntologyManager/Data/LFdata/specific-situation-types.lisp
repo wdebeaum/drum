@@ -276,7 +276,7 @@
   )
 
 (define-type ONT::MOVE
-  :wordnet-sense-keys ("be_active%2:29:00" "draw%2:35:13" "go%2:33:00" "go%2:38:00" "go%2:42:06" "jaunt%2:38:00" "locomote%2:38:00" "make%2:38:05" "mobilize%2:30:00" "move%2:38:00" "move%2:38:02" "move%2:38:03" "move_out%2:41:00" "relocation%1:04:00" "take%2:38:05" "transport%1:04:01" "travel%2:38:00" "wreathe%2:38:00" "movement%1:11:00")
+  :wordnet-sense-keys ("be_active%2:29:00" "draw%2:35:13" "go%2:33:00" "go%2:38:00" "go%2:42:06" "jaunt%2:38:00" "locomote%2:38:00" "make%2:38:05" "mobilize%2:30:00" "move%2:38:00" "move%2:38:02" "move%2:38:03" "movement%1:04:02" "move_out%2:41:00" "relocation%1:04:00" "take%2:38:05" "travel%2:38:00" "wreathe%2:38:00" "movement%1:11:00")
  :parent ont::motion
  :sem (F::SITUATION (F::CONTAINER -) (F::Locative -) (F::trajectory +))
  :arguments (;(:OPTIONAL ONT::agent (F::Phys-obj (:required (f::origin (? org f::human f::non-human-animal)))
@@ -906,7 +906,7 @@
 
 
 (define-type ONT::AVOID-LOCATION
- :parent ONT::PATH-SHAPE
+ :parent ONT::MOTION ;PATH-SHAPE
  :sem (F::SITUATION (F::Cause F::Agentive) (F::Trajectory -))
  :arguments ((:REQUIRED ONT::formal)   ;; the location, or an object
              )
@@ -3561,7 +3561,7 @@
 ;; create, make
 ;; how is this related to/different from ont::cause-make?
 (define-type ONT::CREATE
- :wordnet-sense-keys ("make%2:36:00" "create%2:36:00" "create%2:36:03")
+ :wordnet-sense-keys ("create%2:36:00" "create%2:36:03" "creation%1:04:00" "make%2:36:00")
  :parent ONT::event-of-creation
  :sem (F::SITUATION (:required (F::Cause F::agentive) (F::Trajectory -))(:default (F::Aspect F::bounded)))
  :arguments (;;(:REQUIRED ONT::FORMAL ((? th F::Phys-obj F::Abstr-obj F::situation)))

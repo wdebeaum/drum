@@ -343,7 +343,8 @@
 
 ;; cf related concept ont::create, with agent and formal roles
 (define-type ONT::Invention
- :parent ONT::event-of-creation
+ :wordnet-sense-keys ("invention%1:04:00" "invention%1:06:00" "invention%1:09:00")
+ :parent ONT::CREATE ;event-of-creation
  :arguments ((:ESSENTIAL ONT::agent (F::phys-obj (F::intentional +)) )
              ;;; Invention
 	     ;; ONT::result is our name for VN product
@@ -354,6 +355,7 @@
  )
 
 (define-type ONT::Salience
+ :wordnet-sense-keys ("salience%1:26:00")
  :parent ONT::event-of-state
  :sem (F::Situation (F::Cause F::Mental) (F::Trajectory -))
  ;;; Content
@@ -627,12 +629,12 @@
     )
 
 ;;; Even if we do not know the path, it is implied in the verb
-(define-type ONT::Path-shape
- :parent ont::motion
- :arguments (
+;(define-type ONT::Path-shape
+; :parent ont::motion
+; :arguments (
 ;	     (:ESSENTIAL ONT::Path)
-             )
- )
+;             )
+; )
 
 ;; for verbs that commonly allow non-physical and/or non-moveable formals, e.g.
 ;; put the title in the text box, put the city here, insert the text here
@@ -697,6 +699,7 @@
  )
 
 (define-type ONT::Transportation
+ :wordnet-sense-keys ("transportation%1:04:00" "transportation%1:04:01")
  :parent ont::motion
  :sem (F::Situation (F::Cause F::Agentive))
  :arguments (

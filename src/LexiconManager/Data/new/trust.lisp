@@ -13,14 +13,14 @@
    )
 ))
 
-(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
+(define-words :pos W::v 
  :words (
  (W::trust
    (SENSES
     ((meta-data :origin calo :entry-date 20031230 :change-date nil :comments html-purchasing-corpus)
      (LF-PARENT ONT::TRUST)
      (SEM (F::Aspect F::Indiv-level))
-     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
+     (TEMPL EXPERIENCER-NEUTRAL-XP-TEMPL)
      )
     )
    )

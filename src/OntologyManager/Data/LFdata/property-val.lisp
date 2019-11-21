@@ -4025,9 +4025,10 @@
 
 ;; social status relating to fame
 (define-type ont::fame-val
- :parent ont::status-val 
+ :parent ont::EVALUATION-ATTRIBUTE-VAL ;status-val 
  :wordnet-sense-keys ("famous%5:00:00:known:00" "celebrated%5:00:00:known:00" "legendary%5:00:00:known:00")
  :comment "social status relating to fame"
+ :sem (F::abstr-obj (F::scale ont::fame-scale))
 )
 
 (define-type ont::infamous-val

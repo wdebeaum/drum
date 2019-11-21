@@ -10,7 +10,7 @@
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("stimulus_subject-30.4") :wn ("taste%2:39:02" "taste%2:39:12"))
      (LF-PARENT ONT::appears-to-have-property)
      (example "it tastes good")
-     (TEMPL NEUTRAL-FORMAL-PRED-SUBJCONTROL-TEMPL) ; like look
+     (TEMPL EXPERIENCER-FORMAL-PRED-SUBJCONTROL-TEMPL) ; like look
      (PREFERENCE 0.96)
      )
     ((LF-PARENT ONT::active-perception)

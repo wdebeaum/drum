@@ -1702,14 +1702,14 @@
 
 ;;INFO-Holder needs much more work
 (define-type ONT::INFO-HOLDER
-    :parent ONT::PHYS-REPRESENTATION
+    :parent ONT::INFO-MEDIUM ;PHYS-REPRESENTATION
     :arguments ((:optional ONT::formal))
     :comment "a method/manner or device to store information, may also be used for sharing information"
     )
 
 ;; channel
 (define-type ONT::communication-channel
-    :parent ONT::info-holder
+    :parent ONT::INFO-MEDIUM ;info-holder
     :wordnet-sense-keys ("channel%1:10:01")
     :comment "means to transmit information (through broadcasting/telecasting)"
     )
@@ -1782,7 +1782,7 @@
 
 ;; copy, backup, cc, bcc
 (define-type ont::copy
-    :parent ONT::direct-representation
+    :parent ONT::info-holder ;direct-representation
     :comment "a copy of a document or other means to store information in a hard copy"
     )
 
@@ -1878,11 +1878,11 @@
 ;; list
 (define-type ONT::list
     :wordnet-sense-keys ("list%1:10:00" "listing%1:10:00")
-    :parent ONT::database
+    :parent ONT::INFO-HOLDER ;database
     )
 
 (define-type ONT::WEBSITE
-    :parent ONT::INFO-HOLDER ;iinfo-medium
+    :parent ONT::INFO-HOLDER ;info-medium
     :wordnet-sense-keys ("web_site%1:10:00" "website%1:10:00" "internet_site%1:10:00" "site%1:10:00")
     )
 

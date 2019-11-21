@@ -2146,6 +2146,13 @@
 					      (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive ?exp))))) ont::formal)
     ))
 
+(EXPERIENCER-FORMAL-XP-TEMPL
+   (ARGUMENTS
+    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar) (w::expletive ?exp)) ONT::experiencer)
+    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::finite))) 
+		      ) ont::formal)
+    ))
+
 (AFFECTED-FORMAL-SUBJCONTROL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar) (w::expletive ?exp)) ONT::affected)
@@ -2373,7 +2380,7 @@
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::neutral)
     (LOBJ (:parameter xp (:default (% W::NP (w::var ?dobjvar)))) ONT::neutral1)
-    (LCOMP (:parameter xp2 (:default(% W::PP (w::ptype w::as) (w::arg ?dobjvar)))) ont::formal)
+    (LCOMP (:parameter xp2 (:default (% W::PP (w::ptype w::as) (w::arg ?dobjvar)))) ont::formal)
     ))
 
   (NEUTRAL-NEUTRAL1-FORMAL-2-XP-3-XP2-PP-OPTIONAL-TEMPL		

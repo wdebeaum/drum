@@ -12,6 +12,11 @@
      (LF-PARENT ONT::occurring)
      (TEMPL neutral-templ )
      )
+    ((LF-PARENT ONT::START)
+     (example "he come to understand")
+     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
+     )
+        
     ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("escape-51.1-2"))
      (LF-PARENT ONT::COME)
      (example "the cargo/truck came yesterday")
