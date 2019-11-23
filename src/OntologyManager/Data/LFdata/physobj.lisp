@@ -1700,6 +1700,15 @@
     :arguments ((:OPTIONAL ONT::FIGURE))
     )
 
+;; items in this class don't stand for something, but they can contain representations
+;; e.g. page, book, display
+(define-type ONT::info-medium
+    :wordnet-sense-keys ("speech%1:10:01" "written_communication%1:10:00")
+    :parent ONT::PHYS-REPRESENTATION ;info-holder
+    :comment "a medium to transmit or store information"
+    :sem (F::Phys-obj (F::information F::data)) ;; why (f::container -) here?
+    )
+
 ;;INFO-Holder needs much more work
 (define-type ONT::INFO-HOLDER
     :parent ONT::INFO-MEDIUM ;PHYS-REPRESENTATION
@@ -1743,12 +1752,12 @@
 
 ;; items in this class don't stand for something, but they can contain representations
 ;; e.g. page, book, display
-(define-type ONT::info-medium
-    :wordnet-sense-keys ("speech%1:10:01" "written_communication%1:10:00")
-    :parent ONT::PHYS-REPRESENTATION ;info-holder
-    :comment "a medium to transmit or store information"
-    :sem (F::Phys-obj (F::information F::data)) ;; why (f::container -) here?
-    )
+;(define-type ONT::info-medium
+;    :wordnet-sense-keys ("speech%1:10:01" "written_communication%1:10:00")
+;    :parent ONT::PHYS-REPRESENTATION ;info-holder
+;    :comment "a medium to transmit or store information"
+;    :sem (F::Phys-obj (F::information F::data)) ;; why (f::container -) here?
+;    )
 
 ;; narratives, stories, accounts, histories
 (define-type ONT::chronicle

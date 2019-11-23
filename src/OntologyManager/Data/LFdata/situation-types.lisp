@@ -342,17 +342,17 @@
 
 
 ;; cf related concept ont::create, with agent and formal roles
-(define-type ONT::Invention
- :wordnet-sense-keys ("invention%1:04:00" "invention%1:06:00" "invention%1:09:00")
- :parent ONT::CREATE ;event-of-creation
- :arguments ((:ESSENTIAL ONT::agent (F::phys-obj (F::intentional +)) )
-             ;;; Invention
-	     ;; ONT::result is our name for VN product
-	     (:optional ONT::affected-Result)
-;             (:OPTIONAL ONT::Purpose)
-             (:OPTIONAL ONT::REASON)
-	     )
- )
+;(define-type ONT::Invention
+; :wordnet-sense-keys ("invention%1:04:00" "invention%1:06:00" "invention%1:09:00")
+; :parent ONT::CREATE ;event-of-creation
+; :arguments ((:ESSENTIAL ONT::agent (F::phys-obj (F::intentional +)) )
+;             ;;; Invention
+;	     ;; ONT::result is our name for VN product
+;	     (:optional ONT::affected-Result)
+;;             (:OPTIONAL ONT::Purpose)
+;             (:OPTIONAL ONT::REASON)
+;	     )
+; )
 
 (define-type ONT::Salience
  :wordnet-sense-keys ("salience%1:26:00")
