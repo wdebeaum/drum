@@ -1,7 +1,7 @@
 /*
  * DrumKB.java
  *
- * $Id: DrumKB.java,v 1.35 2019/06/20 04:35:26 lgalescu Exp $
+ * $Id: DrumKB.java,v 1.36 2019/11/27 00:20:08 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  9 May 2015
  */
@@ -567,7 +567,6 @@ public class DrumKB {
             }
         }
         return null;
-
     }
 
     /**
@@ -712,7 +711,15 @@ public class DrumKB {
      * 
      */
     protected String getTextSpan(int uttnum, int start, int end) {
-        String text = getParagraph(getParagraphIdForSentence(uttnum)).getText();
+        String text;
+        if (paragraphs.isEmpty()) {
+            // this happens when we're not in control of the text, but got an utterance from TextTagger
+            // in this case, offsets are relative to the sentence
+            text = getSentence(uttnum).getText();
+        } else {
+            // the default case: offsets are relative to paragraph
+            text = getParagraph(getParagraphIdForSentence(uttnum)).getText();
+        }
         if (text == null) {
             Debug.error("No text?!?");
             return null;

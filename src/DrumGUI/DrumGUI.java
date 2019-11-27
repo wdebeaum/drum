@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.85 2019/11/07 16:42:42 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.86 2019/11/27 00:20:07 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -706,6 +706,11 @@ public class DrumGUI extends StandardTripsModule {
         if (display != null) {
             display.showTextNoSelector(currentInputData);
         }
+        
+        // set up KB to allow processing extractions
+        kb = new DrumKB(properties);
+        kb.setID("tag-request");
+        kb.setParagraph(null, currentInputData);
     }
 
     /**
@@ -1199,14 +1204,11 @@ public class DrumGUI extends StandardTripsModule {
             isSysReady = true;
             sendGetTTParameters();
             if (mode == Mode.BATCH) {
-                // wait for a while to make sure TT really is online
-                try {
-                    Thread.sleep(10000);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
                 initiateProcessing(false);
             }
+//            if (mode == Mode.CONNECTED) {
+//                initiateProcessing(true);
+//            }
             if (display != null)
                 display.setState(Display.State.READY);
         }
