@@ -10,6 +10,7 @@
 	   100
 	   (?reln ?!obj ?t
 	    :spec ?reln
+	    :ONT ?t  ; TRIPS type
 	    :rule -add-spec
 	    ))
 
@@ -25,6 +26,8 @@
 	   (?reln ?!obj ?t
 	    :MOD ?!ev
 	    :MOD ?mod2
+	    :ONT ?t
+	    :spec ?reln ; since -add-spec> wouldn't be used
 	    :rule -state-resulting-from
 	    ))
 	  
