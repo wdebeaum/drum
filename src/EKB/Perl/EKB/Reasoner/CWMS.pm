@@ -1,9 +1,9 @@
 # CWMS.pm
 #
-# Time-stamp: <Thu Sep 26 18:46:17 CDT 2019 lgalescu>
+# Time-stamp: <Thu Sep 26 21:44:57 CDT 2019 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  1 Jun 2016
-# $Id: CWMS.pm,v 1.6 2019/09/26 23:47:07 lgalescu Exp $
+# $Id: CWMS.pm,v 1.7 2019/12/02 21:15:22 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -1039,6 +1039,31 @@ sub default_options {
    },
 
    ### TEMPORARY fixes
+   {
+    ## fix timex expressions for TIME-RANGE terms
+    name => 'EKR:FixTimeRangeTimex',
+    constraints => ['TERM[type="ONT::TIME-RANGE" and timex/from and timex/to]'],
+    handler => sub {
+      my ($rule, $ekb, $t) = @_;
+
+      my $t_id = $t->getAttribute('id');
+
+      INFO("Rule %s matches term %s",
+	   $rule->name(), $t_id);
+
+      my ($tx) = $t->findnodes('timex');
+      my @tx_children = $tx->childNodes(); ## from and to
+      foreach my $n (@tx_children) {
+	$tx->removeChild($n);
+	my $name = $n->nodeName;
+	$n->setNodeName( $name . "-time" );
+	$t->addChild($n);
+      }
+      $t->removeChild($tx);
+
+      1;
+    }
+   }
 
   );
 
