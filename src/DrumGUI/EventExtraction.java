@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.71 2019/11/27 00:19:48 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.72 2019/12/03 15:43:37 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -905,9 +905,9 @@ public class EventExtraction extends Extraction {
         String predType = ontType; // default
         String textAttr = "";
         // if we do have a context term, we pull info from there
-        // update 11/26/2019: nowadays the context term will have the same ont-type as the extraction itself; the original (LF) ont-type is stored in the :TYPE attribute
+        // update 12/03/2019: nowadays the original (LF) ont-type is stored in the :ONT attribute
         if (contextTerm != null) {
-            KQMLObject termType = contextTerm.getKeywordArg(":TYPE");
+            KQMLObject termType = contextTerm.getKeywordArg(":ONT");
             if (termType != null) {
                 String termOntWord = ontWord(termType);
                 if (!termOntWord.isEmpty()) {
