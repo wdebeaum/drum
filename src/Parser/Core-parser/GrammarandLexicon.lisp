@@ -256,7 +256,10 @@
 ;;   inserts the CAT feature for each constituent and builds all the variables.
 ;;   It also checks the format of the rule, and expands out any complex SEM features
 
+(defvar *rules-to-suppress* nil)
+
 (defun build-rule (r cg)
+  (when (not (member (cadr r) *rules-to-suppress*))
     (init-var-table)
     (if (not (verify-rule-id (cadr r) cg))
 	(parser-warn "Duplicate rule id, ~S, used in rule~%  ~S~%" (cadr r) r))
@@ -288,7 +291,7 @@
 		       (duplicate-feature-check lhs-constit r) (SECOND r)))
 
       (if (GapsDisabled) (list newrule)
-	(generate-gap-features-in-rule newrule))))
+	(generate-gap-features-in-rule newrule)))))
 
 (defun duplicate-feature-check (c r)
   "checks if same feature is defined twice in a constituent, and returns it if found"
