@@ -1860,7 +1860,7 @@
 
 (define-type ont::evoke-numbness
  :parent ont::neutral-experience
- :wordnet-sense-keys ("sedate%2:29:00" "numb%2:39:00")
+ :wordnet-sense-keys ("sedate%2:29:00" "numb%2:39:00" "anesthetize%2:29:00")
 )
 
 ;(define-type ONT::evoke-emotion
@@ -2574,8 +2574,8 @@
 
 (define-type ont::sing
     :parent ont::say
-    :wordnet-sense-keys ("sing%2:36:00")
-)
+    :wordnet-sense-keys ("sing%2:36:00" "singing%1:04:00")
+    )
 
 (define-type ont::extended-say
     :parent ont::say
@@ -3656,7 +3656,8 @@
 
 ;; shine, glow, glisten, gleam, sparkle
 (define-type ont::location-of-light
- :wordnet-sense-keys ("shine%2:43:00" "beam%2:43:03" "flash%2:39:00" "shine%2:43:03" "twinkle%1:11:00" "shimmer%1:11:00")
+    :wordnet-sense-keys ("shine%2:43:00" "beam%2:43:03" "flash%2:39:00" "shine%2:43:03" "twinkle%1:11:00" "shimmer%1:11:00"
+					 "glitter%2:39:00")
   :parent ont::emit-giveoff-discharge
   :sem (F::situation (:default (F::trajectory +)))
   ;;:arguments ((:essential ont::formal (f::phys-obj (F::intentional -))) ;; the thing that shines
@@ -4697,6 +4698,11 @@
  :parent ONT::arranging
  )
 
+(define-type ONT::decorate
+    :wordnet-sense-keys ("decorate%2:36:00")
+    :parent ONT::arranging
+    )
+
 (define-type ONT::exchange
  :parent ONT::arranging
  :wordnet-sense-keys ("exchange%2:40:00" "exchange%2:30:00" "transpose%2:30:00" "transpose%2:30:02" "transpose%2:36:00" "transpose%2:30:01" "transpose%2:30:03")
@@ -4880,7 +4886,7 @@
 
 ;;; This corresponds to all cases where things intersect
 (define-type ONT::INTERSECT
- :wordnet-sense-keys ("cross%2:38:03" "intersect%2:38:00" "hold%2:35:01" "coexist%2:42:00")
+ :wordnet-sense-keys ("cross%2:38:03" "intersect%2:38:00" "coexist%2:42:00")
  :parent ONT::position
  :comment "two objects share a common subpart"
  :sem (F::Situation (F::Aspect F::Indiv-level) (F::Cause -))
@@ -4929,6 +4935,7 @@
 
 (define-type ONT::support
     :parent ONT::POSITION
+     :wordnet-sense-keys ("support%2:35:00")
     :sem (F::Situation (F::Aspect F::Indiv-level) (F::Cause -))
     )
 
@@ -5018,7 +5025,8 @@
  :wordnet-sense-keys ("slope%2:38:00" "ascend%2:38:10")
  :parent ONT::BE-AT
  :sem (F::Situation (F::aspect F::stage-level))
- :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj))              )
+ :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj))
+	     (:optional ont::orientation (f::abstr-obj (f::type (? xx ont::direction ont::goal-reln)))))
  )
 
 ;; tilt,lean

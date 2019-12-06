@@ -2729,8 +2729,8 @@
 
 (define-type ont::slow-val
  :parent ont::speed-val 
- :wordnet-sense-keys ("slow%3:00:01" )
-)
+ :wordnet-sense-keys ("slow%3:00:01" "gradually%4:02:00")
+ )
 
 (define-type ont::instantaneous-val
  :parent ont::speed-val 
@@ -4971,7 +4971,8 @@
  )
 
 (define-type ONT::orientation-val
- :parent ONT::spatial-val
+    :parent ONT::spatial-val
+    :comment "spatial relations defining the orientation or an object"
   :wordnet-sense-keys ("oriented%3:00:00::" "orientated%3:00:00::" "orienting%3:00:00::" "orientating%3:00:00::" "unoriented%3:00:00::")
   :arguments ((:OPTIONAL ONT::GROUND (F::phys-obj))
              )

@@ -420,10 +420,17 @@ returns : function return value"
 (format *error-output* "~%~%LOADING MESSAGES~%~%")
 
 (defcomponent-handler
-    '(request &key :content (preliminary-define-type . *))
+    '(request &key :content (define-type . *))
     #'(lambda (msg args)
 	(apply #'add-new-type args))
   :subscribe t)
+
+
+(defmacro tell (&rest args)
+  `(apply #'additional ',args))
+
+(defun additional (&key content)
+  (apply #'add-new-type (cdr content)))
 
 (defmacro preliminary-define-type (&rest args)
   `(apply #'add-new-type ',args))
@@ -440,6 +447,7 @@ returns : function return value"
 						     (cons :required a)) arguments)
 			      :definitions definitions
 			      )
+	(format t "~%Defined type: ~S" trips-type)
 	(recompile-ontology))
       ;;  An existing type, we want to augment the existing definition with the axioms and comments
       (add-definition-to-existing-type trips-type definitions comment wnsense)
@@ -456,12 +464,12 @@ returns : function return value"
 					  ";;"
 					  comment))
 			     comment)))
-	#|(format t "~%~S" `(add-definition-to-existing-type :type ,type
-							   :wnsense ,wnsense
-							   :def ,simplified-def))))))|#
-	(send-msg `(request :content (add-definition-to-existing-type :type ,type
+	(print `(add-definition-to-existing-type :type ,type
+						    :wnsense ,wnsense
+						    :def ,simplified-def))
+	#|	(send-msg `(request :content (add-definition-to-existing-type :type ,type
 								      :wnsense ,wnsense
-								      :def ,simplified-def)))
+								      :def ,simplified-def)))|#
 	(setf (lf-description-definitions type-record)
 	      new-definition)
 	(when new-comment
@@ -470,15 +478,24 @@ returns : function return value"
 
 (defun simplify-def (def type)
   "check that we have non redundant content in the def before processing it"
-  (if (eq (car def) 'ont::OR)
-      (let ((newdef (cons 'ONT::OR
-			  (mapcar #'simplify-def1 (cdr def)))))
-	newdef)
-      ;; check for redundant def
+  (cond ((eq (car def) 'ont::OR)
+	 (let ((newdef (cons 'ONT::OR
+			     (mapcar #'(lambda (x) (simplify-def x type)) (cdr def)))))
+	   newdef))
+     #| ;; check for redundant def
       (if (or (eq (car def) 'ont::and)
-	      (member :formal def))
-	  (simplify-def1 def)
-	  (format t "~%Rejecting definition for type ~S:  ~S" type def))))
+	      (member :formal def))|#
+	((eq (car def) type)
+	  (progn
+	    (format t "~%Rejecting definition for type as redundant ~S:  ~S" type def)
+	    nil))
+	((and (eq (car def) 'ont::and)
+	     (consp (cadr def))
+	     (eq (caadr def) :*))
+	 (cdr def))
+	(t (simplify-def1 def)
+	  
+	   )))
 
 (defun simplify-def1 (olddef)
   "remove WNsense and force"

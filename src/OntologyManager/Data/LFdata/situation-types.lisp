@@ -586,7 +586,7 @@
 
 
 (define-type ONT::touch
-    :wordnet-sense-keys ("touch%2:35:00" "touch%1:04:00")
+    :wordnet-sense-keys ("touch%2:35:00" "touch%1:04:00" "caress%2:35:00")
     :parent ONT::cause-contact
     )
 
@@ -618,6 +618,12 @@
     :parent ont::cause-position
    ;:arguments ((:OPTIONAL ONT::instrument))
     )
+
+(define-type ONT::cause-surround
+    :wordnet-sense-keys ("enclose%2:35:00")
+    :parent ont::cause-position
+    )
+
 
 (define-type ONT::orient
     :comment "cause an AFFECTED to be oriented in some direction"
