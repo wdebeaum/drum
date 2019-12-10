@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.86 2019/11/27 00:20:07 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.87 2019/12/10 00:00:32 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -203,6 +203,13 @@ public class DrumGUI extends StandardTripsModule {
      */
     private boolean splitParagraphsMode = false;
     /**
+     * If {@code true}, paragraphs that don't look like sentences are skipped. For this option to be on,
+     * {@link #splitParagraphsMode} must also be on.
+     * 
+     * @see #splitParagraphsMode
+     */
+    private boolean validateParagraphs = false;
+    /**
      * If {@code true}, the document is considered pre-processed to contain one sentence per line. For the moment this
      * turns off {@link #splitParagraphsMode}.
      * If {@code false} (the default) no such assumption is made.
@@ -299,7 +306,9 @@ public class DrumGUI extends StandardTripsModule {
         splitOnNewlines = propertyValueBoolean("input.split-on-newlines");
         // break document into paragraphs?
         splitParagraphsMode = propertyValueBoolean("input.split-into-paragraphs") && !splitOnNewlines;
-
+        // break document into paragraphs?
+        validateParagraphs =propertyValueBoolean("input.validate-paragraphs") && splitParagraphsMode;
+                
         // ready
         initLog();
         dumpProperties();
@@ -401,6 +410,7 @@ public class DrumGUI extends StandardTripsModule {
         properties.put("tag.options.default", "(:split-clauses true :split-sentences true)");
         properties.put("input.split-into-paragraphs", "false");
         properties.put("input.split-on-newlines", "false");
+        properties.put("input.validate-paragraphs", "false");
         properties.put("extractions.mode", "DRUM");
         properties.put("ekb.reasoner", "DRUM");
     }
@@ -2027,7 +2037,7 @@ public class DrumGUI extends StandardTripsModule {
      * For the moment, this just means replacing Unicode characters that are not valid XML characters. 
      */
     private void normalizeDocument() {
-        currentInputData = currentInputData.replace("\u000C", "\n");
+        currentInputData = currentInputData.replace("\u000C", "\n"); // FORM-FEED (FF)
     }
 
     /**
@@ -2050,7 +2060,22 @@ public class DrumGUI extends StandardTripsModule {
         while (fMatcher.find()) {
             frags.add(fMatcher.group(1));
             offsets.add(fMatcher.start(1));
-            Debug.debug("frag " + frags.size() + ":" + offsets.lastElement() + ":" + frags.lastElement());
+            Debug.debug("frag " + frags.size() + ":"  + offsets.lastElement() + ":" + frags.lastElement());
+        }
+        
+        if (validateParagraphs) {
+            // validate fragments
+            Iterator itf = frags.iterator();
+            Iterator ito = offsets.iterator();
+            while (itf.hasNext() && ito.hasNext()) {
+                String f = (String) itf.next();
+                Integer o = (Integer) ito.next();
+                if (! isValidText(f)) {
+                    itf.remove();
+                    ito.remove();
+                }
+            }
+            Debug.debug(frags.size() + " frags after validation");
         }
         int n = frags.size();
         fragments = frags.toArray(new String[n]);
@@ -2059,10 +2084,77 @@ public class DrumGUI extends StandardTripsModule {
             fragmentOffsets[i] = offsets.get(i);
         }
     }
+    
+    /**
+     * Checks whether the current paragraph (fragment) is text.
+     */
+    private boolean isValidText(String text) {
+        Debug.debug("validating text: " + text);
+        // tokenize
+        String[] tokens = text.split("\\s+");
+        int nTokens = tokens.length;
+        if (nTokens == 0) {
+            Debug.warn("text is empty");
+            return false;
+        }
+        Debug.debug("tokens found: " + nTokens);
+        // check text characteristics
+        int nWordTokens = 0;
+        int maxWordSeqLen = 0;
+        int maxGapLen = 0;
+        double wordDensity = 0.0;
+        int tempWSLen = 0;
+        int tempGapLen = 0;
+        for (int i = 0; i<tokens.length; i++) {
+            if (isWord(tokens[i])) {
+                nWordTokens++;
+                tempWSLen++;
+                if (tempGapLen > maxGapLen) { maxGapLen = tempGapLen; }
+                tempGapLen = 0;
+            } else {
+                if (tempWSLen > maxWordSeqLen) { maxWordSeqLen = tempWSLen; }
+                tempWSLen = 0;
+                tempGapLen++;
+            }
+        }
+        if (tempWSLen > maxWordSeqLen) { maxWordSeqLen = tempWSLen; }
+        if (tempGapLen > maxGapLen) { maxGapLen = tempGapLen; }
+        wordDensity = (double) nWordTokens / nTokens;
+        // validation heuristic: not too short, not too many nonwords, either long seq of words or short seqs of non-words
+        boolean testW = nWordTokens > 5; 
+        boolean testWD = wordDensity >= 0.75;
+        boolean testLWS = maxWordSeqLen >= 5;
+        boolean testLGS = maxGapLen < 5;
+        boolean result = testW && testWD && (testLWS || testLGS);
+        Debug.debug("word-like tokens: " + nWordTokens + " ["+ (testW ? "OK" : "-") +"]");
+        Debug.debug("word density: " + wordDensity + " ["+ (testWD ? "OK" : "-") +"]");
+        Debug.debug("longest word sequence: " + maxWordSeqLen + " ["+ (testLWS ? "OK" : "-") +"]");
+        Debug.debug("longest non-word sequence: " + maxGapLen + " ["+ (testLGS ? "OK" : "-") +"]");
+        Debug.warn("text is"+ (result ? "" : " not") +" valid w/d/s/g=[" + nWordTokens + "/" + wordDensity + "/" + maxWordSeqLen + "/" + maxGapLen + "]");
+        return result;
+    }
+
+    /**
+     * Checks if a token is word-like.
+     * <p>
+     * A word-like token is one that starts with a letter and contains any sequence of letters, marks or dashes.
+     * Initial punctuation (opening quotes or brackets) and final punctuation (we allow a single punctuation character,
+     * but otherwise there are no restrictions on its type) are ignored.
+     * <p>
+     * Of note, number-like tokens are not considered word-like by this function (numbers, currency, dates, etc.).
+     * <p>
+     * TODO: use a dictionary
+     * 
+     * @param token
+     * @return
+     */
+    private boolean isWord(String token) {
+        return token.matches("^[\\p{Ps}\\p{Pi}]?\\p{L}[\\p{L}\\p{M}\\p{Pd}]*[\\p{P}]?$");
+    }
 
     /**
      * Sends tag request for current paragraph. Sent at the beginning of processing when {@link #splitOnNewlines} is
-     * {@code true}
+     * {@code true}.
      */
     private void sendTagRequestForFragment() {
         // if we handle the paragraph IDs, we need to send start-paragraph
