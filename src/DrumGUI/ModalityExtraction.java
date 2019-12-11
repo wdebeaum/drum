@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: ModalityExtraction.java,v 1.27 2019/09/23 05:38:14 lgalescu Exp $
+ * $Id: ModalityExtraction.java,v 1.28 2019/12/11 04:25:43 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -327,6 +327,11 @@ public class ModalityExtraction extends Extraction {
         // we obtain the arg from the EKB, if we can; otherwise, we look for the term in the context
         Extraction ekbTerm = ekbFindExtraction(var);
         KQMLList term = (ekbTerm != null) ? ekbTerm.getValue() : findTermByVar(var, context);
+	if (term == null) {
+            // shouldn't happen, but occasionally terms are missing from the LF!
+            Debug.warn("LF term not found: " + var);
+            return "";
+	}
         KQMLObject termType = pullFullOntType(term);
         int start = getKeywordArgInt(":START", term);
         int end = getKeywordArgInt(":END", term);

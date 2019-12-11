@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.87 2019/12/10 00:00:32 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.90 2019/12/11 03:11:10 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -2034,10 +2034,17 @@ public class DrumGUI extends StandardTripsModule {
     /**
      * Document normalization.
      * <p>
-     * For the moment, this just means replacing Unicode characters that are not valid XML characters. 
+     * For the moment, this just means replacing some Unicode characters that are not valid 
+     * XML characters. It is left whether the list should be generalized to the whole set of 
+     * control characters or something else. 
+     * <p>
+     * Replacement preserves length of whitespace regions.
      */
     private void normalizeDocument() {
-        currentInputData = currentInputData.replace("\u000C", "\n"); // FORM-FEED (FF)
+        currentInputData = currentInputData.replace("\u000C", "\n"); // ^L, FORM-FEED (FF)
+        currentInputData = currentInputData.replace("\u0005", "\n"); // ^E, ENQ
+        currentInputData = currentInputData.replace("\u0010", "\n"); // ^P, DLE
+        currentInputData = currentInputData.replace("\u0015", "\n"); // ^U, NAK
     }
 
     /**
@@ -2075,7 +2082,7 @@ public class DrumGUI extends StandardTripsModule {
                     ito.remove();
                 }
             }
-            Debug.debug(frags.size() + " frags after validation");
+            Debug.info(frags.size() + " valid fragments");
         }
         int n = frags.size();
         fragments = frags.toArray(new String[n]);
@@ -2102,13 +2109,15 @@ public class DrumGUI extends StandardTripsModule {
         int nWordTokens = 0;
         int maxWordSeqLen = 0;
         int maxGapLen = 0;
-        double wordDensity = 0.0;
+        double wordDensity;
+	double avgWordLen = 0.0;
         int tempWSLen = 0;
         int tempGapLen = 0;
+	int tempTotalWordLen = 0;
         for (int i = 0; i<tokens.length; i++) {
             if (isWord(tokens[i])) {
                 nWordTokens++;
-                tempWSLen++;
+                tempWSLen++; tempTotalWordLen += tokens[i].length();
                 if (tempGapLen > maxGapLen) { maxGapLen = tempGapLen; }
                 tempGapLen = 0;
             } else {
@@ -2120,17 +2129,26 @@ public class DrumGUI extends StandardTripsModule {
         if (tempWSLen > maxWordSeqLen) { maxWordSeqLen = tempWSLen; }
         if (tempGapLen > maxGapLen) { maxGapLen = tempGapLen; }
         wordDensity = (double) nWordTokens / nTokens;
-        // validation heuristic: not too short, not too many nonwords, either long seq of words or short seqs of non-words
+	if (nWordTokens > 0)
+	    avgWordLen = (double) tempTotalWordLen / nWordTokens;
+        // validation heuristic: not too many nonwords, either long seq of words or short seqs of non-words; avg word length must be reasonably large
         boolean testW = nWordTokens > 5; 
+	boolean testW2 = (nWordTokens * wordDensity) >= 2;
         boolean testWD = wordDensity >= 0.75;
         boolean testLWS = maxWordSeqLen >= 5;
         boolean testLGS = maxGapLen < 5;
-        boolean result = testW && testWD && (testLWS || testLGS);
+	boolean testAWL = avgWordLen >= 3.5;
+        boolean result = (testW || testW2) && testAWL && testWD && (testLWS || testLGS);
         Debug.debug("word-like tokens: " + nWordTokens + " ["+ (testW ? "OK" : "-") +"]");
-        Debug.debug("word density: " + wordDensity + " ["+ (testWD ? "OK" : "-") +"]");
+        Debug.debug("avg word length: " + String.format("%.2f", avgWordLen) + " ["+ (testAWL ? "OK" : "-") +"]");
+        Debug.debug("word density: " + String.format("%.2f", wordDensity) + " ["+ (testWD ? "OK" : "-") +"]");
         Debug.debug("longest word sequence: " + maxWordSeqLen + " ["+ (testLWS ? "OK" : "-") +"]");
         Debug.debug("longest non-word sequence: " + maxGapLen + " ["+ (testLGS ? "OK" : "-") +"]");
-        Debug.warn("text is"+ (result ? "" : " not") +" valid w/d/s/g=[" + nWordTokens + "/" + wordDensity + "/" + maxWordSeqLen + "/" + maxGapLen + "]");
+        Debug.warn("text is"+ (result ? "" : " not") + " valid w/l/d/s/g=["
+		   + nWordTokens + "/"
+		   + String.format("%.2f", avgWordLen) + "/"
+		   + String.format("%.2f", wordDensity) + "/"
+		   + maxWordSeqLen + "/" + maxGapLen + "]");
         return result;
     }
 
@@ -2149,7 +2167,7 @@ public class DrumGUI extends StandardTripsModule {
      * @return
      */
     private boolean isWord(String token) {
-        return token.matches("^[\\p{Ps}\\p{Pi}]?\\p{L}[\\p{L}\\p{M}\\p{Pd}]*[\\p{P}]?$");
+        return token.matches("^[\\p{Ps}\\p{Pi}]?\\p{L}[\\p{L}\\p{M}\\p{Pd}\\p{Pf}']*[\\p{P}]?$");
     }
 
     /**
@@ -2157,8 +2175,15 @@ public class DrumGUI extends StandardTripsModule {
      * {@code true}.
      */
     private void sendTagRequestForFragment() {
-        // if we handle the paragraph IDs, we need to send start-paragraph
-        sendStartParagraph();
+	if (fragmentsDone == 0) {
+	    if (fragments.length == 0) {
+		Debug.warn("No fragments!");
+		documentDone();
+		return;
+	    }
+	    // if we handle the paragraph IDs, we need to send start-paragraph
+	    sendStartParagraph();
+	}
         if (fragmentsDone < fragments.length) {
             try {
                 // Debug.debug("Processing fragment["+fragmentsProcessed+"]:
@@ -2181,15 +2206,16 @@ public class DrumGUI extends StandardTripsModule {
      * 
      */
     private void sendStartParagraph() {
-        if (splitOnNewlines && (fragmentsDone == 0)) {
-            try {
-                send(KQMLPerformative.fromString("(tell :content (start-paragraph :id paragraph" + currentDatasetIndex
-                        + "))"));
-                Debug.debug("STATE: start-paragraph");
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
+        if (! splitOnNewlines) {
+	    return;
+	}
+	try {
+	    send(KQMLPerformative.fromString("(tell :content (start-paragraph :id paragraph" + currentDatasetIndex
+					     + "))"));
+	    Debug.debug("STATE: start-paragraph");
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	}
     }
 
     /**

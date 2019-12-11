@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.72 2019/12/03 15:43:37 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.74 2019/12/11 04:25:43 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -970,6 +970,11 @@ public class EventExtraction extends Extraction {
         // we obtain the arg from the EKB, if we can; otherwise, we look for the term in the context
         Extraction ekbTerm = ekbFindExtraction(var);
         KQMLList term = (ekbTerm != null) ? ekbTerm.getValue() : findTermByVar(var, context);
+	if (term == null) {
+            // shouldn't happen, but occasionally terms are missing from the LF!
+            Debug.warn("LF term not found: " + var);
+            return "";
+	}
         KQMLObject termType = pullFullOntType(term);
         int start = getKeywordArgInt(":START", term);
         int end = getKeywordArgInt(":END", term);
@@ -1389,7 +1394,16 @@ public class EventExtraction extends Extraction {
         KQMLObject value = getModality();
         if (value == null) return "";
         // value is an ONT type (should not remove package!)
-         return xml_element("modality", "", ontType((KQMLList) value));
+	if (value instanceof KQMLList) {
+	    return xml_element("modality", "", ontType((KQMLList) value));
+	} else if (value.toString().toUpperCase().startsWith("ONT::")) {
+	    // new development; shouldn't be this way!
+	    return xml_element("modality", "", value.toString());	    
+	} else {
+	    // it may be just ONT::DO, but we'll complain
+	    Debug.error("unexpected modality value: " + value);
+	    return "";
+	}
     }
 
     /**
