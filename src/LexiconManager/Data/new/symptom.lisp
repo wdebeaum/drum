@@ -7,7 +7,7 @@
   (W::symptom
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("symptom%1:26:00"))
-     (LF-PARENT ONT::caused-event)
+     (LF-PARENT ONT::evidence) ;caused-event)
      )
     )
    )

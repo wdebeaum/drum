@@ -7,7 +7,7 @@
   (W::effect
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
-     (LF-PARENT ONT::caused-event)
+     (LF-PARENT ONT::outcome) ;caused-event)
      (TEMPL BARE-PRED-TEMPL)
      (preference 0.96) ;; less likely synonym to "side effect"
      )

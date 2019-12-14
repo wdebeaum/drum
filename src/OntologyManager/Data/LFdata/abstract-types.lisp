@@ -446,10 +446,10 @@
 )
 
 ;; layer (of ozone, chocolate), sheet (of ice, paper), slice
-(define-type ont::sheet-abstr
+;(define-type ont::sheet-abstr
 ;  :parent ont::non-measure-ordered-domain
-  :parent ONT::GROUP-OBJECT-abstr
-  )
+;  :parent ONT::GROUP-OBJECT-abstr
+;  )
 
 (define-type ONT::MEASURE-UNIT
  :wordnet-sense-keys ("unit_of_measurement%1:23:00" "unit%1:23:00")
@@ -539,6 +539,7 @@
 
 ;; dozen, hundred, thousand...
 (define-type ONT::NUMBER-UNIT
+ :wordnet-sense-keys ("billion%1:23:00" "billion%1:23:01" "billion%5:00:00:cardinal:00" "billion%5:00:01:cardinal:00" "dozen%1:23:00" "dozen%5:00:00:cardinal:00" "hundred%1:23:00" "hundred%5:00:00:cardinal:00" "thousand%1:23:00" "thousand%5:00:00:cardinal:00" "million%1:23:00" "million%5:00:00:cardinal:00" "trillion%1:23:01" "trillion%5:00:01:cardinal:00" "trillion%5:00:00:cardinal:00")
  :parent ONT::unit
  :comment "words that name measurement units in scales: foot, mile, ..."
  :sem (F::Abstr-obj (F::information F::data))
@@ -580,6 +581,7 @@
  )
 
 (define-type ONT::CONTAINER-LOAD
+ :wordnet-sense-keys ("load%1:23:00")
  :parent ONT::VOLUME-UNIT
  )
 
@@ -610,6 +612,7 @@
     )
 
 (define-type ONT::rate-unit
+ :wordnet-sense-keys ("miles_per_gallon%1:23:00" "bits_per_second%1:28:00" "gigahertz%1:28:00" "hertz%1:28:00" "kilohertz%1:28:00" "megahertz%1:28:00" "terahertz%1:28:00" "revolutions_per_minute%1:28:00" "words_per_minute%1:28:00")
  :parent ONT::formal-unit
  :sem (F::Abstr-obj (F::Scale Ont::Rate-scale))
  :arguments ((:ESSENTIAL ONT::FIGURE ((? type F::phys-obj F::situation)))
@@ -648,6 +651,7 @@
 
 (define-type ONT::number-measure-domain
  ;; :parent ONT::MEASURE-DOMAIN
+ :wordnet-sense-keys ("root%1:23:00" "cosine%1:24:00" "sine%1:24:00" "exponent%1:10:00")
  :parent ONT::MATHEMATICAL-TERM
  :arguments ((:REQUIRED ONT::FIGURE (F::Abstr-obj (F::Measure-function F::Term)))
              )
@@ -687,6 +691,7 @@
 
 ;; three fold
 (define-type ONT::multiple
+ :wordnet-sense-keys ("multiple%1:09:00" "factor%1:23:00" "factor%1:23:01")
  :parent ONT::MATHEMATICAL-TERM
  :sem (F::Abstr-obj (F::Scale ont::DOMAIN))  ; "by three fold" needs scale
  )
@@ -735,11 +740,13 @@
 
 ;; currency
 (define-type ONT::currency
+ :wordnet-sense-keys ("medium_of_exchange%1:21:00")
  :parent ONT::FUNCTION-OBJECT
  :sem (F::Abstr-obj (f::scale ont::money-scale))
  )
 
 (define-type ONT::source
+ :wordnet-sense-keys ("supply%1:23:00")
  :parent ONT::function-OBJECT
  :sem (F::Abstr-obj)
  :arguments ((:essential ONT::FIGURE)
@@ -810,6 +817,7 @@
  :parent ONT::information
  )
 
+#|
 ;; success, failure
 (define-type ONT::outcome
     :wordnet-sense-keys ("result%1:11:00" "consequence%1:19:00")
@@ -817,6 +825,7 @@
     :arguments ((:essential ONT::FIGURE)
 		)
     )
+|#
 
 #|
 (define-type ONT::clinical-finding
@@ -828,17 +837,20 @@
 
 ;; identification
 (define-type ONT::identification
- :parent ONT::information-FUNCTION-OBJECT
+  :wordnet-sense-keys ("identification%1:10:01" "identifier%1:10:00")
+  :parent ONT::information-FUNCTION-OBJECT
   :arguments ((:essential ONT::FIGURE ((? lof F::Phys-obj f::abstr-obj)))
 	     )
  )
 
 ;; pin, isbn
 (define-type ont::id-number
+  :wordnet-sense-keys ("identification_number%1:10:00")
   :parent ont::identification)
 
 ;; ssn
 (define-type ONT::ssn
+ :wordnet-sense-keys ("social_security_number%1:10:00")
  :parent ONT::id-number
   :arguments ((:essential ONT::FIGURE (F::Phys-obj)))
  )
@@ -865,6 +877,7 @@
  )
 
 (define-type ont::zipcode
+  :wordnet-sense-keys ("zip_code%1:10:00")
   :parent ont::location-id
   )
 
@@ -877,7 +890,8 @@
              )
  )
 
-(define-type ONT::caused-event
+(define-type ONT::outcome ;caused-event
+ :wordnet-sense-keys ("consequence%1:19:00" "result%1:11:00" "side_effect%1:19:00")
  :parent ONT::EVENT-TYPE
  :sem (F::situation (F::cause (? cause F::agentive F::force)))
  :arguments ((:OPTIONAL ONT::FIGURE)
@@ -888,7 +902,8 @@
 
 ;;; The difference between actions and events is that actions have agents
 ;;; not used JFA except as LF for word ACTION
-(define-type ONT::Action
+(define-type ONT::CAMPAIGN ;Action
+ :wordnet-sense-keys ("campaign%1:04:02" "campaign%1:11:00" "expedition%1:04:00" "military_operation%1:04:00")
  :parent ONT::EVENT-TYPE
  :sem (F::Situation (F::cause F::Agentive) (F::aspect F::dynamic))
  :arguments ((:OPTIONAL ONT::FIGURE)
@@ -923,7 +938,8 @@
 ;; tour
 ; can tour a house, a museum; doesn't have to be travel
 (define-type ont::tour
-  :parent ont::event-defined-by-activity
+  :wordnet-sense-keys ("tour%1:04:00" "tour%2:38:00")
+  :parent ont::travel ;event-defined-by-activity
   )
 
 ;; recession

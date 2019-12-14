@@ -2393,7 +2393,7 @@
 
 ;; cash, money
 (define-type ONT::money
-    :wordnet-sense-keys ("change%1:21:03" "change%1:21:01" "medium_of_exchange%1:21:00")
+    :wordnet-sense-keys ("change%1:21:03" "change%1:21:01")
     :parent ONT::manufactured-object
     :sem (F::phys-obj (f::object-function f::currency))
     )
