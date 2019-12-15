@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.90 2019/12/11 03:11:10 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.92 2019/12/15 05:09:48 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -122,7 +122,7 @@ public class DrumGUI extends StandardTripsModule {
     /** When true, we can do whatever to close off the current document, then can move on to a new one */
     private boolean documentDone = true;
     /** ID for the paragraph currently being processed. */
-    protected String paragraphId;
+    protected String paragraphId = null;
     /** Counter for external {@code run-text} requests. */
     protected int runTextCounter = 0;
     /** Utterance number (uttnum) of the last utterance of the current fragment. */
@@ -1380,6 +1380,7 @@ public class DrumGUI extends StandardTripsModule {
     private void handleUtteranceFailed(KQMLList content) {
         KQMLObject uttnumObj = content.getKeywordArg(":uttnum");
         int uttnum = Integer.parseInt(uttnumObj.toString());
+        Debug.warn("STATE: failed uttnum: " + uttnum);
         abandonUttnum(uttnum);
         checkIfDoneProcessing();
     }
@@ -2041,10 +2042,12 @@ public class DrumGUI extends StandardTripsModule {
      * Replacement preserves length of whitespace regions.
      */
     private void normalizeDocument() {
-        currentInputData = currentInputData.replace("\u000C", "\n"); // ^L, FORM-FEED (FF)
-        currentInputData = currentInputData.replace("\u0005", "\n"); // ^E, ENQ
-        currentInputData = currentInputData.replace("\u0010", "\n"); // ^P, DLE
-        currentInputData = currentInputData.replace("\u0015", "\n"); // ^U, NAK
+        currentInputData = currentInputData
+	    .replace("\u0005", "\n")	// ^E, ENQ
+	    .replace("\u0008", " ")	// ^H, BS
+	    .replace("\u000C", "\n")	// ^L, FORM-FEED (FF)
+	    .replace("\u0010", "\n")	// ^P, DLE
+	    .replace("\u0015", "\n");	// ^U, NAK
     }
 
     /**
@@ -2067,7 +2070,7 @@ public class DrumGUI extends StandardTripsModule {
         while (fMatcher.find()) {
             frags.add(fMatcher.group(1));
             offsets.add(fMatcher.start(1));
-            Debug.debug("frag " + frags.size() + ":"  + offsets.lastElement() + ":" + frags.lastElement());
+            Debug.debug("frag " + frags.size() + "@"  + offsets.lastElement() + ": " + frags.lastElement());
         }
         
         if (validateParagraphs) {
@@ -2175,22 +2178,23 @@ public class DrumGUI extends StandardTripsModule {
      * {@code true}.
      */
     private void sendTagRequestForFragment() {
-	if (fragmentsDone == 0) {
-	    if (fragments.length == 0) {
-		Debug.warn("No fragments!");
-		documentDone();
-		return;
-	    }
-	    // if we handle the paragraph IDs, we need to send start-paragraph
-	    sendStartParagraph();
-	}
+        if (fragmentsDone == 0) {
+            if (fragments.length == 0) {
+                Debug.warn("No fragments!");
+                documentDone();
+                return;
+            }
+            // if we handle the paragraph IDs, we need to send start-paragraph
+            sendStartParagraph();
+        }
         if (fragmentsDone < fragments.length) {
             try {
+                gotOK = false;
                 // Debug.debug("Processing fragment["+fragmentsProcessed+"]:
                 // /"+(fragmentOffsets[fragmentsProcessed])+"/");
                 sendWithContinuation(makeTagMessage(fragments[fragmentsDone]),
                         new TagReplyHandler(fragmentsDone));
-                Debug.debug("STATE: tag");
+                Debug.debug("STATE: tag fragment");
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -2207,15 +2211,15 @@ public class DrumGUI extends StandardTripsModule {
      */
     private void sendStartParagraph() {
         if (! splitOnNewlines) {
-	    return;
-	}
-	try {
-	    send(KQMLPerformative.fromString("(tell :content (start-paragraph :id paragraph" + currentDatasetIndex
-					     + "))"));
-	    Debug.debug("STATE: start-paragraph");
-	} catch (Exception ex) {
-	    ex.printStackTrace();
-	}
+            return;
+        }
+        try {
+            send(KQMLPerformative.fromString("(tell :content (start-paragraph :id paragraph" + currentDatasetIndex
+                    + "))"));
+            Debug.debug("STATE: start-paragraph");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**

@@ -935,13 +935,6 @@
              )
  )
 
-;; tour
-; can tour a house, a museum; doesn't have to be travel
-(define-type ont::tour
-  :wordnet-sense-keys ("tour%1:04:00" "tour%2:38:00")
-  :parent ont::travel ;event-defined-by-activity
-  )
-
 ;; recession
 (define-type ont::economic-event
 :parent ONT::event-defined-by-activity
@@ -952,6 +945,14 @@
  :parent ONT::event-defined-by-activity
  :sem (F::situation (F::trajectory +))
  )
+
+;; tour
+; can tour a house, a museum; doesn't have to be travel
+(define-type ont::tour
+  :wordnet-sense-keys ("tour%1:04:00" "tour%2:38:00")
+  :parent ont::travel ;event-defined-by-activity
+  )
+
 
 ;; trip, journey
 (define-type ONT::trip
