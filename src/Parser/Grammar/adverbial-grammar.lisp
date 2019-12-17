@@ -588,6 +588,116 @@
      )
 ))
 
+
+(parser::augment-grammar
+  '((headfeatures
+     ;; MD 2008/07/17 added post-subcat as a head feature so that it doesn't lead to overgeneration
+     ;(ADJP ATYPE SORT ARG COMP-OP PRED ARGUMENT headcat transform post-subcat) ; no var, lex, orig-lex, sem
+     (ADJP ATYPE SORT COMP-OP PRED headcat transform post-subcat) ; no var, lex, orig-lex, sem
+     (ADVBL VAR ATYPE headcat transform neg) ; no lex, orig-lex, sem
+     )	       		   
+
+    #|
+     ; how tall is he?
+    ((ADJP (LF (% PROP (CLASS ?c2) (VAR ?advbv) (CONSTRAINT ?newc) (sem ?newsem)))
+           (val ?val) (agr ?agr) (mass ?mass) (var ?advbv) (ARG ?arg) (gap ?gap)
+       (argument ?argmt) (premod +) (sem ?newsem) (lex ?lex) (orig-lex ?orig-lex)
+      )
+     -how-adj-pre>
+     (advbl (ATYPE PRE) (VAR ?advbv) (ARG ?v) ;;(SORT OPERATOR)
+            (argument (% ADJP (sem ?sem)))
+            (gap -) (complex -) (HOW +)
+        (lf (% PROP (CLASS ?c2) (VAR ?advbv)
+           (CONSTRAINT (% & (ONT::GROUND ?grd)))))
+        (lex ?lex) (orig-lex ?orig-lex)
+      )
+     (head (ADJP (lf (% PROP (CLASS ?c) (VAR ?v) (CONSTRAINT ?con) (sem ?sem)))
+        (val ?val) (agr ?agr) (mass ?mass) (argument ?argmt) (arg ?arg)
+        (gap ?gap) (premod -) (sem ?sem) (sem ($ f::abstr-obj (f::scale ?!sc)))
+        ))
+     (add-to-conjunct (val (ONT::GROUND ?grd)) (old ?con) (new ?newc))
+     (compute-sem-features (lf ONT::AT-SCALE-VALUE) (sem ?newsem))
+     )
+    |#
+
+     ; how tall is he?
+    ((ADJP (LF (% PROP (CLASS ONT::AT-SCALE-VALUE) (VAR ?v) (CONSTRAINT ?newc) (sem ?newsem)))
+           (val ?val) (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap) 
+	   (argument ?argmt) (premod +) (sem ?newsem) (lex how) (orig-lex how)
+	   (WH Q) (WH-VAR *)
+      )
+     -how-adj-pre>
+     (word (lex w::how))
+     (head (ADJP (lf (% PROP (CLASS ?c) (VAR ?v) (CONSTRAINT ?con) (sem ?sem))) 
+	    (val ?val) (agr ?agr) (mass ?mass) (argument ?argmt) (arg ?arg)
+	    (gap ?gap) (premod -) (sem ?sem) (sem ($ f::abstr-obj (f::type ONT::PROPERTY-VAL))) ;(f::scale ?sc)))
+	    ))
+     (append-conjuncts (conj1 ?con)
+		       (conj2 (& (ONT::GROUND (% *PRO* (status *wh-term*) (VAR *) (CLASS ONT::LEVEL)
+					 (SEM ?newsem) (CONSTRAINT (& (proform how)
+								   (suchthat ?v)))))
+				 ;(ONT::FIGURE ?arg)
+				 ))
+		       (new ?newc))
+     (compute-sem-features (lf ONT::AT-SCALE-VALUE) (sem ?newsem))
+     )
+
+     ;; how adv  e.g., how quickly did he walk?
+    ((ADVBL  (ARG ?argvar) (SUBCATSEM ?subcatsem)
+      (wh-var *) (WH Q) (SORT PP-WORD) (how-advbl +)
+      (var ?adjv) (atype ?atype) 
+      (LF (% PROP (VAR ?adjv) (CLASS ont::AT-SCALE-VALUE) 
+	     (CONSTRAINT ?newc)
+	     (sem ?newsem) (transform ?trans)))
+      (gap -) (pp-word +) (argument ?argu)
+      (role ?reln) (lex how) (orig-lex how) (sem ?newsem)
+      )
+     -how-advbl>     
+     (word (lex w::how))
+     (head (advbl (var ?adjv) (atype ?atype) (arg ?argvar)  (argument ?argu) (sort pred) ; to rule out "how about..."
+		  (LF (% PROP (class ?reln) (constraint ?con))) (sem ($ f::abstr-obj (f::type ONT::PROCESS-VAL)))))
+     (append-conjuncts (conj1 ?con) 
+		       (conj2 (& (ONT::ground (% *PRO* (status *wh-term*) (VAR *) (CLASS ont::LEVEL)
+					    (SEM ?newsem) (CONSTRAINT (& (proform how) (suchthat ?adjv)))))))
+		       (new ?newc))
+     (compute-sem-features (lf ONT::AT-SCALE-VALUE) (sem ?newsem))
+     )
+    
+    
+    ))
+
+(parser::augment-grammar
+  '((headfeatures
+     ;; MD 2008/07/17 added post-subcat as a head feature so that it doesn't lead to overgeneration
+     (ADJP COMP-OP PRED headcat transform post-subcat) ; no var, lex, orig-lex, atype, argument, arg, sort, sem
+     )	       		   
+
+    ; what color is it?
+    ((ADJP (LF (% PROP (CLASS ONT::AT-SCALE-VALUE) (VAR ?v) (CONSTRAINT ?newc) (sem ?newsem)))
+           (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap) 
+	   (argument (% NP (var ?arg) (lex ?lex))) ; need to have lex here so it can be match in the subj of -S1>
+	   (premod +) (sem ?newsem) (lex what) (orig-lex what)
+	   (ATYPE PREDICATIVE-ONLY)
+	   (SORT PRED) (WH Q) (WH-VAR *)
+      )
+     -what-adj-pre> 
+     (word (lex w::what))
+     (head (N1 (sem ?sem) (sem ($ f::abstr-obj (f::scale ?!sc) (f::type ONT::DOMAIN))) (RESTR ?restr)
+	 (var ?v) (agr ?agr) (mass ?mass) (gap ?gap)
+	 ))
+     (append-conjuncts (conj1 ?restr)
+		       (conj2 (& (ONT::GROUND (% *PRO* (status *wh-term*) (VAR *) (CLASS ONT::LEVEL)
+					 (SEM ?newsem) (CONSTRAINT (& (proform what)
+								   (suchthat ?v)))))
+				 (ONT::FIGURE ?arg)
+				 ))
+		       (new ?newc))
+     (compute-sem-features (lf ONT::AT-SCALE-VALUE) (sem ?newsem))
+    )
+
+    
+))
+    
 (parser::augment-grammar
   '((headfeatures
      (ADJ VAR ATYPE SORT ARG PRED ARGUMENT lex orig-lex headcat transform)
@@ -1189,7 +1299,7 @@
      -advbl-adj-pre>
      (advbl (ATYPE PRE) (VAR ?advbv) (ARG ?v) ;;(SORT OPERATOR) 
             (argument (% ADJP (sem ?sem)))
-            (gap -)
+            (gap -) (complex -) (WH -) ; not "how" or "what"
       )
      (head (ADJP (lf (% PROP (CLASS ?c) (VAR ?v) (CONSTRAINT ?con) (sem ?sem))) 
 	    (val ?val) (agr ?agr) (mass ?mass) (argument ?argmt) (arg ?arg)
@@ -1208,7 +1318,7 @@
      -advbl-hyphen-adj-pre> 1 
      (advbl (ATYPE PRE) (VAR ?advbv) (ARG ?v) ;;(SORT OPERATOR) 
             (argument (% ADJP (sem ?sem)))
-            (gap -) (complex -)
+            (gap -) (complex -) (WH -) ; not "how" or "what"
       )
       (word (lex w::punc-minus))
       (head (ADJP (lf (% PROP (CLASS ?c) (VAR ?v) (CONSTRAINT ?con) (sem ?sem))) 
@@ -1218,7 +1328,7 @@
       (add-to-conjunct (val (MODS ?advbv)) (old ?con) (new ?newc))
      
       )
-
+     
     ;;  as ADJ as-PP
     ((ADJP (LF (% PROP (CLASS (:* ONT::AS-MUCH-AS ?w)) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
       (val ?val) (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap) 
@@ -1726,7 +1836,7 @@
 	      ;(lf (% description (constraint (& (scale ?scale)))))
 	      (lf (% description (constraint ?con)))
 	      (sem ($ f::abstr-obj (f::scale (? sc ont::scale ont::measure-scale)))) ;ont::measure-domain))))
-	      (class  ont::quantity);;(? lft ont::angle-unit ont::length-unit ont::percent ont::distance))
+	      (class  ont::quantity-abstr);;(? lft ont::angle-unit ont::length-unit ont::percent ont::distance))
 	      ;; well, 'he walked miles before he reached water'; 'he crawled inches to the next exit' ...; and this restriction prevents the non-unit NPs so if it's reinstated we need two rules
 ;	      (lf (% description (sort set))) ;; this restriction is needed to prevent bare measure units as adverbials
 	      ))

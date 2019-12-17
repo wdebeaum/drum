@@ -7,7 +7,8 @@
  :words (
 	  (w::gap
 	   (senses
-	    ((lf-parent ont::phys-shape)
+	    (;(lf-parent ont::phys-shape)
+	     (lf-parent ONT::OPENING)
 	     (sem (f::form f::hole))
 	     (example "a gap in the circuit")
 	     (templ count-pred-templ)

@@ -14,8 +14,15 @@
      ;(templ other-reln-templ)
 ;     (TEMPL indef-classifier-templ)
      ;; ont::of is mass or plural -- amount of cake/*person
-     (example "a(n) (certain) amount of water")
+     (example "I drank a(n) (certain) amount of water")
      )
+ 
+    ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("amount%1:03:00"))
+     (LF-PARENT ONT::quantity-abstr)
+     (templ other-reln-subcat-mass-templ)
+     (example "The amount of water is large")
+     )
+ 
     )
    )
 ))

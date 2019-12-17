@@ -4175,7 +4175,8 @@
 (define-type ONT::change-magnitude
  :wordnet-sense-keys ("change_magnitude%2:30:00" "change_intensity%2:39:00")
  :arguments (	     ;(:essential ont::affected (F::abstr-obj (f::scale ont::domain))) ; e.g., rainfall is physobj; flood is situation 
-	     (:essential ont::affected)
+	     ;(:essential ont::affected)
+	     (:essential ont::affected (F::abstr-obj (f::type (? t2 ont::domain ont::quantity-abstr)))) ; height, amount
 	     (:essential ONT::scale (f::abstr-obj (F::scale ont::domain)))
 	     (:optional  ONT::result ((? cau2 F::situation F::Abstr-obj f::phys-obj) (F::type (? t ont::goal-reln ont::source-reln))))) 
 ; :parent ONT::adjust

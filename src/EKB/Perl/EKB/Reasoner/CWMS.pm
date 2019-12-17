@@ -1,9 +1,9 @@
 # CWMS.pm
 #
-# Time-stamp: <Thu Sep 26 21:44:57 CDT 2019 lgalescu>
+# Time-stamp: <Mon Dec 16 11:13:23 CST 2019 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  1 Jun 2016
-# $Id: CWMS.pm,v 1.7 2019/12/02 21:15:22 lgalescu Exp $
+# $Id: CWMS.pm,v 1.8 2019/12/16 17:13:48 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -18,6 +18,8 @@
 # - Significant additions.
 # 2019/07/01 v1.1	lgalescu
 # - Fixed bugs (getting attribute value from descendants)
+# 2019/12/15 v1.2	lgalescu
+# - Fixed bug.
 
 #----------------------------------------------------------------
 # Usage:
@@ -25,7 +27,7 @@
 
 package EKB::Reasoner::CWMS;
 
-$VERSION = '1.1';
+$VERSION = '1.2';
 
 use strict 'vars';
 use warnings;
@@ -99,7 +101,8 @@ sub default_options {
 
       my ($val) = $t->findnodes('value');
       my $tn_id = $val->getAttribute('id');
-      my $tn_term = $ekb->get_assertion($tn_id, "TERM");
+      my $tn_term = $ekb->get_assertion($tn_id, "TERM")
+	or return 0;
       
       match_node( $tn_term,
 		  { SX => { 'type' => "ONT::NUMBER",

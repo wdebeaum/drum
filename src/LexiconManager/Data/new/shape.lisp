@@ -8,7 +8,8 @@
   (W::SHAPE
    (SENSES
     ((meta-data :origin calo :entry-date 20031229 :change-date nil :comments html-purchasing-corpus :wn ("shape%1:07:00" "shape%1:03:00"))
-     (LF-PARENT ONT::shape)
+     ;(LF-PARENT ONT::shape)
+     (LF-PARENT ONT::shape-scale)
      (TEMPL OTHER-RELN-TEMPL)
      )
     )

@@ -7,7 +7,8 @@
  :words (
    (W::POINT
    (SENSES
-    ((LF-PARENT ONT::shape)
+    (;(LF-PARENT ONT::shape)
+     (LF-PARENT ONT::shape-object)
      (example "the flag with the point on it")
      (meta-data :origin fruitcarts :entry-date 20050401 :change-date nil :wn ("point%1:25:02") :comments fruitcarts-03-3)
      )

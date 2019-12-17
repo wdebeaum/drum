@@ -2440,6 +2440,7 @@
 ;; LFs to support fruitcarts vocabulary
 ;;
 
+#|
 ;; the space between objects
 (define-type ONT::shape
     :parent  ONT::Phys-object
@@ -2449,10 +2450,12 @@
 		      )
     :arguments ((:OPTIONAL ONT::FIGURE))
     )
+|#
 
 ;; square, triangle, etc.  -- objects defined by their shape
 (define-type ONT::shape-object
-    :parent  ONT::shape
+    ;:parent  ONT::shape
+    :parent ONT::PHYS-OBJECT
     :wordnet-sense-keys ("shape%1:03:00")
     :sem (f::Phys-obj (:required  (F::origin f::artifact) (f::form f::object) (f::intentional -) (f::information -)
 				  (f::object-function f::representation))
@@ -2561,12 +2564,13 @@
     :parent ont::covering
     )
 ;; Added during a portability experiment
-
+#|
 (define-type ONT::phys-shape
     :parent  ont::shape ;ONT::Phys-object
     :sem (f::Phys-obj (:required (f::form f::object) (f::intentional -) (f::information -))
 		      (:default (f::mobility f::non-self-moving))
 		      ))
+|#
 
 (define-type ONT::container
     :wordnet-sense-keys ("container%1:06:00")
@@ -3309,7 +3313,7 @@
 ;; layer (of ozone, chocolate), sheet (of ice, paper), slice
 (define-type ont::sheet
 ;  :parent ont::non-measure-ordered-domain
-  :parent ONT::SHAPE   ;; why was this in GROUP? JFA 4/19
+  :parent ONT::SHAPE-OBJECT   ;; why was this in GROUP? JFA 4/19
   )
 
 ;; a number/amount/quantity of X

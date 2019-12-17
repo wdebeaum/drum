@@ -7,7 +7,8 @@
  :words (
   (W::form
    (SENSES
-    ((LF-PARENT ONT::shape)
+    (;(LF-PARENT ONT::shape)
+     (LF-PARENT ONT::shape-scale)
      (TEMPL OTHER-RELN-TEMPL)
      )
     ( ;; 20050325 changed from info-function-object to template-info-object

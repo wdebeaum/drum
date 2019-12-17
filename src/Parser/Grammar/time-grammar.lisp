@@ -534,7 +534,7 @@
       )
      -repetition-number-advbll>
      (head (np (lex W::times) (VAR ?v)
-	       (LF (% description (class (? xx ont::quantity ont::rate)) (constraint ?con)))))
+	       (LF (% description (class (? xx ont::quantity-abstr ont::rate)) (constraint ?con))))) ; this probably doesn't work any more
      (compute-sem-features (lf ont::repetition) (sem ?sem))
      (add-to-conjunct (val (FIGURE ?argvar)) (old ?con) (new ?newcon))
      )
@@ -1811,7 +1811,7 @@
     ;;  "sq ft: 5000", "population: 1000"
     ((NP (LF (% description (STATUS ONT::INDEFINITE)
 		(VAR ?v) (SORT unit-measure)
-		(CLASS (:* ONT::quantity ?sc))
+		(CLASS (:* ONT::quantity-abstr ?sc))
 		(CONSTRAINT ?constr) (argument ?argument)
 		(sem ?sem) (unit-spec +)
 		))

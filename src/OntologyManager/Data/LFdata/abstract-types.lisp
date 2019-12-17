@@ -471,7 +471,7 @@
 					   "amount%1:21:00" "amount%1:07:00")
 ; :parent ONT::DOMAIN-PROPERTY
  :parent ONT::GROUP-OBJECT-abstr
- :sem (F::abstr-obj (F::tangible +))
+ ;:sem (F::abstr-obj (F::tangible +)) ; so that the "have" in "I have an amount of water" would pick water instead of amount as the argument
  :arguments ((:ESSENTIAL ONT::FIGURE)
              )
  )

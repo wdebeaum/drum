@@ -177,11 +177,13 @@
              )
  )
 
+#| ; merged with ONT::AT-SCALE-VALUE (or maybe ONT::LEVEL)
 (define-type ONT::DEGREE
  :parent ONT::PREDICATE
  :arguments ((:OPTIONAL ONT::GROUND)
              )
  )
+|#
 
 (define-type ONT::DEGREE-OF-BELIEF
  :parent ONT::SITUATION-MODIFIER

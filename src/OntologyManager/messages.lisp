@@ -425,6 +425,12 @@ returns : function return value"
 	(apply #'add-new-type args))
   :subscribe t)
 
+(defcomponent-handler
+    '(tell &key :content (define-type . *))
+    #'(lambda (msg args)
+	(apply #'add-new-type args))
+  :subscribe t)
+
 
 (defmacro tell (&rest args)
   `(apply #'additional ',args))

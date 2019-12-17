@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Mon Jul  1 18:22:42 CDT 2019 lgalescu>
+# Time-stamp: <Mon Dec 16 13:53:53 CST 2019 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.42 2019/07/01 23:25:00 lgalescu Exp $
+# $Id: EKB.pm,v 1.44 2019/12/16 20:37:49 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -128,7 +128,11 @@
 # - various small improvements 
 # 2019/07/01 v1.18	lgalescu
 # - one more utility function
-
+# 2019/12/16 v2.0	lgalescu
+# - renamed fix() to upgrade()
+# - additional getters and setters
+# - cleaned up some code
+# - added connection graph to speed up find_referrers 
 
 # TODO:
 # - maybe split off non-OO extensions for manipulating XML objects into a separate package?
@@ -136,7 +140,7 @@
 
 package EKB;
 
-$VERSION = '1.18';
+$VERSION = '2.0';
 
 =head1 NAME
 
@@ -336,6 +340,8 @@ sub new {
 	      document => undef,
 	      # gensym counters
 	      symbol_table => {},
+	      # connection graph
+	      ref_graph => {},
 	     };
   if (@_) {
     my $input = shift;
@@ -409,10 +415,18 @@ sub get_document {
   return $self->{document};
 }
 
+sub get_root {
+  my $self = shift;
+  my $dom = $self->get_document()
+    or return undef;
+  return $dom->documentElement;
+}
+
 sub set_timestamp {
   my $self = shift;
   $self->set_attr('timestamp', _timestamp());
 }
+
 
 =head2 get_input( )
 
@@ -422,10 +436,29 @@ Returns the XML element containing the input data, if any.
 
 sub get_input {
   my $self = shift;
-  my ($input_elem) = $self->get_document()->findnodes('//input');
+  my ($input_elem) = $self->get_root()->findnodes('./input');
   return $input_elem;
 }
 
+sub add_input {
+  my $self = shift;
+  my $input_elem = $self->get_input;
+  if ($input_elem) {
+    WARN "EKB already has the 'input' element";
+    return $input_elem;
+  }
+  my $dom = $self->get_document;
+  my $new_input = $dom->createElement("input");
+  my $docs = $dom->createElement("documents");
+  $new_input->appendChild($docs);
+  my $paras = $dom->createElement("paragraphs");
+  $new_input->appendChild($paras);
+  my $sents = $dom->createElement("sentences");
+  $new_input->appendChild($sents);
+  my $root = $self->get_root;
+  $root->appendChild($new_input);
+  return $new_input;
+}
 
 =head1 METHODS
 
@@ -593,13 +626,13 @@ sub save {
   $self->print($self->{file});
 }
 
-=head2 fix( )
+=head2 upgrade( )
 
 Upgrades older EKB formats to the current format. Limited capabilities.
 
 =cut
 
-sub fix {
+sub upgrade {
   my ($self, $opts) = @_;
 
   DEBUG 2, "Fixing format...";
@@ -647,7 +680,7 @@ Normalizes the EKB. Specifically, it modifies the EKB so that:
 
 =back
 
-It also calls See: L<fix()|/> to fix formatting issues.
+It also calls See: L<upgrade()|/> to fix formatting issues.
 
 =cut
 
@@ -656,8 +689,8 @@ sub normalize {
 
   DEBUG 2, "Normalizing...";
 
-  # fix document format
-  $self->fix;
+  # upgrade document format
+  $self->upgrade;
   
   # fix sentence ids
   my @sentences = $self->get_sentences();
@@ -836,6 +869,14 @@ sub crop {
       set_attribute($a, 'start', $s - $shift);
       my $e = $a->getAttribute('end');
       set_attribute($a, 'end', $e - $shift);
+      # look inside for elements that have start and end frames
+      my @others = $a->findnodes('.//*[@start]');
+      foreach my $o (@others) {
+	my $s = $o->getAttribute('start');
+	set_attribute($o, 'start', $s - $shift);
+	my $e = $o->getAttribute('end');
+	set_attribute($o, 'end', $e - $shift);
+      }
   }
 }
 
@@ -869,7 +910,7 @@ sub filter {
   return unless (defined($opts) and ref($opts) eq 'HASH');
 
   # temporary, to handle EKBs in document-less EKBs  
-  $self->fix;
+  $self->upgrade;
   
   if (exists $opts->{documents} ) {
     my @to_keep = @{ $opts->{documents} };
@@ -988,9 +1029,9 @@ Returns value of the EKB attribute.
 sub get_attr {
   my $self = shift;
   my $attr = shift;
-  my $doc = $self->get_document()
+  my $root = $self->get_root
     or return undef; 
-  return $doc->documentElement()->getAttribute($attr);
+  $root->getAttribute($attr);
 }
 
 =head2 set_attr( $attribute, $value )
@@ -1003,9 +1044,9 @@ Returns value of the EKB attribute to the given value.
 sub set_attr {
   my $self = shift;
   my ($attr, $value) = @_;
-  my $doc = $self->get_document()
+  my $root = $self->get_root
     or return undef; 
-  return $doc->documentElement()->setAttribute($attr, $value);
+  $root->setAttribute($attr, $value);
 }
 
 
@@ -1017,9 +1058,20 @@ Returns the list of document nodes.
 
 sub get_docs {
   my $self = shift;
-  my $doc = $self->get_document()
-    or return undef; 
-  return $doc->findnodes('//input//document');
+  my $root = $self->get_root
+    or return undef;
+  $root->findnodes('./input//document');
+}
+
+sub add_doc {
+  my ($self, $docnode) = @_;
+  my $input = $self->get_input;
+  unless ($input) {
+    $self->add_input;
+    $input = $self->get_input;
+  }
+  my ($docs_elem) = $input->findnodes('./documents');
+  $docs_elem->appendChild($docnode);
 }
 
 =head2 get_doc( $docid )
@@ -1031,8 +1083,7 @@ Returns the document node with the given document ID.
 sub get_doc {
   my ($self, $docid) = @_;
   my @docs = $self->get_docs;
-  return
-    first { $_->getAttribute('id') eq $docid } @docs;
+  first { $_->getAttribute('id') eq $docid } @docs;
 }
 
 =head2 set_docid ( $docid, $new_docid )
@@ -1081,6 +1132,68 @@ sub get_paragraph {
     first { $_->getAttribute('id') eq $pid } @paras;
 }
 
+sub add_paragraph {
+  my ($self, $pnode) = @_;
+  my $input = $self->get_input;
+  unless ($input) {
+    $self->add_input;
+    $input = $self->get_input;
+  }
+  my ($paras_elem) = $input->findnodes('./paragraphs');
+  $paras_elem->appendChild($pnode);
+}
+
+=head2 set_pid ( $pid, $new_pid )
+
+Replaces the paragraph ID.
+
+=cut
+
+sub set_pid {
+  my ($self, $pid, $new_pid) = @_;
+  my $para_elem = $self->get_paragraph($pid);
+  my @s = $self->get_sentences($pid);
+  my @a = $self->get_assertions( {paragraph => $pid} );
+  set_attribute($para_elem, 'id' => $new_pid);
+  map { set_attribute($_, 'pid' => $new_pid ) } @s;
+  map { set_attribute($_, 'paragraph' => $new_pid ) } @a;
+}
+
+
+=head2 set_offset ( $pid, $offset )
+
+Sets offset for a paragraph. All character positions (frame numbers) will be 
+shifted to be relative to this offset.
+
+Note: This only works on normalized EKBs. The offset is simply added to the 
+values of existing character positions. 
+
+N.B.: I'm not sure this is necessary! Since character positions are relative to
+the paragraph, they don't need to change except when the paragraph itself 
+changes, such as with L<crop(_$sid_)>.
+
+=cut
+
+sub set_offset {
+  my ($self, $pid, $offset) = @_;
+
+  foreach my $a ($self->get_assertions( {paragraph => $pid} )) {
+    my $s = $a->getAttribute('start');
+    set_attribute($a, 'start', $s + $offset);
+    my $e = $a->getAttribute('end');
+    set_attribute($a, 'end', $e + $offset);
+    # look inside for elements that have start and end frames
+    my @others = $a->findnodes('.//*[@start]');
+    foreach my $o (@others) {
+      my $s = $o->getAttribute('start');
+      set_attribute($o, 'start', $s + $offset);
+      my $e = $o->getAttribute('end');
+      set_attribute($o, 'end', $e + $offset);
+    }
+  }
+}
+
+
 =head2 get_sentences( $pid )
 
 Returns the list of sentence nodes. If the optional argument is given, 
@@ -1110,6 +1223,32 @@ sub get_sentence {
   my ($self, $sid) = @_;
   first { $_->getAttribute('id') eq $sid } $self->get_sentences();
 }
+
+sub add_sentence {
+  my ($self, $snode) = @_;
+  my $input = $self->get_input;
+  unless ($input) {
+    $self->add_input;
+    $input = $self->get_input;
+  }
+  my ($sents_elem) = $input->findnodes('./sentences');
+  $sents_elem->appendChild($snode);
+}
+
+=head2 set_sid ( $sid, $new_sid )
+
+Replaces the sentence ID.
+
+=cut
+
+sub set_sid {
+  my ($self, $sid, $new_sid) = @_;
+  my $sent_elem = $self->get_sentence($sid);
+  my @a = $self->get_assertions( {uttnum => $sid} );
+  set_attribute($sent_elem, 'id' => $new_sid);
+  map { set_attribute($_, 'uttnum' => $new_sid ) } @a;
+}
+
 
 =head2 get_assertions( $atype, $attributes )
 
@@ -1204,6 +1343,29 @@ sub get_assertion {
   return $result;
 }
 
+=head2 set_aid ( $aid, $new_aid )
+
+Replaces the assertion ID.
+
+=cut
+
+sub set_aid {
+  my ($self, $aid, $new_aid) = @_;
+  my $a = $self->get_assertion($aid);
+  my @as = $self->get_assertions();
+  set_attribute($a, 'id' => $new_aid);
+  foreach my $o (@as) {
+    my $oid = $o->getAttribute('id');
+    next if $oid eq $aid;
+    my @elems = $o->findnodes(".//*[\@id=\"$aid\"]");
+    foreach my $el (@elems) {
+      set_attribute($el, 'id', $new_aid);
+      WARN "set_aid: updated $oid: $el";
+    }
+  }
+}
+
+
 # N.B. currently $query can only be a structure expression that can be used
 # by match_structure!
 # example: { type => "ONT::THING" }
@@ -1218,10 +1380,51 @@ sub query_assertions {
 sub find_referrers {
   my ($self, $id, $atype) = @_;
 
+  my @result;
+
+  # if we don't have a connection graph, we make it now
+  if (! %{ $self->{ref_graph} }) {
+    $self->make_connection_graph;
+  }
+
+  my $ref_graph = $self->{ref_graph};
+
+  if (exists $ref_graph->{$id}) {
+    my @refids = keys %{ $ref_graph->{$id} };
+    # update graph
+    foreach my $rid (@refids) {
+      my $ra = $self->get_assertion($rid);
+      unless ($ra) { 
+	delete $ref_graph->{$id}{$rid};
+	if (exists $ref_graph->{$rid}) {
+	  delete $ref_graph->{$rid};
+	}
+      }
+    }
+    # recompute, in case we made changes
+    @refids = keys %{ $ref_graph->{$id} };
+    if (@refids) {
+      # find relevant assertions
+      @result =
+	grep { defined $_ }
+	map { $self->get_assertion($_, $atype) } @refids;
+    } else { # update ref_graph
+      delete $ref_graph->{$id};
+    }
+
+  }
+  
+  DEBUG 3, "Found %d referrers for $id (new:1)", scalar(@result);
+
+  return @result;
+ 
+  # the rest is obsolete (never executed)
+  
   # all assertions containing a descendant node that has an attribute id
   # referring to the arg id; exclusions: self and corefs
   # ref links can be via @id or @event
-  my @result = 
+  # FIXME: @event is obsolete; now we only use @id
+  @result = 
     grep { $_->exists(".//*[name()!='coref' and \@id=\"$id\"] | .//*[\@event=\"$id\"]") }
     grep { $_->getAttribute('id') ne $id }
     $self->get_assertions($atype);
@@ -1229,6 +1432,32 @@ sub find_referrers {
   DEBUG 3, "Found %d referrers for $id", scalar(@result);
 
   return @result;
+}
+
+sub make_connection_graph {
+  my $self = shift;
+  for my $a ($self->get_assertions) {
+    my $id = $a->getAttribute('id');
+    my @links = $a->findnodes(".//*[name()!='coref' and \@id] | .//*[\@event]");
+    next unless @links;
+    for my $l (@links) {
+      my $oid = $l->getAttribute('id');
+      next if $oid eq $id; 
+      my $o = $self->get_assertion($oid)
+	or next;
+      $self->{ref_graph}{$oid}{$id} = 1;
+      DEBUG 3, "ref($oid)=$id";
+      # FIXME: to be removed, since @event is not used anymore
+      $oid = $l->getAttribute('event')
+	or next;
+      next if $oid eq $id; 
+      $o = $self->get_assertion($oid)
+	or next;
+      $self->{ref_graph}{$oid}{$id} = 1;
+    }
+  }
+
+  DEBUG 3, "Found %d connected assertions", scalar(keys %{$self->{ref_graph}});
 }
 
 =head2 find_members_rec( $id, $op_list )
@@ -1273,7 +1502,7 @@ Adds an XML representation of an assertion to the EKB document.
 
 sub add_assertion {
   my ($self, $a) = @_;
-  $self->get_document()->documentElement()->appendChild($a);
+  $self->get_root->appendChild($a);
   DEBUG 2, "Added new assertion: %s", $a;
   $a;
 }
@@ -1287,8 +1516,12 @@ Removes an XML representation of an assertion from the EKB document.
 # TODO: make it take either an id or the node itself
 sub remove_assertion {
   my ($self, $a) = @_;
-  ($a->parentNode)->removeChild($a);
-  DEBUG 2, "Removed assertion: %s", $a;
+  my $r = $self->get_root->removeChild($a);
+  DEBUG 2, "Removed assertion: %s", $r;
+  # update ref_graph, if need be
+  unless (! %{ $self->{ref_graph} }) {
+    delete $self->{ref_graph}{ $r->getAttribute('id') };
+  }
 }
 
 =head2 derive_assertion( $id, $atype, $replace )

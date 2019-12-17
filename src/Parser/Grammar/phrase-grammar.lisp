@@ -1800,7 +1800,7 @@
       (subcat ?subcat) 
 	    )           
      -adj-pred-extent> 1
-     (NP (SORT unit-measure) (class ont::quantity) (var ?var2)
+     (NP (SORT unit-measure) (class ont::quantity-abstr) (var ?var2)
 	 (sem ($ ?s2 (f::scale ?sc)))
 	 )
      (head (ADJ1 (ARG ?arg) (VAR ?v) (COMPLEX ?complex) (atype ?newatype) 
@@ -2524,6 +2524,26 @@
 	 (add-to-conjunct (val (:name-of ?lex)) (old ?r) (new ?constraint)))
 ))
 
+
+(parser::augment-grammar 
+      '((headfeatures
+         (NP CASE MASS NAME agr PRO Changeagr GAP ARGUMENT argument-map SUBCAT role lex orig-lex headcat transform postadvbl refl gerund abbrev derived-from-name
+	     subj dobj subcat-map comp3-map)) ; no sem/class
+
+	; coerce other types into quantity-abstr for "increase/decrease".  For example: Rainfall increased
+        ((NP (LF ?lf) (status ?status) (sem ?sem) (class ont::quantity-abstr) (coerce-amt +)
+	  (SORT PRED) (VAR ?v) (CASE (? case SUB OBJ)) (complex ?complex)
+	  ;(wh ?w) (wh-var ?whv)
+	  )
+         -np-indv-coerce-amount>
+	 (head (NP (LF ?lf) (status ?status) (var ?v) (complex ?complex) (coerce-amt -))
+	       )
+	 (compute-sem-features (lf ont::quantity-abstr) (sem ?sem))
+	 )
+
+	))
+       
+
 ;;(cl:setq *grammar-NP*
 (parser::augment-grammar 
       '((headfeatures
@@ -2665,10 +2685,10 @@
         ;; QUANTITY PHRASES
 
         ;;  UNIT NP PHRASES
-
+	
 	  ;; the / those pounds
 	  ((NP (LF (% description (STATUS ?speclf) (VAR ?v) 
-		      (CLASS ont::quantity) (CONSTRAINT ?constr) (argument ?argument)
+		      (CLASS ont::quantity-abstr) (CONSTRAINT ?constr) (argument ?argument)
 		      (sem ?sem)  (transform ?transform) (unit-spec +)
 		      ))
 	       (spec ont::definite) (class ?c) (VAR ?v) (SORT unit-measure) (WH ?w)  (WH-VAR ?whv))
@@ -2684,16 +2704,16 @@
 	       )
 	   (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
 		     (KIND -) (agr ?agr) (sem ?sem) (sem ($ f::abstr-obj (f::scale ?sc)))
-		     (RESTR ?rest1)
-		     (argument ?argument) (RESTR ?restr1) (transform ?transform) (post-subcat -) (rate-activity-nom -) (agent-nom -)
+		     (RESTR ?restr1)
+		     (argument ?argument) (transform ?transform) (post-subcat -) (rate-activity-nom -) (agent-nom -)
 		     ))
-	   (append-conjuncts (conj1 ?rest1) (conj2 ?restr) (new ?restr2))
+	   (append-conjuncts (conj1 ?restr1) (conj2 ?restr) (new ?restr2))
 	   (add-to-conjunct (val (& (unit ?c) (scale ?sc))) (old ?restr2) (new ?constr))
-	   )
-	  
+	   )	  
+
 	;; several/many pounds
 	  ((NP (LF (% description (STATUS ONT::INDEFINITE) (VAR ?v)
-		      (CLASS ont::quantity) (CONSTRAINT ?constr) (argument ?argument)
+		      (CLASS ont::quantity-abstr) (CONSTRAINT ?constr) (argument ?argument)
 		      (sem ?sem)  (transform ?transform) (unit-spec +)
 		      ))
 	       (SPEC ont::indefinite) (VAR ?v) (SORT unit-measure) (WH ?w))
@@ -2712,7 +2732,7 @@
 
 	;; quantified unit nps: every three gallons
         ((NP (LF (% description (STATUS ont::quantifier) (VAR ?v) (SORT PRED)   ;; use the N var as the new var
-                    (CLASS ONT::quantity) (CONSTRAINT ?constr) 
+                    (CLASS ONT::quantity-abstr) (CONSTRAINT ?constr) 
                     (Sem ?sem)
                     ))
              (SORT PRED) (VAR ?v) (CASE (? case SUB OBJ))
@@ -2800,7 +2820,7 @@
 	;;  gallons, bunches, ...
 
         ((NP (LF (% Description (status ont::indefinite) (VAR ?v)
-	            (CLASS ont::quantity) (CONSTRAINT ?newr)
+	            (CLASS ont::quantity-abstr) (CONSTRAINT ?newr)
                     (sem ?sem)))
              (SORT AGGREGATE-UNIT) (SPEC ont::INDEFINITE) (VAR ?v))
          -bare-measure-count> .98
@@ -2816,7 +2836,7 @@
         ;;  length (inches, miles), degrees ...
 	;; (ONT::A V451423 ONT::QUANTITY  :UNIT (:* ONT::LENGTH-UNIT W::METER) :QUANTITY  W::PLURAL :SCALE ONT::LENGTH-SCALE)
 	   ((NP (LF (% Description (status ont::indefinite) (VAR ?v)
-	            (CLASS ont::quantity) (CONSTRAINT ?newr)
+	            (CLASS ont::quantity-abstr) (CONSTRAINT ?newr)
                     (sem ?sem)))
              (SORT UNIT-MEASURE) (SPEC ont::INDEFINITE) (BARE +) (VAR ?v))
 	    -bare-measure-attribute> .98
@@ -2936,11 +2956,11 @@
 	; $10
 	((NP (LF (% description (STATUS ONT::INDEFINITE)
 		    (VAR ?v) (SORT unit-measure)
-		    (CLASS ONT::quantity)
+		    (CLASS ONT::quantity-abstr)
 		    (CONSTRAINT ?constr) (argument ?argument)
 		    (sem ?sem) 
 		    ))
-	     (class ont::quantity) 
+	     (class ont::quantity-abstr) 
 	      (SPEC ont::INDEFINITE) (unit-spec +) (VAR ?v) (SORT unit-measure))
          -pre-unit-np-number-indef>
 	  (head (N (VAR ?v) (SORT attribute-unit) (Allow-before +) (LF ?unit)
@@ -2983,11 +3003,11 @@
 	((NP (LF (% description (STATUS ONT::INDEFINITE)
 		    (VAR ?v)
 		    (SORT unit-measure) 
-		    (CLASS ONT::quantity)
+		    (CLASS ONT::quantity-abstr)
 		    (CONSTRAINT ?constr) (argument ?argument)
 		    (sem ?sem) 
 		    ))
-	  (class ont::quantity)
+	  (class ont::quantity-abstr)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure))
          -unit-np-number-indef>
 	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r))
@@ -3010,11 +3030,11 @@
 	((NP (LF (% description (STATUS ONT::INDEFINITE)
 		    (VAR ?v)
 		    (SORT unit-measure) 
-		    (CLASS ONT::quantity)
+		    (CLASS ONT::quantity-abstr)
 		    (CONSTRAINT ?constr) (argument ?argument)
 		    (sem ?sem) 
 		    ))
-	  (class ont::quantity)
+	  (class ont::quantity-abstr)
 	  (Mass count)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure))
          -unit-np-number-indef-special-case>
@@ -3034,11 +3054,11 @@
    ;;  thirty feet in height 
 	((NP (LF (% description (STATUS ONT::INDEFINITE)
 		    (VAR ?v) (SORT unit-measure) 
-		    (CLASS ONT::quantity)
+		    (CLASS ONT::quantity-abstr)
 		    (CONSTRAINT ?constr) (argument ?argument)
 		    (sem ?sem) 
 		    ))
-	  (class ont::quantity)
+	  (class ont::quantity-abstr)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure))
          -unit-np-number-indef-explicit-scale>
 	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r))
@@ -3101,7 +3121,7 @@
      (VAR *) (WH ?w) (wh-var *));; must move WH feature up by hand here as it is explicitly specified in a daughter.
      -np-spec-of-def-sing-pp>
     (SPEC (LF ?spec) (ARG ?v) (VAR ?specvar) (name-spec -) (mass mass) (POSS -);;myrosia 12/27/01 added mass restriction to spec
-     (WH ?w)
+     (WH ?w) (lex (? !lex amount)) ; excludes "the amount of water" (need a better solution!)
      (RESTR ?restr)
      (SUBCAT (% PP (Ptype ?ptp) (agr |3S|) (SEM ?sem))))
     (head 
@@ -3316,12 +3336,12 @@
 	((NP (LF (% description (STATUS ONT::INDEFINITE)
 		    (VAR *)
 		    (SORT unit-measure) 
-		    (CLASS ONT::quantity)
+		    (CLASS ONT::quantity-abstr)
 		    (CONSTRAINT ?constr) (argument ?argument)
 		    (sem ?sem) 
 		    ))
 	  (sem ?sem) (lex ?lex)
-	  (class ont::quantity) (ellided +)
+	  (class ont::quantity-abstr) (ellided +)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR *) (SORT unit-measure))
          -unit-np-number-indef-ellided> .98
 	 (head (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (lex ?lex) (restr ?r)))
@@ -3329,7 +3349,7 @@
 	 (add-to-conjunct (val (& (amount (% *PRO* (status ont::indefinite) (class ont::NUMBER) (VAR ?nv) (constraint ?newr)))
 				  (unit ?c)
 				  (scale ?sc))) (old ?restr) (new ?constr))
-	 (compute-sem-features (lf ont::quantity) (sem ?sem))
+	 (compute-sem-features (lf ont::quantity-abstr) (sem ?sem))
 	 )
    ))
 
@@ -3370,7 +3390,7 @@
       (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
 	     (CONSTRAINT (& (FIGURE ?arg) 
 			    (GROUND (% *PRO* (status ont::inDEFINITE) (var ?nv) 
-				    (CLASS ont::quantity)
+				    (CLASS ont::quantity-abstr)
 				    (CONSTRAINT ?constr)))))
 	     (Sem ?sem)))					
       (transform ?transform))
@@ -3393,7 +3413,7 @@
       (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
 	     (CONSTRAINT (& (FIGURE ?arg) 
 			    (GROUND (% *PRO* (status ont::inDEFINITE) (var ?nv) 
-				    (CLASS ont::quantity)
+				    (CLASS ont::quantity-abstr)
 				    (CONSTRAINT ?constr)))))
 	     (Sem ?sem)))
       (SORT unit-measure)
@@ -3417,7 +3437,7 @@
       (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
 	     (CONSTRAINT (& (FIGURE ?arg) 
 			    (GROUND (% *PRO* (status ont::inDEFINITE) (var ?nv) 
-				    (CLASS ont::quantity)
+				    (CLASS ont::quantity-abstr)
 				    (CONSTRAINT ?constr)))))
 	     (Sem ?sem)))					
       (transform ?transform))
@@ -3695,6 +3715,33 @@
       (compute-sem-features (lf ont::STATE-resultING-FROM) (sem ?nsem)
        ))
 
+    ; back up version of -vp-pastprt-adjp->
+     ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem) (class ?lf)
+	    (subcatmap ?subjmap) ;(SUBCATMAP (? x ont::affected ont::affected-result ont::neutral))
+	    (ARGUMENT ?subj)
+	    (atype attributive-only) ;(atype central) 
+	    (LF (% PROP (class ?lf) (VAR ?v) (constraint ?newc)))
+      )
+     -vp-pastprt-adjp-2> 0.985 ; slightly lower score than -vp-pastprt-adjp->
+     (head
+      (vp- (class ?lf) (constraint ?cons) (var ?v) (sem ?sem)
+	   (subj-map ?subjmap) ;(SUBJ-MAP (? x ont::affected ont::affected-result))
+	   (SUBJ ?subj) ;; more general to ask for SUBJ to be AFFECTED role, includes
+ 	                                         ;; the passive as well as unaccusative cases
+	                ;; also neutral/formal: the expected result
+	   (subjvar ?arg)
+	   (gap -) ;;  no gap in the VP
+	   (vform (? pp passive pastpart))
+	   (complex -)
+           (advbl-needed -)
+	   (dobj (% -))  ;; we can't say "the cooked the steak meat" but "the cooked meat" is fine.
+	   ;(comp3 (% -))  ;; sacrificing "the broken by the hammer window"
+	   (comp3 (% ?comp3 (var ?compvar)))  
+           ))
+     (not-bound (arg1 ?compvar)) ; optional but unbound
+     ;(append-conjuncts (conj1 ?cons) (conj2 (& (ont::affected ?arg))) (new ?newc))
+     (append-conjuncts (conj1 ?cons) (conj2 (& (?subjmap ?arg))) (new ?newc))
+     )
 
     
 
@@ -3949,7 +3996,7 @@
     ((SPEC (LF ONT::INDEFINITE) ;(LF wh-quantity)
 	   (Lex (How ?l)) (headcat QUAN) (STATUS WH) (AGR ?a)
           (ARG ?arg) (MASS ?m) (WH Q) (WH-VAR *) (QUANT +) (VAR ?v)
-          (RESTR (& (SIZE (% *PRO* (STATUS WH) (VAR *) (CLASS ont::QUANTITY)
+          (RESTR (& (SIZE (% *PRO* (STATUS WH) (VAR *) (CLASS ont::QUANTITY-ABSTR)
 			     (CONSTRAINT (& (QUAN ?lf)
 					    ;(suchthat ?arg)
 					    ))))))
@@ -3962,7 +4009,7 @@
     ((SPEC (LF ONT::SM) ;(LF wh-quantity)
 	   (Lex (How ?l)) (headcat QUAN) (STATUS WH) (AGR ?a)
           (ARG ?arg) (MASS ?m) (WH Q) (WH-VAR *) (QUANT +) (VAR ?v)
-          (RESTR (& (QUANTITY (% *PRO* (STATUS WH) (VAR *) (CLASS ont::QUANTITY)
+          (RESTR (& (QUANTITY (% *PRO* (STATUS WH) (VAR *) (CLASS ont::QUANTITY-ABSTR)
 				 (CONSTRAINT (& (QUAN ?lf)
 						;(suchthat ?arg)
 						))))))
@@ -4087,6 +4134,7 @@
      )
       ||#
 
+    #|
     ;; how adj   e.g., how red
     ((ADJP (ARG ?argvar) (SUBCATSEM ?subcatsem)
       (wh-var *) (WH Q) (SORT PP-WORD) (how +)
@@ -4107,7 +4155,9 @@
 		   (SEM ?subcatsem) (CONSTRAINT (& (proform ?lex) (suchthat ?adjv)))))))
       (new ?newc))
      )
+    |#
 
+    #|
      ;; how adv  e.g., how quickly
     ((ADVBL  (ARG ?argvar) (SUBCATSEM ?subcatsem)
       (wh-var *) (WH Q) (SORT PP-WORD) (how-advbl +)
@@ -4119,7 +4169,8 @@
       (role ?reln)
       )
      -how-advbl>     
-     (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ont::degree) (lex how))
+     (adv (SORT PP-WORD) (wh Q) (IMPRO-CLASS ont::degree)
+	  (lex how))
      (head (advbl (var ?adjv) (atype ?atype) (arg ?argvar)  (argument ?argu) (sort pred) ; to rule out "how about..."
 		  (LF (% PROP (class ?reln) (constraint ?con)))))
      (append-conjuncts (conj1 ?con) 
@@ -4127,6 +4178,7 @@
 		   (SEM ?subcatsem) (CONSTRAINT (& (proform ?lex) (suchthat ?adjv)))))))
       (new ?newc))
      )
+    |#
     
     ;; pp adverbials, here, there, home 
     ((ADVBL  (ARG ?argvar) (SUBCATSEM ?subcatsem)
@@ -6337,7 +6389,7 @@
 		    ))
 	 (n (lf ?ratelf)
 	  ;; we match the LF here instead of in the SEM in order to get a hard failure 
-	  (lf (? x ONT::DOMAIN ONT::ACTIVITY-EVENT ONT::ABILITY-EVENT ONT::LEVEL ONT::QUANTITY
+	  (lf (? x ONT::DOMAIN ONT::ACTIVITY-EVENT ONT::ABILITY-EVENT ONT::LEVEL ONT::QUANTITY-ABSTR
 		   ONT::time-object))  ; rate, height, activity, level, amount, (planting) date
 	  (sem ($ (? t F::ABSTR-OBJ F::SITUATION F::TIME))))  ; (planting) date
 	 )
