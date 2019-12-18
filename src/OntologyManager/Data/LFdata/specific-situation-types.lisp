@@ -3,6 +3,7 @@
 ;; DRUM
 (define-type ONT::mutation
  :parent ONT::event-of-change
+ :arguments ((:optional  ONT::affected ((? cau3a F::situation F::abstr-obj f::phys-obj) (F::tangible +))) )
  )
 
 ;; abstraction of stative verbs indicating position and orientation,
@@ -4172,15 +4173,17 @@
     )
 
 
+; takes non-tangible AFFECTED (e.g., amount)
 (define-type ONT::change-magnitude
  :wordnet-sense-keys ("change_magnitude%2:30:00" "change_intensity%2:39:00")
  :arguments (	     ;(:essential ont::affected (F::abstr-obj (f::scale ont::domain))) ; e.g., rainfall is physobj; flood is situation 
 	     ;(:essential ont::affected)
-	     (:essential ont::affected (F::abstr-obj (f::type (? t2 ont::domain ont::quantity-abstr)))) ; height, amount
+	     (:essential ont::affected (F::abstr-obj (f::type (? t2 ont::domain ont::quantity-abstr ont::level)))) ; height, amount, level, degree
 	     (:essential ONT::scale (f::abstr-obj (F::scale ont::domain)))
 	     (:optional  ONT::result ((? cau2 F::situation F::Abstr-obj f::phys-obj) (F::type (? t ont::goal-reln ont::source-reln))))) 
 ; :parent ONT::adjust
- :parent ont::change-in-scale
+ ;:parent ont::change-in-scale
+ :parent ont::event-of-change
  )
 
 (define-type ONT::increase
@@ -4221,6 +4224,20 @@
  :parent ONT::decrease
  )
 
+(define-type ONT::adjust-to-extreme
+ ;:parent ONT::adjust
+ :parent ONT::change-magnitude
+ )
+
+(define-type ONT::minimize
+ :wordnet-sense-keys ("minimise%2:30:00")
+ :parent ONT::adjust-to-extreme
+ )
+
+(define-type ONT::maximize
+ :wordnet-sense-keys ("maximise%2:30:00")
+ :parent ONT::adjust-to-extreme
+ )
 
 
 (define-type ONT::fluctuate
@@ -4290,19 +4307,6 @@
 (define-type ont::sumoylation
     :parent ont::post-translational-modification
 )
-
-(define-type ONT::adjust-to-extreme
- :wordnet-sense-keys ("minimise%2:30:00" "minimize%2:30:00" "maximise%2:30:00" "maximize%2:30:00")
- :parent ONT::adjust
- )
-
-(define-type ONT::minimize
- :parent ONT::adjust-to-extreme
- )
-
-(define-type ONT::maximize
- :parent ONT::adjust-to-extreme
- )
 
 (define-type ONT::visual-adjust
  :wordnet-sense-keys ("blur%2:30:01" "blur%2:39:00" "blur%2:39:01" "focus%2:30:00" "sharpen%2:30:03" "sharpen%2:39:00" "soften%2:39:00")

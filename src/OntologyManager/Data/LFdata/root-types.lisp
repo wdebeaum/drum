@@ -52,7 +52,7 @@
      :parent ONT::SITUATION-ROOT
      :comment "Events that involve change or force: should have an AGENT or AFFECTED role"
      :arguments ((:optional  ONT::agent ((? cau4 F::situation F::Abstr-obj f::phys-obj)))
-		 (:optional  ONT::affected ((? cau3a F::situation F::abstr-obj f::phys-obj) (F::tangible +)))
+		 (:optional  ONT::affected ((? cau3a F::situation F::abstr-obj f::phys-obj))) ; (F::tangible +))) 
 		 (:optional  ONT::result (F::Abstr-obj (:default (F::tangible -) (F::type (? !t ont::position-reln)))))
 		 ;;(:optional ONT::beneficiary ((? cau1 f::phys-obj))))
 		 )
@@ -82,7 +82,9 @@
      :definitions ((ont::cause-effect :agent ?agent
 				     :formal (ont::event-of-change)))
      :sem (F::Situation (F::cause F::force))
-     :arguments ((:essential ONT::agent ((? cau2a F::situation F::Abstr-obj f::phys-obj)))))
+     :arguments ((:essential ONT::agent ((? cau2a F::situation F::Abstr-obj f::phys-obj)))
+		 (:optional  ONT::affected ((? cau3a F::situation F::abstr-obj f::phys-obj) (F::tangible +)))
+		 ))
 
 #||(define-type ont::event-of-agent-interaction 
      :parent ONT::event-of-action
@@ -95,7 +97,8 @@
      :parent ONT::event-of-change
      :comment "Events involving changing or mental state or awareness"
      :sem (F::Situation) 
-     :arguments ((:essential ONT::formal ((? cau4 F::situation F::Abstr-obj)))))
+     :arguments ((:optional  ONT::affected ((? cau3a F::situation F::abstr-obj f::phys-obj) (F::tangible +))) 
+		 (:essential ONT::formal ((? cau4 F::situation F::Abstr-obj)))))
 
 
 (define-type ont::event-of-undergoing-action

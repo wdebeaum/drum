@@ -240,7 +240,7 @@
     :sem (F::Situation (F::Trajectory -))
  :arguments ((:REQUIRED ONT::Affected ((? o1 F::Situation F::Phys-obj f::abstr-obj)))
 	     (:ESSENTIAL ONT::agent ((? o2 F::Situation F::Phys-obj f::abstr-obj)))
-	     (:OPTIONAL ONT::Result ((? res F::situation F::abstr-obj)))
+	     (:OPTIONAL ONT::Result ((? res F::situation F::abstr-obj) (F::tangible +)))
 	     )
  )
 

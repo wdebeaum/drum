@@ -15,6 +15,18 @@
      (example "move it 45 degrees")
      (TEMPL attribute-UNIT-TEMPL)
      )
+
+    ((lf-parent ont::level)
+     (example "the degree of coldness")
+     (TEMPL other-reln-templ)
+     (meta-data :origin calo-ontology :entry-date 20060425 :change-date nil :wn ("level%1:07:00") :comments nil)
+     )	  
+    ((lf-parent ont::level)
+     (example "the degree of 5")
+     (TEMPL reln-subcat-of-number-TEMPL)
+     (meta-data :origin calo-ontology :entry-date 20060425 :change-date nil :wn ("level%1:07:00") :comments nil)
+     )	  
+    
     )
    )
 ))

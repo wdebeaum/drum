@@ -465,17 +465,6 @@
  :parent ONT::measure-unit
  )
 
-;; a number/amount/quantity of X
-(define-type ONT::QUANTITY-abstr
-    :wordnet-sense-keys ("measure%1:03:00" "quantity%1:03:00" "amount%1:03:00" "quantity%1:09:01"
-					   "amount%1:21:00" "amount%1:07:00")
-; :parent ONT::DOMAIN-PROPERTY
- :parent ONT::GROUP-OBJECT-abstr
- ;:sem (F::abstr-obj (F::tangible +)) ; so that the "have" in "I have an amount of water" would pick water instead of amount as the argument
- :arguments ((:ESSENTIAL ONT::FIGURE)
-             )
- )
-
 (define-type ONT::tangible-unit
  :parent ONT::MEASURE-UNIT
  :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj))
@@ -672,6 +661,18 @@
  :wordnet-sense-keys ("range%1:07:00" "bracket%1:14:00")
  :parent ont::level
 )
+
+;; a number/amount/quantity of X
+(define-type ONT::QUANTITY-abstr
+    :wordnet-sense-keys ("measure%1:03:00" "quantity%1:03:00" "amount%1:03:00" "quantity%1:09:01"
+					   "amount%1:21:00" "amount%1:07:00")
+; :parent ONT::DOMAIN-PROPERTY
+ ;:parent ONT::GROUP-OBJECT-abstr
+ :parent ONT::LEVEL
+ ;:sem (F::abstr-obj (F::tangible +)) 
+ :arguments ((:ESSENTIAL ONT::FIGURE)
+             )
+ )
 
 (define-type ONT::dynamics
  :wordnet-sense-keys ("dynamics%1:09:00")

@@ -14,6 +14,7 @@
    )
 ))
 
+#|
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 ((w::max (w::out))
@@ -27,4 +28,4 @@
   )
  )
 ))
-
+|#

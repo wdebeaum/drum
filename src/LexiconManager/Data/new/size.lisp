@@ -25,7 +25,8 @@
 (w::size
  (senses
   ((meta-data :origin calo :entry-date 20050425 :change-date 20090507 :comments projector-purchasing :wn ("size%2:30:00"))
-   (LF-PARENT ONT::change-magnitude)
+   ;(LF-PARENT ONT::change-magnitude)
+   (LF-PARENT ONT::CHANGE-IN-SIZE)
    (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
    (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
    )
