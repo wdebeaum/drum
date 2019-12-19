@@ -2527,11 +2527,27 @@
 
 (parser::augment-grammar 
       '((headfeatures
-         (NP CASE MASS NAME agr PRO Changeagr GAP ARGUMENT argument-map SUBCAT role lex orig-lex headcat transform postadvbl refl gerund abbrev derived-from-name
-	     subj dobj subcat-map comp3-map)) ; no sem/class
+         (NP CASE MASS NAME agr PRO Changeagr GAP ARGUMENT argument-map SUBCAT role headcat transform postadvbl refl gerund abbrev derived-from-name
+	     subj dobj subcat-map comp3-map)) ; no sem/class; lex orig-lex
 
-	; coerce other types into quantity-abstr for "increase/decrease".  For example: Rainfall increased
-        ((NP (LF ?lf) (status ?status) (sem ?sem) (class ont::quantity-abstr) (coerce-amt +)
+	; coerce other types into quantity-abstr for "increase/decrease".  
+	; Rainfall increased => The amount of rainfall increased
+	((NP (LF (% Description (status ONT::DEFINITE) (var *) (Class ont::quantity-abstr) (SORT PRED) 
+                (constraint (& (FIGURE ?v)))
+                (sem ?sem)) )
+	     (status ONT::DEFINITE) (sem ?sem) (class ont::quantity-abstr) (coerce-amt +)
+	     (SORT PRED) (VAR *) (CASE (? case SUB OBJ)) (complex ?complex)
+	     
+	  ;(wh ?w) (wh-var ?whv)
+	  )
+         -np-indv-coerce-amount> 
+	 (head (NP (LF ?lf) (status ?status) (var ?v) (complex ?complex) (coerce-amt -)) ; the status is not always instantiated
+	       )
+	 (compute-sem-features (lf ont::quantity-abstr) (sem ?sem))
+	 )
+
+	#|
+	((NP (LF ?lf) (status ?status) (sem ?sem) (class ont::quantity-abstr) (coerce-amt +)
 	  (SORT PRED) (VAR ?v) (CASE (? case SUB OBJ)) (complex ?complex)
 	  ;(wh ?w) (wh-var ?whv)
 	  )
@@ -2540,7 +2556,8 @@
 	       )
 	 (compute-sem-features (lf ont::quantity-abstr) (sem ?sem))
 	 )
-
+	|#
+	
 	))
        
 

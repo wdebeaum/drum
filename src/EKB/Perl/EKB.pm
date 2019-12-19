@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Mon Dec 16 13:53:53 CST 2019 lgalescu>
+# Time-stamp: <Wed Dec 18 00:38:36 CST 2019 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.44 2019/12/16 20:37:49 lgalescu Exp $
+# $Id: EKB.pm,v 1.45 2019/12/18 06:42:46 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -130,17 +130,25 @@
 # - one more utility function
 # 2019/12/16 v2.0	lgalescu
 # - renamed fix() to upgrade()
-# - additional getters and setters
+# - additional getters and setters for input elements
 # - cleaned up some code
-# - added connection graph to speed up find_referrers 
+# - major speed up in find_referrers (using a connection graph)
+# 2019/12/16 v2.1	lgalescu
+# - significant speed-up on find_referrers
+# - improved code
+# - cleanup: removed obsolete subroutines
+# - replaced all calls to XML::LibXML::Element::getChildrenByTagName, which is
+#   strangely very inefficient
+# - fixed major bug in get_assertion (also a big time-waster!)
 
 # TODO:
-# - maybe split off non-OO extensions for manipulating XML objects into a separate package?
+# - maybe split off non-OO extensions for manipulating XML objects into a
+#   separate package?
 # - add DTD validation
 
 package EKB;
 
-$VERSION = '2.0';
+$VERSION = '2.1';
 
 =head1 NAME
 
@@ -280,8 +288,6 @@ our @EXPORT = qw(
 
 		  assertion_args assertion_xargs
 		  get_child_node
-		  get_children_by_name_regex
-		  get_child_node_regex_attr
 		  get_child_node_attr
 		  get_slot_value set_slot_value
 
@@ -392,7 +398,8 @@ This file must be set for L<read()|/read(_)> and L<save()|/save(_)> to work.
 =cut
 
 sub set_file {
-  my ($self, $file) = @_;
+  my $self = shift;
+  my $file = shift;
   $self->{file} = $file;
 }
 
@@ -417,7 +424,7 @@ sub get_document {
 
 sub get_root {
   my $self = shift;
-  my $dom = $self->get_document()
+  my $dom = $self->get_document
     or return undef;
   return $dom->documentElement;
 }
@@ -436,7 +443,7 @@ Returns the XML element containing the input data, if any.
 
 sub get_input {
   my $self = shift;
-  my ($input_elem) = $self->get_root()->findnodes('./input');
+  my ($input_elem) = $self->get_root->findnodes('./input');
   return $input_elem;
 }
 
@@ -447,17 +454,15 @@ sub add_input {
     WARN "EKB already has the 'input' element";
     return $input_elem;
   }
-  my $dom = $self->get_document;
-  my $new_input = $dom->createElement("input");
-  my $docs = $dom->createElement("documents");
-  $new_input->appendChild($docs);
-  my $paras = $dom->createElement("paragraphs");
-  $new_input->appendChild($paras);
-  my $sents = $dom->createElement("sentences");
-  $new_input->appendChild($sents);
-  my $root = $self->get_root;
-  $root->appendChild($new_input);
-  return $new_input;
+  
+  my $root = $self->get_root
+    or return undef;
+
+  $root->appendChild(make_node("input",
+			       make_node("documents"),
+			       make_node("paragraphs"),
+			       make_node("sentences"),
+			      ));
 }
 
 =head1 METHODS
@@ -580,7 +585,7 @@ not of the document itself, therefore there will be no XML declaration.
 sub toString {
   my $self = shift;
 
-  $self->get_document()->documentElement()->toString(1);
+  $self->get_root->toString(1);
 }
 
 =head2 print( $filepath )
@@ -604,7 +609,7 @@ sub print {
     $out = *STDOUT;
   }
   binmode $out;			# do not apply any encoding layers!
-  $self->get_document()->toFH($out, 1);
+  $self->get_document->toFH($out, 1);
   close $out if $file;
 }
 
@@ -727,7 +732,7 @@ sub is_article {
   # FIXME: obsolete, should be removed!
   if ($self->{options}{pub}) { return 1; }
 
-  my $doctype = $self->get_document()->findvalue('//input/@type');
+  my $doctype = $self->get_root->findvalue('./input/@type');
   return (defined $doctype) && (lc($doctype) eq "article"); 
 }
 
@@ -1109,9 +1114,9 @@ the list is restricted to the paragraphs with the given document ID.
 
 sub get_paragraphs {
   my ($self, $docid) = @_;
-  my $doc = $self->get_document()
+  my $input = $self->get_input
     or return undef; 
-  my @result = $doc->findnodes('//input//paragraph');
+  my @result = $input->findnodes('.//paragraph');
   if ($docid) {
     @result =
       grep { $_->getAttribute('docid') eq $docid } @result;
@@ -1203,9 +1208,9 @@ the list is restricted to the sentences with the given paragraph ID.
 
 sub get_sentences {
   my ($self, $pid) = @_;
-  my $doc = $self->get_document()
+  my $input = $self->get_input
     or return undef; 
-  my @result = $doc->findnodes('//input//sentence');
+  my @result = $input->findnodes('.//sentence');
   if ($pid) {
     @result =
       grep { $_->getAttribute('pid') eq $pid } @result;
@@ -1283,7 +1288,7 @@ sub get_assertions {
     DEBUG 2, "atype=%s, attrs=%s", $atype, Dumper($opt_attrs);
   }
 
-  my $doc = $self->get_document()
+  my $root = $self->get_root
     or return undef;
   (! $atype) || is_assertion_type($atype)
     or do {
@@ -1291,10 +1296,8 @@ sub get_assertions {
       DEBUG 2, "called on bad assertion: %s", $a;
       return undef;
     };
-  my @result =
-    $atype
-    ? $doc->findnodes('/ekb/' . $atype)
-    : map { $doc->findnodes('/ekb/' . $_) } @extractionTypes;
+  my @types = $atype ? ( $atype ) : @extractionTypes;
+  my @result = map { $root->findnodes('./' . $_) } @types;
   if ($opt_attrs) {
     @result = grep { match_attributes($_, $opt_attrs) } @result;
   }
@@ -1324,7 +1327,7 @@ sub get_assertion {
     $opt_attrs = $atype;
     $atype = undef;
   }
-  my $doc = $self->get_document()
+  my $root = $self->get_root
     or return undef; 
   (! $atype) || is_assertion_type($atype)
     or do {
@@ -1332,11 +1335,9 @@ sub get_assertion {
       DEBUG 2, "called on bad assertion: %s", $a;
       return undef;
     };
-  my ($result) =
-    $atype
-    ? $doc->findnodes('/ekb/'.$atype.'[@id="'.$id.'"]')
-    : map { $doc->findnodes('/ekb/*'.'[@id="'.$id.'"]') } @extractionTypes;
-  if ($opt_attrs) {
+  my @types = $atype ? ( $atype ) : @extractionTypes;
+  my ($result) = map { $root->findnodes('./'.$_.'[@id="'.$id.'"]') } @types;
+  if ($result && $opt_attrs) {
     match_attributes($result, $opt_attrs)
       or return undef;
   }
@@ -1391,73 +1392,70 @@ sub find_referrers {
 
   if (exists $ref_graph->{$id}) {
     my @refids = keys %{ $ref_graph->{$id} };
-    # update graph
+    # check referrers
+    my $found = 0;
     foreach my $rid (@refids) {
       my $ra = $self->get_assertion($rid);
-      unless ($ra) { 
+      if ($ra) {
+	$found = 1;
+	if ($atype) {
+	  push @result, $ra
+	    if ($atype eq get_assertion_type($ra));
+	} else {
+	  push @result, $ra;
+	}
+      } else {
 	delete $ref_graph->{$id}{$rid};
 	if (exists $ref_graph->{$rid}) {
 	  delete $ref_graph->{$rid};
 	}
       }
     }
-    # recompute, in case we made changes
-    @refids = keys %{ $ref_graph->{$id} };
-    if (@refids) {
-      # find relevant assertions
-      @result =
-	grep { defined $_ }
-	map { $self->get_assertion($_, $atype) } @refids;
-    } else { # update ref_graph
-      delete $ref_graph->{$id};
-    }
-
+    # delete if no referrers
+    delete $ref_graph->{$id}
+      unless $found;
   }
   
-  DEBUG 3, "Found %d referrers for $id (new:1)", scalar(@result);
-
-  return @result;
- 
-  # the rest is obsolete (never executed)
-  
-  # all assertions containing a descendant node that has an attribute id
-  # referring to the arg id; exclusions: self and corefs
-  # ref links can be via @id or @event
-  # FIXME: @event is obsolete; now we only use @id
-  @result = 
-    grep { $_->exists(".//*[name()!='coref' and \@id=\"$id\"] | .//*[\@event=\"$id\"]") }
-    grep { $_->getAttribute('id') ne $id }
-    $self->get_assertions($atype);
-    
   DEBUG 3, "Found %d referrers for $id", scalar(@result);
 
   return @result;
-}
+ }
 
+# makes a static representation of the links between assertions to speed up
+# find_referrer. in one test on a ~4K-assertion EKB, speed-up was >4x, though
+# building and maintaining the graph ate up a lot of the savings; still,
+# overall, ekb_reasoner ran >2x as fast.
 sub make_connection_graph {
   my $self = shift;
-  for my $a ($self->get_assertions) {
-    my $id = $a->getAttribute('id');
-    my @links = $a->findnodes(".//*[name()!='coref' and \@id] | .//*[\@event]");
-    next unless @links;
-    for my $l (@links) {
-      my $oid = $l->getAttribute('id');
-      next if $oid eq $id; 
-      my $o = $self->get_assertion($oid)
-	or next;
-      $self->{ref_graph}{$oid}{$id} = 1;
-      DEBUG 3, "ref($oid)=$id";
-      # FIXME: to be removed, since @event is not used anymore
-      $oid = $l->getAttribute('event')
-	or next;
-      next if $oid eq $id; 
-      $o = $self->get_assertion($oid)
-	or next;
-      $self->{ref_graph}{$oid}{$id} = 1;
-    }
-  }
+  
+  my @assertions = $self->get_assertions;
+  map { $self->add_connections($_) } @assertions;
 
-  DEBUG 3, "Found %d connected assertions", scalar(keys %{$self->{ref_graph}});
+  DEBUG 3, "Found %d connected assertions (out of %d)",
+    scalar(keys %{$self->{ref_graph}}), scalar(@assertions);
+}
+
+sub add_connections {
+  my $self = shift;
+  my $a = shift;
+  
+  my $id = $a->getAttribute('id');
+  my @links = $a->findnodes(".//*[name()!='coref' and \@id] | .//*[\@event]");
+  for my $l (@links) {
+    my $oid = $l->getAttribute('id');
+    next if $oid eq $id; 
+    my $o = $self->get_assertion($oid)
+      or next;
+    $self->{ref_graph}{$oid}{$id} = 1;
+    DEBUG 3, "ref($oid)=$id";
+    # FIXME: obsolete (@event is not used anymore)
+    $oid = $l->getAttribute('event')
+      or next;
+    next if $oid eq $id; 
+    $o = $self->get_assertion($oid)
+      or next;
+    $self->{ref_graph}{$oid}{$id} = 1;
+  }
 }
 
 =head2 find_members_rec( $id, $op_list )
@@ -1750,7 +1748,7 @@ sub modify_assertion {
     # replacement? N.B.: we only replace slots with slots
     if (is_slot($child)) {
       my $cname = $child->nodeName;
-      my @s = $a->getChildrenByTagName($cname);
+      my @s = $a->findnodes("./$cname");
       # we assume at most one existing slot with the given name
       # if the slot is repeatable, the caller should handle removal
       if (scalar(@s) == 1 && is_slot($s[0])) {
@@ -2306,10 +2304,9 @@ sub get_span_text {
   my $self = shift;
   my ($pid, $start, $end) = @_;
 
-  my ($p_node) =
-    $self->get_document()->findnodes('/ekb/input//paragraph[@id="'.$pid.'"]')
+  my $p = $self->get_paragraph($pid)
     or return undef;
-  return substr($p_node->textContent, $start, ($end - $start));
+  return substr($p->textContent, $start, ($end - $start));
 }
 
 =head2 new_id( $prefix, $length )
@@ -2471,41 +2468,13 @@ sub get_children_by_name {
 	WARN "Trace [%d]: %s", -$frame, Dumper(\@cntxt);
       }
     };
-  return $_[0]->getChildrenByTagName($_[1]);
-}
-
-# get child nodes whose tag name matches a regex
-# OBSOLETE as of 2017/04/21 -- will delete in a month
-sub get_children_by_name_regex {
-  my ($node, $tagRegex) = @_;
-  { my ($package, $filename, $line, $callsub) = caller(1);
-    WARN "get_children_by_name_regex is now obsolete. Called from: $callsub at $filename:$line";
-  }
-  return grep { $_->nodeName =~ $tagRegex } $node->childNodes();
-}
-
-# get child node with matching type and given attributes (optional)
-# OBSOLETE as of 2017/04/21 -- will delete in a month
-sub get_child_node_regex_attr {
-  my ($node, $slot, $conds) = @_;
-  { my ($package, $filename, $line, $callsub) = caller(1);
-    WARN "get_children_by_name_regex is now obsolete. Called from: $callsub at $filename:$line";
-  }
-  my @cNodes = get_children_by_name_regex($node, $slot);
-  return undef if scalar(@cNodes) == 0;
-  DEBUG 3, "cNodes:\n%s", join("\n", @cNodes);
-  my @fNodes = grep { match_attributes($_, $conds) } @cNodes;
-  DEBUG 3, "fNodes:\n%s", join("\n", @fNodes);
-  return undef if scalar(@fNodes) == 0;
-  WARN("get_child_node_regex_attr: multiple nodes found! returning the first")
-    if (scalar(@fNodes) > 1);
-  return $fNodes[0];
+  return $_[0]->findnodes("./".$_[1]);
 }
 
 # get child node that has given type and attributes (optional)
 sub get_child_node_attr {
   my ($node, $slot, $conds) = @_;
-  my @fNodes = $node->getChildrenByTagName($slot);
+  my @fNodes = get_children_by_name($node, $slot);
   return undef unless @fNodes;
   my ($fNode) = grep { match_attributes($_, $conds) } @fNodes;
   return $fNode;
@@ -2554,7 +2523,7 @@ Gets the value (text content) of $node's slot with the name $name.
 # issue an error message if it does (or otherwise fail)
 sub get_slot_value {
   my ($node, $slot) = @_;
-  my ($fNode) = $node->getChildrenByTagName($slot);
+  my ($fNode) = get_children_by_name($node, $slot);
   if (! defined $fNode) {
     return undef;
   }

@@ -361,7 +361,7 @@
 			  ((consp C)
 			   C)
 			  ((var-p c)
-			   (format t "~%Warning: found unexpected unbound variable in ADD-TO-CONJUNCT: ~S " args)
+			   ;(format t "~%Warning: found unexpected unbound variable in ADD-TO-CONJUNCT: ~S " args)
 			   nil)
 			  (t
 			   (format t "~%Warning: bad arg passed to add-to-conjunct: ~S" args)

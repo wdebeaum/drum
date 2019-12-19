@@ -2050,6 +2050,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	 ((ont::acceptability-val) :evaluation)
 	 ((ont::pos-condition) :condition)
 	 ;;((ont::goal-reln) :goal)
+	 ((ont::at-scale-value) :manner) ; this goes before position-reln
 	 ((ont::position-reln ) :location)
 	 ((ont::accompaniment) :agent1)
 	 ((ont::by-means-of ont::with-instrument) :method)

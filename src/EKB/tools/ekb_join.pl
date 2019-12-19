@@ -2,7 +2,7 @@
 
 # ekb_join.pl
 #
-# Time-stamp: <Mon Dec 16 16:19:16 CST 2019 lgalescu>
+# Time-stamp: <Mon Dec 16 16:32:04 CST 2019 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 11 Dec 2019
 #
@@ -15,6 +15,10 @@
 # History:
 # 20191210 v0.1 lgalescu
 # - Started working on it.
+# 20191215 v1.0 lgalescu
+# - Tested. Ready.
+# 20191216 v1.1 lgalescu
+# - Tweak: added offset attribute to paragraphs (a bit redundant).
 
 #----------------------------------------------------------------
 # Usage:
@@ -35,6 +39,8 @@ BEGIN {
     $TRIPS_BASE = $ENV{'TRIPS_BASE'} || $TRIPS_BASE_DEFAULT;
     warn "TRIPS_BASE=$TRIPS_BASE\n";
   }
+
+$VERSION = '1.1';
 
 use strict 'vars';
 use warnings;
