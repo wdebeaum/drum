@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.93 2019/12/15 20:49:20 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.94 2019/12/26 17:49:12 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -1640,7 +1640,7 @@ public class DrumGUI extends StandardTripsModule {
      * @param haveInferredEKB
      */
     private void callback(KQMLPerformative taskRequest, boolean haveInferredEKB) {
-        if (gotOK) { // otherwise we must have rejected it already
+        if (haveInferredEKB || gotOK) { // otherwise we must have rejected it already
             reply(taskRequest, makeExtractionsResultMessage());
         }
     }
@@ -2035,19 +2035,18 @@ public class DrumGUI extends StandardTripsModule {
     /**
      * Document normalization.
      * <p>
-     * For the moment, this just means replacing some Unicode characters that are not valid 
-     * XML characters. It is left whether the list should be generalized to the whole set of 
-     * control characters or something else. 
-     * <p>
-     * Replacement preserves length of whitespace regions.
+     * For the moment, this just means replaces control characters that are not valid
+     * XML characters with whitespace (space or newline). Replacement is done character-for-character so that character
+     * positions are not affected by this transformation of the input.
      */
     private void normalizeDocument() {
         currentInputData = currentInputData
                 .replace("\u0003", "\n")    // ^C, ETX
-                .replace("\u0005", "\n")	// ^E, ENQ
-                .replace("\u000C", "\n")	// ^L, FORM-FEED (FF)
-                .replace("\u0010", "\n")	// ^P, DLE
-                .replace("\u0015", "\n")	// ^U, NAK
+                .replace("\u0005", "\n")    // ^E, ENQ
+                .replace("\u000C", "\n")    // ^L, FORM-FEED (FF)
+                .replace("\u0010", "\n")    // ^P, DLE
+                .replace("\u0015", "\n")    // ^U, NAK
+                .replace("\u00A0", " ")     // NO-BREAK SPACE
                 .replaceAll("[\\p{Cc}&&[^\\p{Space}]]", " ");     // all other control chars
     }
 
@@ -2135,14 +2134,22 @@ public class DrumGUI extends StandardTripsModule {
         wordDensity = (double) nWordTokens / nTokens;
 	if (nWordTokens > 0)
 	    avgWordLen = (double) tempTotalWordLen / nWordTokens;
+	
         // validation heuristic: not too many nonwords, either long seq of words or short seqs of non-words; avg word length must be reasonably large
         boolean testW = nWordTokens > 5; 
 	boolean testW2 = (nWordTokens * wordDensity) >= 2;
         boolean testWD = wordDensity >= 0.75;
         boolean testLWS = maxWordSeqLen >= 5;
         boolean testLGS = maxGapLen < 5;
-	boolean testAWL = avgWordLen >= 3.5;
-        boolean result = (testW || testW2) && testAWL && testWD && (testLWS || testLGS);
+	boolean testAWL = avgWordLen >= 3;
+        boolean result =
+	    (nTokens <= 10) // short sentences are ok
+	    ||
+	    ( (testW || testW2) && testAWL // sufficient number of actual words
+	      && testWD  // not too many non-words
+	      && (testLWS // there is at least one reasonably long sequence of actual words
+		  || testLGS)); // or the sequences of non-words are fairly short
+	
         Debug.debug("word-like tokens: " + nWordTokens + " ["+ (testW ? "OK" : "-") +"]");
         Debug.debug("avg word length: " + String.format("%.2f", avgWordLen) + " ["+ (testAWL ? "OK" : "-") +"]");
         Debug.debug("word density: " + String.format("%.2f", wordDensity) + " ["+ (testWD ? "OK" : "-") +"]");

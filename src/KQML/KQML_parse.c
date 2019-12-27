@@ -2,7 +2,7 @@
  * KQML_parse.c: Parsing KQML structures
  *
  * George Ferguson, ferguson@cs.rochester.edu,  6 Nov 1995
- * Time-stamp: <Fri Apr 23 11:38:05 CDT 2010 lgalescu>
+ * Time-stamp: <Thu Dec 26 17:58:50 CST 2019 lgalescu>
  *
  * Note that the KQML spec is very clear about where whitespace is and
  * isn't allowed, and these routines stick to the letter of the law.
@@ -257,6 +257,10 @@ KQMLScanList(char *in, int comma)
     }
     /* Skip open paren */
     in += 1;
+    /* We allow empty lists */
+    if (*in == ')') {
+	return in+1;
+    }
     /* Get initial word of list */
     /* NOTE: KQML spec says this has to be a word, however we want to accept
      * also lists of strings, for example, so we accept an expression here.
@@ -436,6 +440,10 @@ KQMLParseList(char *in)
     }
     /* Skip open paren */
     in += 1;
+    /* We allow empty lists */
+    if (*in == ')') {
+	return NULL;
+    }
     /* Get initial word of list */
     /* See note in KQMLScanList(); we accept an expression rather than
      * a word
