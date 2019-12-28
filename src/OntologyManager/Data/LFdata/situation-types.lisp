@@ -894,7 +894,7 @@
  :sem (F::Situation (F::Aspect F::static) (F::Time-span F::extended) (F::Trajectory -))
  :arguments ((:REQUIRED ONT::neutral )
 	     ;; this is still here until we decide what to do with the formal-pred mappings for be
-	     (:essential ONT::formal (F::Abstr-obj (f::type (? cbd ont::domain-property ont::position-reln ont::predicate ont::relation)))) ; ont::predicate: with, without, around; ont::relation: the same
+	     (:essential ONT::formal ((? formal F::Abstr-obj F::situation) (f::type (? cbd ont::domain-property ont::position-reln ont::predicate ont::relation ONT::MEMBERSHIP)))) ; ont::predicate: with, without, around; ont::relation: the same; ont::membership: It is a dog
 ;             (:ESSENTIAL ONT::PROPERTY ((? oc2 F::abstr-obj))) ;; only properties (preds) -- for event nouns use ont::have-experience or ont::participating
              )
  )
