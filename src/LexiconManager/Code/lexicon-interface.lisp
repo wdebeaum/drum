@@ -540,6 +540,30 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 (defun is-preferred-concept (domain-info)
   (cernl-hack-is-umls-concept domain-info)
   )
+(defun get-lf-and-pos (lex) ;;RIK
+    "get the pos/lf from the result of get-word-def"
+    (let ((ent (lex-entry-description lex)))
+        (list
+          (strip-out-lf (get-feature-values (rest ent) 'w::lf))
+          (car ent))))
+
+(defun check-definition (definition ont-type &optional (pos nil)) ;;RIK
+  "checks to see if a definition matches an ont-type/pos pair"
+  (let ((pos (or (penn-tag-to-trips-pos pos) pos))
+        (d (get-lf-and-pos definition)))
+  (and
+    (or (null ont-type) (eq (car d) ont-type)
+      (and (not (eq *use-tagged-senses-only* 'strict)) (om::subtype (car d) ont-type)))
+    (or (null pos) (eq (cadr d) pos)))))
+
+(defun check-definition-list (definition tests)
+  (cond ((not tests) nil)
+        (t
+          (or (check-definition definition (caar tests) (cadar tests))
+              (check-definition-list definition (cdr tests))))))
+
+(defun filter-by-definition-check (res provided-senses)
+  (remove-if-not #'(lambda (x) (check-definition-list x provided-senses)) res))
 
 (defun is-compatible-sense (sense sense-list)
   (cond
@@ -979,7 +1003,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	 (first-tagged-sense (car tagged-senses)) ; only one sense for ptb
 	 (trips-sense-info (get-lf w :wdef wdef))	 
 	 (retrieved-sense-info trips-sense-info)
-	 res tagged-ont-types part-of-speech-tags domain-tagged-senses replace-vbn-adj
+	 res tagged-ont-types part-of-speech-tags domain-tagged-senses replace-vbn-adj provided-senses
 	 )
     (print-debug "~%GET-WORD-DEF: TRIPS senses for ~S are ~S~% tagged senses are ~S~%" w trips-sense-info tagged-senses)
     (cond ((not wdef)
@@ -1010,7 +1034,14 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 		 (setq this-sense-keylist (subst penn-tags (find-arg this-sense-keylist :penn-parts-of-speech) this-sense-keylist))
 		 (setq replace-vbn-adj t)
 		 )
-	       
+		;; RIK: Gather up all the manually tagged sense combinations so we can filter them out at the end
+      		(dolist (sk these-ont-types)
+      		 (setq provided-senses
+      		   (append provided-senses
+      		     (if penn-tags
+      		       (map 'list #'(lambda (x) (list sk x)) penn-tags)
+        	     	(list (list sk nil))))))
+ 
 	      ;; (when (not (exclude-from-lookup w nil nil))
 		 ;; obtain new senses from WordFinder, if any
 	       (multiple-value-bind (new-wdef new-sense-info)		    
@@ -1046,6 +1077,10 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
     ; combine new or default senses from external sources w/ existing trips senses
     (print-debug "~%After processing RES=~S ~%     WDEF=~S" res wdef)
     (setq res (append res wdef))
+    (if (and provided-senses *use-tagged-senses-only*)
+      ;; RIK: remove the incompatible senses
+      (setq res (filter-by-definition-check res provided-senses))
+      )
     (cond  ;; moved this earlier in processing to use be able to pass in penn-tags and domain-info
 	   ;(tagged-ont-types ;; there is sense information from Text Tagger; make adjustments/hacks
 	   ;; insert TT-tagged domain specific information (i.e., UMLS info), if any, into the lexical entries
