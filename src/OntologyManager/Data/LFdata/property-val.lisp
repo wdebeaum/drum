@@ -1631,7 +1631,7 @@
 (define-type ont::hard-val
  :parent ont::hardness-val 
  :wordnet-sense-keys ("leathery%5:00:00:tough:01" "hard%3:00:01" "solid%5:00:00:hard:01" "tough%3:00:01" )
- :sem (F::Abstr-obj (F::scale ONT::hardness*1--07--00 ))
+; :sem (F::Abstr-obj (F::scale ONT::hardness*1--07--00 ))
  :sem (F::abstr-obj (F::scale ont::tactile-hardness-scale))
 )
 
@@ -1639,7 +1639,7 @@
 (define-type ont::soft-val
  :parent ont::hardness-val 
  :wordnet-sense-keys ("tender%3:00:01::" "soft%3:00:01" "fluffy%5:00:00:soft:01" "plushy%5:00:00:coarse:00")
- :sem (F::Abstr-obj (F::scale ONT::softness*1--07--00 ))
+; :sem (F::Abstr-obj (F::scale ONT::softness*1--07--00 ))
  :sem (F::abstr-obj (F::scale ont::tactile-softness-scale))
 )
 

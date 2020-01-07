@@ -780,7 +780,7 @@
  :parent ONT::consume
  :arguments
  ((:REQUIRED ONT::Affected (F::Phys-obj (F::Form (? f f::solid f::solid-object))
-					(f::type (? t ont::food F::organism)))))
+					(f::type (? t ont::food ont::organism)))))
  )
 
 

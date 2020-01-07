@@ -1000,7 +1000,7 @@
 ;;; for things like per day, a day - must apply to bounded events (no quite stong enough, but as close as we can get with the features we have)
 (define-type ONT::iteration-period
  :parent ONT::predicate  ;; this has nothing to do with time per se
- :arguments ((:ESSENTIAL ONT::FIGURE (F::abstr-object (F::type (? ttt ONT::QUANTITY)))))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::abstr-obj (F::type (? ttt ONT::QUANTITY)))))
  )
 
 ;; the population in the 1920s; the shortage in the 1920s
