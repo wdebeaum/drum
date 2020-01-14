@@ -351,6 +351,7 @@
 ; throughout, through
 (define-type ont::distributed-pos
     :comment "FIGURE is distributed over the GROUND"
+    :wordnet-sense-keys ("throughout%4:02:00" "over%4:02:02")
     :parent ont::position-wrt-area-reln
     )
 

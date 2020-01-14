@@ -1480,7 +1480,7 @@
 
 ;; hot, cold
 (define-type ont::temperature-val
- :parent ont::physical-property-val 
+ :parent ont::property-val 
  :sem (F::abstr-obj (F::scale ont::temperature-scale ))
  :comment "having to do with temperature"
 )
@@ -1604,9 +1604,8 @@
 (define-type ont::texture-val
  :parent ont::touch-property-val 
   :wordnet-sense-keys ("fine%3:00:00::")
- :sem (F::Abstr-obj (F::MEasure-function F::VALUE ))
- :sem (F::abstr-obj (F::scale ont::texture-scale))
-)
+ :sem (F::Abstr-obj (F::MEasure-function F::VALUE ) (F::scale ont::texture-scale))
+ )
 
 (define-type ont::thickeness-in-texture-val
  :parent ont::texture-val
@@ -1625,8 +1624,8 @@
 )
 
 (define-type ont::hardness-val
- :parent ont::texture-val 
-)
+    :parent ont::texture-val
+    )
 
 (define-type ont::hard-val
  :parent ont::hardness-val 
@@ -1965,7 +1964,7 @@
 
 ;; abiliity touch
 (define-type ont::tangibility-val
- :parent ont::sensory-property-val 
+ :parent ont::appearance-property-val 
  :sem (F::abstr-obj (F::scale ont::tactile-scale))
 )
 
@@ -3775,7 +3774,7 @@
 
 ;; usable, useless
 (define-type ont::usability-val
- :parent ont::evaluation-attribute-val 
+ :parent ont::object-affordances-val
  :sem (F::abstr-obj (F::scale ont::usability-scale) )
 )
 
@@ -4159,7 +4158,7 @@
 
 ;; sure, certain, confident
 (define-type ont::certainty-val
- :parent ont::information-property-val 
+ :parent ont::psychological-property-val
  :arguments ((:optional ONT::GROUND )) 
  :sem (F::abstr-obj (F::scale ont::certainty-scale) )
 )
@@ -4313,10 +4312,16 @@
 )
 
 (define-type ont::bitter-val
- :parent ONT::neg-experiencer-property-val 
- :wordnet-sense-keys ("resentful%3:00:00::" "bitter%5:00:00:tasty:00" )
-; :sem (F::Abstr-obj (F::scale ONT::bitter*1--07--00 ))
+ :parent ONT::taste-property-val
+ :wordnet-sense-keys ("bitter%5:00:00:tasty:00" )
  :sem (F::abstr-obj (F::scale ont::bitterness-scale))
+ )
+
+(define-type ont::bitter-resentful-val
+ :parent ONT::neg-experiencer-property-val 
+ :wordnet-sense-keys ("resentful%3:00:00::" )
+; :sem (F::Abstr-obj (F::scale ONT::bitter*1--07--00 ))
+ :sem (F::abstr-obj (F::scale ont::resentfulness-scale))
 )
 
 ;; experiencer properties: NEUTRAL experiences
@@ -5039,7 +5044,7 @@
 )
 
 (define-type ONT::SHAPE-VAL
-  :parent ONT::visual-property-val
+  :parent ONT::appearance-property-val
   :wordnet-sense-keys ("formed%3:00:00::" "rounded%3:00:00::" "curved%3:00:00::" "curving%3:00:00::" "pointed%3:00:00::" "reticulate%3:00:00::" "reticular%3:00:00::" "coiled%3:00:00::" "crosswise%3:00:00::" "uncoiled%3:00:00::" "straight%3:00:02::" "prolate%3:00:00::" "watermelon-shaped%3:00:00::" "oblate%3:00:00::" "pumpkin-shaped%3:00:00::" "crooked%3:00:01::" "concave%3:00:00::" "convex%3:00:00::" "bulging%3:00:06::" "curly%3:00:00::" "straight%3:00:03::" "azimuthal%3:01:00::" "sigmoid%3:01:01::" "hyperbolic%3:01:00::" "two-humped%3:01:00::" "double-humped%3:01:00::" "polygonal%3:01:00::" "pentangular%3:01:00::" "pentagonal%3:01:00::" "sectorial%3:01:00::" "diametral%3:01:00::" "diametric%3:01:00::" "diametrical%3:01:00::" "hemispherical%3:01:00::" "campanulate%3:01:00::" "campanular%3:01:00::" "campanulated%3:01:00::" "octangular%3:01:00::" "octagonal%3:01:00::" "radial%3:01:00::" "bicylindrical%3:01:00::" "icosahedral%3:01:00::" "rhombic%3:01:00::" "rhomboid%3:01:00::" "rhomboidal%3:01:00::" "polyhedral%3:01:00::" "asymptotic%3:01:00::" "shaped%3:01:00::" "triangulate%3:01:00::" "striate%3:01:00::" "quadratic%3:01:01::" "hexangular%3:01:00::" "hexagonal%3:01:00::" "nonspherical%3:01:00::" "angular%3:01:00::" "spherical%3:01:00::" "quadrangular%3:01:00::" "toroidal%3:01:00::" "tangential%3:01:00::" "wedge-shaped%3:01:00::" "cuneal%3:01:00::" "cuneiform%3:01:01::" "trapezoidal%3:01:00::" "tetragonal%3:01:00::" "asteriated%3:01:00::" "one-humped%3:01:00::" "single-humped%3:01:00::" "stemmatic%3:01:00::")
  :sem (F::Abstr-obj (F::Measure-function F::VALUE))
  :sem (F::abstr-obj (F::scale ont::shape-scale ))
@@ -5138,7 +5143,7 @@
 ;; the proposal is close to done; the hotel is close to an address; the reporter got close to the riot;
 ;; close to, near
 (define-type ONT::distance-val
- :parent ONT::spatial-val
+ :parent ONT::dimensional-property-val
  :sem (F::abstr-obj (:required (f::scale ont::distance-scale))
 		    (:default (F::gradability +)))
  :arguments ((:REQUIRED ONT::neutral ((? th f::situation f::phys-obj f::abstr-obj)))

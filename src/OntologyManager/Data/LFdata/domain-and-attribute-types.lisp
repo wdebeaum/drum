@@ -145,25 +145,6 @@
  ;; WORDS: polarity
 )
 
-;; temperature scale
-(define-type ont::temperature-scale
- :wordnet-sense-keys ("temperature%1:07:00" "temperature%1:09:00")
- :parent ont::physical-property-scale 
- :sem (F::abstr-obj (F::Scale Ont::temperature-scale))
- ;; WORDS: temperature
-)
-
-(define-type ont::heat-scale
- :wordnet-sense-keys ("heat%1:07:01" "heat%1:09:00")
- :parent ont::temperature-scale
- ;; WORDS: heat
-)
-
-(define-type ont::cold-scale
- :wordnet-sense-keys ("cold%1:07:00" "cold%1:09:00")
- :parent ont::temperature-scale
- ;; Words: cold
-)
 
 ;; completeness
 (define-type ont::completeness-scale
@@ -288,25 +269,20 @@
  :parent ont::touch-scale 
  :wordnet-sense-keys ("flexibility%1:07:02")
  ;; WORDS: flexibility
-)
+ )
+
+
+(define-type ont::tactile-scale
+ :parent ont::touch-scale 
+ )
+
 
 (define-type ont::texture-scale
- :parent ont::touch-scale 
+ :parent ont::tactile-scale 
  :wordnet-sense-keys ("texture%1:07:00")
  ;; WORDS: texture
 )
 
-(define-type ont::tactile-hardness-scale
- :parent ont::texture-scale 
- :wordnet-sense-keys ("hardness%1:07:01")
- ;; WORDS: hardness
-)
-
-(define-type ont::tactile-softness-scale
- :parent ont::texture-scale 
- :wordnet-sense-keys ("softness%1:07:00")
- ;; WORDS: softness
-)
 
 (define-type ont::texture-thickness-scale
  :parent ont::texture-scale
@@ -558,12 +534,21 @@
 (define-type ont::invisibility-scale
  :parent ont::sight-scale
  :wordnet-sense-keys ("invisibility%1:07:00")
+ )
+
+
+
+(define-type ont::tactile-hardness-scale
+ :parent ont::texture-scale 
+ :wordnet-sense-keys ("hardness%1:07:01")
+ ;; WORDS: hardness
 )
 
-(define-type ont::tactile-scale
- :parent ont::sensory-scale 
- ;; WORDS: tangibility, intangibility
-)
+(define-type ont::tactile-softness-scale
+ :parent ont::texture-scale 
+ :wordnet-sense-keys ("softness%1:07:00")
+ ;; WORDS: softness
+ )
 
 (define-type ont::tangibility-scale
  :parent ont::tactile-scale
@@ -608,12 +593,12 @@
 
 ;;; SPATIAL SCALE
 (define-type ont::spatial-scale
- :parent ont::ordered-domain
+ :parent ont::physical-property-scale
  :comment "scales relating to the properties of space"
 )
 
 (define-type ont::shape-scale
- :parent ont::spatial-scale
+ :parent ont::appearance-scale
 )
 
 (define-type ont::angularity-scale
@@ -684,10 +669,7 @@
  :wordnet-sense-keys ("sociality%1:07:00")
 )
 
-(define-type ont::willingness-scale
- :parent ont::behavioral-scale
- :wordnet-sense-keys ("willingness%1:07:00")
-)
+
 
 (define-type ont::wiseness-scale
  :parent ont::behavioral-scale
@@ -1329,6 +1311,26 @@
 
 (define-type ont::duration-scale
   :parent ont::time-measure-scale
+  )
+
+;; temperature scale
+(define-type ont::temperature-scale
+ :wordnet-sense-keys ("temperature%1:07:00" "temperature%1:09:00")
+ :parent ont::measure-scale 
+ :sem (F::abstr-obj (F::Scale Ont::temperature-scale))
+ ;; WORDS: temperature
+)
+
+(define-type ont::heat-scale
+ :wordnet-sense-keys ("heat%1:07:01" "heat%1:09:00")
+ :parent ont::temperature-scale
+ ;; WORDS: heat
+)
+
+(define-type ont::cold-scale
+ :wordnet-sense-keys ("cold%1:07:00" "cold%1:09:00")
+ :parent ont::temperature-scale
+ ;; Words: cold
 )
 
 (define-type ont::age-scale
@@ -1374,9 +1376,8 @@
  :parent ont::measure-scale 
  :wordnet-sense-keys ("resolution%1:19:01")
  ;; WORDS: definition, resolution
- :arguments ((:ESSENTIAL ONT::GROUND (f::abstr-obj (f::scale ont::other-scale)))
-             )
-)
+ )
+
 
 ;; dimensional scale
 (define-type ont::dimensional-scale
@@ -1629,7 +1630,7 @@
 )
 
 (define-type ont::process-evaluation-scale
- :parent ont::process-property-scale
+ :parent ont::evaluation-scale
 )
 
 (define-type ont::task-complexity-scale
@@ -1859,7 +1860,7 @@
  :wordnet-sense-keys ("usability%1:07:00")
  ;; WORDS: usability
  :comment "ease of use (e.g. ipad - high usability, low utility)"
-)
+ )
 
 ;; PSYCHOLOGICAL CONDITION SCALE
 (define-type ont::psychological-condition-scale
@@ -1867,6 +1868,10 @@
     :parent ont::ordered-domain 
     )
 
+(define-type ont::willingness-scale
+ :parent ont::psychological-condition-scale
+ :wordnet-sense-keys ("willingness%1:07:00")
+)
 (define-type ont::intelligence-scale
  :parent ont::psychological-condition-scale
  :wordnet-sense-keys ("intelligence%1:09:00")
@@ -1904,6 +1909,7 @@
  :wordnet-sense-keys ("consciousness%1:09:01" "light%1:09:02")
  ;; WORDS: awareness, consciousness
 )
+
 
 ;; certainty
 (define-type ont::certainty-scale
@@ -2016,7 +2022,12 @@
 (define-type ont::anger-scale
  :parent ont::experiencer-condition-scale
  :wordnet-sense-keys ("anger%1:26:00" "anger%1:12:00")
-)
+ )
+
+(define-type ont::resentfulness-scale
+ :parent ont::experiencer-condition-scale
+ )
+
 
 (define-type ont::fear-scale
  :parent ont::experiencer-condition-scale

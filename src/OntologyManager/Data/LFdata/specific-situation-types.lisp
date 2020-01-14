@@ -1237,7 +1237,12 @@
 (define-type ont::granulate
  :wordnet-sense-keys ("granulate%2:30:00" "granulate%2:30:01")
  :parent ont::change-integrity
-)
+ )
+
+(define-type ont::gasify-boil
+ :wordnet-sense-keys ("gasify%2:30:00" "boil%2:30:01")
+ :parent ont::change-integrity
+ )
 
 (define-type ONT::life-transformation
     :wordnet-sense-keys ("fruit%2:36:01" "cross-fertilize%2:29:00" "cross-fertilize%2:29:01" "work%2:30:14" "work%2:30:13" "ripen%2:30:01" "ripen%2:30:00" "mellow%2:30:00"
@@ -3796,14 +3801,14 @@
 ; intensity-scale
 (define-type ont::intensify
  :wordnet-sense-keys ("augment%2:30:00" "intensify%2:30:01" "intensify%2:30:00" "sharpen%2:30:01" "sharpen%2:30:00")
- :parent ont::change-in-dimension
+ :parent ont::change-in-scale
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::intensity-scale) (F::orientation f::pos))))
  :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::extended))
 )
 
 (define-type ont::lessen-intensity
  :wordnet-sense-keys ("weaken%2:30:03" "slack%2:30:04")
- :parent ont::change-in-dimension
+ :parent ont::change-in-scale
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::intensity-scale) (F::orientation f::neg))))
  :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::extended))
 )
@@ -4445,8 +4450,8 @@
 
 ;; specific types for caet
 ;; cook by fully immersing in liquid
-(define-type ont::boil
- :wordnet-sense-keys ("blanch%2:30:00" "boil%2:30:00" "boil%2:30:01" "boil%2:30:02" "coddle%2:30:00" "poach%2:30:00")
+(define-type ont::cook-boil
+ :wordnet-sense-keys ("blanch%2:30:00" "boil%2:30:02" "boil%2:30:00" "coddle%2:30:00" "poach%2:30:00")
  :parent ont::cook-in-liquid
  :comment "cook by fully immersing in boiling (or close to boiling) liquid"
 )
@@ -5171,7 +5176,12 @@
     )
 
 (define-type ONT::classify
-    :wordnet-sense-keys ("classify%2:31:01" "relegate%2:31:02" "classify%2:41:00" "separate%2:31:00" "sort_out%2:31:00" "assort%2:31:00" "sort%2:31:00" "class%2:31:00" "classify%2:31:00" "categorise%2:31:00" "categorize%2:31:00" "take%2:31:07" "read%2:31:09" "describe%2:31:00" "discern%2:39:00" "discover%2:39:00")
+    :wordnet-sense-keys ("classify%2:31:01" "relegate%2:31:02" "classify%2:41:00" "separate%2:31:00" "sort_out%2:31:00" "assort%2:31:00" "sort%2:31:00" "class%2:31:00" "classify%2:31:00" "categorise%2:31:00" "categorize%2:31:00" "take%2:31:07" "read%2:31:09" "discern%2:39:00" "discover%2:39:00")
+    :parent ONT::categorization
+    )
+
+(define-type ONT::identify
+    :wordnet-sense-keys ("identify%2:31:01")
     :parent ONT::categorization
     )
 
