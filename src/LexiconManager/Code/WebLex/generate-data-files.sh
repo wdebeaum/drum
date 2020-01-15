@@ -9,6 +9,7 @@ echo "to update the lexicon data directory $lexicon_data_dir ..."
 echo "  removing old data files ..."
 rm $lexicon_data_dir/{ONT,W}\:\:*.xml
 rm -f $lexicon_data_dir/TRIPS-ontology.xml
+rm -f $lexicon_data_dir/trips-ont.omn
 
 echo "  generating new data files ..."
 # CMUCL
@@ -35,6 +36,9 @@ cat - <<EOP | lisp --noinform --noprint
 EOP
 # lisp doesn't print a newline when it quits :(
 echo
+
+lisp --load make-trips-ont-owl.lisp --quit
+mv trips-ont.omn $lexicon_data_dir/
 
 # Filter the newly created files to change the "modified" field from UNIX 
 # timestamp to human-readable time
