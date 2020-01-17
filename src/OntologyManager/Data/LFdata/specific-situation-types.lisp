@@ -1049,7 +1049,7 @@
 ;;; They all occur at a point
 ;;; I kept them from the original hierarchy
 ;;; They didn't fit under FRAMENET frames
-(define-type ONT::LOCATED-MOVE-STATE
+(define-type ONT::PERSISTENT-STATE ;LOCATED-MOVE-STATE
     :parent ONT::event-of-action
     :comment "a state of (passively) maintaining some object's state (e.g., position, possession)"
     :sem (F::SITUATION (F::trajectory -))
@@ -1059,9 +1059,14 @@
 		)
     )
 
+(define-type ONT::BE-INACTIVE
+ :wordnet-sense-keys ("rest%2:41:00")
+ :parent ONT::PERSISTENT-STATE ;HAVE-PROPERTY
+)
+
 (define-type ont::confine
  :wordnet-sense-keys ("confine%2:41:00" "confine%2:35:01" "confinement%1:04:00" "confinement%1:04:01")
-  :parent ont::located-move-state
+  :parent ont::PERSISTENT-STATE ;located-move-state
   )
 
 #||
@@ -1171,7 +1176,7 @@
 
 (define-type ONT::STAY
  :wordnet-sense-keys ("stay%2:30:00" "remain%2:30:00" "rest%2:30:00" "dig_in%2:35:00" "settle%2:30:01" "stand_still%2:38:00" "stay%2:38:01" "stay_in_place%2:38:00" "live%2:42:08")
- :parent ONT::LOCATED-MOVE-STATE
+ :parent ONT::PERSISTENT-STATE ;LOCATED-MOVE-STATE
  :sem (F::SITUATION (F::Aspect F::Unbounded) (F::Cause F::Force) (F::Time-span F::Extended))
  :arguments ((:REQUIRED ONT::affected (F::Phys-obj (F::Mobility F::Movable)))
 	     
@@ -2942,7 +2947,7 @@
 
 (define-type ONT::retain
  :wordnet-sense-keys ("keep%2:35:10" "stay_fresh%2:42:00" "keep%2:42:03" "keep%2:40:00" "hold_on%2:40:00" "cling%2:37:00" "lay_aside%2:40:00")
-  :parent ONT::located-move-state
+  :parent ONT::PERSISTENT-STATE ;located-move-state
   :arguments ((:REQUIRED ONT::affected ((? obj F::PHYS-OBJ F::ABSTR-OBJ)))
 ;	      (:OPTIONAL ONT::cause)
 	      (:OPTIONAL ONT::agent (F::phys-obj (F::intentional +)) (:implements cause))
@@ -5232,7 +5237,7 @@
     :wordnet-sense-keys ("idle%2:41:00")
     ; :comment "events involving waiting about, loitering, idle without purpose, waste time etc"
     :comment "to linger in a place or location"
-    :parent ONT::LOCATED-MOVE-STATE
+    :parent ONT::PERSISTENT-STATE ;LOCATED-MOVE-STATE
     :sem (F::SITUATION (F::Aspect F::Unbounded) (F::Cause F::Force) (F::Time-span F::Extended))
     :arguments ((:OPTIONAL ONT::Agent (F::Phys-obj (F::Mobility F::Movable)))
 					;             (:OPTIONAL ONT::time-duration-rel (F::time (F::time-function f::time-unit)))

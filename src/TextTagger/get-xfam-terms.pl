@@ -17,10 +17,10 @@ my %ac_to_tp = ();
 
 # downcase initial caps if it's just a capitalized word and not an acronym or
 # single letter
-# NOTE: not quite the same as TextTagger::Drum::uncapitalize()
+# NOTE: not quite the same as TextTagger::Normalize::uncapitalize()
 sub downcase_initial {
   my $str = shift;
-  $str =~ s/^[A-Z](?=[a-z]+(?![A-Za-z]))/lc($&)/e;
+  $str =~ s/^\p{Lu}(?=\p{Ll}+(?!\p{L}))/lc($&)/e;
   return $str;
 }
 

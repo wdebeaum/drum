@@ -23,21 +23,21 @@ sub tag_subwords
   my @subwords = ();
   # all lower, but not after single upper
   # (so we get "bar" from "FOObar" and "foo_bar" but not from "foObar" or "Obar")
-  while ($whole_word =~ /(?<!^[A-Z])(?<![^A-Z][A-Z])(?<![a-z])[a-z]+/g)
+  while ($whole_word =~ /(?<!^\p{Lu})(?<![^\p{Lu}]\p{Lu})(?<!\p{Ll})\p{Ll}+/g)
   { push @subwords, { type => "subword", match2tag() }; }
   # all upper, but not the single upper before lower
   # (so we get "A" from "A_ball" but not from "All")
-  while ($whole_word =~ /[A-Z](?:[A-Z]+|(?![a-z])|$)/g)
+  while ($whole_word =~ /\p{Lu}(?:\p{Lu}+|(?!\p{Ll})|$)/g)
   { push @subwords, { type => "subword", match2tag() }; }
   # initial upper, rest lower, but not (upper,) upper, lower s, end
-  while ($whole_word =~ / (?<![A-Z]) [A-Z] [a-z]+ |
-			  [A-Z] [a-z]{2,} |
-			  [A-Z] [a-rt-z]
+  while ($whole_word =~ / (?<!\p{Lu}) \p{Lu} \p{Ll}+ |
+			  \p{Lu} \p{Ll}{2,} |
+			  \p{Lu} (?!s) \p{Ll}
 			/xg)
   { push @subwords, { type => "subword", match2tag() }; }
   # all upper, before an initial upper as above
   # (so we get "KQML" from "KQMLString")
-  while ($whole_word =~ / [A-Z]+ (?= [A-Z] (?: [a-z] [a-z] | [a-rt-z]))/xg)
+  while ($whole_word =~ / \p{Lu}+ (?= \p{Lu} (?: \p{Ll} \p{Ll} | (?!s) \p{Ll}))/xg)
   { push @subwords, { type => "subword", match2tag() }; }
   # all digits
   while ($whole_word =~ /\d+/g)

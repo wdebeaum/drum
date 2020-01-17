@@ -24,6 +24,8 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include <unicode/unistr.h>
+#include <unicode/ustring.h>
 #include "bloom_filter.h"
 
 #define ESTIMATED_NUM_TERMS 10000000
@@ -216,6 +218,7 @@ bool any_lower_p(const std::wstring& term) {
   return false;
 }
 
+/* old char-by-char case conversion
 // Modify term so that no letters are capitalized.
 void to_no_caps(std::wstring& term) {
   std::transform(term.begin(), term.end(), term.begin(), &towlower);
@@ -224,6 +227,31 @@ void to_no_caps(std::wstring& term) {
 // Modify term so that all letters are capitalized.
 void to_all_caps(std::wstring& term) {
   std::transform(term.begin(), term.end(), term.begin(), &towupper);
+}
+*/
+// new whole-string case conversion
+// replace term with a version with no letters are capitalized.
+void to_no_caps(std::wstring& term) {
+  // convert wstring term to UnicodeString uterm
+  int32_t term_len = (int32_t)term.size();
+  int32_t uterm_cap = term_len*4; // way too much space
+  icu::UnicodeString uterm;
+  UChar* uc = uterm.getBuffer(uterm_cap);
+  int32_t uterm_len = 0;
+  UErrorCode ec = U_ZERO_ERROR;
+  u_strFromWCS(uc, uterm_cap, &uterm_len, term.data(), term_len, &ec);
+  if (U_FAILURE(ec))
+    throw L"u_strFromWCS failed"; // TODO u_errorName(ec)
+  uterm.releaseBuffer(uterm_len);
+  // convert uterm to lower case
+  uterm.toLower();
+  uterm_len = uterm.length();
+  // convert uterm back to term
+  wchar_t *wc = new wchar_t[uterm_cap];
+  u_strToWCS(wc, uterm_cap, &term_len, uc, uterm_len, &ec);
+  if (U_FAILURE(ec))
+    throw L"u_strToWCS failed"; // TODO u_errorName(ec)
+  term = std::wstring(wc, term_len);
 }
 
 /*wchar_t to_normal_space_char(wchar_t c) {

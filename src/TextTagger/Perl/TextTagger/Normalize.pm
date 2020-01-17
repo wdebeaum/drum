@@ -67,7 +67,7 @@ sub normalize {
 # downcase first letter if it's followed by two lowercase letters
 sub uncapitalize {
   my $str = shift;
-  $str =~ s/^[A-Z](?=[a-z]{2})/lc($&)/e;
+  $str =~ s/^\p{Lu}(?=\p{Ll}{2})/lc($&)/e;
   return $str;
 }
 
@@ -98,6 +98,57 @@ sub characterize_word_case {
   }
 }
 
+# Split a string into independent glyphs (which may be more than one codepoint)
+# in such a way that it's possible to compare corresponding glyphs in two such
+# split strings case-insensitively without getting confused about cases where
+# case folding changes the number of codepoints in the string, like
+# uc("ß")=="SS" and lc("İ")=="i̇". This may involve changes to the appearance of
+# the string, e.g. turning "ß" into ("s","s") so it can be compared
+# case-insensitively to "SS"->("S","S"). But the case itself should be
+# preserved.
+sub split_glyphs {
+  my $str = shift;
+  my @codepoints = split(//,$str);
+  my @glyphs = ();
+  for my $cp (@codepoints) {
+    if ($cp =~ /^\p{LC}/) { # letter with a case (lower, upper, or title)
+      # test whether uc/lc changes string length
+      my $lcuc = lc(uc($cp));
+      if (length($lcuc) == 1) { # length doesn't change
+	push @glyphs, $cp; # keep it
+      } else { # length changes
+	# get new codepoints
+        my @codepoints2 = split(//, $lcuc);
+	if ($cp =~ /^\p{Lt}/) { # titlecase
+	  # add the first as upper case, the rest as lower
+	  $codepoints2[0] = uc($codepoints2[0]);
+	} elsif ($cp =~ /^\p{Lu}/) { # uppercase
+	  # add all as upper
+	  @codepoints2 = map(uc, @codepoints2);
+	} elsif ($cp =~ /^\p{Ll}/) { # lowercase
+	  # add all as lower
+	  # (do nothing)
+	} else { # should never happen
+	  die "letter has case, but it's not upper, lower, or title: $cp";
+	}
+	# add @codepoints2 to @glyphs, combining marks
+	for my $cp2 (@codepoints2) {
+	  if ($cp2 =~ /^[\p{Mn}\p{Me}]/) { # combining mark (not spacing)
+	    $glyphs[-1] .= $cp2;
+	  } else {
+	    push @glyphs, $cp2;
+	  }
+	}
+      }
+    } elsif ($cp =~ /^[\p{Mn}\p{Me}]/) { # combining mark (not spacing)
+      $glyphs[-1] .= $cp; # append it to previous glyph
+    } else { # some other kind of character
+      push @glyphs, $cp; # just keep it
+    }
+  }
+  return @glyphs;
+}
+
 # return a hashref describing how strings $a and $b relate to each other.
 # Assumes that normalize($a) eq normalize($b). If $bos is true, $a is at the
 # beginning of a sentence.
@@ -122,8 +173,8 @@ sub characterize_match {
   # split $a and $b into characters, and scan through them forming words and
   # counting which dashes are deleted from each (don't count dashes they both
   # have)
-  my @ac = split(//,$a);
-  my @bc = split(//,$b);
+  my @ac = split_glyphs($a);
+  my @bc = split_glyphs($b);
   my @a_words = ('');
   my @b_words = ('');
   my $a_dashes_deleted = 0; # # of dashes in a that aren't in b
@@ -174,7 +225,7 @@ sub characterize_match {
       push @b_words, '';
     } elsif ($bc[0] =~ /\s/) {
       die "non-whitespace/whitespace mismatch: $ac[0] ne $bc[0]";
-    } elsif ($ac[0] =~ /\PL/) {
+    } elsif ($ac[0] =~ /^\PL/) {
       $ac[0] eq $bc[0] or die "non-letter, non-dash mismatch: $ac[0] ne $bc[0]";
       my $c = shift @ac;
       shift @bc;
@@ -191,6 +242,7 @@ sub characterize_match {
       $prev_char_was_digit = ($c =~ /\d/);
     } else {
       my ($ac, $bc) = (shift(@ac), shift(@bc));
+      # FIXME? maybe use fc() instead of lc() here? have to coordinate with terms2.cpp and split_glyphs()
       lc($ac) eq lc($bc) or die "letter mismatch: $ac ne $bc (lc'd)";
       if ($a_words[-1] =~ /\PL$/) {
 	push @a_words, $ac;

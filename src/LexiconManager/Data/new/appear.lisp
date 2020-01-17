@@ -26,7 +26,7 @@
      )
     ((EXAMPLE "It appears that he is happy")
      (meta-data :origin calo :entry-date 20040916 :change-date nil :comments caloy2)
-     (LF-PARENT ONT::appears-to-have-property)
+     (LF-PARENT ONT::possibly-true) ;appears-to-have-property)
      (SEM (F::Aspect F::stage-level))
      (TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::cp (W::ctype W::s-finite))))
      )

@@ -18,7 +18,7 @@ sub tag_capitalized_names
         # it actually is a word
         $word->{type} eq "word" and
         # the word is capitalized (not all-caps)
-        $word->{lex} =~ /^[A-Z]+[a-z]/ and
+        $word->{lex} =~ /^\p{Lu}+\p{Ll}/ and
 	# and isn't already counted as (starting) a name
 	(not grep { $_->{type} eq "named-entity" and
 	            $_->{start} == $word->{start} }
