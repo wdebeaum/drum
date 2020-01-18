@@ -56,9 +56,7 @@
 
 
 (defun subst-in (x bndgs)
- #|| (let ((*vars-seen* nil)
-	)||#
-    (subst-in1 x bndgs nil))
+  (subst-in1 x bndgs nil))
 
 
 ;;;=============================================================================
@@ -72,7 +70,7 @@
    ((or (symbolp x)
         (numberp x)
 	(stringp x))
-    x)
+    (values x vars-seen))
    ((or (null bndgs)
         ;;         (equal bndgs '((nil nil)))
 	(eq bndgs *success*))
@@ -82,13 +80,13 @@
              (null (caar bndgs))
              (null (cadar bndgs))
              (endp (cddar bndgs))))     ; speed||#
-    x)
+    (values x vars-seen))
    ((consp x)
     (subst-in-list x bndgs vars-seen))
    ((var-p x)
     (subst-in-var x bndgs vars-seen))
    ((eq x *empty-constit*)
-    *empty-constit*)
+    (values *empty-constit* vars-seen))
    ((constit-p x)
     (multiple-value-bind 
 	  (newcat new-vars-seen)
@@ -165,7 +163,7 @@
 		      :id (rule-id x)
 		      :prob (rule-prob x)
 		      :var-list var-list
-		      :*-flag (rule-*-flag x)))))))
+		      :*-flag (rule-*-flag x)) newest-vars-seen)))))
    ((arrayp x)   ;; a SEM array
     (subst-in-sem x bndgs vars-seen))
    (t
@@ -185,8 +183,8 @@
 (defun subst-in-var (x bndgs vars-seen)
   "If a variable has a value with variables in it, they need to be SUBST-IN'd as well. but only
      once for each individual variable"
-  ;;(format t "~%Substituting into VAR ~S" x)
-  (let ((val (assoc x vars-seen))) ;; seen before, use value computed before
+  ;;(format t "~%Substituting into VAR ~S var name is ~S" x (var-name x))
+  (let ((val (assoc x vars-seen :test #'equal))) ;; seen before, use value computed before
     (if val
 	(values (cdr val) vars-seen)
 	(let ((v (get-most-specific-binding x bndgs vars-seen)))
@@ -208,10 +206,12 @@
 	      (values var vars-seen)
 	      (multiple-value-bind (vals new-vars-seen)
 		  (subst-in1 (var-values var) bndgs vars-seen)
-		(let ((newv (make-var :name (var-name var)
+		(let ((newv (make-var :name (gen-v-num 'v) ;;(var-name var)
 				      :values vals
 				      :non-empty (var-non-empty var))))
 		  (values newv (append (list (cons var newv) new-vars-seen))))))
+	  
+	  
 	  ;; empty var values
 	  (values var vars-seen))
       ;;no a variable - should be an error

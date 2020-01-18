@@ -163,15 +163,21 @@ the file, with dashes. No need to unpack it.</li>
 
 <p>TextTagger also requires the following dependencies (you might already have them, though):</p>
 <ul>
-<li><a href="http://xmlsoft.org/XSLT/xsltproc2.html">xsltproc</a> (used to process the XML output of MetaMap)</li>
 <li><a href="http://www.perl.org/">Perl</a> &gt;= 5.6?</li>
-<li><a href="http://www.java.com/">Java</a> &gt;= 1.5 (used for the Stanford components)</li>
-<li>A C compiler (e.g. <a href="http://gcc.gnu.org">GCC</a>) (used for the Terms tagger)</li>
 <li><a href="http://www.gnu.org/software/make/">GNU Make</a> (other versions of make might work too)</li>
 <li><a href="http://www.gnu.org/software/bash/">Bash</a></li>
-<li><a href="http://aspell.net/">GNU Aspell</a> (used for the Misspellings tagger)</li>
 <li>Other common UNIX tools like cut, sort, uniq, iconv, unzip, etc.</li>
 <li>Other parts of TRIPS, including KQML, TripsModule, and the Facilitator. TextTagger also makes symlinks to a couple of Perl libraries that live in TextPP.</li>
+</ul>
+
+<p>And it often requires these common dependencies, depending on which taggers are included:</p>
+<ul>
+<li><a href="http://xmlsoft.org/XSLT/xsltproc2.html">xsltproc</a> (used to process the XML output of MetaMap and StanfordCoreNLP)</li>
+<li><a href="http://www.java.com/">Java</a> &gt;= 1.5 (used for the Stanford components)</li>
+<li>A C/C++ compiler (e.g. <a href="http://gcc.gnu.org">GCC</a>) (used for compiling terms.c and/or terms2.cpp, which are used by Asma, Countries, Drum, NamesFromFile, PersonalNames, PlaceNames, PseudoMetaMap, Specialist, TermsFromFile, Terms, and WordNet)</li>
+<li>The <a href="http://site.icu-project.org/home">ICU</a> C++ library (used in terms2.cpp, which is used by Countries, Drum, PlaceNames, Specialist, TermsFromFile; in this case your C++ compiler must support the C++11 standard, specifically the <code>char16_t</code> type)</li>
+<li><a href="https://www.freedesktop.org/wiki/Software/pkg-config/">pkg-config</a> (used to find ICU)</li>
+<li><a href="http://aspell.net/">GNU Aspell</a> (used for the Misspellings tagger)</li>
 </ul>
 
 </div>

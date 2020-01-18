@@ -139,7 +139,6 @@
   (format t "]"))
 
 ;; unifying SEM arrays
-
 (defun unify-sems (sem1 sem2 undos)
   "unifies two semantic feature vectors and returns the result and a probability reflecting the goodness of match (if flexible-semantic-matching is turned on)"
   (if (and (var-p sem1) (var-p sem2))
@@ -158,11 +157,16 @@
 		(values sem1 nil nil undos)
 		(multiple-value-bind (ans bndgs prob newundos)
 		    (unify-sem-arrays arr1 arr2 undos)
-		  (if (null ans) 
-		      (values nil nil nil newundos)
-		      (values (make-var :name (gen-v-num 'sem) ;;(gen-symbol 'sem) 
-					:values ans) 
-			      bndgs prob newundos)))))
+		  (cond ((null ans) 
+			 (values nil nil nil newundos))
+			((eq ans arr1)
+			 (values sem1 nil nil newundos))
+			((eq ans arr2)
+			 (values sem2 nil nil newundos))
+			(t
+			 (values (make-var :name (gen-v-num 'sem) ;;(gen-symbol 'sem) 
+					   :values ans) 
+				 bndgs prob newundos))))))
 	   (t
 	    (values nil nil nil undos))
 	    ;; not handled yet 
