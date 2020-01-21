@@ -184,18 +184,27 @@
   "If a variable has a value with variables in it, they need to be SUBST-IN'd as well. but only
      once for each individual variable"
   ;;(format t "~%Substituting into VAR ~S var name is ~S" x (var-name x))
-  (let ((val (assoc x vars-seen :test #'equal))) ;; seen before, use value computed before
+  (let ((val (get-prior-result x vars-seen))) ;; seen before, use value computed before
     (if val
-	(values (cdr val) vars-seen)
+	(values val vars-seen)
 	(let ((v (get-most-specific-binding x bndgs vars-seen)))
 	  (if (not (eq v x)) 
 	      ;; check new binding
 	      (if (var-p v)
-		  (let ((v1 (assoc v vars-seen)))
+		  (let ((v1 (get-prior-result v vars-seen)))
 		    (if v1
-			(values (cdr v1) vars-seen)
-			(subst-in-var-values v bndgs vars-seen)))
-		  (values v vars-seen))
+			(values v1 (cons (cons x v1) vars-seen))
+			(multiple-value-bind (val new-vars-seen)
+			    (subst-in-var v bndgs vars-seen)
+			  (if (not (equal val v))
+			      (values val (cons (cons x val) new-vars-seen))
+			      (values v (cons (cons x v) vars-seen)))
+			      
+			      )))
+		  ;; value is not a value, but might be a structure (e.g., a SEM structure)
+		  (multiple-value-bind (val new-vars-seen)
+		      (subst-in1 v bndgs vars-seen)
+		    (values val (cons (cons x val) new-vars-seen))))
 	      (subst-in-var-values x bndgs vars-seen))))))
 
 (defun subst-in-var-values (var bndgs vars-seen)
@@ -209,7 +218,7 @@
 		(let ((newv (make-var :name (gen-v-num 'v) ;;(var-name var)
 				      :values vals
 				      :non-empty (var-non-empty var))))
-		  (values newv (append (list (cons var newv) new-vars-seen))))))
+		  (values newv (cons (cons var newv) new-vars-seen)))))
 	  
 	  
 	  ;; empty var values
@@ -234,21 +243,41 @@
 (defun subst-in-sem (sem bndgs vars-seen)
   ;;  see if any changes need to be made first before making a new array
   (let ((changes nil)
+	(prior-val (get-prior-result sem vars-seen))
 	(current-vars-seen vars-seen))
-    (dotimes (i *sem-size*)
-      (multiple-value-bind (newv new-vars-seen)
-	  (subst-in1 (aref sem i) bndgs current-vars-seen)
-	(setq current-vars-seen new-vars-seen)
-	(if (not (eq newv (aref sem i)))
-	    (setq changes (cons (cons i newv) changes)))))
-    (if changes
-      ;; need to create a new array
-      (let ((result (make-array *sem-size*)))
-	(dotimes (i *sem-size*)
-	  (setf (aref result i) (or (cdr (assoc i changes))
-				    (aref sem i))))
-       (values result current-vars-seen))
-      (values sem current-vars-seen))))
+    (if prior-val
+	(values prior-val vars-seen)
+	;;  otherwise, no seen this SEM before
+	(progn
+	  (dotimes (i *sem-size*)
+	    (multiple-value-bind (newv new-vars-seen)
+		(subst-in1 (aref sem i) bndgs current-vars-seen)
+	      (setq current-vars-seen new-vars-seen)
+	      (if (not (eq newv (aref sem i)))
+		  (setq changes (cons (cons i newv) changes)))))
+	  (if changes
+	      ;; need to create a new array
+	      (let ((result (make-array *sem-size*)))
+		(dotimes (i *sem-size*)
+		  (setf (aref result i) (or (cdr (assoc i changes))
+					    (aref sem i))))
+		(values result (cons (cons sem result) current-vars-seen)))
+	      (values sem current-vars-seen)))
+    )))
+
+(defun get-prior-result (x record)
+  (let ((v (assoc x record)))
+    (when v
+      (get-prior-result1 (cdr v) record))))
+
+(defun get-prior-result1 (x record)
+  "In this case, we know we have a binding, just looking for a better one!"
+  (let ((v (assoc x record)))
+    (if v
+	(get-prior-result1 (cdr v) record)
+	x)))
+	
+       
 
 ;;  this substitutes var bindings into values to ground out
 ;;   the bindings as much as possible

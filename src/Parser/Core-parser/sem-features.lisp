@@ -159,10 +159,11 @@
 		    (unify-sem-arrays arr1 arr2 undos)
 		  (cond ((null ans) 
 			 (values nil nil nil newundos))
-			((eq ans arr1)
+			;; we make a new copy no matter what as it gives a binding to each of the SEM variables
+			#|((eq ans arr1)
 			 (values sem1 nil nil newundos))
 			((eq ans arr2)
-			 (values sem2 nil nil newundos))
+			 (values sem2 nil nil newundos))|#
 			(t
 			 (values (make-var :name (gen-v-num 'sem) ;;(gen-symbol 'sem) 
 					   :values ans) 
