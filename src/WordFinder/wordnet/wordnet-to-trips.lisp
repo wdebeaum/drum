@@ -371,9 +371,23 @@
 		       ))
 	       )
 	  (when pertainym-infos
-	    `((,(intern "WORDNET" :parser)
-		  :sense-key ,(get-sense-key synset word)
-	    	  :pertainyms ,pertainym-infos))))))))
+	    ;; make sure we have a form of the word that is actually in synset
+	    ;; before trying to make the sense key from it
+	    (let* ((words_
+		     (mapcar (lambda (w) (substitute #\_ #\Space w)) words))
+	           (ss-word
+		     (find-if
+		       (lambda (w)
+		         (member (slot-value w 'word) words_
+				 :test #'string-equal))
+		       (slot-value synset 'words))))
+	      (if ss-word
+		`((,(intern "WORDNET" :parser)
+		      :sense-key
+		        ,(get-sense-key synset (slot-value ss-word 'word))
+		      :pertainyms ,pertainym-infos))
+		(warn "get-domain-info failed: none of the words ~s are in the synset ~s" words_ synset)
+		))))))))
 	  
 (defun convert-synset (synset word score penntags trips-sense-list)
   "Given a Wordnet synset and a string of the original word being looked up, returns an entry to be sent back to the parser."
