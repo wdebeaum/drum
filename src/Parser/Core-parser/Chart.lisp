@@ -192,7 +192,7 @@ separate instances of the chart/parser.")
       as often happens in LFs with several MOD functions"
   (or (constit-match rhs c)
       (progn
-	(format t "~%constit-match failed on ~S and ~S" rhs c)
+	(trace-msg 2 "~%constit-match failed on ~S and ~S" rhs c)
 	nil)))
 
 (defun getsubconstitnames (n constit)
