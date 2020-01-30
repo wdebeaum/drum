@@ -7,7 +7,7 @@
 ;;; A special type for pronouns etc that can refer to arbitrary abstract objects
 ;;; declares all features as arbibtary vars to override default - features
 (define-type ONT::FACT
-     :wordnet-sense-keys ("fact%1:09:01")
+     :wordnet-sense-keys ("fact%1:09:01" "fact%1:09:02" "fact%1:10:01")
  :parent ONT::ABSTRACT-OBJECT-nontemporal
  :sem (F::Abstr-obj (f::tangible +)) ; facts shouldn't be tangible, but we have it here so that we can add/remove facts (from a graph)
  :arguments ((:optional ONT::formal)
@@ -31,10 +31,12 @@
 
 ;; example, illustration, instance
 (define-type ONT::example
+ :wordnet-sense-keys ("example%1:09:00" "example%1:09:02")
  :parent ONT::kind
  )
 
 (define-type ONT::representation
+ :wordnet-sense-keys ("representation%1:09:00")
  :parent ONT::mental-construction
  :sem (F::Abstr-obj (f::container +))
  :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
@@ -181,6 +183,7 @@
   )
 
 (define-type ONT::TOO-MUCH
+  :wordnet-sense-keys ("too_much%4:02:00")
   :parent ONT::domain-property
   :sem (F::ABSTR-OBJ (:required (F::CONTAINER -) (F::INFORMATION -) (F::INTENTIONAL -))
 		      (:default (F::GRADABILITY +) (F::scale ?!sc)))
@@ -381,6 +384,7 @@
 
 ;; own: his own truck
 (define-type ONT::own
+  :wordnet-sense-keys ("own%5:00:00:personal:00")
   :parent ONT::relation
   )
 
@@ -417,6 +421,7 @@
 |#
 
 (define-type ONT::Mathematical-term
+    :wordnet-sense-keys ("constant%1:23:00" "differential_coefficient%1:09:00" "divisor%1:23:00" "equation%1:10:00" "term%1:09:00")
     :parent ONT::abstract-object-nontemporal
     :sem (f::abstr-obj (:required (f::gradability -)) (:default (f::information f::data)) )
     :arguments ((:ESSENTIAL ONT::FIGURE (f::abstr-obj (F::measure-function f::term)))
@@ -433,6 +438,7 @@
 )
 
 (define-type ont::number
+  :wordnet-sense-keys ("number%1:23:00")
 ;  :parent ont::ordered-domain
   :parent ONT::MATHEMATICAL-TERM
   :sem (F::abstr-obj ;;(F::measure-function F::value)

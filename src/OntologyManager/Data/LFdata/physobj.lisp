@@ -1802,7 +1802,7 @@
 
 (define-type ONT::INFO-REPRESENTATION
     :parent ONT::INFO-HOLDER
-    :wordnet-sense-keys ("representation%1:09:00")
+    :wordnet-sense-keys ("visual_communication%1:10:00");"representation%1:09:00")
     :comment "method to store/encode information for conveying it in a visual manner"
     )
 
@@ -1829,7 +1829,7 @@
 
 (define-type ONT::PLOT-DIAGRAM-DRAWING
     :parent ONT::INFO-REPRESENTATION ;direct-REPRESENTATION
-    :wordnet-sense-keys ("plot%1:10:01" "spectrum%1:19:00" "diagram%1:06:00")
+    :wordnet-sense-keys ("plot%1:10:01" "diagram%1:06:00");"spectrum%1:19:00" 
     :arguments ((:OPTIONAL ONT::FIGURE (?o (F::information F::information-content)))
 		)
     )
