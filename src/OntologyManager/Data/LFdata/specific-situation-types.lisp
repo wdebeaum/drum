@@ -3184,7 +3184,7 @@
  )
 
 (define-type ONT::MAKE-IT-SO
- :wordnet-sense-keys ("have%2:30:00" "have%2:32:00" "have%2:40:02" "have%2:29:00" "make%2:30:00")
+ :wordnet-sense-keys ("have%2:30:00" "have%2:32:00" "have%2:40:02" "make%2:30:00")
  :parent ONT::CAUSE-EFFECT
  :sem (F::situation (F::Aspect F::Dynamic))
  :definitions ((CAUSE-EFFECT :agent ?agent :formal ?formal))
@@ -4187,8 +4187,8 @@
 (define-type ONT::change-magnitude
  :wordnet-sense-keys ("change_magnitude%2:30:00" "change_intensity%2:39:00")
  :arguments (	     ;(:essential ont::affected (F::abstr-obj (f::scale ont::domain))) ; e.g., rainfall is physobj; flood is situation 
-	     ;(:essential ont::affected)
-	     (:essential ont::affected (F::abstr-obj (f::type (? t2 ont::domain ont::quantity-abstr ont::level)))) ; height, amount, level, degree
+	     (:essential ont::affected)
+	     ;(:essential ont::affected (F::abstr-obj (f::type (? t2 ont::domain ont::quantity-abstr ont::level)))) ; height, amount, level, degree
 	     (:essential ONT::scale (f::abstr-obj (F::scale ont::domain)))
 	     (:optional  ONT::result ((? cau2 F::situation F::Abstr-obj f::phys-obj) (F::type (? t ont::goal-reln ont::source-reln))))) 
 ; :parent ONT::adjust

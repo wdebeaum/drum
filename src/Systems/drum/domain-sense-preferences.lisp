@@ -14,6 +14,11 @@
 				       (W::interaction ONT::BIND-INTERACT)
 				       (W::FDA ONT::PROFESSIONAL-ORGANIZATION) ; as opposed to PROTEIN
 				       (W::model ONT::REPRESENTATION)
+				       	(W::CELL ONT::CELL)
+					(W::CLEAR ONT::EMPTY) ;; "clear the model"
+					(W::HGF ONT::GENE-PROTEIN)
+					;((W::NF 1) ONT::GENE-PROTEIN) ; "NF1"
+					(W::NF-1 ONT::GENE-PROTEIN) ; "NF1"
 				       ))
 
 

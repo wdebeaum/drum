@@ -2524,7 +2524,7 @@
 	 (add-to-conjunct (val (:name-of ?lex)) (old ?r) (new ?constraint)))
 ))
 
-
+#|
 (parser::augment-grammar 
       '((headfeatures
          (NP CASE MASS NAME agr PRO Changeagr GAP ARGUMENT argument-map SUBCAT role headcat transform postadvbl refl gerund abbrev derived-from-name
@@ -2559,6 +2559,7 @@
 	|#
 	
 	))
+|#
        
 
 ;;(cl:setq *grammar-NP*
@@ -3138,7 +3139,7 @@
      (VAR *) (WH ?w) (wh-var *));; must move WH feature up by hand here as it is explicitly specified in a daughter.
      -np-spec-of-def-sing-pp>
     (SPEC (LF ?spec) (ARG ?v) (VAR ?specvar) (name-spec -) (mass mass) (POSS -);;myrosia 12/27/01 added mass restriction to spec
-     (WH ?w) (lex (? !lex amount)) ; excludes "the amount of water" (need a better solution!)
+     (WH ?w) ;(lex (? !lex amount)) ; excludes "the amount of water" (need a better solution!)
      (RESTR ?restr)
      (SUBCAT (% PP (Ptype ?ptp) (agr |3S|) (SEM ?sem))))
     (head 

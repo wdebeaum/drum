@@ -62,7 +62,7 @@ sub tag_affixes {
   while ($text =~ / \b (?: \p{Letter} | $dash_re )+ \b /xgi) {
     my $whole_word = $&;
     my ($start, $end) = ($-[0], $+[0]);
-    my @dashed_chunks = split($dash_re, $whole_word);
+    my @dashed_chunks = split($dash_re, $whole_word, -1);
     my $last_chunk = pop @dashed_chunks;
     # check each non-last chunk for prefixhood
     my $chunk_start = $start;

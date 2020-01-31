@@ -765,8 +765,9 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
     )))
 
 (defun find-preferences-for-stem (word preferences is-stem)
-  (let ((explicit-preferences (mapcar #'cdr (remove-if-not  #'(lambda (x)
-								 (eq (car x) word))
+  (let* ((newword (make-into-symbol word)) ; word might be a list (multi-word or, e.g., (W::NF 1)).  Make this into a symbol because the lex (probably where (car x) came from) has been converted into a symbol 
+	 (explicit-preferences (mapcar #'cdr (remove-if-not  #'(lambda (x)
+								 (eq (car x) newword)) 
 							     preferences))))
     (append explicit-preferences
 	    (when (not is-stem)  ;; find the generic ONT preferences only on the main word
