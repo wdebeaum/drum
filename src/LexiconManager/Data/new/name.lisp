@@ -11,7 +11,8 @@
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("name%1:10:00"))
      (EXAMPLE "My name is Chester")
      (LF-PARENT ONT::NAME)
-     (TEMPL GEN-PART-OF-RELN-TEMPL)
+     (TEMPL GEN-PART-OF-RELN-TEMPL (xp (% W::PP (W::ptype (? p W::of w::for)))))
+     
      )
     )
    )

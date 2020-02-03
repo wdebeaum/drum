@@ -44,7 +44,8 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("present%3:00:01"))
-     (LF-PARENT ONT::now)
+     ;(LF-PARENT ONT::now)
+     (LF-PARENT ONT::current-val)
      (P "calculate the present day value")
      (TEMPL attributive-only-adj-templ)
      )

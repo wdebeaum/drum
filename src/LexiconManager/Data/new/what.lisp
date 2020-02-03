@@ -8,13 +8,15 @@
   (W::WHAT ; separate entries for 3s and 3p so we can figure out the spec
    (SENSES
     ((LF-PARENT ONT::REFERENTIAL-SEM)
-     (SEM (F::origin (? !n F::human)))
+     ;(SEM (F::origin (? !n F::human)))
+     (SEM (F::origin (? n F::natural-non-human F::non-living -)))
      (TEMPL pronoun-wh-templ)
      (SYNTAX (W::agr W::3s) (W::wh W::Q)
 	     (w::case (? c w::sub w::obj))) ;(W::case W::obj) (W::sing-lf-only +))
      )
     ((LF-PARENT ONT::REFERENTIAL-SEM)
-     (SEM (F::origin (? !n F::human)))
+     ;(SEM (F::origin (? !n F::human)))
+     (SEM (F::origin (? n F::natural-non-human F::non-living -)))
      (TEMPL pronoun-wh-templ)
      (SYNTAX (W::agr W::3p) (W::wh W::Q)
 	     (w::case (? c w::sub w::obj))) ;(W::case W::obj) (W::sing-lf-only +))

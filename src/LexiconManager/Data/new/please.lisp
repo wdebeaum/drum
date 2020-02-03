@@ -18,7 +18,7 @@
     :pos W::adv :templ DISC-PRE-TEMPL
  :words (
   (W::PLEASE
-   (wordfeats (W::ATYPE (? atype W::pre-vp W::post w::pre-vp)))
+   (wordfeats (W::ATYPE (? atype w::pre W::post w::pre-vp)))
    (SENSES
     ((LF-PARENT ONT::POLITENESS)
      (TEMPL DISC-TEMPL)

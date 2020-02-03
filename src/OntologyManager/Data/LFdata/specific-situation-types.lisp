@@ -122,7 +122,7 @@
  :sem (F::SITUATION (f::cause f::agentive) (F::iobj F::recipient))
  :arguments ((:REQUIRED ONT::affected ((? oc F::Phys-obj F::Abstr-obj F::situation)
 				       (f::type (? typ ont::Phys-object ont::loaded-claim  ;;  lawsuit
-						   ont::mental-construction)))
+						   ont::mental-construction ont::information-function-object)))
 			(f::tangible +))
 	     (:REQUIRED ONT::affected-result ((? tc2  F::Phys-obj f::abstr-obj)))
 	     (:optional ONT::RESULT ((? tc3  F::Phys-obj f::abstr-obj)))

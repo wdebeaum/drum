@@ -9,7 +9,7 @@
     ((LF-PARENT ONT::SUMMARIZE)
      (example "summarize the information")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-FORMAL-XP-TEMPL)
+     (TEMPL AGENT-NEUTRAL-XP-TEMPL)
      )
     )
    )

@@ -29,6 +29,11 @@
      (lf-parent ont::tell) ;; 20120524 GUM change new parent
      (TEMPL AGENT-AGENT1-FORMAL-2-XP1-3-XP-TEMPL (xp (% W::cp (W::ctype W::s-finite))))
      )
+    ((EXAMPLE "Tell the driver about the truck")
+     ;;(LF-PARENT ONT::inform)
+     (lf-parent ont::tell) ;; 20120524 GUM change new parent
+     (TEMPL AGENT-AGENT1-NEUTRAL-2-XP1-3-XP-TEMPL (xp (% W::pp (W::ptype W::about))))
+     )
     ;;;; Myrosia 10/23/03 made the to complement required to avoid needless ambiguities
     ((LF-PARENT ONT::command)
      (example "tell him to do it")

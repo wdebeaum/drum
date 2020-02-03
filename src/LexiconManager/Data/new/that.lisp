@@ -31,7 +31,7 @@
      (SYNTAX (W::WH W::R) (W::agr (? agr W::3s W::3p)) (W::sing-lf-only +))
      )
     ((LF-PARENT ONT::REFERENTIAL-SEM)
-     (SEM (F::origin (? !n F::human)))
+     ;(SEM (F::origin (? !n F::human)))
      (SYNTAX (W::WH -) (W::agr W::3s) (W::case (? cs W::obj w::sub)));; (W::sing-lf-only +))
      )
     #||((LF-PARENT ONT::REFERENTIAL-SEM)

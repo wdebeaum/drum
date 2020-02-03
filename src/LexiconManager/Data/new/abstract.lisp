@@ -21,7 +21,7 @@
     ((LF-PARENT ONT::SUMMARIZE)
      (example "he abstracted the paper")
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% w::NP (w::refl -))))
+     (TEMPL AGENT-NEUTRAL-XP-TEMPL (xp (% w::NP (w::refl -))))
      )
    ((LF-PARENT ONT::CAUSE-COME-FROM)
      (example "he abstracted himself from the situation")

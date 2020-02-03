@@ -9,7 +9,7 @@
    (wordfeats (W::pointer +) (W::sing-lf-only +))
    (SENSES
     ((LF-PARENT ONT::REFERENTIAL-SEM)
-     (SEM (F::origin (? !n F::human)))
+     ;(SEM (F::origin (? !n F::human)))
      )
     )
    )

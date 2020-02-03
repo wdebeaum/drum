@@ -10,7 +10,7 @@
    (SENSES
     ((LF-PARENT ONT::REFERENTIAL-SEM)
      (SYNTAX (w::status ont::pro-set))
-     (SEM (F::origin (? !n F::human)))
+     ;(SEM (F::origin (? !n F::human)))
      )
     )
    )

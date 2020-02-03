@@ -3724,21 +3724,24 @@
  :comment "relating to the distinct periods in history"
 )
 
+(define-type ont::relative-time-location-val
+ :parent ont::temporal-val 
+)
+
 (define-type ont::ancient-val
- :parent ont::historical-era-val 
+ :parent ont::relative-time-location-val
  :wordnet-sense-keys ("nonmodern%3:00:00::" "early%3:00:00::" "classical%3:00:00::" "classic%3:00:00::" "ancient%5:00:00:past:00" "prehistoric%5:00:00:past:00" "prehistoric%3:01:00" )
 )
 
 (define-type ont::modern-val
- :parent ont::historical-era-val 
+ :parent ont::relative-time-location-val
  :wordnet-sense-keys ("nonclassical%3:00:00::" "modern%3:00:00" "contemporary%5:00:00:modern:00" )
 )
 
-;; this isn't exactly era. current is in ont::now
-;(define-type ont::current-val
-; :parent ont::historical-era-val 
-; :wordnet-sense-keys ("contemporary%5:00:00:current:00" "current%3:00:00")
-;)
+(define-type ont::current-val
+ :parent ont::relative-time-location-val
+ :wordnet-sense-keys ("contemporary%5:00:00:current:00" "current%3:00:00")
+)
 
 ;; object-affordances: properties pertaining to function of an entity or an object
 (define-type ont::object-affordances-val
@@ -7046,7 +7049,7 @@
   )
 
 (define-type ONT::old-fashioned-val
-  :parent ONT::temporal-relation-val
+  :parent ONT::relative-time-location-val
   :comment "(old_fashioned)"
   )
 
