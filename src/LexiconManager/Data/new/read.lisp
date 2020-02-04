@@ -25,7 +25,7 @@
      (EXAMPLE "read the letter")
      (LF-PARENT ONT::read)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-affected-TEMPL)
+     (TEMPL AGENT-neutral-XP-TEMPL)
      )
     ((LF-PARENT ONT::read)
      (meta-data :origin calo :entry-date 20031230 :change-date 20090508 :comments html-purchasing-corpus :wn ("read%2:31:00" "read%2:31:04""read%2:31:09""read%2:31:01" ))
