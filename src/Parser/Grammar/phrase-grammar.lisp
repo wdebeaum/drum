@@ -706,7 +706,7 @@
 	      (subcat-map ?smap)))
      ?!subcat
      (add-to-conjunct (val (?smap ?v1)) (old ?r) (new ?con1))
-     (add-to-conjunct (val (scale ?sc)) (old ?con1) (new ?con))
+     (add-to-conjunct (val (scale ?!sc)) (old ?con1) (new ?con))
      )
 
    ;; relational non-scale nouns with filled PP-of complements  e.g. top of the box
@@ -2503,7 +2503,8 @@
 	  subj dobj subcat-map comp3-map)) ; no gap/mass
 
 	;;  special rule for proteins that are tagged as common nouns but used as names
-	((NP (LF (% Description (STATUS ONT::definite) (VAR ?v) (SORT INDIVIDUAL)
+	((NP (LF (% Description (STATUS ONT::definite)
+		    (VAR ?v) (SORT INDIVIDUAL)
 	            (CLASS ?c) (CONSTRAINT ?constraint) (sem ?sem) (transform ?transform)))
              (SORT PRED) (VAR ?v)
              (BARE-NP +) (name-or-bare ?nob)
@@ -2950,7 +2951,7 @@
         ((NP (SORT PRED)
              (VAR ?v) 
 	     (sem ?sem)
-	     (lex ?lex) (WH Q) (WH-VAR ?v)
+	     (lex ?lex) (WH Q) (WH-VAR ?v) (status ?newspec)
              (LF (% Description (status ?newspec) (var ?v) (Class ?s) (SORT (?agr -))
 	            (Lex ?lex) (sem ?sem) (transform ?transform)
 		    (constraint (& (proform ?lex)))
@@ -3361,7 +3362,7 @@
 	  (sem ?sem) (lex ?lex)
 	  (class ont::quantity-abstr) (ellided +)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR *) (SORT unit-measure))
-         -unit-np-number-indef-ellided> .98
+         -unit-np-number-indef-ellided> .96 ;.98
 	 (head (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (lex ?lex) (restr ?r)))
 	 (add-to-conjunct (val (& (value ?num))) (old ?r) (new ?newr))
 	 (add-to-conjunct (val (& (amount (% *PRO* (status ont::indefinite) (class ont::NUMBER) (VAR ?nv) (constraint ?newr)))
@@ -5609,7 +5610,7 @@
      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
      (simple-cons (in1 ?v2) (in2 ?lf1) (out ?members))
      (logical-and (in1 ?generated1) (in2 ?generated2) (out ?generated))
-     )
+     )    
     
     ;; same construction with exceptions (we have an explicit rule to prefer attachment to the top sequence rather than
     ;;   the last embedded item

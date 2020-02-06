@@ -972,9 +972,9 @@
 
       (NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL
        (ARGUMENTS
-      	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) ;;(w::status ont::definiteQ)
+      	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) ;;(w::status ont::definiteQ) (w::coerce-amt -)
 		  (w::expletive -)) ONT::neutral)
-	(LOBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) ;;(w::status ont::definiteQ)
+	(LOBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) (w::status ont::definiteQ) ;;(w::coerce-amt -)
 		 (w::expletive -)) ONT::neutral1)
 	))
 
@@ -1751,7 +1751,7 @@
     (LCOMP (:parameter xp2 (:default (% W::PP (W::ptype (? pt W::to W::with))))) ONT::AGENT1 optional)
     ))
   
-  ;;;;; talk about it to her
+  ;;;;; respond about it to her
   (AGENT-FORMAL-AGENT1-2-XP1-PP-3-XP2-PP-TO-OPTIONAL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::AGENT)
@@ -2065,6 +2065,7 @@
     (LSUBJ (% W::NP) ONT::affected-result)
     ))
 
+#|
 (AGENT-AFFECTEDR-MANNER-2-XP-3-XP2-OPTIONAL-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::AGENT)
@@ -2078,6 +2079,7 @@
     (LOBJ  (:parameter xp (:default (% W::NP))) ONT::affected-result)
     (LCOMP (:parameter xp2 (:default (% W::PP (W::ptype W::on)))) ONT::manner)
     ))
+|#
 
 (affected-RESULT-TEMPL
    (ARGUMENTS

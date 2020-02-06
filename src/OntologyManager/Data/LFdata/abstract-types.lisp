@@ -675,7 +675,7 @@
 ; :parent ONT::DOMAIN-PROPERTY
  ;:parent ONT::GROUP-OBJECT-abstr
  :parent ONT::LEVEL
- ;:sem (F::abstr-obj (F::tangible +)) 
+ :sem (F::abstr-obj (F::tangible +)) ; if we are keeping this we should move this up to ONT::LEVEL
  :arguments ((:ESSENTIAL ONT::FIGURE)
              )
  )
