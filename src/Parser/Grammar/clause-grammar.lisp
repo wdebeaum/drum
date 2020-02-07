@@ -1202,7 +1202,8 @@
      ((pred (arg ?arg) (var *)  (sem ?newsem)
             (lf (% prop (status ont::f) (arg ?arg) (var *) (sem ?newsem)
 		   (class ONT::MEMBERSHIP) (constraint (& (figure ?arg) 
-							  (ground (% *pro* (status ont::definite-plural) (var ?v) (class ?c) (constraint ?constr)))
+							  (ground (% *pro* (status ?x) ;(status ont::definite-plural)
+								     (var ?v) (class ?c) (constraint ?constr)))
 				  ))))
             (argument ?argument)
             (filled -)
@@ -1210,9 +1211,10 @@
       -pred4> 
       (head (np (sem ?sem) (var ?v) (sort pred) (case (? case obj -))
 		(derived-from-name -) (gerund -)
-		(lf (% description (status (? x ont::indefinite ont::bare ont::indefinite-plural)) 
-		       (sem ($ f::phys-obj )) 
-		       (class ?c) (constraint ?constr)))))
+		(lf (% description (status (? x ont::indefinite ont::bare ont::indefinite-plural ont::SM ont::wh ONT::what ONT::which ONT::whose ONT::*wh-term* ont::wh-term ONT::WH-PLURAL ont::wh-term-set ont::kind)) 
+		       ;(sem ($ f::phys-obj )) 
+		       (class ?c) (constraint ?constr)))
+		(lex (? !lex w::what))))  ; exclude "X is what" or "what is X"
       (compute-sem-features (lf ONT::MEMBERSHIP) (sem ?newsem))
       )
 
@@ -2547,7 +2549,7 @@
 	    (sem ?sem) (tma ?tma)
 	    (transform ?transform)
 	    ))
-     (gap (% ?!s3 (case ?dcase) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap -)))
+     (gap (% ?!s3 (case ?dcase) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap -) (status ?dstatus)))
      (advbl-needed ?avn)
      )
     -s-ynq-be-gap> 0.98
@@ -2569,7 +2571,7 @@
 	   (subj ?subj) (subj (% ?s1 (var ?subjvar) (sem ?subjsem) (agr ?subjagr) (lex ?subjlex) (gap -))) ;; note double matching required
 	   (iobj (% -))
 	   (part (% -))		 
-	   (dobj ?!dobj) (dobj (% ?!s3 (case (? dcase obj -)) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap ?gap)))
+	   (dobj ?!dobj) (dobj (% ?!s3 (case (? dcase obj -)) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (status ?dstatus)))
 	   (comp3 (% -))
 	   ;;	   (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) ))
 	    
@@ -2953,12 +2955,12 @@
     ((s (stype whq) (subjvar ?subjvar) (dobjvar ?dobjvar) (subj ?subj) (sem ?sem)
       (qtype q) (lf ?lf) (var ?v))
      -wh-q2>
-     (np (var ?npvar) (sem ?npsem) (wh q) (agr ?a) (case ?case))
+     (np (var ?npvar) (sem ?npsem) (wh q) (agr ?a) (case ?case) (status ?npstatus))
      (head (s (stype ynq) (lf ?lf) (var ?v) (sem ?sem)
 	    (advbl-needed -)
 	    (subj ?subj)
 	    (subjvar ?subjvar) (dobjvar ?dobjvar)
-	    (gap (% np (sem ?npsem) (case ?case) (var ?npvar) (agr ?a))))
+	    (gap (% np (sem ?npsem) (case ?case) (var ?npvar) (agr ?a) (status ?npstatus))))
       )
      )
 
@@ -3038,6 +3040,21 @@
 	    (subjvar ?subjvar) (dobjvar ?dobjvar)
 	    (subj ?subj)
 	    (gap (% advbl (sem ?predsem) (var ?predvar) (arg ?dobjvar))))
+       )
+      )
+
+    ; What kind of pizza is this box?
+    ((s (stype whq) (subjvar ?subjvar) (dobjvar ?dobjvar) (subj ?subj)
+      (qtype q) (lf ?lf) (var ?v))
+     -wh-q-predgap3>
+     (pred (var ?predvar) (sem ?predsem) (wh q) (arg ?subjvar)
+	   (LF (% ?s (CLASS ONT::MEMBERSHIP))) ; match the LF (not the sem) so that it must be MEMBERSHIP
+	   )
+     (head (s (stype ynq) (lf ?lf) (var ?v) 
+	    (advbl-needed -)
+	    (subjvar ?subjvar) (dobjvar ?dobjvar)
+	    (subj ?subj)
+	    (gap (% pred (sem ?predsem) (var ?predvar))))
        )
       )
     
@@ -3326,7 +3343,9 @@
            (punctype (? x imp decl)))
       
       -vp-utt-inform> .95
-      (head (vp (gap -) (sem ?sem) (sem ($ f::situation (f::cause (? cs f::stimulating f::phenomenal f::mental -))))
+      (head (vp (gap -) (sem ?sem) (sem ($ f::situation (f::cause (? cs f::stimulating f::phenomenal f::mental -))
+					   (f::type ONT::NECESSITY) ; restrict this to "have" for now; we need to re-work this rule
+					   )) 
 	     (var ?v)
 	     (constraint ?constraint) (class ?class)
 	     (vform (? vform pres past fut)) (agr (? agr 1s 1p))
@@ -3417,7 +3436,7 @@
 	     ))
        (sem ?sem) (transform ?transform) 
       )
-     -ynq-aux-modal-nocomp> .96 ;; only execute if we have to so we don't explode the search space
+     -ynq-aux-modal-nocomp> .94 ; .96 ;; only execute if we have to so we don't explode the search space
      (head (aux 
 	    (tma-contrib ?tma-contrib)
 	    (sem-contrib ?sem-contrib)
@@ -3678,7 +3697,7 @@
 	     ))
        (sem ?sem) (transform ?transform) 
       )
-     -ynq-aux-modal-nocomp-neg> .96 ;; only execute if we have to so we don't explode the search space
+     -ynq-aux-modal-nocomp-neg> .94 ; .96 ;; only execute if we have to so we don't explode the search space
      (head (aux 
 	    (tma-contrib ?tma-contrib)
 	    (sem-contrib ?sem-contrib)  (lex ?lx)
