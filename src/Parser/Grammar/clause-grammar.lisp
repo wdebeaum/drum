@@ -1619,7 +1619,7 @@
    ;; test: who did he see
    ((vp- (subj ?subj) (subjvar ?subjvar) (dobjvar ?gapvar) ;(dobjvar ?dobjvar)
      (main +) (gap (% ?!cat (var ?gapvar) (sem ?gapsem) (agr ?gapagr) (arg ?arg) (gap -) 
-		      (case ?dcase) (ptype ?ptype)
+		      (case ?dcase) (ptype ?ptype) (status ?status) ; status is matched in wh-q2
 		      ))
      (var ?v) 
      (class ?c)
@@ -2960,7 +2960,7 @@
 	    (advbl-needed -)
 	    (subj ?subj)
 	    (subjvar ?subjvar) (dobjvar ?dobjvar)
-	    (gap (% np (sem ?npsem) (case ?case) (var ?npvar) (agr ?a) (status ?npstatus))))
+	    (gap (% np (sem ?npsem) (case ?case) (var ?npvar) (agr ?a) (status ?npstatus)))) ; match status for HAVE-PROPERTY
       )
      )
 

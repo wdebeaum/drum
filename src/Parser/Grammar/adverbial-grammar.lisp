@@ -1804,7 +1804,8 @@
 		(lex ?pt) (headcat ?hc)
 		(sem ?somesem) ;(sem ($ ?somesem))
 		(var ?gapvar) (agr ?agr)     
-     (gap (% np (lf ?lf) (var ?gapvar) (gap -) (sort (? sort pred descr wh-desc)) (case (? case obj -)) (agr ?agr) (sem ?somesem)))
+		(gap (% np (lf ?lf) (var ?gapvar) (gap -) (sort (? sort pred descr wh-desc))
+			(case (? case obj -)) (agr ?agr) (sem ?somesem) (status ?status))) ; status is matched in wh-q2
      )					; I set the case here to a var, in order to allow -np-spec-of-pp> to work. Otherwise, CASE is not used in PPs
     -pp1-gap> 0.98
     (head (prep (LEX ?pt) (headcat ?hc)))

@@ -9,12 +9,13 @@
 ;;; A domain is a single-valued function                                                                            
 (define-type ONT::DOMAIN
  ;:parent ONT::TANGIBLE-ABSTRACT-object
- :parent ONT::ABSTRACT-object ; not tangible
- :wordnet-sense-keys ("attribute%1:03:00")
- :comment "Nouns that name domain/scales, and can serve as relational nouns (e.g., the COLOR of the box)"
- :arguments ((:REQUIRED ONT::FIGURE)
-             (:optional ont::GROUND)
-             (:optional ont::EXTENT)
+    :parent ONT::ABSTRACT-object ; not tangible
+    :sem (F::abstr-obj (F::scale ont::domain))
+    :wordnet-sense-keys ("attribute%1:03:00")
+    :comment "Nouns that name domain/scales, and can serve as relational nouns (e.g., the COLOR of the box)"
+    :arguments ((:REQUIRED ONT::FIGURE)
+		(:optional ont::GROUND)
+		(:optional ont::EXTENT)
              )
  )
 
@@ -22,6 +23,7 @@
 ;; ORDERED DOMAIN
 
 (define-type ont::ordered-domain
+ :sem (F::abstr-obj (F::scale ONT::ORDERED-DOMAIN))
  :parent ont::domain 
 ; :sem (F::Abstr-obj (F::Scale ?!sc))
 )
@@ -37,12 +39,14 @@
 
 ;; PHYSICAL-PROPERTY-SCALE
 (define-type ont::physical-property-scale
+ :sem (F::abstr-obj (F::scale ONT::PHYSICAL-PROPERTY-SCALE))
  :parent ont::ordered-domain
  :comment "scales associated with properties pertaining to the attributes of physical entities or substances. Note: many properties can apply to non-physical objects."
 )
 
 ;; BODY CONDITION SCALE
 (define-type ont::body-condition-scale
+ :sem (F::abstr-obj (F::scale ONT::BODY-CONDITION-SCALE))
  :parent ont::physical-property-scale 
 ; :sem (f::situation (f::aspect f::indiv-level)) ;; prevent attachment of temporal adv                               
 ; :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj (F::origin F::natural)))
@@ -50,89 +54,106 @@
 )
 
 (define-type ont::positive-body-condition-scale
+ :sem (F::abstr-obj (F::scale ONT::POSITIVE-BODY-CONDITION-SCALE))
  :parent ont::body-condition-scale
 )
 
 (define-type ont::alertness-scale
+ :sem (F::abstr-obj (F::scale ONT::ALERTNESS-SCALE))
  :parent ont::positive-body-condition-scale
  :wordnet-sense-keys ("alertness%1:09:00")
 )
 
 (define-type ont::body-energy-scale
+ :sem (F::abstr-obj (F::scale ONT::BODY-ENERGY-SCALE))
  :parent ont::positive-body-condition-scale
  :wordnet-sense-keys ("vigor%1:07:00" "energy%1:26:00" "energy%1:07:01")
  ;; vim, vigor, energy (strength is in ont::strength scale)
 )
 
 (define-type ont::health-scale
+ :sem (F::abstr-obj (F::scale ONT::HEALTH-SCALE))
  :parent ont::positive-body-condition-scale 
  :wordnet-sense-keys ("wellness%1:26:00" "wellbeing%1:26:00" "health%1:26:00" "healthiness%1:26:00" "condition%1:26:02")
  ;; WORDS: wellness, healthiness, condition (in condition), health, wellbeaing
 )
 
 (define-type ont::satiated-scale
+ :sem (F::abstr-obj (F::scale ONT::SATIATED-SCALE))
  :parent ont::positive-body-condition-scale
  :wordnet-sense-keys ("satiation%1:26:00")
 )
 
 (define-type ont::fitness-scale
+ :sem (F::abstr-obj (F::scale ONT::FITNESS-SCALE))
  :parent ont::positive-body-condition-scale
  :wordnet-sense-keys ("fitness%1:26:00")
 )
 
 (define-type ont::negative-body-condition-scale
+ :sem (F::abstr-obj (F::scale ONT::NEGATIVE-BODY-CONDITION-SCALE))
  :parent ont::body-condition-scale
 )
 
 (define-type ont::pain-scale
+ :sem (F::abstr-obj (F::scale ONT::PAIN-SCALE))
  :wordnet-sense-keys ("painfulness%1:07:00" "soreness%1:12:00" "pain%1:12:00" "soreness%1:12:00")
  :parent ONT::negative-body-condition-scale
 )
 
 (define-type ont::not-satiated-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-SATIATED-SCALE))
  :parent ont::negative-body-condition-scale
  :wordnet-sense-keys ("hunger%1:26:00" "thirst%1:26:00")
 )
 
 (define-type ont::illness-scale
+ :sem (F::abstr-obj (F::scale ONT::ILLNESS-SCALE))
  :parent ont::negative-body-condition-scale
  :wordnet-sense-keys ("unhealthiness%1:26:00" "illness%1:26:00")
 )
 
 ;; restlessness
 (define-type ONT::restlessness-scale
+ :sem (F::abstr-obj (F::scale ONT::RESTLESSNESS-SCALE))
  :wordnet-sense-keys ("restlessness%1:07:01" "restlessness%1:12:00")
  :parent ont::negative-body-condition-scale
 )
 
 ;; feebleness                                                                                                       
 (define-type ONT::feebleness-scale
+ :sem (F::abstr-obj (F::scale ONT::FEEBLENESS-SCALE))
  :wordnet-sense-keys ("feebleness%1:26:00" "weakness%1:07:01") 
  :parent ont::negative-body-condition-scale
  )
 
 
 (define-type ont::lack-of-energy-scale
+ :sem (F::abstr-obj (F::scale ONT::LACK-OF-ENERGY-SCALE))
  :parent ont::negative-body-condition-scale
 )
 
 ;; lethargy
 (define-type ont::lethargy-scale
+ :sem (F::abstr-obj (F::scale ONT::LETHARGY-SCALE))
  :wordnet-sense-keys ("lethargy%1:26:00" "lethargy%1:07:00")
  :parent ont::lack-of-energy-scale
 )
 
 ;; fatigue, tiredness, exhaustion                                                                                   
 (define-type ONT::fatigue-scale
+ :sem (F::abstr-obj (F::scale ONT::FATIGUE-SCALE))
  :wordnet-sense-keys ("exhaustion%1:26:00" "fatigue%1:26:00" "tiredness%1:26:00")
  :parent ont::lack-of-energy-scale
  )
 
 (define-type ont::neutral-body-condition-scale
+ :sem (F::abstr-obj (F::scale ONT::NEUTRAL-BODY-CONDITION-SCALE))
  :parent ont::lack-of-energy-scale
 )
 
 (define-type ont::sleepiness-scale
+ :sem (F::abstr-obj (F::scale ONT::SLEEPINESS-SCALE))
  :parent ont::neutral-body-condition-scale 
   :wordnet-sense-keys ("sleepiness%1:26:00" "drowsiness%1:26:00")
  ;; WORDS: drowsiness, sleepiness
@@ -140,6 +161,7 @@
 
 ;; polarity-scale
 (define-type ont::polarity-scale
+ :sem (F::abstr-obj (F::scale ONT::POLARITY-SCALE))
  :parent ont::physical-property-scale
  :wordnet-sense-keys ("polarity%1:24:01")
  ;; WORDS: polarity
@@ -148,21 +170,25 @@
 
 ;; completeness
 (define-type ont::completeness-scale
+ :sem (F::abstr-obj (F::scale ONT::COMPLETENESS-SCALE))
  :parent ont::physical-property-scale
 )
 
 (define-type ont::complete-scale
+ :sem (F::abstr-obj (F::scale ONT::COMPLETE-SCALE))
  :wordnet-sense-keys ("completeness%1:26:00")
  :parent ont::completeness-scale
 )
 
 (define-type ont::incomplete-scale
+ :sem (F::abstr-obj (F::scale ONT::INCOMPLETE-SCALE))
  :wordnet-sense-keys ("incompleteness%1:26:00")
  :parent ont::completeness-scale
 )
 
 ;; atmospheric scale
 (define-type ont::atmospheric-scale
+ :sem (F::abstr-obj (F::scale ONT::ATMOSPHERIC-SCALE))
  :parent ont::physical-property-scale
 )
 
@@ -171,52 +197,59 @@
  :parent ont::atmospheric-scale 
  :wordnet-sense-keys ("humidity%1:26:00")
  :arguments ((:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Scale Ont::humidity-scale )))) 
- :sem (F::Abstr-obj )
+ :sem (F::Abstr-obj (F::scale ONT::HUMIDITY-SCALE) )
  ;; WORDS: humidity
 )
 
 ;; configuration property scale
 (define-type ont::configuration-property-scale
+ :sem (F::abstr-obj (F::scale ONT::CONFIGURATION-PROPERTY-SCALE))
  :parent ont::physical-property-scale
  :comment "scales for properties regarding the configuration, arrangement or layout of elements"
 )
 
 (define-type ont::constriction-scale
+ :sem (F::abstr-obj (F::scale ONT::CONSTRICTION-SCALE))
  :parent ont::configuration-property-scale
 )
 
 (define-type ont::tightness-scale
+ :sem (F::abstr-obj (F::scale ONT::TIGHTNESS-SCALE))
  :parent ont::constriction-scale
  :wordnet-sense-keys("tightness%1:07:00")
 )
 
 (define-type ont::looseness-scale
+ :sem (F::abstr-obj (F::scale ONT::LOOSENESS-SCALE))
  :parent ont::constriction-scale
  :wordnet-sense-keys("looseness%1:07:00")
 )
 
 ;;  appearance scale
 (define-type ont::appearance-scale
+ :sem (F::abstr-obj (F::scale ONT::APPEARANCE-SCALE))
  :parent ont::physical-property-scale 
  :comment "scales related to surface appearance of a physical entity or object preceptible through sensory input"
  :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
              )
-)
+ )
 
 (define-type ont::smell-scale
+ :sem (F::abstr-obj (F::scale ONT::SMELL-SCALE))
  :parent ont::appearance-scale 
  :wordnet-sense-keys ("smell%1:07:00")
  ;; WORDS: smell
-)
+ )
 
 (define-type ont::negative-smell-scale
+ :sem (F::abstr-obj (F::scale ONT::NEGATIVE-SMELL-SCALE))
  :parent ont::smell-scale 
  :wordnet-sense-keys ("stinkiness%1:07:00" "rancidness%1:07:00")
  ;; WORDS: malodorousness, rancidness, muskiness
- 
-)
+ )
 
 (define-type ont::positive-smell-scale
+ :sem (F::abstr-obj (F::scale ONT::POSITIVE-SMELL-SCALE))
  :parent ont::smell-scale 
  :wordnet-sense-keys ("sweetness%1:07:01")
  ;; WORDS: sweetness, fragrance
@@ -225,20 +258,24 @@
 )
 
 (define-type ont::sound-scale
+ :sem (F::abstr-obj (F::scale ONT::SOUND-SCALE))
  :parent ont::appearance-scale 
 )
 
 (define-type ont::sound-volume-scale
+ :sem (F::abstr-obj (F::scale ONT::SOUND-VOLUME-SCALE))
  :parent ont::sound-scale 
 )
 
 (define-type ont::loudness-scale
+ :sem (F::abstr-obj (F::scale ONT::LOUDNESS-SCALE))
  :parent ont::sound-volume-scale
  :wordnet-sense-keys ("loudness%1:07:00")
  ;; WORDS: loudness
 )
 
 (define-type ont::sound-softness-scale
+ :sem (F::abstr-obj (F::scale ONT::SOUND-SOFTNESS-SCALE))
  :parent ont::sound-volume-scale
  :wordnet-sense-keys ("softness%1:07:01")
  ;; WORDS: softness
@@ -246,6 +283,7 @@
 )
 
 (define-type ont::quietness-scale
+ :sem (F::abstr-obj (F::scale ONT::QUIETNESS-SCALE))
  :parent ont::sound-volume-scale
  :wordnet-sense-keys ("quietness%1:07:00")
  ;; WORDS: quietness
@@ -253,19 +291,23 @@
 )
 
 (define-type ont::sound-texture-scale
+ :sem (F::abstr-obj (F::scale ONT::SOUND-TEXTURE-SCALE))
  :parent ont::sound-scale
 )
 
 (define-type ont::hoarseness-scale
+ :sem (F::abstr-obj (F::scale ONT::HOARSENESS-SCALE))
  :parent ont::sound-texture-scale
  :wordnet-sense-keys ("hoarseness%1:07:00")
 )
 
 (define-type ont::touch-scale
+ :sem (F::abstr-obj (F::scale ONT::TOUCH-SCALE))
  :parent ont::appearance-scale 
 )
 
 (define-type ont::flexibility-scale
+ :sem (F::abstr-obj (F::scale ONT::FLEXIBILITY-SCALE))
  :parent ont::touch-scale 
  :wordnet-sense-keys ("flexibility%1:07:02")
  ;; WORDS: flexibility
@@ -273,11 +315,13 @@
 
 
 (define-type ont::tactile-scale
+ :sem (F::abstr-obj (F::scale ONT::TACTILE-SCALE))
  :parent ont::touch-scale 
  )
 
 
 (define-type ont::texture-scale
+ :sem (F::abstr-obj (F::scale ONT::TEXTURE-SCALE))
  :parent ont::tactile-scale 
  :wordnet-sense-keys ("texture%1:07:00")
  ;; WORDS: texture
@@ -285,67 +329,79 @@
 
 
 (define-type ont::texture-thickness-scale
+ :sem (F::abstr-obj (F::scale ONT::TEXTURE-THICKNESS-SCALE))
  :parent ont::texture-scale
  :wordnet-sense-keys ("thickness%1:07:02")
 )
 
 (define-type ont::texture-thinness-scale
+ :sem (F::abstr-obj (F::scale ONT::TEXTURE-THINNESS-SCALE))
  :parent ont::texture-scale
  :wordnet-sense-keys ("thinness%1:07:02")
 )
 
 (define-type ont::roughness-scale
+ :sem (F::abstr-obj (F::scale ONT::ROUGHNESS-SCALE))
  :parent ont::texture-scale
  :wordnet-sense-keys ("roughness%1:07:00") 
  ;; WORDS: choppiness, roughness
 )
 
 (define-type ont::sharp-texture-scale
+ :sem (F::abstr-obj (F::scale ONT::SHARP-TEXTURE-SCALE))
  :parent ont::texture-scale 
  :wordnet-sense-keys ("sharpness%1:07:01")
  ;; WORDS: sharpness
 )
 
 (define-type ont::smoothness-scale
+ :sem (F::abstr-obj (F::scale ONT::SMOOTHNESS-SCALE))
  :parent ont::texture-scale 
  :wordnet-sense-keys ("smoothness%1:07:00")
  ;; WORDS: smoothness
 )
 
 (define-type ont::taste-scale
+ :sem (F::abstr-obj (F::scale ONT::TASTE-SCALE))
  :parent ont::appearance-scale 
 )
 
 (define-type ont::spiciness-scale
+ :sem (F::abstr-obj (F::scale ONT::SPICINESS-SCALE))
  :parent ont::taste-scale 
  :wordnet-sense-keys ("spiciness%1:07:00")
  ;; WORDS: spiciness
 )
 
 (define-type ont::sourness-scale
+ :sem (F::abstr-obj (F::scale ONT::SOURNESS-SCALE))
  :parent ont::taste-scale 
  :wordnet-sense-keys ("sourness%1:07:00")
  ;; WORDS: sourness
 )
 
 (define-type ont::sweetness-scale
+ :sem (F::abstr-obj (F::scale ONT::SWEETNESS-SCALE))
  :parent ont::taste-scale 
  :wordnet-sense-keys ("sweetness%1:07:00" "sweetness%1:09:00")
  ;; WORDS: sweetness
 )
 
 (define-type ont::bitterness-scale
+ :sem (F::abstr-obj (F::scale ONT::BITTERNESS-SCALE))
  :parent ont::taste-scale 
  :wordnet-sense-keys ("bitterness%1:07:00")
  ;; WORDS: bitterness
 )
 
 (define-type ont::visual-scale
+ :sem (F::abstr-obj (F::scale ONT::VISUAL-SCALE))
  :parent ont::appearance-scale 
 )
 
 
 (define-type ont::luminosity-scale
+ :sem (F::abstr-obj (F::scale ONT::LUMINOSITY-SCALE))
  :parent ont::visual-scale 
  :wordnet-sense-keys ("brightness%1:07:00" "brightness%1:07:02")
 ; :arguments ((:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Scale Ont::luminosity-scale)))
@@ -361,6 +417,7 @@
 ;)
 
 (define-type ont::visual-dullness-scale
+ :sem (F::abstr-obj (F::scale ONT::VISUAL-DULLNESS-SCALE))
  :parent ont::visual-scale 
  :wordnet-sense-keys ("dimness%1:07:01" "softness%1:07:06")
  ;; WORDS: brightness
@@ -376,129 +433,154 @@
 )
 
 (define-type ont::red-scale
+ :sem (F::abstr-obj (F::scale ONT::RED-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("redness%1:07:00")
  ;; WORDS: redness
 )
 
 (define-type ont::blue-scale
+ :sem (F::abstr-obj (F::scale ONT::BLUE-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("blue%1:07:00")
 )
 
 (define-type ont::green-scale
+ :sem (F::abstr-obj (F::scale ONT::GREEN-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("green%1:07:00")
 )
 
 (define-type ont::grey-scale
+ :sem (F::abstr-obj (F::scale ONT::GREY-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("greyness%1:07:00")
 )
 
 (define-type ont::pink-scale
+ :sem (F::abstr-obj (F::scale ONT::PINK-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("pink%1:07:00")
 )
 
 (define-type ont::magenta-scale
+ :sem (F::abstr-obj (F::scale ONT::MAGENTA-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("magenta%1:07:00")
 )
 
 (define-type ont::silver-scale
+ :sem (F::abstr-obj (F::scale ONT::SILVER-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("silver%1:07:00")
 )
 
 (define-type ont::gold-scale
+ :sem (F::abstr-obj (F::scale ONT::GOLD-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("gold%1:07:00")
 )
 
 (define-type ont::white-scale
+ :sem (F::abstr-obj (F::scale ONT::WHITE-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("white%1:07:00")
 )
 
 (define-type ont::brown-scale
+ :sem (F::abstr-obj (F::scale ONT::BROWN-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("brownness%1:07:00")
 )
 
 (define-type ont::black-scale
+ :sem (F::abstr-obj (F::scale ONT::BLACK-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("blackness%1:07:00")
 )
 
 (define-type ont::purple-scale
+ :sem (F::abstr-obj (F::scale ONT::PURPLE-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("purple%1:07:00")
 )
 
 (define-type ont::orange-scale
+ :sem (F::abstr-obj (F::scale ONT::ORANGE-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("orange%1:07:00")
 )
 
 (define-type ont::yellow-scale
+ :sem (F::abstr-obj (F::scale ONT::YELLOW-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("yellow%1:07:00")
 )
 
 (define-type ont::tan-scale
+ :sem (F::abstr-obj (F::scale ONT::TAN-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("tan%1:07:00")
 )
 
 (define-type ont::copper-scale
+ :sem (F::abstr-obj (F::scale ONT::COPPER-SCALE))
  :parent ont::color-scale
  :wordnet-sense-keys ("yellow%1:07:00")
 )
 
 
 (define-type ont::presence-of-light-scale
+ :sem (F::abstr-obj (F::scale ONT::PRESENCE-OF-LIGHT-SCALE))
  :parent ont::visual-scale 
 )
 
 (define-type ont::lightness-scale
+ :sem (F::abstr-obj (F::scale ONT::LIGHTNESS-SCALE))
  :parent ont::presence-of-light-scale
  :wordnet-sense-keys ("lightness%1:07:01")
  ;; WORDS: lightness
 )
 
 (define-type ont::darkness-scale
+ :sem (F::abstr-obj (F::scale ONT::DARKNESS-SCALE))
  :parent ont::presence-of-light-scale
  :wordnet-sense-keys ("darkness%1:26:00")
  ;; WORDS: darkness
 )
 
 (define-type ont::visual-distinctivenss-scale
+ :sem (F::abstr-obj (F::scale ONT::VISUAL-DISTINCTIVENSS-SCALE))
  :parent ont::visual-scale 
 )
 
 (define-type ont::visual-sharpness-scale
+ :sem (F::abstr-obj (F::scale ONT::VISUAL-SHARPNESS-SCALE))
  :parent ont::visual-distinctivenss-scale
  :wordnet-sense-keys ("sharpness%1:07:03" "focus%1:07:01")
  ;; WORDS: sharpness, focus
 )
 
 (define-type ont::blurriness-scale
+ :sem (F::abstr-obj (F::scale ONT::BLURRINESS-SCALE))
  :parent ont::visual-distinctivenss-scale
  :wordnet-sense-keys ("blurriness%1:07:00")
  ;; WORDS: blurry
 )
 
 (define-type ont::light-passage-scale
+ :sem (F::abstr-obj (F::scale ONT::LIGHT-PASSAGE-SCALE))
  :parent ont::visual-scale 
 )
 
 (define-type ont::opacity-scale
+ :sem (F::abstr-obj (F::scale ONT::OPACITY-SCALE))
  :parent ont::light-passage-scale 
  ;; WORDS: opacity
 )
 
 (define-type ont::visual-clarity-scale
+ :sem (F::abstr-obj (F::scale ONT::VISUAL-CLARITY-SCALE))
  :parent ont::light-passage-scale 
  ;; WORDS: transparency, clarity, clearness
 )
@@ -506,32 +588,38 @@
 
 ;; sensory scale
 (define-type ont::sensory-scale
+ :sem (F::abstr-obj (F::scale ONT::SENSORY-SCALE))
  :parent ont::physical-property-scale
  :comment "scales that deal with the quality to being perceivable through sensory input"
  ;; WORDS: sensitivity
 )
 
 (define-type ont::perceptibility-scale
+ :sem (F::abstr-obj (F::scale ONT::PERCEPTIBILITY-SCALE))
  :parent ont::sensory-scale
  :wordnet-sense-keys ("perceptibility%1:07:00")
 )
 
 (define-type ont::sensitivity-scale
+ :sem (F::abstr-obj (F::scale ONT::SENSITIVITY-SCALE))
  :parent ont::sensory-scale
  :wordnet-sense-keys ("sensitivity%1:09:00")
 )
 
 (define-type ont::sight-scale
+ :sem (F::abstr-obj (F::scale ONT::SIGHT-SCALE))
  :parent ont::sensory-scale 
  ;; WORDS: invisibility, visibility
 )
 
 (define-type ont::visibility-scale
+ :sem (F::abstr-obj (F::scale ONT::VISIBILITY-SCALE))
  :parent ont::sight-scale
  :wordnet-sense-keys ("visibility%1:07:00")
 )
 
 (define-type ont::invisibility-scale
+ :sem (F::abstr-obj (F::scale ONT::INVISIBILITY-SCALE))
  :parent ont::sight-scale
  :wordnet-sense-keys ("invisibility%1:07:00")
  )
@@ -539,32 +627,38 @@
 
 
 (define-type ont::tactile-hardness-scale
+ :sem (F::abstr-obj (F::scale ONT::TACTILE-HARDNESS-SCALE))
  :parent ont::texture-scale 
  :wordnet-sense-keys ("hardness%1:07:01")
  ;; WORDS: hardness
 )
 
 (define-type ont::tactile-softness-scale
+ :sem (F::abstr-obj (F::scale ONT::TACTILE-SOFTNESS-SCALE))
  :parent ont::texture-scale 
  :wordnet-sense-keys ("softness%1:07:00")
  ;; WORDS: softness
  )
 
 (define-type ont::tangibility-scale
+ :sem (F::abstr-obj (F::scale ONT::TANGIBILITY-SCALE))
  :parent ont::tactile-scale
  :wordnet-sense-keys ("tangibility%1:07:00")
 )
 
 (define-type ont::intangibility-scale
+ :sem (F::abstr-obj (F::scale ONT::INTANGIBILITY-SCALE))
  :parent ont::tactile-scale
  :wordnet-sense-keys ("intangibility%1:07:00")
 )
 
 (define-type ont::olfactory-scale
+ :sem (F::abstr-obj (F::scale ONT::OLFACTORY-SCALE))
  :parent ont::sensory-scale
 )
 
 (define-type ont::auditory-scale
+ :sem (F::abstr-obj (F::scale ONT::AUDITORY-SCALE))
  :parent ont::sensory-scale 
  :wordnet-sense-keys ("audition%1:09:00")
 )
@@ -572,20 +666,24 @@
 ;; dampness scale
 
 (define-type ont::moisture-content-scale
+ :sem (F::abstr-obj (F::scale ONT::MOISTURE-CONTENT-SCALE))
  :parent ont::physical-property-scale
 )
 
 (define-type ont::wet-scale
+ :sem (F::abstr-obj (F::scale ONT::WET-SCALE))
  :parent ont::moisture-content-scale
  :wordnet-sense-keys ("wetness%1:26:00")
 )
 
 (define-type ont::dry-scale
+ :sem (F::abstr-obj (F::scale ONT::DRY-SCALE))
  :parent ont::moisture-content-scale
  :wordnet-sense-keys ("dryness%1:26:00")
 )
 
 (define-type ont::dehydrated-scale
+ :sem (F::abstr-obj (F::scale ONT::DEHYDRATED-SCALE))
  :parent ont::dry-scale
  :wordnet-sense-keys ("dehydration%1:26:00")
 )
@@ -593,78 +691,93 @@
 
 ;;; SPATIAL SCALE
 (define-type ont::spatial-scale
+ :sem (F::abstr-obj (F::scale ONT::SPATIAL-SCALE))
  :parent ont::physical-property-scale
  :comment "scales relating to the properties of space"
 )
 
 (define-type ont::shape-scale
+ :sem (F::abstr-obj (F::scale ONT::SHAPE-SCALE))
  :parent ont::appearance-scale
 )
 
 (define-type ont::angularity-scale
+ :sem (F::abstr-obj (F::scale ONT::ANGULARITY-SCALE))
  :parent ont::shape-scale
  :wordnet-sense-keys ("angularity%1:07:00")
 )
 
 (define-type ont::squareness-scale
+ :sem (F::abstr-obj (F::scale ONT::SQUARENESS-SCALE))
  :parent ont::angularity-scale
  :wordnet-sense-keys ("squareness%1:07:00")
 )
 
 (define-type ont::rectangularity-scale
+ :sem (F::abstr-obj (F::scale ONT::RECTANGULARITY-SCALE))
  :parent ont::angularity-scale
  :wordnet-sense-keys ("rectangularity%1:07:00")
 )
 
 (define-type ont::triangularity-scale
+ :sem (F::abstr-obj (F::scale ONT::TRIANGULARITY-SCALE))
  :parent ont::angularity-scale
  :wordnet-sense-keys ("triangularity%1:07:00")
 )
 
 (define-type ont::roundness-scale
+ :sem (F::abstr-obj (F::scale ONT::ROUNDNESS-SCALE))
  :parent ont::shape-scale
  :wordnet-sense-keys ("roundness%1:07:00")
 )
 
 ;;; BEHAVIORAL SCALE
 (define-type ont::behavioral-scale
+ :sem (F::abstr-obj (F::scale ONT::BEHAVIORAL-SCALE))
  :parent ont::ordered-domain
  :comment "scales relating to behavioral or psychological attributes that characterize an entity."
 )
 
 (define-type ont::endurance-scale
+ :sem (F::abstr-obj (F::scale ONT::ENDURANCE-SCALE))
  :parent ont::behavioral-scale 
  :wordnet-sense-keys ("endurance%1:07:00")
  ;; WORDS: endurance
 )
 
 (define-type ont::kindness-scale
+ :sem (F::abstr-obj (F::scale ONT::KINDNESS-SCALE))
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("kindness%1:07:00" "kindness%1:07:01" "tenderness%1:07:00")
  ;; WORDS: tenderness, kindness
 )
 
 (define-type ont::gracefulness-scale
+ :sem (F::abstr-obj (F::scale ONT::GRACEFULNESS-SCALE))
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("gracefulness%1:07:00")
 )
 
 (define-type ont::honesty-scale
+ :sem (F::abstr-obj (F::scale ONT::HONESTY-SCALE))
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("honesty%1:07:00")
 )
 
 (define-type ont::modesty-scale
+ :sem (F::abstr-obj (F::scale ONT::MODESTY-SCALE))
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("modesty%1:07:00")
 )
 
 (define-type ont::affection-scale
+ :sem (F::abstr-obj (F::scale ONT::AFFECTION-SCALE))
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("affection%1:12:00" "friendliness%1:07:00" )
 )
 
 (define-type ont::sociability-scale
+ :sem (F::abstr-obj (F::scale ONT::SOCIABILITY-SCALE))
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("sociality%1:07:00")
 )
@@ -672,41 +785,49 @@
 
 
 (define-type ont::wiseness-scale
+ :sem (F::abstr-obj (F::scale ONT::WISENESS-SCALE))
  :parent ont::behavioral-scale
 )
 
 (define-type ont::wisdom-scale
+ :sem (F::abstr-obj (F::scale ONT::WISDOM-SCALE))
  :parent ont::wiseness-scale
  :wordnet-sense-keys ("wiseness%1:07:00")
 )
 
 (define-type ont::folly-scale
+ :sem (F::abstr-obj (F::scale ONT::FOLLY-SCALE))
  :parent ont::wiseness-scale
  :wordnet-sense-keys ("folly%1:07:00")
 )
 
 (define-type ont::aggressiveness-scale
+ :sem (F::abstr-obj (F::scale ONT::AGGRESSIVENESS-SCALE))
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("aggressiveness%1:12:00")
  ; aggressiveness, violence
  )
 
 (define-type ont::tameness-scale
+ :sem (F::abstr-obj (F::scale ONT::TAMENESS-SCALE))
  :parent ont::behavioral-scale
 )
 
 (define-type ont::tame-scale
+ :sem (F::abstr-obj (F::scale ONT::TAME-SCALE))
  :parent ont::tameness-scale
  :wordnet-sense-keys ("tameness%1:07:01")
 )
 
 (define-type ont::wild-scale
+ :sem (F::abstr-obj (F::scale ONT::WILD-SCALE))
  :parent ont::tameness-scale
  :wordnet-sense-keys ("wildness%1:07:00")
 )
 
 ;; bold and daring
 (define-type ont::boldness-scale
+ :sem (F::abstr-obj (F::scale ONT::BOLDNESS-SCALE))
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("daring%1:07:00")
  :comment "bold and daring; forceful approach to challenge"
@@ -714,24 +835,28 @@
 
 ;; courage and bravery
 (define-type ont::courage-scale
+ :sem (F::abstr-obj (F::scale ONT::COURAGE-SCALE))
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("courage%1:07:00")
  :comment "positive strength against fear"
 )
 
 (define-type ont::responsibility-scale
+ :sem (F::abstr-obj (F::scale ONT::RESPONSIBILITY-SCALE))
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("responsibility%1:07:00") 
  ;; WORDS: responsibility, responsibleness
 )
 
 (define-type ont::skillfulness-scale
+ :sem (F::abstr-obj (F::scale ONT::SKILLFULNESS-SCALE))
  :parent ont::behavioral-scale 
  :wordnet-sense-keys ("skillfulness%1:09:00" "skill%1:09:01" "expertise%1:09:00")
 )
 
 ;;; evaluation-scale
 (define-type ont::evaluation-scale
+ :sem (F::abstr-obj (F::scale ONT::EVALUATION-SCALE))
  :parent ont::ordered-domain 
  :wordnet-sense-keys ("quality%1:07:02")
  :comment "scales relating to subjective evaluation of an entity or a situation"
@@ -739,42 +864,50 @@
 )
 
 (define-type ont::fame-scale
+ :sem (F::abstr-obj (F::scale ONT::FAME-SCALE))
  :parent ont::evaluation-scale
  :wordnet-sense-keys ("fame%1:26:01" "fame%1:26:02" "prominence%1:26:00")
 )
 
 ;; freshness
 (define-type ont::freshness-scale
+ :sem (F::abstr-obj (F::scale ONT::FRESHNESS-SCALE))
  :parent ont::evaluation-scale
 )
 
 (define-type ont::fresh-scale
+ :sem (F::abstr-obj (F::scale ONT::FRESH-SCALE))
  :parent ont::freshness-scale
  :wordnet-sense-keys ("freshness%1:07:01")
 )
 
 (define-type ont::not-fresh-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-FRESH-SCALE))
  :parent ont::freshness-scale
  :wordnet-sense-keys ("staleness%1:07:01")
 )
 
 ;; familiarity
 (define-type ont::familiarity-scale
+ :sem (F::abstr-obj (F::scale ONT::FAMILIARITY-SCALE))
  :parent ont::evaluation-scale
 )
 
 (define-type ont::familiar-scale
+ :sem (F::abstr-obj (F::scale ONT::FAMILIAR-SCALE))
  :parent ont::familiarity-scale
  :wordnet-sense-keys ("familiarity%1:07:01")
 )
 
 (define-type ont::not-familiar-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-FAMILIAR-SCALE))
  :parent ont::familiarity-scale
  :wordnet-sense-keys ("unfamiliarity%1:07:00")
 )
 
 ;; necessity
 (define-type ont::necessity-scale
+ :sem (F::abstr-obj (F::scale ONT::NECESSITY-SCALE))
  :parent ont::evaluation-scale 
  :wordnet-sense-keys ("necessity%1:17:00")
  ;; WORDS: need
@@ -783,15 +916,18 @@
 
 ;; typicality
 (define-type ont::typicality-scale
+ :sem (F::abstr-obj (F::scale ONT::TYPICALITY-SCALE))
  :parent ont::evaluation-scale
 )
 
 (define-type ont::typical-scale
+ :sem (F::abstr-obj (F::scale ONT::TYPICAL-SCALE))
  :parent ont::typicality-scale
  :wordnet-sense-keys ("normality%1:07:00" "normality%1:07:01" "normality%1:26:00" "ordinariness%1:07:00")
 )
 
 (define-type ont::not-typical-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-TYPICAL-SCALE))
  :parent ont::typicality-scale
  :wordnet-sense-keys ("irregularity%1:04:00" "abnormality%1:07:00" "extraordinariness%1:07:00" "atypicality%1:26:00")
  ;; WORDS: abnormality, irregularity
@@ -800,108 +936,129 @@
 
 ;; comfort
 (define-type ont::comfort-scale
+ :sem (F::abstr-obj (F::scale ONT::COMFORT-SCALE))
  :parent ont::evaluation-scale 
  ;; WORDS: comfort, discomfort
  :comment "deals with ease and comfort"
 )
 
 (define-type ont::comfortable-scale
+ :sem (F::abstr-obj (F::scale ONT::COMFORTABLE-SCALE))
  :parent ont::comfort-scale
  :wordnet-sense-keys ("comfort%1:26:00" "convenience%1:26:00")
 )
 
 (define-type ont::not-comfortable-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-COMFORTABLE-SCALE))
  :parent ont::comfort-scale
  :wordnet-sense-keys ("discomfort%1:26:00")
 )
 
 ;; conventionality
 (define-type ont::conventionality-scale
+ :sem (F::abstr-obj (F::scale ONT::CONVENTIONALITY-SCALE))
  :parent ont::evaluation-scale
 )
 
 (define-type ont::conventional-scale
+ :sem (F::abstr-obj (F::scale ONT::CONVENTIONAL-SCALE))
  :parent ont::conventionality-scale
  :wordnet-sense-keys ("orthodoxy%1:07:00")
 )
 
 (define-type ont::not-conventional-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-CONVENTIONAL-SCALE))
  :parent ont::conventionality-scale
  :wordnet-sense-keys ("originality%1:07:00")
 )
 
 ;; cleanliness
 (define-type ont::cleanliness-scale
+ :sem (F::abstr-obj (F::scale ONT::CLEANLINESS-SCALE))
  :parent ont::evaluation-scale 
 )
 
 (define-type ont::clean-scale
+ :sem (F::abstr-obj (F::scale ONT::CLEAN-SCALE))
  :parent ont::cleanliness-scale 
  :wordnet-sense-keys ("cleanliness%1:26:00" "cleanliness%1:07:00")
  ;; WORDS: cleanliness
 )
 
 (define-type ont::unclean-scale
+ :sem (F::abstr-obj (F::scale ONT::UNCLEAN-SCALE))
  :parent ont::cleanliness-scale 
  :wordnet-sense-keys ("dirtiness%1:26:00")
  ;; WORDS: cleanliness
 )
 
 (define-type ont::luckiness-scale
+ :sem (F::abstr-obj (F::scale ONT::LUCKINESS-SCALE))
  :parent ont::evaluation-scale 
  :wordnet-sense-keys ("luck%1:26:00")
  ;; WORDS: luck
 )
 
 (define-type ont::cost-scale
+ :sem (F::abstr-obj (F::scale ONT::COST-SCALE))
  :parent ont::evaluation-scale
 )
 
 (define-type ont::expensive-scale
+ :sem (F::abstr-obj (F::scale ONT::EXPENSIVE-SCALE))
  :parent ont::cost-scale
  :wordnet-sense-keys ("costliness%1:07:00" "expensiveness%1:07:00")
 )
 
 (define-type ont::not-expensive-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-EXPENSIVE-SCALE))
  :parent ont::cost-scale
  :wordnet-sense-keys ("cheapness%1:07:00")
 )
 
 (define-type ont::ability-scale
+ :sem (F::abstr-obj (F::scale ONT::ABILITY-SCALE))
  :parent ont::evaluation-scale 
 )
 
 (define-type ont::able-scale
+ :sem (F::abstr-obj (F::scale ONT::ABLE-SCALE))
  :parent ont::ability-scale 
  :wordnet-sense-keys ("ability%1:07:00" "ability%1:09:00" "capability%1:07:00" "capacity%1:07:00" "competence%1:07:00" "capability%1:26:00")
  ;; WORDS: capability, capacity, 
 )
 
 (define-type ont::not-able-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-ABLE-SCALE))
  :parent ont::ability-scale 
  :wordnet-sense-keys ("inability%1:07:00" "incapacity%1:07:00" "incapability%1:07:00")
  ;; WORDS: inability
 )
 
 (define-type ont::attraction-scale
+ :sem (F::abstr-obj (F::scale ONT::ATTRACTION-SCALE))
  :parent ont::evaluation-scale
 )
 
 (define-type ont::attractive-scale
+ :sem (F::abstr-obj (F::scale ONT::ATTRACTIVE-SCALE))
  :parent ont::attraction-scale
  :wordnet-sense-keys ("appeal%1:07:00" "attractiveness%1:07:00")
 )
 
 (define-type ont::not-attractive-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-ATTRACTIVE-SCALE))
  :parent ont::attraction-scale
  :wordnet-sense-keys ("repugnance%1:12:00")
 )
 
 (define-type ont::acceptability-scale
+ :sem (F::abstr-obj (F::scale ONT::ACCEPTABILITY-SCALE))
  :parent ont::evaluation-scale 
 )
 
 (define-type ont::goodness-scale
+ :sem (F::abstr-obj (F::scale ONT::GOODNESS-SCALE))
  :parent ont::acceptability-scale 
  :wordnet-sense-keys ("benefit%1:07:00" "goodness%1:07:02")
  ;; WORDS: benefit
@@ -909,113 +1066,134 @@
 
 
 (define-type ont::badness-scale
+ :sem (F::abstr-obj (F::scale ONT::BADNESS-SCALE))
  :parent ont::acceptability-scale 
  :wordnet-sense-keys ("badness%1:07:00")
 )
 
 (define-type ont::beauty-scale
+ :sem (F::abstr-obj (F::scale ONT::BEAUTY-SCALE))
  :parent ont::evaluation-scale
 )
 
 (define-type ont::beautiful-scale
+ :sem (F::abstr-obj (F::scale ONT::BEAUTIFUL-SCALE))
  :parent ont::beauty-scale
  :wordnet-sense-keys ("beauty%1:07:00" "loveliness%1:07:00" "prettiness%1:07:00" "handsomeness%1:07:00") 
  ;; WORDS: beauty
 )
 
 (define-type ont::ugly-scale
+ :sem (F::abstr-obj (F::scale ONT::UGLY-SCALE))
  :parent ont::beauty-scale
  :wordnet-sense-keys ("ugliness%1:07:00" "unsightliness%1:07:00" "hideousness%1:07:00") 
 )
 
 (define-type ont::noticeability-scale
+ :sem (F::abstr-obj (F::scale ONT::NOTICEABILITY-SCALE))
  :parent ont::evaluation-scale
  :wordnet-sense-keys ("conspicuousness%1:07:00")
 )
 
 (define-type ont::adaptability-scale
+ :sem (F::abstr-obj (F::scale ONT::ADAPTABILITY-SCALE))
  :parent ont::evaluation-scale
  :wordnet-sense-keys("flexibility%1:07:01" "adaptability%1:07:00" "pliability%1:07:01")
  ;; WORDS: flexibility
 )
 
 (define-type ont::importance-scale
+ :sem (F::abstr-obj (F::scale ONT::IMPORTANCE-SCALE))
  :parent ont::evaluation-scale 
  ;; WORDS: importance, priority
 )
 
 (define-type ont::important-scale
+ :sem (F::abstr-obj (F::scale ONT::IMPORTANT-SCALE))
  :parent ont::importance-scale
  :wordnet-sense-keys ("significance%1:07:00" "importance%1:07:00" "importance%1:26:00"
 					     "urgency%1:26:00")
 )
 
 (define-type ont::not-important-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-IMPORTANT-SCALE))
  :parent ont::importance-scale
  :wordnet-sense-keys ("unimportance%1:07:00")
 )
 
 (define-type ont::reliability-scale
+ :sem (F::abstr-obj (F::scale ONT::RELIABILITY-SCALE))
  :parent ont::evaluation-scale 
  :wordnet-sense-keys ("reliability%1:07:00" "trustworthiness%1:07:00")
  ;; WORDS: reliability
 )
 
 (define-type ont::safety-scale
+ :sem (F::abstr-obj (F::scale ONT::SAFETY-SCALE))
  :parent ont::evaluation-scale 
 )
 
 (define-type ont::safe-scale
+ :sem (F::abstr-obj (F::scale ONT::SAFE-SCALE))
  :parent ont::safety-scale 
  :wordnet-sense-keys ("safety%1:26:00")
  ;; WORDS: safety, security
 )
 
 (define-type ont::unsafe-scale
+ :sem (F::abstr-obj (F::scale ONT::UNSAFE-SCALE))
  :parent ont::safety-scale 
  :wordnet-sense-keys ("insecurity%1:26:00") ; danger?
 )
 
 ;; appropriateness
 (define-type ont::appropriateness-scale
+ :sem (F::abstr-obj (F::scale ONT::APPROPRIATENESS-SCALE))
  :parent ont::evaluation-scale 
  ;; WORDS: fitness
 )
 
 (define-type ont::appropriate-scale
+ :sem (F::abstr-obj (F::scale ONT::APPROPRIATE-SCALE))
  :parent ont::appropriateness-scale
  :wordnet-sense-keys ("suitability%1:07:00" "fitness%1:07:00")
 )
 
 (define-type ont::not-appropriate-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-APPROPRIATE-SCALE))
  :parent ont::appropriateness-scale
  :wordnet-sense-keys ("unsuitability%1:07:00")
 )
 
 ;; convenience
 (define-type ont::convenience-scale
+ :sem (F::abstr-obj (F::scale ONT::CONVENIENCE-SCALE))
  :parent ont::evaluation-scale
 )
 
 (define-type ont::convenient-scale
+ :sem (F::abstr-obj (F::scale ONT::CONVENIENT-SCALE))
  :parent ont::convenience-scale 
  :wordnet-sense-keys("convenience%1:07:00")
  ;; WORDS: convenience
 )
 
 (define-type ont::not-convenient-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-CONVENIENT-SCALE))
  :parent ont::convenience-scale
  :wordnet-sense-keys("inconvenience%1:07:00")
 )
 
 ;; basis, foundation
 (define-type ont::basic-scale
+ :sem (F::abstr-obj (F::scale ONT::BASIC-SCALE))
  :parent ont::evaluation-scale
  ;;:wordnet-sense-keys ("foundation%1:09:00")
 )
 
 ;; plainness
 (define-type ont::plain-scale
+ :sem (F::abstr-obj (F::scale ONT::PLAIN-SCALE))
  :parent ont::evaluation-scale
  :wordnet-sense-keys ("plainness%1:26:00")
 )
@@ -1028,15 +1206,18 @@
 
 ;; level of quality, superior, inferior
 (define-type ont::quality-level-scale
+ :sem (F::abstr-obj (F::scale ONT::QUALITY-LEVEL-SCALE))
  :parent ont::evaluation-scale
 )
 
 (define-type ont::superiority-scale
+ :sem (F::abstr-obj (F::scale ONT::SUPERIORITY-SCALE))
  :parent ont::quality-level-scale
  :wordnet-sense-keys ("superiority%1:07:00")
 )
 
 (define-type ont::inferiority-scale
+ :sem (F::abstr-obj (F::scale ONT::INFERIORITY-SCALE))
  :parent ont::quality-level-scale
  :wordnet-sense-keys ("inferiority%1:07:00")
 )
@@ -1044,66 +1225,78 @@
 
 ;; explicit, implicit
 (define-type ont::explicitness-scale
+ :sem (F::abstr-obj (F::scale ONT::EXPLICITNESS-SCALE))
  :parent ont::evaluation-scale
 )
 
 (define-type ont::explicit-scale
+ :sem (F::abstr-obj (F::scale ONT::EXPLICIT-SCALE))
  :parent ont::explicitness-scale
  :wordnet-sense-keys ("explicitness%1:07:00")
 )
 
 (define-type ont::implicit-scale
+ :sem (F::abstr-obj (F::scale ONT::IMPLICIT-SCALE))
  :parent ont::explicitness-scale
  :wordnet-sense-keys ("inexplicitness%1:07:00")
 )
 
 ;; harmfulness (harmlessness not in WN, benigness a word?!)
 (define-type ont::harmfulness-scale
+ :sem (F::abstr-obj (F::scale ONT::HARMFULNESS-SCALE))
  :parent ont::evaluation-scale
  :wordnet-sense-keys ("harmfulness%1:07:00")
 )
 
 ;;asethetic-judgement
 (define-type ont::aesthetic-tastefulness-scale
+ :sem (F::abstr-obj (F::scale ONT::AESTHETIC-TASTEFULNESS-SCALE))
  :parent ont::evaluation-scale
  :wordnet-sense-keys ("stylishness%1:07:00")
 )
 
 ;; partiality, bias, prejudice
 (define-type ont::partiality-scale
+ :sem (F::abstr-obj (F::scale ONT::PARTIALITY-SCALE))
  :parent ont::evaluation-scale
  :wordnet-sense-keys ("partiality%1:09:00" "impartiality%1:09:00")
 )
 
 ;; morality
 (define-type ont::morality-scale
+ :sem (F::abstr-obj (F::scale ONT::MORALITY-SCALE))
  :parent ont::evaluation-scale
  :wordnet-sense-keys ("morality%1:07:00")
 )
 
 ;; offensiveness
 (define-type ont::offensiveness-scale
+ :sem (F::abstr-obj (F::scale ONT::OFFENSIVENESS-SCALE))
  :parent ont::evaluation-scale
  :wordnet-sense-keys ("offensiveness%1:07:00")
 )
 
 ;; messiness, orderliness
 (define-type ont::orderliness-scale
+ :sem (F::abstr-obj (F::scale ONT::ORDERLINESS-SCALE))
  :parent ont::evaluation-scale
 )
 
 (define-type ont::messy-scale
+ :sem (F::abstr-obj (F::scale ONT::MESSY-SCALE))
  :parent ont::orderliness-scale
  :wordnet-sense-keys("disorderliness%1:26:00" "messiness%1:07:00")
 )
 
 (define-type ont::tidy-scale
+ :sem (F::abstr-obj (F::scale ONT::TIDY-SCALE))
  :parent ont::orderliness-scale
  :wordnet-sense-keys("orderliness%1:26:00")
 )
 
 ;; recommendability
 (define-type ont::recommendability-scale
+ :sem (F::abstr-obj (F::scale ONT::RECOMMENDABILITY-SCALE))
  :parent ont::evaluation-scale
  :wordnet-sense-keys ("advisability%1:07:00")
  :comment "worthy of recommendation and advice; wise or prudent"
@@ -1111,142 +1304,168 @@
 
 ;; specificity generality
 (define-type ont::specificity-scale
+ :sem (F::abstr-obj (F::scale ONT::SPECIFICITY-SCALE))
  :parent ont::evaluation-scale
 )
 
 (define-type ont::general-scale
+ :sem (F::abstr-obj (F::scale ONT::GENERAL-SCALE))
  :parent ont::specificity-scale
  :wordnet-sense-keys ("generality%1:07:00")
 )
 
 (define-type ont::specific-scale
+ :sem (F::abstr-obj (F::scale ONT::SPECIFIC-SCALE))
  :parent ont::specificity-scale
  :wordnet-sense-keys ("specialness%1:07:01")
 )
 
 ;; tolerability
 (define-type ont::tolerability-scale
+ :sem (F::abstr-obj (F::scale ONT::TOLERABILITY-SCALE))
  :parent ont::evaluation-scale
  :wordnet-sense-keys ("tolerance%1:07:03")
 )
 
 ;; worthiness
 (define-type ont::worthiness-scale
+ :sem (F::abstr-obj (F::scale ONT::WORTHINESS-SCALE))
  :parent ont::evaluation-scale
  :wordnet-sense-keys ("worthiness%1:07:00")
 )
 
 (define-type ont::real-vs-fake-scale
+ :sem (F::abstr-obj (F::scale ONT::REAL-VS-FAKE-SCALE))
  :parent ont::evaluation-scale
 )
 
 ;; artificiality
 (define-type ont::artificiality-scale
+ :sem (F::abstr-obj (F::scale ONT::ARTIFICIALITY-SCALE))
  :parent ont::real-vs-fake-scale
 )
 
 (define-type ont::artificial-scale
+ :sem (F::abstr-obj (F::scale ONT::ARTIFICIAL-SCALE))
  :parent ont::artificiality-scale
  :wordnet-sense-keys ("affectedness%1:07:00" "artificiality%1:07:00")
 )
 
 (define-type ont::natural-scale
+ :sem (F::abstr-obj (F::scale ONT::NATURAL-SCALE))
  :parent ont::artificiality-scale
  :wordnet-sense-keys ("unnaturalness%1:07:00")
 )
 
 ;; actuality
 (define-type ont::actuality-scale
+ :sem (F::abstr-obj (F::scale ONT::ACTUALITY-SCALE))
  :parent ont::real-vs-fake-scale
 )
 
 (define-type ont::actual-scale
+ :sem (F::abstr-obj (F::scale ONT::ACTUAL-SCALE))
  :parent ont::actuality-scale
  :wordnet-sense-keys ("actuality%1:26:00")
 )
 
 (define-type ont::non-actual-scale
+ :sem (F::abstr-obj (F::scale ONT::NON-ACTUAL-SCALE))
  :parent ont::actuality-scale
  :wordnet-sense-keys ("unreality%1:26:00")
 )
 
 ;; authenticity
 (define-type ont::authenticity-scale
+ :sem (F::abstr-obj (F::scale ONT::AUTHENTICITY-SCALE))
  :parent ont::real-vs-fake-scale
  :wordnet-sense-keys ("authenticity%1:07:00")
 )
 
 ;; INFORMATION PROPERTY SCALE
 (define-type ont::information-property-scale
+ :sem (F::abstr-obj (F::scale ONT::INFORMATION-PROPERTY-SCALE))
  :parent ont::ordered-domain 
 )
 
 ;; comprehensibility
 (define-type ont::comprehensibility-scale
+ :sem (F::abstr-obj (F::scale ONT::COMPREHENSIBILITY-SCALE))
  :parent ont::information-property-scale
  :wordnet-sense-keys ("comprehensibility%1:07:00")
 )
 
 ;; consistency
 (define-type ont::consistency-scale
+ :sem (F::abstr-obj (F::scale ONT::CONSISTENCY-SCALE))
  :parent ont::information-property-scale
  :wordnet-sense-keys ("cohesiveness%1:26:00" "consistency%1:07:01")
 )
 
 ;; credibility
 (define-type ont::credibility-scale
+ :sem (F::abstr-obj (F::scale ONT::CREDIBILITY-SCALE))
  :parent ont::information-property-scale
  :wordnet-sense-keys ("credibility%1:07:00")
 )
 
 ;; meaningfulness
 (define-type ont::meaningfulness-scale
+ :sem (F::abstr-obj (F::scale ONT::MEANINGFULNESS-SCALE))
  :parent ont::information-property-scale
  :wordnet-sense-keys ("meaningfulness%1:07:00")
 )
 
 ;; precision
 (define-type ont::precision-scale
+ :sem (F::abstr-obj (F::scale ONT::PRECISION-SCALE))
  :parent ont::information-property-scale
  :wordnet-sense-keys ("precision%1:07:00")
 )
 
 ;; predictability
 (define-type ont::predictability-scale
+ :sem (F::abstr-obj (F::scale ONT::PREDICTABILITY-SCALE))
  :parent ont::information-property-scale
  :wordnet-sense-keys ("predictability%1:07:00")
 )
 
 ;; relevance
 (define-type ont::relevance-scale
+ :sem (F::abstr-obj (F::scale ONT::RELEVANCE-SCALE))
  :parent ont::information-property-scale
  :wordnet-sense-keys ("relevance%1:24:00")
 )
 
 ;; validity 
 (define-type ont::validity-scale
+ :sem (F::abstr-obj (F::scale ONT::VALIDITY-SCALE))
  :parent ont::information-property-scale
  :wordnet-sense-keys ("validity%1:07:01")
 )
 
 ;; reproducibility
 (define-type ont::reproducibility-scale
+ :sem (F::abstr-obj (F::scale ONT::REPRODUCIBILITY-SCALE))
  :parent ont::information-property-scale
  :wordnet-sense-keys ("reproducibility%1:07:00")
 )
 
 ;; trueness scale
 (define-type ont::trueness-scale
+ :sem (F::abstr-obj (F::scale ONT::TRUENESS-SCALE))
  :parent ont::information-property-scale
  :comment "trueness scale as opposed to categorical true/false distinction (see ont::truth-scale)"
 )
 
 (define-type ont::true-scale
+ :sem (F::abstr-obj (F::scale ONT::TRUE-SCALE))
  :parent ont::trueness-scale
  :wordnet-sense-keys ("trueness%1:26:00")
 )
 
 (define-type ont::false-scale
+ :sem (F::abstr-obj (F::scale ONT::FALSE-SCALE))
  :parent ont::trueness-scale
  :wordnet-sense-keys ("falseness%1:26:00")
 )
@@ -1254,18 +1473,20 @@
 ;; likelihood scale
 (define-type ont::likelihood-scale
  :parent ont::information-property-scale 
- :sem (F::Abstr-obj (F::measure-function F::term))
+ :sem (F::Abstr-obj (F::scale ONT::LIKELIHOOD-SCALE) (F::measure-function F::term))
  :arguments ((:REQUIRED ONT::FIGURE (f::situation))
              )
 )
 
 (define-type ont::likely-scale
+ :sem (F::abstr-obj (F::scale ONT::LIKELY-SCALE))
  :parent ont::likelihood-scale
  :wordnet-sense-keys ("probability%1:07:00")
  ;; WORDS: probability, likelihood, chance
 )
 
 (define-type ont::not-likely-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-LIKELY-SCALE))
  :parent ont::likelihood-scale
  :wordnet-sense-keys ("improbability%1:07:00")
  ;; WORDS: improbability
@@ -1273,16 +1494,19 @@
 
 ;; possibility scale
 (define-type ont::possibility-scale
+ :sem (F::abstr-obj (F::scale ONT::POSSIBILITY-SCALE))
  :parent ont::information-property-scale 
 )
 
 (define-type ont::possible-scale
+ :sem (F::abstr-obj (F::scale ONT::POSSIBLE-SCALE))
  :parent ont::possibility-scale
  :wordnet-sense-keys ("possibility%1:26:00")
  ;; WORDS: possibility
 )
 
 (define-type ont::not-possible-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-POSSIBLE-SCALE))
  :parent ont::possibility-scale
  :wordnet-sense-keys ("impossibility%1:26:00")
  ;; WORDS: impossibility
@@ -1290,6 +1514,7 @@
 
 ;; correctness scale
 (define-type ont::correctness-scale
+ :sem (F::abstr-obj (F::scale ONT::CORRECTNESS-SCALE))
  :parent ont::information-property-scale 
  :wordnet-sense-keys ("accuracy%1:07:02" "correctness%1:07:01")
  ;; WORDS: accuracy
@@ -1297,6 +1522,7 @@
 
 ;; MEASURE SCALE
 (define-type ont::measure-scale
+ :sem (F::abstr-obj (F::scale ONT::MEASURE-SCALE))
  :parent ont::ordered-domain 
  :wordnet-sense-keys ("measurement%1:04:00")
  :arguments ((:essential ont::figure ((? val f::phys-obj f::abstr-obj f::situation))))
@@ -1310,6 +1536,7 @@
  )
 
 (define-type ont::duration-scale
+ :sem (F::abstr-obj (F::scale ONT::DURATION-SCALE))
   :parent ont::time-measure-scale
   )
 
@@ -1322,32 +1549,38 @@
 )
 
 (define-type ont::heat-scale
+ :sem (F::abstr-obj (F::scale ONT::HEAT-SCALE))
  :wordnet-sense-keys ("heat%1:07:01" "heat%1:09:00")
  :parent ont::temperature-scale
  ;; WORDS: heat
 )
 
 (define-type ont::cold-scale
+ :sem (F::abstr-obj (F::scale ONT::COLD-SCALE))
  :wordnet-sense-keys ("cold%1:07:00" "cold%1:09:00")
  :parent ont::temperature-scale
  ;; Words: cold
 )
 
 (define-type ont::age-scale
+ :sem (F::abstr-obj (F::scale ONT::AGE-SCALE))
  ;:parent ont::time-measure-scale
  :parent ont::duration-scale
  :wordnet-sense-keys ("age%1:28:00" "age%1:07:00")
 )
 
 (define-type ont::time-loc-scale
+ :sem (F::abstr-obj (F::scale ONT::TIME-LOC-SCALE))
   :parent ont::time-measure-scale
 )
 
 (define-type ont::number-scale
+ :sem (F::abstr-obj (F::scale ONT::NUMBER-SCALE))
   :parent ont::measure-scale
 )
 
 (define-type ont::total-scale
+ :sem (F::abstr-obj (F::scale ONT::TOTAL-SCALE))
 ; :parent ont::measure-scale
  :parent ont::number-scale
  :wordnet-sense-keys ("total%1:06:00" "count%1:23:00")
@@ -1356,7 +1589,7 @@
 
 (define-type ont::population-scale
  :parent ont::total-scale
- :sem (F::Abstr-obj (F::Measure-function F::term))
+ :sem (F::Abstr-obj (F::scale ONT::POPULATION-SCALE) (F::Measure-function F::term))
  :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj (F::form F::geographical-object)))
              )
  :wordnet-sense-keys ("population%1:23:00") 
@@ -1364,15 +1597,18 @@
 )
 
 (define-type ont::money-scale
+ :sem (F::abstr-obj (F::scale ONT::MONEY-SCALE))
  :parent ont::measure-scale
 )
 
 (define-type ont::predefined-measure-scale
+ :sem (F::abstr-obj (F::scale ONT::PREDEFINED-MEASURE-SCALE))
  :parent ont::measure-scale
 )
 
 ;; resolution scale
 (define-type ont::resolution-scale
+ :sem (F::abstr-obj (F::scale ONT::RESOLUTION-SCALE))
  :parent ont::measure-scale 
  :wordnet-sense-keys ("resolution%1:19:01")
  ;; WORDS: definition, resolution
@@ -1381,18 +1617,21 @@
 
 ;; dimensional scale
 (define-type ont::dimensional-scale
+ :sem (F::abstr-obj (F::scale ONT::DIMENSIONAL-SCALE))
  :parent ont::measure-scale 
  :wordnet-sense-keys ("dimension%1:07:01")
  ;; WORDS: dimension
 )
 
 (define-type ont::intensity-scale
+ :sem (F::abstr-obj (F::scale ONT::INTENSITY-SCALE))
  :parent ont::measure-scale 
  :wordnet-sense-keys ("intensity%1:07:00" "intensity%1:07:03")
  ;; WORDS: intensity
 )
 
 (define-type ont::severity-scale
+ :sem (F::abstr-obj (F::scale ONT::SEVERITY-SCALE))
  :parent ont::measure-scale 
  :wordnet-sense-keys ("severity%1:07:01")
  ;; WORDS: severity
@@ -1412,15 +1651,18 @@
 
 ;; size > relative-to-height-scale
 (define-type ont::relative-to-height-scale
+ :sem (F::abstr-obj (F::scale ONT::RELATIVE-TO-HEIGHT-SCALE))
  :parent ont::size-scale
 )
 
 (define-type ont::fat-scale
+ :sem (F::abstr-obj (F::scale ONT::FAT-SCALE))
  :wordnet-sense-keys ("obesity%1:07:00" "fatness%1:07:00")
  :parent ont::relative-to-height-scale
 )
 
 (define-type ont::skinny-scale
+ :sem (F::abstr-obj (F::scale ONT::SKINNY-SCALE))
  :wordnet-sense-keys ("thinness%1:07:00" "skinniness%1:07:00" "slenderness%1:07:01" "wiriness%1:07:00")
  :parent ont::relative-to-height-scale
 )
@@ -1436,12 +1678,14 @@
  )
 
 (define-type ont::length-scale
+ :sem (F::abstr-obj (F::scale ONT::LENGTH-SCALE))
  :parent ont::linear-extent-scale 
  :wordnet-sense-keys ("length%1:07:00")
  ;; WORDS: length
 )
 
 (define-type ont::vertical-scale
+ :sem (F::abstr-obj (F::scale ONT::VERTICAL-SCALE))
  :parent ont::linear-extent-scale 
 )
 
@@ -1460,6 +1704,7 @@
 )
 
 (define-type ont::non-vertical-scale
+ :sem (F::abstr-obj (F::scale ONT::NON-VERTICAL-SCALE))
  :parent ont::linear-extent-scale 
 )
 
@@ -1471,6 +1716,7 @@
 )
 
 (define-type ont::thinness-scale
+ :sem (F::abstr-obj (F::scale ONT::THINNESS-SCALE))
  :parent ont::non-vertical-scale
  :wordnet-sense-keys ("thinness%1:07:01")
 )
@@ -1505,16 +1751,19 @@
 
 ;;; SHOULD THIS BE UNDER PHYSICAL PROPERTIES? (BODY PROPERTIES/CONDITIONS)
 (define-type ont::physical-strength-scale
+ :sem (F::abstr-obj (F::scale ONT::PHYSICAL-STRENGTH-SCALE))
  :parent ont::dimensional-scale
 )
 ;; strength
 (define-type ont::strength-scale
+ :sem (F::abstr-obj (F::scale ONT::STRENGTH-SCALE))
  :parent ont::physical-strength-scale
  :wordnet-sense-keys ("strength%1:07:00" "vigor%1:07:00" "might%1:07:00" "force%1:07:00")
  ;; WORDS: strength
 )
 
 (define-type ont::weakness-scale
+ :sem (F::abstr-obj (F::scale ONT::WEAKNESS-SCALE))
  :parent ont::physical-strength-scale
  :wordnet-sense-keys ("weakness%1:07:00")
 )
@@ -1531,6 +1780,7 @@
 
 ;; distance
 (define-type ont::distance-scale
+ :sem (F::abstr-obj (F::scale ONT::DISTANCE-SCALE))
  :parent ont::measure-scale 
  :arguments ((:REQUIRED ONT::neutral (F::phys-obj))
              (:OPTIONAL ONT::neutral1 (F::phys-obj))
@@ -1541,6 +1791,7 @@
 )
 
 (define-type ont::mileage-scale
+ :sem (F::abstr-obj (F::scale ONT::MILEAGE-SCALE))
  :parent ont::distance-scale 
  :wordnet-sense-keys ("mileage%1:07:00")
  ;; WORDS: mileage
@@ -1548,12 +1799,14 @@
 
 ;; electric measure scale
 (define-type ont::electric-measure-scale
+ :sem (F::abstr-obj (F::scale ONT::ELECTRIC-MEASURE-SCALE))
  :parent ont::measure-scale 
  :wordnet-sense-keys ("current%1:19:01" "charge%1:19:00" "resistance%1:19:01" "polarity%1:24:00") 
  ;; WORDS: current, charge, resistance
 )
 
 (define-type ont::ratio-scale
+ :sem (F::abstr-obj (F::scale ONT::RATIO-SCALE))
  :parent ont::measure-scale 
  :wordnet-sense-keys ("scale%1:24:01")
 ; :arguments ((:REQUIRED ONT::FIGURE ((? fot F::phys-obj F::situation)))
@@ -1565,12 +1818,14 @@
 
 ;; ratio-scale > percent scale
 (define-type ont::percent-scale
+ :sem (F::abstr-obj (F::scale ONT::PERCENT-SCALE))
  :parent ont::ratio-scale 
  :wordnet-sense-keys ("percentage%1:24:00" )
  ;; WORDS: percentage
 )
 
 (define-type ont::density-scale
+ :sem (F::abstr-obj (F::scale ONT::DENSITY-SCALE))
  :parent ont::ratio-scale 
  :wordnet-sense-keys ("density%1:07:00" "concentration%1:07:02" "concentration%1:07:03")
  :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
@@ -1579,12 +1834,14 @@
 )
 
 (define-type ont::distance-per-gasoline-scale
+ :sem (F::abstr-obj (F::scale ONT::DISTANCE-PER-GASOLINE-SCALE))
  :parent ont::ratio-scale 
  :wordnet-sense-keys ("mileage%1:24:00")
  ;; WORDS: mileage
 )
 
 (define-type ont::pressure-scale
+ :sem (F::abstr-obj (F::scale ONT::PRESSURE-SCALE))
  :parent ont::ratio-scale 
  :wordnet-sense-keys ("pressure%1:19:00")
  ;; WORDS: pressure
@@ -1599,12 +1856,14 @@
 )
 
 (define-type ont::bit-rate-scale
+ :sem (F::abstr-obj (F::scale ONT::BIT-RATE-SCALE))
  :parent ont::rate-scale 
  :wordnet-sense-keys ("bandwidth%1:23:00")
  ;; WORDS: bandwidth
 )
 
 (define-type ont::clock-speed-scale
+ :sem (F::abstr-obj (F::scale ONT::CLOCK-SPEED-SCALE))
  :parent ont::rate-scale 
  :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj (F::origin F::artifact)))
              )
@@ -1612,12 +1871,14 @@
 )
 
 (define-type ont::speed-scale
+ :sem (F::abstr-obj (F::scale ONT::SPEED-SCALE))
  :parent ont::rate-scale 
  :wordnet-sense-keys ("speed%1:28:00" "velocity%1:28:00")
  ;; WORDS: speed, velocity
 )
 
 (define-type ont::voltage-scale
+ :sem (F::abstr-obj (F::scale ONT::VOLTAGE-SCALE))
  :parent ont::ratio-scale 
  :wordnet-sense-keys ("voltage%1:19:02" "electromotive_force%1:19:00" "emf%1:19:00")
  ;; WORDS: voltage
@@ -1626,40 +1887,48 @@
 
 ;;; PROCESS PROPERTY SCALE
 (define-type ont::process-property-scale
+ :sem (F::abstr-obj (F::scale ONT::PROCESS-PROPERTY-SCALE))
  :parent ont::ordered-domain 
 )
 
 (define-type ont::process-evaluation-scale
+ :sem (F::abstr-obj (F::scale ONT::PROCESS-EVALUATION-SCALE))
  :parent ont::evaluation-scale
 )
 
 (define-type ont::task-complexity-scale
+ :sem (F::abstr-obj (F::scale ONT::TASK-COMPLEXITY-SCALE))
  :parent ont::process-evaluation-scale 
  ;; WORDS: complexity
 )
 
 (define-type ont::difficult-scale
+ :sem (F::abstr-obj (F::scale ONT::DIFFICULT-SCALE))
  :parent ont::task-complexity-scale
  :wordnet-sense-keys ("difficulty%1:07:00")
  ;; WORDS: difficulty
 )
 
 (define-type ont::easy-scale
+ :sem (F::abstr-obj (F::scale ONT::EASY-SCALE))
  :parent ont::task-complexity-scale
  :wordnet-sense-keys ("ease%1:07:00")
  ;; WORDS: ease
 )
 
 (define-type ont::steadiness-scale
+ :sem (F::abstr-obj (F::scale ONT::STEADINESS-SCALE))
  :parent ont::process-evaluation-scale 
 )
 
 (define-type ont::steady-scale
+ :sem (F::abstr-obj (F::scale ONT::STEADY-SCALE))
  :parent ont::steadiness-scale
  :wordnet-sense-keys ("steadiness%1:07:01" "stability%1:07:00" "stability%1:07:01" )
 )
 
 (define-type ont::not-steady-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-STEADY-SCALE))
  :parent ont::steadiness-scale
  :wordnet-sense-keys ("unsteadiness%1:07:01" "instability%1:07:00")
 )
@@ -1667,33 +1936,39 @@
 
 ;; effectiveness
 (define-type ont::effectiveness-scale
+ :sem (F::abstr-obj (F::scale ONT::EFFECTIVENESS-SCALE))
  :parent ont::process-evaluation-scale
  :wordnet-sense-keys ("effectiveness%1:07:00")
 )
 
 ;; efficiency
 (define-type ont::efficiency-scale
+ :sem (F::abstr-obj (F::scale ONT::EFFICIENCY-SCALE))
  :parent ont::process-evaluation-scale
  :wordnet-sense-keys ("efficiency%1:09:00")
 )
 
 ;; productivity
 (define-type ont::productivity-scale
+ :sem (F::abstr-obj (F::scale ONT::PRODUCTIVITY-SCALE))
  :parent ont::process-evaluation-scale
  :wordnet-sense-keys ("productivity%1:07:00")
 )
 
 ;; success, failure
 (define-type ont::successfulness-scale
+ :sem (F::abstr-obj (F::scale ONT::SUCCESSFULNESS-SCALE))
  :parent ont::process-evaluation-scale
 )
 
 (define-type ont::successful-scale
+ :sem (F::abstr-obj (F::scale ONT::SUCCESSFUL-SCALE))
  :parent ont::successfulness-scale
  :wordnet-sense-keys ("successfulness%1:26:00")
 )
 
 (define-type ont::failure-scale
+ :sem (F::abstr-obj (F::scale ONT::FAILURE-SCALE))
  :parent ont::successfulness-scale
  :wordnet-sense-keys ("failure%1:26:00")
 )
@@ -1701,6 +1976,7 @@
 ;; utility, usefulness
 ;; usability - under object affordances
 (define-type ont::utility-scale
+ :sem (F::abstr-obj (F::scale ONT::UTILITY-SCALE))
  :parent ont::process-evaluation-scale 
  :wordnet-sense-keys ("utility%1:07:00")
  ;; WORDS: utility
@@ -1709,35 +1985,41 @@
 
 ;; can be done
 (define-type ont::can-be-done-scale
+ :sem (F::abstr-obj (F::scale ONT::CAN-BE-DONE-SCALE))
  :parent ont::process-property-scale
 )
 
 ;; changeability
 (define-type ont::changeability-scale
+ :sem (F::abstr-obj (F::scale ONT::CHANGEABILITY-SCALE))
  :parent ont::can-be-done-scale
  :wordnet-sense-keys ("changeability%1:07:00")
 )
 
 ;; manageability
 (define-type ont::manageability-scale
+ :sem (F::abstr-obj (F::scale ONT::MANAGEABILITY-SCALE))
  :parent ont::can-be-done-scale
  :wordnet-sense-keys ("manageability%1:07:00")
 )
 
 ;; mobility
 (define-type ont::mobility-scale
+ :sem (F::abstr-obj (F::scale ONT::MOBILITY-SCALE))
  :parent ont::can-be-done-scale
  :wordnet-sense-keys ("mobility%1:07:00")
 )
 
 ;; portability
 (define-type ont::portability-scale
+ :sem (F::abstr-obj (F::scale ONT::PORTABILITY-SCALE))
  :parent ont::can-be-done-scale
  :wordnet-sense-keys ("portability%1:07:00")
 )
 
 ;; repleaceability
 (define-type ont::replaceability-scale
+ :sem (F::abstr-obj (F::scale ONT::REPLACEABILITY-SCALE))
  :parent ont::can-be-done-scale
  :wordnet-sense-keys ("replaceability%1:07:00")
 )
@@ -1750,28 +2032,33 @@
 
 ;; process status
 (define-type ont::process-status-scale
+ :sem (F::abstr-obj (F::scale ONT::PROCESS-STATUS-SCALE))
  :parent ont::process-property-scale
 )
 
 
 ;; temporal occurrence
 (define-type ont::temporal-occurrence-scale
+ :sem (F::abstr-obj (F::scale ONT::TEMPORAL-OCCURRENCE-SCALE))
     :parent ont::process-property-scale
     ;; :wordnet-sense-keys ("incidence%1:24:00")
 )
 
 (define-type ont::regularity-scale
+ :sem (F::abstr-obj (F::scale ONT::REGULARITY-SCALE))
  :parent ont::temporal-occurrence-scale
  ;; WORDS: irregularity, regularity
 )
 
 (define-type ont::regular-scale
+ :sem (F::abstr-obj (F::scale ONT::REGULAR-SCALE))
  :parent ont::regularity-scale
  :wordnet-sense-keys ("regularity%1:07:00")
  ;; regularity
 )
 
 (define-type ont::not-regular-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-REGULAR-SCALE))
  :parent ont::regularity-scale
  :wordnet-sense-keys ("intermittence%1:07:00" "irregularity%1:07:00")
  ;; irregularity
@@ -1780,35 +2067,42 @@
 
 ;; RELATIONAL PROPERTY SCALE
 (define-type ont::relational-property-scale
+ :sem (F::abstr-obj (F::scale ONT::RELATIONAL-PROPERTY-SCALE))
  :parent ont::ordered-domain 
 )
 
 (define-type ont::compatibility-scale
+ :sem (F::abstr-obj (F::scale ONT::COMPATIBILITY-SCALE))
  :parent ont::relational-property-scale 
  :wordnet-sense-keys ("compatibility%1:07:00")
  ;; WORDS: compatibility
 )
 
 (define-type ont::similarity-scale
+ :sem (F::abstr-obj (F::scale ONT::SIMILARITY-SCALE))
  :parent ont::relational-property-scale 
 )
 
 (define-type ont::similar-scale
+ :sem (F::abstr-obj (F::scale ONT::SIMILAR-SCALE))
  :parent ont::similarity-scale
  :wordnet-sense-keys ("similarity%1:07:00" "likeness%1:07:00" "comparability%1:07:00")
 )
 
 (define-type ont::different-scale
+ :sem (F::abstr-obj (F::scale ONT::DIFFERENT-SCALE))
  :parent ont::similarity-scale
  :wordnet-sense-keys ("difference%1:07:00" "distinction%1:09:00")
 )
 
 (define-type ont::equal-scale
+ :sem (F::abstr-obj (F::scale ONT::EQUAL-SCALE))
  :parent ont::similarity-scale
  :wordnet-sense-keys ("equivalence%1:26:00")
 )
 
 (define-type ont::same-scale
+ :sem (F::abstr-obj (F::scale ONT::SAME-SCALE))
  :parent ont::similarity-scale
  :wordnet-sense-keys ("identity%1:07:02" "sameness%1:07:00")
 )
@@ -1820,10 +2114,12 @@
 ;; STATUS SCALE
 
 (define-type ont::status-property-scale
+ :sem (F::abstr-obj (F::scale ONT::STATUS-PROPERTY-SCALE))
  :parent ont::ordered-domain 
 )
 
 (define-type ont::confidentiality-scale
+ :sem (F::abstr-obj (F::scale ONT::CONFIDENTIALITY-SCALE))
  :parent ont::status-property-scale 
 :wordnet-sense-keys ("privacy%1:07:00" "privacy%1:26:02")
  ;; WORDS: privacy
@@ -1838,16 +2134,19 @@
 
 ;; OBJECT-AFFORDANCE-SCALE
 (define-type ont::object-affordances-scale
+ :sem (F::abstr-obj (F::scale ONT::OBJECT-AFFORDANCES-SCALE))
  :parent ont::ordered-domain 
 )
 
 (define-type ont::functionality-scale
+ :sem (F::abstr-obj (F::scale ONT::FUNCTIONALITY-SCALE))
  :parent ont::object-affordances-scale
  :wordnet-sense-keys ("functionality%1:07:00")
  ;; WORDS: functionality
 )
 
 (define-type ont::availability-scale
+ :sem (F::abstr-obj (F::scale ONT::AVAILABILITY-SCALE))
  :parent ont::object-affordances-scale
  :wordnet-sense-keys ("availability%1:07:00")
  ;; WORDS: availability
@@ -1856,6 +2155,7 @@
 
 ;; utility moved to process-evaluation-scale to match the adj side
 (define-type ont::usability-scale
+ :sem (F::abstr-obj (F::scale ONT::USABILITY-SCALE))
  :parent ont::object-affordances-scale 
  :wordnet-sense-keys ("usability%1:07:00")
  ;; WORDS: usability
@@ -1864,47 +2164,56 @@
 
 ;; PSYCHOLOGICAL CONDITION SCALE
 (define-type ont::psychological-condition-scale
+ :sem (F::abstr-obj (F::scale ONT::PSYCHOLOGICAL-CONDITION-SCALE))
     :wordnet-sense-keys ("psychological_state%1:26:00")
     :parent ont::ordered-domain 
     )
 
 (define-type ont::willingness-scale
+ :sem (F::abstr-obj (F::scale ONT::WILLINGNESS-SCALE))
  :parent ont::psychological-condition-scale
  :wordnet-sense-keys ("willingness%1:07:00")
 )
 (define-type ont::intelligence-scale
+ :sem (F::abstr-obj (F::scale ONT::INTELLIGENCE-SCALE))
  :parent ont::psychological-condition-scale
  :wordnet-sense-keys ("intelligence%1:09:00")
 )
 
 (define-type ont::intentionality-scale
+ :sem (F::abstr-obj (F::scale ONT::INTENTIONALITY-SCALE))
  :parent ont::psychological-condition-scale
  :wordnet-sense-keys ("deliberation%1:07:00")
 )
 
 (define-type ont::attentiveness-scale
+ :sem (F::abstr-obj (F::scale ONT::ATTENTIVENESS-SCALE))
  :parent ont::psychological-condition-scale
  :wordnet-sense-keys ("attentiveness%1:07:01")
 )
 
 (define-type ont::premeditation-scale
+ :sem (F::abstr-obj (F::scale ONT::PREMEDITATION-SCALE))
  :parent ont::psychological-condition-scale
  :wordnet-sense-keys ("planning%1:09:00")
 )
 
 (define-type ont::ambitiousness-scale
+ :sem (F::abstr-obj (F::scale ONT::AMBITIOUSNESS-SCALE))
  :parent ont::psychological-condition-scale
  :wordnet-sense-keys ("ambition%1:07:00")
  ;; WORDS: ambition
 )
 
 (define-type ont::cautiousness-scale
+ :sem (F::abstr-obj (F::scale ONT::CAUTIOUSNESS-SCALE))
  :parent ont::psychological-condition-scale
  :wordnet-sense-keys ("caution%1:07:00")
  ;; WORDS: caution
 )
 
 (define-type ont::awareness-scale
+ :sem (F::abstr-obj (F::scale ONT::AWARENESS-SCALE))
  :parent ont::psychological-condition-scale 
  :wordnet-sense-keys ("consciousness%1:09:01" "light%1:09:02")
  ;; WORDS: awareness, consciousness
@@ -1913,46 +2222,55 @@
 
 ;; certainty
 (define-type ont::certainty-scale
+ :sem (F::abstr-obj (F::scale ONT::CERTAINTY-SCALE))
  :parent ont::psychological-condition-scale 
 )
 
 (define-type ont::certain-scale
+ :sem (F::abstr-obj (F::scale ONT::CERTAIN-SCALE))
  :parent ont::certainty-scale
  :wordnet-sense-keys ("certainty%1:09:00" "assurance%1:09:00" "certainty%1:07:00")
 )
 
 (define-type ont::not-certain-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-CERTAIN-SCALE))
  :parent ont::certainty-scale
  :wordnet-sense-keys ("doubt%1:09:00" "uncertainty%1:07:00")
 )
 
 ;; rationality
 (define-type  ont::rationality-scale
+ :sem (F::abstr-obj (F::scale ONT::RATIONALITY-SCALE))
  :parent ont::psychological-condition-scale
 )
 
 (define-type ont::not-rational-scale
+ :sem (F::abstr-obj (F::scale ONT::NOT-RATIONAL-SCALE))
  :parent ont::rationality-scale
  :wordnet-sense-keys ("irrationality%1:26:00")
 )
 
 (define-type ont::craziness-scale
+ :sem (F::abstr-obj (F::scale ONT::CRAZINESS-SCALE))
  :parent ont::not-rational-scale 
  :wordnet-sense-keys ("craziness%1:26:00")
 )
 
 (define-type ont::rational-scale
+ :sem (F::abstr-obj (F::scale ONT::RATIONAL-SCALE))
  :parent ont::rationality-scale 
  :wordnet-sense-keys ("sanity%1:26:00" "rationality%1:26:00")
 )
 
 ;;; EXPERIENCER CONDITION SCALE
 (define-type ont::experiencer-condition-scale
+ :sem (F::abstr-obj (F::scale ONT::EXPERIENCER-CONDITION-SCALE))
  :parent ont::psychological-condition-scale
 )
 
 ;; confidence (AUTHORITY doesn't seem to fit. not sure where else it could go though. Leaving it in for now)
 (define-type ont::confidence-scale
+ :sem (F::abstr-obj (F::scale ONT::CONFIDENCE-SCALE))
  :parent ont::experiencer-condition-scale 
  :wordnet-sense-keys ("trust%1:26:00" "authority%1:07:00" "confidence%1:26:02" "confidence%1:12:00") 
  ;; WORDS: confidence, trust
@@ -1960,44 +2278,52 @@
 )
 
 (define-type ont::interest-scale
+ :sem (F::abstr-obj (F::scale ONT::INTEREST-SCALE))
  :parent ont::experiencer-condition-scale
  :wordnet-sense-keys ("interest%1:09:00" "enthusiasm%1:09:00")
 )
 
 (define-type ont::apathy-scale
+ :sem (F::abstr-obj (F::scale ONT::APATHY-SCALE))
  :parent ont::experiencer-condition-scale
  :wordnet-sense-keys ("apathy%1:07:01")
 )
 
 (define-type ont::desire-scale
+ :sem (F::abstr-obj (F::scale ONT::DESIRE-SCALE))
  :parent ont::experiencer-condition-scale
  :wordnet-sense-keys ("desire%1:26:00")
 )
 
 (define-type ont::pleasurability-scale
+ :sem (F::abstr-obj (F::scale ONT::PLEASURABILITY-SCALE))
  :parent ont::experiencer-condition-scale
  :wordnet-sense-keys ("pleasure%1:12:00")
 )
 
 (define-type ont::loneliness-scale
+ :sem (F::abstr-obj (F::scale ONT::LONELINESS-SCALE))
  :parent ont::experiencer-condition-scale 
  :wordnet-sense-keys ("loneliness%1:26:00" "loneliness%1:12:00")
  ;; WORDS: loneliness
 )
 
 (define-type ont::nervousness-scale
+ :sem (F::abstr-obj (F::scale ONT::NERVOUSNESS-SCALE))
  :parent ont::experiencer-condition-scale 
  :wordnet-sense-keys ("nervousness%1:12:00" "anxiety%1:12:00")
  ;; WORDS: nervousness
 )
 
 (define-type ont::sadness-scale
+ :sem (F::abstr-obj (F::scale ONT::SADNESS-SCALE))
  :parent ont::experiencer-condition-scale 
  :wordnet-sense-keys ("sadness%1:12:00" "grief%1:12:00" "sorrow%1:12:00" "sorrow%1:09:00")
  ;; WORDS: sadness
 )
 
 (define-type ont::regret-scale
+ :sem (F::abstr-obj (F::scale ONT::REGRET-SCALE))
  :parent ont::sadness-scale
  :wordnet-sense-keys ("regret%1:12:00")
 )
@@ -2010,53 +2336,63 @@
 ;)
 
 (define-type ont::bother-scale
+ :sem (F::abstr-obj (F::scale ONT::BOTHER-SCALE))
  :parent ont::experiencer-condition-scale
  :wordnet-sense-keys("bother%1:09:00")
 )
 
 (define-type ont::worry-concern-scale
+ :sem (F::abstr-obj (F::scale ONT::WORRY-CONCERN-SCALE))
  :parent ont::experiencer-condition-scale
  :wordnet-sense-keys("worry%1:09:00")
 )
 
 (define-type ont::anger-scale
+ :sem (F::abstr-obj (F::scale ONT::ANGER-SCALE))
  :parent ont::experiencer-condition-scale
  :wordnet-sense-keys ("anger%1:26:00" "anger%1:12:00")
  )
 
 (define-type ont::resentfulness-scale
+ :sem (F::abstr-obj (F::scale ONT::RESENTFULNESS-SCALE))
  :parent ont::experiencer-condition-scale
  )
 
 
 (define-type ont::fear-scale
+ :sem (F::abstr-obj (F::scale ONT::FEAR-SCALE))
  :parent ont::experiencer-condition-scale
  :wordnet-sense-keys ("fear%1:12:00")
 )
 
 (define-type ont::disgust-scale
+ :sem (F::abstr-obj (F::scale ONT::DISGUST-SCALE))
  :parent ont::experiencer-condition-scale
  :wordnet-sense-keys ("disgust%1:12:00")
 )
 
 (define-type ont::envy-scale
+ :sem (F::abstr-obj (F::scale ONT::ENVY-SCALE))
  :parent ont::experiencer-condition-scale
  :wordnet-sense-keys ("envy%1:12:00")
 )
 
 (define-type ont::happiness-scale
+ :sem (F::abstr-obj (F::scale ONT::HAPPINESS-SCALE))
  :parent ont::experiencer-condition-scale 
  :wordnet-sense-keys ("happiness%1:26:00" "happiness%1:12:00")
  ;; WORDS: happiness
 )
 
 (define-type ont::excitement-scale
+ :sem (F::abstr-obj (F::scale ONT::EXCITEMENT-SCALE))
  :parent ont::experiencer-condition-scale 
  :wordnet-sense-keys ("excitement%1:12:00")
  ;; WORDS: happiness
 )
 
 (define-type ont::calmness-scale
+ :sem (F::abstr-obj (F::scale ONT::CALMNESS-SCALE))
  :parent ont::experiencer-condition-scale
  ; considered having calm be mapped to negative orientation on excitement
  ; but the other end of the scale to calm isn't just excitement but can also include
@@ -2065,22 +2401,26 @@
 )
 
 (define-type ont::gratitude-scale
+ :sem (F::abstr-obj (F::scale ONT::GRATITUDE-SCALE))
  :parent ont::experiencer-condition-scale
  :wordnet-sense-keys ("gratitude%1:12:00")
 )
 
 (define-type ont::surprise-scale
+ :sem (F::abstr-obj (F::scale ONT::SURPRISE-SCALE))
  :parent ont::experiencer-condition-scale
  :wordnet-sense-keys ("surprise%1:12:00")
 )
 
 (define-type ont::pleasantness-scale
+ :sem (F::abstr-obj (F::scale ONT::PLEASANTNESS-SCALE))
  :parent ont::experiencer-condition-scale 
  :wordnet-sense-keys ("agreeableness%1:07:00" "pleasantness%1:07:00")
  ;; WORDS: amenity, pleasantness
 )
 
 (define-type ont::pride-scale
+ :sem (F::abstr-obj (F::scale ONT::PRIDE-SCALE))
  :parent ont::experiencer-condition-scale 
  :wordnet-sense-keys ("pride%1:12:00")
  ;; WORDS: pride
@@ -2088,18 +2428,21 @@
 
 ;; confusion
 (define-type ont::confusion-scale
+ :sem (F::abstr-obj (F::scale ONT::CONFUSION-SCALE))
  :wordnet-sense-keys ("confusion%1:09:00" "confusion%1:12:00")
  :parent ont::experiencer-condition-scale
  )
 
 ;; stress
 (define-type ont::stress-scale
+ :sem (F::abstr-obj (F::scale ONT::STRESS-SCALE))
  :wordnet-sense-keys ("stress%1:26:01")
  :parent ont::experiencer-condition-scale
  )
 
 ; for distress
 (define-type ONT::distress-scale
+ :sem (F::abstr-obj (F::scale ONT::DISTRESS-SCALE))
  :parent ONT::experiencer-condition-scale
  :wordnet-sense-keys ("distress%1:26:00" "distress%1:12:02")
  )
@@ -2108,16 +2451,19 @@
 
 ;; STATE OF AFFAIRS SCALE
 (define-type ont::state-of-affairs-scale
+ :sem (F::abstr-obj (F::scale ONT::STATE-OF-AFFAIRS-SCALE))
  :parent ont::ordered-domain 
 )
 
 (define-type ont::balance-scale
+ :sem (F::abstr-obj (F::scale ONT::BALANCE-SCALE))
  :parent ont::state-of-affairs-scale 
  :wordnet-sense-keys ("balance%1:26:00")
  ;; WORDS: balance
 )
 
 (define-type ont::connectivity-scale
+ :sem (F::abstr-obj (F::scale ONT::CONNECTIVITY-SCALE))
  :parent ont::state-of-affairs-scale 
  :wordnet-sense-keys ("connectivity%1:07:00")
  ;; WORDS: connectivity
@@ -2126,10 +2472,12 @@
 
 ;;;;;; UNORDERED DISCRETE DOMAIN
 (define-type ont::unordered-domain
+ :sem (F::abstr-obj (F::scale ONT::UNORDERED-DOMAIN))
  :parent ont::domain 
 )
 
 (define-type ont::gender-scale
+ :sem (F::abstr-obj (F::scale ONT::GENDER-SCALE))
     :parent ont::unordered-domain
     :wordnet-sense-keys ("sex%1:14:00")
  :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
@@ -2139,552 +2487,13 @@
 )
 
 (define-type ont::truth-scale
+ :sem (F::abstr-obj (F::scale ONT::TRUTH-SCALE))
  :parent ont::unordered-domain 
  :wordnet-sense-keys ("truth%1:09:00")
  ;; WORDS: truth
 )
 
 (define-type ont::discrete-color-scale
+ :sem (F::abstr-obj (F::scale ONT::DISCRETE-COLOR-SCALE))
  :parent ont::unordered-domain
 )
-
-
-
-;;;==== ONT::ATTRIBUTE ====                                                                                         
-
-(define-type ONT::attribute
- :wordnet-sense-keys ("dimension%1:09:00" "attribute%1:09:00" "property%1:09:00" "property%1:07:00" "holding%1:21:00" "belongings%1:21:00" "property%1:21:00" "quality%1:07:00")
- :parent ont::abstract-object-nontemporal
- :arguments ((:OPTIONAL ONT::FIGURE ((? lo f::phys-obj f::abstr-obj)))
-             )
- )
-
-(define-type ont::condition-favorability
- :parent ont::attribute
-)
-
-(define-type ont::favorable-condition
- :parent ont::condition-favorability
- :wordnet-sense-keys ("advantage%1:07:00" "advantage%1:07:01" "asset%1:07:00" "strength%1:07:01")
- ;asset, plus, strength advantage
-)
-
-(define-type ont::not-favorable-condition
- :parent ont::condition-favorability
- :wordnet-sense-keys ("weak_point%1:07:00" "liability%1:07:00" "disadvantage%1:07:00" "detriment%1:11:00" "weakness%1:26:00")
- ; detriment, liability, weakness, minus, disadvantage
-)
-
-(define-type ONT::body-property
- :parent ont::attribute
- :arguments ((:OPTIONAL ONT::FIGURE (f::phys-obj (f::origin f::living)))
-             )
- )
-
-(define-type ONT::medical-disorders-and-conditions
- :wordnet-sense-keys ("disorder%1:26:03")
- :parent ONT::event-type
- :sem (F::situation ) ;;(F::container +))
- :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj (F::origin (? og2 f::human f::non-human-animal))))
-             )
- )
-
-;; symptom                                                                                                          
-(define-type ONT::medical-symptom
- :wordnet-sense-keys ("symptom%1:26:00" "sign%1:26:00" "syndrome%1:26:00")
- :parent ONT::medical-disorders-and-conditions
- )
-
-; muscle contraction
-(define-type ont::muscle-contraction
- :parent ont::medical-symptom
- :wordnet-sense-keys ("contraction%1:04:01")
-)
-
-; sniffle
-(define-type ont::sniffle
- :parent ont::medical-symptom
- :wordnet-sense-keys ("sniffle%1:04:00")
-)
-
-; tightness/constriction of a body part
-(define-type ont::body-tightness
- :parent ont::medical-symptom
- :wordnet-sense-keys("tightness%1:09:00")
-)
-
-; for constipation                                                                                                  
-(define-type ONT::constipation
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("constipation%1:26:00")
- )
-
-; for cough                                                                                                         
-(define-type ONT::cough
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("cough%1:26:00")
- )
-
-; for diarrhea
-(define-type ONT::diarrhea
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("diarrhea%1:26:00")
- )
-
-; for dyspepsia                                                                                                     
-(define-type ONT::dyspepsia
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("dyspepsia%1:26:00" "indigestion%1:26:00")
- )
-
-(define-type ont::dyspnea
- :wordnet-sense-keys ("dyspnea%1:26:00" "dyspnea%1:26:00" "dyspnoea%1:26:00" "shortness_of_breath%1:26:00" "sob%1:26:00")
- :parent ont::medical-symptom
- )
-
-; for edema                                                                                                         
-(define-type ONT::edema
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("edema%1:26:00")
- )
-
-; for fever                                                                                                         
-(define-type ONT::fever
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("fever%1:26:00" "febrility%1:26:00" "febricity%1:26:00" "pyrexia%1:26:00" "feverishness%1:26:00")
- )
-
-; for heartburn                                                                                                     
-(define-type ONT::heartburn
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("heartburn%1:26:00")
- )
-
-; for hives                                                                                                         
-(define-type ONT::hives
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("hives%1:26:00")
- )
-
-; for hyperkalemia                                                                                                  
-(define-type ONT::hyperkalemia
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("hyperkalemia%1:26:00")
- )
-
-; for hyperventilation                                                                                              
-(define-type ONT::hyperventilation
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("hyperventilation%1:04:00")
- )
-
-; for hypoglycemia                                                                                                  
-(define-type ONT::hypoglycemia
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("hypoglycemia%1:26:00")
- )
-
-; for inflammation, redness, phlebitis                                                                              
-(define-type ONT::inflammation
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("inflammation%1:26:00" "phlebitis%1:26:00" "redness%1:26:00")
- )
-
-; for jaundice                                                                                                      
-(define-type ONT::jaundice
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("jaundice%1:26:00")
- )
-
-; for lightheadedness                                                                                               
-(define-type ONT::lightheadedness
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("lightheadedness%1:26:00" "dizziness%1:26:00")
- )
-
-; for nausea                                                                                                        
-(define-type ONT::nausea
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("nausea%1:26:00")
- )
-
-; for chill
-;(define-type ONT::chill
-; :parent ONT::medical-symptom
-; :wordnet-sense-keys ("chill%1:26:01")
-; )
-
-; for nosebleed                                                                                                     
-(define-type ONT::nosebleed
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("nosebleed%1:26:00")
- )
-
-; for numbness                                                                                                      
-(define-type ONT::numbness
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("numbness%1:26:00")
- )
-
-; for pain                                                                                                          
-(define-type ONT::pain
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("pain%1:26:00" "hurting%1:26:00" "pain_sensation%1:09:00" "painful_sensation%1:09:00" "soreness%1:26:00")
- )
-
-; for backache                                                                                                      
-(define-type ONT::backache
- :parent ONT::pain
- :wordnet-sense-keys ("backache%1:26:00")
- )
-
-; for headache                                                                                                      
-(define-type ONT::headache
- :parent ONT::pain
- :wordnet-sense-keys ("headache%1:26:00")
- )
-
-; for stomachache                                                                                                   
-(define-type ONT::stomachache
- :parent ONT::pain
- :wordnet-sense-keys ("stomachache%1:26:00")
- )
-
-; for palpitation                                                                                                   
-(define-type ONT::palpitation
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("palpitation%1:26:00")
- )
-
-;; seizure                                                                                                          
-(define-type ont::seizure
- :wordnet-sense-keys ("seizure%1:26:00")
- :parent ont::medical-symptom
- )
-
-; for sneeze                                                                                                        
-(define-type ONT::sneeze
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("sneeze%1:26:00")
- )
-
-; for cramp, spasm                                                                                                  
-(define-type ONT::spasm
- :parent ONT::medical-symptom
- :wordnet-sense-keys ("cramp%1:26:00" "spasm%1:26:00")
- )
-
-;; condition                                                                                                        
-(define-type ONT::medical-condition
- :wordnet-sense-keys ("condition%1:26:05" "malformation%1:26:00" "pathology%1:26:00")
- :parent ONT::medical-disorders-and-conditions
- )
-
-;; coma
-(define-type ont::coma
- :wordnet-sense-keys("coma%1:09:00")
- :parent ont::medical-condition
-)
-
-;; anesthesia                                                                                                       
-(define-type ont::anesthesia
- :wordnet-sense-keys ("anesthesia%1:26:00")
- :parent ont::medical-condition
- )
-
-;; angina                                                                                                           
-(define-type ont::angina
- :wordnet-sense-keys ("angina%1:26:01")
- :parent ont::medical-condition
- )
-
-;; pregnancy
-(define-type ont::pregnancy
- :wordnet-sense-keys ("pregnancy%1:26:00")
- :parent ont::medical-condition
- )
-
-;; disability
-(define-type ont::disability
- :parent ont::medical-condition
- :wordnet-sense-keys ("disability%1:26:00")
-)
-
-;; stroke                                                                                                           
-(define-type ont::stroke
- :wordnet-sense-keys ("stroke%1:26:00")
- :parent ont::medical-condition
- )
-
-;; thrombosis                                                                                                       
-(define-type ont::thrombosis
- :wordnet-sense-keys ("thrombosis%1:26:00")
- :parent ont::medical-condition
- )
-
-;; bruise, contusion, bump                                                                                          
-(define-type ont::injury
- :wordnet-sense-keys ("concussion%1:11:00" "injury%1:26:00" "hurt%1:26:00" "harm%1:26:00" "trauma%1:26:02" "bruise%1:26:00" "contusion%1:26:00" "bump%1:26:00")
-  :parent ont::medical-disorders-and-conditions
- )
-
-;; wound, lesion                                                                                                    
-; bruise can come under physical-symptom too but WN defines it as an injury.                                        
-(define-type ONT::wound
-  :wordnet-sense-keys ("wound%1:26:00" "lesion%1:26:02" "sore%1:26:00")
-  :parent ONT::injury
- )
-
-;; sickness                                                                                                         
-(define-type ONT::disease
- :wordnet-sense-keys ("disease%1:26:00" "ailment%1:26:00" "abnormality%1:26:00")
- :sem (F::situation (F::mobility f::movable)) ; movable: the disease has spread
- :parent ONT::medical-disorders-and-conditions
- )
-
-; for AIDS                                                                                                          
-(define-type ONT::acquired-immune-deficiency-syndrome
- :parent ONT::disease
- :wordnet-sense-keys ("aids%1:26:00" "acquired_immune_deficiency_syndrome%1:26:00")
- )
-
-; for allergy                                                                                                       
-(define-type ONT::allergy
- :parent ONT::disease
- :wordnet-sense-keys ("allergy%1:26:00")
- )
-
-; for anemia                                                                                                        
-(define-type ONT::anemia
- :parent ONT::disease
- :wordnet-sense-keys ("anemia%1:26:00")
- )
-
-;; angina                                                                                                           
-(define-type ont::angina-disease
- :wordnet-sense-keys ("angina%1:26:00")
- :parent ont::medical-symptom
- )
-
-;; arteriosclerosis                                                                                                 
-(define-type ont::arteriosclerosis
- :wordnet-sense-keys ("arteriosclerosis%1:26:00")
- :parent ont::disease
- )
-
-(define-type ONT::arthritis
- :parent ONT::disease
- :wordnet-sense-keys ("arthritis%1:26:00")
- )
-
-; for gout                                                                                                          
-(define-type ONT::gout
- :parent ONT::arthritis
- :wordnet-sense-keys ("gout%1:26:00")
- )
-
-; for osteoarthritis                                                                                                
-(define-type ONT::osteoarthritis
- :parent ONT::arthritis
- :wordnet-sense-keys ("osteoarthritis%1:26:00")
- )
-
-; for asthma                                                                                                        
-(define-type ONT::breathing-disorder
- :parent ONT::disease
- :wordnet-sense-keys ("asthma%1:26:00" "respiratory_disorder%1:26:00")
- )
-
-; for brain-disease                                                                                                 
-(define-type ONT::brain-disease
- :parent ONT::disease
- :wordnet-sense-keys ("brain_disease%1:26:00")
- )
-
-(define-type ONT::cancer
- :parent ONT::disease
- :wordnet-sense-keys ("cancer%1:26:00" "malignancy%1:26:00" "malignance%1:26:00" "carcinoma%1:26:00" "melanoma%1:26:00" "malignant_melanoma%1:26:00" "lymphoma%1:26:00" "leukemia%1:26:00" "leukaemia%1:26:00" "leucaemia%1:26:00" "cancer_of_the_blood%1:26:00" "sarcoma%1:26:00" "angiosarcoma%1:26:00" "myeloma%1:26:00")
- )
-
-; for cardiovascular diseases etc                                                                                   
-(define-type ONT::cardiovascular-disease
- :parent ONT::disease
- :wordnet-sense-keys ("cardiovascular_disease%1:26:00")
- )
-
-; for aneurysm                                                                                                      
-(define-type ONT::aneurysm
- :parent ONT::cardiovascular-disease
- :wordnet-sense-keys ("aneurysm%1:26:00")
- )
-
-; for arrhythmia                                                                                                    
-(define-type ONT::arrhythmia
- :parent ONT::cardiovascular-disease
- :wordnet-sense-keys ("arrhythmia%1:26:00" "tachycardia%1:26:00")
- )
-
-; for heart attack                                                                                                  
-(define-type ONT::heart-attack
- :parent ONT::cardiovascular-disease
- :wordnet-sense-keys ("heart_attack%1:26:00")
- )
-
-; for high BP, hypertension                                                                                         
-(define-type ONT::hypertension
- :parent ONT::cardiovascular-disease
- :wordnet-sense-keys ("hypertension%1:26:00")
- )
-
-(define-type ONT::diabetes
- :parent ONT::disease
- :wordnet-sense-keys ("diabetes%1:26:00")
- )
-
-;; ebola                                                                                                            
-(define-type ONT::ebola
- :parent ONT::disease
- :wordnet-sense-keys ("ebola%1:26:00")
- )
-
-;; epilepsy                                                                                                         
-(define-type ONT::epilepsy
- :parent ONT::disease
- :wordnet-sense-keys ("epilepsy%1:26:00")
- )
-
-;; flu                                                                                                              
-(define-type ONT::flu
- :parent ONT::breathing-disorder
- :wordnet-sense-keys ("flu%1:26:00" "influenza%1:26:00" "grippe%1:26:00")
- )
-
-;; infection                                                                                                        
-(define-type ONT::infection
- :parent ONT::disease
- :wordnet-sense-keys ("infection%1:26:00")
- )
-
-;; hepatitis, cirrhosis                                                                                             
-;; but if we have this category, then liver-cancer can come under this category as well as under cancer.            
-(define-type ONT::liver-disease
- :parent ONT::disease
- :wordnet-sense-keys ("liver_disease%1:26:00")
- )
-
-; for osteoporosis                                                                                                  
-(define-type ONT::osteoporosis
- :parent ONT::disease
- :wordnet-sense-keys ("osteoporosis%1:26:00")
- )
-
-; for pancreatitis                                                                                                  
-(define-type ONT::pancreatitis
- :parent ONT::disease
- :wordnet-sense-keys ("pancreatitis%1:26:00")
- )
-
-; for pneuomnia                                                                                                     
-(define-type ONT::pneumonia
- :parent ONT::breathing-disorder
- :wordnet-sense-keys ("pneumonia%1:26:00")
- )
-
-; for STDs                                                                                                          
-(define-type ONT::std
- :parent ONT::disease
- :wordnet-sense-keys ("sexually_transmitted_disease%1:26:00")
- )
-
-;; stones, cholelithiasis (gall stones), kidney stones                                                              
-(define-type ont::stones-disease
- :wordnet-sense-keys ("cholelithiasis%1:26:00" "gallstone%1:17:00" "kidney_stone%1:17:00")
- :parent ont::disease
- )
-
-#|                                                                                                                  
-;; cholelithiasis (gall stones)                                                                                     
-(define-type ont::cholelithiasis
- :wordnet-sense-keys ("cholelithiasis%1:26:00" "gallstone%1:17:00")
- :parent ont::stones-disease
- )                                                                                                                  
-
-;; kidney stones                                                                                                    
-(define-type ont::kidney-stone
- :wordnet-sense-keys ("kidney_stone%1:17:00")
- :parent ont::stones-disease
- )
-|#
-
-; for tuberculosis
-(define-type ONT::tuberculosis
- :parent ONT::disease
- :wordnet-sense-keys ("tb%1:26:00")
- )
-
-
-
-
-;; mental illness, mental disorder, psychological disorder                                                          
-(define-type ONT::mental-psychological-illness-or-disorder
- :wordnet-sense-keys ("mental_illness%1:26:00" "mental_disorder%1:26:00")
- :parent ONT::event-type
- )
-
-;; addiction                                                                                                        
-(define-type ont::addiction
- :wordnet-sense-keys ("addiction%1:26:00")
- :parent ont::mental-psychological-illness-or-disorder
- )
-
-; for amnesia                                                                                                       
-(define-type ONT::amnesia
- :parent ONT::mental-psychological-illness-or-disorder
- :wordnet-sense-keys ("amnesia%1:09:00")
- )
-
-;; anorexia                                                                                                         
-(define-type ont::eating-disorder
- :wordnet-sense-keys ("anorexia%1:26:00" "eating_disorder%1:26:00")
- :parent ont::mental-psychological-illness-or-disorder
- )
-
-;; anxiety                                                                                                          
-(define-type ont::anxiety
- :wordnet-sense-keys ("anxiety%1:26:00")
- :parent ont::mental-psychological-illness-or-disorder
- )
-
-;; ataxia                                                                                                           
-(define-type ont::nervous-disorder
- :wordnet-sense-keys ("ataxia%1:26:00" "nervous_disorder%1:26:00")
- :parent ont::mental-psychological-illness-or-disorder
- )
-
-
-;; depression                                                                                                       
-(define-type ont::depression
- :wordnet-sense-keys ("depression%1:26:03")
- :parent ont::mental-psychological-illness-or-disorder
- )
-
-;; insanity                                                                                                         
-(define-type ont::insanity
- :wordnet-sense-keys ("insanity%1:26:00")
- :parent ont::mental-psychological-illness-or-disorder
- )
-
-;; mania                                                                                                            
-(define-type ont::mania
- :wordnet-sense-keys ("mania%1:26:00")
- :parent ont::mental-psychological-illness-or-disorder
- )
-
-;; phobia                                                                                                           
-(define-type ont::phobia
- :wordnet-sense-keys ("phobia%1:26:00")
- :parent ont::mental-psychological-illness-or-disorder
- )
-
-
-

@@ -5921,3 +5921,514 @@
   :arguments ((:essential ont::extent (f::abstr-obj (f::scale ?!sc)))
              )
   )
+
+
+
+
+(define-type ONT::medical-disorders-and-conditions
+ :wordnet-sense-keys ("disorder%1:26:03")
+ :parent ONT::event-type
+ :sem (F::situation ) ;;(F::container +))
+ :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj (F::origin (? og2 f::human f::non-human-animal))))
+             )
+ )
+
+;; symptom                                                                                                          
+(define-type ONT::medical-symptom
+ :wordnet-sense-keys ("symptom%1:26:00" "sign%1:26:00" "syndrome%1:26:00")
+ :parent ONT::medical-disorders-and-conditions
+ )
+
+; muscle contraction
+(define-type ont::muscle-contraction
+ :parent ont::medical-symptom
+ :wordnet-sense-keys ("contraction%1:04:01")
+)
+
+; sniffle
+(define-type ont::sniffle
+ :parent ont::medical-symptom
+ :wordnet-sense-keys ("sniffle%1:04:00")
+)
+
+; tightness/constriction of a body part
+(define-type ont::body-tightness
+ :parent ont::medical-symptom
+ :wordnet-sense-keys("tightness%1:09:00")
+)
+
+; for constipation                                                                                                  
+(define-type ONT::constipation
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("constipation%1:26:00")
+ )
+
+; for cough                                                                                                         
+(define-type ONT::cough
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("cough%1:26:00")
+ )
+
+; for diarrhea
+(define-type ONT::diarrhea
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("diarrhea%1:26:00")
+ )
+
+; for dyspepsia                                                                                                     
+(define-type ONT::dyspepsia
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("dyspepsia%1:26:00" "indigestion%1:26:00")
+ )
+
+(define-type ont::dyspnea
+ :wordnet-sense-keys ("dyspnea%1:26:00" "dyspnea%1:26:00" "dyspnoea%1:26:00" "shortness_of_breath%1:26:00" "sob%1:26:00")
+ :parent ont::medical-symptom
+ )
+
+; for edema                                                                                                         
+(define-type ONT::edema
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("edema%1:26:00")
+ )
+
+; for fever                                                                                                         
+(define-type ONT::fever
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("fever%1:26:00" "febrility%1:26:00" "febricity%1:26:00" "pyrexia%1:26:00" "feverishness%1:26:00")
+ )
+
+; for heartburn                                                                                                     
+(define-type ONT::heartburn
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("heartburn%1:26:00")
+ )
+
+; for hives                                                                                                         
+(define-type ONT::hives
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("hives%1:26:00")
+ )
+
+; for hyperkalemia                                                                                                  
+(define-type ONT::hyperkalemia
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("hyperkalemia%1:26:00")
+ )
+
+; for hyperventilation                                                                                              
+(define-type ONT::hyperventilation
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("hyperventilation%1:04:00")
+ )
+
+; for hypoglycemia                                                                                                  
+(define-type ONT::hypoglycemia
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("hypoglycemia%1:26:00")
+ )
+
+; for inflammation, redness, phlebitis                                                                              
+(define-type ONT::inflammation
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("inflammation%1:26:00" "phlebitis%1:26:00" "redness%1:26:00")
+ )
+
+; for jaundice                                                                                                      
+(define-type ONT::jaundice
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("jaundice%1:26:00")
+ )
+
+; for lightheadedness                                                                                               
+(define-type ONT::lightheadedness
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("lightheadedness%1:26:00" "dizziness%1:26:00")
+ )
+
+; for nausea                                                                                                        
+(define-type ONT::nausea
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("nausea%1:26:00")
+ )
+
+; for chill
+;(define-type ONT::chill
+; :parent ONT::medical-symptom
+; :wordnet-sense-keys ("chill%1:26:01")
+; )
+
+; for nosebleed                                                                                                     
+(define-type ONT::nosebleed
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("nosebleed%1:26:00")
+ )
+
+; for numbness                                                                                                      
+(define-type ONT::numbness
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("numbness%1:26:00")
+ )
+
+; for pain                                                                                                          
+(define-type ONT::pain
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("pain%1:26:00" "hurting%1:26:00" "pain_sensation%1:09:00" "painful_sensation%1:09:00" "soreness%1:26:00")
+ )
+
+; for backache                                                                                                      
+(define-type ONT::backache
+ :parent ONT::pain
+ :wordnet-sense-keys ("backache%1:26:00")
+ )
+
+; for headache                                                                                                      
+(define-type ONT::headache
+ :parent ONT::pain
+ :wordnet-sense-keys ("headache%1:26:00")
+ )
+
+; for stomachache                                                                                                   
+(define-type ONT::stomachache
+ :parent ONT::pain
+ :wordnet-sense-keys ("stomachache%1:26:00")
+ )
+
+; for palpitation                                                                                                   
+(define-type ONT::palpitation
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("palpitation%1:26:00")
+ )
+
+;; seizure                                                                                                          
+(define-type ont::seizure
+ :wordnet-sense-keys ("seizure%1:26:00")
+ :parent ont::medical-symptom
+ )
+
+; for sneeze                                                                                                        
+(define-type ONT::sneeze
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("sneeze%1:26:00")
+ )
+
+; for cramp, spasm                                                                                                  
+(define-type ONT::spasm
+ :parent ONT::medical-symptom
+ :wordnet-sense-keys ("cramp%1:26:00" "spasm%1:26:00")
+ )
+
+;; condition                                                                                                        
+(define-type ONT::medical-condition
+ :wordnet-sense-keys ("condition%1:26:05" "malformation%1:26:00" "pathology%1:26:00")
+ :parent ONT::medical-disorders-and-conditions
+ )
+
+;; coma
+(define-type ont::coma
+ :wordnet-sense-keys("coma%1:09:00")
+ :parent ont::medical-condition
+)
+
+;; anesthesia                                                                                                       
+(define-type ont::anesthesia
+ :wordnet-sense-keys ("anesthesia%1:26:00")
+ :parent ont::medical-condition
+ )
+
+;; angina                                                                                                           
+(define-type ont::angina
+ :wordnet-sense-keys ("angina%1:26:01")
+ :parent ont::medical-condition
+ )
+
+;; pregnancy
+(define-type ont::pregnancy
+ :wordnet-sense-keys ("pregnancy%1:26:00")
+ :parent ont::medical-condition
+ )
+
+;; disability
+(define-type ont::disability
+ :parent ont::medical-condition
+ :wordnet-sense-keys ("disability%1:26:00")
+)
+
+;; stroke                                                                                                           
+(define-type ont::stroke
+ :wordnet-sense-keys ("stroke%1:26:00")
+ :parent ont::medical-condition
+ )
+
+;; thrombosis                                                                                                       
+(define-type ont::thrombosis
+ :wordnet-sense-keys ("thrombosis%1:26:00")
+ :parent ont::medical-condition
+ )
+
+;; bruise, contusion, bump                                                                                          
+(define-type ont::injury
+ :wordnet-sense-keys ("concussion%1:11:00" "injury%1:26:00" "hurt%1:26:00" "harm%1:26:00" "trauma%1:26:02" "bruise%1:26:00" "contusion%1:26:00" "bump%1:26:00")
+  :parent ont::medical-disorders-and-conditions
+ )
+
+;; wound, lesion                                                                                                    
+; bruise can come under physical-symptom too but WN defines it as an injury.                                        
+(define-type ONT::wound
+  :wordnet-sense-keys ("wound%1:26:00" "lesion%1:26:02" "sore%1:26:00")
+  :parent ONT::injury
+ )
+
+;; sickness                                                                                                         
+(define-type ONT::disease
+ :wordnet-sense-keys ("disease%1:26:00" "ailment%1:26:00" "abnormality%1:26:00")
+ :sem (F::situation (F::mobility f::movable)) ; movable: the disease has spread
+ :parent ONT::medical-disorders-and-conditions
+ )
+
+; for AIDS                                                                                                          
+(define-type ONT::acquired-immune-deficiency-syndrome
+ :parent ONT::disease
+ :wordnet-sense-keys ("aids%1:26:00" "acquired_immune_deficiency_syndrome%1:26:00")
+ )
+
+; for allergy                                                                                                       
+(define-type ONT::allergy
+ :parent ONT::disease
+ :wordnet-sense-keys ("allergy%1:26:00")
+ )
+
+; for anemia                                                                                                        
+(define-type ONT::anemia
+ :parent ONT::disease
+ :wordnet-sense-keys ("anemia%1:26:00")
+ )
+
+;; angina                                                                                                           
+(define-type ont::angina-disease
+ :wordnet-sense-keys ("angina%1:26:00")
+ :parent ont::medical-symptom
+ )
+
+;; arteriosclerosis                                                                                                 
+(define-type ont::arteriosclerosis
+ :wordnet-sense-keys ("arteriosclerosis%1:26:00")
+ :parent ont::disease
+ )
+
+(define-type ONT::arthritis
+ :parent ONT::disease
+ :wordnet-sense-keys ("arthritis%1:26:00")
+ )
+
+; for gout                                                                                                          
+(define-type ONT::gout
+ :parent ONT::arthritis
+ :wordnet-sense-keys ("gout%1:26:00")
+ )
+
+; for osteoarthritis                                                                                                
+(define-type ONT::osteoarthritis
+ :parent ONT::arthritis
+ :wordnet-sense-keys ("osteoarthritis%1:26:00")
+ )
+
+; for asthma                                                                                                        
+(define-type ONT::breathing-disorder
+ :parent ONT::disease
+ :wordnet-sense-keys ("asthma%1:26:00" "respiratory_disorder%1:26:00")
+ )
+
+; for brain-disease                                                                                                 
+(define-type ONT::brain-disease
+ :parent ONT::disease
+ :wordnet-sense-keys ("brain_disease%1:26:00")
+ )
+
+(define-type ONT::cancer
+ :parent ONT::disease
+ :wordnet-sense-keys ("cancer%1:26:00" "malignancy%1:26:00" "malignance%1:26:00" "carcinoma%1:26:00" "melanoma%1:26:00" "malignant_melanoma%1:26:00" "lymphoma%1:26:00" "leukemia%1:26:00" "leukaemia%1:26:00" "leucaemia%1:26:00" "cancer_of_the_blood%1:26:00" "sarcoma%1:26:00" "angiosarcoma%1:26:00" "myeloma%1:26:00")
+ )
+
+; for cardiovascular diseases etc                                                                                   
+(define-type ONT::cardiovascular-disease
+ :parent ONT::disease
+ :wordnet-sense-keys ("cardiovascular_disease%1:26:00")
+ )
+
+; for aneurysm                                                                                                      
+(define-type ONT::aneurysm
+ :parent ONT::cardiovascular-disease
+ :wordnet-sense-keys ("aneurysm%1:26:00")
+ )
+
+; for arrhythmia                                                                                                    
+(define-type ONT::arrhythmia
+ :parent ONT::cardiovascular-disease
+ :wordnet-sense-keys ("arrhythmia%1:26:00" "tachycardia%1:26:00")
+ )
+
+; for heart attack                                                                                                  
+(define-type ONT::heart-attack
+ :parent ONT::cardiovascular-disease
+ :wordnet-sense-keys ("heart_attack%1:26:00")
+ )
+
+; for high BP, hypertension                                                                                         
+(define-type ONT::hypertension
+ :parent ONT::cardiovascular-disease
+ :wordnet-sense-keys ("hypertension%1:26:00")
+ )
+
+(define-type ONT::diabetes
+ :parent ONT::disease
+ :wordnet-sense-keys ("diabetes%1:26:00")
+ )
+
+;; ebola                                                                                                            
+(define-type ONT::ebola
+ :parent ONT::disease
+ :wordnet-sense-keys ("ebola%1:26:00")
+ )
+
+;; epilepsy                                                                                                         
+(define-type ONT::epilepsy
+ :parent ONT::disease
+ :wordnet-sense-keys ("epilepsy%1:26:00")
+ )
+
+;; flu                                                                                                              
+(define-type ONT::flu
+ :parent ONT::breathing-disorder
+ :wordnet-sense-keys ("flu%1:26:00" "influenza%1:26:00" "grippe%1:26:00")
+ )
+
+;; infection                                                                                                        
+(define-type ONT::infection
+ :parent ONT::disease
+ :wordnet-sense-keys ("infection%1:26:00")
+ )
+
+;; hepatitis, cirrhosis                                                                                             
+;; but if we have this category, then liver-cancer can come under this category as well as under cancer.            
+(define-type ONT::liver-disease
+ :parent ONT::disease
+ :wordnet-sense-keys ("liver_disease%1:26:00")
+ )
+
+; for osteoporosis                                                                                                  
+(define-type ONT::osteoporosis
+ :parent ONT::disease
+ :wordnet-sense-keys ("osteoporosis%1:26:00")
+ )
+
+; for pancreatitis                                                                                                  
+(define-type ONT::pancreatitis
+ :parent ONT::disease
+ :wordnet-sense-keys ("pancreatitis%1:26:00")
+ )
+
+; for pneuomnia                                                                                                     
+(define-type ONT::pneumonia
+ :parent ONT::breathing-disorder
+ :wordnet-sense-keys ("pneumonia%1:26:00")
+ )
+
+; for STDs                                                                                                          
+(define-type ONT::std
+ :parent ONT::disease
+ :wordnet-sense-keys ("sexually_transmitted_disease%1:26:00")
+ )
+
+;; stones, cholelithiasis (gall stones), kidney stones                                                              
+(define-type ont::stones-disease
+ :wordnet-sense-keys ("cholelithiasis%1:26:00" "gallstone%1:17:00" "kidney_stone%1:17:00")
+ :parent ont::disease
+ )
+
+#|                                                                                                                  
+;; cholelithiasis (gall stones)                                                                                     
+(define-type ont::cholelithiasis
+ :wordnet-sense-keys ("cholelithiasis%1:26:00" "gallstone%1:17:00")
+ :parent ont::stones-disease
+ )                                                                                                                  
+
+;; kidney stones                                                                                                    
+(define-type ont::kidney-stone
+ :wordnet-sense-keys ("kidney_stone%1:17:00")
+ :parent ont::stones-disease
+ )
+|#
+
+; for tuberculosis
+(define-type ONT::tuberculosis
+ :parent ONT::disease
+ :wordnet-sense-keys ("tb%1:26:00")
+ )
+
+
+
+
+;; mental illness, mental disorder, psychological disorder                                                          
+(define-type ONT::mental-psychological-illness-or-disorder
+ :wordnet-sense-keys ("mental_illness%1:26:00" "mental_disorder%1:26:00")
+ :parent ONT::event-type
+ )
+
+;; addiction                                                                                                        
+(define-type ont::addiction
+ :wordnet-sense-keys ("addiction%1:26:00")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+; for amnesia                                                                                                       
+(define-type ONT::amnesia
+ :parent ONT::mental-psychological-illness-or-disorder
+ :wordnet-sense-keys ("amnesia%1:09:00")
+ )
+
+;; anorexia                                                                                                         
+(define-type ont::eating-disorder
+ :wordnet-sense-keys ("anorexia%1:26:00" "eating_disorder%1:26:00")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+;; anxiety                                                                                                          
+(define-type ont::anxiety
+ :wordnet-sense-keys ("anxiety%1:26:00")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+;; ataxia                                                                                                           
+(define-type ont::nervous-disorder
+ :wordnet-sense-keys ("ataxia%1:26:00" "nervous_disorder%1:26:00")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+
+;; depression                                                                                                       
+(define-type ont::depression
+ :wordnet-sense-keys ("depression%1:26:03")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+;; insanity                                                                                                         
+(define-type ont::insanity
+ :wordnet-sense-keys ("insanity%1:26:00")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+;; mania                                                                                                            
+(define-type ont::mania
+ :wordnet-sense-keys ("mania%1:26:00")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+;; phobia                                                                                                           
+(define-type ont::phobia
+ :wordnet-sense-keys ("phobia%1:26:00")
+ :parent ont::mental-psychological-illness-or-disorder
+ )
+
+
+

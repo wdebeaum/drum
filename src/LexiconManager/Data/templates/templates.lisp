@@ -1896,6 +1896,13 @@
     (LCOMP (:parameter xp (:default (% W::NP))) ont::NEUTRAL OPTIONAL)
     ))
 
+(AGENT-AGENT1-NEUTRAL-2-XP1-3-XP-TEMPL
+   (ARGUMENTS
+    (LSUBJ (% W::NP) ONT::AGENT)
+    (LOBJ (:parameter xp1 (:default (% W::NP))) ONT::Agent1)
+    (LCOMP (:parameter xp (:default (% W::NP))) ont::NEUTRAL)
+    ))
+
    (AGENT-AGENT1-FORMAL-2-XP1-3-XP-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::AGENT)
