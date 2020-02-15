@@ -944,11 +944,13 @@
 
 ;; recession
 (define-type ont::economic-event
+:wordnet-sense-keys ("deflation%1:22:00" "depression%1:26:02" "disinflation%1:22:00" "economic_growth%1:22:00" "globalization%1:22:00" "inflation%1:22:00" "market_forces%1:22:00" "recession%1:26:00" "spiral%1:22:00" "supply%1:22:00")
 :parent ONT::event-defined-by-activity
 )
 
 ;; travel
 (define-type ONT::travel
+ :wordnet-sense-keys ("travel%1:04:00" "travel%2:38:05")
  :parent ONT::event-defined-by-activity
  :sem (F::situation (F::trajectory +))
  )
@@ -970,25 +972,30 @@
 
 ;; jaunt
 (define-type ont::jaunt
+  :wordnet-sense-keys ("jaunt%1:04:00")
   :parent ont::trip
   )
 
 ;; round trip
 (define-type ONT::round-trip
+ :wordnet-sense-keys ("round_trip%1:04:00")
  :parent ONT::trip
  :sem (F::situation (F::trajectory +))
  )
 
 (define-type ont::air-travel
+  :wordnet-sense-keys ("air_travel%1:04:00")
   :parent ont::trip
   )
 
 ;; flight
 (define-type ONT::flight
+ :wordnet-sense-keys ("flight%1:04:00")
  :parent ONT::air-travel
  )
 
 (define-type ont::water-travel
+  :wordnet-sense-keys ("water_travel%1:04:00")
   :parent ont::trip
   )
 
@@ -998,12 +1005,14 @@
 
 ;; voyage
 (define-type ont::voyage
+  :wordnet-sense-keys ("voyage%1:04:01" "voyage%2:38:00")
   :parent ont::water-travel
   )
 
 ;; drive
 (define-type ont::driving-trip
-  :parent ont::water-travel
+  :wordnet-sense-keys ("ride%1:04:00")
+  :parent ont::land-travel ;water-travel
   )
 
 ;; migration
