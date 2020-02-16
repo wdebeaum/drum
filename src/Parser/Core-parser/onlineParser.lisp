@@ -569,7 +569,7 @@
 	t
 	(match-lex-entries index (cdr terms))))))
 
-(defvar *domain-boosting-factor* nil)
+(defvar *domain-boosting-factor* 0) ; default: no boosting
 (defvar *no-krtype-name-penalty* .95)
 
 (defvar *referential-sem-penalty* .95)
