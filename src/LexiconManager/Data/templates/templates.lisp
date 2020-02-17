@@ -975,7 +975,7 @@
       	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) ;;(w::status ont::definiteQ) (w::coerce-amt -)
 		  (w::expletive -)) ONT::neutral)
 	(LOBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) (w::status (? status ont::definite ont::definite-plural ont::pro ont::pro-set ont::the ont::the-set )) ;(w::status ont::definiteQ) ;;(w::coerce-amt -)
-		 (w::expletive -)) ONT::neutral1)
+		 (w::expletive -) (lex (? !lex w::what))) ONT::neutral1)
 	))
 
       (NEUTRAL-FORMAL-PRED-SUBJCONTROL-TEMPL

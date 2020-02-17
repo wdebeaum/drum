@@ -1016,9 +1016,9 @@
   )
 
 ;; migration
-(define-type ont::migration
-  :parent ont::trip
-  )
+;(define-type ont::migration
+;  :parent ont::trip
+;  )
 
 (define-type ont::located-event
   :parent ont::event-type
@@ -1647,4 +1647,34 @@
 |#
 
 
+;;;==== ONT::ATTRIBUTE ====                                                                                         
+
+(define-type ONT::attribute
+ :wordnet-sense-keys ("dimension%1:09:00" "attribute%1:09:00" "property%1:09:00" "property%1:07:00" "holding%1:21:00" "belongings%1:21:00" "property%1:21:00" "quality%1:07:00")
+ :parent ont::abstract-object-nontemporal
+ :arguments ((:OPTIONAL ONT::FIGURE ((? lo f::phys-obj f::abstr-obj)))
+             )
+ )
+
+(define-type ont::condition-favorability
+ :parent ont::attribute
+)
+
+(define-type ont::favorable-condition
+ :parent ont::condition-favorability
+ :wordnet-sense-keys ("advantage%1:07:00" "advantage%1:07:01" "asset%1:07:00" "strength%1:07:01")
+ ;asset, plus, strength advantage
+)
+
+(define-type ont::not-favorable-condition
+ :parent ont::condition-favorability
+ :wordnet-sense-keys ("weak_point%1:07:00" "liability%1:07:00" "disadvantage%1:07:00" "detriment%1:11:00" "weakness%1:26:00")
+ ; detriment, liability, weakness, minus, disadvantage
+)
+
+(define-type ONT::body-property
+ :parent ont::attribute
+ :arguments ((:OPTIONAL ONT::FIGURE (f::phys-obj (f::origin f::living)))
+             )
+ )
 

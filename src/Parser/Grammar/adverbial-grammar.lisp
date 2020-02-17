@@ -311,7 +311,7 @@
     ;;  Gapped ADVBLs with entire subcat gone, this one for NP subcats only
     ;; TEST: The store the cat was from.
     ((ADVBL (ARG ?arg) 
-            (GAP (% NP (var ?gapv) (SEM ?gapsem) (gap -)
+            (GAP (% NP (var ?gapv) (SEM ?gapsem) (gap -) (status ?status) ;status is matched in wh-q2
 	            (agr ?gapagr) (case (? case obj -))))       
             (FOCUS ?var)
             (LF (% PROP (VAR ?v) (CLASS ?lf) (CONSTRAINT (& (?submap ?gapv) (?argmap ?arg)))
@@ -680,7 +680,7 @@
 	   (ATYPE PREDICATIVE-ONLY)
 	   (SORT PRED) (WH Q) (WH-VAR *)
       )
-     -what-adj-pre> 
+     -what-adj-pre>
      (word (lex w::what))
      (head (N1 (sem ?sem) (sem ($ f::abstr-obj (f::scale ?!sc) (f::type ONT::DOMAIN))) (RESTR ?restr)
 	 (var ?v) (agr ?agr) (mass ?mass) (gap ?gap)

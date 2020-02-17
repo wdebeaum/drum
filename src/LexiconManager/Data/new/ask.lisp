@@ -41,6 +41,12 @@
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL AGENT-OPTIONAL-ADDRESSEE-ASSOCIATED-INFORMATION-TEMPL)
      )|#
+    ((EXAMPLE "ask (about something)")
+     ;;(LF-PARENT ONT::REQUEST)
+     (lf-parent ont::ask-question)
+     (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
+     (TEMPL AGENT-TEMPL)
+     )
     ((EXAMPLE "ask (him) for something")
      ;;(LF-PARENT ONT::REQUEST)
      (lf-parent ont::ask) ;; 20120524 GUM change new type

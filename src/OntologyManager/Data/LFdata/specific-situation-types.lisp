@@ -288,6 +288,10 @@
              )
  )
 
+(define-type ont::MIGRATE
+  :wordnet-sense-keys ("migrate%2:38:00" "migrate%2:38:01")
+  :parent ont::move
+  )
 
 (define-type ont::TRANSLOCATE
   :wordnet-sense-keys ("translocate%2:40:00")

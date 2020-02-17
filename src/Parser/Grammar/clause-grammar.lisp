@@ -1203,17 +1203,20 @@
             (lf (% prop (status ont::f) (arg ?arg) (var *) (sem ?newsem)
 		   (class ONT::MEMBERSHIP) (constraint (& (figure ?arg) 
 							  (ground (% *pro* (status ?x) ;(status ont::definite-plural)
-								     (var ?v) (class ?c) (constraint ?constr)))
+								     (var ?v) (class ?c)
+								     (constraint ?constr)))
 				  ))))
             (argument ?argument)
             (filled -)
             )
-      -pred4> 
+      -pred4> 0.995
       (head (np (sem ?sem) (var ?v) (sort pred) (case (? case obj -))
 		(derived-from-name -) (gerund -)
 		(lf (% description (status (? x ont::indefinite ont::bare ont::indefinite-plural ont::SM ont::wh ONT::what ONT::which ONT::whose ONT::*wh-term* ont::wh-term ONT::WH-PLURAL ont::wh-term-set ont::kind)) 
-		       ;(sem ($ f::phys-obj )) 
-		       (class ?c) (constraint ?constr)))
+		       ;(sem ($ f::phys-obj )) ; allow "what kind"
+		       (class ?c)
+		       (constraint ?constr)))
+		(sem ($ ?!s (f::type (? !t ONT::DOMAIN)))) ; exclude "what color is X" 
 		(lex (? !lex w::what))))  ; exclude "X is what" or "what is X"
       (compute-sem-features (lf ONT::MEMBERSHIP) (sem ?newsem))
       )
@@ -1721,7 +1724,8 @@
    ;; vp rule with comp3 gap  (typically a path from a "where" question or a prepositional phrase)
    ;; where did he come from
    ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar)
-     (main +) (gap (% ?s4 (var ?!gapvar) (case ?ccase) (agr ?gapagr) (sem ?compsem) (ptype ?ptype) (arg ?arg)
+	 (main +) (gap (% ?s4 (var ?!gapvar) (case ?ccase) (agr ?gapagr) (sem ?compsem) (ptype ?ptype)
+			  (arg ?arg) (status ?status) ; status is matched in wh-q2
 		      ))
      (var ?v) 
      (class ?c) (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
@@ -1755,7 +1759,7 @@
    ;; and then the direct object can come after the particle
    ;; the double matching is necessary to differentiate from the cases where there is a non-empty particle
    ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar)
-     (main +) (gap (% ?s4 (var ?!gapvar) (case ?ccase) (agr ?gapagr) (sem ?compsem) (ptype ?ptype) (arg ?arg)
+     (main +) (gap (% ?s4 (var ?!gapvar) (case ?ccase) (agr ?gapagr) (sem ?compsem) (ptype ?ptype) (arg ?arg) (status ?status) ; status is matched in wh-q2
 		      ))
      (var ?v) 
      (class ?c) (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
@@ -2549,7 +2553,7 @@
 	    (sem ?sem) (tma ?tma)
 	    (transform ?transform)
 	    ))
-     (gap (% ?!s3 (case ?dcase) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap -) (status ?dstatus)))
+     (gap (% ?!s3 (case ?dcase) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap -) (status ?status-out)))  ; status is matched in wh-q2
      (advbl-needed ?avn)
      )
     -s-ynq-be-gap> 0.98
@@ -2580,6 +2584,7 @@
     (np (var ?subjvar) (case sub) (sem ?subjsem) (agr ?subjagr) (wh -) (sort (? !sort wh-desc)) (gap -) (lex ?subjlex) )  ;; lots of restrictions on this np to eliminate sentences like "is where the people"
     ;;?!dobj
     (add-to-conjunct (val (tense (? vf past pres fut))) (old ?tma) (new ?newtma))
+    (add-status (in1 ?dstatus) (out ?status-out))
     )
 
    

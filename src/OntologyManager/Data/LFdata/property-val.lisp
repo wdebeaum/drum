@@ -7646,10 +7646,3 @@
   :wordnet-sense-keys ("denominational%3:01:01::")
   )
 
-
-
-(define-type ONT::body-property
- :parent ont::attribute
- :arguments ((:OPTIONAL ONT::FIGURE (f::phys-obj (f::origin f::living)))
-             )
- )

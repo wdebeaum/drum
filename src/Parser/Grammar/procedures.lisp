@@ -927,3 +927,16 @@
       )
 )))
 
+(define-predicate 'w::add-status
+    #'(lambda (args)
+	(add-status args))
+  )
+
+(defun add-status (args)
+  "pass on status if it is instantiated; otherwise make it a variable"
+  (let ((in1 (second (assoc 'w::in1 args)))
+	(out (second (assoc 'w::out args)))
+	)
+    (if (eq in1 '-) (match-vals nil out (make-var :name (gen-symbol 'status)))
+      (match-vals nil out in1))
+    ))
