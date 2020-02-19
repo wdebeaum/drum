@@ -362,9 +362,9 @@
 
 (define-type ONT::attributed-to
  :parent ONT::PREDICATE
- :arguments ((:ESSENTIAL ONT::FIGURE (F::situation (F::type (? t ont::HAVE-PROPERTY ont::CORRELATION))))
-             ;(:REQUIRED ONT::GROUND ((? s F::Phys-obj F::abstr-obj)))
-             (:ESSENTIAL ONT::GROUND (F::Phys-obj (f::intentional +)))
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::situation)) ;(F::type (? t ont::HAVE-PROPERTY ont::CORRELATION)))) 
+             (:REQUIRED ONT::GROUND ((? s F::Phys-obj F::abstr-obj F::situation))) ; hypothesis, plan, book
+             ;(:ESSENTIAL ONT::GROUND (F::Phys-obj (f::intentional +)))
 	     )
  )
 

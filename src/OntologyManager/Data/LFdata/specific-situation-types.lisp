@@ -5179,8 +5179,8 @@
 (define-type ONT::attribute-impute
     :comment "identify a cause of an event"
     :wordnet-sense-keys ("attribute%2:31:01" "base%2:31:00" "impute%2:31:00")
-    :arguments ((:essential ONT::NEUTRAL ((? n F::abstr-obj F::situation)))
-		(:essential ONT::NEUTRAL1 ((? n1 F::abstr-obj F::situation))))
+    :arguments ((:essential ONT::NEUTRAL ) ;((? n F::abstr-obj F::situation))) ; phys-obj: database
+		(:essential ONT::NEUTRAL1 )) ;((? n1 F::abstr-obj F::situation)))) ; phys-obj: database
     :parent ONT::categorization
     )
 

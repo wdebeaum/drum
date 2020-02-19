@@ -69,3 +69,15 @@
     )
 ))
 
+(define-words :pos W::adv :templ DISC-PRE-TEMPL
+ :words (
+  ((W::based W::on)
+   (SENSES
+    ((LF-PARENT ONT::ATTRIBUTED-TO)
+     ;(LF-FORM W::ACCORDING-TO)
+     (TEMPL binary-constraint-S-templ)
+     (EXAMPLE "Based on what i have the helicopter takes a half hour")
+     )
+    )
+   )
+))
