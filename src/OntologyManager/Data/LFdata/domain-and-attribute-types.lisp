@@ -1520,6 +1520,13 @@
  ;; WORDS: accuracy
 )
 
+;; LIFE PROCESS SCALE
+(define-type ont::life-process-scale
+ :sem (F::abstr-obj (F::scale ONT::LIFE-PROCESS-SCALE))
+ :parent ont::ordered-domain
+ :wordnet-sense-keys ("organic_phenomenon%1:19:00")
+)
+
 ;; MEASURE SCALE
 (define-type ont::measure-scale
  :sem (F::abstr-obj (F::scale ONT::MEASURE-SCALE))
@@ -1530,15 +1537,15 @@
 )
 
 ;; time measure scale
-(define-type ont::time-measure-scale
-  :sem (F::Abstr-obj (F::Scale Ont::time-measure-scale))
-  :parent ont::measure-scale
- )
+;(define-type ont::time-measure-scale
+;  :sem (F::Abstr-obj (F::Scale Ont::time-measure-scale))
+;  :parent ont::measure-scale
+; )
 
-(define-type ont::duration-scale
- :sem (F::abstr-obj (F::scale ONT::DURATION-SCALE))
-  :parent ont::time-measure-scale
-  )
+;(define-type ont::duration-scale
+; :sem (F::abstr-obj (F::scale ONT::DURATION-SCALE))
+;  :parent ont::time-measure-scale
+;  )
 
 ;; temperature scale
 (define-type ont::temperature-scale
@@ -1562,17 +1569,17 @@
  ;; Words: cold
 )
 
-(define-type ont::age-scale
- :sem (F::abstr-obj (F::scale ONT::AGE-SCALE))
- ;:parent ont::time-measure-scale
- :parent ont::duration-scale
- :wordnet-sense-keys ("age%1:28:00" "age%1:07:00")
-)
+;(define-type ont::age-scale
+; :sem (F::abstr-obj (F::scale ONT::AGE-SCALE))
+; ;:parent ont::time-measure-scale
+; :parent ont::duration-scale
+; :wordnet-sense-keys ("age%1:28:00" "age%1:07:00")
+;)
 
-(define-type ont::time-loc-scale
- :sem (F::abstr-obj (F::scale ONT::TIME-LOC-SCALE))
-  :parent ont::time-measure-scale
-)
+;(define-type ont::time-loc-scale
+; :sem (F::abstr-obj (F::scale ONT::TIME-LOC-SCALE))
+;  :parent ont::time-measure-scale
+;)
 
 (define-type ont::number-scale
  :sem (F::abstr-obj (F::scale ONT::NUMBER-SCALE))
@@ -2038,31 +2045,31 @@
 
 
 ;; temporal occurrence
-(define-type ont::temporal-occurrence-scale
- :sem (F::abstr-obj (F::scale ONT::TEMPORAL-OCCURRENCE-SCALE))
-    :parent ont::process-property-scale
-    ;; :wordnet-sense-keys ("incidence%1:24:00")
-)
+;(define-type ont::temporal-occurrence-scale
+; :sem (F::abstr-obj (F::scale ONT::TEMPORAL-OCCURRENCE-SCALE))
+;    :parent ont::process-property-scale
+;    ;; :wordnet-sense-keys ("incidence%1:24:00")
+;)
 
-(define-type ont::regularity-scale
- :sem (F::abstr-obj (F::scale ONT::REGULARITY-SCALE))
- :parent ont::temporal-occurrence-scale
- ;; WORDS: irregularity, regularity
-)
+;(define-type ont::regularity-scale
+; :sem (F::abstr-obj (F::scale ONT::REGULARITY-SCALE))
+; :parent ont::temporal-occurrence-scale
+; ;; WORDS: irregularity, regularity
+;)
 
-(define-type ont::regular-scale
- :sem (F::abstr-obj (F::scale ONT::REGULAR-SCALE))
- :parent ont::regularity-scale
- :wordnet-sense-keys ("regularity%1:07:00")
- ;; regularity
-)
+;(define-type ont::regular-scale
+; :sem (F::abstr-obj (F::scale ONT::REGULAR-SCALE))
+; :parent ont::regularity-scale
+; :wordnet-sense-keys ("regularity%1:07:00")
+; ;; regularity
+;)
 
-(define-type ont::not-regular-scale
- :sem (F::abstr-obj (F::scale ONT::NOT-REGULAR-SCALE))
- :parent ont::regularity-scale
- :wordnet-sense-keys ("intermittence%1:07:00" "irregularity%1:07:00")
- ;; irregularity
-)
+;(define-type ont::not-regular-scale
+; :sem (F::abstr-obj (F::scale ONT::NOT-REGULAR-SCALE))
+; :parent ont::regularity-scale
+; :wordnet-sense-keys ("intermittence%1:07:00" "irregularity%1:07:00")
+; ;; irregularity
+;)
 
 
 ;; RELATIONAL PROPERTY SCALE
@@ -2469,11 +2476,71 @@
  ;; WORDS: connectivity
 )
 
+(define-type ont::temporal-scale
+ :sem (F::abstr-obj (F::scale ONT::TEMPORAL-SCALE))
+ :parent ont::ordered-domain
+)
+
+;; time measure scale
+(define-type ont::time-measure-scale
+  :sem (F::Abstr-obj (F::Scale Ont::time-measure-scale))
+  :parent ont::temporal-scale
+)
+
+(define-type ont::duration-scale
+  :sem (F::abstr-obj (F::scale ONT::DURATION-SCALE))
+  :parent ont::time-measure-scale
+)
+
+(define-type ont::age-scale
+  :sem (F::abstr-obj (F::scale ONT::AGE-SCALE))
+  ;:parent ont::time-measure-scale
+  :parent ont::duration-scale
+  :wordnet-sense-keys ("age%1:28:00" "age%1:07:00")
+)
+
+(define-type ont::time-loc-scale
+ :sem (F::abstr-obj (F::scale ONT::TIME-LOC-SCALE))
+  :parent ont::time-measure-scale
+)
+
+;; temporal occurrence
+(define-type ont::temporal-occurrence-scale
+  :sem (F::abstr-obj (F::scale ONT::TEMPORAL-OCCURRENCE-SCALE))
+  :parent ont::temporal-scale ;process-property-scale
+  ;; :wordnet-sense-keys ("incidence%1:24:00")
+)
+ 
+(define-type ont::regularity-scale
+  :sem (F::abstr-obj (F::scale ONT::REGULARITY-SCALE))
+  :parent ont::temporal-occurrence-scale
+  ;; WORDS: irregularity, regularity
+)
+ 
+(define-type ont::regular-scale
+  :sem (F::abstr-obj (F::scale ONT::REGULAR-SCALE))
+  :parent ont::regularity-scale
+  :wordnet-sense-keys ("regularity%1:07:00")
+  ;; regularity
+)
+ 
+(define-type ont::not-regular-scale
+  :sem (F::abstr-obj (F::scale ONT::NOT-REGULAR-SCALE))
+  :parent ont::regularity-scale
+  :wordnet-sense-keys ("intermittence%1:07:00" "irregularity%1:07:00")
+  ;; irregularity
+)
 
 ;;;;;; UNORDERED DISCRETE DOMAIN
 (define-type ont::unordered-domain
  :sem (F::abstr-obj (F::scale ONT::UNORDERED-DOMAIN))
  :parent ont::domain 
+)
+
+(define-type ont::quantity-related-scale
+ :sem (F::abstr-obj (F::scale ONT::QUANTITY-RELATED-SCALE))
+ :parent ont::unordered-domain
+ ;:wordnet-sense-keys ("")
 )
 
 (define-type ont::gender-scale

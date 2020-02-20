@@ -2336,6 +2336,7 @@
  :parent ont::property-val
   :wordnet-sense-keys ("flowering%3:00:00::")
  :comment "properties that describe life processes"
+ :sem (F::abstr-obj (F::scale ont::life-process-scale))
 )
 
 (define-type ont::of-death-val
@@ -2409,14 +2410,16 @@
 ;;; process-related adjectives
 (define-type ont::process-val
   :parent ont::property-val 
- :comment "properties that describe processes"
+  :comment "properties that describe processes"
+  :sem (F::abstr-obj (F::scale ont::process-property-scale))
 )
 
 ;; adjectives meaning "can [not] be verb'd" for some verb
 (define-type ont::can-be-done-val
  :parent ont::property-val 
-  :wordnet-sense-keys ("inheritable%3:00:00::" "heritable%3:00:00::" "excitable%3:00:00::" "noninheritable%3:00:00::" "nonheritable%3:00:00::" "noncombustible%3:00:00::" "incombustible%3:00:00::" "unprofitable%3:00:00::" "profitable%3:00:00::" "passable%3:00:00::" "digestible%3:00:00::" "edible%3:00:00::" "comestible%3:00:00::" "eatable%3:00:00::" "nontaxable%3:00:00::" "exempt%3:00:02::" "impassable%3:00:00::" "unpassable%3:00:00::" "corrigible%3:00:00::" "attachable%3:00:00::" "unforgettable%3:00:00::" "incalculable%3:00:00::" "unpardonable%3:00:00::" "inevitable%3:00:00::" "determinable%3:00:00::" "expressible%3:00:00::" "pardonable%3:00:00::" "contestable%3:00:00::" "thinkable%3:00:00::" "indivisible%3:00:00::" "disposable%3:00:02::" "indeterminable%3:00:00::" "undeterminable%3:00:00::" "collapsible%3:00:00::" "collapsable%3:00:00::" "reversible%3:00:00::" "commutable%3:00:00::" "perishable%3:00:00::" "salable%3:00:00::" "saleable%3:00:00::" "infallible%3:00:00::" "undeniable%3:00:00::" "calculable%3:00:00::" "imperishable%3:00:00::" "incorrigible%3:00:00::" "undatable%3:00:00::" "soluble%3:00:02::" "unalterable%3:00:00::" "inalterable%3:00:00::" "deniable%3:00:00::" "revocable%3:00:00::" "revokable%3:00:00::" "placable%3:00:00::" "distinguishable%3:00:00::" "recoverable%3:00:00::" "incommutable%3:00:00::" "unrecoverable%3:00:00::" "irrecoverable%3:00:00::" "unsalable%3:00:00::" "unsaleable%3:00:00::" "immeasurable%3:00:00::" "unmeasurable%3:00:00::" "immensurable%3:00:00::" "unmeasured%3:00:00::" "extensile%3:00:00::" "extensible%3:00:00::" "indeterminate%3:00:01::" "undetermined%3:00:04::" "expendable%3:00:00::" "implacable%3:00:00::" "inexhaustible%3:00:00::" "inexcusable%3:00:00::" "forgettable%3:00:00::" "detachable%3:00:00::" "indefeasible%3:00:00::" "returnable%3:00:00::" "exchangeable%3:00:00::" "unexchangeable%3:00:00::" "inconsolable%3:00:00::" "disconsolate%3:00:04::" "unconsolable%3:00:00::" "livable%3:00:00::" "liveable%3:00:00::" "excusable%3:00:00::" "nondisposable%3:00:02::" "unlivable%3:00:00::" "unliveable%3:00:00::" "disposable%3:00:01::" "exportable%3:00:00::" "compressible%3:00:00::" "washable%3:00:00::" "scalable%3:00:00::" "explicable%3:00:00::" "inviolable%3:00:00::" "reversible%3:00:02::" "two-sided%3:00:02::" "noncollapsible%3:00:00::" "noncollapsable%3:00:00::" "inedible%3:00:00::" "uneatable%3:00:00::" "indigestible%3:00:00::" "exhaustible%3:00:00::" "inexpressible%3:00:00::" "unexpressible%3:00:00::" "unexcitable%3:00:00::" "stoppable%3:00:00::" "ponderable%3:00:00::" "irreversible%3:00:00::" "retractile%3:00:00::" "nonreflective%3:00:00::" "nonreflecting%3:00:00::" "irrevocable%3:00:00::" "irrevokable%3:00:00::" "unstoppable%3:00:00::" "pronounceable%3:00:00::" "unintelligible%3:00:00::" "unrenewable%3:00:00::" "nonrenewable%3:00:00::" "nonadsorbent%3:00:00::" "nonadsorptive%3:00:00::" "rentable%3:00:00::" "unpreventable%3:00:00::" "unshrinkable%3:00:00::" "extricable%3:00:00::" "unexportable%3:00:00::" "datable%3:00:00::" "dateable%3:00:00::" "operable%3:00:00::" "unexpendable%3:00:00::" "submersible%3:00:00::" "submergible%3:00:00::" "unreportable%3:00:00::" "unportable%3:00:00::" "nonretractile%3:00:00::" "nonretractable%3:00:00::" "nonextensile%3:00:00::" "inextensible%3:00:00::" "nonprotractile%3:00:00::" "shockable%3:00:00::" "narrow-minded%3:00:04::" "unactable%3:00:00::" "indistinguishable%3:00:00::" "undistinguishable%3:00:00::" "incurable%3:00:00::" "playable%3:00:00::" "alterable%3:00:00::" "nondisposable%3:00:01::" "invertible%3:00:00::" "unemployable%3:00:00::" "unappealable%3:00:00::" "traceable%3:00:00::" "trackable%3:00:00::" "incompressible%3:00:00::" "adsorbable%3:00:00::" "adsorbate%3:00:00::" "nonsubmersible%3:00:00::" "nonsubmergible%3:00:00::" "repeatable%3:00:00::" "quotable%3:00:00::" "actable%3:00:00::" "nonwashable%3:00:00::" "bridgeable%3:00:00::" "wearable%3:00:00::" "nonvolatile%3:00:00::" "nonvolatilizable%3:00:00::" "nonvolatilisable%3:00:00::" "knowable%3:00:00::" "cognizable%3:00:00::" "cognisable%3:00:00::" "cognoscible%3:00:00::" "unscalable%3:00:00::" "unclimbable%3:00:00::" "puncturable%3:00:00::" "imponderable%3:00:00::" "preventable%3:00:00::" "resistible%3:00:00::" "nonreversible%3:00:00::" "one-sided%3:00:02::" "consolable%3:00:00::" "non-invertible%3:00:00::" "paintable%3:00:00::" "printable%3:00:00::" "unpronounceable%3:00:00::" "employable%3:00:00::" "unopposable%3:00:00::" "unpublishable%3:00:00::" "irreducible%3:00:00::" "publishable%3:00:00::" "undrinkable%3:00:00::" "unsinkable%3:00:00::" "translatable%3:00:00::" "nondeductible%3:00:00::" "adoptable%3:00:00::" "seasonable%3:00:00::" "drinkable%3:00:00::" "potable%3:00:00::" "unrentable%3:00:00::" "inoperable%3:00:00::" "appealable%3:00:00::" "unshockable%3:00:00::" "broad-minded%3:00:04::" "irreplaceable%3:00:00::" "unreplaceable%3:00:00::" "inextinguishable%3:00:00::" "unseasonable%3:00:00::" "unadoptable%3:00:00::" "nonreturnable%3:00:00::" "opposable%3:00:00::" "apposable%3:00:00::" "reportable%3:00:00::" "sinkable%3:00:00::" "unrepeatable%3:00:00::" "unquotable%3:00:00::" "reducible%3:00:00::" "untraceable%3:00:00::" "nonarbitrable%3:00:00::" "absorbable%3:00:00::" "unpaintable%3:00:00::" "curable%3:00:00::" "unbridgeable%3:00:00::" "shrinkable%3:00:00::" "defeasible%3:00:00::" "unprintable%3:00:00::" "untranslatable%3:00:00::" "extinguishable%3:00:00::" "arbitrable%3:00:00::" "unwearable%3:00:00::" "violable%3:00:00::" "renewable%3:00:00::" "unplayable%3:00:00::" "breakable%3:00:00::" "unchangeable%3:00:00::" "intractable%3:00:00::" "admissible%3:00:00::" "attributable%3:00:00::" "destructible%3:00:00::" "deductible%3:00:00::" "inconvertible%3:00:00::" "unconvertible%3:00:00::" "unexchangeable%3:00:04::" "indispensable%3:00:00::" "inadmissible%3:00:00::" "nonabsorbent%3:00:00::" "nonabsorptive%3:00:00::" "indestructible%3:00:00::" "convertible%3:00:00::" "exchangeable%3:00:04::" "sympathetic%3:00:02::" "appealing%3:00:02::" "likeable%3:00:02::" "likable%3:00:02::" "charitable%3:01:00::" "unattributable%3:00:00::" "unascribable%3:00:00::" "dispensable%3:00:00::" "inhospitable%3:00:02::" "machine_readable%3:01:00::" "computer_readable%3:01:00::" "differentiable%3:01:00::" "hydrolyzable%3:01:00::" "packable%3:01:00::" "fermentable%3:01:00::" "positionable%3:01:00::" "nonfissionable%3:00:00::" "unsympathetic%3:00:02::" "unappealing%3:00:02::" "unlikeable%3:00:02::" "unlikable%3:00:02::" "deliverable%3:01:00::" "metastable%3:01:00::" "stainable%3:01:00::" "sustainable%3:01:00::" "diagonalizable%3:01:00::" "fissionable%3:00:00::" "fissile%3:00:02::" "uninjectable%3:00:00::" "injectable%3:00:00::" "measurable%3:00:00::" "mensurable%3:00:00::" "mensural%3:01:00::" "measured%3:01:00::" "mensurable%3:01:00::")
- :arguments ((:optional ONT::GROUND )) 
+ :wordnet-sense-keys ("inheritable%3:00:00::" "heritable%3:00:00::" "excitable%3:00:00::" "noninheritable%3:00:00::" "nonheritable%3:00:00::" "noncombustible%3:00:00::" "incombustible%3:00:00::" "unprofitable%3:00:00::" "profitable%3:00:00::" "passable%3:00:00::" "digestible%3:00:00::" "edible%3:00:00::" "comestible%3:00:00::" "eatable%3:00:00::" "nontaxable%3:00:00::" "exempt%3:00:02::" "impassable%3:00:00::" "unpassable%3:00:00::" "corrigible%3:00:00::" "attachable%3:00:00::" "unforgettable%3:00:00::" "incalculable%3:00:00::" "unpardonable%3:00:00::" "inevitable%3:00:00::" "determinable%3:00:00::" "expressible%3:00:00::" "pardonable%3:00:00::" "contestable%3:00:00::" "thinkable%3:00:00::" "indivisible%3:00:00::" "disposable%3:00:02::" "indeterminable%3:00:00::" "undeterminable%3:00:00::" "collapsible%3:00:00::" "collapsable%3:00:00::" "reversible%3:00:00::" "commutable%3:00:00::" "perishable%3:00:00::" "salable%3:00:00::" "saleable%3:00:00::" "infallible%3:00:00::" "undeniable%3:00:00::" "calculable%3:00:00::" "imperishable%3:00:00::" "incorrigible%3:00:00::" "undatable%3:00:00::" "soluble%3:00:02::" "unalterable%3:00:00::" "inalterable%3:00:00::" "deniable%3:00:00::" "revocable%3:00:00::" "revokable%3:00:00::" "placable%3:00:00::" "distinguishable%3:00:00::" "recoverable%3:00:00::" "incommutable%3:00:00::" "unrecoverable%3:00:00::" "irrecoverable%3:00:00::" "unsalable%3:00:00::" "unsaleable%3:00:00::" "immeasurable%3:00:00::" "unmeasurable%3:00:00::" "immensurable%3:00:00::" "unmeasured%3:00:00::" "extensile%3:00:00::" "extensible%3:00:00::" "indeterminate%3:00:01::" "undetermined%3:00:04::" "expendable%3:00:00::" "implacable%3:00:00::" "inexhaustible%3:00:00::" "inexcusable%3:00:00::" "forgettable%3:00:00::" "detachable%3:00:00::" "indefeasible%3:00:00::" "returnable%3:00:00::" "exchangeable%3:00:00::" "unexchangeable%3:00:00::" "inconsolable%3:00:00::" "disconsolate%3:00:04::" "unconsolable%3:00:00::" "livable%3:00:00::" "liveable%3:00:00::" "excusable%3:00:00::" "nondisposable%3:00:02::" "unlivable%3:00:00::" "unliveable%3:00:00::" "disposable%3:00:01::" "exportable%3:00:00::" "compressible%3:00:00::" "washable%3:00:00::" "scalable%3:00:00::" "explicable%3:00:00::" "inviolable%3:00:00::" "reversible%3:00:02::" "two-sided%3:00:02::" "noncollapsible%3:00:00::" "noncollapsable%3:00:00::" "inedible%3:00:00::" "uneatable%3:00:00::" "indigestible%3:00:00::" "exhaustible%3:00:00::" "inexpressible%3:00:00::" "unexpressible%3:00:00::" "unexcitable%3:00:00::" "stoppable%3:00:00::" "ponderable%3:00:00::" "irreversible%3:00:00::" "retractile%3:00:00::" "nonreflective%3:00:00::" "nonreflecting%3:00:00::" "irrevocable%3:00:00::" "irrevokable%3:00:00::" "unstoppable%3:00:00::" "pronounceable%3:00:00::" "unintelligible%3:00:00::" "unrenewable%3:00:00::" "nonrenewable%3:00:00::" "nonadsorbent%3:00:00::" "nonadsorptive%3:00:00::" "rentable%3:00:00::" "unpreventable%3:00:00::" "unshrinkable%3:00:00::" "extricable%3:00:00::" "unexportable%3:00:00::" "datable%3:00:00::" "dateable%3:00:00::" "operable%3:00:00::" "unexpendable%3:00:00::" "submersible%3:00:00::" "submergible%3:00:00::" "unreportable%3:00:00::" "unportable%3:00:00::" "nonretractile%3:00:00::" "nonretractable%3:00:00::" "nonextensile%3:00:00::" "inextensible%3:00:00::" "nonprotractile%3:00:00::" "shockable%3:00:00::" "narrow-minded%3:00:04::" "unactable%3:00:00::" "indistinguishable%3:00:00::" "undistinguishable%3:00:00::" "incurable%3:00:00::" "playable%3:00:00::" "alterable%3:00:00::" "nondisposable%3:00:01::" "invertible%3:00:00::" "unemployable%3:00:00::" "unappealable%3:00:00::" "traceable%3:00:00::" "trackable%3:00:00::" "incompressible%3:00:00::" "adsorbable%3:00:00::" "adsorbate%3:00:00::" "nonsubmersible%3:00:00::" "nonsubmergible%3:00:00::" "repeatable%3:00:00::" "quotable%3:00:00::" "actable%3:00:00::" "nonwashable%3:00:00::" "bridgeable%3:00:00::" "wearable%3:00:00::" "nonvolatile%3:00:00::" "nonvolatilizable%3:00:00::" "nonvolatilisable%3:00:00::" "knowable%3:00:00::" "cognizable%3:00:00::" "cognisable%3:00:00::" "cognoscible%3:00:00::" "unscalable%3:00:00::" "unclimbable%3:00:00::" "puncturable%3:00:00::" "imponderable%3:00:00::" "preventable%3:00:00::" "resistible%3:00:00::" "nonreversible%3:00:00::" "one-sided%3:00:02::" "consolable%3:00:00::" "non-invertible%3:00:00::" "paintable%3:00:00::" "printable%3:00:00::" "unpronounceable%3:00:00::" "employable%3:00:00::" "unopposable%3:00:00::" "unpublishable%3:00:00::" "irreducible%3:00:00::" "publishable%3:00:00::" "undrinkable%3:00:00::" "unsinkable%3:00:00::" "translatable%3:00:00::" "nondeductible%3:00:00::" "adoptable%3:00:00::" "seasonable%3:00:00::" "drinkable%3:00:00::" "potable%3:00:00::" "unrentable%3:00:00::" "inoperable%3:00:00::" "appealable%3:00:00::" "unshockable%3:00:00::" "broad-minded%3:00:04::" "irreplaceable%3:00:00::" "unreplaceable%3:00:00::" "inextinguishable%3:00:00::" "unseasonable%3:00:00::" "unadoptable%3:00:00::" "nonreturnable%3:00:00::" "opposable%3:00:00::" "apposable%3:00:00::" "reportable%3:00:00::" "sinkable%3:00:00::" "unrepeatable%3:00:00::" "unquotable%3:00:00::" "reducible%3:00:00::" "untraceable%3:00:00::" "nonarbitrable%3:00:00::" "absorbable%3:00:00::" "unpaintable%3:00:00::" "curable%3:00:00::" "unbridgeable%3:00:00::" "shrinkable%3:00:00::" "defeasible%3:00:00::" "unprintable%3:00:00::" "untranslatable%3:00:00::" "extinguishable%3:00:00::" "arbitrable%3:00:00::" "unwearable%3:00:00::" "violable%3:00:00::" "renewable%3:00:00::" "unplayable%3:00:00::" "breakable%3:00:00::" "unchangeable%3:00:00::" "intractable%3:00:00::" "admissible%3:00:00::" "attributable%3:00:00::" "destructible%3:00:00::" "deductible%3:00:00::" "inconvertible%3:00:00::" "unconvertible%3:00:00::" "unexchangeable%3:00:04::" "indispensable%3:00:00::" "inadmissible%3:00:00::" "nonabsorbent%3:00:00::" "nonabsorptive%3:00:00::" "indestructible%3:00:00::" "convertible%3:00:00::" "exchangeable%3:00:04::" "sympathetic%3:00:02::" "appealing%3:00:02::" "likeable%3:00:02::" "likable%3:00:02::" "charitable%3:01:00::" "unattributable%3:00:00::" "unascribable%3:00:00::" "dispensable%3:00:00::" "inhospitable%3:00:02::" "machine_readable%3:01:00::" "computer_readable%3:01:00::" "differentiable%3:01:00::" "hydrolyzable%3:01:00::" "packable%3:01:00::" "fermentable%3:01:00::" "positionable%3:01:00::" "nonfissionable%3:00:00::" "unsympathetic%3:00:02::" "unappealing%3:00:02::" "unlikeable%3:00:02::" "unlikable%3:00:02::" "deliverable%3:01:00::" "metastable%3:01:00::" "stainable%3:01:00::" "sustainable%3:01:00::" "diagonalizable%3:01:00::" "fissionable%3:00:00::" "fissile%3:00:02::" "uninjectable%3:00:00::" "injectable%3:00:00::" "measurable%3:00:00::" "mensurable%3:00:00::" "mensural%3:01:00::" "measured%3:01:00::" "mensurable%3:01:00::")
+ :arguments ((:optional ONT::GROUND ))
+ :sem (F::abstr-obj (F::scale ont::can-be-done-scale)) ;process-property-scale)) 
 )
 
 ;; reparability, fixability, able to remedy, resolvable
@@ -2567,6 +2570,7 @@
  :parent ont::property-val 
   :wordnet-sense-keys ("dominical%3:01:00::" "sabbatarian%3:01:00::" "semicentennial%3:01:00::" "semicentenary%3:01:00::" "tricentenary%3:01:00::" "tricentennial%3:01:00::" "spatiotemporal%3:01:00::" "quincentennial%3:01:00::" "quincentenary%3:01:00::" "ferial%3:01:00::" "temporal%3:01:01::" "equinoctial%3:01:00::" "bicentennial%3:01:00::" "bicentenary%3:01:00::" "sabbatical%3:01:01::" "sabbatic%3:01:00::")
  :comment "properties relating to time"
+ :sem (F::abstr-obj (F::scale ont::temporal-scale))
 )
 
 ;; temporal occurrence
@@ -2671,6 +2675,7 @@
 (define-type ont::process-status-val
  :parent ont::process-val
  :comment "properties relating to status of processes"
+ :sem (F::abstr-obj (F::scale ont::process-status-scale))
 )
 
 ;; done, finished
@@ -2719,9 +2724,16 @@
  :comment "outcome of the process"
 )
 
+;; process evaluation
+(define-type ont::process-evaluation-val
+  :parent ont::evaluation-attribute-val ;process-val
+  :comment "evaluation properties of processes"
+  :sem (F::abstr-obj (F::scale ont::process-evaluation-scale))
+)
+
 ;;; This is for speed values - fast, slow, etc
 (define-type ont::speed-val
- :parent ont::process-val 
+ :parent ont::dimensional-property-val ;process-evaluation-val ;process-val 
  :arguments ((:REQUIRED ONT::FIGURE ((? type F::phys-obj F::situation F::abstr-obj )))) ;; e.g., "rate" is an abstract object
  :sem (F::abstr-obj (F::scale ont::speed-scale ))
 )
@@ -2745,11 +2757,11 @@
 )
 
 ;; process evaluation
-(define-type ont::process-evaluation-val
- :parent ont::process-val
- :comment "evaluation properties of processes"
- :sem (F::abstr-obj (F::scale ont::process-evaluation-scale))
-)
+;(define-type ont::process-evaluation-val
+; :parent ont::evaluation-attribute-val ;process-val
+; :comment "evaluation properties of processes"
+; :sem (F::abstr-obj (F::scale ont::process-evaluation-scale))
+;)
 
 ;; productive
 (define-type ont::productivity-val
@@ -3190,7 +3202,7 @@
 ;; dimensional-property
 (define-type ont::dimensional-property-val
     :parent ont::property-val
-    :sem (F::abstr-obj (F::scale ont::measure-scale))
+    :sem (F::abstr-obj (F::scale ont::dimensional-scale)) ;measure-scale))
     :comment "properties pertaining to dimensions and measurable extents"
     )
 
@@ -5281,6 +5293,7 @@
 	     (:optional ONT::STANDARD)
              )
  :wordnet-sense-keys("quantitative%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::quantity-related-scale))
  )
 
 (define-type ONT::additional-val
@@ -5305,9 +5318,10 @@
 
 (define-type ONT::adequacy-VAL
 ;   :sem (F::Abstr-obj (F::scale ONT::adequacy-val))
-   :parent  ONT::quantity-related-property-val
+   :parent  ONT::evaluation-attribute-val ;quantity-related-property-val
    :arguments ((:ESSENTIAL ONT::GROUND)
 	       )
+  ; :sem (F::abstr-obj (F::scale ont::evaluation-scale))
  )
 
 (define-type ONT::number-related-property-val
