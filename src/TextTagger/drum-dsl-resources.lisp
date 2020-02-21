@@ -72,6 +72,9 @@
 ;; this one is really big so we don't get it
 (defresource (PC PubChem))
 
+;; our own meta-resource for names of resources/databases
+(defresource (DB databases))
+
 (require-resource-version :ont)
 (require-dsl-file #!TRIPS"src;TextTagger;drum-mappings.lisp")
 

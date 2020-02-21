@@ -22,7 +22,7 @@ install:: mirna-species.tsv drum-terms.tsv drum-dsl/COMPLETE specialist.tsv drum
 #	'$$a = $$1 if (/^ID   (\w+)-/i);  push @{$$h{$$a}}, $$1 if (/^DE   ([A-Z]\w* \w*) mir/i and  not grep { $$_ eq $$1 } @{$$h{$$a}});  END {  print map { $$_ . join("", map { "\t$$_" } @{$$h{$$_}}) . "\n" }  sort keys %h;  }' \
 #	>$@
 
-drum-terms.tsv: merge-terms-files.pl obo-terms.tsv hgnc-terms.tsv uniprot-terms.tsv uniprot-subcell-terms.tsv nextprot-family-terms.tsv pfam-terms.tsv mesh-scr-terms.tsv ncit-terms.tsv hlsm-terms.tsv
+drum-terms.tsv: merge-terms-files.pl obo-terms.tsv hgnc-terms.tsv uniprot-terms.tsv uniprot-subcell-terms.tsv nextprot-family-terms.tsv pfam-terms.tsv mesh-scr-terms.tsv ncit-terms.tsv hlsm-terms.tsv db-terms.tsv
 	./$^ >$@
 
 drum-dbxrefs.tsv: downloads/uniprot_sprot.dat.gz get-uniprot-dbxrefs.pl uniprot-species.pl

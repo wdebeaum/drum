@@ -290,6 +290,9 @@ sub read_from_terms2 {
 	  $lftypes = ['MEDICAL-DISORDERS-AND-CONDITIONS'];
 	} elsif ($id =~ /^PC:/) { # everything (that we get) is a drug
 	  $lftypes = ['PHARMACOLOGIC-SUBSTANCE'];
+	} elsif ($id =~ /^DB:/) { # everything is a database
+	  $lftypes = ['DATABASE'];
+	  # TODO? force penn-pos = NNP
 	}
 	if (defined($lftypes)) {
 	  my @old_terms = grep {
@@ -1256,8 +1259,8 @@ sub score_match {
   } else {
     die "Unrecognized term status: $m->{status}";
   }
-  # we really like famplex
-  if ($pkg eq 'FPLX') {
+  # we really like famplex and db
+  if ($pkg eq 'FPLX' or $pkg eq 'DB') {
     $status_score++;
   }
 

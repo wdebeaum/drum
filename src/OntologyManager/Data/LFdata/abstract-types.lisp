@@ -1031,20 +1031,23 @@
 
 ;; meeting, party, conference
 (define-type ont::gathering-event
-    :wordnet-sense-keys("ceremony%1:04:00" "gathering%1:14:00" "visit%1:04:02")
+    :wordnet-sense-keys("gathering%1:14:00" "visit%1:04:02")
     :parent ont::located-event
   )
 
 ;; 20111005 fire type added for obtw demo
 (define-type ont::fire
+  :wordnet-sense-keys("fire%1:11:00")
   :parent ont::located-event
   )
 
 (define-type ont::ceremony
+  :wordnet-sense-keys("ceremony%1:04:00" "ceremony%1:04:01" "ceremony%1:11:00" "christening%1:04:00" "commencement%1:11:02" "convocation%1:04:00" "funeral%1:11:00");hypernym for "bar_mitzvah%1:11:00" is already here: "ceremony%1:11:00", similarly  inauguration%1:04:00, coronation%1:11:00, initiation%1:11:00, wake%1:04:00, wedding%1:11:00
   :parent ont::gathering-event
   )
 
 (define-type ont::performance-play
+  :wordnet-sense-keys("show%1:10:00")
   :parent ont::gathering-event
   )
 
@@ -1055,8 +1058,7 @@
 
 ;; talk, lecture, demo, presentation
 (define-type ont::presentation
-    :wordnet-sense-keys("presentation%1:10:00" "presentation%1:10:02" "show%1:04:00"
-					       "show%1:10:00")
+    :wordnet-sense-keys("presentation%1:10:00" "presentation%1:10:02" "show%1:04:00") ;"show%1:10:00")
   :parent ont::gathering-event
   )
 
