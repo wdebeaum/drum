@@ -2731,30 +2731,6 @@
   :sem (F::abstr-obj (F::scale ont::process-evaluation-scale))
 )
 
-;;; This is for speed values - fast, slow, etc
-(define-type ont::speed-val
- :parent ont::dimensional-property-val ;process-evaluation-val ;process-val 
- :arguments ((:REQUIRED ONT::FIGURE ((? type F::phys-obj F::situation F::abstr-obj )))) ;; e.g., "rate" is an abstract object
- :sem (F::abstr-obj (F::scale ont::speed-scale ))
-)
-
-(define-type ont::slow-val
- :parent ont::speed-val 
- :wordnet-sense-keys ("slow%3:00:01" "gradually%4:02:00")
- )
-
-(define-type ont::instantaneous-val
- :parent ont::speed-val 
- :wordnet-sense-keys ("instantaneous%5:00:00:fast:01" "instant%5:00:00:fast:01" "sudden%3:00:00" )
-)
-
-(define-type ont::speedy
- :parent ont::speed-val 
- :wordnet-sense-keys ("quick%5:00:02:fast:01" "fleet%5:00:00:fast:01" "rapid%5:00:00:fast:01" "rapid%5:00:02:fast:01" "fast%3:00:01" "quick%5:00:00:fast:01"
-					      "hurried%3:00:00" "hastily%4:02:00")
- ; Words: (W::QUICK W::FAST W::RAPID W::SWIFT W::SPEEDY)
- ; Antonym: NIL (W::SLOW)
-)
 
 ;; process evaluation
 ;(define-type ont::process-evaluation-val
@@ -3205,6 +3181,31 @@
     :sem (F::abstr-obj (F::scale ont::dimensional-scale)) ;measure-scale))
     :comment "properties pertaining to dimensions and measurable extents"
     )
+
+;;; This is for speed values - fast, slow, etc
+(define-type ont::speed-val
+ :parent ont::dimensional-property-val ;process-evaluation-val ;process-val 
+ :arguments ((:REQUIRED ONT::FIGURE ((? type F::phys-obj F::situation F::abstr-obj )))) ;; e.g., "rate" is an abstract object
+ :sem (F::abstr-obj (F::scale ont::speed-scale ))
+)
+
+(define-type ont::slow-val
+ :parent ont::speed-val 
+ :wordnet-sense-keys ("slow%3:00:01" "gradually%4:02:00")
+ )
+
+(define-type ont::instantaneous-val
+ :parent ont::speed-val 
+ :wordnet-sense-keys ("instantaneous%5:00:00:fast:01" "instant%5:00:00:fast:01" "sudden%3:00:00" )
+)
+
+(define-type ont::speedy
+ :parent ont::speed-val 
+ :wordnet-sense-keys ("quick%5:00:02:fast:01" "fleet%5:00:00:fast:01" "rapid%5:00:00:fast:01" "rapid%5:00:02:fast:01" "fast%3:00:01" "quick%5:00:00:fast:01"
+					      "hurried%3:00:00" "hastily%4:02:00")
+ ; Words: (W::QUICK W::FAST W::RAPID W::SWIFT W::SPEEDY)
+ ; Antonym: NIL (W::SLOW)
+)
 
 (define-type ont::physical-strength-val
  :parent ont::dimensional-property-val
