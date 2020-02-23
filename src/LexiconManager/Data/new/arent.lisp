@@ -31,7 +31,14 @@
     (;;(LF-PARENT ONT::IN-RELATION)
       (lf-parent ont::be) ;; 20120524 GUM change new parent
      (LF-FORM W::be)
-     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-A-TEMPL)
+     (meta-data :origin asma :entry-date 20120130 :change-date nil)
+    
+     )
+    (;;(LF-PARENT ONT::IN-RELATION)
+      (lf-parent ont::be) ;; 20120524 GUM change new parent
+     (LF-FORM W::be)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-B-TEMPL)
      (meta-data :origin asma :entry-date 20120130 :change-date nil)
     
      )

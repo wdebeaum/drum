@@ -33,9 +33,17 @@
     (;;(LF-PARENT ONT::IN-RELATION)
      (lf-parent ont::be) ;; 20120524 GUM change new parent
      (LF-FORM W::be)
-     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-A-TEMPL)
      
      )
+
+    (;;(LF-PARENT ONT::IN-RELATION)
+     (lf-parent ont::be) ;; 20120524 GUM change new parent
+     (LF-FORM W::be)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-B-TEMPL)
+     
+     )
+    
     ;;;; .. there is a box
     ((LF-PARENT ONT::EXISTS)
      (LF-FORM W::be)

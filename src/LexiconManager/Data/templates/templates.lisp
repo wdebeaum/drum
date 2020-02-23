@@ -970,12 +970,40 @@
 	))
 |#
 
+      #|
       (NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL
        (ARGUMENTS
       	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) ;;(w::status ont::definiteQ) (w::coerce-amt -)
 		  (w::expletive -)) ONT::neutral)
 	(LOBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) (w::status (? status ont::definite ont::definite-plural ont::pro ont::pro-set ont::the ont::the-set )) ;(w::status ont::definiteQ) ;;(w::coerce-amt -)
 		 (w::expletive -) (lex (? !lex w::what))) ONT::neutral1)
+	))
+      |#
+
+      (NEUTRAL-NEUTRAL1-NP-EQUAL-A-TEMPL
+       (ARGUMENTS
+      	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) ;;(w::status ont::definiteQ) (w::coerce-amt -)
+		  (w::expletive -)) ONT::neutral)
+	(LOBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -)
+					;(w::status (? status ont::definite ont::definite-plural ont::pro ont::pro-set ont::the ont::the-set ))
+					;(w::status ont::definiteQ) ;;(w::coerce-amt -)
+		 (w::expletive -) ;(lex (? !lex w::what))
+		 ) ONT::neutral1)
+	))
+
+      ; What kind of pizza is the supreme?
+      ; to get around the problem that "kind" is abstr-obj and Y might be phys-obj, we don't require matching sems
+      (NEUTRAL-NEUTRAL1-NP-EQUAL-B-TEMPL
+       (ARGUMENTS
+      	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) ;;(w::status ont::definiteQ) (w::coerce-amt -)
+		  (w::expletive -)
+		  (w::lf (% w::prop (w::class (?x ONT::KIND))))
+	       ) ONT::neutral)
+	(LOBJ (% W::NP (W::agr ?agr) (w::sem ?sem2) (w::gerund -)
+					;(w::status (? status ont::definite ont::definite-plural ont::pro ont::pro-set ont::the ont::the-set ))
+					;(w::status ont::definiteQ) ;;(w::coerce-amt -)
+		 (w::expletive -) ;(lex (? !lex w::what))
+		 ) ONT::neutral1)
 	))
 
       (NEUTRAL-FORMAL-PRED-SUBJCONTROL-TEMPL

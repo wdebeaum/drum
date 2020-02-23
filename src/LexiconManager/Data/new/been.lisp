@@ -38,7 +38,13 @@
     (;;(LF-PARENT ONT::IN-RELATION)
      (lf-parent ont::be) ;; 20120524 GUM change new parent
      (LF-FORM W::be)
-     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-A-TEMPL)
+     ;(PREFERENCE 0.96)
+     )
+    (;;(LF-PARENT ONT::IN-RELATION)
+     (lf-parent ont::be) ;; 20120524 GUM change new parent
+     (LF-FORM W::be)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-B-TEMPL)
      ;(PREFERENCE 0.96)
      )
 

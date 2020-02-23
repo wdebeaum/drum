@@ -30,7 +30,14 @@
      (lf-parent ont::be) ;; 20120524 GUM change new parent
      (LF-FORM W::be)
      (meta-data :origin asma :entry-date 20120130 :change-date nil)
-     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-A-TEMPL)
+     
+     )
+    (;;(LF-PARENT ONT::IN-RELATION)
+     (lf-parent ont::be) ;; 20120524 GUM change new parent
+     (LF-FORM W::be)
+     (meta-data :origin asma :entry-date 20120130 :change-date nil)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-B-TEMPL)
      
      )
     ;;;; .. there isnt a box

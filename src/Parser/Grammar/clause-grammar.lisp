@@ -1203,20 +1203,20 @@
             (lf (% prop (status ont::f) (arg ?arg) (var *) (sem ?newsem)
 		   (class ONT::MEMBERSHIP) (constraint (& (figure ?arg) 
 							  (ground (% *pro* (status ?x) ;(status ont::definite-plural)
-								     (var ?v) (class ?c)
+								     (var ?v) (class ?!c)
 								     (constraint ?constr)))
 				  ))))
             (argument ?argument)
             (filled -)
             )
-      -pred4> 0.995
+      -pred4> ;0.995
       (head (np (sem ?sem) (var ?v) (sort pred) (case (? case obj -))
 		(derived-from-name -) (gerund -)
 		(lf (% description (status (? x ont::indefinite ont::bare ont::indefinite-plural ont::SM ont::wh ONT::what ONT::which ONT::whose ONT::*wh-term* ont::wh-term ONT::WH-PLURAL ont::wh-term-set ont::kind)) 
-		       ;(sem ($ f::phys-obj )) ; allow "what kind"
-		       (class ?c)
+		       (sem ($ f::phys-obj )) ; now don't allow "what kind" (abstr-obj)
+		       (class (? !c ONT::DOMAIN)) ;(class ?c) ; hard failure
 		       (constraint ?constr)))
-		(sem ($ ?!s (f::type (? !t ONT::DOMAIN)))) ; exclude "what color is X" 
+		(sem ($ ?!s (f::type (? !t ONT::DOMAIN)))) ; exclude "what color is X" which uses AT-SCALE-VALUE
 		(lex (? !lex w::what))))  ; exclude "X is what" or "what is X"
       (compute-sem-features (lf ONT::MEMBERSHIP) (sem ?newsem))
       )
@@ -3048,7 +3048,8 @@
        )
       )
 
-    ; What kind of pizza is this box?
+    #|
+    ; What kind of pizza is the supreme?
     ((s (stype whq) (subjvar ?subjvar) (dobjvar ?dobjvar) (subj ?subj)
       (qtype q) (lf ?lf) (var ?v))
      -wh-q-predgap3>
@@ -3062,6 +3063,7 @@
 	    (gap (% pred (sem ?predsem) (var ?predvar))))
        )
       )
+    |#
     
     ))
 

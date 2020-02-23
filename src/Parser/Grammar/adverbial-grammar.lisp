@@ -683,7 +683,8 @@
      -what-adj-pre>
      (word (lex w::what))
      (head (N1 (sem ?sem) (sem ($ f::abstr-obj (f::scale ?!sc) (f::type ONT::DOMAIN))) (RESTR ?restr)
-	 (var ?v) (agr ?agr) (mass ?mass) (gap ?gap)
+	       (var ?v) (agr ?agr) (mass ?mass) (gap ?gap)
+	       (class (? x ONT::DOMAIN)) ; fails, not just penalized, if not ONT::DOMAIN
 	 ))
      (append-conjuncts (conj1 ?restr)
 		       (conj2 (& (ONT::GROUND (% *PRO* (status *wh-term*) (VAR *) (CLASS ONT::LEVEL)

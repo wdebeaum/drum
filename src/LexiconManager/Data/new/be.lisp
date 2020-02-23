@@ -37,7 +37,12 @@
     (
      (lf-parent ont::be) ;; 20120524 GUM change new parent
      (LF-FORM W::be)
-     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-A-TEMPL)
+     )
+    (
+     (lf-parent ont::be) ;; 20120524 GUM change new parent
+     (LF-FORM W::be)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-B-TEMPL)
      )
 
     (  ;; the fact is he's happy
