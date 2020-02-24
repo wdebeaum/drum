@@ -997,8 +997,9 @@
        (ARGUMENTS
       	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) ;;(w::status ont::definiteQ) (w::coerce-amt -)
 		  (w::expletive -)
-		  (w::lf (% w::prop (w::class (?x ONT::KIND))))
-	       ) ONT::neutral)
+		  ;(w::lf (% w::prop (w::class (?x ONT::KIND))))
+		  (w::class ONT::KIND) 
+		  ) ONT::neutral)
 	(LOBJ (% W::NP (W::agr ?agr) (w::sem ?sem2) (w::gerund -)
 					;(w::status (? status ont::definite ont::definite-plural ont::pro ont::pro-set ont::the ont::the-set ))
 					;(w::status ont::definiteQ) ;;(w::coerce-amt -)

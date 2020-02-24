@@ -484,13 +484,14 @@
      )
     -s1>
     (np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex) (sort pred) ;; lex needed for expletives? 
-      (pp-word -) (changeagr -) (gap -) (expletive ?exp))
+	(pp-word -) (changeagr -) (gap -) (expletive ?exp)
+	(class ?npclass))
     (head (vp (lf ?lf) (gap ?g)
               ;(template (? !x  lxm::propositional-equal-templ))
               (template (? !x  lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL))
 	      (subjvar ?npvar)
 	      (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex)
-		       (pp-word -) (changeagr -) (gap -) (expletive ?exp)))
+		       (pp-word -) (changeagr -) (gap -) (expletive ?exp) (class ?npclass)))
 	      (var ?v) (vform fin) (agr ?a)
 	      (advbl-needed ?avn)
 	      (neg ?neg)
@@ -2960,12 +2961,12 @@
     ((s (stype whq) (subjvar ?subjvar) (dobjvar ?dobjvar) (subj ?subj) (sem ?sem)
       (qtype q) (lf ?lf) (var ?v))
      -wh-q2>
-     (np (var ?npvar) (sem ?npsem) (wh q) (agr ?a) (case ?case) (status ?npstatus))
+     (np (var ?npvar) (sem ?npsem) (wh q) (agr ?a) (case ?case) (status ?npstatus) (class ?npclass))
      (head (s (stype ynq) (lf ?lf) (var ?v) (sem ?sem)
 	    (advbl-needed -)
 	    (subj ?subj)
 	    (subjvar ?subjvar) (dobjvar ?dobjvar)
-	    (gap (% np (sem ?npsem) (case ?case) (var ?npvar) (agr ?a) (status ?npstatus)))) ; match status for HAVE-PROPERTY
+	    (gap (% np (sem ?npsem) (case ?case) (var ?npvar) (agr ?a) (status ?npstatus) (class ?npclass)))) ; match status for HAVE-PROPERTY
       )
      )
 
