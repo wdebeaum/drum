@@ -6651,7 +6651,7 @@
       )
      -n1-from-name> .995
      (head (name (lex ?l) (sem ?sem) 
-		 (sem ($ (? type f::PHYS-OBJ f::situation) (f::type (? x ont::molecular-part ont::cell-part ont::chemical ont::physical-process ont::organization ont::country)))) ; organization: the FDA; country: the DRC
+		 (sem ($ (? type f::PHYS-OBJ f::situation) (f::type (? x ont::molecular-part ont::cell-part ont::chemical ont::physical-process ont::organization ont::country ont::database)))) ; organization: the FDA; country: the DRC; database: the Small Molecule Pathway Database
 		 (var ?v) (agr ?agr) ;;(agr 3s) 
 		 (lf ?lf) (class ?class)
 	    (full-name ?fname) (time-converted ?tc)

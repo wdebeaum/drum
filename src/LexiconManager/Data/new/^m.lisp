@@ -33,17 +33,11 @@
     (;(;;LF-PARENT ONT::IN-RELATION)
       (lf-parent ont::be) ;; 20120524 GUM change new parent
      (LF-FORM W::be)
-     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-A-TEMPL)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL)
     
      (meta-data :origin trips :entry-date nil :change-date 20073003 :comments csli-revision)
      )
 
-    (;;(LF-PARENT ONT::IN-RELATION)
-     (lf-parent ont::be) ;; 20120524 GUM change new parent
-     (LF-FORM W::be)
-     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-A-TEMPL)
-         )
-    
     )
    )
 ))

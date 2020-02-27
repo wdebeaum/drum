@@ -37,14 +37,8 @@
     (
      (lf-parent ont::be) ;; 20120524 GUM change new parent
      (LF-FORM W::be)
-     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-A-TEMPL)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL)
      )
-    (
-     (lf-parent ont::be) ;; 20120524 GUM change new parent
-     (LF-FORM W::be)
-     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-B-TEMPL)
-     )
-
     (  ;; the fact is he's happy
      (LF-PARENT ont::proposition-equal);used for generalized equality - the fact is that ...
      (LF-FORM w::BE)

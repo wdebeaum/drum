@@ -38,16 +38,9 @@
     (;;(LF-PARENT ONT::IN-RELATION)
      (lf-parent ont::be) ;; 20120524 GUM change new parent
      (LF-FORM W::be)
-     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-A-TEMPL)
+     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL)
      ;(PREFERENCE 0.96)
      )
-    (;;(LF-PARENT ONT::IN-RELATION)
-     (lf-parent ont::be) ;; 20120524 GUM change new parent
-     (LF-FORM W::be)
-     (TEMPL NEUTRAL-NEUTRAL1-NP-EQUAL-B-TEMPL)
-     ;(PREFERENCE 0.96)
-     )
-
     (  ;; the fact is he's happy
      (LF-PARENT ont::proposition-equal)
      (LF-FORM w::BE)
