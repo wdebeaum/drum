@@ -5601,7 +5601,7 @@
 
 ;; deny, hold out, withhold
 (define-type ONT::refuse
- :wordnet-sense-keys ("deny%2:40:00" "refuse%2:40:01" "deny%2:32:05" "reject%2:31:00")
+ :wordnet-sense-keys ("deny%2:40:00" "refuse%2:40:01" "deny%2:32:05" "reject%2:31:00" "refuse%2:40:00" "refuse%2:32:00" "refuse%2:42:04")
   :parent ont::inhibit-effect
  ;; refuse the purchase (sit); proposal (abstr); that package (phys-obj)
   :arguments ((:Required ONT::Effect ((? ro F::Phys-obj F::Situation F::abstr-obj)))

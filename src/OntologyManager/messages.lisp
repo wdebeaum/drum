@@ -422,13 +422,13 @@ returns : function return value"
 (defcomponent-handler
     '(request &key :content (define-type . *))
     #'(lambda (msg args)
-	(apply #'add-new-type args))
+	(when user::*build-ontology* (apply #'add-new-type args)))
   :subscribe t)
 
 (defcomponent-handler
     '(tell &key :content (define-type . *))
     #'(lambda (msg args)
-	(apply #'add-new-type args))
+	(when user::*build-ontology* (apply #'add-new-type args)))
   :subscribe t)
 
 

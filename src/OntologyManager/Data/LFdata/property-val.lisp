@@ -5631,13 +5631,14 @@
 
 (define-type ONT::controlled-val
   :parent ONT::control-val
-  :wordnet-sense-keys ("uncontrolled%3:00:00::" "controlled%3:00:00::" "guided%3:00:00::" "manned%3:00:00::")
+  :wordnet-sense-keys ("controlled%3:00:00::" "guided%3:00:00::" "manned%3:00:00::")
   :comment "controlled or controllable by a human entity (controlled, guided)"
   )
 
 (define-type ONT::not-controlled-val
   :parent ONT::control-val
-  :wordnet-sense-keys ("unrestrained%3:00:00::" "untempered%3:00:01::" "unguided%3:00:00::")
+  :wordnet-sense-keys ("unrestrained%3:00:00::" "untempered%3:00:01::" "unguided%3:00:00::"
+						"uncontrolled%3:00:00::")
   :comment "not controlled by human entity (uncontrolled, unguided)"
   )
 
