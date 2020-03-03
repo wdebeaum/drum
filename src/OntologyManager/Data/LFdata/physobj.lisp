@@ -655,14 +655,16 @@
     :sem (F::Phys-obj (F::form F::Liquid))
     )
 
-(define-type ONT::fuel
-     :wordnet-sense-keys ("fuel%1:27:00")
+
+(define-type ONT::natural-LIQUID-SUBSTANCE
     :parent ONT::liquid-SUBSTANCE
     :sem (F::Phys-obj (F::form F::Liquid) (f::origin f::natural))
     )
 
-(define-type ONT::natural-LIQUID-SUBSTANCE
-    :parent ONT::liquid-SUBSTANCE
+(define-type ONT::fuel
+     :wordnet-sense-keys ("fuel%1:27:00" "petroleum%1:27:00") ; petroleum is a hyponym of fuel but it has two parents
+    ;:parent ONT::liquid-SUBSTANCE
+    :parent ONT::natural-liquid-SUBSTANCE
     :sem (F::Phys-obj (F::form F::Liquid) (f::origin f::natural))
     )
 

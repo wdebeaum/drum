@@ -1126,6 +1126,7 @@
 	    (no-postmodifiers -) ;; exclude "the same path as the battery" and advbl attaching to "path"
 	    (rate-activity-nom -)
 	    (agent-nom -)
+	    (gap -) ; to prevent losing the gap with two successive adv-np-post applications (where the gap moved from the advbl to the n1 after the first application) ; TODO: pass on the gap from the N1
 	    ))
      (advbl (ATYPE POST) 
       (result-only -)  ;; only allow adverbials that may be interpreted as something other than a result

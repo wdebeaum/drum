@@ -1405,7 +1405,7 @@
     )
 
 (define-type ONT::START
- :wordnet-sense-keys ("begin%2:30:01" "start%2:41:00" "get_down%2:30:00" "start%2:38:00" "start%1:11:00" "start%1:28:00" "take%2:41:13" "take_to%2:41:01" "begin%2:32:04" "originate_in%2:42:00")
+ :wordnet-sense-keys ("begin%2:30:01" "start%2:41:00" "get_down%2:30:00" "start%2:38:00" "start%1:11:00" "start%1:28:00" "take%2:41:13" "take_to%2:41:01" "begin%2:32:04" "originate_in%2:42:00" "initiate%2:36:00" "initiate%2:30:00")
  :parent ONT::cause-effect
  :arguments ((:OPTIONAL ONT::neutral ((? agt f::abstr-obj f::situation)))  ;; start the meeting
 	     )

@@ -209,7 +209,8 @@
 		(SUBCAT -)
 		(transform ?transform)
 		))
-      (prep (lex ?ptp))
+      ;(prep (lex ?ptp))
+      (prep (lex (? ptp w::of)))
       (add-to-conjunct  (val (:figure ?gapvar)) (old ?con) (new ?new))
       )
 

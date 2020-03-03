@@ -11,10 +11,11 @@
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL agent-TEMPL)
      )
+    #|
     ((LF-PARENT ONT::STAY)
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL agent-TEMPL))
-    
+    |#
     ((example "the bulbs remain on")
      (LF-PARENT ONT::stay)
      (TEMPL AGENT-FORMAL-PRED-SUBJCONTROL-TEMPL)
