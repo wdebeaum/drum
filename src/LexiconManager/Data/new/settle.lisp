@@ -25,14 +25,14 @@
  :words (
 ((W::settle (w::down))
    (SENSES
-    ((LF-PARENT ont::evoke-relief)
+    ((LF-PARENT ont::evoke-calm) ;evoke-relief)
      (example "settle down")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL affected-TEMPL)
      ;(preference .97) ;; prefer transitive
      (meta-data :origin plow :entry-date 20050922 :change-date nil :comments nil)
      )
-    ((LF-PARENT ont::evoke-relief)
+    ((LF-PARENT ont::evoke-calm) ;evoke-relief)
      (example "settle him down")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)

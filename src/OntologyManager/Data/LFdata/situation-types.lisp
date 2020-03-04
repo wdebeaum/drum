@@ -33,7 +33,7 @@
 |#
 
 (define-type ONT::cause-effect
-    :wordnet-sense-keys ("do%2:36:02" "drive%2:35:00" "make%2:36:08" "open_up%2:30:00")
+    :wordnet-sense-keys ("do%2:36:02" "drive%2:35:00" "make%2:36:08" "open_up%2:30:00" "make%2:30:00")
  :parent ONT::acting
  :comment "an AGENT causes some event to occur or proposition to become true. Usually the verbs that fall under this category are very general causal verbs that take other events as their arguments and are positive causes- i.e., events are caused to happen as opposed to negative causes as in an event is prevented."
  :sem (F::Situation (F::Cause (? cz F::Force f::agentive)) (F::Trajectory -))
@@ -542,9 +542,10 @@
              )
  )
 
+#|
 (define-type ONT::Cure
- :wordnet-sense-keys ("bring_around%2:29:01" "cure%2:29:00" "heal%2:29:01" "care_for%2:29:00")
- :parent ONT::LIFE-PROCESS
+ :wordnet-sense-keys ("bring_around%2:29:01" "care_for%2:29:00" "cure%2:29:00" "heal%2:29:01" "revitalize%2:29:00")
+ :parent ONT::CHANGE-STATE-ACTION ;LIFE-PROCESS
  ;;; Healer
  :arguments ((:OPTIONAL ONT::Agent)
               (:OPTIONAL ONT::affected () (:implements experiencer))
@@ -554,7 +555,7 @@
 ;             (:OPTIONAL ONT::INSTRUMENT (F::phys-obj (F::intentional -)))
              )
  )
-
+|#
 
 (define-type ONT::Cause-to-Move
  :wordnet-sense-keys ("drive%2:35:01" "drive%2:41:02" "move%2:38:01")
@@ -724,7 +725,7 @@
 |#
 
 (define-type ONT::Active-Perception
- :wordnet-sense-keys ("look%2:39:00" "feel%2:39:00" "sense%2:39:00" "note%2:39:02" "look_on%2:39:00" "watch%2:39:00" "watch%2:39:03" "see%2:39:00" "taste%2:39:00" "smell%2:39:00")
+ :wordnet-sense-keys ("feel%2:39:00" "look%2:39:00" "look_on%2:39:00" "note%2:39:02" "sample%2:34:00" "see%2:39:00" "sense%2:39:00" "smell%2:39:00" "taste%2:39:00" "watch%2:39:00" "watch%2:39:03")
  :parent ONT::PERCEPTION
 ; :sem (F::Situation (F::trajectory +)) ;; can perceive along trajectories; on your left you see a building; you hear a noise to your right
  :arguments ((:ESSENTIAL ONT::agent (F::Phys-obj (F::Intentional +)))
@@ -776,7 +777,7 @@
  )
 
 (define-type ONT::eat
- :wordnet-sense-keys ("eat%2:34:00" "eat%2:34:02" "taste%2:34:00")
+ :wordnet-sense-keys ("eat%2:34:00" "eat%2:34:02") ; "taste%2:34:00")
  :parent ONT::consume
  :arguments
  ((:REQUIRED ONT::Affected (F::Phys-obj (F::Form (? f f::solid f::solid-object))
@@ -1056,7 +1057,7 @@
  )
 
 ;; e.g., my leg hurts, he itches, They tired of the game
- (define-type ONT::experiencer-obj
+#| (define-type ONT::experiencer-obj
  :parent ONT::event-of-undergoing-action
  :sem (F::Situation (F::aspect F::dynamic) (F::cause F::agentive))
  :arguments (;; (:REQUIRED ONT::cause) ;; this used to include other verbs, but now is a formal (part or an experiencer), or experiencer
@@ -1064,9 +1065,11 @@
              (:REQUIRED ONT::affected) ;; ie, the lungs
              )
  )
+|#
 
-(define-type ONT::cause-body-effect
- :parent ONT::experiencer-obj
+(define-type ONT::experience-body-effect ;cause-body-effect
+ :wordnet-sense-keys ("cramp%2:29:00")
+ :parent ONT::event-of-undergoing-action ;experiencer-obj
  :arguments ((:REQUIRED ONT::affected ((? cg f::abstr-obj F::Phys-obj) (F::intentional +)))
              ;;; (?o (Information F_Information-content))) ;; Content/Topic
              ;;(:ESSENTIAL ONT::cause)
@@ -1117,7 +1120,7 @@
 
 ;; try, attempt
 (define-type ONT::TRY
- :wordnet-sense-keys ("try%1:04:00" "endeavour%1:04:00" "endeavor%1:04:00" "effort%1:04:00" "attempt%1:04:00" "try%2:29:00" "try_on%2:29:00" "taste%2:34:00" "try_out%2:34:00" "try%2:34:00" "essay%2:41:01" "examine%2:41:00" "try_out%2:41:00" "try%2:41:01" "prove%2:41:03" "test%2:41:00" "try%2:41:00" "seek%2:41:00" "attempt%2:41:00" "essay%2:41:00" "assay%2:41:00" "come_near%2:41:00" "push%1:04:01")
+ :wordnet-sense-keys ("assay%2:41:00" "attempt%1:04:00" "attempt%2:41:00" "come_near%2:41:00" "effort%1:04:00" "endeavor%1:04:00" "endeavour%1:04:00" "essay%2:41:00" "essay%2:41:01" "examine%2:41:00" "prove%2:41:03" "push%1:04:01" "seek%2:41:00" "test%2:41:00" "try%1:04:00" "try%2:29:00" "try_on%2:29:00" "try%2:34:00" "try%2:41:00" "try_out%2:41:00" "try%2:41:01");"taste%2:34:00" "try_out%2:34:00"
  :parent ONT::cause-effect
  :arguments ((:OPTIONAL ONT::neutral ((? agt f::abstr-obj f::situation))))
 ;;((:OPTIONAL ONT::Instrument (F::Phys-obj (F::intentional -)))

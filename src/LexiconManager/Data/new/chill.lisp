@@ -18,7 +18,7 @@
  :words (
 ((W::chill w::out)
    (SENSES
-    ((LF-PARENT ont::experiencer-obj)
+    ((LF-PARENT ont::hang-out) ;experiencer-obj)
      (example "He chilled out on the couch")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL affected-TEMPL)

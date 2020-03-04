@@ -233,7 +233,7 @@
   )
 
 (define-type ONT::appropriate
- :wordnet-sense-keys ("assume%2:38:00" "catch%2:35:00" "claim%2:32:03" "fill%2:41:00" "snatch%2:35:02" "take%2:35:00" "take%2:40:15")
+ :wordnet-sense-keys ("assume%2:38:00" "catch%2:35:00" "claim%2:32:03" "fill%2:41:00" "seize%2:40:07" "snatch%2:35:02" "take%2:35:00" "take%2:40:15")
  :parent ONT::acquire-by-action
  :sem (F::SITUATION (F::Cause F::Agentive) (F::Trajectory -) (F::Aspect F::Dynamic))
  :arguments ((:REQUIRED ONT::AGENT ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
@@ -248,7 +248,7 @@
 )
 
 (define-type ONT::capture
- :wordnet-sense-keys ("capture%2:35:01" "catch%2:35:01" "get%2:35:09" "take%2:40:01")
+  :wordnet-sense-keys ("capture%2:35:01" "catch%2:35:01" "get%2:35:09" "seize%2:35:01" "take%2:40:01")
   :parent ONT::acquire-by-action
   )
 
@@ -374,6 +374,7 @@
 
 ;; flutter
 (define-type ONT::flutter
+ :wordnet-sense-keys ("flutter%1:04:00" "flutter%1:11:01" "flutter%1:26:00" "flutter%2:29:00" "flutter%2:38:00" "flutter%2:38:01" "flutter%2:38:02" "flutter%2:38:03")
  :parent ONT::MOVE
  )
 
@@ -1290,7 +1291,7 @@
 
 ;; revive, come to, energize, perk up
 (define-type ont::reviving
-    :wordnet-sense-keys ("revive%2:29:01" "resuscitate%2:29:00" "revive%2:29:02")
+    :wordnet-sense-keys ("resuscitate%2:29:00" "revive%2:29:01" "revive%2:29:02" "revitalize%2:30:00")
     :definitions ((ont::cause-effect :agent ?agent
 				     :formal (ont::become :affected ?affected
 							  :formal (ont::aware-val :figure ?affected))))
@@ -1454,7 +1455,7 @@
 ;; merged again ASK-QUERY-QUESTION and ENQUIRE-INQUIRE (which mainly takes the intransitive form)
 ;; renamed and moved up to under COMMUNICATION
 (define-type ont::ask-question
-  :wordnet-sense-keys ("ask%2:32:02" "ask%2:32:04")
+  :wordnet-sense-keys ("ask%2:32:00" "ask%2:32:02" "ask%2:32:04")
     :parent ont::COMMUNICATION
     )
 
@@ -1892,7 +1893,7 @@
 ;)
 
 (define-type ONT::evoke-excitement
- :wordnet-sense-keys ("agitate%2:37:00" "overwhelm%2:37:00" "stir%2:37:01")
+ :wordnet-sense-keys ("agitate%2:37:00" "exalt%2:37:01" "overwhelm%2:37:00" "stir%2:37:01" "stir%2:39:00")
  :parent ONT::neutral-experience
  :comment "stir strong feelings"
  )
@@ -1919,7 +1920,7 @@
  )
 
 (define-type ONT::evoke-surprise
- :wordnet-sense-keys ("surprise%2:31:00" "stun%2:39:00" "amaze%2:31:00" "awe%2:37:00" "surprise%1:11:00")
+ :wordnet-sense-keys ("amaze%2:31:00" "awe%2:37:00" "stagger%2:37:00" "stun%2:39:00" "surprise%1:11:00" "surprise%2:31:00")
  :parent ONT::neutral-experience
  :comment "evoke shock or astonishment via the unexpected"
  )
@@ -1936,7 +1937,7 @@
 )
 
 (define-type ont::evoke-relief
- :wordnet-sense-keys ("still%2:37:01" "comfort%2:37:01")
+ :wordnet-sense-keys ("still%2:37:01"); "comfort%2:37:01")
  :parent ont::improve-experience
  :arguments ((:REQUIRED ONT::affected (F::phys-obj (F::intentional +))))
 )
@@ -1954,7 +1955,7 @@
 
 (define-type ONT::evoke-comfort
  :parent ONT::evoke-relief
- :wordnet-sense-keys ("relax%2:29:00" "relax%2:29:01" "rest%2:32:01")
+ :wordnet-sense-keys ("comfort%2:37:01" "relax%2:29:00" "relax%2:29:01" "rest%2:32:01")
  :comment "verbs dealing specifically with the relief of physical pain or discomfort"
  )
 
@@ -2005,6 +2006,7 @@
  )
 
 (define-type ONT::evoke-discomfort
+ :wordnet-sense-keys ("seize%2:31:04")
  :parent ONT::worsen-experience
  :comment "to cause physical discomfort that are not related to irration/bother"
  )
@@ -2369,7 +2371,7 @@
  )
 
 (define-type ONT::convince
- :wordnet-sense-keys ("convert%2:32:00" "win_over%2:32:00" "convince%2:32:00" "court%2:41:01")
+ :wordnet-sense-keys ("convert%2:32:00" "convince%2:32:00" "court%2:41:01" "persuade%2:32:00" "win_over%2:32:00")
  :parent ONT::perlocution
  )
 
@@ -2379,8 +2381,7 @@
  )
 
 (define-type ONT::defame
-    :wordnet-sense-keys ("defame%2:32:00" "slander%2:32:00" "smirch%2:32:00" "asperse%2:32:00" "denigrate%2:32:01" "calumniate%2:32:00" "smear%2:32:00" "sully%2:32:00" "besmirch%2:32:00" "charge%1:10:00" "recrimination%1:10:00"
-					  )
+ :wordnet-sense-keys ("defame%2:32:00" "slander%2:32:00" "smirch%2:32:00" "asperse%2:32:00" "denigrate%2:32:01" "calumniate%2:32:00" "smear%2:32:00" "sully%2:32:00" "besmirch%2:32:00" "charge%1:10:00" "recrimination%1:10:00")
  :parent ONT::accuse
  )
 
@@ -2828,7 +2829,7 @@
 )
 
 (define-type ONT::teach-train
-    :wordnet-sense-keys ("teach%2:32:00" "teach%2:30:00" "train%2:31:00" "train%2:41:02" "train%2:41:00" "train%2:41:01""train%2:32:00" "sensitize%2:39:00")
+    :wordnet-sense-keys ("lesson%1:04:01" "teach%2:32:00" "teach%2:30:00" "train%2:31:00" "train%2:41:02" "train%2:41:00" "train%2:41:01""train%2:32:00" "sensitize%2:39:00")
     :parent ONT::SHOW
     )
 
@@ -3022,6 +3023,7 @@
     )
 
 (define-type ont::ask
+    :wordnet-sense-keys ("ask%2:32:01" "ask%2:32:05" "ask%2:32:09")
     :parent ont::request
     )
 
@@ -3188,7 +3190,7 @@
  )
 
 (define-type ONT::MAKE-IT-SO
- :wordnet-sense-keys ("have%2:30:00" "have%2:32:00" "have%2:40:02" "make%2:30:00")
+ :wordnet-sense-keys ("have%2:30:00" "have%2:32:00" "have%2:40:02")
  :parent ONT::CAUSE-EFFECT
  :sem (F::situation (F::Aspect F::Dynamic))
  :definitions ((CAUSE-EFFECT :agent ?agent :formal ?formal))
@@ -3915,7 +3917,7 @@
 
 ;; weaken
 (define-type ont::weaken
- :wordnet-sense-keys ("weaken%2:30:00" "weaken%2:30:01" "waste%2:30:01")
+ :wordnet-sense-keys ("languish%2:29:00" "languish%2:30:00" "weaken%2:30:00" "weaken%2:30:01" "waste%2:30:01")
  :parent ont::change-in-dimension
  ;; argument add
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::strength-scale) (F::orientation f::pos))))
@@ -3929,7 +3931,7 @@
 )
 
 (define-type ONT::cool
- :wordnet-sense-keys ("cool%2:30:00" "chill%2:30:00" "cool_down%2:30:01")
+ :wordnet-sense-keys ("chill%2:30:00" "cool%2:30:00" "cool%2:30:01" "cool_down%2:30:01")
  :parent ONT::change-in-temperature
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::cold-scale) (F::orientation f::pos))))
  )
@@ -5364,6 +5366,19 @@
 ;		(:optional ONT::Instrument (F::Phys-obj (F::intentional -)))
 		)
     )
+
+(define-type ONT::Cure
+  :wordnet-sense-keys ("bring_around%2:29:01" "care_for%2:29:00" "cure%2:29:     00" "heal%2:29:01" "revitalize%2:29:00")
+  :parent ONT::CHANGE-STATE-ACTION ;LIFE-PROCESS
+  ;;; Healer
+  :arguments ((:OPTIONAL ONT::Agent)
+               (:OPTIONAL ONT::affected () (:implements experiencer))
+              ;;; Affliction
+              (:OPTIONAL ONT::Formal)
+              ;;; Treatment
+ ;             (:OPTIONAL ONT::INSTRUMENT (F::phys-obj (F::intentional -)))
+              )
+)
 
 ;; break a browser, a promise
 (define-type ont::render-ineffective

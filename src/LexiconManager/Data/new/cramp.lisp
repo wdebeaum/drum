@@ -25,7 +25,7 @@
      (preference .95)
      )
     ((meta-data :origin cardiac :entry-date 20081215 :change-date 20090511 :comments nil :vn ("hurt-40.8.3-2") :wn ("injure%2:29:00"))
-     (LF-PARENT ONT::cause-body-effect)
+     (LF-PARENT ONT::experience-body-effect) ;cause-body-effect)
      (TEMPL affected-TEMPL)
      (example "his body cramped (with pain/convulsions)")
      )
@@ -33,6 +33,7 @@
    )
 ))
 
+#|
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::cramp w::up)
@@ -45,4 +46,5 @@
     )
    )
 ))
+|#
 

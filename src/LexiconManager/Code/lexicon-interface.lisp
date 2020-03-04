@@ -553,7 +553,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
         (d (get-lf-and-pos definition)))
   (and
     (or (null ont-type) (eq (car d) ont-type)
-      (and (not (eq *use-tagged-senses-only* 'strict)) (om::subtype (car d) ont-type)))
+      (and (not (eq *use-tagged-senses-only* 'strict)) (or (om::subtype (car d) ont-type) (om::subtype ont-type (car d)) )))
     (or (null pos) (eq (cadr d) pos)))))
 
 (defun check-definition-list (definition tests)
@@ -1078,7 +1078,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
     ; combine new or default senses from external sources w/ existing trips senses
     (print-debug "~%After processing RES=~S ~%     WDEF=~S" res wdef)
     (setq res (append res wdef))
-    (if (and provided-senses *use-tagged-senses-only*)
+    (if (and (eq parser::*in-system* :gloss) provided-senses *use-tagged-senses-only*) ; only do this for gloss
       ;; RIK: remove the incompatible senses
       (setq res (filter-by-definition-check res provided-senses))
       )
@@ -1290,7 +1290,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
  @visibility public
  "
  (let* ((trips-pos-list (find-arg keylist :trips-parts-of-speech))
-	(wn-sense-keys (truncate-list (when (and wf::*use-wordfinder* (not (exclude-from-lookup w nil nil)))
+	(wn-sense-keys (truncate-list (when (and wf::*use-wordfinder* ) ;(not (exclude-from-lookup w nil nil))) ; if the wn-sense-key is explicitly named, we should look it up even if it is a frequent word
 					(remove-if #'wf::stoplist-p
 						   (find-arg keylist :wn-sense-keys))
 					)
@@ -1314,7 +1314,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 	(this-trips-pos-list (if (listp w) (trips-pos-list-for-word wdef :include-multiwords t) (trips-pos-list-for-word wdef :include-multiwords nil)))
 	(this-trips-sense-list (get-lf w :wdef wdef))
 	(wf-wdef (when (and *use-wordfinder*
-			    (not (exclude-from-lookup w this-trips-pos-list penn-tags)))
+			    (or (not (exclude-from-lookup w this-trips-pos-list penn-tags)) wn-sense-keys))
 		   ;;(format t "~%~%HERE!!! with  ~S and ~S"  wf-poslist this-trips-pos-list)
 		   (if wdef  ;;  there are TRIPS entries for the word
 		      (if *use-trips-and-wf-senses*   ;; check if we should get the WN defs anyway
@@ -1331,7 +1331,7 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 			    ;; so try again using default pos list and no sense tags, in case of bad tagging
 			    (if (not wdef)
 				(get-unknown-word-def w :pos-list *default-wf-poslist* :penntag penn-tags :score score)
-				(if (and *use-trips-and-wf-senses* (not (exclude-from-lookup w this-trips-pos-list penn-tags)))
+				(if (and *use-trips-and-wf-senses* (or (not (exclude-from-lookup w this-trips-pos-list penn-tags)) wn-sense-keys))
 				    (get-unknown-word-def w :pos-list (or (set-difference *default-wf-poslist* this-trips-pos-list) *default-wf-poslist*) :penntag penn-tags :score score)))))
 	;; still no WDEF or WN senses!  try alternate spellings
 	(backup-from-alternates (if (and *use-wordfinder* alternate-spellings merged-trips-wn-pos-list (null wf-wdef) (null backup-wf-wdef))

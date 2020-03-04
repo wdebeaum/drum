@@ -14,27 +14,34 @@
     ((meta-data :origin cardiac :entry-date 20081215 :change-date 20090512 :comments nil :vn ("hurt-40.8.3-2") :wn ("injure%2:29:00"))
      (LF-PARENT ONT::evoke-attention)
      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
-     (example "pain seized his body")
+     (example "the movie seized my imagination") ;pain seized his body")
      )
+    
+    ((LF-PARENT ONT::evoke-discomfort)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
+     (example "pain seized his body" "the patient seized with unbearable pain" "he was seized with a dreadful disease")
+     )
+
     ((meta-data :origin cardiac :entry-date 20081215 :change-date 20090512 :comments nil :vn ("hurt-40.8.3-2") :wn ("injure%2:29:00"))
-     (LF-PARENT ONT::cause-body-effect)
+     (LF-PARENT ONT::experience-body-effect) ;evoke-attention) ;cause-body-effect)
      (TEMPL affected-TEMPL)
-     (example "his body seized (with pain/convulsions)")
+     (example "his body seized (with pain/convulsions)" "my calf muscle seized")
      )
     )
    )
 ))
 
+#|
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
    ((W::seize w::up)
    (SENSES
     ((meta-data :origin cardiac :entry-date 20081215 :change-date 20090511 :comments nil :vn ("hurt-40.8.3-2") :wn ("injure%2:29:00"))
-     (LF-PARENT ONT::cause-body-effect)
+     (LF-PARENT ONT::experience-body-effect) ;evoke-attention) ;cause-body-effect)
      (TEMPL affected-TEMPL)
      (example "his body seized up (with pain/convulsions)")
      )
     )
    )
 ))
-
+|#

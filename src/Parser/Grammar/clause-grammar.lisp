@@ -1212,14 +1212,15 @@
             (argument ?argument)
             (filled -)
             )
-      -pred4> 0.98 ;0.995   ; lower the score since MEMBERSHIP matches roles that specify SITUATION
+      -pred4> 0.96 ;0.995   ; lower the score since MEMBERSHIP matches roles that specify SITUATION
       (head (np (sem ?sem) (var ?v) (sort pred) (case (? case obj -))
 		(derived-from-name -) (gerund -)
 		(lf (% description (status (? x ont::indefinite ont::bare ont::indefinite-plural)) ;(status (? x ont::indefinite ont::bare ont::indefinite-plural ont::SM ont::wh ONT::what ONT::which ONT::whose ONT::*wh-term* ont::wh-term ONT::WH-PLURAL ont::wh-term-set ont::kind))
 		       (sem ($ f::phys-obj )) ; now don't allow "what kind" (abstr-obj)
-		       (class ?c) (class (? !c2 ONT::DOMAIN))  ; hard failure
+		       (class (? c ONT::PHYS-OBJECT)) ;(class (? !c2 ONT::DOMAIN))  ; hard failure
 		       (constraint ?constr)))
-		(sem ($ ?!s (f::type (? !t ONT::DOMAIN)))) ; exclude "what color is X" which uses AT-SCALE-VALUE
+		;(sem ($ ?!s (f::type (? !t ONT::DOMAIN)))) ; exclude "what color is X" which uses AT-SCALE-VALUE
+		(sem ($ f::phys-obj )) 
 		(lex (? !lex w::what))))  ; exclude "X is what" or "what is X"
       (compute-sem-features (lf ONT::MEMBERSHIP) (sem ?newsem))
       )

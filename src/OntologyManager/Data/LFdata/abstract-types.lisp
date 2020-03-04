@@ -1053,6 +1053,7 @@
 
 ;; class, course
 (define-type ont::instruction-event
+  :wordnet-sense-keys("class%1:04:00")
   :parent ont::located-event
   )
 
