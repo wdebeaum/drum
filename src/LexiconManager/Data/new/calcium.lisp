@@ -34,7 +34,7 @@
 	   )
 )
 ))
-
+#|
 (define-words :pos W::n
  :words (
   ((W::CALCIUM W::PHOSPHORUS)
@@ -58,4 +58,5 @@
 	   )
 )
 ))
+|#
 

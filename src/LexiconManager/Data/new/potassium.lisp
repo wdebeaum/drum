@@ -13,7 +13,7 @@
 	   )
 )
 ))
-
+#|
 (define-words :pos W::n
  :words (
   ((w::potassium w::chloride)
@@ -25,4 +25,5 @@
 	   )
 )
 ))
+|#
 

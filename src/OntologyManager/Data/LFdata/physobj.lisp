@@ -525,10 +525,12 @@
     :Parent ont::chemical
     )
 
+#|
 (define-type ont::nutrient
     :wordnet-sense-keys ("nutrient%1:03:01")
     :Parent ont::chemical
     )
+|#
 
 (define-type ont::fertilizer
     :wordnet-sense-keys ("fertilizer%1:27:00")
@@ -1155,7 +1157,7 @@
     )
 
 (define-type ONT::FOOD
-    :wordnet-sense-keys ("solid_food%1:13:00" "food%1:13:00" "meal%1:13:01"  "meal%1:13:00" "food%1:03:00" "nutrient%1:03:00"  "nutriment%1:13:00")
+    :wordnet-sense-keys ("food%1:03:00" "food%1:13:00" "meal%1:13:00" "meal%1:13:01" "nutrient%1:03:00" "nutrient%1:03:01" "nutriment%1:13:00" "solid_food%1:13:00")
     :parent ONT::SUBSTANCE
     :sem (F::Phys-obj (:required (F::Object-Function F::comestible))(:default (F::form f::solid)))
     )
@@ -2342,10 +2344,12 @@
 
 (define-type ONT::computer-processor
     :parent ONT::COMPUTER-PART
+    :wordnet-sense-keys ("central_processing_unit%1:06:00" "microprocessor%1:06:00")
     )
 
 (define-type ONT::internal-computer-storage
     :parent ONT::COMPUTER-PART
+    :wordnet-sense-keys ("storage_device%1:06:00" "disk_space%1:15:00")
     )
 
 (define-type ONT::data-storage-medium
@@ -2355,6 +2359,7 @@
 
 (define-type ONT::io-device
     :parent ONT::COMPUTER-PART
+    :wordnet-sense-keys ("magnetic_disk%1:06:00" "disk_drive%1:06:00" "drive%1:06:03")
     )
 
 (define-type ONT::wireless
@@ -2530,16 +2535,19 @@
 (define-type ont::operating-switch
     :parent ONT::device-component
     :sem (F::Phys-obj (F::Form F::solid-object))
+    :wordnet-sense-keys ("control%1:06:00")
     )
 
 ;; specific types added for CAET
 
 (define-type ont::button
     :parent ont::operating-switch
+    :wordnet-sense-keys ("push_button%1:06:00")
     )
 
 (define-type ont::switch
     :parent ont::operating-switch
+    :wordnet-sense-keys ("switch%1:06:01")
     )
 
 (define-type ont::base
@@ -2564,6 +2572,7 @@
 
 (define-type ont::lid
     :parent ont::covering
+    :wordnet-sense-keys ("lid%1:06:00")
     )
 ;; Added during a portability experiment
 #|
@@ -2599,14 +2608,13 @@
 ;; box, bag
 (define-type ONT::small-container
     :parent ONT::container
+    :wordnet-sense-keys ("basket%1:06:00" "backpack%1:06:00" "bottle%1:06:00" "can%1:06:00" "jar%1:06:00" "receptacle%1:06:00")
     )
 
 (define-type ont::package
     :parent ont::small-container
+    :wordnet-sense-keys ("package%1:06:00")
     )
-
-
-
 
 ;; pot, pan
 (define-type ONT::cookware
@@ -2773,7 +2781,7 @@
     :wordnet-sense-keys ("alcohol%1:13:00" "alcoholic_drink%1:13:00" "alcoholic_beverage%1:13:00")
     )
 
-(define-type ONT::PREPARED
+(define-type ONT::PREPARED-FOOD ;PREPARED
     :parent ONT::FOOD
     )
 
@@ -2820,7 +2828,7 @@
     )
 
 (define-type ONT::MINERALS
-    :parent ONT::VITAMINS-MINERALS
+    :parent ONT::CHEMICAL ; VITAMINS-MINERALS
     )
 
 (define-type ONT::BEEF
@@ -2838,8 +2846,9 @@
     :parent ONT::MEAT
     )
 
-(define-type ONT::MEAT-OTHER
+(define-type ONT::MEAT-PRODUCT ;MEAT-OTHER
     :parent ONT::MEAT
+    :wordnet-sense-keys ("bacon%1:13:00" "sausage%1:13:00" "pastrami%1:13:00")
     )
 
 (define-type ONT::WILD-GAME
@@ -2919,7 +2928,7 @@
 
 (define-type ONT::BAKED-GOODS
      :wordnet-sense-keys ("baked_goods%1:13:00")
-    :parent ONT::PREPARED
+    :parent ONT::PREPARED-FOOD ;PREPARED
     )
 
 (define-type ONT::PASTA
@@ -2954,11 +2963,11 @@
 
 (define-type ONT::SWEETS
     :wordnet-sense-keys ("sweet%1:13:00" )
-    :parent ONT::PREPARED
+    :parent ONT::PREPARED-FOOD ;PREPARED
     )
 
 (define-type ONT::MEALS
-    :parent ONT::PREPARED
+    :parent ONT::PREPARED-FOOD ;PREPARED
     )
 
 (define-type ONT::SOUP
@@ -2969,12 +2978,12 @@
 
 (define-type ONT::CEREALS
     :wordnet-sense-keys ("cereal%1:13:00" )
-    :parent ONT::PREPARED
+    :parent ONT::PREPARED-FOOD ;PREPARED
     )
 
 (define-type ONT::FAST-FOOD
     :wordnet-sense-keys ("fast_food%1:13:00")
-    :parent ONT::PREPARED
+    :parent ONT::PREPARED-FOOD ;PREPARED
     )
 
 (define-type ONT::SPICES-HERBS

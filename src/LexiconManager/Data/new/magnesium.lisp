@@ -22,7 +22,7 @@
 	   )
 )
 ))
-
+#|
 (define-words :pos W::n
  :words (
   ((W::MAGNESIUM W::CHLORIDE)
@@ -34,4 +34,5 @@
 	   )
 )
 ))
+|#
 
