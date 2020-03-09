@@ -385,14 +385,17 @@
 	(ratedenomsem ?sem2)
 	)
        -units-slash-time>
-       (head (np (lf ?lfd) (sort unit-measure) (wh -) (var ?v1)
+       (head (np (lf ?lfd) ;(sort unit-measure)  ; allow plants as a "unit": 3 plants/m^2
+		 (wh -) (var ?v1)
 		 (sem ?sem1)
 	          ))
        (punc (lex (? l slash punc-slash)))
        (n (w::agr (? agr w::3s w::3p))  ; km is 3p: e.g., 5km
 	  (var ?v)	(LF ?per) (mass count)
 	  ;(sem ($ f::time (f::scale ont::duration-scale)))
-	  (sem ($ (? t f::time f::abstr-obj) (f::scale ont::measure-scale)))
+	  (sem ($ (? t f::time f::abstr-obj) (f::scale (? sc ont::measure-scale ont::time-measure-scale))
+		  (sort unit-measure)
+		  ))
 	  (sem ?sem2)
 	))
   
