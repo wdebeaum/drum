@@ -3804,7 +3804,7 @@
       (sem ?sem) (relc -) (abbrev -) (gap -) (agr 3s)
 	 )
      (punc (lex w::punc-minus))
-     (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj))) (sem ?sem2)
+     (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj) (sem ?sem))) (sem ?sem2)
       (GAP -) (LF ?lf)  (part (% -)) ;; no particle forms
       (SUBJ-MAP ?!reln) (dobj-map ?dobj-map)
       (dobj-map (? !dmap ONT::NOROLE))  ; to prevent "RAS-induced phosphorylation of ERK and AKT is compromised" from giving a NOROLE to phosphorylation (using a template for "induce")
@@ -3823,7 +3823,7 @@
      (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
       (sem ?sem) (relc -) (abbrev -) (gap -) (agr 3s)
 	 )
-     (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj))) (sem ?sem2)
+     (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj) (sem ?sem))) (sem ?sem2)
       (GAP -) (LF ?lf) (Part (% -))
       (SUBJ-MAP ?!reln) (dobj-map ?dobj-map)
       (dobj-map (? !dmap ONT::NOROLE))  ; to prevent "RAS-induced phosphorylation of ERK and AKT is compromised" from giving a NOROLE to phosphorylation (using a template for "induce")
@@ -3845,7 +3845,7 @@
       (sem ?sem) (relc -) (abbrev -) (gap -) (agr 3s)
 	 )
      (punc (lex w::punc-minus))
-     (head (V (var ?v) (VFORM ing) (subj (% NP (var ?subjvar))) ;(DOBJ (% NP (var ?dobj)))
+     (head (V (var ?v) (VFORM ing) (subj (% NP (var ?subjvar))) (DOBJ (% NP (var ?dobj) (sem ?sem)))
 	      (sem ?sem2)
 	      (subj ?subj) 
       (GAP -) (LF ?lf)  (part (% -)) ;; no particle forms
@@ -3868,7 +3868,7 @@
      (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
       (sem ?sem) (relc -) (abbrev -) (gap -) (agr 3s)
 	 )
-     (head (V (var ?v) (VFORM ing) (subj (% NP (var ?subjvar))) ;(DOBJ (% NP (var ?dobj)))
+     (head (V (var ?v) (VFORM ing) (subj (% NP (var ?subjvar))) (DOBJ (% NP (var ?dobj) (sem ?sem)))
 	      (sem ?sem2)
 	      (subj ?subj) 
       (GAP -) (LF ?lf)  (part (% -)) ;; no particle forms
