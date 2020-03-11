@@ -1016,6 +1016,13 @@
  :wordnet-sense-keys ("cheapness%1:07:00")
 )
 
+;; wealth
+(define-type ont::wealth-scale
+ :sem (F::abstr-obj (F::scale ONT::WEALTH-SCALE))
+ :parent ont::evaluation-scale
+ :wordnet-sense-keys ("financial_condition%1:26:00")
+)
+
 (define-type ont::ability-scale
  :sem (F::abstr-obj (F::scale ONT::ABILITY-SCALE))
  :parent ont::evaluation-scale 

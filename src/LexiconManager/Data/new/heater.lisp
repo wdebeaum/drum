@@ -7,7 +7,7 @@
  (W::heater
    (SENSES
     ((meta-data :origin caet :entry-date 20111220)
-     (lf-parent ont::base)
+     (lf-parent ont::heater) ;base)
      )
     )) 
 ))

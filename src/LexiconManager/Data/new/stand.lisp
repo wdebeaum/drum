@@ -12,7 +12,7 @@
      (example "plant stand")
      )
     ((meta-data :origin caet :entry-date 20111220)
-     (lf-parent ont::stand)
+     (lf-parent ont::base) ;stand)
      )
     )
    )

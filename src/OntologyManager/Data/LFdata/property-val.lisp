@@ -3940,7 +3940,7 @@
 
 ;; wealthy, poor
 (define-type ont::wealthiness-val
- :parent ont::status-val 
+ :parent ont::evaluation-attribute-val ;status-val 
 )
 
 (define-type ont::poor-val

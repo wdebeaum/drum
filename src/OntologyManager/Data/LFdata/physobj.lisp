@@ -2113,12 +2113,12 @@
 
 (define-type ONT::DEVICE
     :parent ONT::MANUFACTURED-OBJECT
-    :wordnet-sense-keys ("device%1:06:00" "buoy%1:10:00")
+    :wordnet-sense-keys ("buoy%1:10:00" "device%1:06:00" "equipment%1:06:00")
     :sem (F::Phys-obj (F::Origin F::Artifact))
     )
 
 (define-type ont::appliance
-    :wordnet-sense-keys ("appliance%1:06:00")
+    :wordnet-sense-keys ("appliance%1:06:00" "burner%1:06:00")
     :parent ont::device
     :sem (f::phys-obj (f::object-function f::instrument))
     )
@@ -2129,6 +2129,10 @@
     :sem (f::phys-obj (f::object-function f::instrument))
     )
 
+(define-type ont::medical-dressing
+    :wordnet-sense-keys ("medical_dressing%1:06:00")
+    :parent ont::medical-instrument ;covering
+    )
 
 ;; walk up, down the stairs
 (define-type ONT::STAIRS
@@ -2199,15 +2203,15 @@
     :sem (F::Phys-obj (F::Origin F::Artifact))
     )
 
-(define-type ONT::EQUIPMENT
+#|(define-type ONT::EQUIPMENT
     :comment "manufactured objects that assist in ior perform some function"
     :parent ONT::MANUFACTURED-OBJECT
     :wordnet-sense-keys ("equipment%1:06:00")
     :sem (F::Phys-obj (F::Origin F::Artifact))
-    )
+    )|#
 
 (define-type ont::tool
-    :parent ont::EQUIPMENT
+    :parent ont::DEVICE ;EQUIPMENT
     :comment "a piece of equipment typically controlled manually (whether powered or not)"
     :wordnet-sense-keys ("tool%1:06:00")
     :sem (f::phys-obj (f::object-function f::instrument))
@@ -2511,24 +2515,22 @@
     :sem (F::Phys-obj (F::Form F::solid-object) (F::Object-Function F::covering))
     )
 
-(define-type ont::medical-dressing
+#|(define-type ont::medical-dressing
     :wordnet-sense-keys ("medical_dressing%1:06:00")
-    :parent ont::covering
-    )
-
-
+    :parent ont::medical-instrument ;covering
+    )|#
 
 (define-type ont::support-stand
     :parent ONT::device-component
-    :wordnet-sense-keys ("pedestal%1:06:00" "stand%1:06:00" "support%1:06:00")
+    :wordnet-sense-keys ("support%1:06:00") ;"pedestal%1:06:00" "stand%1:06:00" "support%1:06:00")
     :sem (F::Phys-obj (F::Form F::solid-object) (F::Object-Function F::support))
     )
 
-(define-type ont::kettle-base
+#|(define-type ont::kettle-base
     :parent ONT::support-stand
     :wordnet-sense-keys ("heater%1:06:00")
     :sem (F::Phys-obj (F::Form F::solid-object))
-    )
+    )|#
 
 
 ;; button, switch
@@ -2551,24 +2553,27 @@
     )
 
 (define-type ont::base
-    :parent ont::kettle-base
+    :wordnet-sense-keys ("base%1:06:00")
+    :parent ont::support-stand ;kettle-base
     )
 
 (define-type ont::heater
-    :parent ont::kettle-base
+    :wordnet-sense-keys ("heater%1:06:00")
+    :parent ont::appliance ;kettle-base
     )
 
-(define-type ont::element
+#|(define-type ont::element
     :parent ont::kettle-base
+    )|#
+
+(define-type ont::heating-element ;burner
+    :wordnet-sense-keys ("heating_element%1:06:00")
+    :parent ont::device-component ;kettle-base
     )
 
-(define-type ont::burner
+#|(define-type ont::stand
     :parent ont::kettle-base
-    )
-
-(define-type ont::stand
-    :parent ont::kettle-base
-    )
+    )|#
 
 (define-type ont::lid
     :parent ont::covering
