@@ -549,6 +549,20 @@
  :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj))) ;;(F::FORM F::solid))))
  )
 
+(define-type ONT::kg
+ :parent ONT::weight-unit
+ :sem (F::abstr-obj (F::Scale Ont::WEIGHT-scale))
+ ;; 5 ounces of water
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj))) ;;(F::FORM F::solid))))
+ )
+
+(define-type ONT::g
+ :parent ONT::weight-unit
+ :sem (F::abstr-obj (F::Scale Ont::WEIGHT-scale))
+ ;; 5 ounces of water
+ :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj))) ;;(F::FORM F::solid))))
+ )
+
 (define-type ONT::acoustic-UNIT
  :wordnet-sense-keys ("sound_unit%1:23:00")
  :parent ONT::formal-UNIT
@@ -561,10 +575,40 @@
  :sem (F::Abstr-obj (F::Scale ONT::LINEAR-EXTENT-SCALE)) ;ONT::LINEAR-D)) ; Ont::length))  ; e.g., km: not just length but could also be width, height, etc
  )
 
+(define-type ONT::km
+ :parent ONT::length-unit
+ :sem (F::Abstr-obj (F::Scale ONT::LINEAR-EXTENT-SCALE)) ;ONT::LINEAR-D)) ; Ont::length))  ; e.g., km: not just length but could also be width, height, etc
+ )
+
+(define-type ONT::m
+ :parent ONT::length-unit
+ :sem (F::Abstr-obj (F::Scale ONT::LINEAR-EXTENT-SCALE)) ;ONT::LINEAR-D)) ; Ont::length))  ; e.g., km: not just length but could also be width, height, etc
+ )
+
+(define-type ONT::cm
+ :parent ONT::length-unit
+ :sem (F::Abstr-obj (F::Scale ONT::LINEAR-EXTENT-SCALE)) ;ONT::LINEAR-D)) ; Ont::length))  ; e.g., km: not just length but could also be width, height, etc
+ )
+
+(define-type ONT::mm
+ :parent ONT::length-unit
+ :sem (F::Abstr-obj (F::Scale ONT::LINEAR-EXTENT-SCALE)) ;ONT::LINEAR-D)) ; Ont::length))  ; e.g., km: not just length but could also be width, height, etc
+ )
+
 ;; acre, sqare feet
 (define-type ONT::AREA-UNIT
  :wordnet-sense-keys ("area_unit%1:23:00" "square_measure%1:23:00")
  :parent ONT::tangible-unit
+ :sem (F::Abstr-obj (F::Scale Ont::area-scale))
+ )
+
+(define-type ONT::ha
+ :parent ONT::area-unit
+ :sem (F::Abstr-obj (F::Scale Ont::area-scale))
+ )
+
+(define-type ONT::m2
+ :parent ONT::area-unit
  :sem (F::Abstr-obj (F::Scale Ont::area-scale))
  )
 

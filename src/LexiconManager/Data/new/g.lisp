@@ -7,9 +7,11 @@
   (w::g
    (wordfeats (W::morph (:forms (-s-3p) :plur W::g)))
    (SENSES
-    ((LF-PARENT ONT::weight-unit)
-     (LF-FORM W::gram)
-     (TEMPL UNIT-TEMPL)
+    (;(LF-PARENT ONT::weight-unit)
+     ;(LF-FORM W::gram)
+     (LF-PARENT ONT::g)
+     ;(TEMPL UNIT-TEMPL)
+     (TEMPL ATTRIBUTE-UNIT-TEMPL)
      (meta-data :origin cernl :entry-date 20100607 :change-date nil :comments nil :wn ("gram%1:23:00"))
      )
     )

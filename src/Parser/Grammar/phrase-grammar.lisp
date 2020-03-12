@@ -3031,9 +3031,9 @@
 		    (SORT unit-measure) 
 		    (CLASS ONT::quantity-abstr)
 		    (CONSTRAINT ?constr) (argument ?argument)
-		    (sem ?sem) 
+		    (sem ?sem)
 		    ))
-	  (class ont::quantity-abstr)
+	  (class ont::quantity-abstr) (mass ?m)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure) (STATUS ONT::INDEFINITE))
          -unit-np-number-indef>
 	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r))

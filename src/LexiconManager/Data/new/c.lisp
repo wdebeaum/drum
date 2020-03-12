@@ -44,7 +44,8 @@
   ((W::c w::m)
    (wordfeats (W::morph (:forms (-none))))
    (SENSES
-    ((LF-PARENT ONT::length-unit)
+    (;(LF-PARENT ONT::length-unit)
+     (LF-PARENT ONT::cm)
      (TEMPL ATTRIBUTE-UNIT-TEMPL)
      (meta-data :origin calo-ontology :entry-date 20060711 :change-date nil :comments nil)
      )

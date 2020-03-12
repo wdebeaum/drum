@@ -6,7 +6,8 @@
  :words (
   ((W::k w::m)
    (SENSES
-    ((LF-PARENT ONT::length-unit)
+    (;(LF-PARENT ONT::length-unit)
+     (LF-PARENT ONT::km)
      (TEMPL ATTRIBUTE-UNIT-TEMPL)
      (meta-data :origin calo-ontology :entry-date 20060711 :change-date nil :comments nil)
      )

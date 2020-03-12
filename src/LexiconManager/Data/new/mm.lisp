@@ -7,9 +7,10 @@
   (W::mm ;; alternate plural
    (wordfeats (W::morph (:forms (-none))))
    (SENSES
-    ((LF-PARENT ONT::length-unit)
+    (;(LF-PARENT ONT::length-unit)
+     (LF-PARENT ONT::MM)
      (TEMPL ATTRIBUTE-UNIT-PLURAL-TEMPL)
-     (LF-FORM W::millimeter)
+     ;(LF-FORM W::millimeter)
      (meta-data :origin calo-ontology :entry-date 20060711 :change-date nil :wn ("mm%1:23:00") :comments nil)
      )
     ) 

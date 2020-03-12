@@ -331,7 +331,7 @@
       -units-per-period> 
       (head (np (lf ?lf) (sort unit-measure) (wh -) (var ?v1) (sem ?sem1) (class ?cl)
 	       ))
-     (advbl (var ?per) (lf (% prop (class ont::iteration-period)))
+     (advbl (var ?per) (lf (% prop (class ont::iteration-period))) (gap -)
       ))
 
     ;; $125 a share
@@ -352,6 +352,25 @@
       (sem ?sem2) (mass count)
       ))
 
+    ;; 3 mm over 2 days
+    ((np (LF (% description (var *) (class ont::rate) (status ont::indefinite)
+		(constraint (& (quantity-abstr ?v1) (over-unit ?per)))))
+      (var *) (case (? case sub obj)) (SORT unit-measure) (AGR 3s)
+      (time-converted +) (lex ?x) (class ont::rate) ;(class ?cl)
+      (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::mobility -) 
+	      (f::type ont::rate) (f::scale ont::rate-scale)))
+      (ratenumsem ?sem1)
+      (ratedenomsem ?sem2)
+       )
+     -units-per-period3> .98
+     (head (np (lf ?lf) (sort unit-measure) (wh -) (var ?v1) (lex ?x) (sem ?sem1) (class ?cl)
+	       (ellided -)
+	       ))
+     (word (lex (? l w::over)))
+     (np (agr 3s) (var ?per) (lf (% description (status ont::indefinite)))
+      (sem ?sem2) (mass count) (sort unit-measure)
+      ))
+    
     ;; Twice a week
     ((np (LF (% description (var *) (class ont::rate) (status ont::indefinite)
 		(constraint (& (repeats ?v1) (over-period ?per)))))
@@ -394,9 +413,8 @@
 	  (var ?v)	(LF ?per) (mass count)
 	  ;(sem ($ f::time (f::scale ont::duration-scale)))
 	  (sem ($ (? t f::time f::abstr-obj) (f::scale (? sc ont::measure-scale ont::time-measure-scale))
-		  (sort unit-measure)
 		  ))
-	  (sem ?sem2)
+	  (sem ?sem2) (sort unit-measure)
 	))
   
     ;; e.g., the gdp / gtp ratio

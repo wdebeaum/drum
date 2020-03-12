@@ -2938,7 +2938,8 @@
 
 ;; bold, timid
 (define-type ont::boldness-val
- :parent ont::animal-propensity-val 
+ :parent ont::animal-propensity-val
+ :sem (F::abstr-obj (F::scale ont::boldness-scale)) 
  :comment "foreceful approach to situations or challenge"
 )
 
@@ -2968,6 +2969,7 @@
 ;; courageous, cowardly
 (define-type ont::courage-val
  :parent ont::animal-propensity-val
+ :sem (F::abstr-obj (F::scale ont::courage-scale))
  :comment "strength in face of fear or tribulation"
 )
 
@@ -2991,7 +2993,7 @@
 
 (define-type ont::modest-val
  :parent ont::modesty-val 
- :wordnet-sense-keys ("humble%3:00:00::" "modest%3:00:02" "unassuming%5:00:00:modest:02" )
+ :wordnet-sense-keys ("humble%3:00:00::" "modest%3:00:01::" "modest%3:00:02" "unassuming%5:00:00:modest:02" )
  :sem (F::abstr-obj (F::scale ont::modesty-scale) (f::orientation f::pos))
 )
 
@@ -3006,6 +3008,7 @@
 (define-type ont::social-interaction-val
  :parent ont::animal-propensity-val 
  :arguments ((:required ont::FIGURE ((? lof f::abstr-obj f::phys-obj f::situation )))) 
+ :sem (F::abstr-obj (F::scale ont::sociability-scale))
  :comment "sociability"
 ; :comment "properties of human behavior having to do with social interaction, e.g. friendly, kind, mean.)"
 )
@@ -3167,6 +3170,7 @@
 
 (define-type ONT::skillfulness-val
   :parent ONT::animal-propensity-val
+  :sem (F::abstr-obj (F::scale ont::skillfulness-scale))
   )
 
 (define-type ont::skillful-val
@@ -3940,6 +3944,7 @@
 
 ;; wealthy, poor
 (define-type ont::wealthiness-val
+ :sem (F::abstr-obj (F::scale ont::wealth-scale))
  :parent ont::evaluation-attribute-val ;status-val 
 )
 
@@ -6787,6 +6792,7 @@
 
 (define-type ONT::self-centeredness-val
   :parent ONT::animal-propensity-val
+  :sem (F::abstr-obj (F::scale ont::self-centeredness-scale))
   :comment "(selfish, egoistic)"
   )
 
@@ -6809,7 +6815,7 @@
 
 (define-type ONT::reticent-val
   :parent ONT::reticence-val
-  :wordnet-sense-keys ("reserved%3:00:01::" "taciturn%3:00:00::" "modest%3:00:01::")
+  :wordnet-sense-keys ("reserved%3:00:01::" "taciturn%3:00:00::") ; "modest%3:00:01::")
   :comment "(taciturn, reticent)"
   )
 
@@ -6979,6 +6985,7 @@
 
 (define-type ONT::forgiveness-val
   :parent ONT::animal-propensity-val
+  :sem (F::abstr-obj (F::scale ont::compassion-scale))
   :comment "(forgiving)"
   )
 

@@ -21,8 +21,9 @@
   (W::m ;; alternate plural
    (wordfeats (W::morph (:forms (-none))))
    (SENSES
-    ((LF-PARENT ONT::length-unit)
-     (LF-FORM W::meter)
+    (;(LF-PARENT ONT::length-unit)
+     ;(LF-FORM W::meter)
+     (LF-PARENT ONT::m)
      (TEMPL ATTRIBUTE-UNIT-PLURAL-TEMPL)
      (meta-data :origin calo-ontology :entry-date 20060711 :change-date nil :wn ("m%1:23:00") :comments nil)
      )
@@ -34,7 +35,8 @@
  :words (
   ((W::m w::m)
    (SENSES
-    ((LF-PARENT ONT::length-unit)
+    (;(LF-PARENT ONT::length-unit)
+     (LF-PARENT ONT::mm)
      (TEMPL ATTRIBUTE-UNIT-TEMPL)
      (meta-data :origin calo-ontology :entry-date 20060711 :change-date nil :comments nil)
      )
@@ -76,3 +78,13 @@
 )
 ))
 
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :words (
+  ((W::M-2)
+   (SENSES
+     ((LF-PARENT ONT::m2)
+     (TEMPL ATTRIBUTE-UNIT-TEMPL)
+     )
+    )
+   )
+))

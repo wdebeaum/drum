@@ -825,13 +825,20 @@
  :wordnet-sense-keys ("wildness%1:07:00")
 )
 
-;; bold and daring
+;; compassion
+(define-type ont::compassion-scale
+ :sem (F::abstr-obj (F::scale ONT::COMPASSION-SCALE))
+ :parent ont::behavioral-scale
+ :wordnet-sense-keys ("compassion%1:12:00")
+)
+
+#|;; bold and daring
 (define-type ont::boldness-scale
  :sem (F::abstr-obj (F::scale ONT::BOLDNESS-SCALE))
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("daring%1:07:00")
  :comment "bold and daring; forceful approach to challenge"
-)
+)|#
 
 ;; courage and bravery
 (define-type ont::courage-scale
@@ -841,11 +848,32 @@
  :comment "positive strength against fear"
 )
 
+;; bold and daring
+(define-type ont::boldness-scale
+ :sem (F::abstr-obj (F::scale ONT::BOLDNESS-SCALE))
+ :parent ont::courage-scale ;behavioral-scale
+ :wordnet-sense-keys ("daring%1:07:00")
+ :comment "bold and daring; forceful approach to challenge"
+)
+
+;; reticence, reservedness
+(define-type ont::reticence-scale
+ :sem (F::abstr-obj (F::scale ONT::RETICENCE-SCALE))
+ :parent ont::behavioral-scale
+ :wordnet-sense-keys ("uncommunicativeness%1:07:00")
+)
+
 (define-type ont::responsibility-scale
  :sem (F::abstr-obj (F::scale ONT::RESPONSIBILITY-SCALE))
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("responsibility%1:07:00") 
  ;; WORDS: responsibility, responsibleness
+)
+
+(define-type ont::self-centeredness-scale
+ :sem (F::abstr-obj (F::scale ONT::SELF-CENTEREDNESS-SCALE))
+ :parent ont::behavioral-scale
+ :wordnet-sense-keys ("self-centeredness%1:07:00")
 )
 
 (define-type ont::skillfulness-scale
