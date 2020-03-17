@@ -5368,7 +5368,7 @@
     )
 
 (define-type ONT::Cure
-  :wordnet-sense-keys ("bring_around%2:29:01" "care_for%2:29:00" "cure%2:29:     00" "heal%2:29:01" "revitalize%2:29:00")
+  :wordnet-sense-keys ("bring_around%2:29:01" "care_for%2:29:00" "cure%2:29:00" "heal%2:29:01" "revitalize%2:29:00")
   :parent ONT::CHANGE-STATE-ACTION ;LIFE-PROCESS
   ;;; Healer
   :arguments ((:OPTIONAL ONT::Agent)
