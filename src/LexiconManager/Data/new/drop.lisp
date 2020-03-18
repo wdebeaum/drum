@@ -17,10 +17,11 @@
      (TEMPL affected-templ) ; like move,bounce
      (PREFERENCE 0.96)
      )
-    ((LF-PARENT ONT::decrease)
+    ;; delete the following -- we get the MOVE-DOWNWARD reading even with it!
+    #|((LF-PARENT ONT::decrease)
      (example "it dropped in temperature")
      (TEMPL AFFECTED-FORMAL-XP-OPTIONAL-TEMPL  (xp (% W::PP (W::ptype (? pt w::in W::with)))))
-     )
+     )|#
     
     ((meta-data :origin calo-ontology :entry-date 20060710 :change-date nil :comments nil)
      (LF-PARENT ONT::discard)
