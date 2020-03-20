@@ -6,7 +6,7 @@
  :words (
  (W::enthusiasm
    (SENSES
-    ((LF-PARENT ONT::interested-scale)
+    ((LF-PARENT ONT::interestedness-scale)
      (templ mass-pred-templ)
      (meta-data :origin domain-reorganization :entry-date 20170904 :change-date 20090508 :comments LM-vocab :wn ("enthusiasm%1:09:00"))
      (example "Enthusiasm for his program is growing")

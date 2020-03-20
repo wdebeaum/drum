@@ -2897,20 +2897,22 @@
 )
 
 
-(define-type ont::animal-disposition-val
+(define-type ont::disposition-val ;animal-disposition-val
  :parent ont::animal-propensity-val
+ :wordnet-sense-keys ("temperamental%3:01:00::" "adventuristic%3:01:00::")
+ :sem (F::abstr-obj (F::scale ont::disposition-scale))
 )
 
 ;; grumpy, cholaric, churlish, crabbed etc
 (define-type ont::negative-disposition-val
- :parent ont::animal-disposition-val
- :wordnet-sense-keys ("temperamental%3:01:00::" "adventuristic%3:01:00::" "ill-natured%3:00:00")
+ :parent ont::disposition-val ;animal-disposition-val
+ :wordnet-sense-keys ("ill-natured%3:00:00") ;"cantankerous%5:00:00:ill-natured:00" "churlish%5:00:00:ill-natured:00" "currish%5:00:00:ill-natured:00" "disagreeable%5:00:00:ill-natured:00" "hotheaded%5:00:00:ill-natured:00" "ill-humored%5:00:00:ill-natured:00" "misanthropic%5:00:00:ill-natured:00" "misogynous%5:00:00:ill-natured:00" "moody%5:00:00:ill-natured:00" "nagging%5:00:00:ill-natured:00" "prickly%5:00:00:ill-natured:00" "snappy%5:00:00:ill-natured:00" "snorty%5:00:00:ill-natured:00" "spoilt%5:00:00:ill-natured:00" "sulky%5:00:00:ill-natured:00" "surly%5:00:00:ill-natured:00" "vinegarish%5:00:00:ill-natured:00")
 )
 
 ;; amiable, euqable, placid
 (define-type ont::positive-disposition-val
- :parent ont::animal-disposition-val
- :wordnet-sense-keys ("good-natured%3:00:00")
+ :parent ont::disposition-val ;animal-disposition-val
+ :wordnet-sense-keys ("good-natured%3:00:00") ;"amiable%5:00:00:good-natured:00" "even-tempered%5:00:00:good-natured:00" "good-natured%3:00:00")
 )
 
 ;; (dis)honest
@@ -4257,7 +4259,7 @@
  :wordnet-sense-keys ("humorless%3:00:00::" "humourless%3:00:00::" "unhumorous%3:00:00::" "dull%3:00:03::" "uninteresting%3:00:00" "boring%5:00:00:uninteresting:00" "wearisome%5:00:00:uninteresting:00" "tiresome%5:00:00:uninteresting:00")
  ; Words: (W::DULL W::BORING W::UNINTERESTING)
  ; Antonym: NIL (W::INTERESTING)
- :sem (F::abstr-obj (F::scale ont::interest-scale) (f::orientation f::neg))
+ :sem (F::abstr-obj (F::scale ont::interestingness-scale) (f::orientation f::neg))
 )
 
 ;(define-type ont::tiresome-val
@@ -4284,7 +4286,7 @@
 (define-type ont::interesting-val
  :parent ont::evoking-pos-experience-property-val 
  :wordnet-sense-keys ("colorful%3:00:03::" "colourful%3:00:03::" "fascinating%5:00:00:interesting:00" "interesting%3:00:00" )
- :sem (F::abstr-obj (F::scale ont::interest-scale) )
+ :sem (F::abstr-obj (F::scale ont::interestingness-scale) )
 )
 
 (define-type ont::pleasing-val
@@ -4363,7 +4365,7 @@
 (define-type ont::interested-val
  :parent ont::pos-experiencer-property-val 
  :wordnet-sense-keys ("curious%3:00:00::" "interested%3:00:00" "curious%5:00:00:interested:00" )
- :sem (F::abstr-obj (F::scale ont::interest-scale) )
+ :sem (F::abstr-obj (F::scale ont::interestedness-scale) )
 )
 
 ; wanting/desiring
@@ -4438,12 +4440,6 @@
  :parent ont::neg-experiencer-property-val 
  :wordnet-sense-keys ("ungrateful%3:00:00" "thankless%3:00:00" "unthankful%3:00:00" )
  :sem (F::abstr-obj (F::scale ont::gratitude-scale) )
-)
-
-(define-type ont::not-interested-val
- :parent ont::neg-experiencer-property-val 
- :wordnet-sense-keys ("incurious%3:00:00::" "uneager%3:00:00::" "uninterested%3:00:00" "disinterested%5:00:00:impartial:00" )
- :sem (F::abstr-obj (F::scale ont::apathy-scale) )
 )
 
 (define-type ont::concerned-val
@@ -4527,10 +4523,18 @@
 
 (define-type ONT::bored
  :parent ONT::neg-experiencer-property-val
- :wordnet-sense-keys ("bored%5:00:00:tired:00" "bored%5:00:00:uninterested:00")
- :sem (F::abstr-obj (F::scale ont::interest-scale) (f::orientation f::neg))
+ :wordnet-sense-keys ("incurious%3:00:00::" "uneager%3:00:00::" "uninterested%3:00:00")
+ ;:wordnet-sense-keys ("bored%5:00:00:tired:00" "bored%5:00:00:uninterested:00")
+ :sem (F::abstr-obj (F::scale ont::apathy-scale) (f::orientation f::neg))
  )
 
+#|
+(define-type ont::not-interested-val
+ :parent ont::neg-experiencer-property-val 
+ :wordnet-sense-keys ("incurious%3:00:00::" "uneager%3:00:00::" "uninterested%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::apathy-scale) )
+)
+|#
 
 ;; smart, (un)intelligent
 (define-type ont::intelligence-val

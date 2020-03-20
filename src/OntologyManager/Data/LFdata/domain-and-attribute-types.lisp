@@ -738,6 +738,24 @@
  :comment "scales relating to behavioral or psychological attributes that characterize an entity."
 )
 
+(define-type ont::disposition-scale
+ :sem (F::abstr-obj (F::scale ONT::DISPOSITION-SCALE))
+ :parent ont::behavioral-scale
+ :wordnet-sense-keys ("disposition%1:07:00"); "good-temperedness%1:07:00" "ill_nature%1:07:00" "impatience%1:07:00" "irritability%1:07:00" "shrewishness%1:07:00" "sulkiness%1:07:00") ;"asperity%1:07:02" "crabbiness%1:07:00" "crankiness%1:07:00" 
+)
+
+(define-type ont::negative-disposition-scale
+ :sem (F::abstr-obj (F::scale ONT::NEGATIVE-DISPOSITION-SCALE))
+ :parent ont::disposition-scale
+ :wordnet-sense-keys ("ill_nature%1:07:00") ;"asperity%1:07:02" "crabbiness%1:07:00" "crankiness%1:07:00" "ill_nature%1:07:00" "impatience%1:07:00" "irritability%1:07:00" "shrewishness%1:07:00" "sulkiness%1:07:00")
+)
+
+(define-type ont::positive-disposition-scale
+ :sem (F::abstr-obj (F::scale ONT::POSITIVE-DISPOSITION-SCALE))
+ :parent ont::disposition-scale
+ :wordnet-sense-keys ("good-temperedness%1:07:00") 
+)
+
 (define-type ont::endurance-scale
  :sem (F::abstr-obj (F::scale ONT::ENDURANCE-SCALE))
  :parent ont::behavioral-scale 
@@ -889,6 +907,12 @@
  :wordnet-sense-keys ("quality%1:07:02")
  :comment "scales relating to subjective evaluation of an entity or a situation"
  ;; WORDS: quality
+)
+
+(define-type ont::interestingness-scale
+ :sem (F::abstr-obj (F::scale ONT::interestingness-SCALE))
+ :parent ont::evaluation-scale
+ :wordnet-sense-keys ("interestingness%1:07:00")
 )
 
 (define-type ont::fame-scale
@@ -2319,10 +2343,10 @@
  ;; not about certainty but more about hope and trust in someone (I have confidence in you; You have my trust.).
 )
 
-(define-type ont::interest-scale
- :sem (F::abstr-obj (F::scale ONT::INTEREST-SCALE))
+(define-type ont::interestedness-scale
+ :sem (F::abstr-obj (F::scale ONT::INTERESTEDNESS-SCALE))
  :parent ont::experiencer-condition-scale
- :wordnet-sense-keys ("interest%1:09:00" "enthusiasm%1:09:00")
+ :wordnet-sense-keys ("interestedness%1:09:00" "enthusiasm%1:09:00")
 )
 
 (define-type ont::apathy-scale
