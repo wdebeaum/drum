@@ -2,7 +2,7 @@
  * hostname.c: Get local hostname
  *
  * George Ferguson, ferguson@cs.rochester.edu,  2 Jan 1996
- * Time-stamp: <96/03/07 18:00:26 ferguson>
+ * Time-stamp: <Fri Mar 20 23:56:05 CDT 2020 lgalescu>
  *
  * This gets the hostname, suitable for use on the local network. For
  * more general use, you'd want to go via gethostbyname() to canonicalize
@@ -10,6 +10,7 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #ifdef SOLARIS
 # include <sys/utsname.h>
 #endif

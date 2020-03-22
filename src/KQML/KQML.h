@@ -2,7 +2,7 @@
  * KQML.h
  *
  * George Ferguson, ferguson@cs.rochester.edu,  6 Nov 1995
- * Time-stamp: <Fri Jan  8 10:29:10 EST 2010 ferguson>
+ * Time-stamp: <Fri Mar 20 23:49:38 CDT 2020 lgalescu>
  *
  * The definition of parameters using a list means that modules need
  * not be re-linked if the set of possible parameters changes.
@@ -20,6 +20,8 @@
 extern "C" {
 #endif
 
+#include <strings.h>
+  
 /*
  * The KQML spec isn't clear about case-sensitivity. Although I would
  * expect that it should be case-sensitive, I suspect that it probably
