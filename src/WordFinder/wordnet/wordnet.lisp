@@ -745,7 +745,8 @@ Signals a condition if EOF is encountered."
    flexible than the actual definition, in that the final :: may be omitted. If
    :head-word:head-id is omitted from a satellite adjective sense key (ss-type
    5), the first matching sense is returned."
-  (let* ((pct (position #\% sense-key))
+  (let* ((*package* (find-package :wf))
+	 (pct (position #\% sense-key))
          (lemma (subseq sense-key 0 pct))
          (ss-type (parse-integer (subseq sense-key (+ pct 1) (+ pct 2))))
 	 (pos (nth (- (if (= ss-type 5) 3 ss-type) 1)
