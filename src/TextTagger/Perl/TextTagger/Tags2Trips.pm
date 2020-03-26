@@ -540,6 +540,9 @@ sub domainSpecificInfo2trips {
       push @$trips, ':matches',
 	   domainSpecificInfo2trips($info->{matches})
 	if (exists($info->{matches}));
+    } elsif ($info->{type} eq 'units') {
+      push @$trips, ':units', '"' . escape_for_quotes($info->{units}) . '"';
+      push @$trips, ':dimensions', '"' . escape_for_quotes($info->{dimensions}) . '"';
     } else {
       die "Unknown type of domain-specific-info: $info->{type}\n" . Data::Dumper->Dump([$info],['*info']);
     }

@@ -1221,6 +1221,12 @@ named-entity with LF type <code>GEOGRAPHIC-REGION</code>.</td>
 <td></td>
 <td>Tags anything matching the <a href="#sec-4.2."><code>:lex</code> (or <code>:text</code>) argument</a> of any of the tags from the input terms list with a copy of the matching tag(s). See <a href="#sec-3.6.">the load-, add-, get-, and clear-input-terms requests</a> and <a href="#sec-3.5.12.">the <code>:input-terms</code> argument</a> to <a href="#sec-3.5.">the tag request</a>. Matching is done case-insensitively, and allows the insertion of various kinds of dash.</td>
 </tr><tr>
+<td>Units</td>
+<td>sense</td>
+<td>X</td>
+<td></td>
+<td>Tags units of measure as nouns with lftypes under <code>MEASURE-UNIT</code> according to their dimensions. Uses the installed <code>units</code> program (e.g. <a href="https://www.gnu.org/software/units/">GNU Units</a>) for its unit definitions. The <code>:units</code> fields of the <code>:domain-specific-info</code> structures produced by the Units tagger may be fed directly to the UnitConverter2 TRIPS module's <code>convert-units</code> request.</td>
+</tr><tr>
 <td>VariantLists</td>
 <td>alternate-spelling</td>
 <td></td>
@@ -1276,7 +1282,7 @@ foo BarBaz don't 123,456 12EA56
 <tr><td>punctuation</td><td>Punctuation, StanfordCoreNLP</td></tr>
 <tr><td>quotation</td><td>Quotations</td></tr>
 <tr><td>sentence</td><td>OneSentencePerLine, Sentences, StanfordCoreNLP</td></tr>
-<tr><td>sense</td><td>ChemicalFormulae, Disambiguator, Drum, Gold, MetaMap, Music, WordNet</td></tr>
+<tr><td>sense</td><td>ChemicalFormulae, Disambiguator, Drum, Gold, MetaMap, Music, Units, WordNet</td></tr>
 <tr><td>spaced-chunk</td><td>SpacedChunks</td></tr>
 <tr><td>street-address</td><td>StreetAddresses</td></tr>
 <tr><td>subnumber</td><td>Words</td></tr>
@@ -1311,6 +1317,7 @@ to the tag request. Sense tags emitted by the Disambiguator tagger may also have
 <tr><td>LOCATION-ID</td><td>StreetAddresses</td></tr>
 <tr><td>LONG-TERM-CONTROL-DRUG</td><td>Asma</td></tr>
 <tr><td>MALE-PERSON</td><td>PersonalNames</td></tr>
+<tr><td>MEASURE-UNIT</td><td>Units (also uses subtypes)</td></tr>
 <tr><td>NATIONALITY</td><td>Countries</td></tr>
 <tr><td>NATIONALITY-VAL</td><td>Countries</td></tr>
 <tr><td>ORGANIZATION</td><td>NamedEntities, StanfordCoreNLP</td></tr>

@@ -67,6 +67,7 @@ use TextTagger::Sentences;
 use TextTagger::SpacedChunks;
 use TextTagger::StreetAddresses;
 use TextTagger::TermsInput;
+use TextTagger::Units;
 use TextTagger::VariantLists;
 use TextTagger::Words;
 use TextTagger::XMLInput;
