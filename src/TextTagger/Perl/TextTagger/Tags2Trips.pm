@@ -56,6 +56,7 @@ our %penn2trips_word_re = (
   'gray' => qr/gray|grey/i,
   'hemophilia' => qr/hemophilia|haemophilia/i,
   'hemophiliac' => qr/hemophiliac|haemophiliac/i,
+  'ischemia' => qr/ischemia|ischaemia/i, # but not ischaemic
   'leaned' => qr/leaned|leant/i,
   'learned' => qr/learned|learnt/i,
   'leukemia' => qr/leukemia|leukaemia/i,
