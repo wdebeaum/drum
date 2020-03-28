@@ -523,7 +523,7 @@
  )
 
 (define-type ONT::Experiencer-emotion
- :wordnet-sense-keys ( "experience%2:37:00" "feel%2:37:00")
+ :wordnet-sense-keys ( "experience%2:37:00" "feel%2:37:00" "feel%2:29:00")
  :parent ONT::event-of-experience
  :sem (F::Situation (:required (F::Cause F::Mental))(:default (F::Aspect F::Stage-Level)))
  :arguments (
