@@ -2971,13 +2971,15 @@
  :wordnet-sense-keys ("dig%2:35:01" "dig_out%2:35:00" "scoop%2:35:01"
 				    "ladle%2:35:00" "ladle%2:35:01" "spoon%2:35:00" "hoe%2:36:00")
  :comment "To move something incrementally, typically using a tool"
- :parent ONT::cause-to-move
+ ;:parent ONT::cause-to-move
+ :parent ONT::cause-move
  )
 
 (define-type ONT::propel
  :wordnet-sense-keys ("throw%1:04:00" "propel%2:35:00" "throw%2:35:02")
  :comment "causing to move by a push and release activity"
- :parent ONT::cause-to-move
+ ;:parent ONT::cause-to-move
+ :parent ONT::cause-move
  )
 
 (define-type ONT::SOW-SEED
@@ -3313,7 +3315,8 @@
 ;; herd
 (define-type ONT::herd
  :wordnet-sense-keys ("herd%2:38:00" "herd%2:38:01" "herd%2:42:00")
- :parent ont::cause-to-move
+ ;:parent ont::cause-to-move
+ :parent ONT::cause-move
  :arguments ((:ESSENTIAL ONT::agent)
 	     (:essential ont::affected  (F::phys-obj (f::mobility f::movable) (f::intentional +)))
              )

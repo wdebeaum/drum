@@ -552,9 +552,11 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
   (let ((pos (or (penn-tag-to-trips-pos pos) pos))
         (d (get-lf-and-pos definition)))
   (and
-    (or (null ont-type) (eq (car d) ont-type)
-      (and (not (eq *use-tagged-senses-only* 'strict)) (or (om::subtype (car d) ont-type) (om::subtype ont-type (car d)) )))
-    (or (null pos) (eq (cadr d) pos)))))
+   (or (null ont-type)
+       (member ont-type '(ONT::ANY-SEM ONT::REFERENTIAL-SEM ONT::SITUATION-ROOT ONT::PROPERTY-VAL ONT::MODIFIER ONT::PREDICATE))
+       (eq (car d) ont-type)
+       (and (not (eq *use-tagged-senses-only* 'strict)) (or (om::subtype (car d) ont-type) (om::subtype ont-type (car d)) )))
+   (or (null pos) (eq (cadr d) pos)))))
 
 (defun check-definition-list (definition tests)
   (cond ((not tests) nil)

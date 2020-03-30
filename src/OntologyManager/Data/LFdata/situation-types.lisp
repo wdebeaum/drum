@@ -557,6 +557,7 @@
  )
 |#
 
+#| ; merged with ONT::CAUSE-MOVE
 (define-type ONT::Cause-to-Move
  :wordnet-sense-keys ("drive%2:35:01" "drive%2:41:02" "move%2:38:01")
  :parent ont::motion
@@ -565,6 +566,7 @@
 	     (:ESSENTIAL ONT::affected ((? ttype f::phys-obj f::abstr-obj)))
              )
  )
+|#
 
 (define-type ONT::cause-contact
     :parent ONT::event-of-causation
