@@ -805,14 +805,14 @@
 
 ;; carnivore, vegetarian -- can be animals as well as human
 (define-type ONT::eater
-    :wordnet-sense-keys ("eater%1:18:00" "feeder%1:18:00" "people%1:14:00" "people%1:14:01" "masses%1:14:00")
+    :wordnet-sense-keys ("eater%1:18:00")
     :parent ONT::organism
     :sem (F::Phys-obj (F::origin f::living) (F::trajectory -))
     )
 
 
 (define-type ONT::person
-    :wordnet-sense-keys ("person%1:03:00")
+    :wordnet-sense-keys ("person%1:03:00" "people%1:14:00")
     :parent ONT::mammal ;; umls
     :sem (F::Phys-obj (F::form F::solid-object)
 		      (F::spatial-abstraction F::spatial-point)
@@ -1002,7 +1002,7 @@
 
 ;; citizen, inhabitant, resident
 (define-type ONT::inhabitant
-    :wordnet-sense-keys ("indweller%1:18:00" "denizen%1:18:00" "dweller%1:18:00" "habitant%1:18:00" "inhabitant%1:18:00" "citizen%1:18:00" "national%1:18:00" "native%1:18:01")
+    :wordnet-sense-keys ("indweller%1:18:00" "denizen%1:18:00" "dweller%1:18:00" "habitant%1:18:00" "inhabitant%1:18:00" "citizen%1:18:00" "national%1:18:00" "native%1:18:01" "people%1:14:01")
     :parent ont::identity-and-origin
 )
 

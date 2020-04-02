@@ -35,7 +35,6 @@
 ;; higher-level type for evaluation
 (define-type ont::evaluation-attribute-val
     :parent ont::property-val
-  :wordnet-sense-keys ("disadvantageous%3:00:00::" "poor%3:00:02::")
     :arguments ((:REQUIRED ONT::FIGURE (?any (F::tangible +))))
     :comment "properties which need an observer to be recognized -- subjective to the observer"
     :sem (F::abstr-obj (F::scale ont::evaluation-scale ))
@@ -114,7 +113,7 @@
 
 (define-type ont::bad
  :parent ont::acceptability-val 
- :wordnet-sense-keys ("unsound%3:00:00::" "unpropitious%3:00:00::" "dirty%5:00:00:nasty:00" "unacceptable%5:00:00:unsatisfactory:00" "unacceptable%3:00:00" "unfavorable%3:00:02" "icky%5:00:00:bad:00" "unfavorable%5:00:00:bad:00" "mediocre%5:00:00:bad:00" "bad%3:00:00" "unsatisfactory%3:00:00")
+ :wordnet-sense-keys ("unsound%3:00:00::" "unpropitious%3:00:00::" "dirty%5:00:00:nasty:00" "unacceptable%5:00:00:unsatisfactory:00" "unacceptable%3:00:00" "unfavorable%3:00:02" "icky%5:00:00:bad:00" "unfavorable%5:00:00:bad:00" "mediocre%5:00:00:bad:00" "bad%3:00:00" "unsatisfactory%3:00:00" "disadvantageous%3:00:00")
  ; Words: (W::BAD W::TERRIBLE W::AWFUL W::NASTY W::DREADFUL W::UNACCEPTABLE W::ROTTEN W::UNSUPPORTABLE W::UNBEARABLE W::INTOLERABLE W::INSUFFERABLE W::UNFAVORABLE W::MEDIOCRE W::LOUSY)
  ; Antonym: ONT::good (W::GOOD W::GREAT W::FINE W::NICE W::ACCEPTABLE W::ALRIGHT W::SATISFACTORY W::SUPERB W::OKAY W::OK W::PEACHY W::FAVORABLE W::BEARABLE W::TOLERABLE W::SUPPORTABLE ALL_RIGHT)
 :sem (F::abstr-obj (F::scale ont::badness-scale))
@@ -3947,7 +3946,9 @@
 ;; wealthy, poor
 (define-type ont::wealthiness-val
  :sem (F::abstr-obj (F::scale ont::wealth-scale))
- :parent ont::evaluation-attribute-val ;status-val 
+ :parent ont::evaluation-attribute-val ;status-val
+ :arguments ((:REQUIRED ONT::figure (F::Phys-obj (f::type (? t ONT::POLITICAL-REGION ONT::PERSON)))) ; country, person
+	     )
 )
 
 (define-type ont::poor-val
@@ -5403,7 +5404,7 @@
   :arguments ((:required ONT::GROUND (f::phys-obj (f::type ont::material)))
 	      (:required ONT::FIGURE ((? xx  F::phys-obj abstr-obj))))
 					; Words: (W::SHORT W::INADEQUATE W::INSUFFICIENT)
-  :wordnet-sense-keys ("meager%3:00:00::" "meagre%3:00:00::" "meagerly%3:00:00::" "stingy%3:00:02::" "scrimpy%3:00:00::" "inadequate%3:00:00::" "unequal%3:00:03::" "inadequate%5:00:00:insufficient:00" "insufficient%3:00:00" "scarce%3:00:00")
+  :wordnet-sense-keys ("meager%3:00:00::" "meagre%3:00:00::" "meagerly%3:00:00::" "stingy%3:00:02::" "scrimpy%3:00:00::" "inadequate%3:00:00::" "unequal%3:00:03::" "inadequate%5:00:00:insufficient:00" "insufficient%3:00:00" "scarce%3:00:00" "poor%3:00:02::")
 					; Antonym: ONT::ADEQUATE (W::SUFFICIENT W::ADEQUATE W::ENOUGH)
   )
 
