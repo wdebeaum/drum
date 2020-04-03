@@ -197,6 +197,8 @@
 			        :format-control "LF, LF-FORM or LF-PARENT value is not a symbol in word ~S in the sense ~S"
 			        :format-arguments (list word sense)
 			        )))
+      (when (and lf-parent (not (gethash lf-parent (om::ling-ontology-lf-table om::*lf-ontology*))))
+        (lexiconmanager-warn "Undefined LF-PARENT in word ~S: ~S" word lf-parent))
       (when (and lf-parent pos) (add-pos-to-lf-table lf-parent pos))
       (make-sense-definition :lf lf :pos pos :lf-parent lf-parent :lf-form (if (null lf) (or lf-form 
                                                                                              (make-into-symbol word)))
