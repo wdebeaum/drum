@@ -94,7 +94,8 @@
 (defcomponent-handler
     '(request &key :content (define-words . *))
     #'(lambda (msg args)
-	(when user::*build-ontology* (apply #'lexicon-define-words args)))
+	(reply-to-msg msg 'reply
+		      :content (when user::*build-ontology* (apply #'lexicon-define-words args))))
   :subscribe t)
 
 ;; the lexicon-interface functions, not via API interface (so the arguments aren't quoted)

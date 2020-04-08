@@ -422,14 +422,16 @@ returns : function return value"
 (defcomponent-handler
     '(request &key :content (define-type . *))
     #'(lambda (msg args)
-	(when user::*build-ontology* (apply #'add-new-type args)))
+	(reply-to-msg msg 'reply
+		      :content (when user::*build-ontology*
+				 (if (apply #'add-new-type args) T))))
   :subscribe t)
-
+#|
 (defcomponent-handler
     '(tell &key :content (define-type . *))
     #'(lambda (msg args)
 	(when user::*build-ontology* (apply #'add-new-type args)))
-  :subscribe t)
+  :subscribe t)|#
 
 
 (defmacro tell (&rest args)
@@ -461,7 +463,8 @@ returns : function return value"
 
 (defun add-definition-to-existing-type (type def comment wnsense)
   (let ((type-record (gethash type (ling-ontology-lf-table *lf-ontology*)))
-	(simplified-def (simplify-def def type)))
+	(simplified-def (simplify-def def type))
+	(WNnewsense (symbol-name wnsense)))
     (when (and type-record simplified-def)
       (let ((new-definition (combine-defns def (lf-description-definitions type-record)))
 	    (new-comment (if (lf-description-comment type-record)
@@ -478,9 +481,13 @@ returns : function return value"
 								      :def ,simplified-def)))|#
 	(setf (lf-description-definitions type-record)
 	      new-definition)
+	(when (and WNnewsense (not (member WNnewsense (lf-description-wordnet-sense-keys type-record) :test #'equal)))
+	    (setf (lf-description-wordnet-sense-keys type-record)
+		  (cons WNnewsense (lf-description-wordnet-sense-keys type-record))))
 	(when new-comment
 	  (setf (lf-description-comment type-record)
-	      new-comment))))))
+		new-comment)))
+      T)))
 
 (defun simplify-def (def type)
   "check that we have non redundant content in the def before processing it"
@@ -530,10 +537,44 @@ returns : function return value"
 
 (defun combine-defns (newdef olddef)
   (if (and newdef olddef)
-      (let ((newdefpreds (if (eq (car newdef) 'ont::or) (cdr newdef)
-			     (list newdef)))
-	    (olddefpreds (if (eq (car olddef) 'ont::or) (cdr olddef)
-			     (list olddef))))
-	(cons 'ont::OR (append olddefpreds newdefpreds)))
+      (let* ((newdefpreds (if (eq (car newdef) 'ont::or)
+			      (cdr newdef)
+			      (list newdef)))
+	     (olddefpreds (if (eq (car olddef) 'ont::or)
+			      (cdr olddef)
+			      (list olddef)))
+	     (reallynewpreds (remove-if #'(lambda (x) (defn-already-in-list x olddefpreds)) newdefpreds)))
+	;;(format t "~%new=~S old=~S" newdefpreds olddefpreds)
+       
+	(if reallynewpreds
+	    (cons 'ont::OR (append olddefpreds reallynewpreds))
+	    olddef))
       (or newdef
 	  olddef)))
+
+(defun defn-already-in-list (newdefn olddefns)
+  (some #'(lambda (x) (defn-match newdefn x nil)) olddefns))
+
+(defun defn-match (x y bndgs)
+   "True is they are identical modulo variable naming"
+   (cond ((equal x y)
+	  (or bndgs '((nil))))
+	 ((or (null x) (null y))
+	  NIL)
+	 ((isvar x)
+	  (let ((bound-value (cdr (assoc x bndgs))))
+	    (if bound-value
+		(defn-match bound-value y bndgs)
+		(cons (cons x y) bndgs))))
+	 ((and (consp x) (consp y))
+	  (let ((newbndgs (defn-match (car x) (car y) bndgs)))
+	    (if newbndgs
+		(defn-match (cdr x) (cdr y) newbndgs))))
+	 (t
+	  nil)
+	  ))
+
+(defun isvar (x)
+  (and x (symbolp x)
+       (eq (first (coerce (symbol-name x) 'list))
+	   #\?)))

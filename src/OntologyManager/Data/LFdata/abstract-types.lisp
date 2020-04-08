@@ -696,16 +696,37 @@
              )
  )
 
-(define-type ONT::LEVEL
-  :comment "words that act as predicates that return the value on a scale/domain: What is the X on this scale?  Note: We exclude words that are identical to the names of the scales they pertain to (e.g., What is the height on the height scale?)"
+(define-type ONT::SCALE-VALUE-FUNCTION
+  :comment "words that act as map objects to values on a scale/domain: What is the X on this scale?  Note: We exclude words that are identical to the names of the scales they pertain to (e.g., What is the height on the height scale?)"
  :wordnet-sense-keys ("level%1:26:00" "level%1:07:00")
- :sem (F::Abstr-obj (F::Scale Ont::LINEAR-extent-SCALE))
+ :sem (F::Abstr-obj (F::Scale Ont::DOMAIN))
 ; :parent ONT::ordered-DOMAIN
  :parent ONT::ABSTRACT-OBJECT
  :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::phys-obj F::Abstr-obj))) ;; noise, water
 	     (:essential ont::GROUND (f::abstr-obj   (F::INFORMATION F::INFORMATION-CONTENT))) ; a level of 5
              )
  )
+
+(define-type ONT::LEVEL
+  :comment "words that act as map objects to values on a scale/domain: What is the X on this scale?  Note: We exclude words that are identical to the names of the scales they pertain to (e.g., What is the height on the height scale?)"
+ :wordnet-sense-keys ("level%1:26:00" "level%1:07:00")
+ :sem (F::Abstr-obj (F::Scale Ont::LINEAR-extent-SCALE))
+; :parent ONT::ordered-DOMAIN
+ :parent ONT::SCALE-VALUE-FUNCTION
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::phys-obj F::Abstr-obj))) ;; noise, water
+	     (:essential ont::GROUND (f::abstr-obj   (F::INFORMATION F::INFORMATION-CONTENT))) ; a level of 5
+             )
+ )
+
+(define-type ont::value
+    :wordnet-sense-keys ("value%1:07:00")
+    :comment "a function from an object to a value on some scale of worth"
+ :parent ONT::scale-value-function
+  :arguments (;(:REQUIRED ONT::FIGURE (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
+	      (:REQUIRED ont::FIGURE ((? lo f::phys-obj f::abstr-obj)))
+              (:REQUIRED ONT::GROUND (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
+              )
+  )
 
 (define-type ONT::range
  :wordnet-sense-keys ("range%1:07:00" "bracket%1:14:00")
@@ -994,7 +1015,7 @@
 
 ;; travel
 (define-type ONT::travel
- :wordnet-sense-keys ("travel%1:04:00" "travel%2:38:05")
+ :wordnet-sense-keys ("travel%1:04:00" )
  :parent ONT::event-defined-by-activity
  :sem (F::situation (F::trajectory +))
  )
@@ -1471,20 +1492,13 @@
     :arguments ((:REQUIRED ont::FIGURE ((? lo f::phys-obj f::abstr-obj))))
     )
 
-(define-type ont::value
- :wordnet-sense-keys ("value%1:07:00")
- :parent ONT::tangible-abstract-object
-  :arguments (;(:REQUIRED ONT::FIGURE (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
-	      (:REQUIRED ont::FIGURE ((? lo f::phys-obj f::abstr-obj)))
-              (:REQUIRED ONT::GROUND (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
-              )
-)
+
 
 
 ;;
 (define-type ONT::VALUE-COST
  :wordnet-sense-keys ("change%1:21:02")
- :parent ONT::value
+ :parent ONT::tangible-abstract-object
  :arguments (
 	     ;(:REQUIRED ONT::FIGURE (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
 	     (:REQUIRED ont::FIGURE ((? lo f::phys-obj f::abstr-obj)))
@@ -1697,7 +1711,7 @@
 ;;;==== ONT::ATTRIBUTE ====                                                                                         
 
 (define-type ONT::attribute
- :wordnet-sense-keys ("dimension%1:09:00" "attribute%1:09:00" "property%1:09:00" "property%1:07:00" "holding%1:21:00" "belongings%1:21:00" "property%1:21:00" "quality%1:07:00")
+ :wordnet-sense-keys ("dimension%1:09:00" "attribute%1:09:00" "property%1:09:00" "property%1:07:00" "quality%1:07:00")
  :parent ont::abstract-object-nontemporal
  :arguments ((:OPTIONAL ONT::FIGURE ((? lo f::phys-obj f::abstr-obj)))
              )

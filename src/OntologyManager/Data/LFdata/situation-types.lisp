@@ -952,7 +952,7 @@
 
 ;; possess -- specific for ownership
 (define-type ont::possess
- :wordnet-sense-keys ("own%2:40:00" "have%2:40:04" "possess%2:40:00" "belong%2:40:00" "possession%1:03:00" "possession%1:04:00" "ownership%1:21:00" "ownership%1:26:00")
+ :wordnet-sense-keys ("own%2:40:00" "have%2:40:04" "possess%2:40:00" "belong%2:40:00"  "possession%1:04:00" "ownership%1:21:00" "ownership%1:26:00")
   :parent ont::have
   :sem (F::SITUATION (F::Aspect F::stage-level) (F::Time-span F::Extended))
   :arguments ((:required ont::neutral (F::phys-obj (f::intentional +))) ;; owner is typically a person or organization
