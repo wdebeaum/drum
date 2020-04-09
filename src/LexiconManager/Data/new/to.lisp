@@ -73,6 +73,7 @@
            ((LF-PARENT ONT::ATTRIBUTED-TO)
             (TEMPL binary-constraint-S-templ)
             (EXAMPLE "he seems honest to me")
+	    (PREFERENCE 0.97)
            ) 
 
 	   ))

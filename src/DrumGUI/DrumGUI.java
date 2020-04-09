@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.95 2020/01/31 05:52:55 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.96 2020/04/08 21:02:04 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -2041,13 +2041,13 @@ public class DrumGUI extends StandardTripsModule {
      */
     private void normalizeDocument() {
         currentInputData = currentInputData
-                .replace("\u0003", "\n")    // ^C, ETX
-                .replace("\u0005", "\n")    // ^E, ENQ
-                .replace("\u000C", "\n")    // ^L, FORM-FEED (FF)
-                .replace("\u0010", "\n")    // ^P, DLE
-                .replace("\u0015", "\n")    // ^U, NAK
+                .replace('\u0003', '\n')    // ^C, ETX
+                .replace('\u0005', '\n')    // ^E, ENQ
+                .replace('\u000C', '\n')    // ^L, FORM-FEED (FF)
+                .replace('\u0010', '\n')    // ^P, DLE
+                .replace('\u0015', '\n')    // ^U, NAK
                 .replaceAll("\\p{Zs}", " ") // all space separators
-                .replaceAll("[\\p{Cc}&&[^\\p{Space}]]", " ");     // all other control chars
+                .replaceAll("\\p{Cc}", " ");// all other control chars
     }
 
     /**

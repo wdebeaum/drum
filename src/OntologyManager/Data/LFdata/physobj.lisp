@@ -78,6 +78,7 @@
     )
 
 (define-type ONT::gene-protein
+    :sem (F::Phys-obj (F::container +))
     :parent ONT::MOLECULAR-PART
     )
 

@@ -9,6 +9,7 @@
     (
 ;     (lf-parent ont::website)
      (lf-parent ont::goal)
+     (TEMPL OTHER-RELN-TEMPL)
       (meta-data :origin task-learning :entry-date 20050930 :change-date nil :wn ("target%1:09:00") :comments nil)
       (EXAMPLE "when you click the link in the document, you go to its target")
      )
