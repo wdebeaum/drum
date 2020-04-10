@@ -633,7 +633,7 @@
 
 ;; portion, serving
 (define-type ont::food-measure-unit
-    :wordnet-sense-keys ("drink%1:04:00" "serving%1:13:00")
+    :wordnet-sense-keys ("serving%1:13:00")
     :parent ont::measure-unit
     :arguments ((:essential ont::FIGURE (f::phys-obj (f::form f::substance))))
     )
@@ -873,7 +873,7 @@
  )
 
 (define-type ONT::measure-metric
- :wordnet-sense-keys ("metric%1:23:00" "measure%1:10:03" "indicator%1:10:00")
+ :wordnet-sense-keys ("metric%1:23:00" "indicator%1:10:00")
  :parent ONT::information
  )
 

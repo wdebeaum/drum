@@ -67,7 +67,7 @@
 (define-type ont::body-energy-scale
  :sem (F::abstr-obj (F::scale ONT::BODY-ENERGY-SCALE))
  :parent ont::positive-body-condition-scale
- :wordnet-sense-keys ("vigor%1:07:00" "energy%1:26:00" "energy%1:07:01")
+ :wordnet-sense-keys ("energy%1:07:01" "energy%1:26:00")
  ;; vim, vigor, energy (strength is in ont::strength scale)
 )
 
@@ -97,7 +97,7 @@
 
 (define-type ont::pain-scale
  :sem (F::abstr-obj (F::scale ONT::PAIN-SCALE))
- :wordnet-sense-keys ("painfulness%1:07:00" "soreness%1:12:00" "pain%1:12:00" "soreness%1:12:00")
+ :wordnet-sense-keys ("painfulness%1:07:00" "pain%1:12:00" "soreness%1:12:00")
  :parent ONT::negative-body-condition-scale
 )
 
@@ -526,7 +526,7 @@
 (define-type ont::copper-scale
  :sem (F::abstr-obj (F::scale ONT::COPPER-SCALE))
  :parent ont::color-scale
- :wordnet-sense-keys ("yellow%1:07:00")
+ :wordnet-sense-keys ("copper%1:07:00")
 )
 
 
@@ -660,7 +660,7 @@
 (define-type ont::auditory-scale
  :sem (F::abstr-obj (F::scale ONT::AUDITORY-SCALE))
  :parent ont::sensory-scale 
- :wordnet-sense-keys ("audition%1:09:00")
+ :wordnet-sense-keys ("audibility%1:07:00")
 )
 
 ;; dampness scale
@@ -738,6 +738,24 @@
  :comment "scales relating to behavioral or psychological attributes that characterize an entity."
 )
 
+(define-type ont::communicativeness-scale
+ :sem (F::abstr-obj (F::scale ONT::COMMUNICATIVENESS-SCALE))
+ :parent ont::behavioral-scale
+ :wordnet-sense-keys ("communicativeness%1:07:00") 
+)
+
+(define-type ont::decisiveness-scale
+ :sem (F::abstr-obj (F::scale ONT::DECISIVENESS-SCALE))
+ :parent ont::behavioral-scale
+ :wordnet-sense-keys ("decisiveness%1:07:00")
+)
+
+(define-type ont::discernment-scale
+ :sem (F::abstr-obj (F::scale ONT::DISCERNMENT-SCALE))
+ :parent ont::behavioral-scale
+ :wordnet-sense-keys ("discernment%1:09:00")
+)
+
 (define-type ont::disposition-scale
  :sem (F::abstr-obj (F::scale ONT::DISPOSITION-SCALE))
  :parent ont::behavioral-scale
@@ -763,11 +781,43 @@
  ;; WORDS: endurance
 )
 
+#|
+(define-type ont::faithfulness-scale
+ :sem (F::abstr-obj (F::scale ONT::FAITHFULNESS-SCALE))
+ :parent ont::behavioral-scale
+ :wordnet-sense-keys ("faithfulness%1:07:00")
+)
+|#
+
+(define-type ont::financial-behavior-scale
+ :sem (F::abstr-obj (F::scale ONT::FINANCIAL-BEHAVIOR-SCALE))
+ :parent ont::behavioral-scale
+ :wordnet-sense-keys ("frugality%1:07:00" "wastefulness%1:07:00")
+)
+
+(define-type ont::frankness-scale
+ :sem (F::abstr-obj (F::scale ONT::FRANKNESS-SCALE))
+ :parent ont::behavioral-scale
+ :wordnet-sense-keys ("frankness%1:07:01")
+)
+
 (define-type ont::kindness-scale
  :sem (F::abstr-obj (F::scale ONT::KINDNESS-SCALE))
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("kindness%1:07:00" "kindness%1:07:01" "tenderness%1:07:00")
  ;; WORDS: tenderness, kindness
+)
+
+(define-type ont::knowledge-experience-scale
+ :sem (F::abstr-obj (F::scale ONT::KNOWLEDGE-EXPERIENCE-SCALE))
+ :parent ont::behavioral-scale
+ :wordnet-sense-keys ("knowledgeability%1:07:00" "experience%1:09:01")
+)
+
+(define-type ont::loyalty-faithfulness-scale ;loyalty-scale
+ :sem (F::abstr-obj (F::scale ONT::LOYALTY-FAITHFULNESS-SCALE)) ;LOYALTY-SCALE))
+ :parent ont::behavioral-scale
+ :wordnet-sense-keys ("loyalty%1:12:00" "faithfulness%1:07:00")
 )
 
 (define-type ont::gracefulness-scale
@@ -786,6 +836,12 @@
  :sem (F::abstr-obj (F::scale ONT::MODESTY-SCALE))
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("modesty%1:07:00")
+)
+
+(define-type ont::patience-scale
+ :sem (F::abstr-obj (F::scale ONT::PATIENCE-SCALE))
+ :parent ont::behavioral-scale
+ :wordnet-sense-keys ("patience%1:07:00")
 )
 
 (define-type ont::affection-scale
@@ -1074,6 +1130,14 @@
  :parent ont::evaluation-scale
  :wordnet-sense-keys ("financial_condition%1:26:00")
 )
+
+(define-type ont::poverty-scale
+  :sem (F::abstr-obj (F::scale ONT::POVERTY-SCALE))
+  :parent ont::wealth-scale
+  :wordnet-sense-keys ("poverty%1:26:00")
+ ;:arguments ((:OPTIONAL ONT::FIGURE)
+ ;            )
+  )
 
 (define-type ont::ability-scale
  :sem (F::abstr-obj (F::scale ONT::ABILITY-SCALE))

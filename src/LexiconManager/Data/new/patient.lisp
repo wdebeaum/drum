@@ -13,3 +13,15 @@
    )
 ))
 
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+   (W::PATIENT
+    (wordfeats (W::MORPH (:FORMS (-LY))))
+    (SENSES
+     ((LF-PARENT ONT::PATIENT-val)
+      (EXAMPLE "he is very patient")
+      )
+     )
+    )
+))
+

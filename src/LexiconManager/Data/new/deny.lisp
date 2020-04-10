@@ -7,7 +7,7 @@
    (W::deny
     (wordfeats (W::morph (:forms (-vb) :nom W::denial)))
    (senses
-    ((lf-parent ont::refuse)
+    ((lf-parent ont::reject) ;refuse)
      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "he denied the charges")
      (meta-data :origin calo-ontology :entry-date 20060125 :change-date nil :comments caloy3)

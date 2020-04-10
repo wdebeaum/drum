@@ -2951,7 +2951,7 @@
 )
 
 (define-type ont::aggressive-val
- :parent ont::boldness-val 
+ :parent ont::animal-propensity-val ;boldness-val 
  :wordnet-sense-keys ("domineering%3:00:00::" "assertive%3:00:00::" "self-asserting%3:00:00::" "self-assertive%3:00:00::" "aggressive%3:00:00" "violent%3:00:00" "strident%5:00:00:imperative:00")
  :sem (F::abstr-obj (F::scale ont::aggressiveness-scale) (f::orientation f::pos))
 )
@@ -3014,15 +3014,20 @@
 ; :comment "properties of human behavior having to do with social interaction, e.g. friendly, kind, mean.)"
 )
 
+(define-type ont::sociability-val
+ :parent ont::social-interaction-val
+ :sem (F::abstr-obj (F::scale ont::sociability-scale))
+)
+
 ;; social
 (define-type ont::social-val
- :parent ont::social-interaction-val
+ :parent ont::sociability-val ;social-interaction-val
  :wordnet-sense-keys ("social%3:01:00" "social%3:00:00" "gregarious%3:00:00" "sociable%3:00:00")
  :sem (F::abstr-obj (F::scale ont::sociability-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-social-val
- :parent ont::social-interaction-val
+ :parent ont::sociability-val ;social-interaction-val
  :wordnet-sense-keys ("unapproachable%3:00:00::" "cool%3:00:02::" "ungregarious%3:00:00" "unsociable%3:00:00" "unsocial%3:00:00")
  :sem (F::abstr-obj (F::scale ont::sociability-scale) (f::orientation f::neg))
 )
@@ -3595,7 +3600,7 @@
 (define-type ONT::DIFFERENT
  :parent ONT::SIMILARITY-VAL
  ; Words: (W::DIFFERENT W::SEPARATE W::DISTINCT)
- :wordnet-sense-keys ("inequitable%3:00:00::" "unjust%3:00:02::" "unlike%3:00:02::" "unequal%3:00:00::" "unlike%3:00:00" "unlike%3:00:00" "discrete%5:00:00:separate:00" "different%3:00:00" "separate%3:00:00" "distinct%5:00:00")
+ :wordnet-sense-keys ("inequitable%3:00:00::" "unjust%3:00:02::" "unlike%3:00:02::" "unequal%3:00:00::" "unlike%3:00:00" "discrete%5:00:00:separate:00" "different%3:00:00" "separate%3:00:00" "distinct%5:00:00")
  ; Antonym: ONT::SIMILAR (W::SIMILAR W::LIKE W::ANALOGOUS W::KINDRED) 
   :sem (F::abstr-obj (F::scale ont::different-scale))
 )
@@ -6718,7 +6723,8 @@
 (define-type ONT::decisiveness-val
   :parent ONT::animal-propensity-val
   :comment "(decisive)"
-  )
+  :sem (F::abstr-obj (F::scale ont::decisiveness-scale))
+)
 
 (define-type ONT::decisive-val
   :parent ONT::decisiveness-val
@@ -6735,6 +6741,7 @@
 (define-type ONT::communicativeness-val
   :parent ONT::animal-propensity-val
   :comment "(communicative)"
+  :sem (F::abstr-obj (F::scale ont::communicativeness-scale))
   )
 
 (define-type ONT::communicative-val
@@ -6751,8 +6758,21 @@
 
 (define-type ONT::financial-behavior-val
   :parent ONT::animal-propensity-val
-  :wordnet-sense-keys ("thrifty%3:00:00::")
-  :comment "(thrifty)"
+  ;:wordnet-sense-keys ("thrifty%3:00:00::")
+  :comment "(frugal, thrifty, wasteful)"
+  :sem (F::abstr-obj (F::scale ont::financial-behavior-scale))
+  )
+
+(define-type ONT::frugal-val
+  :parent ONT::financial-behavior-val
+  :wordnet-sense-keys ("thrifty%3:00:00")
+  :comment "(thrifty, frugal)"
+  )
+
+(define-type ONT::wasteful-val
+  :parent ONT::financial-behavior-val
+  :wordnet-sense-keys ("wasteful%3:00:00")
+  :comment "(wasteful)"
   )
 
 (define-type ONT::not-skillful-val
@@ -6761,26 +6781,28 @@
   :comment "(unskilled)"
   )
 
-(define-type ONT::loyalty-val
+(define-type ONT::loyalty-faithfulness-val ;loyalty-val
   :parent ONT::animal-propensity-val
-  :comment "(loyal)"
+  :comment "(loyal), faithful, dedicated, devoted to something (faithful)"
+  :sem (F::abstr-obj (F::scale ont::loyalty-faithfulness-scale)) ;loyalty-scale))
   )
 
-(define-type ONT::loyal-val
-  :parent ONT::loyalty-val
-  :wordnet-sense-keys ("loyal%3:00:00::" "patriotic%3:00:00::" "loyal%3:00:06::")
-  :comment "(loyal)"
+(define-type ONT::loyal-faithful-val ;loyal-val
+  :parent ONT::loyalty-faithfulness-val
+  :wordnet-sense-keys ("loyal%3:00:00::" "patriotic%3:00:00::" "loyal%3:00:06::" "dedicated%3:00:00::" "faithful%3:00:01::" "faithful%3:00:00::")
+  :comment "(loyal), faithful, dedicated, devoted to something (faithful)"
   )
 
-(define-type ONT::not-loyal-val
-  :parent ONT::loyalty-val
-  :wordnet-sense-keys ("unpatriotic%3:00:00::" "disloyal%3:00:06::" "disloyal%3:00:00::")
-  :comment "(disloyal)"
+(define-type ONT::not-loyal-faithful-val ;not-loyal-val
+  :parent ONT::loyalty-faithfulness-val
+  :wordnet-sense-keys ("disloyal%3:00:00::" "disloyal%3:00:06::" "unpatriotic%3:00:00::" "unfaithful%3:00:00::" "unfaithful%3:00:01::")
+  :comment "(disloyal), (unfaithful)"
   )
-
+#|
 (define-type ONT::faithfulness-val
   :parent ONT::animal-propensity-val
   :comment "faithful, dedicated, devoted to something (faithful)"
+  :sem (F::abstr-obj (F::scale ont::faithfulness-scale))
   )
 
 (define-type ONT::faithful-val
@@ -6794,6 +6816,7 @@
   :wordnet-sense-keys ("unfaithful%3:00:01::" "unfaithful%3:00:00::")
   :comment "(unfaithful)"
   )
+|#
 
 (define-type ONT::self-centeredness-val
   :parent ONT::animal-propensity-val
@@ -6833,6 +6856,7 @@
 (define-type ONT::patience-val
   :parent ONT::animal-propensity-val
   :comment "(patient)"
+  :sem (F::abstr-obj (F::scale ont::patience-scale))
   )
 
 (define-type ONT::patient-val
@@ -6884,6 +6908,7 @@
 (define-type ONT::well-intended-val
   :parent ONT::social-intent-val
   :comment "(benevolent)"
+  :wordnet-sense-keys ("benevolent%3:01:00")
   )
 
 (define-type ONT::social-care-and-support-val
@@ -7009,22 +7034,25 @@
 (define-type ONT::frankness-val
   :parent ONT::animal-propensity-val
   :comment "direct, blunt (frank, blunt)"
+  :sem (F::abstr-obj (F::scale ont::frankness-scale))
   )
 
 (define-type ONT::frank-val
   :parent ONT::frankness-val
   :comment "direct, blunt (frank, blunt)"
+  :wordnet-sense-keys ("direct%3:00:02")
   )
 
 (define-type ONT::not-frank-val
   :parent ONT::frankness-val
-  :wordnet-sense-keys ("direct%3:00:02::" "indirect%3:00:02::")
+  :wordnet-sense-keys ("indirect%3:00:02")
   :comment "indirect, allusive (indirect, allusive)"
   )
 
 (define-type ONT::knowledge-experience-val
   :parent ONT::animal-propensity-val
   :comment "having experience and knowledge (informed, experienced)"
+  :sem (F::abstr-obj (F::scale ont::knowledge-experience-scale))
   )
 
 (define-type ONT::have-knowledge-val
@@ -7048,6 +7076,7 @@
 (define-type ONT::discernment-val
   :parent ONT::animal-propensity-val
   :comment "(discerning, discriminate)"
+  :sem (F::abstr-obj (F::scale ont::discernment-scale))
   )
 
 (define-type ONT::discerning-val

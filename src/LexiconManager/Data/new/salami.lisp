@@ -6,7 +6,7 @@
  :words (
   (W::SALAMI
   (senses
-	   ((LF-PARENT ONT::MEAT-OTHER)
+	   ((LF-PARENT ONT::MEAT-PRODUCT) ;ONT::MEAT-OTHER)
 	    (TEMPL MASS-PRED-TEMPL)
 	    (syntax (W::morph (:forms (-none))))
 	    )
@@ -18,7 +18,7 @@
  :words (
   (W::SALAMI
   (senses
-	   ((LF-PARENT ONT::MEAT-OTHER)
+	   ((LF-PARENT ONT::MEAT-PRODUCT) ;ONT::MEAT-OTHER)
 	    (TEMPL count-PRED-TEMPL)
 	    )
 	   )

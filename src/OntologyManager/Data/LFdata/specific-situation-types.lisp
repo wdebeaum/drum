@@ -1003,7 +1003,7 @@
 
 
 (define-type ONT::PULL
- :wordnet-sense-keys ("force%2:35:01" "draw%2:35:03" "pull%2:35:00" "pull%2:35:04" "suck%1:04:00" "suck%2:34:04")
+ :wordnet-sense-keys ("force%2:35:01" "draw%2:35:03" "pull%2:35:00" "pull%2:35:04")
  :parent ONT::apply-force
  :arguments ((:optional ONT::source (F::abstr-obj (f::type ONT::SOURCE-RELN))))
  )
@@ -1312,7 +1312,7 @@
 
 ;; break a window, a plate
 (define-type ont::break-object
- :wordnet-sense-keys ("wreck%1:11:00" "crash%1:11:00" "smash%1:04:00" "crash%1:04:00" "ram%2:35:01" "crash%2:35:00" "crash%2:38:04" "break_apart%2:35:00" "break_up%2:35:02" "crash%2:35:01" "come_apart%2:30:00" "fall_apart%2:30:03" "split_up%2:30:00" "separate%2:30:03" "break%2:30:00" "break%2:30:10" "break%2:30:15" "check%2:30:03" "crack%2:30:01" "tear%2:35:00" "rupture%2:35:00" "snap%2:35:01" "bust%2:35:02" "fracture%2:29:01" "fracture%2:29:01" "break%2:35:13")
+ :wordnet-sense-keys ("wreck%1:11:00" "crash%1:11:00" "smash%1:04:00" "crash%1:04:00" "ram%2:35:01" "crash%2:35:00" "crash%2:38:04" "break_apart%2:35:00" "break_up%2:35:02" "crash%2:35:01" "come_apart%2:30:00" "fall_apart%2:30:03" "split_up%2:30:00" "separate%2:30:03" "break%2:30:00" "break%2:30:10" "break%2:30:15" "check%2:30:03" "crack%2:30:01" "tear%2:35:00" "rupture%2:35:00" "snap%2:35:01" "bust%2:35:02" "fracture%2:29:01" "break%2:35:13")
     :parent ont::object-change
     :arguments ((:required ONT::affected (F::Phys-obj (f::form (? f f::object f::solid))  ; "pizza" is (default) f::solid
 						  ;; Myrosia 2008/16/07 added origin non-living to account for "break a path", "break a stone"
@@ -1368,7 +1368,7 @@
 |#
 
 (define-type ONT::Stop
-    :wordnet-sense-keys ("abort%2:29:00" "blow_out%2:43:00" "bog_down%2:38:01" "break%2:42:04" "cease%2:42:00" "discontinue%2:42:00" "expire%2:42:00" "get_off%2:41:00" "give_up%2:42:00" "halt%2:38:01" "lay_off%2:42:00" "quit%2:42:04" "run_out%2:42:00" "stop%2:38:01" "stop%2:42:00" "strand%2:38:02" "strand%2:38:03" "terminate%2:30:01" "end%2:42:00")
+    :wordnet-sense-keys ("abort%2:29:00" "blow_out%2:43:00" "bog_down%2:38:01" "break%2:42:04" "cease%2:42:00" "discontinue%2:42:00" "expire%2:42:00" "get_off%2:41:00" "give_up%2:42:00" "halt%2:38:01" "lay_off%2:42:00" "quit%2:42:04" "run_out%2:42:00" "stop%2:38:01" "stop%2:42:00" "strand%2:38:02" "strand%2:38:03" "terminate%2:30:01")
     :parent ONT::inhibit-effect
 ;    :arguments ((:ESSENTIAL ONT::affected ((? oc F::Situation)))  ; commented this out because we can say "stop the car"
 ;		)    
@@ -1395,8 +1395,7 @@
 ;; 20120524 GUM change new type
 (define-type ont::cause-produce-reproduce
     :comment "an AGENT causes a new object to be created"
-    :wordnet-sense-keys ("bring_on%2:39:00" "produce%2:36:03" "yield%2:40:00" "yield%2:40:02"
-					    "output%1:23:00")
+    :wordnet-sense-keys ("output%1:23:00" "produce%2:36:03" "yield%2:40:00" "yield%2:40:02")
     :parent ont::cause-effect
     :definitions ((ont::cause-effect :agent ?agent
 				     :formal (ont::become
@@ -1899,7 +1898,7 @@
  )
 
 (define-type ONT::evoke-attention
-    :wordnet-sense-keys ("interest%2:37:00" "preoccupy%2:37:00" "intrigue%2:42:00")
+    :wordnet-sense-keys ("interest%2:37:00" "preoccupy%2:37:00")
     :arguments ((:OPTIONAL ONT::formal (F::situation)))     ;; e.g., they engaged him in the movie /He was engaged in the movie
     :parent ONT::neutral-experience
  )
@@ -1990,7 +1989,7 @@
 
 (define-type ONT::evoke-confusion
  :parent ONT::worsen-experience
- :wordnet-sense-keys ("confuse%2:37:00" "confuse%2:31:03" "bedaze%2:39:00" "flabbergast%2:31:00")
+ :wordnet-sense-keys ("confuse%2:37:00" "confuse%2:31:03" "flabbergast%2:31:00")
  )
 
 (define-type ONT::evoke-fear
@@ -2229,7 +2228,7 @@
     )
 
 (define-type ONT::reject
- :wordnet-sense-keys ("refuse%2:40:00" "reject%2:40:00" "pass_up%2:40:00" "turn_down%2:40:00" "decline%2:40:00" "dismiss%2:32:02" "refuse%2:41:00" "bounce%2:40:01")
+ :wordnet-sense-keys ("bounce%2:40:01" "decline%2:40:00" "dismiss%2:32:02" "pass_up%2:40:00" "refuse%2:40:00" "refuse%2:41:00" "reject%2:40:00" "turn_down%2:40:00" "deny%2:32:05" "deny%2:40:00" "refuse%2:32:00" "refuse%2:40:01" "refuse%2:42:04" "reject%2:31:00")
  :parent ONT::response
  )
 
@@ -2371,7 +2370,7 @@
  )
 
 (define-type ONT::convince
- :wordnet-sense-keys ("convert%2:32:00" "convince%2:32:00" "court%2:41:01" "persuade%2:32:00" "win_over%2:32:00")
+ :wordnet-sense-keys ("convert%2:32:00" "convince%2:32:00" "persuade%2:32:00" "win_over%2:32:00")
  :parent ONT::perlocution
  )
 
@@ -3020,7 +3019,7 @@
  )
 
 (define-type ont::appeal-apply-demand 
-     :wordnet-sense-keys ("call%2:38:00" "turn_to%2:30:00")
+     :wordnet-sense-keys ("call%2:38:00" "turn_to%2:30:00" "woo%2:41:01")
      :parent ont::request
     )
 
@@ -3043,7 +3042,7 @@
 
 ;;; I dared to go, I dared John to go.
 (define-type ONT::provoke
- :wordnet-sense-keys ("persuade%2:32:00" "force%2:36:00" "coerce%2:41:00" "subject%2:39:03" "oblige%2:41:00" "arouse%2:37:00" "provoke%2:32:00")
+ :wordnet-sense-keys ("force%2:36:00" "coerce%2:41:00" "subject%2:39:03" "oblige%2:41:00" "arouse%2:37:00" "provoke%2:32:00")
  :parent ONT::cause-effect
  :arguments ((:ESSENTIAL ONT::affected ((? exp F::phys-obj f::abstr-obj) (f::intentional +))))
  )
@@ -3066,8 +3065,7 @@
 )
 
 (define-type ONT::HELP
-    :wordnet-sense-keys ("help%2:41:00" "assist%2:41:02" "aid%2:41:00" "help%1:04:00"
-					"help%1:04:00")
+    :wordnet-sense-keys ("help%2:41:00" "assist%2:41:02" "aid%2:41:00" "help%1:04:00")
  :parent ONT::CAUSE-EFFECT
  :arguments ((:optional ONT::Affected ((? o1 F::Situation F::Phys-obj f::abstr-obj))))
  )
@@ -3209,7 +3207,7 @@
  )
 
 (define-type ONT::EXECUTE
-  :wordnet-sense-keys ("fulfil%2:36:00" "fulfill%2:36:00" "action%2:36:00" "carry_out%2:36:00" "execute%2:36:00" "accomplish%2:36:00" "carry_through%2:36:00" "perform%2:36:00" "execute%2:36:01" "do%2:36:01" "do%2:41:01" "play%2:36:05""conduct%2:41:00" "commit%2:41:00" "commit%2:41:01")
+  :wordnet-sense-keys ("fulfil%2:36:00" "fulfill%2:36:00" "action%2:36:00" "carry_out%2:36:00" "execute%2:36:00" "accomplish%2:36:00" "carry_through%2:36:00" "perform%2:36:00" "execute%2:36:01" "do%2:36:01" "do%2:41:01" "conduct%2:41:00" "commit%2:41:00" "commit%2:41:01")
  ;:parent ONT::cause-effect
   :parent ONT::ACTING
   :sem (F::Situation (F::Aspect F::Dynamic))
@@ -3240,7 +3238,7 @@
 
 ;; work (on) -- do work (see also related concept ont::function)
 (define-type ONT::WORKING
- :wordnet-sense-keys ("work%2:41:05" "work%2:41:02" "toil%2:41:00" "practice%1:04:03" "practice%2:41:00")
+ :wordnet-sense-keys ("work%2:41:05" "work%2:41:02" "toil%2:41:00" "practice%1:04:03")
   :parent ONT::intentionally-act
   :sem (F::Situation (F::Aspect F::unbounded) (F::time-span F::extended) )
   :arguments ((:ESSENTIAL ONT::Formal ((? t F::phys-obj F::abstr-obj F::situation)))
@@ -4239,7 +4237,7 @@
  )
 
 (define-type ONT::decrease-completely
- :wordnet-sense-keys ("deplete%2:34:00" "exhaust%2:30:00" "reduction%1:04:00")
+ :wordnet-sense-keys ("deplete%2:34:00" "exhaust%2:30:00")
  :parent ONT::decrease
  )
 
@@ -4762,7 +4760,7 @@
  )
 
 (define-type ONT::separation
- :wordnet-sense-keys ("separate%2:35:01" "disunite%2:35:00" "divide%2:35:01" "part%2:35:01" "break%2:41:13" "divide%2:38:00" "divide%2:42:00" "disjoint%2:35:00" "separate%2:35:00" "separate%2:35:02" "separation%1:11:00")
+ :wordnet-sense-keys ("separate%2:35:01" "disunite%2:35:00" "divide%2:35:01" "part%2:35:01" "break%2:41:13" "divide%2:38:00" "disjoint%2:35:00" "separate%2:35:00" "separate%2:35:02" "separation%1:11:00")
     :parent ONT::event-of-causation
     :comment "abstract, social or physical dissociation"
     :sem (F::SITUATION (:default (F::Cause F::agentive)) (:required (F::trajectory -)))
@@ -5598,6 +5596,11 @@
  :comment "prevent an effect or event from taking place"
  )
 
+(define-type ONT::withhold
+  :wordnet-sense-keys ("withhold%2:40:00")
+ :parent ONT::inhibit-effect
+ )
+
 (define-type ONT::downregulate
  :parent ONT::hindering
  )
@@ -5617,6 +5620,7 @@
     :parent ONT::inhibit-effect
  )
 
+#|
 ;; deny, hold out, withhold
 (define-type ONT::refuse
  :wordnet-sense-keys ("deny%2:40:00" "refuse%2:40:01" "deny%2:32:05" "reject%2:31:00" "refuse%2:40:00" "refuse%2:32:00" "refuse%2:42:04")
@@ -5625,7 +5629,7 @@
   :arguments ((:Required ONT::Effect ((? ro F::Phys-obj F::Situation F::abstr-obj)))
              )
  )
-
+|#
 
 (define-type ont::share-property
     :parent ont::event-of-state
@@ -5798,20 +5802,22 @@
              )
  )
 
+#|
 (define-type ont::financial-condition
   :parent ont::status
   :wordnet-sense-keys ("financial_condition%1:26:00")
  :arguments ((:OPTIONAL ONT::FIGURE)
              )
  )
-
+|#
+#|
 (define-type ont::poverty
   :parent ont::financial-condition
   :wordnet-sense-keys ("poverty%1:26:00")
  :arguments ((:OPTIONAL ONT::FIGURE)
              )
   )
-
+|#
 
 ;;; nauseous/sick/sore, chills, nausea, sickness
 ;;; e.g. He feels sick, Her feet are sore
@@ -6004,7 +6010,7 @@
  )
 
 (define-type ont::dyspnea
- :wordnet-sense-keys ("dyspnea%1:26:00" "dyspnea%1:26:00" "dyspnoea%1:26:00" "shortness_of_breath%1:26:00" "sob%1:26:00")
+ :wordnet-sense-keys ("dyspnea%1:26:00" "dyspnoea%1:26:00" "shortness_of_breath%1:26:00" "sob%1:26:00")
  :parent ont::medical-symptom
  )
 

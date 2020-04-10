@@ -33,3 +33,15 @@
    )
 ))
 
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+   (W::KIND
+    (wordfeats (W::MORPH (:FORMS (-ER -LY))))
+    (SENSES
+     ((LF-PARENT ONT::COURTEOUS-val)
+      (EXAMPLE "he is a kind person")
+      )
+     )
+    )
+))
+

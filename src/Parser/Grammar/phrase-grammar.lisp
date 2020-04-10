@@ -5747,7 +5747,44 @@
      (combine-status (in1 ?status1) (in2 ?status2) (out ?status-out))
      )
    
+    ;; sugar, salt, dill.
 
+    ((NP (ATTACH ?a) (var ?v-punc) ;(var ?v)
+	 (agr 3p) (SEM ?sem) (mass ?m1)
+      (LF (% Description (Status ?status-out) (var ?v-punc) ;(var ?v) 
+	     (class ?class)
+	     (constraint (& (operator ONT::AND) ;(operator ?op)
+			    (sequence ?members)))
+	     (sem ?sem) (CASE ?case1)
+	     (mass ?m1) 
+	     ))
+      (COMPLEX +) (SORT PRED)
+      (generated ?generated) (Status ?status-out)
+      )
+     np-comma-conj-no-and> 
+     (NPSEQ (var ?v1) (SEM ?s1) (lf ?lf1) (class ?c1) (CASE ?case) (mass ?m1)
+      (generated ?generated1) (separator w::punc-comma)
+      (time-converted ?tc1) ;; MD 2008/03/06 Introduced restriction that only items with the same time-converted status can combine - i.e. don't mix number notation for times or non-times. 
+      (status ?status1)
+      )
+     (head (punc (lex punc-comma) (var ?v-punc)))
+     ;(head (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v) (status ?status)))
+    
+      (NP (VAR ?v2) (SEM ?s2) (ATTACH ?a) (lf ?lf2) (LF (% ?d (class ?c2))) (CASE ?case2) (mass ?m1) ;(mass ?m2)
+	       (constraint ?con)
+	    (generated ?generated2) 
+	    (sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
+	    (time-converted ?tc1) 
+            (status ?status2)
+       )
+     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+     (simple-cons (in1 ?v2) (in2 ?lf1) (out ?members))
+     (logical-and (in1 ?generated1) (in2 ?generated2) (out ?generated))
+     (combine-status (in1 ?status1) (in2 ?status2) (out ?status-out))
+     )
+
+    
     ((NPSEQ  (SEM ?sem) (LF (?v1 ?v2)) (AGR ?agr) (mass ?m) (class ?class) (case ?c)
       (generated ?gen)  (time-converted ?tc1) (separator w::punc-comma) (status ?status-out)
       )
@@ -6332,7 +6369,7 @@
     
     ;;  X and Y,  A, Y and Z
     ((N1 (ATTACH ?a) (var ?v) (agr ?agr-out) ;(agr 3p)
-	 (SEM ?sem) (class ?class) (status status-out) (mass ?m1) (case ?case) (lex ?op)
+	 (SEM ?sem) (class ?class) (status ?status-out) (mass ?m1) (case ?case) (lex ?op)
 	 #|
       (LF (% Description (Status ?status) (var ?v) 
 	     (class ?class)
@@ -6369,9 +6406,10 @@
      (simple-cons1 (in1 (% *PRO* (status ?status-out) (var ?v2) (class ?c2) (constraint ?con) (sem ?s2) (lex ?lex2)))
 		   (in2 ?seq) (out ?members))
      )    
-    
+
+    ; A, B, and C
     ((N1 (ATTACH ?a) (var ?v) (agr ?agr-out) ;(agr 3p)
-	 (SEM ?sem) (class ?class) (status status-out) (mass ?m1) (case ?case) (lex ?op)
+	 (SEM ?sem) (class ?class) (status ?status-out) (mass ?m1) (case ?case) (lex ?op)
 	 #|
       (LF (% Description (Status ?status) (var ?v) 
 	     (class ?class)
@@ -6409,7 +6447,50 @@
      (simple-cons1 (in1 (% *PRO* (status ?status-out) (var ?v2) (class ?c2) (constraint ?con) (sem ?s2) (lex ?lex2)))
 		   (in2 ?seq) (out ?members))
      )    
-     
+
+    ; A, B, C
+    ((N1 (ATTACH ?a) (var ?v-punc) ;(var ?v)
+	 (agr ?agr-out) ;(agr 3p)
+	 (SEM ?sem) (class ?class) (status ?status-out) (mass ?m1) (case ?case) ;(lex ?op)
+	 #|
+      (LF (% Description (Status ?status) (var ?v) 
+	     (class ?class)
+	     (constraint (& (operator ?op) (sequence ?members)))
+	     (sem ?sem) (CASE ?case1)
+	     (mass ?m1) 
+	     ))
+	 |#
+	 (restr (& (operator ONT::AND) ;(operator ?op) ; with no conj it has to be AND
+		(sequence ?members)))
+	 (COMPLEX +) (SORT PRED)
+      (generated ?generated)
+      )
+     n1-conj1-comma-no-and> 
+     (N1SEQ (var ?v1) (SEM ?s1) ;(lf ?lf1)
+	    (class ?c1) (CASE ?case) (mass ?m1) (status ?status) (restr (& (sequence ?seq)))
+      (generated ?generated1) (separator W::punc-comma) (agr ?agr)
+      (time-converted ?tc1) ;; MD 2008/03/06 Introduced restriction that only items with the same time-converted status can combine - i.e. don't mix number notation for times or non-times. 
+      )
+     (punc (lex w::punc-comma) (var ?v-punc))
+     ;(conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v)) ;; (status ?status))
+     (head (N1 (VAR ?v2) (SEM ?s2) (ATTACH ?a) (agr ?agr1) ;(lf ?lf2)
+	       (class ?c2) (status ?status2) ;(LF (% ?d (class ?c2) (status ?status)))
+	       (CASE ?case2) (mass ?m2) (restr ?con)
+	    (generated ?generated2) (lex ?lex2)
+	    (sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
+	    (time-converted ?tc1)
+	    (complex -)
+	    ))
+     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+     (logical-and (in1 ?generated1) (in2 ?generated2) (out ?generated))
+     (combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
+     (recompute-agr (in1 ?agr) (in2 ?agr1) (out ?agr-out))
+     (simple-cons1 (in1 (% *PRO* (status ?status-out) (var ?v2) (class ?c2) (constraint ?con) (sem ?s2) (lex ?lex2)))
+		   (in2 ?seq) (out ?members))
+     )    
+
+    
     ))
 ;; the rate/activity construction
 ;;  these rules handle complex constructions like "the binding rate/activity of Ras" where

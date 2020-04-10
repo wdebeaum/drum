@@ -2026,7 +2026,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	((ont::phys-object (:mod :mod1 :mod2 :mod3 :mod4))
 	 ((ont::position-reln ) :location)
 	 ((ont::temporal-location) :time)
-	 ((ont::source-reln) :source)
+	 ;((ont::source-reln) :source)  ; make it :source only for events
 	 )
 	 ;;((ont::assoc-with) :assoc-with))
 	((ont::abstract-object (:mod :mod1 :mod2 :mod3 :mod4))
@@ -2034,7 +2034,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	 ((ont::temporal-location) :time) ; prices in 2016
 	 ;; ((ont::assoc-with) :assoc-with)
 	 ((ont::degree-modifier) :degree)
-	 ((ont::source-reln) :source)
+	 ;((ont::source-reln) :source)
 	 )
 	((ont::situation-root (:mod :mod1 :mod2 :mod3 :mod4))
 	 ((ont::goal-reln) :result)
@@ -2065,7 +2065,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	((ont::referential-sem (:mod :mod1 :mod2 :mod3 :mod4))  ; agentnom and missing head
 	 ((ont::position-reln ) :location)
 	 ((ont::temporal-location) :time)
-	 ((ont::source-reln) :source)
+	 ;((ont::source-reln) :source)
 	 )	 
 	)
  )

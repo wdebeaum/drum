@@ -6,7 +6,7 @@
  :words (
   (W::CHORIZO
   (senses
-	   ((LF-PARENT ONT::MEAT-OTHER)
+	   ((LF-PARENT ONT::MEAT-PRODUCT) ;ONT::MEAT-OTHER)
 	    (TEMPL MASS-PRED-TEMPL)
 	    (syntax (W::morph (:forms (-none))))
 	    )

@@ -14,3 +14,15 @@
    )
 ))
 
+(define-words :pos W::adj 
+  :words (
+  (W::RICH
+   (wordfeats (W::MORPH (:FORMS (-ER))))
+   (SENSES
+    ((EXAMPLE "It is rich in vitamin B12")
+     (LF-PARENT ONT::abundant-val)
+     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::Ptype W::in))))
+     )
+     ))
+  )
+  )

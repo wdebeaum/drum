@@ -208,7 +208,7 @@
 
 
 (define-type ONT::Awareness
- :wordnet-sense-keys ("think%2:31:00" "cogitate%2:31:00" "cerebrate%2:31:00" "attention%1:09:00" "attention%1:09:01")
+ :wordnet-sense-keys ("cogitate%2:31:00" "attention%1:09:00" "attention%1:09:01") ;"cerebrate%2:31:00" "think%2:31:00" 
  :parent ONT::event-of-experience
  :sem (F::Situation (F::Cause F::Mental) (F::Trajectory -))
  :comment "a state in which an EXPERIENCER holds some attitude towards a proposition"
@@ -427,7 +427,7 @@
 ;; cognizer reasoning results in a value
 ;; approximate, assess, estimate, fix, guage
 (define-type ONT::Becoming-Aware-of-value
- :wordnet-sense-keys ("judge%2:31:00" "pass_judgment%2:31:00" "evaluate%2:31:01" "figure%2:31:00" "reckon%2:31:01" "work_out%2:31:06" "compute%2:31:00" "cypher%2:31:00" "cipher%2:31:00" "calculate%2:31:00" "process%2:31:00")
+ :wordnet-sense-keys ("figure%2:31:00" "reckon%2:31:01" "work_out%2:31:06" "compute%2:31:00" "cypher%2:31:00" "cipher%2:31:00" "calculate%2:31:00" "process%2:31:00")
  :parent ONT::scrutiny
  ;;; Phenomenon
  :arguments ((:REQUIRED ONT::Formal (F::ABSTR-OBJ))
@@ -1122,7 +1122,7 @@
 
 ;; try, attempt
 (define-type ONT::TRY
- :wordnet-sense-keys ("assay%2:41:00" "attempt%1:04:00" "attempt%2:41:00" "come_near%2:41:00" "effort%1:04:00" "endeavor%1:04:00" "endeavour%1:04:00" "essay%2:41:00" "essay%2:41:01" "examine%2:41:00" "prove%2:41:03" "push%1:04:01" "seek%2:41:00" "test%2:41:00" "try%1:04:00" "try%2:29:00" "try_on%2:29:00" "try%2:34:00" "try%2:41:00" "try_out%2:41:00" "try%2:41:01");"taste%2:34:00" "try_out%2:34:00"
+ :wordnet-sense-keys ("assay%2:41:00" "attempt%1:04:00" "attempt%2:41:00" "come_near%2:41:00" "effort%1:04:00" "endeavor%1:04:00" "endeavour%1:04:00" "essay%2:41:00" "essay%2:41:01" "examine%2:41:00" "prove%2:41:03" "push%1:04:01" "seek%2:41:00" "test%2:41:00" "try%1:04:00" "try%2:29:00" "try_on%2:29:00" "try%2:41:00" "try_out%2:41:00" "try%2:41:01");"taste%2:34:00" "try_out%2:34:00"
  :parent ONT::cause-effect
  :arguments ((:OPTIONAL ONT::neutral ((? agt f::abstr-obj f::situation))))
 ;;((:OPTIONAL ONT::Instrument (F::Phys-obj (F::intentional -)))

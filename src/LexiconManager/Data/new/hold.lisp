@@ -7,7 +7,7 @@
    ((W::hold w::out)
     (wordfeats (W::morph (:forms (-vb) :past W::held)))
     (senses
-     ((lf-parent ont::refuse)
+     ((lf-parent ont::withhold) ;refuse)
       (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
       (example "he held out the data")
       (meta-data :origin calo-ontology :entry-date 20060125 :change-date nil :comments caloy3)
@@ -21,7 +21,7 @@
    ((W::hold w::back)
     (wordfeats (W::morph (:forms (-vb) :past W::held)))
     (senses
-     ((lf-parent ont::refuse)
+     ((lf-parent ont::withhold) ;refuse)
       (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
       (example "he held back his tears")
       (meta-data :origin calo-ontology :entry-date 20060125 :change-date nil :comments caloy3)

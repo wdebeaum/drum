@@ -51,7 +51,7 @@
 
 (define-type ont::essential-contract
   :parent ont::social-imperative
-  :wordnet-sense-keys ("right%1:07:00" "absolute%1:09:00" "absolute%5:00:00:inalienable:00")
+  :wordnet-sense-keys ("absolute%1:09:00" "absolute%5:00:00:inalienable:00")
 )
 
 

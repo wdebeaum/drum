@@ -11,7 +11,17 @@
      (lf-parent ont::urgent-val)
      (TEMPL ADJ-THEME-XP-TEMPL (xp (% W::PP (w::ptype (? p w::for w::to)))))
      )
+))))
+
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+   (W::CRITICAL
+    (wordfeats (W::MORPH (:FORMS (-LY))))
+    (SENSES
+     ((LF-PARENT ONT::JUDGEMENTAL-val)
+      (EXAMPLE "he is a very critical person")
+      )
+     )
     )
-   )
 ))
 

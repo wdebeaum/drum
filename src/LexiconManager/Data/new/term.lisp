@@ -11,6 +11,7 @@
      (example "use the short term parking")
      ;(TEMPL other-reln-templ)
      (TEMPL count-pred-templ)
+     (preference 0.98)
      )
     (;(LF-PARENT ONT::Mathematical-term)
      (LF-PARENT ONT::linguistic-object)

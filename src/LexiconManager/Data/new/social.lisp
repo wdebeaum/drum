@@ -25,3 +25,15 @@
 		 :COMMENTS nil))))
 ))
 
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+   (W::SOCIAL
+    (wordfeats (W::MORPH (:FORMS (-LY))))
+    (SENSES
+     ((LF-PARENT ONT::SOCIAL-val)
+      (EXAMPLE "he is a very social person")
+      )
+     )
+    )
+))
+
