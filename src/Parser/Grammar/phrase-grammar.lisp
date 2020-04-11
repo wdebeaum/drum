@@ -5887,7 +5887,8 @@
 	    (generated ?gen1)  (time-converted ?tc1) (gerund ?ger) (wh ?wh); ok: which cats and which dogs; ok: which <cats and dogs> (use -two-n1-conjunct>); not ok: <which cat> and dog 
 	    ;; (bare-sequence -)
 	    (LF (% ?sort (class ?c1) (status ?status))) (CASE ?c) (constraint ?con) (mass ?m1) ;; allowing mismatch on mass
-	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram] 	    
+	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram]
+	    (gap -)
 	    )
       (head (conj (SEQ +) (LF ?op) (var ?v) )) ;;(status ?status))
       (NP (SEM ?s2) (VAR ?v2) (agr ?agr1)  (complex -) (expletive -)
@@ -5895,7 +5896,9 @@
        (generated ?gen2)  (time-converted ?tc1)  (gerund ?ger) (wh ?wh)
        ;; (bare-sequence -)
        (LF (% ?sort (class ?c2) (status ?status2))) (CASE ?c) (constraint ?con2) (mass ?m2) ;; allowing mismatch on mass -- e.g. "fatigue and weakness"
-       (sort (? !sort unit-measure)))
+       (sort (? !sort unit-measure))
+       (gap -)
+       )
       (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
       (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
       (logical-and (in1 ?gen1) (in2 ?gen2) (out ?generated))

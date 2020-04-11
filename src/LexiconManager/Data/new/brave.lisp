@@ -7,7 +7,7 @@
    (W::BRAVE
     (wordfeats (W::MORPH (:FORMS (-ER -LY))))
     (SENSES
-     ((LF-PARENT ONT::BRAVE-val)
+     ((LF-PARENT ONT::courageous-val) ;BRAVE-val)
       (EXAMPLE "he was a brave warrior")
       )
      )

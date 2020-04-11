@@ -680,7 +680,7 @@
 	   (ATYPE PREDICATIVE-ONLY)
 	   (SORT PRED) (WH Q) (WH-VAR *)
       )
-     -what-adj-pre>
+     -what-adj-pre> 1.02
      (word (lex w::what))
      (head (N1 (sem ?sem) (sem ($ f::abstr-obj (f::scale ?!sc) (f::type ONT::DOMAIN))) (RESTR ?restr)
 	       (var ?v) (agr ?agr) (mass ?mass) (gap ?gap)

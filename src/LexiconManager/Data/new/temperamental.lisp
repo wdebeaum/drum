@@ -7,7 +7,7 @@
    (W::TEMPERAMENTAL
     (wordfeats (W::MORPH (:FORMS (-LY))))
     (SENSES
-     ((LF-PARENT ONT::TEMPERAMENTAL-val)
+     ((LF-PARENT ONT::disposition-val) ;TEMPERAMENTAL-val)
       (EXAMPLE "his temperamental peculiarities interested her")
       )
      )
