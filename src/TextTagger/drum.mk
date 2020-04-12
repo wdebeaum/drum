@@ -182,10 +182,10 @@ downloads/non-coding_RNA.txt.gz:
 # see http://www.uniprot.org/
 
 downloads/uniprot_sprot.dat.gz:
-	$(call download,"ftp://ftp.uniprot.org/pub/databases/uniprot/knowledgebase/uniprot_sprot.dat.gz")
+	$(call download,"ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.dat.gz")
 
 downloads/subcell.txt:
-	$(call download,"ftp://ftp.uniprot.org/pub/databases/uniprot/knowledgebase/docs/subcell.txt")
+	$(call download,"https://www.uniprot.org/docs/subcell.txt")
 
 # see http://www.nextprot.org/
 
