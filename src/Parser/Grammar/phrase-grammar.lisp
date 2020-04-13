@@ -5623,6 +5623,7 @@
 	     ))
       (COMPLEX +) (SORT PRED)
       (generated ?generated) (Status ?status-out)
+      (npseq +) ; no nested sequences
       )
      np-conj1> 
      (NPSEQ (var ?v1) (SEM ?s1) (lf ?lf1) (class ?c1) (CASE ?case) (mass ?m1)
@@ -5635,7 +5636,8 @@
 	    (generated ?generated2)
 	    (sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
 	    (time-converted ?tc1)
-	    ))
+	    (npseq -) ; no nested sequences
+      ))
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
      (simple-cons (in1 ?v2) (in2 ?lf1) (out ?members))
@@ -5723,6 +5725,7 @@
 	     ))
       (COMPLEX +) (SORT PRED)
       (generated ?generated) (Status ?status-out)
+      (npseq +) ; no nested sequences
       )
      np-comma-conj> 
      (NPSEQ (var ?v1) (SEM ?s1) (lf ?lf1) (class ?c1) (CASE ?case) (mass ?m1)
@@ -5739,6 +5742,7 @@
 	    (sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
 	    (time-converted ?tc1) 
             (status ?status2)
+	    (npseq -) ; no nested sequences
        )
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
@@ -5760,6 +5764,7 @@
 	     ))
       (COMPLEX +) (SORT PRED)
       (generated ?generated) (Status ?status-out)
+      (npseq +) ; no nested sequences
       )
      np-comma-conj-no-and> 
      (NPSEQ (var ?v1) (SEM ?s1) (lf ?lf1) (class ?c1) (CASE ?case) (mass ?m1)
@@ -5776,6 +5781,7 @@
 	    (sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
 	    (time-converted ?tc1) 
             (status ?status2)
+	    (npseq -) ; no nested sequences
        )
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
@@ -6384,7 +6390,8 @@
 	 (restr (& (operator ?op)
 		(sequence ?members)))
 	 (COMPLEX +) (SORT PRED)
-      (generated ?generated)
+	 (generated ?generated)
+	 (n1seq +) ; no nested sequences
       )
      n1-conj1> 
      (N1SEQ (var ?v1) (SEM ?s1) ;(lf ?lf1)
@@ -6400,6 +6407,7 @@
 	    (sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
 	    (time-converted ?tc1)
 	    (complex -)
+	    (n1seq -) ; no nested sequences
 	    ))
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
@@ -6424,7 +6432,8 @@
 	 (restr (& (operator ?op)
 		(sequence ?members)))
 	 (COMPLEX +) (SORT PRED)
-      (generated ?generated)
+	 (generated ?generated)
+	 (n1seq +) ; no nested sequences
       )
      n1-conj1-comma> 
      (N1SEQ (var ?v1) (SEM ?s1) ;(lf ?lf1)
@@ -6441,6 +6450,7 @@
 	    (sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
 	    (time-converted ?tc1)
 	    (complex -)
+	    (n1seq -) ; no nested sequences
 	    ))
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
@@ -6466,7 +6476,8 @@
 	 (restr (& (operator ONT::AND) ;(operator ?op) ; with no conj it has to be AND
 		(sequence ?members)))
 	 (COMPLEX +) (SORT PRED)
-      (generated ?generated)
+	 (generated ?generated)
+	 (n1seq +) ; no nested sequences
       )
      n1-conj1-comma-no-and> 
      (N1SEQ (var ?v1) (SEM ?s1) ;(lf ?lf1)
@@ -6483,6 +6494,7 @@
 	    (sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
 	    (time-converted ?tc1)
 	    (complex -)
+	    (n1seq -) ; no nested sequences
 	    ))
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))

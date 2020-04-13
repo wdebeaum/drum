@@ -226,8 +226,10 @@
  :parent ONT::SITUATION-OBJECT-MODIFIER ; take out of SITUATION-MODIFIER so we can have PHYS-OBJ
  :arguments ((:ESSENTIAL ONT::FIGURE ((? x F::phys-obj F::Situation)
 				      (F::type (? t1 ont::phys-object ont::event-of-action ont::event-of-awareness
-						  ont::event-of-experience) ; event-of-experience: rely
-					       ))); maybe takes statives: This suffices for... ; takes phys-object: The pizza is for eating
+						  ont::event-of-experience ; event-of-experience: rely
+						  ont::have-property ; It is sweet for attracting bees
+						  )
+						  ))); maybe takes statives: This suffices for... ; takes phys-object: The pizza is for eating
 ;;             (:REQUIRED ONT::VAL (F::Situation (F::aspect F::dynamic)))
 	     ;; purposes don't have to be dynamic -- e.g. to store something, to remember, etc.
 ;	     (:REQUIRED ONT::GROUND ((? xx F::Situation f::abstr-obj f::phys-obj) (F::scale (? !sc ont::duration-scale))))
