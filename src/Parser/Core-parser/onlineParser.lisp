@@ -1159,7 +1159,8 @@
 	(validate-and-extract-lf seq-parse seq others msgs)))))
 
 (defun validate-and-extract-lf (terms seq others msgs)
-  "this checks if we got a good parse of a sequence, and if so removes the subparts and rememebrs the LF for the sequence"
+  (trace-preparse "~%~% Validating possible sequence: ~S" terms)
+  "this checks if we got a good parse of a sequence, and if so removes the subparts and remembers the LF for the sequence"
   (let* ((sa (car terms))
 	 (utt (find-arg-in-act sa :type))
 	 (root (find-arg-in-act sa :root))
@@ -1171,7 +1172,8 @@
     (if (and utt root root-lf content-lf)
 	(let ((type (third content-lf)))
 	  (trace-preparse "~%~% FOUND CONTENT ~S " content-lf)
-	  (if (find-arg-in-act content-lf :sequence)  ;;(eq type 'ont::SEQUENCE)
+	  (if (and (find-arg-in-act content-lf :sequence)  ;;(eq type 'ont::SEQUENCE)
+		   (not (has-assoc-with-term (mapcar #'(lambda (x) (find-arg-in-act x :lf)) SAterms))))  ;; if a term has an ASSOC with, its likely a bad parse
 	      (let ((modified-seq (modify-term-with-preparse seq content-lf)))
 		(remember-preparse modified-seq root-content (remove-if #'(lambda (x) (eq (find-arg (cdddr x) :var) root))
 							       SAterms))
@@ -1180,6 +1182,8 @@
 	      msgs))
 	msgs)))
 
+(defun has-assoc-with-term (lfs)
+  (some #'(lambda (x) (member :assoc-with x)) lfs))
 
 (defun modify-term-with-preparse (term content-lf)
   (let ((new-ont-type (or (find-arg-in-act content-lf :element-type)
