@@ -485,7 +485,7 @@ separate instances of the chart/parser.")
 (defvar *semantic-skeleton-map* nil)
 (defvar *var-type-map* nil)
 (defvar *semantic-skeleton-score-factor* .1)
-(defvar *essential-roles* '(ont::agent ont::agent1 ont::affected ont::affected1 ont::neutral ont::neutral1 ont::formal ont::result ont::affected-result ont::of ont::val ont::figure ont::ground ont::experiencer ont::source ont::transient-result))
+(defvar *essential-roles* '(ont::agent ont::agent1 ont::affected ont::affected1 ont::neutral ont::neutral1 ont::formal ont::result ont::affected-result ont::of ont::val ont::figure ont::ground ont::experiencer ont::source ont::transient-result ont::orientation))
 
 ;; set this variable to a set of scored skeleton debugging
 (defvar *debug-skeleton-info* 

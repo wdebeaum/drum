@@ -1096,11 +1096,14 @@ then convert the result  to the lex-entry format that the old parser code expect
 
 (defun adjust-lex-probability (prob entry)
   ;; generally we just use the prob returned from the lexicon, except when
-  ;; its a tagged multiword that only has a SEM of REFERENTIAL-SEM
+  ;; its a tagged multiword that only has a SEM of REFERENTIAL-SEM or SITUATION-ROOT
   (let* ((lf (get-value entry 'w::LF))
 	 (lex (get-value entry 'w::lex))
 	 (core-lf (if (consp lf) (second lf) lf)))
-	(if (and (eq core-lf 'ont::referential-sem) (consp lex))
+    (if (and (member core-lf '(ont::referential-sem ont::situation-root))
+	     ;; a multiword as a list of words or a hyphenated symbol
+	     (or (consp lex)
+		 (and (symbolp lex) (find-if #'(lambda (x) (eq x #\-)) (coerce (symbol-name lex) 'list)))))  
 	    (* prob .96)
 	    prob)))
 
