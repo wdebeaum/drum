@@ -1103,7 +1103,10 @@ then convert the result  to the lex-entry format that the old parser code expect
     (if (and (member core-lf '(ont::referential-sem ont::situation-root))
 	     ;; a multiword as a list of words or a hyphenated symbol
 	     (or (consp lex)
-		 (and (symbolp lex) (find-if #'(lambda (x) (eq x #\-)) (coerce (symbol-name lex) 'list)))))  
+		 (and (symbolp lex)
+		      (find-if #'(lambda (x) (eq x #\-)) (coerce (symbol-name lex) 'list))
+		      (not (intersection '(#\1 #\2 #\3 #\4 #\5 #\6 #\7 #\8 #\9 #\0) (coerce (symbol-name lex) 'list)))
+		      )))  
 	    (* prob .96)
 	    prob)))
 
