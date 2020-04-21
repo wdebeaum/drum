@@ -152,6 +152,7 @@
 
 (define-type ONT::recommendability-val
   :parent ONT::evaluation-attribute-val
+  :sem (F::abstr-obj (F::scale ont::recommendability-scale))
   )
 
 (define-type ont::recommendable-val
@@ -209,6 +210,7 @@
 ;; particular, specific
 (define-type ont::specificity-val
  :parent ont::evaluation-attribute-val 
+ :sem (F::abstr-obj (F::scale ont::specificity-scale))
 )
 
 (define-type ont::specific-val
@@ -377,7 +379,6 @@
 
 ;; (un)important, (un)necessary, (in)significant, central, critical, principal
 (define-type ont::importance-val
-    :wordnet-sense-keys ("immodest%3:00:02" "immodestly%4:02:00")
     :parent ont::evaluation-attribute-val 
     :comment "of primary (i.e., major, significant), secondary (i.e., minor), or no importance"
     :sem (F::abstr-obj (F::scale ont::importance-scale))
@@ -527,7 +528,8 @@
 
 ;; basic, fundamental, inherent
 (define-type ont::basicness-val
- :parent ont::evaluation-attribute-val 
+ :parent ont::evaluation-attribute-val
+ :sem (F::abstr-obj (F::scale ont::basic-scale)) 
 )
 
 (define-type ont::basic-val
@@ -602,6 +604,7 @@
 ;; dependable, reliable
 (define-type ont::reliability-val
  :parent ont::evaluation-attribute-val
+ :sem (F::abstr-obj (F::scale ont::reliability-scale))
 )
 
 (define-type ont::reliable
@@ -3000,7 +3003,7 @@
 
 (define-type ont::arrogant-val
  :parent ont::modesty-val 
- :wordnet-sense-keys ("arrogant%5:00:00:proud:00" "immodest%3:00:02" )
+ :wordnet-sense-keys ("arrogant%5:00:00:proud:00" "immodest%3:00:02" ) ;"immodestly%4:02:00"
  :sem (F::abstr-obj (F::scale ont::modesty-scale) (f::orientation f::pos))
 )
 

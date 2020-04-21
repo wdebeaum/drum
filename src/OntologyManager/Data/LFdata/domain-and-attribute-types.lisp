@@ -1311,7 +1311,7 @@
 (define-type ont::basic-scale
  :sem (F::abstr-obj (F::scale ONT::BASIC-SCALE))
  :parent ont::evaluation-scale
- ;;:wordnet-sense-keys ("foundation%1:09:00")
+ :wordnet-sense-keys ("simplicity%1:07:02") ;"foundation%1:09:00")
 )
 
 ;; plainness
