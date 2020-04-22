@@ -158,6 +158,7 @@ sub characterize_match {
   my ($a, $b, $bos) = @_;
   my $h = {
     type => 'match',
+    input => $a,
     matched => $b
   };
   print STDERR "characterize_match(\"$a\", \"$b\", $bos)\n" if ($debug);

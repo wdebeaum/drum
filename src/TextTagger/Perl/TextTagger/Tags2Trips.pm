@@ -477,7 +477,7 @@ sub domainSpecificInfo2trips {
            sprintf("%.5f", $info->{score})
 	if (exists($info->{score}));
       # the only few that are strings instead of numbers
-      for my $key (qw(matched status source)) {
+      for my $key (qw(input matched status source)) {
 	push @$trips, ':' . $key,
 	     '"' . escape_for_quotes($info->{$key}) . '"'
 	  if (exists($info->{$key}));
@@ -491,7 +491,7 @@ sub domainSpecificInfo2trips {
       }
       # do the rest of the numbers
       for my $key (sort keys %$info) {
-	next if (grep { $_ eq $key } qw(type matched status source score maybe-depluralized surely-depluralized depluralization-score corrected dash-no-dash no-dash-dash exact));
+	next if (grep { $_ eq $key } qw(type input matched status source score maybe-depluralized surely-depluralized depluralization-score corrected dash-no-dash no-dash-dash exact));
 	push @$trips, ':' . $key, $info->{$key}
 	  if (exists($info->{$key}));
       }
