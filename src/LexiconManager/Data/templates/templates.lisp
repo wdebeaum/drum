@@ -1094,6 +1094,12 @@
 	(LOBJ (% W::NP) ONT::neutral)
 	))
 
+(agent-neutral-xp-comp-TEMPL
+       (ARGUMENTS
+	(LSUBJ (% W::NP) ONT::agent)
+	(LCOMP (:parameter xp (:default (% W::PP (w::ptype w::about)))) ONT::neutral)
+	))
+
 (experiencer-neutral-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::experiencer)

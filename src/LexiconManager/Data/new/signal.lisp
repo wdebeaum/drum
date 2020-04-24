@@ -48,3 +48,25 @@
      )
     ))
   ))
+
+(define-words :pos W::n 
+ :words (
+  ((W::SIGNALLING W::PATHWAY)
+   (SENSES
+    (
+     (LF-PARENT ONT::SIGNALING-PATHWAY)
+     (TEMPL COUNT-PRED-TEMPL)
+     )
+    ))
+  ))
+
+(define-words :pos W::n 
+ :words (
+  ((W::SIGNALLING W::CASCADE)
+   (SENSES
+    (
+     (LF-PARENT ONT::SIGNALING-PATHWAY)
+     (TEMPL COUNT-PRED-TEMPL)
+     )
+    ))
+  ))

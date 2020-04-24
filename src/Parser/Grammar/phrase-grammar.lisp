@@ -1956,7 +1956,8 @@
 	    (generated -)
 	    )
       )
-     (np (name +) (time-converted -) (sem ($ f::SITUATION (f::type ont::mutation))) 
+     (np (name +) (time-converted -) (sem ($ f::SITUATION (f::type ont::mutation)))
+	 (class (? c2 ont::mutation)) ; hard match
       (VAR ?v1))
      (add-to-conjunct (val (ASSOC-WITH ?v1)) (old ?r) (new ?new)))
         

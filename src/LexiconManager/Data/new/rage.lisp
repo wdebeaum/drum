@@ -9,7 +9,8 @@
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("marvel-31.3-2"))
      (LF-PARENT ONT::manner-say)
-     (TEMPL agent-neutral-xp-templ (xp (% w::pp (w::ptype (? p w::about w::against))))) ; like mind,worry
+     (TEMPL agent-neutral-xp-comp-templ (xp (% w::pp (w::ptype (? p w::about w::against))))) ; like mind,worry
+     ;(TEMPL agent-neutral-xp-templ (xp (% w::pp (w::ptype (? p w::about w::against))))) ; like mind,worry
      ;(TEMPL experiencer-neutral-templ (xp (% w::pp (w::ptype (? p w::about w::against)))))
      )
     ((example "He raged")
