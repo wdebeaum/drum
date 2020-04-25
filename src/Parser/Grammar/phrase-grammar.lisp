@@ -5915,6 +5915,45 @@
       (recompute-agr (in1 ?agr) (in2 ?agr1) (out ?agr-out))
       )
 
+      ; A, B
+     ((NP (ATTACH ?a) (var ?v) (agr ?agr-out) ;(agr 3p) ; the ice and the fire could be 3s or 3p
+	  (SEM ?sem) (gerund ?ger) (mass ?m1) ; should really be some combination of m1 and m2
+      (LF (% Description (Status ?status-out) (var ?v) 
+	     (class ?class)
+	     (constraint (& (operator ont::and) (sequence (?v1 ?v2))))
+	     (sem ?sem) (CASE ?c)
+	     (mass ?m1) 
+	     ))
+      (COMPLEX +)
+      (SORT PRED) (wh ?wh)
+      (generated ?generated) (Status ?status-out)
+      (npseq +) ; no nested sequences
+       )
+     -two-np-conjunct-no-and>
+     (NP (SEM ?s1) (VAR ?v1) (agr ?agr)  (complex -) (expletive -) ;;(bare-np ?bnp)
+	    (generated ?gen1)  (time-converted ?tc1) (gerund ?ger) (wh ?wh); ok: which cats and which dogs; ok: which <cats and dogs> (use -two-n1-conjunct>); not ok: <which cat> and dog 
+	    ;; (bare-sequence -)
+	    (LF (% ?sort (class ?c1) (status ?status))) (CASE ?c) (constraint ?con) (mass ?m1) ;; allowing mismatch on mass
+	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram]
+	    (gap -)
+	    )
+      ;(head (conj (SEQ +) (LF ?op) (var ?v) )) ;;(status ?status))
+     (head (punc (lex punc-comma) (var ?v)))
+      (NP (SEM ?s2) (VAR ?v2) (agr ?agr1)  (complex -) (expletive -)
+       (bare-np -)  ;; bare-NP should go through N!-conjunct, not NP-conjunct
+       (generated ?gen2)  (time-converted ?tc1)  (gerund ?ger) (wh ?wh)
+       ;; (bare-sequence -)
+       (LF (% ?sort (class ?c2) (status ?status2))) (CASE ?c) (constraint ?con2) (mass ?m2) ;; allowing mismatch on mass -- e.g. "fatigue and weakness"
+       (sort (? !sort unit-measure))
+       (gap -)
+       )
+      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
+      (logical-and (in1 ?gen1) (in2 ?gen2) (out ?generated))
+      (combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
+      (recompute-agr (in1 ?agr) (in2 ?agr1) (out ?agr-out))
+      )
+     
     
     ;;  But not construction, e,g,. apples but not pears, apples not pears, 
      ((NP (ATTACH ?a) (var ?v) (agr ?agr) (SEM ?sem) (gerund ?ger) 
