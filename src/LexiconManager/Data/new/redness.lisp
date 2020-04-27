@@ -7,7 +7,7 @@
   (w::redness
   (senses
    ((meta-data :wn ("redness%1:07:00"))
-    (LF-PARENT ONT::redness-scale)
+    (LF-PARENT ONT::red-scale) ;redness-scale)
     (TEMPL mass-pred-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

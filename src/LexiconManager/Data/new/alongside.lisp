@@ -31,7 +31,7 @@
      (meta-data :origin navigation :entry-date 20080904 :change-date nil :comments nil)
      (preference .97) ;; prefer trajectory sense
      )
-    ((LF-PARENT ONT::ALONG)
+    ((LF-PARENT ONT::pos-extended-along-linear-area) ;ALONG)
      (TEMPL BINARY-CONSTRAINT-TEMPL)
      (example "he walked alongside of the road")
      (meta-data :origin navigation :entry-date 20080904 :change-date nil :comments nil)

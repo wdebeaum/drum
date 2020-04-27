@@ -6,12 +6,12 @@
  :words (
   (W::restart
    (SENSES
-    ((LF-PARENT ONT::RESTART)
+    ((LF-PARENT ONT::RESUME) ;RESTART)
      (example "restart")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL agent-templ)
      )
-    ((LF-PARENT ONT::RESTART)
+    ((LF-PARENT ONT::RESUME) ;RESTART)
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      (example "restart the action")
      (TEMPL AGENT-FORMAL-XP-NP-TEMPL)

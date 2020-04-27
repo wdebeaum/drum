@@ -7,7 +7,7 @@
   (W::softboil
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("cooking-45.3"))
-     (LF-PARENT ONT::boil) ; like bake,blanch,boil,braise,cook,fry
+     (LF-PARENT ONT::cook-boil) ;boil) ; like bake,blanch,boil,braise,cook,fry
      )
     )
    )
@@ -24,7 +24,7 @@
                                  :ing (W::soft w::boiling))))
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("cooking-45.3"))
-     (LF-PARENT ONT::boil) ; like bake,blanch,boil,braise,cook,fry                                                                                                                  
+     (LF-PARENT ONT::cook-boil) ;boil) ; like bake,blanch,boil,braise,cook,fry                                                                                                                  
      )
     )
    )
@@ -40,7 +40,7 @@
                                  :ing (W::soft w::punc-minus w::boiling))))
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("cooking-45.3"))
-     (LF-PARENT ONT::boil) ; like bake,blanch,boil,braise,cook,fry                                                                                                                  
+     (LF-PARENT ONT::cook-boil) ;boil) ; like bake,blanch,boil,braise,cook,fry                                                                                                                  
      )
     )
    )

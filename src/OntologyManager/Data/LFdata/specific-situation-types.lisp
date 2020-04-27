@@ -428,6 +428,7 @@
 (define-type ONT::CAUSE-MOVE
     :definitions ((ont::CAUSE-EFFECT :agent ?agent
 				     :formal (ONT::move :affected ?affected)))
+  :wordnet-sense-keys ("move%2:38:01")
   :parent ONT::MOVE
  )
 
@@ -1898,7 +1899,7 @@
  )
 
 (define-type ONT::evoke-attention
-    :wordnet-sense-keys ("interest%2:37:00" "preoccupy%2:37:00")
+    :wordnet-sense-keys ("interest%2:37:00" "preoccupy%2:37:00" "take_the_stage%2:41:00")
     :arguments ((:OPTIONAL ONT::formal (F::situation)))     ;; e.g., they engaged him in the movie /He was engaged in the movie
     :parent ONT::neutral-experience
  )
@@ -2203,7 +2204,7 @@
 
 ;; 20120523 GUM change new type
 (define-type ONT::accept-agree
- :wordnet-sense-keys ("grudge%2:37:00" "agree%2:32:00" "agree%2:32:04" "accept%2:32:00" "consent%2:32:00" "go_for%2:32:00" "affirm%2:32:01" "acceptance%1:04:00" )
+ :wordnet-sense-keys ("grudge%2:37:00" "agree%2:32:00" "agree%2:32:04" "accept%2:32:00" "consent%2:32:00" "go_for%2:32:00" "affirm%2:32:01" "acceptance%1:04:00" "take_a_dare%2:32:00")
  :parent ONT::response
  )
 
@@ -4663,7 +4664,7 @@
 ;; cognizer formulates a plan
 ;; schedule, plan, arrange
 (define-type ONT::planning
- :wordnet-sense-keys ("plan%2:36:00" "plan%2:31:00" "plan%2:31:01" "time%2:31:00" "plan%1:09:00" "arrange%2:36:03")
+ :wordnet-sense-keys ("plan%2:36:00" "plan%2:31:00" "plan%2:31:01" "time%2:31:00" "arrange%2:36:03");plan%1:09:00
  :parent ont::managing ;ONT::intentionally-act
  :arguments ((:REQUIRED ONT::Formal ((? obj F::ABSTR-OBJ f::situation f::time)))
 	     (:OPTIONAL ONT::neutral)
@@ -4802,7 +4803,7 @@
 
 ;; this isn't a child of ont::combine-objects because of incompatibility of f::trajectory feature
 (define-type ONT::Joining
- :wordnet-sense-keys ("conjoin%2:35:00" "join%2:35:00")
+ :wordnet-sense-keys ("conjoin%2:35:00" "integrate%2:30:01" "join%2:35:00")
  :comment "abstract, social, or physical connection of objects such that the objects retain their original make-up/identity (whereas COMBINE-OBJECTS are not un-combinable anymore)"
 ; :parent ONT::cause-contact
  :parent ONT::putting-together
@@ -4861,7 +4862,7 @@
 
 ;; register for a conference, check in/out at a hotel, enroll in a program
 (define-type ONT::enroll
- :wordnet-sense-keys ("enrol%2:41:00" "enroll%2:41:00" "enter%2:33:00" "enter%2:41:06" "fall_in%2:41:00" "inscribe%2:41:00" "recruit%2:41:01")
+ :wordnet-sense-keys ("enrol%2:41:00" "enroll%2:41:00" "enter%2:33:00" "enter%2:41:06" "fall_in%2:41:00" "inscribe%2:41:00" "recruit%2:41:01" "take_orders%2:41:01")
  :parent ONT::joining
  :sem (F::situation)
  :arguments ((:REQUIRED ONT::Formal (f::phys-obj (f::intentional +))) ;; check in a person

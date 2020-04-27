@@ -208,7 +208,7 @@
 
 
 (define-type ONT::Awareness
- :wordnet-sense-keys ("cogitate%2:31:00" "attention%1:09:00" "attention%1:09:01") ;"cerebrate%2:31:00" "think%2:31:00" 
+ :wordnet-sense-keys ("attention%1:09:00" "attention%1:09:01") ;"cogitate%2:31:00" "cerebrate%2:31:00" "think%2:31:00" 
  :parent ONT::event-of-experience
  :sem (F::Situation (F::Cause F::Mental) (F::Trajectory -))
  :comment "a state in which an EXPERIENCER holds some attitude towards a proposition"
@@ -420,7 +420,7 @@
 
 (define-type ont::evaluate
     :parent ont::scrutiny
-    :wordnet-sense-keys ("evaluate%2:31:01" "contrast%2:31:00")
+    :wordnet-sense-keys ("evaluate%2:31:01"); "contrast%2:31:00")
     :arguments ((:REQUIRED ONT::neutral1 ((? th7 f::phys-obj f::abstr-obj f::situation))))
     )
 
@@ -513,6 +513,14 @@
  :parent ONT::statement
  )
 |#
+
+(define-type ONT::invite
+ :wordnet-sense-keys ("invite%1:10:00" "invite%2:32:01" "invite%2:41:00" "receive%2:35:00")
+ :parent ONT::commissive
+ :arguments (;(:REQUIRED ont::result)
+             (:ESSENTIAL ont::formal)
+             )
+ )
 
 (define-type ONT::offer
  :wordnet-sense-keys ("volunteer%2:41:00" "volunteer%2:41:01")

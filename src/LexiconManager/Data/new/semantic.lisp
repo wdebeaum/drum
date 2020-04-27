@@ -8,7 +8,7 @@
     (SENSES
      ((meta-data :origin calo-ontology :entry-date 20060426 :change-date nil :wn ("semantic%3:01:00") :comments nil)
       (EXAMPLE "the semantic desktop")
-      (lf-parent ont::semantic-val)
+      (lf-parent ont::linguistic-property-val) ;semantic-val)
       )
      )
     )

@@ -234,7 +234,7 @@
  :words (
   ((W::a W::m)
    (SENSES
-    ((LF-PARENT ONT::day-stage-AM)
+    ((LF-PARENT ONT::morning-am) ;day-stage-AM)
      (LF-FORM W::AM)
      (preference 0.98) ;; reduce competion w/ the article
      (SEM (F::time-function F::day-period))
@@ -247,7 +247,7 @@
  :words (
   ((W::a W::punc-period W::m W::punc-period)
    (SENSES
-    ((LF-PARENT :day-stage-AM)
+    ((LF-PARENT :morning-am) ;day-stage-AM)
      (preference 0.98) ;; reduce competion w/ the article
      (LF-FORM W::AM)
      (SEM (F::time-function F::day-period))

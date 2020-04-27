@@ -7,7 +7,7 @@
    (W::INFORMED
    ;? (wordfeats (W::MORPH (:FORMS (-LY))))
     (SENSES
-     ((LF-PARENT ONT::INFORMED-val)
+     ((LF-PARENT ONT::have-knowledge-val) ;INFORMED-val)
       (EXAMPLE "he made an informed decision")
       )
      )

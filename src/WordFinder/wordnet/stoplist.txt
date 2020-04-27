@@ -3596,6 +3596,9 @@ zillion%5:00:00:cardinal:00
 ; was only one for each prefix, so they were added manually
 coordinate%2:30:01::
 hyperextend%2:29:00::
+rage%2:37:00::
+rage%2:42:00::
+straddle%2:42:00::
 transmigrate%2:38:00::
 
 ;; N times
@@ -3729,6 +3732,7 @@ keep_quiet%2:32:00::
 keep_to_oneself%2:41:00::
 kit_out%2:40:00::
 lay_down%2:31:00::
+lie_in%2:29:00::
 lie_down%2:38:00::
 light_up%2:30:00::
 limber_up%2:35:00::
@@ -3799,6 +3803,7 @@ sum_up%2:32:03::
 sum_up%2:42:00::
 switch_off%2:35:00::
 switch_on%2:35:00::
+take_a_dare%2:32:01::
 take_away%2:30:01::
 tamp_down%2:35:00::
 tee_up%2:35:00::

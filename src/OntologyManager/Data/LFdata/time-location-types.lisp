@@ -1122,7 +1122,7 @@
      )
 
 (define-type ont::occuring-now
-     :wordnet-sense-keys ("current%3:00:00")
+     :wordnet-sense-keys ("underway%5:00:00:current:00") ;"current%3:00:00")
      :parent ONT::event-time-wrt-now
      )
 
@@ -1405,7 +1405,7 @@
 
 (define-type ONT::year
     :parent ONT::DATE-OBJECT-IN
-    :wordnet-sense-keys ("year%1:28:00" "year%1:28:01" "year%1:28:02")
+    :wordnet-sense-keys ("year%1:28:00" "year%1:28:02");year%1:28:01
  :sem (F::time (f::time-function f::year-name))
  )
 

@@ -392,7 +392,7 @@
 
 #||;;; ownership, property, etc.
 (define-type ONT::possession
- :wordnet-sense-keys ("possession%1:03:00")
+ :wordnet-sense-keys ();"possession%1:03:00")
  :parent ONT::RELATION
  :arguments ((:ESSENTIAL ONT::neutral (F::phys-obj (F::origin F::human) (F::intentional +)))
              (:ESSENTIAL ONT::neutral1 ((? cth f::phys-obj f::abstr-obj)))
@@ -499,7 +499,7 @@
     :parent ont::time-unit)
 
 (define-type ont::year-duration
-    :wordnet-sense-keys ("year%1:28:00")
+    :wordnet-sense-keys ("year%1:28:01") ;"year%1:28:00")
     :parent ont::time-unit)
 
 (define-type ont::week-duration
@@ -1096,7 +1096,7 @@
 
 ;; meeting, party, conference
 (define-type ont::gathering-event
-    :wordnet-sense-keys("gathering%1:14:00" "visit%1:04:02")
+    :wordnet-sense-keys("gathering%1:14:00"); "visit%1:04:02")
     :parent ont::located-event
   )
 
@@ -1307,7 +1307,7 @@
  )
 
 (define-type ONT::problem
-    :wordnet-sense-keys ("obstacle%1:09:00" "obstacle%1:06:00" "problem%1:26:00" "problem%1:09:00" "challenge%1:26:00" "woe%1:26:00")
+    :wordnet-sense-keys ("obstacle%1:09:00" "obstacle%1:06:00" "problem%1:10:00" "problem%1:26:00" "challenge%1:26:00" "woe%1:26:00");"problem%1:09:00"
     :parent ONT::ps-object
     )
 

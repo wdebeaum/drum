@@ -20,7 +20,7 @@
       (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
       )
      ((meta-data :origin beetle :entry-date 20080716 :change-date nil :comments nil :vn ("separate-23.1-2"))
-      (LF-PARENT ont::spatial-separate) 
+      (LF-PARENT ont::SPATIAL-DIVIDE) ;spatial-separate) 
       (EXAMPLE "the divider divides the room")
       (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
       (TEMPL AGENT-AFFECTED-SOURCE-XP-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? t W::from)))))

@@ -6,7 +6,7 @@
  :words (
   (w::heartache
   (senses
-	   ((LF-PARENT ONT::grief-scale)
+	   ((LF-PARENT ONT::sadness-scale) ;grief-scale)
 	    (TEMPL COUNT-PRED-TEMPL)
 	    (meta-data :origin cardiac :entry-date 20090129 :change-date nil :comments nil)
 	    )
