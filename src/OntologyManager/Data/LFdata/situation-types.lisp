@@ -192,7 +192,7 @@
 
 (define-type ont::reaction-to-stimulus
     :wordnet-sense-keys ("reaction%1:04:00" "reaction%1:09:01" "reaction%1:19:00"
-					  "reaction%1:09:00"  )
+					  "reaction%1:09:00"  "react%2:31:00")
     :parent ont::event-of-action
     )
 
@@ -483,7 +483,7 @@
 
 
 (define-type ONT::Response
- :wordnet-sense-keys ("react%2:31:00" "respond%2:31:00")
+ :wordnet-sense-keys ( "respond%2:32:00")
  :parent ONT::communication
  :comment "Communicative act that is in direct response to a previous communicative act"
  )

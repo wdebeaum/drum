@@ -154,7 +154,8 @@
 
 ;; charge or bill an account, pay for something, spend money for something
 (define-type ONT::commerce-pay
- :wordnet-sense-keys ("bid%2:40:00" "pay%2:40:00" "tithe%2:40:03")
+    :wordnet-sense-keys ("bid%2:40:00" "pay%2:40:00" "tithe%2:40:03"
+				       )
  :parent ONT::giving
  :sem (F::Situation (F::Trajectory -)(F::Aspect F::dynamic))
  :arguments ((:OPTIONAL ONT::Source  ((? atp F::phys-obj F::abstr-obj) (F::object-function f::currency)))  ;; charge it to/take it from my card/account
@@ -248,7 +249,7 @@
 )
 
 (define-type ONT::capture
-  :wordnet-sense-keys ("capture%2:35:01" "catch%2:35:01" "get%2:35:09" "seize%2:35:01" "take%2:40:01")
+  :wordnet-sense-keys ("capture%2:35:01" "capture%2:35:00" "seize%2:35:01" "take%2:40:01" )
   :parent ONT::acquire-by-action
   )
 
@@ -258,7 +259,7 @@
  )
 
 (define-type ONT::take-by-deception
- :wordnet-sense-keys ("cheat%2:41:00" "chisel%2:41:01" "rip_off%2:41:00")
+ :wordnet-sense-keys ("cheat%2:41:00" "chisel%2:41:01" "rip_off%2:41:00" "swindle%1:04:00")
  :parent ONT::acquire-by-action
  :arguments ((:optional ONT::affected1 ((? agt F::Phys-obj f::abstr-obj))
 			))
@@ -277,7 +278,7 @@
   )
 
 (define-type ONT::MOVE
-  :wordnet-sense-keys ("be_active%2:29:00" "draw%2:35:13" "go%2:33:00" "go%2:38:00" "go%2:42:06" "jaunt%2:38:00" "locomote%2:38:00" "make%2:38:05" "mobilize%2:30:00" "move%2:38:00" "move%2:38:02" "move%2:38:03" "movement%1:04:02" "move_out%2:41:00" "relocation%1:04:00" "take%2:38:05" "travel%2:38:00" "wreathe%2:38:00" "movement%1:11:00")
+  :wordnet-sense-keys ("be_active%2:29:00" "draw%2:35:13" "go%2:38:00" "go%2:42:06" "jaunt%2:38:00" "locomote%2:38:00" "make%2:38:05" "mobilize%2:30:00" "move%2:38:00" "move%2:38:02" "move%2:38:03" "movement%1:04:02" "move_out%2:41:00" "relocation%1:04:00" "take%2:38:05" "travel%2:38:00" "wreathe%2:38:00" "movement%1:11:00")
  :parent ont::motion
  :sem (F::SITUATION (F::CONTAINER -) (F::Locative -) (F::trajectory +))
  :arguments (;(:OPTIONAL ONT::agent (F::Phys-obj (:required (f::origin (? org f::human f::non-human-animal)))
@@ -3232,10 +3233,18 @@
 
 ;; take a shower (for asma)
 (define-type ont::take-execute
+    :comment "Execute (and complete) a nominalized event, e.g., break, turn"
     :wordnet-sense-keys ("take%2:41:04")
     :parent ont::execute
     :arguments ((:ESSENTIAL ONT::Formal ((? t F::situation)))
 		))
+
+(define-type ont::take-turn
+    :wordnet-sense-keys ("take_the_floor%2:32:00" "move%2:33:00")
+    :parent ont::take-execute
+    :definitions ((ONT::AND (ONT::TAKE-EXECUTE :agent ?agent :formal ?formal)
+			    (ONT::ACTION-DEFINED-BY-GAME :id ?formal)))
+    )
 
 ;; work (on) -- do work (see also related concept ont::function)
 (define-type ONT::WORKING
@@ -3294,7 +3303,7 @@
 ;;; The actions of someone else picking up or gathering objects
 ;; collect, gather up
 (define-type ONT::collect
-    :wordnet-sense-keys ("gather%2:35:00" "garner%2:35:00" "collect%2:35:00" "pull_together%2:35:00" "assemble%2:41:03"
+    :wordnet-sense-keys ("gather%2:35:00" "garner%2:35:00" "collect%2:35:00" "pull_together%2:35:00" "assemble%2:41:03" "collect%2:40:00"
 					  "gather%2:35:04")
 ; :parent ont::event-of-causation
  :parent ont::acquire

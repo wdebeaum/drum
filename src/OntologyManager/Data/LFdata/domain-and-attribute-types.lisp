@@ -429,7 +429,7 @@
             )
  :sem (F::abstr-obj (F::scale ont::color-scale ))
  ;; WORDS: color, colour
- :wordnet-sense-keys ("colouring%1:07:00" "coloring%1:07:00" "colour%1:07:00" "color%1:07:00" "color%1:09:01" "colour%1:09:01")
+ :wordnet-sense-keys ("colouring%1:07:00" "coloring%1:07:00" "colour%1:07:00" "color%1:07:00" "color%1:09:01" "colour%1:09:01" "color%1:27:00")
 )
 
 (define-type ont::red-scale

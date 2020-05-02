@@ -865,7 +865,7 @@
 
 ;; information
 (define-type ONT::information
- :wordnet-sense-keys ("information%1:09:00" "information%1:10:00" "info%1:10:00" "vital_sign%1:26:00")
+ :wordnet-sense-keys ("information%1:09:00" "information%1:10:00" "info%1:10:00" "vital_sign%1:26:00" "indicator%1:10:01")
  :parent ONT::information-function-object
  ;:arguments ((:optional ONT::formal (F::prop))) ; copied from ONT::MESSAGE
  :arguments ((:optional ONT::FIGURE)

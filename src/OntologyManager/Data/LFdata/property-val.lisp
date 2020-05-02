@@ -2278,13 +2278,13 @@
 
 (define-type ont::asleep-val
     :parent ont::awakeness-val
-    :definitions (ont::not (ont::awake-val :figure ?neutral))
+    :definitions ((ont::not (ont::awake-val :figure ?neutral)))
     :wordnet-sense-keys ("asleep%3:00:00::" "unawakened%3:00:00::" "dormant%3:00:00::" "inactive%3:00:05::" "asleep%4:02:00" )
     )
 
 (define-type ont::awake-val
     :parent ont::awakeness-val
-    :definitions (ont::not (ont::asleep-val :figure ?neutral))
+    :definitions ((ont::not (ont::asleep-val :figure ?neutral)))
     :wordnet-sense-keys ("awake%3:00:00" )
     )
 
