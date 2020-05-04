@@ -483,7 +483,7 @@
 
 
 (define-type ONT::Response
- :wordnet-sense-keys ( "respond%2:32:00")
+ ;:wordnet-sense-keys ( "respond%2:32:00")
  :parent ONT::communication
  :comment "Communicative act that is in direct response to a previous communicative act"
  )
