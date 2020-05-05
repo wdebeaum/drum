@@ -8,7 +8,7 @@
   (W::BACK
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("back%1:06:00" "back%1:15:02"))
-     (LF-PARENT ONT::object-dependent-location)
+     (LF-PARENT ONT::back-location)
      (example "the back of the truck")
      (TEMPL GEN-PART-OF-RELN-TEMPL)
      )

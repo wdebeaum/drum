@@ -274,7 +274,7 @@
 
 ; figure is in front of the ground
 ; in front (of), ahead (of)
-(define-type ont::front
+(define-type ont::front-of
   :parent ont::oriented-loc-reln
   :wordnet-sense-keys ("front%3:00:00")
   )

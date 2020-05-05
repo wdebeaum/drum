@@ -504,8 +504,8 @@
     )
 
 ;; UMLS
-(define-type ONT::chemical
-    :wordnet-sense-keys ("chemical%1:27:00" "chemical_substance%1:27:00"  "chemical_compound%1:27:00")
+(Define-type ONT::chemical
+    :wordnet-sense-keys ("chemical%1:27:00" "chemical_substance%1:27:00"  "chemical_compound%1:27:00" "indicator%1:27:00")
     :parent ONT::substance
     )
 
@@ -1616,9 +1616,22 @@
 (define-type ONT::object-dependent-location
     :wordnet-sense-keys ("region%1:15:00")
     :COMMENT "these are locations defined relative to another object"
+    :definitions ((ont::and (ont::location :id ?id) (ont::oriented-loc-reln :figure ?id :ground ?figure)))  ;; the front of the house ==> the location in front of the house.
     :parent ONT::LOCATION
     :arguments ((:OPTIONAL ONT::FIGURE (F::PHYS-OBJ (F::Form F::object)))
 		)
+    )
+
+(define-type ONT::FRONT-LOCATION
+    :wordnet-sense-keys ("front%1:15:00" "front%1:06:00")
+    :definitions ((ont::and (ont::object-dependent-location :id ?id) (ont::front-of :figure ?id :ground ?figure)))  ;; the front of the house ==> the location in front of the house.
+    :parent ONT::object-dependent-location
+    )
+
+(define-type ONT::BACK-LOCATION
+    :wordnet-sense-keys ("back%1:15:02" "back%1:06:00")
+    :definitions ((ont::and (ont::object-dependent-location :id ?id) (ont::back-of :figure ?id :ground ?figure)))  ;; the front of the house ==> the location in front of the house.
+    :parent ONT::object-dependent-location
     )
 
 (define-type ONT::TOP-LOCATION
@@ -1631,12 +1644,10 @@
     :parent ONT::object-dependent-location
     )
 
-#|
 (define-type ONT::END-LOCATION
     :wordnet-sense-keys ("end%1:15:00" "end%1:15:02")
     :parent ONT::object-dependent-location
     )
-|#
 
 (define-type ONT::SIDE-LOCATION
     :wordnet-sense-keys ("side%1:15:02")
