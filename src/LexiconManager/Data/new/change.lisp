@@ -15,7 +15,7 @@
      )
     ((LF-PARENT ONT::change)
      (example "it changed")
-     (template affected-templ)
+     (templ affected-templ)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      )
     ((LF-PARENT ONT::change)
