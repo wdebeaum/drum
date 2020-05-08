@@ -30,7 +30,7 @@
  :words (
   (w::coffee
   (senses
-	   ((LF-PARENT ONT::BEVERAGES)
+	   ((LF-PARENT ONT::COFFEE) ;ONT::BEVERAGES)
 	    (TEMPL count-PRED-TEMPL)
 	    (SEM (F::form F::liquid))
 	    )

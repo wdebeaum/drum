@@ -6,7 +6,7 @@
  :words (
   (w::nectar
   (senses
-	   ((LF-PARENT ONT::TEAS-COCKTAILS-BLENDS)
+	   ((LF-PARENT ONT::JUICE) ;TEAS-COCKTAILS-BLENDS)
 	    (TEMPL MASS-PRED-TEMPL)
 	    )
 	   )

@@ -7,7 +7,7 @@
 (W::tea
    (SENSES
     ((meta-data :origin caet :entry-date 20111220)
-     (LF-PARENT ONT::tea)
+     (LF-PARENT ONT::TEAS) ;ONT::tea)
      (TEMPL MASS-PRED-TEMPL)
      )
     )

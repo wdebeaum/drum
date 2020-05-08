@@ -6,7 +6,7 @@
  :words (
   (w::tequila
   (senses
-	   ((LF-PARENT ONT::ALCOHOL)
+	   ((LF-PARENT ONT::ALCOHOL-COCKTAILS) ;ALCOHOL)
 	    (TEMPL MASS-PRED-TEMPL)
 	    )
 	   )
@@ -17,7 +17,7 @@
  :words (
   ((W::TEQUILA W::SUNRISE)
   (senses
-	   ((LF-PARENT ONT::ALCOHOL)
+	   ((LF-PARENT ONT::ALCOHOL-COCKTAILS) ;ALCOHOL)
 	    (TEMPL COUNT-PRED-TEMPL)
 	    )
 	   )

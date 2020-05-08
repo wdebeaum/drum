@@ -6,7 +6,7 @@
  :words (
   (W::OJ
    (SENSES
-    ((LF-PARENT ONT::FOOD)
+    ((LF-PARENT ONT::JUICE) ;ONT::FOOD)
      (LF-FORM W::ORANGE-JUICE)
      (SEM (F::form F::liquid))
      (TEMPL MASS-PRED-TEMPL)

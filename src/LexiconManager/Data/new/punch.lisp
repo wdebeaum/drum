@@ -6,7 +6,7 @@
  :words (
   (w::punch
   (senses
-	   ((LF-PARENT ONT::TEAS-COCKTAILS-BLENDS)
+	   ((LF-PARENT ONT::BLENDS) ;ONT::TEAS-BLENDS) ;TEAS-COCKTAILS-BLENDS)
 	    (TEMPL MASS-PRED-TEMPL)
 	    )
 	   )

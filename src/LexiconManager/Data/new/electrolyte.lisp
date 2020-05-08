@@ -6,7 +6,7 @@
  :words (
   ((W::ELECTROLYTE W::SOLUTION)
   (senses
-	   ((LF-PARENT ONT::BEVERAGES)
+	   ((LF-PARENT ONT::ENERGY-DRINK) ;ONT::BEVERAGES)
 	    (TEMPL MASS-PRED-TEMPL)
 	    (SEM (F::form F::liquid))
 	    )
@@ -18,7 +18,7 @@
  :words (
   ((W::ELECTROLYTE W::SOLUTION)
   (senses
-	   ((LF-PARENT ONT::BEVERAGES)
+	   ((LF-PARENT ONT::ENERGY-DRINK) ;ONT::BEVERAGES)
 	    (TEMPL count-PRED-TEMPL)
 	    (SEM (F::form F::liquid))
 	    )

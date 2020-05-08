@@ -6,7 +6,7 @@
  :words (
   (W::SHAKE
   (senses
-	   ((LF-PARENT ONT::BEVERAGES)
+	   ((LF-PARENT ONT::BLENDS) ;ONT::BEVERAGES)
 	    (TEMPL count-PRED-TEMPL)
 	    (SEM (F::form F::liquid))
 	    )

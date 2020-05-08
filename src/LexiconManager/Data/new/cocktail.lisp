@@ -6,7 +6,7 @@
  :words (
   (w::cocktail
   (senses
-	   ((LF-PARENT ONT::TEAS-COCKTAILS-BLENDS)
+	   ((LF-PARENT ONT::ALCOHOL-COCKTAILS) ;TEAS-COCKTAILS-BLENDS)
 	    (TEMPL count-PRED-TEMPL)
 	    )
 	   )

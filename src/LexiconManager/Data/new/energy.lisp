@@ -20,7 +20,7 @@
  :words (
   ((W::ENERGY W::DRINK)
   (senses
-	   ((LF-PARENT ONT::SODA)
+	   ((LF-PARENT ONT::ENERGY-DRINK) ;ONT::SODA)
 	    (TEMPL COUNT-PRED-TEMPL)
 	    )
 	   )

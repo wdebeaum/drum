@@ -462,7 +462,7 @@
 ;how to deal with this?
 ;State and country are too similar. Perhaps country should be a child of state?
 (define-type ONT::STATE
-    :wordnet-sense-keys ("body_politic%1:14:00" "res_publica%1:14:00" "commonwealth%1:14:00" "state%1:15:01" "province%1:15:00")
+    :wordnet-sense-keys ("state%1:15:01")
     :parent ONT::political-region
     )
 
@@ -472,7 +472,7 @@
     )
 
 (define-type ONT::COUNTRY
-    :wordnet-sense-keys ("country%1:15:00" "country%1:14:00")
+    :wordnet-sense-keys ("country%1:14:00" "country%1:15:00" "state%1:14:01" "united_states_department_of_state%1:14:00")
     :parent ONT::POLITICAL-REGION
     )
 
@@ -549,7 +549,7 @@
     )
 
 (define-type ONT::MEDICATION
-    :wordnet-sense-keys ("medicine%1:06:00" "medication%1:06:00" "medicament%1:06:00" "medicine%1:06:00" "medicinal_drug%1:06:00" "antibacterial%1:06:00" "antibacterial_drug%1:06:00" "drug%1:06:00" "agonist%1:06:00")
+    :wordnet-sense-keys ("medication%1:06:00" "medicament%1:06:00" "medicine%1:06:00" "medicinal_drug%1:06:00" "antibacterial%1:06:00" "antibacterial_drug%1:06:00" "drug%1:06:00" "agonist%1:06:00")
     :parent ONT::pharmacologic-substance
     :sem (F::Phys-obj (F::Object-Function F::comestible)) ;; too restrictive -- some medications are e.g. injections
     )
@@ -712,7 +712,7 @@
 
 (define-type ONT::technology
  :parent ONT::manufactured-object
- :wordnet-sense-keys ("technology%1:04:00" "technology%1:06:00")
+ :wordnet-sense-keys ("technology%1:04:00"); WN 3.1 sense commented out for now: "technology%1:06:00")
  :arguments ((:essential ONT::FIGURE)
 	     )
  )
@@ -1315,7 +1315,7 @@
 
 (define-type ONT::bedandbreakfast
     :parent ONT::accommodation
-    :wordnet-sense-keys ("boarding_house%1:06:00" "boarding_house%1:06:00")
+    :wordnet-sense-keys ("boarding_house%1:06:00")
     )
 
 
@@ -2781,23 +2781,6 @@
     :comment "grains and grain products for food"
     )
 
-(define-type ONT::DAIRY
-    :parent ONT::FOOD
-    :wordnet-sense-keys ("dairy_product%1:13:00")
-    )
-
-(define-type ONT::BEVERAGES
-    :parent ONT::FOOD
-    :wordnet-sense-keys ("beverage%1:13:00" "drink%1:13:00" "drinkable%1:13:00" "potable%1:13:00"
-					    "milkshake%1:13:00")
-    :sem (f::phys-obj (F::form F::liquid) (f::origin f::natural))
-    )
-
-(define-type ONT::alcohol
-    :parent ONT::beverages
-    :wordnet-sense-keys ("alcohol%1:13:00" "alcoholic_drink%1:13:00" "alcoholic_beverage%1:13:00")
-    )
-
 (define-type ONT::PREPARED-FOOD ;PREPARED
     :parent ONT::FOOD
     )
@@ -2874,7 +2857,8 @@
     )
 
 (define-type ONT::EMU
-    :parent ONT::MEAT
+    :parent ONT::BIRD ;MEAT
+    :wordnet-sense-keys ("emu%1:05:00")
     )
 
 (define-type ONT::POULTRY
@@ -2884,6 +2868,7 @@
 
 (define-type ONT::CHICKEN
     :parent ONT::POULTRY
+    :wordnet-sense-keys ("chicken%1:13:00")
     )
 
 (define-type ONT::GOOSE
@@ -2898,6 +2883,7 @@
 
 (define-type ONT::QUAIL
     :parent ONT::POULTRY
+    :wordnet-sense-keys ("wildfowl%1:13:00")
     )
 
 (define-type ONT::PIGEON
@@ -2927,20 +2913,22 @@
 
 (define-type ONT::SALTWATER-FISH
     :wordnet-sense-keys ("saltwater_fish%1:13:00")
-    :parent ONT::SEAFOOD
+    :parent ONT::SEAFOOD ;kept as food insead of fish as the WN sense key is about food.
     )
 
 (define-type ONT::FRESHWATER-FISH
-     :wordnet-sense-keys ("freshwater_fish%1:13:00")
-    :parent ONT::SEAFOOD
+    :wordnet-sense-keys ("freshwater_fish%1:13:00")
+    :parent ONT::SEAFOOD ;kept as food insead of fish as the WN sense key is about food.
     )
 
 (define-type ONT::MOLLUSKS
-    :parent ONT::SEAFOOD
+    :parent ONT::invertebrate ;SEAFOOD
+    :wordnet-sense-keys ("mollusk%1:05:00")
     )
 
 (define-type ONT::CRUSTACEANS
-    :parent ONT::SEAFOOD
+    :parent ONT::invertebrate ;SEAFOOD
+    :wordnet-sense-keys ("crustacean%1:05:00")
     )
 
 (define-type ONT::BAKED-GOODS
@@ -3019,6 +3007,7 @@
     )
 
 (define-type ONT::PRESERVATIVES
+    :wordnet-sense-keys ("preservative%1:27:00")
     :parent ONT::INGREDIENTS
     )
 
@@ -3032,8 +3021,15 @@
     :parent ONT::INGREDIENTS
     )
 
-(define-type ONT::JUICE
-    :parent ONT::BEVERAGES
+(define-type ONT::BEVERAGES
+    :parent ONT::FOOD
+    :wordnet-sense-keys ("beverage%1:13:00" "drink%1:13:00");"drinkable%1:13:00" "potable%1:13:00" "milkshake%1:13:00"
+    :sem (f::phys-obj (F::form F::liquid) (f::origin f::natural))
+    )
+
+(define-type ONT::alcohol-cocktails ;alcohol
+    :parent ONT::beverages
+    :wordnet-sense-keys ("alcohol%1:13:00") ;"alcoholic_drink%1:13:00" "alcoholic_beverage%1:13:00")
     )
 
 (define-type ONT::SODA
@@ -3041,35 +3037,67 @@
     :parent ONT::BEVERAGES
     )
 
-(define-type ONT::TEAS-COCKTAILS-BLENDS
+(define-type ONT::JUICE
+    :parent ONT::BEVERAGES
+    :wordnet-sense-keys ("fruit_drink%1:13:00" "fruit_juice%1:13:00") ;"juice%1:13:00" ; removed "nectar%1:13:02" since its supertype is fruit_juice%1:13:00 which is already there) ;"fruit_drink%1:13:00" 
+    )
+
+(define-type ont::LEMONADE-LIMEADE
+    :parent ont::JUICE ;TEAS-BLENDS
+    :wordnet-sense-keys ("lemonade%1:13:00" "limeade%1:13:00")
+    )
+
+(define-type ONT::ENERGY-DRINK
     :parent ONT::BEVERAGES
     )
 
+(define-type ONT::BLENDS
+    :wordnet-sense-keys ("milkshake%1:13:00")
+    :parent ONT::BEVERAGES
+    )
+#|
+(define-type ONT::TEAS-BLENDS ;TEAS-COCKTAILS-BLENDS
+    :parent ONT::BEVERAGES
+    :wordnet-sense-keys ("fruit_drink%1:13:00" "mixed_drink%1:13:00"); "nectar%1:13:02"); "limeade%1:13:00" "lemonade%1:13:00"
+    )
+|#
 ;; > specific types for CAET
 
-(define-type ont::tea
-    :parent ont::teas-cocktails-blends
+(define-type ont::teas
+    :parent ont::BEVERAGES ;TEAS-BLENDS ;teas-cocktails-blends
+    :wordnet-sense-keys ("tea%1:13:00")
     )
 
 (define-type ont::coffee
-    :parent ont::teas-cocktails-blends
+    :parent ont::BEVERAGES ;TEAS-BLENDS ;teas-cocktails-blends
+    :wordnet-sense-keys ("coffee%1:13:00")
+    )
+
+(define-type ONT::DAIRY
+    :parent ONT::FOOD
+    :wordnet-sense-keys ("dairy_product%1:13:00")
     )
 
 (define-type ONT::YOGURT
     :parent ONT::DAIRY
+    :wordnet-sense-keys ("yogurt%1:13:00")
     )
 
 (define-type ONT::MILK
     :parent ONT::DAIRY
+    :wordnet-sense-keys ("milk%1:13:01")
     )
 
 (define-type ONT::CHEESE
     :parent ONT::DAIRY
+    :wordnet-sense-keys ("cheese%1:13:00")
     )
 
 (define-type ONT::BUTTER
     :parent ONT::DAIRY
+    :wordnet-sense-keys ("butter%1:13:00")
     )
+
 ; <
 ; <
 
@@ -3158,7 +3186,7 @@
     )
 
 (define-type ONT::system
-  :wordnet-sense-keys ("system%1:14:00" "system%1:14:00" "system%1:06:00")
+  :wordnet-sense-keys ("system%1:14:00" "system%1:06:00")
   :comment "An interconnected group of objects, abstract or physical"
  :parent ONT::collection
  )
@@ -3183,6 +3211,7 @@
 
 (define-type ONT::formation
  :parent ONT::group-object
+ :wordnet-sense-keys ("formation%1:14:00")
  )
 
 (define-type ONT::row-formation
@@ -3222,17 +3251,20 @@
 ;; commerce, finance, business, marketing
 (define-type ONT::enterprise
  :parent ONT::organization
+ :wordnet-sense-keys ("enterprise%1:14:00")
  )
 
 ;; institution
 (define-type ONT::institution
  :parent ONT::organization
+ :wordnet-sense-keys ("institution%1:14:00")
  )
 
 ;; an institution created for conduction business
 ;; company
 (define-type ONT::company
  :parent ONT::institution
+ :wordnet-sense-keys ("company%1:14:01")
  )
 
 ;; google, amazon, isp
@@ -3243,11 +3275,13 @@
 ;; bank
 (define-type ONT::financial-institution
  :parent ONT::institution
+ :wordnet-sense-keys ("bank%1:14:00" "financial_institution%1:14:00" "stock_exchange%1:06:00")
  )
 
 ;; apple, ibm, hp
 (define-type ONT::electronics-company
  :parent ONT::company
+ :wordnet-sense-keys ("electronics_company%1:14:00")
  )
 
 ;; officemax, officedepot
@@ -3269,6 +3303,7 @@
 ;; market
 (define-type ONT::financial-organization
  :parent ONT::organization
+ :wordnet-sense-keys ("market%1:04:00")
  )
 
 ;; government, gsa, darpa
@@ -3280,6 +3315,7 @@
 ;; ieee
 (define-type ONT::professional-organization
  :parent ONT::organization
+ :wordnet-sense-keys ("professional_organization%1:14:00")
  )
 
 ;; ansi
@@ -3290,16 +3326,19 @@
 
 (define-type ONT::airline
  :parent ONT::enterprise
+ :wordnet-sense-keys ("airline%1:06:00")
  )
 
 ;; affiliate, partner, subsidiary
 (define-type ONT::affiliate
  :parent ONT::company
+ :wordnet-sense-keys ("affiliate%1:14:00")
  )
 
 ;; affiliate, partner, subsidiary
 (define-type ONT::supplier
  :parent ONT::company
+ :wordnet-sense-keys ("supplier%1:18:00")
  )
 
 ;; sri
@@ -3309,12 +3348,14 @@
 
 ;; university, college
 (define-type ONT::academic-institution
-    :parent ONT::research-institution
+ :parent ONT::research-institution
+ :wordnet-sense-keys ("educational_institution%1:14:00")
  )
 
 ;; fedex, ups
 (define-type ONT::shipping-company
  :parent ONT::company
+ :wordnet-sense-keys ("shipping_company%1:14:00")
  )
 
 (define-type ONT::military-group
@@ -3342,6 +3383,7 @@
 (define-type ont::sheet
 ;  :parent ont::non-measure-ordered-domain
   :parent ONT::SHAPE-OBJECT   ;; why was this in GROUP? JFA 4/19
+  :wordnet-sense-keys ("layer%1:06:00" "layer%1:15:00" "sheet%1:17:00")
   )
 
 ;; a number/amount/quantity of X

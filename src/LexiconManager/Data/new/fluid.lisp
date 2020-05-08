@@ -18,7 +18,7 @@
  :words (
   ((W::FLUID W::REPLACEMENT)
   (senses
-	   ((LF-PARENT ONT::BEVERAGES)
+	   ((LF-PARENT ONT::ENERGY-DRINK) ;ONT::BEVERAGES)
 	    (TEMPL MASS-PRED-TEMPL)
 	    (SEM (F::form F::liquid))
 	    )
@@ -30,7 +30,7 @@
  :words (
   ((W::FLUID W::REPLACEMENT)
   (senses
-	   ((LF-PARENT ONT::BEVERAGES)
+	   ((LF-PARENT ONT::ENERGY-DRINK) ;ONT::BEVERAGES)
 	    (TEMPL count-PRED-TEMPL)
 	    (SEM (F::form F::liquid))
 	    )

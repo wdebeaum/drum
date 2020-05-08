@@ -29,7 +29,7 @@
  :words (
   ((W::ICE W::TEA)
   (senses
-	   ((LF-PARENT ONT::TEAS-COCKTAILS-BLENDS)
+	   ((LF-PARENT ONT::TEAS) ;ONT::TEAS-BLENDS) ;TEAS-COCKTAILS-BLENDS)
 	    (TEMPL MASS-PRED-TEMPL)
 	    )
 	   )
@@ -40,7 +40,7 @@
  :words (
   ((W::ICE W::TEA)
   (senses
-	   ((LF-PARENT ONT::TEAS-COCKTAILS-BLENDS)
+	   ((LF-PARENT ONT::TEAS) ;ONT::TEAS-BLENDS) ;TEAS-COCKTAILS-BLENDS)
 	    (TEMPL count-PRED-TEMPL)
 	    )
 	   )

@@ -6,7 +6,7 @@
  :words (
   ((W::CREME W::DE W::MENTHE)
   (senses
-	   ((LF-PARENT ONT::ALCOHOL)
+	   ((LF-PARENT ONT::ALCOHOL-COCKTAILS) ;ALCOHOL)
 	    (TEMPL COUNT-PRED-TEMPL)
 	    )
 	   )

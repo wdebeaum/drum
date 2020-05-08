@@ -4263,7 +4263,7 @@
  :wordnet-sense-keys ("disorienting%3:00:00::" "confusing%5:00:00:disorienting:00" )
 )
 
-(define-type ont::boring
+(define-type ont::boring-val
  :parent ont::evoking-neg-experience-property-val 
  :wordnet-sense-keys ("humorless%3:00:00::" "humourless%3:00:00::" "unhumorous%3:00:00::" "dull%3:00:03::" "uninteresting%3:00:00" "boring%5:00:00:uninteresting:00" "wearisome%5:00:00:uninteresting:00" "tiresome%5:00:00:uninteresting:00")
  ; Words: (W::DULL W::BORING W::UNINTERESTING)

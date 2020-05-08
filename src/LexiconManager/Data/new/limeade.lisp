@@ -6,7 +6,7 @@
  :words (
   (W::LIMEADE
   (senses
-	   ((LF-PARENT ONT::TEAS-COCKTAILS-BLENDS)
+	   ((LF-PARENT ONT::LEMONADE-LIMEADE) ;TEAS-COCKTAILS-BLENDS)
 	    (TEMPL MASS-PRED-TEMPL)
 	    )
 	   )
@@ -17,7 +17,7 @@
  :words (
   (W::LIMEADE
   (senses
-	   ((LF-PARENT ONT::TEAS-COCKTAILS-BLENDS)
+	   ((LF-PARENT ONT::LEMONADE-LIMEADE) ;TEAS-COCKTAILS-BLENDS)
 	    (TEMPL count-PRED-TEMPL)
 	    )
 	   )
