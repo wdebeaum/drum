@@ -12,7 +12,7 @@ use KQML::KQML;
 use IO::Socket;
 use IO::Handle;
 
-use strict vars;
+use strict 'vars';
 
 sub new
 {
@@ -233,7 +233,7 @@ sub dispatch_messages
 	my $verb = lc($msg->{verb});
 	$verb =~ s/-/_/g;
 	eval
-	{
+	{ no strict 'refs'; # prevent chaos if strictures change at the top
 	  if (grep { $_ eq $verb }
 		   qw(eos error sorry ready next rest discard unregister))
 	  { # the KQML performative has no :content arg
