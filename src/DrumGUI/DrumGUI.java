@@ -1,7 +1,7 @@
 /*
  * DrumGUI.java
  *
- * $Id: DrumGUI.java,v 1.96 2020/04/08 21:02:04 lgalescu Exp $
+ * $Id: DrumGUI.java,v 1.97 2020/05/14 13:58:19 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>,  8 Feb 2010
  */
@@ -2047,7 +2047,7 @@ public class DrumGUI extends StandardTripsModule {
                 .replace('\u0010', '\n')    // ^P, DLE
                 .replace('\u0015', '\n')    // ^U, NAK
                 .replaceAll("\\p{Zs}", " ") // all space separators
-                .replaceAll("\\p{Cc}", " ");// all other control chars
+                .replaceAll("[\\p{Cc}&&[^\\p{Space}]]", " ");// all other control chars
     }
 
     /**
