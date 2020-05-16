@@ -352,7 +352,7 @@ my @tests = (
 (ear) (eat) (egg) (ego) (end) (era) (eye)
 (fan) (far) (fat) (fax) (fee) (few) (fig) (fit) (fix) (fly) (fog) (for) (fox) (fun) (fur)
 (gap) (gas) (gay) (get) (gig) (go) (god) (gun) (gut) (guy)
-(ham) (hat) (hay) (he) (hen) (her) (hey) (him) (hip) (his) (hit) (hot) (how) (hug) (hut)
+(ham) (has) (hat) (hay) (he) (hen) (her) (hey) (him) (hip) (his) (hit) (hot) (how) (hug) (hut)
 (I) (ice) (if) (ill) (in) (inn) (ion) (it) (its)
 (jam) (jar) (jaw) (jet) (jew) (job) (joy)
 (key) (kid) (kit)
@@ -369,6 +369,36 @@ my @tests = (
 (war) (way) (we) (wee) (wet) (who) (why) (win) (wit)
 (ye) (yep) (yes) (yet) (you)
 ", tags => [] },
+  # lgalescu's example where "years has" was tagged improperly, causing an error
+  { text => 'However, the recent reauthorization AGOA for another 10 years has provided Ethiopia and Africa yet another chance to make use of this opportunity to boost export and overall competitions along with other African countries.',
+    tags => [
+      { type => 'sense',
+        start => 56, end => 61, lex => 'years',
+	'penn-pos' => ['NNS'], lftype => ['TIME-UNIT'],
+	'domain-specific-info' => {
+	  domain => 'cwms',
+	  type => 'units',
+	  units => 'tropicalyear',
+	  dimensions => 'time'
+	}
+      },
+    ]
+  },
+  # another lgalescu example, "3-4 months are", with context hallucinated by me
+  { text => 'The next 3-4 months are hot.',
+    tags => [
+      { type => 'sense',
+        start => 13, end => 19, lex => 'months',
+	'penn-pos' => ['NNS'], lftype => ['TIME-UNIT'],
+	'domain-specific-info' => {
+	  domain => 'cwms',
+	  type => 'units',
+	  units => 'month',
+	  dimensions => 'time'
+	}
+      },
+    ]
+  },
 );
 =begin
   templates for making tests

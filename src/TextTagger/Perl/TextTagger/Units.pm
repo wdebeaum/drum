@@ -26,7 +26,7 @@ dry due
 eat egg end eye
 fat fee fly fun
 gas get gig gut
-ham hat he hug hut
+ham has hat he hug hut
 in
 jar
 key
@@ -111,7 +111,7 @@ my %prefixes = ();
 # regexen:
 # prefix unit name (without the dash)
 my $prefix_re; # set at init
-# factors in numerator or denominator of unit expression
+# factors in numerator or denominator of unit expression (but see FIXME in init)
 my $numerator_factor_re; # set at init
 my $denominator_factor_re; # set at init
 # unit expression in context
@@ -460,20 +460,34 @@ sub init_units_tagger {
   # unit name in numerator (can be singular or plural)
   my $numerator_unit_re = hash_keys_re(\%units);
   $units{'1'} = $one_desc; # restore '1' unit
+  # FIXME: these two variables have become slightly misnamed: for "denominator"
+  # read "singular", and for "numerator" read "singular or plural"; we used to
+  # allow any numerator factors to be plural, now we only allow the last
+  # numerator factor to be plural
   $numerator_factor_re = qr/$prefix_re?? $numerator_unit_re $exponent_re?/x;
   $denominator_factor_re = qr/$prefix_re?? $singular_re $exponent_re?/x;
+  # note that we capture the specific multiplication operator used in order to
+  # ensure that the same one is used throughout
   my $denominator_re = qr/
     (?<denominator>
       $denominator_factor_re
-      (?: $denominator_mult_re $denominator_factor_re )*
+      (?: (?<dmult> $denominator_mult_re ) $denominator_factor_re
+	  (?: \g{dmult} $denominator_factor_re )*
+      )?
     )
   /x;
   # regex for whole unit expression without context
   my $cf_unit_expr_re = qr/(?:
     (?<numerator>
       $not_stoplist_word_re
-      $numerator_factor_re
-      (?: $numerator_mult_re $numerator_factor_re )*
+      (?:
+	$denominator_factor_re
+	(?<nmult> $numerator_mult_re )
+	(?: $denominator_factor_re \g{nmult} )*
+	$numerator_factor_re
+	|
+	$numerator_factor_re
+      )
     )
     (?: $per_re $denominator_re )?
     |
@@ -499,7 +513,7 @@ sub parse_fraction_component {
   my ($which, $component) = @_;
   my $factor_re;
   if ($which eq 'numerator') {
-    $factor_re = qr/$not_stoplist_word_re $numerator_factor_re/x;
+    $factor_re = qr/$not_stoplist_word_re (?: $denominator_factor_re | $numerator_factor_re $ ) /x;
   } elsif ($which eq 'denominator') {
     $factor_re = $denominator_factor_re; # for first factor; then add stoplist
   } else {
@@ -569,7 +583,7 @@ sub parse_fraction_component {
   if (# we skipped some letters at the end
       substr($component, $prev_end) =~ /\p{L}/ or
       # we parsed multiple units run together as a plural (in the numerator)
-      ($is_plural and (keys %$expr_ap > 1))
+      ($is_plural and (keys %$expr_ap > 1) and $component =~ /^\p{L}+$/)
      ) {
     if ($which eq 'numerator') { # numerator actually wasn't parsed like this
       # reset and take whole word as numerator factor
@@ -577,12 +591,11 @@ sub parse_fraction_component {
       $expr_ap = {};
       $is_plural = 0;
       $prev_end = 0;
-      pos($component) = 0;
-      die "can't parse numerator word?!"
-	unless ($component =~ /^\p{L}+$/g);
+      die "can't parse the numerator we matched into factors, and it's not a single word?!"
+	unless ($component =~ /^\p{L}+$/);
       &$process_factor();
     } else { # something went very wrong with denominator
-      die "can't parse denominator?!"
+      die "can't parse the denominator we matched into factors?!"
     }
   }
   normalize_expr_hash($expr_sp);
@@ -597,7 +610,8 @@ sub tag_units {
     my $tag = +{ type => 'sense', match2tag() };
     my $matched_numerator = $+{numerator};
     my $matched_denominator = $+{denominator}; # maybe undef
-    print STDERR "got unit expression '$tag->{lex}'; numerator = '$matched_numerator'; denominator = '$matched_denominator'\n" if ($debug);
+    print STDERR "got unit expression '$tag->{lex}'; numerator = '$matched_numerator'; denominator = " . (defined($matched_denominator) ? "'$matched_denominator'" : 'undef') . "\n" if ($debug);
+    eval { # try
     my ($numerator_expr_sp, $numerator_expr_ap, $is_plural) =
       parse_fraction_component('numerator', $matched_numerator);
     $tag->{'penn-pos'} = [$is_plural ? 'NNS' : 'NN'];
@@ -651,6 +665,8 @@ sub tag_units {
     };
     #print STDERR Data::Dumper->Dump([$is_plural, $numerator_expr_sp, $numerator_expr_ap, $denominator_expr_sp, $denominator_expr_ap, $unit_expr_sp, $unit_expr_ap, $unit_str, $dim_expr, $dim_str], [qw(is_plural *numerator_expr_sp *numerator_expr_ap denominator_expr_sp denominator_expr_ap *unit_expr_sp *unit_expr_ap unit_str *dim_expr dim_str)]) if ($debug);
     push @tags, $tag;
+    # catch & rethrow with more context
+    1} || die "error processing units expression '$tag->{lex}' (start=$tag->{start}, end=$tag->{end}, numerator='$matched_numerator', denominator=" . (defined($matched_denominator) ? "'$matched_denominator'" : 'undef') . "): $@";
   }
   # also tag angles in degrees°(minutes′(seconds″)) format
   # this can be subtle because the symbols used overlap with temperature
