@@ -1,7 +1,7 @@
 ;;;;
 ;;;; robust.lisp
 ;;;;
-;;;; Time-stamp: <Wed Nov 13 12:42:03 EST 2019 james>
+;;;; Time-stamp: <Fri May 15 12:00:47 EDT 2020 james>
 ;;;;
 
 (in-package :W)
@@ -15,7 +15,16 @@
      (definition  vform neg sem subjvar dobjvar lex headcat)
     (utt sem setting subjvar dobjvar lex headcat))
     
-    ;; CP with no GAP to have a dream
+    ;; CP with no GAP for NOROLE verbs (e.g., raining)
+    ((definition (var ?v)  (lf ?lf))
+      -defn-no-gap-norole> .98
+     (head (cp (var ?v) (lf ?lf) (subj-map ONT::NOROLE) (ctype (? x w::s-to)) ;; make sure there's a subj-map (avoid parses for "there is" etc)
+	       (subj (% ?xx (sem ?subjsem)))
+      (subjvar (% *PRO* (var *) (class ont::ROLE-REF) (sem ?subjsem) (constraint (& (:context-rel :lsubj)))))
+      (gap -)
+      )))
+
+     ;; CP with no GAP to have a dream
     ((definition (var ?v)  (lf ?lf))
       -defn-no-gap> .985
      (head (cp (var ?v) (lf ?lf) (subj-map (? !s ONT::NOROLE)) (ctype (? x w::s-to)) ;; make sure there's a subj-map (avoid parses for "there is" etc)

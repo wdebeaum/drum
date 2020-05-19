@@ -983,7 +983,7 @@
  )
 
 (define-type ONT::commercial-activity
- :wordnet-sense-keys ("finance%1:04:00" "commerce%1:04:00" "deal%1:04:02")
+ :wordnet-sense-keys ("commerce%1:04:00" "deal%1:04:02" "finance%1:04:00" "shop%2:41:00")
  :parent ONT::activity
  :sem (F::situation (F::cause (? cause F::agentive F::force)))
  )

@@ -1469,13 +1469,13 @@
 	(LSUBJ (% W::NP) ONT::AGENT)
 	(LOBJ  (:parameter xp (:default (% W::NP))) ONT::AGENT1)
 	))
-      
+      #| not used anymore
       (AGENT-RESULT-FORMAL-XP-OPTIONAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::AGENT)
 	(LIOBJ (% W::NP) ONT::RESULT)
 	(LCOMP (:parameter xp (:default (% W::pp (W::ptype W::with)))) ONT::FORMAL OPTIONAL)
-	))
+	))|#
 
       (RESULT-TEMPL
        (ARGUMENTS
@@ -1879,12 +1879,13 @@
     (LIOBJ (% W::NP) ont::result optional)
     ))
 
+#| not used anymore
   (AGENT-RESULT-FORMAL-XP-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::AGENT)
     (LOBJ (% W::NP) ONT::RESULT)
     (LCOMP (:parameter xp (:default (% W::NP)))  ONT::FORMAL)
-    ))
+    ))|#
 
 ;; e.g., cc me on that
   (AGENT-AFFECTEDR-AFFECTED-XP-NP-TEMPL

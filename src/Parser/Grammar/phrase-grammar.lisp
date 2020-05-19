@@ -1183,12 +1183,13 @@
     ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem) (atype ?atype) (comparative ?cmp)
       (gap ?gap)
       (argument ?argument)
+       (SUBCAT ?subcat)
       (LF (% PROP (CLASS ?lf)
 	     (VAR ?v) (CONSTRAINT ?newc)
 	     (transform ?transform) (sem ?sem) (premod -)
 	     )))
      -adj-scalar-pred> 1
-     (head (ADJ1 (LF ?lf) ;(SUBCAT -)
+     (head (ADJ1 (LF ?lf) (SUBCAT ?subcat)
 		 (VAR ?v) (sem ?sem) (SORT PRED) (arg ?arg) (ARGUMENT-MAP ?argmap) (pertainym -)
 		 (argument ?argument)
 		 (transform ?transform) (constraint ?con) (comp-op ?dir)
@@ -2429,24 +2430,24 @@
  ;;  COERCION RULE FOR NOUNS e.g., (take my) prescription
     
     ((N (VAR ?v) (MORPH ?m) (SORT ?sort) (CLASS ?kr) (LF ?lf-new)
-	(RESTR (& (MODS (% *PRO* (Var **) (status ont::f)
-			   (class ?op)
-			   (constraint (& (is ?v)
-					  (FIGURE (% *PRO* (var *) (class ?lf-old) (SEM ?oldsem) (constraint (& (related-to **)))))))))))
-	(lex ?l) (sem ?newsem) (AGR ?agr)
+      (RESTR (& (MODS (% *PRO* (Var **) (status ont::f)
+			 (class ?op)
+			 (constraint (& (is ?v)
+					(FIGURE (% *PRO* (var *) (class ?lf-old) (SEM ?oldsem) (constraint (& (related-to **)))))))))))
+      (lex ?l) (sem ?newsem) (AGR ?agr)
       (COERCE -) (TRANSFORM ?t) (MASS ?mass) (CASE ?case) 
       (argument ?argument) (subcat ?subcat) 
       )
      -n1-coerce> .97
      (head (N (COERCE ((% coerce (KR-TYPE ?kr) (Operator ?op) (sem ?newsem) (LF ?lf-new)) ?cc))
               (VAR ?v) (sem ?oldsem) (MORPH ?m) (SORT ?sort) (LF ?lf-old) (lex ?l) (agr ?agr)
-	    (TRANSFORM ?t) (MASS ?mass) (CASE ?case) 
-	    (argument ?argument) (subcat ?subcat)
-	    )
+	      (TRANSFORM ?t) (MASS ?mass) (CASE ?case) 
+	      (argument ?argument) (subcat ?subcat)
+	      )
       )
      )
     
-       ;; coercing a region into an agent, Italy
+    ;; coercing a region into an agent, Italy
 
     ((NP (VAR *) (MORPH ?m) (SORT ?sort)
          (lf (% description (STATUS ONT::DEFINITE) (VAR *) (CLASS ont::political-region)
@@ -2480,7 +2481,28 @@
      (head (name (name +) (COERCE ((% coerce (KR-TYPE ?kr) (Operator ?op) (sem ?newsem) (LF ?lf-new)) ?cc)) ;; gets lf any-sem
 		 (VAR ?v) (class ?class-old) (full-name ?fname) (LF ?lf-old) (lex ?l) (agr ?agr)
 		 (TRANSFORM ?t)))     
-     )      
+     )
+
+#|   ;;;;;    rule is not needed if we have the nominalized versions in the lexicon,
+        ;;;;   which seems better as only a few words allow this
+  ;; COERCION rule for oriented location adjectives: e.g., the property "right" -> "the right" = the location that is right of something
+    
+    ((N (VAR *) (MORPH ?m) (SORT PRED) (LF ont::OBJECT-DEPENDENT-LOCATION)
+      (RESTR (& (MOD ?v)))
+      (lex ?l) (sem ?newsem)
+      (AGR ?agr)
+      (COERCE -) (TRANSFORM ?t) (MASS count) (CASE ?case) 
+      (argument ?argument) (subcat ?subcat) 
+      )
+     -adj-to-n-coerce> 1
+     (head (advbl (var ?v)
+		 (class ont::back-of)
+		 (arg *)
+		 (subcat ?subcat)
+		  )
+      )
+     (compute-sem-features (lf ont::location) (sem ?newsem))
+     )|#
   ))
 
 
@@ -2530,7 +2552,7 @@
 		))
 	 (assoc-val (feat parser::drum) (val ?kr) (result ?!result)) ;; only do this for DRUM
 	 (add-to-conjunct (val (:name-of ?lex)) (old ?r) (new ?constraint)))
-))
+	))
 
 #|
 (parser::augment-grammar 
@@ -3717,7 +3739,7 @@
     ((ADJP (ARG ?arg) (VAR *) (sem ?nsem) (class ?lf)
 	    (subcatmap ?subjmap) ;(SUBCATMAP (? x ont::affected ont::affected-result ont::neutral))
 	    (ARGUMENT ?subj)
-	    (atype predicative-only)
+	    (atype (? at predicative-only))
        (LF (% PROP (var *) (class ONT::state-resulting-from) (sem ?nsem)
 	      (constraint (& (figure ?arg) 
 			     (ground (% *PRO* (status ont::f) (class ?lf) (VAR ?v) (sem ?sem) (constraint ?newc)))

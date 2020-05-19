@@ -7,16 +7,13 @@
  :words (
   (W::RIGHT
    (SENSES
-    ; need a sense for "take a right"
-    #|
-    ((meta-data :origin fruitcarts :entry-date 20060803 :change-date nil :comments nil :wn ("right%1:15:00"))
-     (LF-PARENT ont::right-loc);ONT::object-dependent-location)
+    (
+     (LF-PARENT ont::right-loc)
      (example "to the right of the building")
      (TEMPL GEN-PART-OF-RELN-TEMPL)
      ;; enforced subcat to reduce ambiguity, but prevents "on the right" unless we add another grammar rule
-     ;;     (TEMPL other-reln-subcat-required-templ) 
      )
-    |#
+   
    ((LF-PARENT ont::right-permission)
      (example "the right to sing")
      (TEMPL SUBCAT-INF-TEMPL)
@@ -41,7 +38,7 @@
      (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE W::For))))
      (SYNTAX (W::allow-deleted-comp -))
      )
-    ((lf-parent ont::right)
+    ((lf-parent ont::right-of)
      (templ attributive-only-adj-templ)
      (meta-data :origin bee :entry-date 20040408 :change-date 20090731 :wn ("right%3:00:00") :comments test-s)
      )
@@ -54,10 +51,10 @@
  :tags (:base500)
  :words (
   (W::right
-   (wordfeats (W::ALLOW-POST-N1-SUBCAT +))
+   (wordfeats (W::ALLOW-POST-N1-SUBCAT +))  ;; this is to allow 'the right door of the house'
    (SENSES
     ((meta-data :origin bee :entry-date 20040408 :change-date 20090731 :wn ("right%3:00:00") :comments test-s)
-     (LF-PARENT ONT::right)
+     (LF-PARENT ONT::right-of)
      (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE (? p W::of)))))
      )
     ))))

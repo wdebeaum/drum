@@ -374,9 +374,9 @@
   (case pos
     (w::n (list (or (find 'w::NN penntags) (find 'w::NNS penntags))))
     (w::name (list (or (find 'w::NNP penntags) (find 'w::NNPS penntags))))
-    (w::adj (list (or (find 'w::jjr penntags) (find 'w::jjs penntags) (find 'w::jj penntags) )))
+    (w::adj (list (or (find 'w::jj penntags) (find 'w::jjr penntags) (find 'w::jjs penntags)  )))
     (w::adv (list (or (find 'w::rb penntags) (find 'w::rbr penntags) (find 'w::rbs penntags))))
-    (w::v (intersection penntags '(w::VB w::VBD w::vbg w::vbp w::vbz w::md)))
+    (w::v (intersection penntags '(w::VB w::VBN w::VBD w::vbg w::vbp w::vbz w::md)))
     (otherwise penntags))
   )
 
@@ -491,7 +491,9 @@
        )
       (w::adj
        (let ((pertainyms (find-arg-in-act (car domain-info) :pertainyms))
-	     (compar (if (member 'w::jjr penn-tag) 'compar)))
+	     (compar (if (and (member 'w::jjr penn-tag)
+			      (not (member 'w::JJ penn-tag)))
+			 'compar)))
 	 ;;(format t "~%Pertainymm is ~S from domain info ~S" pertainyms domain-info)
 	 (if pertainyms
 	     (let* ((pert (car pertainyms))

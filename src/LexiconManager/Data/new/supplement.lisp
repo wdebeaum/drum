@@ -9,7 +9,7 @@
    (SENSES
     ((EXAMPLE "I supplemented my diet with vitamins")
      (LF-PARENT ONT::add-include)
-     (TEMPL AGENT-RESULT-FORMAL-XP-OPTIONAL-TEMPL)
+     (TEMPL AGENT-AFFECTED-TEMPL)
      )
     ;; need this template to go through the adjectival passive rule
      ((LF-PARENT ONT::add-include)

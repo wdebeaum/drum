@@ -34,3 +34,16 @@
    )
 ))
 
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
+ :words (
+	 ((W::speak W::of)
+	  (SENSES
+	   (
+	    (LF-PARENT ONT::say)
+	    (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
+	    (example "he mentioned the truck" "it was mentioned")
+	    (TEMPL AGENT-NEUTRAL-AGENT1-OPTIONAL-TEMPL)
+	    )
+	   )
+	  ))
+ )

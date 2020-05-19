@@ -22,7 +22,7 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("end%1:15:00"))
      ;(LF-PARENT ont::pos-end-of-trajectory);ONT::LINE-DEPENDENT-LOCATION)
-     (LF-PARENT ONT::ENDPOINT)
+     (LF-PARENT ONT::END-LOCATION)
      (TEMPL GEN-PART-OF-RELN-TEMPL)
      )
     )

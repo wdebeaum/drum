@@ -549,7 +549,7 @@
     )
 
 (define-type ONT::MEDICATION
-    :wordnet-sense-keys ("medication%1:06:00" "medicament%1:06:00" "medicine%1:06:00" "medicinal_drug%1:06:00" "antibacterial%1:06:00" "antibacterial_drug%1:06:00" "drug%1:06:00" "agonist%1:06:00")
+    :wordnet-sense-keys ("medicine%1:06:00" "antibacterial%1:06:00" "drug%1:06:00" "agonist%1:06:00")
     :parent ONT::pharmacologic-substance
     :sem (F::Phys-obj (F::Object-Function F::comestible)) ;; too restrictive -- some medications are e.g. injections
     )
@@ -1483,11 +1483,11 @@
     :parent ONT::loc-wrt-ground-as-spatial-obj
     :wordnet-sense-keys ("beginning%1:15:00" "beginning%1:09:00")
     )
-
+#|
 (define-type ONT::endpoint
     :parent ONT::loc-wrt-ground-as-spatial-obj
     :wordnet-sense-keys ("end%1:15:00" "end%1:15:02")
-    )
+    )|#
 
 (define-type ONT::waypoint
     :parent ONT::loc-wrt-ground-as-spatial-obj

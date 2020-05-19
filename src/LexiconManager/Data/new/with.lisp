@@ -51,7 +51,7 @@
     ((LF-PARENT ONT::with-instrument)
      (example "I hit it with a hammer")
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
-     (preference .985)
+     ;;(preference .985)
      )
         )
    )))

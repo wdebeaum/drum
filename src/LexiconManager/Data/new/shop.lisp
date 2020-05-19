@@ -21,6 +21,12 @@
      (LF-PARENT ONT::physical-scrutiny)
      (TEMPL AGENT-FORMAL-XP-TEMPL) ; like check,search
      )
+
+    ((LF-PARENT ONT::commercial-activity)
+     (example "they shop a lot")
+     (TEMPL affected-templ)
+     )
+
     )
    )
 ))

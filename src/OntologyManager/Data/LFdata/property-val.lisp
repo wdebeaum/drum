@@ -2296,7 +2296,7 @@
 
 ;; parallel to ont::medical-condition 
 (define-type ont::medical-condition-property-val
- :parent ont::physical-property-val
+ :parent ont::negative-body-condition-property-val ;physical-property-val
 )
 
 ;; mute, deaf, blind
@@ -6001,7 +6001,7 @@
   :comment "(integrated, united)"
   )
 
-(define-type ONT::having-constituent-parts-val
+#|(define-type ONT::having-constituent-parts-val
   :parent ONT::physical-property-val
   )
 
@@ -6021,6 +6021,7 @@
   :parent ONT::having-constituent-parts-val
   :wordnet-sense-keys ("patronized%3:00:00::" "patronised%3:00:00::")
   )
+|#
 
 (define-type ONT::containing-substance-val
   :parent ONT::substantial-property-val

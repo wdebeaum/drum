@@ -39,6 +39,13 @@
      (example "he moved to the corner")
      (TEMPL agent-templ)
      )
+
+    ((LF-PARENT ONT::take-turn)
+     (example "Is it my turn to move")
+     (preference .985)
+     (TEMPL agent-templ)
+     (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
+     )
     )
    )
 ))
