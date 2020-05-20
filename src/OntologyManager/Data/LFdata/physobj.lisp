@@ -1147,7 +1147,7 @@
 
 (define-type ONT::OFFICIAL
     :comment "Person that serves in some administrative role"
-     :wordnet-sense-keys ("leader%1:18:00")
+     :wordnet-sense-keys ("leader%1:18:00" "ruler%1:18:00" "head_of_state%1:18:00")
     :parent ONT::PERSON
     )
 

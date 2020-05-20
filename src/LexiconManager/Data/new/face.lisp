@@ -16,7 +16,7 @@
 )
 ))
 
-(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
+(define-words :pos W::v 
  :tags (:base500)
  :words (
  (W::face

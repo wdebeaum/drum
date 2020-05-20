@@ -8,7 +8,7 @@
    (SENSES
     ((LF-PARENT ONT::DEGREE-MODIFIER-MED)
      (example "degree modifiers are rather more difficult than certain others")
-     (TEMPL ADJ-ADV-OPERATOR-TEMPL)
+     (TEMPL ADJ-OR-ADV-OPERATOR-TEMPL)
      )
      ((LF-PARENT ONT::DEGREE-MODIFIER-MED)
       (meta-data :origin cardiac :entry-date 20090121 :change-date nil :comments speechtest-transcripts)

@@ -2653,6 +2653,13 @@
 		    W::ADJP)  (w::set-modifier -) (W::sort ?sort)) ONT::FIGURE)
     ))
 
+(ADJ-OR-ADV-OPERATOR-TEMPL
+   (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE))
+   (ARGUMENTS
+    (ARGUMENT (% (? W::argcat W::ADVBL  
+		    W::ADJP)  (w::set-modifier -) (W::sort ?sort)) ONT::FIGURE)
+    ))
+
   ;; Not -- don't modify discourse adverbials
    (NEG-ADJ-ADV-OPERATOR-TEMPL
    (SYNTAX(W::SORT W::OPERATOR) (W::ATYPE W::PRE))

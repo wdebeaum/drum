@@ -21,7 +21,7 @@
     ((LF-PARENT ONT::degree-MODIFIER-MED)
      (example "it's pretty green")
      (LF-FORM W::PRETTY)
-     (TEMPL ADJ-ADV-OPERATOR-TEMPL)
+     (TEMPL ADJ-OR-ADV-OPERATOR-TEMPL)
      )
 ;    ((LF-PARENT ONT::degree-MODIFIER)
 ;     (example "he got pretty tired")

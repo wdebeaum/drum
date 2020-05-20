@@ -9,7 +9,7 @@
    (SENSES
     ((LF-PARENT ont::degree-modifier-high)
      (LF-FORM W::VERY)
-     (TEMPL ADJ-ADV-OPERATOR-TEMPL)
+     (TEMPL ADJ-OR-ADV-OPERATOR-TEMPL)
      )
     )
    )
