@@ -461,7 +461,7 @@
  :wordnet-sense-keys ("unit_of_measurement%1:23:00" "unit%1:23:00")
  :parent ONT::unit
  :sem (F::abstr-obj (F::measure-function F::value) (F::CONTAINER -) (F::INFORMATION -)
-       (F::INTENTIONAL -))
+       (F::INTENTIONAL -) (F::SCALE ONT::MEASURE-SCALE))
  ;;; We define an argument here because we want to express selectional restrictions on what this unit can measure
  :arguments ((:ESSENTIAL ONT::FIGURE)
              )

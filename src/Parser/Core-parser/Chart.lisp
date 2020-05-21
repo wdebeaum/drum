@@ -280,6 +280,7 @@ separate instances of the chart/parser.")
      
      (defun put-in-chart (newentry)
        (setf (numberEntries *chart*) (+ (numberEntries *chart*) 1))
+       
        ;;(up-constit-count (entry-rule-id newentry))
        
        (if (and *beam-pruning-on*
@@ -722,15 +723,19 @@ separate instances of the chart/parser.")
   (declare (ignore name))
   ;;  check if we could skip over constituents in the rule
   (let* ((c (entry-constit entry))
+	 (notes (get-value (arc-mother arc) 'notes))
 	 (cat (get-value c 'cat))
 	 (score 1))
+    
     (cond   
      ;;  skip unknown words
      ((and *ignore-unknown-words* (eq cat 'unknown))
       (extend-arc-end-position arc (entry-end entry) *unknown-word-penalty* 
                                (list 'unknown (car (get-value (entry-constit entry) 'input)))))
      ;; skip constituents with SKIP feature
-     ((and (eq (get-value c 'w::SKIP) '+) (setq score (compute-punc-score c (car (last (arc-pre arc))))))
+     ((and (eq (get-value c 'w::SKIP) '+)
+	   (setq score (compute-punc-score c (car (last (arc-pre arc)))))
+	   (not (assoc 'skipped notes))) ;; we only allow one skipped element per constituent
       (extend-arc-end-position arc (entry-end entry) score ;;(compute-penalty-for-skipping c) 
                                (list 'skipped entry))))
     ;; match entry  to RHS of rule in any event

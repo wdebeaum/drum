@@ -3317,6 +3317,8 @@
 (define-type ont::tall-val
     :sem (F::abstr-obj (F::scale ont::height-scale ))
     :parent ont::vertical-val 
+    :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::phys-obj))) ; to distinguish between this and ONT::HIGH-VAL
+             )
     :wordnet-sense-keys ("high-rise%3:00:00::" "tall%3:00:00" )
 )
 

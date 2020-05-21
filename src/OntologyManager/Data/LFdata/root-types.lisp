@@ -180,7 +180,7 @@
 (define-type ont::unit
     :parent ont::abstract-object
     :comment "names of units in various scales/domains"
-    :sem (F::abstr-obj)
+    :sem (F::abstr-obj (F::scale ONT::DOMAIN))
     :wordnet-sense-keys ("definite_quantity%1:23:00")
    )
 

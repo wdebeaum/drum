@@ -3048,7 +3048,7 @@
 
 (parser::augment-grammar 
  '((headfeatures
-    (NP SEM ARGUMENT SUBCAT role lex orig-lex headcat transform postadvbl refl abbrev))
+    (NP ARGUMENT SUBCAT role lex orig-lex headcat transform postadvbl refl abbrev)) ; no sem
     
 	;;  five pounds, thirty feet  -- because of the sort UNIT-MEASURE, these generally end up a specifiers, not main NPS
 	((NP (LF (% description (STATUS ONT::INDEFINITE)
@@ -3056,9 +3056,9 @@
 		    (SORT unit-measure) 
 		    (CLASS ONT::quantity-abstr)
 		    (CONSTRAINT ?constr) (argument ?argument)
-		    (sem ?sem)
+		    (sem ?nsem)
 		    ))
-	  (class ont::quantity-abstr) (mass ?m)
+	  (class ont::quantity-abstr) (mass ?m) (sem ?nsem)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure) (STATUS ONT::INDEFINITE))
          -unit-np-number-indef>
 	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r))
@@ -3067,12 +3067,38 @@
 		   (argument ?argument) (RESTR ?restr)
 		   (post-subcat -)
 		))
+	 (compute-sem-features (lf ont::quantity-abstr) (sem ?nsem))
          (add-to-conjunct (val (& (value ?num))) (old ?r) (new ?newr))
 	 (add-to-conjunct (val (& (amount (% *PRO* (status ont::indefinite) (class ont::NUMBER) (VAR ?nv) (constraint ?newr)))
 				  (unit ?c)
 				  (scale ?sc))) (old ?restr) (new ?constr))
 	 )
 
+	; five blocks (where block is not a regular unit-measure)
+	((NP (LF (% description (STATUS ONT::INDEFINITE)
+		    (VAR ?v)
+		    (SORT unit-measure) 
+		    (CLASS ONT::quantity-abstr)
+		    (CONSTRAINT ?constr) (argument ?argument)
+		    (sem ?nsem)
+		    ))
+	  (class ont::quantity-abstr) (mass ?m) (sem ?nsem)
+	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure) (STATUS ONT::INDEFINITE))
+         -unit-np-number-indef-2>
+	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r))
+ 	 (head (N1 (VAR ?v) (SORT pred) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
+		   (KIND -) (sem ?sem) (sem ($ f::phys-obj)) ;(sem ($ f::abstr-obj  (f::type (? xx ont::unit ont::multiple)) (f::scale ?sc))) ; ont::multiple: increase 100 fold
+		   (argument ?argument) (RESTR ?restr)
+		   (post-subcat -)
+		))
+	 (compute-sem-features (lf ont::quantity-abstr) (sem ?nsem))
+         (add-to-conjunct (val (& (value ?num))) (old ?r) (new ?newr))
+	 (add-to-conjunct (val (& (amount (% *PRO* (status ont::indefinite) (class ont::NUMBER) (VAR ?nv) (constraint ?newr)))
+				  (unit ?c)
+				  (scale ONT::LINEAR-EXTENT-SCALE) ;(scale ?sc)
+				  )) (old ?restr) (new ?constr))
+	 )
+	
   
 
   
@@ -3083,10 +3109,10 @@
 		    (SORT unit-measure) 
 		    (CLASS ONT::quantity-abstr)
 		    (CONSTRAINT ?constr) (argument ?argument)
-		    (sem ?sem) 
+		    (sem ?nsem) 
 		    ))
 	  (class ont::quantity-abstr)
-	  (Mass count)
+	  (Mass count) (sem ?nsem)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure) (STATUS ONT::INDEFINITE))
          -unit-np-number-indef-special-case>
 	 (ART (VAR ?nv) (LEX (? lex w::a w::an)) )
@@ -3095,6 +3121,7 @@
 		   (argument ?argument) (RESTR ?restr)
 		   (post-subcat -)
 		))
+	 (compute-sem-features (lf ont::quantity-abstr) (sem ?nsem))
          (add-to-conjunct (val (& (value 1))) (old ?r) (new ?newr))
 	 (add-to-conjunct (val (& (amount (% *PRO* (status ont::indefinite) (class ont::NUMBER) (VAR ?nv) (constraint ?newr)))
 				  (unit ?c)
@@ -3107,9 +3134,9 @@
 		    (VAR ?v) (SORT unit-measure) 
 		    (CLASS ONT::quantity-abstr)
 		    (CONSTRAINT ?constr) (argument ?argument)
-		    (sem ?sem) 
+		    (sem ?nsem) 
 		    ))
-	  (class ont::quantity-abstr)
+	  (class ont::quantity-abstr) (sem ?nsem)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure) (STATUS ONT::INDEFINITE))
          -unit-np-number-indef-explicit-scale>
 	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r))
@@ -3124,12 +3151,20 @@
 	  ;(sem ($ f::abstr-obj (F::type (? xx ont::domain)) (f::scale ?!sc2))))
 
 	 ;;(class-greatest-lower-bound (in1 ?unit-sc) (in2 ?explicit-sc) (out ?sc))
+	 (compute-sem-features (lf ont::quantity-abstr) (sem ?nsem))
          (add-to-conjunct (val (& (value ?num))) (old ?r) (new ?newr))
 	 (add-to-conjunct (val (& (amount (% *PRO* (status ont::indefinite) (class ont::NUMBER) (VAR ?nv) (constraint ?newr)))
 				  (unit ?c)
 				  (scale ?!unit-sc)))
 	  (old ?restr) (new ?constr))
 	 )
+))
+	
+
+(parser::augment-grammar 
+ '((headfeatures
+    (NP SEM ARGUMENT SUBCAT role lex orig-lex headcat transform postadvbl refl abbrev))
+    
 
    ;;  NP with SPECS that subcategorize for "of" PP's that are count and definite
    ;;    all of the boys, a bunch of the people, most of the trucks, some of them, which of/among the cats
@@ -3457,6 +3492,33 @@
      (add-to-conjunct (val (& (amount ?sz) (unit ?c))) (old ?restr) (new ?constr))
      )
 
+      ;; version of adj-number-noun with units -- creates quantities, not sets
+    ;; a three block tower (block is not of SORT unit-measure)
+    ((ADJP (ARG ?arg) (VAR *) (sem ($ F::ABSTR-OBJ (F::TYPE ONT::ASSOC-WITH) (F::scale ?sc)));(sem ?sem)
+	   (atype attributive-only) (comparative -)
+	   (argument ?aa) ;(argument (% ?aa (sem ?argsem)))
+      (SORT unit-measure)
+      (LF (% PROP (CLASS ONT::ASSOC-WITH) (VAR *) 
+	     (CONSTRAINT (& (FIGURE ?arg) 
+			    (GROUND (% *PRO* (status ont::inDEFINITE) (var ?nv) 
+				    (CLASS ont::quantity-abstr)
+				    (CONSTRAINT ?constr)))))
+	     (sem ($ F::ABSTR-OBJ (F::TYPE ONT::ASSOC-WITH) (F::scale ?sc)));(Sem ?sem)	     
+	     ))					
+      (transform ?transform))
+     -adj-number-unit-modifier-2> .98
+     (NUMBER  (val ?sz) (VAR ?nv) (restr -))
+     (head (N1 (VAR ?v) (SORT PRED) ;(SORT unit-measure)
+	       (INDEF-ONLY -) (CLASS ?c) (mass count) ;(MASS ?m)
+	       (KIND -) ;;(agr 3s)   we allow either 61 year old or 61 years old
+	       (sem ?sem)  (sem ($ f::phys-obj)) ; let's restrict this to only phys-obj for now ;(sem ($ f::abstr-obj (f::scale ?sc))) ;(sem ($ f::abstr-obj (f::scale ont::linear-d)))
+	       (RESTR ?restr) (transform ?transform)
+	       (postadvbl -) (post-subcat -)
+	       ;(argument (% ?aa2 (sem ?argsem))) ; ?aa2 is a PP; not the same as ?aa in the LHS, which is an NP.  But they have the same sem
+	       ))
+     (add-to-conjunct (val (& (amount ?sz) (unit ?c))) (old ?restr) (new ?constr))
+     )
+    
     ;; and often has a hyphen
     ; two-step (pitch) interval, but not a two-step staircase
     ((ADJP (ARG ?arg) (VAR *) (sem ?sem) (atype attributive-only) (comparative -)
