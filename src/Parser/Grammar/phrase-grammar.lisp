@@ -1873,32 +1873,7 @@
    ;;  To handle the variety of ways that COMPARs are expressed, we use an intermediate constituent COMPAR
    ;; some of these are very unrestrictive so have to be ranked low to allow other alternatives to dominate
 
-   ;; adjectives that map to predicates with only one subcat, e.g., X is dependent on Y
-   ((ADJ1 (ARG ?arg) (VAR ?v) (COMPLEX +) (atype ?newatype) ;(atype (? atp postpositive predicative-only))
-	  (gap ?gap)
-      (CONSTRAINT ?newc) (ARGUMENT-MAP ?argmap)
-      (transform ?transform) (sem ?sem) (comparative ?cmp)
-      (subcat ?subcat) ; pass up subcat so it can be used in -NP-ADJ-MISSING-HEAD-COMPAR> ; if we pass up both subcats we go into an infinite loop because this rule can be rematched!
-	    )           
-     -adj-pred-onesubcat> 
-     (head (ADJ1 (LF ?lf)  (VAR ?v)
-	    (transform ?transform) (comparative ?cmp)
-	    (SUBCAT ?subcat) (SUBCAT-MAP ?reln) (SUBCAT (% ?xx (var ?argv) (gap ?gap))) 
-	    (SUBCAT2 ?subcat2) (SUBCAT2 (% - (W::VAR -)))
-	    ;(SUBCAT2-MAP (? !reln2 ONT::NOROLE -)) (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
-	    (post-subcat -)
-	    (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale) (F::intensity ?ints) (F::orientation ?orient)))
-	    (ARGUMENT-MAP ?argmap) (arg ?arg) (prefix -)
-	    (CONSTRAINT ?con) (atype ?atype)
-	    (SORT PRED)))
-     ?subcat
-     ;?subcat2
-     (recompute-atype (atype ?atype) (subcat ?subcat) (subcat2 ?subcat2) (result ?newatype))
-     (append-conjuncts (conj1 ?con) (conj2 (& (?argmap ?arg)
-					      (?reln ?argv) ;(?!reln2 ?argv2)
-					      (scale ?scale) (intensity ?ints) (orientation ?orient))
-					     )
-		       (new ?newc)))
+ 
 
    
    ;; the standard "than PP" is the typical case
@@ -6257,19 +6232,19 @@
     ;; postpositive: the cars available and unavailable
     ((ADJP (ARG ?arg) (argument ?a) (sem ?sem) (atype ?atype1) ;(atype central)
 	   (VAR *) ;(COMPLEX +) -- removed to allow complex adj prenominal modification, e.g. "a natural and periodic state of rest"
-	   (SORT PRED)
+	   (SORT PRED) (gap ?gap)
       (LF (% PROP (CLASS ?class) (VAR *) (sem ?sem) (CONSTRAINT (& (sequence (?v1 ?v2)) (operator ?conj))) ;;?members)))
 	     (transform ?transform) (sem ?sem)
 	     )))
           
      -adj-conj1>
-     (ADJP (arg ?arg) (argument ?a) (VAR ?v1) 
+     (ADJP (arg ?arg) (argument ?a) (VAR ?v1) (gap ?gap)
       ;(lf (% PROP (class ?c1))) (sem ?s1) (atype central) (post-subcat -)
       (lf (% PROP (class ?c1))) (sem ?s1) (atype ?atype1) (post-subcat -)
       (set-modifier -)
       )
      (CONJ (LF ?conj) (but-not -) (but -))
-     (ADJP (arg ?arg)  (argument ?a) (VAR ?v2) 
+     (ADJP (arg ?arg)  (argument ?a) (VAR ?v2) (gap ?gap)
       ;(LF (% PROP (class ?c2))) (sem ?s2) (atype central) (post-subcat -)
       (LF (% PROP (class ?c2))) (sem ?s2) (atype ?atype2) (post-subcat -)
       (set-modifier -)
@@ -7059,4 +7034,75 @@
 
 	))
 
+
+(parser::augment-grammar
+ '((headfeatures
+    (ADJ1 arg lex orig-lex headcat transform argument sort allow-deleted-comp allow-post-n1-subcat) ; no gap, no sem, no lf
+    )
+
+     ;; adjectives that map to predicates with only one subcat, e.g., X is dependent on Y
+   ((ADJ1 (ARG ?arg) (VAR ?v) (COMPLEX +) (atype ?newatype) ;(atype (? atp postpositive predicative-only))
+	  (gap ?gap) (LF ?lf)
+      (CONSTRAINT ?newc) (ARGUMENT-MAP ?argmap)
+      (transform ?transform) (sem ?sem) (comparative ?cmp)
+      (subcat ?subcat) ; pass up subcat so it can be used in -NP-ADJ-MISSING-HEAD-COMPAR> ; if we pass up both subcats we go into an infinite loop because this rule can be rematched!
+	    )           
+     -adj-pred-onesubcat> 
+     (head (ADJ1 (LF ?lf)  (VAR ?v)
+	    (transform ?transform) (comparative ?cmp)
+	    (SUBCAT ?subcat) (SUBCAT-MAP ?reln) (SUBCAT (% ?xx (var ?argv) (gap ?gap))) 
+	    (SUBCAT2 ?subcat2) (SUBCAT2 (% - (W::VAR -)))
+	    ;(SUBCAT2-MAP (? !reln2 ONT::NOROLE -)) (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
+	    (post-subcat -)
+	    (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale) (F::intensity ?ints) (F::orientation ?orient)))
+	    (ARGUMENT-MAP ?argmap) (arg ?arg) (prefix -)
+	    (CONSTRAINT ?con) (atype ?atype)
+	    (SORT PRED)))
+     ?subcat
+     ;?subcat2
+     (recompute-atype (atype ?atype) (subcat ?subcat) (subcat2 ?subcat2) (result ?newatype))
+     (append-conjuncts (conj1 ?con) (conj2 (& (?argmap ?arg)
+					      (?reln ?argv) ;(?!reln2 ?argv2)
+					      (scale ?scale) (intensity ?ints) (orientation ?orient))
+					     )
+		       (new ?newc)))
+
+   ; bigger than or smaller than the dog
+   ((ADJ1 (ARG ?arg) (VAR *) (COMPLEX +) (atype ?atype) ;(atype ?newatype) ;(atype (? atp postpositive predicative-only))
+      (gap ?gap)
+      (CONSTRAINT (& (operator ?conj)
+        (sequence ((% *PRO* (status PROP) (var ?v) (class ?lf) (constraint ?con) (sem ?sem) (arg ?arg))
+               (% *PRO* (status PROP) (var ?v2) (class ?lf2) (constraint ?con2) (sem ?sem2) (arg ?arg))))
+        ))
+      (ARGUMENT-MAP ?argmap) (lf ?nlf)
+      (transform ?transform) (sem ?nsem) (comparative ?cmp)
+      (subcat ?subcat) ; pass up subcat so it can be used in -NP-ADJ-MISSING-HEAD-COMPAR> ; if we pass up both subcats we go into an infinite loop because this rule can be rematched!
+        )           
+     -adj1-pred-onesubcat-conj-gap> 
+     (head (ADJ1 (LF ?lf)  (VAR ?v)
+        (transform ?transform) (comparative ?cmp)
+        (SUBCAT ?subcat) (SUBCAT-MAP ?reln) (SUBCAT (% ?xx (var ?argv) (gap ?gap))) 
+        (subcat2 -) ;(SUBCAT2 ?subcat2) (SUBCAT2 (% - (W::VAR -)))
+        ;(SUBCAT2-MAP (? !reln2 ONT::NOROLE -)) (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
+        (post-subcat -)
+        (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale) (F::intensity ?ints) (F::orientation ?orient)))
+        (ARGUMENT-MAP ?argmap) (arg ?arg) (prefix -)
+        (CONSTRAINT ?con) (atype ?atype)
+        (SORT PRED)))
+    (CONJ (LF ?conj) (but-not -) (but -))
+    (ADJ1 (LF ?lf2)  (VAR ?v2)
+     (transform ?transform2) (comparative ?cmp2)
+     (SUBCAT ?subcat1) (SUBCAT-MAP ?reln1) (SUBCAT (% ?xx1 (var ?argv1) (gap ?gap))) 
+     (subcat2 -) ;(SUBCAT2 ?subcat2a) (SUBCAT2 (% - (W::VAR -)))
+					;(SUBCAT2-MAP (? !reln2 ONT::NOROLE -)) (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
+     (post-subcat -)
+     (sem ?sem2) (sem ($ F::ABSTR-OBJ (f::scale ?scale2) (F::intensity ?ints2) (F::orientation ?orient2)))
+     (ARGUMENT-MAP ?argmap2) (arg ?arg) (prefix -)
+     (CONSTRAINT ?con2) (atype ?atype2)
+     (SORT PRED))
+    ?gap     ;;  We are filling the gap immediately here, which sets the COMPAR role in both adjectives
+    (sem-least-upper-bound (in1 ?sem) (in2 ?sem2) (out ?nsem))
+    (class-least-upper-bound (in1 ?lf) (in2 ?lf2) (out ?nlf))
+    )
+   ))
 
