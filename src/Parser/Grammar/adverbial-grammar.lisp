@@ -22,6 +22,7 @@
      (head (adjp (lf ?lf) (var ?v) (comparative -)  ;;(gap ?gap) (atype predicative-only)
 		 (argument (% ?xxx (var ?arg)))
 		 (sem ?sem) (sem ($ f::ABSTR-OBJ (f::type ont::oriented-loc-reln)))
+		 (lf (% ?s (class ont::oriented-loc-reln)))
 		 
       )))
 
@@ -991,9 +992,9 @@
 	   (LF (% PROP (CLASS ?class) (VAR *) (sem ?sem) (CONSTRAINT (& (sequence (?v1 ?v2)) (operator ?conj))
 		  ))))
      -advbl-conj1>
-     (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf1) (VAR ?v1)(sem ?sem1))) (gap ?g) (argument ?argmt))
+     (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf1) (VAR ?v1)(sem ?sem1))) (gap ?g) (argument ?argmt) (gap -))
      (CONJ (LF ?conj) (but-not -) (but -))
-     (head (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf2) (VAR ?v2) (sem ?sem2))) (gap ?g) (argument ?argmt)))
+     (head (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf2) (VAR ?v2) (sem ?sem2))) (gap ?g) (argument ?argmt) (gap -)))
     (sem-least-upper-bound (in1 ?sem1) (in2 ?sem2) (out ?sem))
     (class-least-upper-bound (in1 ?lf1) (in2 ?lf2) (out ?class))
     )

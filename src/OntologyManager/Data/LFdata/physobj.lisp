@@ -221,7 +221,7 @@
 ;; a place in space
 (define-type ONT::Location
     :parent ONT::GEO-OBJECT
-    :sem (F::Phys-obj (F::origin F::non-living)
+    :sem (F::Phys-obj (F::origin (? o F::non-living F::artifact))
 		      (F::Form F::Geographical-Object)
 		      (F::MOBILITY F::fixed)
 ;		   (F::Object-Function F::Place)
@@ -428,6 +428,9 @@
 (define-type ONT::man-made-structure
     :comment "man made structures that are attached to the earther and thus act like locations"
     :parent ONT::functional-region
+    :sem (F::Phys-obj (F::spatial-abstraction (? sa F::spatial-point F::spatial-region))
+		      (F::origin F::Artifact)(F::trajectory -)
+		      (F::mobility f::fixed))
     )
 
 (define-type ONT::general-structure
@@ -1020,7 +1023,7 @@
     )
 
 ;; insider, outsider, stranger
-(define-type ONT::member-reln
+(define-type ONT::person-defined-by-membership
     :parent ONT::person-reln
     )
 
@@ -1548,7 +1551,7 @@
     :wordnet-sense-keys ("lane%1:06:00")
     )
 
-;; highway, expressway
+;; highway, expresswa
 (define-type ONT::highway
     :parent ONT::route
     :wordnet-sense-keys ("highway%1:06:00")
@@ -2397,6 +2400,7 @@
     :wordnet-sense-keys ("member%1:18:00" "member%1:24:00" "member%1:14:00")
     :arguments ((:OPTIONAL ONT::FIGURE (f::Phys-obj (f::origin f::living)))
 		)
+    
     )
 
 (define-type ONT::AUDIO

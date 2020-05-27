@@ -3539,9 +3539,10 @@
 
 ;; queen, king e.g. bed size
 (define-type ont::predefined-size-val
- :parent ont::predefined-measure-val 
- :wordnet-sense-keys("double%5:00:00:large:00")
-)
+    :arguments ((:essential ont::FIGURE (f::phys-obj (F::intentional -) (F::type ont::furnishings))))
+    :parent ont::predefined-measure-val 
+    :wordnet-sense-keys("double%5:00:00:large:00")
+    )
 
 ;; for foodkb
 ;; lean, nonfat, lowfat

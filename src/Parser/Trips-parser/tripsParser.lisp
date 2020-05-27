@@ -167,6 +167,7 @@
     ;; UTTERANCE END
     ;;   start the actual parser
     ((utterance end-sentence)
+    ;; (break)
      (compute-barriers)
      (setq *uttnum* (find-arg-in-act content :uttnum))
      (setf (end-seen *chart*) t)

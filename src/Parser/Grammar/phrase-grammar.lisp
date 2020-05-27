@@ -7069,7 +7069,7 @@
 
    ; bigger than or smaller than the dog
    ((ADJ1 (ARG ?arg) (VAR *) (COMPLEX +) (atype ?atype) ;(atype ?newatype) ;(atype (? atp postpositive predicative-only))
-      (gap ?gap)
+      (gap -)
       (CONSTRAINT (& (operator ?conj)
         (sequence ((% *PRO* (status PROP) (var ?v) (class ?lf) (constraint ?con) (sem ?sem) (arg ?arg))
                (% *PRO* (status PROP) (var ?v2) (class ?lf2) (constraint ?con2) (sem ?sem2) (arg ?arg))))
@@ -7081,7 +7081,7 @@
      -adj1-pred-onesubcat-conj-gap> 
      (head (ADJ1 (LF ?lf)  (VAR ?v)
         (transform ?transform) (comparative ?cmp)
-        (SUBCAT ?subcat) (SUBCAT-MAP ?reln) (SUBCAT (% ?xx (var ?argv) (gap ?gap))) 
+        (SUBCAT ?subcat) (SUBCAT-MAP ?reln) (SUBCAT (% ?xx (var ?argv) (gap (% NP (var ?gapv) (sem ?argsem)))))
         (subcat2 -) ;(SUBCAT2 ?subcat2) (SUBCAT2 (% - (W::VAR -)))
         ;(SUBCAT2-MAP (? !reln2 ONT::NOROLE -)) (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
         (post-subcat -)
@@ -7092,7 +7092,7 @@
     (CONJ (LF ?conj) (but-not -) (but -))
     (ADJ1 (LF ?lf2)  (VAR ?v2)
      (transform ?transform2) (comparative ?cmp2)
-     (SUBCAT ?subcat1) (SUBCAT-MAP ?reln1) (SUBCAT (% ?xx1 (var ?argv1) (gap ?gap))) 
+     (SUBCAT ?subcat1) (SUBCAT-MAP ?reln1) (SUBCAT (% ?xx1 (var ?argv1) (gap (% NP (var ?gapv) (sem ?argsem)))))
      (subcat2 -) ;(SUBCAT2 ?subcat2a) (SUBCAT2 (% - (W::VAR -)))
 					;(SUBCAT2-MAP (? !reln2 ONT::NOROLE -)) (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
      (post-subcat -)
@@ -7100,7 +7100,7 @@
      (ARGUMENT-MAP ?argmap2) (arg ?arg) (prefix -)
      (CONSTRAINT ?con2) (atype ?atype2)
      (SORT PRED))
-    ?gap     ;;  We are filling the gap immediately here, which sets the COMPAR role in both adjectives
+    (NP (var ?gapv) (sem ?argsem))     ;;  We are "filling the gap" immediately here, which sets the COMPAR role in both adjectives
     (sem-least-upper-bound (in1 ?sem) (in2 ?sem2) (out ?nsem))
     (class-least-upper-bound (in1 ?lf) (in2 ?lf2) (out ?nlf))
     )

@@ -906,7 +906,7 @@
  :arguments ((:REQUIRED ONT::neutral )
 	     ;; this is still here until we decide what to do with the formal-pred mappings for be
 	     (:essential ONT::formal ((? formal F::Abstr-obj) ; F::situation) ; for ONT::MEMBERSHIP
-				      (f::type (? cbd ont::domain-property ont::position-reln ont::predicate ont::relation
+				      (f::type (? cbd ont::relation
 					;ONT::MEMBERSHIP ; ont::membership: It is a dog
 						  )))) ; ont::predicate: with, without, around; ont::relation: the same
 ;             (:ESSENTIAL ONT::PROPERTY ((? oc2 F::abstr-obj))) ;; only properties (preds) -- for event nouns use ont::have-experience or ont::participating
@@ -967,7 +967,7 @@
 	      )
   )
 
-;; membership -- specific for membership in organizations
+;; membership -- specific for membership
 (define-type ont::membership
  :wordnet-sense-keys ("belong%2:42:01" "belong%2:42:07")
   :parent ont::have
@@ -975,6 +975,7 @@
   :arguments ((:required ont::neutral (F::phys-obj (f::intentional +)))
 	      (:required ont::neutral1 (F::abstr-obj (f::type ont::group-object))) ;; e.g. clubs, companies, ...
 	      )
+  :definitions ((ONT::MEMBER-OF :figure ?neutral :ground ?neutral1))
   )
 
 (define-type ONT::wear

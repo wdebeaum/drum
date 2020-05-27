@@ -31,7 +31,7 @@
      (LF-FORM W::REMAINING)
      (templ postpositive-ADJ-TEMPL)
      )
-    ((lf-parent ONT::LEFT)
+    ((lf-parent ONT::LEFT-OF)
      (templ attributive-only-adj-templ)
      (meta-data :origin bee :entry-date 20040408 :change-date 20090731 :wn ("left%3:00:00") :comments test-s)
      )    
@@ -47,7 +47,7 @@
    (wordfeats (W::ALLOW-POST-N1-SUBCAT +))
    (SENSES
     ((meta-data :origin bee :entry-date 20040408 :change-date 20090731 :wn ("left%3:00:00") :comments test-s)
-     (LF-PARENT ONT::LEFT)
+     (LF-PARENT ONT::LEFT-OF)
      (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE (? p W::of)))))
      )
     ))))

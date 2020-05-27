@@ -173,9 +173,9 @@
             
             )
            (F::non-living
-	    (F::Artifact)
 	    )
            )
+	  (F::Artifact)
           
           )
  )

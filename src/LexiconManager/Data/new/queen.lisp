@@ -3,15 +3,16 @@
 ;;;;
 
 (define-words :pos W::n
- :words (
-  ((W::QUEEN W::CRAB)
-  (senses
+  :words (
+	 ((W::QUEEN W::CRAB)
+	  (senses
 	   ((LF-PARENT ONT::CRUSTACEANS)
 	    (TEMPL MASS-PRED-TEMPL)
 	    )
 	   )
-)
-))
+	  )
+	 
+	 ))
 
 (define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
  :words (
@@ -26,13 +27,22 @@
 ))
 
 (define-words :pos W::name
- :words (
-  (w::queen
-  (senses((LF-PARENT ONT::title)
-	    (syntax (w::title +))
-	    (templ nname-templ)
-	    )
+  :words (
+	  (w::queen
+	   (senses((LF-PARENT ONT::title)
+		   (syntax (w::title +))
+		   (templ nname-templ)
+		   )
+		  )
 	   )
-)
-))
+	  ))
+
+(define-words :pos W::N
+ :words (
+	 (w::queen
+	  (senses ((lf-parent ont::official)
+		   (templ count-pred-templ)
+		   ))
+	  )
+	 ))
 

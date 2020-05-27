@@ -5140,7 +5140,7 @@
  :parent ONT::event-of-undergoing-action
  :sem (F::Situation (F::Aspect F::Dynamic) (F::Trajectory -))
  :arguments ((:ESSENTIAL ONT::affected)
-	     (:essential ont::formal (F::abstr-obj (F::TYPE ont::property-val) )
+	     (:essential ont::formal (F::abstr-obj (F::TYPE ont::relation) )
 			 )
 	     ))
 

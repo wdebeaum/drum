@@ -985,10 +985,19 @@ Historical note: the only reason we need to do this is because not ALL lfs get p
      ;; the gethash implementation will fail if no words are defined as leaves on the type. There is no subtype searching. It also misses some cases of POS defined in the subtypes but not higher in the hierarchy, e.g. ont::predicate supports both w::adv and w::adj, but will get only ont::adv without subtype searching. Efficiency could be improved by implementing caching. (e.g., gloss -- this is called when TextTagger sends tagged lexical entries, and TT may pair incompatible words and types)
      #| (gethash ont-type (lexicon-db-lf-table *lexicon-data*))
       )
-    )|#
+      )|#
+      (cond ((om::subtype ont-type 'ont::SITUATION-ROOT)
+	     '(W::V w::N))
+	    ((om::subtype ont-type 'ont::property-val)
+	     '(W::ADJ))
+	    ((om::subtype ont-type 'ont::predicate)
+	     '(W::ADV))
+	    (t '(W::N)))
+      ))
+#|	  
      (remove-if #'null (remove-duplicates (mapcar (lambda (x)
 						     (second x))
-						   (get-words-from-lf ont-type :include-subtypes t))))))
+						   (get-words-from-lf ont-type :include-subtypes t))))))|#
 					
 
 (defun trips-pos-list-for-word (wdef &key include-multiwords)

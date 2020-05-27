@@ -16,8 +16,15 @@
      (lf-parent ont::become)
      (example "the snow became rain")
      (TEMPL AFFECTED-FORMAL-XP-PRED-TEMPL (xp (% w::NP)))
-     )
+      )
+     
+     ((lf-parent ont::improve)
+      (preference .98)   ;; this entry is here to stop WN intreoducing it at a higher priority
+      (example "the dress becomes her")
+      (TEMPL agent-affected-templ)
+      )
+     
     )
    )
-))
+  ))
 
