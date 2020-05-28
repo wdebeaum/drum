@@ -36,7 +36,7 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("high%3:00:01"))
      (EXAMPLE "the temperature is high")
      (LF-PARENT ONT::high-val)
-     (preference 0.98) ; prefer tall-val but only for phys-obj
+     (preference 0.989) ; prefer tall-val but only for phys-obj
      )
 
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("high%3:00:01"))

@@ -7037,7 +7037,7 @@
 
 (parser::augment-grammar
  '((headfeatures
-    (ADJ1 arg lex orig-lex headcat transform argument sort allow-deleted-comp allow-post-n1-subcat) ; no gap, no sem, no lf
+    (ADJ1 arg lex orig-lex headcat transform argument sort allow-deleted-comp allow-post-n1-subcat subcat2) ; no gap, no sem, no lf
     )
 
      ;; adjectives that map to predicates with only one subcat, e.g., X is dependent on Y
@@ -7082,9 +7082,8 @@
      (head (ADJ1 (LF ?lf)  (VAR ?v)
         (transform ?transform) (comparative ?cmp)
         (SUBCAT ?subcat) (SUBCAT-MAP ?reln) (SUBCAT (% ?xx (var ?argv) (gap (% NP (var ?gapv) (sem ?argsem)))))
-        (subcat2 -) ;(SUBCAT2 ?subcat2) (SUBCAT2 (% - (W::VAR -)))
-        ;(SUBCAT2-MAP (? !reln2 ONT::NOROLE -)) (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
-        (post-subcat -)
+       	(SUBCAT2 (% -))
+	(post-subcat -)
         (sem ?sem) (sem ($ F::ABSTR-OBJ (f::scale ?scale) (F::intensity ?ints) (F::orientation ?orient)))
         (ARGUMENT-MAP ?argmap) (arg ?arg) (prefix -)
         (CONSTRAINT ?con) (atype ?atype)
@@ -7093,8 +7092,7 @@
     (ADJ1 (LF ?lf2)  (VAR ?v2)
      (transform ?transform2) (comparative ?cmp2)
      (SUBCAT ?subcat1) (SUBCAT-MAP ?reln1) (SUBCAT (% ?xx1 (var ?argv1) (gap (% NP (var ?gapv) (sem ?argsem)))))
-     (subcat2 -) ;(SUBCAT2 ?subcat2a) (SUBCAT2 (% - (W::VAR -)))
-					;(SUBCAT2-MAP (? !reln2 ONT::NOROLE -)) (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
+     (SUBCAT2 (% - ))
      (post-subcat -)
      (sem ?sem2) (sem ($ F::ABSTR-OBJ (f::scale ?scale2) (F::intensity ?ints2) (F::orientation ?orient2)))
      (ARGUMENT-MAP ?argmap2) (arg ?arg) (prefix -)

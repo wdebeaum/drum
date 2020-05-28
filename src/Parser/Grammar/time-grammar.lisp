@@ -638,7 +638,7 @@
     ;;  Special construction for last year/next week/ etc which doesn't seem to generalize to non-temporal
     ((np (var ?v) (sort pred) (agr 3s) (lex ?n_lex)
       (LF (% description (var ?v) (status ont::definite)
-	     (class ont::time-loc) (constraint (& (proform ?lex) (extent ?class))) (sem ($ f::time)))) ;(f::time-scale F::INTERVAL)))))
+	     (class ont::time-loc) (constraint (& (mod ?adjv) (proform ?lex) (extent ?class))) (sem ($ f::time)))) ;(f::time-scale F::INTERVAL)))))
       (class ont::time-loc)
       (sem ($ f::time))) ;(f::time-scale F::INTERVAL))))
       -next-last-time1> 1
@@ -673,7 +673,7 @@
      (art (lex the))
      (adjp (lex (? lex next last))
        (var ?adjv) (arg ?valvar))
-     (Head (np (sem ?valsem) (var ?v) (sort unit-measure) (restr ?r)
+     (Head (np (var ?v) (sort unit-measure) (restr ?r)
 	       (sem ($ f::abstr-obj (f::scale ont::DURATION-SCALE)))
 	       ))
      
