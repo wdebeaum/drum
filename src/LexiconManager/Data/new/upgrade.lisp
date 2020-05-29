@@ -28,7 +28,7 @@
  :words (
 (w::upgrade
  (senses
-  ((LF-PARENT ONT::device-adjust)
+  ((LF-PARENT ONT::IMPROVE) ;device-adjust)
     (example "you can upgrade your computer")
     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)

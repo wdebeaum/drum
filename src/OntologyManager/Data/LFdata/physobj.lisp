@@ -1997,7 +1997,7 @@
 (define-type ONT::FUNCTIONAL-PHYS-OBJECT
     :parent ONT::PHYS-OBJECT
     :comment "These are objects that are described by their function in an activity- and have other physical descriptions: e.g., the things you are travelling with is LUGGAGE" 
-    :wordnet-sense-keys ("instrumentality%1:06:00" "instrumentation%1:06:00")
+   ; :wordnet-sense-keys ("instrumentality%1:06:00" "instrumentation%1:06:00")
     :sem (F::Phys-obj (:required)(:default (F::origin F::artifact) (F::form F::object) (F::mobility F::movable)))
     )
 
@@ -2313,6 +2313,7 @@
 ;; a physical arrangement of components, e.g. a stereo system
 (define-type ONT::instrumentation
     :parent ONT::manufactured-object
+    :wordnet-sense-keys ("instrumentation%1:06:00")
     :sem (F::Phys-obj (F::mobility F::non-self-moving)(F::object-function F::instrument)(F::group +))
     )
 
@@ -3127,13 +3128,13 @@
     :wordnet-sense-keys ("collection%1:14:00" "array%1:10:00" "series%1:14:01" "trinketry%1:14:00" "population%1:14:01" "batch%1:23:00")
     :parent ONT::group-object
     )
-
+#|;moved under ONT::SYSTEM
 (define-type ONT::arrangement-configuration
     :wordnet-sense-keys ("arrangement%1:14:00" "array%1:14:00" "straggle%1:14:00" "configuration%1:09:00")
     :comment "An group of objects organized in some way"
     :parent ONT::collection
     )
-
+|#
 (define-type ONT::data
     :wordnet-sense-keys ("data%1:14:00")
     :comment "A group of information organized in some way"
@@ -3195,15 +3196,21 @@
  :parent ONT::collection
  )
 
-(define-type ONT::ecosystem
-  :wordnet-sense-keys ("biotic_community%1:14:00" "ecosystem%1:14:00" "biosphere%1:15:00" "biota%1:14:00")
-  :comment "An interconnected group of entities forming an ecosystem"
-  :parent ONT::system
- )
+(define-type ONT::arrangement-configuration
+  :wordnet-sense-keys ("arrangement%1:14:00" "array%1:14:00" "straggle%1:14:00     " "configuration%1:09:00")
+  :comment "An group of objects organized in some way"
+  :parent ONT::system ;collection
+  )
 
 (define-type ONT::structure
-  :wordnet-sense-keys ("structure%1:07:00")
+  :wordnet-sense-keys ("computer_architecture%1:07:00" "structure%1:07:00")
   :comment "A collection of objects organized for some purpose" 
+  :parent ONT::arrangement-configuration ;system
+  )
+
+(define-type ONT::ecosystem
+  :wordnet-sense-keys ("biotic_community%1:14:00" "ecosystem%1:14:00" "biosphere     %1:15:00" "biota%1:14:00")
+  :comment "An interconnected group of entities forming an ecosystem"
   :parent ONT::system
   )
 
