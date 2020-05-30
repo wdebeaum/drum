@@ -1187,7 +1187,7 @@
 )
 
 (define-type ONT::FEELING
-    :wordnet-sense-keys ("feeling%1:03:00" "mercy%1:07:00")
+    :wordnet-sense-keys ("feeling%1:03:00" "mercy%1:07:00" "psychological_state%1:26:00")
     :parent ONT::mental-construction
     :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
 		)

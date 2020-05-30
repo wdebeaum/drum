@@ -5149,10 +5149,11 @@
     
     ;; number or number-and-letter sequences
     ((NP (SORT PRED)
-      (var ?v) (Class ONT::ANY-SEM) (agr ?agr) (case (? cas sub obj -))
+	 (var ?v) (class ont::sequence) ;(Class ONT::ANY-SEM)
+	 (agr ?agr) (case (? cas sub obj -))
       (LF (% Description (status ont::definite) (var ?v) (Sort Individual) (lex ?lf)
                 (Class ONT::SEQUENCE) (constraint (& (NAME-OF ?lf) (val ?val)))
-		(lex ?l) (sem ?sem) (transform ?transform)
+		(sem ?sem) (transform ?transform)
                 ))
       (sem ($ (? ft f::phys-obj f::abstr-obj)))
       (postadvbl +) (generated +)

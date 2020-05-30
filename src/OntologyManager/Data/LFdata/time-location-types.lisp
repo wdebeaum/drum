@@ -44,8 +44,9 @@
 (define-type ont::at-loc
     :comment "prototypical locating of a FIGURE wrt a point-like GROUND"
     :parent ont::position-as-point-reln
-    :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj f::abstr-obj f::situation) (f::tangible +)
-					 (f::type (? typ ont::phys-object ont::tangible-abstract-object ont::event-type))
+    :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj f::abstr-obj f::situation)
+					 ;(f::tangible +)
+					 (f::type (? typ ont::phys-object ont::tangible-abstract-object ont::event-type ont::scale-value-function)) ; scale-value-function: at a level of 5
 					 (f::scale (? !t ONT::TIME-MEASURE-SCALE ONT::RATE-SCALE ONT::MONEY-SCALE ONT::NUMBER-SCALE)) ; excludes "at four"
 				       )))
     )

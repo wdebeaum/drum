@@ -163,7 +163,7 @@
 (define-type ont::polarity-scale
  :sem (F::abstr-obj (F::scale ONT::POLARITY-SCALE))
  :parent ont::physical-property-scale
- :wordnet-sense-keys ("polarity%1:24:01")
+ ;; :wordnet-sense-keys ("polarity%1:24:01")  There is no sense in WN for the scale
  ;; WORDS: polarity
 )
 
@@ -1871,7 +1871,7 @@
 ;; size > volume scale
 (define-type ont::volume-scale
  :parent ont::size-scale 
- :wordnet-sense-keys ("volume%1:23:00")
+ :wordnet-sense-keys ("volume%1:07:03")
  :sem (F::Abstr-obj (F::Scale Ont::Volume-scale))
  :arguments ((:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Scale Ont::Volume-scale)))
              )
@@ -2295,7 +2295,7 @@
 ;; PSYCHOLOGICAL CONDITION SCALE
 (define-type ont::psychological-condition-scale
  :sem (F::abstr-obj (F::scale ONT::PSYCHOLOGICAL-CONDITION-SCALE))
-    :wordnet-sense-keys ("psychological_state%1:26:00")
+    :wordnet-sense-keys ("trait%1:07:00")
     :parent ont::ordered-domain 
     )
 
@@ -2669,17 +2669,16 @@
 (define-type ont::gender-scale
  :sem (F::abstr-obj (F::scale ONT::GENDER-SCALE))
     :parent ont::unordered-domain
-    :wordnet-sense-keys ("sex%1:14:00")
- :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
-             )
- :wordnet-sense-keys ("gender%1:07:00")
- ;; WORDS: gender, sex
-)
+    :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj))
+		)
+    :wordnet-sense-keys ("gender%1:07:00")
+    ;; WORDS: gender, sex
+    )
 
 (define-type ont::truth-scale
  :sem (F::abstr-obj (F::scale ONT::TRUTH-SCALE))
  :parent ont::unordered-domain 
- :wordnet-sense-keys ("truth%1:09:00")
+ :wordnet-sense-keys ("truth%1:26:00")
  ;; WORDS: truth
 )
 

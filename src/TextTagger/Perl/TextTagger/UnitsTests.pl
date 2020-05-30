@@ -399,6 +399,12 @@ my @tests = (
       },
     ]
   },
+  # lgalescu, "Micha'el Tanchum" with context hallucinated
+  { text => "42 Micha'el Tanchum supporters", tags => [] },
+  # lgalescu, "last year as" (arguably "year" and "decade" could be correctly tagged as time units, but they're not in a context we allow)
+  { text => "The energy sector was the biggest loser in the S&P 500 last year as well as for all of last decade.", tags => [] },
+  # lgalescu, "Miami", context hallucinated
+  { text => "42 Miami residents", tags => [] }
 );
 =begin
   templates for making tests
