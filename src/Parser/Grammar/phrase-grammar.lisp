@@ -1912,6 +1912,7 @@
 	    (postadvbl -) 
 	    (generated -)
 	    (gap -)
+	    (n1seq -) ; we should really pass up the n1seq (e.g., Elmira route and schedule)
 	    )
       )
      (add-to-conjunct (val (ASSOC-WITH ?v1)) (old ?r) (new ?new)))

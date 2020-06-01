@@ -803,7 +803,16 @@
        -greet>
        (ONT::GREET :who *USER* :to *ME* :content ?!y)
        )
-      
+
+      #| ; maybe we don't need this
+      ; hello bob
+      ((ONT::SPEECHACT ?!x  ONT::SA_GREET :content ?!y :vocative ?!v)
+       (ONT::THE ?!v ONT::AGENT) ; system name defined as ONT::AGENT in domain-words
+       -greet-vocative>
+       (ONT::GREET :who *USER* :to *ME* :content ?!y)
+       )
+      |#
+
    ;; conventional prompts e.g., hello?  
    ((ONT::SPEECHACT ?!x ONT::SA_PROMPT-FOR :content ?!y)
        -prompt>

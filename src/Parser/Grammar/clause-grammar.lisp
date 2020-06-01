@@ -86,13 +86,15 @@
    ;; top-level utterance rules
 
    ;; hello calo; we did it, calo
+   ;; hello! calo; goodbye, calo
    ;; any utterance can be addressed to someone
    ;; the vocative feature prevents multiple vocative constructs, esp one at beginning and one at end
    ((utt (var ?v) (vocative +) (lf (% speechact (var ?sv) (class ?cl) (constraint ?constraint))))
     -vocative-utt> .95    ;; nb: lowered below np-conj rule to eliminate bad interps of utterances like 'john and mary"
-    (head (utt (focus ?foc) (var ?v) (vocative -) (lf (% speechact (var ?sv) (class (? cl ont::sa_tell ont::sa_yn-question ont::sa_request)) (constraint ?con)))
-	  (punctype -)))
-    (np (var ?nv) (lf (% description (status (? nm ont::gname ont::name))))
+    (head (utt (focus ?foc) (var ?v) (vocative -) (lf (% speechact (var ?sv) (class (? cl ont::sa_tell ont::sa_yn-question ont::sa_request ont::sa_greet ont::sa_close)) (constraint ?con)))
+	       ;(punctype -)
+	       ))
+    (np (var ?nv) (name +) ;(lf (% description (status (? nm ont::gname ont::name)))) ; np-name gives status definite
 	(sem ($ f::phys-obj (f::intentional +) (f::object-function f::occupation)))
 	)
     (add-to-conjunct (val (vocative ?nv)) (old ?con) (new ?constraint))
@@ -104,12 +106,13 @@
 	 (vocative +))
     ;; lowering this rule allows many bad interpretations in coordops
     -vocative-utt2>  .95
-    (np (var ?nv) (lf (% description (status (? nm ont::gname ont::name))))
+    (np (var ?nv) (name +) ;(lf (% description (status (? nm ont::gname ont::name))))
 	(sem ($ f::phys-obj (f::intentional +) (f::object-function f::occupation)))
 	)
-    (head (utt (punctype -) (focus ?foc) (var ?v) (vocative -) 
+    (head (utt ;(punctype -)
+	       (focus ?foc) (var ?v) (vocative -) 
 	       (lf (% speechact (var ?sv) 
-		      (class (? cl ont::sa_tell ont::sa_yn-question ont::sa-request)) (constraint ?con))))
+		      (class (? cl ont::sa_tell ont::sa_yn-question ont::sa-request ont::sa_greet ont::sa_close)) (constraint ?con))))
      )
     (add-to-conjunct (val (vocative ?nv)) (old ?con) (new ?constraint))
     )
