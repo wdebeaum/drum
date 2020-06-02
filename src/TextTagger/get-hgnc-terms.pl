@@ -11,27 +11,33 @@ my %word_to_infos = ();
 
 # HACK: We know the Makefile gives us the genes first, then the RNAs. Both have
 # heading rows at the beginning that we otherwise ignore, so when we see a
-# heading row ($status is 'Status'), we go to the next type.
+# heading row ($status is 'status'), we go to the next type.
 my @tps = (' bogus', ' G', ' R');
 
 while (<>) {
   chomp;
-  my ($id, $symbol, $name, $status, $prev_syms, $prev_names, $synonyms, undef, undef, undef) = split(/\t/);
-  shift @tps if ($status eq 'Status');
+  my ($id, $symbol, $name, undef, undef, $status, undef, undef, $alias_syms, $alias_names, $prev_syms, $prev_names) # many more unused fields
+    = split(/\t/);
+  shift @tps if ($status eq 'status');
   next unless ($status eq 'Approved');
   $id .= $tps[0];
+  $alias_syms =~ s/^"|"$//g;
+  $alias_names =~ s/^"|"$//g;
+  $prev_syms =~ s/^"|"$//g;
   $prev_names =~ s/^"|"$//g;
   # get all the words that are directly in there
   my %common = (id => $id, name => $name);
   my @infos = (
     +{ %common, unnormalized => $symbol, status => 'Approved Symbol' },
     +{ %common, unnormalized => $name, status => 'Approved Name' },
-    (map { +{ %common, unnormalized => $_, status => 'Synonym' } }
-	 split(/, /, $synonyms)),
+    (map { +{ %common, unnormalized => $_, status => 'Alias Symbol' } }
+	 split(/\s*\|\s*/, $alias_syms)),
+    (map { +{ %common, unnormalized => $_, status => 'Alias Name' } }
+	 split(/\s*\|\s*/, $alias_names)),
     (map { +{ %common, unnormalized => $_, status => 'Previous Symbol' } }
-         split(/, /, $prev_syms)),
+         split(/\s*\|\s*/, $prev_syms)),
     (map { +{ %common, unnormalized => $_, status => 'Previous Name' } }
-	 split(/", "/, $prev_names))
+	 split(/\s*\|\s*/, $prev_names))
   );
   # as well as some transformations
   # get rid of stuff in parens in $name

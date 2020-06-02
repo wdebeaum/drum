@@ -18,7 +18,9 @@ my $debug = 0;
 # prefixes, e.g.:
 # "the" becomes t=ton, h=Planck's constant, e=atomic charge
 # "and" becomes a=are, n=nano-, d=day
-# "in" could be "inches", but the preposition is waaay more common
+# Also a few words that are single units but are way more common in other
+# senses, and have been seen in contexts where we might falsely think they're
+# units (i.e. after a number), e.g. "in" as "inches", "key" as "kilogram".
 my @stoplist = qw(
 a act add age air all amp and ant as ash ask at aye
 bad bag ban bar bat be bed bee beg bet bin bus but bye cab cat cut
@@ -30,7 +32,7 @@ ham has hat he hug hut
 in
 jar
 key
-lab lad leg let lid lie lot
+lab lad last leg let lid lie lot
 me mid mud mug
 net nut
 oil
@@ -164,8 +166,14 @@ sub get_dimension {
     } else { # not fundamental
       # HACK: remove & stuff in macos units defns so we at least get the right dimensions for temperature units
       $defn =~ s/\&\+?//g;
-      # remove leading literal number (including sci. notation and fractions)
-      $defn =~ s/^[+-]?(\d*\.\d+|\d+(\|\d+)?)([eE][+-]?\d+)?\s*//g;
+      # remove leading literal number (including sci. notation, fractions, exps)
+      $defn =~ s/
+        ^
+	[+-]?
+	( \d* \. \d+ | \d+ ( \| \d+ )? )
+	( [eE^] [+-]? \d+ )?
+	\s*
+      //gx;
       # parse unit fraction
       my ($numerator, $denominator) = split(m{\s*/\s*}, $defn, 2);
       $numerator = '1' if ($numerator eq '');
@@ -286,8 +294,9 @@ sub init_units_tagger {
 	($name eq 'g' and $defn eq 'g0') or # force of gravity on Earth!
 	($name eq 'force' and $defn eq 'g') # ...cont'd. WTAF.
       );
-      # skip names of numbers and simple fractions, but keep "partsper..."
-      next if ($defn =~ /^(\d+|\d\|\d)$/ or
+      # skip names of numbers and simple fractions, but keep prefixes and
+      # "partsper..."
+      next if (($defn =~ /^(\d+|\d\|\d)$/ and $name !~ /-$/) or
 	       $name eq 'googol' or
 	       ($name =~ /(score|illion|illiard)$/ and
 	        $name !~ /^partsper\w+illion$/));
@@ -499,8 +508,8 @@ sub init_units_tagger {
   $unit_expr_re = qr/
     ^ \s* \K $cf_unit_expr_re (?= \s* $ ) | # the whole text is just units
     \( \s* \K $cf_unit_expr_re (?= \s* \) ) | # units in parens
-    \d \s* \K $cf_unit_expr_re (?! \w ) | # units after a number
-    \b [Ii]n \s+ \K $cf_unit_expr_re (?! \w ) # units after the word "in"
+    \d \s* \K $cf_unit_expr_re (?! ['-]? \w ) | # units after a number
+    \b [Ii]n \s+ \K $cf_unit_expr_re (?! ['-]? \w ) # units after the word "in"
   /x;
 }
 
@@ -642,14 +651,25 @@ sub tag_units {
     normalize_expr_hash($unit_expr_sp);
     normalize_expr_hash($unit_expr_ap);
     my $unit_str = expr_hash_to_string($unit_expr_ap);
-    # get dimension by adding up dimensions of each unit
+    # get dimension by adding up dimensions of each unit.
+    # also check that no two individual units have the same set of dimension
+    # bases (ignore exponents), in order to exclude things like "Miami" as
+    # "mebi-are-mile", which involves two different length-based units
     my $dim_expr = {};
+    my @dim_base_strs = ();
     for my $unit (keys %$unit_expr_sp) {
       my $exponent = $unit_expr_sp->{$unit};
       my $unit_dim_expr = get_dimension($unit);
+      my $dim_base = {};
       for my $dim (keys %$unit_dim_expr) {
 	$dim_expr->{$dim} += $unit_dim_expr->{$dim} * $exponent;
+	$dim_base->{$dim} = 1;
       }
+      my $dim_base_str = expr_hash_to_string($dim_base);
+      return 1 # from eval, i.e. go to next match without making a tag for this
+        if ($dim_base_str ne '1' and
+	    grep { $_ eq $dim_base_str } @dim_base_strs);
+      push @dim_base_strs, $dim_base_str;
     }
     normalize_expr_hash($dim_expr);
     # use dimension to look up ONT type

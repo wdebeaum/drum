@@ -1250,7 +1250,7 @@ sub score_match {
     }
   } elsif ($m->{status} =~ /^(?:NARROW|BROAD) synonym$/) {
     $status_score = 2;
-  } elsif ($m->{status} =~ /^(?:SY|DE|WK|AltName: .*|Synonym)$/) {
+  } elsif ($m->{status} =~ /^(?:SY|DE|WK|AltName: .*|Synonym|Alias .*)$/) {
     $status_score = 3;
   } elsif ($m->{status} =~ /^(?:PI|Previous.*)$/) {
     $status_score = 1;

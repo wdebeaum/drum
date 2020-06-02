@@ -3060,12 +3060,13 @@
 		    ))
 	  (class ont::quantity-abstr) (mass ?m) (sem ?nsem)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure) (STATUS ONT::INDEFINITE))
-         -unit-np-number-indef-2>
+         -unit-np-number-indef-2> 0.98
 	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r))
  	 (head (N1 (VAR ?v) (SORT pred) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
 		   (KIND -) (sem ?sem) (sem ($ f::phys-obj)) ;(sem ($ f::abstr-obj  (f::type (? xx ont::unit ont::multiple)) (f::scale ?sc))) ; ont::multiple: increase 100 fold
 		   (argument ?argument) (RESTR ?restr)
 		   (post-subcat -)
+		   (n1seq -)
 		))
 	 (compute-sem-features (lf ont::quantity-abstr) (sem ?nsem))
          (add-to-conjunct (val (& (value ?num))) (old ?r) (new ?newr))

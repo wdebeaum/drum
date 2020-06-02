@@ -41,10 +41,10 @@ go_protmods.obo: downloads/go.obo go_protmods.pl
 go_protmods.tsv: go_protmods.obo get-obo-terms.pl Perl/TextTagger/Normalize.pm
 	TRIPS_BASE=$(prefix) ./get-obo-terms.pl $< >$@
 
-hgnc-terms.tsv: downloads/protein-coding_gene.txt.gz downloads/non-coding_RNA.txt.gz get-hgnc-terms.pl Perl/TextTagger/Normalize.pm
-	( gunzip -c <downloads/protein-coding_gene.txt.gz && \
-	  gunzip -c <downloads/non-coding_RNA.txt.gz \
-	) | ./get-hgnc-terms.pl \
+hgnc-terms.tsv: downloads/protein-coding_gene.txt downloads/non-coding_RNA.txt get-hgnc-terms.pl Perl/TextTagger/Normalize.pm
+	./get-hgnc-terms.pl \
+	  downloads/protein-coding_gene.txt \
+	  downloads/non-coding_RNA.txt \
 	>$@
 
 uniprot-terms.tsv: downloads/uniprot_sprot.dat.gz get-uniprot-terms.pl Perl/TextTagger/Normalize.pm uniprot-species.pl
@@ -173,11 +173,11 @@ downloads/psi-mi25.obo:
 
 # see http://www.genenames.org/
 
-downloads/protein-coding_gene.txt.gz:
-	$(call download,"ftp://ftp.ebi.ac.uk/pub/databases/genenames/locus_groups/protein-coding_gene.txt.gz")
+downloads/protein-coding_gene.txt:
+	$(call download_compressed,"ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/locus_groups/protein-coding_gene.txt")
 
-downloads/non-coding_RNA.txt.gz:
-	$(call download,"ftp://ftp.ebi.ac.uk/pub/databases/genenames/locus_groups/non-coding_RNA.txt.gz")
+downloads/non-coding_RNA.txt:
+	$(call download_compressed,"ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/locus_groups/non-coding_RNA.txt")
 
 # see http://www.uniprot.org/
 
