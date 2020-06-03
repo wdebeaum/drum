@@ -1910,7 +1910,8 @@
     ;(advbl (particle +) (var ?adv-v)  (arg ?v) (argument (% s (sem ?sem))) (gap -))
     (advbl (particle +) (particle-role-map manner) (var ?adv-v) (arg ?v) 
 	   (argument (% s (sem ?sem))) (gap -)
-	   (sem ?asem))
+     ;;(sem ?asem)     ;; I think this is a mistake - copied from the RESULT rule
+     )
     ?dobj
     ?comp
     )

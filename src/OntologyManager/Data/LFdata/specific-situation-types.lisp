@@ -281,10 +281,7 @@
   :wordnet-sense-keys ("be_active%2:29:00" "draw%2:35:13" "go%2:38:00" "go%2:42:06" "jaunt%2:38:00" "locomote%2:38:00" "make%2:38:05" "mobilize%2:30:00" "move%2:38:00" "move%2:38:02" "move%2:38:03" "movement%1:04:02" "move_out%2:41:00" "relocation%1:04:00" "take%2:38:05" "travel%2:38:00" "wreathe%2:38:00" "movement%1:11:00")
  :parent ont::motion
  :sem (F::SITUATION (F::CONTAINER -) (F::Locative -) (F::trajectory +))
- :arguments (;(:OPTIONAL ONT::agent (F::Phys-obj (:required (f::origin (? org f::human f::non-human-animal)))
-					       ;(:default (F::Mobility F::Self-Moving))))
-;             (:OPTIONAL ONT::purpose (F::Situation (F::Cause F::Agentive) (F::Aspect F::Dynamic)))
-	     (:OPTIONAL ONT::REASON (F::Situation (F::Cause F::Agentive) (F::Aspect F::Dynamic)))
+ :arguments ((:OPTIONAL ONT::REASON (F::Situation (F::Cause F::Agentive) (F::Aspect F::Dynamic)))
 	     (:essential ont::scale (F::abstr-obj  (F::scale ont::domain)))
              )
  )
@@ -429,9 +426,10 @@
 (define-type ONT::CAUSE-MOVE
     :definitions ((ont::CAUSE-EFFECT :agent ?agent
 				     :formal (ONT::move :affected ?affected)))
-  :wordnet-sense-keys ("move%2:38:01")
-  :parent ONT::MOVE
- )
+    :arguments ((:essential ont::affected  ((? xx F::phys-obj F::abstr-obj) (f::mobility f::movable))))
+    :wordnet-sense-keys ("move%2:38:01")
+    :parent ONT::MOVE
+    )
 
 #|
 ; merged with MOVE-UPWARD
@@ -935,7 +933,7 @@
 
 ;; avoid, escape, evade, get around
 (define-type ONT::avoiding
- :wordnet-sense-keys ("avoid%2:32:00" "avoid%2:41:03" "keep_off%2:34:00" "avoid%2:34:00" "forbear%2:42:00")
+ :wordnet-sense-keys ("avoid%2:32:00" "avoid%2:41:03" "keep_off%2:34:00" "avoid%2:34:00" "forbear%2:42:00" "refrain%2:34:00" "abstain%2:41:00")
  :parent ont::intentionally-act
  :sem (F::SITUATION (F::Cause F::Agentive))
  :arguments ((:optional ont::neutral ((? o F::Phys-obj f::abstr-obj f::situation)))
@@ -2826,7 +2824,7 @@
  )
 
 (define-type ont::expose
- :wordnet-sense-keys ("uncover%2:35:00")
+ :wordnet-sense-keys ("uncover%2:35:00" "expose%2:39:02" "expose%2:39:01")
  :parent ont::show
 )
 
@@ -2847,7 +2845,7 @@
 
 (define-type ONT::place-in-position
  :comment "placing an object in a certain position: e.g., lean, sit, stand,  ..."
- :wordnet-sense-keys ("lean%2:35:00" "set_down%2:35:00" "seat%2:35:00" "stand%2:35:01" "perch%2:35:10" "park%2:35:00" "center%2:38:00")
+ :wordnet-sense-keys ("lean%2:35:00" "set_down%2:35:00" "seat%2:35:00" "stand%2:35:01" "perch%2:35:10" "park%2:35:00" "center%2:38:00" "prop%2:35:00")
  :parent ONT::PUT
  )
 
@@ -5874,7 +5872,7 @@
 
 ;; diet
 (define-type ONT::dieting
- :wordnet-sense-keys ("abstain%2:34:00" "refrain%2:34:00" "desist%2:34:00")
+ :wordnet-sense-keys ("diet%2:34:00" "diet%2:34:01")
  :parent ONT::activity
  :arguments ((:REQUIRED ONT::Agent (F::Phys-obj (f::origin f::living)))
  	     )

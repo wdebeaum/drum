@@ -13,7 +13,7 @@
       (TEMPL central-ADJ-TEMPL)
       )
      ((meta-data :origin lou2 :entry-date 20061121 :change-date nil :comments nil)
-      (LF-PARENT ONT::interference-val)
+      (LF-PARENT ONT::unreliable) ;interference-val)
       (example "ivan has a noisy sensor")
       (TEMPL central-ADJ-TEMPL)
       )

@@ -1108,7 +1108,7 @@
      )
 
 (define-type ONT::in-future
-     :wordnet-sense-keys ("future%3:00:00")
+     :wordnet-sense-keys ("future%3:00:00" "prospective%3:00:00::")
      :parent ONT::event-time-wrt-now
      )
 

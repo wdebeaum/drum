@@ -935,7 +935,7 @@
 
 (define-type ont::likely-val
  :parent ont::likelihood-val
- :wordnet-sense-keys ("expected%3:00:00::" "plausible%3:00:00::" "prospective%3:00:00::" "likely%3:00:00::" "likely%3:00:04" "probable%3:00:00" )
+ :wordnet-sense-keys ("expected%3:00:00::" "plausible%3:00:00::" "likely%3:00:00::" "likely%3:00:04" "probable%3:00:00" )
  :sem (F::abstr-obj (F::scale ont::likely-scale))
  )
 
@@ -1342,21 +1342,21 @@
  :wordnet-sense-keys ("nuclear%3:00:00")
 )
 
-;; 20111017 added for obtw demo (word for type)
-(define-type ont::electrical
- :parent ont::substantial-property-val 
-)
-
+#|
 ;; boneless, skinless
-(define-type ont::food-preparation
- :parent ont::substantial-property-val 
-  :wordnet-sense-keys ("boneless%3:00:00::")
+(define-type ont::food-property-val ;food-preparation
+ :parent ont::associated-with-food-val ;substantial-property-val 
+ :wordnet-sense-keys ("boneless%3:00:00::")
 )
+|#
 
+
+#|
 ;;; noisy (data, signal)
 (define-type ont::interference-val
  :parent ont::substantial-property-val 
 )
+|#
 
 ;; optical, magnetic, holographic
 (define-type ont::medium
@@ -1365,6 +1365,11 @@
  :arguments ((:OPTIONAL ONT::FIGURE )) 
  :sem (F::Abstr-obj (F::gradability - ))
  :comment "means of production and dissemination (c.f. ont::mode)"
+)
+
+;; 20111017 added for obtw demo (word for type)
+(define-type ont::electrical
+ :parent ont::medium ;substantial-property-val
 )
 
 (define-type ont::multimedia-val
@@ -3622,19 +3627,19 @@
 
 
 ;; relative, absolute
-(define-type ont::comparative-val
+(define-type ont::relational-val ;comparative-val
  :parent ont::relational-attribute-val 
 )
 
 (define-type ont::relative
- :parent ont::comparative-val 
+ :parent ont::relational-val ;comparative-val 
  :wordnet-sense-keys ("relative%3:00:00" "comparative%3:00:00" )
  ; Words: (W::RELATIVE W::COMPARATIVE)
  ; Antonym: NIL (W::ABSOLUTE)
 )
 
 (define-type ont::not-relative-val
- :parent ont::comparative-val 
+ :parent ont::relational-val ;comparative-val 
  :wordnet-sense-keys ("absolute%3:00:00" )
 )
 
@@ -5490,17 +5495,20 @@
 
 (define-type ONT::serving-as-connection-val
   :parent ONT::relational-attribute-val
+  :wordnet-sense-keys ("conjunctive%3:00:00::")
   :comment "(connecting, conjunctive)"
   )
 
+#|
 (define-type ONT::connecting-val
   :parent ONT::serving-as-connection-val
   :wordnet-sense-keys ("conjunctive%3:00:00::")
   :comment "(connecting, conjunctive)"
   )
+|#
 
 (define-type ONT::correspondence-val
-  :parent ONT::relational-attribute-val
+  :parent ONT::compatibility-val ;relational-attribute-val
   :comment "(commesurate, congruous)"
   )
 
@@ -7299,7 +7307,7 @@
 
 (define-type ONT::food-property-val
   :parent ONT::associated-with-food-val
-  :wordnet-sense-keys ("vinous%3:01:00::" "vinaceous%3:01:00::" "alimentative%3:01:00::" "carroty%3:01:00::" "vanilla%3:01:00::" "wheaten%3:01:00::" "whole-wheat%3:01:00::" "wholemeal%3:01:00::" "herbal%3:01:00::" "garlicky%3:01:00::" "oaten%3:01:00::")
+  :wordnet-sense-keys ("alimentative%3:01:00::" "boneless%3:00:00" "carroty%3:01:00::" "garlicky%3:01:00::" "herbal%3:01:00::" "oaten%3:01:00::" "vanilla%3:01:00::" "vinaceous%3:01:00::" "vinous%3:01:00::" "wheaten%3:01:00::" "wholemeal%3:01:00::" "whole-wheat%3:01:00::")
   )
 
 (define-type ONT::political-val

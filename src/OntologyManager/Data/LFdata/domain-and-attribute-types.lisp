@@ -2208,6 +2208,18 @@
  ;; WORDS: compatibility
 )
 
+(define-type ont::dependence-scale
+ :sem (F::abstr-obj (F::scale ONT::DEPENDENCE-SCALE))
+ :parent ont::relational-property-scale
+ :wordnet-sense-keys ("dependence%1:26:00")
+)
+
+(define-type ont::reciprocity-scale
+ :sem (F::abstr-obj (F::scale ONT::RECIPROCITY-SCALE))
+ :parent ont::relational-property-scale
+ :wordnet-sense-keys ("reciprocity%1:24:00")
+)
+
 (define-type ont::similarity-scale
  :sem (F::abstr-obj (F::scale ONT::SIMILARITY-SCALE))
  :parent ont::relational-property-scale 

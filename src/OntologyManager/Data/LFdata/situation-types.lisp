@@ -656,7 +656,8 @@
 ;; for verbs that commonly allow non-physical and/or non-moveable formals, e.g.
 ;; put the title in the text box, put the city here, insert the text here
 (define-type ONT::put
- :wordnet-sense-keys ("base%2:42:04" "interpose%2:38:01" "lay%2:35:01" "locate%2:40:01" "place%2:35:00" "pose%2:35:02" "position%2:35:00" "put%2:35:00" "set%2:35:00")
+    :wordnet-sense-keys ("base%2:42:04" "interpose%2:38:01" "lay%2:35:01" "locate%2:40:01" "place%2:35:00" "pose%2:35:02" "position%2:35:00" "put%2:35:00" "set%2:35:00"
+					)
  :parent ont::event-of-causation
  :sem (F::Situation (F::trajectory +))
  :arguments ((:ESSENTIAL ONT::agent)
@@ -841,9 +842,9 @@
 ;;; WILL, SHALL
 ;;; carries no Aspect or Time-span features of its own
 (define-type ONT::FUTURE
- :parent ONT::AUX
- :sem (F::situation)
- )
+    :parent ONT::AUX
+    :sem (F::situation)
+    )
 
 ;;; WOULD, SHOULD
 (define-type ONT::CONDITIONAL

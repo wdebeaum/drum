@@ -52,9 +52,21 @@
      (LF-FORM W::TOPIC)
      (TEMPL TOPIC-TEMPL)
      )
-    )
-   )
-))
+    ((LF-PARENT ONT::AS-IF-FOR)
+     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
+     )
+    ))
+  ))
+
+(define-words :pos W::adv :templ DISC-PRE-TEMPL
+ :words (
+  ((W::AS W::IF W::FOR)
+   (SENSES
+    ((LF-PARENT ONT::AS-IF-FOR)
+     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
+     )
+    ))
+  ))
 
 (define-words :pos W::adv :templ DISC-PRE-TEMPL
  :words (
