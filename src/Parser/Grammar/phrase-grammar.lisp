@@ -1053,7 +1053,7 @@
 	    (post-subcat -)
 	    )
       )
-     (PP (var ?argv) (ptype ?ptype) (sem ?psem) (gap -)) ;?!subcat
+     (?xx (var ?argv) (ptype ?ptype) (sem ?psem) (gap -)) ;?!subcat
      (bound (arg1 ?argv)) ; exclude optional unfilled subcats (not sure why ?!subcat doesn't ensure it exists)
      ;?!subcat2
      ;;(UNIFY (arg1 (% ?xxx (var ?psvar))) (arg2 ?!post-subcat))
@@ -1312,7 +1312,7 @@
      -adj-adj1> 1
      (head (ADJ (LF ?lf) (SUBCAT ?subcat) (VAR ?v) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap) (pertainym -)
 		(transform ?transform) (constraint ?con) (comp-op ?dir) (SUBCAT-MAP ?subm)
-		(argument ?argument)
+		(argument ?argument) (gap -)
 		(atype ?atype) (comparative ?cmp) (lex ?lx)
 		(sem ?sem)
 		(FUNCTN -)
@@ -2293,7 +2293,7 @@
     ))
 
 
-;;; MOre complex relational nouns: the difference in states between the terminals
+;;; More complex relational nouns: the difference in states between the terminals
 
 (parser::augment-grammar
   '((headfeatures

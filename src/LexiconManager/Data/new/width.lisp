@@ -14,7 +14,7 @@
      (LF-PARENT ONT::width-scale)
      (TEMPL reln-subcat-of-units-TEMPL)
      )
-    ((LF-PARENT ONT::height-scale)
+    ((LF-PARENT ONT::width-scale)
      (TEMPL reln-subcat-of-units-np-TEMPL)
      )
     )

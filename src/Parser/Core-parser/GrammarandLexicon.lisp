@@ -230,6 +230,7 @@
 	      (mapcar #'(lambda (x)
 			  (insertHeadFeatures x (cdr format)))
 		      (merge-lists (mapcar #'(lambda (r)
+					       
 					       (build-rule r cgrammar))
 					   rules)))
 	      cgrammar))
@@ -308,8 +309,8 @@
 (defun verify-and-build-constit (constit rule head)
   ;;(declare (optimize (speed 3) (safety 0) (debug 0)))
   (let* ((temp (car constit))
-	 (cat (if (atom temp) temp
-		 (read-value temp rule)))) ;;  handles vars as CAT
+	 (cat ;;(if (atom temp) temp
+		 (read-value temp rule))) ;;  handles vars as CAT
     ;; extract out the LF graph specification
     (multiple-value-bind (lfg synfeats)
 	(split-list #'(lambda (x) (eq (car x) 'w::lfg)) (cdr constit))
