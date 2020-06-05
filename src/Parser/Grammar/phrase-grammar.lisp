@@ -1095,7 +1095,8 @@
 	    (post-subcat -)
 	    )
       )
-     (PP (var ?argv) (ptype ?ptype) (sem ?psem) (gap -)) ;?!subcat
+     ;(PP (var ?argv) (ptype ?ptype) (sem ?psem) (gap -)) ;?!subcat
+     (?xx (var ?argv) (ptype ?ptype) (sem ?psem) (gap -)) ;?!subcat
      (bound (arg1 ?argv)) ; exclude optional unfilled subcats (not sure why ?!subcat doesn't ensure it exists)
      ;?!subcat2
      ;;(UNIFY (arg1 (% ?xxx (var ?psvar))) (arg2 ?!post-subcat))
@@ -2788,12 +2789,12 @@
 		    (VAR ?specvar) (CLASS ?c) (constraint ?r1) ;(CONSTRAINT ?newr) ; don't pass up ?r from the NP so that the mods stay with the refset.  We need this to be the case for -can-indirect-request-b2> in IMRules (e.g., Can you tell me all the cats chased by the dog?)
 		    (sem ?sem)  (transform ?transform)
 		    ))
-	     (status ?spec)
+	     (status ?spec) (complex ?complex)
              (SORT PRED) (VAR ?specvar) (WH ?w));; must move WH feature up by hand here as it is explicitly specified in a daughter.
          -np-spec-npplural>
          (SPEC (LF ?spec) (ARG ?v) (name-spec -) (mass ?m) (POSS -) (NPMOD +) (var ?specvar)
                (WH ?w) (agr ?agr) (RESTR ?restr) (SUBCAT (% ?n (sem ?subcatsem))))
-	 (head (NP  (VAR ?v) (MASS ?m) 
+	 (head (NP  (VAR ?v) (MASS ?m) (complex ?complex)
 		    (KIND -) (agr ?agr) 
                     (LF (% DESCRIPTION (CLASS ?c) (STATUS ONT::DEFINITE-plural) 
 			   (CONSTRAINT ?r) (sem ?sem)
@@ -2806,11 +2807,12 @@
 	((NP (LF (% description (STATUS ?spec) (VAR ?specvar) (CLASS ?c) (constraint ?r1) ;(CONSTRAINT ?newr)
 		    (sem ?sem)  (transform ?transform)
 		    ))
+	     (complex ?complex)
              (SORT PRED) (VAR ?specvar) (WH ?w) (STATUS ?spec));; must move WH feature up by hand here as it is explicitly specified in a daughter.
          -np-spec-npmass>
          (SPEC (LF ?spec) (ARG ?v) (name-spec -) (MASS MASS) (POSS -) (NPMOD +) (var ?specvar)
                (WH ?w) (agr ?agr) (RESTR ?restr) (SUBCAT (% ?n (sem ?subcatsem))))
-	 (head (NP  (VAR ?v)
+	 (head (NP  (VAR ?v) (complex ?complex)
 		    (KIND -)  (MASS MASS)
                     (LF (% DESCRIPTION (CLASS ?c) (STATUS ONT::DEFINITE) 
 			   (CONSTRAINT ?r) (sem ?sem)

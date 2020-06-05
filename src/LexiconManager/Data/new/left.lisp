@@ -3,7 +3,7 @@
 ;;;; 
 
 ; need a sense for "take a left"
-#|
+
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :tags (:base500)
  :words (
@@ -11,7 +11,7 @@
    (SENSES
     ((meta-data :origin fruitcarts :entry-date 20060803 :change-date nil :comments nil :wn ("left%1:15:00"))
      (LF-PARENT ont::left-loc);ONT::object-dependent-location)
-     (example "to the left of the building")
+     (example "Move the box to the left")
      (TEMPL GEN-PART-OF-RELN-TEMPL)
      ;; enforced subcat to reduce ambiguity, but prevents "on the left" unless we add another grammar rule 
      ;;     (TEMPL other-reln-subcat-required-templ) 
@@ -19,7 +19,7 @@
     )
    )
 ))
-|#
+
 
 (define-words :pos W::adj 
  :tags (:base500)

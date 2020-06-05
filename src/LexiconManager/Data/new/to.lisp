@@ -127,6 +127,7 @@
    )
 ))
 
+#|
 (define-words :pos W::ADJ
  :words (
   ((W::to w::the w::left)
@@ -137,6 +138,8 @@
     )
    )
 ))
+|#
+
 #|
 (define-words :pos W::ADJ
  :words (
