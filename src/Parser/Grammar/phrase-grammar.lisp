@@ -2324,6 +2324,8 @@
 	       ))
     (pp (ptype w::in) (var ?sc-var) (sem  ($ F::ABSTR-OBJ (f::type ont::domain)
 					     (f::scale ?!scale2))) (gap ?gap))
+    (bound (arg1 ?!scale2))
+    (bound (arg1 ?scale1))
     (class-greatest-lower-bound (in1 ?scale1) (in2 ?!scale2) (out ?newscale))
     (add-to-conjunct (val (scale ?sc-var)) (old ?con) (new ?newcon))
     )
@@ -7055,7 +7057,7 @@
      -adj-pred-onesubcat> 
      (head (ADJ1 (LF ?lf)  (VAR ?v)
 	    (transform ?transform) (comparative ?cmp)
-	    (SUBCAT ?subcat) (SUBCAT-MAP ?reln) (SUBCAT (% ?xx (var ?argv) (gap ?gap))) 
+	    (SUBCAT ?subcat) (SUBCAT-MAP ?reln) (SUBCAT (% ?xx (var ?argv) (ptype ?ptype) (gap ?gap))) 
 	    (SUBCAT2 ?subcat2) (SUBCAT2 (% - (W::VAR -)))
 	    ;(SUBCAT2-MAP (? !reln2 ONT::NOROLE -)) (SUBCAT2 (% ?xx2 (var ?argv2))) ; gap here too?
 	    (post-subcat -)
@@ -7063,7 +7065,8 @@
 	    (ARGUMENT-MAP ?argmap) (arg ?arg) (prefix -)
 	    (CONSTRAINT ?con) (atype ?atype)
 	    (SORT PRED)))
-     ?subcat
+    (?xx (var ?argv) (gap ?gap) (sem ?asem) (ptype ?ptype))  ;; we do this to ensure that the SUBCAT is present (and not skipped b/c its optional - the no SUBCAT case is covered by rue ADJ-ADJ1
+    ;; ?subcat
      ;?subcat2
      (recompute-atype (atype ?atype) (subcat ?subcat) (subcat2 ?subcat2) (result ?newatype))
      (append-conjuncts (conj1 ?con) (conj2 (& (?argmap ?arg)

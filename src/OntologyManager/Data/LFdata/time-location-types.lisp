@@ -584,7 +584,7 @@
 (define-type ont::source-as-loc
     :comment "a relation that indicates where an object was in the past: the person from Italy"
  :parent ont::from
- :arguments ((:ESSENTIAL ONT::FIGURE (F::phys-obj (F::mobility F::movable)))
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? type F::Situation F::phys-obj F::abstr-obj))) ;(F::phys-obj (F::mobility F::movable))) ; abstr-obj: the idea from...; situation: it is bright from the sun
 	     (:ESSENTIAL ONT::GROUND (F::phys-obj
 				      ;;(F::mobility F::movable)) ; exclude "... arrive in country X from country Y"   Can't do this as it also eliminates the usual cases, doesn't it?  JFA 7/19
 				      )))

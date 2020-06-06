@@ -40,7 +40,7 @@
     
     ((LF-PARENT ONT::source-as-loc)
      (example "the train from atlanta" "the book from the library" "the road from Chicago")
-     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
+     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
      (preference .98) 
      )
     

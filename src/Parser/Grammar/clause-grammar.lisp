@@ -726,9 +726,10 @@
      (advbl-needed ?avn)
      )
     -s-subjunctive>  .94 ;; only use if necessary 
-    (np (sem ?npsem) (var ?npvar) ;(agr ?a)
-	(case (? case sub -)) (lex ?lex) ;; lex needed for expletives?
-      (pp-word -) (changeagr -))
+    (np (sem ?npsem) (var ?npvar)  ;(agr ?a)
+     (sort pred)  ;; wh-desc terms are not allowed here
+     (case (? case sub -)) (lex ?lex) ;; lex needed for expletives?
+     (pp-word -) (changeagr -))
     (head (vp (lf ?lf) (gap ?g)
               
 	      (subjvar ?npvar)
