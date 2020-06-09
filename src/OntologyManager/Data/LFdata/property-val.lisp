@@ -2625,6 +2625,7 @@
  :wordnet-sense-keys ("cyclic%3:00:01::" "cyclical%3:00:00::" "continual%3:00:00")
 )
 
+#|
 (define-type ont::regularity-val
  :parent ont::frequency-val 
  :sem (F::abstr-obj (F::scale ont::regularity-scale))
@@ -2643,6 +2644,7 @@
  ; Words: (W::IRREGULAR)
  :sem (F::abstr-obj (F::scale ont::not-regular-scale))
 )
+|#
 
 (define-type ont::frequent
  :parent ont::frequency-val 
@@ -3680,25 +3682,32 @@
 ;; consecutive, sequential, groups of ordered items
 ;; didn't use ordered-domain here because these words describe the ordered
 ;; nature of the objects, but not the domain itself
-(define-type ont::ordered-val
+(define-type ont::systematicity-val ;ordered-val
  :parent ont::relational-attribute-val 
  :comment "properties that deal with ordered nature of objects"
- :wordnet-sense-keys ("ordered%3:00:00")
+ ;:wordnet-sense-keys ("ordered%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::systematicity-scale))
 )
+
+(define-type ont::systematic-val
+ :parent ont::systematicity-val
+ :wordnet-sense-keys ("systematic%3:00:00")
+)
+
+(define-type ONT::organized-val
+  :parent ONT::systematic-val ;orderly-val
+  :wordnet-sense-keys ("organized%3:00:02::" "organized%3:00:01::" "classified%3:00:01::" "structured%3:00:00::")
+  :comment "having category, organization and/or structure (organized)"
+  )
 
 (define-type ont::sequential-val
- :parent ont::ordered-val 
- :wordnet-sense-keys ("serial%3:01:00::" "sequential%5:00:00:ordered:00" "consecutive%5:00:00:ordered:00" "sequent%5:00:00:ordered:00" "successive%5:00:00:ordered:00" "serial%5:00:00:ordered:00" "progressive%5:00:00:ordered:00")
-)
-
-(define-type ont::random-val
- :parent ont::ordered-val 
- :wordnet-sense-keys ("arbitrary%3:00:00::" "random%3:00:00" "randomized%5:00:00:irregular:00")
+ :parent ont::systematic-val ;systematicity-val ;ordered-val 
+ :wordnet-sense-keys ("ordered%3:00:00" "serial%3:01:00::"); "sequential%5:00:00:ordered:00" "consecutive%5:00:00:ordered:00" "sequent%5:00:00:ordered:00" "successive%5:00:00:ordered:00" "serial%5:00:00:ordered:00" "progressive%5:00:00:ordered:00")
 )
 
 ;; next, previous, last, penultimate, etc.
 (define-type ont::sequence-val
- :parent ont::relational-attribute-val 
+ :parent ont::systematic-val ;systematicity-val ;relational-attribute-val 
  :arguments ((:optional ONT::GROUND )) 
  :sem (F::Abstr-obj (F::gradability - ))
  :comment "properties that deal with an object's location with respect to another object in an ordered sequence"
@@ -3732,6 +3741,36 @@
 (define-type ont::middle-val
  :parent ont::sequence-val 
  :wordnet-sense-keys ("halfway%5:00:00:intermediate:00" "intermediate%3:00:00" )
+)
+
+(define-type ont::regular
+ :parent ont::systematic-val ;regularity-val
+ :wordnet-sense-keys ("regular%5:00:00:steady:00" "regular%3:00:00")
+ ; Words: (W::REGULAR)
+ :sem (F::abstr-obj (F::scale ont::regular-scale))
+)
+
+(define-type ont::nonsystematic-val
+ :parent ont::systematicity-val
+ :wordnet-sense-keys ("unsystematic%3:00:00")
+)
+
+(define-type ONT::not-organized-val
+  :parent ONT::nonsystematic-val ;not-orderly-val
+  :wordnet-sense-keys ("disorganized%3:00:00::" "disorganised%3:00:00::" "unorganized%3:00:00::" "unorganised%3:00:00::" "unstructured%3:00:00::" "unclassified%3:00:01::" "unsystematic%3:00:00::")
+  :comment "lacking category, organization and/or structure (disorganized)"
+)
+
+(define-type ont::random-val
+ :parent ont::nonsystematic-val ;systematicity-val ;ordered-val 
+ :wordnet-sense-keys ("arbitrary%3:00:00::" "random%3:00:00" "randomized%5:00:00:irregular:00")
+)
+
+(define-type ont::irregular
+ :parent ont::nonsystematic-val ;regularity-val
+ :wordnet-sense-keys ("aperiodic%3:00:00::" "nonperiodic%3:00:00::" "sporadic%3:00:00" "irregular%5:00:00:sporadic:00" "casual%5:00:00:irregular:00" )
+ ; Words: (W::IRREGULAR)
+ :sem (F::abstr-obj (F::scale ont::not-regular-scale))
 )
 
 ;; old, young
@@ -5643,7 +5682,7 @@
   :wordnet-sense-keys ("unwholesome%3:00:00::" "unhealthful%3:00:00::" "unsanitary%3:00:00::" "insanitary%3:00:00::" "unhealthful%3:00:02::")
   :comment "(unhealthful)"
   )
-
+#|
 (define-type ONT::organized-val
   :parent ONT::orderly-val
   :wordnet-sense-keys ("organized%3:00:02::" "organized%3:00:01::" "classified%3:00:01::" "structured%3:00:00::")
@@ -5655,6 +5694,7 @@
   :wordnet-sense-keys ("disorganized%3:00:00::" "disorganised%3:00:00::" "unorganized%3:00:00::" "unorganised%3:00:00::" "unstructured%3:00:00::" "unclassified%3:00:01::" "unsystematic%3:00:00::")
   :comment "lacking category, organization and/or structure (disorganized)"
   )
+|#
 
 (define-type ONT::control-val
   :parent ONT::evaluation-attribute-val

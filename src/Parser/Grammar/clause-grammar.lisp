@@ -2585,7 +2585,9 @@
 	   (subj ?subj) (subj (% ?s1 (var ?subjvar) (sem ?subjsem) (agr ?subjagr) (lex ?subjlex) (gap -))) ;; note double matching required
 	   (iobj (% -))
 	   (part (% -))		 
-	   (dobj ?!dobj) (dobj (% ?!s3 (case (? dcase obj -)) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (status ?dstatus)))
+	   (dobj ?!dobj)
+	   ;(dobj (% ?!s3 (case (? dcase obj -)) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (status ?dstatus)))
+	   (dobj (% PRED (case (? dcase obj -)) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (status ?dstatus))) ; "what is the red block" should use S1 + -DECL-WH-QUESTION1>
 	   (comp3 (% -))
 	   ;;	   (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) ))
 	    

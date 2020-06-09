@@ -293,7 +293,7 @@
 	  (post-subcat -)
 	  )
          -cardinality2>
-         (head (quan (CARDINALITY +) (VAR ?v) (LF ?c) (mass (? mass count bare)) (STATUS ?status) (AGR ?a)))
+         (head (quan (CARDINALITY +) (convert-to-adj +) (VAR ?v) (LF ?c) (mass (? mass count bare)) (STATUS ?status) (AGR ?a)))
 	 )
 
 	((ADJP (ARG ?arg) (ARGUMENT (% NP))
@@ -797,7 +797,7 @@
      (head (N1 (RESTR ?r) (VAR ?v) (SEM ?nsem) (CLASS ?c) (SET-RESTR ?sr) (gap ?gap)
 	    (SORT ?sort) (relc -) ;;(relc ?relc) "-" to avoid the ambiguity "the [[red book] which I saw]" "the [red [book which I saw]]"  
 	    (subcat ?subcat) (complex ?cmpl)
-	    (post-subcat -)
+	    (post-subcat -) (agent-nom -) ; agent noms have to go through -agentnom1> first
 	    (PRO -) (postadvbl -) ;; to avoid the ambiguity "the [[red truck] at Avon]" "the [red [truck at Avon]]"
 	    )
       )
@@ -818,7 +818,7 @@
      (head (N1 (RESTR ?r) (VAR ?v) (SEM ?nsem) (CLASS ?c) (SET-RESTR ?sr) (gap ?gap)
 	    (SORT ?sort) (relc -) 
 	    (subcat ?subcat) (complex -)
-	    (post-subcat -)
+	    (post-subcat -) (agent-nom -) ; agent noms have to go through -agentnom1> first
 	    (PRO -) (postadvbl -) ;; to avoid the ambiguity "the [[red truck] at Avon]" "the [red [truck at Avon]]"
 	    )
       )
@@ -1076,7 +1076,7 @@
        ;;(post-subcat +)
        (no-postmodifiers +) ;; add an extra feature to say "no further postmodifiers". If we say "The bulb in 1 is in the same path as the battery in 1", we don't want "in 1" to attach to "the path"
       )
-     -N1-post-onesubcat-b> 0.97
+     -N1-post-onesubcat-b> 0.96; 0.97 ; combinatorial explosion if not kept low
      (ADJ1 (atype (? at attributive-only central)) (ALLOW-POST-N1-SUBCAT -) ; "-" here so it's mutually exclusive with -N1-post-onesubcat>
       (LF ?qual) (lex ?lex1)
       (ARG ?v) (VAR ?adjv)

@@ -8,7 +8,7 @@
    (wordfeats (W::status ont::indefinite-plural) (W::negatable +))
    (SENSES
     ((LF ONT::MANY)
-     (non-hierarchy-lf t)(TEMPL quan-cardinality-pl-templ)
+     (non-hierarchy-lf t)(TEMPL quan-cardinality-pl-convertable-templ)
      )
     )
    )

@@ -130,7 +130,10 @@ sub handle_parameters {
     " [-xml-tags keep|remove|replace-with-spaces]" .
     " [-xml-input-rules-file <filename>]" .
     " [-parsers-must-agree <boolean>]" .
-    " [-aspell-dict <filename>]";
+    " [-use-wordfinder <boolean>]" .
+    " [-aspell-dict <filename>]" .
+    " [-allow-prefixes-for-words-only-in-wordnet <boolean>]" .
+    " [-use-lxm <boolean>]";
   # defaults
   $self->{remote_meta_map} = get_remote_meta_map('t');
   $self->{meta_map_sources} = [@all_meta_map_sources];
@@ -141,7 +144,7 @@ sub handle_parameters {
   $self->{xml_tags_mode} = 'keep';
   $self->{parsers_must_agree} = 0;
   $self->{use_wordfinder} = 1;
-  $self->{allow_prefixes_for_words_only_in_wordnet} = 0;
+  $self->{use_lxm} = 1;
   # process options
   eval {
   while (@argv) {
@@ -302,9 +305,8 @@ sub handle_parameters {
       die "Argument required for -aspell-dict"
         if (not defined($aspell_dict));
       $self->{aspell_dict} = $aspell_dict;
-    } elsif ($opt eq '-allow-prefixes-for-words-only-in-wordnet') {
-      $self->{allow_prefixes_for_words_only_in_wordnet} =
-        TripsModule::boolean_opt($opt, shift @argv);
+    } elsif ($opt eq '-use-lxm') {
+      $self->{use_lxm} = TripsModule::boolean_opt($opt, shift @argv);
     } elsif ($opt eq '') {
       # ignore (we get this from a bug in bash 3.2)
     } else {

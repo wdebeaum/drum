@@ -2733,7 +2733,7 @@
  )
 
 (define-type ONT::SUGGEST
- :wordnet-sense-keys ("advise%2:32:02" "proposal%1:10:00" "propose%2:32:00" "suggest%2:32:00")
+ :wordnet-sense-keys ("advise%2:32:02" "proposal%1:10:01" "propose%2:32:00" "suggest%2:32:00") ;"proposal%1:10:00"
  :parent ONT::directive
  )
 

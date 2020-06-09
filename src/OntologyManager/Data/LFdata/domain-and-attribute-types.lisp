@@ -2249,9 +2249,30 @@
  :wordnet-sense-keys ("identity%1:07:02" "sameness%1:07:00")
 )
 
+(define-type ont::systematicity-scale
+ :sem (F::abstr-obj (F::scale ONT::SYSTEMATICITY-SCALE))
+ :parent ont::relational-property-scale
+)
 
+(define-type ont::regularity-scale
+  :sem (F::abstr-obj (F::scale ONT::REGULARITY-SCALE))
+  :parent ont::systematicity-scale ;temporal-occurrence-scale
+  ;; WORDS: irregularity, regularity
+)
 
-
+(define-type ont::regular-scale
+  :sem (F::abstr-obj (F::scale ONT::REGULAR-SCALE))
+  :parent ont::regularity-scale
+  :wordnet-sense-keys ("regularity%1:07:00")
+  ;; regularity
+)
+ 
+(define-type ont::not-regular-scale
+  :sem (F::abstr-obj (F::scale ONT::NOT-REGULAR-SCALE))
+  :parent ont::regularity-scale
+  :wordnet-sense-keys ("intermittence%1:07:00" "irregularity%1:07:00")
+  ;; irregularity
+)
 
 ;; STATUS SCALE
 
@@ -2645,12 +2666,14 @@
   :parent ont::temporal-scale ;process-property-scale
   ;; :wordnet-sense-keys ("incidence%1:24:00")
 )
- 
+
+#| 
 (define-type ont::regularity-scale
   :sem (F::abstr-obj (F::scale ONT::REGULARITY-SCALE))
   :parent ont::temporal-occurrence-scale
   ;; WORDS: irregularity, regularity
 )
+
  
 (define-type ont::regular-scale
   :sem (F::abstr-obj (F::scale ONT::REGULAR-SCALE))
@@ -2665,6 +2688,7 @@
   :wordnet-sense-keys ("intermittence%1:07:00" "irregularity%1:07:00")
   ;; irregularity
 )
+|#
 
 ;;;;;; UNORDERED DISCRETE DOMAIN
 (define-type ont::unordered-domain

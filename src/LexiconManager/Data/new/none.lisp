@@ -10,7 +10,7 @@
    (SENSES
     ((LF ONT::NONE)
      (example "none of the trucks")
-     (non-hierarchy-lf t)(TEMPL quan-cardinality-pl-templ)
+     (non-hierarchy-lf t)(TEMPL quan-cardinality-pl-convertable-templ)
      (SYNTAX (W::agr (? agr W::3p)) (w::status ont::indefinite-plural))
      )
     ((LF ONT::NONE)

@@ -53,13 +53,8 @@ sub remove_unusable_prefix_splits {
     next unless (exists($prefix->{root})); # saved root word tag
     my $root = $prefix->{root};
     my $whole = $prefix->{lex} . $root->{lex};
-          # if the whole word is in TRIPS/WN...
-    #if (word_is_in_trips_lexicon($self, $whole, 1) or
-    if (($self->{allow_prefixes_for_words_only_in_wordnet} ?
-	 (word_is_in_trips_lexicon($self, $whole, 0) and
-	  not word_is_in_trips_lexicon($self, $whole, 1))
-	 : word_is_in_trips_lexicon($self, $whole, 1)
-        ) or
+        # if the whole word is in TRIPS/WN...
+    if (word_is_in_trips_lexicon($self, $whole, 1) or
         # ... or we have no sense (in TRIPS/WN or here) for the root
 	not (word_is_in_trips_lexicon($self, $root->{lex}, 1) or
 	     grep {
@@ -694,7 +689,8 @@ sub combine_tags {
                        grep { $_->{type} eq 'phrase' }
 		       @tags
 		     ]);
-  @tags = remove_unusable_prefix_splits($self, @tags);
+  @tags = remove_unusable_prefix_splits($self, @tags)
+    if ($self->{use_lxm});
   @tags = remove_overlapping_but_nonnesting_phrase_tags(@tags);
   return remove_redundant_names(
            map { combine_tags_for_span($self, $phrase_tag_sources, @$_) }

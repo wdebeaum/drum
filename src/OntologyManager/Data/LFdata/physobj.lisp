@@ -1792,7 +1792,7 @@
 ;; licenses or agreements
 (define-type ont::official-document
     :parent ont::DOCUMENT ;direct-representation
-    :wordnet-sense-keys ("document%1:10:00" "written_document%1:10:00" "papers%1:10:00")
+    :wordnet-sense-keys ("document%1:10:00" "papers%1:10:00" "written_document%1:10:00")
     :comment "a document recording a formal agreement"
     )
 

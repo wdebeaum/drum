@@ -2636,6 +2636,13 @@
 	   )
    (ARGUMENTS
     ))
+
+  (quan-cardinality-pl-convertable-templ
+   (SYNTAX (W::AGR w::3P) (W::CARDINALITY +) (W::convert-to-adj +)(W::MASS (? m1 W::count w::bare))
+	   (W::QOF (% W::PP (W::PTYPE W::OF) (w::agr W::3P) (w::mass (? m2 w::count w::bare)) ))   ;; cardinality in OF should be plural, right 
+	   )
+   (ARGUMENTS
+    ))  
   
   (quan-no-bare-templ
    (SYNTAX(W::NobareSpec +))

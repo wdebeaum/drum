@@ -523,7 +523,7 @@
  )
 
 (define-type ONT::offer
- :wordnet-sense-keys ("volunteer%2:41:00" "volunteer%2:41:01")
+ :wordnet-sense-keys ("offer%1:10:00" "volunteer%2:41:00" "volunteer%2:41:01")
  :parent ONT::commissive
  :arguments (;(:REQUIRED ont::result)
              (:ESSENTIAL ont::formal)

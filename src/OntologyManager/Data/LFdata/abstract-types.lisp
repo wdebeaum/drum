@@ -1247,6 +1247,7 @@
  :parent ONT::ps-object
  ;; CERNL hack:: adding verb roles for verbs tagged as ont::procedure
  :sem (F::Abstr-obj (F::intentional -) (F::container +))
+ :wordnet-sense-keys ("procedure%1:10:00" "procedure%1:04:00" "procedure%1:04:02")
  )
 
 (define-type ONT::method
@@ -1257,27 +1258,31 @@
 ;; recipe, procedure, plan
 (define-type ONT::recipe
  :parent ONT::procedure
+ :wordnet-sense-keys ("instruction%1:10:04")
  )
 
 ;; http, ssl, imap, etc.
 (define-type ont::protocol
  :parent ont::procedure ;; ont::standard
+ :wordnet-sense-keys ("protocol%1:10:01")
  )
 
 ;; policy
 (define-type ONT::policy
  :parent ONT::procedure
+ :wordnet-sense-keys ("policy%1:09:00")
  )
 
 ;; algorithm, program, keystone correction
 ;; note that there is ont::computer-program for specific software programs like VM
 (define-type ONT::algorithm
  :parent ONT::procedure
- )
+ :wordnet-sense-keys ("algorithm%1:09:00")
+)
 
 ;; process
 (define-type ONT::process
- :wordnet-sense-keys ("procedure%1:04:00" "process%1:04:00")
+ ;:wordnet-sense-keys ("procedure%1:04:00" "process%1:04:00")
  :parent ONT::procedure
  )
 
@@ -1297,6 +1302,7 @@
 (define-type ONT::proposal
  :parent ONT::ps-object
  :arguments ((:essential ONT::FIGURE))
+ :wordnet-sense-keys ("proposal%1:10:00")
  )
 
 ;; task-related things that one commits to
