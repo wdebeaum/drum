@@ -2564,6 +2564,8 @@
 	    (transform ?transform)
 	    ))
      (gap (% ?!s3 (case ?dcase) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap -) (status ?status-out)))  ; status is matched in wh-q2
+     ;(gap (% PRED (case ?dcase) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap -) (status ?status-out)))  ; status is matched in wh-q2
+
      (advbl-needed ?avn)
      )
     -s-ynq-be-gap> 0.98
@@ -2586,8 +2588,8 @@
 	   (iobj (% -))
 	   (part (% -))		 
 	   (dobj ?!dobj)
-	   ;(dobj (% ?!s3 (case (? dcase obj -)) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (status ?dstatus)))
-	   (dobj (% PRED (case (? dcase obj -)) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (status ?dstatus))) ; "what is the red block" should use S1 + -DECL-WH-QUESTION1>
+	   (dobj (% ?!s3 (case (? dcase obj -)) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (status ?dstatus)))
+	   ;(dobj (% PRED (case (? dcase obj -)) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (status ?dstatus))) ; "what is the red block" should use S1 + -DECL-WH-QUESTION1>
 	   (comp3 (% -))
 	   ;;	   (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) ))
 	    

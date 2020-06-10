@@ -37,6 +37,7 @@
     compar-op
     conj
     contraction
+    convert-to-adj
     diectic
     disj
     ellipsis

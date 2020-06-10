@@ -1070,13 +1070,13 @@
 
      ; same as -N1-post-onesubcat> but takes adj without ALLOW-POST-N1-SUBCAT
     ;; A few adjectives can have their subcat after the head noun
-    ;; a larger truck than that
+    ;; e.g., What are the mutually exclusive genes with CDH1 in breast cancer? 
      ((N1 (RESTR ?newr) (CLASS ?c) (SORT ?sort) (QUAL -) (COMPLEX +)(set-restr ?sr)
        (relc ?relc) (subcat ?nsubcat)
        ;;(post-subcat +)
        (no-postmodifiers +) ;; add an extra feature to say "no further postmodifiers". If we say "The bulb in 1 is in the same path as the battery in 1", we don't want "in 1" to attach to "the path"
       )
-     -N1-post-onesubcat-b> 0.96; 0.97 ; combinatorial explosion if not kept low
+     -N1-post-onesubcat-b> 0.965; 0.97 ; combinatorial explosion if not kept low
      (ADJ1 (atype (? at attributive-only central)) (ALLOW-POST-N1-SUBCAT -) ; "-" here so it's mutually exclusive with -N1-post-onesubcat>
       (LF ?qual) (lex ?lex1)
       (ARG ?v) (VAR ?adjv)
