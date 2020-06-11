@@ -2832,13 +2832,13 @@
 			     (CONSTRAINT ?newr) (sem ?sem)
 			     (VAR ?v) (CLASS ?c)))
 	     (simple +)
-	     (sem ?sem) (transform ?transform)
+	     (sem ?sem) (transform ?transform) (complex ?complex)
              (SORT PRED) (STATUS ONT::INDEFINITE-PLURAL))
          -bare-plural-count> 
          ;; Myrosia 10/13/03 added a possibility of (mass bare) -- e.g. for "lunches" undergoing this rule
          (head (N1 (SORT PRED) (mass (? mass count bare)) (mass ?m) ;;  (complex -)      I can't see the justification for this -- e.g., "cows eating in the field" is a prefectly good NP
 		   (AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -) (agent-nom -)
-		   (sem ?sem) (transform ?transform)
+		   (sem ?sem) (transform ?transform) (complex ?complex)
 		   (subcat-map ?subcat-map)
 		   (subcat (% ?xx (var ?sc-var)))
 		   (post-subcat -)

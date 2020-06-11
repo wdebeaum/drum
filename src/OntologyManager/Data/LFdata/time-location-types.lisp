@@ -70,7 +70,9 @@
     :comment "FIGURE is within or inside the GROUND"
   :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj f::abstr-obj) ; measure (music)
 				       (f::intentional -) (f::container +) ; containers include corner and pathway
-				       )))
+				       ))
+	      (:essential ont::figure (?xx (F::type (? !x ont::event-of-experience))))
+	      )
   )
 
 #|
