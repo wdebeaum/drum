@@ -71,7 +71,7 @@
   :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj f::abstr-obj) ; measure (music)
 				       (f::intentional -) (f::container +) ; containers include corner and pathway
 				       ))
-	      (:essential ont::figure (?xx (F::type (? !x ont::event-of-experience))))
+	      ;(:essential ont::figure (?xx (F::type (? !x ont::event-of-experience))))
 	      )
   )
 
@@ -586,7 +586,7 @@
 (define-type ont::source-as-loc
     :comment "a relation that indicates where an object was in the past: the person from Italy"
  :parent ont::from
- :arguments ((:ESSENTIAL ONT::FIGURE ((? type F::Situation F::phys-obj F::abstr-obj))) ;(F::phys-obj (F::mobility F::movable))) ; abstr-obj: the idea from...; situation: it is bright from the sun
+ :arguments ((:ESSENTIAL ONT::FIGURE ((? type F::Situation F::phys-obj F::abstr-obj))) ;(F::phys-obj (F::mobility F::movable))) ; abstr-obj: the idea from...; situation: it is bright from the sun, I fish from the pond
 	     (:ESSENTIAL ONT::GROUND (F::phys-obj
 				      ;;(F::mobility F::movable)) ; exclude "... arrive in country X from country Y"   Can't do this as it also eliminates the usual cases, doesn't it?  JFA 7/19
 				      )))
@@ -673,7 +673,7 @@
 
 	     ; copied from to-loc
 	     (:ESSENTIAL ONT::FIGURE ((? f F::PHYS-OBJ F::abstr-obj F::situation)))    ;; need to allow situation here as it can modoify events as well as objects in RESULT expressions
-	     (:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj) (f::spatial-abstraction ?!sa)
+	     (:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj) ;(f::spatial-abstraction ?!sa) ; from the database
 				     ;; (F::mobility F::movable) ; exclude "... arrive in country X from country Y"  JFA I removed the movable constraint to the figure 
 				      ) )  ; spatial-abstraction is not enough: many things have spatial-abstraction, e.g., a frog.  Another possibility is (F::object-function F::spatial-object)
 
