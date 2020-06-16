@@ -7,7 +7,7 @@
   (W::entrance
    (SENSES
     ((meta-data :origin trips :entry-date 20091118 :change-date nil :comments nil :wn ("entrance%1:06:00"))
-     (LF-PARENT ONT::exit)
+     (LF-PARENT ONT::opening)
      (TEMPL GEN-PART-OF-RELN-TEMPL)
      )
     )

@@ -2502,6 +2502,7 @@
 (define-type ont::opening
     :parent ONT::shape-object
     :wordnet-sense-keys ("opening%1:17:00" "gap%1:17:00")
+    :arguments ((:Optional ONT::FIGURE (f::Phys-obj)))
     )
 
 ;; exit, entrance

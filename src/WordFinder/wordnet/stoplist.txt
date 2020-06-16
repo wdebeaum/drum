@@ -3784,6 +3784,7 @@ scoop_out%2:35:02::
 set_up%2:30:00::
 set_up%2:30:02::
 set_up%2:30:03::
+shut_one's_mouth%2:32:00::
 sign_up%2:41:00::
 silt_up%2:35:00::
 sit_down%2:35:00::
@@ -3977,3 +3978,7 @@ climb_on%2:38:00::
 surpass%2:38:00::
 fund%2:40:03::
 fund%2:40:01::
+
+queen%1:05:03::
+queen%1:05:02::
+gain%2:38:00::

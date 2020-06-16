@@ -2052,7 +2052,7 @@
 
 ;; complete vs. incomplete
 (define-type ont::completeness-val
- :parent ont::part-whole-val
+ :parent ont::physical-property-val ;part-whole-val
  :comment "having or not having all the necessary parts"
  :sem (F::abstr-obj (F::scale ont::completeness-scale))
 )
@@ -4370,6 +4370,7 @@
   :wordnet-sense-keys ("appetitive%3:01:00::" "algolagnic%3:01:00::" "technophobic%3:01:00::" "anglophilic%3:01:00::" "aversive%3:01:00::" "technophilic%3:01:00::" "libidinal%3:01:00::" "emotional%3:01:00::" "anglophobic%3:01:00::" "agonal%3:01:00::")
  :arguments ((:ESSENTIAL ONT::FIGURE (F::Phys-obj (f::origin (? org f::human f::non-human-animal)))))
  :comment "state of experiencing a particular emotion or cognitive state"
+ :sem (F::abstr-obj (F::scale ont::experiencer-condition-scale))
 )
 
 ;; happy, sad, gloomy...
@@ -4719,7 +4720,7 @@
 
 (define-type ont::not-protected-val
  :parent ont::protection-val
- :wordnet-sense-keys ("unprotected%3:00:00")
+ :wordnet-sense-keys ("unprotected%3:00:00" "in_the_lurch%4:02:00")
 )
 
 ;; finalized, settled
@@ -6524,6 +6525,7 @@
 (define-type ONT::creativity-val
   :parent ONT::psychological-property-val
   :comment "(creative)"
+  :sem (F::abstr-obj (F::scale ont::creativity-scale))
   )
 
 (define-type ONT::creative-val

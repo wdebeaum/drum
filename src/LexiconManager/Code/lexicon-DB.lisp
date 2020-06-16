@@ -266,13 +266,42 @@ intersection of an entry's tags and these tags is non-empty."
 
 (defun define-a-word (e pos templ boost-word lexicon-data)
   "Defines a word in the new lexicon format"
-  (let ((entry (parse-vocab-table-entry e :pos pos :default-template templ :boost-word boost-word)))
-    (if (vocabulary-entry-p entry)
-	(add-entries-for-word entry lexicon-data)
-	)))
+  (let* ((entry (parse-vocab-table-entry e :pos pos :default-template templ :boost-word boost-word)))
+    (when (vocabulary-entry-p entry)
+      ;;  check if the entry already exists
+      (let* ((type-template-pairs (retrieve-existing-lex-info (car e)))
+	     (senses (if (and (boundp 'user::*build-ontology*) user::*build-ontology*)   ;; if we're dynamically building the lexicon, we check for redundant additions
+			 (remove-if #'(lambda (sense)
+					(member (list (sense-definition-pos sense)
+						      (sense-definition-lf-parent sense)
+						      (sense-definition-templ sense))
+					    type-template-pairs :test #'equal))
+				    (vocabulary-entry-senses entry))
+			 (vocabulary-entry-senses entry))))
+	;;(format t "~%type-template-pairs=~S" type-template-pairs )
+	;;(format t "~%Original senses = ~S filtered senses = ~S" (vocabulary-entry-senses entry) senses)
+	(if senses
+	    (progn (setf (vocabulary-entry-senses entry) senses)
+		   (add-entries-for-word entry lexicon-data))
+	    (print-debug "Suppressing lexical entries because they are already in the lexicon: ~S" entry)
+	    )))
+    ))
+
+(defun retrieve-existing-lex-info (w)
+  (mapcar #'(lambda (x) (let ((e (cdr (lex-entry-description x))))
+			  (list (car (lex-entry-description x))
+				(get-type (cadr (assoc 'W::LF e)))
+				(cadr (assoc 'w::template e)))))
+	  (retrieve-from-lex w)))
+
+(defun get-type (tt)
+  (if (consp tt)
+      (second tt)
+      tt))
+  
 
 (defun add-entries-for-word (entry lexicon-data)
-  ;;(format t "~%~% adding entry ~S" entry)
+  ;;(format t "~%~% adding entry ~S. Is a vocab entry? ~S" entry (vocabulary-entry-p entry))
   "This adds the word and all its morphological variants to the *lexicon-data* table.
 
   ;;; entry: the structure of type vocabulary-entry, a parsed representation of the data in the lexicon
@@ -286,6 +315,7 @@ intersection of an entry's tags and these tags is non-empty."
   ;;; - If the entry contains a particle, the particle definition is also added to the table
 "
   (when (vocabulary-entry-p entry)
+    ;;(format t "~%Pushing ~S" entry)
     ;; put the base form into the base forms table for indexing
     (pushnew (vocabulary-entry-word entry) (lexicon-db-base-forms lexicon-data))
     ;; the lf-form for a word sense is not always specified -- this fills it in if it's missing
@@ -536,7 +566,8 @@ intersection of an entry's tags and these tags is non-empty."
 	;	      (add-suffix word "S")))
 	 (nom-syntax
 	   `(syntax
-	      (w::sort w::pred)
+	     (w::sort w::pred)
+	     (w::mass w::count)
 	      (w::nomobjpreps ,(unless (member objpreps '(- w::-))
 				 `(? objp ,objpreps)))
 	      (w::nomsubjpreps ,(unless (member subjpreps '(- w::-))
@@ -1153,3 +1184,6 @@ intersection of an entry's tags and these tags is non-empty."
     (cadr (assoc feature featlist))
     (cadr (assoc feature featlist :test #'equal))
   ))
+
+	   
+  

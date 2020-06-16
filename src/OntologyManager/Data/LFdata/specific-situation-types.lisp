@@ -287,7 +287,7 @@
  )
 
 (define-type ont::MIGRATE
-  :wordnet-sense-keys ("migrate%2:38:00" "migrate%2:38:01")
+  :wordnet-sense-keys ("migrate%2:38:00" "migrate%2:38:01" "migration%1:04:00" "migration%1:11:00")
   :parent ont::move
   )
 
@@ -1369,7 +1369,7 @@
 |#
 
 (define-type ONT::Stop
-    :wordnet-sense-keys ("abort%2:29:00" "blow_out%2:43:00" "bog_down%2:38:01" "break%2:42:04" "cease%2:42:00" "discontinue%2:42:00" "expire%2:42:00" "get_off%2:41:00" "give_up%2:42:00" "halt%2:38:01" "lay_off%2:42:00" "quit%2:42:04" "run_out%2:42:00" "stop%2:38:01" "stop%2:42:00" "strand%2:38:02" "strand%2:38:03" "terminate%2:30:01" "arrest%2:33:00")
+    :wordnet-sense-keys ("abort%2:29:00" "blow_out%2:43:00" "bog_down%2:38:01" "break%2:42:04" "cease%2:42:00" "discontinue%2:42:00" "expire%2:42:00" "get_off%2:41:00" "give_up%2:42:00" "halt%2:38:01" "lay_off%2:42:00" "quit%2:42:04" "run_out%2:42:00" "stop%2:38:01" "stop%2:42:00" "strand%2:38:02" "strand%2:38:03" "terminate%2:30:01" "arrest%2:33:00" "conclude%2:42:02")
     :parent ONT::inhibit-effect
 ;    :arguments ((:ESSENTIAL ONT::affected ((? oc F::Situation)))  ; commented this out because we can say "stop the car"
 ;		)    
@@ -3020,7 +3020,7 @@
  )
 
 (define-type ont::appeal-apply-demand 
-     :wordnet-sense-keys ("call%2:38:00" "turn_to%2:30:00" "woo%2:41:01" "call%2:35:05")
+     :wordnet-sense-keys ("call%2:38:00" "turn_to%2:30:00" "woo%2:41:01" "call%2:32:05")
      :parent ont::request
     ) 
 
@@ -3045,7 +3045,7 @@
 (define-type ONT::provoke
  :wordnet-sense-keys ("force%2:36:00" "coerce%2:41:00" "subject%2:39:03" "oblige%2:41:00" "arouse%2:37:00" "provoke%2:32:00")
  :parent ONT::cause-effect
- :arguments ((:ESSENTIAL ONT::affected ((? exp F::phys-obj f::abstr-obj) (f::intentional +))))
+ :arguments ((:ESSENTIAL ONT::affected ((? exp F::phys-obj f::abstr-obj)))) ;(f::intentional +))))  ;; deleted as we can arouse feelings and emotions
  )
 
 ;(define-type ONT::cause-stimulate

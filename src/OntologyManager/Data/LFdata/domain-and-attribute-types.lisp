@@ -692,7 +692,7 @@
 ;;; SPATIAL SCALE
 (define-type ont::spatial-scale
  :sem (F::abstr-obj (F::scale ONT::SPATIAL-SCALE))
- :parent ont::physical-property-scale
+ :parent ont::ordered-domain ;physical-property-scale
  :comment "scales relating to the properties of space"
 )
 
@@ -2331,6 +2331,12 @@
     :wordnet-sense-keys ("trait%1:07:00")
     :parent ont::ordered-domain 
     )
+
+(define-type ont::creativity-scale
+ :sem (F::abstr-obj (F::scale ONT::CREATIVITY-SCALE))
+ :parent ont::psychological-condition-scale
+ :wordnet-sense-keys ("creativity%1:09:00")
+)
 
 (define-type ont::willingness-scale
  :sem (F::abstr-obj (F::scale ONT::WILLINGNESS-SCALE))

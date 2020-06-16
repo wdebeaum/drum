@@ -19,13 +19,18 @@
       (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
       (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
       )
-     ((meta-data :origin beetle :entry-date 20080716 :change-date nil :comments nil :vn ("separate-23.1-2"))
+     (
       (LF-PARENT ont::SPATIAL-DIVIDE) ;spatial-separate) 
-      (EXAMPLE "the divider divides the room")
-      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-      (TEMPL AGENT-AFFECTED-SOURCE-XP-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? t W::from)))))
+      (EXAMPLE "the fence divides the field")
+      (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
       )
-   
+
+     #|((LF-PARENT ont::SPATIAL-DIVIDE) ;spatial-separate)      ;; maybe add if we add NEUTRAL2 to the type, unless there's a better interpretation
+      (EXAMPLE "the fence divides the field from the road")
+      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
+      (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL (xp (% W::PP (W::ptype (? t W::from)))))
+      )|#
+
      ((meta-data :origin lam :entry-date 20050420 :change-date 20090522 :comments lam-initial)
       (lf-parent ont::calc-divide)
       (example "divide by 5")

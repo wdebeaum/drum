@@ -1,7 +1,7 @@
 ;;;;
 ;;;; robust.lisp
 ;;;;
-;;;; Time-stamp: <Fri May 15 12:00:47 EDT 2020 james>
+;;;; Time-stamp: <Tue Jun  9 16:03:02 EDT 2020 james>
 ;;;;
 
 (in-package :W)
@@ -223,21 +223,7 @@
       (add-to-conjunct  (val (:figure ?gapvar)) (old ?con) (new ?new))
       )
 
-   #|| ;;  prescription rules
-     ((NP (SORT PRED)
-         (var ?v) (Class (:* ONT::PHARMACOLOGIC-SUBSTANCE ?lex)) (sem ?sem) (agr ?agr) (case (? cas sub obj -))
-         (LF (% Description (Status Name) (var ?v) (Sort Individual)
-                (class (:* ONT::PHARMACOLOGIC-SUBSTANCE ?lex)) (lex ?l) (sem ?sem)  ;; LEX used to be ?fname, but this isn't used any more  JFA 5/04
-                (transform ?transform)
-		(constraint (& (:amount ?val)))
-                ))
-         (mass mass) (time-converted -)
-	 (postadvbl ?gen) ;; swift -- setting postadvl to gen as part of eliminating gname rule but still allowing e.g. truck 1
-         )
-     -np-presciption>
-     (head (name (lex ?l) (sem ?sem) (var ?v) (agr ?agr) (lf (:* ONT::PHARMACOLOGIC-SUBSTANCE ?lex))
-		 ))
-     (adjp (sort w::unit-measure) (arg ?v) (lf (% prop (constraint (& (val ?val)))))))||#
+    
      ))
 
 ;; From np-grammar.lisp

@@ -30,7 +30,7 @@
 
     ((meta-data :wn ("rest%2:41:00"))
      (LF-PARENT ONT::be-inactive)
-     (TEMPL NEUTRAL-TEMPL)
+     (TEMPL AGENT-TEMPL)
      )
 
     )
