@@ -15,7 +15,7 @@
      ) 
     ((LF-PARENT ONT::HAVE)
      (example "I have a truck")
-     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL (xp (% W::NP (w::sort (? !xx W::unit-measure)))))
           )
   
     ((LF-PARENT ONT::EAT)
