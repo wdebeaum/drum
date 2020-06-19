@@ -490,6 +490,7 @@ intersection of an entry's tags and these tags is non-empty."
 				(case form 
 				  ;; normal verb forms
 				  (-vb '(:12s123pbase :3s :ing :ings :past :pastpart :nom :agentnom))
+				  (-vb-pres-past-only '(:12s123pbase :3s :past))
 				  ;; normal noun forms
 				  (-s-3p '(:sing :plur))
 ;;				  (-load '(:load :load-p)) ;; no longer used

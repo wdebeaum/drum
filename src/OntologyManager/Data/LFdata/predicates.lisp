@@ -153,8 +153,10 @@
 
 
 (define-type ONT::NEG
- :parent ONT::PREDICATE
- )
+    :comment "the opposite of an action and some properties"
+    :arguments ((:required ONT::FIGURE ((? xx F::SITUATION F::ABSTR-OBJ) (F::TYPE (? ty ONT::SITUATION-ROOT ONT::RELATION)))))
+    :parent ONT::PREDICATE
+    )
 
 (define-type ONT::PRIORITY
  :parent ONT::PREDICATE

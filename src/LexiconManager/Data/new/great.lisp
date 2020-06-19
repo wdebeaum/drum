@@ -20,11 +20,18 @@
    (wordfeats (W::MORPH (:FORMS (-ER -LY))))   
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("great%5:00:00:good:01") :comlex (EXTRAP-ADJ-FOR-TO-INF-RS))
-     (example "a good book")
+     (example "a great book")
      (lf-parent ont::great-val)
      (SEM (f::gradability +) (f::orientation ont::more) (f::intensity ont::hi))
      (TEMPL central-adj-templ)
      )
+    (
+     (example "a great amount" "great height")
+     (lf-parent ont::high-val)
+     (SEM (f::gradability +) (f::orientation ont::more) (f::intensity ont::hi))
+     (TEMPL central-adj-templ)
+     )
+    
     #||
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("great%5:00:00:good:01") :comlex (EXTRAP-ADJ-FOR-TO-INF-RS))
      (example "a wall good for climbing")

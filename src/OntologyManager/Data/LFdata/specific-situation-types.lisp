@@ -2423,7 +2423,7 @@
 
 ;; honor, respect, prize, treasure, value
 (define-type ONT::appreciate
- :wordnet-sense-keys ("appeal%2:37:00" "appreciate%2:37:00" "bask%2:37:13" "delight%2:34:00" "enjoy%2:37:00" "like%2:37:04" "like%2:37:05" "love%2:37:00" "relish%2:37:00" "savor%2:37:00" "savour%2:37:00")
+ :wordnet-sense-keys ("appeal%2:37:00" "appreciate%2:37:00" "bask%2:37:13" "delight%2:34:00" "enjoy%2:37:00" "like%2:37:04" "like%2:37:05" "love%2:37:00" "relish%2:37:00" "savor%2:37:00" "savour%2:37:00" "respect%2:31:00")
  :parent ONT::experiencer-emotion
  :arguments ((:REQUIRED ONT::Formal ((? t f::phys-obj f::abstr-obj f::situation f::time)))
              (:ESSENTIAL ONT::neutral) ;((? s  f::phys-obj f::abstr-obj) (F::intentional +)))

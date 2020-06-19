@@ -5,7 +5,7 @@
 (define-words :pos W::v 
  :words (
   ((W::feel W::like)
-    (wordfeats (W::morph (:forms (-vb) :past W::felt)))
+    (wordfeats (W::morph (:forms (-vb-pres-past-only) :past W::felt)))
    (SENSES
     ;;;; It feels like we will have to go
     ((LF-PARENT ONT::possibly-true)
@@ -17,8 +17,7 @@
 ))
 
 (define-words :pos W::v
- :tags (:base500)
- :words (
+  :words (
   (W::feel
    (wordfeats (W::morph  (:forms (-vb) :past W::felt)))
    (SENSES
@@ -27,6 +26,13 @@
       (TEMPL experiencer-theme-xp-templ (xp (% w::cp (w::ctype w::s-finite)))) ; like believe,think
      (PREFERENCE .99)
       )
+     ))))
+
+(define-words :pos W::v
+  :words (
+  (W::feel
+   (wordfeats (W::morph  (:forms (-vb) :past W::felt)))
+   (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("see-30.1") :wn ("feel%2:29:00" "feel%2:31:00" "feel%2:35:00" "feel%2:39:00"))
      (LF-PARENT ONT::perception)
      (example "I can feel the sun" "he feels pain in his leg")
