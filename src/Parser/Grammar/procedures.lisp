@@ -167,10 +167,12 @@
   "succeeds only if the two constits are both non null"
   (let ((subcat (get-fvalue args 'w::subcat))
 	(subcat2  (get-fvalue args 'w::subcat2)))
-    (if (and (non-null-constit subcat) (non-null-constit subcat2))
+    (if ;(and (non-null-constit subcat) (non-null-constit subcat2))
+	(and (check-if-bound subcat) (check-if-bound subcat2))
 	*success*
 	)))
 
+#|
 (defun non-null-constit (x)
   (cond ((var-p x)
 	 (if (constit-p (var-values x))
@@ -179,7 +181,7 @@
 			(eq var '-))))
 	     nil))
 	(t (format t "~% SUBCAT is not a var: ~S" x))))
-		  
+|#		  
 		   
 (define-predicate 'w::combine-foot-features
   #'(lambda (args)

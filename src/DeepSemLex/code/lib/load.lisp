@@ -566,6 +566,7 @@
 			(-ly '(none ly))
 			(|-S-3P| '(sing plur))
 			(-vb '(|12S123PBASE| |3S| ing past pastpart nom agentnom))
+			(-vb-pres-past-only '(|12S123PBASE| |3S| past))
 			(-none '(none sing |12S123PBASE|))
 			))
 	      (dolist (sf-suff *syn-feats-to-suffix*)

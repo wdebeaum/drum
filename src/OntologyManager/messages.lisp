@@ -444,7 +444,7 @@ returns : function return value"
   `(apply #'add-new-type ',args))
 
 (defun add-new-type (&key (wnsense nil) (trips-type nil) (comment nil)
-		       (wordnet-sense-keys nil) (parent nil)
+		       (wordnet-sense-keys nil) (parent nil) (root nil)
 		       (definitions nil) (arguments nil))
   (if (not (lf-sem trips-type))
       ;;  A new type, add the full definition

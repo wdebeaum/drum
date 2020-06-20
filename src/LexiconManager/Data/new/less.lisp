@@ -36,6 +36,18 @@
    )
   ))
 
+(define-words :pos W::adj
+ :words (
+  (W::LESS
+   (SENSES
+    ((LF-PARENT ONT::LESS-VAL)
+     ;(TEMPL COMPAR-THAN-templ)
+     (TEMPL COMPAR-templ)
+     )
+    )
+   )
+  ))
+
 #|
 (define-words :pos W::adv :templ DISC-PRE-TEMPL
  :words (
@@ -54,7 +66,8 @@
  :words (
   ((W::less W::than)
    (SENSES
-    ((LF-PARENT ONT::QMODIFIER)
+    (;(LF-PARENT ONT::QMODIFIER)
+     (LF-PARENT ONT::LESS-VAL)
      (LF-FORM W::LESS-THAN)
      (TEMPL NUMBER-OPERATOR-TEMPL)
      )

@@ -1070,7 +1070,8 @@
 
      ; same as -N1-post-onesubcat> but takes adj without ALLOW-POST-N1-SUBCAT
     ;; A few adjectives can have their subcat after the head noun
-    ;; e.g., What are the mutually exclusive genes with CDH1 in breast cancer? 
+     ;; e.g., What are the mutually exclusive genes with CDH1 in breast cancer?
+     ;; need to compete with [mutually exclusive [genes with CDH1]] (n1-qual1 + adv-np-post)
      ((N1 (RESTR ?newr) (CLASS ?c) (SORT ?sort) (QUAL -) (COMPLEX +)(set-restr ?sr)
        (relc ?relc) (subcat ?nsubcat)
        ;;(post-subcat +)
@@ -2281,15 +2282,16 @@
 	
    ;; same with comma  the city, avon
     ((N1 (RESTR ?con) (CLASS ?c) (SORT ?sort) (QUAL ?qual) ;(COMPLEX +) 
-      (subcat (% - (W::VAR -)))) ;(subcat -))
+      (subcat (% - (W::VAR -))) ;(subcat -))
+      (post-subcat -))
      -N1-appos2>
-     (head (N1 (VAR ?v1) (RESTR ?r) (CLASS ?c) (SORT ?sort) (QUAL ?qual) (relc -)
+     (head (N1 (VAR ?v1) (RESTR ?r) (CLASS ?c) (SORT (? !sort unit-measure)) (QUAL ?qual) (relc -)
 	       (subcat (% - (W::VAR -))) ;(subcat -)
-	       (post-subcat -) (sem ?sem)
+	       (post-subcat -) (sem ?sem) (derived-from-name -) (time-converted -)
 	    ))
      (punc (lex w::punc-comma))
-     (np (name +) (generated -) (CLASS ?c) (sem ?sem) (VAR ?v2))
-     (add-to-conjunct (val (EQ ?v2)) (old ?r) (new ?con)))
+     (np (name +) (generated -) (CLASS ?lf) (sem ?sem) (VAR ?v2) (time-converted -))
+     (add-to-conjunct (val (IDENTIFIED-AS ?v2)) (old ?r) (new ?con)))
 		
     ))
 
@@ -2964,7 +2966,7 @@
              (VAR ?v) 
 	     (sem ?sem)
 	     (lex ?lex) (WH Q) (WH-VAR ?v) (status ?newspec)
-             (LF (% Description (status ?newspec) (var ?v) (Class ?s) (SORT (?agr -))
+             (LF (% Description (status ?newspec) (var ?v) (Class ?s)
 	            (Lex ?lex) (sem ?sem) (transform ?transform)
 		    (constraint (& (proform ?lex)))
 		    )))
@@ -4482,7 +4484,7 @@
      -n1-nom-with-obj> 1
       (head (n  (var ?v) (gap -) (aux -) (agr ?agr) (sort pred) (headless -)
 		(sem ?sem)  (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
-		(LF ?class) (transform ?transform)
+		(LF ?class) (transform ?transform) (mass ?mass)
             ;; these are dummy vars for trips-lcflex conversion, please don't delete
             ;;(subj ?subj) (dobj ?dobj) (comp3 ?comp3) (iobj ?iobj) (part ?part)
 	    (dobj ?dobj)
@@ -4554,7 +4556,7 @@
       (comp3-map ?comp-map)
       )
      -nom-of-obj1> 1.0
-     (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger)(agr ?agr)
+     (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger)(agr ?agr) (mass ?mass)
 		(nomobjpreps ?nompreps) (pre-arg-already ?npay)
 		(dobj ?!dobj) 
 ;		(dobj (% ?s3 (case (? dcase obj -)) (agr ?agr) (var ?dv) (sem ?dobjsem) (gap -)))
@@ -4592,7 +4594,7 @@
       )
      -nom-of-subj1> 1.0
      (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger) (agr ?agr)
-		(pre-arg-already ?npay) 
+		(pre-arg-already ?npay) (mass ?mass)
 		(dobj-map -)
 		(sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(class ?class) (transform ?transform)
@@ -4629,7 +4631,7 @@
       )
      -nom-by-subj1> 1
      (head (n1  (var ?v) (gap -) (aux -)(case ?case)  (gerund ?ger) (nomsubjpreps ?subjpreps)
-	      (dobj ?dobj) (pre-arg-already ?npay)(agr ?agr)
+	      (dobj ?dobj) (pre-arg-already ?npay)(agr ?agr) (mass ?mass)
 	      (subj (% ?s3 (case (? dcase obj -)) (var ?dv) (sem ?subjsem) (gap -)))
 	      (dobj-map ?dmap)
 	      (sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
@@ -4669,7 +4671,7 @@
       (postadvbl -) (post-subcat -) (sem ?dobjsem)
       )
      
-     (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger)(agr ?agr)
+     (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger)(agr ?agr) (mass ?mass)
 		(dobj ?!dobj) 
 		(dobj (% ?s3 (case (? dcase obj -)) (var ?dv) (sem ?dobjsem) (gap -)))
 		(dobj-map ?!dmap) (pre-arg-already -)
@@ -4707,7 +4709,7 @@
       (postadvbl -) (post-subcat -) (sem ?dobjsem)
       )
       (Punc (lex W::punc-minus))
-     (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger)
+     (head (n1  (var ?v) (gap -) (aux -)(case ?case) (gerund ?ger) (mass ?mass)
 		(dobj ?!dobj) 
 		(dobj (% ?s3 (case (? dcase obj -)) (var ?dv) (sem ?dobjsem) (gap -)))
 		(dobj-map ?!dmap) (pre-arg-already -)
@@ -4748,7 +4750,7 @@
       (postadvbl -) (post-subcat -) (sem ?subjsem) (lex ?subjlex) (agr ?subjagr)
       )
      
-     (head (n1  (var ?v) (gap -) (aux -)(case ?case)  (gerund ?ger) (agr ?agr)
+     (head (n1  (var ?v) (gap -) (aux -)(case ?case)  (gerund ?ger) (agr ?agr) (mass ?mass)
 		(dobj-map -) 
 ;		(nomobjpreps w::of)
 		(pre-arg-already -)
@@ -4791,7 +4793,7 @@
      
      (head (n1  (var ?v) (gap -) (aux -)(case ?case)  (gerund ?ger) (agr ?agr)
 		;;(dobj-map -) can't do this!  cf "ras attack"
-		(pre-arg-already -)
+		(pre-arg-already -) (mass ?mass)
 		(nomsubjpreps w::of)
 		(sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(class ?class) (transform ?transform)
@@ -4829,7 +4831,7 @@
       (postadvbl -) (post-subcat -) (sem ?subjsem) (lex ?subjlex) (agr ?subjagr) 
       )
      
-     (head (n1  (var ?v) (gap -) (aux -)(case ?case)  (gerund ?ger) (agr ?agr)
+     (head (n1  (var ?v) (gap -) (aux -)(case ?case)  (gerund ?ger) (agr ?agr) (mass ?mass)
 		(subj-map -) 
 ;		(nomsubjpreps w::of)
 		(pre-arg-already -)
@@ -4868,7 +4870,7 @@
      -nom-poss-n-subj> 1
      (Possessor (restr (& (assoc-poss ?v1))))
      (head (n1  (var ?v) (gap -) (aux -)(case ?case)  (gerund ?ger)(agr ?agr)
-		(complex ?complex)
+		(complex ?complex) (mass ?mass)
 		(sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
 		(class ?class) (transform ?transform)
 		;; these are dummy vars for trips-lcflex conversion, please don't delete
@@ -4897,7 +4899,7 @@
       (status ont::definite))
      -nom-poss-n-obj> 1
      (Possessor (restr (& (assoc-poss ?v1))))
-     (head (n1  (var ?v) (gap -) (aux -)(case ?case)  (gerund ?ger) (complex ?complex) (agr ?agr)
+     (head (n1  (var ?v) (gap -) (aux -)(case ?case)  (gerund ?ger) (complex ?complex) (agr ?agr) (mass ?mass)
 		(dobj-map (? dobjmap ONT::AFFECTED ONT::NEUTRAL ONT::AFFECTED1 ONT::NEUTRAL1 ONT::AGENT1))
 		(dobj ?!dobj) 
 		(sem ?sem) (sem ($ F::SITUATION)) ; (f::type ont::event-of-change)))
@@ -4930,7 +4932,7 @@
       (subcat (% -))
       )
      -nom-compln> 1
-     (head (n1  (var ?v) (gap -) (aux -)(case ?case) (agr ?agr)
+     (head (n1  (var ?v) (gap -) (aux -)(case ?case) (agr ?agr) (mass ?mass)
 		(dobj ?dobj)
 		(pre-arg-already ?npay)  (gerund ?ger)
 		;;(dobj-map ?dobjmap)
