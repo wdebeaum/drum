@@ -90,9 +90,9 @@
  )
 
 ;;; swift 04/14/02 added to support sentence-initial uses of yes & no
-(define-type ONT::ASSESS
- :parent ONT::PREDICATE
- )
+;(define-type ONT::ASSESS
+; :parent ONT::PREDICATE
+; )
 
 ;; very, really
 ;; split into five sublevels

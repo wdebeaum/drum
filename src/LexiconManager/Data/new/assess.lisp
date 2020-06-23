@@ -12,7 +12,7 @@
      (TEMPL AGENT-FORMAL-XP-TEMPL)
      (PREFERENCE 0.96)
      )
-    ((LF-PARENT ONT::scrutiny)
+    ((LF-PARENT ONT::evaluate) ;scrutiny)
      (TEMPL agent-neutral-xp-templ)
      )
     )

@@ -404,7 +404,7 @@
 
 ;; cognizer evaluates something
 (define-type ONT::Scrutiny
-    :wordnet-sense-keys ("study%2:31:00" "inspect%2:31:00" "inspect%2:39:00" "judge%2:41:09" "appraise%2:31:01" "analyse%2:31:00" "analyse%2:31:01" "analyse%2:31:04" "check%2:42:09" "check_out%2:40:00" "follow%2:30:01" "follow%2:39:13" "experiment%2:41:02" "experiment%2:41:01" "surveillance%1:04:01" "experiment%1:04:00" "investigation%1:04:00")
+    :wordnet-sense-keys ("analyse%2:31:00" "analyse%2:31:01" "analyse%2:31:04" "appraise%2:31:01" "check%2:42:09" "check_out%2:40:00" "experiment%1:04:00" "experiment%2:41:01" "experiment%2:41:02" "follow%2:30:01" "follow%2:39:13" "inspect%2:31:00" "inspect%2:39:00" "investigation%1:04:00" "judge%2:41:09" "study%2:31:00" "surveillance%1:04:01")
     :parent ONT::cogitation
     :arguments ((:REQUIRED ONT::neutral ((? th6 f::phys-obj f::abstr-obj f::situation))) ;;Ground
 		(:OPTIONAL ONT::formal1 ((? cth f::phys-obj f::abstr-obj f::situation)))  ;;Phenomenon
@@ -420,7 +420,7 @@
 
 (define-type ont::evaluate
     :parent ont::scrutiny
-    :wordnet-sense-keys ("evaluate%2:31:01"); "contrast%2:31:00")
+    :wordnet-sense-keys ("decision_making%1:09:00" "evaluate%2:31:01" "judgment%1:04:02"); "contrast%2:31:00")
     :arguments ((:REQUIRED ONT::neutral1 ((? th7 f::phys-obj f::abstr-obj f::situation))))
     )
 

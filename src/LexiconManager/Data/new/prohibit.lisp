@@ -21,3 +21,13 @@
    )
 ))
 
+(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+ :words (
+   (W::prohibited
+    (wordfeats (W::MORPH (:FORMS (-LY))))
+   (SENSES
+    ((lf-parent ont::not-permissible-val)
+     )
+    )
+   )
+))

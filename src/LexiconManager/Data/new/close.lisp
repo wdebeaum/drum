@@ -53,7 +53,7 @@
      (LF-PARENT ONT::near)
      (example "the houses are close by")
      (TEMPL ADJ-THEME-TEMPL)
-     (SEM (f::orientation ont::less) (f::intensity ont::hi))
+     (SEM (f::orientation ont::pos) (f::intensity ont::hi))
      )
     )
    )

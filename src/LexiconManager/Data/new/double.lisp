@@ -13,10 +13,10 @@
    ;(TEMPL AGENT-affected-RESULT-OPTIONAL-TEMPL (xp (% W::PP (W::ptype W::to))))
    (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
    )
-  ((meta-data :origin step :entry-date 20080626 :change-date 20090504 :comments nil)
+  (
    (LF-PARENT ONT::double)
    (example "it doubled in size")
-   (TEMPL AFFECTED-FORMAL-XP-OPTIONAL-TEMPL  (xp (% W::PP (W::ptype (? pt w::in W::with)))))
+   (TEMPL AFFECTED-TEMPL )
    )
   )
  )

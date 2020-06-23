@@ -40,6 +40,29 @@
     :sem (F::abstr-obj (F::scale ont::evaluation-scale ))
     )
 
+(define-type ont::desirability-val
+ :parent ont::evaluation-attribute-val ;evoking-pos-experience-property-val
+ :sem (F::abstr-obj (F::scale ont::desire-scale) )
+)
+
+(define-type ont::desirable-val
+ :parent ont::desirability-val ;evaluation-attribute-val ;evoking-pos-experience-property-val
+ :wordnet-sense-keys ("desirable%3:00:00" "wanted%3:00:00")
+ ;:sem (F::abstr-obj (F::scale ont::desire-scale) )
+)
+
+(define-type ONT::not-desirable-val
+  :parent ONT::desirability-val ;evoking-neg-experience-property-val
+  :wordnet-sense-keys ("unwanted%3:00:00::" "undesirable%3:00:00::" "unwanted%3:00:01::")
+  :comment "(undesirable)"
+)
+
+(define-type ONT::lovable-val
+  :parent ONT::evaluation-attribute-val ;evoking-pos-experience-property-val
+  :wordnet-sense-keys ("lovable%3:00:00::" "loveable%3:00:00::")
+  :comment "(lovable)"
+)
+
 ;; fresh, stale
 (define-type ont::freshness-val
  :parent ont::evaluation-attribute-val 
@@ -435,7 +458,8 @@
 
 ;; senior, junior
 (define-type ont::seniority-val
- :parent ont::evaluation-attribute-val 
+ :parent ont::evaluation-attribute-val
+ :sem (F::abstr-obj (F::scale ont::seniority-scale)) 
 )
 
 (define-type ont::senior-val
@@ -647,6 +671,7 @@
 ;; judgement
 (define-type ont::judgement-val
  :parent ont::evaluation-attribute-val
+ :sem (F::abstr-obj (F::scale ont::judgement-scale))
 )
 
 ;; morality, righteousness, virtuousness, principle, purity
@@ -781,7 +806,8 @@
 
 ;; free vs. bound
 (define-type ont::freedom-val
- :parent ont::evaluation-attribute-val 
+ :parent ont::evaluation-attribute-val
+ :sem (F::abstr-obj (F::scale ont::freedom-scale)) 
 )
 
 (define-type ont::free-val
@@ -4276,7 +4302,7 @@
 
 ;; worrying, disturbing, tiresome
 (define-type ont::evoking-experience-property-val
- :parent ont::psychological-property-val 
+ :parent ont::property-val ;psychological-property-val 
  :comment "attributes that indicate the evocation of a particular emotion"
 )
 
@@ -4362,12 +4388,13 @@
 ; :sem (F::abstr-obj (F::scale ont::pleasantness-scale) )
 ; )
 
+#|
 (define-type ont::desirable-val
  :parent ont::evoking-pos-experience-property-val 
- :wordnet-sense-keys ("desirable%3:00:00" )
+ :wordnet-sense-keys ("desirable%3:00:00" "wanted%3:00:00")
  :sem (F::abstr-obj (F::scale ont::desire-scale) )
 )
-
+|#
 
 ;; EXPERIENCER PROPERTIES
 (define-type ont::experiencer-property-val
@@ -4433,7 +4460,7 @@
 ; wanting/desiring
 (define-type ONT::desirous
  :parent ONT::pos-experiencer-property-val
- :wordnet-sense-keys ("wanted%3:00:00::" "desirous%3:00:00" "avariciously%4:02:00" )
+ :wordnet-sense-keys ("desirous%3:00:00" "avariciously%4:02:00") ;"wanted%3:00:00"
  :sem (F::abstr-obj (F::scale ont::desire-scale) )
  ; every living thing is desirous of avoiding pain
  )
@@ -5589,6 +5616,7 @@
 (define-type ONT::shapeliness-val
   :parent ONT::evaluation-attribute-val
   :comment "(shapely)"
+  :sem (F::abstr-obj (F::scale ont::shapeliness-scale))
   )
 
 (define-type ONT::shapely-val
@@ -5609,25 +5637,27 @@
   :comment "(unadvisable)"
   )
 
-(define-type ONT::favorability-to-life-val
+(define-type ONT::hospitability-val ;favorability-to-life-val
   :parent ONT::evaluation-attribute-val
   :comment "(hospitable)"
+  :sem (F::abstr-obj (F::scale ont::hospitability-scale))
   )
 
 (define-type ONT::hospitable-val
-  :parent ONT::favorability-to-life-val
+  :parent ONT::hospitability-val ;favorability-to-life-val
   :wordnet-sense-keys ("hospitable%3:00:00::")
   :comment "(hospitable)"
   )
 
 (define-type ONT::not-hospitable-val
-  :parent ONT::favorability-to-life-val
+  :parent ONT::hospitability-val ;favorability-to-life-val
   :wordnet-sense-keys ("inhospitable%3:00:00::")
   :comment "(inhospitable)"
   )
 
+#|
 (define-type ONT::restriction-val
-  :parent ONT::evaluation-attribute-val
+  :parent ONT::control-val ;evaluation-attribute-val
   :comment "(restricted, restrained)"
   )
 
@@ -5642,11 +5672,13 @@
   :wordnet-sense-keys ("unrestricted%3:00:00::" "unrestrictive%3:00:00::" "unconditional%3:00:00::" "unconditioned%3:00:01::")
   :comment "(unrestricted)"
   )
+|#
 
 (define-type ONT::qualification-val
   :parent ONT::evaluation-attribute-val
   :comment "(qualified, eligible)"
-  )
+  :sem (F::abstr-obj (F::scale ont::qualification-scale))
+)
 
 (define-type ONT::qualified-val
   :parent ONT::qualification-val
@@ -5663,6 +5695,7 @@
 (define-type ONT::helpfulness-val
   :parent ONT::evaluation-attribute-val
   :comment "(helpful)"
+  :sem (F::abstr-obj (F::scale ont::helpfulness-scale))
   )
 
 (define-type ONT::helpful-val
@@ -5720,6 +5753,23 @@
   :comment "not controlled by human entity (uncontrolled, unguided)"
   )
 
+(define-type ONT::restriction-val
+  :parent ONT::control-val ;evaluation-attribute-val
+  :comment "(restricted, restrained)"
+  )
+
+(define-type ONT::restricted-val
+  :parent ONT::restriction-val
+  :wordnet-sense-keys ("restrained%3:00:00::" "restricted%3:00:00::" "inhibited%3:00:00::" "restrictive%3:00:00::")
+  :comment "(restricted, restrained)"
+  )
+
+(define-type ONT::not-restricted-val
+  :parent ONT::restriction-val
+  :wordnet-sense-keys ("unrestricted%3:00:00::" "unrestrictive%3:00:00::" "unconditional%3:00:00::" "unconditioned%3:00:01::")
+  :comment "(unrestricted)"
+  )
+
 (define-type ONT::inarticulate-val
   :parent ONT::unable
   :wordnet-sense-keys ("inarticulate%3:00:00::" "unarticulate%3:00:00::")
@@ -5764,6 +5814,7 @@
 (define-type ONT::influence-val
   :parent ONT::evaluation-attribute-val
   :comment "(influential)"
+  :sem (F::abstr-obj (F::scale ont::influence-scale))
   )
 
 (define-type ONT::influential-val
@@ -5781,7 +5832,8 @@
 (define-type ONT::influence-susceptibility-val
   :parent ONT::evaluation-attribute-val
   :comment "not allowing penetration or influence (vulnerable)"
-  )
+  :sem (F::abstr-obj (F::scale ont::influence-susceptibility-scale))  
+)
 
 (define-type ONT::vulnerable-val
   :parent ONT::influence-susceptibility-val
@@ -6383,11 +6435,13 @@
   :comment "(unsurprising)"
   )
 
+#|
 (define-type ONT::not-desirable-val
   :parent ONT::evoking-neg-experience-property-val
   :wordnet-sense-keys ("unwanted%3:00:00::" "undesirable%3:00:00::" "unwanted%3:00:01::")
   :comment "(undesirable)"
   )
+|#
 
 (define-type ONT::discouraging-val
   :parent ONT::evoking-neg-experience-property-val
@@ -6419,11 +6473,13 @@
   :comment "(encouraging)"
   )
 
+#|
 (define-type ONT::lovable-val
   :parent ONT::evoking-pos-experience-property-val
   :wordnet-sense-keys ("lovable%3:00:00::" "loveable%3:00:00::")
   :comment "(lovable)"
   )
+|#
 
 (define-type ONT::remorseless-val
   :parent ONT::neg-experiencer-property-val

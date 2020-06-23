@@ -7,7 +7,7 @@
   (W::judge
    (wordfeats (W::morph (:forms (-vb) :nom w::judgement)))
    (SENSES
-    ((LF-PARENT ONT::scrutiny)
+    ((LF-PARENT ONT::evaluate) ;scrutiny)
      (example "he judged him")
      (TEMPL agent-neutral-xp-templ)
      )

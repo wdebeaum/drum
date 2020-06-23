@@ -7,7 +7,7 @@
   (W::Review
    (wordfeats (W::morph (:forms (-vb) :nom W::review)))
    (SENSES
-    ((LF-PARENT ONT::scrutiny)
+    ((LF-PARENT ONT::evaluate) ;scrutiny)
      (example "review the plan")
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL agent-neutral-xp-templ)

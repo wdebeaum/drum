@@ -22,7 +22,7 @@
      )
     ((meta-data :origin cardiac :entry-date 20080509 :change-date 20090731 :comments LM-vocab)
      (LF-PARENT ONT::weak)
-     (sem (f::gradability +) (f::intensity ont::lo) (f::orientation ont::less))
+     (sem (f::gradability +) (f::intensity ont::lo) (f::orientation ont::pos))
      (example "a dull pain")
      )
     )   

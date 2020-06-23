@@ -24,7 +24,7 @@
      (LF-PARENT ONT::weak)
      (templ central-adj-templ)
      (example "a faint outline")
-     (sem (f::gradability +) (f::intensity ont::lo) (f::orientation ont::less))
+     (sem (f::gradability +) (f::intensity ont::lo) (f::orientation ont::pos))
      )
     ((LF-PARENT ONT::dizzy-val)
      (example "was sick and faint from hunger")

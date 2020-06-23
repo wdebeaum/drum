@@ -866,7 +866,7 @@
 (define-type ont::wisdom-scale
  :sem (F::abstr-obj (F::scale ONT::WISDOM-SCALE))
  :parent ont::wiseness-scale
- :wordnet-sense-keys ("wiseness%1:07:00")
+ :wordnet-sense-keys ("judgment%1:07:00" "wisdom%1:09:01" "wiseness%1:07:00")
 )
 
 (define-type ont::folly-scale
@@ -965,6 +965,30 @@
  ;; WORDS: quality
 )
 
+(define-type ont::freedom-scale
+ :sem (F::abstr-obj (F::scale ONT::FREEDOM-SCALE))
+ :parent ont::evaluation-scale
+ :wordnet-sense-keys ("freedom%1:26:00")
+)
+
+(define-type ont::helpfulness-scale
+ :sem (F::abstr-obj (F::scale ONT::HELPFULNESS-SCALE))
+ :parent ont::evaluation-scale
+ :wordnet-sense-keys ("helpfulness%1:07:01")
+)
+
+(define-type ont::influence-susceptibility-scale
+ :sem (F::abstr-obj (F::scale ONT::INFLUENCE-SUSCEPTIBILITY-SCALE))
+ :parent ont::evaluation-scale
+ :wordnet-sense-keys ("susceptibility%1:26:00")
+)
+
+(define-type ont::influence-scale
+ :sem (F::abstr-obj (F::scale ONT::INFLUENCE-SCALE))
+ :parent ont::evaluation-scale
+ :wordnet-sense-keys ("influence%1:07:00")
+)
+
 (define-type ont::interestingness-scale
  :sem (F::abstr-obj (F::scale ONT::interestingness-SCALE))
  :parent ont::evaluation-scale
@@ -1013,6 +1037,18 @@
  :wordnet-sense-keys ("unfamiliarity%1:07:00")
 )
 
+(define-type ont::hospitability-scale
+ :sem (F::abstr-obj (F::scale ONT::HOSPITABILITY-SCALE))
+ :parent ont::evaluation-scale
+ :wordnet-sense-keys ("hospitableness%1:07:00")
+)
+
+(define-type ont::judgement-scale
+ :sem (F::abstr-obj (F::scale ONT::JUDGEMENT-SCALE))
+ :parent ont::evaluation-scale
+ ;:wordnet-sense-keys ("judgment%1:04:02")
+)
+
 ;; necessity
 (define-type ont::necessity-scale
  :sem (F::abstr-obj (F::scale ONT::NECESSITY-SCALE))
@@ -1021,6 +1057,23 @@
  ;; WORDS: need
 )
 
+(define-type ont::qualification-scale
+ :sem (F::abstr-obj (F::scale ONT::QUALIFICATION-SCALE))
+ :parent ont::evaluation-scale
+ :wordnet-sense-keys ("eligibility%1:07:00")
+)
+
+(define-type ont::seniority-scale
+ :sem (F::abstr-obj (F::scale ONT::SENIORITY-SCALE))
+ :parent ont::evaluation-scale
+ :wordnet-sense-keys ("seniority%1:26:00")
+)
+
+(define-type ont::shapeliness-scale
+ :sem (F::abstr-obj (F::scale ONT::SHAPELINESS-SCALE))
+ :parent ont::evaluation-scale
+ :wordnet-sense-keys ("shapeliness%1:07:00")
+)
 
 ;; typicality
 (define-type ont::typicality-scale
@@ -2458,10 +2511,10 @@
  :wordnet-sense-keys ("apathy%1:07:01")
 )
 
-(define-type ont::desire-scale
- :sem (F::abstr-obj (F::scale ONT::DESIRE-SCALE))
- :parent ont::experiencer-condition-scale
- :wordnet-sense-keys ("desire%1:26:00")
+(define-type ont::desirability-scale ;desire-scale
+ :sem (F::abstr-obj (F::scale ONT::DESIRABILITY-SCALE)) ;DESIRE-SCALE))
+ :parent ont::evaluation-scale ;experiencer-condition-scale
+ :wordnet-sense-keys ("desirability%1:07:00" "desire%1:26:00")
 )
 
 (define-type ont::pleasurability-scale

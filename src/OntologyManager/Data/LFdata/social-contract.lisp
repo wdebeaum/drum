@@ -29,7 +29,7 @@
 
 (define-type ont::social-imperative
   :parent ont::social-contract
-  :wordnet-sense-keys ("freedom%1:26:01" "slavery%1:26:00")
+  :wordnet-sense-keys ("slavery%1:26:00") ;"freedom%1:26:01" 
   )
 
 (define-type ont::right-permission
@@ -62,7 +62,7 @@
 
 (define-type ont::nonessential-contract
   :parent ont::social-imperative
-  :wordnet-sense-keys ("freedom%1:26:00" "privilege%1:07:02" "status%1:26:00::")
+  :wordnet-sense-keys ("exemption%1:26:00" "privilege%1:07:02" "status%1:26:00::") ;"freedom%1:26:00" 
 )
 
 ;; There could be a distinction between a guideline and a motivation --

@@ -2,15 +2,15 @@
 ;;;; W::compile
 ;;;;
 
-(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
+(define-words :pos W::v 
  :words (
   (W::compile
    (wordfeats (W::morph (:forms (-vb) :nom w::compilation)))
    (SENSES
-    ((meta-data :origin "verbnet-2.0" :entry-date 20060606 :change-date nil :comments nil :vn ("build-26.1") :wn ("compile%2:36:00"))
-      (LF-PARENT ONT::arranging)
+    ((LF-PARENT ONT::collect)
+     (TEMPL agent-affectedr-xp-templ)
      )
     )
    )
-))
+  ))
 

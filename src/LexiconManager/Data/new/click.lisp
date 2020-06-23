@@ -1,7 +1,7 @@
 ;;;;
 ;;;; w::click
 ;;;;
-
+#|
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
 ;    )
@@ -18,12 +18,12 @@
       (example "there was a click on that link")
       )
      ))
-))
+))|#
 
 (define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::click
-   (wordfeats (W::morph (:forms (-vb) :nom W::click)))
+   (wordfeats (W::morph (:forms (-vb) :nom W::click :nomobjpreps (w::on w::of))))
    (SENSES
     ((EXAMPLE "click on the url")
      (LF-PARENT ONT::click)

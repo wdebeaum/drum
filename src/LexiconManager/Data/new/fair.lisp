@@ -10,7 +10,7 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date 20061106 :comments nil :wn ("fair%5:00:00:moderate:00") :comlex (ADJ-PP-FOR))
      (example "a good book")
      (LF-PARENT ONT::good)
-     (SEM (f::gradability +) (f::orientation ont::less) (f::intensity ont::lo))
+     (SEM (f::gradability +) (f::orientation ont::pos) (f::intensity ont::lo))
      (TEMPL central-adj-templ)
      )
 ;;;    ((meta-data :origin trips :entry-date 20060824 :change-date 20061106 :comments nil :wn ("fair%5:00:00:moderate:00") :comlex (EXTRAP-ADJ-FOR-TO-INF))
@@ -29,7 +29,7 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date 20061106 :comments nil :wn ("fair%5:00:00:moderate:00") :comlex (ADJ-PP-FOR))
      (EXAMPLE "a solution good for him")
      (LF-PARENT ONT::good)
-     (SEM (f::gradability +) (f::orientation ont::less) (f::intensity ont::lo))
+     (SEM (f::gradability +) (f::orientation ont::pos) (f::intensity ont::lo))
      ;; this is another indirect sense of "for"
      ;; the main sense is adj-purpose-templ for cases such as "this is good for treating cancer"
      ;; the adj-affected-templ is for cases when adjective describes how people are affected, such as "this is good for him" where one has to infer the exact action/result it is good for
