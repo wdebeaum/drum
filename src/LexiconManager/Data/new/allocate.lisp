@@ -5,6 +5,7 @@
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
  (W::allocate
+   (wordfeats (W::morph (:forms (-vb) :nom w::allocation)))
    (SENSES
     ((lf-parent ont::assign)
      (TEMPL AGENT-AFFECTED-TEMPL)

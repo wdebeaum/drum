@@ -5,6 +5,7 @@
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::compute
+   (wordfeats (W::morph (:forms (-vb) :nom w::computation)))
    (SENSES
     ((LF-PARENT ONT::calculation)
      (TEMPL AGENT-FORMAL-XP-TEMPL)

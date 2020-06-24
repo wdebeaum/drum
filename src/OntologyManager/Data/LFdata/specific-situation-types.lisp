@@ -3755,13 +3755,18 @@
 
 (define-type ONT::TRANSFORMATION
  :parent ONT::change
- :wordnet-sense-keys ("transform%2:30:00" "transform%2:30:03" "metabolize%2:34:00")
+ :wordnet-sense-keys ("convert%2:30:03" "metabolize%2:34:00" "transform%2:30:00" "transform%2:30:03")
  :sem (F::SITUATION (F::Aspect F::Dynamic))
  :arguments (;;(:REQUIRED ONT::affected ((? rcp F::Phys-obj f::abstr-obj f::situation)))
 	     (:optional  ONT::affected1 ((? transform-aff1 F::Phys-obj f::abstr-obj)))
              (:OPTIONAL ONT::Agent)
              (:OPTIONAL ONT::RESULT)
              )
+ )
+
+(define-type ONT::encode
+ :wordnet-sense-keys ("encode%2:32:00")
+ :parent ONT::transformation
  )
 
 (define-type ONT::continuous-change

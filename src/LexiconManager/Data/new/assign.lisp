@@ -5,6 +5,7 @@
 (define-words :pos W::v
  :words (
   (W::assign
+   (wordfeats (W::morph (:forms (-vb) :nom w::assignment)))
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("future_having-13.3") :wn ("assign%2:40:01"))
        ;;(meta-data :origin lou :entry-date 20040311 :change-date 20051208 :comments lou-sent-entry)
