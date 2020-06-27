@@ -1,6 +1,6 @@
 # ARKL.pm
 #
-# Time-stamp: <Mon Apr  3 09:41:11 CDT 2017 lgalescu>
+# Time-stamp: <Fri Jun 26 17:38:03 CDT 2020 lgalescu>
 #
 # Author: Roger Carff <rcarff@ihmc.us>, 1 Mar 2017
 #
@@ -86,7 +86,7 @@ use StringParser;
 local $util::Log::Caller_Info = 0;
 
 use strict;
-use warnings FATAL => 'all';
+use warnings;
 
 my $AKRL_ERROR_MISSING_INDICATOR = -10;
 my $AKRL_ERROR_MISSING_TOKEN = -11;
@@ -538,17 +538,23 @@ sub createEKBTerm
             # find the matched-name from the list of matches
             my $matches = $drumTerm->getMatches();
             my $matchedName = undef;
+	    my $textInput = undef;
             if (defined ($matches) && ref($matches) eq "ARRAY" && $matches > 0)
             {
                 foreach my $match (@$matches)
                 {
-                    if ($match->getScore() == $drumTerm->getScore())
+		  if ($match->getScore() == $drumTerm->getScore())
                     {
                         $matchedName = $match->getMatched();
                         if (defined ($matchedName))
                         {
                             $matchedName =~ s/\"//g;
                         }
+                        $textInput = $match->getInput();
+                        if (defined ($textInput))
+                        {
+                            $textInput =~ s/\"//g;
+			}
                         last;
                     }
                 }
@@ -560,10 +566,11 @@ sub createEKBTerm
             }
 
             my $drumTermNode = make_node("drum-term",
-                {  dbid => $id,
-                    'match-score' => $drumTerm->getScore(),
-                    'matched-name' => $matchedName,
-                    name => $name
+                {  'dbid' => $id,
+		   'match-score' => $drumTerm->getScore(),
+		   'matched-name' => $matchedName,
+		   'name' => $name,
+		   'text-input' => $textInput
                 });
             # Add the Ont Types
             my $ontTypes = $drumTerm->getOntTypes();

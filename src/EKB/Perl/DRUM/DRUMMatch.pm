@@ -12,7 +12,7 @@ use Data::Dumper;
 local $util::Log::Caller_Info = 0;
 
 use strict;
-use warnings FATAL => 'all';
+use warnings; 
 
 sub new
 {
@@ -24,6 +24,7 @@ sub new
         $self->{SCORE} = $data->{":score"};
         $self->{MATCHED} = $data->{":matched"};
         $self->{STATUS} = $data->{":status"};
+        $self->{INPUT} = $data->{":input"};
     }
     bless $self, $class;
     return $self;
@@ -78,6 +79,13 @@ sub getStatus
     return $self->{STATUS};
 }
 
+# returns a string containing the input text or undef
+sub getInput
+{
+    my $self = shift;
+    return $self->{INPUT};
+}
+
 
 sub toString
 {
@@ -99,6 +107,11 @@ sub toString
     if (defined($tmp))
     {
         $result = $result . " Status:$tmp";
+    }
+    $tmp = $self->getInput();
+    if (defined($tmp))
+    {
+        $result = $result . " Input:$tmp";
     }
 
     return $result;

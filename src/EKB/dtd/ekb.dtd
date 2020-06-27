@@ -3,7 +3,7 @@
 <!-- DTD schema for the EKB
 
 Author: Lucian Galescu <lgalescu@ihmc.us> 03/04/2016
-$Id: ekb.dtd,v 1.2 2018/10/26 02:09:59 lgalescu Exp $
+$Id: ekb.dtd,v 1.3 2020/06/26 22:44:48 lgalescu Exp $
 
 When the EKB is used for annotation, textual elements must be present (eg, <input>, <text>, @start, @end, @uttnum, @paragraph). 
 
@@ -276,7 +276,8 @@ List of terms grounded in specific bioresources.
   dbid %dbid; #IMPLIED
   name CDATA #IMPLIED
   match-score CDATA #IMPLIED
-  matched-name CDATA #IMPLIED>
+  matched-name CDATA #IMPLIED
+  text-input CDATA #IMPLIED>
 <!-- Drum term types
 -->
 <!ELEMENT types (type)+>

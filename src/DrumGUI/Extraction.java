@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.61 2019/10/08 17:55:29 lgalescu Exp $
+ * $Id: Extraction.java,v 1.62 2020/06/26 21:51:45 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -942,21 +942,37 @@ public class Extraction {
         KQMLObject dbID = dsTerm.getKeywordArg(":ID");
         if (dbID != null)
             attrs.add(xml_attribute("dbid", normalizeDBID(dbID.toString())));
-        // score may be missing
+        // score [optional]
         KQMLObject matchScore = dsTerm.getKeywordArg(":SCORE");
         if (matchScore != null)
             attrs.add(xml_attribute("match-score", matchScore.toString()));
-        // name may be missing
+        // name [optional]
         KQMLObject nameObj = dsTerm.getKeywordArg(":NAME");
         if (nameObj != null)
             attrs.add(xml_attribute("name", xml_escape(nameObj.stringValue())));
-        // matches may be missing
+        // matches [optional]
         KQMLObject matches = dsTerm.getKeywordArg(":MATCHES");
         String matchedName = null;
+        KQMLObject textInput = null;
         if (matches != null) {
-            KQMLObject firstMatch = ((KQMLList) matches).get(0);
-            matchedName = ((KQMLList) firstMatch).getKeywordArg(":MATCHED").stringValue();
-            attrs.add(xml_attribute("matched-name", xml_escape(matchedName)));
+            // look for first match with the top score
+            for (KQMLObject match: (KQMLList) matches) {
+                KQMLObject score = ((KQMLList) match).getKeywordArg(":SCORE");
+                Debug.warn("Checking: " + match);
+                Debug.warn("match score: " + score);
+                if (((KQMLToken) score).equals((KQMLToken) matchScore)) {
+                    // matched name
+                    matchedName = ((KQMLList) match).getKeywordArg(":MATCHED").stringValue();
+                    attrs.add(xml_attribute("matched-name", xml_escape(matchedName)));
+                    // matched text input [optional]
+                    textInput = ((KQMLList) match).getKeywordArg(":INPUT");
+                    if (textInput != null) 
+                        attrs.add(xml_attribute("text-input", xml_escape(textInput.stringValue())));
+                    else
+                        Debug.warn("No :INPUT in " + match);
+                    break;
+                }
+            }
         }
         return attrs;
     }

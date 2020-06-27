@@ -14,7 +14,7 @@ use util::Log;
 local $util::Log::Caller_Info = 0;
 
 use strict;
-use warnings FATAL => 'all';
+use warnings;
 
 sub new
 {

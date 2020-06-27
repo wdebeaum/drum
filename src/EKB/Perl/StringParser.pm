@@ -11,7 +11,7 @@ local $util::Log::Caller_Info = 0;
 local $util::Log::Quiet = 1;
 
 use strict;
-use warnings FATAL => 'all';
+use warnings;
 
 my $STRING_PARSER_ERROR_BAD_CONTEXT = -1;
 my $STRING_PARSER_ERROR_BAD_START = -3;
