@@ -2628,6 +2628,12 @@
  :wordnet-sense-keys ("gratitude%1:12:00")
 )
 
+(define-type ont::relief-scale
+ :sem (F::abstr-obj (F::scale ONT::RELIEF-SCALE))
+ :parent ont::experiencer-condition-scale
+ :wordnet-sense-keys ("relief%1:12:00")
+)
+
 (define-type ont::surprise-scale
  :sem (F::abstr-obj (F::scale ONT::SURPRISE-SCALE))
  :parent ont::experiencer-condition-scale

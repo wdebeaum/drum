@@ -4521,7 +4521,11 @@
  :sem (F::abstr-obj (F::scale ont::calmness-scale) )
  )
 
-
+(define-type ONT::relieved
+ :parent ONT::pos-experiencer-property-val
+ :wordnet-sense-keys ("alleviated%5:00:00:mitigated:00")
+ :sem (F::abstr-obj (F::scale ont::relief-scale) )
+ )
 
 ;;; negative experiencer properties
 
