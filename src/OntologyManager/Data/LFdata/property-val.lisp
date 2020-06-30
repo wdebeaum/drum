@@ -3094,7 +3094,7 @@
 
 ;; confused, surprised, happy
 (define-type ont::psychological-property-val
-    :parent ont::property-val
+    :parent ont::evaluation-attribute-val ;property-val
   :wordnet-sense-keys ("extroversive%3:00:00::" "extraversive%3:00:00::" "maladjusted%3:00:00::" "abnormal%3:00:03::" "introversive%3:00:00::" "introvertive%3:00:00::" "adjusted%3:00:02::" "psychosexual%3:01:00::")
     :arguments ((:REQUIRED ONT::FIGURE (F::phys-obj (f::intentional +) (f::origin (? org f::human f::non-human-animal))))) 
     :comment "properties pertaining to psychological, mental or emotional states"
@@ -4655,6 +4655,18 @@
  ; Antonym: ONT::smart (W::CLEVER W::INTELLIGENT W::SMART)
  :sem (F::abstr-obj (F::scale ont::intelligence-scale) (f::orientation f::neg))
 )
+
+(define-type ONT::intellectual-val
+  :parent ONT::intelligence-val ;intellect-val
+  :wordnet-sense-keys ("intellectual%3:00:00::")
+  :comment "(intellectual)"
+  )
+
+(define-type ONT::not-intellectual-val
+  :parent ONT::intelligence-val ;intellect-val
+  :wordnet-sense-keys ("nonintellectual%3:00:00::")
+  :comment "(nonintellectual)"
+  )
 
 ;;; deliberate, on purpose
 (define-type ont::intentionality-val
@@ -6605,6 +6617,7 @@
   :comment "(uncreative)"
   )
 
+#|
 (define-type ONT::intellect-val
   :parent ONT::psychological-property-val
   :comment "(intellectual)"
@@ -6621,6 +6634,7 @@
   :wordnet-sense-keys ("nonintellectual%3:00:00::")
   :comment "(nonintellectual)"
   )
+|#
 
 (define-type ONT::reservation-val
   :parent ONT::status-val

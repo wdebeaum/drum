@@ -587,7 +587,7 @@
 
 ; hit, strike
 (define-type ONT::HITTING
-    :wordnet-sense-keys ("beat%2:35:01" "hit%2:35:03" "strike%2:35:01" )
+    :wordnet-sense-keys ("beat%2:35:01" "blow%1:04:01" "hit%2:35:03" "strike%2:35:01" )
     :comment "an agent comes into contact with force with another object, typically harming the other object"
 					; :parent ONT::MOTION
     :parent ONT::cause-contact
@@ -597,7 +597,7 @@
 
 
 (define-type ONT::touch
-    :wordnet-sense-keys ("touch%2:35:00" "touch%1:04:00" "caress%2:35:00")
+    :wordnet-sense-keys ("caress%2:35:00" "lick%2:35:00" "touch%1:04:00" "touch%2:35:00")
     :parent ONT::cause-contact
     )
 
