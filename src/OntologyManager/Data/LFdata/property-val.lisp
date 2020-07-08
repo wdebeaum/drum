@@ -1204,6 +1204,11 @@
  :sem (F::abstr-obj (F::scale ont::configuration-property-scale))
 )
 
+(define-type ont::cordless-val
+  :parent ont::configuration-property-val ;substantial-property-val
+  :wordnet-sense-keys ("cordless%3:01:00" "wireless%3:00:00")
+)
+
 (define-type ont::equipped-val
  :wordnet-sense-keys ("equipped%3:00:00" "equipped%3:00:02" "equipped%5:00:00:prepared:00" "armed%3:00:01")
  :parent ont::configuration-property-val 
@@ -1352,21 +1357,24 @@
 ; :parent ont::substantial-property-val 
 ;)
 
-
+#|
 (define-type ont::cordless-val
  :parent ont::substantial-property-val 
  :wordnet-sense-keys ("cordless%3:01:00" "wireless%3:00:00")
 )
+|#
 
 (define-type ont::organic-val
  :parent ont::substantial-property-val 
- :wordnet-sense-keys ("organic%3:00:01" "organic%3:00:02")
+ :wordnet-sense-keys ("organic%3:00:02") ;"organic%3:00:01" 
 )
 
+#|
 (define-type ont::nuclear-val
  :parent ont::substantial-property-val 
  :wordnet-sense-keys ("nuclear%3:00:00")
 )
+|#
 
 #|
 ;; boneless, skinless
@@ -2445,6 +2453,22 @@
   :parent ont::property-val 
   :comment "properties that describe processes"
   :sem (F::abstr-obj (F::scale ont::process-property-scale))
+)
+
+(define-type ont::process-type-val
+  :parent ont::process-val
+  :comment "properties that describe process types"
+)
+
+;; relating to machines
+(define-type ont::mechanical-val
+ :parent ont::process-type-val ;physical-val
+ :wordnet-sense-keys ("nonmechanical%3:00:00::" "mechanical%3:00:00")
+)
+
+(define-type ont::nuclear-val
+ :parent ont::process-type-val ;substantial-property-val
+ :wordnet-sense-keys ("nuclear%3:00:00" "nuclear%3:01:01" "nuclear%3:01:02")
 )
 
 ;; adjectives meaning "can [not] be verb'd" for some verb
@@ -4961,16 +4985,18 @@
   )
 
 (define-type ont::physical-val
- :parent ONT::physics-val 
+ :parent ONT::associated-with-body-val ;physics-val 
  :wordnet-sense-keys ("corporeal%3:00:00::" "material%3:00:04::" "physical%3:00:00" "bodily%5:00:00:physical:00" )
  :arguments ((:optional ONT::GROUND )) 
 )
 
+#|
 ;; relating to machines
 (define-type ont::mechanical-val
- :parent ont::physical-val
+ :parent ont::process-type-val ;physical-val
  :wordnet-sense-keys ("nonmechanical%3:00:00::" "mechanical%3:00:00")
 )
+|#
 
 ;; monroe
 (define-type ONT::POLITICAL
@@ -6151,7 +6177,7 @@
 
 (define-type ONT::containing-substance-val
   :parent ONT::substantial-property-val
-  :wordnet-sense-keys ("metallic%3:00:00::" "metal%3:00:00::" "crystalline%3:00:00::" "leaded%3:00:00::" "starchy%3:00:00::" "nonmetal%3:00:00::" "alcoholic%3:00:00::" "vegetal%3:00:00::" "vegetational%3:00:00::" "vegetative%3:00:00::") ;"wet%3:00:04" "nonmetallic%3:00:00::" "noncrystalline%3:00:00::" "unleaded%3:00:00::" "leadless%3:00:00::"   
+  :wordnet-sense-keys ("alcoholic%3:00:00::" "crystalline%3:00:00::" "leaded%3:00:00::" "metallic%3:00:00::" "metal%3:00:00::" "nonmetal%3:00:00::" "organic%3:00:01" "starchy%3:00:00::" "vegetal%3:00:00::" "vegetational%3:00:00::" "vegetative%3:00:00::") ;"wet%3:00:04" "nonmetallic%3:00:00::" "noncrystalline%3:00:00::" "unleaded%3:00:00::" "leadless%3:00:00::"   
   :comment "(crystalline, alcoholic)"
   )
 
