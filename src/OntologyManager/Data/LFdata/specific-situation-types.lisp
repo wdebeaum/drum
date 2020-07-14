@@ -305,10 +305,13 @@
   )
 |#
 
+#|
 ;; CAET
 (define-type ont::stir
   :parent ont::move
+  :wordnet-sense-keys ("stir%2:35:04" "stir%2:38:01")
   )
+|#
 
 (define-type ONT::move-by-means
  :wordnet-sense-keys ("drive%2:38:11" "take%2:38:02" "take%2:38:11")
@@ -430,6 +433,12 @@
     :wordnet-sense-keys ("move%2:38:01")
     :parent ONT::MOVE
     )
+
+(define-type ont::stir
+  :parent ont::CAUSE-MOVE ;move
+  :wordnet-sense-keys ("stir%2:35:04" "stir%2:38:01")
+  )
+
 
 #|
 ; merged with MOVE-UPWARD
@@ -5163,11 +5172,13 @@
     :sem (F::situation (F::cause F::agentive) (F::time-span F::extended) (F::aspect F::dynamic) (F::trajectory -))
     )
 
+#|
 ; sunrise, sunset, dawn, dusk, twilight
 (define-type ont::nychthemeron-event
 ;  :parent ont::event-defined-by-activity
   :parent ont::natural-event
   )
+|#
 
 (define-type ONT::nonverbal-expression
  :wordnet-sense-keys ("express_emotion%2:37:00" "express_feelings%2:37:00")
