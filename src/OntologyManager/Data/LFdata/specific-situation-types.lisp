@@ -5235,7 +5235,7 @@
  )
 
 (define-type ONT::bet
- :wordnet-sense-keys ()
+ :wordnet-sense-keys ("bet%1:04:00" "bet%2:33:00")
  :parent ONT::event-of-causation
  :sem (F::situation (F::trajectory -))
  :arguments (

@@ -6,7 +6,7 @@ CONFIGDIR="$TRIPS_BASE/src/config"
 
 # get environment from a defs.mk file
 mk2env() {
-  `awk 'BEGIN { print "export" } /^([A-Z_]+) = ([^[:space:]]+)$/ { print " " $1 "=" $3 }' <$1`
+  eval "`perl -n -e 'BEGIN { print \"export\"; } if (/^([A-Z_]+) = ([^\\n]+)\$/) { print \" \$1=\\\"\$2\\\"\"; }' <$1`"
 }
 
 # get environment from lisp/defs.mk

@@ -1251,7 +1251,7 @@
  )
 
 (define-type ONT::method
-     :wordnet-sense-keys ("manner%1:07:01" "method%1:09:00" "way%1:04:01" "path%1:04:00" "path%1:06:00")
+     :wordnet-sense-keys ("manner%1:07:01" "means%1:06:00" "method%1:09:00" "path%1:04:00" "path%1:06:00" "way%1:04:01")
      :parent ONT::ps-object
      )
 
