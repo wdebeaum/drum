@@ -1157,7 +1157,7 @@
     )
 
 (define-type ONT::doctrine
- :wordnet-sense-keys("doctrine%1:09:00" "ideology%1:09:01")
+ :wordnet-sense-keys("doctrine%1:09:00" "faith%1:09:00" "ideology%1:09:01")
  :parent ONT::knowledge-belief
 )
 
