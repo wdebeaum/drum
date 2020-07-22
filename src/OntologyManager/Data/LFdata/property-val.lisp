@@ -975,6 +975,7 @@
  :sem (F::abstr-obj (F::scale ont::not-likely-scale))
 )
 
+#|
 (define-type ont::predictability-val
  :parent ont::information-property-val 
  :sem (F::abstr-obj (F::scale ont::predictability-scale))
@@ -991,6 +992,7 @@
  :wordnet-sense-keys ("unpredictable%3:00:00" "unforeseeable%5:00:00:unpredictable:00" )
  :sem (F::abstr-obj (F::scale ont::predictability-scale) (f::orientation f::neg))
 )
+|#
 
 ;; understandable
 (define-type ont::comprehensibility-val
@@ -1169,11 +1171,13 @@
  :sem (F::abstr-obj (F::scale ont::false-scale))
 )
 
+#|
 ;; verifiability-val
 (define-type ont::verifiability-val
  :parent ont::information-property-val 
  :sem (F::abstr-obj (F::scale ont::reproducibility-scale))
 )
+
 
 (define-type ont::verifiable-val
  :parent ont::verifiability-val
@@ -1186,6 +1190,8 @@
  :wordnet-sense-keys ("unverifiable%5:00:00:subjective:00" "unreproducible%3:00:00")
  :sem (F::abstr-obj (F::scale ont::reproducibility-scale) (f::orientation f::neg))
 )
+|#
+
 
 ;; PHYSICAL-PROPERTY
 (define-type ont::physical-property-val
@@ -2620,6 +2626,41 @@
 
 (define-type ont::w-able-val
  :parent ont::rw-status-val 
+)
+
+(define-type ont::predictability-val
+ :parent ont::can-be-done-val ;information-property-val 
+ :sem (F::abstr-obj (F::scale ont::predictability-scale))
+)
+
+(define-type ont::predictable-val
+ :parent ont::predictability-val 
+ :wordnet-sense-keys ("predictable%3:00:00" "foreseeable%5:00:00:predictable:00" )
+ :sem (F::abstr-obj (F::scale ont::predictability-scale) (f::orientation f::pos))
+)
+
+(define-type ont::not-predictable-val
+ :parent ont::predictability-val
+ :wordnet-sense-keys ("unpredictable%3:00:00" "unforeseeable%5:00:00:unpredictable:00" )
+ :sem (F::abstr-obj (F::scale ont::predictability-scale) (f::orientation f::neg))
+)
+
+;; verifiability-val
+(define-type ont::verifiability-val
+ :parent ont::can-be-done-val ;information-property-val 
+ :sem (F::abstr-obj (F::scale ont::reproducibility-scale))
+)
+
+(define-type ont::verifiable-val
+ :parent ont::verifiability-val
+ :wordnet-sense-keys ("verifiable%5:00:00:objective:00" "provable%5:00:00:obvious:00" "reproducible%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::reproducibility-scale) (f::orientation f::pos))
+)
+
+(define-type ont::not-verifiable-val
+ :parent ont::verifiability-val
+ :wordnet-sense-keys ("unverifiable%5:00:00:subjective:00" "unreproducible%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::reproducibility-scale) (f::orientation f::neg))
 )
 
 ;; Relating to time
@@ -5642,6 +5683,7 @@
 (define-type ONT::dignity-val
   :parent ONT::evaluation-attribute-val
   :comment "(dignified)"
+  :sem (F::abstr-obj (F::scale ont::pride-scale))
   )
 
 (define-type ONT::dignified-val

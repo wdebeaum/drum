@@ -1564,12 +1564,14 @@
  :parent ont::ordered-domain 
 )
 
+#|
 ;; comprehensibility
 (define-type ont::comprehensibility-scale
  :sem (F::abstr-obj (F::scale ONT::COMPREHENSIBILITY-SCALE))
  :parent ont::information-property-scale
  :wordnet-sense-keys ("comprehensibility%1:07:00")
 )
+|#
 
 ;; consistency
 (define-type ont::consistency-scale
@@ -1599,12 +1601,14 @@
  :wordnet-sense-keys ("precision%1:07:00")
 )
 
+#|
 ;; predictability
 (define-type ont::predictability-scale
  :sem (F::abstr-obj (F::scale ONT::PREDICTABILITY-SCALE))
  :parent ont::information-property-scale
  :wordnet-sense-keys ("predictability%1:07:00")
 )
+|#
 
 ;; relevance
 (define-type ont::relevance-scale
@@ -1620,12 +1624,14 @@
  :wordnet-sense-keys ("validity%1:07:01")
 )
 
+#|
 ;; reproducibility
 (define-type ont::reproducibility-scale
  :sem (F::abstr-obj (F::scale ONT::REPRODUCIBILITY-SCALE))
  :parent ont::information-property-scale
  :wordnet-sense-keys ("reproducibility%1:07:00")
 )
+|#
 
 ;; trueness scale
 (define-type ont::trueness-scale
@@ -2169,7 +2175,7 @@
 ;; can be done
 (define-type ont::can-be-done-scale
  :sem (F::abstr-obj (F::scale ONT::CAN-BE-DONE-SCALE))
- :parent ont::process-property-scale
+ :parent ont::ordered-domain ;process-property-scale
 )
 
 ;; changeability
@@ -2177,6 +2183,13 @@
  :sem (F::abstr-obj (F::scale ONT::CHANGEABILITY-SCALE))
  :parent ont::can-be-done-scale
  :wordnet-sense-keys ("changeability%1:07:00")
+)
+
+;; comprehensibility
+(define-type ont::comprehensibility-scale
+ :sem (F::abstr-obj (F::scale ONT::COMPREHENSIBILITY-SCALE))
+ :parent ont::can-be-done-scale ;information-property-scale
+ :wordnet-sense-keys ("comprehensibility%1:07:00")
 )
 
 ;; manageability
@@ -2200,11 +2213,25 @@
  :wordnet-sense-keys ("portability%1:07:00")
 )
 
+;; predictability
+(define-type ont::predictability-scale
+ :sem (F::abstr-obj (F::scale ONT::PREDICTABILITY-SCALE))
+ :parent ont::can-be-done-scale ;information-property-scale
+ :wordnet-sense-keys ("predictability%1:07:00")
+)
+
 ;; repleaceability
 (define-type ont::replaceability-scale
  :sem (F::abstr-obj (F::scale ONT::REPLACEABILITY-SCALE))
  :parent ont::can-be-done-scale
  :wordnet-sense-keys ("replaceability%1:07:00")
+)
+
+;; reproducibility
+(define-type ont::reproducibility-scale
+ :sem (F::abstr-obj (F::scale ONT::REPRODUCIBILITY-SCALE))
+ :parent ont::can-be-done-scale ;information-property-scale
+ :wordnet-sense-keys ("reproducibility%1:07:00")
 )
 
 ;; accessibility - same thing as availability??
@@ -2650,7 +2677,7 @@
 (define-type ont::pride-scale
  :sem (F::abstr-obj (F::scale ONT::PRIDE-SCALE))
  :parent ont::experiencer-condition-scale 
- :wordnet-sense-keys ("pride%1:12:00")
+ :wordnet-sense-keys ("dignity%1:07:00" "pride%1:12:00")
  ;; WORDS: pride
 )
 
