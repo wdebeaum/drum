@@ -350,8 +350,8 @@
      :syntax (merge-in-defaults wfeat 
 				  (append (sense-definition-syntax sense)
 					  (list (cons 'w::template (if (sense-definition-params sense)
-								       (list (sense-definition-templ sense)
-									     (car (sense-definition-params sense)))
+								       (list (list (sense-definition-templ sense)
+									     (car (sense-definition-params sense))))
 								       (list (sense-definition-templ sense)))))
 					  (syntax-template-syntax templdef)))
   ;   :template 'template

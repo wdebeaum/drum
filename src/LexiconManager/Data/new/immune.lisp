@@ -14,3 +14,15 @@
 )
 ))
 
+(define-words :pos W::adj
+ :words (
+  (w::immune
+  (senses
+   ((lf-parent ont::not-vulnerable-val)
+    (TEMPL central-adj-templ)
+    (EXAMPLE "he was immune to persuasion")
+    )
+   )
+)
+))
+
