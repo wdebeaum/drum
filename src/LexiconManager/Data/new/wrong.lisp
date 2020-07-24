@@ -17,6 +17,11 @@
      (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::PTYPE W::For))))
      (SYNTAX (W::allow-deleted-comp -))
      )
+    ((lf-parent ont::not-moral-val)
+    (TEMPL central-adj-templ)
+    (EXAMPLE "an immoral and unwinnable war")
+    )
+
     )
    )
 ))

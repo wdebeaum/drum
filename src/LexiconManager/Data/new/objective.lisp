@@ -13,3 +13,15 @@
    )
 ))
 
+(define-words :pos W::adj
+ :words (
+  (w::objective
+  (senses
+   ((lf-parent ont::not-biased-val)
+    (TEMPL central-adj-templ)
+    (EXAMPLE "an objective appriasal")
+    )
+   )
+)
+))
+
