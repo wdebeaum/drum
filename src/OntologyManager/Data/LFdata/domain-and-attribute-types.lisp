@@ -697,7 +697,8 @@
 )
 
 (define-type ont::shape-scale
- :sem (F::abstr-obj (F::scale ONT::SHAPE-SCALE))
+    :sem (F::abstr-obj (F::scale ONT::SHAPE-SCALE))
+     :wordnet-sense-keys ("shape%1:03:00")
  :parent ont::appearance-scale
 )
 

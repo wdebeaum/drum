@@ -36,7 +36,7 @@
  )
 
 (define-type ONT::representation
- :wordnet-sense-keys ("representation%1:09:00")
+ :wordnet-sense-keys ("representation%1:09:00" "figure%1:25:00")
  :parent ONT::mental-construction
  :sem (F::Abstr-obj (f::container +))
  :arguments ((:OPTIONAL ONT::FIGURE) ;(f::situation (f::information f::mental-construct) (f::cause f::mental)))
@@ -1159,6 +1159,7 @@
 (define-type ONT::doctrine
  :wordnet-sense-keys("doctrine%1:09:00" "faith%1:09:00" "ideology%1:09:01")
  :parent ONT::knowledge-belief
+ :comment "A system of beliefs"
 )
 
 (define-type ONT::understanding

@@ -1521,7 +1521,7 @@
 
 (define-type ONT::setting
     :parent ONT::location
-    :wordnet-sense-keys ("setting%1:26:00" "background%1:26:00" "scope%1:26:00" "situation%1:26:00")
+    :wordnet-sense-keys ("setting%1:26:00" "background%1:26:00" "scope%1:26:00")
     )
 
 (define-type ONT::ROUTE

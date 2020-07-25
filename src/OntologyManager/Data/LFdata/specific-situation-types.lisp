@@ -2238,7 +2238,8 @@
     )
 
 (define-type ONT::reject
- :wordnet-sense-keys ("bounce%2:40:01" "decline%2:40:00" "dismiss%2:32:02" "pass_up%2:40:00" "refuse%2:40:00" "refuse%2:41:00" "reject%2:40:00" "turn_down%2:40:00" "deny%2:32:05" "deny%2:40:00" "refuse%2:32:00" "refuse%2:40:01" "refuse%2:42:04" "reject%2:31:00")
+    :wordnet-sense-keys ("bounce%2:40:01" "decline%2:40:00" "dismiss%2:32:02" "pass_up%2:40:00" "refuse%2:40:00" "refuse%2:41:00" "reject%2:40:00" "turn_down%2:40:00" "deny%2:32:05" "deny%2:40:00" "refuse%2:32:00" "refuse%2:40:01" "refuse%2:42:04" "reject%2:31:00"
+					  "rejection%1:04:00")
  :parent ONT::response
  )
 
@@ -2671,7 +2672,7 @@
 
 (define-type ONT::tie-compete
  :parent ONT::compete
-  :wordnet-sense-keys ("tie%2:33:00" "tie%1:11:00")
+  :wordnet-sense-keys ("tie%2:33:00" "tie%1:11:00" "tie%1:26:00")
   )
 
 (define-type ONT::score-compete
@@ -3706,8 +3707,8 @@
    :wordnet-sense-keys ("clink%2:39:01" "clink%2:39:00" "tinkle%2:39:00" "sound%2:39:00" "ring%2:39:00" "play%2:36:00" "play%2:36:11" "play%2:36:05" "sound%2:39:01" "ring%2:39:01")
   ;; :parent ont::emit
    :parent ont::emit-giveoff-discharge ;; 20121022 GUM change parent; this change requires adding an ont::effect role
-   :arguments ((:OPTIONAL ONT::effect (F::situation))
-	       )
+  ;; :arguments ((:OPTIONAL ONT::effect (F::situation)))
+	       
    )
 
 (define-type ont::emit-vapor
@@ -5044,7 +5045,8 @@
 ;; for positionals: lie, stand
 (define-type ONT::BE-AT-LOC
  :comment "relations that indicate an postural attitude as well as a location"
- :wordnet-sense-keys ("sit%2:35:00" "sit_down%2:35:03" "settle%2:30:00" "hang%2:35:03" "hang%2:35:05" "hang%2:35:06" "hang%2:42:01" "lie%2:35:00" "trail%2:35:05" "lie%2:42:00")
+ :wordnet-sense-keys ("sit%2:35:00" "sit_down%2:35:03" "settle%2:30:00" "hang%2:35:03" "hang%2:35:05" "hang%2:35:06" "hang%2:42:01" "lie%2:35:00" "trail%2:35:05" "lie%2:42:00"
+				    "rise%2:42:00")
  :parent ONT::BE-AT
  :sem (F::Situation (F::aspect F::stage-level))
  :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj)) ;; formal is restricted to phys-obj; otherwise same as be-at
@@ -5823,7 +5825,7 @@
 
 (define-type ont::status
   :parent ont::situation-root
-  :wordnet-sense-keys ("condition%1:26:00" "status%1:26:01" "state%1:26:02" "state_of_matter%1:26:00" "state%1:03:00"  "case%1:09:00")
+  :wordnet-sense-keys ("condition%1:26:00" "status%1:26:01" "state%1:26:02" "state_of_matter%1:26:00" "state%1:03:00"  "case%1:09:00" "situation%1:26:00")
  :arguments ((:OPTIONAL ONT::FIGURE)
              )
  )
@@ -5980,7 +5982,7 @@
 
 
 (define-type ONT::medical-disorders-and-conditions
- :wordnet-sense-keys ("disorder%1:26:03")
+ :wordnet-sense-keys ("disorder%1:26:03" "pathological_state%1:26:00")
  :parent ONT::event-type
  :sem (F::situation ) ;;(F::container +))
  :arguments ((:OPTIONAL ONT::FIGURE (F::phys-obj (F::origin (? og2 f::human f::non-human-animal))))

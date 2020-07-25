@@ -87,8 +87,8 @@
  )
 
 (define-type ONT::Communication
- :wordnet-sense-keys ("put_across%2:32:00" "pass_along%2:32:00" "pass%2:32:01" "pass_on%2:32:00" "communicate%2:32:01" "intercommunicate%2:32:00" "communicate%2:32:00" "communication%1:10:01" 
-"communication%1:24:00")
+ :wordnet-sense-keys ("put_across%2:32:00" "pass_along%2:32:00" "pass%2:32:01" "pass_on%2:32:00" "communicate%2:32:01" "intercommunicate%2:32:00" "communicate%2:32:00" "communication%1:10:01" "speech_act%1:10:00"
+					   "communication%1:24:00")
  :parent ONT::agent-interaction
  :comment "activity that involves transfer of information between agents"
  :sem (F::Situation (F::Cause F::agentive) (F::Trajectory -));  (F::Aspect F::bounded) (F::Time-span F::extended))

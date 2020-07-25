@@ -1238,6 +1238,7 @@
 (define-type ONT::Time-object
     :comment "objects that refer to temporal locations in some way"
     :parent ONT::ANY-TIME-OBJECT
+    :wordnet-sense-keys ("time%1:03:00" )
     :arguments ((:OPTIONAL ONT::FIGURE))
     ;:sem (F::time (F::time-scale (? sc F::point F::interval)))
     )
