@@ -11,7 +11,7 @@
     ;;;; I know (that) he...
     ((LF-PARENT ONT::KNOW)
       (meta-data :origin trips :entry-date unknown :change-date nil :comments nil :wn ( "know%2:31:02"))
-     (TEMPL experiencer-theme-xp-templ (xp (% W::cp (w::ctype w::s-that) (w::wh w::-))))
+     (TEMPL experiencer-formal-xp-templ (xp (% W::cp (w::ctype w::s-that) (w::wh w::-))))
      )
      ((LF-PARENT ONT::know)
       (meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("consider-29.9-2") :wn ("believe%2:31:04:"))
@@ -22,7 +22,7 @@
     ((LF-PARENT ONT::KNOWIF)
      (example "I know whether he left")
      (meta-data :origin csli-ts :entry-date 20070323 :change-date nil :comments nil :wn ("know%2:31:01"))
-     (TEMPL experiencer-theme-xp-templ (xp (% W::cp (w::ctype w::s-if) 
+     (TEMPL experiencer-formal-xp-templ (xp (% W::cp (w::ctype w::s-if) 
 					   (w::wh w::-))))
      )
     ((LF-PARENT ONT::KNOWIF)
@@ -38,7 +38,7 @@
     ;;;; I know how to.../ I know where he is
    (;(LF-PARENT ONT::FAMILIAR)
     (LF-PARENT ONT::know)
-    (TEMPL experiencer-theme-xp-templ (xp (% W::NP (W::sort W::wh-desc))))
+    (TEMPL experiencer-formal-xp-templ (xp (% W::NP (W::sort W::wh-desc))))
     )
    
     ((LF-PARENT ONT::FAMILIAR)

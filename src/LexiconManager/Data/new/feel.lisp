@@ -23,7 +23,7 @@
    (SENSES
      ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("consider-29.9-2"))
       (LF-PARENT ONT::believe)
-      (TEMPL experiencer-theme-xp-templ (xp (% w::cp (w::ctype w::s-finite)))) ; like believe,think
+      (TEMPL experiencer-formal-xp-templ (xp (% w::cp (w::ctype w::s-finite)))) ; like believe,think
      (PREFERENCE .99)
       )
      ))))

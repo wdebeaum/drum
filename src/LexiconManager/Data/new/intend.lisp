@@ -9,7 +9,7 @@
    (SENSES
     ((LF-PARENT ONT::Intention)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL experiencer-theme-xp-templ (xp (% W::cp (W::ctype W::s-to))))
+     (TEMPL experiencer-formal-xp-templ (xp (% W::cp (W::ctype W::s-to))))
      (EXAMPLE "remove the addresses if you don't intend to use them")
      (meta-data :origin task-learning :entry-date 20050916 :change-date nil :comments nil :vn ("wish-62") :wn ("intend%2:31:00" "intend%2:31:01"))
      )

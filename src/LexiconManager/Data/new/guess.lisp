@@ -21,7 +21,7 @@
     ((LF-PARENT ONT::suppose)
      (SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
      (example "I guess that we could try that")
-     (TEMPL experiencer-theme-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL experiencer-formal-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
      )
     ((LF-PARENT ONT::SUPPOSE)
      (example "I guess")

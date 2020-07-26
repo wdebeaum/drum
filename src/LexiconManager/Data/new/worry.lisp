@@ -19,7 +19,7 @@
     ((meta-data :origin trips :entry-date 20060414 :change-date 20090605 :comments nil :vn ("marvel-31.3-2"))
      (EXAMPLE "He worries about it ")
      (LF-PARENT ONT::state-of-worrying)
-     (TEMPL experiencer-Theme-XP-TEMPL (xp (% W::PP (W::ptype (? p W::about)))))
+     (TEMPL experiencer-formal-XP-TEMPL (xp (% W::PP (W::ptype (? p W::about)))))
      )
     )
    )

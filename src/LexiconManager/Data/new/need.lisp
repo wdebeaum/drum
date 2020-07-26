@@ -28,7 +28,7 @@
      )
     ((LF-PARENT ONT::want)
      (SEM (F::Aspect F::stage-level));; allow temporal modifiers here, as implicit /=action/
-     (TEMPL experiencer-THEME-XP-TEMPL)
+     (TEMPL experiencer-formal-XP-TEMPL)
      (example "Assembly is needed")
      )
     ((LF-PARENT ONT::WANT)

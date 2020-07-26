@@ -12,7 +12,7 @@
      (meta-data :origin task-learning :entry-date 20050819 :change-date nil )
      )
     ((LF-PARENT ONT::WANT)
-     (TEMPL experiencer-theme-xp-templ (xp (% W::cp (W::ctype W::s-that))))
+     (TEMPL experiencer-formal-xp-templ (xp (% W::cp (W::ctype W::s-that))))
      (EXAMPLE "I wish (that) we could have spaghetti for dinner")
      (meta-data :origin task-learning :entry-date 20060208 :change-date nil  :vn ("wish-62"))
      )

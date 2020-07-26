@@ -10,7 +10,7 @@
     (
      (LF-PARENT ONT::ASSUME)
      (SEM (F::Aspect F::stage-level))
-     (TEMPL experiencer-formal-as-comp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL experiencer-formal-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
      )
     (
      (LF-PARENT ONT::ASSUME)

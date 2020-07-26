@@ -12,7 +12,7 @@
     ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("consider-29.9-2"))
      (LF-PARENT ONT::believe)
      (SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
-     (TEMPL experiencer-theme-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL experiencer-formal-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
      )
     ;;;; swier -- I didn't think of that.
     ((LF-PARENT ONT::cogitation)
@@ -35,7 +35,7 @@
     ((LF-PARENT ONT::believe)
      (SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
      (example "what do you think")
-     (TEMPL experiencer-theme-xp-templ)
+     (TEMPL experiencer-formal-xp-templ)
      )
     )
    )
