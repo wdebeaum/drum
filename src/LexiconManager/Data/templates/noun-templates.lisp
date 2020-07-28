@@ -691,7 +691,7 @@
   ;;;;; Relational nouns tagged with kinship-reln, e.g. mother
   (KINSHIP-RELN-TEMPL
    (SYNTAX(W::AGR W::3S) (W::MORPH (:FORMS (-S-3P))) (W::CASE (? cas W::sub W::obj)) (w::allow-deleted-comp +) (W::SORT 
-      W::KINSHIP-RELN) (W::MASS W::COUNT))
+      W::OTHER-RELN) (W::MASS W::COUNT))
    (ARGUMENTS
     (SUBCAT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::FIGURE)
     ))

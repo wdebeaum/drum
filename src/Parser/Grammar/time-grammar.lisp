@@ -1368,7 +1368,7 @@
       (lex ?hlex) (headcat ?hcat) (day-specified +) (sem ?sem)) 
      -dt-dow> 1.0
      (head (NP (class (? xx ONT::DAY-NAME)) ;; ONT::TODAY ONT::YESTERDAY ONT::TOMORROW))
-	       (headless -)
+	       (headless -) (complex -)
 	       (lf ?dow)  (lex ?hlex) (headcat ?hcat) (sem ?sem) (var ?var) (wh -)
 	       )))
     ))

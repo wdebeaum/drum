@@ -552,7 +552,7 @@
     -N-prefix> 1.01
     (ADJ (prefix +)
      (LF ?qual) (ARG ?v) (VAR ?adjv) (WH -)
-     (argument (% NP (sem ?argsem))) 
+     (argument (% NP (sem ?nsem))) 
      (COMPLEX -) (comparative ?com) (Set-modifier -)
      (post-subcat -)
      )
@@ -716,7 +716,7 @@
      (subcat ?!subcat)
      )
     -N1-reln-parts> 
-    (head (n (sort reln) (lf ?lf) (RESTR ?r)
+    (head (n1 (sort reln) (lf ?lf) (RESTR ?r)
 	     (subcat ?!subcat)
 	     (subcat (% ?scat (var ?v1) (sem ?ssem) (lf ?lf2) (gap ?gap) )) ;;(sort (? srt pred individual set comparative reln))))
 	     (SEM ($ ?sem (f::scale -))) ;(SEM ($ F::PHYS-OBJ))
@@ -1140,14 +1140,15 @@
     
     ;; nouns with a subcat
     ;; e.g.  trucks of oranges
-    ((N1 (RESTR (& (?!subcatmap ?v1))) (SORT ?sort) (COMPLEX ?complex)
+    ((N1 (RESTR (& (?!subcatmap ?v1))) (SORT PRED) (COMPLEX ?complex)
       (CLASS ?LF) (GAP ?gap) (POSTADVBL -) (QUAL -) (ARGUMENT-MAP ?am)
       (subcat (% -))
       )
      -N1-subcat1>
      (Head (N (VAR ?v) (lf ?LF)
 	    ;(SORT ?sort) (ARGUMENT-MAP ?am)
-	    (SORT (? !sort reln)) (ARGUMENT-MAP ?am) ; reln should go through n1-reln3
+	      ;; (? !sort reln))  : NB: THERE IS NO N1-RELN3!
+	      (ARGUMENT-MAP ?am) ; reln should go through n1-reln3
 	    (SUBCAT ?!subcat) 
 	    (subcat-map ?!subcatmap)
 	    (SUBCAT (% ?xx (var ?v1) (gap ?gap) (sem ?subcatsem) (postadvbl -)))
@@ -4037,7 +4038,7 @@
   ;; the phosphorylating Ras (phosphorylating has an optional LOC role)
  ((ADJP (ARG ?arg) (VAR ?v)  (SUBCATMAP ?!reln) (atype attributive-only)
            (ARGUMENT ?subj) (sem ?sem)
-           (LF (% PROP (class ?lf) (VAR ?v) 
+           (LF (% PROP (class (? cla ONT::EVENT-OF-CHANGE ONT::EVENT-OF-STATE)) (VAR ?v) 
 ;                  (CONSTRAINT (& (?!reln ?arg) (mod ?prefix)))
                   (CONSTRAINT ?newc)
                   (transform ?transform)
@@ -4045,7 +4046,7 @@
            )
      -adj-ing-opt-comp3> 0.97
      (head (V (VFORM (? vf ING)) (COMP3 (% ?!xx (w::optional +)))
-	      (GAP -) (LF ?lf) (sem ?sem)
+	      (GAP -) (sem ?sem) (LF (? cla ONT::EVENT-OF-CHANGE ONT::EVENT-OF-STATE))
               (SUBJ-MAP ?!reln) (SUBJ ?subj)
               (VAR ?v) (transform ?transform)
 ;	      (prefix ?prefix)
@@ -6396,11 +6397,11 @@
 ;;  simple conjuncts/disjunct of N1, e.g., the (dog and cat)
     ((N1 (ATTACH ?a) (var ?v) (agr ?agr-out) ;(agr 3p) ; ice and fire could be 3s or 3p
 	 (SEM ?sem) (gerund ?ger) 
-      (Status ?status-out)
+      ;;(Status ?status-out)
       (class ?class)
       (restr (& (operator ?op) 
-		(sequence ((% *PRO* (status ?status-out) (var ?v1) (class ?c1) (constraint ?con) (sem ?s1) (lex ?lex1))
-			   (% *PRO* (status ?status-out) (var ?v2) (class ?c2) (constraint ?con2) (sem ?s2) (lex ?lex2))))))
+		(sequence ((% *PRO* (status ONT::BARE) (var ?v1) (class ?c1) (constraint ?con) (sem ?s1) (lex ?lex1))
+			   (% *PRO* (status ONT::BARE) (var ?v2) (class ?c2) (constraint ?con2) (sem ?s2) (lex ?lex2))))))
       (CASE ?c)
       (mass ?m1) 
       (COMPLEX +) 
@@ -6409,22 +6410,26 @@
       (lex ?lex) ;(lex ?op)
       )
      -two-n1-conjunct> 
-     (head (N1 (SEM ?s1) (VAR ?v1) (agr ?agr)  (complex -) (expletive -) ;;(bare-np ?bnp)
+     (head (N1 (SEM ?s1) (VAR ?v1) (agr ?agr) ;; (complex -)  ;; I've disabled this temporarily as we need to allow things like "the head of the committee and leader of the senate"
+	       (expletive -) ;;(bare-np ?bnp)
 	    (generated ?gen1)  (time-converted ?tc1) (gerund ?ger)
 	    (lex ?lex1)
-	    (class ?c1) (status ?status) (CASE ?c) (restr ?con) (mass ?m2) ;; allowing mismatch on mass
+	    (class ?c1) 
+	    (CASE ?c) (restr ?con) (mass ?m2) ;; allowing mismatch on mass
 	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram]
 	    ))
      (conj (SEQ +) (LF ?op) (lex ?lex) (var ?v) ) ;;(status ?status))
-     (N1 (SEM ?s2) (VAR ?v2) (agr ?agr1)  (complex -) (expletive -) ;;(bare-np ?bnp)
+     (N1 (SEM ?s2) (VAR ?v2) (agr ?agr1)  ;;(complex -) ;; I've disabled this temporarily as we need to allow things like "a man and head of the committee"
+      (expletive -) ;;(bare-np ?bnp)
 	    (generated ?gen2)  (time-converted ?tc1)  (gerund ?ger)
 	     (lex ?lex2)
-	    (class ?c2) (status ?status2) (CASE ?c) (RESTR ?con2) (mass ?m1) ;; allowing mismatch on mass -- e.g. "fatigue and weakness"
+      (class ?c2) 
+      (CASE ?c) (RESTR ?con2) (mass ?m1) ;; allowing mismatch on mass -- e.g. "fatigue and weakness"
 	    (sort (? !sort unit-measure)))
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
      (logical-and (in1 ?gen1) (in2 ?gen2) (out ?generated))
-     (combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
+     ;;(combine-status (in1 ?status) (in2 ?status2) (out ?status-out))
      (recompute-agr (in1 ?agr) (in2 ?agr1) (out ?agr-out))
      )
     
@@ -7088,7 +7093,7 @@
       (transform ?transform) (sem ?nsem) (comparative ?cmp)
       (subcat ?subcat) ; pass up subcat so it can be used in -NP-ADJ-MISSING-HEAD-COMPAR> ; if we pass up both subcats we go into an infinite loop because this rule can be rematched!
         )           
-     -adj1-pred-onesubcat-conj-gap> 
+    -adj1-pred-onesubcat-conj-gap>  .98
      (head (ADJ1 (LF ?lf)  (VAR ?v)
         (transform ?transform) (comparative ?cmp)
         (SUBCAT ?subcat) (SUBCAT-MAP ?reln) (SUBCAT (% ?xx (var ?argv) (gap (% NP (var ?gapv) (sem ?argsem)))))

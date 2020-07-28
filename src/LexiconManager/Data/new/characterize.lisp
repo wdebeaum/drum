@@ -18,7 +18,7 @@
      (meta-data :origin step :entry-date 20080630 :change-date nil :comments nil :vn ("characterize-29.2"))
       (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (example "this was characterized by him")
-     (TEMPL AGENT-FORMAL-XP-TEMPL)
+     (TEMPL AGENT-NEUTRAL-XP-TEMPL)
      )
     ((LF-PARENT ONT::is-compatible-with)
      ;; changed templ to theme-cotheme so passive rule will work

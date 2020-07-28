@@ -15,12 +15,12 @@
 	(LSUBJ (% W::NP) ONT::AGENT)
 	(LOBJ (:parameter xp (:default (% W::NP))) ONT::FORMAL)
 	))
-      
+      #|
       (experiencer-THEME-XP-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::experiencer)
 	(LOBJ (:parameter xp (:default (% W::NP))) ONT::FORMAL)
-	))
+	))|#
 
       (AGENT-FORMAL-XP-CP-TEMPL
        (ARGUMENTS
@@ -44,13 +44,6 @@
 	(LCOMP (% W::CP  (W::ctype W::s-finite)) ONT::FORMAL)
 	))
 
-#|      (affected-THEME-XP-TEMPL
-       (ARGUMENTS
-	(LSUBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::affected)
-	(LOBJ (:parameter xp (:default (% W::NP))) ONT::FORMAL)
-	))
-|#
-
       (AFFECTED-FORMAL-XP-ADVBL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::affected)
@@ -58,12 +51,6 @@
 					  )) ONT::FORMAL)
 	))
 
-#|      (AGENT-THEME-XP-optional-TEMPL
-       (ARGUMENTS
-	(LSUBJ (% W::NP) ONT::AGENT)
-	(LOBJ (:parameter xp (:default (% W::NP))) ONT::FORMAL optional)
-	))
-|#
     
       (AGENT-RESULT-XP-NP-TEMPL
        (ARGUMENTS
@@ -79,28 +66,6 @@
 					     (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive ?exp)))))
 	      ONT::RESULT optional)
 	))
-
-#|      (theme-goal-XP-TEMPL
-       (ARGUMENTS
-	(LSUBJ (% W::NP) ont::formal)
-	(LOBJ (:parameter xp (:default (% W::NP))) ONT::RESULT)
-	))
-|#
-
-; nobody uses this
-      #|
-      (INSTRUMENT-THEME-XP-TEMPL
-       (ARGUMENTS
-	(LSUBJ (% W::NP) ONT::INSTRUMENT)
-	(LOBJ (:parameter xp (:default (% W::NP))) ONT::FORMAL)
-	))
-
-      (INSTRUMENT-affected-XP-TEMPL
-       (ARGUMENTS
-	(LSUBJ (% W::NP) ONT::INSTRUMENT)
-	(LOBJ (:parameter xp (:default (% W::NP (w::sort (? !xx W::unit-measure))))) ONT::affected)
-	))
-      |#
       
       (AGENT-AFFECTED-XP-NP-TEMPL
        (ARGUMENTS
@@ -143,12 +108,12 @@
 	(LSUBJ (% W::NP) ONT::neutral)
 	(LCOMP (:parameter xp (:default (% W::NP))) ONT::formal)
 	))
-
+#| retired: using experiencer-formal-xp-templ 
       (experiencer-formal-as-comp-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::experiencer)
 	(LCOMP (:parameter xp (:default (% W::NP))) ONT::formal)
-	))
+	))|#
 
       (AGENT-neutral-XP-TEMPL
        (ARGUMENTS
@@ -2180,7 +2145,7 @@
 (EXPERIENCER-FORMAL-XP-TEMPL
    (ARGUMENTS
     (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar) (w::expletive ?exp)) ONT::experiencer)
-    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::finite))) 
+    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-finite))) 
 		      ) ont::formal)
     ))
 

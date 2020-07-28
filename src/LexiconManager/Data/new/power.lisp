@@ -25,11 +25,10 @@
      (LF-PARENT ONT::power)
      (TEMPL MASS-PRED-TEMPL)
      )
-; 20111016 removing this sense to avoid competition w/ obtw demo sense ont::power
-;    ((meta-data :origin calo :entry-date 20050308 :change-date nil :wn ("power%1:19:00") :comments ;projector-purchasing)
-;     (LF-PARENT ONT::intensity)
-;     (TEMPL mass-PRED-TEMPL)
-;     )
+    (
+     (LF-PARENT ONT::able-scale)
+     (templ other-reln-templ (XP (% W::CP (W::CTYPE W::s-to))))
+     )
     )
    )
 ))

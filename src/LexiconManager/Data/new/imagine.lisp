@@ -16,7 +16,7 @@
      (LF-PARENT ONT::BELIEVE)
      (example "I imagine that this will work")
      (SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
-     (TEMPL experiencer-theme-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL experiencer-formal-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
      )
     )
    )

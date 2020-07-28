@@ -10,7 +10,7 @@
      (LF-PARENT ont::doubt)
      (example "he doubted that it would rain")
      (SEM (F::Aspect F::Indiv-level) (F::Time-span F::extended))
-     (TEMPL experiencer-formal-as-comp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL experiencer-formal-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
      )
     (
      (LF-PARENT ont::doubt)

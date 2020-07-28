@@ -16,7 +16,7 @@
     ((LF-PARENT ONT::BELIEVE)
      (example "I bet that I know what's going on")
      (SEM (F::Aspect F::Stage-level) (F::Time-span F::extended))
-     (TEMPL experiencer-theme-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
+     (TEMPL experiencer-formal-xp-templ (xp (% W::cp (W::ctype W::s-finite))))
      (meta-data :origin calo :entry-date 20041122 :change-date nil :comments caloy2)
      )
     ((meta-data :origin csli-ts :entry-date 20070320 :change-date nil :comments nil)

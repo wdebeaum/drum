@@ -13,14 +13,15 @@
 )
 ))
 
-(define-words :pos W::adj :templ CENTRAL-ADJ-TEMPL
+(define-words :pos W::adj :templ LESS-ADJ-TEMPL
  :tags (:base500)
  :words (
   (W::YOUNG
    (wordfeats (W::MORPH (:FORMS (-ER))))
    (SENSES
-    ((meta-data :origin csli-ts :entry-date 20070320 :change-date nil :comments nil :wn nil)
+    (
      (lf-parent ont::young-val)
+     (SEM (F::GRADABILITY F::+) (f::orientation ont::less) (f::intensity ont::med))
      )
     )
    )
