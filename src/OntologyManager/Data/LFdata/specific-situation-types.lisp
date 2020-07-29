@@ -1999,7 +1999,7 @@
 
 (define-type ONT::evoke-confusion
  :parent ONT::worsen-experience
- :wordnet-sense-keys ("confuse%2:37:00" "confuse%2:31:03" "flabbergast%2:31:00")
+ :wordnet-sense-keys ("confuse%2:37:00" "confuse%2:31:03" "flabbergast%2:31:00" "misrepresentation%1:04:00")
  )
 
 (define-type ONT::evoke-fear

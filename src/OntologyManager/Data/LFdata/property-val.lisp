@@ -3258,9 +3258,15 @@
  :sem (F::abstr-obj (F::scale ont::wiseness-scale))
 )
 
+(define-type ONT::not-discerning-val
+  :parent ONT::wiseness-val ;discernment-val
+  :wordnet-sense-keys ("indiscriminate%3:00:00::" "undiscerning%3:00:00::")
+  :comment "(indiscriminate)"
+  )
+
 (define-type ont::wise-val
  :parent ont::wiseness-val 
- :wordnet-sense-keys ("wise%3:00:00" )
+ :wordnet-sense-keys ("discerning%3:00:00::" "discriminate%3:00:00::" "wise%3:00:00" )
  :sem (F::abstr-obj (F::scale ont::wisdom-scale))
 )
 
@@ -3800,7 +3806,8 @@
 (define-type ont::sequence-val
  :parent ont::systematic-val ;systematicity-val ;relational-attribute-val 
  :arguments ((:optional ONT::GROUND )) 
- :sem (F::Abstr-obj (F::gradability - ))
+ ;:sem (F::Abstr-obj (F::gradability - ))
+ :sem (F::abstr-obj (F::gradability - ) (F::scale ont::sequence-scale))
  :comment "properties that deal with an object's location with respect to another object in an ordered sequence"
 )
 
@@ -7278,6 +7285,7 @@
   :comment "positive form of inexperience (naive)"
   )
 
+#|
 (define-type ONT::discernment-val
   :parent ONT::animal-propensity-val
   :comment "(discerning, discriminate)"
@@ -7295,6 +7303,7 @@
   :wordnet-sense-keys ("indiscriminate%3:00:00::" "undiscerning%3:00:00::")
   :comment "(indiscriminate)"
   )
+|#
 
 (define-type ONT::temporal-relation-val
   :parent ONT::temporal-val

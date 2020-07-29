@@ -9,7 +9,7 @@
    (SENSES
     ((meta-data :origin lam :entry-date 20050425 :change-date nil :comments lam-initial)
      (example "operation precedence")
-     (LF-PARENT ONT::mental-object)
+     (LF-PARENT ONT::sequence-scale) ;mental-object)
      (TEMPL count-pred-templ)
      )
     ))

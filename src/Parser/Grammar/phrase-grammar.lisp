@@ -1154,6 +1154,7 @@
 	    (SUBCAT (% ?xx (var ?v1) (gap ?gap) (sem ?subcatsem) (postadvbl -)))
 	    ))
      ?!subcat
+     (fix-gap-for-optional (gap ?gap) (key ?v1))
      (compute-complex (arg0 ?v1) (arg1 ?complex))
      )
 

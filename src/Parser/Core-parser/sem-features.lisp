@@ -315,6 +315,7 @@
 		  (setf (aref result i)
 			(compute-lub-value (aref s1 i) (aref s2 i)))))
 	       (t
+		(setq result (make-array *sem-size* :initial-element nil))
 		(setf (aref result 0)
 		      (make-var :name (gen-v-num 'v) ;;(gen-symbol 'v) 
 				:values (union (var-or-symbol-values type1) (var-or-symbol-values type2))))))

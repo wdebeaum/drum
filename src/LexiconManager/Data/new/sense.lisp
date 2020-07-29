@@ -7,7 +7,7 @@
   (W::SENSE
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("sense%1:09:04"))
-     (LF-PARENT ONT::mental-object)
+     (LF-PARENT ONT::wisdom-scale) ;mental-object)
      (LF-FORM W::sense)
      (TEMPL MASS-PRED-TEMPL)
      (EXAMPLE "that makes sense")

@@ -751,11 +751,13 @@
  :wordnet-sense-keys ("decisiveness%1:07:00")
 )
 
+#|
 (define-type ont::discernment-scale
  :sem (F::abstr-obj (F::scale ONT::DISCERNMENT-SCALE))
  :parent ont::behavioral-scale
  :wordnet-sense-keys ("discernment%1:09:00")
 )
+|#
 
 (define-type ont::disposition-scale
  :sem (F::abstr-obj (F::scale ONT::DISPOSITION-SCALE))
@@ -867,7 +869,7 @@
 (define-type ont::wisdom-scale
  :sem (F::abstr-obj (F::scale ONT::WISDOM-SCALE))
  :parent ont::wiseness-scale
- :wordnet-sense-keys ("judgment%1:07:00" "wisdom%1:09:01" "wiseness%1:07:00")
+ :wordnet-sense-keys ("discernment%1:09:00" "judgment%1:07:00" "wisdom%1:09:01" "wiseness%1:07:00")
 )
 
 (define-type ont::folly-scale
@@ -1543,7 +1545,7 @@
 (define-type ont::actual-scale
  :sem (F::abstr-obj (F::scale ONT::ACTUAL-SCALE))
  :parent ont::actuality-scale
- :wordnet-sense-keys ("actuality%1:26:00")
+ :wordnet-sense-keys ("actuality%1:26:00" "reality%1:07:00")
 )
 
 (define-type ont::non-actual-scale
@@ -2353,6 +2355,12 @@
   :parent ont::regularity-scale
   :wordnet-sense-keys ("intermittence%1:07:00" "irregularity%1:07:00")
   ;; irregularity
+)
+
+(define-type ont::sequence-scale
+  :sem (F::abstr-obj (F::scale ONT::SEQUENCE-SCALE))
+  :parent ont::systematicity-scale
+  :wordnet-sense-keys ("earliness%1:07:00")
 )
 
 ;; STATUS SCALE

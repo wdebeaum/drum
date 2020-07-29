@@ -1134,6 +1134,7 @@
     :parent ont::gathering-event
   )
 
+#|
 ;; idea
 (define-type ONT::mental-object
  :parent ONT::mental-construction
@@ -1143,6 +1144,7 @@
 	     (:optional ont::FORMAL (f::situation))
              )
  )
+|#
 
 (define-type ont::mental-attitude
  :wordnet-sense-keys("mentality%1:09:01")
@@ -1160,6 +1162,12 @@
  :wordnet-sense-keys("doctrine%1:09:00" "faith%1:09:00" "ideology%1:09:01")
  :parent ONT::knowledge-belief
  :comment "A system of beliefs"
+)
+
+(define-type ONT::illusion
+ :wordnet-sense-keys("illusion%1:09:01" "misconception%1:09:00")
+ :parent ONT::knowledge-belief
+ :comment "misconception"
 )
 
 (define-type ONT::understanding
@@ -1198,7 +1206,7 @@
 ;; reason, motivation
 (define-type ONT::motive
   :wordnet-sense-keys ("motivation%1:03:00" "reason%1:10:00")
- :parent ONT::mental-object
+ :parent ONT::mental-construction ;mental-object
  :arguments (
 ;	     (:optional ONT::Associated-information)
 ;	     (:optional ont::purpose) ;; reason for something

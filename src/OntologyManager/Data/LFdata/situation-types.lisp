@@ -414,7 +414,7 @@
 
 (define-type ont::compare
     :parent ont::scrutiny
-    :wordnet-sense-keys ("compare%2:31:00" "contrast%2:31:00")
+    :wordnet-sense-keys ("compare%2:31:00" "comparison%1:04:00" "contrast%2:31:00")
     :arguments ((:REQUIRED ONT::neutral1 ((? th7 f::phys-obj f::abstr-obj f::situation))))
     )
 

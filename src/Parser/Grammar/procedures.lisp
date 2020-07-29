@@ -558,7 +558,23 @@
 	 )))
       (match-vals nil new newfeats))
     ))
-        
+
+(define-predicate 'W::fix-gap-for-optional
+    #'(lambda (args)
+	(fix-gap args))
+  )
+
+(defun fix-gap (args)
+  "This checks whether variable KEY is bound, and sets GAP to - if not.
+     We need this to handle optional constituents better"
+  (let ((gap (second (assoc 'w::gap args)))
+	(key (second (assoc 'W::key args))))
+    (if (var-p gap)
+	(if (check-if-bound key)
+	    *success*
+	    (match-vals nil gap '-))
+	*success*)
+    ))
 
 (defun copy-sem-array (arr)
   (let ((new (make-array *sem-size* :initial-element *default-sem-variable*)))

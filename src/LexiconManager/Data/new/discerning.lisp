@@ -7,7 +7,7 @@
    (W::DISCERNING
     (wordfeats (W::MORPH (:FORMS (-LY))))
     (SENSES
-     ((LF-PARENT ONT::DISCERNING-val)
+     ((LF-PARENT ONT::wise-val) ;DISCERNING-val)
       (EXAMPLE "the restaurant attracts discerning customers")
       )
      )
