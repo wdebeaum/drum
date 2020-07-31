@@ -7073,11 +7073,12 @@
 	    (ARGUMENT-MAP ?argmap) (arg ?arg) (prefix -)
 	    (CONSTRAINT ?con) (atype ?atype)
 	    (SORT PRED)))
-    (?xx (var ?argv) (gap ?gap) (sem ?asem) (ptype ?ptype))  ;; we do this to ensure that the SUBCAT is present (and not skipped b/c its optional - the no SUBCAT case is covered by rue ADJ-ADJ1
+    (?xx (var ?argv) (gap ?gap) (sem ?asem) (ptype ?ptype))  
     ;; ?subcat
-     ;?subcat2
-     (recompute-atype (atype ?atype) (subcat ?subcat) (subcat2 ?subcat2) (result ?newatype))
-     (append-conjuncts (conj1 ?con) (conj2 (& (?argmap ?arg)
+					;?subcat2
+    (bound (arg1 ?argv)) ;; we do this to ensure that the SUBCAT is present (and not skipped b/c its optional - the no SUBCAT case is covered by rue ADJ-ADJ1
+    (recompute-atype (atype ?atype) (subcat ?subcat) (subcat2 ?subcat2) (result ?newatype))
+    (append-conjuncts (conj1 ?con) (conj2 (& (?argmap ?arg)
 					      (?reln ?argv) ;(?!reln2 ?argv2)
 					      (scale ?scale) (intensity ?ints) (orientation ?orient))
 					     )
