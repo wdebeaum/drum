@@ -2,7 +2,7 @@
 ;;;; warn.lisp
 ;;;;
 ;;;; George Ferguson, ferguson@cs.rochester.edu, 24 Sep 2003
-;;;; Time-stamp: <Fri Jan 23 09:41:04 EST 2015 jallen>
+;;;; Time-stamp: <Fri Jul 31 15:41:51 CDT 2020 lgalescu>
 ;;;;
 
 (in-package :im)
@@ -84,6 +84,7 @@
 
 (defun log-msg (content index)
   (output `(TELL :SENDER IM ;;:RECEIVER SYSTEM-LOG
-		 :CONTENT ,(insert-BA-vars content) :INDEX ,index))
+		 :CONTENT ,content ;; ,(insert-BA-vars content)
+		 :INDEX ,index))
   (values))
 

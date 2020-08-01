@@ -61,7 +61,7 @@ my @tests = (
     tags => [
       { type => 'sense',
         start => 6, end => 7, lex => '%',
-	'penn-pos' => ['NN'], lftype => ['NUMBER-UNIT'],
+	'penn-pos' => ['NN'], lftype => ['PERCENT'],
 	'domain-specific-info' => {
 	  domain => 'cwms',
 	  type => 'units',
@@ -180,7 +180,7 @@ my @tests = (
     tags => [
       { type => 'sense',
         start => 2, end => 3, lex => '%',
-	'penn-pos' => ['NN'], lftype => ['NUMBER-UNIT'],
+	'penn-pos' => ['NN'], lftype => ['PERCENT'],
 	'domain-specific-info' => {
 	  domain => 'cwms',
 	  type => 'units',
@@ -320,7 +320,7 @@ my @tests = (
       },
       { type => 'sense',
         start => 190, end => 191, lex => '%',
-	'penn-pos' => ['NN'], lftype => ['NUMBER-UNIT'],
+	'penn-pos' => ['NN'], lftype => ['PERCENT'],
 	'domain-specific-info' => {
 	  domain => 'cwms',
 	  type => 'units',
@@ -330,7 +330,7 @@ my @tests = (
       },
       { type => 'sense',
         start => 199, end => 200, lex => '%',
-	'penn-pos' => ['NN'], lftype => ['NUMBER-UNIT'],
+	'penn-pos' => ['NN'], lftype => ['PERCENT'],
 	'domain-specific-info' => {
 	  domain => 'cwms',
 	  type => 'units',
@@ -338,6 +338,35 @@ my @tests = (
 	  dimensions => '1'
 	}
       },
+    ]
+  },
+  # various issues with dimensionless units (see also "%" and "mm/mm" above)
+  { text => "88 mph",
+    tags => [
+      { type => 'sense',
+	start => 3, end => 6, lex => 'mph',
+	'penn-pos' => ['NN'], lftype => ['SPEED-UNIT'],
+	'domain-specific-info' => {
+	  domain => 'cwms',
+	  type => 'units',
+	  units => 'mph',
+	  dimensions => 'length*time^-1'
+	}
+      }
+    ]
+  },
+  { text => "42 newtons",
+    tags => [
+      { type => 'sense',
+	start => 3, end => 10, lex => 'newtons',
+	'penn-pos' => ['NNS'], lftype => ['WEIGHT-UNIT'],
+	'domain-specific-info' => {
+	  domain => 'cwms',
+	  type => 'units',
+	  units => 'newton',
+	  dimensions => 'length*mass*time^-2'
+	}
+      }
     ]
   },
   #

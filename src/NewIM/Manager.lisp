@@ -248,7 +248,7 @@
     )))
 
 (defun extract-constants (lf)
-  "Currently, we know somethings a constant if it begins with V (sorry!)"
+  "Currently, we know something is a constant if it begins with V (sorry!)"
   (cond
    ((symbolp lf)
     (if (and (not (keywordp lf)) (eql (char (symbol-name lf) 0) #\V))
@@ -264,7 +264,7 @@
    `(request :CONTENT 
 	     (EVALUATE :CONTENT
 		       (CPS-ACT :ID ,act-id
-				:CONTENT ,(insert-BA-vars CPS-act)
+				:CONTENT ,CPS-act ;;,(insert-BA-vars CPS-act)
 				:CONTEXT ,(remove-unused-context CPS-act context)
 				:CHANNEL ,(Channel-id channel))))
    #'(lambda (m)
@@ -468,6 +468,7 @@
     (if cont (send-msg-with-continuation  message cont)
       (output message))))
 
+#|| obsolete (LG 20200731)
 (defun insert-BA-vars (msg)
   "converts atoms of form _x to ?X"
   (cond
@@ -480,6 +481,7 @@
    ((consp msg)
     (cons (insert-BA-vars (car msg)) (insert-BA-vars (cdr msg))))
    ))
+  ||#
 
 (defun lambdas-to-keywords (x)
   (mapcar #'lambda-to-keyword x))

@@ -179,9 +179,10 @@ sub get_dimension {
       $numerator = '1' if ($numerator eq '');
       # parse multiplication
       # FIXME? '-' might also be part of a negative exponent... but I don't see any examples of that in the unit definitions files I have
-      my @numerator_terms = split(m{\s*[\*\/-]\s*}, $numerator);
+      my @numerator_terms = split(m{\s*(?:[\*\/-]\s*|\s+)}, $numerator);
       my @denominator_terms =
-        (defined($denominator) ? split(m{\s*[\*\/-]\s*}, $numerator) : ());
+        (defined($denominator) ?
+	  split(m{\s*(?:[\*\/-]\s*|\s+)}, $denominator) : ());
       # parse and add exponents
       my %unit_terms = (); # map unit base to exponent
       for my $term (@numerator_terms) {
@@ -676,6 +677,8 @@ sub tag_units {
     my $dim_str = expr_hash_to_string($dim_expr);
     $tag->{lftype} =
       [exists($dim2ont{$dim_str}) ? $dim2ont{$dim_str} : $dim2ont{unknown}];
+    # special case for ONT::percent
+    $tag->{lftype} = ['PERCENT'] if ($tag->{lex} =~ /^(\%|percent)$/i);
     # add DSI
     $tag->{'domain-specific-info'} = {
       domain => 'cwms',
