@@ -492,7 +492,7 @@
 	)
     (head (vp (lf ?lf) (gap ?g)
               ;(template (? !x  lxm::propositional-equal-templ))
-              (template (? !x  lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL))
+              ;(template (? !x  lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL))
 	      (subjvar ?npvar)
 	      (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex)
 		       (pp-word -) (changeagr -) (gap -) (expletive ?exp) ;(class ?npclass)
@@ -520,7 +520,7 @@
      (pp-word -) (changeagr -) (subcat-map ont::formal))
     (head (vp (lf ?lf) (gap ?g)
 	      ;(template lxm::propositional-equal-templ)
-	      (template lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL)
+	      ;(template lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL)
 	      (subjvar ?npvar)
 	      (subj (% np (sem ?npsem) (agr ?a) (var ?npvar) (lex ?lex)))
 	      (var ?v) (vform fin) (agr ?a)
@@ -545,7 +545,7 @@
      (pp-word -) (changeagr -) (comp3-map ont::formal))
     (head (vp (lf ?lf) (gap ?g)
 	      ;(template lxm::propositional-equal-templ)
-	      (template lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL)
+	      ;(template lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL)
 	      (subjvar ?npvar)
 	      (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (lex ?lex)))
 	      (var ?v) (vform fin) (agr ?a)
@@ -2564,7 +2564,7 @@
 	    (transform ?transform)
 	    ))
      (gap (% ?!s3 (case ?dcase) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap -) (status ?status-out)))  ; status is matched in wh-q2
-     ;(gap (% PRED (case ?dcase) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap -) (status ?status-out)))  ; status is matched in wh-q2
+     ;(gap (% PRED (case ?dcase) (agr ?!dagr) (var ?dobjvar) (sem ?dobjsem) (gap -) (status ?status-out)))  ; status is matched in wh-q2
 
      (advbl-needed ?avn)
      )
@@ -2589,7 +2589,7 @@
 	   (part (% -))		 
 	   (dobj ?!dobj)
 	   (dobj (% ?!s3 (case (? dcase obj -)) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (status ?dstatus)))
-	   ;(dobj (% PRED (case (? dcase obj -)) (agr ?dagr) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (status ?dstatus))) ; "what is the red block" should use S1 + -DECL-WH-QUESTION1>
+	   ;(dobj (% PRED (case (? dcase obj -)) (agr ?!dagr) (var ?dobjvar) (sem ?dobjsem) (gap ?gap) (status ?dstatus))) ; "what is the red block" should use S1 + -DECL-WH-QUESTION1>; ?!agr so there is one obligatory variable
 	   (comp3 (% -))
 	   ;;	   (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) ))
 	    
@@ -2982,7 +2982,7 @@
 	    (subjvar ?subjvar) (dobjvar ?dobjvar)
 	    (gap (% np (sem ?npsem) (case ?case) (var ?npvar) (agr ?a) (status ?npstatus); (class ?npclass)
 		    ))) ; match status for HAVE-PROPERTY
-      )
+	   )
      )
 
     ;; test: the dog, he said.
@@ -4423,7 +4423,7 @@
 	      (gap ?g)
 	      (SEM ($ F::situation (f::type (? vtype ONT::ARRIVE ont::come ont::appear ont::grow ont::show))))
               ;(template (? !x  lxm::propositional-equal-templ))
-              (template (? !x  lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL))
+              ;(template (? !x  lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL))
 	      (subjvar ?npvar)
 	      (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex)
 		       (pp-word -) (changeagr -) (gap -) (expletive ?exp)))
