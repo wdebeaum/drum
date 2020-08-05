@@ -10,6 +10,11 @@
      (EXAMPLE "you have the freedom to distribute copies")
      (TEMPL SUBCAT-INF-TEMPL)
      )
+
+    ((LF-PARENT ONT::freedom-scale)
+     (EXAMPLE "the shark thrashed its way to freedom")
+     (TEMPL mass-pred-TEMPL)
+     )
     )
    )
 ))

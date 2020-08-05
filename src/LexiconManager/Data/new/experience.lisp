@@ -16,3 +16,15 @@
    )
 ))
 
+(define-words :pos W::n
+ :words (
+  (w::experience
+  (senses
+   ((LF-PARENT ONT::knowledge-experience-scale)
+    (TEMPL mass-pred-TEMPL)
+    (syntax (W::morph (:forms (-none))))
+    )
+   )
+)
+))
+
