@@ -4444,7 +4444,28 @@
 	       ))
      )
 
-    
+    ;; VPs as gerund-NPS
+    ;; not being red
+    ((NP (SORT PRED)
+         (gap -) (var ?v) (agr 3s)
+         (sem ?sem) (mass mass) (gerund +) (class ?class)
+         (case (? case sub obj -)) ;; gerunds aren't case marked, allow any value except posessive
+         (lf (% description (status ont::bare) (VAR ?v) 
+                (class ?class) 
+                (constraint ?newcon) (sort individual)
+                (sem ?sem) (transform ?transform)
+                ))
+	 (status ont::bare)
+	 )
+     -gerund-not> .98 ;;.97
+     (neg)
+     (head (vp (vform ing) (var ?v) (gap -) (aux -)
+               (sem ?sem) 
+	       (class ?class)  (constraint ?con)  (transform ?transform)
+	       ))
+     (add-to-conjunct (old ?con) (val (negation +)) (new ?newcon))
+     )
+   
 #||   THis is replace by new nominlaization handling
     ((NP (SORT PRED)
       (gap -) (var ?v) (agr 3s)
