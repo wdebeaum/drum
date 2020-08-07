@@ -2239,7 +2239,7 @@
 
 (define-type ONT::reject
     :wordnet-sense-keys ("bounce%2:40:01" "decline%2:40:00" "dismiss%2:32:02" "pass_up%2:40:00" "refuse%2:40:00" "refuse%2:41:00" "reject%2:40:00" "turn_down%2:40:00" "deny%2:32:05" "deny%2:40:00" "refuse%2:32:00" "refuse%2:40:01" "refuse%2:42:04" "reject%2:31:00"
-					  "rejection%1:04:00")
+					  "rejection%1:04:00" "rejection%1:26:00")
  :parent ONT::response
  )
 
@@ -2581,7 +2581,7 @@
  )
 
 (define-type ONT::describe
-    :wordnet-sense-keys ("describe%2:32:00" "depict%2:32:01" "draw%2:32:00")
+    :wordnet-sense-keys ("describe%2:32:00" "depict%2:32:01" "draw%2:32:00" "qualify%2:32:01")
     :parent ont::representative
     :arguments ((:REQUIRED ONT::neutral))
     )

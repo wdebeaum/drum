@@ -403,7 +403,7 @@
 (define-type ont::luminosity-scale
  :sem (F::abstr-obj (F::scale ONT::LUMINOSITY-SCALE))
  :parent ont::visual-scale 
- :wordnet-sense-keys ("brightness%1:07:00" "brightness%1:07:02")
+ :wordnet-sense-keys ("brightness%1:07:00" "brightness%1:07:02" "illumination%1:26:00")
 ; :arguments ((:ESSENTIAL ONT::GROUND (F::Abstr-obj (F::Scale Ont::luminosity-scale)))
 ;             )
  ;; WORDS: brightness

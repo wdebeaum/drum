@@ -458,8 +458,12 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 (defun augment-trips-word-categories (word-categories)
   "augment the list of word categories with
       - if ADV is among the categories, include w::prep as well"
-  (when (find 'w::adv word-categories) (setq word-categories (pushnew 'w::prep word-categories)))
-  (when (find 'w::to word-categories) (setq word-categories (remove-duplicates (append '(w::adv w::prep) word-categories))))
+  (when (find 'w::adv word-categories)
+    (setq word-categories (remove-duplicates
+			   (append '(w::prep w::neg)
+				   word-categories))))
+  (when (find 'w::to word-categories)
+    (setq word-categories (remove-duplicates (append '(w::adv w::prep) word-categories))))
   word-categories)
 
 (defun filter-by-pos (wdef w pos-list penn-tags)
@@ -555,8 +559,12 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
    (or (null ont-type)
        (member ont-type '(ONT::ANY-SEM ONT::REFERENTIAL-SEM ONT::SITUATION-ROOT ONT::PROPERTY-VAL ONT::MODIFIER ONT::PREDICATE))
        (eq (car d) ont-type)
-       (and (not (eq *use-tagged-senses-only* 'strict)) (or (om::subtype (car d) ont-type) (om::subtype ont-type (car d)) )))
-   (or (null pos) (eq (cadr d) pos)))))
+       (and (not (eq *use-tagged-senses-only* 'strict))
+	    (or (om::subtype (car d) ont-type) (om::subtype ont-type (car d)) )))
+   (or (null pos)
+       (if (eq pos 'W::ADV)
+	   (if (member (cadr d) '(W::ADV W::NEG)) T)
+	   (eq (cadr d) pos))))))
 
 (defun check-definition-list (definition tests)
   (cond ((not tests) nil)
@@ -790,7 +798,12 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
 (defun filter-by-senses (wdef w trips-defs trips-pos-list penn-tags ont-types wn-sense-keys domain-info &key tagged-senses-only)
   "filter the word definitions to return only senses corresponding to the sense classes in the list. If no such sense exists, a default sense is created on the fly using the available sense and pos information, or defaults if missing"
   (let* ((orig-pos-list  (merge-pos-info trips-pos-list penn-tags))
-	 (pos-list (subst 'w::N 'w::name orig-pos-list));; map NAME to N as they are treated equivalently
+	 (pos-list-noname (subst 'w::N 'w::name orig-pos-list));; map NAME to N as they are treated equivalently
+	 ;; also ADV class can include NEG and PREP
+	 (pos-list (if (member 'W::ADV pos-list-noname)
+		       (remove-duplicates (append '(W::prep w::neg)
+						  pos-list-noname))
+		       pos-list-noname))
 	 (tagged-senses ont-types)
 	 (tagged-senses-remaining tagged-senses)
 	 (compatible-defs nil)
