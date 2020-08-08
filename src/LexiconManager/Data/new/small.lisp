@@ -11,7 +11,7 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("small%5:00:00:limited:00"))
      (LF-PARENT ONT::small)
      (TEMPL LESS-ADJ-TEMPL)
-     (SEM (F::GRADABILITY F::+) (f::orientation ont::less) (f::intensity ont::med))
+     (SEM (F::GRADABILITY +) (f::orientation F::neg) (f::intensity ont::med))
      )
     )
    )

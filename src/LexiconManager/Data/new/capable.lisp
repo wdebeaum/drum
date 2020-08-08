@@ -11,7 +11,7 @@
      (EXAMPLE "He is a capable person")
      (LF-PARENT ONT::able)
      (TEMPL central-adj-optional-xp-TEMPL (XP (% W::PP (W::Ptype W::of))))
-     (SEM (F::GRADABILITY F::+))
+     (SEM (F::GRADABILITY +))
      )
     )
    )

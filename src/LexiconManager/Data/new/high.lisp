@@ -53,7 +53,7 @@
 ;     ) 
  #||   ((EXAMPLE "I need a higher resolution")
      (LF-PARENT ONT::intense)
-     (sem (f::gradability +) (f::intensity ont::hi) (f::orientation ont::more))
+     (sem (f::gradability +) (f::intensity ont::hi) (f::orientation F::pos))
      (TEMPL LESS-ADJ-TEMPL)
      (meta-data :origin boudreaux :entry-date 20031024 :change-date 20090731 :wn ("high%3:00:02") :comments nil)
      )||#

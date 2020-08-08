@@ -21,7 +21,7 @@
    (SENSES
     (
      (lf-parent ont::young-val)
-     (SEM (F::GRADABILITY F::+) (f::orientation ont::less) (f::intensity ont::med))
+     (SEM (F::GRADABILITY +) (f::orientation F::neg) (f::intensity ont::med))
      )
     )
    )

@@ -8,7 +8,7 @@
    (SENSES
     ((meta-data :origin cardiac :entry-date 20080508 :change-date nil :comments LM-vocab)
       (LF-PARENT ONT::great-VAL)
-     (SEM (f::gradability +) (f::orientation ont::more) (f::intensity ont::hi))
+     (SEM (f::gradability +) (f::orientation F::pos) (f::intensity ont::hi))
      (example "They did some incredible work today.")
      )
     ((LF-PARENT ONT::not-credible-val)

@@ -33,7 +33,7 @@
      (example "a wild idea")
      (LF-PARENT ONT::atypical-val)
      (templ central-adj-templ)
-     (sem (f::gradability +) (f::intensity ont::med) (f::orientation ont::less))
+     (sem (f::gradability +) (f::intensity ont::med) (f::orientation F::neg))
      )
     )
    )

@@ -12,7 +12,7 @@
      (lf-form w::far)
      ;(TEMPL COMPAR-TEMPL)
      (TEMPL COMPAR-twosubcats-TEMPL (xp (% W::pp (W::ptype w::from))))
-     (SEM (f::orientation ont::more) (f::intensity ont::med) (F::SCALE ONT::DISTANCE-SCALE) ;ONT::linear-scale)
+     (SEM (f::orientation F::pos) (f::intensity ont::med) (F::SCALE ONT::DISTANCE-SCALE) ;ONT::linear-scale)
 	  )
      )
     )

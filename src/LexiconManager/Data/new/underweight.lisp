@@ -8,7 +8,7 @@
    (SENSES
     ((meta-data :origin cardiac :entry-date 20080327 :change-date nil :comments nil)
      (LF-PARENT ONT::underweight)
-     (sem (f::gradability +) (f::intensity ont::med) (f::orientation ont::less))
+     (sem (f::gradability +) (f::intensity ont::med) (f::orientation F::neg))
      (TEMPL LESS-ADJ-TEMPL)
      )
     )

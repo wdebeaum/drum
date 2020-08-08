@@ -28,7 +28,7 @@
     ((meta-data :origin calo :entry-date 20031223 :change-date 20090731 :wn ("standard%5:00:00:common:01") :comments html-purchasing-corpus)
      (EXAMPLE "They are unusual")
      (lf-parent ont::typical-val)
-     (sem (f::gradability +) (f::intensity ont::med) (f::orientation ont::more))
+     (sem (f::gradability +) (f::intensity ont::med) (f::orientation F::pos))
      )
     )
    )

@@ -37,7 +37,7 @@
    (SENSES
     ((meta-data :origin cardiac :entry-date 20090129 :change-date 20090731 :comments LM-vocab)
      (lf-parent ont::fat-val)
-     (sem (f::gradability +) (f::intensity ont::hi) (f::orientation ont::more))
+     (sem (f::gradability +) (f::intensity ont::hi) (f::orientation F::pos))
      (example "a plump cat" "a plump line")
      )
     )

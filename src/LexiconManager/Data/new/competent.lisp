@@ -11,7 +11,7 @@
      (EXAMPLE "He is an competent person")
      (lf-parent ont::able)
      (TEMPL central-adj-TEMPL)
-     (SEM (F::GRADABILITY F::+))
+     (SEM (F::GRADABILITY +))
      )
     )
    )

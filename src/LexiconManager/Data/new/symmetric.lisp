@@ -9,7 +9,7 @@
    (SENSES
     ((meta-data :origin calo :entry-date 20031222 :change-date nil :wn ("symmetric%3:00:00") :comments html-purchasing-corpus)
      (LF-PARENT ONT::geometric-relationship-val)
-     (SEM (F::GRADABILITY f::-))
+     (SEM (F::GRADABILITY -))
      )
     )
    )

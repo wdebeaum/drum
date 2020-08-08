@@ -9,7 +9,7 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date 20061106 :comments nil :wn ("problematic%5:00:00:questionable:00") :comlex (EXTRAP-ADJ-FOR-TO-INF))
      (example "It seems problematic to ask for equality for one demographic.")
      (LF-PARENT ONT::questionable-VAL)
-     ;(SEM (f::gradability +) (f::orientation ont::less) (f::intensity ont::med))
+     ;(SEM (f::gradability +) (f::orientation F::neg) (f::intensity ont::med))
      (TEMPL central-adj-templ)
      )
 ;;;    ((meta-data :origin trips :entry-date 20060824 :change-date 20061106 :comments nil :wn ("problematic%5:00:00:questionable:00") :comlex (EXTRAP-ADJ-FOR-TO-INF))

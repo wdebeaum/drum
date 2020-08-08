@@ -32,7 +32,7 @@
       (lf-parent ont::lean-val)
 	     (meta-data :origin foodkb :entry-date 20050811 :change-date nil :wn ("lean%3:00:04") :comments nil)
 	     (example "he only eats lean meat")
-	     (SEM (F::GRADABILITY F::+))
+	     (SEM (F::GRADABILITY +))
 	     )
 	    ))
 ))

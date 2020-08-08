@@ -17,7 +17,7 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("enough%5:00:00:sufficient:00"))
      (example "there are trucks enough")
      (LF-PARENT ONT::ADEQUATE)
-     (SEM (F::GRADABILITY F::-))
+     (SEM (F::GRADABILITY -))
      (TEMPL postpositive-adj-optional-xp-templ)
      )
     )

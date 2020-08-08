@@ -28,7 +28,7 @@
     ((meta-data :origin csli-ts :entry-date 20070320 :change-date nil :comments nil :wn nil)
      (EXAMPLE "He is used to that")
      (LF-PARENT ONT::habituated-val)
-     (SEM (F::GRADABILITY F::+))
+     (SEM (F::GRADABILITY +))
      (TEMPL adj-experiencer-theme-req-templ (xp (% w::np)))
      )
     )

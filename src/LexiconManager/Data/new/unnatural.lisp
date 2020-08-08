@@ -11,7 +11,7 @@
      (EXAMPLE "don't turn him into anything unnatural")
      (LF-PARENT ONT::artificial)
      (TEMPL central-adj-TEMPL)
-     (SEM (F::GRADABILITY F::+))
+     (SEM (F::GRADABILITY +))
      )
     )
    )

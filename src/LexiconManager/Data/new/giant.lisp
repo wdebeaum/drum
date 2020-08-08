@@ -8,7 +8,7 @@
    (SENSES
     ((LF-PARENT ONT::huge-val)
      (meta-data :origin caloy3 :entry-date 20070330 :change-date 20090731 :comments y3-test-data)
-     (SEM (F::GRADABILITY F::+) (f::orientation ont::more) (f::intensity ont::hi))
+     (SEM (F::GRADABILITY +) (f::orientation F::pos) (f::intensity ont::hi))
      )
     )
    )

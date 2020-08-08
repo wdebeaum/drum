@@ -10,7 +10,7 @@
      (EXAMPLE "they went to nearby schools")
      (LF-PARENT ONT::near)
      (TEMPL ADJ-THEME-TEMPL)
-     (SEM (f::orientation ont::less) (f::intensity ont::hi))
+     (SEM (f::orientation F::neg) (f::intensity ont::hi))
      )
     )
    )

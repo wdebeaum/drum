@@ -27,7 +27,7 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("other%3:00:00"))
      (LF-PARENT ONT::other)
      (TEMPL adj-co-theme-templ)
-     (SEM (F::GRADABILITY F::-))
+     (SEM (F::GRADABILITY -))
      (SYNTAX (W::atype W::attributive-only))
      )
     )

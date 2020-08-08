@@ -12,7 +12,7 @@
       (LF-PARENT ONT::intense)
       (EXAMPLE "intense odor")
       (TEMPL central-ADJ-TEMPL)
-      (sem (f::gradability +) (f::intensity ont::hi) (f::orientation ont::more))
+      (sem (f::gradability +) (f::intensity ont::hi) (f::orientation F::pos))
       )
      ((LF-PARENT ONT::strong-val)
       (EXAMPLE "strong person" "strong pillars")

@@ -39,7 +39,7 @@
      (LF-PARENT ONT::MORE-VAL)
      (lf-form w::good)
      (TEMPL COMPAR-TEMPL)
-     (SEM (f::orientation ont::more) (f::intensity ont::med) (F::SCALE ONT::ACCEPTABILITY-VAL))
+     (SEM (f::orientation F::pos) (f::intensity ont::med) (F::SCALE ONT::ACCEPTABILITY-VAL))
      )
     )
    )

@@ -10,7 +10,7 @@
    (SENSES
     ((meta-data :origin calo :entry-date 20031223 :change-date nil :wn ("potential%5:00:00:prospective:00") :comments html-purchasing-corpus)
      (lf-parent ont::likely-val)
-     (SEM (F::GRADABILITY F::+))
+     (SEM (F::GRADABILITY +))
      )
     )
    )

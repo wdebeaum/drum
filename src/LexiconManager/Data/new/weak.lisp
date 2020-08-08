@@ -9,7 +9,7 @@
     (SENSES
      ((meta-data :origin calo :entry-date 20050216 :change-date 20090731 :wn ("weak%3:00:00") :comments caloy2)
       (LF-PARENT ONT::weak)
-      (sem (f::gradability +) (f::intensity ont::lo) (f::orientation ont::less))
+      (sem (f::gradability +) (f::intensity ont::lo) (f::orientation F::neg))
       (example "weak odor" "weak signal")
       (TEMPL LESS-ADJ-TEMPL)
       )

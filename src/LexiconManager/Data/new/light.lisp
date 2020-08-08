@@ -135,7 +135,7 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("light%3:00:01"))
      (LF-PARENT ONT::LIGHTWEIGHT)
      (TEMPL LESS-ADJ-TEMPL)
-     (sem (f::gradability +) (f::intensity ont::hi) (f::orientation ont::less))
+     (sem (f::gradability +) (f::intensity ont::hi) (f::orientation F::neg))
      )
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("light%3:00:05"))
      (LF-PARENT ONT::LIGHT-VAL)

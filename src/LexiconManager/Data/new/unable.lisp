@@ -9,7 +9,7 @@
     ((meta-data :origin calo :entry-date 20031205 :change-date 20090731 :wn ("unable%3:00:00") :comments calo-y1script)
      (EXAMPLE "He is unable to do this")
      (LF-PARENT ONT::unable)
-     (SEM (F::GRADABILITY f::+))
+     (SEM (F::GRADABILITY +))
      (TEMPL central-ADJ-optional-xp-TEMPL (XP (% W::cp (W::ctype W::s-to))))
      )
     )

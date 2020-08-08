@@ -11,7 +11,7 @@
      (EXAMPLE "He is an incompetent person")
      (lf-parent ont::unable)
      (TEMPL less-adj-TEMPL)
-     (SEM (F::GRADABILITY F::+))
+     (SEM (F::GRADABILITY +))
      )
     )
    )

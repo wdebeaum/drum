@@ -9,7 +9,7 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("mild%3:00:00"))
      (lf-parent ont::mild-val)
-     (sem (f::gradability +) (f::intensity ont::lo) (f::orientation ont::less))
+     (sem (f::gradability +) (f::intensity ont::lo) (f::orientation F::neg))
      (TEMPL LESS-ADJ-TEMPL)
      )    
     )

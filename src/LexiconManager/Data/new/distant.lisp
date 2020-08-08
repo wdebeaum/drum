@@ -13,7 +13,7 @@
      (LF-PARENT ONT::REMOTE)
      (example "the distant horizon")
      (TEMPL ADJ-THEME-TEMPL)
-     (SEM (f::orientation ont::more) (f::intensity ont::hi))
+     (SEM (f::orientation F::pos) (f::intensity ont::hi))
      )
     )
    )

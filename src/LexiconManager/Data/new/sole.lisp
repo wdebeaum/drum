@@ -21,7 +21,7 @@
     ((meta-data :origin calo :entry-date 20031223 :change-date nil :wn ("sole%5:00:00:unshared:00" "sole%5:00:00:single:05") :comments html-purchasing-corpus)
      (EXAMPLE "The sole exception")
      (LF-PARENT ONT::singularity-VAL)
-     (SEM (F::GRADABILITY F::-))
+     (SEM (F::GRADABILITY -))
      )
     )
    )

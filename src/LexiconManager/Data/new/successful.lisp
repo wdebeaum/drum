@@ -8,7 +8,7 @@
    (SENSES
     ((meta-data :origin calo-ontology :entry-date 20060713 :change-date nil :wn ("successful%3:00:00") :comments ma-request :comlex (ADJECTIVE))
      (lf-parent ont::successful-val)
-     (sem (f::gradability +) (f::orientation ont::more) (f::intensity ont::med))
+     (sem (f::gradability +) (f::orientation F::pos) (f::intensity ont::med))
      (TEMPL central-adj-TEMPL)
      )
     )

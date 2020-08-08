@@ -10,7 +10,7 @@
     ((meta-data :origin task-learning :entry-date 20050912 :change-date nil :wn ("geometric%3:01:00") :comments nil)
      (EXAMPLE "insert geometric shapes")
      (LF-PARENT ONT::shape-val)
-     (SEM (F::GRADABILITY f::-))
+     (SEM (F::GRADABILITY -))
      )
     )
    )

@@ -11,7 +11,7 @@
      (EXAMPLE "an earthquake is a natural disaster")
      (LF-PARENT ONT::natural)
      (TEMPL central-adj-TEMPL)
-     (SEM (F::GRADABILITY F::+))
+     (SEM (F::GRADABILITY +))
      )
     )
    )

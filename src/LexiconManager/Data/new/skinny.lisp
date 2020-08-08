@@ -9,7 +9,7 @@
    (SENSES
     ((meta-data :origin cardiac :entry-date 20080730 :change-date 20090731 :comments speech-pretest)
      (lf-parent ont::skinny-val)
-     (sem (f::gradability +) (f::intensity ont::hi) (f::orientation ont::less))
+     (sem (f::gradability +) (f::intensity ont::hi) (f::orientation F::neg))
      (example "a skinny cat" "a skinny line")
      )
     )

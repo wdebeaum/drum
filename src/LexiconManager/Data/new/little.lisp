@@ -13,7 +13,7 @@
      (lf-parent ont::small)
      (TEMPL LESS-ADJ-TEMPL)
      (example "that's a little cat")
-     (SEM (F::GRADABILITY F::+) (f::orientation ont::less) (f::intensity ont::med))
+     (SEM (F::GRADABILITY +) (f::orientation F::neg) (f::intensity ont::med))
      )
     )
    )

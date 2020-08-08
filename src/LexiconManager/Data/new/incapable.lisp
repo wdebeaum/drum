@@ -10,7 +10,7 @@
      (EXAMPLE "He is incapable of reason")
      (LF-PARENT ONT::unable)
      (TEMPL central-adj-optional-xp-TEMPL (XP (% W::PP (W::Ptype W::of))))
-     (SEM (F::GRADABILITY F::+))
+     (SEM (F::GRADABILITY +))
      )
     )
    )

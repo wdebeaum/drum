@@ -22,13 +22,13 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("great%5:00:00:good:01") :comlex (EXTRAP-ADJ-FOR-TO-INF-RS))
      (example "a great book")
      (lf-parent ont::great-val)
-     (SEM (f::gradability +) (f::orientation ont::more) (f::intensity ont::hi))
+     (SEM (f::gradability +) (f::orientation F::pos) (f::intensity ont::hi))
      (TEMPL central-adj-templ)
      )
     (
      (example "a great amount" "great height")
      (lf-parent ont::high-val)
-     (SEM (f::gradability +) (f::orientation ont::more) (f::intensity ont::hi))
+     (SEM (f::gradability +) (f::orientation F::pos) (f::intensity ont::hi))
      (TEMPL central-adj-templ)
      )
     
@@ -36,13 +36,13 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("great%5:00:00:good:01") :comlex (EXTRAP-ADJ-FOR-TO-INF-RS))
      (example "a wall good for climbing")
      (lf-parent ont::great-val)
-     (SEM (f::gradability +) (f::orientation ont::more) (f::intensity ont::hi))
+     (SEM (f::gradability +) (f::orientation F::pos) (f::intensity ont::hi))
      (TEMPL adj-purpose-TEMPL)
      )
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("great%5:00:00:good:01") :comlex (EXTRAP-ADJ-FOR-TO-INF-RS))
      (EXAMPLE "a drug suitable for cancer")
      (lf-parent ont::great-val)
-     (SEM (f::gradability +) (f::orientation ont::more) (f::intensity ont::hi))
+     (SEM (f::gradability +) (f::orientation F::pos) (f::intensity ont::hi))
      ;; this is a sense that allows for implicit/indirect senses of "for"
      ;; the main sense is adj-purpose-templ for cases such as "this is good for treating cancer"
      ;; the adj-purpose-implicit-templ is for indirect purposes, such as "this is good for cancer" where one has to infer that the actual use is in the treatment action
@@ -51,7 +51,7 @@
     
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("great%5:00:00:good:01") :comlex (EXTRAP-ADJ-FOR-TO-INF-RS))
      (EXAMPLE "a solution good for him")
-     (SEM (f::gradability +) (f::orientation ont::more) (f::intensity ont::hi))
+     (SEM (f::gradability +) (f::orientation F::pos) (f::intensity ont::hi))
      (lf-parent ont::great-val)
      ;; this is another indirect sense of "for"
      ;; the main sense is adj-purpose-templ for cases such as "this is good for treating cancer"

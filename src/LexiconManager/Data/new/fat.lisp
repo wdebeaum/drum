@@ -22,7 +22,7 @@
    (SENSES
     ((meta-data :origin cardiac :entry-date 20080730 :change-date 20090731 :comments speech-pretest)
      (lf-parent ont::fat-val)
-     (sem (f::gradability +) (f::intensity ont::hi) (f::orientation ont::more))
+     (sem (f::gradability +) (f::intensity ont::hi) (f::orientation F::pos))
      (example "a fat cat" "a fat line")
      )
     )

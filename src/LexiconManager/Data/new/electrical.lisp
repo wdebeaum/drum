@@ -12,7 +12,7 @@
  ;    (LF-PARENT ONT::substantial-property-val)
      (lf-parent ont::electrical) 
      (example "electrical wire" "electrical state" "electrical machine")     
-     (SEM (F::GRADABILITY F::-))
+     (SEM (F::GRADABILITY -))
      )
     )
    )

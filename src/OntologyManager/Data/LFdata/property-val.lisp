@@ -4572,7 +4572,7 @@
  ; Words: (W::HAPPY W::EUPHORIC)
  :wordnet-sense-keys ("elated%3:00:00::" "joyous%3:00:00::" "euphoric%3:00:00" "cheerful%3:00:00" "beaming%5:00:00:cheerful:00")
  ; Antonym: ONT::UNHAPPY (W::UNHAPPY W::MISERABLE)
- :sem (F::abstr-obj (F::scale ont::happiness-scale) (F::orientation f::pos) (F::intensity f::hi)) 
+ :sem (F::abstr-obj (F::scale ont::happiness-scale) (F::orientation f::pos) (F::intensity ONT::hi)) 
 )
 
 (define-type ONT::excited

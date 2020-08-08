@@ -15,7 +15,7 @@
     ((meta-data :origin windmills :entry-date 20080606 :change-date nil :comments nil :wn ("available%5:00:00:disposable:00"))
      (example "it is unavailable in 4 MW capacity")
      (lf-parent ont::not-available-val)
-     (SEM (F::GRADABILITY F::-))
+     (SEM (F::GRADABILITY -))
      (TEMPL adj-subcat-property-templ)
      )
     )

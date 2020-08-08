@@ -10,7 +10,7 @@
      ((meta-data :origin calo :entry-date 20031223 :change-date 20090731 :wn ("satisfactory%5:00:00:good:00") :comments html-purchasing-corpus :comlex (EXTRAP-ADJ-FOR-TO-INF))
       (example "a good book")
       (LF-PARENT ONT::good)
-      (SEM (f::gradability +) (f::orientation ont::more) (f::intensity ont::lo))
+      (SEM (f::gradability +) (f::orientation F::pos) (f::intensity ont::lo))
       (TEMPL central-adj-templ)
      )
 ;;;     ((meta-data :origin calo :entry-date 20031223 :change-date 20061106 :wn ("satisfactory%5:00:00:good:00") :comments html-purchasing-corpus :comlex (EXTRAP-ADJ-FOR-TO-INF))

@@ -9,7 +9,7 @@
     (SENSES
      ((EXAMPLE "I want a wireless broadband router")
       (LF-PARENT ONT::mode)
-      (SEM (F::GRADABILITY F::-))
+      (SEM (F::GRADABILITY -))
       (meta-data :origin calo :entry-date 20040504 :change-date nil :comments calo-y1variants)
       )
      )

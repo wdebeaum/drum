@@ -13,7 +13,7 @@
      )
     ((LF-PARENT ONT::mild-VAL)
      (meta-data :origin cardiac :entry-date 20080429  :change-date nil :wn ("oppressive%5:00:00:domineering:00") :comments nil)
-     (sem (f::gradability +) (f::intensity ont::lo) (f::orientation ont::less))
+     (sem (f::gradability +) (f::intensity ont::lo) (f::orientation F::neg))
      (example "a slight headache")
      )
     )

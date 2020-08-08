@@ -11,7 +11,7 @@
      (EXAMPLE "He is an irresponsible person")
      (lf-parent ont::not-responsible-val)
      (TEMPL central-adj-TEMPL)
-     (SEM (F::GRADABILITY F::+))
+     (SEM (F::GRADABILITY +))
      )
     )
    )

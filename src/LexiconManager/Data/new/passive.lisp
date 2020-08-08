@@ -8,7 +8,7 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((LF-PARENT ONT::INACTIVE)
-     (SEM (F::GRADABILITY F::+))
+     (SEM (F::GRADABILITY +))
      (example "passive listener")
      (meta-data :origin calo-ontology :entry-date 20060713 :change-date 20090731 :wn ("passive%3:00:01") :comments ma-request)
      )

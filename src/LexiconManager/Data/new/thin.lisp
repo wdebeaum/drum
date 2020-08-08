@@ -37,7 +37,7 @@
     ((meta-data :origin calo :entry-date 20031223 :change-date 20090731 :wn ("thin%3:00:01") :comments html-purchasing-corpus)
      (EXAMPLE "a thin line")
      (lf-parent ont::thin-val)
-     (sem (f::gradability +) (f::intensity ont::hi) (f::orientation ont::less))
+     (sem (f::gradability +) (f::intensity ont::hi) (f::orientation F::neg))
      )
     ((meta-data :origin domain-reorganization :entry-date 20171002 :change-date nil :wn ("thin%3:00:03"))
      (EXAMPLE "a thin person")

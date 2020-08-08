@@ -24,7 +24,7 @@
      (example "a welcome change")
      (lf-parent ont::pleasing-val)
      (TEMPL central-adj-templ)
-     (SEM (f::gradability +) (f::orientation ont::more) (f::intensity ont::med))
+     (SEM (f::gradability +) (f::orientation F::pos) (f::intensity ont::med))
      )
     )
    )

@@ -11,7 +11,7 @@
      (EXAMPLE "This problem is local [to the area]")
      (LF-PARENT ONT::local-VAL)
      (TEMPL ADJ-CO-THEME-TEMPL)
-     (SEM (f::orientation ont::less) (f::intensity ont::med))
+     (SEM (f::orientation F::neg) (f::intensity ont::med))
      )
     )
    )

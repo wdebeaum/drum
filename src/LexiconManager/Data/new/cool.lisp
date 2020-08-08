@@ -30,7 +30,7 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("cool%5:00:00:fashionable:00") :comlex (EXTRAP-ADJ-FOR-TO-INF-RS))
      (LF-PARENT ONT::good)
-     (SEM (f::gradability +) (f::orientation ont::more) (f::intensity ont::med))
+     (SEM (f::gradability +) (f::orientation F::pos) (f::intensity ont::med))
      )
     ((meta-data :origin plow :entry-date 20060712 :change-date 20090731 :wn ("cool%3:00:01") :comments plow-req)
       (LF-PARENT ONT::COLD)

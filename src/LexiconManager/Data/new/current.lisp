@@ -37,7 +37,7 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("current%3:00:00"))
      ;(lf-parent ont::now)
      (lf-parent ont::current-val)
-     (SEM (F::GRADABILITY F::+))
+     (SEM (F::GRADABILITY +))
      )
     )
    )

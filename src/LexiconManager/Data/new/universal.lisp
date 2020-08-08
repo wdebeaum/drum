@@ -9,7 +9,7 @@
    (SENSES
     ((meta-data :origin calo :entry-date 20040205 :change-date nil :comments html-purchasing-corpus)
      (lf-parent ont::public-val)
-     (SEM (F::GRADABILITY F::-))
+     (SEM (F::GRADABILITY -))
      )
     )
    )

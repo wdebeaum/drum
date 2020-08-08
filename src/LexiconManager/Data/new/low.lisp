@@ -30,7 +30,7 @@
     #|
     ((EXAMPLE "Give me lower resolution" "a low salt diet")
      (LF-PARENT ONT::weak)
-     (sem (f::gradability +) (f::intensity ont::lo) (f::orientation ont::less))
+     (sem (f::gradability +) (f::intensity ont::lo) (f::orientation F::neg))
      (TEMPL LESS-ADJ-TEMPL)
      (meta-data :origin boudreaux :entry-date 20031024 :change-date 20090731 :wn ("low%3:00:02") :comments nil)
      )

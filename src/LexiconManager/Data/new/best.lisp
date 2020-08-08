@@ -12,7 +12,7 @@
      (LF-PARENT ONT::max-val)
      (lf-form w::good)
      (TEMPL SUPERL-TEMPL)
-     (SEM (f::gradability +) (f::orientation ont::more) (f::intensity ont::hi) (F::SCALE ONT::ACCEPTABILITY-VAL))
+     (SEM (f::gradability +) (f::orientation F::pos) (f::intensity ont::hi) (F::SCALE ONT::ACCEPTABILITY-VAL))
      )
     )
    )

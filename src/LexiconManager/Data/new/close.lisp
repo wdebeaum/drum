@@ -37,7 +37,7 @@
      (example "it was a close call")
      (LF-PARENT ONT::near)
      (templ adj-theme-templ)
-     (SEM (f::orientation ont::less) (f::intensity ont::hi))
+     (SEM (f::orientation F::neg) (f::intensity ont::hi))
      )
     |#
     )
@@ -53,7 +53,7 @@
      (LF-PARENT ONT::near)
      (example "the houses are close by")
      (TEMPL ADJ-THEME-TEMPL)
-     (SEM (f::orientation ont::pos) (f::intensity ont::hi))
+     (SEM (f::orientation F::pos) (f::intensity ont::hi))
      )
     )
    )

@@ -42,7 +42,7 @@
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("direct%3:00:00"))
      (LF-PARENT ONT::ROUTE-TOPOLOGY-val)
      (example "a direct route")
-     (SEM (F::GRADABILITY F::+))
+     (SEM (F::GRADABILITY +))
      )
     ;; a direct comment?
     )

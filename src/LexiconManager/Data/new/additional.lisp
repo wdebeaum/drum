@@ -8,7 +8,7 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((LF-PARENT ONT::additional-val)
-     (SEM (F::GRADABILITY F::-))
+     (SEM (F::GRADABILITY -))
      (TEMPL central-adj-optional-xp-TEMPL)
      )
     )

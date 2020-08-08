@@ -23,7 +23,7 @@
       (LF-PARENT ONT::REMOTE)
       (example "a remote possibility" "remote control")
       (templ adj-theme-templ)
-      (SEM (f::orientation ont::more) (f::intensity ont::hi))
+      (SEM (f::orientation F::pos) (f::intensity ont::hi))
       )
      )
     )

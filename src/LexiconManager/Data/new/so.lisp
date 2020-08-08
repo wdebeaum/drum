@@ -8,7 +8,7 @@
    (SENSES
     ((meta-data :origin cardiac :entry-date 20080422 :change-date nil :comments nil)
      (lf-parent ont::neutral-acceptability-val)
-     (SEM (F::GRADABILITY F::+) (f::orientation ont::neutral) (f::intensity ont::-))
+     (SEM (F::GRADABILITY +) (f::orientation F::neutral) (f::intensity -))
      (TEMPL LESS-ADJ-TEMPL)
      )
     )

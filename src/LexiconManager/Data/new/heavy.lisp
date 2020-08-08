@@ -10,7 +10,7 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("heavy%3:00:01"))
      (LF-PARENT ONT::heavy)
-     (sem (f::gradability +) (f::intensity ont::med) (f::orientation ont::more))
+     (sem (f::gradability +) (f::intensity ont::med) (f::orientation F::pos))
      )
     )
    )

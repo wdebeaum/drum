@@ -11,7 +11,7 @@
      (LF-PARENT ONT::max-val)
      (lf-form w::far)
      (TEMPL SUPERL-TWOSUBCATS-TEMPL (xp (% W::pp (W::ptype w::from))))
-     (SEM (f::gradability +) (f::orientation ont::more) (f::intensity ont::hi) (F::SCALE ONT::DISTANCE-SCALE) ;ONT::linear-scale)
+     (SEM (f::gradability +) (f::orientation F::pos) (f::intensity ont::hi) (F::SCALE ONT::DISTANCE-SCALE) ;ONT::linear-scale)
 	  )
      )
     )

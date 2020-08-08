@@ -21,7 +21,7 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil)
      (lf-parent ont::hyperactive-val)
-     (SEM (F::GRADABILITY F::+))
+     (SEM (F::GRADABILITY +))
      )
     )
    )
@@ -33,7 +33,7 @@
 ;   (wordfeats (W::morph (:FORMS (-LY))))
 ;   (SENSES
 ;    ((LF-PARENT ONT::behavioral-property)
-;     (SEM (F::GRADABILITY F::+))
+;     (SEM (F::GRADABILITY +))
 ;     )
 ;    )
 ;   )

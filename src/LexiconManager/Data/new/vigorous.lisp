@@ -9,7 +9,7 @@
    (SENSES
     ((meta-data :origin calo :entry-date 20031223 :change-date nil :wn ("vigorous%5:00:00:energetic:00") :comments html-purchasing-corpus)
      (lf-parent ont::intense)
-     (sem (f::gradability +) (f::intensity ont::hi) (f::orientation ont::less))
+     (sem (f::gradability +) (f::intensity ont::hi) (f::orientation F::neg))
      )
     )
    )

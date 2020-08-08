@@ -11,7 +11,7 @@
      (LF-PARENT ONT::REMOTE)
      (TEMPL ADJ-THEME-TEMPL)
      (example "not the near one, the far one")
-     (SEM (f::orientation ont::more) (f::intensity ont::hi))
+     (SEM (f::orientation F::pos) (f::intensity ont::hi))
      )
     )
    )

@@ -9,7 +9,7 @@
     ((meta-data :origin calo :entry-date 20041122 :change-date 20090731 :wn ("linear%3:00:03") :comments caloy2)
      (lf-parent ont::analog) ;; like analog
      (example "a linear amplifier")
-     (SEM (F::GRADABILITY F::-))
+     (SEM (F::GRADABILITY -))
      )
     )
    )

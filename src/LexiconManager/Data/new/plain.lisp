@@ -11,7 +11,7 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date nil :comments nil :wn ("plain%5:00:00:obvious:00"))
      (LF-PARENT ONT::CLEAR)
-     (SEM (F::GRADABILITY F::+))
+     (SEM (F::GRADABILITY +))
      )
     ((LF-PARENT ont::plain-val)
      (example "plain food")

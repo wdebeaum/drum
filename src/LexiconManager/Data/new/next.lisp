@@ -11,7 +11,7 @@
     ;; what's an example of this? shouldn't next to be an adverb?
 ;    ((LF-PARENT ONT::DISTANCE-VAL)
 ;     (TEMPL ADJ-CO-THEME-TEMPL (XP (% W::PP (W::Ptype W::to))))
-;     (SEM (F::GRADABILITY F::-))
+;     (SEM (F::GRADABILITY -))
 ;     (example "he is next to the church")
 ;     )
     (;(lf-parent ont::sequence-val)

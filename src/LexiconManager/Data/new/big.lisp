@@ -21,7 +21,7 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060824 :change-date 20090731 :comments nil :wn ("big%3:00:01"))
      (LF-PARENT ONT::large)
-     (SEM (F::GRADABILITY F::+) (f::orientation ont::more) (f::intensity ont::med))
+     (SEM (F::GRADABILITY +) (f::orientation F::pos) (f::intensity ont::med))
      )
     )
    )
