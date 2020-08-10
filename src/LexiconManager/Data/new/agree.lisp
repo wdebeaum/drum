@@ -34,7 +34,7 @@
 	    (;(LF-parent ont::accept)
 	     (lf-parent ont::accept-agree) ;; 20120523 GUM change new parent
 	     (Example "He agreed with the findings")
-	     (TEMPL AGENT-neutral-XP-TEMPL (xp (% W::PP (W::ptype (? xx W::to W::on w::with)))))
+	     (TEMPL AGENT-neutral-XP-TEMPL (xp (% W::PP (W::ptype (? xx W::to W::on w::with w::upon)))))
 	     )
 	  
 	    )))
