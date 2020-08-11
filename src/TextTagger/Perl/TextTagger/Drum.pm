@@ -193,6 +193,10 @@ sub read_from_terms2 {
       if ($num_corrected > 0) {
 	$match->{corrected} = $num_corrected;
       }
+      if ($lex ne $input_variant) {
+	$match->{via} = $input_variant;
+	$match->{input} = $lex;
+      }
       print STDERR Data::Dumper->Dump([$match],['*match']) if ($debug);
       my %mapped_id_to_matches_with_status = ();
       my @mapped_ids = (); # equivalent to "keys %mitmws" but stable across runs

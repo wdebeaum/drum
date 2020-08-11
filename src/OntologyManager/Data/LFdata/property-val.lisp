@@ -1398,23 +1398,29 @@
 )
 |#
 
+#|
 ;; optical, magnetic, holographic
 (define-type ont::medium
  :parent ont::substantial-property-val 
-  :wordnet-sense-keys ("magnetic%3:00:00::" "magnetized%3:00:00::" "magnetised%3:00:00::")
+  :wordnet-sense-keys ("magnetized%3:00:00::" "magnetised%3:00:00::") ;"magnetic%3:00:00::"
  :arguments ((:OPTIONAL ONT::FIGURE )) 
  :sem (F::Abstr-obj (F::gradability - ))
  :comment "means of production and dissemination (c.f. ont::mode)"
 )
+|#
 
+#|
 ;; 20111017 added for obtw demo (word for type)
 (define-type ont::electrical
- :parent ont::medium ;substantial-property-val
+ :parent ont::artifact-property-val ;medium ;substantial-property-val
+ :wordnet-sense-keys ("alternating%3:00:00" "direct%3:00:01" "electric%3:01:00" "electrical%3:01:00" "electrical%3:01:01" "electrostatic%3:01:00" "galvanic%3:01:00" "hydroelectric%3:01:00" "inductive%3:01:00" "low-tension%3:00:00" "low-voltage%3:00:00" "photoelectric%3:01:00" "photoelectrical%3:01:00" "piezoelectric%3:01:00" "pyroelectric%3:01:00" "pyroelectrical%3:01:00" "static%3:01:00" "thermoelectric%3:01:00" "thermoelectrical%3:01:00" "voltaic%3:01:00")
 )
+
 
 (define-type ont::multimedia-val
  :parent ont::medium
 )
+|#
 
 ;; e.g., graphical, tactile, vocal
 (define-type ont::mode
@@ -2703,8 +2709,8 @@
 )
 
 (define-type ont::periodic-val
- :parent ont::frequency-val 
- :wordnet-sense-keys ("extrasystolic%3:01:00::" "migrational%3:01:00::" "tidal%3:01:00::" "systolic%3:01:00::" "tertian%3:01:00::" "diastolic%3:01:00::" "cyclic%3:01:00::" "periodic%3:00:00" )
+ :parent ont::frequency-val
+ :wordnet-sense-keys ("cyclic%3:01:00::" "diastolic%3:01:00::" "extrasystolic%3:01:00::" "migrational%3:01:00::" "noncyclic%3:00:00" "noncyclical%3:00:00" "periodic%3:00:00" "systolic%3:01:00::" "tertian%3:01:00::" "tidal%3:01:00::") 
 )
 
 (define-type ont::specified-period-val
@@ -4977,6 +4983,7 @@
 ;; associated with body
 (define-type ont::associated-with-body-val
  :parent ont::associated-with-val 
+ :wordnet-sense-keys ("atonic%3:01:00" "myotonic%3:01:00" "tonic%3:01:02")
 )
 
 ;; body system associations digestive, immune, 
@@ -6248,6 +6255,10 @@
   :parent ONT::mode
   :comment "(written)"
   )
+
+(define-type ont::multimedia-val
+ :parent ont::information-delivery-mode-val ;medium
+)
 
 (define-type ONT::written-val
   :parent ONT::information-delivery-mode-val
@@ -7567,7 +7578,7 @@
 
 (define-type ONT::city-state-district-val
   :parent ONT::geo-location-val
-  :wordnet-sense-keys ("singaporean%3:01:01::" "roman%3:01:01::" "romanic%3:01:00::" "venetian%3:01:00::" "sarawakian%3:01:00::" "ephesian%3:01:00::" "damascene%3:01:00::" "athenian%3:01:00::" "low-tension%3:00:00::" "low-voltage%3:00:00::" "kuwaiti%3:01:00::" "milanese%3:01:00::" "nicaean%3:01:00::" "nicene%3:01:00::" "inductive%3:01:00::" "palestinian%3:01:00::" "tyrolean%3:01:00::" "tyrolese%3:01:00::" "alternating%3:00:00::" "sicilian%3:01:00::" "viennese%3:01:00::" "territorial%3:01:00::" "electrostatic%3:01:00::" "static%3:01:00::" "piezoelectric%3:01:00::" "florentine%3:01:00::" "tuscan%3:01:00::" "quebecois%3:01:00::" "cornish%3:01:00::" "tunisian%3:01:02::" "texan%3:01:00::" "national%3:01:00::" "pyroelectric%3:01:00::" "pyroelectrical%3:01:00::" "genoese%3:01:00::" "genovese%3:01:00::" "thermoelectric%3:01:00::" "thermoelectrical%3:01:00::" "oxonian%3:01:00::" "photoelectric%3:01:00::" "photoelectrical%3:01:00::" "suburban%3:01:00::" "aberdonian%3:01:00::" "noncyclic%3:00:00::" "noncyclical%3:00:00::" "neapolitan%3:01:00::" "myotonic%3:01:00::" "glaswegian%3:01:00::" "californian%3:01:00::" "hydroelectric%3:01:00::" "sabahan%3:01:00::" "lancastrian%3:01:02::" "babylonian%3:01:00::" "atonic%3:01:00::" "prefectural%3:01:00::" "bavarian%3:01:00::" "abkhaz%3:01:00::" "abkhazian%3:01:00::" "mancunian%3:01:00::" "mycenaean%3:01:00::" "corinthian%3:01:00::" "boeotian%3:01:00::" "liverpudlian%3:01:00::" "archdiocesan%3:01:00::" "washingtonian%3:01:01::" "tonic%3:01:02::" "theban%3:01:01::" "communal%3:01:02::" "latin%3:01:01::" "hawaiian%3:01:00::" "civil%3:01:01::" "sardinian%3:01:00::" "voltaic%3:01:00::" "galvanic%3:01:00::" "metropolitan%3:01:00::" "direct%3:00:01::" "galwegian%3:01:00::" "frisian%3:01:00::" "washingtonian%3:01:00::" "spartan%3:01:00::" "parisian%3:01:00::" "luxemburger%3:01:02::" "georgian%3:01:04::" "attic%3:01:00::" "delphic%3:01:00::" "delphian%3:01:00::" "theban%3:01:00::" "trojan%3:01:00::" "carthaginian%3:01:00::" "punic%3:01:00::" "calcuttan%3:01:00::" "argive%3:01:00::" "eparchial%3:01:00::" "electrical%3:01:00::" "parochial%3:01:00::" "electric%3:01:00::" "electrical%3:01:01::" "assamese%3:01:00::" "tasmanian%3:01:00::" "diocesan%3:01:00::" "catalan%3:01:01::" "ionian%3:01:00::" "cantonal%3:01:00::" "provincial%3:01:00::")
+  :wordnet-sense-keys ("aberdonian%3:01:00::" "abkhaz%3:01:00::" "abkhazian%3:01:00::" "archdiocesan%3:01:00::" "argive%3:01:00::" "assamese%3:01:00::" "athenian%3:01:00::" "attic%3:01:00::" "babylonian%3:01:00::" "bavarian%3:01:00::" "boeotian%3:01:00::" "calcuttan%3:01:00::" "californian%3:01:00::" "cantonal%3:01:00::" "carthaginian%3:01:00::" "catalan%3:01:01::" "civil%3:01:01::" "communal%3:01:02::" "corinthian%3:01:00::" "cornish%3:01:00::" "damascene%3:01:00::" "delphian%3:01:00::" "delphic%3:01:00::" "diocesan%3:01:00::" "eparchial%3:01:00::" "ephesian%3:01:00::" "florentine%3:01:00::" "frisian%3:01:00::" "galwegian%3:01:00::" "genoese%3:01:00::" "genovese%3:01:00::" "georgian%3:01:04::" "glaswegian%3:01:00::" "hawaiian%3:01:00::" "ionian%3:01:00::" "kuwaiti%3:01:00::" "lancastrian%3:01:02::" "latin%3:01:01::" "liverpudlian%3:01:00::" "luxemburger%3:01:02::" "mancunian%3:01:00::" "metropolitan%3:01:00::" "milanese%3:01:00::" "mycenaean%3:01:00::" "national%3:01:00::" "neapolitan%3:01:00::" "nicaean%3:01:00::" "nicene%3:01:00::" "oxonian%3:01:00::" "palestinian%3:01:00::" "parisian%3:01:00::" "parochial%3:01:00::" "prefectural%3:01:00::" "provincial%3:01:00::" "punic%3:01:00::" "quebecois%3:01:00::" "roman%3:01:01::" "romanic%3:01:00::" "sabahan%3:01:00::" "sarawakian%3:01:00::" "sardinian%3:01:00::" "sicilian%3:01:00::" "singaporean%3:01:01::" "spartan%3:01:00::" "suburban%3:01:00::" "tasmanian%3:01:00::" "territorial%3:01:00::" "texan%3:01:00::" "theban%3:01:00::" "theban%3:01:01::" "trojan%3:01:00::" "tunisian%3:01:02::" "tuscan%3:01:00::" "tyrolean%3:01:00::" "tyrolese%3:01:00::" "venetian%3:01:00::" "viennese%3:01:00::" "washingtonian%3:01:00::" "washingtonian%3:01:01::")
   )
 
 (define-type ONT::sea-ocean-val
@@ -7805,9 +7816,14 @@
   )
 
 (define-type ONT::artifact-property-val
-  :parent ONT::physics-val
-  :wordnet-sense-keys ("electrolytic%3:01:00::" "axial%3:01:00::" "telegraphic%3:01:00::" "forcipate%3:01:00::" "antisatellite%3:01:00::" "asat%3:01:00::" "paramagnetic%3:01:00::" "archival%3:01:00::" "closed-circuit%3:01:00::" "artifactual%3:01:00::" "artefactual%3:01:00::" "viscometric%3:01:00::" "viscosimetric%3:01:00::" "stereoscopic%3:01:01::" "tiered%3:01:00::" "prismatic%3:01:00::" "audiovisual%3:01:00::" "spring-loaded%3:01:00::" "ceramic%3:01:00::" "catapultic%3:01:00::" "catapultian%3:01:00::" "textile%3:01:00::" "interstitial%3:01:00::" "anodic%3:01:00::" "anodal%3:01:00::" "antiquarian%3:01:00::" "funicular%3:01:00::" "spermicidal%3:01:00::" "gyroscopic%3:01:00::" "woolen%3:01:00::" "woollen%3:01:00::" "bladed%3:01:01::" "electromechanical%3:01:00::" "mechanical%3:01:01::" "mechanically_skillful%3:01:00::" "anastigmatic%3:01:00::" "stigmatic%3:01:00::" "three-wheel%3:01:00::" "three-wheeled%3:01:00::" "fisheye%3:01:00::" "wide-angle%3:01:00::" "valved%3:01:00::" "servomechanical%3:01:00::" "servo%3:01:00::" "journalistic%3:01:00::" "mud-brick%3:01:00::" "ropy%3:01:00::" "ropey%3:01:00::" "vehicular%3:01:00::" "coin-operated%3:01:00::" "prosthetic%3:01:00::" "tegular%3:01:00::" "valvular%3:01:00::" "two-wheel%3:01:00::" "two-wheeled%3:01:00::" "four-wheel%3:01:00::" "four-wheeled%3:01:00::" "calico%3:01:00::" "threaded%3:01:00::" "barometric%3:01:00::" "barometrical%3:01:00::" "robotic%3:01:00::" "broadband%3:01:01::" "cathodic%3:01:00::" "cinematic%3:01:00::" "life-support%3:01:00::" "cementitious%3:01:00::" "muzzle-loading%3:01:00::" "biedermeier%3:01:00::" "bolometric%3:01:00::" "vestiary%3:01:00::")
+  :parent ONT::substantial-property-val ;physics-val
+  :wordnet-sense-keys ("anastigmatic%3:01:00::" "anodal%3:01:00::" "anodic%3:01:00::" "antiquarian%3:01:00::" "antisatellite%3:01:00::" "archival%3:01:00::" "artefactual%3:01:00::" "artifactual%3:01:00::" "asat%3:01:00::" "audiovisual%3:01:00::" "axial%3:01:00::" "barometric%3:01:00::" "barometrical%3:01:00::" "biedermeier%3:01:00::" "bladed%3:01:01::" "bolometric%3:01:00::" "broadband%3:01:01::" "calico%3:01:00::" "catapultian%3:01:00::" "catapultic%3:01:00::" "cathodic%3:01:00::" "cementitious%3:01:00::" "ceramic%3:01:00::" "cinematic%3:01:00::" "closed-circuit%3:01:00::" "coin-operated%3:01:00::" "electrolytic%3:01:00::" "electromechanical%3:01:00::" "fisheye%3:01:00::" "forcipate%3:01:00::" "four-wheel%3:01:00::" "four-wheeled%3:01:00::" "funicular%3:01:00::" "gyroscopic%3:01:00::" "interstitial%3:01:00::" "journalistic%3:01:00::" "life-support%3:01:00::" "magnetic%3:00:00" "mechanical%3:01:01::" "mechanically_skillful%3:01:00::" "mud-brick%3:01:00::" "muzzle-loading%3:01:00::" "paramagnetic%3:01:00::" "prismatic%3:01:00::" "prosthetic%3:01:00::" "robotic%3:01:00::" "ropey%3:01:00::" "ropy%3:01:00::" "servo%3:01:00::" "servomechanical%3:01:00::" "spermicidal%3:01:00::" "spring-loaded%3:01:00::" "stereoscopic%3:01:01::" "stigmatic%3:01:00::" "tegular%3:01:00::" "telegraphic%3:01:00::" "textile%3:01:00::" "threaded%3:01:00::" "three-wheel%3:01:00::" "three-wheeled%3:01:00::" "tiered%3:01:00::" "two-wheel%3:01:00::" "two-wheeled%3:01:00::" "valved%3:01:00::" "valvular%3:01:00::" "vehicular%3:01:00::" "vestiary%3:01:00::" "viscometric%3:01:00::" "viscosimetric%3:01:00::" "wide-angle%3:01:00::" "woolen%3:01:00::" "woollen%3:01:00::")
   )
+
+(define-type ont::electrical
+  :parent ont::artifact-property-val ;medium ;substantial-property-val
+  :wordnet-sense-keys ("alternating%3:00:00" "direct%3:00:01" "electric%3:01:00" "electrical%3:01:00" "electrical%3:01:01" "electrostatic%3:01:00" "galvanic%3:01:00" "hydroelectric%3:01:00" "inductive%3:01:00" "low-tension%3:00:00" "low-voltage%3:00:00" "photoelectric%3:01:00" "photoelectrical%3:01:00" "piezoelectric%3:01:00" "pyroelectric%3:01:00" "pyroelectrical%3:01:00" "static%3:01:00" "thermoelectric%3:01:00" "thermoelectrical%3:01:00" "voltaic%3:01:00")
+)
 
 (define-type ONT::psychology-val
   :parent ONT::associated-with-science-val

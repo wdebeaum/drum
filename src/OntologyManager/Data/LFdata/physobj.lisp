@@ -3198,7 +3198,7 @@
  )
 
 (define-type ONT::arrangement-configuration
-  :wordnet-sense-keys ("arrangement%1:14:00" "array%1:14:00" "straggle%1:14:00     " "configuration%1:09:00")
+  :wordnet-sense-keys ("arrangement%1:14:00" "array%1:14:00" "straggle%1:14:00" "configuration%1:09:00")
   :comment "An group of objects organized in some way"
   :parent ONT::system ;collection
   )
@@ -3210,7 +3210,7 @@
   )
 
 (define-type ONT::ecosystem
-  :wordnet-sense-keys ("biotic_community%1:14:00" "ecosystem%1:14:00" "biosphere     %1:15:00" "biota%1:14:00")
+  :wordnet-sense-keys ("biotic_community%1:14:00" "ecosystem%1:14:00" "biosphere%1:15:00" "biota%1:14:00")
   :comment "An interconnected group of entities forming an ecosystem"
   :parent ONT::system
   )
