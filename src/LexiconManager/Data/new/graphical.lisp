@@ -8,7 +8,7 @@
    (wordfeats (W::morph (:FORMS (-LY))))
    (SENSES
     ((meta-data :origin calo :entry-date 20041122 :change-date nil :wn ("graphical%3:01:00" "graphical%5:00:00:written:00") :comments caloy2)
-     (LF-PARENT ONT::mode)
+     (LF-PARENT ONT::written-val) ;mode)
      (example "a graphical interface")
      )
     )
