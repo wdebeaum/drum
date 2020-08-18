@@ -19,7 +19,7 @@
     (
      (LF-PARENT ont::SPATIAL-DIVIDE) 
      (EXAMPLE "the fence separates the field")
-     (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
+    
      (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL )
      )
 

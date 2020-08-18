@@ -6,7 +6,7 @@
  :words (
   (w::socialize
    (SENSES
-    ((LF-PARENT ONT::social-activity)
+    ((LF-PARENT ONT::interact)
      (example "he socializes with them regularly")
      (TEMPL AGENT-AGENT1-XP-PP-OPTIONAL-TEMPL)
      )
