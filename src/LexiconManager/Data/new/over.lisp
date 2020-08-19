@@ -16,6 +16,7 @@
 
     ((LF-PARENT ONT::above)
      (TEMPL BINARY-CONSTRAINT-NP-implicit-TEMPL)
+     (example "he put it over the box" "he threw the ball over the fence")
      )
     
     ((LF-PARENT ONT::distributed-pos)
