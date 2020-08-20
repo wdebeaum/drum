@@ -1,0 +1,47 @@
+#!/usr/bin/perl
+
+# TRIPS.pm
+#
+# Time-stamp: <Tue Jul 28 11:06:01 CDT 2020 lgalescu>
+#
+# Author: Lucian Galescu <lgalescu@ihmc.us>, 27 Jul 2020
+#
+
+#----------------------------------------------------------------
+# Description:
+# The full TRIPS ontology.
+
+#----------------------------------------------------------------
+# History:
+# 2020/07/27 v1.0	lgalescu
+# - Created.
+
+#----------------------------------------------------------------
+# Usage:
+# 
+
+package Ont::TRIPS;
+
+$VERSION = '1.0';
+
+use strict 'vars';
+use warnings;
+
+use Ont::Ontology;
+
+our @ISA = qw(Ont::Ontology);
+
+
+# (almost) full TRIPS ontology
+my @data = (
+	    ##ONT::TIME-OBJECT##,
+	    ##ONT::REFERENTIAL-SEM##
+	   );
+
+sub new {
+    my $class = shift;
+    my $self = $class->SUPER::new(@data);
+    bless $self, $class;
+}
+
+1;

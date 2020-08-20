@@ -2,7 +2,7 @@
 
 # ekb_join.pl
 #
-# Time-stamp: <Mon Dec 16 16:32:04 CST 2019 lgalescu>
+# Time-stamp: <Wed Dec 18 14:17:38 CST 2019 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 11 Dec 2019
 #
@@ -18,7 +18,8 @@
 # 20191215 v1.0 lgalescu
 # - Tested. Ready.
 # 20191216 v1.1 lgalescu
-# - Tweak: added offset attribute to paragraphs (a bit redundant).
+# - Tweak: added offset attribute to paragraphs (a bit redundant, but should
+#   be useful for validation).
 
 #----------------------------------------------------------------
 # Usage:

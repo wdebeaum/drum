@@ -2,7 +2,7 @@
 
 # ekr_drum.pl
 #
-# Time-stamp: <Wed Jun 27 14:57:41 CDT 2018 lgalescu>
+# Time-stamp: <Tue Jul 28 13:41:00 CDT 2020 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  6 Jun 2016
 #
@@ -21,11 +21,21 @@
 # 2017/04/21 v1.0.3	lgalescu
 # - changed short name of -ekr-options
 # 2018/03/05 v1.1	lgalescu
-# - updated to work with 
+# - updated; now version numbers match cvs revisions
 
 #----------------------------------------------------------------
 # Usage:
 # 
+my $usage;
+
+BEGIN {
+    # Just use basename of program, rather than whole path.
+    $0 =~ s:.*/::;
+
+    $usage = "usage: $0 [-h] [-d DEBUG] -r DOMAIN [-pub] [-o OPTIONS] EKB
+";
+  }
+
 # Get TRIPS_BASE from environment
 BEGIN {
     $TRIPS_BASE_DEFAULT = ".";
@@ -33,7 +43,7 @@ BEGIN {
     warn "TRIPS_BASE=$TRIPS_BASE\n";
   }
 
-my $VERSION = "1.0.2";
+my $VERSION = "1.3";
 
 # local (TRIPS) Perl libraries
 use lib "$main::TRIPS_BASE/etc/";
@@ -64,12 +74,14 @@ our (
     );
 
 GetOptions(
-	   'domain=s'		=> \$opt_domain,
+	   'r|domain=s'		=> \$opt_domain,
 	   'pub' 		=> \$opt_pub,
-	   'ro|ekr-options=s' 	=> \$opt_ekr_options,
+	   'o|options=s' 	=> \$opt_ekr_options,
 	   'd|debug=i' 		=> \$debugLevel,
 	   'h|help' 		=> \$help,
 	  ) or die "Something's wrong";
+
+die $usage if $help;
 
 $util::Log::DebugLevel = $debugLevel // 0;
 $util::Log::CallerInfo = 1;

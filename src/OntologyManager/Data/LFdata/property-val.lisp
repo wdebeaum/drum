@@ -5838,6 +5838,7 @@
 (define-type ONT::control-val
   :parent ONT::evaluation-attribute-val
   :comment "controlled or controllable by a human entity (controlled, guided)"
+  :sem (F::abstr-obj (F::scale ont::controlled-scale))
   )
 
 (define-type ONT::controlled-val

@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Wed Dec 18 00:38:36 CST 2019 lgalescu>
+# Time-stamp: <Tue Jul 28 14:56:25 CDT 2020 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.45 2019/12/18 06:42:46 lgalescu Exp $
+# $Id: EKB.pm,v 1.46 2020/08/19 20:25:53 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -2153,6 +2153,41 @@ sub decreases {
 				 make_arg(':AFFECTED' => $affected_id) ] );
 }
 
+
+=head2 replace_arg( $a, $role, $id)
+
+Replaces the id an argument element with the given role name.
+
+See L<make_arg()|/make_arg(_$role,_$id,_$pos )> for the meaning of the
+arguments. 
+
+See L<add_arg(_$a,_$role,_$id,_$pos )>.
+
+=cut
+
+sub replace_arg {
+  my $self = shift;
+  my ($a, $role, $argId) = @_;
+  # assert that the modified assertion is a proper relation
+  unless (is_relation($a)) {
+    ERROR "Cannot add argument to node: %s", $a;
+    return;
+  }
+  # assert that the new id does represent an existing assertion
+  my $b = $self->get_assertion($argId)
+      or do {
+	  ERROR "Assertion with id %s doe not exist.", $argId;
+	  return;
+  };
+  my ($arg) = assertion_args($a, '[@role="'.$role.'"]')
+      or do {
+	  ERROR "Assertion does not have an %s arg: %s", $role, $a;
+	  return;
+  };
+  $self->_clean_arg($arg);
+  set_attribute($arg, id => $argId);
+  $arg;
+}
 
 =head2 add_arg( $a, $role, $id, $pos )
 

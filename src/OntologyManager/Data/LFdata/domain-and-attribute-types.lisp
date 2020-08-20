@@ -1118,6 +1118,12 @@
  :wordnet-sense-keys ("discomfort%1:26:00")
 )
 
+(define-type ont::controlled-scale
+ :sem (F::abstr-obj (F::scale ONT::CONTROL-SCALE))
+ :parent ont::evaluation-scale
+ :comment "scale corresponding to being controlled"
+)
+
 ;; conventionality
 (define-type ont::conventionality-scale
  :sem (F::abstr-obj (F::scale ONT::CONVENTIONALITY-SCALE))

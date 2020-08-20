@@ -433,7 +433,42 @@ my @tests = (
   # lgalescu, "last year as" (arguably "year" and "decade" could be correctly tagged as time units, but they're not in a context we allow)
   { text => "The energy sector was the biggest loser in the S&P 500 last year as well as for all of last decade.", tags => [] },
   # lgalescu, "Miami", context hallucinated
-  { text => "42 Miami residents", tags => [] }
+  { text => "42 Miami residents", tags => [] },
+  # lgalescu, "...mid-20s °C in..."
+  { text => "Last week temperatures remained above-normal averaging up to 11°C higher than normal across northern Kazakhstan. Maximum temperatures reached 20°C in far northern parts of southern Kazakhstan and in the mid-20s °C in parts of western Afghanistan. Next week, temperatures are likely to vary with abnormal heat and abnormal cold impacting the region.",
+    tags => [
+      { type => 'sense',
+        start => 63, end => 65, lex => '°C',
+	'penn-pos' => ['NN'], lftype => ['MEASURE-UNIT'],
+	'domain-specific-info' => {
+	  domain => 'cwms',
+	  type => 'units',
+	  units => 'kelvin',
+	  dimensions => 'temperature'
+	}
+      },
+      { type => 'sense',
+        start => 144, end => 146, lex => '°C',
+	'penn-pos' => ['NN'], lftype => ['MEASURE-UNIT'],
+	'domain-specific-info' => {
+	  domain => 'cwms',
+	  type => 'units',
+	  units => 'kelvin',
+	  dimensions => 'temperature'
+	}
+      },
+      { type => 'sense',
+        start => 211, end => 213, lex => '°C',
+	'penn-pos' => ['NN'], lftype => ['MEASURE-UNIT'],
+	'domain-specific-info' => {
+	  domain => 'cwms',
+	  type => 'units',
+	  units => 'kelvin',
+	  dimensions => 'temperature'
+	}
+      }
+    ]
+  }
 );
 =begin
   templates for making tests

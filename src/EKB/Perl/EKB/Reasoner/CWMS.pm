@@ -1,9 +1,9 @@
 # CWMS.pm
 #
-# Time-stamp: <Mon Dec 16 11:13:23 CST 2019 lgalescu>
+# Time-stamp: <Thu Jul 30 17:38:43 CDT 2020 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  1 Jun 2016
-# $Id: CWMS.pm,v 1.8 2019/12/16 17:13:48 lgalescu Exp $
+# $Id: CWMS.pm,v 1.9 2020/08/19 20:25:53 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -20,6 +20,9 @@
 # - Fixed bugs (getting attribute value from descendants)
 # 2019/12/15 v1.2	lgalescu
 # - Fixed bug.
+# 2020/07/28 v1.3	lgalescu
+# - Added TRIPS ontology
+# - Added inference for "provide a source of"
 
 #----------------------------------------------------------------
 # Usage:
@@ -27,7 +30,7 @@
 
 package EKB::Reasoner::CWMS;
 
-$VERSION = '1.2';
+$VERSION = '1.3';
 
 use strict 'vars';
 use warnings;
@@ -41,6 +44,7 @@ use EKB::Match;
 use Ont::BioEntities;
 use Ont::BioEvents;
 use Ont::Geo;
+use Ont::TRIPS;
 use EKB::Reasoner::Rule;
 use EKB::Reasoner;
 use util::Log;
@@ -50,6 +54,7 @@ our @ISA = qw(EKB::Reasoner);
 my @rules;
 
 my $ont_geo = Ont::Geo->new();
+my $ont_trips = Ont::TRIPS->new();
 
 sub new {
   my $class = shift;
@@ -90,8 +95,57 @@ sub default_options {
 @rules =
   (
 
-   ## numbers with modifiers, e.g., "over 10,000"
+   ###
    {
+    ## X provides/offers/creates a source of Y
+    # N.B.: need to distinguish b/w "increase" and "increase availability of"
+    #   (or the closely related "increase access to")
+    #   i'm assuming the former if Y is under ONT::ORDERED-DOMAIN (~~ scalar property)
+    # e=EVENT[type=ONT::SUPPLY, agent=x, affected=t]
+    # t=TERM[type=ONT::SOURCE, assoc-with=y[type->>ONT::ORDERED-DOMAIN]]
+    # =>
+    # EVENT[type=ONT::INCREASE, agent=x, affected=y]
+    name => "EKR:SupplySource",
+    constraints => ['EVENT[type[.="ONT::SUPPLY"] and arg1 and arg2[@role=":AFFECTED"]]'],
+    handler => sub {
+      my ($rule, $ekb, $a) = @_;
+      my $a_id = $a->getAttribute('id');
+
+      # arg1
+      my $x_id = $a->findvalue('arg1/@id');
+ 
+      # arg2 = TERM[type=ONT::SOURCE and assoc-with[@id=Y]]
+      # NB: should be ONT::SOURCE but it may be (incorrectly) ONT::DEVICE-COMPONENT
+      my $t_id = $a->findvalue('arg2/@id');
+      my $t = $ekb->get_assertion($t_id, "TERM")
+	or return 0;
+      my $t_type = get_slot_value($t, 'type');
+      $ont_trips->is_a($t_type, "ONT::SOURCE") || ($t_type eq "ONT::DEVICE-COMPONENT")
+        or return 0;
+
+      my $y_id = $t->findvalue('assoc-with/@id')
+	or return 0;
+      my $y = $ekb->get_assertion($y_id, "TERM")
+	or return 0;
+
+      # y = TERM[type->ONT::ORDERED-DOMAIN]
+      my $y_type = get_slot_value($y, 'type');
+      $ont_trips->is_a($y_type, "ONT::ORDERED-DOMAIN") 
+        or return 0;
+
+      # add assertion
+      my $e1 = $ekb->clone_assertion($a, {rule => $rule->name});
+      set_slot_value($e1, 'type' => 'ONT::INCREASE');
+      $ekb->replace_arg($e1, ':AFFECTED' => $y_id);
+      my $e1_id = $ekb->add_assertion($e1);
+
+      1;
+      }
+   },
+
+   ### temporal arguments
+   {
+    ## numbers with modifiers, e.g., "over 10,000"
     name => "EKR:NumberMod",
     constraints => ['TERM[type[.="ONT::NUMBER"] and value[@id and @mod]]'],
     handler => sub {
@@ -133,9 +187,9 @@ sub default_options {
       1;
     }
    },
-
-   ## e.g., "the year 2016"
+   
    {
+    ## e.g., "the year 2016"
     name => "EKR:TimeIdentifiedAs",
     constraints => ['TERM[type[.="ONT::YEAR"] and equals[@id] and scale[.="ONT::TIME-LOC-SCALE"]]'],
     handler => sub {
@@ -170,8 +224,8 @@ sub default_options {
     }
    },
    
-   ## e.g., "the month of March"
    {
+    ## e.g., "the month of March"
     name => "EKR:TimeMonthOf",
     constraints => ['TERM[type[.="ONT::MONTH"] and assoc-with]'],
     handler => sub {
@@ -228,8 +282,8 @@ sub default_options {
     }
    },
 
-   ## e.g., "the first half of March"
    {
+    ## e.g., "the first half of March"
     name => "EKR:TimePart",
     constraints => ['TERM[type[.="ONT::PART"] and assoc-with]'],
     handler => sub {
@@ -291,18 +345,18 @@ sub default_options {
    ## the first 2 weeks of March
    # ...
 
-   ## e.g., "the beginning of 2015", "the start of the week"
-   # < EVENT[@id=$t_id and assoc-with[@id=$tl_id] and type=$type]
-   #    $type=one-of(ONT::START, ???)
-   # < TERM[@id=$tl_id and type=ONT::TIME-LOC]
-   # > + TERM[@id=$t_id]/ as near-clone of EVENT[@id=$t_id]
-   #     - assoc-with
-   #     ~ type=ONT::TIME-LOC
-   #     + timex=TERM[@id=$tl_id]/timex
-   #     + timex/@mod=$type
-   # > - TERM[@id=$tl_id]
-   # > - EVENT[@id=$t_id]
    {
+    ## "the beginning of 2015", "the start of the week"
+    # < EVENT[@id=$t_id and assoc-with[@id=$tl_id] and type=$type]
+    #    $type=one-of(ONT::START, ???)
+    # < TERM[@id=$tl_id and type=ONT::TIME-LOC]
+    # > + TERM[@id=$t_id]/ as near-clone of EVENT[@id=$t_id]
+    #     - assoc-with
+    #     ~ type=ONT::TIME-LOC
+    #     + timex=TERM[@id=$tl_id]/timex
+    #     + timex/@mod=$type
+    # > - TERM[@id=$tl_id]
+    # > - EVENT[@id=$t_id]
     name => "EKR:TimeModStart",
     constraints => ['EVENT[type[.="ONT::START"] and assoc-with]'],
     handler => sub {
@@ -360,19 +414,19 @@ sub default_options {
     }
    },
 
-   ## e.g., "the end of 2015", "the end of April"
-   # < TERM[@id=$t_id and assoc-with[@id=$tl_id] and type=$type]
-   #    $type=one-of(ONT::ENDPOINT, ???)
-   # < TERM[@id=$tl_id and type=ONT::TIME-LOC]
-   # > ~ TERM[@id=$t_id]/
-   #     - assoc-with
-   #     ~ type=ONT::TIME-LOC
-   #     + timex=TERM[@id=$tl_id]/timex
-   #     + timex/@mod=$type
-   # > - TERM[@id=$tl_id]
    {
+    ## e.g., "the end of 2015", "the end of April"
+    # < TERM[@id=$t_id and assoc-with[@id=$tl_id] and type=$type]
+    #    $type=one-of(ONT::END-LOCATION, ???)
+    # < TERM[@id=$tl_id and type=ONT::TIME-LOC]
+    # > ~ TERM[@id=$t_id]/
+    #     - assoc-with
+    #     ~ type=ONT::TIME-LOC
+    #     + timex=TERM[@id=$tl_id]/timex
+    #     + timex/@mod=$type
+    # > - TERM[@id=$tl_id]
     name => "EKR:TimeModEnd",
-    constraints => ['TERM[type[.="ONT::ENDPOINT"] and assoc-with]'],
+    constraints => ['TERM[type[.="ONT::END-LOCATION"] and assoc-with]'],
     handler => sub {
       my ($rule, $ekb, $t) = @_;
 
@@ -428,9 +482,9 @@ sub default_options {
     }
    },
 
-   ## fix time links incorrectly parsed as locations
-   ## order: after all time-related rules
    {
+    ## fix: location => time 
+    ## order: after all time-related rules
     name => "EKR:LocationToTime",
     constraints => ['*/location'],
     handler => sub {
@@ -464,8 +518,9 @@ sub default_options {
     }
    },
 
-   ## result = location
+   ### locations
    {
+    ## fix: result => location
     name => "EKR:EResultIsLoc",
     constraints => ['EVENT[result/@id and location/@id]'],
     handler => sub  {
@@ -500,8 +555,8 @@ sub default_options {
     }
    },
 
-   ## ARRIVE location => to-location
    {
+    ## fix: ARRIVE location => to-location
     name => "EKR:ArriveIn",
     constraints => ['EVENT[type[.="ONT::ARRIVE"] and location[@id and @mod]]'],
     handler => sub  {
@@ -536,8 +591,8 @@ sub default_options {
     }
    },
    
-   ## DEPART location => from-location
    {
+    ## fix: DEPART location => from-location
     name => "EKR:DepartN",
     constraints => ['EVENT[type[.="ONT::DEPART"] and arg2[@role=":NEUTRAL"]]'],
     handler => sub  {
@@ -569,8 +624,8 @@ sub default_options {
     }
    },
    
-   ## location => from-location
    {
+    ## fix: location => from-location
     name => "EKR:ELoc2FromLoc",
     constraints => ['EVENT[location[@id and @mod="ONT::FROM-LOC"]]'],
     handler => sub  {
@@ -603,8 +658,8 @@ sub default_options {
     }
    },
    
-   ## location => to-location
    {
+    ## fix: location => to-location
     name => "EKR:ELoc2ToLoc",
     constraints => ['EVENT[location[@id and @mod]]'],
     handler => sub  {
@@ -639,8 +694,8 @@ sub default_options {
     }
    },
    
-   ## source => from-location
    {
+    ## fix: source => from-location
     name => "EKR:ESource2FromLoc",
     constraints => ['EVENT[source/@id and not(from-location)]'],
     handler => sub  {
@@ -676,8 +731,8 @@ sub default_options {
     }
    },
    
-   ## result(TO) => to-location
    {
+    ## fix: result(TO) => to-location
     name => "EKR:EResult2ToLoc",
     constraints => ['EVENT[result[@id and @mod]]'],
     handler => sub  {
@@ -717,8 +772,8 @@ sub default_options {
     }
    },
 
-   ## result => from-location
    {
+    ## fix: result => from-location
     name => "EKR:EResult2FromLoc",
     constraints => ['EVENT[result[@id and @mod="FROM"] and not(from-location)]'],
     handler => sub  {
@@ -749,7 +804,7 @@ sub default_options {
     }
    },
 
-   ## the rest are generic clean-up rules
+   ### generic clean-up rules
    
    {
     ## remove dangling references on relation arguments
@@ -1042,6 +1097,7 @@ sub default_options {
    },
 
    ### TEMPORARY fixes
+   
    {
     ## fix timex expressions for TIME-RANGE terms
     name => 'EKR:FixTimeRangeTimex',
