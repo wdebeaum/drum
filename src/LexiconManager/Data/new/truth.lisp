@@ -7,7 +7,7 @@
 ;   )
   (W::truth
    (SENSES
-    ((LF-PARENT ONT::truth-scale)
+    ((LF-PARENT ONT::trueness-scale) ;truth-scale)
      (meta-data :origin calo-ontology :entry-date 20060125 :change-date nil :comments caloy3)     
      (TEMPL OTHER-RELN-TEMPL)
      )

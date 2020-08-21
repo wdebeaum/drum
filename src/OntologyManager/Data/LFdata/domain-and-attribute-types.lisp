@@ -1646,7 +1646,7 @@
 (define-type ont::trueness-scale
  :sem (F::abstr-obj (F::scale ONT::TRUENESS-SCALE))
  :parent ont::information-property-scale
- :comment "trueness scale as opposed to categorical true/false distinction (see ont::truth-scale)"
+ ;:comment "trueness scale as opposed to categorical true/false distinction (see ont::truth-scale)"
 )
 
 (define-type ont::true-scale
@@ -2818,12 +2818,14 @@
     ;; WORDS: gender, sex
     )
 
+#|
 (define-type ont::truth-scale
  :sem (F::abstr-obj (F::scale ONT::TRUTH-SCALE))
  :parent ont::unordered-domain 
  :wordnet-sense-keys ("truth%1:26:00")
  ;; WORDS: truth
 )
+|#
 
 (define-type ont::discrete-color-scale
  :sem (F::abstr-obj (F::scale ONT::DISCRETE-COLOR-SCALE))

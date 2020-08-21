@@ -1344,17 +1344,21 @@
  )
 
 (define-type ONT::sport
+ :wordnet-sense-keys ("athletic_game%1:04:00" "athletics%1:04:00" "sport%1:04:00")
  :parent ONT::game
  )
 
+#|
 ;; football, soccer...
 (define-type ONT::athletic-game
  :wordnet-sense-keys ("athletics%1:04:00" "sport%1:04:00")
  :parent ONT::sport
  )
+|#
 
 (define-type ONT::court-game
- :parent ONT::athletic-game
+ :parent ONT::sport ;athletic-game
+ :wordnet-sense-keys ("court_game%1:04:00")
  )
 
 ;; chess
@@ -1366,6 +1370,7 @@
 ;; preference, comparison, contrast
 (define-type ONT::comparison
  :parent ONT::ps-object
+ :wordnet-sense-keys ("comparison%1:24:00")
  )
 
 ;; this involves a selection among alternatives

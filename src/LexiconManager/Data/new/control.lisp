@@ -10,6 +10,11 @@
      (example "we need the remote control")
      (LF-PARENT ONT::device)
      )
+
+    ((LF-PARENT ONT::controlled-scale)
+     (EXAMPLE "the control of the mob by the police")
+     )
+
     )
    )
 ))

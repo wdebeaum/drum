@@ -18,14 +18,16 @@ my $debug = 0;
 # prefixes, e.g.:
 # "the" becomes t=ton, h=Planck's constant, e=atomic charge
 # "and" becomes a=are, n=nano-, d=day
+# Also a few longer words so constructed.
 # Also a few words that are single units but are way more common in other
 # senses, and have been seen in contexts where we might falsely think they're
 # units (i.e. after a number), e.g. "in" as "inches", "key" as "kilogram".
 my @stoplist = qw(
 a act add age air all amp and ant as ash ask at aye
-bad bag ban bar bat be bed bee beg bet bin bus but bye cab cat cut
+bad bag ban bar bat be bed bee beg bet bin bus but bye
+cab cat cut
 dry due
-eat egg end eye
+eat egg end epidemic eye
 fat fee fly fun
 gas get gig gut
 ham has hat he hug hut
@@ -44,12 +46,11 @@ us use
 ye yes yet
 );
 my $stoplist_re = '(?:' . join('|', @stoplist) . ')';
-my $not_stoplist_word_re = qr/
-  (?! # not
-    \b $stoplist_re \b # word on the stoplist
+my $stoplist_word_re = qr/
+    $stoplist_re \b # word on the stoplist
     (?! \s* [\*×⋅\/] ) # not followed by a multiplicative operator
-  )
 /x;
+my $not_stoplist_word_re = qr/(?!$stoplist_word_re)/;
 
 # fundamental dimensions grounded mostly with their SI units
 # - 1 is for dimensionless units
@@ -309,7 +310,7 @@ sub init_units_tagger {
       } else { # unit name we've never seen before
 	$desc = { names => [$name] };
       }
-      if ($defn =~ /^\p{L}\w*$/i and # looks like a single unit
+      if ($defn =~ /^\p{L}\w*(?<![2-9])$/i and # looks like a single unit
 	  @{[parse_prefixes($defn)]} <= 1 # not prefixes+root AFAWK
 	 ) {
 	# therefore, $defn is another single unit, make $name a synonym
@@ -477,12 +478,17 @@ sub init_units_tagger {
   $numerator_factor_re = qr/$prefix_re?? $numerator_unit_re $exponent_re?/x;
   $denominator_factor_re = qr/$prefix_re?? $singular_re $exponent_re?/x;
   # note that we capture the specific multiplication operator used in order to
-  # ensure that the same one is used throughout
+  # ensure that the same one is used throughout, but we still have to check the
+  # stoplist each time in the case of juxtaposition
   my $denominator_re = qr/
     (?<denominator>
       $denominator_factor_re
       (?: (?<dmult> $denominator_mult_re ) $denominator_factor_re
-	  (?: \g{dmult} $denominator_factor_re )*
+	  (?:
+	    (?! \s* $stoplist_word_re )
+	    \g{dmult}
+	    $denominator_factor_re
+	  )*
       )?
     )
   /x;
@@ -493,7 +499,10 @@ sub init_units_tagger {
       (?:
 	$denominator_factor_re
 	(?<nmult> $numerator_mult_re )
-	(?: $denominator_factor_re \g{nmult} )*
+	(?: $denominator_factor_re
+	    (?! \s* $stoplist_word_re )
+	    \g{nmult}
+	)*
 	$numerator_factor_re
 	|
 	$numerator_factor_re
@@ -509,7 +518,8 @@ sub init_units_tagger {
   $unit_expr_re = qr/
     ^ \s* \K $cf_unit_expr_re (?= \s* $ ) | # the whole text is just units
     \( \s* \K $cf_unit_expr_re (?= \s* \) ) | # units in parens
-    \d \s* \K $cf_unit_expr_re (?! ['-]? \w ) | # units after a number
+    # units after a number (not including plural 10s)
+    \d (?: 0s \s )? \s* \K $cf_unit_expr_re (?! ['-]? \w ) |
     \b [Ii]n \s+ \K $cf_unit_expr_re (?! ['-]? \w ) # units after the word "in"
   /x;
 }
@@ -620,6 +630,23 @@ sub tag_units {
     my $tag = +{ type => 'sense', match2tag() };
     my $matched_numerator = $+{numerator};
     my $matched_denominator = $+{denominator}; # maybe undef
+    # HACK: cut off the word "drop" from the end of a units expression if we can
+    # This is tricky because "drop" can actually be a volume unit, but it often
+    # follows a quantity as a regular noun to indicate the direction of movement
+    if ($tag->{lex} =~ /\s*\bdrops?$/) { # lex ends with drop(s)
+      my $new_lex = $`; # without drop
+      if ($new_lex ne '' and $new_lex !~ /([\*×⋅\/]|\bper)$/) {
+	# drop wasn't the whole units expression, and didn't follow an explicit
+	# multiplicative operator; adjust the tag to exclude drop
+	$tag->{lex} = $new_lex;
+	$tag->{end} = $tag->{start} + length($new_lex);
+	if (defined($matched_denominator)) { # drop was in denominator
+	  $matched_denominator =~ s/\s*\bdrops?$//;
+	} else { # no denominator; drop was in numerator
+	  $matched_numerator =~ s/\s*\bdrops?$//;
+	}
+      }
+    }
     print STDERR "got unit expression '$tag->{lex}'; numerator = '$matched_numerator'; denominator = " . (defined($matched_denominator) ? "'$matched_denominator'" : 'undef') . "\n" if ($debug);
     eval { # try
     my ($numerator_expr_sp, $numerator_expr_ap, $is_plural) =

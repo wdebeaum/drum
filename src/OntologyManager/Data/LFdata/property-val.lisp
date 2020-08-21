@@ -1451,7 +1451,8 @@
 )
 
 (define-type ont::digital-val
- :parent ont::signal-representation-val 
+ :parent ont::signal-representation-val
+ :wordnet-sense-keys ("digital%3:00:00") 
 )
 
 (define-type ont::analog
@@ -1463,6 +1464,7 @@
 
 (define-type ont::sensory-mode-val
  :parent ont::mode
+ :wordnet-sense-keys ("ocular%3:01:04")
  ; auditory, visual, tactile communication/information
 )
 
@@ -1973,7 +1975,7 @@
 ;; sensory properties: PROPERTIES regarding the ABILITY to receive sensory input (e.g., invisible, visible, touchable, smellable)
 (define-type ont::sensory-property-val
  :parent ont::physical-property-val 
-  :wordnet-sense-keys ("sensory%3:00:00::" "sensorial%3:00:00::" "haptic%3:01:00::" "tactile%3:01:00::" "tactual%3:01:00::" "ocular%3:01:04::" "optic%3:01:04::" "optical%3:01:04::" "visual%3:01:04::" "exteroceptive%3:01:00::" "perceptual%3:01:00::" "interoceptive%3:01:00::" "proprioceptive%3:01:00::" "sensational%3:01:00::" "sensory%3:01:00::" "perceptive%3:01:00::" "somatosensory%3:01:00::" "euphonic%3:01:00::" "euphonical%3:01:00::" "allergic%3:01:00::" "cross-modal%3:01:00::" "olfactory%3:01:00::" "olfactive%3:01:00::" "auditory%3:01:00::" "audile%3:01:00::" "auditive%3:01:00::" "gustatory%3:01:00::" "gustative%3:01:00::" "gustatorial%3:01:00::" "auscultatory%3:01:00::" "squinty%3:01:00::" "anaphylactic%3:01:00::" "orthoptic%3:01:00::" "amphoric%3:01:00::" "synesthetic%3:01:00::" "synaesthetic%3:01:00::" "sensitizing%3:00:00::" "sensitising%3:00:00::")
+  :wordnet-sense-keys ("allergic%3:01:00::" "amphoric%3:01:00::" "anaphylactic%3:01:00::" "audile%3:01:00::" "auditive%3:01:00::" "auditory%3:01:00::" "auscultatory%3:01:00::" "cross-modal%3:01:00::" "euphonic%3:01:00::" "euphonical%3:01:00::" "exteroceptive%3:01:00::" "gustative%3:01:00::" "gustatorial%3:01:00::" "gustatory%3:01:00::" "haptic%3:01:00::" "interoceptive%3:01:00::" "olfactive%3:01:00::" "olfactory%3:01:00::" "orthoptic%3:01:00::" "perceptive%3:01:00::" "perceptual%3:01:00::" "proprioceptive%3:01:00::" "sensational%3:01:00::" "sensitising%3:00:00::" "sensitizing%3:00:00::" "sensorial%3:00:00::" "sensory%3:00:00::" "sensory%3:01:00::" "somatosensory%3:01:00::" "squinty%3:01:00::" "synaesthetic%3:01:00::" "synesthetic%3:01:00::" "tactile%3:01:00::" "tactual%3:01:00::")
  :comment "properties relating to the ability to receive sensory input (compare to ont::appearance-property-val)"
  :sem (F::abstr-obj (F::scale ont::sensory-scale ))
 )

@@ -6,7 +6,7 @@
  :words (
   (w::boxing
   (senses
-   ((LF-PARENT ONT::athletic-game)
+   ((LF-PARENT ONT::sport) ;athletic-game)
     (TEMPL bare-PRED-TEMPL)
     (syntax (W::morph (:forms (-none))))
     )

@@ -439,7 +439,7 @@ my @tests = (
     tags => [
       { type => 'sense',
         start => 63, end => 65, lex => '°C',
-	'penn-pos' => ['NN'], lftype => ['MEASURE-UNIT'],
+	'penn-pos' => ['NN'], lftype => ['TEMPERATURE-UNIT'],
 	'domain-specific-info' => {
 	  domain => 'cwms',
 	  type => 'units',
@@ -449,7 +449,7 @@ my @tests = (
       },
       { type => 'sense',
         start => 144, end => 146, lex => '°C',
-	'penn-pos' => ['NN'], lftype => ['MEASURE-UNIT'],
+	'penn-pos' => ['NN'], lftype => ['TEMPERATURE-UNIT'],
 	'domain-specific-info' => {
 	  domain => 'cwms',
 	  type => 'units',
@@ -459,7 +459,7 @@ my @tests = (
       },
       { type => 'sense',
         start => 211, end => 213, lex => '°C',
-	'penn-pos' => ['NN'], lftype => ['MEASURE-UNIT'],
+	'penn-pos' => ['NN'], lftype => ['TEMPERATURE-UNIT'],
 	'domain-specific-info' => {
 	  domain => 'cwms',
 	  type => 'units',
@@ -468,7 +468,70 @@ my @tests = (
 	}
       }
     ]
-  }
+  },
+  # lgalescu, "... x% drop in ..."
+  { text => "a 52% drop in sale of essential goods",
+    tags => [
+      { type => 'sense',
+        start => 4, end => 5, lex => '%',
+	'penn-pos' => ['NN'], lftype => ['PERCENT'],
+	'domain-specific-info' => {
+	  domain => 'cwms',
+	  type => 'units',
+	  units => 'percent',
+	  dimensions => '1'
+	}
+      }
+    ]
+  },
+  { text => "a 0.95% drop in coffee consumption",
+    tags => [
+      { type => 'sense',
+        start => 6, end => 7, lex => '%',
+	'penn-pos' => ['NN'], lftype => ['PERCENT'],
+	'domain-specific-info' => {
+	  domain => 'cwms',
+	  type => 'units',
+	  units => 'percent',
+	  dimensions => '1'
+	}
+      }
+    ]
+  },
+  # test that "drop" still works as a unit when appropriate
+  { text => "5 drops",
+    tags => [
+      { type => 'sense',
+        start => 2, end => 7, lex => 'drops',
+	'penn-pos' => ['NNS'], lftype => ['VOLUME-UNIT'],
+	'domain-specific-info' => {
+	  domain => 'cwms',
+	  type => 'units',
+	  units => 'drop',
+	  dimensions => 'length^3'
+	}
+      },
+    ]
+  },
+  # lgalescu, "epidemic" as e*pi*demi-c
+  { text => 'epidemic', tags => [] },
+  # test "RPM" in order to see if getting rid of "pi" as a unit messes up general angle units like "revolution" and things based on it (it does)
+  { text => 'RPM',
+    tags => [
+      { type => 'sense',
+        start => 0, end => 3, lex => 'RPM',
+	'penn-pos' => ['NN'], lftype => ['MEASURE-UNIT'],
+	'domain-specific-info' => {
+	  domain => 'cwms',
+	  type => 'units',
+	  units => 'rpm',
+	  dimensions => 'angle*time^-1'
+	}
+      },
+    ]
+  },
+  # lgalescu, "...Fig. 7a are..."
+  { text => 'The sector-activity patterns depicted in Fig. 7a are similar to the patterns observed at the sector level', tags => [] },
 );
 =begin
   templates for making tests

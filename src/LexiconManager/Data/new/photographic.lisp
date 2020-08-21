@@ -10,6 +10,11 @@
      (LF-PARENT ONT::artifact-property-val) ;medium)
      (example "photographic film") ;; like electromagnetic, holographic
      )
+
+     ((LF-PARENT ONT::representation-method-val)
+     (example "they showed it in a photographic manner")
+     )
+
     )
    )
 ))
