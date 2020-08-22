@@ -879,8 +879,7 @@
 
 ;; engineer, artist, scientist
 (define-type ONT::professional
-    :wordnet-sense-keys ("professional%1:18:00" "professional_person%1:18:00"
-						"skilled_worker%1:18:00")
+    :wordnet-sense-keys ("agent%1:18:01" "agent%1:18:02" "professional%1:18:00" "professional_person%1:18:00" "skilled_worker%1:18:00")
     :comment "a person defined by a role that they play. e.g., doctor, leader, ..."
     :parent ONT::PERSON
     :sem (F::Phys-obj (F::form F::solid-object)
@@ -890,8 +889,26 @@
 		      (F::Container -) (F::intentional +) (F::information -))
     :arguments ((:OPTIONAL ONT::FIGURE ((? lof F::Phys-obj f::abstr-obj)))
 		(:optional ont::norole)  ;; here for "driver", "fixer": see note in DRV-NOM-RELN-TEMPL 
-		)
+ 	       )
+)
+
+;; runner, swimmer
+(define-type ONT::athlete
+    :wordnet-sense-keys ("athlete%1:18:00" "jock%1:18:00")
+    :parent ONT::professional ;person
+)    
+
+(define-type ONT::author
+    :wordnet-sense-keys ("writer%1:18:00" "author%1:18:00")
+    :parent ONT::professional
+    :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::origin F::artifact) (f::information f::information-content))))
     )
+
+(define-type ONT::OFFICIAL
+    :comment "Person that serves in some administrative role"
+    :wordnet-sense-keys ("leader%1:18:00" "ruler%1:18:00" "head_of_state%1:18:00")
+    :parent ONT::PROFESSIONAL ;PERSON
+)
 
 ;; scholar, student, graduate
 (define-type ONT::scholar
@@ -901,11 +918,11 @@
 		)
     )
 
-(define-type ONT::author
-    :wordnet-sense-keys ("writer%1:18:00" "author%1:18:00")
-    :parent ONT::professional
-    :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::origin F::artifact) (f::information f::information-content))))
-    )
+;; 20111006 for obtw demo
+(define-type ONT::scout
+    :parent ONT::professional ;PERSON
+    :wordnet-sense-keys ("scout%1:18:00")
+)
 
 ;; expert, specialist, afficionado, gourmet, gourmand
 (define-type ONT::specialist
@@ -919,11 +936,13 @@
     :parent ONT::professional
     )
 
+#|
 ;; runner, swimmer
 (define-type ONT::athlete
     :wordnet-sense-keys ("athlete%1:18:00" "jock%1:18:00")
-    :parent ONT::person
+    :parent ONT::professional ;person
     )
+|#
 
 ;; passenger, traveller
 (define-type ONT::traveller
@@ -1136,11 +1155,13 @@
     :wordnet-sense-keys ("patient%1:18:00")
     )
 
+#|
 ;; 20111006 for obtw demo
 (define-type ONT::scout
-    :parent ONT::PERSON
+    :parent ONT::professional ;PERSON
     :wordnet-sense-keys ("scout%1:18:00")
     )
+|#
 
 ;;; swift 24/01/02 added types addressee, recipient, focus-of-emotion to replace roles labelled 'beneficiary' in e.g. verbs of communication
 (define-type ONT::ADDRESSEE
@@ -1148,12 +1169,13 @@
     :wordnet-sense-keys ("addressee%1:18:00")
     )
 
+#|
 (define-type ONT::OFFICIAL
     :comment "Person that serves in some administrative role"
      :wordnet-sense-keys ("leader%1:18:00" "ruler%1:18:00" "head_of_state%1:18:00")
-    :parent ONT::PERSON
+    :parent ONT::PROFESSIONAL ;PERSON
     )
-
+|#
 
 (define-type ONT::RECIPIENT
     :parent ONT::PERSON

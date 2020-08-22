@@ -1386,21 +1386,25 @@
  :parent ONT::relation
   )
 
+#|
 ;; system, agent
 (define-type ont::agent
   :parent ont::phys-object
   :sem (F::phys-obj (F::information F::information-content) (f::intentional +))
   )
+|#
 
 ;; (health care) assistant
 (define-type ont::assistant
  :wordnet-sense-keys ("assistant%1:18:00" "helper%1:18:01" "help%1:18:00" "supporter%1:18:01")
-  :parent ont::agent
+  :parent ont::professional ;agent
   )
 
+#|
 (define-type ont::harmful-agency
   :parent ont::agent
   )
+|#
 
 (define-type ONT::computer-software
   :parent ONT::representation
