@@ -2,7 +2,7 @@
 # Makefile -- install a set of Perl modules
 #
 # Lucian Galescu <lgalescu@ihmc.us> 2017/02/03
-# $Id: Makefile,v 1.8 2020/08/19 20:25:53 lgalescu Exp $
+# $Id: Makefile,v 1.9 2020/08/25 20:16:37 lgalescu Exp $
 #
 
 # Will come from parent Makefile...
@@ -44,6 +44,7 @@ SRCS_OUT = $(SRCS_IN:.in=)
 
 SRCS += $(SRCS_OUT)
 
+# we typically don't need to make in subdirs; exceptions are made via this makefile
 # SUBDIRS = EKB Ont
 
 CONFIGDIR=../../config
@@ -63,5 +64,10 @@ install:: $(SRCS)
 	   $(INSTALL_DATA) $$src "$$destdir"); \
 	done
 
-$(SRCS_OUT): %: %.in
+# this uses $TRIPS_BASE/src/DeepSemLex/data/TRIPS/trips-ont-dsl.xml
+Ont/TRIPS.pm: Ont/TRIPS.pm.in | dsl
 	../tools/make-ont-file.pl $< > $@
+
+.PHONY: dsl
+dsl:
+	make -C $(TRIPS_BASE)/src/DeepSemLex/data/ TRIPS/COMPLETE
