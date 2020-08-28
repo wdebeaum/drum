@@ -375,7 +375,7 @@
    ;;  FRAGMENTS AS UTTERANCES
 
     ((UTT (no-post-adv +) (lf (% SPEECHACT (VAR **) (CLASS ONT::SA_PRED-FRAGMENT) (no-post-adv +) (constraint (& (content ?v))))) (var **))
-    -advbl-utt> 
+    -advbl-utt> .96
     (head (advbl (WH -) (SORT (? !sort DISC)) (VAR ?v) (ARGUMENT (% ?x (SEM ?sem))) 
 		 (ARG (% *PRO* (VAR *) (gap -) (class ?lf) (sem ?sem)))
 		 (gap -))))

@@ -9,7 +9,7 @@
    (SENSES
     ((EXAMPLE "Purchase a computer")
       (meta-data :origin calo :entry-date 20040401 :change-date nil :comments y1-dialog-variations)
-     (LF-PARENT ONT::purchase)
+     (LF-PARENT ONT::commerce-buy)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )

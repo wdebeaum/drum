@@ -2950,15 +2950,15 @@
 
 	((parenthetical (var ?cc) (arg ?arg) (role :parenthetical))
 	 -paren1> 1
-	 (punc (lex (? x W::START-SQUARE-PAREN W::START-PAREN w::punc-comma)))
+	 (punc (lex (? x W::START-SQUARE-PAREN W::START-PAREN))) ;w::punc-comma)))
 	 (head (Utt (LF (% W::SPEECHACT (constraint (& (content ?cc))))) (headcat (? !hc w::name))))  ; for names use appositive rules
-	 (punc (lex  (? y W::END-SQUARE-PAREN W::END-PAREN w::punc-comma))))
+	 (punc (lex  (? y W::END-SQUARE-PAREN W::END-PAREN)))) ;w::punc-comma))))
 
 	((parenthetical (var ?cc) (arg ?arg) (role :parenthetical))
 	 -paren2> 1
-	 (punc (lex (? x W::START-SQUARE-PAREN W::START-PAREN W::punc-COMMA)))
+	 (punc (lex (? x W::START-SQUARE-PAREN W::START-PAREN))) ;W::punc-COMMA)))
 	 (head (pred (var ?cc) (arg ?arg)))
-	 (punc (lex  (? y W::END-SQUARE-PAREN W::END-PAREN w::punc-comma))))
+	 (punc (lex  (? y W::END-SQUARE-PAREN W::END-PAREN)))) ;w::punc-comma))))
 	 
 	 
         ;; NP -> WH-PRO

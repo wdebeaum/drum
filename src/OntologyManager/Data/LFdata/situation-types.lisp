@@ -36,7 +36,7 @@
     :wordnet-sense-keys ("do%2:36:02" "drive%2:35:00" "make%2:36:08" "open_up%2:30:00" "make%2:30:00")
  :parent ONT::acting
  :comment "an AGENT causes some event to occur or proposition to become true. Usually the verbs that fall under this category are very general causal verbs that take other events as their arguments and are positive causes- i.e., events are caused to happen as opposed to negative causes as in an event is prevented."
- :sem (F::Situation (F::Cause (? cz F::Force f::agentive)) (F::Trajectory -))
+ :sem (F::Situation (F::Cause (?  F::Force f::agentive)) (F::Trajectory -))
  :arguments ((:ESSENTIAL ONT::agent ((? oc F::Phys-obj F::Abstr-obj F::Situation)))
 	     (:optional ont::affected ((? aff F::SITUATION F::ABSTR-OBJ F::Phys-obj)))
 	     (:optional ont::formal ((? res2 F::SITUATION F::ABSTR-OBJ)
@@ -52,7 +52,7 @@
  :arguments ((:ESSENTIAL ONT::affected ((? oc F::Phys-obj F::Abstr-obj F::Situation)))  
              
              (:OPTIONAL ONT::formal ((? eoc3 F::situation)))
-             (:OPTIONAL ONT::agent ((? aoc F::phys-obj F::abstr-obj)) (:implements cause))
+             (:OPTIONAL ONT::agent ((? aoc F::phys-obj F::abstr-obj F::situation)) (:implements cause))
              )
  )
 
@@ -982,7 +982,7 @@
 (define-type ONT::wear
  :wordnet-sense-keys ("have_on%2:29:00")
  :parent ONT::event-of-action
- :arguments ((:required ont::neutral (F::phys-obj)))
+ :arguments ((:required ont::neutral (F::phys-obj (f::type ont::attire))))
  :sem (F::SITUATION (F::Aspect F::unbounded) (F::Time-span F::Extended))
  )
 

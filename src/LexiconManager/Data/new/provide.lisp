@@ -16,9 +16,10 @@
     ((LF-PARENT ONT::supply)
      (example "provide him with the food")
      (SEM (F::Aspect F::Bounded) (F::Time-span F::Atomic))
-     (TEMPL AGENT-AFFECTEDR-AFFECTED-XP-NP-TEMPL (xp (% w::pp (w::ptype w::with) (W::lf (% ?p (w::class (? x ont::phys-object)))))))
+     (TEMPL AGENT-AFFECTEDR-AFFECTED-XP-NP-TEMPL (xp (% w::pp (w::ptype w::with)))) ;(W::lf (% ?p (w::class (? x ont::phys-object)))))))
      (meta-data :origin calo-ontology :entry-date 20050922 :change-date 20090501 :comments vn2-integration)
      )
+    #|
     ((LF-PARENT ONT::enable)
      (example "provide an opportunity (to him)")
      (SEM (F::Aspect F::Bounded) (F::Time-span F::Atomic))
@@ -30,6 +31,7 @@
      (TEMPL AGENT-FORMAL-XP-CP-TEMPL (xp (% w::pp (w::ptype w::with) (W::lf (% ?p (w::class (? x ont::situation-root)))))))
      (meta-data :origin calo-ontology :entry-date 20050922 :change-date 20090501 :comments vn2-integration)
      )
+    |#
 
     #||  ((LF-PARENT ONT::supply)
      (example "the battery provides a spark (to the engine)")

@@ -673,7 +673,7 @@
 
 	     ; copied from to-loc
 	     (:ESSENTIAL ONT::FIGURE ((? f F::PHYS-OBJ F::abstr-obj F::situation)))    ;; need to allow situation here as it can modoify events as well as objects in RESULT expressions
-	     (:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj) ;(f::spatial-abstraction ?!sa) ; from the database
+	     (:ESSENTIAL ONT::GROUND ((? t F::Phys-obj F::abstr-obj) ;(f::spatial-abstraction ?!sa) ; database doesn't have spatial-abstraction
 				     ;; (F::mobility F::movable) ; exclude "... arrive in country X from country Y"  JFA I removed the movable constraint to the figure 
 				      ) )  ; spatial-abstraction is not enough: many things have spatial-abstraction, e.g., a frog.  Another possibility is (F::object-function F::spatial-object)
 
@@ -1075,6 +1075,9 @@
 
 (define-type ont::since
     :parent ont::since-until
+    :arguments (
+             (:ESSENTIAL ONT::GROUND ((? vl F::time f::situation) (f::type (? type ONT::any-time-object ONT::EVENT-OF-CHANGE))))
+	     )
    
     )
 
@@ -1296,21 +1299,6 @@
     :parent ont::time-interval
     )
 
-(define-type ONT::month
-    :comment "time interval of a named month"
-    :parent ont::time-interval
-    )
-
-(define-type ONT::week
-    :comment "time interval of a week"
-    :parent ont::time-interval
-    )
-
-(define-type ONT::day
-    :comment "time interval of a day"
-    :parent ont::time-interval
-    )
-
 
 ;; ont::time-unit has been moved under ont::measure-unit (with other units pounds, ghz, etc.)
 ;;; Covers all explicit things with date and time counting
@@ -1354,6 +1342,24 @@
 (define-type ont::date-object-in
     :comment "temporal objects that use IN - e.g., in June"
     :parent ONT::TIME-Object
+    )
+
+(define-type ONT::month
+    :comment "time interval of a named month"
+    ;:parent ont::time-interval
+    :parent ont::date-object-in ; It rained in the last two days; the meeting will convene in the next week
+    )
+
+(define-type ONT::week
+    :comment "time interval of a week"
+    ;:parent ont::time-interval
+    :parent ont::date-object-in ; It rained in the last two days; the meeting will convene in the next week
+    )
+
+(define-type ONT::day
+    :comment "time interval of a day"
+    ;:parent ont::time-interval
+    :parent ont::date-object-in ; It rained in the last two days; the meeting will convene in the next week
     )
 
 (define-type ONT::today

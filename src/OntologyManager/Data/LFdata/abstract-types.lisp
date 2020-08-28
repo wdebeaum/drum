@@ -1525,7 +1525,7 @@
  :parent ONT::tangible-abstract-object
  :arguments (
 	     ;(:REQUIRED ONT::FIGURE (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
-	     (:REQUIRED ont::FIGURE ((? lo f::phys-obj f::abstr-obj)))
+	     (:REQUIRED ont::FIGURE ((? lo f::phys-obj f::abstr-obj f::situation))) ; situation: the cost of building a house
 	     (:REQUIRED ONT::EXTENT (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
 	     )
  )

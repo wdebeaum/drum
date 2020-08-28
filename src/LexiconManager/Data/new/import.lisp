@@ -8,8 +8,9 @@
   (wordfeats (W::morph (:forms (-vb) :nom w::import)))
  (senses
   ((meta-data :origin task-learning :entry-date 20050815 :change-date nil :comments nil)
-  (LF-PARENT ONT::transport)
-  (example "import the document")
+  ;(LF-PARENT ONT::transport)
+  (LF-PARENT ONT::commerce-buy)
+  (example "import the goods")
   )))
 ))
 

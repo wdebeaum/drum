@@ -15,7 +15,7 @@
      )
     |#
         
-    ((lf-parent ont::purchase)
+    ((lf-parent ont::commerce-buy)
      (example "buy the book from amazon dot com")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic) (F::trajectory -))
      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)

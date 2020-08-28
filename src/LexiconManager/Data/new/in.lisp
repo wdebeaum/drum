@@ -64,7 +64,8 @@
   ((W::IN W::NEED)
    (SENSES
     (;(LF-PARENT ONT::physical-reaction)
-     (LF-PARENT ONT::desirous)
+     ;(LF-PARENT ONT::desirous)
+     (LF-PARENT ONT::inadequate)
      (TEMPL postpositive-ADJ-experiencer-theme-TEMPL (XP (% W::PP (W::Ptype W::of))))
      (example "I am in need of entertainment")
      )
@@ -312,7 +313,8 @@
    (SENSES
     ((LF-PARENT ONT::CHOICE-OPTION)
      (LF-FORM W::INSTEAD-OF)
-     (TEMPL binary-constraint-S-templ)
+     ;(TEMPL binary-constraint-S-templ)
+     (TEMPL binary-constraint-NP-templ)
      )
     ((LF-PARENT ONT::CHOICE-OPTION)
      (LF-FORM W::INSTEAD-OF)

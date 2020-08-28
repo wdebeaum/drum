@@ -760,6 +760,25 @@
       )
      (add-to-conjunct (val (MODS ?mod)) (old ?con) (new ?new)))
 
+    ;; she, however, ate the pizza.
+   ((vp- (constraint ?new)
+     (tma ?tma) (sem ?argsem)
+     (advbl-needed ?avn)
+      )
+    -adv-vp-pre-s-comma> ;.98 ; already gets lower score because of the comma constits
+    (punc (lex w::punc-comma))
+     (advbl (SORT PRED) (ATYPE (? x PRE-VP)) (ARGUMENT (% S (SEM ?sem))) ;;($ f::situation))))
+      (GAP -) 
+      (ARG ?v) (VAR ?mod)
+      )
+    (punc (lex w::punc-comma))
+     (head (vp- (VAR ?v) (constraint ?con) (SEM ?argsem) ;;(aux -) 
+		(tma ?tma)
+		(advbl-needed ?avn)
+	    )
+      )
+     (add-to-conjunct (val (MODS ?mod)) (old ?con) (new ?new)))
+   
     ;; another version of adv-vp-pre-s> for occasional cases, and rarer
     ;; she in this case was fired
    ((vp- (constraint ?new)
@@ -781,7 +800,6 @@
       )
      (add-to-conjunct (val (MODS ?mod)) (old ?con) (new ?new)))
    
-
     ((vp- (constraint ?new) (tma ?tma) (class ?class) (sem ?sem) (var ?v)
       (advbl-needed -) (complex +) (subjvar ?subjvar)
       (GAP ?gap)

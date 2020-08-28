@@ -82,8 +82,8 @@
   )
 
 ;; 12/2009 removing the f::intentional restriction so one can buy horses
-(define-type ONT::purchase
- :wordnet-sense-keys ("buy%2:40:00" "purchase%1:04:00" "purchase%2:40:00")
+(define-type ONT::commerce-buy
+ :wordnet-sense-keys ("buy%2:40:00" "purchase%1:04:00" "purchase%2:40:00" "import%2:40:00")
  :parent ONT::commerce
  :sem (F::SITUATION (F::Aspect F::dynamic))
  :arguments (     (:REQUIRED ONT::affected ((? th13 F::Phys-obj F::Abstr-obj F::situation) ;(f::intentional -)
@@ -167,7 +167,7 @@
 
 ;; sell something for a price
 (define-type ONT::commerce-sell
- :wordnet-sense-keys ("merchandise%2:40:00" "sell%2:40:00")
+ :wordnet-sense-keys ("merchandise%2:40:00" "sell%2:40:00" "export%2:40:00")
  :parent ONT::giving
  :sem (F::Situation (F::Trajectory -)(F::Aspect F::dynamic))
  )
@@ -181,7 +181,7 @@
  :wordnet-sense-keys ("furnish%2:40:00" "provide%2:40:00" "render%2:40:02" "supply%2:40:00")
   :parent ONT::giving
   :arguments ((:optional ONT::agent)
-              (:optional ONT::affected (F::Phys-obj))
+              (:optional ONT::affected) ;(F::Phys-obj))
 	      )
   )
 
@@ -214,7 +214,7 @@
     )
 
 (define-type ONT::owe
- :wordnet-sense-keys ("owe%2:40:01")
+ :wordnet-sense-keys ("owe%2:40:01" "owe%2:40:00")
  :parent ONT::event-of-state
  :arguments ((:OPTIONAL ONT::neutral1 ((? rcp F::Phys-obj f::abstr-obj)))
 	     (:optional ont::neutral2 )
@@ -3168,7 +3168,7 @@
     :definitions ((ONT::CAUSE-EFFECT :agent ?agent
 				     :formal (ONT::ACTIVITY-ONGOING :formal ?formal)))
     :comment "causing some activity to continue"
-    :wordnet-sense-keys ("maintain%2:42:00" )
+    :wordnet-sense-keys ("maintain%2:42:00")
     )
 
 (define-type ont::disable
@@ -4283,6 +4283,11 @@
 
 (define-type ONT::fluctuate
  :wordnet-sense-keys ("fluctuate%2:30:00" "fluctuation%1:11:01" "fluctuation%1:11:00")
+ :parent ONT::change
+ )
+
+(define-type ONT::stabilize
+ :wordnet-sense-keys ("stabilize%2:30:01")
  :parent ONT::change
  )
 

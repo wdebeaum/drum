@@ -635,6 +635,7 @@
 	       ))
      (compute-sem-features (lf ont::event-time-rel) (sem ?sem)))
 
+    #| ; since last year is not :EXTENT
     ;;  Special construction for last year/next week/ etc which doesn't seem to generalize to non-temporal
     ((np (var ?v) (sort pred) (agr 3s) (lex ?n_lex)
       (LF (% description (var ?v) (status ont::definite)
@@ -647,6 +648,7 @@
       (Head (n1 (sem ?valsem) (var ?v) (class ?class) (restr ?r) (lex ?n_lex)
 	       (sem ($ f::time)) ;(f::time-scale F::INTERVAL)))
 	       )))
+    |#
 
     ;; E.G., last February 15th, next Tuesday
       
