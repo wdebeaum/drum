@@ -331,7 +331,9 @@ sub init
   {
     print STDERR "Initializing " . $tagger->{name} . "...\n"
       if ($self->{debug});
-    &{$tagger->{init_function}}($self);
+    eval {
+      &{$tagger->{init_function}}($self);
+    1 } || die "Failed to initialize $tagger->{name} tagger: $@";
   }
   # wait for them to be ready if necessary
   for my $tagger (@{$self->{init_taggers}})
@@ -339,7 +341,9 @@ sub init
     if (exists($tagger->{ready_function})) {
       print STDERR "Waiting for " . $tagger->{name} . " to be ready...\n"
 	if ($self->{debug});
-      &{$tagger->{ready_function}}($self);
+      eval {
+	&{$tagger->{ready_function}}($self);
+      1 } || die "Failed to ready $tagger->{name} tagger: $@";
     }
   }
   print STDERR "Done initializing taggers.\n" if ($self->{debug});

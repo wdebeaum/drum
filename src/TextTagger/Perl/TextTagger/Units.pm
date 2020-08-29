@@ -258,7 +258,9 @@ sub hash_keys_re {
 sub init_units_tagger {
   # locate unit definitions file
   my $units_file = `units -U 2>&1`;
-  if ($units_file =~ /illegal option/) { # macOS' ancient version of units
+  if (not defined($units_file)) {
+    die "can't run 'units' command; is it installed?";
+  } elsif ($units_file =~ /illegal option/) { # macOS' ancient version of units
     $units_file = '/usr/share/misc/units.lib';
   } elsif ($units_file =~ m[^/]) {
     chomp $units_file;
