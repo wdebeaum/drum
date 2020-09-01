@@ -532,6 +532,34 @@ my @tests = (
   },
   # lgalescu, "...Fig. 7a are..."
   { text => 'The sector-activity patterns depicted in Fig. 7a are similar to the patterns observed at the sector level', tags => [] },
+  #
+  # errors lgalescu reported in 2020-08-29 email "more issues with units"
+  #
+  # slashes that aren't division...
+  # ...after a number that isn't a measurement (a year)
+  # (actually got stuck parsing the denominator at "i")
+  { text => '* Additionally, many far northern areas Afar did not experience an extension of the 2019 Karan/Kiremt season.', tags => [] },
+  # ...after "in"
+  # (actually got stuck parsing the denominator at "o")
+  { text => '* The assessment revealed that in all/almost areas visited some level of coordination mechanism has been set up though there is no uniformity in the naming, structure, membership and scope of activity.', tags => [] },
+  # ...after a figure number
+  # (actually got stuck parsing the denominator at "o")
+  { text => '* FIGURE 1 Liberia / Sectoral contributions to real GDP growth"', tags => [] },
+  # postfix digits that aren't exponents...
+  # ...after a year: "almost 8"
+  # (actually got stuck parsing the numerator at "o")
+  { text => '* Moreover, to address the needs of its most vulnerable population, Ethiopia has successfully implemented a largescale safety net program - the Productive Safety Net Program (PSNP), the biggest safety net in Africa except for South Africa - since 2005 that covered in 2018 almost 8 million direct beneficiaries.', tags => [] },
+  # ...in parens: "example 2"
+  # (actually got stuck parsing the numerator at "x")
+  { text => '* This either underestimates (see example 1) or overestimates (example 2) population within a travel time band.', tags => [] },
+  # semi- that doesn't mean "exactly half of the following unit"
+  # (actually got stuck parsing the numerator at "r")
+  { text => '* However, these factors did not trigger significant irrigation investments, even in semi-arid areas where the payoff to irrigation is high.', tags => [] },
+  # "cash-based" error, after "in"
+  # (actually got stuck parsing the numerator at "a" (wait, what?))
+  { text => "* Disbursed US$ 524 million in cash-based transfers across 56 countries and maximized WFP's digital payment systems to serve 10 million unique beneficiaries - the most to date.", tags => [
+    # arguably "US$ 524 million" should be tagged, but we don't do currency
+  ] },
 );
 =begin
   templates for making tests

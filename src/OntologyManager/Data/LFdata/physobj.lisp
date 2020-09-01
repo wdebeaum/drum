@@ -892,6 +892,11 @@
  	       )
 )
 
+(define-type ONT::accountant
+    :wordnet-sense-keys ("accountant%1:18:00")
+    :parent ONT::professional
+)
+
 ;; runner, swimmer
 (define-type ONT::athlete
     :wordnet-sense-keys ("athlete%1:18:00" "jock%1:18:00")
@@ -903,6 +908,12 @@
     :parent ONT::professional
     :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::origin F::artifact) (f::information f::information-content))))
     )
+
+(define-type ONT::manager
+    :wordnet-sense-keys ("head%1:18:00")
+    :parent ONT::professional 
+    :comment "Person that performs a managing role, e.g., boss, ceo, executive etc"
+)
 
 (define-type ONT::OFFICIAL
     :comment "Person that serves in some administrative role"

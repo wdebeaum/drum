@@ -67,7 +67,7 @@
   (w::out
   (senses((lf-parent ont::location-distance-modifier)
 	    (templ adv-operator-templ)
-	    (example "he is over there" "he is out in the sunshine" "he is out in the street"))
+	    (example "he is out there" "he is out in the sunshine" "he is out in the street"))
 	   )
 )
 ))

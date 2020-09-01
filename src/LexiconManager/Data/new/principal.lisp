@@ -6,7 +6,7 @@
  :words (
    (W::principal
    (SENSES
-    ((LF-PARENT ONT::professional)
+    ((LF-PARENT ONT::manager) ;professional)
      (meta-data :origin caloy3 :entry-date 20070330 :change-date nil :comments y3-test-data :wn ("principal%1:18:00"))
      )
     )

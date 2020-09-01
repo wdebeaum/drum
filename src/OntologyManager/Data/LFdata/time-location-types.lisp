@@ -264,6 +264,19 @@
 		(:essential ONT::GROUND ((? of1  f::phys-obj f::abstr-obj) (f::type (? t ONT::CARDINAL-POINT ONT::object-dependent-location)))))
   )
 
+#|(define-type ont::over-orientation-change
+  :comment "the orientation of the figure is changed"
+  :parent ont::oriented-loc-reln
+  :wordnet-sense-keys ("over%4:02:01")
+)
+
+(define-type ont::over-to
+  :comment "either intransitive preposition, or to-PP complement as GROUND"
+  :parent ont::oriented-loc-reln
+  :wordnet-sense-keys ("over%4:02:01")
+)
+|#
+
 ; figure is on an object
 (define-type ont::on
   :parent ont::oriented-loc-reln
@@ -729,7 +742,13 @@
 	     (:ESSENTIAL ONT::GROUND (F::Phys-obj))
 	     (:OPTIONAL ONT::NOROLE)
             )
- )
+)
+
+(define-type ont::direction-over
+    :parent ont::direction
+    :wordnet-sense-keys ("over%4:02:01")
+    :comment "relates to changes in position as in -hand it over to me- or changes in orientation as in -knock the lamp over-"
+)
 
 (define-type ont::direction-wrt-entity
     :parent ont::direction
