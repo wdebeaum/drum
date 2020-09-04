@@ -23,7 +23,7 @@ my $debug = 0;
 # senses, and have been seen in contexts where we might falsely think they're
 # units (i.e. after a number), e.g. "in" as "inches", "key" as "kilogram".
 my @stoplist = qw(
-a act add age air all amp and ant as ash ask at aye
+a act add age air all amp and ant arid as ash ask at aye
 bad bag ban bar bat be bed bee beg bet bin bus but bye
 cab cat cut
 dry due
@@ -40,7 +40,7 @@ net nut
 oil
 pad pal pat pet pie pig pin pit pub put
 ray rib rid rod
-sad sea see set she sin sue sum sun
+sad sale sea see set she sin sue sum sun
 tea the tin to toe
 us use
 ye yes yet
@@ -114,11 +114,10 @@ my %prefixes = ();
 # regexen:
 # prefix unit name (without the dash)
 my $prefix_re; # set at init
-# factors in numerator or denominator of unit expression (but see FIXME in init)
-my $numerator_factor_re; # set at init
-my $denominator_factor_re; # set at init
-# unit expression in context
-my $unit_expr_re; # set at init
+my $max_prefix_length; # number of characters in the longest possible prefix
+# root/base unit name
+my $singular_unit_re; # set at init
+my $singular_or_plural_unit_re; # set at init
 # unit exponents (usually 1 digit, excluding 0 and +1, maybe with negation)
 my $exponent_re = qr/(?: \s* ^? \s* (?<exponent> -? [2-9] | -1 ) (?![\d\.]) )/x;
 # * operator in numerator
@@ -436,6 +435,13 @@ sub init_units_tagger {
   $units{ampere}{dimension} = { charge => 1, time => -1 };
   # regex for prefixes (used by get_dimension)
   $prefix_re = hash_keys_re(\%prefixes);
+  # find max prefix length
+  $max_prefix_length = 0;
+  for my $prefix (keys %prefixes) {
+    my $prefix_length = length($prefix);
+    $max_prefix_length = $prefix_length
+      if ($max_prefix_length < $prefix_length);
+  }
   # determine all other dimensions
   for my $name (keys %units) {
     get_dimension($name);
@@ -445,7 +451,7 @@ sub init_units_tagger {
   my $one_desc = $units{'1'};
   delete $units{'1'};
   # regex for singular units
-  my $singular_re = hash_keys_re(\%units);
+  $singular_unit_re = hash_keys_re(\%units);
   # add plurals as additional keys of %units, but don't:
   # - pluralize prefixes
   # - pluralize the shortest name of a unit with multiple names (initialism)
@@ -469,226 +475,469 @@ sub init_units_tagger {
   for my $plural (keys %plural_units) {
     $units{$plural} = $plural_units{$plural} if ($plural_units{$plural});
   }
-  # build up final regex:
-  # unit name in numerator (can be singular or plural)
-  my $numerator_unit_re = hash_keys_re(\%units);
+  # regex for singular or plural units
+  $singular_or_plural_unit_re = hash_keys_re(\%units);
   $units{'1'} = $one_desc; # restore '1' unit
-  # FIXME: these two variables have become slightly misnamed: for "denominator"
-  # read "singular", and for "numerator" read "singular or plural"; we used to
-  # allow any numerator factors to be plural, now we only allow the last
-  # numerator factor to be plural
-  $numerator_factor_re = qr/$prefix_re?? $numerator_unit_re $exponent_re?/x;
-  $denominator_factor_re = qr/$prefix_re?? $singular_re $exponent_re?/x;
-  # note that we capture the specific multiplication operator used in order to
-  # ensure that the same one is used throughout, but we still have to check the
-  # stoplist each time in the case of juxtaposition
-  my $denominator_re = qr/
-    (?<denominator>
-      $denominator_factor_re
-      (?: (?<dmult> $denominator_mult_re ) $denominator_factor_re
-	  (?:
-	    (?! \s* $stoplist_word_re )
-	    \g{dmult}
-	    $denominator_factor_re
-	  )*
-      )?
-    )
-  /x;
-  # regex for whole unit expression without context
-  my $cf_unit_expr_re = qr/(?:
-    (?<numerator>
-      $not_stoplist_word_re
-      (?:
-	$denominator_factor_re
-	(?<nmult> $numerator_mult_re )
-	(?: $denominator_factor_re
-	    (?! \s* $stoplist_word_re )
-	    \g{nmult}
-	)*
-	$numerator_factor_re
-	|
-	$numerator_factor_re
-      )
-    )
-    (?: $per_re $denominator_re )?
-    |
-    # numerator can be a single non-unit word, like "plants", if we
-    # definitely have a denominator
-    (?<numerator> \b \p{L}+ \b) $per_re $denominator_re
-  )/x;
-  # regex with context
-  $unit_expr_re = qr/
-    ^ \s* \K $cf_unit_expr_re (?= \s* $ ) | # the whole text is just units
-    \( \s* \K $cf_unit_expr_re (?= \s* \) ) | # units in parens
-    # units after a number (not including plural 10s)
-    \d (?: 0s \s )? \s* \K $cf_unit_expr_re (?! ['-]? \w ) |
-    \b [Ii]n \s+ \K $cf_unit_expr_re (?! ['-]? \w ) # units after the word "in"
-  /x;
 }
 
-# given a string that matched as either numerator or denominator (indicated by
-# the first argument) return three values: two expr hashes using the preferred
-# names of all units and prefixes (the first with separate prefixes, the second
-# with attached prefixes), and a boolean indicating whether any units were
-# plural
-sub parse_fraction_component {
-  my ($which, $component) = @_;
-  my $factor_re;
-  if ($which eq 'numerator') {
-    $factor_re = qr/$not_stoplist_word_re (?: $denominator_factor_re | $numerator_factor_re $ ) /x;
-  } elsif ($which eq 'denominator') {
-    $factor_re = $denominator_factor_re; # for first factor; then add stoplist
-  } else {
-    die "WTF";
+# Backtracking support
+#
+# usage:
+#   choose([choice1, choice2, ...], sub {
+#     my $chosen = shift;
+#     # ... code that sets $val but might deeply call fail()...
+#     return $val;
+#   });
+#
+# This will call the sub with each choice until it doesn't fail, and then
+# return its return values. If all choices fail, choose fails too, causing
+# further backtracking. Other exceptions are rethrown immediately rather than
+# causing backtracking.
+sub fail { die '__FAIL__ at line ' . [caller]->[2]; }
+sub failed { return ($@ =~ /__FAIL__/); }
+my $btd = 0; # backtracking depth, used for debug indenting
+sub choose {
+  my ($choices, $fn) = @_;
+  #print STDERR (' 'x$btd) . Data::Dumper->Dump([$choices],['*choices']) if ($debug);
+  print STDERR (' 'x$btd) . "choices = ($choices->[0] .. $choices->[-1])\n" if ($debug);
+  for my $chosen (@$choices) {
+    print STDERR (' 'x$btd) . "trying choice $chosen...\n" if ($debug);
+    my @vals;
+    $btd++ if ($debug);
+    my $success = eval { @vals = &$fn($chosen); 1 };
+    $btd-- if ($debug);
+    if ($success) {
+      print STDERR (' 'x$btd) . "success!\n" if ($debug);
+#      print STDERR (' 'x$btd) . Data::Dumper->Dump([\@vals],['*vals']) if ($debug);
+      return @vals;
+    } elsif (not failed()) {
+      die $@; # re-throw exception that didn't come from fail()
+    } else {
+      print STDERR (' 'x$btd) . $@ . "\n" if ($debug);
+    }
   }
-  my $expr_sp = {}; # separate prefixes
-  my $expr_ap = {}; # attached prefixes
-  my $is_plural = 0;
-  my $prev_end = 0;
-  my $process_factor = sub {
-    my $unit = $&;
-    print STDERR "unit=$unit\n" if ($debug);
-    # get the prefix, root unit, and exponent of the factor, if they're there
-    # first get the exponent and strip it off the unit
-    my $exponent = 1;
-    if ($unit =~ /$exponent_re$/) {
-      $exponent = 0 + $+{exponent};
-      $unit = $`;
+  fail();
+}
+
+# Parsing functions
+#
+# In general, this:
+#   parse_foo($str, args..., sub { my ($foo, $foo_len, $str) = @_; ... })
+# will try to parse a foo at the start of $str, and then pass a representation
+# of the foo, the number of characters it consumed, and the remainder of the
+# string to the sub, and return what the sub returns. It instead calls fail()
+# if a foo cannot be parsed at this location.
+
+# parse a factor in a units expression with a prefix of a specific length
+# see parse_factor() below
+sub parse_factor_with_prefix_len {
+  my ($str, $unit_re, $prefix_len, $then) = @_;
+  my $prefix = undef;
+  if ($prefix_len > 0) {
+    $prefix = substr($str, 0, $prefix_len);
+    print STDERR (' 'x$btd) . "prefix=$prefix\n" if ($debug);
+    $prefix =~ /^$prefix_re$/ or fail();
+    $prefix .= '-';
+    # use preferred name of prefix
+    exists($units{$prefix}) or die "bogus prefix match '$prefix'?!";
+    $prefix = $units{$prefix}{preferred};
+  }
+  my $after_prefix = substr($str, $prefix_len);
+  # try to match the longest unit we can first, just to find out how long
+  # that is (and fail early if we can't match any unit)
+  $after_prefix =~ /^$unit_re/ or fail();
+  my $max_unit_len = $+[0];
+  # try longest matching units first, but allow backtracking to shorter ones
+  print STDERR (' 'x$btd) . "choosing unit length...\n" if ($debug);
+  return choose([reverse(1 .. $max_unit_len)], sub {
+    my $unit_len = shift;
+    my $unit = substr($after_prefix, 0, $unit_len);
+    $unit =~ /^$unit_re$/ or fail();
+    print STDERR (' 'x$btd) . "unit=$unit\n" if ($debug);
+    my $after_unit = substr($after_prefix, $unit_len);
+    # HACK: if we're currently considering no prefix, and we found a unit with
+    # the same name as a prefix, run together with following unit(s), we should
+    # try to interpret it as the prefix first
+    # e.g. "cm" is centi-*meter, not speedoflight*meter
+    if ($prefix_len == 0 and exists($prefixes{$unit}) and
+        $after_unit =~ /^\p{L}/) {
+      my @vals;
+      my $success = eval {
+	@vals = parse_factor_with_prefix_len($str, $unit_re, $unit_len, $then);
+	1
+      };
+      if ($success) {
+	return @vals;
+      } elsif (not failed()) {
+	die $@; # rethrow non-fail() error
+      }
+      # else we failed to parse the factor while interpreting what we found as
+      # a prefix; continue interpreting it as a unit instead
     }
-    print STDERR "unit=$unit; exponent=$exponent\n" if ($debug);
-    # then get the prefix and strip it off, but only if we don't already know
-    # the whole unit, and do know the root unit
-    my $prefix = undef;
-    if ((not exists($units{$unit})) and
-        $unit =~ /^$prefix_re/ and
-	exists($units{$'})) {
-      $prefix = "$&-";
-      $unit = $';
-      print STDERR "prefix=$prefix; unit=$unit\n" if ($debug);
-      # use preferred name of prefix
-      exists($units{$prefix}) or die "bogus prefix match '$prefix'?!";
-      $prefix = $units{$prefix}{preferred};
-    }
-    # use preferred name of root unit if it exists (might be unk. like "plants")
+    # use preferred name of root/base unit
     # also detect plurality by whether the matched unit is in {names}
-    if (exists($units{$unit})) {
-      $is_plural = 1 unless (grep { $_ eq $unit } @{$units{$unit}{names}});
-      $unit = $units{$unit}{preferred};
-    } elsif ($unit =~ /s$/) { # detect plurality of unk. units by final "s"
-      $is_plural = 1;
+    exists($units{$unit}) or die "bogus unit match '$unit'?!";
+    my $is_plural = ((grep { $_ eq $unit } @{$units{$unit}{names}}) ? 0 : 1);
+    $unit = $units{$unit}{preferred};
+    # try to match an optional exponent (=1 if missing)
+    my ($exp, $exp_len, $after_exp);
+    if ($after_unit =~ /^$exponent_re/) {
+      ($exp, $exp_len, $after_exp) = ((0 + $+{exponent}), $+[0], $');
+      print STDERR (' 'x$btd) . "exp=$exp\n" if ($debug);
+    } else {
+      ($exp, $exp_len, $after_exp) = (1, 0, $after_unit);
     }
-    print STDERR "pref.prefix=$prefix; pref.unit=$unit; is_plural=$is_plural\n" if ($debug);
-    # add prefix and unit to expr
-    $expr_sp->{$unit} += $exponent;
-    if (defined($prefix)) {
-      $expr_sp->{$prefix} += $exponent;
-      $prefix =~ s/-$//;
-      $unit = $prefix . $unit;
+    my $factor = +{
+      (defined($prefix) ? (prefix => $prefix) : ()),
+      base => $unit,
+      is_plural => $is_plural,
+      exp => $exp
+    };
+    print STDERR (' 'x$btd) . Data::Dumper->Dump([$factor],['*factor']) if ($debug);
+    my $factor_len = $prefix_len + $unit_len + $exp_len;
+    my $after_factor = $after_exp;
+    return &$then($factor, $factor_len, $after_factor);
+  });
+}
+
+# parse a factor in a units expression, which includes exactly one unit name,
+# and may have a prefix and/or an exponent. Pass an object like this:
+# {
+#   [prefix => "prefix",]
+#   base => "unit",
+#   is_plural => 1,
+#   exp => #
+# }
+# The preferred names of the prefix (with trailing dash) and unit will be used.
+# If no explicit exponent is found, the exp field will be 1.
+sub parse_factor {
+  my ($str, $unit_re, $then) = @_;
+  # try shortest prefixes first (including no prefix)
+  # (but see HACK in parse_factor_with_prefix_len())
+  my $slm1 = length($str) - 1;
+  ($slm1 >= 0) or fail();
+  my $mpl = (($max_prefix_length < $slm1) ? $max_prefix_length : $slm1);
+  print STDERR (' 'x$btd) . "choosing prefix length...\n" if ($debug);
+  return choose([0 .. $mpl], sub {
+    my $prefix_len = shift;
+    return parse_factor_with_prefix_len($str, $unit_re, $prefix_len, $then);
+  });
+}
+
+# parse one side of a units fraction
+# $which = 'numerator' or 'denominator'
+# $mult_op is the multiplicative operator to use, or undef if we haven't
+# decided yet
+# Pass an object similar to that passed by parse_cf_units_expr().
+sub parse_fraction_component {
+  my ($str, $which, $mult_op, $then) = @_;
+  my $unit_re =
+    ($which eq 'numerator' ? $singular_or_plural_unit_re : $singular_unit_re);
+  # parse the first factor
+  parse_factor($str, $unit_re, sub {
+    my ($factor, $factor_len, $after_factor) = @_;
+    # turn the first factor into the start of a component
+    my $prefix_nodash = $factor->{prefix};
+    $prefix_nodash =~ s/-$//;
+    my $prefixed_unit = $prefix_nodash . $factor->{base};
+    my $comp_head = +{
+      ap => { $prefixed_unit => $factor->{exp} },
+      sp => { 
+	(defined($factor->{prefix}) ? ($factor->{prefix} => 1) : ()),
+	$factor->{base} => $factor->{exp}
+      },
+      is_plural => $factor->{is_plural}
+    };
+    # if factor was plural, stop looking for more factors
+    if ($factor->{is_plural}) {
+      return &$then($comp_head, $factor_len, $after_factor);
     }
-    $expr_ap->{$unit} += $exponent;
+    # otherwise, look for a/the mult op and another factor
+    my ($have_mult, $mult_len, $after_mult);
+    if (defined($mult_op)) {
+      # mult op already defined, just check for that one (but still check
+      # stoplist)
+      if ($after_factor =~ /^ (?! \s* $stoplist_word_re ) $mult_op /x) {
+	($have_mult, $mult_len, $after_mult) = (1, $+[0], $');
+      }
+    } else { # mult op not yet defined, check for any mult op
+      my $mult_re =
+        ($which eq 'numerator' ?
+	  $numerator_mult_re : $denominator_mult_re);
+      if ($after_factor =~ /^$mult_re/) {
+	($have_mult, $mult_op, $mult_len, $after_mult) = (1, $&, $+[0], $');
+	print STDERR (' 'x$btd) . "mult_op='$mult_op'\n" if ($debug);
+      }
+    }
+    if ($have_mult) {
+      # recurse to get the rest of the component with the same mult op
+      my @vals;
+      my $success = eval {
+	@vals = parse_fraction_component($after_mult, $which, $mult_op, sub {
+	  my ($comp_tail, $comp_tail_len, $after_comp) = @_;
+	  # disallow multiple factors run together with a plural (or a final
+	  # "s" as "second")
+	  # e.g. "plants"=pico-liter*atto-newtons (or newton*second)
+	  print STDERR (' 'x$btd) . Data::Dumper->Dump([$comp_head, $comp_tail, $mult_op],[qw(*comp_head *comp_tail mult_op)]) if ($debug);
+	  if (($comp_tail->{is_plural} or
+	       ($comp_tail_len == 1 and exists($comp_tail->{ap}{second}))
+	      ) and $mult_op eq '') {
+	    print STDERR (' 'x$btd) . "rejecting multiple factors run together with plural\n" if ($debug);
+	    fail();
+	  }
+	  # HACK:
+	  # disallow "drop(s)" as the last word in a units expression unless it
+	  # has an explicit operator connecting it (not mere juxtaposition), or
+	  # it is the whole expression
+	  # This is tricky because "drop" can actually be a volume unit, but it
+	  # often follows a quantity as a regular noun to indicate the
+	  # direction of movement.
+	  if ((($comp_tail_len == 4 and substr($after_mult, 0, 4) eq 'drop') or
+	       ($comp_tail_len == 5 and substr($after_mult, 0, 5) eq 'drops')
+	      ) and
+	      $mult_op !~ /\S/ and # prev mult was juxtaposition
+	      ($which eq 'denominator' or # this is the denominator
+	       $after_comp !~ /^$per_re/ # there is no denominator
+	      )
+	     ) {
+	    fail();
+	  }
+	  # add $comp_head and $comp_tail to make $comp
+	  my $comp = +{
+	    sp => {},
+	    ap => {},
+	    is_plural => $comp_tail->{is_plural}
+	  };
+	  for my $k (qw(ap sp)) {
+	    # copy $comp_tail to $comp
+	    for my $base (keys %{$comp_tail->{$k}}) {
+	      $comp->{$k}{$base} = $comp_tail->{$k}{$base};
+	    }
+	    # add $comp_head to $comp
+	    for my $base (keys %{$comp_head->{$k}}) {
+	      $comp->{$k}{$base} += $comp_head->{$k}{$base};
+	    }
+	  }
+	  my $total_len = $factor_len + $mult_len + $comp_tail_len;
+	  return &$then($comp, $total_len, $after_comp);
+	});
+	1
+      };
+      if ($success) {
+	return @vals;
+      } elsif ($mult_op =~ /\S/) { # we saw an explicit mult op
+	die $@; # rethrow
+      } else { # mult was by juxtaposition, just pass first factor
+        return &$then($comp_head, $factor_len, $after_factor);
+      }
+    } else { # no mult op
+      # just pass the one factor we found
+      return &$then($comp_head, $factor_len, $after_factor);
+    }
+  });
+}
+
+# combine representations of numerator and denominator into one object, and
+# normalize
+# if denominator is undef, just normalize a copy of numerator
+sub make_fraction {
+  my ($numerator, $denominator) = @_;
+  my $fraction = {
+    sp => {},
+    ap => {},
+    is_plural => $numerator->{is_plural}
   };
-  # scan factors of fraction component
-  print STDERR "parsing $which = $component\n" if ($debug);
-  while ($component =~ /(?: $factor_re \b | $factor_re )/gx) {
-    my ($start, $end) = ($-[0], $+[0]);
-    my $op = substr($component, $prev_end, $start - $prev_end);
-    $prev_end = $end;
-    if ($op =~ /\p{L}/) { # we skipped some letters
-      # trigger skipped letter processing after loop
-      $prev_end = 0;
-      last;
+  # subtract denominator's exponents from numerator's, and normalize
+  for my $k (qw(sp ap)) {
+    # deep copy from numerator
+    for my $base (keys %{$numerator->{$k}}) {
+      $fraction->{$k}{$base} = $numerator->{$k}{$base};
     }
-    &$process_factor();
-    $factor_re = qr/$not_stoplist_word_re $denominator_factor_re/x
-      if ($which eq 'denominator');
+    # subtract denominator if we have one
+    if (defined($denominator)) {
+      for my $base (keys %{$denominator->{$k}}) {
+	$fraction->{$k}{$base} -= $denominator->{$k}{$base};
+      }
+    }
+    $fraction->{$k} = normalize_expr_hash($fraction->{$k});
   }
-  if (# we skipped some letters at the end
-      substr($component, $prev_end) =~ /\p{L}/ or
-      # we parsed multiple units run together as a plural (in the numerator)
-      ($is_plural and (keys %$expr_ap > 1) and $component =~ /^\p{L}+$/)
+  return $fraction;
+}
+
+# call fail() if a fraction component seems like a name rather than a units
+# expression
+sub fail_if_seems_like_name {
+  my ($str, $comp) = @_;
+  if ($str =~ /^\p{Lu}\p{Ll}{4,}$/ and # capitalized word 5+ letters long
+      scalar(keys %{$comp->{ap}}) > 1 # more than 1 factor
      ) {
-    if ($which eq 'numerator') { # numerator actually wasn't parsed like this
-      # reset and take whole word as numerator factor
-      $expr_sp = {};
-      $expr_ap = {};
-      $is_plural = 0;
-      $prev_end = 0;
-      die "can't parse the numerator we matched into factors, and it's not a single word?!"
-	unless ($component =~ /^\p{L}+$/);
-      &$process_factor();
-    } else { # something went very wrong with denominator
-      die "can't parse the denominator we matched into factors?!"
+    fail();
+  }
+}
+
+# given a string, try to parse a units expression at the start of the string,
+# ignoring context after the expression, and pass an object like this:
+# {
+#   sp => { base => exp, base => exp, ... }, # separate prefixes
+#   ap => { base => exp, base => exp, ... }  # attached prefixes
+#   is_plural => bool
+# }
+# The base=>exp hashes in the sp and ap fields will be normalized.
+sub parse_cf_units_expr {
+  my ($str, $then) = @_;
+  print STDERR (' 'x$btd) . "choosing known or unknown units...\n" if ($debug);
+  return choose(
+    [
+      sub { # first try known units
+	$str =~ /^$stoplist_word_re/ and fail();
+	return parse_fraction_component($str, 'numerator', undef, sub {
+	  my ($numerator, $numerator_len, $after_numerator) = @_;
+	  print STDERR (' 'x$btd) . Data::Dumper->Dump([$numerator],['*numerator']) if ($debug);
+	  fail_if_seems_like_name(substr($str, 0, $numerator_len), $numerator);
+	  if ($after_numerator =~ /^$per_re/) {
+	    my ($per_len, $after_per) = ($+[0], $');
+	    # TODO? factor out the following along with the near-identical copy under "unknown unit" below
+	    return
+	      parse_fraction_component($after_per, 'denominator', undef,
+		sub {
+		  my ($denominator, $denominator_len, $after_denominator) = @_;
+		  print STDERR (' 'x$btd) . Data::Dumper->Dump([$denominator],['*denominator']) if ($debug);
+		  fail_if_seems_like_name(substr($after_per, 0, $denominator_len), $denominator);
+		  my $fraction = make_fraction($numerator, $denominator);
+		  my $total_len = $numerator_len + $per_len + $denominator_len;
+		  print STDERR (' 'x$btd) . Data::Dumper->Dump([$fraction],['*fraction']) if ($debug);
+		  return &$then($fraction, $total_len, $after_denominator);
+		}
+	      );
+	  } else { # no denominator
+	    my $fraction = make_fraction($numerator, undef);
+	    print STDERR (' 'x$btd) . Data::Dumper->Dump([$fraction],['*fraction']) if ($debug);
+	    return &$then($fraction, $numerator_len, $after_numerator);
+	  }
+	});
+      },
+      sub { # unknown unit
+	# numerator can be a single non-unit word, like "plants", if we
+	# definitely have a denominator
+	# FIXME!!! first \b does nothing since we don't have the full string
+	$str =~ /^ (\b \p{L}+ \b) $per_re /x or fail();
+	my ($numerator_str, $numerator_per_len, $after_per) = ($1, $+[0], $');
+	my $numerator = +{
+	  sp => { $numerator_str => 1 },
+	  ap => { $numerator_str => 1 },
+	  # assume numerator is plural if it ends in "s"
+	  is_plural => (($numerator_str =~ /s$/i) ? 1 : 0)
+	};
+	print STDERR (' 'x$btd) . Data::Dumper->Dump([$numerator],['*numerator']) if ($debug);
+	return parse_fraction_component($after_per, 'denominator', undef, sub {
+	  my ($denominator, $denominator_len, $after_denominator) = @_;
+	  print STDERR (' 'x$btd) . Data::Dumper->Dump([$denominator],['*denominator']) if ($debug);
+	  fail_if_seems_like_name(substr($after_per, 0, $denominator_len), $denominator);
+	  my $fraction = make_fraction($numerator, $denominator);
+	  my $total_len = $numerator_per_len + $denominator_len;
+	  print STDERR (' 'x$btd) . Data::Dumper->Dump([$fraction],['*fraction']) if ($debug);
+	  return &$then($fraction, $total_len, $after_denominator);
+	});
+      }
+    ],
+    # try each of the preceding subs in turn
+    sub { return &{$_[0]}(); }
+  );
+}
+
+# try to parse a units expression starting at the given start offset in the
+# given text, and return an object like parse_cf_units_expr() does, with
+# start/end fields added, or fail. Note that this actually returns the units
+# expression representation, rather than passing it to a sub given as an
+# argument. But it can still fail().
+sub parse_units_expr {
+  my ($text, $start) = @_;
+  my $after_start = substr($text, $start);
+  fail() if ($after_start =~ /^\s/); # no whitespace at start of units
+  my $before_start = substr($text, 0, $start);
+  my $after_end_re; # substring after end must match this regex,
+  # which depends on context before the units expression:
+  if ($before_start =~ /^\s*$/) { # the whole text is just units
+    $after_end_re = qr/^\s*$/;
+  } elsif ($before_start =~ /\(\s*$/) { # units in parens
+    $after_end_re = qr/^\s*\)/;
+  } elsif (# units after a number (not including plural 10s)
+	   $before_start =~ /\d\s+$/ or
+	   $before_start =~ /\d0s\s+$/ or
+	   ($before_start =~ /\d$/ and not
+	    ($before_start =~ /\d0$/ and $after_start =~ /^s\s/)
+	   ) or
+	   # units after the word "in"
+	   $before_start =~ / \b [Ii]n \s+ $ /x
+	  ) {
+    # end not in the middle of a word
+    $after_end_re = qr/ ^ (?! ['-]? \w ) /x;
+  } else { # no valid preceding context for units expression
+    fail();
+  }
+  return parse_cf_units_expr($after_start, sub {
+    my ($expr, $expr_len, $after_end) = @_;
+    fail() unless ($after_end =~ $after_end_re);
+    $expr->{start} = $start;
+    $expr->{end} = $start + $expr_len;
+    return $expr;
+  });
+}
+
+# given the whole input text, return a list of units expression structures
+sub find_and_parse_units_exprs {
+  my $text = shift;
+  my $search_start = 0;
+  my $search_end = length($text) - 1;
+  my @exprs = ();
+  for(;;) {
+    my $expr;
+    my $start = undef;
+    my $success = eval {
+      print STDERR (' 'x$btd) . "choosing start...\n" if ($debug);
+      ($expr) = choose([$search_start .. $search_end], sub {
+	$start = shift;
+	return parse_units_expr($text, $start);
+      });
+      1
+    };
+    if ($success) {
+      print STDERR Data::Dumper->Dump([$expr],['*expr']) if ($debug);
+      push @exprs, $expr;
+      $search_start = $expr->{end};
+    } elsif (failed()) { # no more matches to be found
+      last;
+    } else { # non-failure exception
+      # re-throw with context
+      die "error finding units expression starting at $start (" . substr($text, $start, 10) . "...): $@";
     }
   }
-  normalize_expr_hash($expr_sp);
-  normalize_expr_hash($expr_ap);
-  return ($expr_sp, $expr_ap, $is_plural);
+  return @exprs;
 }
 
 sub tag_units {
   my ($self, $text) = @_;
   my @tags = ();
-  while ($text =~ /$unit_expr_re/g) {
-    my $tag = +{ type => 'sense', match2tag() };
-    my $matched_numerator = $+{numerator};
-    my $matched_denominator = $+{denominator}; # maybe undef
-    # HACK: cut off the word "drop" from the end of a units expression if we can
-    # This is tricky because "drop" can actually be a volume unit, but it often
-    # follows a quantity as a regular noun to indicate the direction of movement
-    if ($tag->{lex} =~ /\s*\bdrops?$/) { # lex ends with drop(s)
-      my $new_lex = $`; # without drop
-      if ($new_lex ne '' and $new_lex !~ /([\*×⋅\/]|\bper)$/) {
-	# drop wasn't the whole units expression, and didn't follow an explicit
-	# multiplicative operator; adjust the tag to exclude drop
-	$tag->{lex} = $new_lex;
-	$tag->{end} = $tag->{start} + length($new_lex);
-	if (defined($matched_denominator)) { # drop was in denominator
-	  $matched_denominator =~ s/\s*\bdrops?$//;
-	} else { # no denominator; drop was in numerator
-	  $matched_numerator =~ s/\s*\bdrops?$//;
-	}
-      }
-    }
-    print STDERR "got unit expression '$tag->{lex}'; numerator = '$matched_numerator'; denominator = " . (defined($matched_denominator) ? "'$matched_denominator'" : 'undef') . "\n" if ($debug);
+  for my $units_expr (find_and_parse_units_exprs($text)) {
+    my $lex = substr($text, $units_expr->{start}, $units_expr->{end} - $units_expr->{start});
+    print STDERR "Processing units expression '$lex':\n" . Data::Dumper->Dump([$units_expr],['*units_expr']) if ($debug);
     eval { # try
-    my ($numerator_expr_sp, $numerator_expr_ap, $is_plural) =
-      parse_fraction_component('numerator', $matched_numerator);
-    $tag->{'penn-pos'} = [$is_plural ? 'NNS' : 'NN'];
-    # will hold combined numerator/denominator expr
-    my $unit_expr_sp = {};
-    my $unit_expr_ap = {};
-    # copy numerator
-    for my $unit (keys %$numerator_expr_sp) {
-      $unit_expr_sp->{$unit} = $numerator_expr_sp->{$unit};
-    }
-    for my $unit (keys %$numerator_expr_ap) {
-      $unit_expr_ap->{$unit} = $numerator_expr_ap->{$unit};
-    }
-    my $denominator_expr_sp;
-    my $denominator_expr_ap;
-    if (defined($matched_denominator)) {
-      ($denominator_expr_sp, $denominator_expr_ap, undef) = # no plural denom.
-	parse_fraction_component('denominator', $matched_denominator);
-      # subtract denominator exponents
-      for my $unit (keys %$denominator_expr_sp) {
-	$unit_expr_sp->{$unit} -= $denominator_expr_sp->{$unit};
-      }
-      for my $unit (keys %$denominator_expr_ap) {
-	$unit_expr_ap->{$unit} -= $denominator_expr_ap->{$unit};
-      }
-    }
-    # make canonical string for units
-    normalize_expr_hash($unit_expr_sp);
-    normalize_expr_hash($unit_expr_ap);
-    my $unit_str = expr_hash_to_string($unit_expr_ap);
+    my $tag = +{
+      type => 'sense',
+      lex => $lex,
+      start => $units_expr->{start},
+      end => $units_expr->{end}
+    };
+    $tag->{'penn-pos'} = [$units_expr->{is_plural} ? 'NNS' : 'NN'];
+    my $unit_str = expr_hash_to_string($units_expr->{ap});
     # get dimension by adding up dimensions of each unit.
     # also check that no two individual units have the same set of dimension
     # bases (ignore exponents), in order to exclude things like "Miami" as
-    # "mebi-are-mile", which involves two different length-based units
+    # "mebi-are*mile", which involves two different length-based units
     my $dim_expr = {};
     my @dim_base_strs = ();
-    for my $unit (keys %$unit_expr_sp) {
-      my $exponent = $unit_expr_sp->{$unit};
+    for my $unit (keys %{$units_expr->{sp}}) {
+      my $exponent = $units_expr->{sp}{$unit};
       my $unit_dim_expr = get_dimension($unit);
       my $dim_base = {};
       for my $dim (keys %$unit_dim_expr) {
@@ -715,10 +964,9 @@ sub tag_units {
       units => $unit_str,
       dimensions => $dim_str
     };
-    #print STDERR Data::Dumper->Dump([$is_plural, $numerator_expr_sp, $numerator_expr_ap, $denominator_expr_sp, $denominator_expr_ap, $unit_expr_sp, $unit_expr_ap, $unit_str, $dim_expr, $dim_str], [qw(is_plural *numerator_expr_sp *numerator_expr_ap denominator_expr_sp denominator_expr_ap *unit_expr_sp *unit_expr_ap unit_str *dim_expr dim_str)]) if ($debug);
     push @tags, $tag;
     # catch & rethrow with more context
-    1} || die "error processing units expression '$tag->{lex}' (start=$tag->{start}, end=$tag->{end}, numerator='$matched_numerator', denominator=" . (defined($matched_denominator) ? "'$matched_denominator'" : 'undef') . "): $@";
+    1} || die "error processing units expression '$lex': $@\n" . Data::Dumper->Dump([$units_expr],['*units_expr']);
   }
   # also tag angles in degrees°(minutes′(seconds″)) format
   # this can be subtle because the symbols used overlap with temperature

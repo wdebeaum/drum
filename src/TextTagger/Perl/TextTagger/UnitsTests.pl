@@ -470,6 +470,7 @@ my @tests = (
     ]
   },
   # lgalescu, "... x% drop in ..."
+  # also, discovered later, "sale" as second*atto-liter*atomiccharge
   { text => "a 52% drop in sale of essential goods",
     tags => [
       { type => 'sense',

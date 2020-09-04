@@ -1,9 +1,9 @@
 # EKB.pm
 #
-# Time-stamp: <Tue Jul 28 14:56:25 CDT 2020 lgalescu>
+# Time-stamp: <Fri Aug 28 15:34:53 CDT 2020 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  3 May 2016
-# $Id: EKB.pm,v 1.46 2020/08/19 20:25:53 lgalescu Exp $
+# $Id: EKB.pm,v 1.47 2020/09/03 22:27:07 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -296,6 +296,7 @@ our @EXPORT = qw(
 
 		  make_node clone_node
 		  make_slot_node make_slot_nodes
+		  make_wm_node
 		  make_predicate
 		  make_arg
 		  make_components make_complex_name
@@ -2747,6 +2748,17 @@ sub make_node {
   set_attributes($node, $attrs);
   add_children($node, @children);
   return $node;
+}
+
+# make wm node; has a grounding slot and, optionally, a polarity
+sub make_wm_node {
+  my $mapping = shift;
+  my $wm_node = make_node( 'wm-type',
+			   make_slot_node(grounding => $mapping->{type}) );
+  if (exists $mapping->{polarity}) {
+    add_children($wm_node, make_slot_node(polarity =>  $mapping->{polarity}));
+  }
+  return $wm_node;
 }
 
 =head2 getvalue_xpath( $node, $xpath )

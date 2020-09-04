@@ -2,7 +2,7 @@
 
 # TRIPS.pm
 #
-# Time-stamp: <Tue Jul 28 11:06:01 CDT 2020 lgalescu>
+# Time-stamp: <Thu Sep  3 17:32:02 CDT 2020 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 27 Jul 2020
 #
@@ -15,6 +15,10 @@
 # History:
 # 2020/07/27 v1.0	lgalescu
 # - Created.
+# 2020/08/28 v2.0	lgalescu
+# - Added mappings to the WM ontology.
+# 2020/09/03 v2.1	lgalescu
+# - More WM mappings.
 
 #----------------------------------------------------------------
 # Usage:
@@ -22,26 +26,173 @@
 
 package Ont::TRIPS;
 
-$VERSION = '1.0';
+$VERSION = '2.1';
 
 use strict 'vars';
 use warnings;
+use feature 'state';
 
 use Ont::Ontology;
+use List::Util qw(first);
+use util::Log;
 
 our @ISA = qw(Ont::Ontology);
 
 
 # (almost) full TRIPS ontology
-my @data = (
-	    ##ONT::TIME-OBJECT##,
-	    ##ONT::REFERENTIAL-SEM##
-	   );
+my @data =
+  (
+   ##ONT::TIME-OBJECT##,
+   ##ONT::REFERENTIAL-SEM##,
+   # additions for terms not in the official TRIPS ontology
+   'ONT::CONFLICT' => 'ONT::TRANSGRESS',
+   'ONT::GET' => 'ONT::EVENT-OF-CAUSATION',
+   'ONT::INFLUENCE' => 'ONT::EVENT-OF-CAUSATION',
+   'ONT::TRANSFORM' => 'ONT::CHANGE',
+   'ONT::TEST' => 'ONT::COGITATION',
+   'ONT::OBSERVE' => 'ONT::ACQUIRE-BELIEF',
+   'ONT::MODULATE' => 'ONT::CHANGE',
+   'ONT::BREAK' => 'ONT::CHANGE',
+   'ONT::MAINTAIN' => 'ONT::EVENT-OF-ACTION',
+   'ONT::INHIBIT' => 'ONT::ACTING',
+   'ONT::STIMULATE' => 'ONT::CAUSE-EFFECT',
+   'ONT::END' => 'ONT::INHIBITs-EFFECT',
+   'ONT::TIME-RANGE' => 'ONT::TIME-INTERVAL',
+   'ONT::CAUSE' => 1,
+  );
+
+our %mappings =
+  (
+   # concept
+   'ONT::AGRICULTURE' => { type => "wm_compositional/concept/agriculture" }, 
+   'ONT::CROP' => { type => "wm_compositional/concept/agriculture/crop" },
+   'ONT::GRAINS' => { type => "wm_compositional/concept/agriculture/crop/cereals" },
+   'ONT::EMERGENCY' => { type => "wm_compositional/concept/crisis_or_disaster" },
+   'ONT::CONFLICT' => { type => "wm_compositional/concept/crisis_or_disaster/conflict" },
+   'ONT::CRIMINAL-ACTIVITY' => { type => "wm_compositional/concept/crisis_or_disaster/conflict/crime" },
+   'ONT::DROUGHT' => { type => "wm_compositional/concept/crisis_or_disaster/environmental/drought" },
+   'ONT::FLOODING' => { type => "wm_compositional/concept/crisis_or_disaster/environmental/flood" },
+   'ONT::ECONOMIC-SYSTEM' => { type => "wm_compositional/concept/economy" },
+   'ONT::ASSETS' => { type => "wm_compositional/concept/economy/assets" },
+   'ONT::BUDGET' => { type => "wm_compositional/concept/economy/budget" },
+   'ONT::CURRENCY' => { type => "wm_compositional/concept/economy/currency" },
+   'ONT::CLIMATE' => { type => "wm_compositional/concept/environment/climate" },
+   'ONT::PRECIPITATION' => { type => "wm_compositional/concept/environment/meteorology/precipitation" },
+   'ONT::STORM' => { type => "wm_compositional/concept/environment/meteorology/precipitation" },
+   'ONT::TEMPERATURE-SCALE' => { type => "wm_compositional/concept/environment/meteorology/temperature" },
+   'ONT::WEATHER' => { type => "wm_compositional/concept/environment/meteorology/weather" },
+   'ONT::LAND' => { type => "wm_compositional/concept/environment/natural_resources/land" },
+   'ONT::EARTH-SUBSTANCE' => { type => "wm_compositional/concept/environment/natural_resources/soil" },
+   'ONT::BODY-OF-WATER' => { type => "wm_compositional/concept/environment/natural_resources/water_bodies" },
+   'ONT::POLLUTION' => { type => "wm_compositional/concept/environment/pollution" },
+   'ONT::PRODUCT' => { type => "wm_compositional/concept/goods" },
+   'ONT::FERTILIZER' => { type => "wm_compositional/concept/goods/agricultural/fertilizer" },
+   'ONT::FOOD' => { type => "wm_compositional/concept/goods/food" },
+   'ONT::FUEL' => { type => "wm_compositional/concept/goods/fuel" },
+   'ONT::MEDICATION' => { type => "wm_compositional/concept/goods/medicine" },
+   'ONT::HEALTH-SCALE' => { type => "wm_compositional/concept/health" },
+   'ONT::DISEASE' => { type => "wm_compositional/concept/health/disease" },
+   'ONT::FLU' => { type => "wm_compositional/concept/health/disease/flu" },
+   'ONT::BRIDGE' => { type => "wm_compositional/concept/infrastructure/bridge" },
+   'ONT::AGE-SCALE' => { type => "wm_compositional/concept/population/demographics/age" },
+   'ONT::GENDER-SCALE' => { type => "wm_compositional/concept/population/demographics/gender" },
+   'ONT::POVERTY-SCALE' => { type => "wm_compositional/concept/poverty" },
+   'ONT::REPOSITORY' => { type => "wm_compositional/concept/storage" },
+   'ONT::DIRECTION' => { type => "wm_compositional/concept/trend" },
+   'ONT::WATER' => { type => "wm_compositional/concept/water" },
+
+   # process
+   'ONT::ACQUIRE' => { type => "wm_compositional/process/access" },
+   'ONT::ADAPT' => { type => "wm_compositional/process/adapt" },
+   'ONT::PROCREATE' => { type => "wm_compositional/process/breeding" },
+   'ONT::COLLABORATE' => { type => "wm_compositional/process/collaborate" },
+   'ONT::COMMUNICATION' => { type => "wm_compositional/process/communicate" },
+   'ONT::ARGUE' => { type => "wm_compositional/process/communicate/debate" },
+   'ONT::CAPTURE' => { type => "wm_compositional/process/conflict/abduct" },
+   'ONT::ATTACK' => { type => "wm_compositional/process/conflict/attack" },
+   'ONT::THREATEN' => { type => "wm_compositional/process/conflict/threat" },
+   'ONT::GROUP-CONFLICT' => { type => "wm_compositional/process/conflict/war" },
+   'ONT::REQUEST' => { type => "wm_compositional/process/demand" },
+   'ONT::NATURE-CHANGE' => { type => "wm_compositional/process/processing" },
+   'ONT::SOW-SEED' => { type => "wm_compositional/process/planting" },
+   'ONT::MANAGING' => { type => "wm_compositional/process/manage" },
+   'ONT::PLANNING' => { type => "wm_compositional/process/plan" },
+   'ONT::BE-BORN' => { type => "wm_compositional/process/population/birth" },
+   'ONT::DIE' => { type => "wm_compositional/process/population/death" },
+   'ONT::PREPARE' => { type => "wm_compositional/process/prepare" },
+   'ONT::CAUSE-PRODUCE-REPRODUCE' => { type => "wm_compositional/process/produce" },
+   'ONT::SUPPLY' => { type => "wm_compositional/process/supply" },
+   'ONT::PROTECTING' => { type => "wm_compositional/process/secure" },
+   'ONT::COMMERCE-BUY' => { type => "wm_compositional/process/trade/import" },
+   'ONT::COMMERCE-SELL' => { type => "wm_compositional/process/trade/export" },
+   'ONT::TEACH-TRAIN' => { type => "wm_compositional/process/train_or_educate" },
+   'ONT::TRANSPORT' => { type => "wm_compositional/process/transport" },
+
+   # property
+   'ONT::AVAILABLE' => { type => "wm_compositional/property/availability" },
+   'ONT::NOT-AVAILABLE-VAL' => { type => "wm_compositional/property/unavailability" } ,
+   'ONT::AVAILABILITY-SCALE' => { type => "wm_compositional/property/availability" },
+   ## NB: safety == security
+   'ONT::SAFETY-VAL' => { type => "wm_compositional/property/security" },
+   'ONT::DANGEROUS' => { type => "wm_compositional/property/insecurity" },
+   'ONT::SAFETY-SCALE' => { type => "wm_compositional/property/security" },
+   'ONT::UNSAFE-SCALE' => { type => "wm_compositional/property/insecurity" },
+   'ONT::STEADY' => { type => "wm_compositional/property/stability" },
+   'ONT::UNSTEADY' => { type => "wm_compositional/property/instability" },
+   'ONT::STEADINESS-SCALE' => { type => "wm_compositional/property/stability" },
+   'ONT::NOT-STEADY-SCALE' => { type => "wm_compositional/property/instability" },
+   'ONT::CHANGEABILITY-VAL' => { type => "wm_compositional/property/variability" },
+   'ONT::CHANGEABLE-VAL' => { type => "wm_compositional/property/variability" },
+   'ONT::NOT-CHANGEABLE-VAL' => { type => "wm_compositional/property/variability",
+				  polarity => "negative" },
+   'ONT::CHANGEABILITY-SCALE' => { type => "wm_compositional/property/variability" },
+
+   'ONT::PRICE' => { type => "wm_compositional/property/price_or_cost" },
+   'ONT::EXPENSE' => { type => "wm_compositional/property/price_or_cost" },
+   
+   # entity
+   'ONT::GEOGRAPHIC-REGION' => { type => "wm_compositional/entity/geo-location" },
+   'ONT::FAMILY-GROUP' => { type => "wm_compositional/entity/household" },
+   'ONT::ORGANIZATION' => { type => "wm_compositional/entity/organization" },
+   # time
+   'ONT::SEASON' => { type => "wm_compositional/time/season" },
+   'ONT::TIME-OBJECT' => { type => "wm_compositional/time" },
+   # predicate mappings
+   'ONT::GET' => { use_predicate => 1 },
+   'ONT::MOVE' => { use_predicate => 1 },
+  );
 
 sub new {
-    my $class = shift;
-    my $self = $class->SUPER::new(@data);
-    bless $self, $class;
+  my $class = shift;
+  my $self = $class->SUPER::new(@data);
+  bless $self, $class;
+}
+
+sub map {
+  my $self = shift;
+  my $type = shift;
+  state $sorted_mappings =
+    [ sort { my $r = $self->comp($a, $b);
+	     DEBUG(2, "comp($a, $b)=%s", $r);
+	     $r
+      }
+      keys %mappings
+    ];
+  # DEBUG 0, "sorted: (%s)", join(", ", @$sorted_mappings);
+  # FIXME: use subsumption (is_a)
+  if (exists $mappings{$type}) {
+    return $mappings{$type};
+  } elsif ($self->has($type)) {
+    # find the lowest node in the hierarchy where we can attach
+    my $match = first { $self->is_a($type, $_) } @$sorted_mappings;
+    if ($match) {
+      WARN "$type mapped via $match";
+      return $mappings{$match};
+    }
+    return;
+  }
+  WARN "Ont::TRIPS does not contain type: $type";
+  return;
 }
 
 1;

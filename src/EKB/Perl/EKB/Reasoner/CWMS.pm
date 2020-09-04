@@ -1,9 +1,9 @@
 # CWMS.pm
 #
-# Time-stamp: <Thu Jul 30 17:38:43 CDT 2020 lgalescu>
+# Time-stamp: <Thu Sep  3 16:57:23 CDT 2020 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  1 Jun 2016
-# $Id: CWMS.pm,v 1.9 2020/08/19 20:25:53 lgalescu Exp $
+# $Id: CWMS.pm,v 1.10 2020/09/03 22:27:07 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -116,6 +116,7 @@ sub default_options {
  
       # arg2 = TERM[type=ONT::SOURCE and assoc-with[@id=Y]]
       # NB: should be ONT::SOURCE but it may be (incorrectly) ONT::DEVICE-COMPONENT
+      # NB: role may also be :AFFECTED-RESULT -- not handled yet! **FIXME**
       my $t_id = $a->findvalue('arg2/@id');
       my $t = $ekb->get_assertion($t_id, "TERM")
 	or return 0;
@@ -132,6 +133,9 @@ sub default_options {
       my $y_type = get_slot_value($y, 'type');
       $ont_trips->is_a($y_type, "ONT::ORDERED-DOMAIN") 
         or return 0;
+
+      INFO "Rule %s matches event %s (y: %s)",
+	$rule->name(), $a_id, $y_id;
 
       # add assertion
       my $e1 = $ekb->clone_assertion($a, {rule => $rule->name});
@@ -1121,6 +1125,67 @@ sub default_options {
       $t->removeChild($tx);
 
       1;
+    }
+   },
+
+   ### ontology mappings
+   {
+    name => 'EKR:AddWMOntTypes',
+    constraints => [],
+    handler => sub {
+      my ($rule, $ekb, $a) = @_;
+
+      my $a_id = $a->getAttribute('id');
+      my $a_type = get_slot_value($a, "type");
+
+      my $wm_mapping = $ont_trips->map($a_type)
+	or return 0;
+
+      if (exists($wm_mapping->{use_predicate})) {
+	my ($pred) = $a->findnodes('predicate');
+	$pred or return 0;
+	$a_type = get_slot_value($pred, "type");
+	$wm_mapping = $ont_trips->map($a_type)
+	  or return 0;
+      }
+
+      INFO "Rule %s matches assertion %s (type=%s)",
+	$rule->name(), $a_id, $a_type;
+
+      my $tn = get_child_node($a, "type");
+      my $wm_node = make_wm_node($wm_mapping);
+      $ekb->modify_assertion( $a, $wm_node );
+      
+      1;
+    }
+   },
+
+   {
+    name => 'EKR:AddWMOntTypesQuals',
+    constraints => ['*[qualifiers]'],
+    handler => sub {
+      my ($rule, $ekb, $a) = @_;
+
+      my $a_id = $a->getAttribute('id');
+      my @qq = $a->findnodes('qualifiers/qual');
+
+      my $count = 0;
+      foreach my $q (@qq) {
+	my $q_type = get_slot_value($q, "type");
+
+	my $wm_mapping = $ont_trips->map($q_type)
+	  or next;
+
+	INFO "Rule %s matches assertion %s (qual type=%s)",
+	  $rule->name(), $a_id, $q_type;
+
+	my $tn = get_child_node($q, "type");
+	my $wm_node = make_wm_node($wm_mapping);
+	$q->addChild( $wm_node );
+        $count++;
+      }
+      
+      $count;
     }
    }
 

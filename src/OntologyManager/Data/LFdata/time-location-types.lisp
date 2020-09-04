@@ -51,6 +51,15 @@
 				       )))
     )
 
+(define-type ont::at-loc-relative
+    :comment "prototypical locating of a FIGURE wrt a point-like GROUND"
+    :parent ont::at-loc
+    :arguments ((:ESSENTIAL ONT::GROUND (f::phys-obj
+					 ;(f::tangible +)
+					 (f::type ont::loc-wrt-orientation)
+					 )))
+    )
+
 (define-type ont::loc-where-rel
     :comment "relative clause relations that could be at-loc or in-loc, e.g., a place where it never rains; the city where I live"
     :parent ont::position-as-point-reln

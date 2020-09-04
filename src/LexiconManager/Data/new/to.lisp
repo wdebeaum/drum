@@ -75,8 +75,12 @@
             (TEMPL binary-constraint-S-templ)
             (EXAMPLE "he seems honest to me")
 	    (PREFERENCE 0.97)
-           ) 
+           )
 
+	   ((LF-PARENT ONT::at-loc-relative)
+            (TEMPL binary-constraint-S-OR-NP-templ)
+            (EXAMPLE "he sat to the right of me")
+	    )
 	   ))
   ))
 
