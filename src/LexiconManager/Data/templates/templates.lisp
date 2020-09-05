@@ -969,7 +969,8 @@
 					;(W::argument ?lsubj)
 				     (W::argument (% W::np (W::sem ?lsubjsem)
 						     (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive -)
-							 ))
+						     ))
+				     (w::result-only -)
 				     (w::arg ?lsubjvar) (W::gap ?gap))) ONT::FORMAL)
 	))
 

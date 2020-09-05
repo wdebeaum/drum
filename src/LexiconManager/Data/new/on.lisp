@@ -141,6 +141,11 @@
 	     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
 	     (example "it is on the corner")
 	     )
+	    
+	    ((LF-PARENT ONT::at-loc-relative)
+            (TEMPL binary-constraint-S-OR-NP-templ)
+            (EXAMPLE "he sat on the right of me")
+	    )
     ;;;;; on drugs, on antibiotics
 	    ((LF-PARENT ONT::on-medication)
 	     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
@@ -206,7 +211,7 @@
   )
 ))
 
-
+#|
 (define-words :pos W::ADJ
  :words (
   ((W::on w::the w::right)
@@ -218,6 +223,7 @@
    )
 ))
 
+
 (define-words :pos W::ADJ
  :words (
   ((W::on w::the w::left)
@@ -228,3 +234,4 @@
     )
    )
 ))
+|#

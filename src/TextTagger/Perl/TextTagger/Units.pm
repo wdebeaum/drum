@@ -775,6 +775,21 @@ sub fail_if_seems_like_name {
   }
 }
 
+# parse denominator and combine with given numerator
+sub finish_parsing_fraction {
+  my ($numerator, $numerator_per_len, $after_per, $then) = @_;
+  return
+    parse_fraction_component($after_per, 'denominator', undef, sub {
+      my ($denominator, $denominator_len, $after_denominator) = @_;
+      print STDERR (' 'x$btd) . Data::Dumper->Dump([$denominator],['*denominator']) if ($debug);
+      fail_if_seems_like_name(substr($after_per, 0, $denominator_len), $denominator);
+      my $fraction = make_fraction($numerator, $denominator);
+      my $total_len = $numerator_per_len + $denominator_len;
+      print STDERR (' 'x$btd) . Data::Dumper->Dump([$fraction],['*fraction']) if ($debug);
+      return &$then($fraction, $total_len, $after_denominator);
+    });
+}
+
 # given a string, try to parse a units expression at the start of the string,
 # ignoring context after the expression, and pass an object like this:
 # {
@@ -796,19 +811,7 @@ sub parse_cf_units_expr {
 	  fail_if_seems_like_name(substr($str, 0, $numerator_len), $numerator);
 	  if ($after_numerator =~ /^$per_re/) {
 	    my ($per_len, $after_per) = ($+[0], $');
-	    # TODO? factor out the following along with the near-identical copy under "unknown unit" below
-	    return
-	      parse_fraction_component($after_per, 'denominator', undef,
-		sub {
-		  my ($denominator, $denominator_len, $after_denominator) = @_;
-		  print STDERR (' 'x$btd) . Data::Dumper->Dump([$denominator],['*denominator']) if ($debug);
-		  fail_if_seems_like_name(substr($after_per, 0, $denominator_len), $denominator);
-		  my $fraction = make_fraction($numerator, $denominator);
-		  my $total_len = $numerator_len + $per_len + $denominator_len;
-		  print STDERR (' 'x$btd) . Data::Dumper->Dump([$fraction],['*fraction']) if ($debug);
-		  return &$then($fraction, $total_len, $after_denominator);
-		}
-	      );
+	    return finish_parsing_fraction($numerator, $numerator_len + $per_len, $after_per, $then);
 	  } else { # no denominator
 	    my $fraction = make_fraction($numerator, undef);
 	    print STDERR (' 'x$btd) . Data::Dumper->Dump([$fraction],['*fraction']) if ($debug);
@@ -819,8 +822,7 @@ sub parse_cf_units_expr {
       sub { # unknown unit
 	# numerator can be a single non-unit word, like "plants", if we
 	# definitely have a denominator
-	# FIXME!!! first \b does nothing since we don't have the full string
-	$str =~ /^ (\b \p{L}+ \b) $per_re /x or fail();
+	$str =~ /^ ( \p{L}+ ) $per_re /x or fail();
 	my ($numerator_str, $numerator_per_len, $after_per) = ($1, $+[0], $');
 	my $numerator = +{
 	  sp => { $numerator_str => 1 },
@@ -829,15 +831,7 @@ sub parse_cf_units_expr {
 	  is_plural => (($numerator_str =~ /s$/i) ? 1 : 0)
 	};
 	print STDERR (' 'x$btd) . Data::Dumper->Dump([$numerator],['*numerator']) if ($debug);
-	return parse_fraction_component($after_per, 'denominator', undef, sub {
-	  my ($denominator, $denominator_len, $after_denominator) = @_;
-	  print STDERR (' 'x$btd) . Data::Dumper->Dump([$denominator],['*denominator']) if ($debug);
-	  fail_if_seems_like_name(substr($after_per, 0, $denominator_len), $denominator);
-	  my $fraction = make_fraction($numerator, $denominator);
-	  my $total_len = $numerator_per_len + $denominator_len;
-	  print STDERR (' 'x$btd) . Data::Dumper->Dump([$fraction],['*fraction']) if ($debug);
-	  return &$then($fraction, $total_len, $after_denominator);
-	});
+	return finish_parsing_fraction($numerator, $numerator_per_len, $after_per, $then);
       }
     ],
     # try each of the preceding subs in turn

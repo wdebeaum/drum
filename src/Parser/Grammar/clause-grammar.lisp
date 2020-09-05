@@ -43,7 +43,7 @@
     ;; (pps var)
     (utt neg qtype ;; sem
      subjvar dobjvar cont lex orig-lex headcat transform)
-    (pred qtype focus gap filled transform headcat lex orig-lex)
+    (pred qtype focus gap filled transform headcat lex orig-lex result-only)
     )
    
    ;;  handling start and end of utterance
