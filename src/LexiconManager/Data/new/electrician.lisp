@@ -6,7 +6,7 @@
  :words (
   (w::electrician
   (senses
-	   ((LF-PARENT ONT::professional)
+	   ((LF-PARENT ONT::construction-worker) ;professional)
 	    (TEMPL COUNT-PRED-TEMPL)
 	    )
 	   )

@@ -6,7 +6,7 @@
  :words (
   (w::cleaner
   (senses
-	   ((LF-PARENT ONT::professional)
+	   ((LF-PARENT ONT::cleaner) ;professional)
 	    (TEMPL COUNT-PRED-TEMPL)
 	    )
 	   )

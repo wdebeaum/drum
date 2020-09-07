@@ -6,7 +6,7 @@
  :words (
   (w::painter
   (senses
-	   ((LF-PARENT ONT::professional)
+	   ((LF-PARENT ONT::artist) ;professional)
 	    (TEMPL COUNT-PRED-TEMPL)
 	    )
 	   )

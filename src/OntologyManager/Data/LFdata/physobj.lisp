@@ -901,13 +901,55 @@
 (define-type ONT::athlete
     :wordnet-sense-keys ("athlete%1:18:00" "jock%1:18:00")
     :parent ONT::professional ;person
-)    
+)
+
+(define-type ONT::artist
+    :wordnet-sense-keys ("artist%1:18:00")
+    :parent ONT::professional
+    :comment "a person who creates art/performs artistic work"
+)
 
 (define-type ONT::author
     :wordnet-sense-keys ("writer%1:18:00" "author%1:18:00")
     :parent ONT::professional
     :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::origin F::artifact) (f::information f::information-content))))
     )
+
+(define-type ONT::cleaner
+    :wordnet-sense-keys ("cleaner%1:18:00")
+    :parent ONT::professional
+    :comment "a person whose occupation is cleaning"
+)
+
+(define-type ONT::construction-worker
+    :wordnet-sense-keys ("builder%1:18:00" "construction_worker%1:18:00")
+    :parent ONT::professional
+    :comment "a person whose work is related to construction of buildings etc, e.g., bricklayer, builder, plumber and roofer"
+)
+
+(define-type ONT::consultant
+    :wordnet-sense-keys ("consultant%1:18:00")
+    :parent ONT::professional
+    :comment "an expert whose job is to give advise"
+)
+
+(define-type ONT::developer-programmer
+    :wordnet-sense-keys ("programmer%1:18:00")
+    :parent ONT::professional
+    :comment "a person who designs, writes and tests computer programs"
+)
+
+(define-type ONT::editor
+    :wordnet-sense-keys ("editor%1:18:00")
+    :parent ONT::professional
+    :comment "a person responsible for editorial aspect of publication"
+)
+
+(define-type ONT::entrepreneur
+    :wordnet-sense-keys ("businessperson%1:18:00")
+    :parent ONT::professional
+    :comment "a person who engages in industrial enterprise, organizes business venture"
+)
 
 (define-type ONT::manager
     :wordnet-sense-keys ("head%1:18:00")

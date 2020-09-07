@@ -6,7 +6,7 @@
  :words (
   (W::developer
    (SENSES
-    ((LF-PARENT ONT::professional)
+    ((LF-PARENT ONT::developer-programmer) ;professional)
      (EXAMPLE "developers use java to create applets")
      (meta-data :origin task-learning :entry-date 20050823 :change-date nil :comments nil)
      )
