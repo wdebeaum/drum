@@ -7,7 +7,7 @@
    (W::dean
    (SENSES
     ((meta-data :origin calo :entry-date 20050404 :change-date nil :comments projector-purchasing)
-     (LF-PARENT ONT::professional)
+     (LF-PARENT ONT::official) ;professional)
      )
     )
    )

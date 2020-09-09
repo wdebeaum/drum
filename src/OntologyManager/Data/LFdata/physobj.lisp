@@ -951,16 +951,63 @@
     :comment "a person who engages in industrial enterprise, organizes business venture"
 )
 
+(define-type ONT::food-industry-professional
+    :wordnet-sense-keys ("chef%1:18:01" "cook%1:18:00" "restaurant_attendant%1:18:00")
+    :parent ONT::professional
+    :comment "a person whose profession is related to food industry, e.g., chef, waiter, etc"
+)
+
+(define-type ONT::gamer
+    :parent ONT::professional
+    :comment "a person who plays video games for profession"
+)
+
+(define-type ONT::legal-professional
+    :wordnet-sense-keys ("attorney%1:18:00" "judge%1:18:00" "lawman%1:18:00")
+    :parent ONT::professional
+    :comment "a person whose profession is related to law, such as practicing it, giving legal advice, conducting lawsuits, providing judgements on court cases, and administering law"
+)
+
 (define-type ONT::manager
     :wordnet-sense-keys ("head%1:18:00")
     :parent ONT::professional 
     :comment "Person that performs a managing role, e.g., boss, ceo, executive etc"
 )
 
+(define-type ONT::media-professional
+    :wordnet-sense-keys ("journalist%1:18:00" "reporter%1:18:00")
+    :parent ONT::professional
+    :comment "a person whose profession is related to media, such as producing content for media, reporting, journalism"
+)
+
+(define-type ONT::meteorologist
+    :wordnet-sense-keys ("meteorologist%1:18:00")
+    :parent ONT::professional
+    :comment "a person whose profession is to study and predict weather conditions"
+)
+
 (define-type ONT::OFFICIAL
     :comment "Person that serves in some administrative role"
     :wordnet-sense-keys ("leader%1:18:00" "ruler%1:18:00" "head_of_state%1:18:00")
     :parent ONT::PROFESSIONAL ;PERSON
+)
+
+(define-type ONT::pilot
+    :wordnet-sense-keys ("aviator%1:18:00")
+    :parent ONT::professional
+    :comment "a person who operates aircrafts"
+)
+
+(define-type ONT::police
+    :wordnet-sense-keys ("police_officer%1:18:00")
+    :parent ONT::professional
+    :comment "a person whose profession is in law enforcement"
+)
+
+(define-type ONT::politics-professional
+    :wordnet-sense-keys ("politician%1:18:00" "politician%1:18:01" "president_of_the_united_states%1:04:00" "senator%1:18:00" "speaker%1:18:01")
+    :parent ONT::professional
+    :comment "a person whose profession is in law enforcement"
 )
 
 ;; scholar, student, graduate

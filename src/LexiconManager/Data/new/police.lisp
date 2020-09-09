@@ -34,7 +34,7 @@
    (wordfeats (W::morph (:forms (-none))))
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil)
-     (LF-PARENT ONT::PROFESSIONAL)
+     (LF-PARENT ONT::police) ;PROFESSIONAL)
      (TEMPL COUNT-PRED-3p-TEMPL)
      )
     )

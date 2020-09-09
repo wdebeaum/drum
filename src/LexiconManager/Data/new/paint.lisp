@@ -21,3 +21,15 @@
    )
 ))
 
+(define-words :pos W::n
+ :tags (:base500)
+ :words (
+  (W::PAINTING
+   (SENSES
+    ( (LF-PARENT ONT::IMAGE)
+     (TEMPL OTHER-RELN-TEMPL)
+     )
+    )
+   ))
+ )
+   

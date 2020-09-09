@@ -6,7 +6,8 @@
  :words (
   (W::REASON
    (SENSES
-    ((LF-PARENT ONT::motive)
+    ;; should be an AGENTnom
+    ((LF-PARENT ONT::cause-effect)
      (example "the reason that he left")
      (templ count-subcat-that-optional-templ)
      (meta-data :origin trips :entry-date unknown :change-date 20041201 :wn ("reason%1:16:00") :comments caloy2)

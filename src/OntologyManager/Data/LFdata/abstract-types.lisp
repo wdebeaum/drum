@@ -1207,7 +1207,7 @@
 (define-type ONT::motive
   :wordnet-sense-keys ("motivation%1:03:00" "reason%1:10:00")
  :parent ONT::mental-construction ;mental-object
- :arguments (
+ :arguments ((:OPTIONAL ONT::FORMAL) 
 ;	     (:optional ONT::Associated-information)
 ;	     (:optional ont::purpose) ;; reason for something
 ;	     (:optional ont::REASON) ;; reason for something

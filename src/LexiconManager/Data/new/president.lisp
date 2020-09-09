@@ -7,7 +7,7 @@
   (W::president
    (SENSES
     ((meta-data :origin calo-ontology :entry-date 20051214 :change-date nil :comments nil)
-     (LF-PARENT ONT::professional)
+     (LF-PARENT ONT::politics-professional) ;professional)
      (templ other-reln-templ)
      )
     )

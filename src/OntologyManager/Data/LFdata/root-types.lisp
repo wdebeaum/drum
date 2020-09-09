@@ -188,6 +188,7 @@
     :parent ont::tangible-abstract-object
     :comment "constructions of the mind: plans, goals, beliefs, ..."
     :sem (F::abstr-obj (f::information f::mental-construct))
+    :arguments ((:optional ONT::FIGURE))
    )
 
 ;;; This is a catch-all for things that are relations between multiple

@@ -1,7 +1,7 @@
 ;;;;
 ;;;; W::motivation
 ;;;;
-
+#|  ;; now nominalization of motivate
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
   (W::motivation
@@ -15,3 +15,4 @@
    )
 ))
 
+|#

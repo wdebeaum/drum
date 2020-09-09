@@ -7,7 +7,7 @@
    (W::waitress
    (SENSES
     ((meta-data :origin step :entry-date 20080721 :change-date nil :comments nil)
-     (LF-PARENT ONT::professional)
+     (LF-PARENT ONT::food-industry-professional) ;professional)
       )
     )
    )
