@@ -1,6 +1,6 @@
 (in-package "PARSER")
 ;;
-;; Time-stamp: <Thu Sep 22 14:41:24 EDT 2016 jallen>
+;; Time-stamp: <Fri Sep 11 09:24:42 EDT 2020 james>
 
 
 ;;;; This file contains functions converting string input
@@ -36,6 +36,8 @@
 		      (#\~ :punc-tilde)
 		      (#\# :hashmark)
 		      (#\& :punc-and)
+		      (#\◦ :degrees)
+		      (#\′ #\^)
 		      (#\U+2013 :punc-minus))) ;;:punc-en-dash)))
 
 (defvar *break-chars* (cons '#\space (mapcar #'car *punc-list*)))
