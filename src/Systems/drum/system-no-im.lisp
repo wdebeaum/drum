@@ -77,7 +77,5 @@
 (setq lxm::*no-wf-senses-for-words-tagged-with-ont-types* t)
 (setq  lxm::*use-trips-and-wf-senses* nil) ;; don't use wordnet if we have TRIPS entries  
 
-;; LOGGING options
-(setq logging::*logging-enabled* nil)
-(setq logging2::*logging-enabled* nil)
-
+;;;; LOGGING options (logging is on by default)
+;; (setq logging2::*logging-enabled* nil)

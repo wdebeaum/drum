@@ -2,7 +2,7 @@
 
 # TRIPS.pm
 #
-# Time-stamp: <Thu Sep  3 17:32:02 CDT 2020 lgalescu>
+# Time-stamp: <Thu Sep  3 18:18:10 CDT 2020 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 27 Jul 2020
 #
@@ -57,6 +57,7 @@ my @data =
    'ONT::INHIBIT' => 'ONT::ACTING',
    'ONT::STIMULATE' => 'ONT::CAUSE-EFFECT',
    'ONT::END' => 'ONT::INHIBITs-EFFECT',
+   'ONT::SEEM' => 'ONT::HAVE-PROPERTY',
    'ONT::TIME-RANGE' => 'ONT::TIME-INTERVAL',
    'ONT::CAUSE' => 1,
   );

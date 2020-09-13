@@ -136,8 +136,7 @@
 ;; lower bound
 (setq lxm::*domain-score-lower-bound* 0.95)
 
-;;;; LOGGING options
-(setq logging::*logging-enabled* nil)
+;;;; LOGGING options (logging is on by default)
 (setq logging2::*logging-enabled* nil)
 
 ;;;; extractor rules

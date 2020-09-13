@@ -2,10 +2,13 @@
 ;;;; logging.lisp
 ;;;;
 ;;;; George Ferguson, ferguson@cs.rochester.edu, 17 Aug 1999
-;;;; Time-stamp: <Tue Feb 10 14:54:27 EST 2004 ferguson>
+;;;; Time-stamp: <Sat Sep 12 13:29:37 CDT 2020 lgalescu>
 ;;;;
 
 (in-package :logging2)
+
+(defvar *logging-enabled* t
+  "Whether we want the logs. We usually do. Set to nil to disable logging from all lisp components.")
 
 (defvar *log-filename* "module.log"
   "Name of the file used to log messages to and from this module.")
@@ -32,23 +35,25 @@ the current directory."
 (defun log-message (what msg)
   "Logs message MSG in the module's log file. Argument WHAT should be a
 keyword like :SEND, :RECEIVE, or :WARN."
-  (format *log-stream* "<~A T=\"~A\">~%  ~S~%</~A>~%~%"
-	  what (timestamp) msg what)
-  (finish-output *log-stream*))
+  (when *logging-enabled*
+    (format *log-stream* "<~A T=\"~A\">~%  ~S~%</~A>~%~%"
+	    what (timestamp) msg what)
+    (finish-output *log-stream*)))
 
 (defun chdir (dir)
   "Closes the current module log and reopens it in the directory named DIR."
-  (let* ((logfile (make-pathname :directory `(:relative ,dir) ;; NC - explicit
-				 :name *log-filename*)))
-    (when *log-stream*
-      (format *log-stream* "</LOG>~%")
-      (close *log-stream*))
-    (setq *log-stream* (open logfile :direction :output
-			     :if-exists :supersede
-			     :if-does-not-exist :create))
-    (format *log-stream* "<LOG DATE=\"~A\" TIME=\"~A\" FILE=\"~A\">~%~%"
-	    (datestamp) (timestamp) (truename logfile))
-    (finish-output *log-stream*)))
+  (when *logging-enabled*
+    (let* ((logfile (make-pathname :directory `(:relative ,dir) ;; NC - explicit
+				   :name *log-filename*)))
+      (when *log-stream*
+	(format *log-stream* "</LOG>~%")
+	(close *log-stream*))
+      (setq *log-stream* (open logfile :direction :output
+			       :if-exists :supersede
+			       :if-does-not-exist :create))
+      (format *log-stream* "<LOG DATE=\"~A\" TIME=\"~A\" FILE=\"~A\">~%~%"
+	      (datestamp) (timestamp) (truename logfile))
+      (finish-output *log-stream*))))
 
 (defun timestamp ()
   "Returns an HH:MM:SS timestamp."
