@@ -945,6 +945,12 @@
     :comment "a person responsible for editorial aspect of publication"
 )
 
+(define-type ONT::engineer
+    :wordnet-sense-keys ("engineer%1:18:00")
+    :parent ONT::professional
+    :comment "a person who uses scientific knowledge to solve practical problems"
+)
+
 (define-type ONT::entrepreneur
     :wordnet-sense-keys ("businessperson%1:18:00")
     :parent ONT::professional
@@ -1010,9 +1016,15 @@
     :comment "a person whose profession is in law enforcement"
 )
 
+(define-type ONT::publisher
+    :wordnet-sense-keys ("publisher%1:18:00")
+    :parent ONT::professional
+    :comment "a person engaged in publishing books etc"
+)
+
 ;; scholar, student, graduate
 (define-type ONT::scholar
-    :wordnet-sense-keys ("student%1:18:01" "bookman%1:18:00" "scholarly_person%1:18:00" "scholar%1:18:00" "student%1:18:00" "pupil%1:18:00" "educatee%1:18:00")
+    :wordnet-sense-keys ("bookman%1:18:00" "educatee%1:18:00" "pupil%1:18:00" "scholar%1:18:00" "scholarly_person%1:18:00" "scientist%1:18:00" "student%1:18:00" "student%1:18:01" "theorist%1:18:00")
     :parent ONT::professional
     :arguments ((:OPTIONAL ONT::FIGURE ((? lof F::Phys-obj f::abstr-obj)))
 		)
@@ -1022,6 +1034,12 @@
 (define-type ONT::scout
     :parent ONT::professional ;PERSON
     :wordnet-sense-keys ("scout%1:18:00")
+)
+
+(define-type ONT::seller-trader
+    :wordnet-sense-keys ("merchant%1:18:00")
+    :parent ONT::professional
+    :comment "a person engaged in retail trade"
 )
 
 ;; expert, specialist, afficionado, gourmet, gourmand
@@ -1049,6 +1067,18 @@
     :wordnet-sense-keys ("traveler%1:18:00" "traveller%1:18:00")
     :parent ONT::person
     )
+
+(define-type ONT::teacher-trainer
+    :wordnet-sense-keys ("educator%1:18:00" "trainer%1:18:00")
+    :parent ONT::professional
+    :comment "a person who educates others"
+)
+
+(define-type ONT::technician
+    :wordnet-sense-keys ("technician%1:18:00" "technician%1:18:01")
+    :parent ONT::professional
+    :comment "a person whose occupation involves training in a specific technique etc"
+)
 
 ;; consumer, customer, client
 (define-type ONT::consumer

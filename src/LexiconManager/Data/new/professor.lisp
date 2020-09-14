@@ -7,7 +7,7 @@
    (W::professor
    (SENSES
     ((meta-data :origin calo :entry-date 20050404 :change-date nil :wn ("professor%1:18:00") :comments projector-purchasing)
-     (LF-PARENT ONT::professional)
+     (LF-PARENT ONT::teacher-trainer) ;professional)
      )
     )
    )

@@ -7,7 +7,7 @@
    (W::theorist
    (SENSES
     ((meta-data :origin calo :entry-date 20060124 :change-date nil :wn ("theorist%1:18:00") :comments meeting-understanding)
-     (LF-PARENT ONT::professional)
+     (LF-PARENT ONT::scholar) ;professional)
      )
     )
    )
