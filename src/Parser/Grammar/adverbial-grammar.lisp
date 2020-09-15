@@ -674,7 +674,7 @@
      (ADJP COMP-OP PRED headcat transform post-subcat) ; no var, lex, orig-lex, atype, argument, arg, sort, sem
      )	       		   
 
-    ; what color is it?
+    ; what/which color is it?
     ((ADJP (LF (% PROP (CLASS ONT::AT-SCALE-VALUE) (VAR ?v) (CONSTRAINT ?newc) (sem ?newsem)))
            (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap) 
 	   (argument (% NP (var ?arg) (lex ?lex))) ; need to have lex here so it can be match in the subj of -S1>
@@ -683,7 +683,7 @@
 	   (SORT PRED) (WH Q) (WH-VAR *)
       )
      -what-adj-pre> 1.02
-     (word (lex w::what))
+     (word (lex (? w-lex w::what w::which)))
      (head (N1 (sem ?sem) (sem ($ f::abstr-obj (f::scale ?!sc) (f::type ONT::DOMAIN))) (RESTR ?restr)
 	       (var ?v) (agr ?agr) (mass ?mass) (gap ?gap)
 	       (class (? x ONT::DOMAIN)) ; fails, not just penalized, if not ONT::DOMAIN
@@ -1787,7 +1787,9 @@
 			 (sem ?asem)
 			 (SEM ($ f::abstr-obj
 				 (F::type (? ttt ont::path ont::conventional-position-reln ont::direction ont::complex-ground-reln ont::back ont::front ont::left-of ont::off ont::orients-to ont::right-of ;ont::pos-as-containment-reln ; we allowed "in" for some reason, but I don't remember the example!
-					     ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object))))
+					     ont::pos-directional-reln ont::pos-distance ont::pos-wrt-speaker-reln ont::resulting-object
+					     ont::directional-vert ; above, below
+					     ))))
 					;(F::type (? ttt ont::path ont::position-reln))))
 	      ;;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ont::on ont::at-loc )))) ; take the trajectory senses instead of the position-as-extent-reln senses of words such as "across"
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))

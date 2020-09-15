@@ -78,9 +78,20 @@
 )
 ))
 
+#|(define-words :pos W::n :templ COUNT-PRED-TEMPL
+ :words (
+  (W::M-2
+   (SENSES
+     ((LF-PARENT ONT::m2)
+     (TEMPL ATTRIBUTE-UNIT-TEMPL)
+     )
+    )
+   )
+  ))|#
+
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
-  ((W::M-2)
+  ((W::M 2)
    (SENSES
      ((LF-PARENT ONT::m2)
      (TEMPL ATTRIBUTE-UNIT-TEMPL)

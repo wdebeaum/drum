@@ -619,19 +619,19 @@
 
 (define-type ONT::cause-position
     :parent ont::event-of-causation
-    :arguments ((:ESSENTIAL ONT::affected-result)
-		(:optional ont::affected1)
-		)
+   ;; :arguments ((:ESSENTIAL ONT::affected-result)
+   ;;		(:optional ont::affected1)
+   ;;		)
     )
 
 (define-type ONT::cause-cover
     :wordnet-sense-keys ("cover%2:35:00" "cover%2:35:01" "cover%2:35:14" "impregnate%2:30:00" "saturate%2:30:04")
     :parent ont::cause-position
-   ;:arguments ((:OPTIONAL ONT::instrument))
+    :arguments ((:OPTIONAL ONT::affected1))
     )
 
 (define-type ONT::cause-surround
-    :wordnet-sense-keys ("enclose%2:35:00")
+    :wordnet-sense-keys ("enclose%2:35:00" "surround%2:33:00" "surround%2:33:01")
     :parent ont::cause-position
     )
 

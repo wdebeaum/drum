@@ -9,11 +9,11 @@
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("breathe-40.1.2") :wn ("spit%2:29:00"))
      (LF-PARENT ONT::expectorate)
-     (TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL) ; like vomit
+     (TEMPL agent-AFFECTED-XP-NP-TEMPL) 
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("breathe-40.1.2") :wn ("spit%2:29:00"))
      (LF-PARENT ONT::expectorate)
-     (TEMPL affected-templ) ; like bleed
+     (TEMPL agent-templ)
      )
     )
    )

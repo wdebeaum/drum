@@ -141,6 +141,25 @@
     (add-to-conjunct (val (punctype ?p)) (old ?con) (new ?constraint))
     )
 
+   ; Which is bigger, the dog or the cat?
+   ; (not necessarily a question) I am not sure what to eat, the pizza or the cake.
+   ; for now only disjunctions, but it can also be just one NP (What am I, chopped liver?) or something other than NPs (to be or not to be)
+   ;
+   ((utt  (var ?v) (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
+     (punc +) (punctype ?p) (uttword ?uw)
+     (lf (% ?s (var ?sv) (class ?cl) (constraint ?constraint)))
+     )
+   -utt-choice>
+   (head (utt (focus ?foc) (ended -) (var ?v) ;(punc -) ; sa-seq has punc, but now this rule would allow consecutive puncs, e.g., I ate the pizza!!
+	      (uttword ?uw)
+	  (lf (% (? s speechact sa-seq) (var ?sv) (class ?cl) (constraint ?con)))
+	  ))
+   (punc (punctype ?p) (lex (? lex w::punc-colon w::punc-comma)))
+   (NP (var ?var-np) (lf (% ?l (constraint (% ?c (operator ONT::OR)))))) ; just disjunctions for now
+    (add-to-conjunct (val (choice-option ?var-np)) (old ?con) (new ?constraint))
+    )
+   
+
    ; if it was an SA_TELL but there is a question mark, change the sa type to SA_YN-QUESTION
    ; e.g., I ate the pizza?
    ((utt  (var ?v) (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
@@ -600,8 +619,7 @@
          (var *) (qtype ?type) (punctype ?p))
     -decl-wh-question1> ;.98
     (head (s (stype (? st decl imp)) (wh q) (gap -) (wh-var ?foc) (var ?v) (advbl-needed -))))
-   
-   
+
    ;; e.g., when?
    ((utt (lf (% speechact (var *) (class ont::sa_wh-question) (constraint (& (content ?v) (focus ?foc)))))
           (var *) (qtype ?type) (punctype ?p))

@@ -1029,9 +1029,11 @@
  )
 
 (define-type ONT::PUSH-LIQUID
- :wordnet-sense-keys ("squirt%2:35:00" "squirt%2:35:10" "sprinkle%2:35:01" "spray%2:35:03" "splash%2:35:04" "splash%2:35:00")
-  :parent ONT::push
-  )
+    :wordnet-sense-keys ("squirt%2:35:00" "squirt%2:35:10" "sprinkle%2:35:01" "spray%2:35:03" "splash%2:35:04" "splash%2:35:00")
+    :parent ONT::push
+    :arguments ((:required ONT::affected (F::Phys-obj (F::form F::liquid) (F::mobility F::movable)))
+		)
+    )
 
 (define-type ont::expectorate
  :wordnet-sense-keys ("expectorate%2:29:00")
@@ -5776,8 +5778,11 @@
 
 ;; stretch  20120523 GUM change new type
 (define-type ONT::straddle
- :parent ont::body-movement
- )
+    :parent ont::body-movement
+    :arguments ((:REQUIRED ONT::neutral (F::phys-obj (F::intentional -)))
+		 
+		)
+    )
 
 
 ;; stretch  20120523 GUM change new type
