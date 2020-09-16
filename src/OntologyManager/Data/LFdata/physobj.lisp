@@ -897,6 +897,12 @@
     :parent ONT::professional
 )
 
+(define-type ONT::applicant
+    :wordnet-sense-keys ("applicant%1:18:00" "candidate%1:18:00")
+    :parent ONT::professional
+    :comment "a person who seeks employment and has applied for it"
+)
+
 ;; runner, swimmer
 (define-type ONT::athlete
     :wordnet-sense-keys ("athlete%1:18:00" "jock%1:18:00")
@@ -945,6 +951,12 @@
     :comment "a person responsible for editorial aspect of publication"
 )
 
+(define-type ONT::employee
+    :wordnet-sense-keys ("employee%1:18:00")
+    :parent ONT::professional
+    :comment "a person who is hired to perform a job"
+)
+
 (define-type ONT::engineer
     :wordnet-sense-keys ("engineer%1:18:00")
     :parent ONT::professional
@@ -975,7 +987,7 @@
 )
 
 (define-type ONT::manager
-    :wordnet-sense-keys ("head%1:18:00")
+    :wordnet-sense-keys ("employer%1:18:00" "head%1:18:00")
     :parent ONT::professional 
     :comment "Person that performs a managing role, e.g., boss, ceo, executive etc"
 )
@@ -1014,6 +1026,12 @@
     :wordnet-sense-keys ("politician%1:18:00" "politician%1:18:01" "president_of_the_united_states%1:04:00" "senator%1:18:00" "speaker%1:18:01")
     :parent ONT::professional
     :comment "a person whose profession is in law enforcement"
+)
+
+(define-type ONT::professional-associate
+    :wordnet-sense-keys ("colleague%1:18:00" "colleague%1:18:01")
+    :parent ONT::professional
+    :comment "the colleague/peer relation/role an individual has in a professional setting"
 )
 
 (define-type ONT::publisher
@@ -1078,6 +1096,12 @@
     :wordnet-sense-keys ("technician%1:18:00" "technician%1:18:01")
     :parent ONT::professional
     :comment "a person whose occupation involves training in a specific technique etc"
+)
+
+(define-type ONT::worker
+    :wordnet-sense-keys ("workman%1:18:00" "worker%1:18:01")
+    :parent ONT::professional
+    :comment "a person who performs manual labor"
 )
 
 ;; consumer, customer, client

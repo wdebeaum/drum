@@ -6,7 +6,7 @@
  :words (
   (w::laborer
   (senses
-	   ((LF-PARENT ONT::professional)
+	   ((LF-PARENT ONT::worker) ;professional)
 	    (TEMPL COUNT-PRED-TEMPL)
 	    )
 	   )
