@@ -346,6 +346,8 @@
 	 (combined-features
 	  (add-feats-renaming-if-necessary newfeatures oldfeatures))
 	 )
+    (if (> (list-length combined-features) 20)
+	(break "Warning: constituent built with more than 20 features"))
     (if combined-features
 	(match-vals nil newconstraintvar (make-constit :cat '& :feats combined-features))
 	(match-vals nil newconstraintvar oldconstraint)
@@ -492,7 +494,10 @@
       (;;parser-warn 
        break "Warning no value defined for result in call to APPEND-CONJUNCTS: Args are ~S" args))
     (cond
-     ((and (constit-p conj1) (constit-p conj2) (eq (constit-cat conj1) '&) (eq (constit-cat conj2) '&))
+      ((and (constit-p conj1) (constit-p conj2) (eq (constit-cat conj1) '&) (eq (constit-cat conj2) '&))
+       (if (or (> (list-length (constit-feats conj1)) 20)
+	       (> (list-length (constit-feats conj2)) 20))
+	   (break "Warning - constituent build with more than 20 features"))
       (match-vals nil newconjunctvar 
                   (make-constit :cat '& 
                                 :feats (append (constit-feats conj1) 

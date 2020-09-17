@@ -59,7 +59,7 @@
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
       ((W::m w::p w::g)
-   (SENSES
+   (senses
     ( (meta-data :origin calo :entry-date 20050522 :change-date nil :comments caloy2)
       (lf-parent ont::rate-unit)
       (templ bare-pred-templ)
@@ -78,7 +78,7 @@
 )
 ))
 
-#|(define-words :pos W::n :templ COUNT-PRED-TEMPL
+(define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
   (W::M-2
    (SENSES
@@ -87,15 +87,15 @@
      )
     )
    )
-  ))|#
-
+  ))
+#|
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
-  ((W::M 2)
+  ((W::M w::two)
    (SENSES
      ((LF-PARENT ONT::m2)
      (TEMPL ATTRIBUTE-UNIT-TEMPL)
      )
     )
    )
-))
+))|#

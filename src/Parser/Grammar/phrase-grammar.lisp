@@ -1351,6 +1351,40 @@
      (append-conjuncts (conj1 (& (FIGURE ?arg) (GROUND ?adjval) (scale ?finalsc)))
       (conj2 ?tempcon) (new ?newc)))
 
+   ;;  a foot high fence, a mile wide river, .. 
+    ((ADJP (ARG ?arg) (VAR ?v) (sem ?sem) (atype ?atype) (comparative ?cmp)
+      (LF (% PROP (CLASS ont::at-scale-value) (VAR ?v) (CONSTRAINT ?newc)
+	     (transform ?transform) (sem ?sem)))
+      (argument ?argument)
+      )
+     -adj-unit-modifier-no-number> 1.0
+    #| (ADJP (sort unit-measure) (var ?adjv) 
+      (LF (% PROP (constraint (& (GROUND ?adjval)))))
+     (sem ($ F::ABSTR-OBJ (F::scale (? sc ont::scale ont::domain))))) ;ont::linear-d)))))|#
+     (N1 (VAR ?mv) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
+	       (KIND -) 
+      (sem ?sem)  (sem ($ f::abstr-obj (f::scale (? sc1 ont::domain))))
+      (RESTR ?restr) (transform ?transform)
+      (postadvbl -) (post-subcat -)
+      (argument (% ?aa2 (sem ?argsem))) ; ?aa2 is a PP; not the same as ?aa in the LHS, which is an NP.  But they have the same sem
+      )
+     (head (ADJ (LF ?lf)  (VAR ?v) (SUBCAT -) (sem ($ F::ABSTR-OBJ (F::scale (? sc1 ont::domain)))) ;ont::linear-d))))
+		(SORT PRED) ;;(ARGUMENT-MAP ?argmap)
+		(transform ?transform) (constraint ?con)
+		(argument ?argument)
+		
+		(atype ?atype) (comparative ?cmp)
+		(post-subcat -)
+		(FUNCTN -)
+		))
+     ;;(class-greatest-lower-bound (in1 ?sc1) (in2 ?sc) (out ?finalsc))
+     (append-conjuncts (conj1 ?restr) (conj2 ?r) (new ?tempcon))
+     (append-conjuncts (conj1 (& (FIGURE ?arg) (GROUND (% *PRO* (status ont::inDEFINITE) (var ?mv) 
+							  (CLASS ont::quantity-abstr)
+							  (CONSTRAINT (& (unit ?c) (amount 1)))))
+			      (scale (? sc1 ont::domain))))
+      (conj2 ?tempcon) (new ?newc)))
+
    ;; of height three feet
    ((ADJP (ARG ?arg) (VAR ?adjv) (sem ?sem) (atype ?atype) (comparative ?cmp)
      (argument (% ?xx (sem ?argsem) (var ?argvar) (lex ?lex)))
@@ -3912,7 +3946,7 @@
 	      (& (?!dobj-map (% *PRO* (status ont::kind) (var ?v-n) (class ?nc) (constraint ?nr) (sem ?sem)))
 		 (?reln ?subjvar) ;(?dobj-map ?dobj)
 		 )))))
-     -adj-ing+obj-hyphen> 1
+     -ag+obj-hyphen> 1
      (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
       (sem ?sem) (relc -) (abbrev -) (gap -) (agr 3s)
 	 )
@@ -7081,7 +7115,7 @@
 	  (gap ?gap) (LF ?lf)
       (CONSTRAINT ?newc) (ARGUMENT-MAP ?argmap)
       (transform ?transform) (sem ?sem) (comparative ?cmp)
-      (subcat ?subcat) ; pass up subcat so it can be used in -NP-ADJ-MISSING-HEAD-COMPAR> ; if we pass up both subcats we go into an infinite loop because this rule can be rematched!
+      (subcat ?subcat) ; pass up subcat so it can be used in -NP-MISSING-HEAD-COMPAR> ; if we pass up both subcats we go into an infinite loop because this rule can be rematched!
 	    )           
      -adj-pred-onesubcat> 
      (head (ADJ1 (LF ?lf)  (VAR ?v)

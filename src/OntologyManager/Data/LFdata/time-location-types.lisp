@@ -26,7 +26,7 @@
 
 (define-type ont::at-scale-value
     :comment "The main predicate for associating an object with a value on a scale"
-    :parent ont::position-reln)
+    :parent ont::relation)
 
 ; *********************************************
 ;
