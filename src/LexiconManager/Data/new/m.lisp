@@ -37,7 +37,7 @@
    (SENSES
     (;(LF-PARENT ONT::length-unit)
      (LF-PARENT ONT::mm)
-     (TEMPL ATTRIBUTE-UNIT-TEMPL)
+     (TEMPL abbrev-attribute-templ)
      (meta-data :origin calo-ontology :entry-date 20060711 :change-date nil :comments nil)
      )
     )
@@ -50,19 +50,19 @@
    (SENSES
     ( (meta-data :origin calo :entry-date 20050522 :change-date nil :comments caloy2)
       (lf-parent ont::rate-unit)
-      (templ bare-pred-templ)
+      (templ abbrev-attribute-templ)
      )
     )
    )
 ))
 
-(define-words :pos W::n :templ COUNT-PRED-TEMPL
+(define-words :pos W::n 
  :words (
       ((W::m w::p w::g)
    (senses
     ( (meta-data :origin calo :entry-date 20050522 :change-date nil :comments caloy2)
       (lf-parent ont::rate-unit)
-      (templ bare-pred-templ)
+      (templ abbrev-attribute-templ)
      )
     )
    )

@@ -224,7 +224,7 @@
 (define-type ONT::is-compatible-with
  :wordnet-sense-keys ("accept%2:42:00" "accompany%2:42:00" "agree%2:42:03" "apply%2:42:01" "take%2:42:03")
  :parent ONT::event-of-state
- :arguments ((:REQUIRED ONT::NEUTRAL (F::Phys-obj (F::intentional -)))
+ :arguments ((:REQUIRED ONT::NEUTRAL (F::Phys-obj (F::intentional -) (F::type ont::manufactured-object)))
 	     (:ESSENTIAL ONT::neutral1 ((? tt F::phys-obj F::situation F::abstr-obj))))
  :comment "one object meets some criteria defined by another object"
  )
@@ -2213,12 +2213,6 @@
     :comment "object is not similar to another with respect to some property"
     )
 
-;; 20120523 GUM change new type
-(define-type ONT::accept-agree
- :wordnet-sense-keys ("grudge%2:37:00" "agree%2:32:00" "agree%2:32:04" "accept%2:32:00" "consent%2:32:00" "go_for%2:32:00" "affirm%2:32:01" "acceptance%1:04:00" "take_a_dare%2:32:00")
- :parent ONT::response
- )
-
 (define-type ONT::compromise
  :wordnet-sense-keys ("compromise%2:32:01" "compromise%2:32:00")
  :parent ONT::accept-agree
@@ -2251,6 +2245,12 @@
  :arguments ((:optional ONT::affected)
  	     (:optional ONT::formal)
              )
+ )
+
+
+(define-type ONT::accept-agree
+ :wordnet-sense-keys ("grudge%2:37:00" "agree%2:32:00" "agree%2:32:04" "accept%2:32:00" "consent%2:32:00" "go_for%2:32:00" "affirm%2:32:01" "acceptance%1:04:00" "take_a_dare%2:32:00")
+ :parent ONT::judgement
  )
 
 ;; graduate
@@ -2777,7 +2777,7 @@
 
 (define-type ont::incur-inherit-receive
     :wordnet-sense-keys ("fall%2:40:12" "get%2:39:14" "inherit%2:40:02" "take%2:31:09")
-    :arguments ((:REQUIRED ONT::affected1 ((? tt f::phys-obj f::abstr-obj) (f::intentional -))))
+    :arguments ((:REQUIRED ONT::affected1 ((? tt f::phys-obj f::abstr-obj f::situation) (f::intentional -))))
     :parent ont::event-of-undergoing-action
     )
 

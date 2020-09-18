@@ -2060,7 +2060,7 @@
  ;; WORDS: bandwidth
 )
 
-(define-type ont::clock-speed-scale
+(define-type ont::frequency-scale
  :sem (F::abstr-obj (F::scale ONT::CLOCK-SPEED-SCALE))
  :parent ont::rate-scale 
  :arguments ((:REQUIRED ONT::FIGURE (F::Phys-obj (F::origin F::artifact)))

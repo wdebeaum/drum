@@ -651,7 +651,7 @@
     )
 
 (define-type ONT::rate-unit
- :wordnet-sense-keys ("miles_per_gallon%1:23:00" "bits_per_second%1:28:00" "gigahertz%1:28:00" "hertz%1:28:00" "kilohertz%1:28:00" "megahertz%1:28:00" "terahertz%1:28:00" "revolutions_per_minute%1:28:00" "words_per_minute%1:28:00")
+ :wordnet-sense-keys ("miles_per_gallon%1:23:00" "revolutions_per_minute%1:28:00" "words_per_minute%1:28:00")
  :parent ONT::formal-unit
  :sem (F::Abstr-obj (F::Scale Ont::Rate-scale))
  :arguments ((:ESSENTIAL ONT::FIGURE ((? type F::phys-obj F::situation)))
@@ -659,9 +659,22 @@
  )
 
 (define-type ONT::speed-unit
- :wordnet-sense-keys ("mph%1:28:01" "miles_per_hour%1:28:01" "kilometers_per_hour%1:28:00" "kilometres_per_hour%1:28:00" "kph%1:28:00" "km/h%1:28:00")
- :parent ONT::rate-unit
- )
+    :wordnet-sense-keys ("mph%1:28:00" "miles_per_hour%1:28:01" "kilometers_per_hour%1:28:00" "kilometres_per_hour%1:28:00" "kph%1:28:00" "km/h%1:28:00")
+    :sem (F::Abstr-obj (F::Scale Ont::speed-scale))
+    :parent ONT::rate-unit
+    )
+
+(define-type ONT::frequency-unit
+    :wordnet-sense-keys ("Hz%1:28:00" "khz%1:28:00" "mhz%1:28:00" "ghz%1:28:00" "thz%1:28:00")
+    :sem (F::Abstr-obj (F::Scale Ont::frequency-scale))
+    :parent ONT::rate-unit
+    )
+
+(define-type ONT::bandwidth-unit
+    :wordnet-sense-keys ("bps%1:28:00" "baud%1:23:00")
+    :sem (F::Abstr-obj (F::Scale Ont::bit-rate-scale))
+    :parent ONT::rate-unit
+    )
 
 ;; bit, byte
 (define-type ONT::memory-UNIT
