@@ -321,7 +321,7 @@
    
     ;; rate expressions
     ;; 7 miles per hour; 7 degrees per second
-    ((np (LF (% description (var *) (class ont::rate) (status ont::indefinite) (constraint (& (repeats ?v1) (over-period ?per)))))
+    ((np (LF (% description (var *) (class ont::rate) (status ont::indefinite) (constraint (& (amount ?v1) (over-period ?per)))))
       (var *) (case (? case sub obj)) (SORT unit-measure) (AGR 3s)
       (time-converted +) (class ?cl)
       (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::mobility -)
@@ -336,7 +336,7 @@
 
     ;; $125 a share
     ((np (LF (% description (var *) (class ont::rate) (status ont::indefinite)
-		(constraint (& (repeats ?v1) (over-period ?per)))))
+		(constraint (& (amount ?v1) (over-period ?per)))))
       (var *) (case (? case sub obj)) (SORT unit-measure) (AGR 3s)
       (time-converted +) (lex ?x) (class ?cl)
       (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::mobility -) 
@@ -354,7 +354,7 @@
 
     ;; 3 mm over 2 days
     ((np (LF (% description (var *) (class ont::rate) (status ont::indefinite)
-		(constraint (& (quantity-abstr ?v1) (over-unit ?per)))))
+		(constraint (& (amount ?v1) (over-period ?per)))))
       (var *) (case (? case sub obj)) (SORT unit-measure) (AGR 3s)
       (time-converted +) (lex ?x) (class ont::rate) ;(class ?cl)
       (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::mobility -) 
@@ -373,7 +373,7 @@
     
     ;; Twice a week
     ((np (LF (% description (var *) (class ont::rate) (status ont::indefinite)
-		(constraint (& (repeats ?v1) (over-period ?per)))))
+		(constraint (& (amount ?v1) (over-period ?per)))))
       (var *) (case (? case sub obj)) (SORT unit-measure) (AGR 3s)
       (time-converted +) (lex ?x) (class ONT::REPETITION)
       (sem ($ f::abstr-obj (f::intentional -) (f::information -) (f::mobility -) 
@@ -393,7 +393,7 @@
     ;; m/s = meters per second
     ;; added kg/ha etc
     ((np (LF (% description (var ?v) (class ont::rate) (status indefinite)
-		(constraint (& (repeats ?v1)
+		(constraint (& (amount ?v1)
 			       (over-unit ?per) ;(over-period ?per)
 			       ))))
             (var ?v) (case (? case sub obj)) (SORT UNIT-MEASURE) (AGR 3s)

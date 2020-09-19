@@ -31,7 +31,7 @@
  :tags (:base500)
  :words (
   (w::ground
-   (wordfeats (W::morph (:forms (-vb) :nom w::grounding)))
+   (wordfeats (W::morph (:forms (-vb)))) ;; :nom w::grounding)))
     (SENSES
      (;(LF-PARENT ONT::establish)
       (LF-PARENT ONT::attribute-impute)

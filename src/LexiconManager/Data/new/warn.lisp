@@ -5,7 +5,7 @@
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::warn
-   (wordfeats (W::morph (:forms (-vb) :nom W::warning)))
+   (wordfeats (W::morph (:forms (-vb) ))) ;;:nom W::warning)))  This is redundant with the GERUND
    (SENSES
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date 20090506 :comments nil :vn ("advise-37.9-1"))
      (LF-PARENT ONT::warn)

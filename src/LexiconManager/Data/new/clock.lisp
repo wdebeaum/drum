@@ -19,10 +19,10 @@
   ((W::CLOCK W::SPEED)
    (wordfeats (W::morph (:forms (-S-3P) :plur (W::clock W::speeds))))
    (SENSES
-    ((LF-PARENT ONT::CLOCK-SPEED-scale)
+    ((LF-PARENT ONT::frequency-scale)
      (TEMPL reln-subcat-of-units-TEMPL)
      )
-    ((LF-PARENT ONT::CLOCK-SPEED-scale)
+    ((LF-PARENT ONT::frequency-scale)
      (TEMPL other-reln-TEMPL)
      )
     )
