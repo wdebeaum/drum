@@ -5,7 +5,7 @@
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 	 (W::interpret
-	  (wordfeats (W::morph (:forms (-vb) :past w::interpreted :pastprt w::interpreted :ing w::interpreting :nom w::interpretation)))
+	  (wordfeats (W::morph (:forms (-vb) :past w::interpreted :pastpart w::interpreted :ing w::interpreting :nom w::interpretation)))
 	  (SENSES
 	   ((LF-PARENT ONT::classify)
 	    (meta-data :origin calo-ontology :entry-date 20051209 :change-date 20090501 :comments Interpret :vn ("characterize-29.2"))
