@@ -878,7 +878,7 @@
     )
 
 ;; engineer, artist, scientist
-(define-type ONT::professional
+(define-type ONT::PERSON-DEFINED-BY-ACTIVITY ;ONT::professional
     :wordnet-sense-keys ("agent%1:18:01" "agent%1:18:02" "professional%1:18:00" "professional_person%1:18:00" "skilled_worker%1:18:00")
     :comment "a person defined by a role that they play. e.g., doctor, leader, ..."
     :parent ONT::PERSON
@@ -894,169 +894,181 @@
 
 (define-type ONT::accountant
     :wordnet-sense-keys ("accountant%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
+)
+
+(define-type ONT::agent-representative
+    :wordnet-sense-keys ("representative%1:18:00")
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
+    :comment "a person who represents a person or party"
 )
 
 (define-type ONT::applicant
     :wordnet-sense-keys ("applicant%1:18:00" "candidate%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person who seeks employment and has applied for it"
 )
 
 ;; runner, swimmer
 (define-type ONT::athlete
     :wordnet-sense-keys ("athlete%1:18:00" "jock%1:18:00")
-    :parent ONT::professional ;person
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional ;person
 )
 
 (define-type ONT::artist
     :wordnet-sense-keys ("artist%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person who creates art/performs artistic work"
 )
 
 (define-type ONT::author
     :wordnet-sense-keys ("writer%1:18:00" "author%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj (F::origin F::artifact) (f::information f::information-content))))
     )
 
+(define-type ONT::benefactor
+    ;:wordnet-sense-keys ("")
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
+    :comment "a person/agency that sponsors other people/agencies"
+)
+
 (define-type ONT::cleaner
     :wordnet-sense-keys ("cleaner%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person whose occupation is cleaning"
 )
 
 (define-type ONT::construction-worker
     :wordnet-sense-keys ("builder%1:18:00" "construction_worker%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person whose work is related to construction of buildings etc, e.g., bricklayer, builder, plumber and roofer"
 )
 
 (define-type ONT::consultant
     :wordnet-sense-keys ("consultant%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "an expert whose job is to give advise"
 )
 
 (define-type ONT::developer-programmer
     :wordnet-sense-keys ("programmer%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person who designs, writes and tests computer programs"
 )
 
 (define-type ONT::editor
     :wordnet-sense-keys ("editor%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person responsible for editorial aspect of publication"
 )
 
 (define-type ONT::employee
     :wordnet-sense-keys ("employee%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person who is hired to perform a job"
 )
 
 (define-type ONT::engineer
     :wordnet-sense-keys ("engineer%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person who uses scientific knowledge to solve practical problems"
 )
 
 (define-type ONT::entrepreneur
     :wordnet-sense-keys ("businessperson%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person who engages in industrial enterprise, organizes business venture"
 )
 
 (define-type ONT::food-industry-professional
     :wordnet-sense-keys ("chef%1:18:01" "cook%1:18:00" "restaurant_attendant%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person whose profession is related to food industry, e.g., chef, waiter, etc"
 )
 
 (define-type ONT::gamer
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person who plays video games for profession"
 )
 
 (define-type ONT::legal-professional
     :wordnet-sense-keys ("attorney%1:18:00" "judge%1:18:00" "lawman%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person whose profession is related to law, such as practicing it, giving legal advice, conducting lawsuits, providing judgements on court cases, and administering law"
 )
 
 (define-type ONT::manager
     :wordnet-sense-keys ("employer%1:18:00" "head%1:18:00")
-    :parent ONT::professional 
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional 
     :comment "Person that performs a managing role, e.g., boss, ceo, executive etc"
 )
 
 (define-type ONT::media-professional
     :wordnet-sense-keys ("journalist%1:18:00" "reporter%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person whose profession is related to media, such as producing content for media, reporting, journalism"
 )
 
 (define-type ONT::meteorologist
     :wordnet-sense-keys ("meteorologist%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person whose profession is to study and predict weather conditions"
 )
 
 (define-type ONT::OFFICIAL
     :comment "Person that serves in some administrative role"
     :wordnet-sense-keys ("leader%1:18:00" "ruler%1:18:00" "head_of_state%1:18:00")
-    :parent ONT::PROFESSIONAL ;PERSON
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;PROFESSIONAL ;PERSON
 )
 
 (define-type ONT::pilot
     :wordnet-sense-keys ("aviator%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person who operates aircrafts"
 )
 
 (define-type ONT::police
     :wordnet-sense-keys ("police_officer%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person whose profession is in law enforcement"
 )
 
 (define-type ONT::politics-professional
     :wordnet-sense-keys ("politician%1:18:00" "politician%1:18:01" "president_of_the_united_states%1:04:00" "senator%1:18:00" "speaker%1:18:01")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person whose profession is in law enforcement"
 )
 
 (define-type ONT::professional-associate
     :wordnet-sense-keys ("colleague%1:18:00" "colleague%1:18:01")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "the colleague/peer relation/role an individual has in a professional setting"
 )
 
 (define-type ONT::publisher
     :wordnet-sense-keys ("publisher%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person engaged in publishing books etc"
 )
 
 ;; scholar, student, graduate
 (define-type ONT::scholar
     :wordnet-sense-keys ("bookman%1:18:00" "educatee%1:18:00" "pupil%1:18:00" "scholar%1:18:00" "scholarly_person%1:18:00" "scientist%1:18:00" "student%1:18:00" "student%1:18:01" "theorist%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :arguments ((:OPTIONAL ONT::FIGURE ((? lof F::Phys-obj f::abstr-obj)))
 		)
     )
 
 ;; 20111006 for obtw demo
 (define-type ONT::scout
-    :parent ONT::professional ;PERSON
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional ;PERSON
     :wordnet-sense-keys ("scout%1:18:00")
 )
 
 (define-type ONT::seller-trader
     :wordnet-sense-keys ("merchant%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person engaged in retail trade"
 )
 
@@ -1069,7 +1081,7 @@
 ;; doctor, nurse
 (define-type ONT::health-professional
     :wordnet-sense-keys ("health_professional%1:18:00" "primary_care_provider%1:18:00" "PCP%1:18:00" "health_care_provider%1:18:00" "caregiver%1:18:01")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     )
 
 #|
@@ -1088,19 +1100,19 @@
 
 (define-type ONT::teacher-trainer
     :wordnet-sense-keys ("educator%1:18:00" "trainer%1:18:00")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person who educates others"
 )
 
 (define-type ONT::technician
     :wordnet-sense-keys ("technician%1:18:00" "technician%1:18:01")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person whose occupation involves training in a specific technique etc"
 )
 
 (define-type ONT::worker
     :wordnet-sense-keys ("workman%1:18:00" "worker%1:18:01")
-    :parent ONT::professional
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person who performs manual labor"
 )
 

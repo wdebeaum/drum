@@ -1410,7 +1410,7 @@
 ;; (health care) assistant
 (define-type ont::assistant
  :wordnet-sense-keys ("assistant%1:18:00" "helper%1:18:01" "help%1:18:00" "supporter%1:18:01")
-  :parent ont::professional ;agent
+  :parent ont::PERSON-DEFINED-BY-ACTIVITY ;professional ;agent
   )
 
 #|

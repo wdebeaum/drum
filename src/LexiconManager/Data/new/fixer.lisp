@@ -7,7 +7,7 @@
   (W::FIXER
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("fixer%1:18:01"))
-     (LF-PARENT ONT::professional)
+     (LF-PARENT ONT::agent-representative) ;professional)
      (TEMPL DRV-NOM-RELN-TEMPL)
      )
     )

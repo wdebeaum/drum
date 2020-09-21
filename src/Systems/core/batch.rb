@@ -631,8 +631,8 @@ def read_text_units
     when :file_list
       input_dir = File.dirname(File.expand_path(Options.input))
       File.open(Options.input).each_line.collect_concat { |f|
-        # remove leading and trailing whitespace and comments
-        f = f.sub(/^\s+/,'').sub(/\s*(#.*)?$/,'')
+        # remove leading and trailing whitespace and comments (lines starting w/ '#' after optional whitespace)
+        f = f.sub(/^\s+/,'').sub(/\s*$/,'').sub(/^#.*/,'')
 	if (f.empty?) # otherwise blank line
 	  []
 	else # line with a file on it
@@ -646,6 +646,48 @@ def read_text_units
   end
 end
 
+# get new value for num_tripses
+# TODO: generalize if we want other info in this file
+def read_new_num_tripses
+  conf_name = "batch.conf"
+  if (File.exists?(conf_name))
+    File.open(conf_name, 'r').each_line { |line|
+      if (line =~ /^n(um[_-]tripses)?\s*=\s*(\d+)/)
+        return $2.to_i
+      end
+    }
+  end
+  return nil
+end
+
+# adjust number of modules (num_tripses); returns new num_tripses
+# side effect: change port-to-module map
+def adjust_num_tripses_maybe(p2m)
+  num_tripses = p2m.length
+  new_num_tripses = read_new_num_tripses()
+  # keep the same?
+  return p2m.length if new_num_tripses.nil?
+  # increasing? add ports at the end
+  a = (new_num_tripses-num_tripses).times { p2m.push(nil) }
+  if (a > 0)
+    $stderr.puts "num_tripses increased by #{a} to #{new_num_tripses}"
+    return new_num_tripses
+  end
+  # decreasing? drop ports from the tail
+  d = 0
+  (num_tripses-new_num_tripses).times { 
+    if (p2m.last.nil? or not p2m.last.alive?)
+      p2m.pop()
+      d += 1
+    else
+      break
+    end
+  }
+  $stderr.puts "num_tripses decreased by #{d} to #{p2m.length}" if (d > 0)
+  return new_num_tripses
+end
+
+  
 #
 # Main program
 #
@@ -679,6 +721,14 @@ def main
       started = false
       begin
 	port2module.each_with_index { |mod, port|
+          ## TODO: it seems to me ruby allows modifying the array during
+          ## a loop like this; but i should check to make sure!
+          # see if we need to adjust num_tripses
+          num_tripses = adjust_num_tripses_maybe(port2module)
+          # don't start new processes on ports slated for removal
+          if (port >= num_tripses)
+            break
+          end
 	  if (mod.nil? or not mod.alive?)
 	    port2module[port] =
 	      BatchModule.new(logdir, port + Options.port_base,

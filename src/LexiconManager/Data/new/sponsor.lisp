@@ -7,7 +7,7 @@
 ;   )
    (W::sponsor
    (SENSES
-    ((LF-PARENT ONT::professional)
+    ((LF-PARENT ONT::benefactor) ;professional)
      (EXAMPLE "confirm the sponsor name")
      (meta-data :origin plot :entry-date 20080812 :change-date nil :comments nil)
      )
