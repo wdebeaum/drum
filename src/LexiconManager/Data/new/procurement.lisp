@@ -1,7 +1,7 @@
 ;;;;
 ;;;; w::procurement
 ;;;;
-
+#|
 (define-words :pos W::n :templ COUNT-PRED-TEMPL
  :words (
    (w::procurement
@@ -13,5 +13,5 @@
      )
     )
    )
-))
+)|#
 

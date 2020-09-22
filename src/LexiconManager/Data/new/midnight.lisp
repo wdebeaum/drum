@@ -8,7 +8,7 @@
   (W::midnight
    (SENSES
     ((LF-PARENT ONT::midnight)
-     (SEM (F::time-function F::day-point))
+     ;;(SEM (F::time-function F::day-point))
      )
     )
    )

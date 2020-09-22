@@ -74,6 +74,12 @@
    (ARGUMENTS
     ))
 
+  (ABBREV-ATTRIBUTE-TEMPL
+   (SYNTAX(W::SORT W::ATTRIBUTE-UNIT) (W::AGR (? agr W::3s W::3p)) (W::morph (:forms (-none)))
+	  (W::CASE (? cas W::sub W::obj)) (W::MASS W::BARE))
+   (ARGUMENTS
+    ))
+
   ;; he has difficulty/trouble doing that
   (mass-PRED-assoc-with-TEMPL
    (SYNTAX(W::SORT W::PRED) (W::AGR W::3s) (W::CASE (? cas W::sub W::obj)) (W::MASS W::mass))
@@ -158,7 +164,7 @@
   ;;;;; although 9 inches of rope sounds ok to me, just not too common
   ;;;;; (ARGUMENT2 (% NP (number +)) LF_VAL)
   (attribute-unit-templ
-   (SYNTAX(W::AGR (? a W::3s W::3p)) (W::MORPH (:FORMS (-S-3P))) (W::SORT W::ATTRIBUTE-UNIT) (W::CASE (? cas 
+   (SYNTAX (W::AGR (? a W::3s W::3p)) (W::MORPH (:FORMS (-S-3P))) (W::SORT W::ATTRIBUTE-UNIT) (W::CASE (? cas 
      W::sub W::obj)) (w::allow-deleted-comp +) (W::MASS W::COUNT))
    (ARGUMENTS
     (ARGUMENT (:parameter xp (:default (% W::PP (W::ptype W::of)))) ONT::FIGURE)

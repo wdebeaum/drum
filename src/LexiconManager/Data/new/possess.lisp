@@ -10,7 +10,7 @@
     ((EXAMPLE "he possesses a truck")
      (LF-PARENT ONT::possess)
      (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
-     (SEM (F::Aspect F::indiv-level) (F::Time-span F::extended))
+     ;;(SEM (F::Aspect F::indiv-level) (F::Time-span F::extended))
      )
     )
    )

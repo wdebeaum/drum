@@ -2291,63 +2291,24 @@
   (LSUBJ (% W::NP) ONT::neutral1)
   (LOBJ  (:parameter xp (:default (% W::NP))) ONT::neutral)
   ))
-
-#|(neutral-neutral-xp-templ
- (ARGUMENTS
-  (LSUBJ (% W::NP)  ont::neutral)
-  (LOBJ  (:parameter xp (:default (% W::NP))) ONT::neutral1)
-  ))
-|#
-
-#|(AGENT-ACTION-OBJCONTROL-TEMPL
-   (ARGUMENTS
-    (LSUBJ (% W::NP) ONT::AGENT)
-    (LOBJ (% W::NP (W::lex ?dobjlex) (W::sem ?dobjsem) (W::var ?dobjvar) (w::expletive ?exp)) ont::neutral)
-    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required (W::subj (% W::np (W::sem ?dobjsem)
-		(W::lex ?dobjlex) (W::var ?dobjvar) (w::expletive ?exp))))) ont::formal)
-    ))
-|#
-
-; nobody uses this
-#|
-  (theme-OBJCONTROL-TEMPL
-   (ARGUMENTS
-    (LSUBJ (% W::NP) ONT::neutral)
-    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required (W::subj (% W::np (W::sem ?dobjsem)
-		(W::lex ?dobjlex) (W::var ?dobjvar))))) ont::formal)
-    ))
-|#  
-
-#|  (AGENT-EFFECT-SUBJCONTROL-TEMPL
-   (ARGUMENTS
-    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar) (w::expletive ?exp)) ONT::AGENT)
-    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to))) (:required(W::subj (% W::np (W::sem ?lsubjsem) 
-                    (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive ?exp))))) ONT::FORMAL)
-    ))
-|#
-
-#|(neutral-EFFECT-SUBJCONTROL-TEMPL
-   (ARGUMENTS
-    (LSUBJ (% W::NP (W::lex ?lsubjlex) (W::sem ?lsubjsem) (W::var ?lsubjvar) (w::expletive ?exp)) ONT::neutral)
-    (LCOMP (:parameter xp (:default (% W::cp (W::ctype W::s-to)))
-		       (:required (W::subj (% W::np (W::sem ?lsubjsem) 
-					     (W::lex ?lsubjlex) (W::var ?lsubjvar) (w::expletive ?exp))))) ONT::FORMAL)
-    ))
-|#
    
 ;;  all the followins "as theme" templates require an ARG value in the PP - which only occurs with constructs like "as happy"
 (AGENT-NEUTRAL-FORMAL-2-XP-3-XP2-PP-OPTIONAL-TEMPL		
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::agent)
     (LOBJ (:parameter xp (:default (% W::NP (w::var ?dobjvar)))) ONT::neutral)
-    (LCOMP (:parameter xp2 (:default(% W::PP (w::ptype w::as) (w::arg ?dobjvar)))) ont::formal optional)
+    (LCOMP (:parameter xp2 (:default(% W::PP (w::var ?compvar) (w::ptype w::as)
+				       ;; (w::arg ?dobjvar)  can't do this in a PP as they are semantically vaccuous -- if we want this it needs to be an ADVBL
+				       ))) ont::formal optional)
     ))
 
 (AGENT-NEUTRAL-FORMAL-2-XP-3-XP2-PP-TEMPL		
    (ARGUMENTS
     (LSUBJ (% W::NP) ONT::agent)
     (LOBJ (:parameter xp (:default (% W::NP (w::var ?dobjvar)))) ONT::neutral)
-    (LCOMP (:parameter xp2 (:default(% W::PP (w::ptype w::as) (w::arg ?dobjvar)))) ont::formal)
+    (LCOMP (:parameter xp2 (:default(% W::PP (w::var ?compvar) (w::ptype w::as)
+				       ;;(w::arg ?dobjvar)
+				       ))) ont::formal)
     ))
 
 (AGENT-NEUTRAL-NEUTRAL1-2-XP-3-XP2-TEMPL		

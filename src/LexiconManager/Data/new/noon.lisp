@@ -10,7 +10,7 @@
   (W::noon
    (SENSES
     ((LF-PARENT ONT::noon)
-     (SEM (F::time-function F::day-point))
+     ;;(SEM (F::time-function F::day-point))
      )
     )
    )

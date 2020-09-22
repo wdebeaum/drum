@@ -2213,10 +2213,6 @@
     :comment "object is not similar to another with respect to some property"
     )
 
-(define-type ONT::compromise
- :wordnet-sense-keys ("compromise%2:32:01" "compromise%2:32:00")
- :parent ONT::accept-agree
- )
 
 (define-type ONT::contest
  :wordnet-sense-keys ("disagree%2:32:00" "differ%2:32:00" "dissent%2:32:01" "take_issue%2:32:00")
@@ -2251,6 +2247,14 @@
 (define-type ONT::accept-agree
  :wordnet-sense-keys ("grudge%2:37:00" "agree%2:32:00" "agree%2:32:04" "accept%2:32:00" "consent%2:32:00" "go_for%2:32:00" "affirm%2:32:01" "acceptance%1:04:00" "take_a_dare%2:32:00")
  :parent ONT::judgement
+ )
+
+
+(define-type ONT::compromise
+ :wordnet-sense-keys ("compromise%2:32:01" "compromise%2:32:00")
+ :parent ONT::accept-agree
+ :arguments ((:optional ONT::neutral)
+	     )
  )
 
 ;; graduate
@@ -3101,7 +3105,7 @@
 ;; this needs to be able to have stative ont::effect, as in 'let him know'
 ;; also need to have phys & abstr objects as in "are pets allowed"
 (define-type ONT::Allow
- :wordnet-sense-keys ("allow%2:41:00" )
+ :wordnet-sense-keys ("allow%2:41:00" "permit%2:32:00")
   :parent ONT::CAUSE-EFFECT
  ;; approval for the purchase (sit); budget (abstr); that machine (phys-obj)
   :arguments ((:Required ONT::affected ((? aff F::phys-obj f::abstr-obj f::situation)))
