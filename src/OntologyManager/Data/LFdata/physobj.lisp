@@ -898,7 +898,7 @@
 )
 
 (define-type ONT::agent-representative
-    :wordnet-sense-keys ("representative%1:18:00")
+    :wordnet-sense-keys ("fixer%1:18:00" "representative%1:18:00")
     :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person who represents a person or party"
 )
@@ -928,7 +928,7 @@
     )
 
 (define-type ONT::benefactor
-    ;:wordnet-sense-keys ("")
+    :wordnet-sense-keys ("benefactor%1:18:00")
     :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person/agency that sponsors other people/agencies"
 )
@@ -938,6 +938,12 @@
     :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;professional
     :comment "a person whose occupation is cleaning"
 )
+
+;; sender, receiver, caller
+(define-type ONT::communication-party
+    :wordnet-sense-keys ("communicator%1:18:00")
+    :parent ONT::PERSON-DEFINED-BY-ACTIVITY ;person-reln
+)  
 
 (define-type ONT::construction-worker
     :wordnet-sense-keys ("builder%1:18:00" "construction_worker%1:18:00")
@@ -1201,11 +1207,13 @@
  :wordnet-sense-keys ("hindu%1:18:01" "buddhist%1:18:00" "christian%1:18:00")
 )
 
+#|
 ;; sender, receiver, caller
 (define-type ONT::communication-party
     :wordnet-sense-keys ("communicator%1:18:00")
     :parent ONT::person-reln
     )
+|#
 
 ;; insider, outsider, stranger
 (define-type ONT::person-defined-by-membership
