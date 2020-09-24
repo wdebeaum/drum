@@ -927,7 +927,7 @@
     ;; Myrosia 05/14/00
     ;; e.g. three thirty five
     ;; This is a slightly lower priority to ensure left-to-right addition
-    ((number (val ?newval) (agr 3p) (lex (?l1 ?l2)) (sem ?sem)
+    ((number (val ?newval) (agr 3p) (lex (?l1 ?l2)) (sem ?sem) ; not sure we want a lex this way?
 	     (var *);; making up a new var for this number
 	     (lf ?lf) (coerce ?coerce) (ntype ?ntype) (nobarespec +) 
       )
@@ -941,7 +941,8 @@
     ;; Myrosia 10/01/2004
     ;; plus/minus numbers
     ;; THIS TIME WE ID THIS AS POSITIVE BECAUSE WE NEED TO KNOW THAT IT WAS SIGNED
-    ((number (val ?v1) (agr ?agr) (lex (?l1 ?l2)) (NTYPE w::POSITIVE)
+    ((number (val ?v1) (agr ?agr) (lex ?l1) ;(lex (?l1 ?l2))
+	     (NTYPE w::POSITIVE)
       (var *);; making up a new var for this number
       (lf ?lf) (coerce ?coerce) (nobarespec +)
       )
@@ -953,7 +954,7 @@
      )
 
 
-    ((number (val ?newval) (agr 3p) (lex (?l1 ?l2));;(NTYPE threedigit)
+    ((number (val ?newval) (agr 3p) (lex ?l1) ;(lex (?l1 ?l2));;(NTYPE threedigit)
 	     (var *);; making up a new var for this number
       (lf ?lf) (coerce ?coerce) (ntype ?ntype) (nobarespec +)
       )
@@ -994,7 +995,7 @@
 	     )
      -range2>
      (word (lex from))
-     (head (number (nobarespec ?nbs) (lf ?lf) (val ?!v1)))
+     (head (number (nobarespec ?nbs) (lf ?lf) (lex ?l1) (val ?!v1)))
      (word (lex to))
      (number (val ?!v2) (lex ?l2)))
 
@@ -1006,17 +1007,17 @@
 	     )
      -range3>
      (word (lex between))
-     (head (number (nobarespec ?nbs) (lf ?lf) (val ?!v1)))
+     (head (number (nobarespec ?nbs) (lf ?lf) (lex ?l1) (val ?!v1)))
      (word (lex and))
      (number (val ?!v2) (lex ?l2)))
 
     ;; 10 or 15
-    ((number (RESTR (& (sequence (?!v1 ?!v2)))) (agr 3p) (lex (?l1 ?l2)) (ntype ?ntype) 
+    ((number (RESTR (& (sequence (?!v1 ?!v2)) (operator ONT::OR))) (agr 3p) (lex (?l1 ?l2)) (ntype ?ntype) 
       (var *) (LF ?lf) (coerce ?coerce) (sem ?sem)
       (nobarespec ?nbs)
 	     )
      -uncertain-number>
-     (head (number (nobarespec ?nbs) (lf ?lf) (val ?!v1)))
+     (head (number (nobarespec ?nbs) (lf ?lf) (lex ?l1) (val ?!v1)))
      (word (lex or))
      (number (val ?!v2) (lex ?l2)))
 

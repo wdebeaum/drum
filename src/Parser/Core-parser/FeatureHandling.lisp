@@ -210,7 +210,14 @@
 		   (find-if #'(lambda (v)
 				(not (symbolp v)))
 			    values))
-      (setq values (car values)))
+
+      ;(setq values (car values))
+      (setq values (or (remove-if #'(lambda (v)
+			     (not (or (symbolp v) (numberp v))))
+			 values)
+		nil)) ; nil probably is not a good value but we need a default here
+
+      )
   
     (make-var :name name :values values :non-empty non-empty))
 

@@ -647,7 +647,7 @@ def read_text_units
 end
 
 # get new value for num_tripses
-# TODO: generalize if we want other info in this file
+# TODO? generalize if we want other info in this file (some parameters would break things if changed mid-stream, so be careful about which can be changed this way)
 def read_new_num_tripses
   conf_name = "batch.conf"
   if (File.exists?(conf_name))
@@ -720,9 +720,9 @@ def main
       # thread/module/TRIPS instance/port
       started = false
       begin
-	port2module.each_with_index { |mod, port|
-          ## TODO: it seems to me ruby allows modifying the array during
-          ## a loop like this; but i should check to make sure!
+        port = 0
+	while (port < port2module.size)
+	  mod = port2module[port]
           # see if we need to adjust num_tripses
           num_tripses = adjust_num_tripses_maybe(port2module)
           # don't start new processes on ports slated for removal
@@ -738,7 +738,8 @@ def main
 	    started = true
 	    break
 	  end
-	}
+	  port += 1
+	end
 	unless (started)
 	  # all are busy
 	  # wait for the next thread to finish
