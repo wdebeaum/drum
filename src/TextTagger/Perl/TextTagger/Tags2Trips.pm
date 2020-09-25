@@ -947,6 +947,8 @@ sub filter_phrases_from_short_sentences {
     my $text = ' 'x($max-$min);
     for (@tags) {
       if (exists($_->{lex}) and $_->{type} ne 'alternate-spelling') {
+	# sanity check
+	length($_->{lex}) == $_->{end} - $_->{start} or die "length of lex != end-start in tag:\n" . Data::Dumper->Dump([$_],['*tag']);
 	substr($text, $_->{start} - $min, $_->{end} - $_->{start}, $_->{lex});
       }
     }

@@ -1423,6 +1423,7 @@
   :parent ONT::representation
 ;  :sem (F::Abstr-obj (F::information F::information-content))
   :sem (F::Abstr-obj (f::origin f::artifact) (F::information F::mental-construct))
+  :wordnet-sense-keys ("computer_code%1:10:00") 
   )
 
 ;; autofill, autocomplete, colorsync, etc.
@@ -1439,7 +1440,8 @@
 
 (define-type ONT::web-browser
   :parent ONT::computer-software
-  )
+  :wordnet-sense-keys ("browser%1:10:00")
+)
 
 (define-type ONT::Linguistic-object
  :wordnet-sense-keys ("language_unit%1:10:00" "linguistic_unit%1:10:00")
@@ -1451,6 +1453,7 @@
 (define-type ONT::number-object
  :parent ONT::number
  :sem (F::Abstr-obj (F::information F::data))
+ :wordnet-sense-keys ("digit%1:23:00")
  )
 
 (define-type ont::language
@@ -1472,12 +1475,14 @@
 ;; html, java, etc.
 (define-type ont::computer-language
  :parent ont::language
- )
+ :wordnet-sense-keys ("markup_language%1:10:00" "programming_language%1:10:00")
+)
 
 ;; mbox, jpeg, doc, txt, etc.
 (define-type ont::file-format
  :parent ont::computer-language
- )
+ :wordnet-sense-keys ("mpeg%1:04:00")
+)
 
 ;;; there is ont::graphic-symbol; this should be related somehow
 (define-type ONT::punctuation
@@ -1503,7 +1508,8 @@
 ;; alpha, beta, ...
 (define-type ONT::greek-letter-symbol
  :parent ONT::letter-symbol
- )
+ :wordnet-sense-keys ("alpha%1:10:00" "beta%1:10:00" "chi%1:10:00" "delta%1:10:00" "epsilon%1:10:00" "eta%1:10:00" "gamma%1:10:00" "iota%1:10:00" "kappa%1:10:00" "lambda%1:10:00" "mu%1:10:00" "nu%1:10:00" "omega%1:10:00" "omicron%1:10:00" "phi%1:10:00" "pi%1:10:00" "psi%1:10:00" "rho%1:10:00" "sigma%1:10:00" "tau%1:10:00" "theta%1:10:00" "upsilon%1:10:00" "xi%1:10:00" "zeta%1:10:00")
+)
 
 (define-type ONT::COST-RELATION
  :parent ONT::predicate

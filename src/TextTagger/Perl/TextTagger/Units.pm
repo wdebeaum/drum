@@ -536,7 +536,7 @@ sub parse_factor_with_prefix_len {
   if ($prefix_len > 0) {
     $prefix = substr($str, 0, $prefix_len);
     print STDERR (' 'x$btd) . "prefix=$prefix\n" if ($debug);
-    $prefix =~ /^$prefix_re$/ or fail();
+    $prefix =~ /^$prefix_re\z/ or fail();
     $prefix .= '-';
     # use preferred name of prefix
     exists($units{$prefix}) or die "bogus prefix match '$prefix'?!";
@@ -552,7 +552,7 @@ sub parse_factor_with_prefix_len {
   return choose([reverse(1 .. $max_unit_len)], sub {
     my $unit_len = shift;
     my $unit = substr($after_prefix, 0, $unit_len);
-    $unit =~ /^$unit_re$/ or fail();
+    $unit =~ /^$unit_re\z/ or fail();
     print STDERR (' 'x$btd) . "unit=$unit\n" if ($debug);
     my $after_unit = substr($after_prefix, $unit_len);
     # HACK: if we're currently considering no prefix, and we found a unit with
@@ -858,8 +858,8 @@ sub parse_units_expr {
   } elsif (# units after a number (not including plural 10s)
 	   $before_start =~ /\d\s+$/ or
 	   $before_start =~ /\d0s\s+$/ or
-	   ($before_start =~ /\d$/ and not
-	    ($before_start =~ /\d0$/ and $after_start =~ /^s\s/)
+	   ($before_start =~ /\d\z/ and not
+	    ($before_start =~ /\d0\z/ and $after_start =~ /^s\s/)
 	   ) or
 	   # units after the word "in"
 	   $before_start =~ / \b [Ii]n \s+ $ /x

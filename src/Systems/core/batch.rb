@@ -631,8 +631,8 @@ def read_text_units
     when :file_list
       input_dir = File.dirname(File.expand_path(Options.input))
       File.open(Options.input).each_line.collect_concat { |f|
-        # remove leading and trailing whitespace and comments (lines starting w/ '#' after optional whitespace)
-        f = f.sub(/^\s+/,'').sub(/\s*$/,'').sub(/^#.*/,'')
+        # remove leading and trailing whitespace and comments
+        f = f.sub(/^\s+/,'').sub(/\s*(#.*)?$/,'')
 	if (f.empty?) # otherwise blank line
 	  []
 	else # line with a file on it

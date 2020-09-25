@@ -561,6 +561,8 @@ my @tests = (
   { text => "* Disbursed US$ 524 million in cash-based transfers across 56 countries and maximized WFP's digital payment systems to serve 10 million unique beneficiaries - the most to date.", tags => [
     # arguably "US$ 524 million" should be tagged, but we don't do currency
   ] },
+  # lgalescu reported on 2020-09-23
+  { text => "RNS Number : 2630E\nKEFI Minerals plc", tags => [] },
 );
 =begin
   templates for making tests

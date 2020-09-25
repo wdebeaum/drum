@@ -178,7 +178,9 @@ sub asciify_string {
     push @$substs, $subst;
     my $name = charnames::viacode(ord($&));
     $subst->{ascii} = do {
-      if ($name =~ m{^GREEK SMALL LETTER ([A-Z]+)$}) {
+      if (not defined($name)) {
+	'?'; # undef would otherwise become '', which messes up unasciify_tags
+      } elsif ($name =~ m{^GREEK SMALL LETTER ([A-Z]+)$}) {
 	lc($1);
       } elsif ($name =~ m{^GREEK CAPTIAL LETTER ([A-Z]+)$}) {
 	$1;
