@@ -680,7 +680,11 @@ sub parse_fraction_component {
 	  # e.g. "plants"=pico-liter*atto-newtons (or newton*second)
 	  print STDERR (' 'x$btd) . Data::Dumper->Dump([$comp_head, $comp_tail, $mult_op],[qw(*comp_head *comp_tail mult_op)]) if ($debug);
 	  if (($comp_tail->{is_plural} or
-	       ($comp_tail_len == 1 and exists($comp_tail->{ap}{second}))
+	       ($comp_tail_len == 1 and 
+	        (exists($comp_tail->{ap}{second}) or # GNU units
+	         exists($comp_tail->{ap}{sec}) # macos units
+		)
+	       )
 	      ) and $mult_op eq '') {
 	    print STDERR (' 'x$btd) . "rejecting multiple factors run together with plural\n" if ($debug);
 	    fail();

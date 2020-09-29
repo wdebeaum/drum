@@ -563,6 +563,8 @@ my @tests = (
   ] },
   # lgalescu reported on 2020-09-23
   { text => "RNS Number : 2630E\nKEFI Minerals plc", tags => [] },
+  # lgalescu 2020-09-25, "business" != bushel*second*inch*charge*second*second
+  { text => "A local company engaged in business promotion", tags => [] },
 );
 =begin
   templates for making tests
