@@ -1562,26 +1562,31 @@
 ;; unique lf for price
 (define-type ONT::PRICE
  :parent ONT::VALUE-COST
-  :arguments ((:REQUIRED ont::FIGURE ((? lo f::phys-obj f::abstr-obj)))
+ :arguments ((:REQUIRED ont::FIGURE ((? lo f::phys-obj f::abstr-obj)))
 	      (:REQUIRED ONT::EXTENT (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
-             )
+            )
+ :wordnet-sense-keys ("price%1:07:00" "price%1:07:01" "price%1:07:02" "price%1:21:00" "price%1:21:02")
  )
 
+#|
+;MOVING TO domain-and-attribute-types.lisp
 ;; unique lf for rate, as in gsa rate
 (define-type ont::charge-per-unit
-  :parent ont::value-cost
+  :parent ont::ratio-scale ;value-cost
   )
+|#
 
 ;; for account, grant, credit card
 ;; can we find a way to distinguish between bill (put it on my bill) and grant (put it on my grant)?
 (define-type ONT::ACCOUNT
- :parent ont::value-cost
+ :parent ont::function-object ;value-cost
 ; :parent ONT::ABSTRACT-OBJECT-nontemporal
  :sem (F::Abstr-obj (F::Measure-function F::term)  (f::object-function f::currency) (f::scale ont::money-scale))
   :arguments (
  ;; accounts can belong to individuals, organizations or projects
  (:essential ont::FIGURE ((? lof f::phys-obj f::abstr-obj))))
- )
+ :wordnet-sense-keys ("account%1:26:00" "financial_aid%1:21:00" "fund%1:21:01" "funding%1:21:00" "grant%1:10:00") 
+)
 
 ;; bill, tab
 (define-type ONT::ACCOUNT-PAYABLE
@@ -1615,20 +1620,22 @@
  )
 |#
 
+#|
 ;; diagnostics
 (define-type ont::medical-test
   :parent ont::procedure
   )
+|#
 
 ;; can be either treatment or test -- not sure where to classify but adding WN mappings
 (define-type ont::medical-procedure
-  :wordnet-sense-keys  ("medical_procedure%1:04:00"  "incision%1:04:00" "section%1:04:00" "surgical_incision%1:04:00")
+  :wordnet-sense-keys  ("checkup%1:04:00" "incision%1:04:00" "medical_procedure%1:04:00" "section%1:04:00" "surgical_incision%1:04:00")
   :parent ont::procedure
   )
 
 (define-type ont::medical-diagnostic
   :wordnet-sense-keys ("diagnostic_procedure%1:04:00" "diagnostic_technique%1:04:00")
-  :parent ont::medical-test
+  :parent ont::medical-procedure ;medical-test
   )
 
 (define-type ONT::CONSTRAINT
@@ -1645,13 +1652,15 @@
  :sem (F::Abstr-obj (F::information F::information-content))
  :arguments ((:ESSENTIAL ONT::FIGURE )
              )
+ :wordnet-sense-keys ("name%1:10:00")
  )
 
 (define-type ONT::FIRSTNAME
  :parent ONT::NAME
  :sem (F::Abstr-obj (F::information F::information-content))
  :arguments ((:ESSENTIAL ONT::FIGURE )
-             )
+            )
+ :wordnet-sense-keys ("first_name%1:10:00")
  )
 
 (define-type ONT::LASTNAME
@@ -1659,6 +1668,7 @@
  :sem (F::Abstr-obj (F::information F::information-content))
  :arguments ((:ESSENTIAL ONT::FIGURE )
              )
+ :wordnet-sense-keys ("surname%1:10:00")
  )
 
 (define-type ONT::FULLNAME
@@ -1674,6 +1684,7 @@
  :sem (F::Abstr-obj (F::information F::information-content))
  :arguments ((:ESSENTIAL ONT::FIGURE  (F::phys-obj (F::origin F::artifact) (F::information f::information-content)))
              )
+ :wordnet-sense-keys ("designation%1:10:00" "highness%1:18:00" "sir%1:18:01" "sir%1:18:00")
  )
 
 (define-type ONT::SIGNATURE
@@ -1698,9 +1709,10 @@
 ;; For epa and bee
 
 (define-type ont::definition
-    :parent ont::information-function-object
-    :arguments ((:essential ont::FIGURE))
-    )
+ :parent ont::information-function-object
+ :arguments ((:essential ont::FIGURE))
+ :wordnet-sense-keys ("definition%1:10:00")
+)
 
 ;; changed parent to ont::discipline (from abstract-object)
 ;; 2005.04/20 Added by Myrosia to handle words like algebra, mathematics etc.

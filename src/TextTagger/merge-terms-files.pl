@@ -6,9 +6,6 @@
 # the normalized term at the start of the row.
 # normalized ( unnormalized col col col ... ','? )+
 
-use lib "./Perl";
-use TextTagger::Util qw(remove_duplicates);
-
 use strict vars;
 
 # read a line from a file and split on tabs into a listref, return undef on eof
@@ -84,8 +81,7 @@ for(;;) {
     } else {
       push @output_row, ',';
     }
-    push @output_row, $unnormalized,
-	 @{remove_duplicates($unnormalized2triples{$unnormalized})};
+    push @output_row, $unnormalized, @{$unnormalized2triples{$unnormalized}};
   }
   # write the output row
   print join("\t", @output_row) . "\n";

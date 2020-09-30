@@ -2014,6 +2014,12 @@
  ;; WORDS: quotient, scale
 )
 
+;; unique lf for rate, as in gsa rate
+(define-type ont::charge-per-unit
+  :parent ont::ratio-scale ;value-cost
+  :wordnet-sense-keys ("charge_per_unit%1:21:00")
+)
+
 ;; ratio-scale > percent scale
 (define-type ont::percent-scale
  :sem (F::abstr-obj (F::scale ONT::PERCENT-SCALE))
@@ -2048,7 +2054,7 @@
 ;; rate
 (define-type ont::rate-scale
  :parent ont::ratio-scale 
- :wordnet-sense-keys ("rate%1:21:00" "rate%1:28:00" "incidence%1:24:00")
+ :wordnet-sense-keys ("rate%1:28:00" "incidence%1:24:00") ;"rate%1:21:00" 
  :sem (F::Abstr-obj (F::Scale Ont::Rate-scale))
  ;; WORDS: rate
 )

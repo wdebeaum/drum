@@ -3446,7 +3446,7 @@
   )
 
 (define-type ont::family-group
-  :wordnet-sense-keys ("family%1:14:02")
+  :wordnet-sense-keys ("family%1:14:01" "family%1:14:02")
     :parent ont::social-group
     )
 
