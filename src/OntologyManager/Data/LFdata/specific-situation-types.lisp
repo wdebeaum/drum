@@ -3553,8 +3553,8 @@
  :arguments ((:REQUIRED ONT::formal ((? ttp F::Situation F::phys-obj) (F::Aspect (? asp f::dynamic f::stage-level)))) 
 ;             (:REQUIRED ONT::Duration  (F::abstr-obj (F::scale F::duration-scale)))
              (:REQUIRED ONT::EXTENT  (F::abstr-obj (F::scale ont::duration-scale)))
-             ;;; it will take the truck 5 minutes [to arrive]
-             (:OPTIONAL ONT::neutral (f::phys-obj))
+             ;;; it will take the truck 5 minutes [to arrive  - the meeting lasted five minutes
+             (:OPTIONAL ONT::neutral ((? ccc f::phys-obj f::situation)))
              )
  )
 
@@ -4738,7 +4738,7 @@
 
 ;; for configure, arrange X (into Y) e.g. he arranged them into groups of three
 (define-type ONT::arranging
- :wordnet-sense-keys ("arrange%2:35:00" "reorient%2:30:00" "put_aside%2:35:00" "address%2:32:02" "alternate%2:30:01")
+ :wordnet-sense-keys ("arrange%2:35:00" "reorient%2:30:00" "put_aside%2:35:00" "address%2:32:02" "alternate%2:30:01" "organization%1:04:01")
  :parent ONT::control-manage
  :sem (F::SITUATION (F::Cause F::agentive) (F::Trajectory -))
  :arguments ((:REQUIRED ONT::Agent  ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))

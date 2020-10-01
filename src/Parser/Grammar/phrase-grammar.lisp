@@ -3074,9 +3074,10 @@
 		    (SORT unit-measure) 
 		    (CLASS ONT::quantity-abstr)
 		    (CONSTRAINT ?constr) (argument ?argument)
-		    (sem ?nsem)
+		    (sem ($ F::ABSTR-OBJ (F::scale ?sc) (f::type ont::quantity-abstr) (f::tangible +))) ;;(sem ?nsem)
 		    ))
-	  (class ont::quantity-abstr) (mass ?m) (sem ?nsem)
+	  (class ont::quantity-abstr) (mass ?m)
+	  (sem ($ F::ABSTR-OBJ (F::scale ?sc) (f::type ont::quantity-abstr) (f::tangible +))) ;;(sem ?nsem)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure) (STATUS ONT::INDEFINITE))
          -unit-np-number-indef>
 	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r))
@@ -3098,9 +3099,10 @@
 		    (SORT unit-measure) 
 		    (CLASS ONT::quantity-abstr)
 		    (CONSTRAINT ?constr) (argument ?argument)
-		    (sem ?nsem)
+		    (sem ($ F::ABSTR-OBJ (F::scale ?sc) (f::type ont::quantity-abstr) (f::tangible +))) ;;(sem ?nsem)
 		    ))
-	  (class ont::quantity-abstr) (mass ?m) (sem ?nsem)
+	  (class ont::quantity-abstr) (mass ?m)
+	  (sem ($ F::ABSTR-OBJ (F::scale ?sc) (f::type ont::quantity-abstr) (f::tangible +))) ;;(sem ?nsem)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure) (STATUS ONT::INDEFINITE))
          -unit-np-number-indef-2> 0.98
 	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r))
@@ -3117,9 +3119,22 @@
 				  (scale ONT::LINEAR-EXTENT-SCALE) ;(scale ?sc)
 				  )) (old ?restr) (new ?constr))
 	 )
-	
-  
 
+
+   ((NP (VAR *) (SORT unit-measure) (sem ?sem)
+      (class ont::quantity-abstr)
+      (SORT unit-measure) (status indefinite)
+      (LF (% DESCRIPTION (STATUS indefinite) (CLASS ONT::QUANTITY-ABSTR) (VAR *)
+	     (CONSTRAINT (& (operator AND)
+			    (sequence (?v1 ?v2))))
+	     (Sem ?sem)))					
+      (transform ?transform))
+     -NP-number-unit-sequence>
+     (head (NP (SORT unit-measure) (sem ($ f::abstr-obj (f::scale ?sc))) (sem ?sem) (var ?v1)))
+     (NP  (SORT unit-measure) (sem ($ f::abstr-obj (f::scale ?sc)))  (var ?v2))
+     )
+
+ 
   
    ;;  special case: "a mile"
 
@@ -3128,10 +3143,11 @@
 		    (SORT unit-measure) 
 		    (CLASS ONT::quantity-abstr)
 		    (CONSTRAINT ?constr) (argument ?argument)
-		    (sem ?nsem) 
+		    (sem ($ F::ABSTR-OBJ (F::scale ?sc) (f::type ont::quantity-abstr) (f::tangible +))) ;;(sem ?nsem) 
 		    ))
 	  (class ont::quantity-abstr)
-	  (Mass count) (sem ?nsem)
+	  (Mass count)
+	  (sem ($ F::ABSTR-OBJ (F::scale ?sc) (f::type ont::quantity-abstr) (f::tangible +))) ;;(sem ?nsem)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure) (STATUS ONT::INDEFINITE))
          -unit-np-number-indef-special-case>
 	 (ART (VAR ?nv) (LEX (? lex w::a w::an)) )

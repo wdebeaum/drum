@@ -723,7 +723,7 @@
 (define-type ONT::LEVEL
   :comment "words that act as map objects to values on a scale/domain: What is the X on this scale?  Note: We exclude words that are identical to the names of the scales they pertain to (e.g., What is the height on the height scale?)"
  :wordnet-sense-keys ("level%1:26:00" "level%1:07:00")
- :sem (F::Abstr-obj (F::Scale Ont::LINEAR-extent-SCALE))
+ :sem (F::Abstr-obj (F::Scale ont::domain))
 ; :parent ONT::ordered-DOMAIN
  :parent ONT::SCALE-VALUE-FUNCTION
  :arguments ((:ESSENTIAL ONT::FIGURE ((? of f::phys-obj F::Abstr-obj))) ;; noise, water
@@ -1246,13 +1246,18 @@
 
 (define-type ont::mental-plan
  :parent ont::ps-object
- :wordnet-sense-keys("plan%1:09:01" "plan%1:09:00" "plan_of_action%1:09:00")
+ :wordnet-sense-keys("plan%1:09:00" "plan_of_action%1:09:00")
  )
 
 (define-type ont::budget
  :parent ont::mental-plan
  :wordnet-sense-keys("budget%1:21:03")
-)
+ )
+
+(define-type ont::design-plan
+ :parent ont::mental-plan
+ :wordnet-sense-keys("design%1:09:01")
+ )
 
 ;; baseline, guideline
 ;(define-type ont::standard
