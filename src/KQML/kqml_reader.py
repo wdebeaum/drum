@@ -110,7 +110,6 @@ class KQMLReader(object):
             ch = self.peek_char()
             if ch == '|':
                 in_pipes = not in_pipes
-                self.read_char()
             if in_pipes or self.is_token_char(ch):
                 buf += ch
                 self.read_char()
