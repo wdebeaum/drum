@@ -1727,14 +1727,17 @@
     :sem (F::Abstr-obj (F::container +)) ;; why is this container +?
     )
 
+#|
 ;; acid wash
 (define-type ONT::food-prep-process
  :parent ONT::process
  )
+|#
 
 (define-type ONT::eating-plan
  :parent ONT::RECIPE
- )
+ :wordnet-sense-keys ("diet%1:04:00") 
+)
 
 ;; abnormality, irregularity, anomaly
 ;; moved under domain. jena Aug 2017 see not-typical-scale

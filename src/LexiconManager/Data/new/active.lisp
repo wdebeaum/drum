@@ -6,7 +6,7 @@
  :words (
   ((W::ACTIVE W::DRY)
   (senses
-	   ((LF-PARENT ONT::food-prep-PROCESS)
+	   ((LF-PARENT ONT::transformation) ;food-prep-PROCESS)
 	    (syntax (W::morph (:forms (-none))))
 	    (TEMPL COUNT-PRED-TEMPL)
 	    )

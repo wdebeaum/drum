@@ -3443,7 +3443,8 @@
 
 (define-type ONT::push-out-of
  :parent ONT::cause-out-of
- )
+ :wordnet-sense-keys ("expel%2:41:00" "push_out%2:38:00") 
+)
 
 (define-type ONT::pull-out-of
 ; :parent ONT::come-out-of
@@ -3461,7 +3462,7 @@
 |#
 
 (define-type ONT::socially-remove
-    :wordnet-sense-keys ("banishment%1:04:00" "expel%2:41:01" "expel%2:41:00" "ouster%1:04:00" "repatriate%2:41:01" "debarment%1:04:00")
+    :wordnet-sense-keys ("banishment%1:04:00" "expel%2:41:01" "ouster%1:04:00" "repatriate%2:41:01" "debarment%1:04:00" "purge%2:41:00") ;"expel%2:41:00"
  :parent ONT::cause-come-from
  :arguments (;(:REQUIRED ONT::Formal ((? thm F::phys-obj F::abstr-obj) (F::intentional +)))
 	     (:REQUIRED ONT::affected ((? thm F::phys-obj F::abstr-obj) (F::intentional +)))
