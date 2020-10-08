@@ -8,7 +8,7 @@
              )
  )
 
-(define-type ONT::SOUND-UNIT
+(define-type ONT::music-unit ;SOUND-UNIT
  :parent ONT::MEASURE-UNIT
  :sem (F::abstr-obj)
  :arguments ((:ESSENTIAL ONT::FIGURE ((? t F::ABSTR-OBJ)))) ; music
@@ -23,12 +23,12 @@
 |#
 
 (define-type ONT::PITCH-UNIT
- :parent ONT::SOUND-UNIT
+ :parent ONT::music-unit ;SOUND-UNIT
  :sem (F::Abstr-obj (F::scale ONT::pitch-scale))
 )
 
 (define-type ONT::NOTE-LENGTH-UNIT
- :parent ONT::SOUND-UNIT
+ :parent ONT::music-unit ;SOUND-UNIT
  :wordnet-sense-keys ("whole_note%1:10:00")
 )
 

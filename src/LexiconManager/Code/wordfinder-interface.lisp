@@ -145,6 +145,7 @@
 	  ;; create the replicated senses
 	  (print-debug "~% templates to replicate = ~S" templates-to-replicate)
 	  (dolist (template templates-to-replicate)
+	    (format t "~%TEMPLATE is ~S" template)
 	    (pushnew (make-sense-definition :pos pos :lf (list :* lf w) :nonhierarchy-lf nil
 					    :pref *no-kr-probability*
 					    :lf-form (if (listp w) (make-into-symbol w) w)
@@ -261,7 +262,7 @@
 	   (w::mass (? mss w::count w::mass))
 	   (w::agr (? agn w::3s w::3p))
 	   (w::CASE (? cas w::SUB w::OBJ))
-	   (w::sort w::pred)
+	  ;; (w::sort w::pred)
 	   (w::subcat ?subcat)
 	   ))
 	;; multiple verb tagging by TT  (W::VB W::VBD W::VBG W::VBN W::VBP W::VBZ) -- generate all forms	 
@@ -287,14 +288,14 @@
 		      (w::mass (? mss w::count w::mass))
 		      (w::agr (? ags w::3s))
 		      (w::CASE (? cas w::SUB w::OBJ))
-		      (w::sort w::pred)
+		      ;;(w::sort w::pred)
 		      (w::subcat ?subcat)
 		      ))
 	   (w::NNS   '((w::morph (:forms (-S-3P))) ; Noun plural
 		       (w::mass (? msc w::count))
 		       (w::agr (? agp w::3p))
 		       (w::CASE (? cas w::SUB w::OBJ))
-		       (w::sort w::pred)
+		       ;;(w::sort w::pred)
 		       (w::subcat ?subcat)
 		       ))
 	   (w::NNP  '((w::name +) (w::AGR w::3s)))   ; Proper noun singular
@@ -383,7 +384,8 @@
 (defun make-unknown-name-entry (word score penn-tag ont-types domain-info)
   (print-debug "making NAME sense for word ~S with type ~S~%" word ont-types)
   (let* ((penn-tag (reconcile-penntags-and-pos (list (base-penn-tag penn-tag)) 'w::name))
-	 (syntax (or (penn-tag-to-trips-syntax penn-tag) '((w::name +) (w::AGR w::3s))))
+	 (syntax1 (or (penn-tag-to-trips-syntax penn-tag) '((w::name +) (w::AGR w::3s))))
+	 (syntax (append syntax1 '((W::SORT W::PRED))))
 	 )
   (when word
     (when (null ont-types)
@@ -444,7 +446,7 @@
 (defun make-unknown-word-entry (word pos score feats wid lflist trips-sense-list penn-tag tagged-ont-types domain-info)
   "make an underspecified lexical entry for the unknown word"
     (declare (ignore tagged-ont-types))
-  ;;(print-debug  "~%MAKE-UNKNOWN-WORD-ENTRY: generating word entry for ~S with ~S and ~S ~%" word pos lflist)
+  (print-debug  "~%MAKE-UNKNOWN-WORD-ENTRY: generating word entry for ~S with ~S and ~S ~%" word pos lflist)
   (let* ((lfform (if (listp word) (make-into-symbol word) word))
 	(lf (car lflist))
 	(pos (if (listp pos) (car pos) pos))
@@ -454,7 +456,8 @@
      
     ;; assign underspecified syntactic and semantic features depending on part of speech
      (case pos
-      (w::n
+       (w::n
+	(print-debug  "starting to build features for Noun with feats ~S" feats)
        (setq wagr (or (get-feature-values feats 'w::agr) 
 		      (if (member 'w::nns penn-tag)
 			  '(? ag w::3p))
@@ -480,6 +483,10 @@
 
        (when (om::is-sublf lf 'ont::situation-root)
 	 (setq syntax (append syntax '((w::nomobjpreps (? nomobjprep w::of)) (w::nomsubjpreps (? nomsubjprep w::by))))))
+       (if (om::is-sublf lf 'ont::unit)
+	 (setq syntax (append syntax '((W::sort w::unit-measure))))
+	 (setq syntax (append syntax '((W::SORT w::PRED)))))
+       (print-debug "~%Noun features are: SYNTAX=~S SEM=~S" syntax sem)
        ;;(setq lf (list :* lf lfform))     
        ;; make untyped sem so it will match any features on the role restrictions
 ;       (setq sem `,(make-untyped-sem nil) )
@@ -594,7 +601,7 @@
      ;; if we failed to make an entry above, we do a generic one here
      
      (when (not res) ;; (find pos '(w::v w::adv w::name w::n))) 
-       (print-debug "making word sense for word ~S with pos ~S lf ~S sem ~S ~%     score=~S domain-info ~S~%" word pos lf sem score domain-info)
+       (print-debug "making word sense for word ~S with pos ~S lf ~S syntax= ~S sem ~S ~%     score=~S domain-info ~S~%" word pos lf syntax sem score domain-info)
        (let* ((entry (make-word-sense-definition
 		      :name wid
 		      :pos pos
@@ -634,6 +641,7 @@
 	   (setq sense-defs (make-word-sense-definitions this-entry (lexicon-db-synt-table *lexicon-data*)))
 	   (when sense-defs
 	     (dolist (this-sense sense-defs)
+	       (format t "~%~% PROCESSING SENSE ~S" this-sense)
 	       (setq maps (word-sense-definition-mappings this-sense))
 	       (setq roles (word-sense-definition-roles this-sense))
 	       (if (consistent-features (word-sense-definition-syntax this-sense) syntax)
@@ -650,13 +658,14 @@
 				      :mappings maps
 				      :roles roles
 				      )))
+		     (format t "~%~% THE ENTRY TO MAKE IS ~S" new-entry)
 		     (push (make-lexicon-entry word new-entry) res)
 		     )))
 	     res
 	     ))))
 
 (defun combine-syntax-features (newfeats defaultfeats)
-  "remove any default feats defines in newfeats"
+  "remove any default feats that are defined in newfeats"
   (let ((defined-feats (mapcar #'car newfeats)))
     (append newfeats (remove-if #'(lambda (x) (member (car x) defined-feats))
 				defaultfeats))))
@@ -676,8 +685,11 @@
 		     (if (consp feats2val)
 			 (intersection (cddr val) (cddr feats2val))
 			 (member feats2val val)))
+		
 		(and (consp feats2val)
-		     (member val feats2val)))
+		     (member val feats2val))
+		(om::subtype-in val feats2val parser::*syntax-type-hierarchy*)
+		)
 	    (consistent-features (cdr feats1) feats2)
 	    ))
       T))

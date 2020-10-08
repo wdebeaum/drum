@@ -3449,7 +3449,8 @@
 (define-type ONT::pull-out-of
 ; :parent ONT::come-out-of
  :parent ONT::cause-out-of
- )
+ :wordnet-sense-keys ("pull%2:38:03") 
+)
 
 #|
 (define-type ONT::pull-off
