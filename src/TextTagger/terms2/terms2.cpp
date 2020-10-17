@@ -552,17 +552,17 @@ int main(int argc, char** argv) {
       for (std::wstring::const_iterator term_start = line.begin();
 	   term_start != line.end();
 	   ++term_start) {
-	if (term_start == line.begin() ||
-	    ((!iswalnum(*(term_start-1))) &&
-	     (!is_perl_space(*term_start)))) {
+	if ((term_start == line.begin() ||
+	     (!iswalnum(*(term_start-1)))) &&
+	    (!is_perl_space(*term_start))) {
 	  // The start of the term is at a word boundary.
 	  for (size_t term_length = 1;
 	       term_length <= max_term_length &&
 	       term_start + term_length <= line.end();
 	       ++term_length) {
-	    if (term_start + term_length == line.end() ||
-		((!iswalnum(*(term_start + term_length))) &&
-		 (!is_perl_space(*(term_start + term_length - 1))))) {
+	    if ((term_start + term_length == line.end() ||
+		 (!iswalnum(*(term_start + term_length)))) &&
+		(!is_perl_space(*(term_start + term_length - 1)))) {
 	      // The end of the term is at a word boundary.
 	      std::wstring term = line.substr(term_start - line.begin(), term_length);
 	      find_and_print_term(vocab, NULL, term, term_start - line.begin(), term_length);
