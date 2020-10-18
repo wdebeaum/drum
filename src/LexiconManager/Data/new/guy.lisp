@@ -7,7 +7,8 @@
   (W::GUY
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("guy%1:18:00"))
-     (LF-PARENT ONT::PERSON)
+     ;(LF-PARENT ONT::PERSON)
+     (LF-PARENT ONT::MALE-PERSON) ; use the narrower interpretation of "guy" as a male
      )
     )
    )
