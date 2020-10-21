@@ -145,7 +145,7 @@
 	  ;; create the replicated senses
 	  (print-debug "~% templates to replicate = ~S" templates-to-replicate)
 	  (dolist (template templates-to-replicate)
-	    (format t "~%TEMPLATE is ~S" template)
+	    ;(format t "~%TEMPLATE is ~S" template)
 	    (pushnew (make-sense-definition :pos pos :lf (list :* lf w) :nonhierarchy-lf nil
 					    :pref *no-kr-probability*
 					    :lf-form (if (listp w) (make-into-symbol w) w)
@@ -508,6 +508,7 @@
 		    (pert-lf-form (parser::tokenize (second pert)))
 		    (pert-lf (or (car (find-arg (cadr sense-info) :ont-types))
 				 (lookup-type-in-lexicon pert-lf-form)
+				 (caar (wf::get-best-lfs-for-wn-word (second pert)))
 				 'ont::referential-sem))
 		    (pert-domain-info  (find-arg (cadr sense-info) :domain-specific-info)))
 	       (format t "pertainym sense info is: SENSE-INFO ~S LF: ~S LF-FORM: ~S domain info: ~S" sense-info pert-lf pert-lf-form pert-domain-info)
@@ -641,7 +642,7 @@
 	   (setq sense-defs (make-word-sense-definitions this-entry (lexicon-db-synt-table *lexicon-data*)))
 	   (when sense-defs
 	     (dolist (this-sense sense-defs)
-	       (format t "~%~% PROCESSING SENSE ~S" this-sense)
+	       ;(format t "~%~% PROCESSING SENSE ~S" this-sense)
 	       (setq maps (word-sense-definition-mappings this-sense))
 	       (setq roles (word-sense-definition-roles this-sense))
 	       (if (consistent-features (word-sense-definition-syntax this-sense) syntax)
@@ -658,7 +659,7 @@
 				      :mappings maps
 				      :roles roles
 				      )))
-		     (format t "~%~% THE ENTRY TO MAKE IS ~S" new-entry)
+		     ;(format t "~%~% THE ENTRY TO MAKE IS ~S" new-entry)
 		     (push (make-lexicon-entry word new-entry) res)
 		     )))
 	     res

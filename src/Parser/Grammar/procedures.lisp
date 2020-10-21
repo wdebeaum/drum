@@ -172,6 +172,19 @@
 	*success*
 	)))
 
+(define-predicate 'w::one-BOUND
+  #'(lambda (args)
+      (one-bound args)))
+
+(defun one-bound (args)
+  "succeeds only if one (or both) of the two constits are both non null"
+  (let ((arg1 (get-fvalue args 'w::arg1))
+	(arg2  (get-fvalue args 'w::arg2)))
+    (if ;(and (non-null-constit subcat) (non-null-constit subcat2))
+	(or (check-if-bound arg1) (check-if-bound arg2))
+	*success*
+	)))
+
 #|
 (defun non-null-constit (x)
   (cond ((var-p x)

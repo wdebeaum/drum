@@ -3120,10 +3120,10 @@
 				  )) (old ?restr) (new ?constr))
 	 )
 
-
+	; four feet two inches
    ((NP (VAR *) (SORT unit-measure) (sem ?sem)
       (class ont::quantity-abstr)
-      (SORT unit-measure) (status indefinite)
+      (status indefinite)
       (LF (% DESCRIPTION (STATUS indefinite) (CLASS ONT::QUANTITY-ABSTR) (VAR *)
 	     (CONSTRAINT (& (operator AND)
 			    (sequence (?v1 ?v2))))
@@ -7147,7 +7147,7 @@
     (?xx (var ?argv) (gap ?gap) (sem ?asem) (ptype ?ptype))  
     ;; ?subcat
 					;?subcat2
-    (bound (arg1 ?argv)) ;; we do this to ensure that the SUBCAT is present (and not skipped b/c its optional - the no SUBCAT case is covered by rue ADJ-ADJ1
+    (one-bound (arg1 ?argv) (arg2 ?gap)) ;; we do this to ensure that the SUBCAT is present (and not skipped b/c its optional - the no SUBCAT case is covered by rue ADJ-ADJ1.  Either that or there is a gap (with a yet to be instantiated var)
     (recompute-atype (atype ?atype) (subcat ?subcat) (subcat2 ?subcat2) (result ?newatype))
     (append-conjuncts (conj1 ?con) (conj2 (& (?argmap ?arg)
 					      (?reln ?argv) ;(?!reln2 ?argv2)
