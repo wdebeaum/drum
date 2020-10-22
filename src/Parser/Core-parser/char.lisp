@@ -1,6 +1,6 @@
 (in-package "PARSER")
 ;;
-;; Time-stamp: <Fri Sep 11 09:24:42 EDT 2020 james>
+;; Time-stamp: <Wed Oct 21 16:15:32 CDT 2020 lgalescu>
 
 
 ;;;; This file contains functions converting string input
@@ -38,6 +38,7 @@
 		      (#\& :punc-and)
 		      (#\◦ :degrees)
 		      (#\′ #\^)
+		      (#\' #\^)
 		      (#\U+2013 :punc-minus))) ;;:punc-en-dash)))
 
 (defvar *break-chars* (cons '#\space (mapcar #'car *punc-list*)))
@@ -151,7 +152,9 @@
 	      (rest (cdr c-list))
 	      (second (car rest))
 	      (third (cadr rest))
-	      (map (assoc first *punc-list*)))
+	      (map (or (assoc first *punc-list*)
+		       (if (and (not (alphanumericp first)) (not (eql first #\Space)))
+			   (list first :punc-unknown)))))
 	(cond 
 	  (map
 	   (cons #\space (cons (cadr map)

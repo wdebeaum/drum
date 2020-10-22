@@ -5,7 +5,7 @@
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
  (W::refer
-  (wordfeats (W::morph (:forms (-vb) :past W::referred :ing W::referring :nom referral)))
+  (wordfeats (W::morph (:forms (-vb) :past W::referred :ing W::referring :nom w::referral)))
   (SENSES
    ;;; Not sure what this one did that the second one doesn't do
      #|((meta-data :origin calo :entry-date 20031230 :change-date 20090506 :comments html-purchasing-corpus)

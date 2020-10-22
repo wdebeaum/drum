@@ -34,18 +34,21 @@
      (TEMPL BINARY-CONSTRAINT-NP-implicit-TEMPL)
      (example "he put it over the box" "he threw the ball over the fence")
      )
-    
+
+    #|
     ((LF-PARENT ONT::distributed-pos)
      (TEMPL BINARY-CONSTRAINT-S-implicit-TEMPL)
      (example "he spread the seed over the field")
      )
-    
-  #| ((LF-PARENT ONT::QMODIFIER)
+    |#
+
+    ; fix: oscillating between QMODIFIER and MORE-THAN-REL
+   ((LF-PARENT ONT::QMODIFIER)
      (example "sell it for over five dollars")
      (TEMPL NUMBER-OPERATOR-TEMPL)
      (lf-form w::more)
      (meta-data :origin calo :entry-date 20040426 :change-date nil :comments calo-y1v1)
-     )|#
+     )
 
     (;(LF-PARENT ONT::TIME-span-rel)
      (LF-PARENT ONT::EVENT-DURATION-MODIFIER)
@@ -62,16 +65,19 @@
      (example "green over the last week")
      )
  |#
- 
+
+    #|
     ((LF-PARENT ONT::more-than-rel)
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      (example "purchases over five dollars" "he drove over the limit")
      (SYNTAX (W::ALLOW-DELETED-COMP +) (w::degree-adv +))
      (meta-data :origin calo :entry-date 20040112 :change-date nil :comments calo-y1v1)
      )
+    |#
 
     ((LF-PARENT ONT::COMPLETELY)
-     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     ;(TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     (TEMPL PARTICLE-TEMPL)
      (EXAMPLE "I looked over the files" "read it over" "talked the matter over with his wife")
     )
     

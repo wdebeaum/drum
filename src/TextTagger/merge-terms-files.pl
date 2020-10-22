@@ -50,7 +50,7 @@ for(;;) {
   # is different)
   my %unnormalized2triples = ();
   for my $i (@min_indices) {
-    while ($input_rows[$i][0] eq $min_term) {
+    while (defined($input_rows[$i]) and $input_rows[$i][0] eq $min_term) {
       # get the comma-separated groups of columns in @{$input_rows[$i]} except
       # the first element, which is the normalized term
       my $j = 1;

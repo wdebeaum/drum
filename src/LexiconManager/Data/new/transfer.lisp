@@ -21,7 +21,7 @@
  :words (
   (W::transfer
    ;; adding the morph forms as the doubled consonant with unstressed final syllable is an exception to the morph rule
-   (wordfeats (W::morph (:forms (-vb) :past W::transferred :ing W::transferring) :nom transfer))
+   (wordfeats (W::morph (:forms (-vb) :past W::transferred :ing W::transferring :nom w::transfer)))
    (SENSES
     ((LF-PARENT ONT::transfer)
      (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))

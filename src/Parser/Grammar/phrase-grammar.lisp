@@ -6470,7 +6470,7 @@
     ((N1 (ATTACH ?a) (var ?v) (agr ?agr-out) ;(agr 3p) ; ice and fire could be 3s or 3p
 	 (SEM ?sem) (gerund ?ger) 
       ;;(Status ?status-out)
-      (class ?class)
+      (class ?class) (SUBCAT (% - (W::VAR -)))
       (restr (& (operator ?op) 
 		(sequence ((% *PRO* (status ONT::BARE) (var ?v1) (class ?c1) (constraint ?con) (sem ?s1) (lex ?lex1))
 			   (% *PRO* (status ONT::BARE) (var ?v2) (class ?c2) (constraint ?con2) (sem ?s2) (lex ?lex2))))))
@@ -6834,7 +6834,8 @@
      (agr 3s)  ; The answer *is* 5.
      (status ont::number))
     -np-number> 0.98
-    (head (number (val ?lf) (lex ?l) (val ?val) (range -) (agr (? a 3s 3p));(number-only +)
+    (head (number (val ?lf) (lex ?l) (val ?val) ;(range -) ; allow "between 3 and 5" 
+		  (agr (? a 3s 3p));(number-only +)
 		  (mass ?mass) (sem ?sem1) (restr ?restr) (var ?v)
 		  ;(headcat (? !x ordinal))
 		  ))

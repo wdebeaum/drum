@@ -5,7 +5,7 @@
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::prohibit
-   (wordfeats (W::morph (:forms (-vb) :past W::prohibited :ing W::prohibiting :nom prohibition)))
+   (wordfeats (W::morph (:forms (-vb) :past W::prohibited :ing W::prohibiting :nom w::prohibition)))
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date 20090528 :comments nil :vn ("forbid-67"))
      (LF-PARENT ONT::prohibit)

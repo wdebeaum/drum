@@ -703,9 +703,9 @@
     variables used in the word entries."
   (let* ((id (lex-entry-id lex-entry))
          (rhs (mapcar #'(lambda (w)
-                          (if (symbolp w)
-                            (make-constit :cat 'w::word :feats (list (list 'w::lex w)))
-                            (read-value w id)))
+                          (if (or (symbolp w) (numberp w))
+			      (make-constit :cat 'w::word :feats (list (list 'w::lex w)))
+			      (read-value w id)))
                       (cons word remaining-words)))
           (arc (make-arc :mother (instantiatevar (lex-entry-constit lex-entry))
                         :post RHS

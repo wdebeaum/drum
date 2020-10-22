@@ -360,11 +360,14 @@
 	  (add-feats-renaming-if-necessary newfeatures oldfeatures))
 	 )
     (if (> (list-length combined-features) 20)
-	(break "Warning: constituent built with more than 20 features"))
-    (if combined-features
-	(match-vals nil newconstraintvar (make-constit :cat '& :feats combined-features))
+	;(break "Warning: constituent built with more than 20 features"))
+	(progn
+	  (parser-warn "~%Warning: constituent built with more than 20 features, not adding more")
+	  nil) ; do not add more
+      (if combined-features
+	  (match-vals nil newconstraintvar (make-constit :cat '& :feats combined-features))
 	(match-vals nil newconstraintvar oldconstraint)
-	)
+	))
     ))
 
 (defun get-features-from-val (c args)
@@ -510,12 +513,16 @@
       ((and (constit-p conj1) (constit-p conj2) (eq (constit-cat conj1) '&) (eq (constit-cat conj2) '&))
        (if (or (> (list-length (constit-feats conj1)) 20)
 	       (> (list-length (constit-feats conj2)) 20))
-	   (break "Warning - constituent build with more than 20 features"))
-      (match-vals nil newconjunctvar 
+	   ;(break "Warning - constituent build with more than 20 features"))
+	   (progn
+	     (parser-warn "~%Warning: constituent built with more than 20 features, not adding more")
+	     nil) ; do not add more
+
+	 (match-vals nil newconjunctvar 
                   (make-constit :cat '& 
                                 :feats (append (constit-feats conj1) 
                                                (remove-if #'(lambda (c) (eq (car c) '-))
-                                                          (constit-feats conj2))))))
+                                                          (constit-feats conj2)))))))
      ((or (null conj1) (eq conj1 '-) (var-p conj1))
       ;; CONJ1 is empty, so we simply bind to CONJ2 if its set
            (if (and (constit-p conj2) (eq (constit-cat conj2) '&))

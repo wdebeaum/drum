@@ -19,17 +19,20 @@
 (define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 (W::offer
-   (wordfeats (W::morph (:forms (-vb) :past W::offered :ing offering :nom offer)))
+   (wordfeats (W::morph (:forms (-vb) :past W::offered :ing w::offering :nom w::offer)))
    (SENSES
     ((lf-parent ont::offer)
-     (TEMPL AGENT-AGENT1-FORMAL-2-XP1-3-XP-TEMPL)
-     (example "offer him a job")
+     ;(TEMPL AGENT-AGENT1-FORMAL-2-XP1-3-XP-TEMPL)
+     ;(TEMPL AGENT-AGENT1-NEUTRAL-2-XP1-3-XP-TEMPL)
+     (TEMPL AGENT-NEUTRAL-XP-TEMPL)
+     (example "offer (him) a job")
      ;; restructured this to allow non-movable things to be given
      (meta-data :origin calo :entry-date unknown :change-date 20090513 :comments calo-y1variants)
     )
     ((LF-PARENT ONT::offer)
      (example "the bid offers incentive (to the group)")
-     (TEMPL agent-affected-goal-optional-TEMPL)
+     ;(TEMPL agent-affected-goal-optional-TEMPL)
+     (TEMPL AGENT-NEUTRAL-AGENT1-OPTIONAL-TEMPL)
      (meta-data :origin ptb :entry-date 20100604 :change-date 20090501 :comments nil)
      )
 

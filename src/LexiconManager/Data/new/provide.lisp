@@ -11,7 +11,7 @@
      (example "provide the food (to him)")
      (SEM (F::Aspect F::Bounded) (F::Time-span F::Atomic))
      ;(TEMPL agent-affected-xp-TEMPL)
-     (TEMPL AGENT-AFFECTED-AFFECTEDR-XP-OPTIONAL-TEMPL (xp (% w::pp (w::ptype w::to))))
+     (TEMPL AGENT-AFFECTED-AFFECTEDR-XP-OPTIONAL-TEMPL) ;(xp (% w::pp (w::ptype w::to))))  ; the template specifies additional restrictions on SORT, which would be lost if we specify the xp here
      )
     ((LF-PARENT ONT::supply)
      (example "provide him with the food")

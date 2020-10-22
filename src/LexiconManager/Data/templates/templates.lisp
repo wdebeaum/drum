@@ -776,15 +776,15 @@
       (AGENT-AFFECTED-AFFECTEDR-XP-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
-	(LOBJ (% W::NP) ONT::affected)
-	(LCOMP (:parameter xp (:default (% W::PP (W::ptype W::to)))) ONT::AFFECTED-RESULT)
+	(LOBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::affected)
+	(LCOMP (:parameter xp (:default (% W::PP (W::ptype W::to) (w::sort (? !xx2 W::unit-measure))))) ONT::AFFECTED-RESULT)
 	))
 
       (AGENT-AFFECTED-AFFECTEDR-XP-OPTIONAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
-	(LOBJ (% W::NP) ONT::affected)
-	(LCOMP (:parameter xp (:default (% W::PP (W::ptype W::to)))) ONT::AFFECTED-RESULT optional)
+	(LOBJ (% W::NP (w::sort (? !xx W::unit-measure))) ONT::affected)
+	(LCOMP (:parameter xp (:default (% W::PP (W::ptype W::to) (w::sort (? !xx2 W::unit-measure))))) ONT::AFFECTED-RESULT optional)
 	))      
       
     #|  (AGENT-AFFECTED-GOAL-TEMPL

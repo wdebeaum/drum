@@ -25,7 +25,7 @@ my $debug = 0;
 my @stoplist = qw(
 a act add age air all amp and ant arid as ash ask at aye
 bad bag ban bar bat be bed bee beg bet bin bus but bye
-cab cat cut
+cab camp camps cat cut
 dry due
 eat egg end epidemic eye
 fat fee fly fun

@@ -32,7 +32,8 @@
      )
 
     ((LF-PARENT ONT::COMPLETELY)
-     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     ;(TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     (TEMPL PARTICLE-TEMPL)
      (EXAMPLE "I looked through the files")
      )
 
