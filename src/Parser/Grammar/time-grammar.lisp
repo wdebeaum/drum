@@ -1457,19 +1457,32 @@
    )
 
    ;; July 31
-  ((DATE (INT +) (Month ?m) (DAY ?n)(lex ?hlex) (headcat ?hcat) (day-specified +))
+  ((DATE (INT +) (Month ?m) (DAY ?var-num) ;(DAY ?n)
+	 (lex ?hlex) (headcat ?hcat) (day-specified +))
    -dt-month-day> 1.0
    (head (name (LF ONT::MONTH-NAME)
 		(lf ?M) (lex ?hlex) (headcat ?hcat)
 		))
-   (number (VAL ?n) (NTYPE w::DAY)))
+   ;(number (VAL ?n) (NTYPE w::DAY))
+   (NP (class ONT::NUMBER) (NTYPE (? ntype w::DAY w::range))
+       (headless -) (complex -) 
+       (var ?var-num) (wh -)
+       )
+
+   )
 
   ;; 31 July
-  ((DATE (INT +) (Month ?m) (DAY ?n)(lex ?hlex) (headcat ?hcat) (day-specified +))
+  ;; Between 1 and 3 April (Note: We should check the values of the range)
+  ((DATE (INT +) (Month ?m) (DAY ?var-num) ;(DAY ?n)
+	 (lex ?hlex) (headcat ?hcat) (day-specified +))
    -dt-month-day-rev> 1.0
-   (number (VAL ?n) (NTYPE w::DAY))
+   ;(number (VAL ?n) (NTYPE w::DAY) (var ?var-num)) 
+   (NP (class ONT::NUMBER) (NTYPE (? ntype w::DAY w::range))
+       (headless -) (complex -) 
+       (var ?var-num) (wh -)
+       )
    (head (name (LF ONT::MONTH-NAME)
-		(lf ?M) (lex ?hlex) (headcat ?hcat)
+	       (lf ?M) (lex ?hlex) (headcat ?hcat)
 		))
    )
   

@@ -329,6 +329,11 @@
              )
  )
 
+(define-type ONT::Count
+    :wordnet-sense-keys ("count%2:32:00")
+    :parent ONT::determine
+    
+    )
 
 (define-type ONT::expectation
  :wordnet-sense-keys ("expect%2:31:00" "anticipate%2:31:00" "expect%2:31:01")

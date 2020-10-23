@@ -6832,12 +6832,14 @@
      (constraint ?restr) 
      (nobarespec +) ;; bare numbers can't be specifiers     
      (agr 3s)  ; The answer *is* 5.
-     (status ont::number))
+     (status ont::number)
+     (ntype ?ntype))
     -np-number> 0.98
     (head (number (val ?lf) (lex ?l) (val ?val) ;(range -) ; allow "between 3 and 5" 
 		  (agr (? a 3s 3p));(number-only +)
 		  (mass ?mass) (sem ?sem1) (restr ?restr) (var ?v)
 		  ;(headcat (? !x ordinal))
+		  (ntype ?ntype)
 		  ))
     )
    
@@ -6949,7 +6951,8 @@
 	;;  HEADLESS CONSTRUCTIONS
 
 	;; e.g., the first three, the three,
-	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?subcatsem) (case (? case SUB OBJ)) (N-N-MOD +) (AGR 3p) (Headless +)
+    ((NP (SORT PRED) (class ont::referential-sem) ;(CLASS ?c)
+	 (VAR ?v) (sem ?subcatsem) (case (? case SUB OBJ)) (N-N-MOD +) (AGR 3p) (Headless +)
 	    (lf (% description (status ?spec) (var ?v) (sort SET)
 		    (class ont::referential-sem) ;(Class ont::ANY-SEM)
 		    (constraint ?con)
@@ -6966,7 +6969,8 @@
 	 )
 
 	;; e.g.,  many, a few, ...
-	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?subcatsem) (case (? case SUB OBJ)) (N-N-MOD +) (AGR ?agr) 
+	((NP (SORT PRED) (class ont::referential-sem) ;(CLASS ?c)
+	     (VAR ?v) (sem ?subcatsem) (case (? case SUB OBJ)) (N-N-MOD +) (AGR ?agr) 
 	     (lf (% description (status ?newspec) ;(status ?status)
 		    (var ?v) (sort SET)
 		    (class ont::referential-sem) ;(Class ont::ANY-SEM)
@@ -6983,7 +6987,8 @@
 	 )
         
 	;;  e.g., some (as in some pain)  -- we treat these as pre-referential
-	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?subcatsem) (case (? case SUB OBJ))
+	((NP (SORT PRED) (class ont::referential-sem) ;(CLASS ?c)
+	     (VAR ?v) (sem ?subcatsem) (case (? case SUB OBJ))
 	     (lf (% description (status ?spec) (var ?v) (sort INDIVIDUAL)
 		    (class ont::referential-sem) ;(Class ont::Any-sem)
 		    (constraint ?restr)
@@ -6999,7 +7004,8 @@
         
 	;;  e.g., the two at avon
 	;;  only allowed with determiners that involve a SIZE
-	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?s) (case (? case SUB OBJ))
+	((NP (SORT PRED) (class ont::referential-sem) ;(CLASS ?c)
+	     (VAR ?v) (sem ?s) (case (? case SUB OBJ))
 	     (lf (% description (status ?spec) (var ?v) (sort SET)
 		    (class ont::referential-sem) ;(Class ont::Any-sem)
 		    (constraint ?con)
@@ -7038,7 +7044,8 @@
 	 )
 ||#
 	;;  The green two, the largest three, ...
-	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?s) (case (? case SUB OBJ))  (headless +)
+	((NP (SORT PRED) (class ont::referential-sem) ;(CLASS ?c)
+	     (VAR ?v) (sem ?s) (case (? case SUB OBJ))  (headless +)
 	     (lf (% description (status ?spec) (var ?v) (sort SET) 
 		    (class ont::referential-sem) ;(Class ont::Any-sem) 
 		    (constraint ?con)
@@ -7072,7 +7079,8 @@
 	
 
 	;;  The green two in the corner, the largest three of the houses, ...
-	((NP (SORT PRED) (CLASS ?c) (VAR ?v) (sem ?s) (case (? case SUB OBJ)) (headless +)
+	((NP (SORT PRED) (class ont::referential-sem) ;(CLASS ?c)
+	     (VAR ?v) (sem ?s) (case (? case SUB OBJ)) (headless +)
 	     (lf (% description (status ?spec) (var ?v) (sort SET)
 		    (class ont::referential-sem) ;(Class ont::Any-sem) 
 		    (constraint ?con)

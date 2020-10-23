@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JFrame;
-import javafx.stage.Stage;
-
 import TRIPS.KQML.*;
 
 /** Handle window management KQML messages for windows of type W. */

@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.regex.*;
 import javax.swing.JFrame;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 import TRIPS.KQML.*;
 
