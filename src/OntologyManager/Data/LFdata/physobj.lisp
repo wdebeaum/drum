@@ -1368,7 +1368,7 @@
     :wordnet-sense-keys ("light%1:15:00" "light%1:19:00" "light%1:26:00")
     )
 
-(define-type ONT::PRODUCE
+(define-type ONT::FOOD-PRODUCE
     :parent ONT::FOOD
     :wordnet-sense-keys ("produce%1:13:00" )
     :sem (F::Phys-obj (F::origin F::natural) (F::form F::Solid))
@@ -3016,12 +3016,12 @@
 
 (define-type ONT::FRUIT
     :wordnet-sense-keys ("edible_fruit%1:13:00")
-    :parent ONT::PRODUCE
+    :parent ONT::FOOD-PRODUCE
     )
 
 (define-type ONT::VEGETABLE
     :wordnet-sense-keys ("vegetable%1:13:00" "veggie%1:13:00" "veg%1:13:00")
-    :parent ONT::PRODUCE
+    :parent ONT::FOOD-PRODUCE
     )
 
 (define-type ONT::VITAMINS
