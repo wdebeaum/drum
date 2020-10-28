@@ -3263,7 +3263,7 @@
 
 ;; work (on) -- do work (see also related concept ont::function)
 (define-type ONT::WORKING
- :wordnet-sense-keys ("work%2:41:05" "work%2:41:02" "toil%2:41:00" "practice%1:04:03")
+ :wordnet-sense-keys ("employ%1:26:00" "job%1:04:00" "practice%1:04:03" "toil%2:41:00" "work%2:41:02" "work%2:41:05")
   :parent ONT::intentionally-act
   :sem (F::Situation (F::Aspect F::unbounded) (F::time-span F::extended) )
   :arguments ((:ESSENTIAL ONT::Formal ((? t F::phys-obj F::abstr-obj F::situation)))
@@ -3464,7 +3464,7 @@
 
 (define-type ONT::socially-remove
     :wordnet-sense-keys ("banishment%1:04:00" "expel%2:41:01" "ouster%1:04:00" "repatriate%2:41:01" "debarment%1:04:00" "purge%2:41:00") ;"expel%2:41:00"
- :parent ONT::cause-come-from
+ :parent ONT::agent-interaction ;cause-come-from
  :arguments (;(:REQUIRED ONT::Formal ((? thm F::phys-obj F::abstr-obj) (F::intentional +)))
 	     (:REQUIRED ONT::affected ((? thm F::phys-obj F::abstr-obj) (F::intentional +)))
              )
@@ -5697,6 +5697,7 @@
 
 ;; Added by myrosia for "differentiate", "factorise" etc.
 (define-type ONT::function-calculation
+ :wordnet-sense-keys ("average%2:31:00" "cube%2:31:00" "differentiate%2:31:00" "extrapolate%2:31:00" "factor%2:31:00" "factorize%2:31:00" "integrate%2:31:00" "prorate%2:31:00" "raise%2:31:00differentiate%2:31:00" "square%2:31:00")
  :parent ONT::calculation
  :arguments ((:REQUIRED ONT::formal (f::abstr-obj (f::measure-function f::term)))
              )
@@ -5714,6 +5715,7 @@
 		
 		))
 
+#|
 (define-type ont::employment
  :parent ont::agent-interaction
  :arguments ((:REQUIRED ont::effect (F::Situation)) ;; job, service
@@ -5721,16 +5723,17 @@
 	     (:REQUIRED ONT::affected ((? th28 F::phys-obj f::abstr-obj) (F::intentional +))) ;; employee
              )
  )
+|#
 
 ;; employ, hire
 (define-type ONT::employ
- :wordnet-sense-keys ("hire%2:41:00" "engage%2:41:01" "employ%2:41:00")
- :parent ONT::employment
+ :wordnet-sense-keys ("employ%2:41:00" "employment%1:04:02" "engage%2:41:01" "hire%2:41:00")
+ :parent ONT::agent-interaction ;employment
  )
 
 (define-type ont::retire
  :wordnet-sense-keys ("pension_off%2:41:00" "retire%2:41:01" "retire%2:41:03")
- :parent ont::employment
+ :parent ont::stop ;employment
 )
 
 ;(define-type ONT::fire-dismiss
@@ -5750,7 +5753,7 @@
 (define-type ont::terminate
  :wordnet-sense-keys ("displace%2:41:04" "fire%2:41:00" "give_notice%2:41:00" "can%2:41:00" "dismiss%2:41:00" "give_the_axe%2:41:00" "send_away%2:41:00" "sack%2:41:00" "force_out%2:41:00" "give_the_sack%2:41:00" "terminate%2:41:01")
 ; :parent ont::event-of-causation ;; 20120529 GUM change new parent + args
- :parent ont::employment
+ :parent ont::socially-remove ;employment
  :arguments ((:REQUIRED ont::effect (F::Situation)) ;; job, service
              (:REQUIRED ONT::agent ((? ag F::phys-obj f::abstr-obj) (F::intentional +))) ;; employer
 	     (:REQUIRED ONT::affected ((? th29 F::phys-obj f::abstr-obj) (F::intentional +))) ;; employee

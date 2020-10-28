@@ -1,9 +1,9 @@
 # CWMS.pm
 #
-# Time-stamp: <Thu Sep  3 16:57:23 CDT 2020 lgalescu>
+# Time-stamp: <Tue Oct 27 16:05:32 CDT 2020 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  1 Jun 2016
-# $Id: CWMS.pm,v 1.10 2020/09/03 22:27:07 lgalescu Exp $
+# $Id: CWMS.pm,v 1.11 2020/10/27 21:06:58 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -23,6 +23,8 @@
 # 2020/07/28 v1.3	lgalescu
 # - Added TRIPS ontology
 # - Added inference for "provide a source of"
+# 2020/10/27 v1.4	lgalescu
+# - Added rules to fix and interpred ONT::PRODUCE events
 
 #----------------------------------------------------------------
 # Usage:
@@ -30,7 +32,7 @@
 
 package EKB::Reasoner::CWMS;
 
-$VERSION = '1.3';
+$VERSION = '1.4';
 
 use strict 'vars';
 use warnings;
@@ -95,6 +97,88 @@ sub default_options {
 @rules =
   (
 
+   ### ont fixes
+   {
+    ## ONT::PRODUCE
+    # e=EVENT[type=ONT::PRODUCE]
+    # p=e->predicate->type
+    # =>
+    # e=EVENT[type=p]
+    name => "EKR:FixPRODUCE",
+    constraints => ['EVENT[type[.="ONT::PRODUCE"]]'],
+    handler => sub {
+      my ($rule, $ekb, $e) = @_;
+      
+      my $e_id = $e->getAttribute('id');
+      my ($pred) = $e->findnodes('predicate');
+      my $ptype = get_slot_value($pred, "type") if $pred;
+      $ptype = "ONT::SITUATION-ROOT" unless $ptype;
+      
+      INFO "Rule %s matches event %s (pred: %s)",
+	$rule->name(), $e_id, $ptype;
+
+      $ekb->modify_assertion( $e,
+			      make_slot_node(type => $ptype)
+			      );
+      1;
+    }
+   },
+   
+   {
+    ## ONT::CREATE
+    # e=EVENT[type=ONT::CREATE, predicate/text/@normalization=BUILD]
+    # =>
+    # e=EVENT[type=ONT::BUILD]
+    name => "EKR:FixCREATE-BUILD-1",
+    constraints => ['EVENT[type[.="ONT::CREATE"]]'],
+    handler => sub {
+      my ($rule, $ekb, $e) = @_;
+      
+      my $e_id = $e->getAttribute('id');
+      my ($prednorm) = getvalue_xpath($e, 'predicate/text/@normalization');
+      $prednorm eq "BUILD" or return 0;
+      
+      INFO "Rule %s matches event %s (prednorm: %s)",
+	$rule->name(), $e_id, $prednorm;
+
+      $ekb->modify_assertion( $e,
+			      make_slot_node(type => "ONT::BUILD")
+			      );
+      1;
+    }
+   },
+   
+   {
+    ## ONT::CREATE
+    # e=EVENT[type=ONT::CREATE, affected-result=x]
+    # x=TERM[type=ONT::MAN-MADE-STRUCTURE]
+    # =>
+    # e=EVENT[type=ONT::BUILD]
+    name => "EKR:FixCREATE-BUILD-2",
+    constraints => ['EVENT[type[.="ONT::CREATE"] and arg2[@role=":AFFECTED-RESULT"]]'],
+    handler => sub {
+      my ($rule, $ekb, $e) = @_;
+      
+      my $e_id = $e->getAttribute('id');
+
+      # arg2
+      my $x_id = $e->findvalue('arg2/@id');
+      my $x = $ekb->get_assertion($x_id, "TERM")
+	or return 0;
+      my $x_type = get_slot_value($x, 'type');
+      $ont_trips->is_a($x_type, "ONT::MAN-MADE-STRUCTURE")
+	or return 0;
+      
+      INFO "Rule %s matches event %s (x: %s)",
+	$rule->name(), $e_id, $x_id;
+
+      $ekb->modify_assertion( $e,
+			      make_slot_node(type => "ONT::BUILD")
+			      );
+      1;
+    }
+   },
+   
    ###
    {
     ## X provides/offers/creates a source of Y

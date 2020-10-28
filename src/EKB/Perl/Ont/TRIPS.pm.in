@@ -2,7 +2,7 @@
 
 # TRIPS.pm
 #
-# Time-stamp: <Thu Sep  3 18:18:10 CDT 2020 lgalescu>
+# Time-stamp: <Tue Oct 27 16:06:29 CDT 2020 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 27 Jul 2020
 #
@@ -19,6 +19,9 @@
 # - Added mappings to the WM ontology.
 # 2020/09/03 v2.1	lgalescu
 # - More WM mappings.
+# 2020/10/27 v2.2	lgalescu
+# - Added mappings for ONT::BUILD (non-standard)
+# - bug fix.
 
 #----------------------------------------------------------------
 # Usage:
@@ -26,7 +29,7 @@
 
 package Ont::TRIPS;
 
-$VERSION = '2.1';
+$VERSION = '2.2';
 
 use strict 'vars';
 use warnings;
@@ -45,6 +48,7 @@ my @data =
    ##ONT::TIME-OBJECT##,
    ##ONT::REFERENTIAL-SEM##,
    # additions for terms not in the official TRIPS ontology
+   'ONT::BUILD' => 'ONT::CREATE',
    'ONT::CONFLICT' => 'ONT::TRANSGRESS',
    'ONT::GET' => 'ONT::EVENT-OF-CAUSATION',
    'ONT::INFLUENCE' => 'ONT::EVENT-OF-CAUSATION',
@@ -56,7 +60,7 @@ my @data =
    'ONT::MAINTAIN' => 'ONT::EVENT-OF-ACTION',
    'ONT::INHIBIT' => 'ONT::ACTING',
    'ONT::STIMULATE' => 'ONT::CAUSE-EFFECT',
-   'ONT::END' => 'ONT::INHIBITs-EFFECT',
+   'ONT::END' => 'ONT::INHIBIT-EFFECT',
    'ONT::SEEM' => 'ONT::HAVE-PROPERTY',
    'ONT::TIME-RANGE' => 'ONT::TIME-INTERVAL',
    'ONT::CAUSE' => 1,
@@ -105,6 +109,7 @@ our %mappings =
    # process
    'ONT::ACQUIRE' => { type => "wm_compositional/process/access" },
    'ONT::ADAPT' => { type => "wm_compositional/process/adapt" },
+   'ONT::BUILD' => { type => "wm_compositional/process/build" },
    'ONT::PROCREATE' => { type => "wm_compositional/process/breeding" },
    'ONT::COLLABORATE' => { type => "wm_compositional/process/collaborate" },
    'ONT::COMMUNICATION' => { type => "wm_compositional/process/communicate" },
