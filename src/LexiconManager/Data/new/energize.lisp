@@ -7,7 +7,8 @@
  :words (
 	  (w::energize
 	   (senses
-	    ((LF-parent ont::change-device-state))
+	    ((LF-parent ont::start-object)) ;change-device-state))
+
 	    ((lf-parent ONT::evoke-liveliness)
 	     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
 	     (syntax (w::resultative +))

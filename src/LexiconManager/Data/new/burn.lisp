@@ -32,7 +32,7 @@
     (SENSES
      ((meta-data :origin beetle :entry-date 20050216 :change-date nil :comments mockup-1)
       (EXAMPLE "a lightbub burned out")
-      (lf-parent ont::burn-out-light-up-change) ;; GUM change new parent 20121030
+      (lf-parent ont::stop) ;burn-out-light-up-change) ;; GUM change new parent 20121030
       (TEMPL affected-TEMPL)
       (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
       )

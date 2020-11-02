@@ -43,13 +43,13 @@
 	   (wordfeats (W::morph (:forms (-vb) :past w::lit)))
 	   (senses
 	    (;(lf-parent ont::change-device-state)
-	     (lf-parent ont::burn-out-light-up-change) ;; GUM change new parent 20121030
+	     (lf-parent ont::light-up-change) ;burn-out-light-up-change) ;; GUM change new parent 20121030
 	     (example "light the lamp")
 	     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
 	     (meta-data :origin bee :entry-date 20040614 :change-date nil :comments portability-experiment)
 	     )
 	    (;(lf-parent ont::change-device-state)
-	     (lf-parent ont::burn-out-light-up-change) ;; GUM change new parent 20121030
+	     (lf-parent ont::light-up-change) ;burn-out-light-up-change) ;; GUM change new parent 20121030
 	     (example "In which of the following diagrams will the bulb light")
 	     (templ affected-templ)
 	     (meta-data :origin bee :entry-date 20070813 :change-date nil :comments beetle-pilot)
@@ -65,7 +65,7 @@
 	  ((w::light (w::up))
 	   (wordfeats (W::morph (:forms (-vb) :past w::lit)))
 	   (senses
-	    ((lf-parent ont::burn-out-light-up-change) ;; GUM change new parent 20121030
+	    ((lf-parent ont::light-up-change) ;burn-out-light-up-change) ;; GUM change new parent 20121030
 	     ;;(lf-parent ont::change-device-state)
 	     (example "The lamp lights up")
 	     (templ affected-templ)

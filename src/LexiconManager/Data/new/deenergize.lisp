@@ -7,8 +7,9 @@
  :words (
 	  (w::deenergize
 	   (senses
-	    ((LF-parent ont::change-device-state))
-	    ((LF-parent ont::change-device-state) 
+	    ((LF-parent ont::deactivate-turn-off)) ;change-device-state))
+	    
+	    ((LF-parent ont::deactivate-turn-off) ;change-device-state) 
 	     (templ agent-templ)
 	     (Example "Intransitive usage: how do I deenergize "))
 	    ))

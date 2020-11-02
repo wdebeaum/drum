@@ -206,7 +206,7 @@
 |#
 
 (define-type ONT::discard
-    :wordnet-sense-keys ("eliminate%2:30:01" "eliminate%2:31:00" "eliminate%2:42:01" "get_rid_of%2:40:01"
+    :wordnet-sense-keys ("eliminate%2:31:00" "eliminate%2:42:01" "get_rid_of%2:40:01" ;eliminate%2:30:01
 					     )
     :parent ONT::relinquish
     :arguments ((:OPTIONAL ONT::Source)
@@ -1387,7 +1387,7 @@
  )
 
 ;; added because of importance in bio domain
-(define-type ONT::deactivate
+(define-type ONT::deactivate-turn-off ;deactivate
     :comment "Stoping the running of some ongoing process or object that causes a process"
     :parent ONT::stop
  )
@@ -1704,8 +1704,7 @@
     )
 
 (define-type ont::kill
-    :wordnet-sense-keys ("kill%2:35:00" "kill%2:35:01" "kill%2:35:02" "destroy%2:35:01"
-					"killing%1:04:00" "corporal_punishment%1:04:00")
+    :wordnet-sense-keys ("eliminate%2:30:01" "corporal_punishment%1:04:00" "destroy%2:35:01" "kill%2:35:00" "kill%2:35:01" "kill%2:35:02" "killing%1:04:00")
     :comment "killing a living being"
     ;;:definitions ((cause-effect :agent (R :agent) :formal (ont::die :affected (R :affected))))
     :arguments ((:ESSENTIAL ONT::affected (F::phys-obj (F::type ont::organism) (F::origin F::living))))
@@ -5525,7 +5524,7 @@
  :parent ONT::closure
  )
 
-
+#|
 ;; This is turn-on, turn-off, energize, de-energize
 ;; Eventually ONT::enable and ONT::disable should be moved here
 ;; Also change/set the dial to ont::result
@@ -5537,16 +5536,16 @@
 		(:optional ONT::Result)
 		)
     )
-
+|#
 
 
 
 ;; GUM change new type 20121030
-(define-type ont::burn-out-light-up-change
-  :parent ont::change-device-state
+(define-type ont::light-up-change ;burn-out-light-up-change
+  :parent ont::start-object ;change-device-state
   )
 
-
+#|
 ;; go out
 (define-type ONT::extinguish
  :parent ONT::Change-device-state
@@ -5555,7 +5554,9 @@
 	     (:REQUIRED ONT::Affected (f::phys-obj )) ;;(f::form f::substance))) ;; turn off the water -- you're really runing off the tap which produces water
              )
  )
+ |#
 
+#|
 ;; turn/switch off
 (define-type ONT::turn-off
  :parent ONT::extinguish
@@ -5563,6 +5564,7 @@
  :arguments ((:REQUIRED ONT::agent)
              )
  )
+|#
 
 ; merged back into ONT::register
 ;;; Measure in VerbNet, dimension in FrameNet

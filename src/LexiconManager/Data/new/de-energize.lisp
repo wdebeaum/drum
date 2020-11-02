@@ -13,10 +13,12 @@
                                  :ing (W::de w::punc-minus w::energizing)
 				 :nom (w::de w::punc-minus w::energization))))
 	   (senses
-	    ((LF-parent ont::change-device-state) (lf-form w::deenergize)
+	    ((LF-parent ont::deactivate-turn-off) ;change-device-state) 
+	     (lf-form w::deenergize)
 	     (Example "Transitive usage: I do I deenergize magnets?")
 	     )
-	    ((LF-parent ont::change-device-state)
+
+	    ((LF-parent ont::deactivate-turn-off) ;change-device-state)
 	     (templ agent-templ)
 	     (Example "Intransitive usage: how do I deenergize "))
 	    ))
