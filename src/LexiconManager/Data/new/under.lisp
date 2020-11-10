@@ -17,7 +17,7 @@
 
     ((LF-PARENT ONT::situated-in)
      (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
-     
+     (example "under normal conditions" "The crash is under investigations")
      )
     
     ((LF-PARENT ONT::less-than-rel)

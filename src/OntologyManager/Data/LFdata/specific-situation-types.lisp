@@ -3464,7 +3464,7 @@
 (define-type ONT::socially-remove
     :wordnet-sense-keys ("banishment%1:04:00" "expel%2:41:01" "ouster%1:04:00" "repatriate%2:41:01" "debarment%1:04:00" "purge%2:41:00") ;"expel%2:41:00"
  :parent ONT::agent-interaction ;cause-come-from
- :arguments (;(:REQUIRED ONT::Formal ((? thm F::phys-obj F::abstr-obj) (F::intentional +)))
+ :arguments ((:optional ONT::source ((? thm F::phys-obj)))
 	     (:REQUIRED ONT::affected ((? thm F::phys-obj F::abstr-obj) (F::intentional +)))
              )
  )
