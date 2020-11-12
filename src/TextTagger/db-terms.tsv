@@ -1,0 +1,18 @@
+biocarta	BioCarta	DB:1	BioCarta	name
+comparative toxicogenomics database	Comparative Toxicogenomics Database	DB:2	Comparative Toxicogenomics Database	name
+ctd	CTD	DB:3	Comparative Toxicogenomics Database	synonym
+disgenet	DisGeNET	DB:4	DisGeNET	name
+gene ontology	Gene Ontology	DB:5	Gene Ontology	name
+geo rnai database	GEO RNAI database	DB:6	GEO RNAI database	name
+go	GO	DB:5	Gene Ontology	synonym
+hgnc	HGNC	DB:6	HGNC	name
+humancyc	HumanCyc	DB:7	HumanCyc	name
+kegg	KEGG	DB:7	KEGG	name
+molecular signatures database	Molecular Signatures Database	DB:8	Molecular Signatures Database	name
+msigdb	MSigDB	DB:8	Molecular Signatures Database	synonym
+pharmacogenomics knowledgebase	Pharmacogenomics Knowledgebase	DB:9	Pharmacogenomics Knowledgebase	name
+pharmgkb	PharmGKB	DB:9	Pharmacogenomics Knowledgebase	synonym
+reactome	Reactome	DB:10	Reactome	name
+small molecule pathway database	Small Molecule Pathway Database	DB:11	Small Molecule Pathway Database	name
+smpdb	SMPDB	DB:11	Small Molecule Pathway Database	synonym
+wikipathways	WikiPathways	DB:12	WikiPathways	name
