@@ -785,7 +785,7 @@
      (tma ?tma) (sem ?argsem)
      (advbl-needed ?avn) (complex +)
       )
-     -adv-vp-pre-complex-s>  .97
+     -adv-vp-pre-complex-s> 0.96 ;.97
      (advbl (SORT BINARY-CONSTRAINT) 
 ;      (ATYPE (? x PRE PRE-VP)) 
       (ATYPE (? x PRE-VP)) 

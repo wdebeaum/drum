@@ -42,6 +42,7 @@
      (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (example "cover the situation")
+     (preference 0.98)
      )
     )
    )

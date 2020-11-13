@@ -3228,7 +3228,7 @@
   :parent ONT::ACTING
   :sem (F::Situation (F::Aspect F::Dynamic))
  :arguments ( ;; run the script/program
-	     (:essential ont::agent (F::PHYS-OBJ (f::intentional +) (F::origin F::human)))
+	     (:essential ont::agent (F::PHYS-OBJ (f::intentional +) (F::origin F::living)))
 	     (:optional ont::neutral ((? thm f::abstr-obj f::situation) (f::type (? tt ONT::PROCEDURE)))) ;; ONT::EVENT-OF-ACTION ))))
 	     (:optional ont::result ((? res1 F::SITUATION F::ABSTR-OBJ))) ; copied from CAUSE-EFFECT
 	     (:optional ont::formal ((? res2 F::SITUATION F::ABSTR-OBJ)
@@ -5543,7 +5543,8 @@
 ;; GUM change new type 20121030
 (define-type ont::light-up-change ;burn-out-light-up-change
   :parent ont::start-object ;change-device-state
-  )
+  :wordnet-sense-keys ("light_up%2:34:00")  
+)
 
 #|
 ;; go out

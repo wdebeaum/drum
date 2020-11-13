@@ -76,6 +76,7 @@
 ; in, within, inside (of)
 (define-type ont::in-loc
     :parent ont::pos-wrt-containment-reln
+    :wordnet-sense-keys ("inside%4:02:00" "inside%4:02:01")
     :comment "FIGURE is within or inside the GROUND"
   :arguments ((:ESSENTIAL ONT::GROUND ((? val f::phys-obj f::abstr-obj) ; measure (music)
 				       (f::intentional -) (f::container +) ; containers include corner and pathway
