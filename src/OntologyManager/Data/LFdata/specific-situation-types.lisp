@@ -5502,27 +5502,31 @@
  )
 |#
 
+#|
 (define-type ONT::Closure
     :parent ONT::Change-state-action
     :arguments (
 		(:required ONT::affected (F::Phys-obj (f::form f::object)))
 		)
     )
+|#
 
 (define-type ONT::open
  :wordnet-sense-keys ("open%2:41:00" "premier%2:36:01" "open_up%2:35:00" "open%2:35:06" "open%2:35:00")
- :parent ONT::closure
+ :parent ONT::Change-state-action ;closure
  )
 
 (define-type ONT::close
  :wordnet-sense-keys ("close%2:41:00" "close%2:35:00" "close%2:35:06")
- :parent ONT::closure
+ :parent ONT::Change-state-action ;closure
  )
 
+#|
 (define-type ONT::clog
  :wordnet-sense-keys ("obstruct%2:35:00" "clog%2:35:00" "choke_off%2:35:00" "clog_up%2:35:00" "back_up%2:35:00" "congest%2:35:00" "choke%2:35:01" "foul%2:35:00")
  :parent ONT::closure
  )
+|#
 
 #|
 ;; This is turn-on, turn-off, energize, de-energize
@@ -5629,10 +5633,15 @@
 
 ;; FN
 (define-type ont::hindering
- :wordnet-sense-keys ("hold_back%2:41:00" "keep_back%2:41:00" "restrain%2:41:01" "throttle%2:30:01" "confine%2:30:00" "bound%2:30:00" "limit%2:30:01" "trammel%2:30:00" "restrain%2:30:00" "restrict%2:30:00" "handicap%2:33:00" "hinder%2:33:00" "hamper%2:33:00"  "barricade%1:06:00" "obstruction%1:06:00" "crush%2:41:00" "disrupt%2:30:01"  "compromise%2:32:03" "hinder%2:41:01")
+ :wordnet-sense-keys ("barricade%1:06:00" "bound%2:30:00" "closure%1:04:01" "compromise%2:32:03" "confine%2:30:00" "crush%2:41:00" "disrupt%2:30:01" "hamper%2:33:00" "handicap%2:33:00" "hinder%2:33:00" "hinder%2:41:01" "hold_back%2:41:00" "keep_back%2:41:00" "limit%2:30:01" "obstruction%1:06:00" "restrain%2:30:00" "restrain%2:41:01" "restrict%2:30:00" "throttle%2:30:01" "trammel%2:30:00")
     :parent ont::inhibit-effect
  :comment "make it difficult for an effect or event to complete; obstruct an ongoing event"
     )
+
+(define-type ONT::clog
+ :wordnet-sense-keys ("obstruct%2:35:00" "clog%2:35:00" "choke_off%2:35:00" "clog_up%2:35:00" "back_up%2:35:00" "congest%2:35:00" "choke%2:35:01" "foul%2:35:00")
+ :parent ONT::hindering ;closure
+ )
 
 (define-type ONT::prevent
   :wordnet-sense-keys ("prevent%2:41:00" "prevent%2:41:01" "prevention%1:04:00" "keep%2:40:01")
