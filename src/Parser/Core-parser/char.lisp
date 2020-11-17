@@ -1,6 +1,6 @@
 (in-package "PARSER")
 ;;
-;; Time-stamp: <Wed Oct 21 16:15:32 CDT 2020 lgalescu>
+;; Time-stamp: <Mon Nov 16 12:26:42 EST 2020 james>
 
 
 ;;;; This file contains functions converting string input
@@ -32,14 +32,17 @@
 		      (#\% :Percent) (#\@ :at-sign)
 		      (#\" :punc-quotemark) 
 		      (#\\ :punc-backslash) (#\/ :punc-slash)
-		      (#\` #\^)
+		      (#\^ :punc-hat)
+		      ;;(#\` #\^)
 		      (#\~ :punc-tilde)
 		      (#\# :hashmark)
 		      (#\& :punc-and)
 		      (#\◦ :degrees)
-		      (#\′ #\^)
-		      (#\' #\^)
+		      ;;(#\′ #\^)
+		      ;;(#\' #\^)
 		      (#\U+2013 :punc-minus))) ;;:punc-en-dash)))
+
+(defvar *single-quote* '(#\' #\′ #\`))
 
 (defvar *break-chars* (cons '#\space (mapcar #'car *punc-list*)))
 
@@ -153,7 +156,10 @@
 	      (second (car rest))
 	      (third (cadr rest))
 	      (map (or (assoc first *punc-list*)
-		       (if (and (not (alphanumericp first)) (not (eql first #\Space)))
+		       (if (and (not (alphanumericp first))
+				(not (eql first #\Space))
+				(not (member first *single-quote*))
+				)
 			   (list first :punc-unknown)))))
 	(cond 
 	  (map
@@ -203,7 +209,7 @@
 	 (cons #\space (expand-contractions rest)))
 	
 	;;     'm, 's, 'll, 't etc
-	((eql first #\')
+	((member first *single-quote*)
 	 (if (or (and (member second '(#\M #\S #\T #\D)) (or (null third) (eq third #\space)))
 		 (and (eq second #\L) (eq third #\L))
 		 (and (eq second #\R) (eq third #\E))
@@ -213,10 +219,10 @@
 	     (cons #\space (cons #\^ (cons #\space (expand-contractions rest))))))
 
 	;; n't as in didn't
-	((and (eql first #\N) (equal second #\') (equal third #\T))
+	((and (eql first #\N) (member second *single-quote*) (equal third #\T))
 	 (cons #\space (cons #\N (cons #\^ (cons #\T (expand-contractions (cddr rest)))))))
 	;; e.g. o'clock, o'connor, ...  
-	((and (eql first #\O) (eql second #\'))
+	((and (eql first #\O) (member second *single-quote*))
 	 (if third
 	     (if (both-case-p third)
 		 (list* #\O #\^ third 
