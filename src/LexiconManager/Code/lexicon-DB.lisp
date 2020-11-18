@@ -573,7 +573,8 @@ intersection of an entry's tags and these tags is non-empty."
 				 `(? objp ,objpreps)))
 	      (w::nomsubjpreps ,(unless (member subjpreps '(- w::-))
 				  `(? subjp ,subjpreps)))
-	      (w::nom-of ,(vocabulary-entry-word entry))
+	      ;(w::nom-of ,(vocabulary-entry-word entry))
+	      (w::nom-of ,(cons (vocabulary-entry-word entry) (vocabulary-entry-remaining-words entry)))
 	      ))
 	 (nom-def
 	   (when word
