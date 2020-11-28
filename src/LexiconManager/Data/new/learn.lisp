@@ -2,6 +2,7 @@
 ;;;; w::learn
 ;;;;
 
+; see also learnt.lisp
 (define-words :pos W::V 
   :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)

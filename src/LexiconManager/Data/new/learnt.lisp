@@ -31,6 +31,10 @@
 	     (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::NP (W::sort W::wh-desc))))
 	     (meta-data :origin lam :entry-date 20050421 :change-date nil :comments lam-initial  :wn ("learn%2:31:00"))
 	     )
+	    ((lf-parent ont::learn)
+	     (Example "I learnt to sing.")
+	     (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL)
+	     )	    	    
 	    ))
 ))
 

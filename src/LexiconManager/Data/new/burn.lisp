@@ -2,6 +2,7 @@
 ;;;; W::burn
 ;;;;
 
+; see also burnt.lisp
 (define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
    (W::burn
