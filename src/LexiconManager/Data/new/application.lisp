@@ -11,7 +11,7 @@
      (meta-data :origin plow :entry-date 20050325 :change-date nil :wn ("application%1:10:00") :comments nil)
      )
 
-    ((LF-PARENT ONT::computer-program)
+    ((LF-PARENT ONT::computer-software) ;computer-program)
      (example "quit the application")
      (meta-data :origin plot :entry-date 20080413 :change-date nil :wn ("application%1:10:00") :comments nil)
      )

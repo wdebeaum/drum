@@ -7,7 +7,7 @@
   ((W::SEARCH W::ENGINE)
    (wordfeats (W::morph (:forms (-S-3P) :plur (W::search W::engines))))
    (SENSES
-    ((LF-PARENT ONT::computer-program)
+    ((LF-PARENT ONT::computer-software) ;computer-program)
      (TEMPL COUNT-PRED-TEMPL)
      (META-DATA :ORIGIN CALO :ENTRY-DATE 20050318 :CHANGE-DATE 20050824 :wn ("search_engine%1:10:00")
       :COMMENTS HTML-PURCHASING-CORPUS))))

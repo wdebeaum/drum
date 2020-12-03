@@ -44,7 +44,7 @@
  :words (
   ((W::FIRE W::WALL)
    (SENSES
-    ((LF-PARENT ONT::computer-software)
+    ((LF-PARENT ONT::computer-system) ;computer-software)
      (LF-FORM W::fire-wall)
      (TEMPL COUNT-PRED-TEMPL)
      (META-DATA :ORIGIN CALO :ENTRY-DATE 20040204 :CHANGE-DATE NIL

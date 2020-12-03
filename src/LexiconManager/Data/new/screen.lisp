@@ -18,7 +18,8 @@
  :words (
   ((W::SCREEN W::SAVER)   
    (SENSES
-    ((LF-PARENT ONT::computer-software) (TEMPL COUNT-PRED-TEMPL)
+    ((LF-PARENT ONT::computer-system) ;computer-software) 
+     (TEMPL COUNT-PRED-TEMPL)
      (META-DATA :ORIGIN CALO :ENTRY-DATE 20040204 :CHANGE-DATE NIL :wn ("screen_saver%1:06:00")
       :COMMENTS HTML-PURCHASING-CORPUS))))
 ))

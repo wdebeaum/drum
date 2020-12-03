@@ -1160,7 +1160,7 @@
 
 ;; storm, thunder, lightning
 (define-type ONT::atmospheric-event
- :wordnet-sense-keys ("brighten%2:43:00" "storm%2:43:01" "boom%2:43:00" "blow%2:43:00")
+ :wordnet-sense-keys ("blow%2:43:00" "boom%2:43:00" "brighten%2:43:00" "storm%2:43:01")
  :parent ONT::natural-event
  :arguments ((:essential ont::agent)
 	     (:optional ont::norole)
@@ -3070,7 +3070,7 @@
 ; )
 
 (define-type ONT::cause-stimulate
- :wordnet-sense-keys ("fuel%2:37:00")
+ :wordnet-sense-keys ("energize%2:30:00" "fuel%2:37:00")
  :parent ONT::cause-effect
  :arguments ((:ESSENTIAL ONT::affected ((? exp F::phys-obj f::abstr-obj f::situation) (f::intentional -)))
 	     ))
@@ -5057,8 +5057,7 @@
 ;; for positionals: lie, stand
 (define-type ONT::BE-AT-LOC
  :comment "relations that indicate an postural attitude as well as a location"
- :wordnet-sense-keys ("sit%2:35:00" "sit_down%2:35:03" "settle%2:30:00" "hang%2:35:03" "hang%2:35:05" "hang%2:35:06" "hang%2:42:01" "lie%2:35:00" "trail%2:35:05" "lie%2:42:00"
-				    "rise%2:42:00")
+ :wordnet-sense-keys ("sit%2:35:00" "sit_down%2:35:03" "settle%2:30:00" "straddle%2:42:01" "hang%2:35:03" "hang%2:35:05" "hang%2:35:06" "hang%2:42:01" "lie%2:35:00" "trail%2:35:05" "lie%2:42:00" "rise%2:42:00")
  :parent ONT::BE-AT
  :sem (F::Situation (F::aspect F::stage-level))
  :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj)) ;; formal is restricted to phys-obj; otherwise same as be-at
@@ -5799,10 +5798,10 @@
 
 ;; stretch  20120523 GUM change new type
 (define-type ONT::straddle
-    :parent ont::body-movement
-    :arguments ((:REQUIRED ONT::neutral (F::phys-obj (F::intentional -)))
-		 
+    :parent ont::body-movement-place ;body-movement
+    :arguments ((:REQUIRED ONT::neutral (F::phys-obj (F::intentional -))) 
 		)
+    :wordnet-sense-keys ("straddle%1:04:00")
     )
 
 

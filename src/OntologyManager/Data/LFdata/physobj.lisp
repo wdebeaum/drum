@@ -2485,7 +2485,7 @@
     )
 
 (define-type ONT::computer
-    :wordnet-sense-keys ("computer%1:06:00" "computing_machine%1:06:00" "computing_device%1:06:00" "data_processor%1:06:00" "electronic_computer%1:06:00" "information_processing_system%1:06:00")
+    :wordnet-sense-keys ("computer%1:06:00" "computing_device%1:06:00" "computing_machine%1:06:00" "data_processor%1:06:00" "electronic_computer%1:06:00" "information_processing_system%1:06:00")
     :parent ONT::MACHINE
     :sem (F::Phys-obj (F::mobility F::non-self-moving)(f::form f::object) 
 		      (F::object-function (? xx F::provides-service-on-off f::provides-service-up-down))
@@ -2496,10 +2496,17 @@
     :parent ONT::computer
     )
 
+#|
 ;; ibm, macintosh, dell
 (define-type ONT::computer-make
     :parent ONT::computer
     )
+|#
+
+(define-type ONT::computer-system
+    :parent ONT::computer
+    :wordnet-sense-keys ("firewall%1:06:01" "screen_saver%1:06:00")
+)
 
 ;; laptop, pc
 (define-type ONT::computer-type

@@ -1424,8 +1424,8 @@
   )
 |#
 
-(define-type ONT::computer-software
-  :parent ONT::representation
+(define-type ONT::computer-software-related ;computer-software
+  :parent ONT::mental-construction ;representation
 ;  :sem (F::Abstr-obj (F::information F::information-content))
   :sem (F::Abstr-obj (f::origin f::artifact) (F::information F::mental-construct))
   :wordnet-sense-keys ("computer_code%1:10:00") 
@@ -1434,17 +1434,17 @@
 ;; autofill, autocomplete, colorsync, etc.
 (define-type ONT::software-feature
  :wordnet-sense-keys ("expose%1:10:00" "unmasking%1:10:00")
-  :parent ONT::computer-software
+  :parent ONT::computer-software-related ;computer-software
   )
 
 ;; specific programs like VM
-(define-type ONT::computer-program
+(define-type ONT::computer-software ;computer-program
  :wordnet-sense-keys ("applications_programme%1:10:00" "application_program%1:10:00" "application%1:10:01" "program%1:10:02" "programme%1:10:02" "computer_program%1:10:00" "computer_programme%1:10:00")
-  :parent ONT::computer-software
+  :parent ONT::computer-software-related
   )
 
 (define-type ONT::web-browser
-  :parent ONT::computer-software
+  :parent ONT::computer-system ;computer-software
   :wordnet-sense-keys ("browser%1:10:00")
 )
 

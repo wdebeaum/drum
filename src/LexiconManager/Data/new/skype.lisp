@@ -6,7 +6,7 @@
  :words (
   (W::skype
    (SENSES
-    ((LF-PARENT ONT::computer-program)
+    ((LF-PARENT ONT::computer-software) ;computer-program)
      (TEMPL nname-templ)
      (example "I use skype.")
      )

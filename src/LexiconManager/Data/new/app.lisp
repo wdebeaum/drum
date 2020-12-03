@@ -6,7 +6,7 @@
  :words (
   (W::app
    (SENSES
-    ((LF-PARENT ONT::computer-program)
+    ((LF-PARENT ONT::computer-software) ;computer-program)
      (example "quit the application")
      )
     )
