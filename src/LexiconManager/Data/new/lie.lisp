@@ -51,7 +51,7 @@
    (wordfeats (W::morph (:forms (-vb) :past W::lay :pastpart W::lain :ing W::lying)))
    (SENSES
     ((EXAMPLE "You had better lie down")
-     (LF-PARENT ONT::BODY-MOVEMENT-self)
+     (LF-PARENT ONT::body-movement-place) ;BODY-MOVEMENT-self)
      (LF-FORM W::lie-down)
      (TEMPL AGENT-TEMPL)
      )

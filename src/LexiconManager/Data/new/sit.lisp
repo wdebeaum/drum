@@ -57,7 +57,7 @@
    (wordfeats (W::morph (:forms (-vb) :past W::sat :ing W::sitting)))
    (SENSES
     ((EXAMPLE "You had better sit down")
-     (LF-PARENT ONT::BODY-MOVEMENT)
+     (LF-PARENT ONT::body-movement-place) ;BODY-MOVEMENT)
      (TEMPL AGENT-TEMPL)
      )
     )
@@ -70,7 +70,7 @@
    (wordfeats (W::morph (:forms (-vb) :past W::sat :ing W::sitting)))
    (SENSES
     ((EXAMPLE "You had better sit down")
-     (LF-PARENT ONT::BODY-MOVEMENT)
+     (LF-PARENT ONT::body-movement-place) ;BODY-MOVEMENT)
       (TEMPL AGENT-TEMPL)
      )
     )

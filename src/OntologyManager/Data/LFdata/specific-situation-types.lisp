@@ -402,7 +402,7 @@
 
 ;; jump, hop
 (define-type ONT::jump
- :wordnet-sense-keys ("jump%2:38:01")
+ :wordnet-sense-keys ("jerk%2:38:01" "jump%2:38:01")
  :parent ONT::bounce-reflect
  )
 
@@ -737,7 +737,7 @@
   )
 
 (define-type ONT::ROTATE
- :wordnet-sense-keys ("turn%2:38:00" "rotate%2:38:01")
+ :wordnet-sense-keys ("bend%2:38:02" "rotate%2:38:01" "turn%2:38:00")
  :parent ONT::event-of-causation
  :sem (F::situation (F::Aspect F::dynamic))
  :arguments (
@@ -1081,7 +1081,7 @@
 )
 
 (define-type ont::confine
- :wordnet-sense-keys ("confine%2:41:00" "confine%2:35:01" "confinement%1:04:00" "confinement%1:04:01")
+ :wordnet-sense-keys ("confine%2:35:01" "confine%2:35:03" "confine%2:41:00" "confinement%1:04:00" "confinement%1:04:01")
   :parent ont::PERSISTENT-STATE ;located-move-state
   )
 
@@ -1337,7 +1337,7 @@
     )
 
 (define-type ONT::shape-change
- :wordnet-sense-keys ("forge%2:36:03" "mould%2:36:01" "mold%2:36:01" "work%2:36:12" "form%2:36:00" "shape%2:36:00" "shape%2:30:00" "form%2:30:01")
+ :wordnet-sense-keys ("bend%2:35:00" "bend%2:38:00" "forge%2:36:03" "form%2:30:01" "form%2:36:00" "mold%2:36:01" "mould%2:36:01" "shape%2:30:00" "shape%2:36:00" "stretch%2:38:00" "work%2:36:12")
   :parent ONT::object-change
   )
 
@@ -2860,7 +2860,7 @@
 
 (define-type ONT::place-in-position
  :comment "placing an object in a certain position: e.g., lean, sit, stand,  ..."
- :wordnet-sense-keys ("lean%2:35:00" "set_down%2:35:00" "seat%2:35:00" "stand%2:35:01" "perch%2:35:10" "park%2:35:00" "center%2:38:00" "prop%2:35:00")
+ :wordnet-sense-keys ("center%2:38:00" "lean%2:35:00" "lean%2:38:07" "park%2:35:00" "perch%2:35:10" "prop%2:35:00" "seat%2:35:00" "set_down%2:35:00" "set_down%2:35:02" "stand%2:35:01" "stand_up%2:35:03")
  :parent ONT::PUT
  )
 
@@ -2966,7 +2966,7 @@
  )
 
 (define-type ONT::retain
- :wordnet-sense-keys ("keep%2:35:10" "stay_fresh%2:42:00" "keep%2:42:03" "keep%2:40:00" "hold_on%2:40:00" "cling%2:37:00" "lay_aside%2:40:00")
+ :wordnet-sense-keys ("cling%2:37:00" "hold_on%2:40:00" "keep%2:35:10" "keep%2:40:00" "keep%2:42:03" "lay_aside%2:40:00" "stash_away%2:40:00" "stay_fresh%2:42:00" "stock%2:40:01")
   :parent ONT::PERSISTENT-STATE ;located-move-state
   :arguments ((:REQUIRED ONT::affected ((? obj F::PHYS-OBJ F::ABSTR-OBJ)))
 ;	      (:OPTIONAL ONT::cause)
@@ -2991,7 +2991,7 @@
  )
 
 (define-type ONT::propel
- :wordnet-sense-keys ("throw%1:04:00" "propel%2:35:00" "throw%2:35:02")
+ :wordnet-sense-keys ("propel%2:35:00" "throw%1:04:00" "throw%2:35:02" "twitch%2:38:00")
  :comment "causing to move by a push and release activity"
  ;:parent ONT::cause-to-move
  :parent ONT::cause-move
@@ -5057,7 +5057,7 @@
 ;; for positionals: lie, stand
 (define-type ONT::BE-AT-LOC
  :comment "relations that indicate an postural attitude as well as a location"
- :wordnet-sense-keys ("sit%2:35:00" "sit_down%2:35:03" "settle%2:30:00" "straddle%2:42:01" "hang%2:35:03" "hang%2:35:05" "hang%2:35:06" "hang%2:42:01" "lie%2:35:00" "trail%2:35:05" "lie%2:42:00" "rise%2:42:00")
+ :wordnet-sense-keys ("hang%2:35:03" "hang%2:35:05" "hang%2:35:06" "hang%2:42:01" "lie%2:35:00" "lie%2:42:00" "rise%2:42:00" "settle%2:30:00" "sit%2:35:00" "sit_down%2:35:03" "stand%2:35:00" "straddle%2:42:01" "trail%2:35:05")
  :parent ONT::BE-AT
  :sem (F::Situation (F::aspect F::stage-level))
  :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj)) ;; formal is restricted to phys-obj; otherwise same as be-at
@@ -5092,6 +5092,7 @@
 (define-type ONT::leaning
     :comment "The state of being in a position of leaning (against something)"
  :parent ONT::be-at-loc
+ :wordnet-sense-keys ("lean%2:38:00")
  )
 
 ;; manipulate, influence
@@ -5307,10 +5308,11 @@
 
 (define-type ont::archive
 ;  :parent ont::retain
-  :parent ont::record
+  :parent ont::persistent-state ;record
   :arguments ((:essential ont::affected (?ttype (f::information f::information-content)))
 	     (:essential ont::source (?ttype1 (f::object-function f::instrument)))
              )
+  :wordnet-sense-keys ("archive%2:35:00")
   )
 
 ;; back up/copy the data/files (formal)
@@ -5321,6 +5323,7 @@
  :arguments ((:essential ont::neutral (?ttype (f::information f::information-content)))
 	     (:essential ont::source (?ttype1 (f::object-function f::instrument)))
              )
+ :wordnet-sense-keys ("copy%2:36:01" "reproduce%2:36:00")
  )
 
 ;; he smeared the paint on the wall
@@ -5779,19 +5782,10 @@
 	       )
  )
 
-
-
-;; twitch, jerk, tremble
-(define-type ONT::uncontrolled-body-motion
- :wordnet-sense-keys ("tremble%2:38:00" "move_involuntarily%2:29:00" "move_reflexively%2:29:00")
- :parent ont::body-movement
- :sem (F::Situation (F::Cause F::Force))
- )
-
-
 ;; stretch  20120523 GUM change new type
 (define-type ONT::body-movement-place
- :wordnet-sense-keys ("poise%2:35:01")
+; :wordnet-sense-keys ("poise%2:35:01")
+  :wordnet-sense-keys ("flop%2:38:00" "flop%2:38:01" "lie%2:38:00" "sit%2:38:00")
     :comment "Verbs of posture that are with respect to some place"
   :parent ont::body-movement
  )
@@ -5804,19 +5798,25 @@
     :wordnet-sense-keys ("straddle%1:04:00")
     )
 
-
-;; stretch  20120523 GUM change new type
-(define-type ONT::stretch
- :parent ont::body-movement
- )
-
-
 ;; stretch  20120523 GUM change new type
 (define-type ONT::body-movement-self
     :comment "Verbs of posture that can be independent of any location: e.g., bow is not with respect to a location, but to sit it must be somewhere"
  :parent ont::body-movement
+ :wordnet-sense-keys ("bend%2:35:08" "bend%2:38:03" "stand_up%2:38:00")
  )
 
+;; stretch  20120523 GUM change new type
+(define-type ONT::stretch
+ :parent ont::body-movement-self ;body-movement
+ :wordnet-sense-keys ("stretch%2:29:01" "stretch%2:29:02")
+)
+
+;; twitch, jerk, tremble
+(define-type ONT::uncontrolled-body-motion
+ :wordnet-sense-keys ("jerk%2:38:00" "move_involuntarily%2:29:00" "move_reflexively%2:29:00" "tremble%2:38:00")
+ :parent ont::body-movement-self ;body-movement
+ :sem (F::Situation (F::Cause F::Force))
+)
 
 ;(define-type ONT::Stative
 ; :parent ONT::EVENT-TYPE
