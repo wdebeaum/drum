@@ -19,3 +19,15 @@
    )
 ))
 
+(define-words :pos W::n 
+ :words (
+	 (W::glasses  ; plural only
+	  (wordfeats (W::morph (:forms (-none))))
+	  (SENSES
+	   (
+	    (LF-PARENT ONT::personal-item)
+	    (TEMPL COUNT-PRED-3p-TEMPL)
+	    )
+	   )
+	  )
+))

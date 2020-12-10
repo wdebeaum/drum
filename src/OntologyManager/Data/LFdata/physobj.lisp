@@ -2638,6 +2638,13 @@
 		)
     )
 
+
+(define-type ONT::personal-item
+    :parent ONT::manufactured-object
+    :wordnet-sense-keys ("jewelry%1:06:00" "watch%1:06:00" "glasses%1:06:00")
+    :sem (f::Phys-obj (F::Origin F::Artifact))
+    )
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; boudreaux-types.lisp
 ;; swift 20030918
@@ -2646,7 +2653,8 @@
 
 ;; boudreaux wears a suit
 (define-type ONT::attire
-    :parent ONT::manufactured-object
+    ;:parent ONT::manufactured-object
+    :parent ONT::personal-item
     :wordnet-sense-keys ("clothing%1:06:00" "article_of_clothing%1:06:00" "vesture%1:06:00" "wear%1:06:00" "wearable%1:06:00" "habiliment%1:06:00")
     :sem (f::Phys-obj (F::Origin F::Artifact))
     )

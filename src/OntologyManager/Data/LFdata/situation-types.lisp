@@ -987,7 +987,7 @@
 (define-type ONT::wear
  :wordnet-sense-keys ("have_on%2:29:00")
  :parent ONT::event-of-action
- :arguments ((:required ont::neutral (F::phys-obj (f::type ont::attire))))
+ :arguments ((:required ont::neutral (F::phys-obj (f::type ont::personal-item))))
  :sem (F::SITUATION (F::Aspect F::unbounded) (F::Time-span F::Extended))
  )
 
