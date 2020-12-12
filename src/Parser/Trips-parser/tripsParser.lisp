@@ -175,11 +175,13 @@
      (adjust-word-length-parameter content)
      ;;  manage the temporary cost-table changes
      (if *original-cost-table-was-modified*
-	 (setq *original-cost-table-was-modified* nil)
-	 (when *original-cost-table*
+	 (progn
+	   (setq *original-cost-table-was-modified* nil)
+	   (when *original-cost-table*
 	     ;; we reset the cost table
-	   (setq *cost-table* *original-cost-table*)
-	   (setq *original-cost-table* nil)))
+	     (setq *cost-table* *original-cost-table*)
+	     (setq *original-cost-table* nil)))
+       )
 	 
      (continue-BU-parse)
      (let ((utts (get-parse :lf :numb (number-parses-to-find *chart*))))
