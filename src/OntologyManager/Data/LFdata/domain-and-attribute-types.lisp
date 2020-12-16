@@ -2235,6 +2235,12 @@
  :wordnet-sense-keys ("predictability%1:07:00")
 )
 
+;; reparability
+(define-type ont::reparability-scale
+ :sem (F::abstr-obj (F::scale ONT::REPARABILITY-SCALE))
+ :parent ont::can-be-done-scale ;information-property-scale
+)
+
 ;; repleaceability
 (define-type ont::replaceability-scale
  :sem (F::abstr-obj (F::scale ONT::REPLACEABILITY-SCALE))
