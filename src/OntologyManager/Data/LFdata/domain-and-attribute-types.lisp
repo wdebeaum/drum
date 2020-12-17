@@ -2193,11 +2193,29 @@
  :parent ont::ordered-domain ;process-property-scale
 )
 
+;; accessibility - same thing as availability??
+(define-type ont::accessibility-scale
+ :sem (F::abstr-obj (F::scale ONT::ACCESSIBILITY-SCALE))
+ :parent ont::can-be-done-scale
+)
+
+;; avoidability
+(define-type ont::avoidability-scale
+ :sem (F::abstr-obj (F::scale ONT::AVOIDABILITY-SCALE))
+ :parent ont::can-be-done-scale
+)
+
 ;; changeability
 (define-type ont::changeability-scale
  :sem (F::abstr-obj (F::scale ONT::CHANGEABILITY-SCALE))
  :parent ont::can-be-done-scale
  :wordnet-sense-keys ("changeability%1:07:00")
+)
+
+;; chargeability
+(define-type ont::chargeability-scale
+ :sem (F::abstr-obj (F::scale ONT::CHARGEABILITY-SCALE))
+ :parent ont::can-be-done-scale
 )
 
 ;; comprehensibility
@@ -2207,6 +2225,18 @@
  :wordnet-sense-keys ("comprehensibility%1:07:00")
 )
 
+;; enforceability
+(define-type ont::enforceability-scale
+ :sem (F::abstr-obj (F::scale ONT::ENFORCEABILITY-SCALE))
+ :parent ont::can-be-done-scale
+)
+
+;; expandability
+(define-type ont::expandability-scale
+ :sem (F::abstr-obj (F::scale ONT::EXPANDABILITY-SCALE))
+ :parent ont::can-be-done-scale
+)
+
 ;; manageability
 (define-type ont::manageability-scale
  :sem (F::abstr-obj (F::scale ONT::MANAGEABILITY-SCALE))
@@ -2214,11 +2244,30 @@
  :wordnet-sense-keys ("manageability%1:07:00")
 )
 
+;; measurability
+(define-type ont::measurability-scale
+ :sem (F::abstr-obj (F::scale ONT::MEASURABILITY-SCALE))
+ :parent ont::can-be-done-scale
+ :wordnet-sense-keys ("measurability%1:07:00")
+)
+
 ;; mobility
 (define-type ont::mobility-scale
  :sem (F::abstr-obj (F::scale ONT::MOBILITY-SCALE))
  :parent ont::can-be-done-scale
  :wordnet-sense-keys ("mobility%1:07:00")
+)
+
+;; networkability
+(define-type ont::networkability-scale
+ :sem (F::abstr-obj (F::scale ONT::NETWORKABILITY-SCALE))
+ :parent ont::can-be-done-scale
+)
+
+;; permeability
+(define-type ont::permeability-scale
+ :sem (F::abstr-obj (F::scale ONT::PERMEABILITY-SCALE))
+ :parent ont::can-be-done-scale
 )
 
 ;; portability
@@ -2233,6 +2282,12 @@
  :sem (F::abstr-obj (F::scale ONT::PREDICTABILITY-SCALE))
  :parent ont::can-be-done-scale ;information-property-scale
  :wordnet-sense-keys ("predictability%1:07:00")
+)
+
+;; readability
+(define-type ont::readability-scale
+ :sem (F::abstr-obj (F::scale ONT::READABILITY-SCALE))
+ :parent ont::can-be-done-scale ;information-property-scale
 )
 
 ;; reparability
@@ -2255,11 +2310,12 @@
  :wordnet-sense-keys ("reproducibility%1:07:00")
 )
 
-;; accessibility - same thing as availability??
-;(define-type ont::accessibility-scale
-; :parent ont::can-be-done-scale
-; :wordnet-sense-keys ("")
-;)
+;; transferability
+(define-type ont::transferability-scale
+ :sem (F::abstr-obj (F::scale ONT::TRANSFERABILITY-SCALE))
+ :parent ont::can-be-done-scale ;information-property-scale
+ :wordnet-sense-keys ("transferability%1:07:00")
+)
 
 ;; process status
 (define-type ont::process-status-scale

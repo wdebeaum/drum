@@ -2500,6 +2500,62 @@
 )
 |#
 
+(define-type ont::accessible-val
+ :parent ont::can-be-done-val ;accessibility-val
+ :wordnet-sense-keys ("accessible%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::accessibility-scale) (f::orientation f::pos))
+)
+
+;; adhearable stickable
+(define-type ont::adhearable-val
+ :parent ont::can-be-done-val
+ :wordnet-sense-keys ("adhesive%3:00:00")
+)
+
+(define-type ONT::avoidable-val
+  :parent ONT::can-be-done-val ;avoidability-val
+  :wordnet-sense-keys ("evitable%3:00:00::" "avoidable%3:00:00::" "avertible%3:00:00::" "avertable%3:00:00::")
+  :comment "(evitable)"
+  :sem (F::abstr-obj (F::scale ont::avoidability-scale) (f::orientation f::pos))
+  )
+
+(define-type ONT::changeable-val
+  :parent ONT::can-be-done-val ;changeability-val
+  :wordnet-sense-keys ("variable%3:00:00::" "mutable%3:00:00::" "changeable%3:00:04::" "modifiable%3:00:00::" "unmodifiable%3:00:00::" "changeable%3:00:00::" "changeful%3:00:00::" "alterable%3:00:00::")
+  :comment "(modifiable, changeable)"
+  :sem (F::abstr-obj (F::scale ont::changeability-scale) (f::orientation f::pos))
+  )
+
+(define-type ont::chargeable-val
+ :parent ont::can-be-done-val ;chargeability-val
+ :sem (F::abstr-obj (F::scale ont::chargeability-scale) (f::orientation f::pos))
+)
+
+(define-type ont::enforceable-val
+ :parent ont::can-be-done-val ;enforceability-val
+ :wordnet-sense-keys ("enforceable%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::enforceability-scale) (f::orientation f::pos))
+)
+
+(define-type ont::expandable-val
+ :parent ont::can-be-done-val ;expandability-val
+ :wordnet-sense-keys ("expandable%5:00:00:expansive:00" "expansive%3:00:00" "expandable%5:00:00:elastic:00")
+ :sem (F::abstr-obj (F::scale ont::expandability-scale) (f::orientation f::pos))
+)
+
+(define-type ONT::permeable-val
+  :parent ONT::can-be-done-val ;permeability-val
+  :wordnet-sense-keys ("leaky%3:00:00::" "permeable%3:00:00::" "pervious%3:00:00::")
+  :comment "(permeable, leaky)"
+  :sem (F::abstr-obj (F::scale ont::permeability-scale) (f::orientation f::pos))
+  )
+
+(define-type ONT::readable-val
+  :parent ONT::can-be-done-val ;readability-val
+  :wordnet-sense-keys ("legible%3:00:00::")
+  :comment "(readable, legible)"
+  )
+
 (define-type ont::reparable-val
  :parent ont::can-be-done-val ;reparability-val
  :sem (F::abstr-obj (F::scale ont::reparability-scale))
@@ -2512,7 +2568,6 @@
  :parent ont::reparability-val
  :wordnet-sense-keys ("irreconcilable%3:00:00" "irremediable%3:00:00" "irreparable%3:00:00")
 )
-|#
 
 ;; (in)accessible
 (define-type ont::accessibility-val
@@ -2522,39 +2577,34 @@
 )
 
 (define-type ont::accessible-val
- :parent ont::accessibility-val 
+ :parent ont::can-be-done-val ;accessibility-val 
  :wordnet-sense-keys ("accessible%3:00:00" )
-; :sem (F::abstr-obj (F::scale ont::accessibility-scale) (f::orientation f::pos))
+ :sem (F::abstr-obj (F::scale ont::accessibility-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-accessible-val
- :parent ont::accessibility-val 
+ :parent ont::can-not-be-done-val ;accessibility-val 
  :wordnet-sense-keys ("inaccessible%3:00:00" )
 ; :sem (F::abstr-obj (F::scale ont::accessibility-scale) (f::orientation f::neg))
-)
-
-
-;; adhearable stickable
-(define-type ont::adhearable-val
- :parent ont::can-be-done-val
- :wordnet-sense-keys ("adhesive%3:00:00")
 )
 
 ;; (un)manageable, (un)controllable
 (define-type ont::manageability-val
  :parent ont::can-be-done-val 
 )
+|#
 
 (define-type ont::manageable
- :parent ont::manageability-val 
+ :parent ont::can-be-done-val ;manageability-val 
  :wordnet-sense-keys ("controllable%5:00:00:manageable:00" "manageable%3:00:00" )
  ; Words: (W::CONTROLLABLE W::MANAGEABLE)
  ; Antonym: ONT::unmanageable (W::UNCONTROLLABLE W::UNMANAGEABLE)
  :sem (F::abstr-obj (F::scale ont::manageability-scale) (f::orientation f::pos))
 )
 
+#|
 (define-type ont::unmanageable
- :parent ont::manageability-val 
+ :parent ont::can-not-be-done-val ;manageability-val 
  :wordnet-sense-keys ("indocile%5:00:00:unmanageable:00" "unmanageable%3:00:00" )
  ; Words: (W::UNCONTROLLABLE W::UNMANAGEABLE)
  ; Antonym: ONT::manageable (W::CONTROLLABLE W::MANAGEABLE)
@@ -2567,12 +2617,12 @@
 )
 
 (define-type ont::not-enforceable-val
- :parent ont::enforceability-val 
+ :parent ont::can-not-be-done-val ;enforceability-val 
  :wordnet-sense-keys ("unenforceable%3:00:00" )
 )
 
 (define-type ont::enforceable-val
- :parent ont::enforceability-val 
+ :parent ont::can-be-done-val ;enforceability-val 
  :wordnet-sense-keys ("enforceable%3:00:00" )
 )
 
@@ -2582,7 +2632,8 @@
 )
 
 (define-type ont::chargeable-val
- :parent ont::chargeability-val 
+ :parent ont::can-be-done-val ;chargeability-val
+ :sem (F::abstr-obj (F::scale ont::chargeability-scale) (f::orientation f::pos)) 
 )
 
 ;; expandable
@@ -2591,30 +2642,67 @@
 )
 
 (define-type ont::expandable-val
- :parent ont::expandability-val
+ :parent ont::can-be-done-val ;expandability-val
  :wordnet-sense-keys ("expandable%5:00:00:expansive:00" "expansive%3:00:00" "expandable%5:00:00:elastic:00")
+ :sem (F::abstr-obj (F::scale ont::expandability-scale) (f::orientation f::pos))
+)
+|#
+
+(define-type ONT::measurable-val
+  :parent ONT::can-be-done-val ;measurability-val
+  :wordnet-sense-keys ("fathomable%3:00:00::" "plumbable%3:00:00::" "soundable%3:00:00::")
+  :comment "(measurable)"
+  :sem (F::abstr-obj (F::scale ont::measurability-scale) (f::orientation f::pos))
+  )
+
+;; removable, portable
+(define-type ont::movable-val
+ :parent ont::can-be-done-val
+ :sem (F::abstr-obj (F::scale ont::mobility-scale) (f::orientation f::pos))
+)
+
+(define-type ont::removable-val
+ :parent ont::movable-val
+ :wordnet-sense-keys ("removable%3:00:00" )
+)
+
+(define-type ont::portable-val
+ :parent ont::movable-val
+ :wordnet-sense-keys ("mobile%3:00:00::" "portable%3:00:00" "movable%5:00:00:portable:00" "movable%5:00:00:mobile:00")
+ :sem (F::abstr-obj (F::scale ont::portability-scale))
 )
 
 ;; networkable
 (define-type ont::networkable-val
  :parent ont::can-be-done-val 
+ :sem (F::abstr-obj (F::scale ont::networkability-scale) (f::orientation f::pos))
 )
 
+(define-type ont::predictable-val
+ :parent ont::can-be-done-val ;predictability-val
+ :wordnet-sense-keys ("predictable%3:00:00" "foreseeable%5:00:00:predictable:00" )
+ :sem (F::abstr-obj (F::scale ont::predictability-scale) (f::orientation f::pos))
+)
+
+#|
 ;; replaceable
 (define-type ont::replaceability-val
  :parent ont::can-be-done-val 
  :sem (F::abstr-obj (F::scale ont::replaceability-scale))
 )
+|#
 
 (define-type ont::replaceable-val
- :parent ont::replaceability-val
+ :parent ont::can-be-done-val ;replaceability-val
  :wordnet-sense-keys ("interchangeable%5:00:00:replaceable:00" "replaceable%3:00:00")
  :sem (F::abstr-obj (F::scale ont::replaceability-scale) (f::orientation f::pos))
 )
 
+#|
 ;; removable, portable
 (define-type ont::movable-val
- :parent ont::can-be-done-val 
+ :parent ont::can-be-done-val
+ :sem (F::abstr-obj (F::scale ont::mobility-scale) (f::orientation f::pos)) 
 )
 
 (define-type ont::removable-val
@@ -2627,6 +2715,7 @@
  :wordnet-sense-keys ("mobile%3:00:00::" "portable%3:00:00" "movable%5:00:00:portable:00" "movable%5:00:00:mobile:00")
  :sem (F::abstr-obj (F::scale ont::portability-scale))
 )
+|#
 
 ;; readable, writable, burnable
 (define-type ont::rw-status-val
@@ -2641,19 +2730,20 @@
  :parent ont::rw-status-val 
 )
 
+#|
 (define-type ont::predictability-val
  :parent ont::can-be-done-val ;information-property-val 
  :sem (F::abstr-obj (F::scale ont::predictability-scale))
 )
 
 (define-type ont::predictable-val
- :parent ont::predictability-val 
+ :parent ont::can-be-done-val ;predictability-val 
  :wordnet-sense-keys ("predictable%3:00:00" "foreseeable%5:00:00:predictable:00" )
  :sem (F::abstr-obj (F::scale ont::predictability-scale) (f::orientation f::pos))
 )
 
 (define-type ont::not-predictable-val
- :parent ont::predictability-val
+ :parent ont::can-not-be-done-val ;predictability-val
  :wordnet-sense-keys ("unpredictable%3:00:00" "unforeseeable%5:00:00:unpredictable:00" )
  :sem (F::abstr-obj (F::scale ont::predictability-scale) (f::orientation f::neg))
 )
@@ -2663,18 +2753,28 @@
  :parent ont::can-be-done-val ;information-property-val 
  :sem (F::abstr-obj (F::scale ont::reproducibility-scale))
 )
+|#
+
+(define-type ONT::transferable-val
+  :parent ONT::can-be-done-val ;transferability-val
+  :wordnet-sense-keys ("alienable%3:00:00::")
+  :comment "(transferable, alienable)"
+  :sem (F::abstr-obj (F::scale ont::transferability-scale) (f::orientation f::pos))
+  )
 
 (define-type ont::verifiable-val
- :parent ont::verifiability-val
+ :parent ont::can-be-done-val ;verifiability-val
  :wordnet-sense-keys ("verifiable%5:00:00:objective:00" "provable%5:00:00:obvious:00" "reproducible%3:00:00")
  :sem (F::abstr-obj (F::scale ont::reproducibility-scale) (f::orientation f::pos))
 )
 
+#|
 (define-type ont::not-verifiable-val
- :parent ont::verifiability-val
+ :parent ont::can-not-be-done-val ;verifiability-val
  :wordnet-sense-keys ("unverifiable%5:00:00:subjective:00" "unreproducible%3:00:00")
  :sem (F::abstr-obj (F::scale ont::reproducibility-scale) (f::orientation f::neg))
 )
+|#
 
 (define-type ont::can-not-be-done-val
  :parent ont::property-val
@@ -2683,10 +2783,81 @@
  :sem (F::abstr-obj (F::scale ont::can-not-be-done-scale)) ;process-property-scale))
 )
 
+(define-type ont::not-accessible-val
+ :parent ont::can-not-be-done-val ;accessibility-val
+ :wordnet-sense-keys ("inaccessible%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::accessibility-scale) (f::orientation f::neg))
+)
+
+(define-type ONT::not-avoidable-val
+  :parent ONT::can-not-be-done-val ;avoidability-val
+  :comment "(inevitable)"
+  :sem (F::abstr-obj (F::scale ont::avoidability-scale) (f::orientation f::neg))
+  )
+
+(define-type ONT::not-changeable-val
+  :parent ONT::can-not-be-done-val ;changeability-val
+  :wordnet-sense-keys ("invariable%3:00:00::" "immutable%3:00:00::" "changeless%3:00:04::" "inalterable%3:00:00::")
+  :comment "(unchangeable, unmodifiable)"
+  :sem (F::abstr-obj (F::scale ont::changeability-scale) (f::orientation f::neg))
+  )
+
+(define-type ont::not-enforceable-val
+ :parent ont::can-not-be-done-val ;enforceability-val
+ :wordnet-sense-keys ("unenforceable%3:00:00" )
+ :sem (F::abstr-obj (F::scale ont::enforceability-scale) (f::orientation f::neg))
+)
+
+(define-type ONT::not-measurable-val
+  :parent ONT::can-not-be-done-val ;measurability-val
+  :comment "(immeasurable)"
+  :sem (F::abstr-obj (F::scale ont::measurability-scale) (f::orientation f::neg))
+  )
+
+(define-type ONT::not-permeable-val
+  :parent ONT::can-not-be-done-val ;permeability-val
+  :wordnet-sense-keys ("impervious%3:00:00::" "imperviable%3:00:00::" "tight%3:00:02::" "impermeable%3:00:00::")
+  :comment "(impermeable, impervious)"
+  :sem (F::abstr-obj (F::scale ont::permeability-scale) (f::orientation f::neg))
+  )
+
+(define-type ont::not-predictable-val
+ :parent ont::can-not-be-done-val ;predictability-val
+ :wordnet-sense-keys ("unpredictable%3:00:00" "unforeseeable%5:00:00:unpredictable:00" )
+ :sem (F::abstr-obj (F::scale ont::predictability-scale) (f::orientation f::neg))
+)
+
+(define-type ONT::not-readable-val
+  :parent ONT::can-not-be-done-val ;readability-val
+  :wordnet-sense-keys ("illegible%3:00:00::")
+  :comment "(unreadable, illegible)"
+  )
+
 (define-type ont::not-reparable-val
  :parent ont::can-not-be-done-val ;reparability-val
  :wordnet-sense-keys ("irreconcilable%3:00:00" "irremediable%3:00:00" "irreparable%3:00:00")
  :sem (F::abstr-obj (F::scale ont::reparability-scale))
+)
+
+(define-type ONT::not-transferable-val
+  :parent ONT::can-not-be-done-val ;transferability-val
+  :wordnet-sense-keys ("inalienable%3:00:00::" "unalienable%3:00:00::")
+  :comment "(nontransferable, inalienable)"
+  :sem (F::abstr-obj (F::scale ont::transferability-scale) (f::orientation f::neg))
+  )
+
+(define-type ont::not-verifiable-val
+ :parent ont::can-not-be-done-val ;verifiability-val
+ :wordnet-sense-keys ("unverifiable%5:00:00:subjective:00" "unreproducible%3:00:00")
+ :sem (F::abstr-obj (F::scale ont::reproducibility-scale) (f::orientation f::neg))
+)
+
+(define-type ont::unmanageable
+ :parent ont::can-not-be-done-val ;manageability-val
+ :wordnet-sense-keys ("indocile%5:00:00:unmanageable:00" "unmanageable%3:00:00" )
+ ; Words: (W::UNCONTROLLABLE W::UNMANAGEABLE)
+ ; Antonym: ONT::manageable (W::CONTROLLABLE W::MANAGEABLE)
+ :sem (F::abstr-obj (F::scale ont::manageability-scale) (f::orientation f::neg))
 )
 
 ;; Relating to time
@@ -6002,20 +6173,23 @@
   :comment "(light-duty)"
   )
 
+#|
 (define-type ONT::avoidability-val
   :parent ONT::can-be-done-val
   :comment "(evitable)"
   )
 
 (define-type ONT::avoidable-val
-  :parent ONT::avoidability-val
+  :parent ONT::can-be-done-val ;avoidability-val
   :wordnet-sense-keys ("evitable%3:00:00::" "avoidable%3:00:00::" "avertible%3:00:00::" "avertable%3:00:00::")
   :comment "(evitable)"
+  :sem (F::abstr-obj (F::scale ont::avoidability-scale) (f::orientation f::pos))
   )
 
 (define-type ONT::not-avoidable-val
-  :parent ONT::avoidability-val
+  :parent ONT::can-not-be-done-val ;avoidability-val
   :comment "(inevitable)"
+  :sem (F::abstr-obj (F::scale ont::avoidability-scale) (f::orientation f::neg))
   )
 
 (define-type ONT::measurability-val
@@ -6024,14 +6198,16 @@
   )
 
 (define-type ONT::measurable-val
-  :parent ONT::measurability-val
+  :parent ONT::can-be-done-val ;measurability-val
   :wordnet-sense-keys ("fathomable%3:00:00::" "plumbable%3:00:00::" "soundable%3:00:00::")
   :comment "(measurable)"
+  :sem (F::abstr-obj (F::scale ont::measurability-scale) (f::orientation f::pos))
   )
 
 (define-type ONT::not-measurable-val
-  :parent ONT::measurability-val
+  :parent ONT::can-not-be-done-val ;measurability-val
   :comment "(immeasurable)"
+  :sem (F::abstr-obj (F::scale ont::measurability-scale) (f::orientation f::neg))
   )
 
 (define-type ONT::readability-val
@@ -6040,13 +6216,13 @@
   )
 
 (define-type ONT::readable-val
-  :parent ONT::readability-val
+  :parent ONT::can-be-done-val ;readability-val
   :wordnet-sense-keys ("legible%3:00:00::")
   :comment "(readable, legible)"
   )
 
 (define-type ONT::not-readable-val
-  :parent ONT::readability-val
+  :parent ONT::can-not-be-done-val ;readability-val
   :wordnet-sense-keys ("illegible%3:00:00::")
   :comment "(unreadable, illegible)"
   )
@@ -6057,15 +6233,17 @@
   )
 
 (define-type ONT::transferable-val
-  :parent ONT::transferability-val
+  :parent ONT::can-be-done-val ;transferability-val
   :wordnet-sense-keys ("alienable%3:00:00::")
   :comment "(transferable, alienable)"
+  :sem (F::abstr-obj (F::scale ont::transferability-scale) (f::orientation f::pos))
   )
 
 (define-type ONT::not-transferable-val
-  :parent ONT::transferability-val
+  :parent ONT::can-not-be-done-val ;transferability-val
   :wordnet-sense-keys ("inalienable%3:00:00::" "unalienable%3:00:00::")
   :comment "(nontransferable, inalienable)"
+  :sem (F::abstr-obj (F::scale ont::transferability-scale) (f::orientation f::neg))
   )
 
 (define-type ONT::permeability-val
@@ -6074,15 +6252,17 @@
   )
 
 (define-type ONT::permeable-val
-  :parent ONT::permeability-val
+  :parent ONT::can-be-done-val ;permeability-val
   :wordnet-sense-keys ("leaky%3:00:00::" "permeable%3:00:00::" "pervious%3:00:00::")
   :comment "(permeable, leaky)"
+  :sem (F::abstr-obj (F::scale ont::permeability-scale) (f::orientation f::pos))
   )
 
 (define-type ONT::not-permeable-val
-  :parent ONT::permeability-val
+  :parent ONT::can-not-be-done-val ;permeability-val
   :wordnet-sense-keys ("impervious%3:00:00::" "imperviable%3:00:00::" "tight%3:00:02::" "impermeable%3:00:00::")
   :comment "(impermeable, impervious)"
+  :sem (F::abstr-obj (F::scale ont::permeability-scale) (f::orientation f::neg))
   )
 
 (define-type ONT::changeability-val
@@ -6091,17 +6271,19 @@
   )
 
 (define-type ONT::changeable-val
-  :parent ONT::changeability-val
+  :parent ONT::can-be-done-val ;changeability-val
   :wordnet-sense-keys ("variable%3:00:00::" "mutable%3:00:00::" "changeable%3:00:04::" "modifiable%3:00:00::" "unmodifiable%3:00:00::" "changeable%3:00:00::" "changeful%3:00:00::" "alterable%3:00:00::")
   :comment "(modifiable, changeable)"
+  :sem (F::abstr-obj (F::scale ont::changeability-scale) (f::orientation f::pos))
   )
 
 (define-type ONT::not-changeable-val
-  :parent ONT::changeability-val
+  :parent ONT::can-not-be-done-val ;changeability-val
   :wordnet-sense-keys ("invariable%3:00:00::" "immutable%3:00:00::" "changeless%3:00:04::" "inalterable%3:00:00::")
   :comment "(unchangeable, unmodifiable)"
+  :sem (F::abstr-obj (F::scale ont::changeability-scale) (f::orientation f::neg))
   )
-
+|#
 (define-type ONT::adaptability-val
   :parent ONT::evaluation-attribute-val ;can-be-done-val
   :comment "(adaptable)"
