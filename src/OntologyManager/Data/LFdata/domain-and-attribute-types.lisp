@@ -2191,11 +2191,18 @@
 (define-type ont::can-be-done-scale
  :sem (F::abstr-obj (F::scale ONT::CAN-BE-DONE-SCALE))
  :parent ont::ordered-domain ;process-property-scale
+ :wordnet-sense-keys ("separability%1:26:00") ;Added separability%1:26:00 as an example of this general category, we can also create a separate category ont::separability-scale if needed
 )
 
 ;; accessibility - same thing as availability??
 (define-type ont::accessibility-scale
  :sem (F::abstr-obj (F::scale ONT::ACCESSIBILITY-SCALE))
+ :parent ont::can-be-done-scale
+)
+
+;; adhearability 
+(define-type ont::adhearability-scale
+ :sem (F::abstr-obj (F::scale ONT::ADHEARABILITY-SCALE))
  :parent ont::can-be-done-scale
 )
 
@@ -2308,6 +2315,12 @@
  :sem (F::abstr-obj (F::scale ONT::REPRODUCIBILITY-SCALE))
  :parent ont::can-be-done-scale ;information-property-scale
  :wordnet-sense-keys ("reproducibility%1:07:00")
+)
+
+;; surmountability
+(define-type ont::surmountability-scale
+ :sem (F::abstr-obj (F::scale ONT::SURMOUNTABILITY-SCALE))
+ :parent ont::can-be-done-scale
 )
 
 ;; transferability

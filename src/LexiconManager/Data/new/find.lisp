@@ -77,6 +77,11 @@
      (TEMPL AGENT-FORMAL-XP-TEMPL (xp (% W::cp (W::ctype (? ct W::s-if)))))
      )
     
+     ((EXAMPLE "she found the matching socks")
+     (LF-PARENT ONT::find)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
+     )
+
     (
 
      (LF-PARENT ONT::determine)

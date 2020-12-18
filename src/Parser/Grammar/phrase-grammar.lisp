@@ -3962,7 +3962,7 @@
 	      (& (?!dobj-map (% *PRO* (status ont::kind) (var ?v-n) (class ?nc) (constraint ?nr) (sem ?sem)))
 		 (?reln ?subjvar) ;(?dobj-map ?dobj)
 		 )))))
-     -ag+obj-hyphen> 1
+     -adj-ing+obj-hyphen> 1
      (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
       (sem ?sem) (relc -) (abbrev -) (gap -) (agr 3s)
 	 )
@@ -3986,7 +3986,7 @@
 	      (& (?!dobj-map (% *PRO* (status ont::kind) (var ?v-n) (class ?nc) (constraint ?nr) (sem ?sem)))
 		 (?reln ?subjvar) ;(?dobj-map ?dobj)
 		 )))))
-     -adj-ing+obj> 1
+     -adj-ing+obj> .98 ;1
      (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
       (sem ?sem) (relc -) (abbrev -) (gap -) (agr 3s)
 	 )

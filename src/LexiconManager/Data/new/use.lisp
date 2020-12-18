@@ -12,11 +12,13 @@
      (example "use your head")
      (SEM (F::ASPECT F::DYNAMIC))
      )
+    #|
     ((LF-Parent ont::use)
      (example "a battery uses a chemical reaction to maintain voltage" "the engine uses gasoline")
      (meta-data :origin (beetle2 mobius) :entry-date 20080218 :change-date nil :comments pilot1)
      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
+    |#
     )
    )
 ))

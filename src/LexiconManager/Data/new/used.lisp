@@ -12,11 +12,13 @@
       (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
       (meta-data :origin csli-ts :entry-date 20070320 :change-date nil :comments nil)
       )
+     #|
      ((LF-PARENT ont::habitual)
       (example "the meetings used to drive them crazy")
       (TEMPL AGENT-FORMAL-SUBJCONTROL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
       (meta-data :origin csli-ts :entry-date 20070320 :change-date nil :comments nil)
       )
+     |#
      )
     )
 ))
