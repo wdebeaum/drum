@@ -7,7 +7,7 @@
  :words (
   (W::LETTER
    (SENSES
-    ((LF-PARENT  ONT::linguistic-object)
+    ((LF-PARENT  ONT::linguistic-component) ;linguistic-object)
      (example "what are the letters of the alphabet")
      )
     ((LF-PARENT ONT::letter-mail)

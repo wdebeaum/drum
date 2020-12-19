@@ -6,7 +6,7 @@
  :words (
   (W::grammar
    (SENSES
-    ((LF-PARENT ONT::linguistic-object)
+    ((LF-PARENT ONT::linguistic-component) ;linguistic-object)
      (EXAMPLE "the grammar of the language")
      (meta-data :origin task-learning :entry-date 20050926 :change-date nil :wn ("grammar%1:09:00") :comments nil)
      )

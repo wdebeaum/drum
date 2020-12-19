@@ -917,6 +917,13 @@
  :comment "bold and daring; forceful approach to challenge"
 )|#
 
+;; competitiveness
+(define-type ont::competitiveness-scale
+ :sem (F::abstr-obj (F::scale ONT::COMPETITIVENESS-SCALE))
+ :parent ont::behavioral-scale
+ :wordnet-sense-keys ("competitiveness%1:07:00")
+)
+
 ;; courage and bravery
 (define-type ont::courage-scale
  :sem (F::abstr-obj (F::scale ONT::COURAGE-SCALE))

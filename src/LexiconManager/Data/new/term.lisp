@@ -14,7 +14,7 @@
      (preference 0.98)
      )
     (;(LF-PARENT ONT::Mathematical-term)
-     (LF-PARENT ONT::linguistic-object)
+     (LF-PARENT ONT::linguistic-component) ;linguistic-object)
      (TEMPL count-pred-templ)
      (meta-data :origin lam :entry-date 20050706 :change-date nil :wn ("term%1:09:00" "term%1:10:01") :comments nil)
      )

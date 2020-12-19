@@ -28,3 +28,16 @@
    )
 ))
 
+(define-words :pos W::v
+ :words (
+  ((W::dig (W::through))
+   (wordfeats (W::morph (:forms (-vb) :past W::dug)))
+   (SENSES
+    ((LF-PARENT ONT::physical-scrutiny)
+     (SEM (F::Aspect F::unbounded) (F::Time-span F::extended))
+     (example "he dug through the papers")
+     (TEMPL AGENT-NEUTRAL-XP-TEMPL)
+     )
+    )
+   )
+))

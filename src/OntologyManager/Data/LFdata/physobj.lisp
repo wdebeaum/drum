@@ -24,7 +24,7 @@
 )
 
 (define-type ONT::natural-object
-    :wordnet-sense-keys ("natural_object%1:03:00" "actinoid%1:27:00::" "rare_earth%1:27:00" "galaxy%1:14:00" "galaxy%1:14:01" "oort_cloud%1:14:00")
+    :wordnet-sense-keys ("actinoid%1:27:00::" "galaxy%1:14:00" "galaxy%1:14:01" "natural_object%1:03:00" "nodule%1:17:00" "oort_cloud%1:14:00" "rare_earth%1:27:00")
     :parent ONT::PHYS-OBJECT
     :sem (F::Phys-obj (F::origin F::natural)(F::spatial-abstraction (? sa F::spatial-point F::spatial-region)))
     )
@@ -2273,7 +2273,7 @@
 (define-type ONT::internal-body-part
     :parent ONT::BODY-PART
     :sem (F::Phys-obj (F::intentional -))
-    :wordnet-sense-keys ("digestive_system%1:08:00" "somatic_cell%1:08:00" "tract%1:08:01" "vocal_cord%1:08:00" "brain%1:08:00" "blood_vessel%1:08:00" "connective_tissue%1:08:00" "organ%1:08:00" "cavity%1:08:00" "duct%1:08:00" "abdomen%1:08:00" "stomach%1:08:00" "lymphatic_tissue%1:08:00")
+    :wordnet-sense-keys ("abdomen%1:08:00" "blood_vessel%1:08:00" "brain%1:08:00" "cavity%1:08:00" "connective_tissue%1:08:00" "digestive_system%1:08:00" "duct%1:08:00" "lymphatic_tissue%1:08:00" "mind%1:09:00" "organ%1:08:00" "somatic_cell%1:08:00" "stomach%1:08:00" "tract%1:08:01" "vocal_cord%1:08:00")
     )
 
 (define-type ONT::CELL-PART

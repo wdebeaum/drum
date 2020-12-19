@@ -8,7 +8,7 @@
 	 (w::expression
 	  (senses
 	   (;(LF-parent ONT::Mathematical-term) 
-	    (LF-PARENT ONT::linguistic-object)
+	    (LF-PARENT ONT::linguistic-component) ;inguistic-object)
 	    ;(templ other-reln-templ)
 	    (TEMPL count-pred-templ)
 	    (meta-data :origin lam :entry-date 20050420 :change-date nil :comments lam-initial)

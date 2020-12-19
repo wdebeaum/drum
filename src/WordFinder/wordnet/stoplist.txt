@@ -3712,6 +3712,8 @@ get_over%2:36:00::
 get_over%2:38:00::
 get_well%2:30:00::
 go_home%2:38:00::
+go_out%2:38:00::
+get_out%2:38:01::
 hang_up%2:35:01::
 heat_up%2:30:00::
 heat_up%2:30:01::

@@ -1449,7 +1449,7 @@
 )
 
 (define-type ONT::Linguistic-object
- :wordnet-sense-keys ("language_unit%1:10:00" "linguistic_unit%1:10:00")
+ ;:wordnet-sense-keys ("language_unit%1:10:00" "linguistic_unit%1:10:00")
  :parent ONT::mental-construction
 ; :sem (F::Abstr-obj (F::information F::data))
  )
@@ -1466,16 +1466,24 @@
  :parent ont::linguistic-object
  )
 
+#|
 (define-type ont::question
     :wordnet-sense-keys ("question%1:10:00")
     :parent ont::linguistic-object
     )
+|#
 
 ;; prefix, suffix
 (define-type ont::linguistic-component
  :parent ont::linguistic-object
  :arguments ((:REQUIRED ONT::FIGURE (F::abstr-obj (f::information f::information-content))))
+ :wordnet-sense-keys ("conjugation%1:14:01" "declension%1:14:00" "grammatical_category%1:10:00" "lexeme%1:10:00" "linguistic_relation%1:24:00" "linguistic_unit%1:10:00" "morpheme%1:10:00" "phone%1:10:00" "syllable%1:10:00")
  )
+
+(define-type ont::question
+    :wordnet-sense-keys ("question%1:10:00")
+    :parent ont::linguistic-component ;linguistic-object
+    )
 
 ;; html, java, etc.
 (define-type ont::computer-language
@@ -1503,12 +1511,14 @@
     :comment "a textual symbol to represent information"
     )
 
+#|
 ;; letters of the alphabet
 (define-type ONT::grammatical-category
     :wordnet-sense-keys ("grammatical_category%1:10:00" "declension%1:14:00" "conjugation%1:14:01"
 							"linguistic_relation%1:24:00")
     :parent ONT::linguistic-object
     )
+|#
 
 ;; alpha, beta, ...
 (define-type ONT::greek-letter-symbol
@@ -1570,7 +1580,7 @@
  :arguments ((:REQUIRED ont::FIGURE ((? lo f::phys-obj f::abstr-obj)))
 	      (:REQUIRED ONT::EXTENT (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
             )
- :wordnet-sense-keys ("price%1:07:00" "price%1:07:01" "price%1:07:02" "price%1:21:00" "price%1:21:02")
+ :wordnet-sense-keys ("charge%1:21:02" "price%1:07:00" "price%1:07:01" "price%1:07:02" "price%1:21:00" "price%1:21:02")
  )
 
 #|

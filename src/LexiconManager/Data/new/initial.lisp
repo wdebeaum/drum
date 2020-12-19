@@ -6,7 +6,7 @@
  :words (
   (W::initial
    (SENSES
-    ((LF-PARENT ONT::linguistic-object)
+    ((LF-PARENT ONT::linguistic-component) ;linguistic-object)
      (EXAMPLE "enter the initials for the city")
      (meta-data :origin plow :entry-date 20060706 :change-date nil :wn ("initial%1:10:00") :comments pq)
      )
