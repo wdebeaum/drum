@@ -2,6 +2,7 @@
 ;;;; W::calm
 ;;;;
 
+#|
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
 ((W::calm (w::down))
@@ -22,6 +23,7 @@
     )
    )
 ))
+|#
 
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (

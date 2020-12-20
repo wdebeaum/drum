@@ -3662,6 +3662,9 @@ build_up%2:30:06::
 bundle_up%2:35:00::
 burn_down%2:30:02::
 call_up%2:32:00::
+calm_down%2:30:03::
+calm_down%2:37:00::
+calm_down%2:37:01::
 change_over%2:30:01::
 change_over%2:30:02::
 check_out%2:31:00::
