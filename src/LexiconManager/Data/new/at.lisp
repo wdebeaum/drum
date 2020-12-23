@@ -72,6 +72,9 @@
      (preference .991) ; slightly prefer this even if there is a semantic violation for this (and all the other senses)
      )
 
+    ((LF-PARENT ONT::PURCHASE-COST)
+     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     )
     
     #|
     ((LF-PARENT ONT::spatial-LOC)

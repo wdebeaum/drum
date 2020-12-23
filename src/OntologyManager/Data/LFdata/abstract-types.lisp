@@ -1013,6 +1013,13 @@
  :sem (F::Situation)
  )
 
+(define-type ONT::order-tranquility
+ :wordnet-sense-keys ("order%1:26:00")
+ :parent ont::situation
+ :arguments ((:OPTIONAL ONT::assoc-with)
+             )
+ )
+
 (define-type ONT::trouble
  :wordnet-sense-keys ("impairment%1:11:00" "harm%1:11:01" "damage%1:11:00" "problem%1:09:00" "trouble%1:09:00" "trouble%1:11:00" "disorder%1:26:00" "danger%1:26:01")
  :parent ont::situation

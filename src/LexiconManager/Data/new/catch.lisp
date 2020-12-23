@@ -17,7 +17,7 @@
 (define-words :pos W::V 
  :words (
   (W::catch
-   (wordfeats (W::morph (:forms (-vb) :past W::caught :ing w::catching :nom w::catch)))
+   (wordfeats (W::morph (:forms (-vb) :past W::caught :ing w::catching :nom w::catch :agentnom w::catcher)))
    (SENSES
     ((meta-data :origin trips :entry-date 20060414 :change-date 20090430 :comments nil :vn ("get-13.5.1") :wn ("catch%2:35:00" "catch%2:35:01" "catch%2:35:03"))
      (lf-parent ont::capture)

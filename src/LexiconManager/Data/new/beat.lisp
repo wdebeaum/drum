@@ -30,6 +30,12 @@
      (meta-data :origin ptb :entry-date 20100526 :change-date nil :comments nil :wn ("beat%2:35:01"))
      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
+
+    ((example "he beat her in the race")
+     (LF-PARENT ont::win-compete)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
+     )
+
     )
    )
 ))

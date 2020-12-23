@@ -3240,7 +3240,7 @@
 
 ;; play (for asma)
 (define-type ont::play
-    :wordnet-sense-keys ("play%2:33:00" "play%2:41:03" "play%2:41:00")
+    :wordnet-sense-keys ("playing%1:04:00" "play%2:33:00" "play%2:41:03" "play%2:41:00")
     ;:parent ont::execute
     :parent ont::intentionally-act
     )
