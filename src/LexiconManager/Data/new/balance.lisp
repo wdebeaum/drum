@@ -22,7 +22,7 @@
      (meta-data :origin calo :entry-date 20050425 :change-date nil :comments projector-purchasing)
      )
     ((EXAMPLE "the cup is balancing on the table")
-     (LF-PARENT ONT::BE-AT-LOC)
+     (LF-PARENT ONT::balance) ;BE-AT-LOC)
      (SEM (F::Aspect F::Stage-level) (F::Time-span F::Extended))
      (TEMPL neutral-templ)
      )

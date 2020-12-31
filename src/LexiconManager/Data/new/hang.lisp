@@ -21,7 +21,7 @@
    (wordfeats (W::morph (:forms (-vb) :past W::hung :pastpart W::hung)))   
    (SENSES
     ((EXAMPLE "he was hanging from the tree")
-     (LF-PARENT ONT::BE-AT-LOC)
+     (LF-PARENT ONT::hang-suspend-dangle) ;BE-AT-LOC)
      (SEM (F::Aspect F::Stage-level) (F::Time-span F::Extended))
      (TEMPL neutral-templ)
      )

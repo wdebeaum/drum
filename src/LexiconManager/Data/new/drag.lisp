@@ -13,7 +13,7 @@
      (example "drag the river")
      (PREFERENCE 0.96)
      )
-    ((LF-PARENT ONT::cause-move)
+    ((LF-PARENT ONT::drag-haul) ;cause-move)
      (example "drag the triangle")
      (SEM (F::Cause F::Agentive) (F::Aspect F::unbounded) (F::Time-span F::extended))
      (meta-data :origin fruitcarts :entry-date 20050331 :change-date nil :comments fruitcart-11-1 :vn ("carry-11.4") :wn ("drag%2:35:00" "drag%2:35:01"))

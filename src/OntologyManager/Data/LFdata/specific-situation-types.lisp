@@ -434,6 +434,11 @@
     :parent ONT::MOVE
     )
 
+(define-type ont::drag-haul
+  :parent ont::CAUSE-MOVE
+  :wordnet-sense-keys ("pull%2:35:00")
+  )
+
 (define-type ont::stir
   :parent ont::CAUSE-MOVE ;move
   :wordnet-sense-keys ("stir%2:35:04" "stir%2:38:01")
@@ -1012,7 +1017,7 @@
 
 
 (define-type ONT::PULL
- :wordnet-sense-keys ("force%2:35:01" "draw%2:35:03" "pull%2:35:00" "pull%2:35:04")
+ :wordnet-sense-keys ("pull%2:35:04")
  :parent ONT::apply-force
  :arguments ((:optional ONT::source (F::abstr-obj (f::type ONT::SOURCE-RELN))))
  )
@@ -1616,7 +1621,7 @@
 
 ;;; When something appears, there are no agents
 (define-type ONT::appear
- :wordnet-sense-keys ("appear%2:30:00" "appear%2:30:02" "break%2:32:05" "come_out%2:32:00" "materialize%2:30:00" "arise%2:42:00")
+ :wordnet-sense-keys ("appear%2:30:00" "appear%2:30:02" "arise%2:42:00" "break%2:32:05" "come_out%2:32:00" "materialize%2:30:00" "rise%2:42:00")
  :parent ONT::event-of-undergoing-action
  :comment "an entity comes into existence or comes into view"
  :sem (F::Situation (F::Cause F::Phenomenal))
@@ -5057,17 +5062,25 @@
 ;; for positionals: lie, stand
 (define-type ONT::BE-AT-LOC
  :comment "relations that indicate an postural attitude as well as a location"
- :wordnet-sense-keys ("hang%2:35:03" "hang%2:35:05" "hang%2:35:06" "hang%2:42:01" "lie%2:35:00" "lie%2:42:00" "rise%2:42:00" "settle%2:30:00" "sit%2:35:00" "sit_down%2:35:03" "stand%2:35:00" "straddle%2:42:01" "trail%2:35:05")
+ :wordnet-sense-keys ("lie%2:35:00" "lie%2:42:00" "sit%2:35:00" "sit_down%2:35:03" "stand%2:35:00" "straddle%2:42:01")
  :parent ONT::BE-AT
  :sem (F::Situation (F::aspect F::stage-level))
  :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj)) ;; formal is restricted to phys-obj; otherwise same as be-at
              )
  )
 
+(define-type ONT::balance
+ :parent ONT::be-at-loc
+ )
 
 ;; float
 (define-type ONT::float
  :wordnet-sense-keys ("hover%2:38:01" "float%2:38:01")
+ :parent ONT::be-at-loc
+ )
+
+(define-type ONT::hang-suspend-dangle
+ :wordnet-sense-keys ("hang%2:35:03" "hang%2:35:05" "hang%2:35:06" "hang%2:42:01")
  :parent ONT::be-at-loc
  )
 
