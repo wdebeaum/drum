@@ -9,7 +9,7 @@
    (wordfeats (W::morph (:forms (-vb) :past W::lay :pastpart W::lain :ing W::lying)))
    (SENSES
     ((EXAMPLE "The stick was lying in the road")
-     (LF-PARENT ONT::BE-AT-LOC)
+     (LF-PARENT ONT::lie) ;BE-AT-LOC)
      (SEM (F::Aspect F::Stage-level) (F::Time-span F::Extended))
      (TEMPL neutral-templ)
      )

@@ -26,7 +26,7 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("put_spatial-9.2-1"))
      (EXAMPLE "The tree was standing on the hill")
-     (LF-PARENT ONT::BE-AT-LOC) 
+     (LF-PARENT ONT::stand) ;BE-AT-LOC) 
      (SEM (F::Aspect F::Stage-level) (F::Time-span F::Extended))
      (TEMPL neutral-templ)
      )

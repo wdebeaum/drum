@@ -34,7 +34,7 @@
    (SENSES
     ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("put_spatial-9.2-1"))
      (EXAMPLE "the cup is sitting on the table")
-     (LF-PARENT ONT::BE-AT-LOC)
+     (LF-PARENT ONT::sit) ;BE-AT-LOC)
      (SEM (F::Aspect F::Stage-level) (F::Time-span F::Extended))
      (TEMPL neutral-templ)
      )

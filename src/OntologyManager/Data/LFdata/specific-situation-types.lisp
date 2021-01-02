@@ -5062,7 +5062,7 @@
 ;; for positionals: lie, stand
 (define-type ONT::BE-AT-LOC
  :comment "relations that indicate an postural attitude as well as a location"
- :wordnet-sense-keys ("lie%2:35:00" "lie%2:42:00" "sit%2:35:00" "sit_down%2:35:03" "stand%2:35:00" "straddle%2:42:01")
+ :wordnet-sense-keys ("lie%2:42:00")
  :parent ONT::BE-AT
  :sem (F::Situation (F::aspect F::stage-level))
  :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj)) ;; formal is restricted to phys-obj; otherwise same as be-at
@@ -5081,6 +5081,21 @@
 
 (define-type ONT::hang-suspend-dangle
  :wordnet-sense-keys ("hang%2:35:03" "hang%2:35:05" "hang%2:35:06" "hang%2:42:01")
+ :parent ONT::be-at-loc
+ )
+
+(define-type ONT::lie
+ :wordnet-sense-keys ("lie%2:35:00")
+ :parent ONT::be-at-loc
+ )
+
+(define-type ONT::sit
+ :wordnet-sense-keys ("sit%2:35:00" "straddle%2:42:01")
+ :parent ONT::be-at-loc
+ )
+
+(define-type ONT::stand
+ :wordnet-sense-keys ("stand%2:35:00")
  :parent ONT::be-at-loc
  )
 
