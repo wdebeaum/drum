@@ -13,7 +13,7 @@
      )
 
     ((LF-PARENT ONT::DIRECTION-OVER) ;OVER-TO) ;DIRECTION)
-     (TEMPL PRED-S-POST-TEMPL)
+     (TEMPL particle-templ) ;PRED-S-POST-TEMPL)
      (EXAMPLE "he threw the ball over (to me)" "hand it over (to them)" "got his point over" "he won them over (to the other side)" "invite some friends over (to your place)" "he fell over" "he turned his cards over" "she knocked the lamp over")
      ) ;Removed as this is covered by ont::over-to below.
     

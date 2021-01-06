@@ -2,7 +2,7 @@
 ;;;; W::insert
 ;;;;
 
-(define-words :pos W::v :TEMPL AGENT-AFFECTED-RESULT-ADVBL-OBJCONTROL-TEMPL
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL ;AGENT-AFFECTED-RESULT-ADVBL-OBJCONTROL-TEMPL
  :words (
   (W::insert
    (wordfeats (W::morph (:forms (-vb) :nom w::insertion)))

@@ -3840,6 +3840,8 @@ young_person%1:18:00::
 young_woman%1:18:00::
 zip_up%2:35:00::
 
+roller_coaster%1:26:00::
+
 pile_up%2:35:00::
 heap_up%2:35:00::
 stack_up%2:35:00::

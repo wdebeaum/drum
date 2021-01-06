@@ -126,7 +126,7 @@
      (example "I got it for five dollars")
      (TEMPL BINARY-CONSTRAINT-S-TEMPL)
      )
-    ((LF-PARENT ONT::COST-RELATION)
+    ((LF-PARENT ONT::PURCHASE-COST) ;COST-RELATION)
      (meta-data :origin calo :entry-date 20040423 :change-date nil :comments calo-y1v4)
      (example "I want a computer for five dollars")
      (TEMPL BINARY-CONSTRAINT-NP-TEMPL)

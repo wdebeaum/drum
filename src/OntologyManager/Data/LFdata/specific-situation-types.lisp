@@ -4111,7 +4111,7 @@
 
 ; brighten
 (define-type ont::brighten
- :wordnet-sense-keys ("brighten%2:30:01")
+ :wordnet-sense-keys ("brighten%2:30:01" "light%2:30:00" "light_up%2:43:02")
  :parent ont::change-in-visual-scale
  :arguments((:essential ONT::scale (f::abstr-obj (F::scale ont::luminosity-scale) (F::orientation f::pos))))
  :sem (F::SITUATION  (F::Aspect F::bounded) (F::Time-span F::extended))
@@ -5577,7 +5577,8 @@
 ;; GUM change new type 20121030
 (define-type ont::light-up-change ;burn-out-light-up-change
   :parent ont::start-object ;change-device-state
-  :wordnet-sense-keys ("light_up%2:34:00")  
+  :wordnet-sense-keys ("light%2:43:00" "light_up%2:34:00")
+  :comment "start an object by igniting it, e.g., light a cigarette"  
 )
 
 #|

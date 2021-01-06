@@ -1533,6 +1533,7 @@
  :wordnet-sense-keys ("alpha%1:10:00" "beta%1:10:00" "chi%1:10:00" "delta%1:10:00" "epsilon%1:10:00" "eta%1:10:00" "gamma%1:10:00" "iota%1:10:00" "kappa%1:10:00" "lambda%1:10:00" "mu%1:10:00" "nu%1:10:00" "omega%1:10:00" "omicron%1:10:00" "phi%1:10:00" "pi%1:10:00" "psi%1:10:00" "rho%1:10:00" "sigma%1:10:00" "tau%1:10:00" "theta%1:10:00" "upsilon%1:10:00" "xi%1:10:00" "zeta%1:10:00")
 )
 
+#|
 (define-type ONT::COST-RELATION
  :parent ONT::predicate
  :sem (F::Abstr-obj (f::scale ont::money-scale) (f::information f::information-content))
@@ -1540,11 +1541,12 @@
 	     (:REQUIRED ONT::GROUND (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
              )
  )
+|#
 
 ;; I want to buy a computer for under 1000 dollars
 ;; we want vp attachment here, but not to static verbs
 (define-type ONT::PURCHASE-COST
-  :parent ONT::COST-RELATION
+  :parent ONT::predicate ;COST-RELATION
   :arguments ((:REQUIRED ont::FIGURE (f::situation (f::aspect f::dynamic)))
 	      (:REQUIRED ONT::GROUND (F::Abstr-obj (F::Scale Ont::money-scale) (f::object-function f::currency)))
              )
