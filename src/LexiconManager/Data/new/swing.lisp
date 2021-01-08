@@ -11,6 +11,11 @@
      (LF-PARENT ONT::move-back-and-forth)
      (TEMPL affected-templ) ; like move,bounce
       )
+    (
+     (LF-PARENT ONT::move-back-and-forth)
+     (TEMPL agent-affected-xp-np-templ)
+     (example "He swung the cat.")
+      )
     )
    )
   ))

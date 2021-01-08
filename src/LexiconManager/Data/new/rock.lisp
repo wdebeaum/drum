@@ -22,6 +22,11 @@
      (example "the ship rocked")
      (TEMPL affected-templ)
      )
+    (
+     (LF-PARENT ONT::move-back-and-forth)
+     (TEMPL agent-affected-xp-np-templ)
+     (example "He rocked the cradle.")
+      )
     )
    )
 ))
