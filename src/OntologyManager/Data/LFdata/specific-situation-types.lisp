@@ -3433,7 +3433,7 @@
 
 (define-type ONT::rise
  :wordnet-sense-keys ("rise%2:38:00")
- :parent ONT::event-of-undergoing-action
+ :parent ONT::move-upward ;event-of-undergoing-action
  :arguments ((:OPTIONAL ONT::Agent)
              )
  )
