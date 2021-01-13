@@ -5062,7 +5062,7 @@
 ;; for positionals: lie, stand
 (define-type ONT::BE-AT-LOC
  :comment "relations that indicate an postural attitude as well as a location"
- :wordnet-sense-keys ("lie%2:42:00")
+ :wordnet-sense-keys ("lie%2:42:00" "rest%2:35:00")
  :parent ONT::BE-AT
  :sem (F::Situation (F::aspect F::stage-level))
  :arguments ((:ESSENTIAL ONT::neutral (F::Phys-obj)) ;; formal is restricted to phys-obj; otherwise same as be-at
@@ -5831,7 +5831,7 @@
 (define-type ONT::body-movement-self
     :comment "Verbs of posture that can be independent of any location: e.g., bow is not with respect to a location, but to sit it must be somewhere"
  :parent ont::body-movement
- :wordnet-sense-keys ("bend%2:35:08" "bend%2:38:03" "stand_up%2:38:00")
+ :wordnet-sense-keys ("bend%2:35:08" "bend%2:38:03" "bow%2:32:00" "bow%2:38:00" "rise%2:38:05" "slouch%2:38:01" "slump%2:38:00" "stand_up%2:38:00")
  )
 
 ;; stretch  20120523 GUM change new type
