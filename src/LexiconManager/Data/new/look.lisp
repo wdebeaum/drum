@@ -44,11 +44,21 @@
   (W::look
    (wordfeats (W::morph (:forms (-vb) :nom W::look)))
    (SENSES
-    ((LF-PARENT ONT::APPEARS-TO-HAVE-PROPERTY)
+    (;(LF-PARENT ONT::APPEARS-TO-HAVE-PROPERTY)
+     (LF-PARENT ONT::SEEM)
      (example "he looks happy (to me)")
-     (TEMPL NEUTRAL-FORMAL-SUBJCONTROL-TEMPL)
+     ;(TEMPL NEUTRAL-FORMAL-SUBJCONTROL-TEMPL)
+     (TEMPL NEUTRAL-FORMAL-PRED-SUBJCONTROL-TEMPL)
      )
     ;; but shouldn't this really be an agent??
+
+
+    (;(LF-PARENT ONT::APPEARS-TO-HAVE-PROPERTY)
+     (LF-PARENT ONT::SEEM)
+     (example "he looks to be happy/the situation looks to be out of control")
+     (TEMPL NEUTRAL-FORMAL-CP-SUBJCONTROL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
+     (SYNTAX (w::exclude-passive +))
+     )
     
     ((meta-data :origin trips :entry-date 20060414 :change-date nil :comments nil :vn ("peer-30.3") :wn ("look%2:39:00" "look%2:39:02"))
      (LF-PARENT ONT::physical-scrutiny)
@@ -78,9 +88,11 @@
   ((W::look W::like)
    (SENSES
     ;;;; It looks like we will have to go
-    ((LF-PARENT ONT::POSSIBLY-true)
-     (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
+    (;(LF-PARENT ONT::POSSIBLY-true)
+     (LF-PARENT ONT::SEEM)
+     ;(SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
+     ;(TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
+     (TEMPL EXPLETIVE-FORMAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
      )
     ((meta-data :origin calo :entry-date 20040421 :change-date nil :comments caloy1v4)
      (LF-PARENT ONT::resemble)

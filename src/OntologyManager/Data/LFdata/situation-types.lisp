@@ -925,13 +925,13 @@
 )
 |#
 
-
+#|
 (define-type ONT::possibly-true
  ;:wordnet-sense-keys ("seem%2:39:01")
  :wordnet-sense-keys ("appear%2:39:01")
  :parent ONT::event-of-state
  :arguments ((:REQUIRED ONT::formal (F::situation))))
-
+|#
 
 ;; we have lines down; we have a book ready for you
 ;; 10/2009 isolating this from ont::have-property to be able to distinguish between "have" and "be" in generation
@@ -991,10 +991,15 @@
  :sem (F::SITUATION (F::Aspect F::unbounded) (F::Time-span F::Extended))
  )
 
-(define-type ONT::APPEARS-TO-HAVE-PROPERTY
+; merging ONT::APPEARS-TO-HAVE-PROPERTY and ONT::POSSIBLY-TRUE
+(define-type ONT::SEEM ;ONT::APPEARS-TO-HAVE-PROPERTY
  :wordnet-sense-keys ("look%2:39:01" "seem%2:39:02" "seem%2:42:00" "sound%2:39:06" "taste%2:39:02");"seem%2:39:01" 
- :parent ONT::HAVE-PROPERTY
- :sem (F::situation (F::Aspect F::stage-level) (F::Time-span F::extended))
+ ;:parent ONT::HAVE-PROPERTY
+ :parent ONT::EVENT-OF-STATE
+ :sem (F::situation (F::Aspect F::indiv-level) (F::Time-span F::extended))
+ :arguments ((:required ont::neutral1)
+	     (:required ont::formal ((? oc F::Abstr-obj F::Situation) (f::type (? t ONT::RELATION ONT::SITUATION-ROOT)))) ; seems happy, seems to like fish, seems to eat very fast
+	     )
  )
 
 ;;; predicates of comparison, e.g. equals, resembles
@@ -1205,10 +1210,11 @@
 (define-type ONT::be-inclined
     ;; 20120529 GUM change new parent
     :wordnet-sense-keys ("tend%2:42:01")
-    :parent ont::have-property
-    :arguments (
-		(:REQUIRED ONT::Formal ((? obj F::SITUATION F::ABSTR-OBJ) (f::intentional -)))
-		)
+    ;:parent ont::have-property
+    :parent ONT::EVENT-OF-STATE
+    :sem (F::situation (F::Aspect F::indiv-level) (F::Time-span F::extended))
+    :arguments ((:required ont::formal ((? oc F::Abstr-obj F::Situation) (f::type (? t ONT::RELATION ONT::SITUATION-ROOT)) (f::intentional -))) ; seems happy, seems to like fish, seems to eat very fast
+	     )
     )
 
 (define-type ONT::direct-at

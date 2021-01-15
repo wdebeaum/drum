@@ -5,6 +5,9 @@
   (load (make-pathname :directory '(:relative :up "config" "lisp")
 		       :name "trips")))
 
+(unless (find-package :dfc)
+  (load #!TRIPS"src;defcomponent;loader"))
+
 (unless (find-package :comm)
   (load #!TRIPS"src;Comm;defsys"))
 

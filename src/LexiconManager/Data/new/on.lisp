@@ -157,6 +157,12 @@
 	     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
 	     (PREFERENCE 0.975)
 	     )
+
+            ((LF-PARENT ONT::situated-in)
+             (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
+             (example "on a date")
+            )
+
 	    )
 	   )
 ))

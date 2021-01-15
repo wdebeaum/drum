@@ -18,11 +18,16 @@
  :words (
   (W::DATE
   (senses
-	   ((LF-PARENT ONT::FRUIT)	    
-	    (TEMPL COUNT-PRED-TEMPL)
-	    ;(preference .97)
-	    (preference .10)
-	    )
+    ((LF-PARENT ONT::FRUIT)	    
+     (TEMPL COUNT-PRED-TEMPL)
+     ;(preference .97)
+     (preference .10)
+    )
+
+    ((LF-PARENT ONT::social-event) ;gathering-event)
+     (TEMPL count-PRED-TEMPL)
+    )
+
 	   )
 )
 ))

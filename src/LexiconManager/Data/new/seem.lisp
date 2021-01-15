@@ -2,46 +2,66 @@
 ;;;; W::seem
 ;;;;
 
+
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   ((W::seem W::like)
    (SENSES
     ;;;; it seems like we will have to go
-    ((LF-PARENT ONT::POSSIBLY-true)
-     (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
+    (;(LF-PARENT ONT::POSSIBLY-true)
+     (LF-PARENT ONT::SEEM)
+     ;(SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
+     ;(TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
+     (TEMPL EXPLETIVE-FORMAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
+     (example "it seems like we will have to go")
      )
+    (;(LF-PARENT ONT::APPEARS-TO-HAVE-PROPERTY)
+     (LF-PARENT ONT::SEEM)
+     (example "he seems like a nice person")
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
+     (SYNTAX (w::exclude-passive +))
+     )    
     )
    )
 ))
+
 
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :tags (:base500)
  :words (
   (W::seem
    (SENSES
-    ((LF-PARENT ONT::APPEARS-TO-HAVE-PROPERTY)
+    (;(LF-PARENT ONT::APPEARS-TO-HAVE-PROPERTY)
+     (LF-PARENT ONT::SEEM)
      (example "he seems happy")
      (TEMPL NEUTRAL-FORMAL-PRED-SUBJCONTROL-TEMPL)
      (SYNTAX (w::exclude-passive +))
      )
+    (;(LF-PARENT ONT::APPEARS-TO-HAVE-PROPERTY)
+     (LF-PARENT ONT::SEEM)
+     (example "he seems a nice person")
+     (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL)
+     (SYNTAX (w::exclude-passive +))
+     )
     ((EXAMPLE "It seems that he came")
-     (LF-PARENT ONT::POSSIBLY-true)
+     (LF-PARENT ONT::SEEM)
+     ;(LF-PARENT ONT::POSSIBLY-true)
      ;(LF-PARENT ONT::APPEARS-TO-HAVE-PROPERTY)
-     (SEM (F::Aspect F::stage-level))
-     (TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::cp (W::ctype W::s-finite))))
+     ;(TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::cp (W::ctype W::s-finite))))
+     (TEMPL EXPLETIVE-FORMAL-1-XP1-2-XP2-TEMPL)
      (SYNTAX (w::exclude-passive +))
      )
     ((EXAMPLE "there seems to be a truck on the corner")
      ;(LF-PARENT ONT::POSSIBLY-true)
-     (LF-PARENT ONT::APPEARS-TO-HAVE-PROPERTY)
-     (SEM (F::Aspect F::stage-level))
-     (TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::there))) (xp2 (% W::cp (W::ctype W::s-to))))
+     ;(LF-PARENT ONT::APPEARS-TO-HAVE-PROPERTY)
+     (LF-PARENT ONT::SEEM)
+     ;(TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::there))) (xp2 (% W::cp (W::ctype W::s-to))))
+     (TEMPL EXPLETIVE-FORMAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::there))) (xp2 (% W::cp (W::ctype W::s-to) (W::lf (% ?p (w::class ont::exists))))))     
      (SYNTAX (w::exclude-passive +))
      )
-    ((LF-PARENT ONT::APPEARS-TO-HAVE-PROPERTY)
+    (;(LF-PARENT ONT::APPEARS-TO-HAVE-PROPERTY)
+     (LF-PARENT ONT::SEEM)
      (example "he seems to be happy/the situation seems to be out of control")
-     (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
      (TEMPL NEUTRAL-FORMAL-CP-SUBJCONTROL-TEMPL (xp (% W::cp (W::ctype W::s-to))))
      (SYNTAX (w::exclude-passive +))
      )

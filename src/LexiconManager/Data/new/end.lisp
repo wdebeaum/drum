@@ -67,3 +67,14 @@
    )
   
 ))
+
+(define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
+ :words (
+  ((W::end w::up)
+   (SENSES
+    ((lf-parent ont::complete)
+     (example "he ended up throwing the ball")
+    )
+    )
+   )
+))

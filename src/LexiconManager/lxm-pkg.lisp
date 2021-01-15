@@ -9,6 +9,6 @@
   (load #!TRIPS"src;OntologyManager;om-pkg"))
 
 (defpackage :lxm
-  (:use :common-lisp :util :om)
+  (:use :common-lisp :util :om :dfc)
   (:nicknames :lexiconmanager))
 

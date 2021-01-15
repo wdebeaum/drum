@@ -26,12 +26,6 @@
  :words (
 (W::smell
    (SENSES
-     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("stimulus_subject-30.4") :wn ("smell%2:39:00" "smell%2:39:02"))
-     (LF-PARENT ONT::appears-to-have-property)
-     (example "it smells like trouble")
-     (TEMPL NEUTRAL-FORMAL-SUBJCONTROL-TEMPL) ; like look
-     (PREFERENCE 0.96)
-     )
     ((meta-data :origin calo :entry-date 20031230 :change-date nil :comments html-purchasing-corpus)
      (LF-PARENT ONT::ACTIVE-PERCEPTION)
      (SEM (F::Time-span F::extended))
@@ -47,3 +41,28 @@
    )
 ))
 
+(define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
+ :words (
+  ((W::smell W::like)
+   (SENSES
+    (;(LF-PARENT ONT::POSSIBLY-true)
+     (LF-PARENT ONT::SEEM)
+     ;(SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
+     ;(TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
+     (TEMPL EXPLETIVE-FORMAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
+     (EXAMPLE "It smells like something bad happened.")
+     )
+
+     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("stimulus_subject-30.4") :wn ("smell%2:39:00" "smell%2:39:02"))
+     ;(LF-PARENT ONT::appears-to-have-property)
+     (LF-PARENT ONT::SEEM)
+     (example "it smells like trouble")
+     ;(TEMPL NEUTRAL-FORMAL-SUBJCONTROL-TEMPL) ; like look
+     (TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::NP)))
+     (SYNTAX (w::exclude-passive +))
+     ;(PREFERENCE 0.96)
+     )
+    
+    )
+   )
+))

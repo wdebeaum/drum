@@ -9,9 +9,9 @@
     ((meta-data :origin calo-ontology :entry-date 20060609 :change-date nil :wn ("shower%1:06:00") :comments plow-req)
      (LF-PARENT ONT::fixture)
      )
-    ((meta-data :origin asma :entry-date 20111005)
-     (LF-PARENT ONT::shower)
-     )
+    ;((meta-data :origin asma :entry-date 20111005)
+    ; (LF-PARENT ONT::shower)
+    ; )
     ((LF-PARENT ONT::precipitation)
      (example "scattered showers")
      (meta-data :origin plow :entry-date 20060712 :change-date nil :wn ("shower%1:19:00") :comments plow-req)
@@ -29,6 +29,18 @@
      (LF-PARENT ONT::giving)
  ; like spray
      (example "shower them with roses")
+     )
+    )
+   )
+))
+
+(define-words :pos W::v :TEMPL AGENT-TEMPL
+ :words (
+  (W::shower
+   (wordfeats (W::morph (:forms (-vb) :past W::showered :ing W::showering :nom w::shower)))
+   (SENSES
+     ((LF-PARENT ONT::shower)
+     (example "he showered")
      )
     )
    )

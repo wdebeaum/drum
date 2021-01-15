@@ -1205,6 +1205,7 @@
 	     (atype (? atp central attributive-only predicative-only))
 	     ;; md 2008/17/07 eliminated cases with positive post-subcat, they should only happen when an adjective is looking for an argument after an np, not possible in the pred situation
 	     (post-subcat -) (how ?how)
+	     (subcat -) ; if there is a subcat, use ADJ-PRED-ONESUBCAT
 	     ))
       )
 

@@ -6,7 +6,7 @@
 ;;;;
 
 (defpackage :parser
-  (:use :common-lisp :util :ontologymanager :lexiconmanager :w)
+  (:use :common-lisp :util :ontologymanager :lexiconmanager :w :dfc)
   (:export
 #|| init-var-table  ;; (init-var-table): initializes the variable readtable
 	   read-value      ;; (read-value X), reads a value without resetting the current variable readtable

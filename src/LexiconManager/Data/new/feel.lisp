@@ -8,10 +8,12 @@
     (wordfeats (W::morph (:forms (-vb-pres-past-only) :past W::felt)))
    (SENSES
     ;;;; It feels like we will have to go
-    ((LF-PARENT ONT::possibly-true)
+    (;(LF-PARENT ONT::possibly-true)
+     (LF-PARENT ONT::SEEM)
      (meta-data :origin cardiac :entry-date 20090416 :change-date nil :comments speechtests)
-     (SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
-     (TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
+     ;(SEM (F::Aspect F::stage-level) (F::Time-span F::extended))
+     ;(TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
+     (TEMPL EXPLETIVE-FORMAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
      )
     ))
 ))
@@ -46,9 +48,11 @@
      (TEMPL EXPERIENCER-NEUTRAL-FORMAL-CP-OBJCONTROL-A-TEMPL (xp (% W::VP (W::vform W::base))))
      )
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("stimulus_subject-30.4") :wn ("feel%2:39:09" "feel%2:42:00"))
-     (LF-PARENT ONT::appears-to-have-property)
+     ;(LF-PARENT ONT::appears-to-have-property)
+     (LF-PARENT ONT::SEEM)
      (example "it feels good")
-     (TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
+     ;(TEMPL EXPLETIVE-NEUTRAL-1-XP1-2-XP2-TEMPL (xp1 (% W::NP (W::lex W::it))) (xp2 (% W::s (W::stype W::decl))))
+     (TEMPL EXPLETIVE-FORMAL-1-XP1-2-XP2-TEMPL (xp2 (% W::PRED)))
      )
     ;;;; I feel poorly
     ;;;; I feel like a coke

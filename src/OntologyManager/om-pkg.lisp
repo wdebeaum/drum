@@ -6,7 +6,7 @@
 ;;;;
 
 (defpackage :om ;;:ontologymanager
-  (:use :common-lisp :util)
+  (:use :common-lisp :util :dfc)
   (:nicknames :ontologymanager) ;;:om)
   ;; gf: 11/6/2003: Need to export these structure types since the LXM uses them
   (:export feature-list

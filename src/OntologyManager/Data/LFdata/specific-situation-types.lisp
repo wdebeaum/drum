@@ -3075,7 +3075,7 @@
 ; )
 
 (define-type ONT::cause-stimulate
- :wordnet-sense-keys ("energize%2:30:00" "fuel%2:37:00")
+ :wordnet-sense-keys ("energize%2:30:00" "fuel%2:37:00") 
  :parent ONT::cause-effect
  :arguments ((:ESSENTIAL ONT::affected ((? exp F::phys-obj f::abstr-obj f::situation) (f::intentional -)))
 	     ))
@@ -5436,6 +5436,7 @@
 		(:optional ONT::agent ((? cs f::situation f::phys-obj ))) ; (F::situation (F::cause f::force)))
 ;		(:optional ONT::Instrument (F::Phys-obj (F::intentional -)))
 		)
+    :wordnet-sense-keys ("reset%2:32:00")
     )
 
 (define-type ONT::Cure
@@ -5480,11 +5481,12 @@
  )
 
 (define-type ont::shower
-    :wordnet-sense-keys ("shower%1:04:00"  )
+    :wordnet-sense-keys ("shower%1:04:00" "shower%2:29:00" )
     :parent ont::clean
 )
 
 (define-type ont::bath
+    :wordnet-sense-keys ("bath%2:29:00" "bathing%1:04:01")
     :parent ont::clean
 )
 
