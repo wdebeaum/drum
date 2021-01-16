@@ -132,6 +132,11 @@
     :parent ONT::MOLECULAR-PART
     )
 
+(define-type ONT::egg
+    :wordnet-sense-keys ("egg%1:05:00")
+    :parent ONT::organism
+    )
+
 (define-type ONT::microorganism
     :wordnet-sense-keys ("microorganism%1:05:00")
     :parent ONT::organism
@@ -796,7 +801,7 @@
     :parent ont::vertebrate
     )
 
-;; dog, bear, ...
+;; dog, bear, ...    really should be nonhuman-mammal
 (define-type ont::nonhuman-animal
     :sem (F::Phys-obj (F::intentional +) (F::origin F::non-human-animal) (F::trajectory -))
     :parent ont::mammal
@@ -3080,7 +3085,7 @@
 
 (define-type ONT::POULTRY
     :wordnet-sense-keys ("bird%1:13:00")
-    :parent ONT::MEAT
+    :parent ONT::NONhuman-animal
     )
 
 (define-type ONT::CHICKEN

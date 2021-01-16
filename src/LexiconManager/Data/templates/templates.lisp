@@ -1681,10 +1681,13 @@
     ))
 |#
 
+;;  This is only used for the special case tr4eatment of LOCATE as ONT::EXISTS.
 (NEUTRAL-LOCATION-XP-TEMPL
    (ARGUMENTS
-    (LSUBJ (% W::NP) ONT::neutral)
-    (LCOMP  (:parameter xp (:default  (% W::ADVBL (W::lf (% ?p (w::class (? x ont::position-reln))))))) ONT::location)
+    (LSUBJ (% W::NP (W::lex ?subjlex) (W::sem ?subjsem) (w::var ?subjvar) ) ONT::neutral)
+    (LCOMP  (:parameter xp (:default  (% W::ADVBL (W::lf (% ?p (w::class (? x ont::position-reln))))
+					 (w::arg ?subjvar) (w::argument (% W::NP (W::sem ?subjsem) (w::var ?subjvar))))
+			       )) ONT::location)
     ))
   
 (NEUTRAL-NEUTRAL1-LOCATION-2-XP1-3-XP-TEMPL

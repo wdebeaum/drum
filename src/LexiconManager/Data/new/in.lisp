@@ -327,7 +327,7 @@
 (define-words :pos W::ADV
   :tags (:base500)
   :words (
-	  ((w::in W::front)
+	 #| ((w::in W::front)
 	   (SENSES
 	    ((LF-PARENT ONT::front-of)
 	     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL  (xp (% w::pp (w::ptype (? pt w::of)))))
@@ -336,7 +336,7 @@
 	     (meta-data :origin joust :entry-date 20091026 :change-date nil :comments nil)
 	     )
 	    )
-	   )
+	   )|#
 	  ((w::in W::part)
 	   (SENSES
 	    ((LF-PARENT ONT::partial-incomplete)

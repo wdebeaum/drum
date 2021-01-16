@@ -4978,6 +4978,7 @@
  :parent ONT::EVENT-OF-STATE
  :sem (F::Situation (F::aspect F::stage-level) (F::time-span F::extended)(F::cause -) (F::locative F::located) (F::trajectory -))
  :arguments ((:REQUIRED ONT::neutral)
+	     (:optional ont::location) ;; used in the template for LOCATED
              )
  )
 

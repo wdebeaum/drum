@@ -31,7 +31,8 @@
  :wordnet-sense-keys ("object%1:03:00" "physical_object%1:03:00")
  :parent ONT::referential-sem
  :comment "All physical objects: things that have substance"
- :sem (F::Phys-obj (F::tangible +))
+ :sem (F::Phys-obj (:required (F::tangible +))
+		   (:default (F::form F::object)))
  )
 
 (define-type ONT::situation-root

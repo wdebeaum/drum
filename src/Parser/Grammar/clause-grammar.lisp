@@ -2486,7 +2486,7 @@
 	   (tma ?tma) (vform ?vf) 
 	   ;; no uniform & unique lf's for main verb be uses, so have to match the lex
 	   ;; unless we can match the lf-form be
-	   (lex (? lx am are is was were)) ; ^s)) ; no contraction
+	   (lex (? lx am are is was were ^S)) ;;  1/21 because this rule is used in WH questions as well, it can be a contraction ; ^s)) ; no contraction
 	   (subj ?subj) (subj (% ?s1 (var ?subjvar) (sem ?subjsem) (agr ?subjagr) (lex ?subjlex) (gap -))) ;; note double matching required
 	   (iobj (% -))
 	   (part (% -));; (part ?part) 
@@ -4091,7 +4091,7 @@
     (head (vp- (vform ?vf) (subjvar ?subj)  (subj ?subject) (var ?v1) (seq -)  (agr ?agr) (gap ?gap) (lex ?lex1)
 	       (advbl-needed -) (class ?c1) (constraint ?con1) (tma ?tma1) (sem ?sem1) (subj-map ?subjmap)
 	   ))
-    (CONJ (lf ?lx) (lex ?lex) (but-not -)) ;;(? lx or but however plus otherwise so and)))
+    (CONJ (lf ?lx) (lex (? !lex both either neither)) (but-not -)) ;;(? lx or but however plus otherwise so and)))
 
     (vp- (vform ?vf) (var ?v2) (subjvar ?subj) (subj ?subject) (agr ?agr) (gap ?gap) (dobj ?dobj)
      (lex ?lex2) (Advbl-needed -) (class ?c2) (constraint ?con2)  (tma ?tma2) (sem ?sem2))

@@ -6,7 +6,7 @@
  :words (
   (W::egg
   (senses
-	   ((LF-PARENT ONT::food)
+	   ((LF-PARENT ONT::egg)
 	    (TEMPL count-PRED-TEMPL)
 	    )
 	   )
