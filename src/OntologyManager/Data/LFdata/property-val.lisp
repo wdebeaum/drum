@@ -1116,6 +1116,7 @@
 ;; empirical or theoretical?
 (define-type ont::basis-of-evidence-val
  :parent ont::information-property-val
+ :sem (F::abstr-obj (F::scale ont::basis-of-evidence-scale))
 )
 
 (define-type ont::theoretical-val

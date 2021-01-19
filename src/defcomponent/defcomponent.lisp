@@ -69,7 +69,15 @@ Use DEFCOMPONENT-HANDLER to add message handlers for the component."
 present already."
   (if (find :source-pathname spec)
       spec
-    (let* ((this-directory (directory-namestring *load-truename*)))
+    (let* ((this-directory
+	     ;; This leaves out more pathname components than we should here,
+	     ;; notably device
+	     ;(directory-namestring *load-truename*)
+	     ;; This instead just erases the components specific to the file:
+	     ;; name, type, and version
+	     (namestring (make-pathname :name nil :type nil :version nil
+					:defaults *load-truename*))
+	     ))
       (setq spec (append spec (list :source-pathname this-directory))))))
 
 ;;;

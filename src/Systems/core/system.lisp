@@ -69,12 +69,14 @@ DEF-TRIPS-SYSTEM."
     (ecase type
       (:old-trips-component
        (let ((path (pop def)))
-	 (load (make-pathname :directory (pathname-directory path)
+	 (load (make-pathname :device (pathname-device path)
+			      :directory (pathname-directory path)
 			      :name "defsys"))
 	 (mk:load-system name)))
       (:dfc-component
        (let ((path (pop def)))
-	 (load (make-pathname :directory (pathname-directory path)
+	 (load (make-pathname :device (pathname-device path)
+			      :directory (pathname-directory path)
 			      :name "defsys"))
 	 (dfc:load-component name)))
       )))

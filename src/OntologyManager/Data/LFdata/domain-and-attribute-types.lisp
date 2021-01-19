@@ -1589,6 +1589,12 @@
 )
 |#
 
+(define-type ont::basis-of-evidence-scale
+ :sem (F::abstr-obj (F::scale ONT::BASIS-OF-EVIDENCE-SCALE))
+ :parent ont::information-property-scale
+ :wordnet-sense-keys ("proof%1:10:00")
+)
+
 ;; consistency
 (define-type ont::consistency-scale
  :sem (F::abstr-obj (F::scale ONT::CONSISTENCY-SCALE))

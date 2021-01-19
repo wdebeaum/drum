@@ -26,8 +26,7 @@
   (ext:quit))
 
 (defun get-env (var)
-  (format *error-output* "~&GET-ENV not supported in abcl~%")
-  nil)
+  (ext:getenv (string var)))
 
 (defun gc (arg)
   (declare (ignore arg))

@@ -2,12 +2,13 @@
 ;;;; defsystem.lisp
 ;;;;
 ;;;; George Ferguson, ferguson@cs.rochester.edu, 13 Sep 2002
-;;;; $Id: defsystem.lisp,v 1.5 2010/01/18 19:06:29 ferguson Exp $
+;;;; $Id: defsystem.lisp,v 1.6 2021/01/18 20:43:40 wdebeaum Exp $
 ;;;;
 
 (eval-when (:load-toplevel :execute)
   (let* ((this-directory (pathname-directory *load-pathname*)))
-    (load (make-pathname :directory (append this-directory
+    (load (make-pathname :device (pathname-device *load-pathname*)
+			 :directory (append this-directory
 					    (list "defsystem-3.6i"))
 			 :name "defsystem"))))
 

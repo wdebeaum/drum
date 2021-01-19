@@ -2,7 +2,7 @@
 ;;;; trips.lisp for config/lisp
 ;;;;
 ;;;; George Ferguson, ferguson@cs.rochester.edu, 23 Jun 1997
-;;;; $Id: trips.lisp,v 1.15 2015/02/06 21:33:45 lgalescu Exp $
+;;;; $Id: trips.lisp,v 1.16 2021/01/18 20:43:40 wdebeaum Exp $
 ;;;;
 
 (setq *load-verbose* t)
@@ -42,6 +42,9 @@ when the \"trips.lisp\" file is loaded.")
     (setq *TRIPS_BASE*
       (make-pathname :device this-device
                      :directory (append this-directory '(:up :up :up))))
+    ;; this incantation makes ABCL interpret :up in jar: pathnames
+    #+:abcl
+      (setq *TRIPS_BASE* (parse-namestring (namestring (merge-pathnames *TRIPS_BASE*))))
     (format *trace-output* "~&;; *TRIPS_BASE* = ~S~%" *TRIPS_BASE*)))
 
 ;;;
@@ -56,7 +59,7 @@ when the \"trips.lisp\" file is loaded.")
  				     #+(and
 					(not (and :mcl (not :openmcl)))
 					(not :mswindows)) "unix"))
-		:name "pathname"))
+		:name "pathname" :type "lisp"))
 
 ;;;
 ;;; Define #! as shorthand for MAKE-TRIPS-PATHNAME
