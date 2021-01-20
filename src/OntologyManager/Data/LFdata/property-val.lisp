@@ -1001,6 +1001,11 @@
  :sem (F::abstr-obj (F::scale ont::comprehensibility-scale))
 )
 
+(define-type ONT::ambiguous-val
+  :parent ONT::comprehensibility-val ;clarity-val
+  :wordnet-sense-keys ("ambiguous%3:00:00::" "equivocal%3:00:00::" "ambiguous%3:00:04::")  :comment "(ambiguous)"
+  )
+
 (define-type ont::comprehensible-val
  :parent ont::comprehensibility-val
  :wordnet-sense-keys ("intelligible%3:00:00::" "friendly%3:00:03" "comprehensible%3:00:00")
@@ -1013,21 +1018,23 @@
  :sem (F::abstr-obj (F::scale ont::comprehensibility-scale) (f::orientation f::neg))
 )
 
+#|
 ; obvious, obscure apparent
 (define-type ont::clarity-val
  :parent ont::information-property-val 
  :comment "clear, obvious vs. unclear, obscure"
 )
+|#
 
 (define-type ont::clear
- :parent ont::clarity-val 
+ :parent ont::comprehensibility-val ;clarity-val 
  :wordnet-sense-keys ("unequivocal%3:00:00::" "univocal%3:00:00::" "unambiguous%3:00:04::" "unambiguous%3:00:00::" "apparent%5:00:00:obvious:00" "obvious%3:00:00" "clear%3:00:00")
  ; Words: (w::clear W::OBVIOUS W::EVIDENT)
  ; Antonym: ONT::unclear (W::UNOBVIOUS)
 )
 
 (define-type ont::unclear
- :parent ont::clarity-val 
+ :parent ont::comprehensibility-val ;clarity-val 
  :wordnet-sense-keys ("unobvious%3:00:00::" "unclear%3:00:00" "opaque%5:00:00:incomprehensible:00" "ill-defined%3:00:00" "obscure%5:00:00:unclear:00" )
  ; Words: (w::unobvious W::UNCLEAR W::OBSCURE W::OPAQUE)
  ; Antonym: ONT::clear (W::CLEAR w::obvious w::evident)
@@ -7608,28 +7615,31 @@
   :comment "(noon)"
   )
 
+#|
 (define-type ONT::logicality-val
   :parent ONT::information-property-val
   :comment "(logical)"
   )
+|#
 
 (define-type ONT::logical-val
-  :parent ONT::logicality-val
+  :parent ONT::comprehensibility-val ;logicality-val
   :wordnet-sense-keys ("logical%3:00:00::")
   :comment "(logical)"
   )
 
 (define-type ONT::not-logical-val
-  :parent ONT::logicality-val
+  :parent ONT::comprehensibility-val ;logicality-val
   :wordnet-sense-keys ("illogical%3:00:00::" "unlogical%3:00:04::")
   :comment "(illogical)"
   )
-
+#|
 (define-type ONT::ambiguous-val
-  :parent ONT::clarity-val
+  :parent ONT::comprehensibility-val ;clarity-val
   :wordnet-sense-keys ("ambiguous%3:00:00::" "equivocal%3:00:00::" "ambiguous%3:00:04::")
   :comment "(ambiguous)"
   )
+|#
 
 (define-type ONT::substantiation-val
   :parent ONT::information-property-val
@@ -7638,6 +7648,7 @@
 
 (define-type ONT::substantiated-val
   :parent ONT::substantiation-val
+  :wordnet-sense-keys ("supported%3:00:02")
   :comment "(substantiated, supported)"
   )
 
