@@ -4246,20 +4246,22 @@
  :comment "not operating as intended,  typically a physcal location with operating hours"
 )
 
+#|
 ;; static, dynamic                                              
 (define-type ont::motion-val
  :parent ont::object-affordances-val
  :arguments ((:REQUIRED ONT::FIGURE (F::phys-obj )))
  :comment "describes dynamicity of motion"
 )
+|#
 
 (define-type ONT::DYNAMIC-MOVING-VAL
- :parent ont::motion-val
+ :parent ont::activity-val ;motion-val
  :wordnet-sense-keys ("standing%3:00:02::" "moving%3:00:02::" "running%3:00:02::" "moving%3:00:03::" "dynamic%3:00:00::" "dynamical%3:00:00::" "dynamic%3:00:04")
 )
 
 (define-type ONT::STATIC-NONMOVING-VAL
- :parent ont::motion-val
+ :parent ont::activity-val ;motion-val
  :wordnet-sense-keys ("immobile%3:00:00::" "undynamic%3:00:00::" "adynamic%3:00:04::" "still%3:00:03::" "static%5:00:00:nonmoving:00" "still%5:00:01:nonmoving:00" "motionless%5:00:00:nonmoving:00" "nonmoving%3:00:00")
 )
 

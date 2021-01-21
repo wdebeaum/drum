@@ -993,7 +993,7 @@
 
 ; merging ONT::APPEARS-TO-HAVE-PROPERTY and ONT::POSSIBLY-TRUE
 (define-type ONT::SEEM ;ONT::APPEARS-TO-HAVE-PROPERTY
- :wordnet-sense-keys ("look%2:39:01" "seem%2:39:02" "seem%2:42:00" "sound%2:39:06" "taste%2:39:02");"seem%2:39:01" 
+ :wordnet-sense-keys ("look%2:39:01" "seem%2:39:02" "seem%2:42:00" "sound%2:39:06" "taste%2:39:02" "appear%2:39:01");"seem%2:39:01" 
  ;:parent ONT::HAVE-PROPERTY
  :parent ONT::EVENT-OF-STATE
  :sem (F::situation (F::Aspect F::indiv-level) (F::Time-span F::extended))

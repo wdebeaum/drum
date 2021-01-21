@@ -3013,6 +3013,12 @@
     (ARGUMENT (% W::S) ONT::FIGURE)
     ))
 
+(PRED-S-or-ADJP-templ
+   (SYNTAX (W::SORT W::PRED) (W::ATYPE (? ATYPE W::PRE W::POST W::PRE-VP)))
+   (ARGUMENTS
+    (ARGUMENT (% (? cat W::S w::ADJP)) ONT::FIGURE)
+    ))
+
 (PRED-S-or-NP-templ
    (SYNTAX (W::SORT W::PRED) (W::ATYPE (? ATYPE W::PRE W::POST W::PRE-VP)))
    (ARGUMENTS
@@ -3277,16 +3283,20 @@
   (adj-experiencer-theme-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE w::central) (W::ARG ?arg)  (W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP (w::sort (? !xx W::unit-measure))) ont::affected)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ont::formal)
+    ;(ARGUMENT (% W::NP (w::sort (? !xx W::unit-measure))) ont::affected)
+    ;(subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ont::formal)
+    (ARGUMENT (% W::NP (w::sort (? !xx W::unit-measure))) ont::FIGURE)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ont::GROUND)
     (subcat2 (% -) ONT::NOROLE)
     ))
 
   (adj-experiencer-theme-req-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE w::central) (W::ARG ?arg)  (W::ALLOW-DELETED-COMP -))
    (ARGUMENTS
-    (ARGUMENT (% W::NP (w::sort (? !xx W::unit-measure))) ont::affected)
-    (subcat (:parameter xp (:default (% W::np))) ont::formal)
+    ;(ARGUMENT (% W::NP (w::sort (? !xx W::unit-measure))) ont::affected)
+    ;(subcat (:parameter xp (:default (% W::np))) ont::formal)
+    (ARGUMENT (% W::NP (w::sort (? !xx W::unit-measure))) ont::FIGURE)
+    (subcat (:parameter xp (:default (% W::np))) ont::GROUND)
     (subcat2 (% -) ONT::NOROLE)
     ))
   
@@ -3318,9 +3328,11 @@
   (adj-neutral-neutral-templ
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) (W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::neutral)
+    ;(ARGUMENT (% W::NP) ONT::neutral)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
 ;    (subcat (:parameter xp (:default (% W::pp (W::ptype (? pt W::to w::for))))) ONT::neutral1 optional)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype (? pt W::to w::for))))) ONT::neutral1)
+    ;(subcat (:parameter xp (:default (% W::pp (W::ptype (? pt W::to w::for))))) ONT::neutral1)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype (? pt W::to w::for))))) ONT::GROUND)
     (subcat2 (% -) ONT::NOROLE)
     ))
 
@@ -3338,7 +3350,8 @@
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg))
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::FIGURE)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::IN)))) ONT::FORMAL)
+    ;(subcat (:parameter xp (:default (% W::pp (W::ptype W::IN)))) ONT::FORMAL)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::IN)))) ONT::GROUND)
     (subcat2 (% -) ONT::NOROLE)
     ))
   
@@ -3359,7 +3372,8 @@
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg))
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::FIGURE)
-    (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to)))) ONT::formal)
+    ;(subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to)))) ONT::formal)
+    (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to)))) ONT::GROUND)
     (subcat2 (% -) ONT::NOROLE)
     ))
 
@@ -3465,8 +3479,10 @@
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) (W::ALLOW-DELETED-COMP -))
    (ARGUMENTS
 ;    (ARGUMENT (% W::NP) ONT::of)
-    (ARGUMENT (% W::NP) ONT::NEUTRAL)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ont::formal)
+    ;(ARGUMENT (% W::NP) ONT::NEUTRAL)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
+    ;(subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ont::formal)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ont::GROUND)
     (subcat2 (% -) ONT::NOROLE)
     ))
   
@@ -3479,7 +3495,8 @@
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::FIGURE)
 ;    (subcat (:parameter xp (:default (% W::CP (W::ctype W::s-that)))) ONT::Content)
-    (subcat (:parameter xp (:default (% W::CP (W::ctype W::s-that)))) ONT::FORMAL)
+    ;(subcat (:parameter xp (:default (% W::CP (W::ctype W::s-that)))) ONT::FORMAL)
+    (subcat (:parameter xp (:default (% W::CP (W::ctype W::s-that)))) ONT::GROUND)
     (subcat2 (% -) ONT::NOROLE)
     ))
   
@@ -3489,7 +3506,8 @@
    (SYNTAX (W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) (W::ALLOW-DELETED-COMP -))
    (ARGUMENTS
 ;    (ARGUMENT (% W::NP) ONT::CONTENT)
-    (ARGUMENT (% W::NP) ONT::FORMAL)
+    ;(ARGUMENT (% W::NP) ONT::FORMAL)
+    (ARGUMENT (% W::NP) ONT::FIGURE) ; not sure why there is only one argument?
     ))
 
   
@@ -3529,8 +3547,10 @@
    (SYNTAX (W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) (W::ALLOW-DELETED-COMP -))
    (ARGUMENTS
 ;    (ARGUMENT (% W::NP) ONT::Content)
-    (ARGUMENT (% W::NP) ONT::FORMAL)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::Affected)
+    ;(ARGUMENT (% W::NP) ONT::FORMAL)
+    ;(subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::Affected)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::GROUND)
     (subcat2 (% -) ONT::NOROLE)
     ))
   
@@ -3539,8 +3559,10 @@
    (SYNTAX (W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) ) ;(W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
 ;    (ARGUMENT (% W::NP) ONT::Content)
-    (ARGUMENT (% W::NP) ONT::FORMAL)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::Affected OPTIONAL)
+    ;(ARGUMENT (% W::NP) ONT::FORMAL)
+    ;(subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::Affected OPTIONAL)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::for)))) ONT::GROUND OPTIONAL)
     (subcat2 (% -) ONT::NOROLE)
     ))
 
@@ -3556,20 +3578,23 @@
     (ARGUMENT (% W::NP (W::lex W::it)) ONT::NOROLE)
     (subcat (:parameter xp1 
 			(:default (% W::pp (W::ptype W::for))) 
-			(:required (w::var ?subcatvar) (w::sem ?subcatsem) (w::lex ?subcatlex) (w::expletive ?exp))) ONT::Affected)
+			(:required (w::var ?subcatvar) (w::sem ?subcatsem) (w::lex ?subcatlex) (w::expletive ?exp))) ONT::FIGURE) ;ONT::Affected)
     (subcat2 (:parameter xp2 
 			 (:default (% W::CP (W::ctype W::s-to)))  
 			 (:required (W::subj (% W::np (W::sem ?subcatsem) (W::lex ?subcatlex) (W::var ?subcatvar) (w::expletive ?exp)))))
 ;	     ONT::Content)
-	     ONT::FORMAL)
+	     ;ONT::FORMAL)
+	     ONT::GROUND)
     ))
   
 
   (ADJ-property-TEMPL
    (SYNTAX(W::SORT W::PRED) (W::ATYPE W::central) (W::ARG ?arg) (W::ALLOW-DELETED-COMP +))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::NEUTRAL)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::in)))) ONT::FORMAL)
+    ;(ARGUMENT (% W::NP) ONT::NEUTRAL)
+    ;(subcat (:parameter xp (:default (% W::pp (W::ptype W::in)))) ONT::FORMAL)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::in)))) ONT::GROUND)
     (subcat2 (% -) ONT::NOROLE)
     ))
 
@@ -3698,6 +3723,7 @@
   ;;;;; attributive only adjectives, like "mere" or "former" which
   ;;;;; cant' go after the noun. (none of these can take compliments)
   ;;;;; no complement -- replaces simple-adj-templ
+#|
   (attributive-only-adj-theme-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) 
 	  (W::ATYPE W::attributive-only) (W::SUBCAT -) 
@@ -3706,19 +3732,23 @@
    (ARGUMENTS
     (ARGUMENT (% W::NP) ont::formal)
     ))
-  
+|#  
+
   (adj-theme-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::SUBCAT -) (W::ARG ?arg) (W::ATYPE W::central))
    (ARGUMENTS
     (ARGUMENT (% W::NP) ONT::FIGURE)
     ))
-  
+
+; I don't think this one is used but it's the default template in many entries
   (adj-experiencer-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::SUBCAT -) (W::ARG ?arg) (W::ATYPE W::central))
    (ARGUMENTS
-    (ARGUMENT (% W::NP (w::sort (? !xx W::unit-measure))) ONT::AFFECTED)
+    ;(ARGUMENT (% W::NP (w::sort (? !xx W::unit-measure))) ONT::AFFECTED)
+    (ARGUMENT (% W::NP (w::sort (? !xx W::unit-measure))) ONT::FIGURE)
     ))
 
+#|
    (adj-experiencer-content-xp-templ
    (SYNTAX (W::SORT W::PRED) (W::ARG ?arg) (W::ATYPE W::central) (w::allow-deleted-comp +))
    (ARGUMENTS
@@ -3727,6 +3757,9 @@
     (subcat (:parameter xp (:default (% W::pp (W::ptype W::of)))) ONT::ground)
     (subcat2 (% -) ONT::NOROLE)
     ))
+|#  
+
+
 #| not cureently used
 ;; the task is easy to perform/ the car is easy to fix
   (adj-theme-action-templ
@@ -3747,7 +3780,8 @@
 	  )
    (ARGUMENTS
     (ARGUMENT (% W::NP (w::var ?fig)) ONT::FIGURE)
-    (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to) (w::subjvar ?fig )))) ONT::FORMAL)
+    ;(subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to) (w::subjvar ?fig )))) ONT::FORMAL)
+    (subcat (:parameter xp (:default (% W::cp (W::ctype W::s-to) (w::subjvar ?fig )))) ONT::GROUND)
     (subcat2 (% -) ONT::NOROLE)
     ))
   
@@ -3799,7 +3833,8 @@
   (postpositive-adj-theme-templ
    (SYNTAX(W::COMP-OP W::MORE) (W::SORT W::PRED) (W::ATYPE W::postpositive) (W::SUBCAT -) (W::ARG ?arg))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ONT::FORMAL)
+    ;(ARGUMENT (% W::NP) ONT::FORMAL)
+    (ARGUMENT (% W::NP) ONT::FIGURE)
     ))
    
   ;;;;; if word is postpositive and takes optional subcats
@@ -3873,8 +3908,10 @@
 	(W::ATYPE W::postpositive) 
 	   (W::ARG ?arg))
    (ARGUMENTS
-    (ARGUMENT (% W::NP) ont::affected)
-    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ont::formal optional)
+    ;(ARGUMENT (% W::NP) ont::affected)
+    ;(subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ont::formal optional)
+    (ARGUMENT (% W::NP) ont::FIGURE)
+    (subcat (:parameter xp (:default (% W::pp (W::ptype W::to)))) ont::GROUND optional)
     (subcat2 (% -) ONT::NOROLE)
     ))
   

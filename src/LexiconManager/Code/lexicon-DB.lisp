@@ -851,7 +851,8 @@ intersection of an entry's tags and these tags is non-empty."
               (setf (sense-definition-pos s) 'w::ADV)
 	      ;; need to update the lfform with the right form of the word
 	      (setf (sense-definition-lf-form s) word)
-	      (setf (sense-definition-templ s) 'pred-s-vp-templ) ;; requires an :of role
+	      ;(setf (sense-definition-templ s) 'pred-s-vp-templ) ;; requires an :of role
+	      (setf (sense-definition-templ s) 'PRED-S-or-ADJP-templ) ;; requires an :of role
               (setf (sense-definition-params s) nil)
               )
           (vocabulary-entry-senses entry))
