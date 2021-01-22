@@ -192,7 +192,7 @@ separate instances of the chart/parser.")
       as often happens in LFs with several MOD functions"
   (or (constit-match rhs c)
       (progn
-	(trace-msg 2 "~%constit-match failed on ~S and ~S" rhs c)
+	(trace-msg 2 "~%constit-match failed on ~S and ~S~%" rhs c)
 	nil)))
 
 (defun getsubconstitnames (n constit)
@@ -772,7 +772,7 @@ separate instances of the chart/parser.")
       (if (eq (constit-cat c) 'W::pause) ;; skip filled pauses
 	  .99
 	  ;; otherwise we have punctuation
-	  .95 ))) ;;; as we have incorporated better handling of punctuation, we are penalizing skipping more
+	  .9))) ;.95 ))) ;;; as we have incorporated better handling of punctuation, we are penalizing skipping more
 #||	     (case (get-value c 'w::lex)
 	       (W::PUNC-COMMA
 		(case (constit-cat prevc) 

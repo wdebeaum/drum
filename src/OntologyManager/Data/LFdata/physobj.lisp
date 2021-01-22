@@ -1588,11 +1588,25 @@
     :parent ont::furnishings
     )
 
+(define-type ont::household-linen-covering
+    :parent ONT::manufactured-object
+    :wordnet-sense-keys ("household_linen%1:06:00")
+    :sem (F::Phys-obj (F::Form F::solid-object) )
+    )
+
+(define-type ont::towel
+    ;:parent ONT::furnishings
+    :parent ONT::household-linen-covering
+    :wordnet-sense-keys ("towel%1:06:00")
+    :sem (F::Phys-obj (F::Form F::solid-object) )
+    )
+
 (define-type ont::bedding
     :comment "objects related to bedding: pillow, blanket"
-    :parent ONT::furnishings
+    ;:parent ONT::furnishings
+    :parent ONT::household-linen-covering
     :wordnet-sense-keys ("bedclothes%1:06:00" "bed_clothing%1:06:00" "pillow%1:06:00")
-    :sem (F::Phys-obj (F::Form F::solid-object) (F::Object-Function F::furniture))
+    :sem (F::Phys-obj (F::Form F::solid-object))
     )
 
 ;; anywhere, anyplace, ...

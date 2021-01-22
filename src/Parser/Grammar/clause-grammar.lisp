@@ -142,24 +142,29 @@
     )
 
    ; Which is bigger, the dog or the cat?
+   ; How does it look, big or small?
    ; (not necessarily a question) I am not sure what to eat, the pizza or the cake.
    ; for now only disjunctions, but it can also be just one NP (What am I, chopped liver?) or something other than NPs (to be or not to be)
    ;
+   ; We should also match the focus or the type of SA to the choice type (e.g., "what" matches an NP)
+   ;
    ((utt  (var ?v) (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
      (punc +) (punctype ?p) (uttword ?uw)
-     (lf (% ?s (var ?sv) (class ?cl) (constraint ?constraint)))
+     (lf (% ?s (var ?sv) (class ONT::SA_WH-QUESTION) ;(class ?cl)
+	    (constraint ?constraint)))
      )
-   -utt-choice>
+   -utt-choice> 1
    (head (utt (focus ?foc) (ended -) (var ?v) ;(punc -) ; sa-seq has punc, but now this rule would allow consecutive puncs, e.g., I ate the pizza!!
 	      (uttword ?uw)
-	  (lf (% (? s speechact sa-seq) (var ?sv) (class ?cl) (constraint ?con)))
+	      (lf (% (? s speechact) ; sa-seq)
+		     (var ?sv) (class ONT::SA_WH-QUESTION) ;(class ?cl)
+		     (constraint ?con)))
 	  ))
    (punc (punctype ?p) (lex (? lex w::punc-colon w::punc-comma)))
-   (NP (var ?var-np) (lf (% ?l (constraint (% ?c (operator ONT::OR)))))) ; just disjunctions for now
+   ((? cc NP ADJP ADVBL) (var ?var-np) (lf (% ?l (constraint (% ?c (operator ONT::OR)))))) ; just disjunctions for now
     (add-to-conjunct (val (choice-option ?var-np)) (old ?con) (new ?constraint))
     )
    
-
    ; if it was an SA_TELL but there is a question mark, change the sa type to SA_YN-QUESTION
    ; e.g., I ate the pizza?
    ((utt  (var ?v) (focus ?foc)  ;; i changed the var from the punc to the utt so that the lf is printed properly (why was it the other way?
@@ -1244,7 +1249,8 @@
 		       (class (? c ONT::PHYS-OBJECT)) ;(class (? !c2 ONT::DOMAIN))  ; hard failure
 		       (constraint ?constr)))
 					;(sem ($ ?!s (f::type (? !t ONT::DOMAIN)))) ; exclude "what color is X" which uses AT-SCALE-VALUE
-		(sem ($ f::phys-obj )) 
+		(sem ($ f::phys-obj ))
+		(agr 3p) ; neighbors, classmates, enemies, friends
 		(lex (? !lex w::what))))  ; exclude "X is what" or "what is X"
       (compute-sem-features (lf ONT::MEMBER-RELN) (sem ?newsem))
       )
@@ -1293,7 +1299,7 @@
      ;; vp rules 
      ;; test: he said the dog barked.
     ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar) 
-      (var ?v) (class ?c) (gap ?gap) 
+      (var ?v) (class ?c) ;(gap ?gap) 
       (constraint ?newc)
       (tma ?tma)
       (postadvbl -) (vform ?vf)
@@ -1309,8 +1315,10 @@
 	    (iobj ?iobj) (iobj (% ?s2  (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))
 	   ;; (iobj (% -))
 	    (part ?part) 
-	    (dobj ?dobj) (dobj (% ?s3 (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?gap)))	    
-	    ;; we allow a possible gap in the dobj np e.g., "what did he thwart the passage of"
+	    (dobj ?dobj) (dobj (% ?s3 (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem)
+				  ;(gap ?gap)))	    
+				  (gap -)))	    
+	    ;; we allow a possible gap in the dobj np e.g., "what did he thwart the passage of" ; This now uses -VP1-GAPPED-DOBJ-ROLE> since we don't allow gaps here anymore
 	    (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -)))
 	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	    (restr ?prefix)
@@ -1703,7 +1711,7 @@
 	   (subj ?subj) (subj (% ?s1 (lex ?subjlex) (agr ?subjagr) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
 	   (iobj ?iobj) (iobj (% ?s2  (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))
 	   (part ?part) 
-	   (dobj ?dobj) (dobj (% (? s3 pp pred) (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?!gap)))
+	   (dobj ?dobj) (dobj (% (? s3 pp pred np) (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem) (gap ?!gap)))
 	   (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -)))
 	   (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
 	    (be-there -)
@@ -2685,9 +2693,9 @@
     ?comp)
 
    ; Is the pizza cold quickly/eventually?
-   ; Is the pizza in the oven?  
+   ; Is the pizza cold in the oven?  
    ; Is the pizza cold if I put it in the fridge?
-   ((s (stype ynq) (main +) (aux -) (gap ?gap) ;(gap -)
+   ((s (stype ynq) (main +) (aux -) (gap -) ;(gap ?gap) ;(gap -)
      (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar) (agr ?subjagr)))
      (sort pred) 
      
@@ -2706,7 +2714,7 @@
      (advbl-needed ?avn)
      )
     -s-ynq-be-adv2>
-    (head (s (stype ynq) (main +) (aux -) (gap ?gap) ;(gap -)
+    (head (s (stype ynq) (main +) (aux -) (gap -) ;(gap ?gap) ;(gap -) ; gap - so that it's a true ynq question, not one that is going to be turned into a wh-question using -S-YNQ-BE-GAP
 	     (subj (% np (lex ?subjlex) (sem ?subjsem) (var ?subjvar) (agr ?subjagr)))
 	     (sort pred) 
 	     

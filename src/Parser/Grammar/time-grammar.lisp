@@ -746,7 +746,7 @@
       (var *) (LF ?lf) (coerce ?coerce) (sem ?sem) (comma +) (digits ?newdigits)
       (nobarespec ?nbs)
 	     )
-     -comma-number> 1
+     -comma-number> 1.01
      (head (number (nobarespec ?nbs) (lf ?lf) (val ?!v1) (lex ?l1) (sem ?sem)
 		   (coerce ?coerce) (digits ?!digits1)))
      (punc (lex W::punc-comma))
