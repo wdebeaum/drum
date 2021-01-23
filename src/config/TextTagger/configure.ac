@@ -53,7 +53,13 @@ ac_biomodel_search_list=`expand_paths cj-parser/biomodel/`
 ac_umls_search_list=`expand_paths UMLS/2010AB/ UMLS/2009AA/`
 ac_semgroups_search_list=`expand_paths UMLS/SemGroups.txt`
 ac_metamap_search_list=`expand_paths UMLS/MetaMap/public_mm/`
-ac_corenlp_search_list=`expand_versioned_paths stanford-corenlp/stanford-corenlp-full-????-??-??/ stanford-corenlp/stanford-corenlp-????-??-??/`
+# CoreNLP's search list is convoluted because Stanford hasn't been very
+# consistent about whether the version is major.minor.patch or YYYY-MM-DD; some
+# versions can be downloaded with filenames in either format, but lately
+# they're only offering major.minor.patch. In this list, the YYYY-MM-DD format
+# of each version (if it exists) comes before the major.minor.patch format of
+# the same version.
+ac_corenlp_search_list="`expand_versioned_paths stanford-corenlp/stanford-corenlp-4.*.*/` `expand_paths stanford-corenlp/stanford-corenlp-{full-2018-10-05,3.9.2,full-2018-02-27,3.9.1,full-2017-06-09,3.8.0,full-2016-10-31,3.7.0,full-2015-12-09,3.6.0,full-2015-04-21,full-2015-04-20,3.5.2,full-2015-01-29,3.5.1,full-2014-10-31,3.5.0,full-2014-08-27,3.4.1,full-2014-06-16,3.4.0,3.4,2010-11-12}` `expand_versioned_paths stanford-corenlp/stanford-corenlp-full-????-??-??/ stanford-corenlp/stanford-corenlp-????-??-??/`"
 ac_enju_search_list=`expand_paths enju/enju-2.4.2/enju`
 ac_aspell_search_list=`which aspell || echo /usr/bin/aspell /usr/local/bin/aspell /opt/local/bin/aspell`
 

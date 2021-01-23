@@ -2,7 +2,7 @@
 # Makefile for EKB
 #
 # Lucian Galescu <lgalescu@ihmc.us> 2017/02/03
-# $Id: Makefile,v 1.4 2018/11/01 20:27:02 lgalescu Exp $
+# $Id: Makefile,v 1.5 2021/01/22 16:40:53 lgalescu Exp $
 
 MODULE = EKBAgent
 MAIN = EKBAgent.pl
@@ -10,7 +10,7 @@ SRCS = EKBAgent.pl
 PERL_FLAGS = -CSD
 export PERL_FLAGS
 
-SUBDIRS = Perl # style dtd
+SUBDIRS = Perl tools # style dtd
 
 CONFIGDIR=../config
 include $(CONFIGDIR)/perl/prog.mk
