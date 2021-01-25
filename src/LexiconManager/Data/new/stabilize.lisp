@@ -4,7 +4,7 @@
 
 (define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
-  (W::flood
+  (W::stabilize
    (SENSES
     ((LF-PARENT ONT::stabilize)
      (example "the economy stabilized")
