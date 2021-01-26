@@ -1908,6 +1908,43 @@
 					     )
 		       (new ?newc)))
 
+    ; some adjectives can modify other adjectives, e.g., light/dark blue; pinkish red
+    ; there are others not handled yet: e.g., early modern English, southern French town, icy cold
+    ((ADJ1 (ARGUMENT-MAP ?argmap2)
+	   (subcat ?subcat)
+	   (subcat2 ?subcat2)
+	   (atype ?atype2) ;(atype central)
+	   (VAR ?v2) ;(COMPLEX +) -- removed to allow complex adj prenominal modification, e.g. "a natural and periodic state of rest"
+	   (SORT PRED) 
+	   (constraint ?newcon2)
+	   )
+     -adj1-adj1> 0.991 ; slight higher than having the two adj modify the same noun (two applications of n1-qual1)
+     (ADJ1 (arg ?v1) (argument ?a1) (VAR ?v1) (gap ?gap1)
+	   (lf (? c1 ont::color-saturation-val ont::color-val)) (lf ?lf1)
+	   (sem ($ F::ABSTR-OBJ (f::scale ?scale1) (F::intensity ?ints1) (F::orientation ?orient1))) (sem ?s1)
+	   (atype ?atype1) (post-subcat -)
+	   (ARGUMENT-MAP ?argmap1) (lex ?lex1)
+	   (set-modifier -)
+	   (constraint ?con1) (transform ?transform1) (premod ?premod1)
+      )
+     (head (ADJ1 (arg ?arg2)  (argument ?a2) (VAR ?v2) (gap ?gap2)
+      (LF (? c2 ont::color-val)) (sem ?s2) (atype ?atype2) (post-subcat -)
+      (set-modifier -)
+      (constraint ?con2)
+      (ARGUMENT-MAP ?argmap2)
+      (subcat ?subcat)
+      (subcat2 ?subcat2)
+      ))
+     (append-conjuncts (conj1 ?con1) (conj2 (& (orientation ?orient1) (intensity ?ints1)
+					    (?argmap1 ?v2) (scale ?scale1) 
+					    ))
+		       (new ?newcon1))
+     (add-to-conjunct (val (:MOD (% *PRO* (status ont::F) (var ?v1) (class ?lf1) (lex ?lex1)
+				    (constraint ?newcon1) (sem ?s1) (transform ?transform1) (premod ?premod1))))
+		      (old ?con2) (new ?newcon2))
+     )
+
+    
    ;;  To handle the variety of ways that COMPARs are expressed, we use an intermediate constituent COMPAR
    ;; some of these are very unrestrictive so have to be ranked low to allow other alternatives to dominate
 
@@ -6336,6 +6373,7 @@
      ;;(simple-cons (in1 ?v2) (in2 ?lf1) (out ?members))
      )
 
+    ; brave, smart and good
     ((ADJP (ARG ?arg) (argument ?a) (sem ?sem) (atype ?atype1) ;(atype central)
 	   (VAR *) ;(COMPLEX +) -- removed to allow complex adj prenominal modification, e.g. "a natural and periodic state of rest"
 	   (SORT PRED)
