@@ -27,7 +27,8 @@
      (meta-data :origin lou :entry-date 20040716 :change-date 20090501 :comments lou-demo :vn ("dub-29.3-1"))
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (example "name this site zuchinni")
-     (TEMPL AGENT-NEUTRAL-FORMAL-2-XP-3-XP2-NP-TEMPL)
+     ;(TEMPL AGENT-NEUTRAL-FORMAL-2-XP-3-XP2-NP-TEMPL)
+     (TEMPL AGENT-NEUTRAL-NEUTRAL1-XP-TEMPL (XP (% W::NP)))
      )
     ;; need this definition to allow v-passive-by rule to apply; comp arg must be -
     ((LF-PARENT ONT::naming)
@@ -39,7 +40,8 @@
     ((meta-data :origin ptb :entry-date 20100429 :change-date nil :comments nil :vn ("dub-29.3-1"))
      (LF-PARENT ONT::naming)
      (example "the company named her as president")
-     (TEMPL AGENT-NEUTRAL-FORMAL-2-XP-3-XP2-PP-TEMPL) ; like interpret,classify
+     ;(TEMPL AGENT-NEUTRAL-FORMAL-2-XP-3-XP2-PP-TEMPL) ; like interpret,classify
+     (TEMPL AGENT-NEUTRAL-NEUTRAL1-2-XP-3-XP2-TEMPL (xp2 (% W::PP (w::ptype w::as)))) ; like interpret,classify
      )
     )
    )

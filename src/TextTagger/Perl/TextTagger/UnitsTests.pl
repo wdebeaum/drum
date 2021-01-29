@@ -565,6 +565,8 @@ my @tests = (
   { text => "RNS Number : 2630E\nKEFI Minerals plc", tags => [] },
   # lgalescu 2020-09-25, "business" != bushel*second*inch*charge*second*second
   { text => "A local company engaged in business promotion", tags => [] },
+  # lgalescu 2021-01-28, "are" is verb, not area unit (also on macos "deeply" != deci-*charge*charge*pico-*lightyear)
+  { text => 'forecasts for 2018 are deeply concerning', tags => [] },
 );
 =begin
   templates for making tests

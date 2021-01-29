@@ -5811,7 +5811,7 @@
 
 (define-type ONT::inadequate
   :parent ONT::adequacy-VAL
-  :arguments ((:required ONT::GROUND (f::phys-obj (f::type ont::material)))
+  :arguments ((:required ONT::GROUND) ;(f::phys-obj (f::type ont::material)))
 	      (:required ONT::FIGURE ((? xx  F::phys-obj abstr-obj))))
 					; Words: (W::SHORT W::INADEQUATE W::INSUFFICIENT)
   :wordnet-sense-keys ("meager%3:00:00::" "meagre%3:00:00::" "meagerly%3:00:00::" "stingy%3:00:02::" "scrimpy%3:00:00::" "inadequate%3:00:00::" "unequal%3:00:03::" "inadequate%5:00:00:insufficient:00" "insufficient%3:00:00" "scarce%3:00:00" "poor%3:00:02::")

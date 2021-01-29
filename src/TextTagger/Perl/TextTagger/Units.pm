@@ -297,9 +297,10 @@ sub init_units_tagger {
 	($name eq 'g' and $defn eq 'g0') or # force of gravity on Earth!
 	($name eq 'force' and $defn eq 'g') # ...cont'd. WTAF.
       );
-      # skip names of numbers and simple fractions, but keep prefixes and
-      # "partsper..."
-      next if (($defn =~ /^(\d+|\d\|\d)$/ and $name !~ /-$/) or
+      # skip names of numbers and simple fractions, but keep prefixes, "fuzz",
+      # and "partsper..." ("fuzz" is needed to avoid extra "unknown" dimension
+      # in approximate time units like "year")
+      next if (($defn =~ /^(\d+|\d\|\d)$/ and $name !~ /-$|^fuzz$/) or
 	       $name eq 'googol' or
 	       ($name =~ /(score|illion|illiard)$/ and
 	        $name !~ /^partsper\w+illion$/));

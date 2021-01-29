@@ -54,7 +54,7 @@
 (define-type ONT::organism
     :wordnet-sense-keys ("organism%1:03:00" "being%1:03:00" "life%1:19:00" "life%1:26:00" "life%1:03:00")
     :parent ONT::natural-object
-    :sem (F::Phys-obj (F::origin F::living))
+    :sem (F::Phys-obj (F::origin F::living) (F::container +)) ; stuffed animal
     )
 
 (define-type ONT::MOLECULAR-PART
@@ -496,7 +496,7 @@
 
 (define-type ONT::material
     :parent ONT::phys-object
-    :wordnet-sense-keys ("material%1:27:00" "stuff%1:27:00")
+    :wordnet-sense-keys ("material%1:27:00" "stuff%1:27:00" "material%1:06:00")
     :sem (F::Phys-obj (F::mobility F::non-self-moving) (f::form f::substance))
     )
 
@@ -828,7 +828,8 @@
 		      (F::origin F::Human)
 		      (F::Object-Function F::Occupation)
 		      (f::mobility f::self-moving)
-		      (F::Container -) (F::intentional +) (F::information -))
+		      ;(F::Container -)
+		      (F::intentional +) (F::information -))
     )
 
 ;; self
@@ -846,7 +847,8 @@
 		      (F::origin F::Human)
 		      (F::Object-Function F::Occupation)
 		      (f::mobility f::self-moving)
-		      (F::Container -) (F::intentional +) (F::information -))
+		      ;(F::Container -)
+		      (F::intentional +) (F::information -))
     )
 
 (define-type ONT::imaginary-being
@@ -857,7 +859,8 @@
 		      ;(F::origin F::Human)
 		      ;(F::Object-Function F::Occupation)
 		      (f::mobility f::self-moving)
-		      (F::Container -) (F::intentional +) (F::information -))
+		      ;(F::Container -)
+		      (F::intentional +) (F::information -))
     )
 
 (define-type ONT::user
@@ -891,7 +894,8 @@
 		      (F::spatial-abstraction F::spatial-point)
 		      (F::origin F::Human)
 		      (F::Object-Function F::Occupation)
-		      (F::Container -) (F::intentional +) (F::information -))
+		      ;(F::Container -)
+		      (F::intentional +) (F::information -))
     :arguments ((:OPTIONAL ONT::FIGURE ((? lof F::Phys-obj f::abstr-obj)))
 		(:optional ont::norole)  ;; here for "driver", "fixer": see note in DRV-NOM-RELN-TEMPL 
  	       )

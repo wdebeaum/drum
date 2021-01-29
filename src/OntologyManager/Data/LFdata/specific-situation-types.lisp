@@ -2770,6 +2770,7 @@
 (define-type ONT::naming
  :wordnet-sense-keys ("designate%2:32:00" "denominate%2:32:00")
  :parent ONT::conventional-speech-act
+ :arguments ((:REQUIRED ONT::neutral1))
  )
 
 (define-type ONT::declare-performative
