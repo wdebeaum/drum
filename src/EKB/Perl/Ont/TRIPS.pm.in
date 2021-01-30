@@ -2,7 +2,7 @@
 
 # TRIPS.pm
 #
-# Time-stamp: <Tue Oct 27 16:06:29 CDT 2020 lgalescu>
+# Time-stamp: <Fri Jan 29 12:30:45 CST 2021 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 27 Jul 2020
 #
@@ -35,6 +35,7 @@ use strict 'vars';
 use warnings;
 use feature 'state';
 
+use Data::Dumper;
 use Ont::Ontology;
 use List::Util qw(first);
 use util::Log;
@@ -66,6 +67,12 @@ my @data =
    'ONT::CAUSE' => 1,
   );
 
+# schema:
+# ont-type => mapping | lex-mapping | indirect-mapping
+# mapping ::= { type => wm-type, polarity => wm-polarity }
+# lex-mapping ::= { lex => { word => mapping, ... }
+# indirect-mapping ::= { use_predicate => 1 }
+# - this results in using the predicate's ont-type for mapping
 our %mappings =
   (
    # concept
@@ -80,6 +87,7 @@ our %mappings =
    'ONT::ECONOMIC-SYSTEM' => { type => "wm_compositional/concept/economy" },
    'ONT::ASSETS' => { type => "wm_compositional/concept/economy/assets" },
    'ONT::BUDGET' => { type => "wm_compositional/concept/economy/budget" },
+   'ONT::REVENUE' => { type => "wm_compositional/concept/economy/income" },
    'ONT::CURRENCY' => { type => "wm_compositional/concept/economy/currency" },
    'ONT::CLIMATE' => { type => "wm_compositional/concept/environment/climate" },
    'ONT::PRECIPITATION' => { type => "wm_compositional/concept/environment/meteorology/precipitation" },
@@ -96,7 +104,7 @@ our %mappings =
    'ONT::FUEL' => { type => "wm_compositional/concept/goods/fuel" },
    'ONT::MEDICATION' => { type => "wm_compositional/concept/goods/medicine" },
    'ONT::HEALTH-SCALE' => { type => "wm_compositional/concept/health" },
-   'ONT::DISEASE' => { type => "wm_compositional/concept/health/disease" },
+   'ONT::MEDICAL-DISORDERS-AND-CONDITIONS' => { type => "wm_compositional/concept/health/disease" },
    'ONT::FLU' => { type => "wm_compositional/concept/health/disease/flu" },
    'ONT::BRIDGE' => { type => "wm_compositional/concept/infrastructure/bridge" },
    'ONT::AGE-SCALE' => { type => "wm_compositional/concept/population/demographics/age" },
@@ -105,6 +113,16 @@ our %mappings =
    'ONT::REPOSITORY' => { type => "wm_compositional/concept/storage" },
    'ONT::DIRECTION' => { type => "wm_compositional/concept/trend" },
    'ONT::WATER' => { type => "wm_compositional/concept/water" },
+   'ONT::INSECT' => { lex =>
+		     { "LOCUST" => { type => "wm_compositional/concept/agriculture/pest/locust/solitary/solitary_locust" },
+		       "DESERT-LOCUST" => { type => "wm_compositional/concept/agriculture/pest/locust/solitary/solitary_locust" },
+		       "HOPPER" => { type => "wm_compositional/concept/agriculture/pest/locust/solitary/solitary_hopper" },
+		      }
+		    },
+   'ONT::MAMMAL' => { lex =>
+		      { "LIVESTOCK" => { type => "wm_compositional/concept/agriculture/livestock" }
+		      }
+		    },
 
    # process
    'ONT::ACQUIRE' => { type => "wm_compositional/process/access" },
@@ -129,10 +147,21 @@ our %mappings =
    'ONT::CAUSE-PRODUCE-REPRODUCE' => { type => "wm_compositional/process/produce" },
    'ONT::SUPPLY' => { type => "wm_compositional/process/supply" },
    'ONT::PROTECTING' => { type => "wm_compositional/process/secure" },
-   'ONT::COMMERCE-BUY' => { type => "wm_compositional/process/trade/import" },
-   'ONT::COMMERCE-SELL' => { type => "wm_compositional/process/trade/export" },
+   'ONT::COMMERCE-BUY' => { lex =>
+			    { "IMPORT" => { type => "wm_compositional/process/trade/import" }
+			    }
+			  },
+   'ONT::COMMERCE-SELL' => { lex =>
+			     { "EXPORT" => { type => "wm_compositional/process/trade/export" }
+			     }
+			   },
    'ONT::TEACH-TRAIN' => { type => "wm_compositional/process/train_or_educate" },
    'ONT::TRANSPORT' => { type => "wm_compositional/process/transport" },
+   'ONT::INCREASE' => { lex =>
+			{ "INFLATION" => { type => "wm_compositional/process/inflation" },
+			  "DEVELOPMENT" => { type => "wm_compositional/process/develop" }
+			}
+		      },
 
    # property
    'ONT::AVAILABLE' => { type => "wm_compositional/property/availability" },
@@ -177,28 +206,50 @@ sub new {
 sub map {
   my $self = shift;
   my $type = shift;
+  my $opts = shift;
+  # this is static, since mappings don't change dynamically
   state $sorted_mappings =
     [ sort { my $r = $self->comp($a, $b);
 	     DEBUG(2, "comp($a, $b)=%s", $r);
-	     $r
-      }
+	     $r }
       keys %mappings
     ];
-  # DEBUG 0, "sorted: (%s)", join(", ", @$sorted_mappings);
+  { local $Data::Dumper::Terse = 1;
+    local $Data::Dumper::Indent = 0;
+    DEBUG 2, "map(%s, %s)", $type, Dumper($opts);
+  }
   # FIXME: use subsumption (is_a)
   if (exists $mappings{$type}) {
-    return $mappings{$type};
+    my $mapping = $mappings{$type};
+    if (exists($mapping->{use_predicate})) {
+      if ($opts and defined $opts->{pred}) {
+	my $pred = $opts->{pred};
+	delete $opts->{pred};
+	return $self->map($pred, $opts);
+      } else {
+	return undef;
+      }
+    }
+    return apply_lex_constraint($mapping, $opts->{lex} // undef);
   } elsif ($self->has($type)) {
     # find the lowest node in the hierarchy where we can attach
     my $match = first { $self->is_a($type, $_) } @$sorted_mappings;
     if ($match) {
       WARN "$type mapped via $match";
-      return $mappings{$match};
+      return apply_lex_constraint($mappings{$match}, $opts->{lex} // undef);
     }
-    return;
+    return undef;
   }
   WARN "Ont::TRIPS does not contain type: $type";
-  return;
+  return undef;
 }
 
+sub apply_lex_constraint {
+  my $mapping = shift;
+  my $lex = shift;
+  return $mapping unless exists $mapping->{lex};
+  return undef unless $lex;
+  return (exists $mapping->{lex}{$lex}) ? $mapping->{lex}{$lex} : undef;
+}
+  
 1;

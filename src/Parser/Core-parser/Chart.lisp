@@ -46,6 +46,7 @@
 ;; gf 5 May 2006: Start refactoring of chart code
 
 (defvar *max-utterance-length* 2000)  ;; accepts utterance up to 20 seconds (good luck parsing it!!)
+(defvar *punc-penalty* 0.95)
 
 (defclass chart ()
   ((numberEntries :initform 0 :accessor numberEntries)   ;; the number of entries currently on the chart
@@ -772,7 +773,7 @@ separate instances of the chart/parser.")
       (if (eq (constit-cat c) 'W::pause) ;; skip filled pauses
 	  .99
 	  ;; otherwise we have punctuation
-	  .9))) ;.95 ))) ;;; as we have incorporated better handling of punctuation, we are penalizing skipping more
+	  *punc-penalty*))) ;.95 ))) ;;; as we have incorporated better handling of punctuation, we are penalizing skipping more
 #||	     (case (get-value c 'w::lex)
 	       (W::PUNC-COMMA
 		(case (constit-cat prevc) 
