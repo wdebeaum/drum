@@ -1299,7 +1299,7 @@
      ;; vp rules 
      ;; test: he said the dog barked.
     ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar) 
-      (var ?v) (class ?c) ;(gap ?gap) 
+      (var ?v) (class ?c) (gap ?gap) 
       (constraint ?newc)
       (tma ?tma)
       (postadvbl -) (vform ?vf)
@@ -1316,8 +1316,8 @@
 	   ;; (iobj (% -))
 	    (part ?part) 
 	    (dobj ?dobj) (dobj (% ?s3 (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem)
-				  ;(gap ?gap)))	    
-				  (gap -)))	    
+				  (gap ?gap)))	    
+				  ;(gap -)))	    
 	    ;; we allow a possible gap in the dobj np e.g., "what did he thwart the passage of" ; This now uses -VP1-GAPPED-DOBJ-ROLE> since we don't allow gaps here anymore
 	    (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -)))
 	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
