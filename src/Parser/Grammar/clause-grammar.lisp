@@ -528,6 +528,34 @@
 	  )
     )
 
+   ; Who do you think (that) ate the pizza?
+   ((s (stype decl) (var ?v) (subjvar ?npvar) ;(gap ?g)
+       (focus ?npvar)
+     (lf ?lf) (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex)
+		       (pp-word -) (changeagr -) (gap -) (expletive ?exp))
+	       )
+     (gap (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex)
+		       (pp-word -) (changeagr -) (gap -) (expletive ?exp) (status ?status)) ; status is matched in wh-q2
+	       )     
+     (advbl-needed ?avn)
+     )
+    -s1-missing-subj>
+    (head (vp (lf ?lf) (gap -) ;(gap ?g)
+              ;(template (? !x  lxm::propositional-equal-templ))
+              ;(template (? !x  lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL))
+	      (subjvar ?npvar)
+	      (subj (% np (sem ?npsem) (var ?npvar) (agr ?a) (case (? case sub -)) (lex ?lex)
+		       (pp-word -) (changeagr -) (gap -) (expletive ?exp) ;(class ?npclass)
+		       ;(status ?status) do not pass up the status into the gap because the subj doesn't have status set
+		       ))
+	      (var ?v) (vform fin) (agr ?a)
+	      (advbl-needed ?avn)
+	      (neg ?neg)
+	      )
+	  )
+    )
+
+   
    ;;  special case s1 rule for abstract objects that can be equivalent to propositions (e.g., fact, belief, etc)
    ;;    these all take a subcat-map to ont::formal - only verb that can do this so far is ont::be.
    ;;    e.g., the fact is he left angry
@@ -992,13 +1020,13 @@
    ;; e.g., that the train arrives.
    ;; test: i know that the dog barks.
    ;; test: i know that the dog chased the cat.
-   ((cp (ctype s-that-overt) (gap -) 
+   ((cp (ctype s-that-overt) (gap ?gap) ;(gap -) pass up the gap now for "The pizza I think I ate"
      (lf (% prop (var ?v) (constraint ?con) (class ?lf) (tma ?newtma)))  ;; (lf ?lf) ;; (lex ?lex) (headcat ?vcomp)) ;; non-aug-trips settings
 	(lex ?hlex) (headcat ?hcat)) ;; aug-trips
     -s-that-overt>
     (word (lex (? lx that)) ;; if whether))   these are handled by ctype s-if rule   jfa 3/07
 	  (headcat ?vcomp))
-    (head (s (stype decl) (main -) (gap -) 
+    (head (s (stype decl) (main -) (gap ?gap) ;(gap -) 
 	     (lf (% prop (var ?v) (constraint ?con) (class ?lf) (tma ?tma))) ;;(lf ?lf) 
 	      (adj-s-prepost -)
 	     (vform fin)
@@ -1049,11 +1077,11 @@
    ;; e.g., (i know) the train arrived.
    ;; test: i know the dog barked.
    ;; test: i know the dog chased the cat.
-   ((cp (ctype s-that-missing) (gap -) 
+   ((cp (ctype s-that-missing) (gap ?gap) ;(gap -) pass up the gap now for "The pizza I think I ate"
       (lf (% prop (var ?v) (constraint ?con) (class ?lf) (tma ?newtma))) ;;(lf ?lf)
 	(lex ?hlex) (headcat ?hcat)) ;; aug-trips
     -s-that-missing> .98
-    (head (s (stype decl) (main -) (wh -) (gap -)
+    (head (s (stype decl) (main -) (wh -) (gap ?gap) ;(gap -)
 	      (adj-s-prepost -)
 	      (lf (% prop (var ?v) (constraint ?con) (class ?lf) (tma ?tma))) ;;(lf ?lf) 
 	      (vform fin)
@@ -1210,8 +1238,9 @@
 	     (atype (? atp central attributive-only predicative-only))
 	     ;; md 2008/17/07 eliminated cases with positive post-subcat, they should only happen when an adjective is looking for an argument after an np, not possible in the pred situation
 	     (post-subcat -) (how ?how)
-	     ;(subcat -) ; if there is a subcat, use ADJ-PRED-ONESUBCAT, but need a better restriction because those that have an optional unfilled subcat use this rule too (e.g., worse)
+	     (subcat ?subcat)
 	     ))
+      (check-subcat (arg1 ?subcat))
       )
 
    ;; test: the dog is from the store.
@@ -1299,7 +1328,7 @@
      ;; vp rules 
      ;; test: he said the dog barked.
     ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar) 
-      (var ?v) (class ?c) (gap ?gap) 
+      (var ?v) (class ?c) ;(gap ?gap) 
       (constraint ?newc)
       (tma ?tma)
       (postadvbl -) (vform ?vf)
@@ -1316,8 +1345,8 @@
 	   ;; (iobj (% -))
 	    (part ?part) 
 	    (dobj ?dobj) (dobj (% ?s3 (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem)
-				  (gap ?gap)))	    
-				  ;(gap -)))	    
+				  ;(gap ?gap)))	    
+				  (gap -)))	    
 	    ;; we allow a possible gap in the dobj np e.g., "what did he thwart the passage of" ; This now uses -VP1-GAPPED-DOBJ-ROLE> since we don't allow gaps here anymore
 	    (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -)))
 	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)

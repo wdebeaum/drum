@@ -185,6 +185,35 @@
 	*success*
 	)))
 
+(define-predicate 'w::check-subcat
+  #'(lambda (args)
+      (check-subcat args)))
+
+(defun check-subcat (args)
+  "succeeds if the subcat is - or filled or if the subcat is unfilled and optional"
+  (let ((x (get-fvalue args 'w::arg1)))
+    (cond ((var-p x)
+	   (if (constit-p (var-values x))
+	       (let ((var (get-value (var-values x) 'w::var))
+		     (z (format t "~%(var-values x): ~S~%w::var: ~S~%w::optional: ~S~%"
+				(var-values x)
+				(get-value (var-values x) 'w::var)
+				;(get-value (var-values x) 'w::optional)))
+				(constit-optional (var-values x))))
+			)
+		 (cond ((var-p var)
+			(if (eq (constit-optional (var-values x)) 't) *success* nil)
+			)
+		       ;((eq var '-) *success*)
+		       (t *success*)
+		       ))
+	     *success*))
+	  (t ;(format t "~% SUBCAT is not a var: ~S" x)
+	   *success*
+	     ))
+    )
+  )
+
 #|
 (defun non-null-constit (x)
   (cond ((var-p x)
