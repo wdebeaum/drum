@@ -539,7 +539,7 @@
 	       )     
      (advbl-needed ?avn)
      )
-    -s1-missing-subj>
+    -s1-missing-subj> .97
     (head (vp (lf ?lf) (gap -) ;(gap ?g)
               ;(template (? !x  lxm::propositional-equal-templ))
               ;(template (? !x  lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL))
