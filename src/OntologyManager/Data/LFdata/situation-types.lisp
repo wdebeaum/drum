@@ -244,6 +244,11 @@
 	     )
  )
 
+(define-type ONT::Objective-influence-neg
+    :wordnet-sense-keys ("afflict%2:37:00" "afflict%2:30:00" "hit%2:35:05")
+    :parent ONT::Objective-influence
+ )
+
 (define-type ONT::Body-movement
  :wordnet-sense-keys ("change_posture%2:38:00")
  :parent ONT::EVENT-OF-causation

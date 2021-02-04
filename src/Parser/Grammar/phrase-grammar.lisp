@@ -2001,7 +2001,7 @@
      
      (head (N1 (VAR ?v2) (relc -) (sem ?sem) (sem ($ (? x F::ABSTR-OBJ F::PHYS-OBJ))) ;;  F::SITUATION)))
 	    (RESTR ?r) (CLASS ?c) (SORT PRED) (name-mod -)
-	    (subjmap -)  ;; nominalized verbs have their own rules
+	    (subj-map -)  ;; nominalized verbs have their own rules
 	    (subcat ?subcat)
 	    (post-subcat -)
 	    (postadvbl -) 
@@ -2028,7 +2028,7 @@
       ;; we reinstated "gerund -" as "computing" should be an adjective (and we need to exclude "... via phosphorylating Raf"
       (sem ?n-sem) (derived-from-name -) ; names go through -name-n1>
       (CLASS ?modc) (PRO -) (N-N-MOD -) ;(COMPLEX -)   ;;  can't require COMPLEX - any more -- e.g., "p53 expression levels"  -- now we can!! This goes through nom-rate instead.
-      ; set two-n1-conjunct to complex - so that e.g., <trade and migration> route, can go through this rule
+      ; set two-n1-conjunct to (complex -) so that e.g., <trade and migration> route, can go through this rule
       ; removed "COMPLEX -" again: "water treatment plant" (added complex + back to two-n1-conjunct)
       (SUBCAT (% -)) ;(SUBCAT ?ignore)
       (GAP -) (kr-type ?kr-type)
@@ -2041,7 +2041,7 @@
 	       (RESTR ?r)
 	       (SORT PRED) (gap ?gap) 
 	    (relc -)  (postadvbl -) (post-subcat -) 
-	    (subjmap -)  ;; nominalized verbs have their own rules
+	    (subj-map -)  ;; nominalized verbs have their own rules
 	    (abbrev -)
 	       ))
      (add-to-conjunct 
@@ -2063,7 +2063,7 @@
      (head (N1 (VAR ?v2) (QUAL -) (subcat ?subcat) (n-sing-already -)
 	       (RESTR ?r) (CLASS ?c) (SORT ?sort) (N-N-MOD -)
 	       (relc -)  (postadvbl -) (post-subcat -) (name-mod -)
-	       (subjmap -)  ;; nominalized verbs have their own rules
+	       (subj-map -)  ;; nominalized verbs have their own rules
 	       ))
      (add-to-conjunct (val (ASSOC-WITH (% *PRO* (status ont::kind) (var ?v1) (class ?modc) 
 					  (constraint ?modr) (sem ?sem)))) (old ?r) (new ?new)))
@@ -2102,7 +2102,7 @@
      (head (N1 (VAR ?v2) (QUAL -) 
 	    (RESTR ?r) (CLASS ?c) (SORT PRED)
 	    (relc ?relc) (subcat ?subcat) (postadvbl -)
-	    (post-subcat -)  (subjmap -)  ;; nominalized verbs have their own rules
+	    (post-subcat -)  (subj-map -)  ;; nominalized verbs have their own rules
 	       ))
       (add-to-conjunct (val (ASSOC-WITH (% *PRO* (status ont::kind) (var ?v1) (class ?modc) (constraint ?modr) (sem ?sem)))) (old ?r) (new ?new)))
     
@@ -4508,7 +4508,7 @@
 ; pass up subcat
 (parser::augment-grammar 
   '((headfeatures
-     (NP VAR SEM LEX wh lex orig-lex headcat transform postadvbl subcat subcat-map)
+     (NP VAR SEM wh lex orig-lex headcat transform postadvbl subcat subcat-map)
      (N1 lex orig-lex headcat set-restr refl abbrev nomobjpreps nomsubjpreps agent-nom rate-activity-nom result subcat subcat-map) ; result for nominalizations
      )    
     
@@ -6786,7 +6786,8 @@
 		    ))
 	 (n (lf ?ratelf)
 	  ;; we match the LF here instead of in the SEM in order to get a hard failure 
-	  (lf (? x ONT::DOMAIN ONT::ACTIVITY-EVENT ONT::ABILITY-EVENT ONT::LEVEL ONT::QUANTITY-ABSTR
+	    (lf (? x ONT::MEASURE-SCALE ;ONT::DOMAIN ; rate, height; excludes security
+		   ONT::ACTIVITY-EVENT ONT::ABILITY-EVENT ONT::LEVEL ONT::QUANTITY-ABSTR
 		   ONT::time-object))  ; rate, height, activity, level, amount, (planting) date
 	  (sem ($ (? t F::ABSTR-OBJ F::SITUATION F::TIME))))  ; (planting) date
 	 )

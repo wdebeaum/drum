@@ -29,7 +29,7 @@
  :tags (:base500)
  :words (
 ;    ))
-  (W::AGENT
+  (W::CAUSE
    (SENSES
     ((LF-PARENT ONT::REASON-informal)
      (LF-FORM W::because)

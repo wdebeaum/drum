@@ -399,6 +399,35 @@
         (verb-frames (get-verb-frame-numbers synset))
 	(mapped-ont-type (remove-duplicates (mapcar #'convert-hierarchy hiers)))
 	)
+    ;; map otherwise-unmapped adverbs using the corresponding adjective mapping
+    (when (and (eq '|r| (slot-value synset 'ss-type)) ; adverb synset
+	       (equalp '(ONT::predicate) mapped-ont-type)) ; unmapped adv
+      ;; get derived-from-adjective pointers and their target synsets
+      (let ((ptrs (get-pointers-by-relationship wm synset "\\")))
+	(when ptrs
+	  ;; find the derived-from-adj pointer for the specific word
+	  ;; (NOTE: there are two cases in WN 3.0 where there are multiple
+	  ;; derived-from-adj pointers from the same word, unclearly%4:02:00::
+	  ;; and peripherally%4:02:00::; we ignore that and just take the first
+	  ;; pointer that leads to a mapping.)
+	  (loop with word-number =
+		  (1+ (position word synonyms :test #'string-equal))
+		for (ptr target-ss) in ptrs
+		for source-target = (slot-value ptr 'source-target)
+		for (source-word-number target-word-number) =
+		  (multiple-value-list (truncate source-target 256))
+		when (= source-word-number word-number) ; pointer for right word
+		do
+		  ;; redo ONT mapping using adjective target-ss
+		  (let* ((adj-hiers (get-hierarchy wm target-ss))
+			 (adj-ont-types
+			   (remove-duplicates
+			       (mapcar #'convert-hierarchy adj-hiers))))
+		    (unless (equalp '(ONT::property-val) adj-ont-types)
+		      ;; have a mapping, use it and finish loop
+		      (setf mapped-ont-type adj-ont-types)
+		      (loop-finish)))
+		))))
     (cond ((and trips-sense-list
 		(or (lxm::is-duplicate-sense constit-type (car mapped-ont-type) trips-sense-list)
 		    (lxm::is-subsumed-sense constit-type (car mapped-ont-type) trips-sense-list)))

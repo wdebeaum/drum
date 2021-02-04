@@ -8,7 +8,8 @@
     (W::unknown-adv
    (SENSES
     ((LF-PARENT ONT::PREDICATE)
-     (TEMPL PRED-S-VP-TEMPL)
+     ;(TEMPL PRED-S-VP-TEMPL)
+     (TEMPL PRED-S-OR-ADJP-TEMPL)
      )
     )
    )

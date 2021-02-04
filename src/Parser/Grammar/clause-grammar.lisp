@@ -539,7 +539,7 @@
 	       )     
      (advbl-needed ?avn)
      )
-    -s1-missing-subj> .97
+    -s1-missing-subj> .95 ;.97 ; keep this low because this duplicates every vp
     (head (vp (lf ?lf) (gap -) ;(gap ?g)
               ;(template (? !x  lxm::propositional-equal-templ))
               ;(template (? !x  lxm::NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL))
@@ -554,7 +554,6 @@
 	      )
 	  )
     )
-
    
    ;;  special case s1 rule for abstract objects that can be equivalent to propositions (e.g., fact, belief, etc)
    ;;    these all take a subcat-map to ont::formal - only verb that can do this so far is ont::be.
@@ -863,7 +862,10 @@
 	   (preadvbl -)
 	   (advbl-needed -)
 	   (lex ?hlex) (headcat ?hcat) ;; aug-trips
-	   )))
+	   (subjvar ?subjvar)
+	   ))
+    (bound (arg1 ?subjvar)) ; make sure this is not from s1-missing-subj
+    )
 
    ;; test: the person on whom he relies
    ((cp (ctype relc) (arg ?arg) (argsem ?argsem) (gap -)
