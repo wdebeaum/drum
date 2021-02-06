@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.65 2019/11/07 19:54:11 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.66 2021/02/06 00:56:55 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -471,7 +471,7 @@ public class TermExtraction extends Extraction {
         return xml_element(exType, attrs, conts);
     }
     /**
-     * Returns a domain-specific (e.g., {@code drum-terms}) XML element containing a set of grounding information terms.
+     * Returns a domain-specific XML element containing a set of grounding information terms.
      * 
      */
     protected String xml_grounding() {
@@ -483,10 +483,7 @@ public class TermExtraction extends Extraction {
     }
 
     /**
-     * Returns a {@code country} XML element containing grounding information for country names.
-     * <p>
-     * Attributes: {@code code}, {@code name}
-     * CAPITAL, REGION, SUBREGION, DEMONYM
+     * Returns an XML element containing grounding information for various named entities in the CWMS domain.
      */
     protected String xml_cwmsTerm(KQMLList dsTerm) {
         if (dsTerm == null)
