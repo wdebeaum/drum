@@ -1002,7 +1002,7 @@
  )
 
 (define-type ONT::agriculture
- :wordnet-sense-keys ("agriculture%1:04:01")
+ :wordnet-sense-keys ("agriculture%1:04:01" "cultivation%1:04:00" "cultivation%1:04:02")
  :parent ONT::activity
  :sem (F::situation (F::cause (? cause F::agentive F::force)))
  )

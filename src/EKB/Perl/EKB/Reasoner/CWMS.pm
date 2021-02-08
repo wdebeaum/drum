@@ -1,9 +1,9 @@
 # CWMS.pm
 #
-# Time-stamp: <Tue Oct 27 16:05:32 CDT 2020 lgalescu>
+# Time-stamp: <Fri Feb  5 22:30:51 CST 2021 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  1 Jun 2016
-# $Id: CWMS.pm,v 1.11 2020/10/27 21:06:58 lgalescu Exp $
+# $Id: CWMS.pm,v 1.12 2021/02/07 19:29:15 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -123,7 +123,38 @@ sub default_options {
       1;
     }
    },
-   
+
+   # abandoned -- maybe we should get IM/EX to do better first
+   # {
+   #  ## ONT::CONFLICT
+   #  # e=EVENT[type=ONT::PRODUCE,predicate/type=X]
+   #  # X==INVADE,INVASION
+   #  # =>
+   #  # e=EVENT[type=p]
+   #  name => "EKR:FixCONFLICT",
+   #  constraints => ['EVENT[type[.="ONT::CONFLICT"]]'],
+   #  handler => sub {
+   #    my ($rule, $ekb, $e) = @_;
+      
+   #    my $e_id = $e->getAttribute('id');
+   #    my ($pred) = $e->findnodes('predicate');
+   #    my $ptype = get_slot_value($pred, "type") if $pred;
+   #    my ($prednorm) = getvalue_xpath($e, 'predicate/text/@normalization');
+   #    $prednorm 
+   # 	or return 0;
+   #    if ($prdnorm
+
+      
+   #    INFO "Rule %s matches event %s (ONT::CONFLICT~%s~%s)",
+   # 	$rule->name(), $e_id, $ptype, $prednorm;
+
+   #    $ekb->modify_assertion( $e,
+   # 			      make_slot_node(type => $ptype)
+   # 			      );
+   #    1;
+   #  }
+   # },
+
    {
     ## ONT::CREATE
     # e=EVENT[type=ONT::CREATE, predicate/text/@normalization=BUILD]
@@ -136,7 +167,8 @@ sub default_options {
       
       my $e_id = $e->getAttribute('id');
       my ($prednorm) = getvalue_xpath($e, 'predicate/text/@normalization');
-      $prednorm eq "BUILD" or return 0;
+      $prednorm and ($prednorm eq "BUILD")
+	or return 0;
       
       INFO "Rule %s matches event %s (prednorm: %s)",
 	$rule->name(), $e_id, $prednorm;
@@ -892,6 +924,37 @@ sub default_options {
     }
    },
 
+   {
+    ## risk of, problem of as CC factors
+    # < (CC A :factor X)
+    # < (EVENT X ONT::TROUBLE :assoc-with Y)
+    # > (CC A1 :factor Y)
+    name => "EKR:TroubleFactor",
+    constraints => ['CC and arg[@role=":FACTOR"]'],
+    handler => sub {
+      my ($rule, $ekb, $a) = @_;
+      my $a_id = $a->getAttribute('id');
+      my $x_id = $a->findvalue('arg[@role=":FACTOR"]/@id');
+      my $x = $ekb->get_assertion($x_id, "EVENT")
+	or return 0;
+      my $x_type = get_slot_value($x, "type");
+      $ont_trips->is_a($x_type, "ONT::TROUBLE")
+	or return 0;
+      my $y_id = $x->findvalue('assoc-with/@id')
+	or return 0;
+      
+      INFO "Rule %s matches assertion %s (x: %s/%s, y: %s)",
+	$rule->name(), $a_id, $x_id, $x_type, $y_id;
+
+      # add assertion
+      my $a1 = $ekb->clone_assertion($a, {rule => $rule->name});
+      $ekb->replace_arg($a1, ':FACTOR' => $y_id);
+      $ekb->add_assertion($a1);
+
+      1;
+      }
+    },
+
    ### generic clean-up rules
    
    {
@@ -1215,26 +1278,31 @@ sub default_options {
    ### ontology mappings
    {
     name => 'EKR:AddWMOntTypes',
-    constraints => [],
+    constraints => ['*[not(wm-type)]'],
     handler => sub {
       my ($rule, $ekb, $a) = @_;
-
+      
       my $a_id = $a->getAttribute('id');
       my $a_type = get_slot_value($a, "type");
+      # extra info: pred type, lex, gid, gname
+      my $info = {};
+      # for relns, use text normalization to get lexeme
+      my ($pred, $lex) = (undef, undef);
+      ($pred) = $a->findnodes('predicate');
+      my $p_type = get_slot_value($pred, "type") if $pred;
+      $info->{pred} = $p_type if $p_type;
+      ($lex) = getvalue_xpath($pred // $a, 'text/@normalization') ;
+      $info->{lex} = $lex if $lex;
+      my ($gid) = getvalue_xpath($a, 'grounding/term/@id'); # first term
+      $info->{gid} = $gid if $gid;      
+      # my ($gname) = $a->findnodes('grounding/term/@name'); # first term
 
-      my $wm_mapping = $ont_trips->map($a_type)
+      my $wm_mapping = $ont_trips->map($a_type, $info)
 	or return 0;
 
-      if (exists($wm_mapping->{use_predicate})) {
-	my ($pred) = $a->findnodes('predicate');
-	$pred or return 0;
-	$a_type = get_slot_value($pred, "type");
-	$wm_mapping = $ont_trips->map($a_type)
-	  or return 0;
-      }
-
-      INFO "Rule %s matches assertion %s (type=%s)",
-	$rule->name(), $a_id, $a_type;
+      INFO "Rule %s matches assertion %s (type=%s, {%s} => %s)",
+	$rule->name(), $a_id, $a_type, join(",", map { "$_:$info->{$_}" } keys %$info),
+	Dumper($wm_mapping);
 
       my $tn = get_child_node($a, "type");
       my $wm_node = make_wm_node($wm_mapping);
