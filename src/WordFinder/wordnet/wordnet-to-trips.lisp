@@ -393,7 +393,7 @@
   "Given a Wordnet synset and a string of the original word being looked up, returns an entry to be sent back to the parser."
   (setq *parent-offset-list* nil) ;; reset parent offset list used in hierarchy search
   (let* ((hiers (get-hierarchy wm synset))
-        (synonyms (get-synonyms synset))
+        (synonyms (wn-lemmas synset))
 	(lex-filenum (get-lex-filenum synset))
 	(constit-type (convert-wordnet-pos-to-trips (get-pos-string synset)))
         (verb-frames (get-verb-frame-numbers synset))
