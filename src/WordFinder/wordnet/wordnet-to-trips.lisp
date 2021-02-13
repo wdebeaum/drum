@@ -411,7 +411,10 @@
 	  ;; and peripherally%4:02:00::; we ignore that and just take the first
 	  ;; pointer that leads to a mapping.)
 	  (loop with word-number =
-		  (1+ (position word synonyms :test #'string-equal))
+		  ;; FIXME sometimes we get only the first word in a multi-word
+		  ;; and it doesn't match any synonyms, e.g. word="at"
+		  ;; synonyms=("lengthily" "at_length")
+		  (1+ (or (position word synonyms :test #'string-equal) -1))
 		for (ptr target-ss) in ptrs
 		for source-target = (slot-value ptr 'source-target)
 		for (source-word-number target-word-number) =
