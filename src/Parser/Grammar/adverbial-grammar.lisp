@@ -1010,9 +1010,9 @@
 	   (LF (% PROP (CLASS ?class) (VAR *) (sem ?sem) (CONSTRAINT (& (sequence (?v1 ?v2)) (operator ?conj))
 		  ))))
      -advbl-conj1>
-     (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf1) (VAR ?v1)(sem ?sem1))) (gap ?g) (argument ?argmt) (gap -))
-     (CONJ (LF ?conj) (but-not -) (but -))
-     (head (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf2) (VAR ?v2) (sem ?sem2))) (gap ?g) (argument ?argmt) (gap -)))
+     (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf1) (VAR ?v1)(sem ?sem1))) (gap ?g) (argument ?argmt) (gap -) (atype ?atype))
+     (CONJ (LF ?conj) (but-not -) (but -) (subcat2 -)) ; subcat2 - excludes "either" and "neither"
+     (head (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf2) (VAR ?v2) (sem ?sem2))) (gap ?g) (argument ?argmt) (gap -) (atype ?atype)))
     (sem-least-upper-bound (in1 ?sem1) (in2 ?sem2) (out ?sem))
     (class-least-upper-bound (in1 ?lf1) (in2 ?lf2) (out ?class))
     )

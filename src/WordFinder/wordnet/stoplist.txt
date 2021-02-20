@@ -3993,3 +3993,6 @@ gain%2:38:00::
 equal_to%5:00:00:adequate:00
 transfer%1:18:00::
 
+arugula%1:20:00:: ; to stop arugulas (and we have "arugula" in the lexicon already)
+afloat%5:00:00:purposeless:00
+

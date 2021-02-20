@@ -59,9 +59,16 @@
     (multiple-value-bind (b-name b-attributes b-children)
         (xml-element-parts b)
 	(declare (ignore b-name b-attributes)) ; should be the same as a
-      `(pos ,@a-attributes
-        ,@(merge-class-xml-lists nil (append a-children b-children))
-	))))
+      (let* ((all-children (append a-children b-children))
+	     (class-children
+	       (remove-if-not (lambda (x) (eq (car x) 'class)) all-children))
+	     (morph-children
+	       (remove-if-not (lambda (x) (eq (car x) 'morph)) all-children))
+	     )
+	`(pos ,@a-attributes
+	  ,@(remove-duplicates morph-children :test #'equalp)
+	  ,@(merge-class-xml-lists nil class-children)
+	  )))))
 
 (defun merge-pos-xml-lists (a b)
   "Given two lists of pos XMLs, return a single merged list. May destructively modify a."

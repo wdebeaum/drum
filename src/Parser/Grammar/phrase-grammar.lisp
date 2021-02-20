@@ -6137,7 +6137,7 @@
      ((NP (ATTACH ?a) (var ?v) (agr ?agr) (SEM ?sem) (gerund ?ger) 
       (LF (% Description (Status ?status) (var ?v) 
 	     (class ?c1)
-	     (constraint (& (operator but-not) (sequence (?v1)) (except ?exception)))
+	     (constraint (& (operator ONT::but-not) (sequence (?v1)) (except ?exception)))
 	     (sem ?sem) (CASE ?c)
 	     (mass ?m1) 
 	     ))
@@ -6152,7 +6152,8 @@
 	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram] 	    
 	    )
       (head (conj (but-not +) (var ?v)))
-      (np (var ?exception))
+      (np (var ?exception) (class ?c2))
+      (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class)) ; not passed up but this will calculate a similarity score
       )
 ;;  But not construction, e,g,. apples but not pears, apples not pears, 
      ((NP (ATTACH ?a) (var ?v) (agr ?agr) (SEM ?s1) (gerund ?ger) 
@@ -6362,7 +6363,7 @@
       (lf (% PROP (class ?c1))) (sem ?s1) (atype ?atype1) (post-subcat -)
       (set-modifier -)
       )
-     (CONJ (LF ?conj) (but-not -) (but -))
+     (CONJ (LF ?conj) (but-not -) (but -) (subcat2 -)) ; subcat2 - excludes "either" and "neither"
      (ADJP (arg ?arg)  (argument ?a) (VAR ?v2) (gap ?gap)
       ;(LF (% PROP (class ?c2))) (sem ?s2) (atype central) (post-subcat -)
       (LF (% PROP (class ?c2))) (sem ?s2) (atype ?atype2) (post-subcat -)

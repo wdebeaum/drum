@@ -195,11 +195,13 @@
     (cond ((var-p x)
 	   (if (constit-p (var-values x))
 	       (let ((var (get-value (var-values x) 'w::var))
+		     #|
 		     (z (format t "~%(var-values x): ~S~%w::var: ~S~%w::optional: ~S~%"
 				(var-values x)
 				(get-value (var-values x) 'w::var)
 				;(get-value (var-values x) 'w::optional)))
 				(constit-optional (var-values x))))
+		     |#
 			)
 		 (cond ((var-p var)
 			(if (eq (constit-optional (var-values x)) 't) *success* nil)
