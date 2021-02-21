@@ -392,7 +392,7 @@
 		(gap ?gap)
 		(LF (% ?sort1 (class ?c1) (status ?status)))
 		))
-      (CONJ (LF ?conj) (var ?vc) (but-not -) (but -) (lex ?lex))
+      (CONJ (LF ?conj) (var ?vc) (but-not -) (but -) (lex ?lex) (subcat2 -)) ; subcat2 - excludes "either" and "neither"
       (PP (PTYPE ?pt) (var ?v2) (case ?c) (sem ?s2)
        (gap ?gap)
        (LF (% ?sort2 (class ?c2)))
@@ -1031,13 +1031,14 @@
        (old ?con) (new ?newcon))
       )
 
+     ; either slowly or quickly
     ((ADVBL (ARG ?arg) (sem ?sem) (VAR *)
-      (LF (% PROP (CLASS ?clf) (VAR *) (sem ?sem) 
-	     (constraint (& (?cop (?v1 ?v2))))
+      (LF (% PROP (CLASS ?class) (VAR *) (sem ?sem) 
+	     (constraint (& (operator ?cop) (sequence (?v1 ?v2))))
 	     ))
       (headcat ?hcat) (fake-head 0) ;; aug-trips
       )
-     -advbl-double-coord>
+     -advbl-double-conj1>
      (conj (SEQ +) (SUBCAT1 ADVBL) (SUBCAT2 ?wlex) (SUBCAT3 ADVBL) 
       (var ?v) (lf ?clf)
       (operator ?cop))                
@@ -1045,6 +1046,7 @@
      (word (lex ?wlex))
      (head (ADVBL (ARG ?arg) (LF (% PROP (CLASS ?lf2) (VAR ?v2) (sem ?sem2)))))
      (sem-least-upper-bound (in1 ?sem1) (in2 ?sem2) (out ?sem))
+     (class-least-upper-bound (in1 ?lf1) (in2 ?lf2) (out ?class))
      )
     
     ;; declarative:

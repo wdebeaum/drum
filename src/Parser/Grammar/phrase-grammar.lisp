@@ -3162,7 +3162,7 @@
       (class ont::quantity-abstr)
       (status indefinite)
       (LF (% DESCRIPTION (STATUS indefinite) (CLASS ONT::QUANTITY-ABSTR) (VAR *)
-	     (CONSTRAINT (& (operator AND)
+	     (CONSTRAINT (& (operator ONT::AND)
 			    (sequence (?v1 ?v2))))
 	     (Sem ?sem)))					
       (transform ?transform))
@@ -4014,7 +4014,7 @@
      )
 
     ;; TEST: the pizza eating elephant
-     ((ADJP (VAR ?v)  (arg ?subjvar) (class ?lf) (atype attributive-only) ;(atype w::central)
+     ((ADJP (VAR ?v)  (arg ?subjvar) (class ?lf) (atype attributive-only) ;(atype w::central) ; but it could be predicative also?
 	    (argument ?subj) ;(argument (% NP (var ?dobj)))
 	    (vform ing)
 	    (constraint ?constraint) (sem ?sem2) ;(sem ?sem)
@@ -5812,7 +5812,7 @@
       (time-converted ?tc1) ;; MD 2008/03/06 Introduced restriction that only items with the same time-converted status can combine - i.e. don't mix number notation for times or non-times.
       (status ?status1)
       )
-     (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v)) ;; (status ?status))
+     (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v) (subcat2 -)) ;; (status ?status)) ; subcat2 - excludes "either" and "neither"
      (head (NP (VAR ?v2) (SEM ?s2) (ATTACH ?a) (lf ?lf2) (LF (% ?d (class ?c2) (status ?status2))) (CASE ?case2) (mass ?m2) (constraint ?con)
 	    (generated ?generated2)
 	    (sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
@@ -5828,7 +5828,7 @@
     
     ;; same construction with exceptions (we have an explicit rule to prefer attachment to the top sequence rather than
     ;;   the last embedded item
-
+    ; A, B and C but not D
      ((NP (ATTACH ?a) (var ?v) (agr 3p) (SEM ?sem)  
       (LF (% Description (Status ?status-out) (var ?v) 
 	     (class ?class)
@@ -5845,7 +5845,7 @@
        (time-converted ?tc1) ;; MD 2008/03/06 Introduced restriction that only items with the same time-converted status can combine - i.e. don't mix number notation for times or non-times.
        (status ?status1)
        )
-      (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v)) ;; (status ?status))
+      (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v) (subcat2 -)) ;; (status ?status)) ; subcat2 - excludes "either" and "neither"
       (head (NP (VAR ?v2) (SEM ?s2) (ATTACH ?a) (lf ?lf2) (LF (% ?d (class ?c2) (status ?status2))) (CASE ?case2) (mass ?m2) (constraint ?con)
 		(generated ?generated2)
 		(sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
@@ -5879,7 +5879,7 @@
        (status ?status1)
        )
       (punc (lex punc-comma))
-      (head (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v))) ;; (status ?status))
+      (head (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v) (subcat2 -))) ;; (status ?status)) ; subcat2 - excludes "either" and "neither"
       (NP (VAR ?v2) (SEM ?s2) (ATTACH ?a) (lf ?lf2) (LF (% ?d (class ?c2) (status ?status2))) (CASE ?case2) (mass ?m2) (constraint ?con)
        (generated ?generated2)
        (sort (? !sort unit-measure)) ;; no unit-measure here since they form sub-NPs & we want the whole one
@@ -5915,7 +5915,7 @@
       (status ?status1)
       )
      (punc (lex punc-comma))
-     (head (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v) (status ?status)))
+     (head (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v) (status ?status) (subcat2 -))) ; subcat2 - excludes "either" and "neither"
     
       (NP (VAR ?v2) (SEM ?s2) (ATTACH ?a) (lf ?lf2) (LF (% ?d (class ?c2))) (CASE ?case2) (mass ?m1) ;(mass ?m2)
 	       (constraint ?con)
@@ -6041,7 +6041,7 @@
 	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram]
 	    (status ?status1)
 	    ))
-     (conj (SEQ +) (LF ?op) (var ?v))
+     (conj (SEQ +) (LF ?op) (var ?v) (subcat2 -)) ; subcat2 - excludes "either" and "neither"
      (NP (SEM ?s2) (VAR ?v2) ;;(agr ?agr)  
       (complex -) (expletive -) 
       (headless -)
@@ -6077,7 +6077,7 @@
 	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram]
 	    (gap -)
 	    )
-      (head (conj (SEQ +) (LF ?op) (var ?v) )) ;;(status ?status))
+      (head (conj (SEQ +) (LF ?op) (var ?v) (subcat2 -))) ;;(status ?status)) ; subcat2 - excludes "either" and "neither"
       (NP (SEM ?s2) (VAR ?v2) (agr ?agr1)  (complex -) (expletive -)
        (bare-np -)  ;; bare-NP should go through N!-conjunct, not NP-conjunct
        (generated ?gen2)  (time-converted ?tc1)  (gerund ?ger) (wh ?wh)
@@ -6197,7 +6197,7 @@
 	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram] 	    
 	    )
       
-      (head (conj (SEQ +) (LF ?op) (var ?v) )) ;;(status ?status))
+      (head (conj (SEQ +) (LF ?op) (var ?v) (subcat2 -))) ;;(status ?status)) ; subcat2 - excludes "either" and "neither"
       (NP (SEM ?s2) (VAR ?v2) (agr ?agr1)  (complex -) (expletive -) ;;(bare-np ?bnp)
 	    (generated ?gen2)  (time-converted ?tc1)  (gerund ?ger)
 	    ;; (bare-sequence -)
@@ -6394,7 +6394,7 @@
       (lf (% PROP (class ?c2))) (sem ?s2) (atype ?atype2) (post-subcat -)
       (set-modifier -)
       )
-     (CONJ (LF ?conj) (but-not -) (but -))
+     (CONJ (LF ?conj) (but-not -) (but -) (subcat2 -)) ; subcat2 - excludes "either" and "neither"
      (ADJP (arg ?arg)  (argument ?a) (VAR ?v3) 
       ;(LF (% PROP (class ?c2))) (sem ?s2) (atype central) (post-subcat -)
       (LF (% PROP (class ?c3))) (sem ?s3) (atype ?atype3) (post-subcat -)
@@ -6427,7 +6427,7 @@
       (set-modifier -)
       )
      (punc (lex w::punc-comma))
-     (CONJ (LF ?conj) (but-not -) (but -))
+     (CONJ (LF ?conj) (but-not -) (but -) (subcat2 -)) ; subcat2 - excludes "either" and "neither"
      (ADJP (arg ?arg)  (argument ?a) (VAR ?v3) 
       ;(LF (% PROP (class ?c2))) (sem ?s2) (atype central) (post-subcat -)
       (LF (% PROP (class ?c3))) (sem ?s3) (atype ?atype3) (post-subcat -)
@@ -6468,8 +6468,8 @@
     ((ADJP (arg ?arg) (argument ?a) (sem ?sem) (var *) (atype central)
       (sort pred)
       (lex ?hlex) (headcat ?hcat) (fake-head 0) ;; aug-trips
-      (LF (% PROP (CLASS ?clf) (VAR *) (sem ?sem) 
-	     (constraint (& (sequence (?v1 ?v2)))) 
+      (LF (% PROP (CLASS ?class) (VAR *) (sem ?sem) 
+	     (constraint (& (operator ?cop) (sequence (?v1 ?v2)))) 
 	     (transform ?transform) (sem ?sem))
 	  ))
      
@@ -6478,14 +6478,19 @@
       (var ?v) (lf ?clf)
       (operator ?cop)
       )                
-     (adjp (var ?v1) (arg ?arg) (argument ?a) (SEM ?s1) (lf ?lf1) (atype central) (post-subcat -)
+     (adjp (var ?v1) (arg ?arg) (argument ?a) (SEM ?s1)
+	   (LF (% PROP (CLASS ?lf1) )) 
+	   (atype central) (post-subcat -)
       (set-modifier -)
       (lex ?hlex) (headcat ?hcat) ) ;; aug-trips
      (word (lex ?wlex))
-     (adjp (var ?v2) (arg ?arg) (argument ?a) (SEM ?s2) (lf ?lf2) (atype central) (post-subcat -)
+     (adjp (var ?v2) (arg ?arg) (argument ?a) (SEM ?s2)
+	   (LF (% PROP (CLASS ?lf2) )) 
+	   (atype central) (post-subcat -)
       (set-modifier -)
       )
      (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
+     (class-least-upper-bound (in1 ?lf1) (in2 ?lf2) (out ?class))
      ;;(simple-cons (in1 ?v2) (in2 ?lf1) (out ?members))
      )            
     ))
@@ -6505,7 +6510,7 @@
   '((headfeatures
      (N1 lf headcat transform set-restr refl abbrev subcat subcat-map)
      )
-;;  simple conjuncts/disjunct of N1, e.g., the (dog and cat)
+;;  simple conjuncts/disjunct of N1, e.g., the (dog and cat); a big <cat or dog>
     ((N1 (ATTACH ?a) (var ?v) (agr ?agr-out) ;(agr 3p) ; ice and fire could be 3s or 3p
 	 (SEM ?sem) (gerund ?ger) 
       ;;(Status ?status-out)
@@ -6529,7 +6534,7 @@
 	    (CASE ?c) (restr ?con) (mass ?m2) ;; allowing mismatch on mass
 	    (sort (? !sort unit-measure)) ;; no unit measure here since they form sub-NPs [500 mb] & we want the top-level [500 mb of ram]
 	    ))
-     (conj (SEQ +) (LF ?op) (lex ?lex) (var ?v) ) ;;(status ?status))
+     (conj (SEQ +) (LF ?op) (lex ?lex) (var ?v) (subcat2 -)) ;;(status ?status)) ; subcat2 - excludes "either" and "neither"
      (N1 (SEM ?s2) (VAR ?v2) (agr ?agr1)  ;;(complex -) ;; I've disabled this temporarily as we need to allow things like "a man and head of the committee"
       (expletive -) ;;(bare-np ?bnp)
 	    (generated ?gen2)  (time-converted ?tc1)  (gerund ?ger)
@@ -6625,7 +6630,7 @@
       (generated ?generated1) (separator W::punc-comma) (agr ?agr)
       (time-converted ?tc1) ;; MD 2008/03/06 Introduced restriction that only items with the same time-converted status can combine - i.e. don't mix number notation for times or non-times. 
       )
-     (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v)) ;; (status ?status))
+     (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v) (subcat2 -)) ;; (status ?status)) ; subcat2 - excludes "either" and "neither"
      (head (N1 (VAR ?v2) (SEM ?s2) (ATTACH ?a) (agr ?agr1) ;(lf ?lf2)
 	       (class ?c2) (status ?status2) ;(LF (% ?d (class ?c2) (status ?status)))
 	       (CASE ?case2) (mass ?m2) (restr ?con)
@@ -6668,7 +6673,7 @@
       (time-converted ?tc1) ;; MD 2008/03/06 Introduced restriction that only items with the same time-converted status can combine - i.e. don't mix number notation for times or non-times. 
       )
      (punc (lex w::punc-comma))
-     (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v)) ;; (status ?status))
+     (conj (SEQ +) (LF ?op) (SUBCAT NP) (var ?v) (subcat2 -)) ;; (status ?status)) ; subcat2 - excludes "either" and "neither"
      (head (N1 (VAR ?v2) (SEM ?s2) (ATTACH ?a) (agr ?agr1) ;(lf ?lf2)
 	       (class ?c2) (status ?status2) ;(LF (% ?d (class ?c2) (status ?status)))
 	       (CASE ?case2) (mass ?m2) (restr ?con)
@@ -7225,7 +7230,7 @@
         (ARGUMENT-MAP ?argmap) (arg ?arg) (prefix -)
         (CONSTRAINT ?con) (atype ?atype)
         (SORT PRED)))
-    (CONJ (LF ?conj) (but-not -) (but -))
+    (CONJ (LF ?conj) (but-not -) (but -) (subcat2 -)) ; subcat2 - excludes "either" and "neither"
     (ADJ1 (LF ?lf2)  (VAR ?v2)
      (transform ?transform2) (comparative ?cmp2)
      (SUBCAT ?subcat1) (SUBCAT-MAP ?reln1) (SUBCAT (% ?xx1 (var ?argv1) (gap (% NP (var ?gapv) (sem ?argsem)))))

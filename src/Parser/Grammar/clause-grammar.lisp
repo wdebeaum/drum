@@ -4074,12 +4074,12 @@
    ;; TEST: Either the dog barks or the dog chases the cat.
    ((s (stype ?st) (var *) 
      (sem ?sem) (lex ?lex)
-     (LF (% prop (var *) (class ?class) (constraint (&  (OPERATOR ?clf)
+     (LF (% prop (var *) (class ?class) (constraint (&  (OPERATOR ?cop)
 							(SEQUENCE (?v1 ?v2))))))
      )
     -s-double-conj>
     (conj (lex ?lex)  (SUBCAT1 S) (SUBCAT2 ?wlex) (SUBCAT3 S) 
-     (var ?v) (lf ?clf))
+     (var ?v) (lf ?clf) (operator ?cop))
     (head (s (stype (? st decl imp)) (subj ?subj1) (var ?v1) (sseq -) (sem ?s1)
 	   (lf (% prop (class ?c1) (tma ?tma1)))
 	   (advbl-needed -)
@@ -4094,14 +4094,14 @@
 
    ;; and the VP version e.g., to either stay or go
    ((VP (var *) (LF (% prop (var *) (class ?class) 
-		       (constraint (&  (OPERATOR ?clf)
+		       (constraint (&  (OPERATOR ?cop)
 				       (SEQUENCE (?v1 ?v2))))))
      (agr ?agr) (lex ?lex) (vform ?vform) (gap ?g) (subj ?subj) (sem ?sem)
 		       
      )
     -either-vp>
     (conj (SUBCAT1 VP) (lex ?lex) (SUBCAT2 ?wlex) (SUBCAT3 VP) 
-     (var ?v) (lf ?clf)) 
+     (var ?v) (lf ?clf) (operator ?cop)) 
     (head (vp (subj ?subj) (var ?v1) (agr ?agr) (vform ?vform) (gap ?g) (sem ?s1)
 	   (lf (% prop (class ?c1) (tma ?tma1)))
 	   (advbl-needed -)
@@ -4120,7 +4120,7 @@
    ;; he had eaten and slept, to puncture or penetrate or pierce, to fight but accept, 
    ; This uses this rule: The mouse is caught by the dog and caught by the cat.
    ((vp- (seq +) (vform ?vf) (var *)  (subjvar ?subj)  (subj ?subject) (agr ?agr) (gap ?gap)(subj-map ?subjmap) (dobj ?dobj)
-     (class ?class) (sem ?sem) (lex ?lex)
+     (class ?class) (sem ?sem) (lex ?!lex)
      (constraint (&  (OPERATOR ?lx) 
 		     (SEQUENCE 
 		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (sem ?sem1) (lex ?lex1) (constraint ?con1))
@@ -4142,7 +4142,7 @@
    ; (the dog that) chased and ate the cat
    ((vp- (seq +) (vform ?vf) (var *)  (subjvar ?subj)  (subj ?subject) (agr ?agr) (gap -) ;(gap ?gap)
 	 (subj-map ?subjmap)
-     (class ?class) (sem ?sem)  (lex ?lex)
+     (class ?class) (sem ?sem)  (lex ?!lex)
      (constraint (&  (OPERATOR ?lx) 
 		     (SEQUENCE 
 		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (sem ?sem1) (lex ?lex1) (constraint ?con1))
@@ -4152,7 +4152,7 @@
     (head (vp- (vform ?vf) (subjvar ?subj)  (subj ?subject) (var ?v1) (seq -)  (agr ?agr) (gap ?!dobj) (lex ?lex1)
 	       (advbl-needed -) (class ?c1) (constraint ?con1) (tma ?tma1) (sem ?sem1) (subj-map ?subjmap)
 	   ))
-    (CONJ (lf ?lx)  (lex ?lex) (but-not -)) ;;(? lx or but however plus otherwise so and)))
+    (CONJ (lf ?lx) (lex (? !lex both either neither)) (but-not -)) ;;(? lx or but however plus otherwise so and)))
     (vp- (vform ?vf) (var ?v2) (subjvar ?subj) (subj ?subject) (agr ?agr) (gap -) (dobj ?!dobj) (lex ?lex2)
      (Advbl-needed -) (class ?c2) (constraint ?con2)  (tma ?tma2) (sem ?sem2))
     (sem-least-upper-bound (in1 ?sem1) (in2 ?sem2) (out ?sem))

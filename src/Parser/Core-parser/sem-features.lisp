@@ -308,17 +308,21 @@
 		(type2 (aref s2 0))
 		)
 	     ;; a special case for 0, which is the type
-	     (cond
-	       ((or (eq type1 type2) (var-p type2) (var-p type1))
-		(setf (aref result 0) (if (var-p type2) type1 type2))
-		(do ((i 1 (+ i 1))) ((>= i *sem-size*))
-		  (setf (aref result i)
-			(compute-lub-value (aref s1 i) (aref s2 i)))))
-	       (t
+	     (if
+	      (or (eq type1 type2) (var-p type2) (var-p type1))
+	      (setf (aref result 0) (if (var-p type2) type1 type2))
+	      (setf (aref result 0)
+		    (make-var :name (gen-v-num 'v) ;;(gen-symbol 'v) 
+			      :values (union (var-or-symbol-values type1) (var-or-symbol-values type2)))))
+	     
+	     (do ((i 1 (+ i 1))) ((>= i *sem-size*))
+	       (setf (aref result i)
+		     (compute-lub-value (aref s1 i) (aref s2 i))))
+	      #| (t
 		(setq result (make-array *sem-size* :initial-element nil))
 		(setf (aref result 0)
 		      (make-var :name (gen-v-num 'v) ;;(gen-symbol 'v) 
-				:values (union (var-or-symbol-values type1) (var-or-symbol-values type2))))))
+				:values (union (var-or-symbol-values type1) (var-or-symbol-values type2))))))|#
 	    result))
        ;; they are not SEM arrays
        ((null s1)
