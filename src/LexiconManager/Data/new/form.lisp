@@ -31,6 +31,10 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (meta-data :origin task-learning :entry-date 20050831 :change-date nil :comments nil)
      )
+    ((LF-PARENT ONT::create) ;; GUM change new parent 20121027
+     (example "A star formed.")
+     (TEMPL AFFECTEDR-TEMPL)
+     )
    #||
    (LF-PARENT ONT::create) ;; GUM change new parent 20121027
      (example "trees form a circle" "a and the battery form a closed path")
