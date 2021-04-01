@@ -547,9 +547,12 @@
      )
 
      
-    ;;  resultative construction using adverbs: e.g., I walked to the store
-    ;; (not any more 2020/02/18: it seems this is also used for passive transitives, e.g., The box was moved to the corner )
-    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
+    ;;  resultative construction using adverbs: e.g., I walked to the store; The height increases to 2 inches
+
+    ;; it seems this is also used for passive transitives, e.g., The box was moved to the corner
+    ;; (not any more 2020/02/18)
+    ;; (update 2021/03/31: reinstated passives by commenting out (vform (? !vform passive)) because we can't remember what problem this avoided and how passives can be parsed otherwise.
+    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION ONT::CHANGE-MAGNITUDE)) (var ?v)
 				       ;(class (? class ONT::EVENT-OF-CHANGE)) (var ?v) ; it leaked from the roof ; I arrived into the house; but we need to exclude e.g, used/expressed in the liver (yes, passive)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
 ;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
@@ -558,7 +561,7 @@
       (advbl-needed -) (complex +) (GAP ?gap)
       )
      -vp-result-advbl-intransitive>  
-     (head (vp- (VAR ?v) (vform (? !vform passive)) ; exclude passives
+     (head (vp- (VAR ?v) ;(vform (? !vform passive)) ; exclude passives
 		(seq -)  ;;  post mods to conjoined VPs is very rare
 		;(DOBJVAR -)  ; This doesn't work because it could unify with a dobjvar not yet instantiated
 		;(dobj (% -)) ; cannot use (dobj -) because dobj is (% - (W::VAR -))
@@ -895,7 +898,7 @@
     
     ;;  resultative construction using adverbs: e.g., sweep the dust into the corner
     ;; only allow one of these ; 2019/09/20: now we allow more than one of these
-    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
+    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION ONT::CHANGE-MAGNITUDE)) (var ?v)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
 ;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
       (advbl-needed -) (complex +) (GAP ?gap) ;(result-present +)
@@ -1764,7 +1767,7 @@
     )
 
    ; whom can I take the box to?
-    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION)) (var ?v)
+    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION ONT::MAGNITUDE)) (var ?v)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
 ;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)
       (advbl-needed -) (complex +) (GAP ?!gap) (result-present +)
