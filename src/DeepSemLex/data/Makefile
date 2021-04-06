@@ -3,7 +3,9 @@ include $(CONFIGDIR)/defs.mk
 include $(CONFIGDIR)/java/defs.mk
 include $(CONFIGDIR)/perl/defs.mk
 include $(CONFIGDIR)/ruby/defs.mk
+ifneq (,$(wildcard $(CONFIGDIR)/saxon))
 include $(CONFIGDIR)/saxon/defs.mk
+endif
 include $(CONFIGDIR)/DeepSemLex/defs.mk
 
 export TRIPS_BASE=$(prefix)
@@ -34,6 +36,10 @@ TRIPS/trips-ont-dsl-inh.lisp: ../code/converters/trips-ont-to-dsl-inh.sh ../code
 
 TRIPS/trips-ont-dsl-inh.xml: TRIPS/trips-ont-dsl-inh.lisp ../code/converters/dsl-to-xml.sh ../code/converters/dsl-to-xml.lisp $(wildcard $(TRIPS_BASE)/src/OntologyManager/Data/LFdata/*.lisp)
 	cd ../code/converters ; ./dsl-to-xml.sh <../../data/$< >../../data/$@
+
+# non-TRIPS data depends on saxon, so don't bother with the rest of this
+# Makefile if we don't have the saxon config checked out of CVS
+ifneq (,$(wildcard $(CONFIGDIR)/saxon))
 
 ON_SIS=$(shell ls $(ONTONOTES)/data/english/metadata/sense-inventories/*.xml \
 	       |$(PERL) -n -e 'print "$$1\n" if (/\/([^\/-]+-[nv])\.xml$$/);')
@@ -121,3 +127,4 @@ FrameNet/frame/COMPLETE: FrameNet/frame/COMPLETE-XML $(FN_FRAMES:%=FrameNet/fram
 
 # TODO FrameNet/lu/%.lisp
 
+endif
