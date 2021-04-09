@@ -581,7 +581,8 @@
       (GAP ?gap)
       ;; (subjvar ?subjvar)
       (sem ?advblsem)
-      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln)))) ;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ))))
+      (SEM ($ f::abstr-obj (F::type (? ttt ont::path ont::position-reln
+				       ont::resulting-object ont::resulting-state)))) ;(F::type (? !ttt1 ont::position-as-extent-reln ont::position-w-trajectory-reln ))))
 ;      (SEM ($ f::abstr-obj (F::type (? ttt ont::position-reln ont::goal-reln ont::direction-reln))))
       (SET-MODIFIER -)  ;; mainly eliminate numbers 
       (ARG ?npvar) (VAR ?mod)
