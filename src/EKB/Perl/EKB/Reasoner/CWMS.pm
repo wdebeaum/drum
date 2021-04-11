@@ -1,9 +1,9 @@
 # CWMS.pm
 #
-# Time-stamp: <Fri Feb  5 22:30:51 CST 2021 lgalescu>
+# Time-stamp: <Sat Apr 10 23:04:54 CDT 2021 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  1 Jun 2016
-# $Id: CWMS.pm,v 1.12 2021/02/07 19:29:15 lgalescu Exp $
+# $Id: CWMS.pm,v 1.13 2021/04/11 04:20:10 lgalescu Exp $
 #
 
 #----------------------------------------------------------------
@@ -55,8 +55,9 @@ our @ISA = qw(EKB::Reasoner);
 
 my @rules;
 
-my $ont_geo = Ont::Geo->new();
-my $ont_trips = Ont::TRIPS->new();
+# nb: we don't want to initialize these here
+my $ont_geo;
+my $ont_trips;
 
 sub new {
   my $class = shift;
@@ -79,6 +80,10 @@ sub _init {
   my $self = shift;
   $self->default_options();
   $self->SUPER::_init(@_); # pass options up
+
+  # hack: initialize ontologies here
+  $ont_geo = Ont::Geo->new();
+  $ont_trips = Ont::TRIPS->new();
 
   push @{ $self->{rules} },
     map { EKB::Reasoner::Rule->new($self, $_) } @rules;

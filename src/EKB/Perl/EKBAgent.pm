@@ -1,6 +1,6 @@
 # EKBAgent.pm
 #
-# Time-stamp: <Sat Nov  3 20:56:49 CDT 2018 lgalescu>
+# Time-stamp: <Sat Apr 10 23:17:25 CDT 2021 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 13 Feb 2017
 #
@@ -166,6 +166,7 @@ use KQML::KQML;
 
 use EKB;
 use EKB::Compare;
+use EKB::Reasoner::Default;
 use EKB::Reasoner::Drum;
 use EKB::Reasoner::CWMS;
 use EKB::Store;
@@ -687,6 +688,7 @@ sub do_inference {
   # open the proper reasoner
   ## FIXME: what about options?!?
   my $reasoner =
+    ($domain eq "Default") ? EKB::Reasoner::Default->new($ekb) :
     ($domain eq "DRUM") ? EKB::Reasoner::Drum->new($ekb) :
     ($domain eq "CWMS") ? EKB::Reasoner::CWMS->new($ekb) :
     EKB::Reasoner->new($ekb);

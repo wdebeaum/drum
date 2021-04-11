@@ -1,6 +1,6 @@
 # Reasoner.pm
 #
-# Time-stamp: <Tue Apr 18 17:29:19 CDT 2017 lgalescu>
+# Time-stamp: <Sat Apr 10 23:31:23 CDT 2021 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>, 22 May 2016
 #
@@ -26,6 +26,9 @@
 #   of what has happened
 # - optimization + logic: should get control over EKB changes, to be able
 #   to apply rules to those elements as well
+# - now that some reasoners are not as lightweight as they started out
+#   being (CWMS being a good example), i should change things so a reasoner
+#   is a static object, rather than something spawned for each ekb.
 
 package EKB::Reasoner;
 
@@ -103,6 +106,7 @@ sub rule_names {
 ## Initialization
 sub _init {
   my $self = shift;
+  INFO "Initializing reasoner: %s", ref($self);
   if (@_) {
     $self->options(@_);
   }

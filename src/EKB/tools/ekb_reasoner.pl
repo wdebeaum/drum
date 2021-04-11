@@ -2,7 +2,7 @@
 
 # ekr_drum.pl
 #
-# Time-stamp: <Tue Jul 28 13:41:00 CDT 2020 lgalescu>
+# Time-stamp: <Sat Apr 10 23:33:56 CDT 2021 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  6 Jun 2016
 #
@@ -61,9 +61,11 @@ use Test::More;
 
 use util::Log;
 
+use EKB::Reasoner::Rule;
+
+use EKB::Reasoner::Default;
 use EKB::Reasoner::Drum;
 use EKB::Reasoner::CWMS;
-use EKB::Reasoner::Rule;
 
 our (
      $opt_domain,
@@ -115,8 +117,9 @@ if ($opt_ekr_options) {
 
 DEBUG 3, "options in: %s", Dumper(\%ekr_options);
 
-my $domain = uc($opt_domain); # FIXME in case domain reasoners' names get more complicated
+my $domain = $opt_domain // "Default"; 
 my $reasoner = 
+  ($domain eq "Default") ? EKB::Reasoner::Default->new($ekb, %ekr_options) :
   ($domain eq "DRUM") ? EKB::Reasoner::Drum->new($ekb, %ekr_options) :
   ($domain eq "CWMS") ? EKB::Reasoner::CWMS->new($ekb, %ekr_options) :
   EKB::Reasoner->new($ekb, %ekr_options);
@@ -125,7 +128,7 @@ DEBUG 3, "options out: %s", Dumper(\%{$reasoner->options()});
 
 $reasoner->run();
 
-INFO "Done: $opt_domain inference";
+INFO "Done: $domain inference";
 $ekb->info();
 
 $ekb->print();

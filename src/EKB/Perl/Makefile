@@ -2,7 +2,7 @@
 # Makefile -- install a set of Perl modules
 #
 # Lucian Galescu <lgalescu@ihmc.us> 2017/02/03
-# $Id: Makefile,v 1.9 2020/08/25 20:16:37 lgalescu Exp $
+# $Id: Makefile,v 1.10 2021/04/11 03:47:15 lgalescu Exp $
 #
 
 # Will come from parent Makefile...
@@ -13,29 +13,14 @@ $(error This Makefile should only be called from its parent)
 endif
 
 SRCS =  AKRL2EKB.pm \
-	AKRL/AKRLList.pm \
-	AKRL/AKRLTerm.pm \
-	DRUM/DRUMAASite.pm \
-	DRUM/DRUMMatch.pm \
-	DRUM/DRUMMutation.pm \
-	DRUM/DRUMTerm.pm \
 	EKBAgent.pm \
-	EKB/Compare.pm \
-	EKB/Match.pm \
-	EKB/Reasoner/Drum.pm \
-	EKB/Reasoner/IndexCards.pm \
-	EKB/Reasoner/CWMS.pm \
-	EKB/Reasoner/Rule.pm \
-	EKB/Reasoner.pm \
-	EKB/Store.pm \
-	EKB/Test.pm \
 	EKB.pm \
-	Ont/BioEntities.pm \
-	Ont/BioEvents.pm \
-	Ont/Geo.pm \
-	Ont/GenericTerms.pm \
-	Ont/Ontology.pm \
-	StringParser.pm
+	StringParser.pm \
+	$(wildcard AKRL/*.pm) \
+	$(wildcard DRUM/*.pm) \
+	$(wildcard EKB/*.pm) \
+	$(wildcard EKB/Reasoner/*.pm) \
+	$(wildcard Ont/*.pm)
 
 SRCS_IN = \
 	Ont/TRIPS.pm.in
