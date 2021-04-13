@@ -22,14 +22,15 @@
     ((LF-PARENT ONT::transformation) ;; GUM change new parent 20121027
      (example "make the paper into a square")
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
-     (TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL (xp (% W::PP (W::ptype W::into))))
+     ;(TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL (xp (% W::PP (W::ptype W::into))))
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      )
     (
      (LF-PARENT ONT::transformation) ;; GUM change new parent 20121027
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
      (example "make that triangle a big triangle")
      (preference .98)
-     (TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL)
+     (TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL)  ; this probably doesn't work with the RESULT restrictions
      (meta-data :origin fruitcarts :entry-date 20050427 :change-date nil :comments fruitcart-11-4)
      )
     (

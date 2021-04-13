@@ -15,8 +15,9 @@
      ((meta-data :origin csli-ts :entry-date 20070321 :change-date nil :comments nil)
      (lf-parent ont::become)
      (example "the snow became rain")
-     (TEMPL AFFECTED-FORMAL-XP-PRED-TEMPL (xp (% w::NP)))
-      )
+     ;(TEMPL AFFECTED-FORMAL-XP-PRED-TEMPL (xp (% w::NP)))
+     (TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL)
+     )
      
      ((lf-parent ont::improve)
       (preference .98)   ;; this entry is here to stop WN intreoducing it at a higher priority

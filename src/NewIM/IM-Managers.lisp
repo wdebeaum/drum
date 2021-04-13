@@ -448,7 +448,8 @@
 	     (extraction-ids (remove-duplicates (mapcar #'second (append-lists (utt-record-extractions rec)))))
 	     
 	     (extractions (build-extractions (mapcar #'list ;; I add an extra set of parens to be backwards compatible with old format!
-						     (mapcar #'remove-unwanted-roles (remove-if-not #'(lambda (x) (member (second x) extraction-ids)) lfs)))
+						     (mapcar #'remove-unwanted-roles (remove-if #'(lambda (y) (eq (third y) 'ONT::NOOP)) ; do not output rules extracted as ONT::NOOP
+												(remove-if-not #'(lambda (x) (member (second x) extraction-ids)) lfs))))
 					     context)))
 	     ;;(reduced-exs (mapcar #'elim-dups extractions)))
 	(mapcar #'(lambda (e)

@@ -1213,7 +1213,7 @@
  :sem (F::Situation (F::Cause F::force))
  :arguments (
 	     (:optional ont::agent ((? cs f::phys-obj f::abstr-obj f::situation)))
-	     (:optional ont::result)
+	     (:optional ont::result (F::abstr-obj (F::TYPE (? t ont::resulting-state ont::domain-property ont::resulting-object))))
 	     ;; e.g. the research fluctuates with the budget; the interest increases with time
 	     (:OPTIONAL ONT::formal ((? cl f::abstr-obj f::situation f::time))) ; was ont::correlate
 	     ;;(:optional ont::agent ((? ag f::abstr-obj F::phys-obj )(F::intentional +))))
@@ -1267,7 +1267,7 @@
  )
 
 (define-type ont::gasify-boil
- :wordnet-sense-keys ("gasify%2:30:00" "boil%2:30:01")
+ :wordnet-sense-keys ("gasify%2:30:00" "boil%2:30:01" "evaporate%2:30:00" "evaporate%2:30:01" "evaporate%2:30:02")
  :parent ont::change-integrity
  )
 
@@ -3618,7 +3618,7 @@
 	     ;;(:ESSENTIAL ONT::Agent (F::Phys-obj (F::intentional +)))
 	     ;; for "An open switch creates a gap" / FN: "it created fanatics during the Afgan war"
 	     ;; the process creates compression
-	     (:OPTIONAL ONT::agent ((? cs F::Phys-obj f::abstr-obj) ))
+	     (:OPTIONAL ONT::agent ((? cs F::Phys-obj f::abstr-obj f::situation) )) ; situation: The explosion generated smoke
 	     (:essential ont::affected-result ((? aff  F::Phys-obj f::abstr-obj) 
 					       (f::type (? x ONT::PHYS-OBJECT ont::mental-construction ont::information-function-object))))
 	     (:essential ont::affected ((? aff  F::Phys-obj f::abstr-obj) 
@@ -5196,6 +5196,7 @@
  :parent ONT::event-of-undergoing-action
  :sem (F::Situation (F::Aspect F::Dynamic) (F::Trajectory -))
  :arguments ((:ESSENTIAL ONT::affected)
+	     (:ESSENTIAL ONT::affected1 ((? ttype f::abstr-obj F::Phys-obj F::Situation)))
 	     (:essential ont::formal (F::abstr-obj (F::TYPE ont::relation) )
 			 )
 	     ))

@@ -204,7 +204,8 @@
 
 	
 	((and (both-case-p first) second (digit-char-p second))
-	 (cons first (cons #\space  (expand-contractions (cdr c-list)))))
+	 ;(cons first (cons #\space  (expand-contractions (cdr c-list)))))
+	 (cons first (expand-contractions (cdr c-list)))) ; so that "CO2" is tokenized as W::CO2 rather than (W::CO "2")
 	((eql first #\_)
 	 (cons #\space (expand-contractions rest)))
 	
