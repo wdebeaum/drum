@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.74 2019/12/11 04:25:43 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.75 2021/04/15 21:07:37 lgalescu Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -57,7 +57,8 @@ public class EventExtraction extends Extraction {
         /** */
         FORMAL(":FORMAL"),
         /** */
-        RESULT(":RES");
+        RESULT(":RES"),
+        SOURCE(":SRC");
         private String roleName;
         private Role(String name) { roleName = name; }
         public String toString() { return roleName; }
