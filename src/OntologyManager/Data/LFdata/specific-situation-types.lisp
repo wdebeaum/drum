@@ -4909,7 +4909,7 @@
  :sem (F::situation)
  :arguments ((:REQUIRED ONT::Formal (f::phys-obj (f::intentional +))) ;; check in a person
 	     (:optional ont::neutral ((? oc f::phys-obj f::situation f::abstr-obj))) ;; at a hotel, in a program
-	   
+	     (:REQUIRED ONT::agent (f::phys-obj (f::intentional +)))
              )
  )
 

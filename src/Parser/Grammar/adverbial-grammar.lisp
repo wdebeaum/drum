@@ -552,7 +552,7 @@
     ;; it seems this is also used for passive transitives, e.g., The box was moved to the corner
     ;; (not any more 2020/02/18)
     ;; (update 2021/03/31: reinstated passives by commenting out (vform (? !vform passive)) because we can't remember what problem this avoided and how passives can be parsed otherwise.
-    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION ONT::CHANGE-MAGNITUDE)) (var ?v)
+    ((vp- (constraint ?new) (tma ?tma) (class (? class ONT::EVENT-OF-CAUSATION ONT::CHANGE-MAGNITUDE ONT::ENTERING)) (var ?v)
 				       ;(class (? class ONT::EVENT-OF-CHANGE)) (var ?v) ; it leaked from the roof ; I arrived into the house; but we need to exclude e.g, used/expressed in the liver (yes, passive)
          ;;(LF (% PROP (constraint ?new) (class ?class) (sem ?sem) (var ?v) (tma ?tma)))
 ;      (advbl-needed -) (complex +) (result-present +) (GAP ?gap)

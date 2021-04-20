@@ -2957,10 +2957,10 @@
 	   ;; maybe for "sand and water"
         ((NP (LF (% Description (STATUS ONT::INDEFINITE-plural) (VAR ?v) (SORT STUFF) 
 	            (CLASS ?c) (CONSTRAINT ?r) (sem ?sem) (transform ?transform)))
-             (SORT PRED) (VAR ?v) (STATUS ONT::INDEFINITE-plural)
+             (SORT PRED) (VAR ?v) (STATUS ONT::INDEFINITE-plural) (complex ?complex)
              )
          -bare-plural-mass> .988   ;; just a hair less than the COUNT for cases where ther 
-         (head (N1 (SORT PRED) (mass mass) (MASS ?m) (complex -)
+         (head (N1 (SORT PRED) (mass mass) (MASS ?m) (complex ?complex) ;(complex -)
 		(AGR 3p) (VAR ?v) (CLASS ?c) (RESTR ?r) (rate-activity-nom -) (agent-nom -)
 		(sem ?sem) (transform ?transform)
 		(post-subcat -)
