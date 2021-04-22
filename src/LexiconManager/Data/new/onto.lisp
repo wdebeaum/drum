@@ -9,7 +9,8 @@
    (wordfeats (w::result-only +))
    (SENSES
     ((LF-PARENT ONT::goal-as-on)
-     (TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     ;(TEMPL BINARY-CONSTRAINT-S-TEMPL)
+     (TEMPL BINARY-CONSTRAINT-NP-TEMPL)
      )
     )
    )

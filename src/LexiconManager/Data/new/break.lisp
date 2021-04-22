@@ -46,6 +46,7 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL affected-TEMPL)
      (SYNTAX (w::resultative +))
+     (PREFERENCE 0.98)
     )
 
     ;((LF-PARENT ONT::stop)
@@ -55,6 +56,7 @@
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
      (TEMPL AFFECTED-FORMAL-XP-PRED-TEMPL)
      (SYNTAX (w::resultative +))
+     (PREFERENCE 0.96)
     )
 
 

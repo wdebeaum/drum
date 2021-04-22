@@ -26,7 +26,7 @@
 (define-type ONT::natural-object
     :wordnet-sense-keys ("actinoid%1:27:00::" "galaxy%1:14:00" "galaxy%1:14:01" "natural_object%1:03:00" "nodule%1:17:00" "oort_cloud%1:14:00" "rare_earth%1:27:00")
     :parent ONT::PHYS-OBJECT
-    :sem (F::Phys-obj (F::origin F::natural)(F::spatial-abstraction (? sa F::spatial-point F::spatial-region)))
+    :sem (F::Phys-obj (F::origin F::natural)(F::spatial-abstraction (? sa F::spatial-point F::spatial-region)) (F::container +)) ; container: e.g., rock
     )
 
 (define-type ONT::Physics-object
@@ -344,7 +344,7 @@
 
 ;; force, pressure, compression
 (define-type ont::physical-phenomenon
-    :wordnet-sense-keys ("force%1:19:00" "causal_agency%1:03:00" "cause%1:03:00" "causal_agent%1:03:00"  "cause%1:11:00" "momentum%1:07:00")
+    :wordnet-sense-keys ("force%1:19:00" "causal_agency%1:03:00" "cause%1:03:00" "causal_agent%1:03:00"  "cause%1:11:00" "momentum%1:07:00" "wave%1:11:00")
     :parent ont::natural-phenomenon
     :sem (F::Phys-obj (F::origin F::non-living))
     )

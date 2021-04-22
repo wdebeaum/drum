@@ -3550,7 +3550,8 @@
 (define-type ont::act-behave
     :wordnet-sense-keys ("act%2:29:00" "act%2:36:04" "behave%2:41:01" "behavior%1:26:00" "perform%2:36:01" "performance%1:04:00" "play%2:36:02" "posturing%1:07:00")
     :parent ont::acting
-    :arguments ((:REQUIRED ONT::formal (F::phys-obj)))   ;; the role -- acted as a judges, acts as a catalyst
+    :arguments ((:REQUIRED ont::agent ((? atp f::phys-obj) (f::intentional +)))
+		(:REQUIRED ONT::formal (F::phys-obj)))   ;; the role -- acted as a judges, acts as a catalyst
     )
 
 (define-type ONT::Take-time

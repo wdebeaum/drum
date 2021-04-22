@@ -20,7 +20,7 @@
 (define-words :pos W::V :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::crack
-   (wordfeats (W::morph (:forms (-vb) :nom W::crack)))
+   (wordfeats (W::morph (:forms (-vb)))) ;:nom W::crack)))
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("break-45.1") :wn ("crack%2:30:00" "crack%2:30:01" "crack%2:30:02" "crack%2:30:05"))
      (LF-PARENT ont::break-object)
