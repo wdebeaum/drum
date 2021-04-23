@@ -7662,6 +7662,8 @@
 
 (define-type ONT::maturity-val
   :parent ONT::life-process-val
+  :arguments ((:ESSENTIAL ONT::FIGURE ((? o1 F::Phys-obj) (F::origin f::living)))
+	     )
   :comment "(mature)"
   )
 

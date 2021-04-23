@@ -1722,7 +1722,8 @@
      (transform ?transform)   
      )
      -more-adj-compar> 1.0
-    (ADV (lf (:* ?pred ?xx)) (comparative (? cmp + superl)) (complex -)
+     (ADV (lf (:* ?pred (? xx w::more w::less w::most w::least))) ;(lf (:* ?pred ?xx))
+	  (comparative (? cmp + superl)) (complex -)
      (ground-oblig ?go) (SUBCAT ?ground-subcat) (SUBCAT-MAP ?ground-smap))
     (head (ADJ (LF (:* ?lftype ?w)) (comp-op ?comp-op)
 	       (SUBCAT2 (% -)) (post-subcat -)(VAR ?v) (comparative -)
@@ -1754,7 +1755,8 @@
      (transform ?transform)   
      )
      -more-adj-compar2> 1.0
-    (ADV (lf (:* ?pred ?xx)) (comparative (? cmp + superl)) (complex -)
+     (ADV (lf (:* ?pred (? xx w::more w::less w::most w::least))) ;(lf (:* ?pred ?xx))
+	  (comparative (? cmp + superl)) (complex -)
      (ground-oblig ?go) (SUBCAT ?ground-subcat) (SUBCAT-MAP ?ground-smap))
     (head (ADJ (LF (:* ?lftype ?w)) (comp-op ?comp-op)
 	       (SUBCAT2 (% -)) (post-subcat -)(VAR ?v) (comparative -)
@@ -1793,7 +1795,7 @@
      ;;(arg ?arg)
      )
      -more-adv-compar> 1.0
-    (ADV (lf (:* ?pred ?xx))
+    (ADV (lf (:* ?pred (? xx w::more w::less w::most w::least))) ;(lf (:* ?pred ?xx)) ; exclude "closer" which is (W::LF (:* ONT::MORE-VAL W::CLOSE))
      (comparative (? cmp + superl)) (complex -)
      (ground-oblig ?go)
      (SUBCAT ?ground-subcat)

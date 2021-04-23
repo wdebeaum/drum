@@ -80,3 +80,16 @@
    )
 ))
 
+(define-words :pos W::ADV
+ :tags (:base500)
+ :words (
+  ((W::OFF w::of)
+   (SENSES
+    ((LF-PARENT ONT::off)
+     (LF-FORM w::off)
+     (example "The ball bounced off of the wall.")
+     (TEMPL BINARY-CONSTRAINT-S-or-NP-TEMPL)
+     )
+    )
+   )
+))
