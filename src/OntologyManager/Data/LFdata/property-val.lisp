@@ -35,7 +35,7 @@
 ;; higher-level type for evaluation
 (define-type ont::evaluation-attribute-val
     :parent ont::property-val
-    :arguments ((:REQUIRED ONT::FIGURE (?any (F::tangible +))))
+    :arguments ((:REQUIRED ONT::FIGURE)) ;(?any (F::tangible +)))) ; "quickly enough": quickly is tangible -
     :comment "properties which need an observer to be recognized -- subjective to the observer"
     :sem (F::abstr-obj (F::scale ont::evaluation-scale ))
     )

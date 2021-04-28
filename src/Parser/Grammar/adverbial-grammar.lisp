@@ -139,7 +139,7 @@
      (head (adv (lf ?lf) ;;(SORT BINARY-CONSTRAINT) 
             ;; make sure pp-word is not a sort here
             (sort (? !sort pp-word double-subcat))
-	    (argument (% ?cat2 (var ?arg) (lex ?arglex) (sem ?argsem) (subjvar ?subjvar)))
+	    (argument (% ?cat2 (var ?arg) (lex ?arglex) (sem ?argsem) (subjvar ?subjvar) (sort ?argsort)))
             (subcat ?!sub) (SUBCAT (% ?cat (var ?subv) (sem ?subcatsem) (stype ?stype) (vform ?vform) (gap ?gap)))
 	    
             (subcat-map ?submap) (ARGUMENT-MAP ?argmap)
@@ -1472,7 +1472,7 @@
      )
      ||#
 
-     #|
+     ;#| ; not sure why this rule was commented out
     ;; TEST: red enough
     ((ADJP (LF (% PROP (CLASS ?c) (VAR ?v) (CONSTRAINT ?newc) (sem ?sem)))
            (val ?val) (agr ?agr) (mass ?mass) (var ?v) (ARG ?arg) (gap ?gap)
@@ -1483,14 +1483,14 @@
 	    (val ?val) (agr ?agr) (mass ?mass) (argument ?argmt)
 	    (gap ?gap)
                  ))
-     (advbl (ATYPE postpositive) (VAR ?advbv) (ARG ?v)
+     (advbl (ATYPE post) (VAR ?advbv) (ARG ?v)
             (argument (% ADJP (sem ?sem) ))
             (gap -)
             )
      (add-to-conjunct (val (MODS ?advbv)) (old ?con) (new ?newc))
      
      )
-|#
+;|#
 
     ;;  ADV modification
     ;; TEST: very quickly 
@@ -1526,7 +1526,8 @@
 	    (role ?role) (subcatsem ?subcatsem) (arg ?arg)
 	    (gap ?gap)(comparative ?cmp)
 	    ))
-       (advbl (ATYPE postpositive) (VAR ?advbv) (ARG ?v)
+     (advbl (ATYPE post)
+	    (VAR ?advbv) (ARG ?v)
             (argument (% ADVBL (sem ?sem) (sort ?sort)(comparative ?cmp) ))
             (gap -)
             )

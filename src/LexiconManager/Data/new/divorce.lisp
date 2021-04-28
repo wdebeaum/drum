@@ -2,6 +2,7 @@
 ;;;; w::divorce
 ;;;;
 
+#|
 (define-words :pos W::n
  :words (
   (w::divorce
@@ -13,13 +14,16 @@
    )
 )
 ))
+|#
 
 (define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::divorce
+   (wordfeats (W::morph (:forms (-vb) :nom w::divorce :nomobjpreps (w::of))))
    (SENSES
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("separate-23.1-1"))
-     (LF-PARENT ONT::separation)
+     ;(LF-PARENT ONT::separation)
+     (LF-PARENT ONT::social-separation)     
  ; like divide
      )
     )

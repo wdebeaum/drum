@@ -2348,7 +2348,7 @@
 (define-type ONT::DEVICE
     :parent ONT::MANUFACTURED-OBJECT
     :wordnet-sense-keys ("buoy%1:10:00" "device%1:06:00" "equipment%1:06:00")
-    :sem (F::Phys-obj (F::Origin F::Artifact))
+    :sem (F::Phys-obj (F::Origin F::Artifact) (F::container +)) ; put bullets into a gun, put steam into a piston
     )
 
 (define-type ont::appliance

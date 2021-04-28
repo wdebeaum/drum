@@ -4828,6 +4828,14 @@
  :sem (F::Situation (F::Aspect F::Dynamic) (F::Cause F::Agentive))
  )
 
+(define-type ONT::SOCIAL-SEPARATION
+ :parent ONT::SEPARATION
+ :sem (F::Situation (F::Aspect F::Dynamic) (F::Cause F::Agentive))
+ :arguments ((:REQUIRED ONT::agent (F::Phys-obj (f::intentional +)))
+	     (:REQUIRED ONT::affected (F::Phys-obj (f::intentional +)))
+	     )
+ )
+
 ;; cut, slice, chop
 (define-type ONT::cut
  :parent ONT::break-object

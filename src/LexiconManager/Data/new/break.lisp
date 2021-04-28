@@ -100,11 +100,19 @@
 (define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 ;   )
-  ((W::break (W::up))
+  ((W::break W::up)
    (wordfeats (W::morph (:forms (-vb) :past W::broke :pastpart W::broken :nom (w::break w::up))))
    (SENSES
-    ((LF-PARENT ONT::Separation)
+    (;(LF-PARENT ONT::Separation)
+     (LF-PARENT ONT::social-separation)
      (SEM (F::Aspect F::Bounded) (F::Time-span F::Atomic))
+     (TEMPL AGENT-NP-PLURAL-TEMPL)
+     (example "Mr. and Mrs. Bee broke up.")
+     )
+    (;(LF-PARENT ONT::separation)
+     (LF-PARENT ONT::social-separation)
+     (TEMPL AGENT-AFFECTED-XP-PP-TEMPL (xp (% w::pp (w::ptype (? t w::with)))))
+     (example "Mrs. Bee broke up with Mr. Bee.")
      )
     )
    )
