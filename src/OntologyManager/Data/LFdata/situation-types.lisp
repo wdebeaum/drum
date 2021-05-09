@@ -711,8 +711,9 @@
  :wordnet-sense-keys ("enter%2:38:00" "come_in%2:38:02" "get_into%2:38:00" "get_in%2:38:01" "go_into%2:38:00" "go_in%2:38:00" "move_into%2:38:00" "enter%2:36:00" "entrance%1:11:00")
  :parent ont::event-of-action ;ont::motion
  :arguments ((:REQUIRED ONT::affected ((? ttype f::phys-obj)))
-	     (:ESSENTIAL ont::neutral (F::phys-obj (F::spatial-abstraction (? sa F::spatial-region))
-					       (F::object-function (? of f::spatial-object f::building))))
+	     (:ESSENTIAL ont::neutral (F::phys-obj ;(F::spatial-abstraction (? sa F::spatial-region))
+					;(F::object-function (? of f::spatial-object f::building))
+				       (F::container +)))
 	     )
  )
 

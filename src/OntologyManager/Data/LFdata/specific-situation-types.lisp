@@ -748,6 +748,8 @@
  :arguments (
 ;	     (:ESSENTIAL ONT::Instrument (F::Phys-obj (F::object-Function F::Vehicle) (F::Container +) (F::Mobility
 ;                             F::movable) (F::intentional -)))
+	     ;(:OPTIONAL ONT::RESULT (F::ABSTR-OBJ (f::type (? !t ont::goal-as-containment ont::resulting-object ont::resulting-state)))) ; excludes "into" so that "turn into" would take ONT::TRANSFORMATION ; but this doesn't seem to change the asem in -vp-result-advbl-no-particle>.  Is it because of the negatioN?
+	     (:OPTIONAL ONT::RESULT (F::ABSTR-OBJ (f::type (? t ont::to-loc ont::goal-as-on)))) ; excludes "into" so that "turn into" would take ONT::TRANSFORMATION
              )
  )
 

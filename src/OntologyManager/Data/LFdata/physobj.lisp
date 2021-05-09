@@ -503,6 +503,7 @@
 (define-type ONT::SUBSTANCE
     :wordnet-sense-keys ("substance%1:03:00" "substance%1:03:01" "substance%1:27:00" "matter%1:03:00" "paper%1:27:00")
     :parent ONT::material
+    :sem (F::Phys-obj (F::container +)) ; in the water/blood/soil/sediment
     )
 
 ;; ASMA
@@ -1372,7 +1373,8 @@
     )
 
 (define-type ONT::LIGHT
-    :parent ONT::SUBSTANCE
+    ;:parent ONT::SUBSTANCE
+    :parent ONT::physical-phenomenon
     :sem (F::Phys-obj (F::origin F::non-living))
     :wordnet-sense-keys ("light%1:15:00" "light%1:19:00" "light%1:26:00")
     )
@@ -2632,8 +2634,9 @@
 
 (define-type ONT::AUDIO
     :wordnet-sense-keys ("audio%1:10:00" "sound%1:10:00")
-    :parent ONT::substance
-    :sem (F::PHYS-OBJ (f::form f::wave) (F::INTENTIONAL -) (F::CONTAINER -))
+    ;:parent ONT::substance
+    :parent ONT::physical-phenomenon
+    :sem (F::PHYS-OBJ (f::form f::wave) (F::INTENTIONAL -)) ; (F::CONTAINER -)) ; its parent has container +
     :arguments ((:OPTIONAL ONT::FIGURE (F::Phys-obj))
 		)
     )

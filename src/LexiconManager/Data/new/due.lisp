@@ -24,11 +24,13 @@
      (Example "changes due to a damaged bulb")
      (meta-data :origin beetle :entry-date 20081111 :change-date nil :comments nil)
      )
+    #|
     ((LF-PARENT ONT::due-to)
      (TEMPL BINARY-CONSTRAINT-PRED-TEMPL (xp (% w::pp (w::ptype w::to))))
      (Example "The car is brown due to rust")
      (meta-data :origin beetle :entry-date 20081111 :change-date nil :comments nil)
      )
+    |#
     ))
 ))
 

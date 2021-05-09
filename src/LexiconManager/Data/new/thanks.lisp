@@ -46,3 +46,14 @@
    )
 ))
 
+(define-words 
+    :pos W::adv :templ DISC-PRE-TEMPL
+ :words (
+  (W::thanks
+   (SENSES    
+    ((LF-PARENT ONT::due-to)
+     (TEMPL binary-constraint-s-or-NP-templ (xp (% w::pp (w::ptype w::to))))
+     (Example "I was late thanks to the rain")
+     )
+    ))
+))

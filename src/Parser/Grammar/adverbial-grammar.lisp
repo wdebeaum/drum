@@ -566,7 +566,8 @@
 		;(DOBJVAR -)  ; This doesn't work because it could unify with a dobjvar not yet instantiated
 		;(dobj (% -)) ; cannot use (dobj -) because dobj is (% - (W::VAR -))
 		(dobj (% ?xx (var ?dobjvar))) ; check that this is not bound below
-		(comp3 (% -)) ; for arguments as complements
+		;(comp3 (% -)) ; for arguments as complements
+		(comp3 (% ?yy (var ?comp3var))) ; check that this is not bound below
 		(SUBJ (% NP (Var ?npvar) (agr ?agr) (sem ?sem) (lex ?lex) (case ?case)))  
 		(subjvar ?npvar)
 		(constraint ?con) (tma ?tma) ;(result-present -)
@@ -590,6 +591,7 @@
       )
      (unify-but-dont-bind (pattern ?asem) (value ?advblsem))
      (not-bound (arg1 ?dobjvar)) ; accounts for both intransitive case and unbounded optional dobj case
+     (not-bound (arg1 ?comp3var)) ; accounts for both intransitive case and unbounded optional comp3 case (e.g., empty: agent-affected-source-xp-optional-templ
      (add-to-conjunct (val (result ?mod)) (old ?con) (new ?new))  ; The RESULT will be remapped to TRANSIENT-RESULT
      )
 ))
