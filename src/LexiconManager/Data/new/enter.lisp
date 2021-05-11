@@ -18,7 +18,7 @@
      ;(LF-PARENT ONT::put)
      ;(TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (LF-PARENT ONT::record)
-     (TEMPL AGENT-NEUTRAL-XP-NP-TEMPL)
+     (TEMPL AGENT-NEUTRAL-XP-TEMPL)
      (SEM (F::Aspect F::bounded) (F::Time-span F::extended))
      )
      ((EXAMPLE "enter!")
