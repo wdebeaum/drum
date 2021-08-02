@@ -4,7 +4,7 @@ DRUM (Deep Reader for Understanding Mechanisms) is an IHMC-led project funded by
 
 This git repo is a mirror of the TRIPS `drum` CVS module. It is updated nightly.
 
-[Installation instructions](http://trips.ihmc.us/trac/drum/wiki/TripsDrumSystemInstallation)
+[Installation instructions](https://github.com/wdebeaum/trips-docs/wiki/DRUM-System-Installation-Notes)
 
 Note that the `src/config/lisp/defsystem/defsystem-3.6i/` directory contains a modified, non-standard, non-official version of [MK:DEFSYSTEM](http://www.cliki.net/mk-defsystem) 3.6i. See the comments near the top of `defsystem.lisp` in that directory for its copyright notice and license.
 
