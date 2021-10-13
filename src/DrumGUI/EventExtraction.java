@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.75 2021/04/15 21:07:37 lgalescu Exp $
+ * $Id: EventExtraction.java,v 1.76 2021/10/12 20:59:53 cmteng Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -75,6 +75,8 @@ public class EventExtraction extends Extraction {
         TENSE(":TENSE"),
         // spec, for nominalizations
         SPEC(":SPEC"),
+	// un-normalized lex
+        LEX(":LEX"),	
         // {DRUM} :CELL-LINE id --> cell line
         CELL_LINE(":CELL-LINE"),
         // {DRUM} :SITE id [:SITEMOD ontType] --> eg, at/SITEMOD Y200/SITE
@@ -854,6 +856,8 @@ public class EventExtraction extends Extraction {
         List<String> conts = super.xml_commonContents();
         if (features.get(Feature.SPEC) != null)
             conts.add(xml_element("spec", "", features.get(Feature.SPEC).toString()));
+        if (features.get(Feature.LEX) != null)
+            conts.add(xml_element("lex", "", removePackage(features.get(Feature.LEX).toString())));
         conts.add(xml_negation());
         conts.add(xml_polarity());
         conts.add(xml_modality());

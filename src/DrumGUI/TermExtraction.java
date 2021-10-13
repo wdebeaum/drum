@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.66 2021/02/06 00:56:55 lgalescu Exp $
+ * $Id: TermExtraction.java,v 1.67 2021/10/12 20:59:53 cmteng Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -36,6 +36,8 @@ public class TermExtraction extends Extraction {
         NAME(":NAME"),
         // :SPEC --> quantifier 
         SPEC(":SPEC"),
+	// un-normalized lex
+        LEX(":LEX"),	
         // :PRO id --> ID for event describing modifier
         PRO(":PRO"),
         // :BASE id --> an assoc-with for compositional terms, eg, "the Erk gene"
@@ -422,6 +424,8 @@ public class TermExtraction extends Extraction {
         List<String> conts = super.xml_commonContents();
         if (attributes.get(Attribute.SPEC) != null)
             conts.add(xml_element("spec", "", attributes.get(Attribute.SPEC).toString()));
+        if (attributes.get(Attribute.LEX) != null)
+            conts.add(xml_element("lex", "", removePackage(attributes.get(Attribute.LEX).toString())));
         conts.add(xml_name());
         conts.add(xml_mods());
         conts.add(xml_features());
