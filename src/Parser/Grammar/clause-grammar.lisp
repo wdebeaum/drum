@@ -3933,6 +3933,7 @@
    
    ;; conjoined vps w/ same subject
    ;; test: the dog barked and chased the cat.
+   ;; relax this?: "the dog barks and chased the cat" doesn't work here because we require tma to be the same in both conjuncts
    ((s (stype ?st) (var ?v3) (sem ?sem) (lex ?lex)
      (lf (% prop (var ?v3) 
 	    (class ?class)
@@ -3946,7 +3947,8 @@
 	     (advbl-needed -)
 	     ))
     (conj (lf (? op ont::and ont::or ont::but)) (lex ?lex) (var ?v3))
-    (vp (subj ?subj) (gap -) (var ?v2) (tma ?tma) (advbl-needed -)
+    (vp (subj ?subj) (SUBJ (% ?sub1 (agr ?agr))) ; subj and vp agr
+	(gap -) (var ?v2) (tma ?tma) (advbl-needed -) (agr ?agr)
      (class ?c2) (sem ?s2))
     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
@@ -3967,7 +3969,8 @@
          (advbl-needed -)
          ))
     (conj (lf (? op ont::and ont::or ont::but)) (lex ?lex) (var ?v3))
-    (vp (subj ?subj) (gap -) (var ?v2) (tma ?tma) (advbl-needed -) (dobj ?!dobj)
+    (vp (subj ?subj) (SUBJ (% ?sub1 (agr ?agr))) ; subj and vp agr
+	(gap -) (var ?v2) (tma ?tma) (advbl-needed -) (dobj ?!dobj) (agr ?agr)
      (class ?c2) (sem ?s2))
     (sem-least-upper-bound (in1 ?s1) (in2 ?s2) (out ?sem))
     (class-least-upper-bound (in1 ?c1) (in2 ?c2) (out ?class))
