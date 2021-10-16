@@ -15,13 +15,16 @@
  :words (
   (W::award
    (SENSES
+    #|
     ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("future_having-13.3") :wn ("award%2:40:00" "award%2:40:01" "award%2:41:00"))
      (LF-PARENT ONT::giving)
      (TEMPL AGENT-AFFECTED-TEMPL) ; like grant,offer
      )
+    |#
    ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("future_having-13.3") :wn ("award%2:40:00" "award%2:40:01" "award%2:41:00"))
      (LF-PARENT ONT::giving)
-     (TEMPL agent-affected-goal-optional-templ) ; like grant,offer
+     ;(TEMPL agent-affected-goal-optional-templ) ; like grant,offer
+     (TEMPL AGENT-AFFECTED-AFFECTEDR-XP-optional-TEMPL)
      )
     )
    )

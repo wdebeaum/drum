@@ -1,4 +1,4 @@
-#!/usr/bin/perl -CSD
+#!/usr/bin/env perl -CSD
 
 # test.pl
 #

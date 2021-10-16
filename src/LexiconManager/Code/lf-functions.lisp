@@ -27,7 +27,7 @@
      :features required
      :defaults default)
     )))
-  
+
 
 ;; takes an untyped feature list in the format type <feature list>
 ;; and makes it into a structure with variable type

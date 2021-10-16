@@ -24,7 +24,7 @@
   ((W::BUT w::not)
    (wordfeats (w::but-not +))
    (SENSES
-    ((LF ONT::BUT-EXCEPTION)
+    ((LF (:* ONT::BUT-EXCEPTION W::BUT-NOT))
      (non-hierarchy-lf t)
      (TEMPL SUBCAT-ANY-TEMPL)
      )
