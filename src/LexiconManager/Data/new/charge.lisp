@@ -55,13 +55,15 @@
      (EXAMPLE "charge it to my account")
      (LF-PARENT ONT::commerce-collect)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-AFFECTED-SOURCE-XP-TEMPL (xp (% W::pp (W::ptype (? pt W::to W::on)))))
+     ;(TEMPL AGENT-AFFECTED-SOURCE-XP-TEMPL (xp (% W::pp (W::ptype (? pt W::to W::on)))))
+     (TEMPL AGENT-AFFECTED-AFFECTEDR-XP-TEMPL (xp (% W::pp (W::ptype (? pt W::to W::on))))) ; copied from bill.lisp
      )
     ((meta-data :origin calo :entry-date 20040407 :change-date nil :comments y1-variations)
      (EXAMPLE "charge my account")
      (LF-PARENT ONT::commerce-collect)
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-SOURCE-XP-TEMPL)
+     ;(TEMPL AGENT-SOURCE-XP-TEMPL)
+     (TEMPL AGENT-AFFECTEDR-AFFECTED-XP-PP-WITH-2-OPTIONAL-TEMPL (xp (% W::PP (W::ptype (? t W::for))))) ; copied from bill.lisp
      )
     ((meta-data :origin step :entry-date 20080626 :change-date nil :comments nil)
      (EXAMPLE "charge the battery")

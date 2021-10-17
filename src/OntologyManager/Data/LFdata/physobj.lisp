@@ -2633,7 +2633,7 @@
     )
 
 (define-type ONT::AUDIO
-    :wordnet-sense-keys ("audio%1:10:00" "sound%1:10:00")
+    :wordnet-sense-keys ("audio%1:10:00" "sound%1:10:00" "echo%1:07:00")
     ;:parent ONT::substance
     :parent ONT::physical-phenomenon
     :sem (F::PHYS-OBJ (f::form f::wave) (F::INTENTIONAL -)) ; (F::CONTAINER -)) ; its parent has container +

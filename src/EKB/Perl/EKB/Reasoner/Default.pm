@@ -3,7 +3,7 @@
 # Time-stamp: <Sat Apr 10 22:00:08 CDT 2021 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  10 Apr 2021
-# $Id: Default.pm,v 1.1 2021/04/11 04:37:15 lgalescu Exp $
+# $Id: Default.pm,v 1.2 2021/10/16 07:33:40 cmteng Exp $
 #
 
 #----------------------------------------------------------------
@@ -195,6 +195,8 @@ sub default_options {
       my ($rule, $ekb, $r) = @_;
 
       return 0 unless is_relation($r);
+
+      return 0 if $r->findnodes('sequence');  # sequences don't have other arguments
 
       my $r_id = $r->getAttribute('id');
 

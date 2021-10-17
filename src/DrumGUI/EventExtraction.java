@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.76 2021/10/12 20:59:53 cmteng Exp $
+ * $Id: EventExtraction.java,v 1.78 2021/10/16 16:38:00 cmteng Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -76,7 +76,9 @@ public class EventExtraction extends Extraction {
         // spec, for nominalizations
         SPEC(":SPEC"),
 	// un-normalized lex
-        LEX(":LEX"),	
+        LEX(":LEX"),
+	// sem features
+	FEATURES(":FEATURES"),
         // {DRUM} :CELL-LINE id --> cell line
         CELL_LINE(":CELL-LINE"),
         // {DRUM} :SITE id [:SITEMOD ontType] --> eg, at/SITEMOD Y200/SITE
@@ -92,6 +94,9 @@ public class EventExtraction extends Extraction {
         SOURCE(":SOURCE"),
         RESULT(":RESULT"),
         RESULT1(":RESULT1"),
+	// sequence and operator
+	SEQUENCE(":SEQUENCE"),
+	OPERATOR(":OPERATOR"),
         // [:FROM id] :TO id --> {DRUM} cell components/locations
         FROM(":FROM"),
         TO(":TO"),
@@ -839,6 +844,11 @@ public class EventExtraction extends Extraction {
         conts.add(xml_source());
         conts.add(xml_result());
         conts.add(xml_result1());
+	if (features.get(Feature.SEQUENCE) != null)
+            conts.add(xml_element("sequence", "", features.get(Feature.SEQUENCE).toString()));
+        if (features.get(Feature.OPERATOR) != null)
+            conts.add(xml_element("operator", "", features.get(Feature.OPERATOR).toString()));
+
         if (ExtractionFactory.getProperty("extractions.mode").equals("DRUM")) {
             conts.add(xml_site());
             conts.add(xml_cellline());
@@ -858,6 +868,8 @@ public class EventExtraction extends Extraction {
             conts.add(xml_element("spec", "", features.get(Feature.SPEC).toString()));
         if (features.get(Feature.LEX) != null)
             conts.add(xml_element("lex", "", removePackage(features.get(Feature.LEX).toString())));
+        if (features.get(Feature.FEATURES) != null)
+            conts.add(xml_element("features", "", removePackage(features.get(Feature.FEATURES).toString())));
         conts.add(xml_negation());
         conts.add(xml_polarity());
         conts.add(xml_modality());

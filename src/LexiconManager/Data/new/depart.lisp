@@ -2,6 +2,8 @@
 ;;;; W::depart
 ;;;;
 
+; to fix: the "for" PP clause does not fit the semantic restriction for RESULT
+
 (define-words :pos W::v :TEMPL AGENT-FORMAL-XP-TEMPL
  :words (
   (W::depart
@@ -17,7 +19,8 @@
      (meta-data :origin ralf :entry-date 20040930 :change-date nil :comments ralf.txt)
      (example "the truck departed atlanta for rochester")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (TEMPL AGENT-SOURCE-RESULT-2-XP1-OPTIONAL-3-XP2-OPTIONAL-TEMPL (xp2 (% W::PP (W::ptype W::for))))
+     ;(TEMPL AGENT-SOURCE-RESULT-2-XP1-OPTIONAL-3-XP2-OPTIONAL-TEMPL (xp2 (% W::PP (W::ptype W::for))))
+     (TEMPL AGENT-NEUTRAL-RESULT-2-XP1-OPTIONAL-3-XP2-OPTIONAL-TEMPL (xp2 (% W::PP (W::ptype W::for))))
      (preference .9)
      )
     )

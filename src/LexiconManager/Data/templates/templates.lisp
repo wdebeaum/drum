@@ -652,7 +652,9 @@
       (LSUBJ (% W::NP) ONT::aGENT)
       (LOBJ (% W::NP) ONT::ALONG)
       ))||#
-      
+
+      ; tried to replace this by the next two:
+      ; AGENT-neutral-RESULT-2-XP1-OPTIONAL-3-XP2-OPTIONAL-TEMPL and AGENT-result-RESULT-2-XP1-OPTIONAL-3-XP2-OPTIONAL-TEMPL
       (AGENT-SOURCE-RESULT-2-XP1-OPTIONAL-3-XP2-OPTIONAL-TEMPL
        (ARGUMENTS
 	(LSUBJ (% W::NP) ONT::agent)
@@ -660,6 +662,22 @@
 	(LCOMP (:parameter xp2 (:default (% W::PP (W::ptype W::to)))) ont::result OPTIONAL)
 	))
 
+      (AGENT-neutral-RESULT-2-XP1-OPTIONAL-3-XP2-OPTIONAL-TEMPL
+       (ARGUMENTS
+	(LSUBJ (% W::NP) ONT::agent)
+	(LOBJ (:parameter xp1 (:default (% W::NP))) ONT::neutral OPTIONAL)
+	(LCOMP (:parameter xp2 (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::to-loc))))))) ont::result OPTIONAL)
+	))
+
+      #|
+      (AGENT-result-RESULT-2-XP1-OPTIONAL-3-XP2-OPTIONAL-TEMPL
+       (ARGUMENTS
+	(LSUBJ (% W::NP) ONT::agent)
+	(LOBJ (:parameter xp1 (:default (% W::NP))) ONT::result OPTIONAL)
+	(LCOMP (:parameter xp2 (:default (% W::ADVBL (W::lf (% ?p (w::class (? x ont::to-loc))))))) ont::result OPTIONAL)
+	))
+      |#
+      
       #|  ; nobody uses this
       (GO-TO-FROM-TEMPL
        (ARGUMENTS

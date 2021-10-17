@@ -510,7 +510,9 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
   (when term
     (if (consp term) 
       (if (eq (car term) 'term)
+	  ;(add-sem-if-necessary
 	  (add-orig-lex-if-necessary (add-lex-if-necessary (or (add-positional-info (find-arg-in-act term :lf) term) term) term) term)
+	;term)
 	  (mapcar #'extract-lf-from-term term))
       term)))
 
@@ -522,6 +524,8 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 
 (defvar *add-lex-to-lf* nil)
 (defvar *add-orig-lex-to-lf* nil)
+
+(defvar *sem-features-to-output* nil)
 
 (defun add-lex-if-necessary (lf term)
   (if (and *add-lex-to-lf* (consp term))
@@ -538,6 +542,47 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	    (append lf (list :orig-lex orig-lex))
 	    lf))
       lf))
+
+
+(defun collect-sem-features (term)
+  (if (and *sem-features-to-output* (consp term))
+      (let ((sem (find-arg-in-act term :sem))
+	    (f_list nil))
+	(if sem
+	    (progn
+	      (setq f_list (remove nil (mapcar #'(lambda (x)
+						   (let ((f_value (assoc x (cddr sem))))
+						     (if (and f_value (not (eq (cadr f_value) '-)))
+							 f_value)))
+					       *sem-features-to-output*)))
+	      ))
+	f_list))
+  )
+
+(defun add-sem-if-necessary (lf term)
+  (let ((f_list (collect-sem-features term)))
+    (if f_list
+	(append lf (list :features f_list))
+      lf)))
+
+#|
+(defun add-sem-if-necessary (lf term)
+  (if (and *sem-features-to-output* (consp term))
+      (let ((sem (find-arg-in-act term :sem)))
+	(if sem
+	    (progn
+	      (setq f_list (remove nil (mapcar #'(lambda (x)
+						   (let ((f_value (assoc x (cddr sem))))
+						     (if (and f_value (not (eq (cadr f_value) '-)))
+							 f_value)))
+					       *sem-features-to-output*)))
+	      (if f_list
+		  (append lf (list ':features f_list))
+		lf))
+	    lf))
+      lf))
+|#
+
 
 (defun sort-lfs (root lfs)
   "Sorts LFs by closet distance to the 'root' LF, which is the first one"
@@ -1234,8 +1279,21 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	    (setq term (replace-arg-in-act term :lf (append newlf (list :LEX lex))))
 	    (setq newlf (append newlf (list :LEX lex)))
 	    ))
-      (if (and *add-orig-lex-to-lf* orig-lex)
-	  (setq term (replace-arg-in-act term :lf (append newlf (list :ORIG-LEX orig-lex)))))
+      (if (and *add-orig-lex-to-lf* orig-lex)	  
+	  (progn 
+	    (setq term (replace-arg-in-act term :lf (append newlf (list :ORIG-LEX orig-lex))))
+	    (setq newlf (append newlf (list :ORIG-LEX orig-lex)))
+	    ))
+
+      (if (and :*sem-features-to-output* sem)
+	  (let ((f_list (collect-sem-features term)))
+	    (if f_list
+		(progn
+		  (setq term (replace-arg-in-act term :lf (append newlf (list :features f_list))))
+		  (setq newlf (append newlf (list :features f_list)))
+		  ))
+	    ))
+      
       (if (and input (or (null form) (member 'w::input form)))
 	  (setq term (append term (list :INPUT input)))
         )
@@ -1580,6 +1638,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
          (tma (get-fvalue args 'w::tma))
 	 (lex (get-fvalue args 'W::lex))
 	 (orig-lex (get-fvalue args 'w::orig-lex))
+	 (sem (get-fvalue args 'w::sem))
          (roles (build-roles-for-lf var constraints))
          (input (get-fvalue args 'w::input))
 	 (start (get-fvalue args 'W::start))
@@ -1596,6 +1655,16 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
    
     (if (or (null form) (member 'w::var form)) (setq term (append term (list :VAR var))))
     (if (or (null form) (member 'w::sem form)) (setq term (append term (list :SEM (get-fvalue args 'w::sem) ))))
+
+    (if (and :*sem-features-to-output* sem)
+	  (let ((f_list (collect-sem-features term)))
+	    (if f_list
+		(progn
+		  (setq term (replace-arg-in-act term :lf (append newlf (list :features f_list))))
+		  (setq newlf (append newlf (list :features f_list)))
+		  ))
+	    ))
+
     (if (and *add-lex-to-lf* lex)
 	(progn
 	  (setq term (replace-arg-in-act term :lf (append new-lf (list :LEX lex))))
@@ -1992,7 +2061,15 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	 ;((ont::direction) :manner) ; e.g., forward 
 	 ((ont::at-scale-value) :manner)
 	 ((ont::to-loc ont::position-reln ont::goal-reln ont::direction-reln) :result)
-	 ((ont::source-reln) :source))	
+	 ((ont::source-reln) :source))
+	#|
+	((ont::motion ( :mod1 :mod2 :mod3 :mod4))
+	 ((ont::pos-as-containment-reln) :location)
+	 ;((ont::direction) :manner) ; e.g., forward 
+	 ((ont::at-scale-value) :manner)
+	 ((ont::to-loc ont::position-reln ont::goal-reln ont::direction-reln) :result1)
+	 ((ont::source-reln) :source))
+	|#
 	((ont::motion (:result :result1 :result2))
 	 ((ont::obj-in-path ont::trajectory) :transient-result)
 	 )

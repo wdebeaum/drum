@@ -4145,7 +4145,7 @@
    ; (the dog that) chased and ate the cat
    ((vp- (seq +) (vform ?vf) (var *)  (subjvar ?subj)  (subj ?subject) (agr ?agr) (gap -) ;(gap ?gap)
 	 (subj-map ?subjmap)
-     (class ?class) (sem ?sem)  (lex ?!lex)
+     (class ?class) (sem ?sem)  (lex ?!lex) (dobj ?!dobj)
      (constraint (&  (OPERATOR ?lx) 
 		     (SEQUENCE 
 		      ((% *PRO* (var ?v1) (status ont::f) (class ?c1) (tma ?tma1) (sem ?sem1) (lex ?lex1) (constraint ?con1))
