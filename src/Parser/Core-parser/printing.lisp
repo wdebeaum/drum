@@ -548,7 +548,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
   (if (and *sem-features-to-output* (consp term))
       (let ((sem (find-arg-in-act term :sem))
 	    (f_list nil))
-	(if sem
+	(if (and sem (not (eq sem '-)))
 	    (progn
 	      (setq f_list (remove nil (mapcar #'(lambda (x)
 						   (let ((f_value (assoc x (cddr sem))))
