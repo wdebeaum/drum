@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.68 2021/10/16 16:38:00 cmteng Exp $
+ * $Id: TermExtraction.java,v 1.69 2021/10/20 06:31:26 cmteng Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -39,7 +39,7 @@ public class TermExtraction extends Extraction {
 	// un-normalized lex
         LEX(":LEX"),	
 	// sem features
-	FEATURES(":FEATURES"),
+	SEM_FEATURES(":FEATURES"),
         // :PRO id --> ID for event describing modifier
         PRO(":PRO"),
         // :BASE id --> an assoc-with for compositional terms, eg, "the Erk gene"
@@ -93,7 +93,7 @@ public class TermExtraction extends Extraction {
         PHASE(":PHASE"), // another time modifier
         // [:FROM id] :TO id --> {CWMS} time-range attributes
         FROM(":FROM"),
-        TO(":TO"),
+        TO(":TO")
         ;
         private String attrName;
         private Attribute(String name) { attrName = name; }
@@ -428,8 +428,8 @@ public class TermExtraction extends Extraction {
             conts.add(xml_element("spec", "", attributes.get(Attribute.SPEC).toString()));
         if (attributes.get(Attribute.LEX) != null)
             conts.add(xml_element("lex", "", removePackage(attributes.get(Attribute.LEX).toString())));
-        if (attributes.get(Attribute.FEATURES) != null)
-            conts.add(xml_element("features", "", removePackage(attributes.get(Attribute.FEATURES).toString())));
+        if (attributes.get(Attribute.SEM_FEATURES) != null)
+            conts.add(xml_element("sem_features", "", removePackage(attributes.get(Attribute.SEM_FEATURES).toString())));
         conts.add(xml_name());
         conts.add(xml_mods());
         conts.add(xml_features());
@@ -465,6 +465,8 @@ public class TermExtraction extends Extraction {
         conts.add(xml_refset());
         conts.add(xml_scale());
         conts.add(xml_location());
+        conts.add(xml_from());
+        conts.add(xml_to());
         conts.add(xml_timex());
         conts.add(xml_value());
         conts.add(xml_unit());
@@ -1268,6 +1270,41 @@ public class TermExtraction extends Extraction {
         }
         return result;
     }
+
+    private String xml_from() {
+        KQMLObject varObj = attributes.get(Attribute.FROM);
+        if (varObj == null) 
+            return "";
+
+        String var = varObj.toString();
+        if (isOntVar(var)) {
+            if (ekbFindExtraction(var) != null) {
+                return xml_elementWithID("from", var);
+            } else { // we need to define the item here
+                return xml_lfTerm("from", var);
+            }
+        } 
+        Debug.error("unexpected " + Attribute.FROM + " value: " + var);
+        return "";
+    }
+
+    private String xml_to() {
+        KQMLObject varObj = attributes.get(Attribute.TO);
+        if (varObj == null) 
+            return "";
+
+        String var = varObj.toString();
+        if (isOntVar(var)) {
+            if (ekbFindExtraction(var) != null) {
+                return xml_elementWithID("to", var);
+            } else { // we need to define the item here
+                return xml_lfTerm("to", var);
+            }
+        } 
+        Debug.error("unexpected " + Attribute.TO + " value: " + var);
+        return "";
+    }
+    
     
     /**
      * Creates explicit site (eg, domain) property for the term.

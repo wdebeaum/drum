@@ -1660,8 +1660,8 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 	  (let ((f_list (collect-sem-features term)))
 	    (if f_list
 		(progn
-		  (setq term (replace-arg-in-act term :lf (append newlf (list :features f_list))))
-		  (setq newlf (append newlf (list :features f_list)))
+		  (setq term (replace-arg-in-act term :lf (append new-lf (list :features f_list))))
+		  (setq new-lf (append new-lf (list :features f_list)))
 		  ))
 	    ))
 

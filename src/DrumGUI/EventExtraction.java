@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.78 2021/10/16 16:38:00 cmteng Exp $
+ * $Id: EventExtraction.java,v 1.79 2021/10/20 06:31:25 cmteng Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -78,7 +78,7 @@ public class EventExtraction extends Extraction {
 	// un-normalized lex
         LEX(":LEX"),
 	// sem features
-	FEATURES(":FEATURES"),
+	SEM_FEATURES(":FEATURES"),
         // {DRUM} :CELL-LINE id --> cell line
         CELL_LINE(":CELL-LINE"),
         // {DRUM} :SITE id [:SITEMOD ontType] --> eg, at/SITEMOD Y200/SITE
@@ -868,8 +868,8 @@ public class EventExtraction extends Extraction {
             conts.add(xml_element("spec", "", features.get(Feature.SPEC).toString()));
         if (features.get(Feature.LEX) != null)
             conts.add(xml_element("lex", "", removePackage(features.get(Feature.LEX).toString())));
-        if (features.get(Feature.FEATURES) != null)
-            conts.add(xml_element("features", "", removePackage(features.get(Feature.FEATURES).toString())));
+        if (features.get(Feature.SEM_FEATURES) != null)
+            conts.add(xml_element("sem_features", "", removePackage(features.get(Feature.SEM_FEATURES).toString())));
         conts.add(xml_negation());
         conts.add(xml_polarity());
         conts.add(xml_modality());

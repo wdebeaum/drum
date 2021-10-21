@@ -3,7 +3,7 @@
 # Time-stamp: <Sat Apr 10 22:00:08 CDT 2021 lgalescu>
 #
 # Author: Lucian Galescu <lgalescu@ihmc.us>,  10 Apr 2021
-# $Id: Default.pm,v 1.2 2021/10/16 07:33:40 cmteng Exp $
+# $Id: Default.pm,v 1.3 2021/10/20 06:32:46 cmteng Exp $
 #
 
 #----------------------------------------------------------------
@@ -196,7 +196,7 @@ sub default_options {
 
       return 0 unless is_relation($r);
 
-      return 0 if $r->findnodes('sequence');  # sequences don't have other arguments
+      return 0 if $r->findnodes('sequence');  # keep sequence (even though it doesn't have other arguments)
 
       my $r_id = $r->getAttribute('id');
 
@@ -396,6 +396,9 @@ sub default_options {
     handler => sub {
       my ($rule, $ekb, $t) = @_;
 
+      # keep the term if it has location/to/from information
+      return 0 if ($t->findnodes('location') or $t->findnodes('from') or $t->findnodes('to'));  
+      
       my $t_id = $t->getAttribute('id');
 
       # < ! *(...id=X...)
