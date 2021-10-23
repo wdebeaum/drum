@@ -758,7 +758,7 @@
 
     ;; allowing agr to be 3s OR 3p -- 0.1 meter(s) per second
     ;; decimal digit e.g., one . seven, one point seven 
-    ((number (VAL ?newval) (agr (? ag 3s 3p)) (lex (?l1 ?l2)) 
+    ((number (VAL ?newval) (agr (? ag 3s 3p)) (lex (?l1 (? l point punc-period) ?l2)) 
       (var *) (LF ?lf) (ntype w::decpoint) (coerce ?coerce)  (sem ?sem)
       (nobarespec +) ;; impossible to have this as a bare specifier
 	     )
@@ -830,7 +830,7 @@
     
     
    ;; decimal digit less than one e.g., . seven, point seven five
-    ((number (VAL ?newval) (agr 3p) (lex (?l1)) 
+    ((number (VAL ?newval) (agr 3p) (lex ((? l point punc-period) ?l1)) 
       (var *) (LF ?lf) (ntype w::decpoint) (coerce ?coerce)  (sem ?sem)
       (nobarespec +) ;; impossible to have this as a bare specifier
 	     )
@@ -842,7 +842,7 @@
     
     ;; number unit  e.g., fifteen hundred, three hundred thousand
 
-    ((number (VAL ?newval) (agr 3p) (lex ?l2) ;;(lex (?l1 ?l2)) ;;me
+    ((number (VAL ?newval) (agr 3p) (lex (?l1 ?l2)) ;;(lex (?l1 ?l2)) ;;me
 			 (ntype ?ntype) (unit +)
       (var *) (LF ?lf) (coerce ?coerce) (nobarespec ?nbs) (sem ?sem)
       )
@@ -854,7 +854,7 @@
      (compute-val-and-ntype (expr (W::TIMES* ?!v1 ?!v2)) (newval ?newval) (ntype ?ntype)))
 
     ;;   half a million/billion/trillion
-    ((number (VAL ?newval) (agr 3p) (lex ?l2) ;;(lex (?l1 ?l2)) ;;me
+    ((number (VAL ?newval) (agr 3p) (lex (half a ?l2)) ;;(lex (?l1 ?l2)) ;;me
 			 (ntype ?ntype) (unit +)
       (var *) (LF ?lf) (coerce ?coerce) (nobarespec ?nbs) (sem ?sem)
       )
@@ -882,7 +882,7 @@
     ;; Special case of above: number UNIT AND number < 100
     ;;   e.g., two thousand and thirty five, two hundred and one, ...
 
-    ((number (VAL ?newval) (agr 3p) (lex (?l1 ?l2)) (ntype ?ntype)
+    ((number (VAL ?newval) (agr 3p) (lex (?l1 and ?l2)) (ntype ?ntype)
 	     (var *) (LF ?lf) (nobarespec ?nbs) (sem ?sem)
 	     )
      -number-unit-small-number>
@@ -894,7 +894,7 @@
     ;; Special case of above: number AND fraction
     ;;   e.g., one and two thirds; five and a half
 
-    ((number (VAL ?newval) (agr 3p) (lex (?l1 ?l2)) (ntype ?ntype)
+    ((number (VAL ?newval) (agr 3p) (lex (?l1 and ?l2)) (ntype ?ntype)
 	     (var *) (LF ?lf) (nobarespec ?nbs) (sem ?sem)
 	     )
      -number-unit-fraction>
@@ -941,7 +941,7 @@
     ;; Myrosia 10/01/2004
     ;; plus/minus numbers
     ;; THIS TIME WE ID THIS AS POSITIVE BECAUSE WE NEED TO KNOW THAT IT WAS SIGNED
-    ((number (val ?v1) (agr ?agr) (lex ?l1) ;(lex (?l1 ?l2))
+    ((number (val ?v1) (agr ?agr) (lex (+ ?l1)) ;(lex (?l1 ?l2))
 	     (NTYPE w::POSITIVE)
       (var *);; making up a new var for this number
       (lf ?lf) (coerce ?coerce) (nobarespec +)
@@ -954,7 +954,7 @@
      )
 
 
-    ((number (val ?newval) (agr 3p) (lex ?l1) ;(lex (?l1 ?l2));;(NTYPE threedigit)
+    ((number (val ?newval) (agr 3p) (lex (- ?l1)) ;(lex (?l1 ?l2));;(NTYPE threedigit)
 	     (var *);; making up a new var for this number
       (lf ?lf) (coerce ?coerce) (ntype ?ntype) (nobarespec +)
       )
@@ -967,7 +967,7 @@
 
     ;; number ranges
     ;;  10 to 20
-    ((number (RESTR (& (min ?!v1) (max ?!v2))) (agr 3p) (lex (?l1 ?l2)) (ntype W::RANGE) (range +)
+    ((number (RESTR (& (min ?!v1) (max ?!v2))) (agr 3p) (lex (?l1 to ?l2)) (ntype W::RANGE) (range +)
       (var *) (LF ?lf) (coerce ?coerce) (sem ?sem)
       (nobarespec ?nbs)
 	     )
@@ -977,7 +977,7 @@
      (number (val ?!v2) (lex ?l2)))
 
     ;; number range with hyphen
-    ((number (RESTR (& (min ?!v1) (max ?!v2))) (agr 3p) (lex (?l1 ?l2)) (ntype W::RANGE) (range +)
+    ((number (RESTR (& (min ?!v1) (max ?!v2))) (agr 3p) (lex (?l1 - ?l2)) (ntype W::RANGE) (range +)
       (var *) (LF ?lf) (coerce ?coerce) (sem ?sem)
       (nobarespec ?nbs)
 	     )
@@ -989,7 +989,7 @@
      )
 
     ;; from 20 to 35
-    ((number (RESTR (& (min ?!v1) (max ?!v2))) (agr 3p) (lex (?l1 ?l2)) (ntype ?ntype) (range +)
+    ((number (RESTR (& (min ?!v1) (max ?!v2))) (agr 3p) (lex (from ?l1 to ?l2)) (ntype ?ntype) (range +)
       (var *) (LF ?lf) (coerce ?coerce) (sem ?sem)
       (nobarespec ?nbs)
 	     )
@@ -1000,7 +1000,7 @@
      (number (val ?!v2) (lex ?l2)))
 
     ;; between 20 and 35
-    ((number (RESTR (& (min ?!v1) (max ?!v2))) (agr 3p) (lex (?l1 ?l2)) (ntype w::range) ;(ntype ?ntype)
+    ((number (RESTR (& (min ?!v1) (max ?!v2))) (agr 3p) (lex (between ?l1 and ?l2)) (ntype w::range) ;(ntype ?ntype)
 	     (range +)
       (var *) (LF ?lf) (coerce ?coerce) (sem ?sem)
       (nobarespec ?nbs)
@@ -1012,12 +1012,12 @@
      (number (val ?!v2) (lex ?l2)))
 
     ;; 10 or 15
-    ((number (RESTR (& (sequence (?!v1 ?!v2)) (operator ONT::OR))) (agr 3p) (lex (?l1 ?l2)) (ntype ?ntype) 
+    ((number (RESTR (& (sequence (?!v1 ?!v2)) (operator ONT::OR))) (agr 3p) (lex (?l1 or ?l2)) (ntype ?ntype) 
       (var *) (LF ?lf) (coerce ?coerce) (sem ?sem)
       (nobarespec ?nbs)
 	     )
      -uncertain-number>
-     (head (number (nobarespec ?nbs) (lf ?lf) (lex ?l1) (val ?!v1)))
+     (head (number (nobarespec ?nbs) (lf ?lf) (lex ?l1)  (ntype ?ntype) (val ?!v1)))
      (word (lex or))
      (number (val ?!v2) (lex ?l2)))
 

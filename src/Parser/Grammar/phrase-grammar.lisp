@@ -298,14 +298,14 @@
 
 	((ADJP (ARG ?arg) (ARGUMENT (% NP))
 	  (AGR ?a)
-	  (sort pred) (VAR ?v) (sem ?sem) (atype w::central) (comparative -) (set-modifier +)
+	  (sort pred) (VAR ?v) (sem ?sem) (atype w::central) (comparative -) (set-modifier +) (lex ?numlex)
 	  (LF (% DESCRIPTION (STATUS ont::indefinite) (var ?v) (CLASS ONT::NUMBER) (constraint ?newc)))
 	  (post-subcat -)
 	  )
 	 -card-number>
-	 (head (NUMBER (val ?c) (lf ?lf) (VAR ?v) (AGR ?a) (restr ?r) (sem ?sem))) ;;(ntype !negative)))
+	 (head (NUMBER (val ?c) (lf ?lf) (VAR ?v) (AGR ?a) (restr ?r) (sem ?sem) (lex ?numlex))) ;;(ntype !negative)))
 	 ;;(GT (arg1 ?c) (arg2 -1)) ;; negative numbers can't be cardinalities  -- I removed this as it caused "under 500 trucks" to fail
-	 (add-to-conjunct (val (:value ?c)) (old ?r) (new ?newc))
+	 (add-to-conjunct (val (:value ?c) (lex ?numlex) ) (old ?r) (new ?newc))
 	 )
 
         ;;  We need special treatment of number units, as they act like numbers sometimes, as in "the hundred trucks",
@@ -3119,14 +3119,14 @@
 	  (sem ($ F::ABSTR-OBJ (F::scale ?sc) (f::type ont::quantity-abstr) (f::tangible +))) ;;(sem ?nsem)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure) (STATUS ONT::INDEFINITE))
          -unit-np-number-indef>
-	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r))
+	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r) (lex ?numlex))
  	 (head (N1 (VAR ?v) (SORT unit-measure) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
 		   (KIND -) (sem ?sem) (sem ($ f::abstr-obj  (f::type (? xx ont::unit ont::multiple)) (f::scale ?sc))) ; ont::multiple: increase 100 fold
 		   (argument ?argument) (RESTR ?restr)
 		   (post-subcat -)
 		))
 	 (compute-sem-features (lf ont::quantity-abstr) (sem ?nsem))
-         (add-to-conjunct (val (& (value ?num))) (old ?r) (new ?newr))
+         (add-to-conjunct (val (& (value ?num) (lex ?numlex))) (old ?r) (new ?newr))
 	 (add-to-conjunct (val (& (amount (% *PRO* (status ont::indefinite) (class ont::NUMBER) (VAR ?nv) (constraint ?newr)))
 				  (unit ?c)
 				  (scale ?sc))) (old ?restr) (new ?constr))
@@ -3144,7 +3144,7 @@
 	  (sem ($ F::ABSTR-OBJ (F::scale ?sc) (f::type ont::quantity-abstr) (f::tangible +))) ;;(sem ?nsem)
 	  (SPEC ont::INDEFINITE) (AGR 3s) (unit-spec +) (VAR ?v) (SORT unit-measure) (STATUS ONT::INDEFINITE))
          -unit-np-number-indef-2> 0.98
-	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r))
+	 (NUMBER (val ?num) (VAR ?nv) (AGR ?agr) (restr ?r)(lex ?numlex))
  	 (head (N1 (VAR ?v) (SORT pred) (INDEF-ONLY -) (CLASS ?c) (MASS ?m)
 		   (KIND -) (sem ?sem) (sem ($ f::phys-obj)) ;(sem ($ f::abstr-obj  (f::type (? xx ont::unit ont::multiple)) (f::scale ?sc))) ; ont::multiple: increase 100 fold
 		   (argument ?argument) (RESTR ?restr)
@@ -3152,7 +3152,7 @@
 		   (n1seq -)
 		))
 	 (compute-sem-features (lf ont::quantity-abstr) (sem ?nsem))
-         (add-to-conjunct (val (& (value ?num))) (old ?r) (new ?newr))
+         (add-to-conjunct (val (& (value ?num)(lex ?numlex))) (old ?r) (new ?newr))
 	 (add-to-conjunct (val (& (amount (% *PRO* (status ont::indefinite) (class ont::NUMBER) (VAR ?nv) (constraint ?newr)))
 				  (unit ?c)
 				  (scale ONT::LINEAR-EXTENT-SCALE) ;(scale ?sc)
