@@ -23,7 +23,8 @@
      (example "make the paper into a square")
      (SEM (F::Cause F::Agentive) (F::Aspect F::bounded) (F::Time-span F::extended))
      ;(TEMPL AGENT-AFFECTED-RESULT-XP-NP-TEMPL (xp (% W::PP (W::ptype W::into))))
-     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
+     ;(TEMPL AGENT-AFFECTED-XP-NP-TEMPL)  ; we can't say just "I made the paper"
+     (TEMPL agent-affected-result-objcontrol-templ)
      )
     (
      (LF-PARENT ONT::transformation) ;; GUM change new parent 20121027
