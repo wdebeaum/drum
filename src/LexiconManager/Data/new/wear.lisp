@@ -43,3 +43,16 @@
    )
 ))
 
+(define-words :pos W::V :TEMPL AGENT-FORMAL-XP-TEMPL
+ :words (
+  ((W::wear (w::down))
+   (wordfeats (W::morph (:forms (-vb) :past W::wore :pastpart W::worn :ing W::wearing)))
+   (SENSES
+    ((meta-data :origin cardiac :entry-date 20080508 :change-date 20090511 :comments LM-vocab)
+     (LF-PARENT ONT::deteriorate) 
+     (syntax (w::resultative +)) 
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) ; like annoy,bother,concern,hurt
+     )
+    )
+   )
+))
