@@ -5680,13 +5680,13 @@
 
 ;; FN
 (define-type ont::hindering
- :wordnet-sense-keys ("barricade%1:06:00" "bound%2:30:00" "closure%1:04:01" "compromise%2:32:03" "confine%2:30:00" "crush%2:41:00" "disrupt%2:30:01" "hamper%2:33:00" "handicap%2:33:00" "hinder%2:33:00" "hinder%2:41:01" "hold_back%2:41:00" "keep_back%2:41:00" "limit%2:30:01" "obstruction%1:06:00" "restrain%2:30:00" "restrain%2:41:01" "restrict%2:30:00" "throttle%2:30:01" "trammel%2:30:00")
+ :wordnet-sense-keys ("barricade%1:06:00" "bound%2:30:00" "closure%1:04:01" "compromise%2:32:03" "confine%2:30:00" "crush%2:41:00" "disrupt%2:30:01" "hamper%2:33:00" "handicap%2:33:00" "hinder%2:33:00" "hinder%2:41:01" "hold_back%2:41:00" "keep_back%2:41:00" "limit%2:30:01" "obstruction%1:06:00" "restrain%2:30:00" "restrain%2:41:01" "restrict%2:30:00" "throttle%2:30:01" "trammel%2:30:00" "obstruct%2:35:00" "obstruction%1:04:01")
     :parent ont::inhibit-effect
  :comment "make it difficult for an effect or event to complete; obstruct an ongoing event"
     )
 
 (define-type ONT::clog
- :wordnet-sense-keys ("obstruct%2:35:00" "clog%2:35:00" "choke_off%2:35:00" "clog_up%2:35:00" "back_up%2:35:00" "congest%2:35:00" "choke%2:35:01" "foul%2:35:00")
+ :wordnet-sense-keys ("clog%2:35:00" "choke_off%2:35:00" "clog_up%2:35:00" "back_up%2:35:00" "congest%2:35:00" "choke%2:35:01" "foul%2:35:00")
  :parent ONT::hindering ;closure
  )
 

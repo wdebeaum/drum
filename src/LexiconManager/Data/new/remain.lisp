@@ -17,8 +17,10 @@
      (TEMPL agent-TEMPL))
     |#
     ((example "the bulbs remain on")
-     (LF-PARENT ONT::stay)
-     (TEMPL AGENT-FORMAL-PRED-SUBJCONTROL-TEMPL)
+     ;(LF-PARENT ONT::stay)
+     ;(TEMPL AGENT-FORMAL-PRED-SUBJCONTROL-TEMPL)
+     (LF-PARENT ONT::MAINTAIN-KEEP)
+     (TEMPL AFFECTED-FORMAL-XP-PRED-TEMPL)
      (meta-data :origin bee :entry-date 20090220 :change-date nil :comments beetle-pilots)
      )
     )

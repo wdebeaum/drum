@@ -1895,7 +1895,8 @@
      )
     -extent-adj-compar-advbl> 1.0 ;.97
     (head (Adjp (var ?v) (sem ?sem)  (arg **)
-	      (bare -) 
+		(bare -)
+		(sem ($ f::abstr-obj (f::type (? t ont::more-val ont::less-val)))) ; added sem restriction because the lf restriction doesn't seem to get a penalty
 	      (lf (% prop (class (? cc ont::more-val ont::less-val))))
 	      (sem ($ f::abstr-obj (f::scale (? sc ont::scale ont::measure-scale)))) 
 	      

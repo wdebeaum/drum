@@ -3576,6 +3576,7 @@
     :parent ont::dimensional-property-val
     :wordnet-sense-keys ("scale_value%1:09:00")
     :sem (F::abstr-obj (F::scale ont::dimensional-scale))
+    :arguments ((:REQUIRED ONT::figure ((? F::Phys-obj F::abstr-obj F::situation) (f::type (? t ONT::DOMAIN ONT::VALUE-COST) )))) ; price
     :comment "indicates a position given a dimensional scale. These adjectives do not specify the shape, direction, or alignment of the scale."
 )
 
@@ -4463,10 +4464,12 @@
  :wordnet-sense-keys ("optional%3:00:00" )
 )
 
+; not just psychological: e.g., "the amount is reasonble"
 ;; reasonable/sensible vs unreasonable (mental states)
 (define-type ont::sensibility-val
- :parent ont::psychological-property-val
- :comment "describing mental ability or sensitivity to respond to emotional influences"
+ ;:parent ont::psychological-property-val
+  :parent ont::evaluation-attribute-val  
+  ;:comment "describing mental ability or sensitivity to respond to emotional influences"
  :sem (F::abstr-obj (F::scale ont::rationality-scale) )
 )
 

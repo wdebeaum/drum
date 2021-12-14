@@ -42,6 +42,21 @@
    )
 ))
 
+
+(define-words :pos W::ADV
+ :words (
+  ((W::OUT W::FROM) ; not that best English
+   (SENSES
+    ((LF-PARENT ONT::OUTSIDE)
+     (example "it is out from the bag") 
+     (TEMPL BINARY-CONSTRAINT-S-OR-NP-TEMPL)
+     )
+   
+    )
+   )
+))
+
+
 (define-words :pos W::ADV
  :tags (:base500)
  :words (

@@ -305,7 +305,8 @@
 	 -card-number>
 	 (head (NUMBER (val ?c) (lf ?lf) (VAR ?v) (AGR ?a) (restr ?r) (sem ?sem) (lex ?numlex))) ;;(ntype !negative)))
 	 ;;(GT (arg1 ?c) (arg2 -1)) ;; negative numbers can't be cardinalities  -- I removed this as it caused "under 500 trucks" to fail
-	 (add-to-conjunct (val (:value ?c) (lex ?numlex) ) (old ?r) (new ?newc))
+	 (add-to-conjunct (val (:value ?c)) (old ?r) (new ?newc1))
+	 (add-to-conjunct (val (lex ?numlex)) (old ?newc1) (new ?newc))
 	 )
 
         ;;  We need special treatment of number units, as they act like numbers sometimes, as in "the hundred trucks",
@@ -5301,7 +5302,8 @@
       (postadvbl +) (status (? st definite definite-plural))
       )
      -NP-adj-missing-head> .981  ;; just a hair above the PLUR forms to set the defaulr
-     (head (spec  (poss -) (restr ?restr) (wh-var ?whv)
+     (head (spec  ;(poss -)  ; allow "their young"
+	          (restr ?restr) (wh-var ?whv)
 		  (WH -)   ;;tentatively eliminating WH terms  -- is there an example like "show me which large?"
 		  ;(restr (& (proform -)))  ;; prevent this and that, which should be pronouns
 		  (lf ?spec) (arg *) (agr (? agr 3s 3p)) ;(agr |3P|)
@@ -7008,7 +7010,8 @@
 	  (postadvbl +) (status ?spec)
 	  )
 	 -NP-missing-head-plur> .98 
-	 (head (spec (poss -)  (restr ?restr) (mass count)
+	 (head (spec ;(poss -)
+		     (restr ?restr) (mass count)
 		     (LF ?spec) (arg ?v) (agr 3p) (var ?v) ;;(NObareSpec -)       removed to handle "the three (arrived)"  jfa 5/10
 		     ))
 	 (CARDINALITY (var ?card) (AGR 3p))
@@ -7061,7 +7064,8 @@
 	  (postadvbl +) (headless +) (status ?newspec)
 	  )
 	 -NP-missing-head-mod-plur> .96
-	 (head (spec  (poss -) (restr ?restr) ;;(SUBCAT (% ?x (SEM ?s)))
+	 (head (spec  ;(poss -)
+		      (restr ?restr) ;;(SUBCAT (% ?x (SEM ?s)))
 		(lf ?spec) (arg ?v) (agr 3p) (var ?v)
 		;;(postadvbl +)
 		)) ;; (NObareSpec -)))
@@ -7101,7 +7105,8 @@
 	  (postadvbl +) (status ?newspec)
 	  )
 	 -NP-missing-head-number> .96
-	 (head (spec  (poss -) (restr ?restr)
+	 (head (spec  ;(poss -)
+		      (restr ?restr)
                       (lf ?spec) (arg ?v) (agr |3P|) (var ?v)))
 	 (ADJP (LF ?l1) (ARG ?v) ;(ARG *)
 	       (set-modifier -)
@@ -7136,7 +7141,8 @@
 	  (postadvbl +) (status ?newspec)
 	  )
 	 -NP-missing-head-number-mod> .96
-	 (head (spec  (poss -) (restr ?restr)
+	 (head (spec  ;(poss -)
+		      (restr ?restr)
                       (lf ?spec) (arg ?v) (agr |3P|) (var ?v)))
 	 (ADJP (ARG ?v) ;(ARG *) 
 	  (var ?advvar1) (ARGUMENT (% NP (sem ?s))))

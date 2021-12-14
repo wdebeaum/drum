@@ -439,7 +439,7 @@
     )
 
 (define-type ONT::general-structure
-    :wordnet-sense-keys ("structure%1:06:00" "petting_zoo%1:14:00" "herbarium%1:14:00")
+    :wordnet-sense-keys ("structure%1:06:00" "petting_zoo%1:14:00" "herbarium%1:14:00" "dam%1:06:00")
     :parent ONT::man-made-structure
     )
 
