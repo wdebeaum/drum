@@ -29,6 +29,7 @@
   :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
 	  (w::split
+	   (wordfeats (W::morph (:forms (-vb) :past W::split :pastpart W::split :ing W::splitting)))
 	   (senses
         
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("break-45.1") :wn ("split%2:30:01" "split%2:35:00"))

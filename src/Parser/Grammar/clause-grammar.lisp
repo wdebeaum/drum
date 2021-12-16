@@ -1366,6 +1366,48 @@
 		       (new ?newc))
      
      )
+
+    ; the uranium atoms are split (fission) to produce heat.
+    ((vp- (subj ?subj)  (subjvar ?subjvar) (dobjvar ?dobjvar) 
+      (var ?v) (class ?c) ;(gap ?gap) 
+      (constraint ?newc)
+      (tma ?tma)
+      (postadvbl -) (vform ?vf)
+      )
+     -vp1-role-parenthetical> 1  ;;  rule with no indirect object
+     (head (v (aux -) ;; main verbs only
+	    (lf ?c)
+	    (sem ($ f::situation (f::type ont::situation-root)))
+	    (vform ?vf)
+	    (tma ?tma)
+	    ;; (subj (? subj (% ?s1 (var ?subjvar))))
+	    (subj ?subj) (subj (% ?s1 (lex ?subjlex) (agr ?subjagr) (var ?subjvar) (sem ?subjsem) (gap -))) ;; note double matching required
+	    (iobj ?iobj) (iobj (% ?s2  (case (? icase obj -)) (var ?iobjvar) (sem ?iobjsem) (gap -)))
+	   ;; (iobj (% -))
+	    (part ?part) 
+	    (dobj ?dobj) (dobj (% ?s3 (agr ?dobjagr) (case (? dcase obj -)) (var ?dobjvar) (sem ?dobjsem)
+				  ;(gap ?gap)))	    
+				  (gap -)))	    
+	    ;; we allow a possible gap in the dobj np e.g., "what did he thwart the passage of" ; This now uses -VP1-GAPPED-DOBJ-ROLE> since we don't allow gaps here anymore
+	    (comp3 ?comp) (comp3 (% ?s4 (case (? ccase obj -)) (var ?compvar) (sem ?compsem) (gap -)))
+	    (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
+	    (restr ?prefix)
+	   ))
+     ?iobj     
+     ?dobj
+     ?part
+     ?comp
+     	 (parenthetical (var ?pv) (arg ?v) (role ?role))
+     (append-conjuncts (conj1 ?prefix) (conj2 (& (lsubj ?subjvar) (lobj ?dobjvar)
+		       (liobj ?iobjvar) (lcomp ?compvar)
+		       (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
+		       (?iobj-map ?iobjvar) (?comp3-map ?compvar)
+		       ))
+		       (new ?newc1))
+     	 (add-to-conjunct (val (parenthetical ?pv)) (old ?newc1) (new ?newc))
+
+     
+     )
     
    ;; case with a gap in the comp3
    ;;  e.g., what did he start to cook
