@@ -1862,7 +1862,7 @@
      ?dobj
      ?part
     )
-
+#|
    ;; vp rule with comp3 gap when a verb has a particle
    ;; the difference from comp-gap1-role is that part is bound to be non-empty by double-matching on (part (% word))
    ;; and then the direct object can come after the particle
@@ -1894,7 +1894,7 @@
     ?!part
     ?dobj
     )
-
+|#
     
    ;; vp rule with a vp comp3 with a gap inside it
    ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar)
@@ -1925,7 +1925,7 @@
      ?comp
     (bound (arg1 ?!gap))  ;; remember, we are parsing bottom up, so this must be bound from below
     )
-      
+   #|   
    ;; particles with no independent semantics
    ;;  test: load up the oranges  ;; note: example isobsolete as up will be compositional!!!
    ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar) (main +)
@@ -1952,7 +1952,7 @@
     ?dobj
     ?comp
     )
-
+|#
    
    ;;  test: move up the blocks (i.e., move the blocks up)
    ;;  push up the window
@@ -2441,6 +2441,38 @@
 
    
    
+   ))
+
+(parser::augment-grammar
+ '((headfeatures
+    (vp- vform var agr neg sem iobj dobj comp3 part cont   tense-pro aux modal auxname orig-lex headcat transform subj-map advbl-needed
+	 passive passive-map template result))
+   ;; particles with no independent semantics
+   ;;  test: load up the oranges  ;; note: example isobsolete as up will be compositional!!!
+   ((vp- (subj ?subj) (subjvar ?subjvar)  (dobjvar ?dobjvar) (main +)
+     (class ?c) (var ?v) (lex (?vlex ?plex)) 
+     (constraint (& (lsubj ?subjvar) (lobj ?dobjvar)
+		    (lcomp ?compvar)
+		    (?lsubj-map ?subjvar) (?dobj-map ?dobjvar)
+		    (?iobj-map ?iobjvar) (?comp3-map ?compvar)
+		    ))
+     (postadvbl -)
+     )
+    -vp-particle-role> 1  ;; boost this as finding the particle is good evidence for the interpretation
+    (head (v (aux -) (lex ?vlex)
+	     (lf ?c) (sem ($ f::situation (f::type ont::situation-root)))  (vform ?tense-pro)
+	     (subj ?subj) (subj (% ?s1 (lex ?subjlex) (var ?subjvar) (agr ?subjagr) (sem ?subjsem) (gap -) )) ;; note double matching required
+	     (iobj (% -))
+	     (part ?!part) (part (% part (lex ?plex)))
+	     (dobj ?dobj)			(dobj (% ?s3 (var ?dobjvar) (sem ?dobjsem) (case (? dcase obj -)) ))
+	     (comp3 ?comp)		(comp3 (% ?s4 (var ?compvar) (sem ?compsem) (case (? ccase obj -))))
+	     (subj-map ?lsubj-map) (dobj-map ?dobj-map) (iobj-map ?iobj-map) (comp3-map ?comp3-map)
+	     
+	     ))
+    ?!part
+    ?dobj
+    ?comp
+    )
    ))
 
 

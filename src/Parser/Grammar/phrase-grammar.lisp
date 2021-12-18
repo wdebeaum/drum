@@ -2180,7 +2180,8 @@
 	      (post-subcat -) (gap -)
 	      (no-postmodifiers -) 
 	      ))
-    (advbl (var ?advv) (sort w::disc) (sem ($ f::abstr-obj (f::type ont::qualification))))
+    (advbl (var ?advv) (sort w::disc) (lf (% prop (class ont::qualification)))
+     (sem ($ f::abstr-obj (f::type ont::qualification))))
     (cp (ctype relc) (VAR ?relv) (ARG ?v) (ARGSEM ?argsem) 
      (LF ?lf))
     (add-to-conjunct (val (MODS (?relv ?advv))) (old ?r) (new ?con)))
@@ -5524,12 +5525,12 @@
             (focus ?foc) (arg ?s-v) (wh Q) (lf ?lf1)
             ))
      (s (stype decl) (sem ?argsem) (var ?s-v)
-      (lf ?lf-s)
+      (lf ?lf-s) (lex ?lex)
       (gap -) ;; no gap here because locations are treated as adjuncts in grammar (except for pred BE!)
       (advbl-needed -) 
       (preadvbl -)   ;; we eliminate preadvbl constructs as they are at best awkward -- e.g., where quickly did you run, and lead to bad parses for how quickly did you run
       )
-     (add-constraints-to-lf (lf ?lf-s) (new ((MOD ?advblvar))) (result ?newlf)
+     (add-constraints-to-lf (lf ?lf-s) (new ((MOD ?advblvar) (LEX ?lex))) (result ?newlf)
      ))
     
     ;;    e.g., (I know) where the dogs are.

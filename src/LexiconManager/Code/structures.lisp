@@ -95,7 +95,7 @@
   (transform nil)
   (coercions nil)
   (operator nil) ;; This is set if the entry is obtained by doing a LF coercion
-  )
+ )
   
 
 (defstruct syntax-template

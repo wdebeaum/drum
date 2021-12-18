@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.79 2021/10/20 06:31:25 cmteng Exp $
+ * $Id: EventExtraction.java,v 1.80 2021/12/17 20:42:57 cmteng Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -77,6 +77,8 @@ public class EventExtraction extends Extraction {
         SPEC(":SPEC"),
 	// un-normalized lex
         LEX(":LEX"),
+	// top-level ontology type
+        TOP_TYPE(":TOP_TYPE"),
 	// sem features
 	SEM_FEATURES(":FEATURES"),
         // {DRUM} :CELL-LINE id --> cell line
@@ -868,6 +870,8 @@ public class EventExtraction extends Extraction {
             conts.add(xml_element("spec", "", features.get(Feature.SPEC).toString()));
         if (features.get(Feature.LEX) != null)
             conts.add(xml_element("lex", "", removePackage(features.get(Feature.LEX).toString())));
+        if (features.get(Feature.TOP_TYPE) != null)
+            conts.add(xml_element("top_type", "", features.get(Feature.TOP_TYPE).toString())); // leave package in
         if (features.get(Feature.SEM_FEATURES) != null)
             conts.add(xml_element("sem_features", "", removePackage(features.get(Feature.SEM_FEATURES).toString())));
         conts.add(xml_negation());

@@ -170,7 +170,7 @@
 					 (w::digit ,(identify-digit val))
 					 (w::val ,val)
 					 (w::var ?nvar)
-					 (w::lex ,(lexicalize-number val))
+					 (w::lex ,word );;(lexicalize-number val))
 					 ;; allow numbers as bare specifiers so that the lfs for 'more than five trucks' and 'more than five' have the same representation for numbers
 ;;					 (w::nobarespec +)
 					 (w::has-digits ,has-digits)
@@ -348,6 +348,7 @@ intersection of an entry's tags and these tags is non-empty."
 	(let* ((part (vocabulary-entry-particle entry))
 	       (partdef (gethash part word-table))
 	       )
+	  
 	  (when (or (null partdef)
 		    ;; this is a test that this entry is already defined as part of speech particle ('w::part)
 		    ;; if not, we need to add it
@@ -753,8 +754,12 @@ intersection of an entry's tags and these tags is non-empty."
     ;;     SEM.ARGSEM - make into variables unless they already are
     
     (setq feats (cons (list 'w::input name1) feats))
+    
     (if (not (get-fvalue feats 'w::LEX)) 
-	(setq feats (cons (list 'w::LEX name1) feats)))
+	(setq feats (cons (list 'w::LEX (if (word-sense-definition-remaining-words entry)
+					    (cons name (word-sense-definition-remaining-words entry))
+					    
+					    name)) feats)))
     (if (not (get-fvalue feats 'w::VAR))
 	;(setq feats (cons (list 'w::VAR (gentemp "V" *parser-package*))
 	(setq feats (cons (list 'w::VAR (gentemp *var-prefix* *parser-package*))

@@ -1,7 +1,7 @@
 /*
  * TermExtraction.java
  *
- * $Id: TermExtraction.java,v 1.69 2021/10/20 06:31:26 cmteng Exp $
+ * $Id: TermExtraction.java,v 1.70 2021/12/17 20:42:57 cmteng Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -38,6 +38,8 @@ public class TermExtraction extends Extraction {
         SPEC(":SPEC"),
 	// un-normalized lex
         LEX(":LEX"),	
+	// top-level ontology type
+        TOP_TYPE(":TOP_TYPE"),
 	// sem features
 	SEM_FEATURES(":FEATURES"),
         // :PRO id --> ID for event describing modifier
@@ -428,6 +430,8 @@ public class TermExtraction extends Extraction {
             conts.add(xml_element("spec", "", attributes.get(Attribute.SPEC).toString()));
         if (attributes.get(Attribute.LEX) != null)
             conts.add(xml_element("lex", "", removePackage(attributes.get(Attribute.LEX).toString())));
+        if (attributes.get(Attribute.TOP_TYPE) != null)
+            conts.add(xml_element("top_type", "", attributes.get(Attribute.TOP_TYPE).toString())); // leave package in
         if (attributes.get(Attribute.SEM_FEATURES) != null)
             conts.add(xml_element("sem_features", "", removePackage(attributes.get(Attribute.SEM_FEATURES).toString())));
         conts.add(xml_name());
