@@ -526,6 +526,7 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 (defvar *add-orig-lex-to-lf* nil)
 
 (defvar *sem-features-to-output* nil)
+(defvar *add-top-level-type* nil)
 
 (defun add-lex-if-necessary (lf term)
   (if (and *add-lex-to-lf* (consp term))
@@ -1293,6 +1294,11 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 		  (setq newlf (append newlf (list :features f_list)))
 		  ))
 	    ))
+
+      (if (and *add-top-level-type* (om::is-sublf (get-core-type class) 'ont::situation-root))
+	  (setq term (replace-arg-in-act term :lf (append newlf (list :top_type 'ont::situation-root))))
+	  (setq newlf (append newlf (list :top_type 'ont::situation-root)))
+	)    
       
       (if (and input (or (null form) (member 'w::input form)))
 	  (setq term (append term (list :INPUT input)))
@@ -1664,6 +1670,10 @@ usually not be 0 for speech. Also it finds one path quickly in order to set the 
 		  (setq new-lf (append new-lf (list :features f_list)))
 		  ))
 	    ))
+
+    (if (and *add-top-level-type* (om::is-sublf (get-core-type class) 'ont::situation-root))
+	(setq new-lf (append new-lf (list :top_type 'ont::situation-root)))
+      )
 
     (if (and *add-lex-to-lf* lex)
 	(progn
