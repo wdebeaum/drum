@@ -588,7 +588,7 @@
 		      (or (if (symbolp lf) (member lf '(ont::referential-sem ont::property-val)))
 			  (if (consp lf) (intersection lf '(ont::referential-sem ont::property-val)))))
 		 ;; addition penalty if it contains a hyphen!
-		 (if (position #\- (coerce (symbol-name lex) 'list))
+		 (if (and (symbolp lex) (position #\- (coerce (symbol-name lex) 'list)))
 		     (* *referential-sem-penalty*  *referential-sem-penalty*)
 		      *referential-sem-penalty*)
 		      1)
