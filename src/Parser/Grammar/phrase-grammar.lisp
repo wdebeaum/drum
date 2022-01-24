@@ -1267,12 +1267,13 @@
      )
    -adj-pertainym-construction> 1
     (head (ADJ (LF ?lf) (SUBCAT ?subcat) (VAR ?v) (sem ?sem) (SORT PRED) (ARGUMENT-MAP ?argmap) 
-	       (pertainym ?!pert-type) (pert-domain-info ?pert-domain-info)
+	       (pertainym ?!pert-type) (pertainym (:* ?!pert-t ?!pert-w))
+	       (pert-domain-info ?pert-domain-info)
 	       (transform ?transform) (constraint ?con) (comp-op ?dir) (arg ?arg)
 	       (atype ?atype) (comparative ?cmp) (lex ?lx) (argument ?argument)
 	       ))
     (compute-sem-features (lf ?!pert-type) (sem ?pert-sem) (domain-info ?pert-domain-info))
-    (add-to-conjunct  (val (:GROUND (% *PRO* (status ont::kind) (class ?!pert-type)
+    (add-to-conjunct  (val (:GROUND (% *PRO* (status ont::kind) (class ?!pert-type) (lex ?!pert-w)
 				    (var *) (sem ?pert-sem) (constraint (& (drum ?pert-domain-info))))))
      (old ?con) 
      (new ?newc))
@@ -3960,11 +3961,11 @@
       (vform passive) (constraint ?constraint) (sem ?sem2) ;(sem ?sem)
       (LF (% prop (class ?lf) (var ?v)
 	     (constraint 
-	      (& (?!reln (% *PRO* (status ont::kind) (var ?v-n) (class ?nc) (constraint ?nr) (sem ?sem)))
+	      (& (?!reln (% *PRO* (status ont::kind) (var ?v-n) (class ?nc) (constraint ?nr) (sem ?sem) (lex ?lex)))
 		 (?dobj-map ?dobj))))))
      -adj-passive+subj-hyphen> 1
      (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
-      (sem ?sem) (relc -) (abbrev -) (gap -) (agr 3s)
+      (sem ?sem) (relc -) (abbrev -) (gap -) (agr 3s) (lex ?lex)
 	 )
      (punc (lex w::punc-minus))
      (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj) (sem ?sem))) (sem ?sem2)
@@ -3980,11 +3981,11 @@
       (vform passive) (constraint ?constraint) (sem ?sem2) ;(sem ?sem)
       (LF (% prop (class ?lf) (var ?v)
 	     (constraint 
-	      (& (?!reln (% *PRO* (status ont::kind) (var ?v-n) (class ?nc) (constraint ?nr) (sem ?sem)))
+	      (& (?!reln (% *PRO* (status ont::kind) (var ?v-n) (class ?nc) (constraint ?nr) (sem ?sem) (lex ?lex)))
 		 (?dobj-map ?dobj))))))
      -adj-passive+subj> 
      (n1 (sort ?sort) (CLASS ?nc) (RESTR ?nr) (status ?status) (complex -) (gerund -) (var ?v-n) 
-      (sem ?sem) (relc -) (abbrev -) (gap -) (agr 3s)
+      (sem ?sem) (relc -) (abbrev -) (gap -) (agr 3s) (lex ?lex)
 	 )
      (head (V (var ?v) (VFORM pastpart) (DOBJ (% NP (var ?dobj) (sem ?sem))) (sem ?sem2)
       (GAP -) (LF ?lf) (Part (% -))

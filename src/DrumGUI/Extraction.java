@@ -1,7 +1,7 @@
 /*
  * Extraction.java
  *
- * $Id: Extraction.java,v 1.62 2020/06/26 21:51:45 lgalescu Exp $
+ * $Id: Extraction.java,v 1.63 2022/01/24 03:24:23 cmteng Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 18 Feb 2010
  */
@@ -497,6 +497,11 @@ public class Extraction {
     protected static String removePackage(String w, boolean withSpaces) {
         if (w != null) {
             w = w.replaceAll("^[A-Za-z]+::", "");
+
+	    // multiwords: e.g., (w::sleeping w::bag) -> (sleeping bag)
+            w = w.replaceAll("\\([A-Za-z]+::", "(");
+            w = w.replaceAll(" [A-Za-z]+::", " ");
+	    
             if (withSpaces) {
                 w = w.replaceAll("[_-]", " ");
             }
@@ -879,6 +884,7 @@ public class Extraction {
         KQMLObject termType = pullFullOntType(lfTerm);
         int start = getKeywordArgInt(":START", lfTerm);
         int end = getKeywordArgInt(":END", lfTerm);
+	String argLex = getKeywordArgString(":LEX", lfTerm);
 
         List<String> attrs = new ArrayList<String>();
         if (attributes != null)
@@ -891,6 +897,7 @@ public class Extraction {
         conts.add(xml_element("text",
                 xml_attribute("normalization", xml_escape(normalizeOnt(ontWord(termType)))),
                 xml_escape(removeTags(getTextSpan(start, end)))));
+	conts.add(xml_element("lex", "", removePackage(argLex)));
 
         return xml_element(tag, attrs, conts);
     }

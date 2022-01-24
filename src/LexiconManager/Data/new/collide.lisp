@@ -1,20 +1,19 @@
 ;;;;
-;;;; W::crash
+;;;; W::collide
 ;;;;
 
 (define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::collide
-    (wordfeats (W::morph (:forms (-vb) :nom w::crash)))
+    (wordfeats (W::morph (:forms (-vb) :nom w::collison)))
    (SENSES
     ((LF-PARENT ont::collide)
      (example "The car collided with the wall" )
-     (TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL (xp (% W::PP (W::ptype (? x W::into w::with))))
+     (TEMPL AFFECTED-AFFECTED1-XP-NP-TEMPL (xp (% W::PP (W::ptype (? x W::into w::with)))))
      )
     ((LF-PARENT ont::collide)
      (example "The cars collided")
      (TEMPL AFFECTED-NP-PLURAL-TEMPL)
-     )
      )
     )
    )))

@@ -1,7 +1,7 @@
 /*
  * EventExtraction.java
  *
- * $Id: EventExtraction.java,v 1.80 2021/12/17 20:42:57 cmteng Exp $
+ * $Id: EventExtraction.java,v 1.81 2022/01/24 03:24:23 cmteng Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -999,6 +999,7 @@ public class EventExtraction extends Extraction {
         KQMLObject termType = pullFullOntType(term);
         int start = getKeywordArgInt(":START", term);
         int end = getKeywordArgInt(":END", term);
+	String argLex = getKeywordArgString(":LEX", term);
         
         List<String> attrs = new ArrayList<String>();
         attrs.add(xml_attribute("id", removePackage(var)));
@@ -1011,6 +1012,7 @@ public class EventExtraction extends Extraction {
         conts.add(xml_element("text",
                 xml_attribute("normalization", xml_escape(normalizeOnt(ontWord(termType)))),
                 xml_escape(removeTags(getTextSpan(start, end)))));
+	conts.add(xml_element("lex", "", removePackage(argLex)));
 
         return xml_element("arg" + roleIndex, attrs, conts);
     }

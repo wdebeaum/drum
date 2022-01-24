@@ -1,7 +1,7 @@
 /*
  * ExtractionFactory.java
  *
- * $Id: ExtractionFactory.java,v 1.14 2019/10/08 17:55:29 lgalescu Exp $
+ * $Id: ExtractionFactory.java,v 1.15 2022/01/23 07:11:52 cmteng Exp $
  *
  * Author: Lucian Galescu <lgalescu@ihmc.us>, 8 Jan 2015
  */
@@ -134,7 +134,8 @@ public class ExtractionFactory {
                 Debug.warn("Mapped to: " + extractionType);
             }
             // F extractions w/ roles map to EVENT
-            if (extractionType.equalsIgnoreCase("ONT::F")) {
+            if ((extractionType.equalsIgnoreCase("ONT::F")) 
+		&& (!ExtractionFactory.getProperty("extractions.mode").equals("propolis"))) { //skip this in propolis
                 // try building event extraction object
                 EventExtraction tmpEx = new EventExtraction(ekb, value, context, uttnum);
                 if (! tmpEx.getRoles().isEmpty()) {
