@@ -140,7 +140,9 @@
             ;; make sure pp-word is not a sort here
             (sort (? !sort pp-word double-subcat))
 	    (argument (% ?cat2 (var ?arg) (lex ?arglex) (sem ?argsem) (subjvar ?subjvar) (sort ?argsort)))
-            (subcat ?!sub) (SUBCAT (% ?cat (var ?subv) (sem ?subcatsem) (stype ?stype) (vform ?vform) (subjvar ?subjvar) (gap ?gap)))
+            (subcat ?!sub) (SUBCAT (% ?cat (var ?subv) (sem ?subcatsem) (stype ?stype) (vform ?vform)
+				      ;(subjvar ?subjvar) 
+				      (gap ?gap)))
 	    
             (subcat-map ?submap) (ARGUMENT-MAP ?argmap)
 	    (subcat2 -) ; to prevent e.g., if... then... to be used here (BINARY-CONSTRAINT-S-DECL-MIDDLE-WORD-SUBCAT-TEMPL)
@@ -821,9 +823,9 @@
 		))
 
      (advbl (particle -) (ATYPE POST)
-      (ARGUMENT (% S (sem ?sem) (var ?v) (subjvar ?subjvar)))  ;; 06/18 I commented out tis as it si sometimes not specified in the ADVBL, and thus sets it to -, and thus the S1> rule cannot match
+	    (ARGUMENT (% S (sem ?sem) (var ?v) (subjvar ?subjvar)))  ;; 06/18 I commented out tis as it si sometimes not specified in the ADVBL, and thus sets it to -, and thus the S1> rule cannot match
       ;;	 ))
-      ;; 2021/12/15: put back the (subjvar ?subjvar) so it can pass on the subjcontrol for "I open the door by pushing it."
+      ;; 2021/12/15: put back the (subjvar ?subjvar) so it can pass on the subjcontrol for "I opened the door by pushing it."
       (GAP -) (result-only -)
       ;;(subjvar ?subjvar)   ;Not sure why this was here - maybe for purpose clauses. Leaving it in causes many parses to fail as the SUBJVAR in the new VP is wrecked
      ;; the SUBJVAR is required in the argument to be able to pass in the subject for things like "the dog walked barking".
