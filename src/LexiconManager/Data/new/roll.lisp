@@ -20,17 +20,23 @@
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("roll-51.3.1") :wn ("roll%2:29:06" "roll%2:38:00"))
      (LF-PARENT ONT::roll)
      (TEMPL affected-templ) ; like move,bounce
-     (PREFERENCE 0.96)
+     ;(PREFERENCE 0.96)
      )
+    ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("roll-51.3.1") :wn ("roll%2:29:06" "roll%2:38:00"))
+     (LF-PARENT ONT::roll)
+     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) ; like move,bounce
+     ;(PREFERENCE 0.96)
+     )    
     ((meta-data :origin "verbnet-2.0" :entry-date 20060315 :change-date nil :comments nil :vn ("roll-51.3.1") :wn ("roll%2:29:06" "roll%2:38:00"))
      (LF-PARENT ONT::rotate)
      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL) ; like rotate,turn,spin
      (PREFERENCE 0.96)
      )
    ((meta-data :origin "verbnet-1.5" :entry-date 20051219 :change-date nil :comments nil :vn ("run-51.3.2") :wn ("roll%2:29:06" "roll%2:38:00"))
-     (LF-PARENT ONT::roll)
-     (TEMPL agent-templ) ; like stroll,walk
-     (PREFERENCE 0.96)
+     ;(LF-PARENT ONT::roll)
+    (LF-PARENT ONT::SELF-LOCOMOTE) ; so that not both agent-templ and affected-templ are in ont::roll
+    (TEMPL agent-templ) ; like stroll,walk
+     ;(PREFERENCE 0.96)
      )
     ((example "let's roll with that one")
      (LF-PARENT ONT::SELECT)
