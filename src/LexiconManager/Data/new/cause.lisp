@@ -11,7 +11,8 @@
     ((EXAMPLE "Aspirin causes headaches")
      ;(lf-parent ont::cause-produce-reproduce) 
      (lf-parent ont::cause-effect) 
-     (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
+     ;(TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
+     (TEMPL AGENT-FORMAL-XP-NP-TEMPL)
      )
     ;; LF-GUM spreadsheet instructions say delete this sense, but then surface form has no representation.
     ;; changing parent instead to ont::cause-effect
