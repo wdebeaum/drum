@@ -43,7 +43,15 @@ mv trips-ont.omn $lexicon_data_dir/
 # Filter the newly created files to change the "modified" field from UNIX 
 # timestamp to human-readable time
 echo "  making 'modified' attribute a human-readable time ..."
-perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/{ONT,W}\:\:*.xml
+# "argument list too long" :(
+#perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/{ONT,W}\:\:*.xml
+perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/ONT\:\:[a-m]*.xml
+perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/ONT\:\:[n-z]*.xml
+perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/W\:\:[a-e]*.xml
+perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/W\:\:[f-j]*.xml
+perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/W\:\:[k-o]*.xml
+perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/W\:\:[p-t]*.xml
+perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/W\:\:[u-z]*.xml
 
 echo "done."
 
