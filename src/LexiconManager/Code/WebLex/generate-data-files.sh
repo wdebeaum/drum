@@ -7,7 +7,17 @@ echo "Using the TRIPS source directory $trips_src_dir"
 echo "to update the lexicon data directory $lexicon_data_dir ..."
 
 echo "  removing old data files ..."
-rm $lexicon_data_dir/{ONT,W}\:\:*.xml
+# argument list too long :(
+#rm $lexicon_data_dir/{ONT,W}\:\:*.xml
+rm $lexicon_data_dir/ONT\:\:[a-m]*.xml
+rm $lexicon_data_dir/ONT\:\:[n-z]*.xml
+rm $lexicon_data_dir/W\:\:[a-e]*.xml
+rm $lexicon_data_dir/W\:\:[f-j]*.xml
+rm $lexicon_data_dir/W\:\:[k-o]*.xml
+rm $lexicon_data_dir/W\:\:[p-t]*.xml
+rm $lexicon_data_dir/W\:\:[u-z]*.xml
+rm $lexicon_data_dir/W\:\:[\<^.]*.xml
+
 rm -f $lexicon_data_dir/TRIPS-ontology.xml
 rm -f $lexicon_data_dir/trips-ont.omn
 
@@ -52,6 +62,7 @@ perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexi
 perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/W\:\:[k-o]*.xml
 perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/W\:\:[p-t]*.xml
 perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/W\:\:[u-z]*.xml
+perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/W\:\:[\<^.]*.xml
 
 echo "done."
 
