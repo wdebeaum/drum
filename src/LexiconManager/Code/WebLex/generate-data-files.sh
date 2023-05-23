@@ -9,8 +9,10 @@ echo "to update the lexicon data directory $lexicon_data_dir ..."
 echo "  removing old data files ..."
 # argument list too long :(
 #rm $lexicon_data_dir/{ONT,W}\:\:*.xml
+rm $lexicon_data_dir/ONT\:\:[0-9]*.xml
 rm $lexicon_data_dir/ONT\:\:[a-m]*.xml
 rm $lexicon_data_dir/ONT\:\:[n-z]*.xml
+rm $lexicon_data_dir/W\:\:[0-9]*.xml
 rm $lexicon_data_dir/W\:\:[a-e]*.xml
 rm $lexicon_data_dir/W\:\:[f-j]*.xml
 rm $lexicon_data_dir/W\:\:[k-o]*.xml
@@ -55,8 +57,10 @@ mv trips-ont.omn $lexicon_data_dir/
 echo "  making 'modified' attribute a human-readable time ..."
 # "argument list too long" :(
 #perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/{ONT,W}\:\:*.xml
+perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/ONT\:\:[0-9]*.xml
 perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/ONT\:\:[a-m]*.xml
 perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/ONT\:\:[n-z]*.xml
+perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/W\:\:[0-9]*.xml
 perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/W\:\:[a-e]*.xml
 perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/W\:\:[f-j]*.xml
 perl -i -p -e 's/modified="(\d*)"/"modified=\"" . localtime($1) . "\""/e;' $lexicon_data_dir/W\:\:[k-o]*.xml
