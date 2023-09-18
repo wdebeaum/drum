@@ -77,9 +77,24 @@
 (def-or-update-package :w (:use))
 (def-or-update-package :f (:use)) ; should go away at some point...
 ;(def-or-update-package :ont) ; see resources.lisp
+;; intern all the sem-feat names in F:: and import them into LD::
+;; FIXME duplicate lists; see also symbol-types.lisp
+(dolist (s '(
+    object-function origin form mobility group spatial-abstraction intentional information container kr-type trajectory tangible
+    aspect time-span cause locative type iobj
+    measure-function scale gradability intensity orientation
+    time-function
+    ))
+  (intern (symbol-name s) :f))
 (defpackage :lexicon-data
   (:use)
   (:nicknames :ld)
+  (:shadowing-import-from :f
+    object-function origin form mobility group spatial-abstraction intentional information container kr-type trajectory tangible
+    aspect time-span cause locative type iobj
+    measure-function scale gradability intensity orientation
+    time-function
+    )
   )
 
 (defpackage :type-predicates)

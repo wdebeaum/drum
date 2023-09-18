@@ -95,17 +95,7 @@
     ))
 
 ;;; sem-feat subtypes
-
-;; import all the sem-feat names from F:: into LD::
-;; FIXME duplicate lists
-(shadowing-import
- '(
-    F::object-function F::origin F::form F::mobility F::group F::spatial-abstraction F::intentional F::information F::container F::kr-type F::trajectory F::tangible
-    F::aspect F::time-span F::cause F::locative F::type F::iobj
-    F::measure-function F::scale F::gradability F::intensity F::orientation
-    F::time-function
- )
- :ld)
+;;; see also lists of sem-feat symbols in defsys.lisp
 
 (in-package :ld)
 
