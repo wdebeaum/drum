@@ -1888,7 +1888,7 @@
 (define-type ONT::cardinal-point
     :parent ONT::LOCATION-by-description
     :wordnet-sense-keys ("cardinal_compass_point%1:24:00")
-    :arguments ((:OPTIONAL ONT::FIGURE (F::PHYS-OBJ))
+    :arguments ((:OPTIONAL ONT::FIGURE ((? lof F::PHYS-OBJ)))
 		)
     )
 
