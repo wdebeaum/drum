@@ -56,7 +56,7 @@
     :parent ont::at-loc
     :arguments ((:ESSENTIAL ONT::GROUND (f::phys-obj
 					 ;(f::tangible +)
-					 (f::type ont::loc-wrt-orientation)
+					 (f::type (? typ ont::loc-wrt-orientation ont::cardinal-point))
 					 )))
     )
 
