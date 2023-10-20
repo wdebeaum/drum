@@ -1220,15 +1220,21 @@ TODO: domain-specific words (such as CALO) and certain irregular forms (such as 
   (if (consp x) (second x) x))
 
 (defun is-defined-word (w &key (use-wordfinder *use-wordfinder*))
-  "Return T iff the word w has a real definition (not just referential-sem)."
+  "Return T iff the word w has a real definition (not just referential-sem or
+   as the first word in a multiword expression)."
   (let* ((*use-wordfinder* use-wordfinder)
 	 (defs (get-word-def w nil)))
-    ;; it's defined if we didn't just make up a single referential-sem sense
-    (not (and (= 1 (length defs))
-	      (eq 'ont::referential-sem
-		  (let ((lf (second (assoc 'w::lf (cddr (nth 3 (car defs)))))))
-		    (if (consp lf) (second lf) lf)))
-	      ))))
+    (and
+      ;; we didn't just make up a single referential-sem sense
+      (not (and (= 1 (length defs))
+		(eq 'ont::referential-sem
+		    (let ((lf (second (assoc 'w::lf
+					     (cddr (nth 3 (car defs)))))))
+		      (if (consp lf) (second lf) lf)))
+		))
+      ;; at least one def is for the individual word, not an expr it starts
+      (some (lambda (d) (= 1 (length (second d)))) defs)
+      )))
 
 (defun refine-existing-entry-with-sense-info (wdef sense-info)
   (let ((ont-type (car (find-arg (car sense-info) :ont-types))))
