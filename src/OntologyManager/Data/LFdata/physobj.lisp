@@ -135,6 +135,7 @@
 (define-type ONT::egg
     :wordnet-sense-keys ("egg%1:05:00")
     :parent ONT::organism
+    :sem (F::Phys-obj (:default (F::Object-Function F::comestible)))
     )
 
 (define-type ONT::microorganism
@@ -3107,6 +3108,7 @@
 (define-type ONT::POULTRY
     :wordnet-sense-keys ("bird%1:13:00")
     :parent ONT::NONhuman-animal
+    :sem (F::Phys-obj (:required (F::Object-Function F::comestible)))
     )
 
 (define-type ONT::CHICKEN

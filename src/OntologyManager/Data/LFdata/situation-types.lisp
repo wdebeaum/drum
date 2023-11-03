@@ -964,7 +964,7 @@
     :parent ONT::event-of-state ;HAVING
     :sem (F::SITUATION (F::Aspect F::static) (F::Time-span F::Extended) (F::Trajectory -))
     :arguments ((:REQUIRED ONT::NEUTRAL ((? oc1 F::Phys-obj F::abstr-obj F::Situation) (F::tangible +)))
-             (:ESSENTIAL ONT::NEUTRAL1 ((? oc2 F::Phys-obj F::abstr-obj) (F::tangible +))))
+             (:ESSENTIAL ONT::NEUTRAL1 ((? oc2 F::Phys-obj F::abstr-obj) (F::tangible +) (F::object-function (? !objfn F::comestible)))))
     ;; property argument needed here for the secondary predication 'we have lines down' 'we have a book ready'
     ;; added 12/2010 when conflating ont::secondary-have-property with ont::have
     ;;:arguments ((:optional ONT::PROPERTY ((? ocp F::abstr-obj))) ;; only properties (preds) -- for event nouns use ont::have-experience or ont::participating

@@ -16,14 +16,14 @@
     ((LF-PARENT ONT::HAVE)
      (example "I have a truck")
      (TEMPL NEUTRAL-NEUTRAL1-XP-TEMPL (xp (% W::NP (w::sort (? !xx W::unit-measure)))))
+     (preference 0.991) ; slightly prefer this basic sense over the others when their specific restrictions don't match
           )
   
-    ((LF-PARENT ONT::EAT)
+    ((LF-PARENT ONT::CONSUME)
      (TEMPL AGENT-AFFECTED-XP-NP-TEMPL)
      (meta-data :origin medadvisor :entry-date 20011121 :change-date nil :comments nil)
      (example "I like to have an antacid at bedtime")
      (SEM (F::Aspect F::bounded) (F::Time-span F::atomic))
-     (preference .991)  ;; slightly preferred if the COMESTIBLE restriction is satisfied
      )
     ((LF-PARENT ONT::MAKE-IT-SO)
      (meta-data :origin trains :entry-date unknown :change-date nil :comments nil)
