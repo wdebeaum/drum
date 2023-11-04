@@ -1199,7 +1199,7 @@
 
 (define-type ONT::STAY
     :wordnet-sense-keys ("stay%2:30:00" "remain%2:30:00" "rest%2:30:00" "dig_in%2:35:00" "settle%2:30:01" "stand_still%2:38:00" "stay%2:38:01" "stay_in_place%2:38:00" "live%2:42:08"
-					"arrest%1:26:00")
+					"arrest%1:26:00" "board%2:34:00")
  :parent ONT::PERSISTENT-STATE ;LOCATED-MOVE-STATE
  :sem (F::SITUATION (F::Aspect F::Unbounded) (F::Cause F::Force) (F::Time-span F::Extended))
  :arguments ((:REQUIRED ONT::affected (F::Phys-obj (F::Mobility F::Movable)))
