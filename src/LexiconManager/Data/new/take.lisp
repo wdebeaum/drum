@@ -96,13 +96,13 @@
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      ;(preference 1.0) ;; the default 
      (example "take the box")
-     (template AGENT-AFFECTED-XP-TEMP)
+     (template AGENT-AFFECTED-XP-NP-TEMPL)
      )
 
     ((LF-PARENT ONT::cause-move)
      (SEM (F::Cause F::agentive) (F::Aspect F::bounded) (F::Time-span F::atomic))
      (example "take the bird out of the cage")
-     (template AGENT-AFFECTED-XP-TEMP)
+     (template AGENT-AFFECTED-XP-NP-TEMPL)
      )
     
     ((LF-PARENT ONT::is-compatible-with)
