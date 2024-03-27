@@ -122,14 +122,13 @@ options.</p>
 </li>
 
 <li>Download
-<a href="http://geonames.usgs.gov/docs/stategaz/NationalFile_20160201.zip">this
-GNIS geographic names database package</a> and put it in
-<code>/usr/local/share/geonames/2016-02-01/</code>. The
-name of this file appears to change frequently. If that link doesn't work, go
-to the <a href="http://geonames.usgs.gov/">geonames</a> site and select
-"domestic names" and then "download" from the navigation menu. On that page
-there should be a link to a zip file containing one text file for the whole
-nation (not individual state files). Rename the zip file to
+<a href="https://prd-tnm.s3.amazonaws.com/StagedProducts/GeographicNames/DomesticNames/DomesticNames_AllStates_Text.zip">this
+GNIS geographic names database package</a>, rename it to <code>NationalFile.zip</code> and put it in
+<code>/usr/local/share/geonames/2024-02-01/</code>. The
+name and location of this file appears to change frequently. If that link doesn't work, go
+to the <a href="http://geonames.usgs.gov/">USGS geonames</a> site and select
+"domestic names" and then look for a way to download the single zip file containing one text file for the whole
+nation (not individual state files). At time of writing, you would click the link under the "Names Data Access" heading on the right called "Direct Link to All Names Data Products", then click on "DomesticNames/", then "DomesticNames_AllStates_Text.zip". Rename the zip file to
 <code>NationalFile.zip</code> and put it in a directory named for the date on
 the file, with dashes. No need to unpack it.</li>
 

@@ -50,7 +50,7 @@ case $VERSION in
     # All versions from 2009-10-02 on.
     # This version goes back to a single file, but this time all UTF-8 (with a
     # BOM)
-    unzip -p $ZIPFILE NationalFile_20??????.txt | \
+    unzip -p $ZIPFILE NationalFile_20??????.txt Text/DomesticNames_National.txt | \
     LC_ALL='C' cut -d '|' -f 2 | \
     perl -n -e 's/ \(.*\)//; s/^\s*//; s/\s*$//; print "$_\n" unless (/Feature_Name/i or $_ eq "");' >terms.unsorted.txt || exit 1
     LC_ALL='C' sort <terms.unsorted.txt | LC_ALL='C' uniq >terms.txt || exit 1
