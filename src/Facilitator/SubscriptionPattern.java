@@ -2,7 +2,7 @@
  * SubscriptionPattern.java
  *
  * George Ferguson, ferguson@cs.rochester.edu,  3 Apr 2000
- * $Id: SubscriptionPattern.java,v 1.2 2010/04/22 03:30:20 lgalescu Exp $
+ * $Id: SubscriptionPattern.java,v 1.3 2024/04/01 15:44:13 wdebeaum Exp $
  */
 
 package TRIPS.Facilitator;
@@ -73,7 +73,7 @@ abstract public class SubscriptionPattern {
 		return new MatchNothingPattern();
 	    } else {
 		// We may have several conditions to test
-		Vector matchers = new Vector();
+		Vector<SubscriptionPattern> matchers = new Vector<SubscriptionPattern>();
 		Object vobj = l.get(0);
 		if (vobj instanceof KQMLToken) {
 		    String verb = ((KQMLToken)vobj).stringValue();

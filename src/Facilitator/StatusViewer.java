@@ -44,7 +44,7 @@ public class StatusViewer extends JFrame implements FacilitatorDisplay {
       }
     };
   class NonEditableTableModel extends DefaultTableModel {
-    public NonEditableTableModel(Vector data, Vector columnNames) {
+    public NonEditableTableModel(Vector<? extends Vector> data, Vector<?> columnNames) {
       super(data, columnNames);
     }
     @Override

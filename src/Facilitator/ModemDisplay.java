@@ -2,7 +2,7 @@
  * ModemDisplay.java
  *
  * David Costello, costello@cs.rochester.edu,  8 Jul 1999
- * $Id: ModemDisplay.java,v 1.7 2016/12/16 16:39:14 wdebeaum Exp $
+ * $Id: ModemDisplay.java,v 1.8 2024/04/01 15:44:13 wdebeaum Exp $
  *
  */
 
@@ -52,7 +52,7 @@ public class ModemDisplay extends JFrame implements FacilitatorDisplay, ActionLi
     private Facilitator facilitator;
     private JPanel mainpanel;
     private JLabel statusLine;
-    protected Hashtable entries = new Hashtable();
+    protected Hashtable<String, ModemDisplayEntry> entries = new Hashtable<String, ModemDisplayEntry>();
     TrafficViewer trafficViewer = null;
     StatusViewer statusViewer = null;
     //
@@ -87,15 +87,15 @@ public class ModemDisplay extends JFrame implements FacilitatorDisplay, ActionLi
 	    title = value;
 	}
 	if ((value = facilitator.getParameter("-iconic")) != null) {
-	    iconic = Boolean.getBoolean(value);
+	    iconic = Boolean.parseBoolean(value);
 	}
 	if ((value = facilitator.getParameter("-geometry")) != null) {
 	    geometry = new GeometrySpec(value);
 	} else {
 	    geometry = new GeometrySpec(DEFAULT_GEOMETRY);
-	}	    
+	}
 	if ((value = facilitator.getParameter("-showMenuBar")) != null) {
-	    showMenuBar = new Boolean(value).booleanValue();
+	    showMenuBar = Boolean.parseBoolean(value);
 	}
     }
     // Setup the main panel of the display

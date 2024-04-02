@@ -2,7 +2,7 @@
  * Log.java
  *
  * Dave Costello  , costello@cs.rochester.edu, Jun 1998
- * $Id: Log.java,v 1.4 2007/07/13 20:06:24 wdebeaum Exp $
+ * $Id: Log.java,v 1.5 2024/04/01 15:44:13 wdebeaum Exp $
  *
  */
 
@@ -121,9 +121,9 @@ class TimeStamper {
     }
     private String padNum(int i) {
 	if (i < 10) {
-	    return "0" + new Integer(i).toString();
+	    return "0" + Integer.valueOf(i).toString();
 	} else {
-	    return new Integer(i).toString();
+	    return Integer.valueOf(i).toString();
 	}
     }
 }

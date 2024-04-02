@@ -2,7 +2,7 @@
  * Launcher.java
  *
  * George Ferguson, ferguson@cs.rochester.edu,  4 Aug 2000
- * $Id: Launcher.java,v 1.5 2010/04/22 03:30:20 lgalescu Exp $
+ * $Id: Launcher.java,v 1.6 2024/04/01 15:44:13 wdebeaum Exp $
  *
  */
 
@@ -36,7 +36,7 @@ public class Launcher {
     // Fields
     //
     Facilitator facilitator;
-    List subprocesses = new LinkedList();
+    List<Process> subprocesses = new LinkedList<Process>();
     //
     // Constructor
     //
@@ -131,7 +131,7 @@ public class Launcher {
 	    argv = createArgvFromList((KQMLList)argvobj);
 	}
 	// Load class
-	Class clazz;
+	Class<?> clazz;
 	try {
 	    clazz = cloader.loadClass(classname);
 	} catch (ClassNotFoundException ex) {
@@ -153,7 +153,7 @@ public class Launcher {
 		instance = constructor.newInstance(initargs);
 	    } else {
 		Debug.warn("using default constructor for class: " + classname);
-		instance = clazz.newInstance();
+		instance = clazz.getDeclaredConstructor().newInstance();
 	    }
 	} catch (Exception ex) {
 	    throw new LauncherException("exception creating instance of class " + classname + ": ",ex);

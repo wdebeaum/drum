@@ -2,7 +2,7 @@
  * @(#)ClientGroup.java
  *
  * David Costello, costello@cs.rochester.edu,  8 Jan 2000
- * $Id: ClientGroup.java,v 1.1.1.1 2005/01/14 19:48:08 ferguson Exp $
+ * $Id: ClientGroup.java,v 1.2 2024/04/01 15:44:13 wdebeaum Exp $
  *
  * gf: 11/9/2002: My quick hacks here using static vars/methods probably
  *                aren't right.Should do something with the registry instead.
@@ -21,7 +21,7 @@ public class ClientGroup implements Sendable {
     // Fields
     //
     protected String name;
-    protected Vector members = new Vector();
+    protected Vector<Sendable> members = new Vector<Sendable>();
     //
     // Constructors
     //

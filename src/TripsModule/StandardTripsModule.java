@@ -2,7 +2,7 @@
  * StandardTripsModule.java
  *
  * George Ferguson, ferguson@cs.rochester.edu, 11 Dec 2000
- * $Id: StandardTripsModule.java,v 1.8 2011/11/13 02:15:08 blaylock Exp $
+ * $Id: StandardTripsModule.java,v 1.9 2024/04/01 15:44:13 wdebeaum Exp $
  */
 
 package TRIPS.TripsModule;
@@ -202,7 +202,7 @@ abstract public class StandardTripsModule implements TripsModule {
 		int colon;
 		if ((colon = value.indexOf(':')) > -1) {
 		    host = value.substring(0, colon);
-		    port = new Integer(value.substring(colon+1)).intValue();
+		    port = Integer.parseInt(value.substring(colon+1));
 		} else {
 		    host = value;
 		    port = DEFAULT_PORT;

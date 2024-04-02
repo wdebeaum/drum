@@ -2,7 +2,7 @@
  * @(#)Facilitator.java
  *
  * David Costello, costello@cs.rochester.edu,  8 Jul 1999
- * $Id: Facilitator.java,v 1.10 2019/06/19 00:50:24 lgalescu Exp $
+ * $Id: Facilitator.java,v 1.11 2024/04/01 15:44:13 wdebeaum Exp $
  */
 package TRIPS.Facilitator;
 
@@ -161,7 +161,7 @@ public class Facilitator extends Thread implements Sendable {
 	    hideTraffic = Boolean.TRUE;
 	}
 	if ((value = getParameter("-port")) != null) {
-	    startPort = new Integer(value).intValue();
+	    startPort = Integer.parseInt(value);
 	}
 	if ((value = getParameter("-scan")) != null) {
 	    scanForPort = StringUtils.stringToBoolean(value);
@@ -247,14 +247,17 @@ public class Facilitator extends Thread implements Sendable {
 	    Debug.warn("yow! displayClassName shouldn't be null!");
 	    return;
 	}
-	Class displayClass;
+	Class<?> displayClass1;
 	try {
-	    displayClass = Class.forName(displayClassName);
+	    displayClass1 = Class.forName(displayClassName);
 	} catch (ClassNotFoundException ex) {
 	    Debug.warn("display class not found: " + displayClassName);
 	    return;
 	}
-	if (!FacilitatorDisplay.class.isAssignableFrom(displayClass)) {
+	Class<? extends FacilitatorDisplay> displayClass;
+	try {
+	    displayClass = displayClass1.asSubclass(FacilitatorDisplay.class);
+	} catch (ClassCastException ex) {
 	    Debug.warn("display class \"" + displayClassName + "\" is not a FacilitatorDisplay");
 	    return;
 	}

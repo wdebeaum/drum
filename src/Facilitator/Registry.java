@@ -2,7 +2,7 @@
  * Registry.java
  *
  * George Ferguson, ferguson@cs.rochester.edu,  4 Apr 2000
- * $Id: Registry.java,v 1.1.1.1 2005/01/14 19:48:08 ferguson Exp $
+ * $Id: Registry.java,v 1.2 2024/04/01 15:44:13 wdebeaum Exp $
  */
 package TRIPS.Facilitator;
 
@@ -28,8 +28,8 @@ public class Registry {
     //
     // Fields
     //
-    Hashtable clientsByName = new Hashtable();
-    Hashtable entriesByClient = new Hashtable();
+    Hashtable<String, Sendable> clientsByName = new Hashtable<String, Sendable>();
+    Hashtable<Sendable, RegistryEntry> entriesByClient = new Hashtable<Sendable, RegistryEntry>();
     //
     // Constructor
     //
@@ -158,7 +158,7 @@ public class Registry {
 class RegistryEntry {
     // Fields
     Sendable client;
-    Vector names = new Vector();
+    Vector<String> names = new Vector<String>();
     // Constructor
     RegistryEntry(Sendable client) {
 	this.client = client;
