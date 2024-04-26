@@ -9,7 +9,7 @@
 ;;   (wordfeats (W::MORPH (:forms (-S-3P -load))))
    (SENSES
     ((meta-data :origin trips :entry-date 20060803 :change-date nil :comments nil :wn ("ship%1:06:00"))
-     (LF-PARENT ONT::VEHICLE)
+     (LF-PARENT ONT::WATER-VEHICLE)
      )
     )
    )

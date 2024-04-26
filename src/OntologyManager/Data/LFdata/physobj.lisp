@@ -1255,6 +1255,12 @@
 		      (F::trajectory +) (F::container (? fcont + -)))
     )
 
+(define-type ONT::WATER-VEHICLE
+    :wordnet-sense-keys ("vessel%1:06:00::")
+    :parent ONT::VEHICLE
+    :sem (F::Phys-obj (F::mobility F::water-movable) (F::form F::Enclosure) (F::spatial-abstraction F::spatial-point))
+    )
+
 (define-type ONT::AIR-VEHICLE
     :wordnet-sense-keys ("plane%1:06:01" "aeroplane%1:06:00" "airplane%1:06:00" "aircraft%1:06:00")
     :parent ONT::VEHICLE
