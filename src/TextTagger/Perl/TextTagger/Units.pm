@@ -35,7 +35,7 @@ in
 jar
 key
 lab lad last leg let lid lie lot
-me mid mud mug
+me meet mid mud mug
 net nut
 oil
 pad pal pat pet pie pig pin pit pub put

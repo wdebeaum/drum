@@ -6072,6 +6072,8 @@
 	     (mass ?m1) 
 	     ))
       (COMPLEX +)
+      (gap -)
+      (case ?c) ; added for -ynq-modal-aux (e.g., Will the dog and the cat meet?)
       (SORT PRED) (wh ?wh)
       (generated ?generated) (Status ?status-out)
        )

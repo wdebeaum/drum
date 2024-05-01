@@ -386,7 +386,7 @@ my @tests = (
 (jam) (jar) (jaw) (jet) (jew) (job) (joy)
 (key) (kid) (kit)
 (lab) (lad) (lap) (law) (lay) (leg) (let) (lid) (lie) (lip) (log) (lot) (low)
-(man) (map) (may) (me) (mid) (mix) (mud) (mug) (my)
+(man) (map) (may) (me) (meet) (mid) (mix) (mud) (mug) (my)
 (net) (new) (no) (nod) (nor) (not) (now) (nun) (nut)
 (oak) (odd) (of) (off) (oil) (ok) (old) (on) (one) (opt) (or) (our) (out) (owe) (owl) (own)
 (pad) (pal) (pan) (par) (pat) (pay) (pen) (per) (pet) (pie) (pig) (pin) (pit) (pop) (pot) (pub) (put)
