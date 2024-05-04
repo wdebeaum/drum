@@ -994,9 +994,11 @@
 
 ;;; This is only for movable objects meeting
 ;;; Path meeting gets mapped to intersection
+;; c.f. ONT::SOCIAL-ACTIVITY
 (define-type ONT::MEET
  :wordnet-sense-keys ("meet%2:41:00" "gather%2:41:00" "assemble%2:41:00" "forgather%2:41:00" "foregather%2:41:00"  "come_across%2:38:00" "encounter%2:33:00" "meet%2:41:03"  "meet%2:41:01")
- :parent ONT::agent-interaction
+; :parent ONT::agent-interaction
+ :parent ONT::event-of-action ; taken out of agent-interaction because some agents are not intentional (e.g., boats)
  :sem (F::SITUATION (F::Trajectory -))
  :arguments (
              )

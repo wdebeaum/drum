@@ -258,7 +258,9 @@
 	    (end (find-value item :end))
 	    (score (find-value item :score))
 	    (prob (find-value item :prob))
-	    (remaining-feats (cddr item)))
+	    (remaining-feats (cddr item))
+	    (ont-types (find-value (car (find-value item :sense-info)) :ont-types))
+	    )
        (if (null start) (break "no start specified: process word entry"));;(setq start (up-max-position)))
        (if (null end) (break "no end specified: process word entry"))
        (update-min-position-found start)
@@ -270,8 +272,11 @@
 	   (let ((n (extract-number-value word)))
 	     (if n
 		 ;; build a number constituent
-		 (mapcar #'(lambda (x) (add-digits-feature x word))
-			 (find-lex-entries n start end (compute-lexical-prob prob score) (remove-arg remaining-feats :sense-info)))
+		 (if ont-types  ; the number is also tagged as other types (e.g., ships)
+		     (mapcar #'(lambda (x) (add-digits-feature x word)) ; the other types will also have W::NUMBER-DIGITS and W::DIGITS, but then the constit for W::WORD also already has these
+			     (find-lex-entries n start end (compute-lexical-prob prob score) remaining-feats))
+		   (mapcar #'(lambda (x) (add-digits-feature x word))
+			   (find-lex-entries n start end (compute-lexical-prob prob score) (remove-arg remaining-feats :sense-info))))
 		 ;; build a string constituent
 		 (list (build-entry (make-string-constit item)
 				    start
