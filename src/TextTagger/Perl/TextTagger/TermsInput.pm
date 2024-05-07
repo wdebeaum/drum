@@ -33,7 +33,7 @@ sub tag_input_terms {
   my ($self, $text) = @_;
   my @tags = ();
   for my $term (@input_terms) {
-    my $search = ($term->{lex} || $term->{text});
+    my $search = (exists($term->{lex}) ? $term->{lex} : $term->{text});
 # simple way
 #    while ($text =~ /\b\Q$search\E\b/g) {
 # HACK for DRUM to allow (various kinds of) dash insertion and case variants
