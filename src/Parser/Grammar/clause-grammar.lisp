@@ -2727,7 +2727,9 @@
 	    
      ))
     ;;?subj
-    (np (var ?subjvar) (case sub) (sem ?subjsem) (agr ?subjagr) (wh -) (sort (? !sort wh-desc)) (gap -) (lex ?subjlex) )  ;; lots of restrictions on this np to eliminate sentences like "is where the people"
+    (np (var ?subjvar) (case sub) (sem ?subjsem) (agr ?subjagr) (wh -) (sort (? !sort wh-desc)) (gap -) (lex ?subjlex)
+	(expletive -)  ; to prevent "What blocks are there?" from using the expletive sense of "there"
+	)  ;; lots of restrictions on this np to eliminate sentences like "is where the people"
     ;;?!dobj
     (add-to-conjunct (val (tense (? vf past pres fut))) (old ?tma) (new ?newtma))
     (add-status (in1 ?dstatus) (out ?status-out))
