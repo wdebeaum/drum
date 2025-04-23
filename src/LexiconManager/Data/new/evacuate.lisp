@@ -5,6 +5,7 @@
 (define-words :pos W::v :TEMPL AGENT-AFFECTED-XP-NP-TEMPL
  :words (
   (W::evacuate
+   (wordfeats (W::morph (:forms (-vb) :nom w::evacuation)))
    (SENSES
 #|
     ((LF-PARENT ONT::evacuate)

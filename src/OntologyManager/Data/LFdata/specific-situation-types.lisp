@@ -124,7 +124,9 @@
 				       (f::type (? typ ont::Phys-object ont::loaded-claim  ;;  lawsuit
 						   ont::mental-construction ont::information-function-object)))
 			(f::tangible +))
-	     (:REQUIRED ONT::affected-result ((? tc2  F::Phys-obj f::abstr-obj)))
+	     (:REQUIRED ONT::affected-result ((? tc2  F::Phys-obj f::abstr-obj)
+					      (f::type (? !tc2-type ont::measure-scale)) ; prefer population the PEOPLE-GROUP to poulation the scale
+					      ))
 	     (:optional ONT::RESULT ((? tc3  F::Phys-obj f::abstr-obj)))
              )
  )

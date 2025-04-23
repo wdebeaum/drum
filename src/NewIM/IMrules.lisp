@@ -268,7 +268,7 @@
 
    ;;  Tell me about <event>  ==>  what is ?   
    ((ONT::SPEECHACT ?x ONT::SA_REQUEST :CONTENT ?!theme)
-    (ONT::F ?!theme (? t3 ONT::TELL) :MOD ?!n :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
+    (ONT::F ?!theme (? t3 ONT::TELL) :MODS (?!n) :force (? f ONT::TRUE ONT::ALLOWED ONT::FUTURE ONT::POSSIBLE)) 
     (?!spec ?!n (? t2 ONT::ASSOCIATED-INFORMATION) :ground ?!X) ; e.g., about the evidence/ the explosion/ the gene, ... 
     -request-tell-about>
     (ONT::ASK-WHAT-IS :who *user* :to *ME* :what ?!X)
