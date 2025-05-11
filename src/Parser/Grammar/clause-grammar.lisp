@@ -1245,6 +1245,22 @@
       (check-subcat (arg1 ?subcat))
       )
 
+     ((pred (lf ?lf) (arg ?arg) (argument ?argument) (var ?v) (agr ?agr) (sem ?sem)    
+            (filled -) (adjectival +) (how ?how)
+	    (subcat -) ; convert an unoptional subcat to none
+            )
+      -pred-adj2> 0.97 ;1 ; lower score than -pred-adj> and also so it would prefer getting a subcat; "essential" in "it is essential to..." can't be parsed without this rule.  The right way to do it is to add a template to essential (adj-inf-templ), but that would involve adding this template to a lot of entries
+      (head (adjp (lf ?lf) (sem ?sem)
+		  (var ?v) (arg ?arg) (argument ?argument) (argument (% ?argcat (var ?arg))) ;;(wh -) eliminated to allow "how red"
+	     (set-modifier -) ;; numbers are set-modifier +, and they don't behave as normal adjps in predicates
+	     (atype (? atp central attributive-only predicative-only))
+	     ;; md 2008/17/07 eliminated cases with positive post-subcat, they should only happen when an adjective is looking for an argument after an np, not possible in the pred situation
+	     (post-subcat -) (how ?how)
+	     (subcat ?subcat)
+	     ))
+      ;(check-subcat (arg1 ?subcat))
+      )
+     
    ;; test: the dog is from the store.
      ((pred (lf ?lf) (arg ?arg) (argument ?argument) (var ?v) (agr ?agr) (sem ?sem)    
        (filled -) (adjectival -) (gap ?gap)

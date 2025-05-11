@@ -944,14 +944,15 @@
 	(LOBJ (% W::CP (w::ctype w::s-that)) ONT::neutral1)
 	))
 
-#|      (goal-equal-templ
+      ; the plan is to eat the pizza.
+      (goal-equal-templ
        (ARGUMENTS
       	(LSUBJ (% W::NP (W::agr ?agr) (w::sem ?sem) (w::gerund -) (w::subcat-map ont::formal)
 		  (w::subcat (% W::CP (w::ctype w::s-to))))
 	       ONT::neutral)
-	(LOBJ (% W::CP (w::ctype w::s-to)) ONT::neutral1)
+	(LOBJ (% W::CP (w::ctype w::s-to)) ONT::neutral1)  ; should this be FORMAL?
 	))
-|#
+
 
       #|
       (NEUTRAL-NEUTRAL1-NP-EQUAL-TEMPL

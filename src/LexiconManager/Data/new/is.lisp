@@ -51,6 +51,13 @@
      (LF-FORM w::BE)
      (TEMPL NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL)
      )
+    
+    (  ;; the plan is to eat the pizza 
+     (LF-PARENT ont::proposition-equal) ; do we need to put this in ^s.lisp?
+     (LF-FORM w::BE)
+     (TEMPL goal-equal-templ)
+     )
+
     ;;;; .. there is a box
     ((LF-PARENT ONT::EXISTS)
      (LF-FORM W::be)

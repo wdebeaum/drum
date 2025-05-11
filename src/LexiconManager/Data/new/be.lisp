@@ -46,6 +46,12 @@
      (EXAMPLE "the fact is that we went to the store")
      )
 
+    (  ;; the plan is to eat the pizza
+     (LF-PARENT ont::proposition-equal)
+     (LF-FORM w::BE)
+     (TEMPL goal-equal-templ)
+     )
+    
        ;;;; .. there is a box
     ((LF-PARENT ONT::EXISTS)
      (LF-FORM W::be)

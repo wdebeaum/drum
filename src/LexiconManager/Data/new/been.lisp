@@ -47,6 +47,12 @@
      (TEMPL NEUTRAL-NEUTRAL1-CP-STHAT-EQUAL-TEMPL)
      )
 
+    (  ;; the plan is to eat the pizza
+     (LF-PARENT ont::proposition-equal)
+     (LF-FORM w::BE)
+     (TEMPL goal-equal-templ)
+     )
+    
     ;;;; There has been an accident.
     ((LF-PARENT ONT::EXISTS)
      (LF-FORM W::be)
