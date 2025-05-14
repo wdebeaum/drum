@@ -835,6 +835,8 @@
  :wordnet-sense-keys ("follow%2:38:00" "come_after%2:41:00" "follow%2:42:03")
  :parent ONT::MOTION-WRT-ANOTHER-OBJECT
  :sem (F::SITUATION (F::Aspect F::Unbounded) (F::Cause F::Agentive) (F::Trajectory +))
+ :arguments ((:REQUIRED ONT::neutral ((? xx F::Phys-obj F::Abstr-obj F::Situation)
+				       (F::type (? !tt ont::mental-construction)))))
  )
 
 (define-type ONT::PURSUE
@@ -4689,6 +4691,8 @@
  :parent ont::control-manage
  :comment "to nurture, raise, or rear humans or other animate beings; take responsibility for the growth of animate beings (compare to ont::grow)"
  :wordnet-sense-keys ("rear%2:41:00")
+ :arguments ((:REQUIRED ONT::affected (F::Phys-obj (f::origin f::living)))
+ 	     )
 )
 
 ;; guide, lead, direct, conduct
@@ -5770,7 +5774,7 @@
 ;; Should be used for other words like "adhere" etc.
 ;; FN compliance,
 (define-type ONT::Compliance
- :wordnet-sense-keys ("celebrate%2:41:01" "conform%2:30:01" "keep%2:41:03" "keep%2:41:05" "obey%2:41:00" "observe%2:41:02" "observe%2:41:04")
+ :wordnet-sense-keys ("celebrate%2:41:01" "conform%2:30:01" "keep%2:41:03" "keep%2:41:05" "obey%2:41:00" "observe%2:41:02" "observe%2:41:04" "adhere%2:30:00" "adhere%2:42:00" "adhere%2:42:02" "attachment%1:04:02")
     :parent ONT::event-of-action
     :sem (f::situation (f::cause f::agentive) (f::aspect f::dynamic))
     :arguments ((:optional ONT::Agent  ((? agt F::Phys-obj f::abstr-obj) (F::intentional +)))
